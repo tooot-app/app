@@ -8,12 +8,16 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.0",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "@reduxjs/toolkit": "^1.4.0",
     "expo": "~39.0.2",
+    "expo-app-auth": "~9.2.0",
     "expo-status-bar": "~1.0.2",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
@@ -27,7 +31,8 @@
     "react-redux": "^7.2.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "babel-plugin-module-resolver": "^4.0.0"
   },
   "private": true
 }

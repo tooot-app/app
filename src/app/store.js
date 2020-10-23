@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import timelineReducer from '../screens/timelineSlice'
+import genericTimelineSlice from 'src/stacks/common/timelineSlice'
 
 export default configureStore({
   reducer: {
-    timeline: timelineReducer
+    'social.xmflsct.com': genericTimelineSlice('social.xmflsct.com').slice
+      .reducer,
+    'm.cmx.im': genericTimelineSlice('m.cmx.im').slice.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

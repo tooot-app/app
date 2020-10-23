@@ -1,4 +1,6 @@
-export default function relative_time (date) {
+import PropTypes from 'prop-types'
+
+export default function relativeTime (date) {
   var units = {
     year: 24 * 60 * 60 * 1000 * 365,
     month: (24 * 60 * 60 * 1000 * 365) / 12,
@@ -16,4 +18,8 @@ export default function relative_time (date) {
   for (var u in units)
     if (Math.abs(elapsed) > units[u] || u == 'second')
       return rtf.format(Math.round(elapsed / units[u]), u)
+}
+
+relativeTime.propTypes = {
+  date: PropTypes.string.isRequired
 }
