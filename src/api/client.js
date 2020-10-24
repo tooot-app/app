@@ -1,12 +1,6 @@
-export async function client (
-  instance,
-  endpoint,
-  query,
-  { body, ...customConfig } = {}
-) {
-  if (!instance || !endpoint) {
-    console.error('Missing instance or endpoint.')
-    return Promise.reject('Missing instance or endpoint.')
+export async function client (url, query, { body, ...customConfig } = {}) {
+  if (!url) {
+    return Promise.reject('Missing URL.')
   }
   const headers = { 'Content-Type': 'application/json' }
 
@@ -25,8 +19,8 @@ export async function client (
   let data
   try {
     const response = await fetch(
-      `https://${instance}/api/v1/${endpoint}${
-        query
+      `https://${url}${
+        Object.keys(query).length
           ? `?${Object.keys(query)
               .map(key => `${key}=${query[key]}`)
               .join('&')}`

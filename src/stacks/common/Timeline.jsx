@@ -1,23 +1,25 @@
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { ActivityIndicator, FlatList, View } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect, useSelector, useDispatch } from 'react-redux'
 
 import TootTimeline from 'src/components/TootTimeline'
+import { fetch, getToots, getStatus } from './timelineSlice'
 
-import genericTimelineSlice from './timelineSlice'
-
-export default function Timeline ({ instance, endpoint, local }) {
+export default function Timeline ({ remote, endpoint, local }) {
   const dispatch = useDispatch()
-  const toots = useSelector(genericTimelineSlice(instance).getToots)
-  const status = useSelector(genericTimelineSlice(instance).getStatus)
+  const toots = useSelector(state =>
+    getToots(state)({ remote, endpoint, local })
+  )
+  const status = useSelector(state =>
+    getStatus(state)({ remote, endpoint, local })
+  )
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(genericTimelineSlice(instance).fetch({ endpoint, local }))
+      dispatch(fetch({ remote, endpoint, local }))
     }
   }, [status, dispatch])
-
   let content
 
   if (status === 'error') {
@@ -31,22 +33,13 @@ export default function Timeline ({ instance, endpoint, local }) {
           renderItem={TootTimeline}
           onRefresh={() =>
             dispatch(
-              genericTimelineSlice(instance).fetch({
-                endpoint,
-                local,
-                id: toots[0].id,
-                newer: true
-              })
+              fetch({ remote, endpoint, local, id: toots[0].id, newer: true })
             )
           }
           refreshing={status === 'loading'}
           onEndReached={() =>
             dispatch(
-              genericTimelineSlice(instance).fetch({
-                endpoint,
-                local,
-                id: toots[toots.length - 1].id
-              })
+              fetch({ remote, endpoint, local, id: toots[toots.length - 1].id })
             )
           }
           onEndReachedThreshold={0.5}
@@ -61,6 +54,7 @@ export default function Timeline ({ instance, endpoint, local }) {
 }
 
 Timeline.propTypes = {
-  instance: PropTypes.string.isRequired,
-  public: PropTypes.bool
+  remote: PropTypes.bool,
+  endpoint: PropTypes.string.isRequired,
+  local: PropTypes.bool
 }

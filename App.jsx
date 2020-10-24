@@ -1,6 +1,6 @@
 import React from 'react'
-import Main from './src/Main'
+import Index from './src/Index'
 
-const App = () => <Main />
+const App = () => <Index />
 
 export default App
