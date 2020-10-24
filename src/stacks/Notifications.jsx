@@ -26,7 +26,9 @@ export default function Notifications () {
       }}
     >
       <Stack.Screen name='Notifications'>
-        {props => <Timeline endpoint='notifications' {...props} />}
+        {props => (
+          <Timeline timeline={{ endpoint: 'notifications' }} {...props} />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   )

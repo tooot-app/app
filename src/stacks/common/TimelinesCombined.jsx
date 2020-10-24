@@ -9,7 +9,7 @@ import Timeline from './Timeline'
 
 const Stack = createNativeStackNavigator()
 
-export default function TimelinesCombined ({ page, route }) {
+export default function TimelinesCombined ({ name, content }) {
   const [segment, setSegment] = useState(0)
   const [renderHeader, setRenderHeader] = useState(false)
 
@@ -31,7 +31,7 @@ export default function TimelinesCombined ({ page, route }) {
         headerCenter: () =>
           renderHeader ? (
             <SegmentedControl
-              values={[route[0].title, route[1].title]}
+              values={[content[0].title, content[1].title]}
               selectedIndex={segment}
               onChange={e => {
                 setSegment(e.nativeEvent.selectedSegmentIndex)
@@ -48,7 +48,7 @@ export default function TimelinesCombined ({ page, route }) {
           ) : null
       }}
     >
-      <Stack.Screen name={page}>
+      <Stack.Screen name={name}>
         {props => (
           <Animated.View
             style={{
@@ -59,10 +59,10 @@ export default function TimelinesCombined ({ page, route }) {
             {...props}
           >
             <View style={{ width: Dimensions.get('window').width }}>
-              <Timeline {...route[0].timeline} />
+              <Timeline timeline={content[0].timeline} />
             </View>
             <View style={{ width: Dimensions.get('window').width }}>
-              <Timeline {...route[1].timeline} />
+              <Timeline timeline={content[1].timeline} />
             </View>
           </Animated.View>
         )}
@@ -72,10 +72,11 @@ export default function TimelinesCombined ({ page, route }) {
 }
 
 TimelinesCombined.propTypes = {
-  route: PropTypes.arrayOf(
+  name: PropTypes.string.isRequired,
+  content: PropTypes.arrayOf(
     PropTypes.exact({
       title: PropTypes.string.isRequired,
-      timeline: PropTypes.exact(Timeline.propTypes).isRequired
+      timeline: Timeline.propTypes.timeline
     })
   ).isRequired
 }

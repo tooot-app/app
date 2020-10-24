@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import TootTimeline from 'src/components/TootTimeline'
 import { fetch, getToots, getStatus } from './timelineSlice'
 
-const Default = ({ toots, status, remote, endpoint, local }) => {
+const Default = ({ dispatch, toots, status, timeline }) => {
   return (
     <>
       <FlatList
@@ -14,15 +14,11 @@ const Default = ({ toots, status, remote, endpoint, local }) => {
         keyExtractor={({ id }) => id}
         renderItem={TootTimeline}
         onRefresh={() =>
-          dispatch(
-            fetch({ remote, endpoint, local, id: toots[0].id, newer: true })
-          )
+          dispatch(fetch({ ...timeline, id: toots[0].id, newer: true }))
         }
         refreshing={status === 'loading'}
         onEndReached={() =>
-          dispatch(
-            fetch({ remote, endpoint, local, id: toots[toots.length - 1].id })
-          )
+          dispatch(fetch({ ...timeline, id: toots[toots.length - 1].id }))
         }
         onEndReachedThreshold={0.5}
         style={{ height: '100%', width: '100%' }}
@@ -32,7 +28,7 @@ const Default = ({ toots, status, remote, endpoint, local }) => {
   )
 }
 
-const Notifications = ({ toots, status, endpoint }) => {
+const Notifications = ({ dispatch, toots, status, timeline }) => {
   return (
     <>
       <FlatList
@@ -41,13 +37,15 @@ const Notifications = ({ toots, status, endpoint }) => {
         renderItem={({ item }) => (
           <TootTimeline item={item} notification={true} />
         )}
-        // onRefresh={() =>
-        //   dispatch(fetch({ endpoint, id: toots[0].status.id, newer: true }))
-        // }
-        // refreshing={status === 'loading'}
-        // onEndReached={() =>
-        //   dispatch(fetch({ endpoint, id: toots[toots.length - 1].status.id }))
-        // }
+        onRefresh={() =>
+          dispatch(fetch({ ...timeline, id: toots[0].id, newer: true }))
+        }
+        refreshing={status === 'loading'}
+        onEndReached={() =>
+          dispatch(
+            fetch({ ...timeline, id: toots[toots.length - 1].id })
+          )
+        }
         onEndReachedThreshold={0.5}
         style={{ height: '100%', width: '100%' }}
       />
@@ -56,18 +54,14 @@ const Notifications = ({ toots, status, endpoint }) => {
   )
 }
 
-export default function Timeline ({ remote, endpoint, local }) {
+export default function Timeline ({ timeline }) {
   const dispatch = useDispatch()
-  const toots = useSelector(state =>
-    getToots(state)({ remote, endpoint, local })
-  )
-  const status = useSelector(state =>
-    getStatus(state)({ remote, endpoint, local })
-  )
+  const toots = useSelector(state => getToots(state)(timeline))
+  const status = useSelector(state => getStatus(state)(timeline))
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetch({ remote, endpoint, local }))
+      dispatch(fetch(timeline))
     }
   }, [status, dispatch])
 
@@ -75,18 +69,22 @@ export default function Timeline ({ remote, endpoint, local }) {
   if (status === 'error') {
     content = <Text>Error message</Text>
   } else {
-    if (endpoint === 'notifications') {
+    if (timeline.endpoint === 'notifications') {
       content = (
-        <Notifications toots={toots} status={status} endpoint={endpoint} />
+        <Notifications
+          dispatch={dispatch}
+          toots={toots}
+          status={status}
+          timeline={timeline}
+        />
       )
     } else {
       content = (
         <Default
+          dispatch={dispatch}
           toots={toots}
           status={status}
-          remote={remote}
-          endpoint={endpoint}
-          local={local}
+          timeline={timeline}
         />
       )
     }
@@ -96,7 +94,9 @@ export default function Timeline ({ remote, endpoint, local }) {
 }
 
 Timeline.propTypes = {
-  remote: PropTypes.bool,
-  endpoint: PropTypes.string,
-  local: PropTypes.bool
+  timeline: PropTypes.exact({
+    remote: PropTypes.bool,
+    endpoint: PropTypes.string,
+    local: PropTypes.bool
+  }).isRequired
 }
