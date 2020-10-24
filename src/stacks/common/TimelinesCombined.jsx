@@ -9,7 +9,7 @@ import Timeline from './Timeline'
 
 const Stack = createNativeStackNavigator()
 
-export default function TimelinesCombined ({ route }) {
+export default function TimelinesCombined ({ page, route }) {
   const [segment, setSegment] = useState(0)
   const [renderHeader, setRenderHeader] = useState(false)
 
@@ -48,7 +48,7 @@ export default function TimelinesCombined ({ route }) {
           ) : null
       }}
     >
-      <Stack.Screen name='LocalView'>
+      <Stack.Screen name={page}>
         {props => (
           <Animated.View
             style={{

@@ -7,6 +7,7 @@ import { client } from 'src/api/client'
 // Local:         public/local
 // CurrentPublic: public
 // RemotePublic:  remote
+// Notifications: notifications
 
 const checkInstance = ({ remote, endpoint, local }) =>
   remote ? 'remote' : `${endpoint}${local ? '/local' : ''}`
@@ -16,6 +17,8 @@ export const fetch = createAsyncThunk(
   async ({ remote, endpoint, local, id, newer }, { getState }) => {
     const instance = remote
       ? `${getState().instanceInfo.remote}/api/v1/timelines/public`
+      : endpoint === 'notifications'
+      ? `${getState().instanceInfo.current}/api/v1/${endpoint}`
       : `${getState().instanceInfo.current}/api/v1/timelines/${endpoint}`
 
     const query = {
@@ -56,6 +59,10 @@ export const timelineSlice = createSlice({
       status: 'idle'
     },
     remote: {
+      toots: [],
+      status: 'idle'
+    },
+    notifications: {
       toots: [],
       status: 'idle'
     }

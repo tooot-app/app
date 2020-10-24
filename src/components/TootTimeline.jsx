@@ -5,7 +5,7 @@ import HTML from 'react-native-render-html'
 
 import relativeTime from 'src/utils/relativeTime'
 
-export default function TootTimeline ({ item }) {
+export default function TootTimeline ({ item, notification }) {
   return (
     <View style={styles.tootTimeline}>
       <View style={styles.header}>
@@ -36,7 +36,13 @@ export default function TootTimeline ({ item }) {
           </View>
         </View>
       </View>
-      {item.content ? <HTML html={item.content} /> : <></>}
+      {notification ? (
+        <HTML html={item.status.content} />
+      ) : item.content ? (
+        <HTML html={item.content} />
+      ) : (
+        <></>
+      )}
     </View>
   )
 }
@@ -54,7 +60,8 @@ TootTimeline.propTypes = {
       website: PropTypes.string
     }),
     content: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  notification: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
