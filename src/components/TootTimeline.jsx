@@ -1,51 +1,59 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import HTML from 'react-native-render-html'
+import { StyleSheet, View } from 'react-native'
 
-import relativeTime from 'src/utils/relativeTime'
+import Reblog from './TootTimeline/Reblog'
+import Avatar from './TootTimeline/Avatar'
+import Header from './TootTimeline/Header'
+import Content from './TootTimeline/Content'
+import Actions from './TootTimeline/Actions'
 
 export default function TootTimeline ({ item, notification }) {
   return (
     <View style={styles.tootTimeline}>
-      <View style={styles.header}>
-        <Image
-          source={{
-            uri: item.reblog ? item.reblog.account.avatar : item.account.avatar
-          }}
-          style={styles.avatar}
+      {item.reblog && (
+        <Reblog
+          name={item.account.display_name || item.account.username}
+          emojis={item.account.emojis}
         />
-        <View>
-          <View style={styles.name}>
-            <Text>
-              {item.reblog
-                ? item.reblog.account.display_name
-                : item.account.display_name}
-            </Text>
-            <Text>
-              {item.reblog ? item.reblog.account.acct : item.account.acct}
-            </Text>
-          </View>
-          <View>
-            <Text>{relativeTime(item.created_at)}</Text>
-            {item.application && item.application.name !== 'Web' && (
-              <Text onPress={() => Linking.openURL(item.application.website)}>
-                {item.application.name}
-              </Text>
-            )}
-          </View>
+      )}
+      <View style={styles.toot}>
+        <Avatar uri={item.reblog?.account.avatar || item.account.avatar} />
+        <View style={{flexGrow: 1}}>
+          <Header
+            name={
+              (item.reblog?.account.display_name
+                ? item.reblog?.account.display_name
+                : item.reblog?.account.username) ||
+              (item.account.display_name
+                ? item.account.display_name
+                : item.account.username)
+            }
+            emojis={item.reblog?.account.emojis || item.account.emojis}
+            account={item.reblog?.account.acct || item.account.acct}
+            created_at={item.created_at}
+            application={item.application || null}
+          />
+          <Content
+            content={notification ? item.status.content : item.content}
+          />
         </View>
       </View>
-      {notification ? (
-        <HTML html={item.status.content} />
-      ) : item.content ? (
-        <HTML html={item.content} />
-      ) : (
-        <></>
-      )}
+      <Actions />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  tootTimeline: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 12
+  },
+  toot: {
+    flexDirection: 'row'
+  }
+})
 
 TootTimeline.propTypes = {
   item: PropTypes.shape({
@@ -63,20 +71,3 @@ TootTimeline.propTypes = {
   }).isRequired,
   notification: PropTypes.bool
 }
-
-const styles = StyleSheet.create({
-  tootTimeline: {
-    flex: 1,
-    padding: 15
-  },
-  header: {
-    flexDirection: 'row'
-  },
-  avatar: {
-    width: 40,
-    height: 40
-  },
-  name: {
-    flexDirection: 'row'
-  }
-})

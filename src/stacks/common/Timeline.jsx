@@ -21,7 +21,6 @@ const Default = ({ dispatch, toots, status, timeline }) => {
           dispatch(fetch({ ...timeline, id: toots[toots.length - 1].id }))
         }
         onEndReachedThreshold={0.5}
-        style={{ height: '100%', width: '100%' }}
       />
       {status === 'loading' && <ActivityIndicator />}
     </>
@@ -42,12 +41,9 @@ const Notifications = ({ dispatch, toots, status, timeline }) => {
         }
         refreshing={status === 'loading'}
         onEndReached={() =>
-          dispatch(
-            fetch({ ...timeline, id: toots[toots.length - 1].id })
-          )
+          dispatch(fetch({ ...timeline, id: toots[toots.length - 1].id }))
         }
         onEndReachedThreshold={0.5}
-        style={{ height: '100%', width: '100%' }}
       />
       {status === 'loading' && <ActivityIndicator />}
     </>
