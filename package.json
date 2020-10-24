@@ -28,7 +28,9 @@
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0",
-    "react-redux": "^7.2.1"
+    "react-redux": "^7.2.1",
+    "@react-native-community/segmented-control": "2.1.1",
+    "@expo/vector-icons": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

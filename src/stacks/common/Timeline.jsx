@@ -55,6 +55,6 @@ export default function Timeline ({ remote, endpoint, local }) {
 
 Timeline.propTypes = {
   remote: PropTypes.bool,
-  endpoint: PropTypes.string.isRequired,
+  endpoint: PropTypes.string,
   local: PropTypes.bool
 }

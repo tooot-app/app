@@ -9,7 +9,7 @@ import store from 'src/stacks/common/store'
 import { Provider } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
 
-import Main from 'src/stacks/Main'
+import Local from 'src/stacks/Local'
 import Public from 'src/stacks/Public'
 import Notifications from 'src/stacks/Notifications'
 import Me from 'src/stacks/Me'
@@ -22,7 +22,7 @@ export default function Index () {
       <StatusBar style='auto' />
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name='Main' component={Main} />
+          <Tab.Screen name='Local' component={Local} />
           <Tab.Screen name='Public' component={Public} />
           {/* <Tab.Screen name='Notifications' component={Notifications} /> */}
           <Tab.Screen name='Me' component={Me} />

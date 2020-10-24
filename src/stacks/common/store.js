@@ -8,7 +8,7 @@ const preloadedState = {
   instanceInfo: {
     current: 'social.xmflsct.com',
     currentToken: 'qjzJ0IjvZ1apsn0_wBkGcdjKgX7Dao9KEPhGwggPwAo',
-    remote: 'm.cmx.im'
+    remote: 'mastodon.social'
   }
 }
 
@@ -17,14 +17,7 @@ const reducer = {
   timelines: timelineSlice
 }
 
-// const middleware = getDefaultMiddleware =>
-//   getDefaultMiddleware({
-//     immutableCheck: false,
-//     serializableCheck: false
-//   })
-
 export default configureStore({
   preloadedState,
-  reducer,
-  // middleware
+  reducer
 })

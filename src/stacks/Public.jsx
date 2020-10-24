@@ -1,14 +1,14 @@
 import React from 'react'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 
-import CurrentPublic from 'src/stacks/Public/CurrentPublic'
+import TimelinesCombined from 'src/stacks/common/TimelinesCombined'
 
-const PublicStack = createNativeStackNavigator()
-
-export default function PublicTimeline () {
+export default function Public () {
   return (
-    <PublicStack.Navigator>
-      <PublicStack.Screen name='CurrentPublic' component={CurrentPublic} />
-    </PublicStack.Navigator>
+    <TimelinesCombined
+      route={[
+        { title: '跨站', timeline: { endpoint: 'public' } },
+        { title: '他站', timeline: { remote: true } }
+      ]}
+    />
   )
 }

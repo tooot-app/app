@@ -4,8 +4,8 @@ import { client } from 'src/api/client'
 
 // Naming convention
 // Following:     home
-// Local:         home/local
-// CurrentPublic: public/local
+// Local:         public/local
+// CurrentPublic: public
 // RemotePublic:  remote
 
 const checkInstance = ({ remote, endpoint, local }) =>
@@ -14,8 +14,6 @@ const checkInstance = ({ remote, endpoint, local }) =>
 export const fetch = createAsyncThunk(
   'timeline/fetch',
   async ({ remote, endpoint, local, id, newer }, { getState }) => {
-    if (!endpoint) console.error('Missing endpoint')
-
     const instance = remote
       ? `${getState().instanceInfo.remote}/api/v1/timelines/public`
       : `${getState().instanceInfo.current}/api/v1/timelines/${endpoint}`
@@ -37,6 +35,11 @@ export const fetch = createAsyncThunk(
   }
 )
 
+export const getToots = state => instance =>
+  state.timelines[checkInstance(instance)].toots
+export const getStatus = state => instance =>
+  state.timelines[checkInstance(instance)].status
+
 export const timelineSlice = createSlice({
   name: 'timeline',
   initialState: {
@@ -44,11 +47,11 @@ export const timelineSlice = createSlice({
       toots: [],
       status: 'idle'
     },
-    'home/local': {
+    'public/local': {
       toots: [],
       status: 'idle'
     },
-    'public/local': {
+    public: {
       toots: [],
       status: 'idle'
     },
@@ -73,10 +76,5 @@ export const timelineSlice = createSlice({
     }
   }
 })
-
-export const getToots = state => instance =>
-  state.timelines[checkInstance(instance)].toots
-export const getStatus = state => instance =>
-  state.timelines[checkInstance(instance)].status
 
 export default timelineSlice.reducer
