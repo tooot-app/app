@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar'
 
 import Local from 'src/stacks/Local'
 import Public from 'src/stacks/Public'
+import Post from 'src/stacks/Post'
 import Notifications from 'src/stacks/Notifications'
 import Me from 'src/stacks/Me'
 
@@ -54,6 +55,7 @@ export default function Index () {
         >
           <Tab.Screen name='Local' component={Local} />
           <Tab.Screen name='Public' component={Public} />
+          <Tab.Screen name='Post' component={Post} />
           <Tab.Screen name='Notifications' component={Notifications} />
           <Tab.Screen name='Me' component={Me} />
         </Tab.Navigator>
