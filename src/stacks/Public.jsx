@@ -7,8 +7,8 @@ export default function Public () {
     <TimelinesCombined
       name='Public'
       content={[
-        { title: '跨站', timeline: { endpoint: 'public' } },
-        { title: '他站', timeline: { remote: true } }
+        { title: '跨站', page: 'LocalPublic' },
+        { title: '他站', page: 'RemotePublic' }
       ]}
     />
   )

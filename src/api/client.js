@@ -13,21 +13,19 @@ export async function client (url, query, { body, ...customConfig } = {}) {
     }
   }
 
+  const queryString = query
+    ? `?${Object.keys(query)
+        .map(key => `${key}=${query[key]}`)
+        .join('&')}`
+    : ''
+
   if (body) {
     config.body = JSON.stringify(body)
   }
+
   let data
   try {
-    const response = await fetch(
-      `https://${url}${
-        Object.keys(query).length
-          ? `?${Object.keys(query)
-              .map(key => `${key}=${query[key]}`)
-              .join('&')}`
-          : ''
-      }`,
-      config
-    )
+    const response = await fetch(`https://${url}${queryString}`, config)
     data = await response.json()
     if (response.ok) {
       return data

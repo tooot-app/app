@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Image, StyleSheet } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 
 export default function Avatar ({ uri }) {
   return <Image source={{ uri: uri }} style={styles.avatar} />

@@ -7,8 +7,8 @@ export default function Local () {
     <TimelinesCombined
       name='Local'
       content={[
-        { title: '关注', timeline: { endpoint: 'home' } },
-        { title: '本站', timeline: { endpoint: 'public', local: true } }
+        { title: '关注', page: 'Following' },
+        { title: '本站', page: 'Local' }
       ]}
     />
   )

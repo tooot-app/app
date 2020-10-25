@@ -2,7 +2,6 @@ import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
-enableScreens()
 
 import React from 'react'
 import { Feather } from '@expo/vector-icons'
@@ -16,6 +15,7 @@ import Post from 'src/stacks/Post'
 import Notifications from 'src/stacks/Notifications'
 import Me from 'src/stacks/Me'
 
+enableScreens()
 const Tab = createBottomTabNavigator()
 
 export default function Index () {

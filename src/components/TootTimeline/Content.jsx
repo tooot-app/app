@@ -1,29 +1,100 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { Dimensions, StyleSheet, View } from 'react-native'
-import HTML from 'react-native-render-html'
+import { StyleSheet, Text } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import HTMLView from 'react-native-htmlview'
 
-// !! Need to solve dimension issue
+import Emojis from './Emojis'
 
-export default function Content ({ content }) {
-  const [viewWidth, setViewWidth] = useState()
-  return (
-    content && (
-      <View
-        style={{ width: '100%' }}
-        onLayout={e => setViewWidth(e.nativeEvent.layout.width)}
-      >
-        {viewWidth && (
-          <HTML html={content} containerStyle={{ width: viewWidth }} />
-        )}
-      </View>
-    )
+function renderNode (navigation, node, index, mentions) {
+  if (node.name == 'a') {
+    const classes = node.attribs.class
+    const href = node.attribs.href
+    if (classes) {
+      if (classes.includes('hashtag')) {
+        return (
+          <Text
+            key={index}
+            style={styles.a}
+            onPress={() => {
+              const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
+              navigation.navigate('Hashtag', {
+                hashtag: tag[1] || tag[2]
+              })
+            }}
+          >
+            {node.children[0].data}
+            {node.children[1]?.children[0].data}
+          </Text>
+        )
+      } else if (classes.includes('mention')) {
+        return (
+          <Text
+            key={index}
+            style={styles.a}
+            onPress={() => {
+              const username = href.split(new RegExp(/@(.*)/))
+              const usernameIndex = mentions.findIndex(
+                m => m.username === username[1]
+              )
+              navigation.navigate('Account', {
+                id: mentions[usernameIndex].id
+              })
+            }}
+          >
+            {node.children[0].data}
+            {node.children[1]?.children[0].data}
+          </Text>
+        )
+      }
+    } else {
+      const domain = href.split(new RegExp(/:\/\/(.*?)\//))
+      return (
+        <Text
+          key={index}
+          style={styles.a}
+          onPress={() => {
+            navigation.navigate('Webview', {
+              uri: href,
+              domain: domain[1]
+            })
+          }}
+        >
+          {domain[1]}
+        </Text>
+      )
+    }
+  }
+}
+
+export default function Content ({
+  content,
+  emojis,
+  media_attachments,
+  mentions,
+  tags
+}) {
+  const navigation = useNavigation()
+
+  return content ? (
+    <HTMLView
+      value={content}
+      renderNode={(node, index) =>
+        renderNode(navigation, node, index, mentions)
+      }
+      TextComponent={({ children }) => (
+        <Emojis content={children} emojis={emojis} dimension={14} />
+      )}
+    />
+  ) : (
+    <></>
   )
 }
 
 const styles = StyleSheet.create({
-  width: 50,
-  height: 50
+  a: {
+    color: 'blue'
+  }
 })
 
 Content.propTypes = {

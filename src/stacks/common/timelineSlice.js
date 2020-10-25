@@ -3,85 +3,104 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { client } from 'src/api/client'
 
 // Naming convention
-// Following:     home
-// Local:         public/local
-// CurrentPublic: public
-// RemotePublic:  remote
+// Following:     timelines/home
+// Local:         timelines/public/local
+// LocalPublic:   timelines/public
+// RemotePublic:  remote/timelines/public
 // Notifications: notifications
-
-const checkInstance = ({ remote, endpoint, local }) =>
-  remote ? 'remote' : `${endpoint}${local ? '/local' : ''}`
+// Hashtag:       hastag
+// List:          list
 
 export const fetch = createAsyncThunk(
   'timeline/fetch',
-  async ({ remote, endpoint, local, id, newer }, { getState }) => {
-    const instance = remote
-      ? `${getState().instanceInfo.remote}/api/v1/timelines/public`
-      : endpoint === 'notifications'
-      ? `${getState().instanceInfo.current}/api/v1/${endpoint}`
-      : `${getState().instanceInfo.current}/api/v1/timelines/${endpoint}`
-
-    const query = {
-      ...(local && { local: 'true' }),
-      ...(newer ? { since_id: id } : id && { max_id: id })
-    }
-
+  async ({ page, query, hashtag, list }, { getState }) => {
+    const instanceLocal = getState().instanceInfo.local + '/api/v1/'
+    const instanceRemote = getState().instanceInfo.remote + '/api/v1/'
     const header = {
-      ...(getState().instanceInfo.currentToken && {
-        headers: {
-          Authorization: `Bearer ${getState().instanceInfo.currentToken}`
-        }
-      })
+      headers: {
+        Authorization: `Bearer ${getState().instanceInfo.localToken}`
+      }
     }
 
-    return await client.get(instance, query, header)
+    switch (page) {
+      case 'Following':
+        return await client.get(`${instanceLocal}timelines/home`, query, header)
+      case 'Local':
+        query ? (query.local = true) : (query = { local: 'true' })
+        return await client.get(
+          `${instanceLocal}timelines/public`,
+          query,
+          header
+        )
+      case 'LocalPublic':
+        return await client.get(
+          `${instanceLocal}timelines/public`,
+          query,
+          header
+        )
+      case 'RemotePublic':
+        return await client.get(`${instanceRemote}timelines/public`, query)
+      case 'Notifications':
+        return await client.get(`${instanceLocal}notifications`, query, header)
+      case 'Hashtag':
+        return await client.get(
+          `${instanceLocal}timelines/tag/${hashtag}`,
+          query,
+          header
+        )
+      case 'List':
+        return await client.get(
+          `${instanceLocal}timelines/list/${list}`,
+          query,
+          header
+        )
+      default:
+        console.error('Timeline type error')
+    }
   }
 )
 
-export const getToots = state => instance =>
-  state.timelines[checkInstance(instance)].toots
-export const getStatus = state => instance =>
-  state.timelines[checkInstance(instance)].status
+const timelineInitState = {
+  toots: [],
+  status: 'idle'
+}
+
+export const getState = state => page => state.timelines[page]
 
 export const timelineSlice = createSlice({
   name: 'timeline',
   initialState: {
-    home: {
-      toots: [],
-      status: 'idle'
-    },
-    'public/local': {
-      toots: [],
-      status: 'idle'
-    },
-    public: {
-      toots: [],
-      status: 'idle'
-    },
-    remote: {
-      toots: [],
-      status: 'idle'
-    },
-    notifications: {
-      toots: [],
-      status: 'idle'
+    Following: timelineInitState,
+    Local: timelineInitState,
+    LocalPublic: timelineInitState,
+    RemotePublic: timelineInitState,
+    Notifications: timelineInitState,
+    Hashtag: timelineInitState,
+    List: timelineInitState
+  },
+  reducers: {
+    reset (state, action) {
+      state[action.payload] = timelineInitState
     }
   },
   extraReducers: {
     [fetch.pending]: (state, action) => {
-      state[checkInstance(action.meta.arg)].status = 'loading'
+      state[action.meta.arg.page].status = 'loading'
     },
     [fetch.fulfilled]: (state, action) => {
-      state[checkInstance(action.meta.arg)].status = 'succeeded'
-      action.meta.arg.newer
-        ? state[checkInstance(action.meta.arg)].toots.unshift(...action.payload)
-        : state[checkInstance(action.meta.arg)].toots.push(...action.payload)
+      state[action.meta.arg.page].status = 'succeeded'
+      if (action.meta.arg.query && action.meta.arg.query.since_id) {
+        state[action.meta.arg.page].toots.unshift(...action.payload)
+      } else {
+        state[action.meta.arg.page].toots.push(...action.payload)
+      }
     },
     [fetch.rejected]: (state, action) => {
+      state[action.meta.arg.page].status = 'failed'
       console.error(action.error.message)
-      state[checkInstance(action.meta.arg)].status = 'failed'
     }
   }
 })
 
+export const { reset } = timelineSlice.actions
 export default timelineSlice.reducer

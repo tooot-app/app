@@ -15,7 +15,7 @@ export default function Header ({
   const [since, setSince] = useState(relativeTime(created_at))
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setSince(relativeTime(created_at))
     }, 1000)
   })
@@ -49,8 +49,7 @@ export default function Header ({
 
 const styles = StyleSheet.create({
   names: {
-    flexDirection: 'row',
-    marginBottom: 8
+    flexDirection: 'row'
   },
   name: {
     flexDirection: 'row',
@@ -66,6 +65,8 @@ const styles = StyleSheet.create({
   created_at: {
     fontSize: 12,
     lineHeight: 12,
+    marginTop: 8,
+    marginBottom: 8,
     marginRight: 8
   },
   application: {

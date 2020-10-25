@@ -16,9 +16,9 @@ const instanceInfoSlice = createSlice({
   }
 })
 
-export const getCurrent = state => state.current
-export const getCurrentToken = state => state.currentToken
-export const getRemote = state => state.remote
+// export const getCurrent = state => state.current
+// export const getCurrentToken = state => state.currentToken
+// export const getRemote = state => state.remote
 
 // export const { increment, decrement, incrementByAmount } = counterSlice.actions
 export default instanceInfoSlice.reducer

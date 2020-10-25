@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Animated, Dimensions, View } from 'react-native'
+import { Animated, Dimensions, Text, View } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { Feather } from '@expo/vector-icons'
 
 import Timeline from './Timeline'
+import Account from 'src/stacks/Shared/Account'
+import Hashtag from 'src/stacks/Shared/Hashtag'
+import Webview from 'src/stacks/Shared/Webview'
 
 const Stack = createNativeStackNavigator()
 
@@ -21,34 +24,35 @@ export default function TimelinesCombined ({ name, content }) {
   const moveAnimation = useRef(new Animated.Value(0)).current
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        statusBarAnimation: 'none',
-        headerRight: () =>
-          renderHeader ? (
-            <Feather name='search' size={24} color='black' />
-          ) : null,
-        headerCenter: () =>
-          renderHeader ? (
-            <SegmentedControl
-              values={[content[0].title, content[1].title]}
-              selectedIndex={segment}
-              onChange={e => {
-                setSegment(e.nativeEvent.selectedSegmentIndex)
-                Animated.timing(moveAnimation, {
-                  toValue:
-                    -e.nativeEvent.selectedSegmentIndex *
-                    Dimensions.get('window').width,
-                  duration: 250,
-                  useNativeDriver: false
-                }).start()
-              }}
-              style={{ width: 150, height: 30 }}
-            />
-          ) : null
-      }}
-    >
-      <Stack.Screen name={name}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name={name}
+        options={{
+          statusBarAnimation: 'none',
+          headerRight: () =>
+            renderHeader ? (
+              <Feather name='search' size={24} color='black' />
+            ) : null,
+          headerCenter: () =>
+            renderHeader ? (
+              <SegmentedControl
+                values={[content[0].title, content[1].title]}
+                selectedIndex={segment}
+                onChange={e => {
+                  setSegment(e.nativeEvent.selectedSegmentIndex)
+                  Animated.timing(moveAnimation, {
+                    toValue:
+                      -e.nativeEvent.selectedSegmentIndex *
+                      Dimensions.get('window').width,
+                    duration: 250,
+                    useNativeDriver: false
+                  }).start()
+                }}
+                style={{ width: 150, height: 30 }}
+              />
+            ) : null
+        }}
+      >
         {props => (
           <Animated.View
             style={{
@@ -59,14 +63,35 @@ export default function TimelinesCombined ({ name, content }) {
             {...props}
           >
             <View style={{ width: Dimensions.get('window').width }}>
-              <Timeline timeline={content[0].timeline} />
+              <Timeline page={content[0].page} />
             </View>
             <View style={{ width: Dimensions.get('window').width }}>
-              <Timeline timeline={content[1].timeline} />
+              <Timeline page={content[1].page} />
             </View>
           </Animated.View>
         )}
       </Stack.Screen>
+      <Stack.Screen
+        name='Account'
+        component={Account}
+        options={({ route }) => ({
+          title: `${route.params.id}`
+        })}
+      />
+      <Stack.Screen
+        name='Hashtag'
+        component={Hashtag}
+        options={({ route }) => ({
+          title: `#${decodeURIComponent(route.params.hashtag)}`
+        })}
+      />
+      <Stack.Screen
+        name='Webview'
+        component={Webview}
+        options={({ route }) => ({
+          title: `${route.params.domain}`
+        })}
+      />
     </Stack.Navigator>
   )
 }
@@ -76,7 +101,7 @@ TimelinesCombined.propTypes = {
   content: PropTypes.arrayOf(
     PropTypes.exact({
       title: PropTypes.string.isRequired,
-      timeline: Timeline.propTypes.timeline
+      page: Timeline.propTypes.page
     })
   ).isRequired
 }

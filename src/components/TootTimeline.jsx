@@ -8,7 +8,36 @@ import Header from './TootTimeline/Header'
 import Content from './TootTimeline/Content'
 import Actions from './TootTimeline/Actions'
 
+// Maybe break away notification types? https://docs.joinmastodon.org/entities/notification/
+
 export default function TootTimeline ({ item, notification }) {
+  let contentAggregated = {}
+  if (notification && item.status) {
+    contentAggregated = {
+      content: item.status.content,
+      emojis: item.status.emojis,
+      media_attachments: item.status.media_attachments,
+      mentions: item.status.mentions,
+      tags: item.status.tags
+    }
+  } else if (item.reblog) {
+    contentAggregated = {
+      content: item.reblog.content,
+      emojis: item.reblog.emojis,
+      media_attachments: item.reblog.media_attachments,
+      mentions: item.reblog.mentions,
+      tags: item.reblog.tags
+    }
+  } else {
+    contentAggregated = {
+      content: item.content,
+      emojis: item.emojis,
+      media_attachments: item.media_attachments,
+      mentions: item.mentions,
+      tags: item.tags
+    }
+  }
+
   return (
     <View style={styles.tootTimeline}>
       {item.reblog && (
@@ -19,7 +48,7 @@ export default function TootTimeline ({ item, notification }) {
       )}
       <View style={styles.toot}>
         <Avatar uri={item.reblog?.account.avatar || item.account.avatar} />
-        <View style={{flexGrow: 1}}>
+        <View style={styles.details}>
           <Header
             name={
               (item.reblog?.account.display_name
@@ -34,9 +63,7 @@ export default function TootTimeline ({ item, notification }) {
             created_at={item.created_at}
             application={item.application || null}
           />
-          <Content
-            content={notification ? item.status.content : item.content}
-          />
+          <Content {...contentAggregated} />
         </View>
       </View>
       <Actions />
@@ -51,7 +78,11 @@ const styles = StyleSheet.create({
     padding: 12
   },
   toot: {
+    flex: 1,
     flexDirection: 'row'
+  },
+  details: {
+    flex: 1
   }
 })
 

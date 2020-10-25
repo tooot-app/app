@@ -1,98 +1,65 @@
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
 import { ActivityIndicator, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import TootTimeline from 'src/components/TootTimeline'
-import { fetch, getToots, getStatus } from './timelineSlice'
+import { fetch, getState } from './timelineSlice'
 
-const Default = ({ dispatch, toots, status, timeline }) => {
-  return (
-    <>
-      <FlatList
-        data={toots}
-        keyExtractor={({ id }) => id}
-        renderItem={TootTimeline}
-        onRefresh={() =>
-          dispatch(fetch({ ...timeline, id: toots[0].id, newer: true }))
-        }
-        refreshing={status === 'loading'}
-        onEndReached={() =>
-          dispatch(fetch({ ...timeline, id: toots[toots.length - 1].id }))
-        }
-        onEndReachedThreshold={0.5}
-      />
-      {status === 'loading' && <ActivityIndicator />}
-    </>
-  )
-}
+// Opening nesting hashtag pages
 
-const Notifications = ({ dispatch, toots, status, timeline }) => {
-  return (
-    <>
-      <FlatList
-        data={toots}
-        keyExtractor={({ status: { id } }) => id}
-        renderItem={({ item }) => (
-          <TootTimeline item={item} notification={true} />
-        )}
-        onRefresh={() =>
-          dispatch(fetch({ ...timeline, id: toots[0].id, newer: true }))
-        }
-        refreshing={status === 'loading'}
-        onEndReached={() =>
-          dispatch(fetch({ ...timeline, id: toots[toots.length - 1].id }))
-        }
-        onEndReachedThreshold={0.5}
-      />
-      {status === 'loading' && <ActivityIndicator />}
-    </>
-  )
-}
-
-export default function Timeline ({ timeline }) {
+export default function Timeline ({ page, hashtag, list }) {
   const dispatch = useDispatch()
-  const toots = useSelector(state => getToots(state)(timeline))
-  const status = useSelector(state => getStatus(state)(timeline))
+  const state = useSelector(state => getState(state)(page))
+  const [timelineReady, setTimelineReady] = useState(false)
 
   useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetch(timeline))
+    if (state.status === 'idle') {
+      dispatch(fetch({ page, hashtag, list }))
+      setTimelineReady(true)
     }
-  }, [status, dispatch])
+  }, [state, dispatch])
 
   let content
-  if (status === 'error') {
+  if (state.status === 'error') {
     content = <Text>Error message</Text>
   } else {
-    if (timeline.endpoint === 'notifications') {
-      content = (
-        <Notifications
-          dispatch={dispatch}
-          toots={toots}
-          status={status}
-          timeline={timeline}
+    content = (
+      <>
+        <FlatList
+          data={state.toots}
+          keyExtractor={({ id }) => id}
+          renderItem={TootTimeline}
+          onRefresh={() =>
+            dispatch(fetch({ page, query: { since_id: state.toots[0].id } }))
+          }
+          refreshing={state.status === 'loading'}
+          onEndReached={() => {
+            if (!timelineReady) {
+              dispatch(
+                fetch({
+                  page,
+                  query: {
+                    max_id: state.toots[state.toots.length - 1].id
+                  }
+                })
+              )
+              setTimelineReady(true)
+            }
+          }}
+          onEndReachedThreshold={0.5}
+          onMomentumScrollBegin={() => setTimelineReady(false)}
         />
-      )
-    } else {
-      content = (
-        <Default
-          dispatch={dispatch}
-          toots={toots}
-          status={status}
-          timeline={timeline}
-        />
-      )
-    }
+        {state.status === 'loading' && <ActivityIndicator />}
+      </>
+    )
   }
 
   return <View>{content}</View>
 }
 
 Timeline.propTypes = {
-  timeline: PropTypes.exact({
-    remote: PropTypes.bool,
-    endpoint: PropTypes.string,
-    local: PropTypes.bool
-  }).isRequired
+  page: PropTypes.string.isRequired,
+  hashtag: PropTypes.string,
+  list: PropTypes.string
 }
