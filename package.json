@@ -25,6 +25,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-htmlview": "^0.16.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",

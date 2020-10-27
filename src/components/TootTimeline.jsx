@@ -1,5 +1,5 @@
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import Reblog from './TootTimeline/Reblog'
@@ -11,31 +11,25 @@ import Actions from './TootTimeline/Actions'
 // Maybe break away notification types? https://docs.joinmastodon.org/entities/notification/
 
 export default function TootTimeline ({ item, notification }) {
+  const [viewWidth, setViewWidth] = useState()
+
   let contentAggregated = {}
+  let actualContent
   if (notification && item.status) {
-    contentAggregated = {
-      content: item.status.content,
-      emojis: item.status.emojis,
-      media_attachments: item.status.media_attachments,
-      mentions: item.status.mentions,
-      tags: item.status.tags
-    }
+    actualContent = item.status
   } else if (item.reblog) {
-    contentAggregated = {
-      content: item.reblog.content,
-      emojis: item.reblog.emojis,
-      media_attachments: item.reblog.media_attachments,
-      mentions: item.reblog.mentions,
-      tags: item.reblog.tags
-    }
+    actualContent = item.reblog
   } else {
-    contentAggregated = {
-      content: item.content,
-      emojis: item.emojis,
-      media_attachments: item.media_attachments,
-      mentions: item.mentions,
-      tags: item.tags
-    }
+    actualContent = item
+  }
+  contentAggregated = {
+    content: actualContent.content,
+    emojis: actualContent.emojis,
+    media_attachments: actualContent.media_attachments,
+    mentions: actualContent.mentions,
+    sensitive: actualContent.sensitive,
+    spoiler_text: actualContent.spoiler_text,
+    tags: actualContent.tags
   }
 
   return (
@@ -48,7 +42,10 @@ export default function TootTimeline ({ item, notification }) {
       )}
       <View style={styles.toot}>
         <Avatar uri={item.reblog?.account.avatar || item.account.avatar} />
-        <View style={styles.details}>
+        <View
+          style={styles.details}
+          onLayout={e => setViewWidth(e.nativeEvent.layout.width)}
+        >
           <Header
             name={
               (item.reblog?.account.display_name
@@ -63,7 +60,7 @@ export default function TootTimeline ({ item, notification }) {
             created_at={item.created_at}
             application={item.application || null}
           />
-          <Content {...contentAggregated} />
+          <Content {...contentAggregated} width={viewWidth} />
         </View>
       </View>
       <Actions />
@@ -82,7 +79,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   details: {
-    flex: 1
+    flex: 1,
+    flexGrow: 1
   }
 })
 

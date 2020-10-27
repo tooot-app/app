@@ -29,7 +29,9 @@ export default function Timeline ({ page, hashtag, list }) {
         <FlatList
           data={state.toots}
           keyExtractor={({ id }) => id}
-          renderItem={TootTimeline}
+          renderItem={({ item, index, separators }) => (
+            <TootTimeline key={item.key} item={item} />
+          )}
           onRefresh={() =>
             dispatch(fetch({ page, query: { since_id: state.toots[0].id } }))
           }
