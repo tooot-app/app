@@ -16,18 +16,13 @@ const accountInitState = {
   status: 'idle'
 }
 
-export const getState = state => state.account
+export const retrive = state => state.account
 
 export const accountSlice = createSlice({
   name: 'account',
-  initialState: {
-    account: {},
-    status: 'idle'
-  },
+  initialState: accountInitState,
   reducers: {
-    reset: state => {
-      state.account = accountInitState
-    }
+    reset: () => accountInitState
   },
   extraReducers: {
     [fetch.pending]: state => {

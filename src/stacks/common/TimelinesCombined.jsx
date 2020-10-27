@@ -74,9 +74,11 @@ export default function TimelinesCombined ({ name, content }) {
       <Stack.Screen
         name='Account'
         component={Account}
-        options={({ route }) => ({
-          title: `${route.params.id}`
-        })}
+        options={{
+          headerTranslucent: true,
+          headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
+          headerCenter: () => {}
+        }}
       />
       <Stack.Screen
         name='Hashtag'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 
 import Reblog from './TootTimeline/Reblog'
 import Avatar from './TootTimeline/Avatar'
@@ -11,8 +11,6 @@ import Actions from './TootTimeline/Actions'
 // Maybe break away notification types? https://docs.joinmastodon.org/entities/notification/
 
 export default function TootTimeline ({ item, notification }) {
-  const [viewWidth, setViewWidth] = useState()
-
   let contentAggregated = {}
   let actualContent
   if (notification && item.status) {
@@ -41,11 +39,11 @@ export default function TootTimeline ({ item, notification }) {
         />
       )}
       <View style={styles.toot}>
-        <Avatar uri={item.reblog?.account.avatar || item.account.avatar} />
-        <View
-          style={styles.details}
-          onLayout={e => setViewWidth(e.nativeEvent.layout.width)}
-        >
+        <Avatar
+          uri={item.reblog?.account.avatar || item.account.avatar}
+          id={item.reblog?.account.id || item.account.id}
+        />
+        <View style={styles.details}>
           <Header
             name={
               (item.reblog?.account.display_name
@@ -60,7 +58,11 @@ export default function TootTimeline ({ item, notification }) {
             created_at={item.created_at}
             application={item.application || null}
           />
-          <Content {...contentAggregated} width={viewWidth} />
+          <Content
+            {...contentAggregated}
+            style={{ flex: 1 }}
+            width={Dimensions.get('window').width - 24 - 50 - 8}
+          />
         </View>
       </View>
       <Actions />

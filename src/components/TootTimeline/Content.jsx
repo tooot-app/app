@@ -6,75 +6,13 @@ import {
   Modal,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  Pressable,
   View
 } from 'react-native'
-import HTMLView from 'react-native-htmlview'
+import Collapsible from 'react-native-collapsible'
 import ImageViewer from 'react-native-image-zoom-viewer'
-import { useNavigation } from '@react-navigation/native'
 
-import Emojis from './Emojis'
-
-function renderNode (navigation, node, index, mentions) {
-  if (node.name == 'a') {
-    const classes = node.attribs.class
-    const href = node.attribs.href
-    if (classes) {
-      if (classes.includes('hashtag')) {
-        return (
-          <Text
-            key={index}
-            style={styles.a}
-            onPress={() => {
-              const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-              navigation.navigate('Hashtag', {
-                hashtag: tag[1] || tag[2]
-              })
-            }}
-          >
-            {node.children[0].data}
-            {node.children[1]?.children[0].data}
-          </Text>
-        )
-      } else if (classes.includes('mention')) {
-        return (
-          <Text
-            key={index}
-            style={styles.a}
-            onPress={() => {
-              const username = href.split(new RegExp(/@(.*)/))
-              const usernameIndex = mentions.findIndex(
-                m => m.username === username[1]
-              )
-              navigation.navigate('Account', {
-                id: mentions[usernameIndex].id
-              })
-            }}
-          >
-            {node.children[0].data}
-            {node.children[1]?.children[0].data}
-          </Text>
-        )
-      }
-    } else {
-      const domain = href.split(new RegExp(/:\/\/(.*?)\//))
-      return (
-        <Text
-          key={index}
-          style={styles.a}
-          onPress={() => {
-            navigation.navigate('Webview', {
-              uri: href,
-              domain: domain[1]
-            })
-          }}
-        >
-          {domain[1]}
-        </Text>
-      )
-    }
-  }
-}
+import ParseContent from 'src/components/ParseContent'
 
 function Media ({ media_attachments, sensitive, width }) {
   const [mediaSensitive, setMediaSensitive] = useState(sensitive)
@@ -90,16 +28,6 @@ function Media ({ media_attachments, sensitive, width }) {
 
   let images = []
   if (width) {
-    const calWidth = i => {
-      if (media_attachments.length === 1) {
-        return { flexGrow: 1, aspectRatio: 16 / 9 }
-      } else if (media_attachments.length === 3 && i === 2) {
-        return { flexGrow: 1, aspectRatio: 16 / 9 }
-      } else {
-        return { flexBasis: width / 2 - 4, aspectRatio: 16 / 9 }
-      }
-    }
-
     media_attachments = media_attachments.map((m, i) => {
       switch (m.type) {
         case 'unknown':
@@ -111,9 +39,9 @@ function Media ({ media_attachments, sensitive, width }) {
             height: m.meta.original.height
           })
           return (
-            <TouchableHighlight
+            <Pressable
               key={i}
-              style={calWidth(i)}
+              style={{ flexGrow: 1, height: width / 5, margin: 4 }}
               onPress={() => {
                 setImageModalIndex(i)
                 setImageModalVisible(true)
@@ -122,9 +50,9 @@ function Media ({ media_attachments, sensitive, width }) {
               <Image
                 source={{ uri: m.preview_url }}
                 style={styles.image}
-                blurRadius={mediaSensitive ? 50 : 0}
+                blurRadius={mediaSensitive ? width / 5 : 0}
               />
-            </TouchableHighlight>
+            </Pressable>
           )
       }
     })
@@ -181,54 +109,79 @@ export default function Content ({
   mentions,
   sensitive,
   spoiler_text,
-  tags,
   width
 }) {
-  const navigation = useNavigation()
+  const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
 
-  let fullContent = []
-  if (content) {
-    fullContent.push(
-      <HTMLView
-        key='content'
-        value={content}
-        renderNode={(node, index) =>
-          renderNode(navigation, node, index, mentions)
-        }
-        TextComponent={({ children }) => (
-          <Emojis content={children} emojis={emojis} dimension={14} />
-        )}
-      />
-    )
-  }
-  if (media_attachments) {
-    fullContent.push(
-      <Media
-        key='media'
-        media_attachments={media_attachments}
-        sensitive={sensitive}
-        width={width}
-      />
-    )
-  }
-
-  return fullContent
+  return (
+    <>
+      {content &&
+        (spoiler_text ? (
+          <>
+            <Text>
+              {spoiler_text}{' '}
+              <Text onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}>
+                点击展开
+              </Text>
+            </Text>
+            <Collapsible collapsed={spoilerCollapsed}>
+              <ParseContent
+                content={content}
+                emojis={emojis}
+                emojiSize={14}
+                mentions={mentions}
+              />
+            </Collapsible>
+          </>
+        ) : (
+          <ParseContent
+            content={content}
+            emojis={emojis}
+            emojiSize={14}
+            mentions={mentions}
+          />
+        ))}
+      {media_attachments.length > 0 && (
+        <View
+          style={{
+            width: width + 8,
+            height: width / 2,
+            marginTop: 4,
+            marginLeft: -4
+          }}
+        >
+          <Media
+            media_attachments={media_attachments}
+            sensitive={sensitive}
+            width={width}
+          />
+        </View>
+      )}
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
   media: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    alignContent: 'stretch'
   },
   image: {
     width: '100%',
     height: '100%'
-  },
-  a: {
-    color: 'blue'
   }
 })
 
 Content.propTypes = {
-  content: PropTypes.string
+  content: ParseContent.propTypes.content,
+  emojis: ParseContent.propTypes.emojis,
+  // media_attachments
+  mentions: ParseContent.propTypes.mentions,
+  sensitive: PropTypes.bool.isRequired,
+  spoiler_text: PropTypes.string,
+  width: PropTypes.number.isRequired
 }

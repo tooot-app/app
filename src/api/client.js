@@ -14,9 +14,7 @@ export async function client (url, query, { body, ...customConfig } = {}) {
   }
 
   const queryString = query
-    ? `?${Object.keys(query)
-        .map(key => `${key}=${query[key]}`)
-        .join('&')}`
+    ? `?${query.map(({ key, value }) => `${key}=${value}`).join('&')}`
     : ''
 
   if (body) {

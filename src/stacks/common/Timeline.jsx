@@ -33,7 +33,12 @@ export default function Timeline ({ page, hashtag, list }) {
             <TootTimeline key={item.key} item={item} />
           )}
           onRefresh={() =>
-            dispatch(fetch({ page, query: { since_id: state.toots[0].id } }))
+            dispatch(
+              fetch({
+                page,
+                query: [{ key: 'since_id', value: state.toots[0].id }]
+              })
+            )
           }
           refreshing={state.status === 'loading'}
           onEndReached={() => {
@@ -41,9 +46,12 @@ export default function Timeline ({ page, hashtag, list }) {
               dispatch(
                 fetch({
                   page,
-                  query: {
-                    max_id: state.toots[state.toots.length - 1].id
-                  }
+                  query: [
+                    {
+                      key: 'max_id',
+                      value: state.toots[state.toots.length - 1].id
+                    }
+                  ]
                 })
               )
               setTimelineReady(true)

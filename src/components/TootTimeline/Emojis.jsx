@@ -2,17 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Text } from 'react-native'
 
-const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/g)
-const regexEmojiSelect = new RegExp(/:([a-z0-9_]+):/)
+const regexEmoji = new RegExp(/(:.*?:)/g)
 
 export default function Emojis ({ content, emojis, dimension }) {
   const hasEmojis = content.match(regexEmoji)
   return hasEmojis ? (
     content.split(regexEmoji).map((str, i) => {
       if (str.match(regexEmoji)) {
-        const emojiShortcode = str.split(regexEmojiSelect)[1]
+        const emojiShortcode = str.split(regexEmoji)[1]
         const emojiIndex = emojis.findIndex(emoji => {
-          return emoji.shortcode === emojiShortcode
+          return emojiShortcode === `:${emoji.shortcode}:`
         })
         return (
           <Image

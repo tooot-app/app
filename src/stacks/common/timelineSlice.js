@@ -13,7 +13,7 @@ import { client } from 'src/api/client'
 
 export const fetch = createAsyncThunk(
   'timeline/fetch',
-  async ({ page, query, hashtag, list }, { getState }) => {
+  async ({ page, query = [], hashtag, list }, { getState }) => {
     const instanceLocal = getState().instanceInfo.local + '/api/v1/'
     const instanceRemote = getState().instanceInfo.remote + '/api/v1/'
     const header = {
@@ -26,7 +26,7 @@ export const fetch = createAsyncThunk(
       case 'Following':
         return await client.get(`${instanceLocal}timelines/home`, query, header)
       case 'Local':
-        query ? (query.local = true) : (query = { local: 'true' })
+        query.push({ key: 'local', value: 'true' })
         return await client.get(
           `${instanceLocal}timelines/public`,
           query,

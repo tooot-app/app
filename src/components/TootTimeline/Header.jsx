@@ -14,11 +14,12 @@ export default function Header ({
 }) {
   const [since, setSince] = useState(relativeTime(created_at))
 
+  // causing full re-render
   useEffect(() => {
     setTimeout(() => {
       setSince(relativeTime(created_at))
     }, 1000)
-  })
+  }, [since])
 
   return (
     <View>
