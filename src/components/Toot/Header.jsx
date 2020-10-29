@@ -27,7 +27,9 @@ export default function Header ({
         <View style={styles.name}>
           <Emojis content={name} emojis={emojis} dimension={14} />
         </View>
-        <Text style={styles.account}>@{account}</Text>
+        <Text style={styles.account} numberOfLines={1}>
+          @{account}
+        </Text>
       </View>
       <View style={styles.meta}>
         <View>

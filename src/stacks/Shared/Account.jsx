@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Dimensions,
+  FlatList,
   Image,
   ScrollView,
   StyleSheet,
   Text,
   View
 } from 'react-native'
-import HTMLView from 'react-native-htmlview'
+import SegmentedControl from '@react-native-community/segmented-control'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 
 import * as accountSlice from 'src/stacks/common/accountSlice'
 import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
+import * as timelineSlice from 'src/stacks/common/timelineSlice'
 
 import ParseContent from 'src/components/ParseContent'
+import Timeline from 'src/stacks/common/Timeline'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
@@ -65,10 +68,7 @@ function Information ({ account, emojis }) {
             </Text>
           </View>
         ))}
-
-      <Text>
-        <ParseContent content={account.note} emojis={emojis} />
-      </Text>
+      {account.note && <ParseContent content={account.note} emojis={emojis} />}
       <Text>
         加入时间{' '}
         {new Date(account.created_at).toLocaleDateString('zh-CN', {
@@ -85,13 +85,89 @@ function Information ({ account, emojis }) {
   )
 }
 
+function Toots ({ account }) {
+  const [segment, setSegment] = useState(0)
+  const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
+    false
+  )
+  const horizontalPaging = useRef()
+
+  const pages = ['Account_Default', 'Account_All', 'Account_Media']
+
+  return (
+    <>
+      <SegmentedControl
+        values={['嘟嘟', '嘟嘟和回复', '媒体']}
+        selectedIndex={segment}
+        onChange={({ nativeEvent }) => {
+          setSegmentManuallyTriggered(true)
+          setSegment(nativeEvent.selectedSegmentIndex)
+          horizontalPaging.current.scrollToIndex({
+            index: nativeEvent.selectedSegmentIndex
+          })
+        }}
+        style={{ width: '100%', height: 30 }}
+      />
+      <FlatList
+        style={{ width: Dimensions.get('window').width, height: '100%' }}
+        data={pages}
+        keyExtractor={page => page}
+        renderItem={({ item, index }) => {
+          return (
+            <View style={{ width: Dimensions.get('window').width }}>
+              <Timeline
+                key={index}
+                page={item}
+                account={account}
+                disableRefresh
+              />
+            </View>
+          )
+        }}
+        ref={horizontalPaging}
+        bounces={false}
+        getItemLayout={(data, index) => ({
+          length: Dimensions.get('window').width,
+          offset: Dimensions.get('window').width * index,
+          index
+        })}
+        horizontal
+        ListHeaderComponent={
+          <View
+            style={{
+              width: Dimensions.get('window').width,
+              height: 100,
+              position: 'absolute'
+            }}
+          >
+            <Text>Test</Text>
+          </View>
+        }
+        onMomentumScrollEnd={() => {
+          setSegmentManuallyTriggered(false)
+        }}
+        onScroll={({ nativeEvent }) =>
+          !segmentManuallyTriggered &&
+          setSegment(
+            nativeEvent.contentOffset.x <= Dimensions.get('window').width / 3
+              ? 0
+              : 1
+          )
+        }
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+      />
+    </>
+  )
+}
+
 export default function Account ({
   route: {
     params: { id }
   }
 }) {
   const dispatch = useDispatch()
-  const accountState = useSelector(accountSlice.retrive)
+  const accountState = useSelector(state => state.account)
   // const stateRelationships = useSelector(relationshipsState)
   const [loaded, setLoaded] = useState(false)
   const [headerImageSize, setHeaderImageSize] = useState()
@@ -100,7 +176,6 @@ export default function Account ({
     if (accountState.status === 'idle') {
       dispatch(accountSlice.fetch({ id }))
     }
-
     if (accountState.account.header) {
       Image.getSize(accountState.account.header, (width, height) => {
         setHeaderImageSize({ width, height })
@@ -117,12 +192,15 @@ export default function Account ({
 
       return () => {
         dispatch(accountSlice.reset())
+        dispatch(timelineSlice.reset('Account_Default'))
+        dispatch(timelineSlice.reset('Account_All'))
+        dispatch(timelineSlice.reset('Account_Media'))
       }
     }, [])
   )
   // add emoji support
   return loaded ? (
-    <ScrollView>
+    <View>
       <Header
         uri={accountState.account.header}
         size={
@@ -134,9 +212,10 @@ export default function Account ({
       />
       <Information
         account={accountState.account}
-        emojis={accountState.emojis}
+        emojis={accountState.account.emojis}
       />
-    </ScrollView>
+      {accountState.account.id && <Toots account={accountState.account.id} />}
+    </View>
   ) : (
     <></>
   )

@@ -16,8 +16,6 @@ const accountInitState = {
   status: 'idle'
 }
 
-export const retrive = state => state.account
-
 export const accountSlice = createSlice({
   name: 'account',
   initialState: accountInitState,

@@ -30,8 +30,6 @@ const relationshipsInitState = {
   status: 'idle'
 }
 
-export const retrive = state => state.relationships
-
 export const relationshipSlice = createSlice({
   name: 'relationships',
   initialState: {

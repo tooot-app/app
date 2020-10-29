@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Text } from 'react-native'
 
-const regexEmoji = new RegExp(/(:.*?:)/g)
+const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
 
 export default function Emojis ({ content, emojis, dimension }) {
   const hasEmojis = content.match(regexEmoji)
@@ -13,7 +13,11 @@ export default function Emojis ({ content, emojis, dimension }) {
         const emojiIndex = emojis.findIndex(emoji => {
           return emojiShortcode === `:${emoji.shortcode}:`
         })
-        return (
+        return emojiIndex === -1 ? (
+          <Text key={i} style={{ color: 'red' }}>
+            Something wrong with emoji!
+          </Text>
+        ) : (
           <Image
             key={i}
             source={{ uri: emojis[emojiIndex].url }}

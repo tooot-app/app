@@ -1,63 +1,73 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { ActivityIndicator, FlatList, View } from 'react-native'
+import { ActivityIndicator, FlatList, Text, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-import TootTimeline from 'src/components/TootTimeline'
-import { fetch, getState } from './timelineSlice'
+import Toot from 'src/components/Toot'
+import { fetch } from './timelineSlice'
 
 // Opening nesting hashtag pages
 
-export default function Timeline ({ page, hashtag, list }) {
+export default function Timeline ({
+  page,
+  hashtag,
+  list,
+  toot,
+  account,
+  disableRefresh
+}) {
   const dispatch = useDispatch()
-  const state = useSelector(state => getState(state)(page))
+  const state = useSelector(state => state.timelines[page])
   const [timelineReady, setTimelineReady] = useState(false)
 
   useEffect(() => {
     if (state.status === 'idle') {
-      dispatch(fetch({ page, hashtag, list }))
+      dispatch(fetch({ page, hashtag, list, toot, account }))
       setTimelineReady(true)
     }
   }, [state, dispatch])
 
   let content
-  if (state.status === 'error') {
+  if (state.status === 'failed') {
     content = <Text>Error message</Text>
   } else {
     content = (
       <>
         <FlatList
+          style={{ minHeight: '100%' }}
           data={state.toots}
           keyExtractor={({ id }) => id}
           renderItem={({ item, index, separators }) => (
-            <TootTimeline key={item.key} item={item} />
+            <Toot key={item.key} item={item} />
           )}
-          onRefresh={() =>
-            dispatch(
-              fetch({
-                page,
-                query: [{ key: 'since_id', value: state.toots[0].id }]
-              })
-            )
-          }
-          refreshing={state.status === 'loading'}
-          onEndReached={() => {
-            if (!timelineReady) {
+          {...(state.pointer && { initialScrollIndex: state.pointer })}
+          {...(!disableRefresh && {
+            onRefresh: () =>
               dispatch(
                 fetch({
                   page,
-                  query: [
-                    {
-                      key: 'max_id',
-                      value: state.toots[state.toots.length - 1].id
-                    }
-                  ]
+                  query: [{ key: 'since_id', value: state.toots[0].id }]
                 })
-              )
-              setTimelineReady(true)
-            }
-          }}
-          onEndReachedThreshold={0.5}
+              ),
+            refreshing: state.status === 'loading',
+            onEndReached: () => {
+              if (!timelineReady) {
+                dispatch(
+                  fetch({
+                    page,
+                    query: [
+                      {
+                        key: 'max_id',
+                        value: state.toots[state.toots.length - 1].id
+                      }
+                    ]
+                  })
+                )
+                setTimelineReady(true)
+              }
+            },
+            onEndReachedThreshold: 0.5
+          })}
           onMomentumScrollBegin={() => setTimelineReady(false)}
         />
         {state.status === 'loading' && <ActivityIndicator />}
@@ -71,5 +81,7 @@ export default function Timeline ({ page, hashtag, list }) {
 Timeline.propTypes = {
   page: PropTypes.string.isRequired,
   hashtag: PropTypes.string,
-  list: PropTypes.string
+  list: PropTypes.string,
+  toot: PropTypes.string,
+  disableRefresh: PropTypes.bool
 }

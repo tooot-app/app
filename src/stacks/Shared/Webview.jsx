@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { WebView } from 'react-native-webview'
 
-// Webview preview card
+// Update page title
 
 export default function Webview ({
   route: {

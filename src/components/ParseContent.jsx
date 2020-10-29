@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
-import Emojis from 'src/components/TootTimeline/Emojis'
+import Emojis from 'src/components/Toot/Emojis'
 
 function renderNode ({ node, index, navigation, mentions, showFullLink }) {
   if (node.name == 'a') {
@@ -72,7 +72,8 @@ export default function ParseContent ({
   emojis,
   emojiSize = 14,
   mentions,
-  showFullLink = false
+  showFullLink = false,
+  linesTruncated = 10
 }) {
   const navigation = useNavigation()
 
@@ -80,13 +81,16 @@ export default function ParseContent ({
     <HTMLView
       value={content}
       stylesheet={HTMLstyles}
-      addLineBreaks={null}
+      paragraphBreak={null}
       renderNode={(node, index) =>
         renderNode({ node, index, navigation, mentions, showFullLink })
       }
       TextComponent={({ children }) => (
         <Emojis content={children} emojis={emojis} dimension={emojiSize} />
       )}
+      RootComponent={({ children }) => {
+        return <Text numberOfLines={linesTruncated}>{children}</Text>
+      }}
     />
   )
 }
@@ -115,5 +119,6 @@ ParseContent.propTypes = {
       acct: PropTypes.string.isRequired
     })
   ),
-  showFullLink: PropTypes.bool
+  showFullLink: PropTypes.bool,
+  linesTruncated: PropTypes.number
 }

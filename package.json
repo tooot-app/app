@@ -28,11 +28,16 @@
     "react-native-htmlview": "^0.16.0",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-reanimated": "~1.13.0",
+    "react-native-render-html": "^4.2.4",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0",
-    "react-redux": "^7.2.1"
+    "react-redux": "^7.2.1",
+    "expo-av": "~8.6.0",
+    "expo-secure-store": "~9.2.0",
+    "expo-splash-screen": "~0.6.1",
+    "@react-native-community/viewpager": "4.1.6"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

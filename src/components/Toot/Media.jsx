@@ -9,12 +9,9 @@ import {
   Pressable,
   View
 } from 'react-native'
-import Collapsible from 'react-native-collapsible'
 import ImageViewer from 'react-native-image-zoom-viewer'
 
-import ParseContent from 'src/components/ParseContent'
-
-function Media ({ media_attachments, sensitive, width }) {
+export default function Media ({ media_attachments, sensitive, width }) {
   const [mediaSensitive, setMediaSensitive] = useState(sensitive)
   const [imageModalVisible, setImageModalVisible] = useState(false)
   const [imageModalIndex, setImageModalIndex] = useState(0)
@@ -26,6 +23,7 @@ function Media ({ media_attachments, sensitive, width }) {
     }
   }, [mediaSensitive])
 
+  let media
   let images = []
   if (width) {
     media_attachments = media_attachments.map((m, i) => {
@@ -41,7 +39,7 @@ function Media ({ media_attachments, sensitive, width }) {
           return (
             <Pressable
               key={i}
-              style={{ flexGrow: 1, height: width / 5, margin: 4 }}
+              style={{ flexGrow: 1, height: width / 2, margin: 4 }}
               onPress={() => {
                 setImageModalIndex(i)
                 setImageModalVisible(true)
@@ -57,7 +55,7 @@ function Media ({ media_attachments, sensitive, width }) {
       }
     })
     if (images) {
-      return (
+      media = (
         <>
           <View style={styles.media}>
             {media_attachments}
@@ -95,69 +93,25 @@ function Media ({ media_attachments, sensitive, width }) {
         </>
       )
     } else {
-      return <View style={styles.media}>{media_attachments}</View>
+      media = <View style={styles.media}>{media_attachments}</View>
     }
   } else {
-    return <></>
+    media = <></>
   }
-}
-
-export default function Content ({
-  content,
-  emojis,
-  media_attachments,
-  mentions,
-  sensitive,
-  spoiler_text,
-  width
-}) {
-  const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
 
   return (
-    <>
-      {content &&
-        (spoiler_text ? (
-          <>
-            <Text>
-              {spoiler_text}{' '}
-              <Text onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}>
-                点击展开
-              </Text>
-            </Text>
-            <Collapsible collapsed={spoilerCollapsed}>
-              <ParseContent
-                content={content}
-                emojis={emojis}
-                emojiSize={14}
-                mentions={mentions}
-              />
-            </Collapsible>
-          </>
-        ) : (
-          <ParseContent
-            content={content}
-            emojis={emojis}
-            emojiSize={14}
-            mentions={mentions}
-          />
-        ))}
-      {media_attachments.length > 0 && (
-        <View
-          style={{
-            width: width + 8,
-            height: width / 2,
-            marginTop: 4,
-            marginLeft: -4
-          }}
-        >
-          <Media
-            media_attachments={media_attachments}
-            sensitive={sensitive}
-            width={width}
-          />
-        </View>
-      )}
-    </>
+    media_attachments.length > 0 && (
+      <View
+        style={{
+          width: width + 8,
+          height: width / 2,
+          marginTop: 4,
+          marginLeft: -4
+        }}
+      >
+        {media}
+      </View>
+    )
   )
 }
 
@@ -176,12 +130,8 @@ const styles = StyleSheet.create({
   }
 })
 
-Content.propTypes = {
-  content: ParseContent.propTypes.content,
-  emojis: ParseContent.propTypes.emojis,
+Media.propTypes = {
   // media_attachments
-  mentions: ParseContent.propTypes.mentions,
   sensitive: PropTypes.bool.isRequired,
-  spoiler_text: PropTypes.string,
   width: PropTypes.number.isRequired
 }
