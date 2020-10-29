@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function Avatar ({ uri, id }) {
   const navigation = useNavigation()
+  // Need to fix go back root
   return (
     <Pressable
       style={styles.avatar}

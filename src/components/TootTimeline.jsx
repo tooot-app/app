@@ -3,7 +3,7 @@ import propTypesStatus from 'src/prop-types/status'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Reblog from './Toot/Reblog'
+import Actioned from './Toot/Actioned'
 import Avatar from './Toot/Avatar'
 import Header from './Toot/Header'
 import Content from './Toot/Content'
@@ -26,7 +26,8 @@ export default function TootTimeline ({ toot }) {
     return (
       <View style={styles.tootTimeline}>
         {toot.reblog && (
-          <Reblog
+          <Actioned
+            action='reblog'
             name={toot.account.display_name || toot.account.username}
             emojis={toot.account.emojis}
           />
