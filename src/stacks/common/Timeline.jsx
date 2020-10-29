@@ -38,7 +38,7 @@ export default function Timeline ({
           data={state.toots}
           keyExtractor={({ id }) => id}
           renderItem={({ item, index, separators }) => (
-            <Toot key={item.key} item={item} />
+            <Toot key={item.key} toot={item} />
           )}
           {...(state.pointer && { initialScrollIndex: state.pointer })}
           {...(!disableRefresh && {

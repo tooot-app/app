@@ -12,27 +12,23 @@ import Media from './Toot/Media'
 import Card from './Toot/Card'
 import Actions from './Toot/Actions'
 
-// Maybe break away notification types? https://docs.joinmastodon.org/entities/notification/
-
-export default function Toot ({ item, notification }) {
+export default function Toot ({ toot }) {
   const navigation = useNavigation()
 
   let actualContent
-  if (notification && item.status) {
-    actualContent = item.status
-  } else if (item.reblog) {
-    actualContent = item.reblog
+  if (toot.reblog) {
+    actualContent = toot.reblog
   } else {
-    actualContent = item
+    actualContent = toot
   }
 
-  const toot = useMemo(() => {
+  const tootView = useMemo(() => {
     return (
       <View style={styles.tootTimeline}>
-        {item.reblog && (
+        {toot.reblog && (
           <Reblog
-            name={item.account.display_name || item.account.username}
-            emojis={item.account.emojis}
+            name={toot.account.display_name || toot.account.username}
+            emojis={toot.account.emojis}
           />
         )}
         <View style={styles.toot}>
@@ -48,8 +44,8 @@ export default function Toot ({ item, notification }) {
               }
               emojis={actualContent.account.emojis}
               account={actualContent.account.acct}
-              created_at={item.created_at}
-              application={item.application}
+              created_at={toot.created_at}
+              application={toot.application}
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
@@ -92,7 +88,7 @@ export default function Toot ({ item, notification }) {
     )
   })
 
-  return toot
+  return tootView
 }
 
 const styles = StyleSheet.create({
@@ -112,7 +108,7 @@ const styles = StyleSheet.create({
 })
 
 Toot.propTypes = {
-  item: PropTypes.shape({
+  toot: PropTypes.shape({
     account: PropTypes.shape({
       avatar: PropTypes.string.isRequired,
       display_name: PropTypes.string.isRequired,
@@ -124,6 +120,5 @@ Toot.propTypes = {
       website: PropTypes.string
     }),
     content: PropTypes.string
-  }).isRequired,
-  notification: PropTypes.bool
+  }).isRequired
 }
