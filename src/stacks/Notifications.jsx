@@ -26,7 +26,7 @@ export default function Notifications () {
       }}
     >
       <Stack.Screen name='Notifications'>
-        {props => <Timeline page='Notifications' {...props} />}
+        {() => <Timeline page='Notifications' />}
       </Stack.Screen>
     </Stack.Navigator>
   )

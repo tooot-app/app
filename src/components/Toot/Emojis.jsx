@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import propTypesEmoji from 'src/prop-types/emoji'
 import { Image, Text } from 'react-native'
 
 const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
@@ -44,13 +45,5 @@ export default function Emojis ({ content, emojis, dimension }) {
 
 Emojis.propTypes = {
   content: PropTypes.string.isRequired,
-  emojis: PropTypes.arrayOf(
-    PropTypes.exact({
-      shortcode: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      static_url: PropTypes.string.isRequired,
-      visible_in_picker: PropTypes.bool.isRequired,
-      category: PropTypes.string
-    })
-  )
+  emojis: PropTypes.arrayOf(propTypesEmoji)
 }

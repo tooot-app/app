@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { ActivityIndicator, FlatList, Text, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Toot from 'src/components/Toot'
+import TootNotification from 'src/components/TootNotification'
+import TootTimeline from 'src/components/TootTimeline'
 import { fetch } from './timelineSlice'
 
 // Opening nesting hashtag pages
@@ -37,9 +38,13 @@ export default function Timeline ({
           style={{ minHeight: '100%' }}
           data={state.toots}
           keyExtractor={({ id }) => id}
-          renderItem={({ item, index, separators }) => (
-            <Toot key={item.key} toot={item} />
-          )}
+          renderItem={({ item, index, separators }) =>
+            page === 'Notifications' ? (
+              <TootNotification key={item.key} toot={item} />
+            ) : (
+              <TootTimeline key={item.key} toot={item} />
+            )
+          }
           {...(state.pointer && { initialScrollIndex: state.pointer })}
           {...(!disableRefresh && {
             onRefresh: () =>

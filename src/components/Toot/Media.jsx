@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import propTypesAttachment from 'src/prop-types/attachment'
 import {
   Button,
   Image,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
 })
 
 Media.propTypes = {
-  // media_attachments
+  media_attachments: PropTypes.arrayOf(propTypesAttachment),
   sensitive: PropTypes.bool.isRequired,
   width: PropTypes.number.isRequired
 }

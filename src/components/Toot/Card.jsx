@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import propTypesCard from 'src/prop-types/card'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -54,20 +54,5 @@ const styles = StyleSheet.create({
 })
 
 Card.propTypes = {
-  card: PropTypes.exact({
-    url: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    type: PropTypes.oneOf(['link', 'photo', 'video']),
-    author_name: PropTypes.string,
-    author_url: PropTypes.string,
-    provider_name: PropTypes.string,
-    provider_url: PropTypes.string,
-    html: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    image: PropTypes.string,
-    embed_url: PropTypes.string,
-    blurhash: PropTypes.string
-  }).isRequired
+  card: propTypesCard
 }

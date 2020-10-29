@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import PropTypes from 'prop-types'
+import propTypesStatus from 'src/prop-types/status'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -12,7 +12,7 @@ import Media from './Toot/Media'
 import Card from './Toot/Card'
 import Actions from './Toot/Actions'
 
-export default function Toot ({ toot }) {
+export default function TootTimeline ({ toot }) {
   const navigation = useNavigation()
 
   let actualContent
@@ -107,18 +107,6 @@ const styles = StyleSheet.create({
   }
 })
 
-Toot.propTypes = {
-  toot: PropTypes.shape({
-    account: PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
-      display_name: PropTypes.string.isRequired,
-      acct: PropTypes.string.isRequired
-    }).isRequired,
-    created_at: PropTypes.string.isRequired,
-    application: PropTypes.exact({
-      name: PropTypes.string.isRequired,
-      website: PropTypes.string
-    }),
-    content: PropTypes.string
-  }).isRequired
+TootTimeline.propTypes = {
+  toot: propTypesStatus
 }

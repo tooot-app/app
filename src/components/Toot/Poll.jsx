@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import propTypesPoll from 'src/prop-types/poll'
 import { StyleSheet, Text, View } from 'react-native'
 
 import Emojis from './Emojis'
@@ -43,21 +43,5 @@ const styles = StyleSheet.create({
 })
 
 Poll.propTypes = {
-  poll: PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    expires_at: PropTypes.string.isRequired,
-    expired: PropTypes.bool.isRequired,
-    multiple: PropTypes.bool.isRequired,
-    votes_count: PropTypes.number,
-    voters_count: PropTypes.number,
-    voted: PropTypes.bool.isRequired,
-    own_votes: PropTypes.array,
-    options: PropTypes.arrayOf(
-      PropTypes.exact({
-        title: PropTypes.string.isRequired,
-        votes_count: PropTypes.number.isRequired
-      })
-    ),
-    emojis: Emojis.propTypes.emojis
-  }).isRequired
+  poll: propTypesPoll
 }

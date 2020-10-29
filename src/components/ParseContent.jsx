@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import propTypesEmoji from 'src/prop-types/emoji'
+import propTypesMention from 'src/prop-types/mention'
 import { StyleSheet, Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
@@ -109,16 +111,9 @@ const HTMLstyles = StyleSheet.create({
 
 ParseContent.propTypes = {
   content: PropTypes.string.isRequired,
-  emojis: Emojis.propTypes.emojis,
+  emojis: PropTypes.arrayOf(propTypesEmoji),
   emojiSize: PropTypes.number,
-  mentions: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      username: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      acct: PropTypes.string.isRequired
-    })
-  ),
+  mentions: PropTypes.arrayOf(propTypesMention),
   showFullLink: PropTypes.bool,
   linesTruncated: PropTypes.number
 }

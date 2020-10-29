@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import propTypesEmoji from 'src/prop-types/emoji'
 import { StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
@@ -32,5 +33,5 @@ const styles = StyleSheet.create({
 
 Reblog.propTypes = {
   name: PropTypes.string.isRequired,
-  emojis: Emojis.propTypes.emojis
+  emojis: PropTypes.arrayOf(propTypesEmoji)
 }
