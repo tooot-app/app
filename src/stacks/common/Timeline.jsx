@@ -43,26 +43,11 @@ export default function Timeline ({
           {...(state.pointer && { initialScrollIndex: state.pointer })}
           {...(!disableRefresh && {
             onRefresh: () =>
-              dispatch(
-                fetch({
-                  page,
-                  query: [{ key: 'since_id', value: state.toots[0].id }]
-                })
-              ),
+              dispatch(fetch({ page, paginationDirection: 'prev' })),
             refreshing: state.status === 'loading',
             onEndReached: () => {
               if (!timelineReady) {
-                dispatch(
-                  fetch({
-                    page,
-                    query: [
-                      {
-                        key: 'max_id',
-                        value: state.toots[state.toots.length - 1].id
-                      }
-                    ]
-                  })
-                )
+                dispatch(fetch({ page, paginationDirection: 'next' }))
                 setTimelineReady(true)
               }
             },

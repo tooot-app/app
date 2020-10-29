@@ -23,10 +23,10 @@ export async function client (url, query, { body, ...customConfig } = {}) {
 
   let data
   try {
-    const response = await fetch(`https://${url}${queryString}`, config)
+    const response = await fetch(`${url}${queryString}`, config)
     data = await response.json()
     if (response.ok) {
-      return data
+      return { headers: response.headers, body: data }
     }
     throw new Error(response.statusText)
   } catch (err) {

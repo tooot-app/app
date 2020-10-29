@@ -5,9 +5,9 @@ import { client } from 'src/api/client'
 export const fetch = createAsyncThunk(
   'account/fetch',
   async ({ id }, { getState }) => {
-    const instanceLocal = getState().instanceInfo.local + '/api/v1/'
-
-    return await client.get(`${instanceLocal}accounts/${id}`)
+    const instanceLocal = `https://${getState().instanceInfo.local}/api/v1/`
+    const res = await client.get(`${instanceLocal}accounts/${id}`)
+    return res.body
   }
 )
 
