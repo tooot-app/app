@@ -8,7 +8,7 @@ import Avatar from './Toot/Avatar'
 import Header from './Toot/Header'
 import Content from './Toot/Content'
 import Poll from './Toot/Poll'
-import Media from './Toot/Media'
+import Attachment from './Toot/Attachment'
 import Card from './Toot/Card'
 import Actions from './Toot/Actions'
 
@@ -53,7 +53,7 @@ export default function TootNotification ({ toot }) {
                   )}
                   {toot.status.poll && <Poll poll={toot.status.poll} />}
                   {toot.status.media_attachments && (
-                    <Media
+                    <Attachment
                       media_attachments={toot.status.media_attachments}
                       sensitive={toot.status.sensitive}
                       width={Dimensions.get('window').width - 24 - 50 - 8}

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { Feather } from '@expo/vector-icons'
 
 import Timeline from 'src/stacks/common/Timeline'
+import sharedScreens from 'src/stacks/Shared/sharedScreens'
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +29,8 @@ export default function Notifications () {
       <Stack.Screen name='Notifications'>
         {() => <Timeline page='Notifications' />}
       </Stack.Screen>
+
+      {sharedScreens(Stack)}
     </Stack.Navigator>
   )
 }

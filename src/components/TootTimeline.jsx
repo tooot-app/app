@@ -8,7 +8,7 @@ import Avatar from './Toot/Avatar'
 import Header from './Toot/Header'
 import Content from './Toot/Content'
 import Poll from './Toot/Poll'
-import Media from './Toot/Media'
+import Attachment from './Toot/Attachment'
 import Card from './Toot/Card'
 import Actions from './Toot/Actions'
 
@@ -50,9 +50,9 @@ export default function TootTimeline ({ toot }) {
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
-              onPress={() =>
-                navigation.navigate('Toot', { toot: actualContent.id })
-              }
+              // onPress={() =>
+              //   navigation.navigate('Toot', { toot: actualContent.id })
+              // }
             >
               {actualContent.content ? (
                 <Content
@@ -67,8 +67,8 @@ export default function TootTimeline ({ toot }) {
                 <></>
               )}
               {actualContent.poll && <Poll poll={actualContent.poll} />}
-              {actualContent.media_attachments && (
-                <Media
+              {actualContent.media_attachments.length > 0 && (
+                <Attachment
                   media_attachments={actualContent.media_attachments}
                   sensitive={actualContent.sensitive}
                   width={Dimensions.get('window').width - 24 - 50 - 8}

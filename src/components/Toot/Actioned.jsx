@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
 })
 
 Actioned.propTypes = {
-  action: PropTypes.oneOf(['favourite', 'follow', 'poll', 'reblog']).isRequired,
+  action: PropTypes.oneOf(['favourite', 'follow', 'mention', 'poll', 'reblog'])
+    .isRequired,
   name: PropTypes.string,
   emojis: PropTypes.arrayOf(propTypesEmoji),
   notification: PropTypes.bool

@@ -6,10 +6,7 @@ import SegmentedControl from '@react-native-community/segmented-control'
 import { Feather } from '@expo/vector-icons'
 
 import Timeline from './Timeline'
-import Account from 'src/stacks/Shared/Account'
-import Hashtag from 'src/stacks/Shared/Hashtag'
-import Toot from 'src/stacks/Shared/Toot'
-import Webview from 'src/stacks/Shared/Webview'
+import sharedScreens from 'src/stacks/Shared/sharedScreens'
 
 const Stack = createNativeStackNavigator()
 
@@ -93,36 +90,8 @@ export default function TimelinesCombined ({ name, content }) {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen
-        name='Account'
-        component={Account}
-        options={{
-          headerTranslucent: true,
-          headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-          headerCenter: () => {}
-        }}
-      />
-      <Stack.Screen
-        name='Hashtag'
-        component={Hashtag}
-        options={({ route }) => ({
-          title: `#${decodeURIComponent(route.params.hashtag)}`
-        })}
-      />
-      <Stack.Screen
-        name='Toot'
-        component={Toot}
-        options={() => ({
-          title: '对话'
-        })}
-      />
-      <Stack.Screen
-        name='Webview'
-        component={Webview}
-        // options={({ route }) => ({
-        //   title: `${route.params.domain}`
-        // })}
-      />
+
+      {sharedScreens(Stack)}
     </Stack.Navigator>
   )
 }

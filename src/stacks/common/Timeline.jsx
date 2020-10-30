@@ -22,10 +22,12 @@ export default function Timeline ({
   const [timelineReady, setTimelineReady] = useState(false)
 
   useEffect(() => {
-    if (state.status === 'idle') {
+    let mounted = true
+    if (state.status === 'idle' && mounted) {
       dispatch(fetch({ page, hashtag, list, toot, account }))
       setTimelineReady(true)
     }
+    return () => (mounted = false)
   }, [state, dispatch])
 
   let content
