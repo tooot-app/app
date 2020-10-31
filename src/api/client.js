@@ -1,43 +1,40 @@
-export async function client (url, query, { body, ...customConfig } = {}) {
-  if (!url) {
-    return Promise.reject('Missing URL.')
-  }
-  const headers = { 'Content-Type': 'application/json' }
+import store from 'src/stacks/common/store'
+import ky from 'ky'
 
-  const config = {
-    method: body ? 'POST' : 'GET',
-    ...customConfig,
-    headers: {
-      ...headers,
-      ...customConfig.headers
-    }
-  }
+export default async function client ({
+  method, // *  get / post
+  instance, // *  local / remote
+  endpoint, // *  if url is empty
+  query, //    object
+  body //    object
+}) {
+  const state = store.getState().instanceInfo
 
-  const queryString = query
-    ? `?${query.map(({ key, value }) => `${key}=${value}`).join('&')}`
-    : ''
-
-  if (body) {
-    config.body = JSON.stringify(body)
-  }
-
-  let data
+  let response
   try {
-    const response = await fetch(`${url}${queryString}`, config)
-    data = await response.json()
-    if (response.ok) {
-      return { headers: response.headers, body: data }
-    }
-    throw new Error(response.statusText)
-  } catch (err) {
-    return Promise.reject(err.message ? err.message : data)
+    response = await ky(endpoint, {
+      method: method,
+      prefixUrl: `https://${state[instance]}/api/v1`,
+      searchParams: query,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(instance === 'local' && {
+          Authorization: `Bearer ${state.localToken}`
+        })
+      },
+      ...(body && { json: body })
+    })
+  } catch {
+    return Promise.reject('ky error')
   }
-}
 
-client.get = function (instance, endpoint, query, customConfig = {}) {
-  return client(instance, endpoint, query, { ...customConfig, method: 'GET' })
-}
-
-client.post = function (instance, endpoint, query, body, customConfig = {}) {
-  return client(instance, endpoint, query, { ...customConfig, body })
+  if (response.ok) {
+    return Promise.resolve({
+      headers: response.headers,
+      body: await response.json()
+    })
+  } else {
+    console.error(response.error)
+    return Promise.reject({ body: response.error_message })
+  }
 }

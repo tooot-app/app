@@ -35,7 +35,6 @@ export default function TootNotification ({ toot }) {
               account={actualAccount.acct}
               created_at={toot.created_at}
             />
-            {/* Can pass toot info to next page to speed up performance */}
             <Pressable
               onPress={() => navigation.navigate('Toot', { toot: toot.id })}
             >
@@ -52,7 +51,7 @@ export default function TootNotification ({ toot }) {
                     />
                   )}
                   {toot.status.poll && <Poll poll={toot.status.poll} />}
-                  {toot.status.media_attachments && (
+                  {toot.status.media_attachments.length > 0 && (
                     <Attachment
                       media_attachments={toot.status.media_attachments}
                       sensitive={toot.status.sensitive}
@@ -67,6 +66,7 @@ export default function TootNotification ({ toot }) {
             </Pressable>
             {toot.status && (
               <Actions
+                id={toot.status.id}
                 replies_count={toot.status.replies_count}
                 reblogs_count={toot.status.reblogs_count}
                 reblogged={toot.status.reblogged}
@@ -78,7 +78,7 @@ export default function TootNotification ({ toot }) {
         </View>
       </View>
     )
-  })
+  }, [toot])
 
   return tootView
 }

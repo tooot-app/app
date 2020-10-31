@@ -6,7 +6,7 @@ const propTypesAttachment = PropTypes.shape({
   type: PropTypes.oneOf(['unknown', 'image', 'gifv', 'video', 'audio'])
     .isRequired,
   url: PropTypes.string.isRequired,
-  preview_url: PropTypes.string.isRequired,
+  preview_url: PropTypes.string,
 
   // Others
   remote_url: PropTypes.string,

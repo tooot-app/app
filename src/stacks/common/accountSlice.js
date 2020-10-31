@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { client } from 'src/api/client'
+import client from 'src/api/client'
 
 export const fetch = createAsyncThunk(
   'account/fetch',
   async ({ id }, { getState }) => {
-    const instanceLocal = `https://${getState().instanceInfo.local}/api/v1/`
-    const res = await client.get(`${instanceLocal}accounts/${id}`)
+    const res = await client({
+      method: 'get',
+      instance: 'local',
+      endpoint: `accounts/${id}`
+    })
     return res.body
   }
 )

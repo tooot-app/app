@@ -101,7 +101,8 @@ TimelinesCombined.propTypes = {
   content: PropTypes.arrayOf(
     PropTypes.exact({
       title: PropTypes.string.isRequired,
-      page: Timeline.propTypes.page
+      page: Timeline.propTypes.page,
+      instance: PropTypes.oneOf(['local', 'remote'])
     })
   ).isRequired
 }

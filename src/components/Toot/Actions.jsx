@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
+import action from 'src/components/action'
+
 export default function Actions ({
+  id,
   replies_count,
   reblogs_count,
   reblogged,
@@ -20,7 +23,7 @@ export default function Actions ({
         <Feather name='repeat' />
         <Text>{reblogs_count}</Text>
       </Pressable>
-      <Pressable style={styles.action}>
+      <Pressable style={styles.action} onPress={() => action('favourite', id)}>
         <Feather name='heart' />
         <Text>{favourites_count}</Text>
       </Pressable>
@@ -34,15 +37,23 @@ export default function Actions ({
 const styles = StyleSheet.create({
   actions: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 4
   },
   action: {
     width: '25%',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingTop: 8,
+    paddingBottom: 8
   }
 })
 
-// Actions.propTypes = {
-//   uri: PropTypes.string
-// }
+Actions.propTypes = {
+  id: PropTypes.string.isRequired,
+  replies_count: PropTypes.number.isRequired,
+  reblogs_count: PropTypes.number.isRequired,
+  reblogged: PropTypes.bool.isRequired,
+  favourites_count: PropTypes.number.isRequired,
+  favourited: PropTypes.bool.isRequired
+}

@@ -15,7 +15,7 @@ export default function Timeline ({
   list,
   toot,
   account,
-  disableRefresh
+  disableRefresh = false
 }) {
   const dispatch = useDispatch()
   const state = useSelector(state => state.timelines[page])
@@ -50,11 +50,25 @@ export default function Timeline ({
           {...(state.pointer && { initialScrollIndex: state.pointer })}
           {...(!disableRefresh && {
             onRefresh: () =>
-              dispatch(fetch({ page, paginationDirection: 'prev' })),
+              dispatch(
+                fetch({
+                  page,
+                  hashtag,
+                  list,
+                  paginationDirection: 'prev'
+                })
+              ),
             refreshing: state.status === 'loading',
             onEndReached: () => {
               if (!timelineReady) {
-                dispatch(fetch({ page, paginationDirection: 'next' }))
+                dispatch(
+                  fetch({
+                    page,
+                    hashtag,
+                    list,
+                    paginationDirection: 'next'
+                  })
+                )
                 setTimelineReady(true)
               }
             },

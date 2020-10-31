@@ -50,9 +50,9 @@ export default function TootTimeline ({ toot }) {
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
-              // onPress={() =>
-              //   navigation.navigate('Toot', { toot: actualContent.id })
-              // }
+              onPress={() =>
+                navigation.navigate('Toot', { toot: actualContent.id })
+              }
             >
               {actualContent.content ? (
                 <Content
@@ -77,6 +77,7 @@ export default function TootTimeline ({ toot }) {
               {actualContent.card && <Card card={actualContent.card} />}
             </Pressable>
             <Actions
+              id={actualContent.id}
               replies_count={actualContent.replies_count}
               reblogs_count={actualContent.reblogs_count}
               reblogged={actualContent.reblogged}
