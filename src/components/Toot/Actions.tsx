@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {
+  ActionSheetIOS,
+  Clipboard,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { useDispatch } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 
 import action from './action'
+import Success from './Responses/Success'
 
 export interface Props {
   id: string
+  url: string
   replies_count: number
   reblogs_count: number
   reblogged?: boolean
@@ -17,6 +27,7 @@ export interface Props {
 
 const Actions: React.FC<Props> = ({
   id,
+  url,
   replies_count,
   reblogs_count,
   reblogged,
@@ -27,8 +38,19 @@ const Actions: React.FC<Props> = ({
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false)
 
+  const [successMessage, setSuccessMessage] = useState()
+  useEffect(() => {
+    setTimeout(() => {
+      setSuccessMessage(undefined)
+      console.log('ajwieorjawioejri')
+    }, 2000)
+    return () => {}
+  }, [successMessage])
+
   return (
     <>
+      <Success message={successMessage} />
+
       <View style={styles.actions}>
         <Pressable style={styles.action}>
           <Feather name='message-circle' color='gray' />
@@ -96,7 +118,38 @@ const Actions: React.FC<Props> = ({
           onPress={() => setModalVisible(false)}
         >
           <View style={styles.modalSheet}>
-            <Text>分享，复制链接，（删除）</Text>
+            <Pressable
+              onPress={() =>
+                ActionSheetIOS.showShareActionSheetWithOptions(
+                  {
+                    url,
+                    excludedActivityTypes: [
+                      'com.apple.UIKit.activity.Mail',
+                      'com.apple.UIKit.activity.Print',
+                      'com.apple.UIKit.activity.SaveToCameraRoll',
+                      'com.apple.UIKit.activity.OpenInIBooks'
+                    ]
+                  },
+                  () => {},
+                  () => {
+                    setModalVisible(false)
+                    setSuccessMessage('分享成功！')
+                  }
+                )
+              }
+            >
+              <Text>分享</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                Clipboard.setString(url)
+                // Success message
+                setModalVisible(false)
+              }}
+            >
+              <Text>复制链接</Text>
+            </Pressable>
+            <Text>（删除）</Text>
             <Text>（静音），（置顶）</Text>
             <Text>静音用户，屏蔽用户，屏蔽域名，举报用户</Text>
           </View>

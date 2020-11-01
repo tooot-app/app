@@ -20,7 +20,7 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
 
   let actualContent = toot.reblog ? toot.reblog : toot
 
-  // const tootView = useMemo(() => {
+  const tootView = useMemo(() => {
     return (
       <View style={styles.tootTimeline}>
         {toot.reblog && (
@@ -76,6 +76,7 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
             </Pressable>
             <Actions
               id={actualContent.id}
+              url={actualContent.url}
               replies_count={actualContent.replies_count}
               reblogs_count={actualContent.reblogs_count}
               reblogged={actualContent.reblogged}
@@ -87,9 +88,9 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
         </View>
       </View>
     )
-  // }, [toot])
+  }, [toot])
 
-  // return tootView
+  return tootView
 }
 
 const styles = StyleSheet.create({

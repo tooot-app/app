@@ -19,7 +19,6 @@ const Timeline: React.FC<{
 }> = ({ page, hashtag, list, toot, account, disableRefresh = false }) => {
   const dispatch = useDispatch()
   const state = useSelector((state: RootState) => state.timelines[page])
-  const [updateStatus, setUpdateStatus] = useState(false)
   const [timelineReady, setTimelineReady] = useState(false)
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const Timeline: React.FC<{
       dispatch(fetch({ page, hashtag, list, toot, account }))
       setTimelineReady(true)
     }
-    setUpdateStatus(!updateStatus)
     return () => {
       mounted = false
     }

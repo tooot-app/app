@@ -17,7 +17,6 @@ const action = async ({
   stateKey: 'favourited' | 'reblogged' | 'bookmarked' | 'muted' | 'pinned'
   statePrev: boolean
 }): Promise<void> => {
-  console.log(stateKey + ' --- ' + statePrev)
   const alert = {
     title: 'This is a title',
     message: 'This is a message'
@@ -37,7 +36,6 @@ const action = async ({
 
   if (!res.body[stateKey] === statePrev) {
     dispatch(updateStatus(res.body))
-    console.log('------ ' + res.body[stateKey])
   } else {
     Alert.alert(alert.title, alert.message, [
       { text: 'OK', onPress: () => console.log('OK Pressed') }
