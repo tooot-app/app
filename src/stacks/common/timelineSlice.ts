@@ -4,6 +4,7 @@ import {
   createSlice,
   PayloadAction
 } from '@reduxjs/toolkit'
+import store from 'src'
 
 import client from 'src/api/client'
 
@@ -214,8 +215,21 @@ export const timelineSlice = createSlice({
     Account_Media: timelineInitState
   },
   reducers: {
-    reset: (state, action: PayloadAction<store.TimelinePage>) => {
+    reset (state, action: PayloadAction<store.TimelinePage>) {
+      //@ts-ignore
       state[action.payload] = timelineInitState
+    },
+    updateStatus (state, action) {
+      Object.keys(state).map((page: store.TimelinePage) => {
+        //@ts-ignore
+        const index: number = state[page].toots.findIndex(
+          (toot: mastodon.Status) => toot.id === action.payload.id
+        )
+        if (index !== -1) {
+          //@ts-ignore
+          state[page].toots[index] = action.payload
+        }
+      })
     }
   },
   extraReducers: builder => {
@@ -252,5 +266,5 @@ export const timelineSlice = createSlice({
   }
 })
 
-export const { reset } = timelineSlice.actions
+export const { reset, updateStatus } = timelineSlice.actions
 export default timelineSlice.reducer

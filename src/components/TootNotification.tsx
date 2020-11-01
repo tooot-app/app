@@ -75,6 +75,7 @@ const TootNotification: React.FC<Props> = ({ toot }) => {
                 reblogged={toot.status.reblogged}
                 favourites_count={toot.status.favourites_count}
                 favourited={toot.status.favourited}
+                bookmarked={toot.status.bookmarked}
               />
             )}
           </View>

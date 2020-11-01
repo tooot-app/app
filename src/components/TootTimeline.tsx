@@ -20,7 +20,7 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
 
   let actualContent = toot.reblog ? toot.reblog : toot
 
-  const tootView = useMemo(() => {
+  // const tootView = useMemo(() => {
     return (
       <View style={styles.tootTimeline}>
         {toot.reblog && (
@@ -81,14 +81,15 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
               reblogged={actualContent.reblogged}
               favourites_count={actualContent.favourites_count}
               favourited={actualContent.favourited}
+              bookmarked={actualContent.bookmarked}
             />
           </View>
         </View>
       </View>
     )
-  }, [toot])
+  // }, [toot])
 
-  return tootView
+  // return tootView
 }
 
 const styles = StyleSheet.create({
