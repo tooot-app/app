@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native'
 import HTMLView, { HTMLViewNode } from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
-import Emojis from 'src/components/Toot/Emojis'
+import Emojis from 'src/components/Status/Emojis'
 
 const renderNode = ({
   node,
@@ -14,7 +14,7 @@ const renderNode = ({
 }: {
   node: HTMLViewNode
   index: number
-  navigation: object
+  navigation: any
   mentions?: mastodon.Mention[]
   showFullLink: boolean
 }) => {

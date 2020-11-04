@@ -2,7 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { Alert } from 'react-native'
 
 import client from 'src/api/client'
-import { updateStatus } from 'src/stacks/common/timelineSlice'
+// import { updateStatus } from 'src/stacks/common/timelineSlice'
 
 const action = async ({
   dispatch,
@@ -35,7 +35,7 @@ const action = async ({
   })
 
   if (!res.body[stateKey] === statePrev) {
-    dispatch(updateStatus(res.body))
+    // dispatch(updateStatus(res.body))
   } else {
     Alert.alert(alert.title, alert.message, [
       { text: 'OK', onPress: () => console.log('OK Pressed') }

@@ -38,6 +38,7 @@
     "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0",
     "react-navigation": "^4.4.3",
+    "react-query": "^2.26.1",
     "react-redux": "^7.2.1"
   },
   "devDependencies": {

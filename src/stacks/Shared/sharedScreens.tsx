@@ -5,11 +5,7 @@ import Hashtag from 'src/stacks/Shared/Hashtag'
 import Toot from 'src/stacks/Shared/Toot'
 import Webview from 'src/stacks/Shared/Webview'
 
-export interface Props {
-  Stack: any
-}
-
-const sharedScreens = Stack => {
+const sharedScreens = (Stack: any) => {
   return [
     <Stack.Screen
       key='Account'

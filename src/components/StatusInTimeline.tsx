@@ -2,35 +2,35 @@ import React, { useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Actioned from './Toot/Actioned'
-import Avatar from './Toot/Avatar'
-import Header from './Toot/Header'
-import Content from './Toot/Content'
-import Poll from './Toot/Poll'
-import Attachment from './Toot/Attachment'
-import Card from './Toot/Card'
-import Actions from './Toot/Actions'
+import Actioned from './Status/Actioned'
+import Avatar from './Status/Avatar'
+import Header from './Status/Header'
+import Content from './Status/Content'
+import Poll from './Status/Poll'
+import Attachment from './Status/Attachment'
+import Card from './Status/Card'
+import Actions from './Status/Actions'
 
 export interface Props {
-  toot: mastodon.Status
+  status: mastodon.Status
 }
 
-const TootTimeline: React.FC<Props> = ({ toot }) => {
+const StatusInTimeline: React.FC<Props> = ({ status }) => {
   const navigation = useNavigation()
 
-  let actualContent = toot.reblog ? toot.reblog : toot
+  let actualContent = status.reblog ? status.reblog : status
 
-  const tootView = useMemo(() => {
+  const statusView = useMemo(() => {
     return (
-      <View style={styles.tootTimeline}>
-        {toot.reblog && (
+      <View style={styles.statusView}>
+        {status.reblog && (
           <Actioned
             action='reblog'
-            name={toot.account.display_name || toot.account.username}
-            emojis={toot.account.emojis}
+            name={status.account.display_name || status.account.username}
+            emojis={status.account.emojis}
           />
         )}
-        <View style={styles.toot}>
+        <View style={styles.status}>
           <Avatar
             uri={actualContent.account.avatar}
             id={actualContent.account.id}
@@ -43,8 +43,8 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
               }
               emojis={actualContent.account.emojis}
               account={actualContent.account.acct}
-              created_at={toot.created_at}
-              application={toot.application}
+              created_at={status.created_at}
+              application={status.application}
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
@@ -88,18 +88,18 @@ const TootTimeline: React.FC<Props> = ({ toot }) => {
         </View>
       </View>
     )
-  }, [toot])
+  }, [status])
 
-  return tootView
+  return statusView
 }
 
 const styles = StyleSheet.create({
-  tootTimeline: {
+  statusView: {
     flex: 1,
     flexDirection: 'column',
     padding: 12
   },
-  toot: {
+  status: {
     flex: 1,
     flexDirection: 'row'
   },
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TootTimeline
+export default StatusInTimeline

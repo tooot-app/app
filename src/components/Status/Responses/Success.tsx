@@ -8,7 +8,7 @@ export interface Props {
 const Success: React.FC<Props> = ({ message }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current
   useEffect(() => {
-    console.log(message)
+    // console.log(message)
     if (message !== undefined) {
       fadeIn()
     } else {

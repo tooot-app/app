@@ -1,9 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import instanceInfoSlice from 'src/stacks/common/instanceInfoSlice'
-import timelineSlice from 'src/stacks/common/timelineSlice'
-import accountSlice from 'src/stacks/common/accountSlice'
-// import relationshipsSlice from 'src/stacks/common/relationshipsSlice'
 
 // get site information from local storage and pass to reducers
 const preloadedState = {
@@ -15,10 +12,7 @@ const preloadedState = {
 }
 
 const reducer = {
-  instanceInfo: instanceInfoSlice,
-  timelines: timelineSlice,
-  account: accountSlice,
-  // relationships: relationshipsSlice
+  instanceInfo: instanceInfoSlice
 }
 
 const store = configureStore({

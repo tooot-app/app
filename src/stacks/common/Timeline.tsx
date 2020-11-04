@@ -1,84 +1,93 @@
-import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, Text, View } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { ActivityIndicator, AppState, FlatList, Text, View } from 'react-native'
+import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
-import TootNotification from 'src/components/TootNotification'
-import TootTimeline from 'src/components/TootTimeline'
-import { RootState } from 'src/stacks/common/store'
-import { fetch } from './timelineSlice'
+import StatusInNotifications from 'src/components/StatusInNotifications'
+import StatusInTimeline from 'src/components/StatusInTimeline'
+import { timelineFetch } from './timelineFetch'
 
 // Opening nesting hashtag pages
 
-const Timeline: React.FC<{
+export interface Props {
   page: store.TimelinePage
   hashtag?: string
   list?: string
   toot?: string
   account?: string
   disableRefresh?: boolean
-}> = ({ page, hashtag, list, toot, account, disableRefresh = false }) => {
-  const dispatch = useDispatch()
-  const state = useSelector((state: RootState) => state.timelines[page])
-  const [timelineReady, setTimelineReady] = useState(false)
+}
 
-  useEffect(() => {
-    let mounted = true
-    if (state.status === 'idle' && mounted) {
-      dispatch(fetch({ page, hashtag, list, toot, account }))
-      setTimelineReady(true)
+const Timeline: React.FC<Props> = ({
+  page,
+  hashtag,
+  list,
+  toot,
+  account,
+  disableRefresh = false
+}) => {
+  setFocusHandler(handleFocus => {
+    const handleAppStateChange = (appState: string) => {
+      if (appState === 'active') {
+        handleFocus()
+      }
     }
-    return () => {
-      mounted = false
-    }
-  }, [state, dispatch])
+    AppState.addEventListener('change', handleAppStateChange)
+    return () => AppState.removeEventListener('change', handleAppStateChange)
+  })
+
+  const {
+    isLoading,
+    isFetchingMore,
+    isError,
+    isSuccess,
+    data,
+    fetchMore
+  } = useInfiniteQuery(
+    [page, { page, hashtag, list, toot, account }],
+    timelineFetch
+  )
+  const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
 
   let content
-  if (state.status === 'failed') {
+  if (!isSuccess) {
+    content = <ActivityIndicator />
+  } else if (isError) {
     content = <Text>Error message</Text>
   } else {
     content = (
       <>
         <FlatList
           style={{ minHeight: '100%' }}
-          data={state.toots}
+          data={flattenData}
           keyExtractor={({ id }) => id}
           renderItem={({ item, index, separators }) =>
             page === 'Notifications' ? (
-              <TootNotification key={index} toot={item} />
+              <StatusInNotifications key={index} status={item} />
             ) : (
-              <TootTimeline key={index} toot={item} />
+              <StatusInTimeline key={index} status={item} />
             )
           }
           // {...(state.pointer && { initialScrollIndex: state.pointer })}
           {...(!disableRefresh && {
             onRefresh: () =>
-              dispatch(
-                fetch({
-                  page,
-                  hashtag,
-                  list,
-                  paginationDirection: 'prev'
-                })
+              fetchMore(
+                {
+                  direction: 'prev',
+                  id: flattenData[0].id
+                },
+                { previous: true }
               ),
-            refreshing: state.status === 'loading',
+            refreshing: isLoading,
             onEndReached: () => {
-              if (!timelineReady) {
-                dispatch(
-                  fetch({
-                    page,
-                    hashtag,
-                    list,
-                    paginationDirection: 'next'
-                  })
-                )
-                setTimelineReady(true)
-              }
+              fetchMore({
+                direction: 'next',
+                id: flattenData[flattenData.length - 1].id
+              })
             },
             onEndReachedThreshold: 0.5
           })}
-          onMomentumScrollBegin={() => setTimelineReady(false)}
         />
-        {state.status === 'loading' && <ActivityIndicator />}
+        {isFetchingMore && <ActivityIndicator />}
       </>
     )
   }

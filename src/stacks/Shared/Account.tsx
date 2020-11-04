@@ -9,16 +9,14 @@ import {
   View
 } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
-import { useDispatch, useSelector } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 
-import * as accountSlice from 'src/stacks/common/accountSlice'
-import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
-import * as timelineSlice from 'src/stacks/common/timelineSlice'
+// import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
 
 import ParseContent from 'src/components/ParseContent'
 import Timeline from 'src/stacks/common/Timeline'
+import { useQuery } from 'react-query'
+import { accountFetch } from '../common/accountFetch'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
@@ -33,11 +31,25 @@ const Header = ({
     return (
       <Image
         source={{ uri: uri }}
-        style={styles.header(size ? size.height / size.width : 1 / 2)}
+        style={[
+          styles.header,
+          {
+            height:
+              Dimensions.get('window').width *
+              (size ? size.height / size.width : 1 / 2)
+          }
+        ]}
       />
     )
   } else {
-    return <View style={styles.header(1 / 3)} />
+    return (
+      <View
+        style={[
+          styles.header,
+          { height: Dimensions.get('window').width * (1 / 3) }
+        ]}
+      />
+    )
   }
 }
 
@@ -102,7 +114,7 @@ const Toots = ({ account }: { account: string }) => {
   const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
     false
   )
-  const horizontalPaging = useRef()
+  const horizontalPaging = useRef<any>()
 
   const pages = ['Account_Default', 'Account_All', 'Account_Media']
 
@@ -186,55 +198,46 @@ const Account: React.FC<Props> = ({
     params: { id }
   }
 }) => {
-  const dispatch = useDispatch()
-  const accountState = useSelector(state => state.account)
+  const { isLoading, isFetchingMore, isError, isSuccess, data } = useQuery(
+    ['Account', { id }],
+    accountFetch
+  )
+
   // const stateRelationships = useSelector(relationshipsState)
   const [loaded, setLoaded] = useState(false)
-  const [headerImageSize, setHeaderImageSize] = useState()
+  interface isHeaderImageSize {
+    width: number
+    height: number
+  }
+  const [headerImageSize, setHeaderImageSize] = useState<
+    isHeaderImageSize | undefined
+  >(undefined)
 
   useEffect(() => {
-    if (accountState.status === 'idle') {
-      dispatch(accountSlice.fetch({ id }))
-    }
-    if (accountState.account.header) {
-      Image.getSize(accountState.account.header, (width, height) => {
+    if (data.header) {
+      Image.getSize(data.header, (width, height) => {
         setHeaderImageSize({ width, height })
         setLoaded(true)
       })
     } else {
       setLoaded(true)
     }
-  }, [accountState, dispatch])
+  }, [data])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Do something when the screen is focused
-
-      return () => {
-        dispatch(accountSlice.reset())
-        dispatch(timelineSlice.reset('Account_Default'))
-        dispatch(timelineSlice.reset('Account_All'))
-        dispatch(timelineSlice.reset('Account_Media'))
-      }
-    }, [])
-  )
   // add emoji support
-  return loaded ? (
+  return isSuccess ? (
     <View>
-      <Header
-        uri={accountState.account.header}
-        size={
-          headerImageSize && {
+      {headerImageSize && (
+        <Header
+          uri={data.header}
+          size={{
             width: headerImageSize.width,
             height: headerImageSize.height
-          }
-        }
-      />
-      <Information
-        account={accountState.account}
-        emojis={accountState.account.emojis}
-      />
-      {accountState.account.id && <Toots account={accountState.account.id} />}
+          }}
+        />
+      )}
+      <Information account={data} emojis={data.emojis} />
+      <Toots account={id} />
     </View>
   ) : (
     <></>
@@ -242,11 +245,10 @@ const Account: React.FC<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  header: ratio => ({
+  header: {
     width: '100%',
-    height: Dimensions.get('window').width * ratio,
     backgroundColor: 'gray'
-  }),
+  },
   information: { marginTop: -30, paddingLeft: 12, paddingRight: 12 },
   avatar: {
     width: 90,

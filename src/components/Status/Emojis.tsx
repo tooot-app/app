@@ -20,9 +20,7 @@ const Emojis: React.FC<Props> = ({ content, emojis, dimension }) => {
             return emojiShortcode === `:${emoji.shortcode}:`
           })
           return emojiIndex === -1 ? (
-            <Text key={i} style={{ color: 'red' }}>
-              Something wrong with emoji!
-            </Text>
+            <Text key={i}>{emojiShortcode}</Text>
           ) : (
             <Image
               key={i}

@@ -42,7 +42,6 @@ const Actions: React.FC<Props> = ({
   useEffect(() => {
     setTimeout(() => {
       setSuccessMessage(undefined)
-      console.log('ajwieorjawioejri')
     }, 2000)
     return () => {}
   }, [successMessage])
