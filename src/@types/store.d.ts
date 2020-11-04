@@ -1,13 +1,11 @@
 declare namespace store {
-  type AsyncStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
-
   type InstanceInfoState = {
     local: string
     localToken: string
     remote: string
   }
 
-  type TimelinePage =
+  type Pages =
     | 'Following'
     | 'Local'
     | 'LocalPublic'
@@ -20,28 +18,14 @@ declare namespace store {
     | 'Account_All'
     | 'Account_Media'
 
-  type TimelineState = {
-    toots: mastodon.Status[] | []
-    pointer?: string
-    status: AsyncStatus
-  }
-
-  type TimelinesState = {
-    Following: TimelineState
-    Local: TimelineState
-    LocalPublic: TimelineState
-    RemotePublic: TimelineState
-    Notifications: TimelineState
-    Hashtag: TimelineState
-    List: TimelineState
-    Toot: TimelineState
-    Account_Default: TimelineState
-    Account_All: TimelineState
-    Account_Media: TimelineState
-  }
-
-  type AccountState = {
-    account: mastodon.Account | {}
-    status: AsyncStatus
-  }
+  type QueryKey = [
+    Pages,
+    {
+      page: Pages
+      hashtag?: string
+      list?: string
+      toot?: string
+      account?: string
+    }
+  ]
 }

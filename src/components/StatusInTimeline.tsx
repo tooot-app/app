@@ -13,9 +13,10 @@ import Actions from './Status/Actions'
 
 export interface Props {
   status: mastodon.Status
+  queryKey: store.QueryKey
 }
 
-const StatusInTimeline: React.FC<Props> = ({ status }) => {
+const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
   const navigation = useNavigation()
 
   let actualContent = status.reblog ? status.reblog : status
@@ -75,6 +76,7 @@ const StatusInTimeline: React.FC<Props> = ({ status }) => {
               {actualContent.card && <Card card={actualContent.card} />}
             </Pressable>
             <Actions
+              queryKey={queryKey}
               id={actualContent.id}
               url={actualContent.url}
               replies_count={actualContent.replies_count}

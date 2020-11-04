@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   ActionSheetIOS,
+  Alert,
   Clipboard,
   Modal,
   Pressable,
@@ -8,13 +9,51 @@ import {
   Text,
   View
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
-import action from './action'
+import client from 'src/api/client'
+
 import Success from './Responses/Success'
 
+const fireMutation = async ({
+  id,
+  type,
+  stateKey,
+  prevState
+}: {
+  id: string
+  type: 'favourite' | 'reblog' | 'bookmark' | 'mute' | 'pin'
+  stateKey: 'favourited' | 'reblogged' | 'bookmarked' | 'muted' | 'pinned'
+  prevState: boolean
+}) => {
+  let res = await client({
+    method: 'post',
+    instance: 'local',
+    endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
+  })
+  res = await client({
+    method: 'post',
+    instance: 'local',
+    endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
+  })
+
+  if (!res.body[stateKey] === prevState) {
+    return Promise.resolve(res.body)
+  } else {
+    const alert = {
+      title: 'This is a title',
+      message: 'This is a message'
+    }
+    Alert.alert(alert.title, alert.message, [
+      { text: 'OK', onPress: () => console.log('OK Pressed') }
+    ])
+    return Promise.reject()
+  }
+}
+
 export interface Props {
+  queryKey: store.QueryKey
   id: string
   url: string
   replies_count: number
@@ -22,10 +61,11 @@ export interface Props {
   reblogged?: boolean
   favourites_count: number
   favourited?: boolean
-  bookmarked: boolean
+  bookmarked?: boolean
 }
 
 const Actions: React.FC<Props> = ({
+  queryKey,
   id,
   url,
   replies_count,
@@ -35,7 +75,6 @@ const Actions: React.FC<Props> = ({
   favourited,
   bookmarked
 }) => {
-  const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false)
 
   const [successMessage, setSuccessMessage] = useState()
@@ -46,10 +85,42 @@ const Actions: React.FC<Props> = ({
     return () => {}
   }, [successMessage])
 
+  const queryCache = useQueryCache()
+  const [mutateAction] = useMutation(fireMutation, {
+    onMutate: () => {
+      queryCache.cancelQueries(queryKey)
+      const prevData = queryCache.getQueryData(queryKey)
+      return prevData
+    },
+    onSuccess: (newData, params) => {
+      if (params.type === 'reblog') {
+        queryCache.invalidateQueries(['Following', { page: 'Following' }])
+      }
+      // queryCache.setQueryData(queryKey, (oldData: any) => {
+      //   oldData &&
+      //     oldData.map((paging: any) => {
+      //       paging.toots.map(
+      //         (status: mastodon.Status | mastodon.Notification, i: number) => {
+      //           if (status.id === newData.id) {
+      //             paging.toots[i] = newData
+      //           }
+      //         }
+      //       )
+      //     })
+      //   return oldData
+      // })
+      return Promise.resolve()
+    },
+    onError: (err, variables, prevData) => {
+      queryCache.setQueryData(queryKey, prevData)
+    },
+    onSettled: () => {
+      queryCache.invalidateQueries(queryKey)
+    }
+  })
+
   return (
     <>
-      <Success message={successMessage} />
-
       <View style={styles.actions}>
         <Pressable style={styles.action}>
           <Feather name='message-circle' color='gray' />
@@ -59,12 +130,11 @@ const Actions: React.FC<Props> = ({
         <Pressable
           style={styles.action}
           onPress={() =>
-            action({
-              dispatch,
+            mutateAction({
               id,
               type: 'reblog',
               stateKey: 'reblogged',
-              statePrev: reblogged || false
+              prevState: reblogged || false
             })
           }
         >
@@ -74,12 +144,11 @@ const Actions: React.FC<Props> = ({
         <Pressable
           style={styles.action}
           onPress={() =>
-            action({
-              dispatch,
+            mutateAction({
               id,
               type: 'favourite',
               stateKey: 'favourited',
-              statePrev: favourited || false
+              prevState: favourited || false
             })
           }
         >
@@ -89,12 +158,11 @@ const Actions: React.FC<Props> = ({
         <Pressable
           style={styles.action}
           onPress={() =>
-            action({
-              dispatch,
+            mutateAction({
               id,
               type: 'bookmark',
               stateKey: 'bookmarked',
-              statePrev: bookmarked
+              prevState: bookmarked || false
             })
           }
         >

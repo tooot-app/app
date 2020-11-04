@@ -28,6 +28,7 @@ const Header = ({
   size: { width: number; height: number }
 }) => {
   if (uri) {
+    const heightRatio = size ? size.height / size.width : 1 / 2
     return (
       <Image
         source={{ uri: uri }}
@@ -36,7 +37,7 @@ const Header = ({
           {
             height:
               Dimensions.get('window').width *
-              (size ? size.height / size.width : 1 / 2)
+              (heightRatio > 0.5 ? 1 / 2 : heightRatio)
           }
         ]}
       />
@@ -144,6 +145,7 @@ const Toots = ({ account }: { account: string }) => {
                 page={item}
                 account={account}
                 disableRefresh
+                scrollEnabled={false}
               />
             </View>
           )
@@ -156,17 +158,6 @@ const Toots = ({ account }: { account: string }) => {
           index
         })}
         horizontal
-        ListHeaderComponent={
-          <View
-            style={{
-              width: Dimensions.get('window').width,
-              height: 100,
-              position: 'absolute'
-            }}
-          >
-            <Text>Test</Text>
-          </View>
-        }
         onMomentumScrollEnd={() => {
           setSegmentManuallyTriggered(false)
         }}
@@ -204,7 +195,6 @@ const Account: React.FC<Props> = ({
   )
 
   // const stateRelationships = useSelector(relationshipsState)
-  const [loaded, setLoaded] = useState(false)
   interface isHeaderImageSize {
     width: number
     height: number
@@ -214,19 +204,18 @@ const Account: React.FC<Props> = ({
   >(undefined)
 
   useEffect(() => {
-    if (data.header) {
+    if (isSuccess && data.header) {
       Image.getSize(data.header, (width, height) => {
         setHeaderImageSize({ width, height })
-        setLoaded(true)
       })
     } else {
-      setLoaded(true)
+      setHeaderImageSize({ width: 3, height: 1 })
     }
-  }, [data])
+  }, [data, isSuccess])
 
   // add emoji support
-  return isSuccess ? (
-    <View>
+  return isSuccess && headerImageSize ? (
+    <ScrollView>
       {headerImageSize && (
         <Header
           uri={data.header}
@@ -238,7 +227,7 @@ const Account: React.FC<Props> = ({
       )}
       <Information account={data} emojis={data.emojis} />
       <Toots account={id} />
-    </View>
+    </ScrollView>
   ) : (
     <></>
   )

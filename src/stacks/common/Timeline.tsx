@@ -4,17 +4,19 @@ import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import StatusInNotifications from 'src/components/StatusInNotifications'
 import StatusInTimeline from 'src/components/StatusInTimeline'
+import store from './store'
 import { timelineFetch } from './timelineFetch'
 
 // Opening nesting hashtag pages
 
 export interface Props {
-  page: store.TimelinePage
+  page: store.Pages
   hashtag?: string
   list?: string
   toot?: string
   account?: string
   disableRefresh?: boolean
+  scrollEnabled?: boolean
 }
 
 const Timeline: React.FC<Props> = ({
@@ -23,7 +25,8 @@ const Timeline: React.FC<Props> = ({
   list,
   toot,
   account,
-  disableRefresh = false
+  disableRefresh = false,
+  scrollEnabled = true
 }) => {
   setFocusHandler(handleFocus => {
     const handleAppStateChange = (appState: string) => {
@@ -35,6 +38,10 @@ const Timeline: React.FC<Props> = ({
     return () => AppState.removeEventListener('change', handleAppStateChange)
   })
 
+  const queryKey: store.QueryKey = [
+    page,
+    { page, hashtag, list, toot, account }
+  ]
   const {
     isLoading,
     isFetchingMore,
@@ -42,10 +49,7 @@ const Timeline: React.FC<Props> = ({
     isSuccess,
     data,
     fetchMore
-  } = useInfiniteQuery(
-    [page, { page, hashtag, list, toot, account }],
-    timelineFetch
-  )
+  } = useInfiniteQuery(queryKey, timelineFetch)
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
 
   let content
@@ -58,13 +62,14 @@ const Timeline: React.FC<Props> = ({
       <>
         <FlatList
           style={{ minHeight: '100%' }}
+          scrollEnabled={scrollEnabled} // For timeline in Account view
           data={flattenData}
           keyExtractor={({ id }) => id}
           renderItem={({ item, index, separators }) =>
             page === 'Notifications' ? (
               <StatusInNotifications key={index} status={item} />
             ) : (
-              <StatusInTimeline key={index} status={item} />
+              <StatusInTimeline key={index} status={item} queryKey={queryKey} />
             )
           }
           // {...(state.pointer && { initialScrollIndex: state.pointer })}

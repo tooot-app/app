@@ -1,3 +1,5 @@
+import { uniqBy } from 'lodash'
+
 import client from 'src/api/client'
 
 export const timelineFetch = async (
@@ -93,7 +95,7 @@ export const timelineFetch = async (
           pinned: 'true'
         }
       })
-      const toots = res.body
+      let toots: mastodon.Status[] = res.body
       res = await client({
         method: 'get',
         instance: 'local',
@@ -102,7 +104,7 @@ export const timelineFetch = async (
           exclude_replies: 'true'
         }
       })
-      toots.push(...res.body)
+      toots = uniqBy([...toots, ...res.body], 'id')
       return Promise.resolve({ toots: toots })
 
     case 'Account_All':
