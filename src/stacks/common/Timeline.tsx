@@ -70,7 +70,11 @@ const Timeline: React.FC<Props> = ({
           keyExtractor={({ id }) => id}
           renderItem={({ item, index, separators }) =>
             page === 'Notifications' ? (
-              <StatusInNotifications key={index} status={item} />
+              <StatusInNotifications
+                key={index}
+                notification={item}
+                queryKey={queryKey}
+              />
             ) : (
               <StatusInTimeline key={index} status={item} queryKey={queryKey} />
             )

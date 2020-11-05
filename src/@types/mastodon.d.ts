@@ -187,7 +187,7 @@ declare namespace mastodon {
   type Status = {
     // Base
     id: string
-    url: string
+    uri: string
     created_at: string
     account: Account
     content: string

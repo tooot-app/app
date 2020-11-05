@@ -8,7 +8,7 @@ const client = async ({
   query,
   body
 }: {
-  method: 'get' | 'post'
+  method: 'get' | 'post' | 'delete'
   instance: 'local' | 'remote'
   endpoint: string
   query?: {
@@ -16,7 +16,7 @@ const client = async ({
   }
   body?: object
 }): Promise<any> => {
-  const state: RootState['instanceInfo'] = store.getState().instanceInfo
+  const state: RootState["instanceInfo"] = store.getState().instanceInfo
 
   let response
   try {
@@ -42,8 +42,8 @@ const client = async ({
       body: await response.json()
     })
   } else {
-    console.error(response.error)
-    return Promise.reject({ body: response.error_message })
+    console.error(response.status + ': ' + response.statusText)
+    return Promise.reject({ body: response.statusText })
   }
 }
 

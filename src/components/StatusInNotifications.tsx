@@ -9,92 +9,94 @@ import Content from './Status/Content'
 import Poll from './Status/Poll'
 import Attachment from './Status/Attachment'
 import Card from './Status/Card'
-import Actions from './Status/Actions'
+import ActionsStatus from './Status/ActionsStatus'
 
 export interface Props {
-  status: mastodon.Notification
+  notification: mastodon.Notification
+  queryKey: store.QueryKey
 }
 
-const TootNotification: React.FC<Props> = ({ status }) => {
+const TootNotification: React.FC<Props> = ({ notification, queryKey }) => {
   const navigation = useNavigation()
-  const actualAccount = status.status ? status.status.account : status.account
+  const actualAccount = notification.status
+    ? notification.status.account
+    : notification.account
 
   const statusView = useMemo(() => {
     return (
-      <View style={styles.statusView}>
+      <View style={styles.notificationView}>
         <Actioned
-          action={status.type}
-          name={status.account.display_name || status.account.username}
-          emojis={status.account.emojis}
+          action={notification.type}
+          name={
+            notification.account.display_name || notification.account.username
+          }
+          emojis={notification.account.emojis}
           notification
         />
 
-        <View style={styles.status}>
+        <View style={styles.notification}>
           <Avatar uri={actualAccount.avatar} id={actualAccount.id} />
           <View style={styles.details}>
             <Header
               name={actualAccount.display_name || actualAccount.username}
               emojis={actualAccount.emojis}
               account={actualAccount.acct}
-              created_at={status.created_at}
+              created_at={notification.created_at}
             />
             <Pressable
-              onPress={() => navigation.navigate('Toot', { toot: status.id })}
+              onPress={() =>
+                navigation.navigate('Toot', { toot: notification.id })
+              }
             >
-              {status.status ? (
+              {notification.status ? (
                 <>
-                  {status.status.content && (
+                  {notification.status.content && (
                     <Content
-                      content={status.status.content}
-                      emojis={status.status.emojis}
-                      mentions={status.status.mentions}
-                      spoiler_text={status.status.spoiler_text}
-                      // tags={status.status.tags}
+                      content={notification.status.content}
+                      emojis={notification.status.emojis}
+                      mentions={notification.status.mentions}
+                      spoiler_text={notification.status.spoiler_text}
+                      // tags={notification.notification.tags}
                       // style={{ flex: 1 }}
                     />
                   )}
-                  {status.status.poll && <Poll poll={status.status.poll} />}
-                  {status.status.media_attachments.length > 0 && (
+                  {notification.status.poll && (
+                    <Poll poll={notification.status.poll} />
+                  )}
+                  {notification.status.media_attachments.length > 0 && (
                     <Attachment
-                      media_attachments={status.status.media_attachments}
-                      sensitive={status.status.sensitive}
+                      media_attachments={notification.status.media_attachments}
+                      sensitive={notification.status.sensitive}
                       width={Dimensions.get('window').width - 24 - 50 - 8}
                     />
                   )}
-                  {status.status.card && <Card card={status.status.card} />}
+                  {notification.status.card && (
+                    <Card card={notification.status.card} />
+                  )}
                 </>
               ) : (
                 <></>
               )}
             </Pressable>
-            {status.status && (
-              <Actions
-                id={status.status.id}
-                url={status.status.url}
-                replies_count={status.status.replies_count}
-                reblogs_count={status.status.reblogs_count}
-                reblogged={status.status.reblogged}
-                favourites_count={status.status.favourites_count}
-                favourited={status.status.favourited}
-                bookmarked={status.status.bookmarked}
-              />
+            {notification.status && (
+              <ActionsStatus queryKey={queryKey} status={notification.status} />
             )}
           </View>
         </View>
       </View>
     )
-  }, [status])
+  }, [notification])
 
   return statusView
 }
 
 const styles = StyleSheet.create({
-  statusView: {
+  notificationView: {
     flex: 1,
     flexDirection: 'column',
     padding: 12
   },
-  status: {
+  notification: {
     flex: 1,
     flexDirection: 'row'
   },

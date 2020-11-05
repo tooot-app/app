@@ -7,6 +7,7 @@ import React from 'react'
 import { Feather } from '@expo/vector-icons'
 import store from 'src/stacks/common/store'
 import { Provider } from 'react-redux'
+import Toast from 'react-native-toast-message'
 import { StatusBar } from 'expo-status-bar'
 
 import Local from 'src/stacks/Local'
@@ -22,6 +23,7 @@ export const Index: React.FC = () => {
   return (
     <Provider store={store}>
       <StatusBar style='auto' />
+
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -62,6 +64,8 @@ export const Index: React.FC = () => {
           <Tab.Screen name='Notifications' component={Notifications} />
           <Tab.Screen name='Me' component={Me} />
         </Tab.Navigator>
+
+        <Toast ref={(ref: any) => Toast.setRef(ref)} />
       </NavigationContainer>
     </Provider>
   )

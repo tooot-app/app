@@ -9,7 +9,7 @@ import Content from './Status/Content'
 import Poll from './Status/Poll'
 import Attachment from './Status/Attachment'
 import Card from './Status/Card'
-import Actions from './Status/Actions'
+import ActionsStatus from './Status/ActionsStatus'
 
 export interface Props {
   status: mastodon.Status
@@ -19,7 +19,7 @@ export interface Props {
 const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
   const navigation = useNavigation()
 
-  let actualContent = status.reblog ? status.reblog : status
+  let actualStatus = status.reblog ? status.reblog : status
 
   const statusView = useMemo(() => {
     return (
@@ -33,59 +33,49 @@ const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
         )}
         <View style={styles.status}>
           <Avatar
-            uri={actualContent.account.avatar}
-            id={actualContent.account.id}
+            uri={actualStatus.account.avatar}
+            id={actualStatus.account.id}
           />
           <View style={styles.details}>
             <Header
               name={
-                actualContent.account.display_name ||
-                actualContent.account.username
+                actualStatus.account.display_name ||
+                actualStatus.account.username
               }
-              emojis={actualContent.account.emojis}
-              account={actualContent.account.acct}
+              emojis={actualStatus.account.emojis}
+              account={actualStatus.account.acct}
               created_at={status.created_at}
               application={status.application}
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
               onPress={() =>
-                navigation.navigate('Toot', { toot: actualContent.id })
+                navigation.navigate('Toot', { toot: actualStatus.id })
               }
             >
-              {actualContent.content ? (
+              {actualStatus.content ? (
                 <Content
-                  content={actualContent.content}
-                  emojis={actualContent.emojis}
-                  mentions={actualContent.mentions}
-                  spoiler_text={actualContent.spoiler_text}
-                  // tags={actualContent.tags}
+                  content={actualStatus.content}
+                  emojis={actualStatus.emojis}
+                  mentions={actualStatus.mentions}
+                  spoiler_text={actualStatus.spoiler_text}
+                  // tags={actualStatus.tags}
                   // style={{ flex: 1 }}
                 />
               ) : (
                 <></>
               )}
-              {actualContent.poll && <Poll poll={actualContent.poll} />}
-              {actualContent.media_attachments.length > 0 && (
+              {actualStatus.poll && <Poll poll={actualStatus.poll} />}
+              {actualStatus.media_attachments.length > 0 && (
                 <Attachment
-                  media_attachments={actualContent.media_attachments}
-                  sensitive={actualContent.sensitive}
+                  media_attachments={actualStatus.media_attachments}
+                  sensitive={actualStatus.sensitive}
                   width={Dimensions.get('window').width - 24 - 50 - 8}
                 />
               )}
-              {actualContent.card && <Card card={actualContent.card} />}
+              {actualStatus.card && <Card card={actualStatus.card} />}
             </Pressable>
-            <Actions
-              queryKey={queryKey}
-              id={actualContent.id}
-              url={actualContent.url}
-              replies_count={actualContent.replies_count}
-              reblogs_count={actualContent.reblogs_count}
-              reblogged={actualContent.reblogged}
-              favourites_count={actualContent.favourites_count}
-              favourited={actualContent.favourited}
-              bookmarked={actualContent.bookmarked}
-            />
+            <ActionsStatus queryKey={queryKey} status={actualStatus} />
           </View>
         </View>
       </View>

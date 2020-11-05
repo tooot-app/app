@@ -7,6 +7,7 @@ const preloadedState = {
   instanceInfo: {
     local: 'social.xmflsct.com',
     localToken: 'qjzJ0IjvZ1apsn0_wBkGcdjKgX7Dao9KEPhGwggPwAo',
+    localAccountId: '1',
     remote: 'mastodon.social'
   }
 }
