@@ -51,6 +51,9 @@ const Timeline: React.FC<Props> = ({
     fetchMore
   } = useInfiniteQuery(queryKey, timelineFetch)
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
+  // if (page==='Toot'){
+  //   console.log(data)
+  // }
 
   let content
   if (!isSuccess) {

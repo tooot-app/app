@@ -159,8 +159,12 @@ export const timelineFetch = async (
         endpoint: `statuses/${toot}/context`
       })
       return Promise.resolve({
-        toots: [...context.ancestors, current, ...context.descendants],
-        pointer: context.ancestors.length
+        toots: [
+          ...context.body.ancestors,
+          current.body,
+          ...context.body.descendants
+        ],
+        pointer: context.body.ancestors.length
       })
 
     default:

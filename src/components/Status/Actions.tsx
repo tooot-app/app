@@ -32,11 +32,6 @@ const fireMutation = async ({
     instance: 'local',
     endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
   })
-  res = await client({
-    method: 'post',
-    instance: 'local',
-    endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
-  })
 
   if (!res.body[stateKey] === prevState) {
     return Promise.resolve(res.body)

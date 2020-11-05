@@ -4,7 +4,7 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       ['@babel/plugin-proposal-optional-chaining'],
-      ['babel-plugin-typescript-to-proptypes'],
+      // ['babel-plugin-typescript-to-proptypes'],
       [
         'module-resolver',
         {

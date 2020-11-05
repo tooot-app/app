@@ -4,7 +4,7 @@ import HTMLView, { HTMLViewNode } from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
 import Emojis from 'src/components/Status/Emojis'
-
+// Prevent going to the same hashtag multiple times
 const renderNode = ({
   node,
   index,
@@ -29,7 +29,7 @@ const renderNode = ({
             style={styles.a}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-              navigation.navigate('Hashtag', {
+              navigation.push('Hashtag', {
                 hashtag: tag[1] || tag[2]
               })
             }}
@@ -38,7 +38,7 @@ const renderNode = ({
             {node.children[1]?.children[0].data}
           </Text>
         )
-      } else if (classes.includes('mention')) {
+      } else if (classes.includes('mention') && mentions) {
         return (
           <Text
             key={index}
@@ -48,7 +48,7 @@ const renderNode = ({
               const usernameIndex = mentions.findIndex(
                 m => m.username === username[1]
               )
-              navigation.navigate('Account', {
+              navigation.push('Account', {
                 id: mentions[usernameIndex].id
               })
             }}
@@ -106,8 +106,12 @@ const ParseContent: React.FC<Props> = ({
         renderNode({ node, index, navigation, mentions, showFullLink })
       }
       TextComponent={({ children }) =>
-        emojis ? (
-          <Emojis content={children} emojis={emojis} dimension={emojiSize} />
+        emojis && children ? (
+          <Emojis
+            content={children.toString()}
+            emojis={emojis}
+            dimension={emojiSize}
+          />
         ) : (
           <Text>{children}</Text>
         )
