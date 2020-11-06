@@ -38,6 +38,9 @@ const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
           />
           <View style={styles.details}>
             <Header
+              queryKey={queryKey}
+              accountId={actualStatus.account.id}
+              domain={actualStatus.uri.split(new RegExp(/\/\/(.*?)\//))[1]}
               name={
                 actualStatus.account.display_name ||
                 actualStatus.account.username
