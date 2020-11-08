@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import Base from './Me/Base'
 import Authentication from 'src/stacks/Me/Authentication'
 
+import sharedScreens from 'src/stacks/Shared/sharedScreens'
+
 const Stack = createNativeStackNavigator()
 
 const Me: React.FC = () => {
@@ -17,6 +19,8 @@ const Me: React.FC = () => {
           stackPresentation: 'modal'
         }}
       />
+
+      {sharedScreens(Stack)}
     </Stack.Navigator>
   )
 }

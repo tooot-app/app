@@ -12,7 +12,7 @@ import { StatusBar } from 'expo-status-bar'
 
 import Local from 'src/stacks/Local'
 import Public from 'src/stacks/Public'
-import Post from 'src/stacks/Post'
+import PostRoot from 'src/stacks/PostRoot'
 import Notifications from 'src/stacks/Notifications'
 import Me from 'src/stacks/Me'
 
@@ -36,7 +36,7 @@ export const Index: React.FC = () => {
                 case 'Public':
                   name = 'globe'
                   break
-                case 'Post':
+                case 'PostRoot':
                   name = 'plus'
                   break
                 case 'Notifications':
@@ -60,7 +60,22 @@ export const Index: React.FC = () => {
         >
           <Tab.Screen name='Local' component={Local} />
           <Tab.Screen name='Public' component={Public} />
-          <Tab.Screen name='Post' component={Post} />
+          <Tab.Screen
+            name='PostRoot'
+            component={PostRoot}
+            listeners={({ navigation, route }) => ({
+              tabPress: e => {
+                e.preventDefault()
+                const {
+                  length,
+                  [length - 1]: last
+                } = navigation.dangerouslyGetState().history
+                navigation.navigate(last.key.split(new RegExp(/(.*?)-/))[1], {
+                  screen: 'PostToot'
+                })
+              }
+            })}
+          />
           <Tab.Screen name='Notifications' component={Notifications} />
           <Tab.Screen name='Me' component={Me} />
         </Tab.Navigator>

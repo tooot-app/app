@@ -2,12 +2,14 @@ import store, { RootState } from 'src/stacks/common/store'
 import ky from 'ky'
 
 const client = async ({
+  version = 'v1',
   method,
   instance,
   endpoint,
   query,
   body
 }: {
+  version: 'v1' | 'v2'
   method: 'get' | 'post' | 'delete'
   instance: 'local' | 'remote'
   endpoint: string
@@ -16,13 +18,13 @@ const client = async ({
   }
   body?: object
 }): Promise<any> => {
-  const state: RootState["instanceInfo"] = store.getState().instanceInfo
+  const state: RootState['instanceInfo'] = store.getState().instanceInfo
 
   let response
   try {
     response = await ky(endpoint, {
       method: method,
-      prefixUrl: `https://${state[instance]}/api/v1`,
+      prefixUrl: `https://${state[instance]}/api/${version}`,
       searchParams: query,
       headers: {
         'Content-Type': 'application/json',

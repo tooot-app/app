@@ -17,6 +17,7 @@
     "@react-navigation/native": "^5.8.6",
     "@react-navigation/stack": "^5.12.3",
     "@reduxjs/toolkit": "^1.4.0",
+    "autolinker": "^3.14.2",
     "expo": "~39.0.4",
     "expo-app-auth": "~9.2.0",
     "expo-av": "~8.6.0",

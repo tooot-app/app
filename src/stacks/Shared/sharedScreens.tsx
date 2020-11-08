@@ -4,6 +4,7 @@ import Account from 'src/stacks/Shared/Account'
 import Hashtag from 'src/stacks/Shared/Hashtag'
 import Toot from 'src/stacks/Shared/Toot'
 import Webview from 'src/stacks/Shared/Webview'
+import PostToot from './PostToot'
 
 const sharedScreens = (Stack: any) => {
   return [
@@ -21,7 +22,7 @@ const sharedScreens = (Stack: any) => {
       key='Hashtag'
       name='Hashtag'
       component={Hashtag}
-      options={({ route }) => ({
+      options={({ route }: any) => ({
         title: `#${decodeURIComponent(route.params.hashtag)}`
       })}
     />,
@@ -40,6 +41,14 @@ const sharedScreens = (Stack: any) => {
       // options={({ route }) => ({
       //   title: `${route.params.domain}`
       // })}
+    />,
+    <Stack.Screen
+      key='PostToot'
+      name='PostToot'
+      component={PostToot}
+      options={{
+        stackPresentation: 'modal'
+      }}
     />
   ]
 }
