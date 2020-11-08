@@ -47,7 +47,7 @@ const sharedScreens = (Stack: any) => {
       name='PostToot'
       component={PostToot}
       options={{
-        stackPresentation: 'modal'
+        stackPresentation: 'fullScreenModal'
       }}
     />
   ]

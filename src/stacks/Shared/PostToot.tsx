@@ -1,7 +1,9 @@
 import { Feather } from '@expo/vector-icons'
 import React, { useCallback, useEffect, useState } from 'react'
 import {
+  Alert,
   Keyboard,
+  KeyboardAvoidingView,
   Pressable,
   StyleSheet,
   Text,
@@ -9,7 +11,8 @@ import {
   View
 } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import Autolinker, { HtmlTag } from 'autolinker'
+import Autolinker from 'src/modules/autolinker'
+import { useNavigation } from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,7 +28,7 @@ const PostTootMain = () => {
       Keyboard.removeListener('keyboardDidShow', _keyboardDidShow)
       Keyboard.removeListener('keyboardDidHide', _keyboardDidHide)
     }
-  })
+  }, [])
   const _keyboardDidShow = (props: any) => {
     setKeyboardHeight(props.endCoordinates.height)
   }
@@ -36,12 +39,13 @@ const PostTootMain = () => {
 
   const [charCount, setCharCount] = useState(0)
   const [formattedText, setFormattedText] = useState<React.ReactNode>()
+  let prevTags = []
   const onChangeText = useCallback(content => {
     const tags: string[] = []
     Autolinker.link(content, {
-      email: false,
+      email: true,
       phone: false,
-      mention: 'twitter',
+      mention: 'mastodon',
       hashtag: 'twitter',
       replaceFn: props => {
         const tag = props.getMatchedText()
@@ -49,13 +53,18 @@ const PostTootMain = () => {
         return tag
       }
     })
+    prevTags = tags
 
     let _content = content
     const children = []
     tags.forEach(tag => {
       const parts = _content.split(tag)
       children.push(parts.shift())
-      children.push(<Text style={{ color: 'red' }}>{tag}</Text>)
+      children.push(
+        <Text style={{ color: 'red' }} key={Math.random()}>
+          {tag}
+        </Text>
+      )
       _content = parts.join(tag)
     })
     children.push(_content)
@@ -67,43 +76,63 @@ const PostTootMain = () => {
   return (
     <View
       style={styles.main}
-      onLayout={({ nativeEvent }) => {
-        setViewHeight(nativeEvent.layout.height)
-      }}
+      onLayout={({ nativeEvent }) => setViewHeight(nativeEvent.layout.height)}
     >
-      <TextInput
-        style={[styles.textInput, { height: viewHeight - keyboardHeight - 44 }]}
-        autoCapitalize='none'
-        autoFocus
-        enablesReturnKeyAutomatically
-        multiline
-        placeholder='想说点什么'
-        // value={rawText}
-        onChangeText={onChangeText}
-        scrollEnabled
-      >
-        <Text>{formattedText}</Text>
-      </TextInput>
-      <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
-        <Feather name='paperclip' size={24} />
-        <Feather name='bar-chart-2' size={24} />
-        <Feather name='eye-off' size={24} />
-        <Text>{charCount}</Text>
-      </Pressable>
+      <View style={{ height: viewHeight - keyboardHeight }}>
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize='none'
+          autoFocus
+          enablesReturnKeyAutomatically
+          multiline
+          placeholder='想说点什么'
+          onChangeText={onChangeText}
+          scrollEnabled
+        >
+          <Text>{formattedText}</Text>
+        </TextInput>
+        <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
+          <Feather name='paperclip' size={24} />
+          <Feather name='bar-chart-2' size={24} />
+          <Feather name='eye-off' size={24} />
+          <Text>{charCount}</Text>
+        </Pressable>
+      </View>
     </View>
   )
 }
 
 const PostToot: React.FC = () => {
+  const navigation = useNavigation()
+
   return (
     <Stack.Navigator>
       <Stack.Screen
         name='PostTootMain'
         component={PostTootMain}
         options={{
-          headerLeft: () => <Text>取消</Text>,
+          headerLeft: () => (
+            <Pressable
+              onPress={() =>
+                Alert.alert('确认取消编辑？', '', [
+                  { text: '继续编辑', style: 'cancel' },
+                  {
+                    text: '退出编辑',
+                    style: 'destructive',
+                    onPress: () => navigation.goBack()
+                  }
+                ])
+              }
+            >
+              <Text>退出编辑</Text>
+            </Pressable>
+          ),
           headerCenter: () => <></>,
-          headerRight: () => <Text>发嘟嘟</Text>
+          headerRight: () => (
+            <Pressable>
+              <Text>发嘟嘟</Text>
+            </Pressable>
+          )
         }}
       />
     </Stack.Navigator>
@@ -112,10 +141,10 @@ const PostToot: React.FC = () => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '100%',
-    height: '100%'
+    flex: 1
   },
   textInput: {
+    flex: 1,
     backgroundColor: 'gray'
   },
   additions: {
