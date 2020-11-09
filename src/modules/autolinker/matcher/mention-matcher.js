@@ -7,7 +7,7 @@ import { MentionMatch } from "../match/mention-match";
 // called multiple times, thus instantiating MentionMatcher and its RegExp 
 // objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
 // See descriptions of the properties where they are used for details about them
-var mastodonRegex = new RegExp("@[_@." + alphaNumericAndMarksCharsStr + "]{1,}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g');
+var mastodonRegex = new RegExp("@[_" + alphaNumericAndMarksCharsStr + "]{1,}[@]?[_." + alphaNumericAndMarksCharsStr + "]{0,}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g');
 var twitterRegex = new RegExp("@[_" + alphaNumericAndMarksCharsStr + "]{1,50}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
 var instagramRegex = new RegExp("@[_." + alphaNumericAndMarksCharsStr + "]{1,30}(?![_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 30 characters
 var soundcloudRegex = new RegExp("@[-_." + alphaNumericAndMarksCharsStr + "]{1,50}(?![-_" + alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters

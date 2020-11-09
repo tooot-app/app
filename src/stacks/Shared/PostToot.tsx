@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
+  ActivityIndicator,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
@@ -13,11 +14,67 @@ import {
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import Autolinker from 'src/modules/autolinker'
 import { useNavigation } from '@react-navigation/native'
+import { debounce, differenceWith, isEqual } from 'lodash'
+import { searchFetch } from '../common/searchFetch'
+import { useQuery } from 'react-query'
+import { FlatList } from 'react-native-gesture-handler'
 
 const Stack = createNativeStackNavigator()
 
+const Suggestion = React.memo(({ item, index }) => {
+  return (
+    <View key={index}>
+      <Text>{item.acct ? item.acct : item.name}</Text>
+    </View>
+  )
+})
+
+const Suggestions = ({
+  type,
+  text
+}: {
+  type: 'mention' | 'hashtag'
+  text: string
+}) => {
+  const { status, data } = useQuery(
+    [
+      'Search',
+      { type: type === 'mention' ? 'accounts' : 'hashtags', term: text }
+    ],
+    searchFetch,
+    { retry: false }
+  )
+
+  let content
+  switch (status) {
+    case 'success':
+      content = data[type === 'mention' ? 'accounts' : 'hashtags'].length ? (
+        <FlatList
+          data={data[type === 'mention' ? 'accounts' : 'hashtags']}
+          renderItem={({ item, index, separators }) => (
+            <Suggestion item={item} index={index} />
+          )}
+        />
+      ) : (
+        <Text>空无一物</Text>
+      )
+      break
+    case 'loading':
+      content = <ActivityIndicator />
+      break
+    case 'error':
+      content = <Text>搜索错误</Text>
+      break
+    default:
+      content = <></>
+  }
+
+  return content
+}
+
 const PostTootMain = () => {
   const [viewHeight, setViewHeight] = useState(0)
+  const [contentHeight, setContentHeight] = useState(0)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
@@ -39,33 +96,50 @@ const PostTootMain = () => {
 
   const [charCount, setCharCount] = useState(0)
   const [formattedText, setFormattedText] = useState<React.ReactNode>()
-  let prevTags = []
+  const [suggestionsShown, setSuggestionsShown] = useState({
+    display: false,
+    tag: undefined
+  })
+  const debouncedSuggestions = useCallback(
+    debounce(tag => setSuggestionsShown({ display: true, tag }), 300),
+    []
+  )
+  let prevTags: { type: 'url' | 'mention' | 'hashtag'; text: string }[] = []
   const onChangeText = useCallback(content => {
-    const tags: string[] = []
+    const tags: { type: 'url' | 'mention' | 'hashtag'; text: string }[] = []
     Autolinker.link(content, {
-      email: true,
+      email: false,
       phone: false,
       mention: 'mastodon',
       hashtag: 'twitter',
       replaceFn: props => {
-        const tag = props.getMatchedText()
-        tags.push(tag)
-        return tag
+        // @ts-ignore
+        tags.push({ type: props.getType(), text: props.getMatchedText() })
+        return
       }
     })
+
+    const changedTag = differenceWith(prevTags, tags, isEqual)
+    if (changedTag.length) {
+      if (changedTag[0].type !== 'url') {
+        debouncedSuggestions(changedTag[0])
+      }
+    } else {
+      setSuggestionsShown({ display: false, tag: undefined })
+    }
     prevTags = tags
 
     let _content = content
     const children = []
     tags.forEach(tag => {
-      const parts = _content.split(tag)
+      const parts = _content.split(tag.text)
       children.push(parts.shift())
       children.push(
         <Text style={{ color: 'red' }} key={Math.random()}>
-          {tag}
+          {tag.text}
         </Text>
       )
-      _content = parts.join(tag)
+      _content = parts.join(tag.text)
     })
     children.push(_content)
 
@@ -80,17 +154,39 @@ const PostTootMain = () => {
     >
       <View style={{ height: viewHeight - keyboardHeight }}>
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {
+              flex: suggestionsShown.display ? 0 : 1,
+              minHeight: contentHeight + 14
+            }
+          ]}
           autoCapitalize='none'
+          autoCorrect={false}
           autoFocus
           enablesReturnKeyAutomatically
           multiline
           placeholder='想说点什么'
           onChangeText={onChangeText}
+          onContentSizeChange={({ nativeEvent }) => {
+            setContentHeight(nativeEvent.contentSize.height)
+          }}
           scrollEnabled
         >
           <Text>{formattedText}</Text>
         </TextInput>
+        {suggestionsShown.display ? (
+          <View
+            style={[
+              styles.suggestions
+              // { height: viewHeight - contentHeight - keyboardHeight - 44 }
+            ]}
+          >
+            <Suggestions {...suggestionsShown.tag} />
+          </View>
+        ) : (
+          <></>
+        )}
         <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
           <Feather name='paperclip' size={24} />
           <Feather name='bar-chart-2' size={24} />
@@ -144,8 +240,11 @@ const styles = StyleSheet.create({
     flex: 1
   },
   textInput: {
-    flex: 1,
     backgroundColor: 'gray'
+  },
+  suggestions: {
+    flex: 1,
+    backgroundColor: 'lightyellow'
   },
   additions: {
     height: 44,

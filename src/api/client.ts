@@ -9,7 +9,7 @@ const client = async ({
   query,
   body
 }: {
-  version: 'v1' | 'v2'
+  version?: 'v1' | 'v2'
   method: 'get' | 'post' | 'delete'
   instance: 'local' | 'remote'
   endpoint: string
@@ -34,8 +34,8 @@ const client = async ({
       },
       ...(body && { json: body })
     })
-  } catch {
-    return Promise.reject('ky error')
+  } catch (error) {
+    return Promise.reject('ky error: ' + error)
   }
 
   if (response.ok) {

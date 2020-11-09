@@ -45,18 +45,20 @@ const Attachment: React.FC<Props> = ({
         (width / media_attachments[0].meta.original.width) *
         media_attachments[0].meta.original.height
       break
-    case 'video':
-      attachment = (
-        <AttachmentVideo
-          media_attachments={media_attachments}
-          sensitive={sensitive}
-          width={width}
-        />
-      )
-      attachmentHeight =
-        (width / media_attachments[0].meta.original.width) *
-        media_attachments[0].meta.original.height
-      break
+    // Support multiple video
+    // Supoort when video meta is empty
+    // case 'video':
+    //   attachment = (
+    //     <AttachmentVideo
+    //       media_attachments={media_attachments}
+    //       sensitive={sensitive}
+    //       width={width}
+    //     />
+    //   )
+    //   attachmentHeight =
+    //     (width / media_attachments[0].meta.original.width) *
+    //     media_attachments[0].meta.original.height
+    //   break
     // case 'audio':
     //   attachment = (
     //     <AttachmentAudio
