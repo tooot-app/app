@@ -21,6 +21,11 @@ import { FlatList } from 'react-native-gesture-handler'
 
 const Stack = createNativeStackNavigator()
 
+export interface Tag {
+  type: 'url' | 'accounts' | 'hashtags'
+  text: string
+}
+
 const Suggestion = React.memo(({ item, index }) => {
   return (
     <View key={index}>
@@ -104,23 +109,32 @@ const PostTootMain = () => {
     debounce(tag => setSuggestionsShown({ display: true, tag }), 300),
     []
   )
-  let prevTags: { type: 'url' | 'mention' | 'hashtag'; text: string }[] = []
+  let prevTags: Tag[] = []
   const onChangeText = useCallback(content => {
-    const tags: { type: 'url' | 'mention' | 'hashtag'; text: string }[] = []
+    const tags: Tag[] = []
     Autolinker.link(content, {
       email: false,
       phone: false,
       mention: 'mastodon',
       hashtag: 'twitter',
       replaceFn: props => {
+        let type = props.getType()
+        switch (type) {
+          case 'mention':
+            type = 'accounts'
+            break
+          case 'hashtag':
+            type = 'hashtags'
+            break
+        }
         // @ts-ignore
-        tags.push({ type: props.getType(), text: props.getMatchedText() })
+        tags.push({ type: type, text: props.getMatchedText() })
         return
       }
     })
 
     const changedTag = differenceWith(prevTags, tags, isEqual)
-    if (changedTag.length) {
+    if (changedTag.length && tags.length !== 0) {
       if (changedTag[0].type !== 'url') {
         debouncedSuggestions(changedTag[0])
       }
@@ -128,23 +142,38 @@ const PostTootMain = () => {
       setSuggestionsShown({ display: false, tag: undefined })
     }
     prevTags = tags
-
     let _content = content
+    let contentLength: number = 0
     const children = []
     tags.forEach(tag => {
       const parts = _content.split(tag.text)
-      children.push(parts.shift())
+      const prevPart = parts.shift()
+      children.push(prevPart)
+      contentLength = contentLength + prevPart.length
       children.push(
         <Text style={{ color: 'red' }} key={Math.random()}>
           {tag.text}
         </Text>
       )
-      _content = parts.join(tag.text)
+      switch (tag.type) {
+        case 'url':
+          contentLength = contentLength + 23
+          break
+        case 'accounts':
+          contentLength =
+            contentLength + tag.text.split(new RegExp('(@.*)@?'))[1].length
+          break
+        case 'hashtags':
+          contentLength = contentLength + tag.text.length
+          break
+      }
+      _content = parts.join()
     })
     children.push(_content)
+    contentLength = contentLength + _content.length
 
     setFormattedText(React.createElement(Text, null, children))
-    setCharCount(content.length)
+    setCharCount(500 - contentLength)
   }, [])
 
   return (
@@ -176,12 +205,7 @@ const PostTootMain = () => {
           <Text>{formattedText}</Text>
         </TextInput>
         {suggestionsShown.display ? (
-          <View
-            style={[
-              styles.suggestions
-              // { height: viewHeight - contentHeight - keyboardHeight - 44 }
-            ]}
-          >
+          <View style={[styles.suggestions]}>
             <Suggestions {...suggestionsShown.tag} />
           </View>
         ) : (
