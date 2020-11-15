@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import { useQuery } from 'react-query'
 
 import { searchFetch } from '../../common/searchFetch'
-import { PostAction, PostState } from './PostMain'
+import { PostAction, PostState } from '../PostToot'
 import updateText from './updateText'
 
 declare module 'react' {

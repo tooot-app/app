@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react'
 import { Image, Pressable } from 'react-native'
 
-import { PostAction, PostState } from './PostMain'
+import { PostAction, PostState } from '../PostToot'
 import updateText from './updateText'
 
 export interface Props {

@@ -6,6 +6,7 @@ const client = async ({
   method,
   instance,
   endpoint,
+  headers,
   query,
   body
 }: {
@@ -13,6 +14,7 @@ const client = async ({
   method: 'get' | 'post' | 'delete'
   instance: 'local' | 'remote'
   endpoint: string
+  headers?: { [key: string]: string }
   query?: {
     [key: string]: string | number | boolean
   }
@@ -28,6 +30,7 @@ const client = async ({
       searchParams: query,
       headers: {
         'Content-Type': 'application/json',
+        ...headers,
         ...(instance === 'local' && {
           Authorization: `Bearer ${state.localToken}`
         })

@@ -1,4 +1,4 @@
-import { PostState } from './PostMain'
+import { PostState } from '../PostToot'
 
 const updateText = ({
   onChangeText,

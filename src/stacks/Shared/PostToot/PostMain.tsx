@@ -1,10 +1,4 @@
-import React, {
-  createElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useReducer
-} from 'react'
+import React, { createElement, Dispatch, useCallback, useEffect } from 'react'
 import {
   Keyboard,
   Pressable,
@@ -22,94 +16,14 @@ import PostSuggestions from './PostSuggestions'
 import PostEmojis from './PostEmojis'
 import { useQuery } from 'react-query'
 import { emojisFetch } from 'src/stacks/common/emojisFetch'
+import { PostAction, PostState } from '../PostToot'
 
-export type PostState = {
-  text: {
-    count: number
-    raw: string
-    formatted: ReactNode
-  }
-  selection: { start: number; end: number }
-  overlay: null | 'suggestions' | 'emojis'
-  tag:
-    | {
-        type: 'url' | 'accounts' | 'hashtags'
-        text: string
-        offset: number
-      }
-    | undefined
-  emojis: mastodon.Emoji[] | undefined
-  height: {
-    view: number
-    editor: number
-    keyboard: number
-  }
+export interface Props {
+  postState: PostState
+  postDispatch: Dispatch<PostAction>
 }
 
-export type PostAction =
-  | {
-      type: 'text'
-      payload: Partial<PostState['text']>
-    }
-  | {
-      type: 'selection'
-      payload: PostState['selection']
-    }
-  | {
-      type: 'overlay'
-      payload: PostState['overlay']
-    }
-  | {
-      type: 'tag'
-      payload: PostState['tag']
-    }
-  | {
-      type: 'emojis'
-      payload: PostState['emojis']
-    }
-  | {
-      type: 'height'
-      payload: Partial<PostState['height']>
-    }
-
-const postInitialState: PostState = {
-  text: {
-    count: 0,
-    raw: '',
-    formatted: undefined
-  },
-  selection: { start: 0, end: 0 },
-  overlay: null,
-  tag: undefined,
-  emojis: undefined,
-  height: {
-    view: 0,
-    editor: 0,
-    keyboard: 0
-  }
-}
-const postReducer = (state: PostState, action: PostAction): PostState => {
-  switch (action.type) {
-    case 'text':
-      return { ...state, text: { ...state.text, ...action.payload } }
-    case 'selection':
-      return { ...state, selection: action.payload }
-    case 'overlay':
-      return { ...state, overlay: action.payload }
-    case 'tag':
-      return { ...state, tag: action.payload }
-    case 'emojis':
-      return { ...state, emojis: action.payload }
-    case 'height':
-      return { ...state, height: { ...state.height, ...action.payload } }
-    default:
-      throw new Error('Unexpected action')
-  }
-}
-
-const PostMain = () => {
-  const [postState, postDispatch] = useReducer(postReducer, postInitialState)
-
+const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
     Keyboard.addListener('keyboardDidHide', _keyboardDidHide)
