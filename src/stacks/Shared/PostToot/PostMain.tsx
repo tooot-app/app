@@ -1,4 +1,10 @@
-import React, { createElement, Dispatch, useCallback, useEffect } from 'react'
+import React, {
+  createElement,
+  Dispatch,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import {
   Keyboard,
   Pressable,
@@ -7,7 +13,6 @@ import {
   TextInput,
   View
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons'
 import { debounce, differenceWith, isEqual } from 'lodash'
 
@@ -24,27 +29,7 @@ export interface Props {
 }
 
 const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', _keyboardDidShow)
-    Keyboard.addListener('keyboardDidHide', _keyboardDidHide)
-
-    return () => {
-      Keyboard.removeListener('keyboardDidShow', _keyboardDidShow)
-      Keyboard.removeListener('keyboardDidHide', _keyboardDidHide)
-    }
-  }, [])
-  const _keyboardDidShow = (props: any) => {
-    postDispatch({
-      type: 'height',
-      payload: { keyboard: props.endCoordinates.height }
-    })
-  }
-  const _keyboardDidHide = () => {
-    postDispatch({
-      type: 'height',
-      payload: { keyboard: 0 }
-    })
-  }
+  const [editorMinHeight, setEditorMinHeight] = useState(0)
 
   const { data: emojisData } = useQuery(['Emojis'], emojisFetch)
   useEffect(() => {
@@ -54,15 +39,10 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
   }, [emojisData])
 
   const debouncedSuggestions = useCallback(
-    debounce(
-      tag =>
-        (() => {
-          console.log(tag)
-          postDispatch({ type: 'overlay', payload: 'suggestions' })
-          postDispatch({ type: 'tag', payload: tag })
-        })(),
-      300
-    ),
+    debounce(tag => {
+      postDispatch({ type: 'overlay', payload: 'suggestions' })
+      postDispatch({ type: 'tag', payload: tag })
+    }, 500),
     []
   )
   let prevTags: PostState['tag'][] = []
@@ -87,7 +67,6 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
             newType = 'url'
             break
         }
-        // @ts-ignore
         tags.push({
           type: newType,
           text: props.getMatchedText(),
@@ -99,7 +78,18 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
 
     const changedTag = differenceWith(prevTags, tags, isEqual)
     // quick delete causes flicking of suggestion box
-    if (changedTag.length && tags.length && !disableDebounce) {
+    if (
+      changedTag.length > 0 &&
+      tags.length > 0 &&
+      content.length > 0 &&
+      !disableDebounce
+    ) {
+      console.log('changedTag length')
+      console.log(changedTag.length)
+      console.log('tags length')
+      console.log(tags.length)
+      console.log('changed Tag')
+      console.log(changedTag)
       if (changedTag[0]!.type !== 'url') {
         debouncedSuggestions(changedTag[0])
       }
@@ -147,92 +137,77 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
       }
     })
   }, [])
+
   return (
-    <SafeAreaView
-      style={styles.main}
-      edges={['left', 'right', 'bottom']}
-      onLayout={({ nativeEvent }) =>
-        postDispatch({
-          type: 'height',
-          payload: { view: nativeEvent.layout.height }
-        })
-      }
-    >
-      <View
-        style={{ height: postState.height.view - postState.height.keyboard }}
+    <View style={{ flex: 1 }}>
+      <TextInput
+        style={[
+          styles.textInput,
+          {
+            flex: postState.overlay ? 0 : 1,
+            minHeight: editorMinHeight + 14
+          }
+        ]}
+        autoCapitalize='none'
+        autoCorrect={false}
+        autoFocus
+        enablesReturnKeyAutomatically
+        multiline
+        placeholder='想说点什么'
+        onChangeText={content => onChangeText({ content })}
+        onContentSizeChange={({ nativeEvent }) => {
+          setEditorMinHeight(nativeEvent.contentSize.height)
+        }}
+        onSelectionChange={({
+          nativeEvent: {
+            selection: { start, end }
+          }
+        }) => {
+          postDispatch({ type: 'selection', payload: { start, end } })
+        }}
+        scrollEnabled
       >
-        <TextInput
-          style={[
-            styles.textInput,
-            {
-              flex: postState.overlay ? 0 : 1,
-              minHeight: postState.height.editor + 14
-            }
-          ]}
-          autoCapitalize='none'
-          autoCorrect={false}
-          autoFocus
-          enablesReturnKeyAutomatically
-          multiline
-          placeholder='想说点什么'
-          onChangeText={content => onChangeText({ content })}
-          onContentSizeChange={({ nativeEvent }) => {
-            postDispatch({
-              type: 'height',
-              payload: { editor: nativeEvent.contentSize.height }
-            })
-          }}
-          onSelectionChange={({
-            nativeEvent: {
-              selection: { start, end }
-            }
-          }) => {
-            postDispatch({ type: 'selection', payload: { start, end } })
-          }}
-          scrollEnabled
-        >
-          <Text>{postState.text.formatted}</Text>
-        </TextInput>
-        {postState.overlay === 'suggestions' ? (
-          <View style={[styles.suggestions]}>
-            <PostSuggestions
-              onChangeText={onChangeText}
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        ) : (
-          <></>
-        )}
-        {postState.overlay === 'emojis' ? (
-          <View style={[styles.emojis]}>
-            <PostEmojis
-              onChangeText={onChangeText}
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        ) : (
-          <></>
-        )}
-        <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
-          <Feather name='paperclip' size={24} />
-          <Feather name='bar-chart-2' size={24} />
-          <Feather name='eye-off' size={24} />
-          <Feather
-            name='smile'
-            size={24}
-            color={postState.emojis?.length ? 'black' : 'white'}
-            onPress={() => {
-              if (postState.emojis?.length && postState.overlay === null) {
-                postDispatch({ type: 'overlay', payload: 'emojis' })
-              }
-            }}
+        <Text>{postState.text.formatted}</Text>
+      </TextInput>
+      {postState.overlay === 'suggestions' ? (
+        <View style={[styles.suggestions]}>
+          <PostSuggestions
+            onChangeText={onChangeText}
+            postState={postState}
+            postDispatch={postDispatch}
           />
-          <Text>{postState.text.count}</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+        </View>
+      ) : (
+        <></>
+      )}
+      {postState.overlay === 'emojis' ? (
+        <View style={[styles.emojis]}>
+          <PostEmojis
+            onChangeText={onChangeText}
+            postState={postState}
+            postDispatch={postDispatch}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
+      <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
+        <Feather name='paperclip' size={24} />
+        <Feather name='bar-chart-2' size={24} />
+        <Feather name='eye-off' size={24} />
+        <Feather
+          name='smile'
+          size={24}
+          color={postState.emojis?.length ? 'black' : 'white'}
+          onPress={() => {
+            if (postState.emojis?.length && postState.overlay === null) {
+              postDispatch({ type: 'overlay', payload: 'emojis' })
+            }
+          }}
+        />
+        <Text>{postState.text.count}</Text>
+      </Pressable>
+    </View>
   )
 }
 
