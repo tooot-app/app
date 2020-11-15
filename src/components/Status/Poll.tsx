@@ -6,7 +6,7 @@ import Emojis from './Emojis'
 export interface Props {
   poll: mastodon.Poll
 }
-
+// When haven't voted, result should not be shown but intead let people vote
 const Poll: React.FC<Props> = ({ poll }) => {
   return (
     <View>
