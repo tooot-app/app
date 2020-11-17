@@ -13,15 +13,16 @@ import {
   TextInput,
   View
 } from 'react-native'
+import { useQuery } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 import { debounce, differenceWith, isEqual } from 'lodash'
 
 import Autolinker from 'src/modules/autolinker'
-import PostSuggestions from './PostSuggestions'
 import PostEmojis from './PostEmojis'
-import { useQuery } from 'react-query'
+import PostPoll from './PostPoll'
+import PostSuggestions from './PostSuggestions'
 import { emojisFetch } from 'src/stacks/common/emojisFetch'
-import { PostAction, PostState } from '../PostToot'
+import { PostAction, PostState } from 'src/stacks/Shared/PostToot'
 
 export interface Props {
   postState: PostState
@@ -169,8 +170,13 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
       >
         <Text>{postState.text.formatted}</Text>
       </TextInput>
+      {postState.poll.active && (
+        <View style={styles.poll}>
+          <PostPoll postState={postState} postDispatch={postDispatch} />
+        </View>
+      )}
       {postState.overlay === 'suggestions' ? (
-        <View style={[styles.suggestions]}>
+        <View style={styles.suggestions}>
           <PostSuggestions
             onChangeText={onChangeText}
             postState={postState}
@@ -181,7 +187,7 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
         <></>
       )}
       {postState.overlay === 'emojis' ? (
-        <View style={[styles.emojis]}>
+        <View style={styles.emojis}>
           <PostEmojis
             onChangeText={onChangeText}
             postState={postState}
@@ -193,7 +199,16 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
       )}
       <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
         <Feather name='paperclip' size={24} />
-        <Feather name='bar-chart-2' size={24} />
+        <Feather
+          name='bar-chart-2'
+          size={24}
+          onPress={() =>
+            postDispatch({
+              type: 'poll',
+              payload: { ...postState.poll, active: !postState.poll.active }
+            })
+          }
+        />
         <Feather name='eye-off' size={24} />
         <Feather
           name='smile'
@@ -211,12 +226,20 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
   )
 }
 
+// (PostSuggestions as any).whyDidYouRender = true,
+// (PostPoll as any).whyDidYouRender = true,
+// (PostEmojis as any).whyDidYouRender = true
+
 const styles = StyleSheet.create({
   main: {
     flex: 1
   },
   textInput: {
     backgroundColor: 'gray'
+  },
+  poll: {
+    flex: 1,
+    height: 100
   },
   suggestions: {
     flex: 1,

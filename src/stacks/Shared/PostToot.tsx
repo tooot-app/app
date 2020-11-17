@@ -31,6 +31,27 @@ export type PostState = {
       }
     | undefined
   emojis: mastodon.Emoji[] | undefined
+  poll: {
+    active: boolean
+    total: number
+    options: {
+      '1': string
+      '2': string
+      '3': string
+      '4': string
+      [key: string]: string
+    }
+    multiple: boolean
+    expire:
+      | '300'
+      | '1800'
+      | '3600'
+      | '21600'
+      | '86400'
+      | '259200'
+      | '604800'
+      | string
+  }
 }
 
 export type PostAction =
@@ -54,6 +75,10 @@ export type PostAction =
       type: 'emojis'
       payload: PostState['emojis']
     }
+  | {
+      type: 'poll'
+      payload: PostState['poll']
+    }
 
 const postInitialState: PostState = {
   text: {
@@ -64,7 +89,19 @@ const postInitialState: PostState = {
   selection: { start: 0, end: 0 },
   overlay: null,
   tag: undefined,
-  emojis: undefined
+  emojis: undefined,
+  poll: {
+    active: false,
+    total: 2,
+    options: {
+      '1': '',
+      '2': '',
+      '3': '',
+      '4': ''
+    },
+    multiple: false,
+    expire: '86400'
+  }
 }
 const postReducer = (state: PostState, action: PostAction): PostState => {
   switch (action.type) {
@@ -78,6 +115,8 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
       return { ...state, tag: action.payload }
     case 'emojis':
       return { ...state, emojis: action.payload }
+    case 'poll':
+      return { ...state, poll: action.payload }
     default:
       throw new Error('Unexpected action')
   }
@@ -105,6 +144,72 @@ const PostToot: React.FC = () => {
   }
 
   const [postState, postDispatch] = useReducer(postReducer, postInitialState)
+
+  const tootPost = async () => {
+    if (postState.text.count < 0) {
+      Alert.alert('字数超限', '', [
+        {
+          text: '返回继续编辑'
+        }
+      ])
+    } else {
+      const formData = new FormData()
+      formData.append('status', postState.text.raw)
+      if (postState.poll.active) {
+        Object.values(postState.poll.options)
+          .filter(e => e.length)
+          .forEach(e => {
+            console.log(e)
+            formData.append('poll[options][]', e)
+          })
+        formData.append('poll[expires_in]', postState.poll.expire)
+        formData.append('poll[multiple]', postState.poll.multiple.toString())
+      }
+      console.log(formData)
+
+      client({
+        method: 'post',
+        instance: 'local',
+        endpoint: 'statuses',
+        headers: {
+          'Idempotency-Key': Date.now().toString() + Math.random().toString()
+        },
+        body: formData
+      })
+        .then(
+          res => {
+            if (res.body.id) {
+              Alert.alert('发布成功', '', [
+                {
+                  text: '好的',
+                  onPress: () => navigation.goBack()
+                }
+              ])
+            } else {
+              Alert.alert('发布失败', '', [
+                {
+                  text: '返回重试'
+                }
+              ])
+            }
+          },
+          error => {
+            Alert.alert('发布失败', error.body, [
+              {
+                text: '返回重试'
+              }
+            ])
+          }
+        )
+        .catch(() => {
+          Alert.alert('发布失败', '', [
+            {
+              text: '返回重试'
+            }
+          ])
+        })
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
@@ -134,42 +239,7 @@ const PostToot: React.FC = () => {
               ),
               headerCenter: () => <></>,
               headerRight: () => (
-                <Pressable
-                  onPress={async () => {
-                    if (postState.text.count < 0) {
-                      Alert.alert('字数超限', '', [
-                        {
-                          text: '返回继续编辑'
-                        }
-                      ])
-                    } else {
-                      const res = await client({
-                        method: 'post',
-                        instance: 'local',
-                        endpoint: 'statuses',
-                        headers: {
-                          'Idempotency-Key':
-                            Date.now().toString() + Math.random().toString()
-                        },
-                        query: { status: postState.text.raw }
-                      })
-                      if (res.body.id) {
-                        Alert.alert('发布成功', '', [
-                          {
-                            text: '好的',
-                            onPress: () => navigation.goBack()
-                          }
-                        ])
-                      } else {
-                        Alert.alert('发布失败', '', [
-                          {
-                            text: '返回重试'
-                          }
-                        ])
-                      }
-                    }
-                  }}
-                >
+                <Pressable onPress={async () => tootPost()}>
                   <Text>发嘟嘟</Text>
                 </Pressable>
               )
@@ -184,5 +254,6 @@ const PostToot: React.FC = () => {
     </KeyboardAvoidingView>
   )
 }
+;(PostMain as any).whyDidYouRender = true
 
 export default PostToot

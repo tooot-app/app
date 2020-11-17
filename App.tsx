@@ -11,6 +11,11 @@ setConsole({
   error: console.warn
 })
 
+if (__DEV__) {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render')
+  whyDidYouRender(React)
+}
+
 const App: React.FC = () => (
   <ReactQueryCacheProvider queryCache={queryCache}>
     <Index />
