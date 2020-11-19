@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react'
 import {
+  ActionSheetIOS,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -15,6 +16,7 @@ import {
 } from 'react-native'
 import { useQuery } from 'react-query'
 import { Feather } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
 import { debounce, differenceWith, isEqual } from 'lodash'
 
 import Autolinker from 'src/modules/autolinker'
@@ -23,6 +25,8 @@ import PostPoll from './PostPoll'
 import PostSuggestions from './PostSuggestions'
 import { emojisFetch } from 'src/stacks/common/emojisFetch'
 import { PostAction, PostState } from 'src/stacks/Shared/PostToot'
+import addAttachments from './addAttachments'
+import PostAttachments from './PostAttachments'
 
 export interface Props {
   postState: PostState
@@ -30,6 +34,15 @@ export interface Props {
 }
 
 const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
+  useEffect(() => {
+    ;(async () => {
+      const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!')
+      }
+    })()
+  }, [])
+
   const [editorMinHeight, setEditorMinHeight] = useState(0)
 
   const { data: emojisData } = useQuery(['Emojis'], emojisFetch)
@@ -139,6 +152,19 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
     })
   }, [])
 
+  const getVisibilityIcon = () => {
+    switch (postState.visibility) {
+      case 'public':
+        return 'globe'
+      case 'unlisted':
+        return 'unlock'
+      case 'private':
+        return 'lock'
+      case 'direct':
+        return 'mail'
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <TextInput
@@ -170,6 +196,11 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
       >
         <Text>{postState.text.formatted}</Text>
       </TextInput>
+      {postState.attachments.length > 0 && (
+        <View style={styles.attachments}>
+          <PostAttachments postState={postState} postDispatch={postDispatch} />
+        </View>
+      )}
       {postState.poll.active && (
         <View style={styles.poll}>
           <PostPoll postState={postState} postDispatch={postDispatch} />
@@ -198,7 +229,13 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
         <></>
       )}
       <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
-        <Feather name='paperclip' size={24} />
+        <Feather
+          name='paperclip'
+          size={24}
+          onPress={async () =>
+            await addAttachments({ postState, postDispatch })
+          }
+        />
         <Feather
           name='bar-chart-2'
           size={24}
@@ -209,7 +246,34 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
             })
           }
         />
-        <Feather name='eye-off' size={24} />
+        <Feather
+          name={getVisibilityIcon()}
+          size={24}
+          onPress={() =>
+            ActionSheetIOS.showActionSheetWithOptions(
+              {
+                options: ['公开', '不公开', '仅关注着', '私信', '取消'],
+                cancelButtonIndex: 4
+              },
+              buttonIndex => {
+                switch (buttonIndex) {
+                  case 0:
+                    postDispatch({ type: 'visibility', payload: 'public' })
+                    break
+                  case 1:
+                    postDispatch({ type: 'visibility', payload: 'unlisted' })
+                    break
+                  case 2:
+                    postDispatch({ type: 'visibility', payload: 'private' })
+                    break
+                  case 3:
+                    postDispatch({ type: 'visibility', payload: 'direct' })
+                    break
+                }
+              }
+            )
+          }
+        />
         <Feather
           name='smile'
           size={24}
@@ -236,6 +300,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: 'gray'
+  },
+  attachments: {
+    flex: 1,
+    height: 100
   },
   poll: {
     flex: 1,

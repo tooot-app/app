@@ -13,7 +13,7 @@ setConsole({
 
 if (__DEV__) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React)
+  // whyDidYouRender(React)
 }
 
 const App: React.FC = () => (

@@ -8,6 +8,9 @@ const preloadedState = {
     local: 'social.xmflsct.com',
     localToken: 'qjzJ0IjvZ1apsn0_wBkGcdjKgX7Dao9KEPhGwggPwAo',
     localAccountId: '1',
+    localAccount: {
+      locked: false
+    },
     remote: 'mastodon.social'
   }
 }

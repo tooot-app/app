@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useNavigation } from '@react-navigation/native'
 
+import store from 'src/stacks/common/store'
 import PostMain from './PostToot/PostMain'
 import client from 'src/api/client'
 
@@ -52,6 +53,13 @@ export type PostState = {
       | '604800'
       | string
   }
+  attachments: {
+    id: string
+    url: string
+    preview_url: string
+    description: string
+  }[]
+  visibility: 'public' | 'unlisted' | 'private' | 'direct'
 }
 
 export type PostAction =
@@ -79,6 +87,25 @@ export type PostAction =
       type: 'poll'
       payload: PostState['poll']
     }
+  | {
+      type: 'attachments/add'
+      payload: {
+        id: string
+        url: string
+        preview_url: string
+        description: string
+      }
+    }
+  | {
+      type: 'attachments/remove'
+      payload: {
+        id: string
+      }
+    }
+  | {
+      type: 'visibility'
+      payload: PostState['visibility']
+    }
 
 const postInitialState: PostState = {
   text: {
@@ -101,7 +128,11 @@ const postInitialState: PostState = {
     },
     multiple: false,
     expire: '86400'
-  }
+  },
+  attachments: [],
+  visibility: store.getState().instanceInfo.localAccount.locked
+    ? 'private'
+    : 'public'
 }
 const postReducer = (state: PostState, action: PostAction): PostState => {
   switch (action.type) {
@@ -117,6 +148,15 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
       return { ...state, emojis: action.payload }
     case 'poll':
       return { ...state, poll: action.payload }
+    case 'attachments/add':
+      return { ...state, attachments: state.attachments.concat(action.payload) }
+    case 'attachments/remove':
+      return {
+        ...state,
+        attachments: state.attachments.filter(a => a.id !== action.payload.id)
+      }
+    case 'visibility':
+      return { ...state, visibility: action.payload }
     default:
       throw new Error('Unexpected action')
   }
@@ -159,13 +199,11 @@ const PostToot: React.FC = () => {
         Object.values(postState.poll.options)
           .filter(e => e.length)
           .forEach(e => {
-            console.log(e)
             formData.append('poll[options][]', e)
           })
         formData.append('poll[expires_in]', postState.poll.expire)
         formData.append('poll[multiple]', postState.poll.multiple.toString())
       }
-      console.log(formData)
 
       client({
         method: 'post',
@@ -254,6 +292,6 @@ const PostToot: React.FC = () => {
     </KeyboardAvoidingView>
   )
 }
-;(PostMain as any).whyDidYouRender = true
+// ;(PostMain as any).whyDidYouRender = true
 
 export default PostToot

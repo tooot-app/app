@@ -41,8 +41,9 @@ const client = async ({
   // } catch (error) {
   //   return Promise.reject('ky error: ' + error.json())
   // }
-
+  console.log('upload done')
   if (response.ok) {
+    console.log('returning ok')
     return Promise.resolve({
       headers: response.headers,
       body: await response.json()
