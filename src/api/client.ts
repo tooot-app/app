@@ -5,14 +5,16 @@ const client = async ({
   version = 'v1',
   method,
   instance,
+  instanceUrl,
   endpoint,
   headers,
   query,
   body
 }: {
   version?: 'v1' | 'v2'
-  method: 'get' | 'post' | 'delete'
+  method: 'get' | 'post' | 'put' | 'delete'
   instance: 'local' | 'remote'
+  instanceUrl?: string
   endpoint: string
   headers?: { [key: string]: string }
   query?: {
@@ -21,12 +23,13 @@ const client = async ({
   body?: FormData
 }): Promise<any> => {
   const state: RootState['instanceInfo'] = store.getState().instanceInfo
+  const url = instanceUrl || store.getState().instanceInfo[instance]
 
   let response
   // try {
   response = await ky(endpoint, {
     method: method,
-    prefixUrl: `https://${state[instance]}/api/${version}`,
+    prefixUrl: `https://${url}/api/${version}`,
     searchParams: query,
     headers: {
       'Content-Type': 'application/json',
@@ -42,14 +45,19 @@ const client = async ({
   //   return Promise.reject('ky error: ' + error.json())
   // }
   console.log('upload done')
-  if (response.ok) {
+  if (response?.ok) {
     console.log('returning ok')
     return Promise.resolve({
       headers: response.headers,
       body: await response.json()
     })
   } else {
-    const errorResponse = await response.json()
+    let errorResponse
+    try {
+      errorResponse = await response.json()
+    } catch (error) {
+      return Promise.reject({ body: 'Nothing found' })
+    }
     console.error(response.status + ': ' + errorResponse.error)
     return Promise.reject({ body: errorResponse.error })
   }

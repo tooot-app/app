@@ -9,6 +9,7 @@ import {
   ActionSheetIOS,
   Keyboard,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -166,80 +167,93 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <TextInput
-        style={[
-          styles.textInput,
-          {
-            flex: postState.overlay ? 0 : 1,
-            minHeight: editorMinHeight + 14
-          }
-        ]}
-        autoCapitalize='none'
-        autoCorrect={false}
-        autoFocus
-        enablesReturnKeyAutomatically
-        multiline
-        placeholder='想说点什么'
-        onChangeText={content => onChangeText({ content })}
-        onContentSizeChange={({ nativeEvent }) => {
-          setEditorMinHeight(nativeEvent.contentSize.height)
-        }}
-        onSelectionChange={({
-          nativeEvent: {
-            selection: { start, end }
-          }
-        }) => {
-          postDispatch({ type: 'selection', payload: { start, end } })
-        }}
-        scrollEnabled
+    <View style={styles.base}>
+      <ScrollView
+        style={styles.contentView}
+        alwaysBounceVertical={false}
+        keyboardDismissMode='interactive'
       >
-        <Text>{postState.text.formatted}</Text>
-      </TextInput>
-      {postState.attachments.length > 0 && (
-        <View style={styles.attachments}>
-          <PostAttachments postState={postState} postDispatch={postDispatch} />
-        </View>
-      )}
-      {postState.poll.active && (
-        <View style={styles.poll}>
-          <PostPoll postState={postState} postDispatch={postDispatch} />
-        </View>
-      )}
-      {postState.overlay === 'suggestions' ? (
-        <View style={styles.suggestions}>
-          <PostSuggestions
-            onChangeText={onChangeText}
-            postState={postState}
-            postDispatch={postDispatch}
-          />
-        </View>
-      ) : (
-        <></>
-      )}
-      {postState.overlay === 'emojis' ? (
-        <View style={styles.emojis}>
-          <PostEmojis
-            onChangeText={onChangeText}
-            postState={postState}
-            postDispatch={postDispatch}
-          />
-        </View>
-      ) : (
-        <></>
-      )}
+        <TextInput
+          style={[
+            styles.textInput
+            // {
+            //   flex: postState.overlay ? 0 : 1,
+            //   minHeight: editorMinHeight + 14
+            // }
+          ]}
+          autoCapitalize='none'
+          autoCorrect={false}
+          autoFocus
+          enablesReturnKeyAutomatically
+          multiline
+          placeholder='想说点什么'
+          onChangeText={content => onChangeText({ content })}
+          onContentSizeChange={({ nativeEvent }) => {
+            setEditorMinHeight(nativeEvent.contentSize.height)
+          }}
+          onSelectionChange={({
+            nativeEvent: {
+              selection: { start, end }
+            }
+          }) => {
+            postDispatch({ type: 'selection', payload: { start, end } })
+          }}
+          scrollEnabled
+        >
+          <Text>{postState.text.formatted}</Text>
+        </TextInput>
+        {postState.attachments.length > 0 && (
+          <View style={styles.attachments}>
+            <PostAttachments
+              postState={postState}
+              postDispatch={postDispatch}
+            />
+          </View>
+        )}
+        {postState.poll.active && (
+          <View style={styles.poll}>
+            <PostPoll postState={postState} postDispatch={postDispatch} />
+          </View>
+        )}
+        {postState.overlay === 'suggestions' ? (
+          <View style={styles.suggestions}>
+            <PostSuggestions
+              onChangeText={onChangeText}
+              postState={postState}
+              postDispatch={postDispatch}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
+        {postState.overlay === 'emojis' ? (
+          <View style={styles.emojis}>
+            <PostEmojis
+              onChangeText={onChangeText}
+              postState={postState}
+              postDispatch={postDispatch}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
+      </ScrollView>
       <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
         <Feather
           name='paperclip'
           size={24}
+          color={postState.poll.active ? 'gray' : 'black'}
           onPress={async () =>
-            await addAttachments({ postState, postDispatch })
+            !postState.poll.active &&
+            (await addAttachments({ postState, postDispatch }))
           }
         />
         <Feather
           name='bar-chart-2'
           size={24}
+          color={postState.attachments.length > 0 ? 'gray' : 'black'}
           onPress={() =>
+            postState.attachments.length === 0 &&
             postDispatch({
               type: 'poll',
               payload: { ...postState.poll, active: !postState.poll.active }
@@ -295,18 +309,22 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
 // (PostEmojis as any).whyDidYouRender = true
 
 const styles = StyleSheet.create({
-  main: {
+  base: {
     flex: 1
   },
-  textInput: {
+  contentView: {
+    flex: 1,
     backgroundColor: 'gray'
+  },
+  textInput: {
+    backgroundColor: 'lightgray',
+    paddingBottom: 20
   },
   attachments: {
     flex: 1,
     height: 100
   },
   poll: {
-    flex: 1,
     height: 100
   },
   suggestions: {

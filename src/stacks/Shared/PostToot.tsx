@@ -204,6 +204,12 @@ const PostToot: React.FC = () => {
         formData.append('poll[expires_in]', postState.poll.expire)
         formData.append('poll[multiple]', postState.poll.multiple.toString())
       }
+      if (postState.attachments.length > 0) {
+        postState.attachments.forEach(attachment =>
+          formData.append('media_ids[]', attachment.id)
+        )
+      }
+      formData.append('visibility', postState.visibility)
 
       client({
         method: 'post',
@@ -220,7 +226,10 @@ const PostToot: React.FC = () => {
               Alert.alert('发布成功', '', [
                 {
                   text: '好的',
-                  onPress: () => navigation.goBack()
+                  onPress: () => {
+                    // clear homepage cache
+                    navigation.goBack()
+                  }
                 }
               ])
             } else {

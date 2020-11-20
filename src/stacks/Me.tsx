@@ -8,6 +8,11 @@ import sharedScreens from 'src/stacks/Shared/sharedScreens'
 
 const Stack = createNativeStackNavigator()
 
+export type ScreenMe = {
+  'Me-Base': undefined
+  'Me-Authentication': undefined
+}
+
 const Me: React.FC = () => {
   return (
     <Stack.Navigator>
