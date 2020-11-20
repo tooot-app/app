@@ -22,8 +22,9 @@ const client = async ({
   }
   body?: FormData
 }): Promise<any> => {
-  const state: RootState['instanceInfo'] = store.getState().instanceInfo
-  const url = instanceUrl || store.getState().instanceInfo[instance]
+  const state: RootState['instances'] = store.getState().instances
+  const url =
+    instance === 'remote' ? instanceUrl || state.remote.url : state.local.url
 
   let response
   // try {
@@ -35,7 +36,7 @@ const client = async ({
       'Content-Type': 'application/json',
       ...headers,
       ...(instance === 'local' && {
-        Authorization: `Bearer ${state.localToken}`
+        Authorization: `Bearer ${state.local.token}`
       })
     },
     ...(body && { body: body }),

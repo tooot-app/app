@@ -15,7 +15,7 @@ const renderNode = ({
   node: HTMLViewNode
   index: number
   navigation: any
-  mentions?: mastodon.Mention[]
+  mentions?: Mastodon.Mention[]
   showFullLink: boolean
 }) => {
   if (node.name == 'a') {
@@ -80,9 +80,9 @@ const renderNode = ({
 
 export interface Props {
   content: string
-  emojis?: mastodon.Emoji[]
+  emojis?: Mastodon.Emoji[]
   emojiSize?: number
-  mentions?: mastodon.Mention[]
+  mentions?: Mastodon.Mention[]
   showFullLink?: boolean
   linesTruncated?: number
 }

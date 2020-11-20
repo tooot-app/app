@@ -1,10 +1,4 @@
-declare namespace store {
-  type InstanceInfoState = {
-    local: string
-    localToken: string
-    remote: string
-  }
-
+declare namespace App {
   type Pages =
     | 'Following'
     | 'Local'

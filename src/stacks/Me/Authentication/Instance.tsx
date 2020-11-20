@@ -1,16 +1,23 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Text, TextInput, View } from 'react-native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
 import { instanceFetch } from 'src/stacks/common/instanceFetch'
-import { ScreenMeAuthentication } from '../Authentication'
 import client from 'src/api/client'
-import * as AppAuth from 'expo-app-auth'
+import * as AuthSession from 'expo-auth-session'
+import { useDispatch } from 'react-redux'
+import { updateLocal } from 'src/stacks/common/instancesSlice'
+import { useNavigation } from '@react-navigation/native'
 
 const Instance: React.FC = () => {
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
   const [instance, setInstance] = useState('')
+  const [applicationData, setApplicationData] = useState<{
+    clientId: string
+    clientSecret: string
+  }>()
 
   const { isSuccess, refetch, data } = useQuery(
     ['Instance', { instance }],
@@ -25,6 +32,7 @@ const Instance: React.FC = () => {
     debounce(
       text => {
         setInstance(text)
+        setApplicationData(undefined)
         refetch()
       },
       1000,
@@ -35,26 +43,10 @@ const Instance: React.FC = () => {
     []
   )
 
-  const signInAsync = async (id: string) => {
-    let authState = await AppAuth.authAsync({
-      issuer: `https://${instance}`,
-      scopes: ['read', 'write', 'follow', 'push'],
-      clientId: id,
-      redirectUrl: 'exp://127.0.0.1:19000',
-      serviceConfiguration: {
-        authorizationEndpoint: `https://${instance}/oauth/authorize`,
-        revocationEndpoint: `https://${instance}/oauth/revoke`,
-        tokenEndpoint: `https://${instance}/oauth/token`
-      },
-      additionalParameters: {
-        response_type: 'code'
-      }
-    })
-    console.log(authState)
-    return authState
-  }
-
-  const oauthCreateApplication = async () => {
+  const createApplication = async () => {
+    if (applicationData) {
+      return Promise.resolve()
+    }
     const formData = new FormData()
     formData.append('client_name', 'test_dudu')
     formData.append('redirect_uris', 'exp://127.0.0.1:19000')
@@ -68,20 +60,60 @@ const Instance: React.FC = () => {
       body: formData
     })
     if (res.body?.client_id.length > 0) {
-      return Promise.resolve(res.body)
+      setApplicationData({
+        clientId: res.body.client_id,
+        clientSecret: res.body.client_secret
+      })
+      return Promise.resolve()
     } else {
       return Promise.reject()
     }
   }
 
-  const oauthFlow = async () => {
-    const applicationData = await oauthCreateApplication()
-    if (applicationData.client_id.length > 0) {
-      await signInAsync(applicationData.client_id)
-    } else {
-      console.error('Application data error')
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId: applicationData?.clientId!,
+      clientSecret: applicationData?.clientSecret,
+      scopes: ['read', 'write', 'follow', 'push'],
+      redirectUri: 'exp://127.0.0.1:19000'
+      // usePKCE: false
+    },
+    {
+      authorizationEndpoint: `https://${instance}/oauth/authorize`
     }
-  }
+  )
+
+  useEffect(() => {
+    ;(async () => {
+      if (request?.clientId) {
+        await promptAsync()
+      }
+    })()
+  }, [request])
+
+  useEffect(() => {
+    ;(async () => {
+      if (response?.type === 'success') {
+        const { accessToken } = await AuthSession.exchangeCodeAsync(
+          {
+            clientId: applicationData?.clientId!,
+            clientSecret: applicationData?.clientSecret,
+            scopes: ['read', 'write', 'follow', 'push'],
+            redirectUri: 'exp://127.0.0.1:19000',
+            code: response.params.code,
+            extraParams: {
+              grant_type: 'authorization_code'
+            }
+          },
+          {
+            tokenEndpoint: `https://${instance}/oauth/token`
+          }
+        )
+        dispatch(updateLocal({ url: instance, token: accessToken }))
+        navigation.navigate('Local')
+      }
+    })()
+  }, [response])
 
   return (
     <View>
@@ -99,7 +131,7 @@ const Instance: React.FC = () => {
       <Button
         title='登录'
         disabled={!data?.uri}
-        onPress={async () => await oauthFlow()}
+        onPress={async () => await createApplication()}
       />
       {isSuccess && data && data.uri && (
         <View>

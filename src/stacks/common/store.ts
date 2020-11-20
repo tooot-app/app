@@ -1,27 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import instanceInfoSlice from 'src/stacks/common/instanceInfoSlice'
-
-// get site information from local storage and pass to reducers
-const preloadedState = {
-  instanceInfo: {
-    local: 'social.xmflsct.com',
-    localToken: 'qjzJ0IjvZ1apsn0_wBkGcdjKgX7Dao9KEPhGwggPwAo',
-    localAccountId: '1',
-    localAccount: {
-      locked: false
-    },
-    remote: 'mastodon.social'
-  }
-}
-
-const reducer = {
-  instanceInfo: instanceInfoSlice
-}
+import instancesSlice from 'src/stacks/common/instancesSlice'
 
 const store = configureStore({
-  preloadedState,
-  reducer
+  reducer: {
+    instances: instancesSlice
+  }
 })
 
 export default store

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Emojis from './Emojis'
 
 export interface Props {
-  poll: mastodon.Poll
+  poll: Mastodon.Poll
 }
 // When haven't voted, result should not be shown but intead let people vote
 const Poll: React.FC<Props> = ({ poll }) => {

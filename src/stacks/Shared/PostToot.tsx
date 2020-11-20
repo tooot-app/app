@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 import store from 'src/stacks/common/store'
 import PostMain from './PostToot/PostMain'
 import client from 'src/api/client'
+import { getLocalAccountPreferences } from '../common/instancesSlice'
 
 const Stack = createNativeStackNavigator()
 
@@ -31,7 +32,7 @@ export type PostState = {
         offset: number
       }
     | undefined
-  emojis: mastodon.Emoji[] | undefined
+  emojis: Mastodon.Emoji[] | undefined
   poll: {
     active: boolean
     total: number
@@ -130,9 +131,10 @@ const postInitialState: PostState = {
     expire: '86400'
   },
   attachments: [],
-  visibility: store.getState().instanceInfo.localAccount.locked
-    ? 'private'
-    : 'public'
+  visibility:
+    getLocalAccountPreferences(store.getState())[
+      'posting:default:visibility'
+    ] || 'public'
 }
 const postReducer = (state: PostState, action: PostAction): PostState => {
   switch (action.type) {

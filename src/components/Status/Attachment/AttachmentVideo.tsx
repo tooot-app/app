@@ -4,7 +4,7 @@ import { Video } from 'expo-av'
 import { Feather } from '@expo/vector-icons'
 
 export interface Props {
-  media_attachments: mastodon.Attachment[]
+  media_attachments: Mastodon.Attachment[]
   sensitive: boolean
   width: number
 }

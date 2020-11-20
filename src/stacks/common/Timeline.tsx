@@ -4,13 +4,12 @@ import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import StatusInNotifications from 'src/components/StatusInNotifications'
 import StatusInTimeline from 'src/components/StatusInTimeline'
-import store from './store'
 import { timelineFetch } from './timelineFetch'
 
 // Opening nesting hashtag pages
 
 export interface Props {
-  page: store.Pages
+  page: App.Pages
   hashtag?: string
   list?: string
   toot?: string
@@ -38,7 +37,7 @@ const Timeline: React.FC<Props> = ({
     return () => AppState.removeEventListener('change', handleAppStateChange)
   })
 
-  const queryKey: store.QueryKey = [
+  const queryKey: App.QueryKey = [
     page,
     { page, hashtag, list, toot, account }
   ]

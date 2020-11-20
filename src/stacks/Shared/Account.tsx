@@ -58,8 +58,8 @@ const Information = ({
   account,
   emojis
 }: {
-  account: mastodon.Account
-  emojis: mastodon.Emoji[]
+  account: Mastodon.Account
+  emojis: Mastodon.Emoji[]
 }) => {
   return (
     <View style={styles.information}>

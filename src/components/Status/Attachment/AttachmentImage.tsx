@@ -3,7 +3,7 @@ import { Button, Image, Modal, StyleSheet, Pressable, View } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
 
 export interface Props {
-  media_attachments: mastodon.Attachment[]
+  media_attachments: Mastodon.Attachment[]
   sensitive: boolean
   width: number
 }

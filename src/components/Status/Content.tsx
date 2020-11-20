@@ -6,8 +6,8 @@ import ParseContent from 'src/components/ParseContent'
 
 export interface Props {
   content: string
-  emojis: mastodon.Emoji[]
-  mentions: mastodon.Mention[]
+  emojis: Mastodon.Emoji[]
+  mentions: Mastodon.Mention[]
   spoiler_text?: string
 }
 

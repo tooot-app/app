@@ -95,7 +95,7 @@ export const timelineFetch = async (
           pinned: 'true'
         }
       })
-      let toots: mastodon.Status[] = res.body
+      let toots: Mastodon.Status[] = res.body
       res = await client({
         method: 'get',
         instance: 'local',

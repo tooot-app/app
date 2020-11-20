@@ -5,7 +5,7 @@ const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
 
 export interface Props {
   content: string
-  emojis: mastodon.Emoji[]
+  emojis: Mastodon.Emoji[]
   dimension: number
 }
 

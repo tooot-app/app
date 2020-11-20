@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 export interface Props {
-  card: mastodon.Card
+  card: Mastodon.Card
 }
 
 const Card: React.FC<Props> = ({ card }) => {

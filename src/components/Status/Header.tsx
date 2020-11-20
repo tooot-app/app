@@ -9,6 +9,11 @@ import Emojis from './Emojis'
 import relativeTime from 'src/utils/relativeTime'
 import client from 'src/api/client'
 import { useSelector } from 'react-redux'
+import {
+  getLocalAccountId,
+  getLocalUrl
+} from 'src/stacks/common/instancesSlice'
+import store from 'src/stacks/common/store'
 
 const fireMutation = async ({
   id,
@@ -116,14 +121,14 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: store.QueryKey
+  queryKey: App.QueryKey
   accountId: string
   domain: string
   name: string
-  emojis?: mastodon.Emoji[]
+  emojis?: Mastodon.Emoji[]
   account: string
   created_at: string
-  application?: mastodon.Application
+  application?: Mastodon.Application
 }
 
 const Header: React.FC<Props> = ({
@@ -137,8 +142,8 @@ const Header: React.FC<Props> = ({
   application
 }) => {
   const navigation = useNavigation()
-  const localAccountId = useSelector(state => state.instanceInfo.localAccountId)
-  const localDomain = useSelector(state => state.instanceInfo.local)
+  const localAccountId = getLocalAccountId(store.getState())
+  const localDomain = getLocalUrl(store.getState())
   const [since, setSince] = useState(relativeTime(created_at))
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -158,7 +163,7 @@ const Header: React.FC<Props> = ({
       //   oldData &&
       //     oldData.map((paging: any) => {
       //       paging.toots.map(
-      //         (status: mastodon.Status | mastodon.Notification, i: number) => {
+      //         (status: Mastodon.Status | Mastodon.Notification, i: number) => {
       //           if (status.id === newData.id) {
       //             paging.toots[i] = newData
       //           }

@@ -7,7 +7,7 @@ import Emojis from './Emojis'
 export interface Props {
   action: 'favourite' | 'follow' | 'mention' | 'poll' | 'reblog'
   name?: string
-  emojis?: mastodon.Emoji[]
+  emojis?: Mastodon.Emoji[]
   notification?: boolean
 }
 

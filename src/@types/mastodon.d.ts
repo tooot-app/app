@@ -1,4 +1,4 @@
-declare namespace mastodon {
+declare namespace Mastodon {
   type Account = {
     // Base
     id: string
@@ -182,6 +182,14 @@ declare namespace mastodon {
     own_votes?: number[]
     options: { title: string; votes_count: number }[]
     emojis: Emoji[]
+  }
+
+  type Preferences = {
+    'posting:default:visibility'?: 'public' | 'unlisted' | 'private' | 'direct'
+    'posting:default:sensitive'?: boolean
+    'posting:default:language'?: string
+    'reading:expand:media'?: 'default' | 'show_all' | 'hide_all'
+    'reading:expand:spoilers'?: boolean
   }
 
   type Status = {

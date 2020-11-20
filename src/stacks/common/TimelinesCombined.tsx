@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Dimensions, FlatList, View } from 'react-native'
+import { Dimensions, FlatList, Text, View } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { Feather } from '@expo/vector-icons'
 
 import Timeline from './Timeline'
 import sharedScreens from 'src/stacks/Shared/sharedScreens'
+import { getLocalRegistered } from './instancesSlice'
+import store from './store'
 
 const Stack = createNativeStackNavigator()
 
-const Page = ({ item: { page } }: { item: { page: store.TimelinePage } }) => {
+const Page = ({ item: { page } }: { item: { page: App.Pages } }) => {
   return (
     <View style={{ width: Dimensions.get('window').width }}>
       <Timeline page={page} />
@@ -19,10 +21,11 @@ const Page = ({ item: { page } }: { item: { page: store.TimelinePage } }) => {
 
 export interface Props {
   name: string
-  content: { title: string; page: string }[]
+  content: { title: string; page: App.Pages }[]
 }
 
 const TimelinesCombined: React.FC<Props> = ({ name, content }) => {
+  const localRegistered = getLocalRegistered(store.getState())
   const [segment, setSegment] = useState(0)
   const [renderHeader, setRenderHeader] = useState(false)
   const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
@@ -68,7 +71,13 @@ const TimelinesCombined: React.FC<Props> = ({ name, content }) => {
             data={content}
             keyExtractor={({ page }) => page}
             renderItem={({ item, index }) => {
-              return <Page key={index} item={item} />
+              return localRegistered || item.page === 'RemotePublic' ? (
+                <Page key={index} item={item} />
+              ) : (
+                <View style={{ width: Dimensions.get('window').width }}>
+                  <Text>请先登录</Text>
+                </View>
+              )
             }}
             ref={horizontalPaging}
             bounces={false}

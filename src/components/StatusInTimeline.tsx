@@ -12,8 +12,8 @@ import Card from './Status/Card'
 import ActionsStatus from './Status/ActionsStatus'
 
 export interface Props {
-  status: mastodon.Status
-  queryKey: store.QueryKey
+  status: Mastodon.Status
+  queryKey: App.QueryKey
 }
 
 const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {

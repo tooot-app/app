@@ -5,7 +5,7 @@ import AttachmentImage from './Attachment/AttachmentImage'
 import AttachmentVideo from './Attachment/AttachmentVideo'
 
 export interface Props {
-  media_attachments: mastodon.Attachment[]
+  media_attachments: Mastodon.Attachment[]
   sensitive: boolean
   width: number
 }

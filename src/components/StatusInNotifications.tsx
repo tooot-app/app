@@ -12,8 +12,8 @@ import Card from './Status/Card'
 import ActionsStatus from './Status/ActionsStatus'
 
 export interface Props {
-  notification: mastodon.Notification
-  queryKey: store.QueryKey
+  notification: Mastodon.Notification
+  queryKey: App.QueryKey
 }
 
 const TootNotification: React.FC<Props> = ({ notification, queryKey }) => {

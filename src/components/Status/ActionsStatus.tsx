@@ -10,10 +10,11 @@ import {
 } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { useMutation, useQueryCache } from 'react-query'
-import { useSelector } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 
 import client from 'src/api/client'
+import { getLocalAccountId } from 'src/stacks/common/instancesSlice'
+import store from 'src/stacks/common/store'
 
 const fireMutation = async ({
   id,
@@ -106,12 +107,12 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: store.QueryKey
-  status: mastodon.Status
+  queryKey: App.QueryKey
+  status: Mastodon.Status
 }
 
 const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
-  const localAccountId = useSelector(state => state.instanceInfo.localAccountId)
+  const localAccountId = getLocalAccountId(store.getState())
   const [modalVisible, setModalVisible] = useState(false)
 
   const queryCache = useQueryCache()
@@ -129,7 +130,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
       //   oldData &&
       //     oldData.map((paging: any) => {
       //       paging.toots.map(
-      //         (status: mastodon.Status | mastodon.Notification, i: number) => {
+      //         (status: Mastodon.Status | Mastodon.Notification, i: number) => {
       //           if (status.id === newData.id) {
       //             paging.toots[i] = newData
       //           }
