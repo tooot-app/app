@@ -64,8 +64,8 @@ export const Index: React.FC = () => {
                 length,
                 [length - 1]: last
               } = navigation.dangerouslyGetState().history
-              navigation.navigate(last.key.split(new RegExp(/(.*?)-/))[1], {
-                screen: 'PostToot'
+              navigation.navigate(last.key.split(new RegExp(/(.*)-/))[1], {
+                screen: 'Screen-Shared-Compose'
               })
             }
           })}

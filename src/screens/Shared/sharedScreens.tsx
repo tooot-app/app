@@ -4,7 +4,7 @@ import ScreenSharedAccount from 'src/screens/Shared/Account'
 import ScreenSharedHashtag from 'src/screens/Shared/Hashtag'
 import ScreenSharedToot from 'src/screens/Shared/Toot'
 import ScreenSharedWebview from 'src/screens/Shared/Webview'
-import PostToot from 'src/screens/Shared/Compose'
+import Compose from 'src/screens/Shared/Compose'
 import { TypedNavigator } from '@react-navigation/native'
 import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
 import {
@@ -62,9 +62,9 @@ const sharedScreens = (
       // })}
     />,
     <Stack.Screen
-      key='Screen-Shared-PostToot'
-      name='Screen-Shared-PostToot'
-      component={PostToot}
+      key='Screen-Shared-Compose'
+      name='Screen-Shared-Compose'
+      component={Compose}
       options={{
         stackPresentation: 'fullScreenModal'
       }}

@@ -164,7 +164,7 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
   }
 }
 
-const PostToot: React.FC = () => {
+const Compose: React.FC = () => {
   const navigation = useNavigation()
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
@@ -305,4 +305,4 @@ const PostToot: React.FC = () => {
 }
 // ;(PostMain as any).whyDidYouRender = true
 
-export default PostToot
+export default Compose
