@@ -3,7 +3,7 @@ import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
 import { Provider } from 'react-redux'
 
 import { Index } from 'src/Index'
-import store from 'src/store'
+import { store } from 'src/store'
 
 const queryCache = new QueryCache()
 

@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useNavigation } from '@react-navigation/native'
 
-import store from 'src/store'
+import { store } from 'src/store'
 import PostMain from './Compose/PostMain'
 import client from 'src/api/client'
 import { getLocalAccountPreferences } from 'src/utils/slices/instancesSlice'

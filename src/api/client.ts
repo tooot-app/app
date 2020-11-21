@@ -1,4 +1,4 @@
-import store, { RootState } from 'src/store'
+import { store, RootState } from 'src/store'
 import ky from 'ky'
 
 const client = async ({

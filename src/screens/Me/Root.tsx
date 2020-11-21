@@ -1,12 +1,15 @@
 import React from 'react'
 import { View } from 'react-native'
-import store from 'src/store'
-import { getLocalRegistered } from 'src/utils/slices/instancesSlice'
+import { useSelector } from 'react-redux'
+
+import { RootState } from 'src/store'
 
 import Login from './Root/Login'
 
 const ScreenMeRoot: React.FC = () => {
-  const localRegistered = getLocalRegistered(store.getState())
+  const localRegistered = useSelector(
+    (state: RootState) => state.instances.local.url
+  )
 
   return <View>{localRegistered ? <></> : <Login />}</View>
 }

@@ -14,7 +14,7 @@ import { Feather } from '@expo/vector-icons'
 
 import client from 'src/api/client'
 import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
-import store from 'src/store'
+import {store} from 'src/store'
 
 const fireMutation = async ({
   id,
