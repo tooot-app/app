@@ -57,7 +57,6 @@ export const Index: React.FC = () => {
         <Tab.Screen name='Screen-Public' component={ScreenPublic} />
         <Tab.Screen
           name='Screen-Post'
-          component={() => <></>}
           listeners={({ navigation, route }) => ({
             tabPress: e => {
               e.preventDefault()
@@ -70,8 +69,13 @@ export const Index: React.FC = () => {
               })
             }
           })}
+        >
+          {() => <></>}
+        </Tab.Screen>
+        <Tab.Screen
+          name='Screen-Notifications'
+          component={ScreenNotifications}
         />
-        <Tab.Screen name='Screen-Notifications' component={ScreenNotifications} />
         <Tab.Screen name='Screen-Me' component={ScreenMe} />
       </Tab.Navigator>
 

@@ -5,8 +5,27 @@ import ScreenSharedHashtag from 'src/screens/Shared/Hashtag'
 import ScreenSharedToot from 'src/screens/Shared/Toot'
 import ScreenSharedWebview from 'src/screens/Shared/Webview'
 import PostToot from 'src/screens/Shared/Compose'
+import { TypedNavigator } from '@react-navigation/native'
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
+import {
+  NativeStackNavigationEventMap,
+  NativeStackNavigatorProps
+} from 'react-native-screens/lib/typescript/types'
 
-const sharedScreens = (Stack: any) => {
+const sharedScreens = (
+  Stack: TypedNavigator<
+    Record<string, object | undefined>,
+    any,
+    NativeStackNavigationOptions,
+    NativeStackNavigationEventMap,
+    ({
+      initialRouteName,
+      children,
+      screenOptions,
+      ...rest
+    }: NativeStackNavigatorProps) => JSX.Element
+  >
+) => {
   return [
     <Stack.Screen
       key='Screen-Shared-Account'
@@ -15,7 +34,7 @@ const sharedScreens = (Stack: any) => {
       options={{
         headerTranslucent: true,
         headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-        headerCenter: () => {}
+        headerCenter: () => <></>
       }}
     />,
     <Stack.Screen

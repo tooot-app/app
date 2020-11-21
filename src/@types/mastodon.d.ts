@@ -136,6 +136,13 @@ declare namespace Mastodon {
     blurhash: string
   }
 
+  type Conversation = {
+    id: string
+    accounts: Account[]
+    unread: boolean
+    last_status?: Status
+  }
+
   type Emoji = {
     // Base
     shortcode: string
@@ -149,6 +156,11 @@ declare namespace Mastodon {
     name: string
     value: string
     verified_at?: string
+  }
+
+  type List = {
+    id: string
+    title: string
   }
 
   type Mention = {

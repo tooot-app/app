@@ -76,7 +76,6 @@ const Login: React.FC = () => {
       clientSecret: applicationData?.clientSecret,
       scopes: ['read', 'write', 'follow', 'push'],
       redirectUri: 'exp://127.0.0.1:19000'
-      // usePKCE: false
     },
     {
       authorizationEndpoint: `https://${instance}/oauth/authorize`

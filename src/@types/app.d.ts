@@ -11,6 +11,9 @@ declare namespace App {
     | 'Account_Default'
     | 'Account_All'
     | 'Account_Media'
+    | 'Conversations'
+    | 'Bookmarks'
+    | 'Favourites'
 
   type QueryKey = [
     Pages,

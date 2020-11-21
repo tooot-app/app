@@ -12,23 +12,23 @@ import Card from './Status/Card'
 import ActionsStatus from './Status/ActionsStatus'
 
 export interface Props {
-  status: Mastodon.Status
+  item: Mastodon.Status
   queryKey: App.QueryKey
 }
 
-const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
+const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const navigation = useNavigation()
 
-  let actualStatus = status.reblog ? status.reblog : status
+  let actualStatus = item.reblog ? item.reblog : item
 
   const statusView = useMemo(() => {
     return (
       <View style={styles.statusView}>
-        {status.reblog && (
+        {item.reblog && (
           <Actioned
             action='reblog'
-            name={status.account.display_name || status.account.username}
-            emojis={status.account.emojis}
+            name={item.account.display_name || item.account.username}
+            emojis={item.account.emojis}
           />
         )}
         <View style={styles.status}>
@@ -47,13 +47,15 @@ const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
               }
               emojis={actualStatus.account.emojis}
               account={actualStatus.account.acct}
-              created_at={status.created_at}
-              application={status.application}
+              created_at={item.created_at}
+              application={item.application}
             />
             {/* Can pass toot info to next page to speed up performance */}
             <Pressable
               onPress={() =>
-                navigation.navigate('Toot', { toot: actualStatus.id })
+                navigation.navigate('Screen-Shared-Toot', {
+                  toot: actualStatus.id
+                })
               }
             >
               {actualStatus.content ? (
@@ -83,7 +85,7 @@ const StatusInTimeline: React.FC<Props> = ({ status, queryKey }) => {
         </View>
       </View>
     )
-  }, [status])
+  }, [item])
 
   return statusView
 }
@@ -104,4 +106,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default StatusInTimeline
+export default TimelineDefault

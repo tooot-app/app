@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
 import createSecureStore from 'redux-persist-expo-securestore'
 
@@ -14,7 +14,12 @@ const instancesPersistConfig = {
 const store = configureStore({
   reducer: {
     instances: persistReducer(instancesPersistConfig, instancesSlice)
-  }
+  },
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: ['persist/PERSIST']
+    }
+  })
 })
 
 let persistor = persistStore(store)

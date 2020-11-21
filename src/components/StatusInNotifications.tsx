@@ -45,7 +45,9 @@ const TootNotification: React.FC<Props> = ({ notification, queryKey }) => {
             />
             <Pressable
               onPress={() =>
-                navigation.navigate('Toot', { toot: notification.id })
+                navigation.navigate('Screen-Shared-Toot', {
+                  toot: notification.id
+                })
               }
             >
               {notification.status ? (

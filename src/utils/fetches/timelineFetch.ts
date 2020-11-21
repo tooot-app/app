@@ -47,7 +47,7 @@ export const timelineFetch = async (
         endpoint: 'timelines/home',
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Local':
       query.local = 'true'
@@ -57,7 +57,7 @@ export const timelineFetch = async (
         endpoint: 'timelines/public',
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'LocalPublic':
       res = await client({
@@ -66,7 +66,7 @@ export const timelineFetch = async (
         endpoint: 'timelines/public',
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'RemotePublic':
       res = await client({
@@ -75,7 +75,7 @@ export const timelineFetch = async (
         endpoint: 'timelines/public',
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Notifications':
       res = await client({
@@ -84,7 +84,7 @@ export const timelineFetch = async (
         endpoint: 'notifications',
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Account_Default':
       res = await client({
@@ -105,7 +105,7 @@ export const timelineFetch = async (
         }
       })
       toots = uniqBy([...toots, ...res.body], 'id')
-      return Promise.resolve({ toots: toots })
+      return Promise.resolve({ toots: toots, pointer: null })
 
     case 'Account_All':
       res = await client({
@@ -114,7 +114,7 @@ export const timelineFetch = async (
         endpoint: `accounts/${account}/statuses`,
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Account_Media':
       res = await client({
@@ -125,7 +125,7 @@ export const timelineFetch = async (
           only_media: 'true'
         }
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Hashtag':
       res = await client({
@@ -134,18 +134,43 @@ export const timelineFetch = async (
         endpoint: `timelines/tag/${hashtag}`,
         query
       })
-      return Promise.resolve({ toots: res.body })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
-    // case 'List':
-    //   res = await client({
-    //     method: 'get',
-    //     instance: 'local',
-    //     endpoint: `timelines/list/${list}`,
-    //     query
-    //   })
-    //   return {
-    //     toots: res.body
-    //   }
+    case 'Conversations':
+      res = await client({
+        method: 'get',
+        instance: 'local',
+        endpoint: `conversations`,
+        query
+      })
+      return Promise.resolve({ toots: res.body, pointer: null })
+
+    case 'Bookmarks':
+      res = await client({
+        method: 'get',
+        instance: 'local',
+        endpoint: `bookmarks`,
+        query
+      })
+      return Promise.resolve({ toots: res.body, pointer: null })
+
+    case 'Favourites':
+      res = await client({
+        method: 'get',
+        instance: 'local',
+        endpoint: `favourites`,
+        query
+      })
+      return Promise.resolve({ toots: res.body, pointer: null })
+
+    case 'List':
+      res = await client({
+        method: 'get',
+        instance: 'local',
+        endpoint: `timelines/list/${list}`,
+        query
+      })
+      return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Toot':
       const current = await client({
@@ -168,6 +193,6 @@ export const timelineFetch = async (
       })
 
     default:
-      console.error('First time fetching timeline error')
+      console.error('Page is not provided')
   }
 }

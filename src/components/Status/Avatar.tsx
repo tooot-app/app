@@ -14,7 +14,7 @@ const Avatar: React.FC<Props> = ({ uri, id }) => {
     <Pressable
       style={styles.avatar}
       onPress={() => {
-        navigation.navigate('Account', {
+        navigation.navigate('Screen-Shared-Account', {
           id: id
         })
       }}

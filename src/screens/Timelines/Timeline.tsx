@@ -3,7 +3,8 @@ import { ActivityIndicator, AppState, FlatList, Text, View } from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import StatusInNotifications from 'src/components/StatusInNotifications'
-import StatusInTimeline from 'src/components/StatusInTimeline'
+import TimelineDefault from 'src/components/TimelineDefault'
+import TimelineConversation from 'src/components/TimelineConversation'
 import { timelineFetch } from 'src/utils/fetches/timelineFetch'
 
 // Opening nesting hashtag pages
@@ -37,10 +38,7 @@ const Timeline: React.FC<Props> = ({
     return () => AppState.removeEventListener('change', handleAppStateChange)
   })
 
-  const queryKey: App.QueryKey = [
-    page,
-    { page, hashtag, list, toot, account }
-  ]
+  const queryKey: App.QueryKey = [page, { page, hashtag, list, toot, account }]
   const {
     isLoading,
     isFetchingMore,
@@ -50,9 +48,7 @@ const Timeline: React.FC<Props> = ({
     fetchMore
   } = useInfiniteQuery(queryKey, timelineFetch)
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
-  // if (page==='Toot'){
-  //   console.log(data)
-  // }
+  // const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
 
   let content
   if (!isSuccess) {
@@ -67,18 +63,30 @@ const Timeline: React.FC<Props> = ({
           scrollEnabled={scrollEnabled} // For timeline in Account view
           data={flattenData}
           keyExtractor={({ id }) => id}
-          renderItem={({ item, index, separators }) =>
-            page === 'Notifications' ? (
-              <StatusInNotifications
-                key={index}
-                notification={item}
-                queryKey={queryKey}
-              />
-            ) : (
-              <StatusInTimeline key={index} status={item} queryKey={queryKey} />
-            )
-          }
-          // {...(state.pointer && { initialScrollIndex: state.pointer })}
+          renderItem={({ item, index, separators }) => {
+            switch (page) {
+              case 'Conversations':
+                return <TimelineConversation key={index} item={item} />
+              case 'Notifications':
+                return (
+                  <StatusInNotifications
+                    key={index}
+                    notification={item}
+                    queryKey={queryKey}
+                  />
+                )
+              default:
+                return (
+                  <TimelineDefault
+                    key={index}
+                    item={item}
+                    queryKey={queryKey}
+                  />
+                )
+            }
+          }}
+          // require getItemLayout
+          // {...(flattenPointer[0] && { initialScrollIndex: flattenPointer[0] })}
           {...(!disableRefresh && {
             onRefresh: () =>
               fetchMore(
