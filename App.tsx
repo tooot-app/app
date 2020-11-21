@@ -1,7 +1,9 @@
 import React from 'react'
 import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
+import { Provider } from 'react-redux'
 
 import { Index } from 'src/Index'
+import store from 'src/store'
 
 const queryCache = new QueryCache()
 
@@ -18,7 +20,9 @@ if (__DEV__) {
 
 const App: React.FC = () => (
   <ReactQueryCacheProvider queryCache={queryCache}>
-    <Index />
+    <Provider store={store}>
+      <Index />
+    </Provider>
   </ReactQueryCacheProvider>
 )
 
