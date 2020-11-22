@@ -1,16 +1,37 @@
 import React from 'react'
-import { Image, Text } from 'react-native'
+import { Image, StyleSheet, Text } from 'react-native'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 
 const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
 
 export interface Props {
   content: string
   emojis: Mastodon.Emoji[]
-  dimension: number
+  size: number
+  fontBold?: boolean
 }
 
-const Emojis: React.FC<Props> = ({ content, emojis, dimension }) => {
+const Emojis: React.FC<Props> = ({
+  content,
+  emojis,
+  size,
+  fontBold = false
+}) => {
+  const { theme } = useTheme()
+  const styles = StyleSheet.create({
+    text: {
+      fontSize: size,
+      lineHeight: size + 2,
+      color: theme.primary,
+      ...(fontBold && { fontWeight: 'bold' })
+    },
+    image: {
+      width: size,
+      height: size
+    }
+  })
   const hasEmojis = content.match(regexEmoji)
+
   return hasEmojis ? (
     <>
       {content.split(regexEmoji).map((str, i) => {
@@ -20,20 +41,19 @@ const Emojis: React.FC<Props> = ({ content, emojis, dimension }) => {
             return emojiShortcode === `:${emoji.shortcode}:`
           })
           return emojiIndex === -1 ? (
-            <Text key={i}>{emojiShortcode}</Text>
+            <Text key={i} style={styles.text}>
+              {emojiShortcode}
+            </Text>
           ) : (
             <Image
               key={i}
               source={{ uri: emojis[emojiIndex].url }}
-              style={{ width: dimension, height: dimension }}
+              style={styles.image}
             />
           )
         } else {
           return (
-            <Text
-              key={i}
-              style={{ fontSize: dimension, lineHeight: dimension + 1 }}
-            >
+            <Text key={i} style={styles.text}>
               {str}
             </Text>
           )
@@ -41,9 +61,7 @@ const Emojis: React.FC<Props> = ({ content, emojis, dimension }) => {
       })}
     </>
   ) : (
-    <Text style={{ fontSize: dimension, lineHeight: dimension + 1 }}>
-      {content}
-    </Text>
+    <Text style={styles.text}>{content}</Text>
   )
 }
 

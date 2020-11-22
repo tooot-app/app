@@ -2,21 +2,23 @@ import React, { useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Actioned from './Status/Actioned'
-import Avatar from './Status/Avatar'
-import Header from './Status/Header'
-import Content from './Status/Content'
-import Poll from './Status/Poll'
-import Attachment from './Status/Attachment'
-import Card from './Status/Card'
-import ActionsStatus from './Status/ActionsStatus'
+import Actioned from './Shared/Actioned'
+import Avatar from './Shared/Avatar'
+import HeaderDefault from './Shared/HeaderDefault'
+import Content from './Shared/Content'
+import Poll from './Shared/Poll'
+import Attachment from './Shared/Attachment'
+import Card from './Shared/Card'
+import ActionsStatus from './Shared/ActionsStatus'
+
+import constants from 'src/utils/styles/constants'
 
 export interface Props {
   notification: Mastodon.Notification
   queryKey: App.QueryKey
 }
 
-const TootNotification: React.FC<Props> = ({ notification, queryKey }) => {
+const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const navigation = useNavigation()
   const actualAccount = notification.status
     ? notification.status.account
@@ -37,7 +39,7 @@ const TootNotification: React.FC<Props> = ({ notification, queryKey }) => {
         <View style={styles.notification}>
           <Avatar uri={actualAccount.avatar} id={actualAccount.id} />
           <View style={styles.details}>
-            <Header
+            <HeaderDefault
               name={actualAccount.display_name || actualAccount.username}
               emojis={actualAccount.emojis}
               account={actualAccount.acct}
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
   notificationView: {
     flex: 1,
     flexDirection: 'column',
-    padding: 12
+    padding: constants.GLOBAL_PAGE_PADDING
   },
   notification: {
     flex: 1,
@@ -108,4 +110,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TootNotification
+export default TimelineNotifications

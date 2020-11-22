@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/segmented-control": "2.1.1",
     "@react-navigation/bottom-tabs": "^5.10.6",
     "@react-navigation/native": "^5.8.6",
@@ -25,6 +26,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
+    "react-native-appearance": "~0.3.3",
     "react-native-collapsible": "^1.5.3",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-htmlview": "^0.16.0",
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@babel/core": "~7.12.3",
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@expo/config": "^3.3.15",
     "@types/lodash": "^4.14.164",
     "@types/node": "^14.14.7",
     "@types/react": "~16.9.35",

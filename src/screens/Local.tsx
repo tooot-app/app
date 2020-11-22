@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Timelines from 'src/screens/Timelines/Timelines'
+import Timelines from 'src/components/Timelines'
 
 const ScreenLocal: React.FC = () => {
   return (

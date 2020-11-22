@@ -2,20 +2,23 @@ import React, { useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Actioned from './Status/Actioned'
-import Avatar from './Status/Avatar'
-import Header from './Status/Header'
-import Content from './Status/Content'
-import Poll from './Status/Poll'
-import Attachment from './Status/Attachment'
-import Card from './Status/Card'
-import ActionsStatus from './Status/ActionsStatus'
+import Actioned from './Shared/Actioned'
+import Avatar from './Shared/Avatar'
+import HeaderDefault from './Shared/HeaderDefault'
+import Content from './Shared/Content'
+import Poll from './Shared/Poll'
+import Attachment from './Shared/Attachment'
+import Card from './Shared/Card'
+import ActionsStatus from './Shared/ActionsStatus'
+
+import constants from 'src/utils/styles/constants'
 
 export interface Props {
   item: Mastodon.Status
   queryKey: App.QueryKey
 }
 
+// When the poll is long
 const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const navigation = useNavigation()
 
@@ -37,7 +40,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
             id={actualStatus.account.id}
           />
           <View style={styles.details}>
-            <Header
+            <HeaderDefault
               queryKey={queryKey}
               accountId={actualStatus.account.id}
               domain={actualStatus.uri.split(new RegExp(/\/\/(.*?)\//))[1]}
@@ -75,7 +78,12 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
                 <Attachment
                   media_attachments={actualStatus.media_attachments}
                   sensitive={actualStatus.sensitive}
-                  width={Dimensions.get('window').width - 24 - 50 - 8}
+                  width={
+                    Dimensions.get('window').width -
+                    constants.SPACING_M * 2 -
+                    50 -
+                    8
+                  }
                 />
               )}
               {actualStatus.card && <Card card={actualStatus.card} />}
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
   statusView: {
     flex: 1,
     flexDirection: 'column',
-    padding: 12
+    padding: constants.GLOBAL_PAGE_PADDING
   },
   status: {
     flex: 1,

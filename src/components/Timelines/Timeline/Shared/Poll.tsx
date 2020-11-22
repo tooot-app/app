@@ -19,7 +19,7 @@ const Poll: React.FC<Props> = ({ poll }) => {
             <Emojis
               content={option.title}
               emojis={poll.emojis}
-              dimension={14}
+              size={14}
             />
           </View>
           <View

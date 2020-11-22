@@ -2,10 +2,11 @@ import React from 'react'
 import { ActivityIndicator, AppState, FlatList, Text, View } from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
-import StatusInNotifications from 'src/components/StatusInNotifications'
-import TimelineDefault from 'src/components/TimelineDefault'
-import TimelineConversation from 'src/components/TimelineConversation'
+import TimelineNotifications from 'src/components/Timelines/Timeline/Notifications'
+import TimelineDefault from 'src/components/Timelines/Timeline/Default'
+import TimelineConversation from 'src/components/Timelines/Timeline/Conversation'
 import { timelineFetch } from 'src/utils/fetches/timelineFetch'
+import TimelineSeparator from './Timeline/Separator'
 
 // Opening nesting hashtag pages
 
@@ -69,7 +70,7 @@ const Timeline: React.FC<Props> = ({
                 return <TimelineConversation key={index} item={item} />
               case 'Notifications':
                 return (
-                  <StatusInNotifications
+                  <TimelineNotifications
                     key={index}
                     notification={item}
                     queryKey={queryKey}
@@ -85,6 +86,7 @@ const Timeline: React.FC<Props> = ({
                 )
             }
           }}
+          ItemSeparatorComponent={() => <TimelineSeparator />}
           // require getItemLayout
           // {...(flattenPointer[0] && { initialScrollIndex: flattenPointer[0] })}
           {...(!disableRefresh && {

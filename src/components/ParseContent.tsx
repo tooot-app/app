@@ -1,18 +1,22 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { Text } from 'react-native'
 import HTMLView, { HTMLViewNode } from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
-import Emojis from 'src/components/Status/Emojis'
+import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
+  theme,
   node,
   index,
   navigation,
   mentions,
   showFullLink
 }: {
-  node: HTMLViewNode
+  theme: any
+  node: any
   index: number
   navigation: any
   mentions?: Mastodon.Mention[]
@@ -26,10 +30,10 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={styles.a}
+            style={{ color: theme.link }}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-              navigation.push('Hashtag', {
+              navigation.push('Screen-Shared-Hashtag', {
                 hashtag: tag[1] || tag[2]
               })
             }}
@@ -42,13 +46,13 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={styles.a}
+            style={{ color: theme.link }}
             onPress={() => {
               const username = href.split(new RegExp(/@(.*)/))
               const usernameIndex = mentions.findIndex(
                 m => m.username === username[1]
               )
-              navigation.push('Account', {
+              navigation.push('Screen-Shared-Account', {
                 id: mentions[usernameIndex].id
               })
             }}
@@ -63,9 +67,9 @@ const renderNode = ({
       return (
         <Text
           key={index}
-          style={styles.a}
+          style={{ color: theme.link }}
           onPress={() => {
-            navigation.navigate('Webview', {
+            navigation.navigate('Screen-Shared-Webview', {
               uri: href,
               domain: domain[1]
             })
@@ -80,8 +84,8 @@ const renderNode = ({
 
 export interface Props {
   content: string
+  size: number
   emojis?: Mastodon.Emoji[]
-  emojiSize?: number
   mentions?: Mastodon.Mention[]
   showFullLink?: boolean
   linesTruncated?: number
@@ -89,29 +93,24 @@ export interface Props {
 
 const ParseContent: React.FC<Props> = ({
   content,
+  size,
   emojis,
-  emojiSize = 14,
   mentions,
   showFullLink = false,
   linesTruncated = 10
 }) => {
   const navigation = useNavigation()
+  const { theme } = useTheme()
 
   return (
     <HTMLView
       value={content}
-      stylesheet={HTMLstyles}
-      paragraphBreak=''
       renderNode={(node, index) =>
-        renderNode({ node, index, navigation, mentions, showFullLink })
+        renderNode({ theme, node, index, navigation, mentions, showFullLink })
       }
       TextComponent={({ children }) =>
         emojis && children ? (
-          <Emojis
-            content={children.toString()}
-            emojis={emojis}
-            dimension={emojiSize}
-          />
+          <Emojis content={children.toString()} emojis={emojis} size={size} />
         ) : (
           <Text>{children}</Text>
         )
@@ -122,17 +121,5 @@ const ParseContent: React.FC<Props> = ({
     />
   )
 }
-
-const styles = StyleSheet.create({
-  a: {
-    color: 'blue'
-  }
-})
-
-const HTMLstyles = StyleSheet.create({
-  p: {
-    marginBottom: 12
-  }
-})
 
 export default ParseContent

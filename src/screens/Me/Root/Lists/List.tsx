@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Timeline from 'src/screens/Timelines/Timeline'
+import Timeline from 'src/components/Timelines/Timeline'
 
 // Show remote hashtag? Only when private, show local version?
 

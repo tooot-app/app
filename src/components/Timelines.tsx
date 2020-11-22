@@ -5,10 +5,11 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 
-import Timeline from './Timeline'
+import Timeline from './Timelines/Timeline'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
 import { InstancesState } from 'src/utils/slices/instancesSlice'
 import { RootState } from 'src/store'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 
 const Stack = createNativeStackNavigator()
 
@@ -36,6 +37,7 @@ export interface Props {
 }
 
 const Timelines: React.FC<Props> = ({ name, content }) => {
+  const { theme } = useTheme()
   const localRegistered = useSelector(
     (state: RootState) => state.instances.local.url
   )
@@ -59,7 +61,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         options={{
           headerRight: () =>
             renderHeader ? (
-              <Feather name='search' size={24} color='black' />
+              <Feather name='search' size={24} color={theme.secondary} />
             ) : null,
           headerCenter: () =>
             renderHeader ? (

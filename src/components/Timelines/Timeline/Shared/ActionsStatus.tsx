@@ -14,7 +14,9 @@ import { Feather } from '@expo/vector-icons'
 
 import client from 'src/api/client'
 import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
-import {store} from 'src/store'
+import { store } from 'src/store'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+import constants from 'src/utils/styles/constants'
 
 const fireMutation = async ({
   id,
@@ -112,6 +114,11 @@ export interface Props {
 }
 
 const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
+  const { theme } = useTheme()
+  const iconColor = theme.secondary
+  const iconColorAction = (state: boolean) =>
+    state ? theme.primary : theme.secondary
+
   const localAccountId = getLocalAccountId(store.getState())
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -153,8 +160,22 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
     <>
       <View style={styles.actions}>
         <Pressable style={styles.action}>
-          <Feather name='message-circle' color='gray' />
-          {status.replies_count > 0 && <Text>{status.replies_count}</Text>}
+          <Feather
+            name='message-circle'
+            color={iconColor}
+            size={constants.FONT_SIZE_M + 2}
+          />
+          {status.replies_count > 0 && (
+            <Text
+              style={{
+                color: theme.secondary,
+                fontSize: constants.FONT_SIZE_M,
+                marginLeft: constants.SPACING_XS
+              }}
+            >
+              {status.replies_count}
+            </Text>
+          )}
         </Pressable>
 
         <Pressable
@@ -168,7 +189,11 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             })
           }
         >
-          <Feather name='repeat' color={status.reblogged ? 'black' : 'gray'} />
+          <Feather
+            name='repeat'
+            color={iconColorAction(status.reblogged)}
+            size={constants.FONT_SIZE_M + 2}
+          />
         </Pressable>
 
         <Pressable
@@ -182,7 +207,11 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             })
           }
         >
-          <Feather name='heart' color={status.favourited ? 'black' : 'gray'} />
+          <Feather
+            name='heart'
+            color={iconColorAction(status.favourited)}
+            size={constants.FONT_SIZE_M + 2}
+          />
         </Pressable>
 
         <Pressable
@@ -198,12 +227,17 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
         >
           <Feather
             name='bookmark'
-            color={status.bookmarked ? 'black' : 'gray'}
+            color={iconColorAction(status.bookmarked)}
+            size={constants.FONT_SIZE_M + 2}
           />
         </Pressable>
 
         <Pressable style={styles.action} onPress={() => setModalVisible(true)}>
-          <Feather name='more-horizontal' color='gray' />
+          <Feather
+            name='share-2'
+            color={iconColor}
+            size={constants.FONT_SIZE_M + 2}
+          />
         </Pressable>
       </View>
 
@@ -319,14 +353,12 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'row',
-    marginTop: 8
+    marginTop: constants.SPACING_M
   },
   action: {
     width: '20%',
     flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: 8,
-    paddingBottom: 8
+    justifyContent: 'center'
   },
   modalBackground: {
     width: '100%',

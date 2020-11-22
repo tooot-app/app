@@ -8,12 +8,10 @@ import { useMutation, useQueryCache } from 'react-query'
 import Emojis from './Emojis'
 import relativeTime from 'src/utils/relativeTime'
 import client from 'src/api/client'
-import { useSelector } from 'react-redux'
-import {
-  getLocalAccountId,
-  getLocalUrl
-} from 'src/utils/slices/instancesSlice'
-import {store} from 'src/store'
+import { getLocalAccountId, getLocalUrl } from 'src/utils/slices/instancesSlice'
+import { store } from 'src/store'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+import constants from 'src/utils/styles/constants'
 
 const fireMutation = async ({
   id,
@@ -131,7 +129,7 @@ export interface Props {
   application?: Mastodon.Application
 }
 
-const Header: React.FC<Props> = ({
+const HeaderDefault: React.FC<Props> = ({
   queryKey,
   accountId,
   domain,
@@ -141,6 +139,8 @@ const Header: React.FC<Props> = ({
   created_at,
   application
 }) => {
+  const { theme } = useTheme()
+
   const navigation = useNavigation()
   const localAccountId = getLocalAccountId(store.getState())
   const localDomain = getLocalUrl(store.getState())
@@ -194,26 +194,42 @@ const Header: React.FC<Props> = ({
       <View style={styles.nameAndAction}>
         <View style={styles.name}>
           {emojis ? (
-            <Emojis content={name} emojis={emojis} dimension={14} />
+            <Emojis
+              content={name}
+              emojis={emojis}
+              size={constants.FONT_SIZE_M}
+              fontBold={true}
+            />
           ) : (
-            <Text numberOfLines={1}>{name}</Text>
+            <Text numberOfLines={1} style={{ color: theme.primary }}>
+              {name}
+            </Text>
           )}
+          <Text
+            style={[styles.account, { color: theme.secondary }]}
+            numberOfLines={1}
+          >
+            @{account}
+          </Text>
         </View>
         {accountId !== localAccountId && domain !== localDomain && (
           <Pressable
             style={styles.action}
             onPress={() => setModalVisible(true)}
           >
-            <Feather name='more-horizontal' color='gray' />
+            <Feather
+              name='more-horizontal'
+              color={theme.secondary}
+              size={constants.FONT_SIZE_M + 2}
+            />
           </Pressable>
         )}
       </View>
-      <Text style={styles.account} numberOfLines={1}>
-        @{account}
-      </Text>
       <View style={styles.meta}>
         <View>
-          <Text style={styles.created_at}>{since}</Text>
+          <Text style={[styles.created_at, { color: theme.secondary }]}>
+            {since}
+          </Text>
         </View>
         {application && application.name !== 'Web' && (
           <View>
@@ -223,9 +239,9 @@ const Header: React.FC<Props> = ({
                   uri: application.website
                 })
               }}
-              style={styles.application}
+              style={[styles.application, { color: theme.secondary }]}
             >
-              {application.name}
+              发自于 - {application.name}
             </Text>
           </View>
         )}
@@ -310,32 +326,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   name: {
-    flexDirection: 'row',
-    marginRight: 8,
-    fontWeight: '900'
-  },
-  action: {
-    width: 14,
-    height: 14,
-    marginLeft: 8
-  },
-  account: {
-    lineHeight: 14,
-    flexShrink: 1
-  },
-  meta: {
+    flexBasis: '80%',
     flexDirection: 'row'
   },
+  action: {
+    flexBasis: '20%',
+    alignItems: 'center'
+  },
+  account: {
+    flexShrink: 1,
+    marginLeft: constants.SPACING_XS,
+    lineHeight: constants.FONT_SIZE_M + 2
+  },
+  meta: {
+    flexDirection: 'row',
+    marginTop: constants.SPACING_XS,
+    marginBottom: constants.SPACING_S
+  },
   created_at: {
-    fontSize: 12,
-    lineHeight: 12,
-    marginTop: 8,
-    marginBottom: 8,
-    marginRight: 8
+    fontSize: constants.FONT_SIZE_S
   },
   application: {
-    fontSize: 12,
-    lineHeight: 11
+    fontSize: constants.FONT_SIZE_S,
+    marginLeft: constants.SPACING_S
   },
   modalBackground: {
     width: '100%',
@@ -354,4 +367,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Header
+export default HeaderDefault

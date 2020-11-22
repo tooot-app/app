@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { Feather } from '@expo/vector-icons'
 
-import Timeline from 'src/screens/Timelines/Timeline'
+import Timeline from 'src/components/Timelines/Timeline'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 
 const Stack = createNativeStackNavigator()
 
 const ScreenNotifications: React.FC = () => {
+  const { theme } = useTheme()
+
   const [renderHeader, setRenderHeader] = useState(false)
 
   useEffect(() => {
@@ -20,9 +23,10 @@ const ScreenNotifications: React.FC = () => {
       screenOptions={{
         headerRight: () =>
           renderHeader ? (
-            <Feather name='search' size={24} color='black' />
+            <Feather name='search' size={24} color={theme.secondary} />
           ) : null,
-        headerTitle: '通知'
+        headerTitle: '通知',
+        headerLargeTitle: true
       }}
     >
       <Stack.Screen name='Notifications'>

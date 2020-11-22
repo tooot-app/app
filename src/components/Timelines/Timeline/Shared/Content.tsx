@@ -4,6 +4,9 @@ import Collapsible from 'react-native-collapsible'
 
 import ParseContent from 'src/components/ParseContent'
 
+import constants from 'src/utils/styles/constants'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+
 export interface Props {
   content: string
   emojis: Mastodon.Emoji[]
@@ -17,6 +20,7 @@ const Content: React.FC<Props> = ({
   mentions,
   spoiler_text
 }) => {
+  const { theme } = useTheme()
   const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
 
   return (
@@ -26,15 +30,18 @@ const Content: React.FC<Props> = ({
           <>
             <Text>
               {spoiler_text}{' '}
-              <Text onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}>
-                点击展开
+              <Text
+                onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}
+                style={{ color: theme.link }}
+              >
+                {spoilerCollapsed ? '点击展开' : '点击收起'}
               </Text>
             </Text>
             <Collapsible collapsed={spoilerCollapsed}>
               <ParseContent
                 content={content}
+                size={constants.FONT_SIZE_M}
                 emojis={emojis}
-                emojiSize={14}
                 mentions={mentions}
               />
             </Collapsible>
@@ -42,8 +49,8 @@ const Content: React.FC<Props> = ({
         ) : (
           <ParseContent
             content={content}
+            size={constants.FONT_SIZE_M}
             emojis={emojis}
-            emojiSize={14}
             mentions={mentions}
           />
         ))}

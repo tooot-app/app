@@ -2,6 +2,7 @@ import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 
 export interface Props {
   icon?: string
@@ -11,6 +12,8 @@ export interface Props {
 }
 
 const Core: React.FC<Props> = ({ icon, title, navigateTo }) => {
+  const { theme } = useTheme()
+
   return (
     <View style={styles.core}>
       {icon && <Feather name={icon} size={24} style={styles.iconLeading} />}
@@ -19,7 +22,7 @@ const Core: React.FC<Props> = ({ icon, title, navigateTo }) => {
         <Feather
           name='chevron-right'
           size={24}
-          color='lightgray'
+          color={theme.secondary}
           style={styles.iconNavigation}
         />
       )}

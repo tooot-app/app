@@ -18,7 +18,7 @@ const HeaderConversation: React.FC<Props> = ({ account, created_at }) => {
             <Emojis
               content={account.display_name || account.username}
               emojis={account.emojis}
-              dimension={14}
+              size={14}
             />
           ) : (
             <Text numberOfLines={1}>

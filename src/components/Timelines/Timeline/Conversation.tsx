@@ -2,9 +2,11 @@ import React, { useMemo } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Avatar from './Status/Avatar'
-import HeaderConversation from './Status/HeaderConversation'
-import Content from './Status/Content'
+import Avatar from './Shared/Avatar'
+import HeaderConversation from './Shared/HeaderConversation'
+import Content from './Shared/Content'
+
+import constants from 'src/utils/styles/constants'
 
 export interface Props {
   item: Mastodon.Conversation
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
   statusView: {
     flex: 1,
     flexDirection: 'column',
-    padding: 12
+    padding: constants.GLOBAL_PAGE_PADDING
   },
   status: {
     flex: 1,

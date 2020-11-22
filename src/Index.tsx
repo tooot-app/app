@@ -14,12 +14,17 @@ import ScreenPublic from 'src/screens/Public'
 import ScreenNotifications from 'src/screens/Notifications'
 import ScreenMe from 'src/screens/Me'
 
+import { themes } from 'src/utils/styles/themes'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+
 enableScreens()
 const Tab = createBottomTabNavigator()
 
 export const Index: React.FC = () => {
+  const { mode, theme } = useTheme()
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={themes[mode]}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -48,8 +53,8 @@ export const Index: React.FC = () => {
           }
         })}
         tabBarOptions={{
-          activeTintColor: 'black',
-          inactiveTintColor: 'gray',
+          activeTintColor: theme.primary,
+          inactiveTintColor: theme.secondary,
           showLabel: false
         }}
       >

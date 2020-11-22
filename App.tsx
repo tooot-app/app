@@ -1,7 +1,9 @@
 import React from 'react'
+import { AppearanceProvider } from 'react-native-appearance'
 import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
 import { Provider } from 'react-redux'
 
+import ThemeManager from 'src/utils/styles/ThemeManager'
 import { Index } from 'src/Index'
 import { store } from 'src/store'
 
@@ -18,12 +20,18 @@ if (__DEV__) {
   // whyDidYouRender(React)
 }
 
-const App: React.FC = () => (
-  <ReactQueryCacheProvider queryCache={queryCache}>
-    <Provider store={store}>
-      <Index />
-    </Provider>
-  </ReactQueryCacheProvider>
-)
+const App: React.FC = () => {
+  return (
+    <AppearanceProvider>
+      <ThemeManager>
+        <ReactQueryCacheProvider queryCache={queryCache}>
+          <Provider store={store}>
+            <Index />
+          </Provider>
+        </ReactQueryCacheProvider>
+      </ThemeManager>
+    </AppearanceProvider>
+  )
+}
 
 export default App
