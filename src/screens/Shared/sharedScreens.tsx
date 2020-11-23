@@ -5,27 +5,9 @@ import ScreenSharedHashtag from 'src/screens/Shared/Hashtag'
 import ScreenSharedToot from 'src/screens/Shared/Toot'
 import ScreenSharedWebview from 'src/screens/Shared/Webview'
 import Compose from 'src/screens/Shared/Compose'
-import { TypedNavigator } from '@react-navigation/native'
-import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
-import {
-  NativeStackNavigationEventMap,
-  NativeStackNavigatorProps
-} from 'react-native-screens/lib/typescript/types'
+import ScreenSharedSearch from './Search'
 
-const sharedScreens = (
-  Stack: TypedNavigator<
-    Record<string, object | undefined>,
-    any,
-    NativeStackNavigationOptions,
-    NativeStackNavigationEventMap,
-    ({
-      initialRouteName,
-      children,
-      screenOptions,
-      ...rest
-    }: NativeStackNavigatorProps) => JSX.Element
-  >
-) => {
+const sharedScreens = (Stack: any) => {
   return [
     <Stack.Screen
       key='Screen-Shared-Account'
@@ -67,6 +49,14 @@ const sharedScreens = (
       component={Compose}
       options={{
         stackPresentation: 'fullScreenModal'
+      }}
+    />,
+    <Stack.Screen
+      key='Screen-Shared-Search'
+      name='Screen-Shared-Search'
+      component={ScreenSharedSearch}
+      options={{
+        stackPresentation: 'modal'
       }}
     />
   ]

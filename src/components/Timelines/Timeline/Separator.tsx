@@ -13,7 +13,8 @@ const TimelineSeparator = () => {
 const styles = StyleSheet.create({
   base: {
     borderTopWidth: 1,
-    marginLeft: constants.SPACING_M + constants.AVATAR_S + constants.SPACING_S
+    marginLeft: constants.SPACING_M + constants.AVATAR_S + constants.SPACING_S,
+    marginRight: constants.SPACING_M
   }
 })
 

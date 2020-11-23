@@ -3,6 +3,8 @@ export default {
   FONT_SIZE_M: 14,
   FONT_SIZE_L: 18,
 
+  FONT_WEIGHT_BOLD: '600',
+
   SPACING_XS: 4,
   SPACING_S: 8,
   SPACING_M: 16,

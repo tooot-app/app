@@ -7,9 +7,12 @@ import { Feather } from '@expo/vector-icons'
 
 import Timeline from './Timelines/Timeline'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
-import { InstancesState } from 'src/utils/slices/instancesSlice'
-import { RootState } from 'src/store'
+import { getRemoteUrl, InstancesState } from 'src/utils/slices/instancesSlice'
+import { RootState, store } from 'src/store'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useNavigation } from '@react-navigation/native'
+import getCurrentTab from 'src/utils/getCurrentTab'
+import PleaseLogin from './PleaseLogin'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,22 +28,24 @@ const Page = ({
       {localRegistered || page === 'RemotePublic' ? (
         <Timeline page={page} />
       ) : (
-        <Text>请先登录</Text>
+        <PleaseLogin />
       )}
     </View>
   )
 }
 
 export interface Props {
-  name: string
+  name: 'Screen-Local-Root' | 'Screen-Public-Root'
   content: { title: string; page: App.Pages }[]
 }
 
 const Timelines: React.FC<Props> = ({ name, content }) => {
+  const navigation = useNavigation()
   const { theme } = useTheme()
   const localRegistered = useSelector(
     (state: RootState) => state.instances.local.url
   )
+  const publicDomain = getRemoteUrl(store.getState())
   const [segment, setSegment] = useState(0)
   const [renderHeader, setRenderHeader] = useState(false)
   const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
@@ -59,58 +64,80 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
       <Stack.Screen
         name={name}
         options={{
-          headerRight: () =>
-            renderHeader ? (
-              <Feather name='search' size={24} color={theme.secondary} />
-            ) : null,
-          headerCenter: () =>
-            renderHeader ? (
-              <SegmentedControl
-                values={[content[0].title, content[1].title]}
-                selectedIndex={segment}
-                onChange={({ nativeEvent }) => {
-                  setSegmentManuallyTriggered(true)
-                  setSegment(nativeEvent.selectedSegmentIndex)
-                  horizontalPaging.current.scrollToIndex({
-                    index: nativeEvent.selectedSegmentIndex
-                  })
-                }}
-                style={{ width: 150, height: 30 }}
-              />
-            ) : null
+          headerTitle: name === 'Screen-Public-Root' ? publicDomain : '',
+          ...(renderHeader &&
+            localRegistered && {
+              headerCenter: () => (
+                <SegmentedControl
+                  values={[content[0].title, content[1].title]}
+                  selectedIndex={segment}
+                  onChange={({ nativeEvent }) => {
+                    setSegmentManuallyTriggered(true)
+                    setSegment(nativeEvent.selectedSegmentIndex)
+                    horizontalPaging.current.scrollToIndex({
+                      index: nativeEvent.selectedSegmentIndex
+                    })
+                  }}
+                  style={{ width: 150, height: 30 }}
+                />
+              ),
+              headerRight: () => (
+                <Feather
+                  name='search'
+                  size={24}
+                  color={theme.secondary}
+                  onPress={() => {
+                    navigation.navigate(getCurrentTab(navigation), {
+                      screen: 'Screen-Shared-Search'
+                    })
+                  }}
+                />
+              )
+            })
         }}
       >
-        {() => (
-          <FlatList
-            style={{ width: Dimensions.get('window').width, height: '100%' }}
-            data={content}
-            extraData={localRegistered}
-            keyExtractor={({ page }) => page}
-            renderItem={({ item, index }) => (
-              <Page key={index} item={item} localRegistered={localRegistered} />
-            )}
-            ref={horizontalPaging}
-            bounces={false}
-            getItemLayout={(data, index) => ({
-              length: Dimensions.get('window').width,
-              offset: Dimensions.get('window').width * index,
-              index
-            })}
-            horizontal
-            onMomentumScrollEnd={() => setSegmentManuallyTriggered(false)}
-            onScroll={({ nativeEvent }) =>
-              !segmentManuallyTriggered &&
-              setSegment(
-                nativeEvent.contentOffset.x <=
-                  Dimensions.get('window').width / 2
-                  ? 0
-                  : 1
-              )
-            }
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-          />
-        )}
+        {() => {
+          return (
+            <FlatList
+              style={{ width: Dimensions.get('window').width, height: '100%' }}
+              data={content}
+              extraData={localRegistered}
+              keyExtractor={({ page }) => page}
+              renderItem={({ item, index }) => {
+                if (!localRegistered && index === 0) {
+                  return null
+                }
+                return (
+                  <Page
+                    key={index}
+                    item={item}
+                    localRegistered={localRegistered}
+                  />
+                )
+              }}
+              ref={horizontalPaging}
+              bounces={false}
+              getItemLayout={(data, index) => ({
+                length: Dimensions.get('window').width,
+                offset: Dimensions.get('window').width * index,
+                index
+              })}
+              horizontal
+              onMomentumScrollEnd={() => setSegmentManuallyTriggered(false)}
+              onScroll={({ nativeEvent }) =>
+                !segmentManuallyTriggered &&
+                setSegment(
+                  nativeEvent.contentOffset.x <=
+                    Dimensions.get('window').width / 2
+                    ? 0
+                    : 1
+                )
+              }
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+            />
+          )
+        }}
       </Stack.Screen>
 
       {sharedScreens(Stack)}

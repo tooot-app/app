@@ -16,9 +16,18 @@ import ScreenMe from 'src/screens/Me'
 
 import { themes } from 'src/utils/styles/themes'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import getCurrentTab from 'src/utils/getCurrentTab'
 
 enableScreens()
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<RootStackParamList>()
+
+export type RootStackParamList = {
+  'Screen-Local': undefined
+  'Screen-Public': { publicTab: boolean }
+  'Screen-Post': undefined
+  'Screen-Notifications': undefined
+  'Screen-Me': undefined
+}
 
 export const Index: React.FC = () => {
   const { mode, theme } = useTheme()
@@ -65,11 +74,7 @@ export const Index: React.FC = () => {
           listeners={({ navigation, route }) => ({
             tabPress: e => {
               e.preventDefault()
-              const {
-                length,
-                [length - 1]: last
-              } = navigation.dangerouslyGetState().history
-              navigation.navigate(last.key.split(new RegExp(/(.*)-/))[1], {
+              navigation.navigate(getCurrentTab(navigation), {
                 screen: 'Screen-Shared-Compose'
               })
             }

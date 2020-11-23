@@ -8,24 +8,30 @@ import ScreenMeFavourites from './Me/Favourites'
 import ScreenMeLists from './Me/Lists'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
 import ScreenMeListsList from './Me/Root/Lists/List'
+import { useSelector } from 'react-redux'
+import { RootState } from 'src/store'
 
 const Stack = createNativeStackNavigator()
 
 const ScreenMe: React.FC = () => {
+  const localRegistered = useSelector(
+    (state: RootState) => state.instances.local.url
+  )
+
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitle: 'test'
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen
         name='Screen-Me-Root'
         component={ScreenMeRoot}
-        options={{
-          headerTranslucent: true,
-          headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-          headerCenter: () => <></>
-        }}
+        options={
+          localRegistered
+            ? {
+                headerTranslucent: true,
+                headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
+                headerCenter: () => <></>
+              }
+            : { headerTitle: '我的长毛象' }
+        }
       />
       <Stack.Screen
         name='Screen-Me-Conversations'

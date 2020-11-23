@@ -2,6 +2,8 @@ import React from 'react'
 import { Image, StyleSheet, Text } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
+import constants from 'src/utils/styles/constants'
+
 const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
 
 export interface Props {
@@ -23,7 +25,7 @@ const Emojis: React.FC<Props> = ({
       fontSize: size,
       lineHeight: size + 2,
       color: theme.primary,
-      ...(fontBold && { fontWeight: 'bold' })
+      ...(fontBold && { fontWeight: constants.FONT_WEIGHT_BOLD })
     },
     image: {
       width: size,

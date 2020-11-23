@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
@@ -9,8 +9,12 @@ import * as AuthSession from 'expo-auth-session'
 import { useDispatch } from 'react-redux'
 import { updateLocal } from 'src/utils/slices/instancesSlice'
 import { useNavigation } from '@react-navigation/native'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+
+import constants from 'src/utils/styles/constants'
 
 const Login: React.FC = () => {
+  const { theme } = useTheme()
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const [instance, setInstance] = useState('')
@@ -109,23 +113,34 @@ const Login: React.FC = () => {
           }
         )
         dispatch(updateLocal({ url: instance, token: accessToken }))
-        navigation.navigate('Local')
+        navigation.navigate('Screen-Local-Root')
       }
     })()
   }, [response])
 
   return (
-    <View>
+    <View style={styles.base}>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={{
+          height: 50,
+          color: theme.primary,
+          borderColor: theme.border,
+          borderWidth: 1,
+          padding: constants.SPACING_M
+        }}
         onChangeText={onChangeText}
         autoCapitalize='none'
         autoCorrect={false}
+        autoFocus
         clearButtonMode='unless-editing'
         keyboardType='url'
         textContentType='URL'
+        onSubmitEditing={async () =>
+          isSuccess && data && data.uri && (await createApplication())
+        }
         placeholder='输入服务器'
-        placeholderTextColor='#888888'
+        placeholderTextColor={theme.secondary}
+        returnKeyType='go'
       />
       <Button
         title='登录'
@@ -134,11 +149,17 @@ const Login: React.FC = () => {
       />
       {isSuccess && data && data.uri && (
         <View>
-          <Text>{data.title}</Text>
+          <Text style={{ color: theme.primary }}>{data.title}</Text>
         </View>
       )}
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  base: {
+    padding: constants.GLOBAL_PAGE_PADDING
+  }
+})
 
 export default Login

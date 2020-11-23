@@ -17,15 +17,34 @@ export type InstancesState = {
   }
 }
 
+const initialStateLocal = {
+  url: undefined,
+  token: undefined,
+  account: {
+    id: undefined,
+    preferences: {
+      'posting:default:visibility': undefined,
+      'posting:default:sensitive': undefined,
+      'posting:default:language': undefined,
+      'reading:expand:media': undefined,
+      'reading:expand:spoilers': undefined
+    }
+  }
+}
+
 export const updateLocal = createAsyncThunk(
   'instances/updateLocal',
   async ({
     url,
     token
   }: {
-    url: InstancesState['local']['url']
-    token: InstancesState['local']['token']
+    url?: InstancesState['local']['url']
+    token?: InstancesState['local']['token']
   }) => {
+    if (!url || !token) {
+      return initialStateLocal
+    }
+
     const {
       body: { id }
     } = await client({
@@ -58,22 +77,9 @@ export const updateLocal = createAsyncThunk(
 const instancesSlice = createSlice({
   name: 'instances',
   initialState: {
-    local: {
-      url: undefined,
-      token: undefined,
-      account: {
-        id: undefined,
-        preferences: {
-          'posting:default:visibility': undefined,
-          'posting:default:sensitive': undefined,
-          'posting:default:language': undefined,
-          'reading:expand:media': undefined,
-          'reading:expand:spoilers': undefined
-        }
-      }
-    },
+    local: initialStateLocal,
     remote: {
-      url: 'mastodon.social'
+      url: 'm.cmx.im'
     }
   } as InstancesState,
   reducers: {},
@@ -85,6 +91,7 @@ const instancesSlice = createSlice({
 })
 
 export const getLocalUrl = (state: RootState) => state.instances.local.url
+export const getRemoteUrl = (state: RootState) => state.instances.remote.url
 export const getLocalAccountId = (state: RootState) =>
   state.instances.local.account.id
 export const getLocalAccountPreferences = (state: RootState) =>

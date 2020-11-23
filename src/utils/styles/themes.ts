@@ -7,6 +7,7 @@ export type ColorDefinitions =
   | 'link'
   | 'border'
   | 'separator'
+  | 'dangerous'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -37,6 +38,10 @@ const themeColors: {
   separator: {
     light: 'rgba(0, 0, 0, 0.1)',
     dark: 'rgba(255, 255, 255, 0.1)'
+  },
+  dangerous: {
+    light: 'rgb(255, 59, 48)',
+    dark: 'rgb(255, 69, 58)'
   }
 }
 
