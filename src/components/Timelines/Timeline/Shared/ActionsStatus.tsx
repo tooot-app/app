@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   ActionSheetIOS,
   Clipboard,
@@ -11,12 +11,14 @@ import {
 import Toast from 'react-native-toast-message'
 import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
+import { findIndex } from 'lodash'
 
 import client from 'src/api/client'
 import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
 import { store } from 'src/store'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import constants from 'src/utils/styles/constants'
+import { toast } from 'src/components/toast'
 
 const fireMutation = async ({
   id,
@@ -25,14 +27,7 @@ const fireMutation = async ({
   prevState
 }: {
   id: string
-  type:
-    | 'favourite'
-    | 'reblog'
-    | 'bookmark'
-    | 'mute'
-    | 'pin'
-    | 'delete'
-    | 'account/mute'
+  type: 'favourite' | 'reblog' | 'bookmark' | 'mute' | 'pin' | 'delete'
   stateKey:
     | 'favourited'
     | 'reblogged'
@@ -53,27 +48,13 @@ const fireMutation = async ({
         method: 'post',
         instance: 'local',
         endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
-      })
+      }) // bug in response from Mastodon
 
       if (!res.body[stateKey] === prevState) {
-        if (type === 'bookmark' || 'mute' || 'pin')
-          Toast.show({
-            type: 'success',
-            position: 'bottom',
-            text1: '功能成功',
-            visibilityTime: 2000,
-            autoHide: true,
-            bottomOffset: 65
-          })
+        toast({ type: 'success', content: '功能成功' })
         return Promise.resolve(res.body)
       } else {
-        Toast.show({
-          type: 'error',
-          position: 'bottom',
-          text1: '请重试',
-          autoHide: false,
-          bottomOffset: 65
-        })
+        toast({ type: 'error', content: '功能错误' })
         return Promise.reject()
       }
       break
@@ -85,23 +66,10 @@ const fireMutation = async ({
       })
 
       if (res.body[stateKey] === id) {
-        Toast.show({
-          type: 'success',
-          position: 'bottom',
-          text1: '删除成功',
-          visibilityTime: 2000,
-          autoHide: true,
-          bottomOffset: 65
-        })
+        toast({ type: 'success', content: '删除成功' })
         return Promise.resolve(res.body)
       } else {
-        Toast.show({
-          type: 'error',
-          position: 'bottom',
-          text1: '请重试',
-          autoHide: false,
-          bottomOffset: 65
-        })
+        toast({ type: 'error', content: '删除失败' })
         return Promise.reject()
       }
       break
@@ -120,136 +88,204 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
     state ? theme.primary : theme.secondary
 
   const localAccountId = getLocalAccountId(store.getState())
-  const [modalVisible, setModalVisible] = useState(false)
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const queryCache = useQueryCache()
   const [mutateAction] = useMutation(fireMutation, {
-    onMutate: () => {
+    onMutate: ({ id, type, stateKey, prevState }) => {
       queryCache.cancelQueries(queryKey)
-      const prevData = queryCache.getQueryData(queryKey)
-      return prevData
-    },
-    onSuccess: (newData, params) => {
-      if (params.type === 'reblog') {
-        queryCache.invalidateQueries(['Following', { page: 'Following' }])
+      const oldData = queryCache.getQueryData(queryKey)
+
+      switch (type) {
+        case 'favourite':
+        case 'reblog':
+        case 'bookmark':
+        case 'mute':
+        case 'pin':
+          queryCache.setQueryData(queryKey, old =>
+            (old as {}[]).map((paging: any) => ({
+              toots: paging.toots.map((toot: any) => {
+                if (toot.id === id) {
+                  toot[stateKey] =
+                    typeof prevState === 'boolean' ? !prevState : true
+                }
+                return toot
+              }),
+              pointer: paging.pointer
+            }))
+          )
+          break
+        case 'delete':
+          queryCache.setQueryData(queryKey, old =>
+            (old as {}[]).map((paging: any) => ({
+              toots: paging.toots.map((toot: any, index: number) => {
+                if (toot.id === id) {
+                  paging.toots.splice(index, 1)
+                }
+                return toot
+              }),
+              pointer: paging.pointer
+            }))
+          )
+          break
       }
-      // queryCache.setQueryData(queryKey, (oldData: any) => {
-      //   oldData &&
-      //     oldData.map((paging: any) => {
-      //       paging.toots.map(
-      //         (status: Mastodon.Status | Mastodon.Notification, i: number) => {
-      //           if (status.id === newData.id) {
-      //             paging.toots[i] = newData
-      //           }
-      //         }
-      //       )
-      //     })
-      //   return oldData
-      // })
-      return Promise.resolve()
+
+      return oldData
     },
-    onError: (err, variables, prevData) => {
-      queryCache.setQueryData(queryKey, prevData)
-    },
-    onSettled: () => {
-      queryCache.invalidateQueries(queryKey)
+    onError: (err, _, oldData) => {
+      toast({ type: 'error', content: '请重试' })
+      queryCache.setQueryData(queryKey, oldData)
     }
   })
+
+  const onPressReply = useCallback(() => {}, [])
+  const onPressReblog = useCallback(
+    () =>
+      mutateAction({
+        id: status.id,
+        type: 'reblog',
+        stateKey: 'reblogged',
+        prevState: status.reblogged
+      }),
+    [status.reblogged]
+  )
+  const onPressFavourite = useCallback(
+    () =>
+      mutateAction({
+        id: status.id,
+        type: 'favourite',
+        stateKey: 'favourited',
+        prevState: status.favourited
+      }),
+    [status.favourited]
+  )
+  const onPressBookmark = useCallback(
+    () =>
+      mutateAction({
+        id: status.id,
+        type: 'bookmark',
+        stateKey: 'bookmarked',
+        prevState: status.bookmarked
+      }),
+    [status.bookmarked]
+  )
+  const onPressShare = useCallback(() => setBottomSheetVisible(true), [])
+
+  const childrenReply = useMemo(
+    () => (
+      <>
+        <Feather
+          name='message-circle'
+          color={iconColor}
+          size={constants.FONT_SIZE_M + 2}
+        />
+        {status.replies_count > 0 && (
+          <Text
+            style={{
+              color: theme.secondary,
+              fontSize: constants.FONT_SIZE_M,
+              marginLeft: constants.SPACING_XS
+            }}
+          >
+            {status.replies_count}
+          </Text>
+        )}
+      </>
+    ),
+    [status.replies_count]
+  )
+  const childrenReblog = useMemo(
+    () => (
+      <Feather
+        name='repeat'
+        color={
+          status.visibility === 'public' || status.visibility === 'unlisted'
+            ? iconColorAction(status.reblogged)
+            : theme.disabled
+        }
+        size={constants.FONT_SIZE_M + 2}
+      />
+    ),
+    [status.reblogged]
+  )
+  const childrenFavourite = useMemo(
+    () => (
+      <Feather
+        name='heart'
+        color={iconColorAction(status.favourited)}
+        size={constants.FONT_SIZE_M + 2}
+      />
+    ),
+    [status.favourited]
+  )
+  const childrenBookmark = useMemo(
+    () => (
+      <Feather
+        name='bookmark'
+        color={iconColorAction(status.bookmarked)}
+        size={constants.FONT_SIZE_M + 2}
+      />
+    ),
+    [status.bookmarked]
+  )
+  const childrenShare = useMemo(
+    () => (
+      <Feather
+        name='share-2'
+        color={iconColor}
+        size={constants.FONT_SIZE_M + 2}
+      />
+    ),
+    []
+  )
 
   return (
     <>
       <View style={styles.actions}>
-        <Pressable style={styles.action}>
-          <Feather
-            name='message-circle'
-            color={iconColor}
-            size={constants.FONT_SIZE_M + 2}
-          />
-          {status.replies_count > 0 && (
-            <Text
-              style={{
-                color: theme.secondary,
-                fontSize: constants.FONT_SIZE_M,
-                marginLeft: constants.SPACING_XS
-              }}
-            >
-              {status.replies_count}
-            </Text>
-          )}
-        </Pressable>
+        <Pressable
+          style={styles.action}
+          onPress={onPressReply}
+          children={childrenReply}
+        />
 
         <Pressable
           style={styles.action}
-          onPress={() =>
-            mutateAction({
-              id: status.id,
-              type: 'reblog',
-              stateKey: 'reblogged',
-              prevState: status.reblogged
-            })
+          onPress={
+            status.visibility === 'public' || status.visibility === 'unlisted'
+              ? onPressReblog
+              : null
           }
-        >
-          <Feather
-            name='repeat'
-            color={iconColorAction(status.reblogged)}
-            size={constants.FONT_SIZE_M + 2}
-          />
-        </Pressable>
+          children={childrenReblog}
+        />
 
         <Pressable
           style={styles.action}
-          onPress={() =>
-            mutateAction({
-              id: status.id,
-              type: 'favourite',
-              stateKey: 'favourited',
-              prevState: status.favourited
-            })
-          }
-        >
-          <Feather
-            name='heart'
-            color={iconColorAction(status.favourited)}
-            size={constants.FONT_SIZE_M + 2}
-          />
-        </Pressable>
+          onPress={onPressFavourite}
+          children={childrenFavourite}
+        />
 
         <Pressable
           style={styles.action}
-          onPress={() =>
-            mutateAction({
-              id: status.id,
-              type: 'bookmark',
-              stateKey: 'bookmarked',
-              prevState: status.bookmarked
-            })
-          }
-        >
-          <Feather
-            name='bookmark'
-            color={iconColorAction(status.bookmarked)}
-            size={constants.FONT_SIZE_M + 2}
-          />
-        </Pressable>
+          onPress={onPressBookmark}
+          children={childrenBookmark}
+        />
 
-        <Pressable style={styles.action} onPress={() => setModalVisible(true)}>
-          <Feather
-            name='share-2'
-            color={iconColor}
-            size={constants.FONT_SIZE_M + 2}
-          />
-        </Pressable>
+        <Pressable
+          style={styles.action}
+          onPress={onPressShare}
+          children={childrenShare}
+        />
       </View>
 
       <Modal
         animationType='fade'
         presentationStyle='overFullScreen'
         transparent
-        visible={modalVisible}
+        visible={bottomSheetVisible}
       >
         <Pressable
           style={styles.modalBackground}
-          onPress={() => setModalVisible(false)}
+          onPress={() => setBottomSheetVisible(false)}
         >
           <View style={styles.modalSheet}>
             <Pressable
@@ -266,15 +302,8 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
                   },
                   () => {},
                   () => {
-                    setModalVisible(false)
-                    Toast.show({
-                      type: 'success',
-                      position: 'bottom',
-                      text1: '分享成功',
-                      visibilityTime: 2000,
-                      autoHide: true,
-                      bottomOffset: 65
-                    })
+                    setBottomSheetVisible(false)
+                    toast({ type: 'success', content: '分享成功' })
                   }
                 )
               }
@@ -284,15 +313,8 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             <Pressable
               onPress={() => {
                 Clipboard.setString(status.uri)
-                setModalVisible(false)
-                Toast.show({
-                  type: 'success',
-                  position: 'bottom',
-                  text1: '链接复制成功',
-                  visibilityTime: 2000,
-                  autoHide: true,
-                  bottomOffset: 65
-                })
+                setBottomSheetVisible(false)
+                toast({ type: 'success', content: '链接复制成功' })
               }}
             >
               <Text>复制链接</Text>
@@ -300,7 +322,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             {status.account.id === localAccountId && (
               <Pressable
                 onPress={() => {
-                  setModalVisible(false)
+                  setBottomSheetVisible(false)
                   mutateAction({
                     id: status.id,
                     type: 'delete',
@@ -314,7 +336,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             <Text>（删除并重发）</Text>
             <Pressable
               onPress={() => {
-                setModalVisible(false)
+                setBottomSheetVisible(false)
                 mutateAction({
                   id: status.id,
                   type: 'mute',
@@ -325,10 +347,11 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             >
               <Text>{status.muted ? '取消静音' : '静音'}</Text>
             </Pressable>
+            {/* Also note that reblogs cannot be pinned. */}
             {status.account.id === localAccountId && (
               <Pressable
                 onPress={() => {
-                  setModalVisible(false)
+                  setBottomSheetVisible(false)
                   mutateAction({
                     id: status.id,
                     type: 'pin',

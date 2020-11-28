@@ -1,5 +1,12 @@
-import React from 'react'
-import { ActivityIndicator, AppState, FlatList, Text, View } from 'react-native'
+import React, { useCallback } from 'react'
+import {
+  ActivityIndicator,
+  AppState,
+  FlatList,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from 'src/components/Timelines/Timeline/Notifications'
@@ -51,6 +58,40 @@ const Timeline: React.FC<Props> = ({
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
   // const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
 
+  const flKeyExtrator = useCallback(({ id }) => id, [])
+  const flRenderItem = useCallback(({ item }) => {
+    switch (page) {
+      case 'Conversations':
+        return <TimelineConversation item={item} />
+      case 'Notifications':
+        return <TimelineNotifications notification={item} queryKey={queryKey} />
+      default:
+        return <TimelineDefault item={item} queryKey={queryKey} />
+    }
+  }, [])
+  const flItemSeparatorComponent = useCallback(() => <TimelineSeparator />, [])
+  const flOnRefresh = useCallback(
+    () =>
+      !disableRefresh &&
+      fetchMore(
+        {
+          direction: 'prev',
+          id: flattenData[0].id
+        },
+        { previous: true }
+      ),
+    [disableRefresh]
+  )
+  const flOnEndReach = useCallback(
+    () =>
+      !disableRefresh &&
+      fetchMore({
+        direction: 'next',
+        id: flattenData[flattenData.length - 1].id
+      }),
+    [disableRefresh]
+  )
+
   let content
   if (!isSuccess) {
     content = <ActivityIndicator />
@@ -60,53 +101,18 @@ const Timeline: React.FC<Props> = ({
     content = (
       <>
         <FlatList
-          style={{ minHeight: '100%' }}
-          scrollEnabled={scrollEnabled} // For timeline in Account view
           data={flattenData}
-          keyExtractor={({ id }) => id}
-          renderItem={({ item, index, separators }) => {
-            switch (page) {
-              case 'Conversations':
-                return <TimelineConversation key={index} item={item} />
-              case 'Notifications':
-                return (
-                  <TimelineNotifications
-                    key={index}
-                    notification={item}
-                    queryKey={queryKey}
-                  />
-                )
-              default:
-                return (
-                  <TimelineDefault
-                    key={index}
-                    item={item}
-                    queryKey={queryKey}
-                  />
-                )
-            }
-          }}
-          ItemSeparatorComponent={() => <TimelineSeparator />}
+          onRefresh={flOnRefresh}
+          renderItem={flRenderItem}
+          onEndReached={flOnEndReach}
+          keyExtractor={flKeyExtrator}
+          style={styles.flatList}
+          scrollEnabled={scrollEnabled} // For timeline in Account view
+          ItemSeparatorComponent={flItemSeparatorComponent}
+          refreshing={!disableRefresh && isLoading}
+          onEndReachedThreshold={!disableRefresh ? 0.5 : null}
           // require getItemLayout
           // {...(flattenPointer[0] && { initialScrollIndex: flattenPointer[0] })}
-          {...(!disableRefresh && {
-            onRefresh: () =>
-              fetchMore(
-                {
-                  direction: 'prev',
-                  id: flattenData[0].id
-                },
-                { previous: true }
-              ),
-            refreshing: isLoading,
-            onEndReached: () => {
-              fetchMore({
-                direction: 'next',
-                id: flattenData[flattenData.length - 1].id
-              })
-            },
-            onEndReachedThreshold: 0.5
-          })}
         />
         {isFetchingMore && <ActivityIndicator />}
       </>
@@ -115,5 +121,11 @@ const Timeline: React.FC<Props> = ({
 
   return <View>{content}</View>
 }
+
+const styles = StyleSheet.create({
+  flatList: {
+    minHeight: '100%'
+  }
+})
 
 export default Timeline

@@ -84,4 +84,4 @@ const Attachment: React.FC<Props> = ({
   )
 }
 
-export default Attachment
+export default React.memo(Attachment, () => true)

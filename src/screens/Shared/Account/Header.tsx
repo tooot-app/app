@@ -9,7 +9,6 @@ export interface Props {
 const limitRatio = 0.4
 
 const AccountHeader: React.FC<Props> = ({ uri, limitHeight = false }) => {
-  console.log(uri)
   useEffect(() => {
     if (uri) {
       if (uri.includes('/headers/original/missing.png')) {

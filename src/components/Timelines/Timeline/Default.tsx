@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -23,6 +23,43 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
+
+  const pressableToot = useCallback(
+    () =>
+      navigation.navigate('Screen-Shared-Toot', {
+        toot: actualStatus.id
+      }),
+    []
+  )
+  const childrenToot = useMemo(
+    () => (
+      <>
+        {actualStatus.content ? (
+          <Content
+            content={actualStatus.content}
+            emojis={actualStatus.emojis}
+            mentions={actualStatus.mentions}
+            spoiler_text={actualStatus.spoiler_text}
+            // tags={actualStatus.tags}
+          />
+        ) : (
+          <></>
+        )}
+        {actualStatus.poll && <Poll poll={actualStatus.poll} />}
+        {actualStatus.media_attachments.length > 0 && (
+          <Attachment
+            media_attachments={actualStatus.media_attachments}
+            sensitive={actualStatus.sensitive}
+            width={
+              Dimensions.get('window').width - constants.SPACING_M * 2 - 50 - 8
+            }
+          />
+        )}
+        {actualStatus.card && <Card card={actualStatus.card} />}
+      </>
+    ),
+    []
+  )
 
   const statusView = useMemo(() => {
     return (
@@ -54,40 +91,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
               application={item.application}
             />
             {/* Can pass toot info to next page to speed up performance */}
-            <Pressable
-              onPress={() =>
-                navigation.navigate('Screen-Shared-Toot', {
-                  toot: actualStatus.id
-                })
-              }
-            >
-              {actualStatus.content ? (
-                <Content
-                  content={actualStatus.content}
-                  emojis={actualStatus.emojis}
-                  mentions={actualStatus.mentions}
-                  spoiler_text={actualStatus.spoiler_text}
-                  // tags={actualStatus.tags}
-                  // style={{ flex: 1 }}
-                />
-              ) : (
-                <></>
-              )}
-              {actualStatus.poll && <Poll poll={actualStatus.poll} />}
-              {actualStatus.media_attachments.length > 0 && (
-                <Attachment
-                  media_attachments={actualStatus.media_attachments}
-                  sensitive={actualStatus.sensitive}
-                  width={
-                    Dimensions.get('window').width -
-                    constants.SPACING_M * 2 -
-                    50 -
-                    8
-                  }
-                />
-              )}
-              {actualStatus.card && <Card card={actualStatus.card} />}
-            </Pressable>
+            <Pressable onPress={pressableToot} children={childrenToot} />
             <ActionsStatus queryKey={queryKey} status={actualStatus} />
           </View>
         </View>
@@ -114,4 +118,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TimelineDefault
+export default React.memo(TimelineDefault, (prev, next) => {
+  let skipUpdate = true
+  skipUpdate = prev.item.id === next.item.id
+  skipUpdate = prev.item.replies_count === next.item.replies_count
+  skipUpdate = prev.item.favourited === next.item.favourited
+  skipUpdate = prev.item.reblogged === next.item.reblogged
+  skipUpdate = prev.item.bookmarked === next.item.bookmarked
+  return skipUpdate
+})

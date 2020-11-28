@@ -304,10 +304,6 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
   )
 }
 
-// (PostSuggestions as any).whyDidYouRender = true,
-// (PostPoll as any).whyDidYouRender = true,
-// (PostEmojis as any).whyDidYouRender = true
-
 const styles = StyleSheet.create({
   base: {
     flex: 1

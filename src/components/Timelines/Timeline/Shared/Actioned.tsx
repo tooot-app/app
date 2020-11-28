@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Actioned
+export default React.memo(Actioned)

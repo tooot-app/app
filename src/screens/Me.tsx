@@ -1,5 +1,6 @@
 import React from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
+import { useSelector } from 'react-redux'
 
 import ScreenMeRoot from 'src/screens/Me/Root'
 import ScreenMeConversations from './Me/Cconversations'
@@ -8,7 +9,8 @@ import ScreenMeFavourites from './Me/Favourites'
 import ScreenMeLists from './Me/Lists'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
 import ScreenMeListsList from './Me/Root/Lists/List'
-import { useSelector } from 'react-redux'
+import ScreenMeSettings from './Me/Settings'
+
 import { RootState } from 'src/store'
 
 const Stack = createNativeStackNavigator()
@@ -37,7 +39,7 @@ const ScreenMe: React.FC = () => {
         name='Screen-Me-Conversations'
         component={ScreenMeConversations}
         options={{
-          headerTitle: '对话'
+          headerTitle: '私信'
         }}
       />
       <Stack.Screen
@@ -51,21 +53,28 @@ const ScreenMe: React.FC = () => {
         name='Screen-Me-Favourites'
         component={ScreenMeFavourites}
         options={{
-          headerTitle: '书签'
+          headerTitle: '喜欢'
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists'
         component={ScreenMeLists}
         options={{
-          headerTitle: '书签'
+          headerTitle: '列表'
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists-List'
         component={ScreenMeListsList}
+        options={({ route }: any) => ({
+          headerTitle: `列表：${route.params.title}`
+        })}
+      />
+      <Stack.Screen
+        name='Screen-Me-Settings'
+        component={ScreenMeSettings}
         options={{
-          headerTitle: '书签'
+          headerTitle: '设置'
         }}
       />
 

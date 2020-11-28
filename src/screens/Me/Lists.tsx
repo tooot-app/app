@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, Text } from 'react-native'
 import { useQuery } from 'react-query'
-import { MenuContainer, MenuHeader, MenuItem } from 'src/components/Menu'
+import { MenuContainer, MenuItem } from 'src/components/Menu'
 
 import { listsFetch } from 'src/utils/fetches/listsFetch'
 
@@ -17,25 +17,22 @@ const ScreenMeLists: React.FC = () => {
       lists = <Text>载入错误</Text>
       break
     case 'success':
-      lists = data?.map(d => (
+      lists = data?.map((d: Mastodon.List, i: number) => (
         <MenuItem
+          key={i}
           icon='list'
           title={d.title}
           navigateTo='Screen-Me-Lists-List'
           navigateToParams={{
-            list: d.id
+            list: d.id,
+            title: d.title
           }}
         />
       ))
       break
   }
 
-  return (
-    <MenuContainer>
-      <MenuHeader heading='我的列表' />
-      {lists}
-    </MenuContainer>
-  )
+  return <MenuContainer>{lists}</MenuContainer>
 }
 
 export default ScreenMeLists

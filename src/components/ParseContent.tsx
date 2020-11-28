@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Text } from 'react-native'
 import HTMLView, { HTMLViewNode } from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
@@ -102,22 +102,30 @@ const ParseContent: React.FC<Props> = ({
   const navigation = useNavigation()
   const { theme } = useTheme()
 
+  const renderNodeCallback = useCallback(
+    (node, index) =>
+      renderNode({ theme, node, index, navigation, mentions, showFullLink }),
+    []
+  )
+  const textComponent = useCallback(
+    ({ children }) =>
+      emojis && children ? (
+        <Emojis content={children.toString()} emojis={emojis} size={size} />
+      ) : (
+        <Text>{children}</Text>
+      ),
+    []
+  )
+  const rootComponent = useCallback(({ children }) => {
+    return <Text numberOfLines={linesTruncated}>{children}</Text>
+  }, [])
+
   return (
     <HTMLView
       value={content}
-      renderNode={(node, index) =>
-        renderNode({ theme, node, index, navigation, mentions, showFullLink })
-      }
-      TextComponent={({ children }) =>
-        emojis && children ? (
-          <Emojis content={children.toString()} emojis={emojis} size={size} />
-        ) : (
-          <Text>{children}</Text>
-        )
-      }
-      RootComponent={({ children }) => {
-        return <Text numberOfLines={linesTruncated}>{children}</Text>
-      }}
+      TextComponent={textComponent}
+      RootComponent={rootComponent}
+      renderNode={renderNodeCallback}
     />
   )
 }

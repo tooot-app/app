@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -8,32 +8,29 @@ export interface Props {
 
 const Card: React.FC<Props> = ({ card }) => {
   const navigation = useNavigation()
+  const onPress = useCallback(() => {
+    navigation.navigate('Screen-Shared-Webview', {
+      uri: card.url
+    })
+  }, [])
+
   return (
-    card && (
-      <Pressable
-        style={styles.card}
-        onPress={() => {
-          navigation.navigate('Webview', {
-            uri: card.url
-          })
-        }}
-      >
-        {card.image && (
-          <View style={styles.left}>
-            <Image source={{ uri: card.image }} style={styles.image} />
-          </View>
-        )}
-        <View style={styles.right}>
-          <Text numberOfLines={1}>{card.title}</Text>
-          {card.description ? (
-            <Text numberOfLines={2}>{card.description}</Text>
-          ) : (
-            <></>
-          )}
-          <Text numberOfLines={1}>{card.url}</Text>
+    <Pressable style={styles.card} onPress={onPress}>
+      {card.image && (
+        <View style={styles.left}>
+          <Image source={{ uri: card.image }} style={styles.image} />
         </View>
-      </Pressable>
-    )
+      )}
+      <View style={styles.right}>
+        <Text numberOfLines={1}>{card.title}</Text>
+        {card.description ? (
+          <Text numberOfLines={2}>{card.description}</Text>
+        ) : (
+          <></>
+        )}
+        <Text numberOfLines={1}>{card.url}</Text>
+      </View>
+    </Pressable>
   )
 }
 
@@ -56,4 +53,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Card
+export default React.memo(Card, () => true)

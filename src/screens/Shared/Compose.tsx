@@ -303,6 +303,5 @@ const Compose: React.FC = () => {
     </KeyboardAvoidingView>
   )
 }
-// ;(PostMain as any).whyDidYouRender = true
 
 export default Compose

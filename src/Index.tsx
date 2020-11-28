@@ -4,10 +4,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
 import React from 'react'
-import { Feather } from '@expo/vector-icons'
-
-// @ts-ignore
 import Toast from 'react-native-toast-message'
+import { Feather } from '@expo/vector-icons'
 
 import ScreenLocal from 'src/screens/Local'
 import ScreenPublic from 'src/screens/Public'
@@ -17,6 +15,7 @@ import ScreenMe from 'src/screens/Me'
 import { themes } from 'src/utils/styles/themes'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import getCurrentTab from 'src/utils/getCurrentTab'
+import { toastConfig } from 'src/components/toast'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -89,7 +88,7 @@ export const Index: React.FC = () => {
         <Tab.Screen name='Screen-Me' component={ScreenMe} />
       </Tab.Navigator>
 
-      <Toast ref={(ref: any) => Toast.setRef(ref)} />
+      <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
     </NavigationContainer>
   )
 }

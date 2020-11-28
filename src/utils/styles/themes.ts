@@ -3,11 +3,14 @@ import { DefaultTheme, DarkTheme } from '@react-navigation/native'
 export type ColorDefinitions =
   | 'primary'
   | 'secondary'
+  | 'disabled'
   | 'background'
   | 'link'
   | 'border'
   | 'separator'
-  | 'dangerous'
+  | 'success'
+  | 'error'
+  | 'warning'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -22,6 +25,10 @@ const themeColors: {
   secondary: {
     light: 'rgb(153, 153, 153)',
     dark: 'rgb(117, 117, 117)'
+  },
+  disabled: {
+    light: 'rgb(229, 229, 234)',
+    dark: 'rgb(44, 44, 46)'
   },
   background: {
     light: 'rgb(255, 255, 255)',
@@ -39,9 +46,17 @@ const themeColors: {
     light: 'rgba(0, 0, 0, 0.1)',
     dark: 'rgba(255, 255, 255, 0.1)'
   },
-  dangerous: {
+  success: {
+    light: 'rgb(52, 199, 89)',
+    dark: 'rgb(48, 209, 88)'
+  },
+  error: {
     light: 'rgb(255, 59, 48)',
     dark: 'rgb(255, 69, 58)'
+  },
+  warning: {
+    light: 'rgb(255, 149, 0)',
+    dark: 'rgb(255, 159, 10)'
   }
 }
 

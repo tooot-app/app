@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Dimensions, FlatList, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
@@ -59,6 +59,52 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
 
   const horizontalPaging = useRef<FlatList>(null!)
 
+  const onChangeSegment = useCallback(({ nativeEvent }) => {
+    setSegmentManuallyTriggered(true)
+    setSegment(nativeEvent.selectedSegmentIndex)
+    horizontalPaging.current.scrollToIndex({
+      index: nativeEvent.selectedSegmentIndex
+    })
+  }, [])
+  const onPressSearch = useCallback(() => {
+    navigation.navigate(getCurrentTab(navigation), {
+      screen: 'Screen-Shared-Search'
+    })
+  }, [])
+
+  const flGetItemLayout = useCallback(
+    (data, index) => ({
+      length: Dimensions.get('window').width,
+      offset: Dimensions.get('window').width * index,
+      index
+    }),
+    []
+  )
+  const flKeyExtrator = useCallback(({ page }) => page, [])
+  const flRenderItem = useCallback(
+    ({ item, index }) => {
+      if (!localRegistered && index === 0) {
+        return null
+      }
+      return <Page item={item} localRegistered={localRegistered} />
+    },
+    [localRegistered]
+  )
+  const flOnMomentumScrollEnd = useCallback(
+    () => setSegmentManuallyTriggered(false),
+    []
+  )
+  const flOnScroll = useCallback(
+    ({ nativeEvent }) =>
+      !segmentManuallyTriggered &&
+      setSegment(
+        nativeEvent.contentOffset.x <= Dimensions.get('window').width / 2
+          ? 0
+          : 1
+      ),
+    []
+  )
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -71,13 +117,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
                 <SegmentedControl
                   values={[content[0].title, content[1].title]}
                   selectedIndex={segment}
-                  onChange={({ nativeEvent }) => {
-                    setSegmentManuallyTriggered(true)
-                    setSegment(nativeEvent.selectedSegmentIndex)
-                    horizontalPaging.current.scrollToIndex({
-                      index: nativeEvent.selectedSegmentIndex
-                    })
-                  }}
+                  onChange={onChangeSegment}
                   style={{ width: 150, height: 30 }}
                 />
               ),
@@ -86,11 +126,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
                   name='search'
                   size={24}
                   color={theme.secondary}
-                  onPress={() => {
-                    navigation.navigate(getCurrentTab(navigation), {
-                      screen: 'Screen-Shared-Search'
-                    })
-                  }}
+                  onPress={onPressSearch}
                 />
               )
             })
@@ -99,42 +135,19 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         {() => {
           return (
             <FlatList
-              style={{ width: Dimensions.get('window').width, height: '100%' }}
-              data={content}
-              extraData={localRegistered}
-              keyExtractor={({ page }) => page}
-              renderItem={({ item, index }) => {
-                if (!localRegistered && index === 0) {
-                  return null
-                }
-                return (
-                  <Page
-                    key={index}
-                    item={item}
-                    localRegistered={localRegistered}
-                  />
-                )
-              }}
-              ref={horizontalPaging}
-              bounces={false}
-              getItemLayout={(data, index) => ({
-                length: Dimensions.get('window').width,
-                offset: Dimensions.get('window').width * index,
-                index
-              })}
               horizontal
-              onMomentumScrollEnd={() => setSegmentManuallyTriggered(false)}
-              onScroll={({ nativeEvent }) =>
-                !segmentManuallyTriggered &&
-                setSegment(
-                  nativeEvent.contentOffset.x <=
-                    Dimensions.get('window').width / 2
-                    ? 0
-                    : 1
-                )
-              }
               pagingEnabled
+              data={content}
+              bounces={false}
+              onScroll={flOnScroll}
+              ref={horizontalPaging}
+              style={styles.flatList}
+              renderItem={flRenderItem}
+              extraData={localRegistered}
+              keyExtractor={flKeyExtrator}
+              getItemLayout={flGetItemLayout}
               showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={flOnMomentumScrollEnd}
             />
           )
         }}
@@ -145,4 +158,11 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   )
 }
 
-export default Timelines
+const styles = StyleSheet.create({
+  flatList: {
+    width: Dimensions.get('window').width,
+    height: '100%'
+  }
+})
+
+export default React.memo(Timelines, () => true)
