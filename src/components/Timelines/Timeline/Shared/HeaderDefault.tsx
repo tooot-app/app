@@ -9,11 +9,11 @@ import relativeTime from 'src/utils/relativeTime'
 import client from 'src/api/client'
 import { getLocalAccountId, getLocalUrl } from 'src/utils/slices/instancesSlice'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import constants from 'src/utils/styles/constants'
 import BottomSheet from 'src/components/BottomSheet'
 import BottomSheetRow from 'src/components/BottomSheet/Row'
 import { toast } from 'src/components/toast'
 import { useSelector } from 'react-redux'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 const fireMutation = async ({
   id,
@@ -156,7 +156,7 @@ const HeaderDefault: React.FC<Props> = ({
       <Feather
         name='more-horizontal'
         color={theme.secondary}
-        size={constants.FONT_SIZE_M + 2}
+        size={StyleConstants.Font.Size.M + 2}
       />
     ),
     []
@@ -170,7 +170,7 @@ const HeaderDefault: React.FC<Props> = ({
             <Emojis
               content={name}
               emojis={emojis}
-              size={constants.FONT_SIZE_M}
+              size={StyleConstants.Font.Size.M}
               fontBold={true}
             />
           ) : (
@@ -202,7 +202,7 @@ const HeaderDefault: React.FC<Props> = ({
         {visibility === 'private' && (
           <Feather
             name='lock'
-            size={constants.FONT_SIZE_S}
+            size={StyleConstants.Font.Size.S}
             color={theme.secondary}
             style={styles.visibility}
           />
@@ -297,24 +297,24 @@ const styles = StyleSheet.create({
   },
   account: {
     flexShrink: 1,
-    marginLeft: constants.SPACING_XS,
-    lineHeight: constants.FONT_SIZE_M + 2
+    marginLeft: StyleConstants.Spacing.XS,
+    lineHeight: StyleConstants.Font.Size.M + 2
   },
   meta: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: constants.SPACING_XS,
-    marginBottom: constants.SPACING_S
+    marginTop: StyleConstants.Spacing.XS,
+    marginBottom: StyleConstants.Spacing.S
   },
   created_at: {
-    fontSize: constants.FONT_SIZE_S
+    fontSize: StyleConstants.Font.Size.S
   },
   visibility: {
-    marginLeft: constants.SPACING_S
+    marginLeft: StyleConstants.Spacing.S
   },
   application: {
-    fontSize: constants.FONT_SIZE_S,
-    marginLeft: constants.SPACING_S
+    fontSize: StyleConstants.Font.Size.S,
+    marginLeft: StyleConstants.Spacing.S
   }
 })
 

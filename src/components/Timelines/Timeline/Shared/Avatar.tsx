@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   uri: string
@@ -27,9 +26,9 @@ const Avatar: React.FC<Props> = ({ uri, id }) => {
 
 const styles = StyleSheet.create({
   avatar: {
-    width: constants.AVATAR_S,
-    height: constants.AVATAR_S,
-    marginRight: constants.SPACING_S
+    width: StyleConstants.Avatar.S,
+    height: StyleConstants.Avatar.S,
+    marginRight: StyleConstants.Spacing.S
   },
   image: {
     width: '100%',

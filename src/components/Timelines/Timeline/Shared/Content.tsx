@@ -4,8 +4,8 @@ import Collapsible from 'react-native-collapsible'
 
 import ParseContent from 'src/components/ParseContent'
 
-import constants from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   content: string
@@ -40,7 +40,7 @@ const Content: React.FC<Props> = ({
             <Collapsible collapsed={spoilerCollapsed}>
               <ParseContent
                 content={content}
-                size={constants.FONT_SIZE_M}
+                size={StyleConstants.Font.Size.M}
                 emojis={emojis}
                 mentions={mentions}
               />
@@ -49,7 +49,7 @@ const Content: React.FC<Props> = ({
         ) : (
           <ParseContent
             content={content}
-            size={constants.FONT_SIZE_M}
+            size={StyleConstants.Font.Size.M}
             emojis={emojis}
             mentions={mentions}
           />

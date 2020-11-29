@@ -1,8 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   children: React.ReactNode
@@ -18,7 +17,9 @@ const MenuContainer: React.FC<Props> = ({ ...props }) => {
         styles.base,
         {
           borderTopColor: theme.separator,
-          marginTop: props.marginTop ? constants.GLOBAL_PAGE_PADDING : 0
+          marginTop: props.marginTop
+            ? StyleConstants.Spacing.Global.PagePadding
+            : 0
         }
       ]}
     >
@@ -30,7 +31,7 @@ const MenuContainer: React.FC<Props> = ({ ...props }) => {
 const styles = StyleSheet.create({
   base: {
     borderTopWidth: 1,
-    marginBottom: constants.GLOBAL_PAGE_PADDING
+    marginBottom: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

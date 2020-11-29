@@ -14,9 +14,9 @@ import { Feather } from '@expo/vector-icons'
 import client from 'src/api/client'
 import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import constants from 'src/utils/styles/constants'
 import { toast } from 'src/components/toast'
 import { useSelector } from 'react-redux'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 const fireMutation = async ({
   id,
@@ -175,14 +175,14 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
         <Feather
           name='message-circle'
           color={iconColor}
-          size={constants.FONT_SIZE_M + 2}
+          size={StyleConstants.Font.Size.M + 2}
         />
         {status.replies_count > 0 && (
           <Text
             style={{
               color: theme.secondary,
-              fontSize: constants.FONT_SIZE_M,
-              marginLeft: constants.SPACING_XS
+              fontSize: StyleConstants.Font.Size.M,
+              marginLeft: StyleConstants.Spacing.XS
             }}
           >
             {status.replies_count}
@@ -201,7 +201,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
             ? iconColorAction(status.reblogged)
             : theme.disabled
         }
-        size={constants.FONT_SIZE_M + 2}
+        size={StyleConstants.Font.Size.M + 2}
       />
     ),
     [status.reblogged]
@@ -211,7 +211,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
       <Feather
         name='heart'
         color={iconColorAction(status.favourited)}
-        size={constants.FONT_SIZE_M + 2}
+        size={StyleConstants.Font.Size.M + 2}
       />
     ),
     [status.favourited]
@@ -221,7 +221,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
       <Feather
         name='bookmark'
         color={iconColorAction(status.bookmarked)}
-        size={constants.FONT_SIZE_M + 2}
+        size={StyleConstants.Font.Size.M + 2}
       />
     ),
     [status.bookmarked]
@@ -231,7 +231,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
       <Feather
         name='share-2'
         color={iconColor}
-        size={constants.FONT_SIZE_M + 2}
+        size={StyleConstants.Font.Size.M + 2}
       />
     ),
     []
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'row',
-    marginTop: constants.SPACING_M
+    marginTop: StyleConstants.Spacing.M
   },
   action: {
     width: '20%',

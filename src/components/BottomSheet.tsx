@@ -11,8 +11,7 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   children: React.ReactNode
@@ -104,23 +103,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   container: {
-    padding: constants.SPACING_L,
-    paddingTop: constants.SPACING_M
+    padding: StyleConstants.Spacing.L,
+    paddingTop: StyleConstants.Spacing.M
   },
   handle: {
     alignSelf: 'center',
-    width: constants.GLOBAL_SPACING_BASE * 8,
-    height: constants.GLOBAL_SPACING_BASE / 2,
+    width: StyleConstants.Spacing.Global.PagePadding * 8,
+    height: StyleConstants.Spacing.Global.PagePadding / 2,
     borderRadius: 100,
-    top: -constants.SPACING_M * 2
+    top: -StyleConstants.Spacing.M * 2
   },
   cancel: {
-    padding: constants.SPACING_S,
+    padding: StyleConstants.Spacing.S,
     borderWidth: 1,
     borderRadius: 100
   },
   text: {
-    fontSize: constants.FONT_SIZE_L,
+    fontSize: StyleConstants.Font.Size.L,
     textAlign: 'center'
   }
 })

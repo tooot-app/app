@@ -10,8 +10,7 @@ import Poll from './Shared/Poll'
 import Attachment from './Shared/Attachment'
 import Card from './Shared/Card'
 import ActionsStatus from './Shared/ActionsStatus'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   notificationView: {
     flex: 1,
     flexDirection: 'column',
-    padding: constants.GLOBAL_PAGE_PADDING
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   notification: {
     flex: 1,

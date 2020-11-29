@@ -11,9 +11,11 @@ import { updateLocal } from 'src/utils/slices/instancesSlice'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
-import constants from 'src/utils/styles/constants'
+import { useTranslation } from 'react-i18next'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 const Login: React.FC = () => {
+  const { t } = useTranslation('meRoot')
   const { theme } = useTheme()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -126,7 +128,7 @@ const Login: React.FC = () => {
           color: theme.primary,
           borderColor: theme.border,
           borderWidth: 1,
-          padding: constants.SPACING_M
+          padding: StyleConstants.Spacing.M
         }}
         onChangeText={onChangeText}
         autoCapitalize='none'
@@ -138,12 +140,12 @@ const Login: React.FC = () => {
         onSubmitEditing={async () =>
           isSuccess && data && data.uri && (await createApplication())
         }
-        placeholder='输入服务器'
+        placeholder={t('content.login.server.placeholder')}
         placeholderTextColor={theme.secondary}
         returnKeyType='go'
       />
       <Button
-        title='登录'
+        title={t('content.login.button')}
         disabled={!data?.uri}
         onPress={async () => await createApplication()}
       />
@@ -158,7 +160,7 @@ const Login: React.FC = () => {
 
 const styles = StyleSheet.create({
   base: {
-    padding: constants.GLOBAL_PAGE_PADDING
+    padding: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

@@ -2,8 +2,8 @@ import React from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import constants from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   onPressFunction: () => void
@@ -16,7 +16,11 @@ const BottomSheetRow: React.FC<Props> = ({ onPressFunction, icon, text }) => {
 
   return (
     <Pressable onPress={() => onPressFunction()} style={styles.pressable}>
-      <Feather name={icon} color={theme.primary} size={constants.FONT_SIZE_L} />
+      <Feather
+        name={icon}
+        color={theme.primary}
+        size={StyleConstants.Font.Size.L}
+      />
       <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>
     </Pressable>
   )
@@ -25,12 +29,12 @@ const BottomSheetRow: React.FC<Props> = ({ onPressFunction, icon, text }) => {
 const styles = StyleSheet.create({
   pressable: {
     flexDirection: 'row',
-    marginBottom: constants.SPACING_L
+    marginBottom: StyleConstants.Spacing.L
   },
   text: {
-    fontSize: constants.FONT_SIZE_M,
-    lineHeight: constants.FONT_SIZE_L,
-    marginLeft: constants.SPACING_S
+    fontSize: StyleConstants.Font.Size.M,
+    lineHeight: StyleConstants.Font.Size.L,
+    marginLeft: StyleConstants.Spacing.S
   }
 })
 

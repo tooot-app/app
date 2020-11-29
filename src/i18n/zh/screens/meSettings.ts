@@ -10,7 +10,7 @@ export default {
       }
     },
     theme: {
-      heading: '颜色模式',
+      heading: '应用外观',
       options: {
         auto: '跟随系统',
         light: '浅色模式',

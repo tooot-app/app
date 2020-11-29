@@ -10,8 +10,7 @@ import Poll from './Shared/Poll'
 import Attachment from './Shared/Attachment'
 import Card from './Shared/Card'
 import ActionsStatus from './Shared/ActionsStatus'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   item: Mastodon.Status
@@ -51,7 +50,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
             media_attachments={actualStatus.media_attachments}
             sensitive={actualStatus.sensitive}
             width={
-              Dimensions.get('window').width - constants.SPACING_M * 2 - 50 - 8
+              Dimensions.get('window').width - StyleConstants.Spacing.M * 2 - 50 - 8
             }
           />
         )}
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
   statusView: {
     flex: 1,
     flexDirection: 'column',
-    padding: constants.GLOBAL_PAGE_PADDING
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   status: {
     flex: 1,

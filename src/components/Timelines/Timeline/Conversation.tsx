@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import Avatar from './Shared/Avatar'
 import HeaderConversation from './Shared/HeaderConversation'
 import Content from './Shared/Content'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   item: Mastodon.Conversation
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
   statusView: {
     flex: 1,
     flexDirection: 'column',
-    padding: constants.GLOBAL_PAGE_PADDING
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   status: {
     flex: 1,

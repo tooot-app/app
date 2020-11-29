@@ -4,8 +4,7 @@ import { Feather } from '@expo/vector-icons'
 
 import Emojis from './Emojis'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   action: 'favourite' | 'follow' | 'mention' | 'poll' | 'reblog'
@@ -30,7 +29,7 @@ const Actioned: React.FC<Props> = ({
       icon = (
         <Feather
           name='heart'
-          size={constants.FONT_SIZE_S}
+          size={StyleConstants.Font.Size.S}
           color={iconColor}
           style={styles.icon}
         />
@@ -41,7 +40,7 @@ const Actioned: React.FC<Props> = ({
       icon = (
         <Feather
           name='user-plus'
-          size={constants.FONT_SIZE_S}
+          size={StyleConstants.Font.Size.S}
           color={iconColor}
           style={styles.icon}
         />
@@ -52,7 +51,7 @@ const Actioned: React.FC<Props> = ({
       icon = (
         <Feather
           name='bar-chart-2'
-          size={constants.FONT_SIZE_S}
+          size={StyleConstants.Font.Size.S}
           color='black'
           style={styles.icon}
         />
@@ -63,7 +62,7 @@ const Actioned: React.FC<Props> = ({
       icon = (
         <Feather
           name='repeat'
-          size={constants.FONT_SIZE_S}
+          size={StyleConstants.Font.Size.S}
           color={iconColor}
           style={styles.icon}
         />
@@ -81,7 +80,7 @@ const Actioned: React.FC<Props> = ({
             <Emojis
               content={content}
               emojis={emojis}
-              size={constants.FONT_SIZE_S}
+              size={StyleConstants.Font.Size.S}
             />
           ) : (
             <Text>{content}</Text>
@@ -97,11 +96,11 @@ const Actioned: React.FC<Props> = ({
 const styles = StyleSheet.create({
   actioned: {
     flexDirection: 'row',
-    marginBottom: constants.SPACING_S
+    marginBottom: StyleConstants.Spacing.S
   },
   icon: {
-    marginLeft: constants.AVATAR_S - constants.FONT_SIZE_S,
-    marginRight: constants.SPACING_S
+    marginLeft: StyleConstants.Avatar.S - StyleConstants.Font.Size.S,
+    marginRight: StyleConstants.Spacing.S
   },
   content: {
     flexDirection: 'row'

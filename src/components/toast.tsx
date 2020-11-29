@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import constants from 'src/utils/styles/constants'
 import { Feather } from '@expo/vector-icons'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Params {
   type: 'success' | 'error' | 'warning'
@@ -65,7 +65,7 @@ const ToastBase = ({ config }: { config: Config }) => {
         <Feather
           name={iconSet[config.type]}
           color={theme[config.type]}
-          size={constants.FONT_SIZE_M + 2}
+          size={StyleConstants.Font.Size.M + 2}
         />
         <Text style={[styles.text, { color: theme.primary }]}>
           {config.text1}
@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: constants.SPACING_M
+    padding: StyleConstants.Spacing.M
   },
   text: {
-    fontSize: constants.FONT_SIZE_M,
-    marginLeft: constants.SPACING_S
+    fontSize: StyleConstants.Font.Size.M,
+    marginLeft: StyleConstants.Spacing.S
   }
 })
 

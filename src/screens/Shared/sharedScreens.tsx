@@ -6,8 +6,11 @@ import ScreenSharedToot from 'src/screens/Shared/Toot'
 import ScreenSharedWebview from 'src/screens/Shared/Webview'
 import Compose from 'src/screens/Shared/Compose'
 import ScreenSharedSearch from './Search'
+import { useTranslation } from 'react-i18next'
 
 const sharedScreens = (Stack: any) => {
+  const { t } = useTranslation()
+
   return [
     <Stack.Screen
       key='Screen-Shared-Account'
@@ -32,16 +35,16 @@ const sharedScreens = (Stack: any) => {
       name='Screen-Shared-Toot'
       component={ScreenSharedToot}
       options={() => ({
-        title: '对话'
+        title: t('sharedToot:heading')
       })}
     />,
     <Stack.Screen
       key='Screen-Shared-Webview'
       name='Screen-Shared-Webview'
       component={ScreenSharedWebview}
-      // options={({ route }) => ({
-      //   title: `${route.params.domain}`
-      // })}
+      options={() => ({
+        stackPresentation: 'modal'
+      })}
     />,
     <Stack.Screen
       key='Screen-Shared-Compose'

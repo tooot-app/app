@@ -1,7 +1,12 @@
 export default {
   heading: '我的长毛象',
   content: {
-    login: {},
+    login: {
+      server: {
+        placeholder: '请输入服务器'
+      },
+      button: '登录'
+    },
     collections: {
       conversations: '$t(meConversations:heading)',
       bookmarks: '$t(meBookmarks:heading)',

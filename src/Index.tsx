@@ -17,6 +17,7 @@ import { themes } from 'src/utils/styles/themes'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import getCurrentTab from 'src/utils/getCurrentTab'
 import { toastConfig } from 'src/components/toast'
+import { useTranslation } from 'react-i18next'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -30,6 +31,7 @@ export type RootStackParamList = {
 }
 
 export const Index: React.FC = () => {
+  const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
@@ -39,7 +41,7 @@ export const Index: React.FC = () => {
   return (
     <>
       <StatusBar barStyle={barStyle[mode]} />
-      <NavigationContainer theme={themes[mode]}>
+      <NavigationContainer theme={themes[mode]} key={i18n.language}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {

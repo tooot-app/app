@@ -9,8 +9,7 @@ import {
   View
 } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   text: string
@@ -66,8 +65,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: constants.GLOBAL_PAGE_PADDING,
-    paddingRight: constants.GLOBAL_PAGE_PADDING
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

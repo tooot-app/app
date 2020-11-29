@@ -1,5 +1,7 @@
+import { store } from 'src/store'
+
 const relativeTime = (date: string) => {
-  let units = {
+  const units = {
     year: 24 * 60 * 60 * 1000 * 365,
     month: (24 * 60 * 60 * 1000 * 365) / 12,
     day: 24 * 60 * 60 * 1000,
@@ -8,14 +10,20 @@ const relativeTime = (date: string) => {
     second: 1000
   }
 
-  let rtf = new Intl.RelativeTimeFormat('zh', { numeric: 'auto' })
+  const rtf = new Intl.RelativeTimeFormat(store.getState().settings.language, {
+    numeric: 'auto'
+  })
 
-  let elapsed: number = new Date(date) - new Date()
+  const elapsed = +new Date(date) - +new Date()
 
   // "Math.abs" accounts for both "past" & "future" scenarios
-  for (var u in units)
-    if (Math.abs(elapsed) > units[u] || u == 'second')
+  for (const u in units) {
+    // @ts-ignore
+    if (Math.abs(elapsed) > units[u] || u == 'second') {
+      // @ts-ignore
       return rtf.format(Math.round(elapsed / units[u]), u)
+    }
+  }
 }
 
 export default relativeTime

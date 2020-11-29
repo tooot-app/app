@@ -5,14 +5,15 @@ import { Feather } from '@expo/vector-icons'
 
 import ParseContent from 'src/components/ParseContent'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-
-import constants from 'src/utils/styles/constants'
+import { StyleConstants } from 'src/utils/styles/constants'
+import { useTranslation } from 'react-i18next'
 
 export interface Props {
   account: Mastodon.Account | undefined
 }
 
 const AccountInformation: React.FC<Props> = ({ account }) => {
+  const { t } = useTranslation('sharedAccount')
   const { theme } = useTheme()
   const [avatarLoaded, setAvatarLoaded] = useState(false)
 
@@ -53,7 +54,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
               >
                 <ParseContent
                   content={field.name}
-                  size={constants.FONT_SIZE_M}
+                  size={StyleConstants.Font.Size.M}
                   emojis={account.emojis}
                   showFullLink
                 />{' '}
@@ -62,7 +63,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
               <Text style={{ width: '70%', color: theme.primary }}>
                 <ParseContent
                   content={field.value}
-                  size={constants.FONT_SIZE_M}
+                  size={StyleConstants.Font.Size.M}
                   emojis={account.emojis}
                   showFullLink
                 />
@@ -76,7 +77,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
         <View style={styles.note}>
           <ParseContent
             content={account.note}
-            size={constants.FONT_SIZE_M}
+            size={StyleConstants.Font.Size.M}
             emojis={account.emojis}
           />
         </View>
@@ -84,19 +85,20 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
       {account?.created_at && (
         <View style={styles.created_at}>
-          <Feather name='calendar' size={constants.FONT_SIZE_M + 2} />
+          <Feather name='calendar' size={StyleConstants.Font.Size.M + 2} />
           <Text
             style={{
               color: theme.primary,
-              fontSize: constants.FONT_SIZE_M,
-              marginLeft: constants.SPACING_XS
+              fontSize: StyleConstants.Font.Size.M,
+              marginLeft: StyleConstants.Spacing.XS
             }}
           >
-            加入时间：
-            {new Date(account.created_at).toLocaleDateString('zh-CN', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
+            {t('content.created_at', {
+              date: new Date(account.created_at).toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })
             })}
           </Text>
         </View>
@@ -104,13 +106,19 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
       <View style={styles.summary}>
         <Text style={{ color: theme.primary }}>
-          {account?.statuses_count} 条嘟文
+          {t('content.summary.statuses_count', {
+            count: account?.statuses_count
+          })}
         </Text>
         <Text style={{ color: theme.primary }}>
-          关注 {account?.followers_count} 人
+          {t('content.summary.followers_count', {
+            count: account?.followers_count
+          })}
         </Text>
         <Text style={{ color: theme.primary }}>
-          被 {account?.following_count} 人关注
+          {t('content.summary.following_count', {
+            count: account?.following_count
+          })}
         </Text>
       </View>
     </View>
@@ -119,33 +127,33 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
 const styles = StyleSheet.create({
   information: {
-    marginTop: -30 - constants.GLOBAL_PAGE_PADDING,
-    padding: constants.GLOBAL_PAGE_PADDING
+    marginTop: -30 - StyleConstants.Spacing.Global.PagePadding,
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   avatar: {
-    width: constants.AVATAR_L,
-    height: constants.AVATAR_L,
+    width: StyleConstants.Avatar.L,
+    height: StyleConstants.Avatar.L,
     borderRadius: 8
   },
   display_name: {
-    fontSize: constants.FONT_SIZE_L,
-    fontWeight: 'bold',
-    marginTop: constants.SPACING_M,
-    marginBottom: constants.SPACING_XS
+    fontSize: StyleConstants.Font.Size.L,
+    fontWeight: StyleConstants.Font.Weight.Bold,
+    marginTop: StyleConstants.Spacing.M,
+    marginBottom: StyleConstants.Spacing.XS
   },
   account: {
-    fontSize: constants.FONT_SIZE_M,
-    marginBottom: constants.SPACING_S
+    fontSize: StyleConstants.Font.Size.M,
+    marginBottom: StyleConstants.Spacing.S
   },
   fields: {
-    marginBottom: constants.SPACING_S
+    marginBottom: StyleConstants.Spacing.S
   },
   note: {
-    marginBottom: constants.SPACING_M
+    marginBottom: StyleConstants.Spacing.M
   },
   created_at: {
     flexDirection: 'row',
-    marginBottom: constants.SPACING_M
+    marginBottom: StyleConstants.Spacing.M
   },
   summary: {
     flexDirection: 'row',

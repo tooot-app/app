@@ -3,12 +3,14 @@ import { Dimensions, FlatList, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 
 import Timeline from 'src/components/Timelines/Timeline'
+import { useTranslation } from 'react-i18next'
 
 export interface Props {
   id: Mastodon.Account['id']
 }
 
 const AccountToots: React.FC<Props> = ({ id }) => {
+  const { t } = useTranslation('sharedAccount')
   const [segment, setSegment] = useState(0)
   const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
     false
@@ -24,7 +26,11 @@ const AccountToots: React.FC<Props> = ({ id }) => {
   return (
     <>
       <SegmentedControl
-        values={['嘟嘟', '嘟嘟和回复', '媒体']}
+        values={[
+          t('content.segments.left'),
+          t('content.segments.middle'),
+          t('content.segments.right')
+        ]}
         selectedIndex={segment}
         onChange={({ nativeEvent }) => {
           setSegmentManuallyTriggered(true)

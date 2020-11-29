@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
-import constants from 'src/utils/styles/constants'
 import { ColorDefinitions } from 'src/utils/styles/themes'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   iconFront?: string
@@ -34,7 +34,7 @@ const Core: React.FC<Props> = ({
         {iconFront && (
           <Feather
             name={iconFront}
-            size={constants.FONT_SIZE_M + 2}
+            size={StyleConstants.Font.Size.M + 2}
             color={theme[iconFrontColor]}
             style={styles.iconFront}
           />
@@ -55,7 +55,7 @@ const Core: React.FC<Props> = ({
         {iconBack && (
           <Feather
             name={iconBack}
-            size={constants.FONT_SIZE_M + 2}
+            size={StyleConstants.Font.Size.M + 2}
             color={theme[iconBackColor]}
             style={styles.iconBack}
           />
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   core: {
     flex: 1,
     flexDirection: 'row',
-    paddingLeft: constants.GLOBAL_PAGE_PADDING,
-    paddingRight: constants.GLOBAL_PAGE_PADDING
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding
   },
   front: {
     flex: 1,
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   text: {
-    fontSize: constants.FONT_SIZE_M
+    fontSize: StyleConstants.Font.Size.M
   },
   content: {
-    fontSize: constants.FONT_SIZE_M
+    fontSize: StyleConstants.Font.Size.M
   },
   iconBack: {
     marginLeft: 8
