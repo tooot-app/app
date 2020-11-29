@@ -6,7 +6,7 @@ import { getLocalUrl } from 'src/utils/slices/instancesSlice'
 
 import Login from './Root/Login'
 import MyInfo from './Root/MyInfo'
-import MyCollections from './Root/MyCollections'
+import Collections from './Root/Collections'
 import Settings from './Root/Settings'
 import Logout from './Root/Logout'
 
@@ -16,7 +16,7 @@ const ScreenMeRoot: React.FC = () => {
   return (
     <ScrollView>
       {localRegistered ? <MyInfo /> : <Login />}
-      {localRegistered && <MyCollections />}
+      {localRegistered && <Collections />}
       <Settings />
       {localRegistered && <Logout />}
     </ScrollView>

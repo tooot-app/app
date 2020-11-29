@@ -5,17 +5,19 @@ import { updateLocal } from 'src/utils/slices/instancesSlice'
 import MenuButton from 'src/components/Menu/Button'
 import { MenuContainer } from 'src/components/Menu'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 
 const Logout: React.FC = () => {
+  const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
   const navigation = useNavigation()
 
   const alertOption = {
-    title: '确认退出登录？',
-    message: '退出登录后，需要重新认证账号',
+    title: t('content.logout.alert.title'),
+    message: t('content.logout.alert.message'),
     buttons: [
       {
-        text: '退出登录',
+        text: t('content.logout.alert.buttons.logout'),
         style: 'destructive' as const,
         onPress: () => {
           dispatch(updateLocal({}))
@@ -26,7 +28,7 @@ const Logout: React.FC = () => {
         }
       },
       {
-        text: '取消',
+        text: t('content.logout.alert.buttons.cancel'),
         style: 'cancel' as const
       }
     ]
@@ -35,7 +37,7 @@ const Logout: React.FC = () => {
   return (
     <MenuContainer>
       <MenuButton
-        text='退出当前账号'
+        text={t('content.logout.button')}
         destructive={true}
         alertOption={alertOption}
       />

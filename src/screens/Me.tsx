@@ -41,42 +41,42 @@ const ScreenMe: React.FC = () => {
         name='Screen-Me-Conversations'
         component={ScreenMeConversations}
         options={{
-          headerTitle: t('headers.me.conversations')
+          headerTitle: t('meConversations:heading')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Bookmarks'
         component={ScreenMeBookmarks}
         options={{
-          headerTitle: t('headers.me.bookmarks')
+          headerTitle: t('meBookmarks:heading')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Favourites'
         component={ScreenMeFavourites}
         options={{
-          headerTitle: t('headers.me.favourites')
+          headerTitle: t('meFavourites:heading')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists'
         component={ScreenMeLists}
         options={{
-          headerTitle: t('headers.me.lists.root')
+          headerTitle: t('meLists:heading')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists-List'
         component={ScreenMeListsList}
         options={({ route }: any) => ({
-          headerTitle: t('headers.me.lists.list', { list: route.params.title })
+          headerTitle: t('meListsList:heading', { list: route.params.title })
         })}
       />
       <Stack.Screen
         name='Screen-Me-Settings'
         component={ScreenMeSettings}
         options={{
-          headerTitle: t('headers.me.settings.root')
+          headerTitle: t('meSettings:heading')
         }}
       />
 

@@ -44,7 +44,7 @@ export interface Props {
 
 const Timelines: React.FC<Props> = ({ name, content }) => {
   const navigation = useNavigation()
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const localRegistered = useSelector(getLocalUrl)
   const publicDomain = useSelector(getRemoteUrl)
   const [segment, setSegment] = useState(0)
@@ -107,6 +107,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
               headerCenter: () => (
                 <View style={styles.segmentsContainer}>
                   <SegmentedControl
+                    appearance={mode}
                     values={[content[0].title, content[1].title]}
                     selectedIndex={segment}
                     onChange={onChangeSegment}

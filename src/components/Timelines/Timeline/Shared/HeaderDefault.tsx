@@ -98,6 +98,7 @@ export interface Props {
   emojis?: Mastodon.Emoji[]
   account: string
   created_at: string
+  visibility: Mastodon.Status['visibility']
   application?: Mastodon.Application
 }
 
@@ -109,6 +110,7 @@ const HeaderDefault: React.FC<Props> = ({
   emojis,
   account,
   created_at,
+  visibility,
   application
 }) => {
   const { theme } = useTheme()
@@ -197,6 +199,14 @@ const HeaderDefault: React.FC<Props> = ({
             {since}
           </Text>
         </View>
+        {visibility === 'private' && (
+          <Feather
+            name='lock'
+            size={constants.FONT_SIZE_S}
+            color={theme.secondary}
+            style={styles.visibility}
+          />
+        )}
         {application && application.name !== 'Web' && (
           <View>
             <Text
@@ -292,11 +302,15 @@ const styles = StyleSheet.create({
   },
   meta: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginTop: constants.SPACING_XS,
     marginBottom: constants.SPACING_S
   },
   created_at: {
     fontSize: constants.FONT_SIZE_S
+  },
+  visibility: {
+    marginLeft: constants.SPACING_S
   },
   application: {
     fontSize: constants.FONT_SIZE_S,

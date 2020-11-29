@@ -28,22 +28,25 @@ setConsole({
 const App: React.FC = () => {
   return (
     <AppearanceProvider>
-      <ThemeManager>
-        <ReactQueryCacheProvider queryCache={queryCache}>
-          <Provider store={store}>
-            <PersistGate persistor={persistor}>
-              {bootstrapped => {
-                if (bootstrapped) {
-                  require('src/i18n/i18n')
-                  return <Index />
-                } else {
-                  return <></>
-                }
-              }}
-            </PersistGate>
-          </Provider>
-        </ReactQueryCacheProvider>
-      </ThemeManager>
+      <ReactQueryCacheProvider queryCache={queryCache}>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            {bootstrapped => {
+              if (bootstrapped) {
+                console.log('Bootstrapped!')
+                require('src/i18n/i18n')
+                return (
+                  <ThemeManager>
+                    <Index />
+                  </ThemeManager>
+                )
+              } else {
+                return <></>
+              }
+            }}
+          </PersistGate>
+        </Provider>
+      </ReactQueryCacheProvider>
     </AppearanceProvider>
   )
 }

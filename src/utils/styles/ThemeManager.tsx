@@ -1,39 +1,44 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Appearance, useColorScheme } from 'react-native-appearance'
+import { Appearance } from 'react-native-appearance'
+import { useSelector } from 'react-redux'
 import { ColorDefinitions, getTheme } from 'src/utils/styles/themes'
+import { getSettingsTheme } from '../slices/settingsSlice'
 
-const osTheme = Appearance.getColorScheme() as 'light' | 'dark'
-
-export const ManageThemeContext: React.Context<{
+type ContextType = {
   mode: 'light' | 'dark'
   theme: { [key in ColorDefinitions]: string }
-  toggle: () => void
-}> = createContext({
-  mode: osTheme,
-  theme: getTheme(osTheme),
-  toggle: () => {}
+  setTheme: (theme: 'light' | 'dark') => void
+}
+
+export const ManageThemeContext = createContext<ContextType>({
+  mode: 'light',
+  theme: getTheme('light'),
+  setTheme: () => {}
 })
 
 export const useTheme = () => useContext(ManageThemeContext)
 
 const ThemeManager: React.FC = ({ children }) => {
-  const [mode, setMode] = useState(osTheme)
-  const systemTheme = useColorScheme()
+  const userTheme = useSelector(getSettingsTheme)
+  const currentMode =
+    userTheme === 'auto'
+      ? (Appearance.getColorScheme() as 'light' | 'dark')
+      : userTheme
 
-  const toggleTheme = () => {
-    mode === 'light' ? setMode('dark') : setMode('light')
-  }
+  const [mode, setMode] = useState(currentMode)
+
+  const setTheme = (theme: 'light' | 'dark') => setMode(theme)
 
   useEffect(() => {
-    setMode(systemTheme === 'no-preference' ? 'light' : systemTheme)
-  }, [systemTheme])
+    setMode(currentMode)
+  }, [currentMode])
 
   return (
     <ManageThemeContext.Provider
       value={{
         mode: mode,
         theme: getTheme(mode),
-        toggle: toggleTheme
+        setTheme: setTheme
       }}
     >
       {children}

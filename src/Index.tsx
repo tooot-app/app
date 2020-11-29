@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
 import React from 'react'
+import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
 
@@ -30,65 +31,72 @@ export type RootStackParamList = {
 
 export const Index: React.FC = () => {
   const { mode, theme } = useTheme()
+  enum barStyle {
+    light = 'dark-content',
+    dark = 'light-content'
+  }
 
   return (
-    <NavigationContainer theme={themes[mode]}>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let name: string
-            switch (route.name) {
-              case 'Screen-Local':
-                name = 'home'
-                break
-              case 'Screen-Public':
-                name = 'globe'
-                break
-              case 'Screen-Post':
-                name = 'plus'
-                break
-              case 'Screen-Notifications':
-                name = 'bell'
-                break
-              case 'Screen-Me':
-                name = focused ? 'smile' : 'meh'
-                break
-              default:
-                name = 'alert-octagon'
-                break
-            }
-            return <Feather name={name} size={size} color={color} />
-          }
-        })}
-        tabBarOptions={{
-          activeTintColor: theme.primary,
-          inactiveTintColor: theme.secondary,
-          showLabel: false
-        }}
-      >
-        <Tab.Screen name='Screen-Local' component={ScreenLocal} />
-        <Tab.Screen name='Screen-Public' component={ScreenPublic} />
-        <Tab.Screen
-          name='Screen-Post'
-          listeners={({ navigation, route }) => ({
-            tabPress: e => {
-              e.preventDefault()
-              navigation.navigate(getCurrentTab(navigation), {
-                screen: 'Screen-Shared-Compose'
-              })
+    <>
+      <StatusBar barStyle={barStyle[mode]} />
+      <NavigationContainer theme={themes[mode]}>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let name: string
+              switch (route.name) {
+                case 'Screen-Local':
+                  name = 'home'
+                  break
+                case 'Screen-Public':
+                  name = 'globe'
+                  break
+                case 'Screen-Post':
+                  name = 'plus'
+                  break
+                case 'Screen-Notifications':
+                  name = 'bell'
+                  break
+                case 'Screen-Me':
+                  name = focused ? 'smile' : 'meh'
+                  break
+                default:
+                  name = 'alert-octagon'
+                  break
+              }
+              return <Feather name={name} size={size} color={color} />
             }
           })}
+          tabBarOptions={{
+            activeTintColor: theme.primary,
+            inactiveTintColor: theme.secondary,
+            showLabel: false
+          }}
         >
-          {() => <></>}
-        </Tab.Screen>
-        <Tab.Screen
-          name='Screen-Notifications'
-          component={ScreenNotifications}
-        />
-        <Tab.Screen name='Screen-Me' component={ScreenMe} />
-      </Tab.Navigator>
+          <Tab.Screen name='Screen-Local' component={ScreenLocal} />
+          <Tab.Screen name='Screen-Public' component={ScreenPublic} />
+          <Tab.Screen
+            name='Screen-Post'
+            listeners={({ navigation, route }) => ({
+              tabPress: e => {
+                e.preventDefault()
+                navigation.navigate(getCurrentTab(navigation), {
+                  screen: 'Screen-Shared-Compose'
+                })
+              }
+            })}
+          >
+            {() => <></>}
+          </Tab.Screen>
+          <Tab.Screen
+            name='Screen-Notifications'
+            component={ScreenNotifications}
+          />
+          <Tab.Screen name='Screen-Me' component={ScreenMe} />
+        </Tab.Navigator>
 
-      <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
-    </NavigationContainer>
+        <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
+      </NavigationContainer>
+    </>
   )
 }

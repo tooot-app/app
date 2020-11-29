@@ -88,6 +88,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
               emojis={actualStatus.account.emojis}
               account={actualStatus.account.acct}
               created_at={item.created_at}
+              visibility={item.visibility}
               application={item.application}
             />
             {/* Can pass toot info to next page to speed up performance */}

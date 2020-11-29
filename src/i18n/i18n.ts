@@ -9,9 +9,8 @@ import {
   getSettingsLanguage
 } from 'src/utils/slices/settingsSlice'
 import { store } from 'src/store'
-  console.log(store.getState())
+
 if (!getSettingsLanguage(store.getState())) {
-  console.log('No default locale of app')
   const deviceLocal = Localization.locale
   if (deviceLocal.startsWith('zh')) {
     store.dispatch(changeLanguage('zh'))
