@@ -1,14 +1,17 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Timelines from 'src/components/Timelines'
 
 const ScreenPublic: React.FC = () => {
+  const { t } = useTranslation()
+
   return (
     <Timelines
       name='Screen-Public-Root'
       content={[
-        { title: '跨站', page: 'LocalPublic' },
-        { title: '他站', page: 'RemotePublic' }
+        { title: t('headers.public.segments.left'), page: 'LocalPublic' },
+        { title: t('headers.public.segments.right'), page: 'RemotePublic' }
       ]}
     />
   )

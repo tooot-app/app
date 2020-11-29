@@ -1,5 +1,6 @@
 import React from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 import ScreenMeRoot from 'src/screens/Me/Root'
@@ -16,6 +17,7 @@ import { RootState } from 'src/store'
 const Stack = createNativeStackNavigator()
 
 const ScreenMe: React.FC = () => {
+  const { t } = useTranslation()
   const localRegistered = useSelector(
     (state: RootState) => state.instances.local.url
   )
@@ -32,49 +34,49 @@ const ScreenMe: React.FC = () => {
                 headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
                 headerCenter: () => <></>
               }
-            : { headerTitle: '我的长毛象' }
+            : { headerTitle: t('headers.me.root') }
         }
       />
       <Stack.Screen
         name='Screen-Me-Conversations'
         component={ScreenMeConversations}
         options={{
-          headerTitle: '私信'
+          headerTitle: t('headers.me.conversations')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Bookmarks'
         component={ScreenMeBookmarks}
         options={{
-          headerTitle: '书签'
+          headerTitle: t('headers.me.bookmarks')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Favourites'
         component={ScreenMeFavourites}
         options={{
-          headerTitle: '喜欢'
+          headerTitle: t('headers.me.favourites')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists'
         component={ScreenMeLists}
         options={{
-          headerTitle: '列表'
+          headerTitle: t('headers.me.lists.root')
         }}
       />
       <Stack.Screen
         name='Screen-Me-Lists-List'
         component={ScreenMeListsList}
         options={({ route }: any) => ({
-          headerTitle: `列表：${route.params.title}`
+          headerTitle: t('headers.me.lists.list', { list: route.params.title })
         })}
       />
       <Stack.Screen
         name='Screen-Me-Settings'
         component={ScreenMeSettings}
         options={{
-          headerTitle: '设置'
+          headerTitle: t('headers.me.settings.root')
         }}
       />
 

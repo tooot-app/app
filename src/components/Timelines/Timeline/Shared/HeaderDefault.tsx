@@ -2,19 +2,18 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
-import Toast from 'react-native-toast-message'
 import { useMutation, useQueryCache } from 'react-query'
 
 import Emojis from './Emojis'
 import relativeTime from 'src/utils/relativeTime'
 import client from 'src/api/client'
 import { getLocalAccountId, getLocalUrl } from 'src/utils/slices/instancesSlice'
-import { store } from 'src/store'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import constants from 'src/utils/styles/constants'
 import BottomSheet from 'src/components/BottomSheet'
 import BottomSheetRow from 'src/components/BottomSheet/Row'
 import { toast } from 'src/components/toast'
+import { useSelector } from 'react-redux'
 
 const fireMutation = async ({
   id,
@@ -115,8 +114,8 @@ const HeaderDefault: React.FC<Props> = ({
   const { theme } = useTheme()
 
   const navigation = useNavigation()
-  const localAccountId = getLocalAccountId(store.getState())
-  const localDomain = getLocalUrl(store.getState())
+  const localAccountId = useSelector(getLocalAccountId)
+  const localDomain = useSelector(getLocalUrl)
   const [since, setSince] = useState(relativeTime(created_at))
   const [modalVisible, setModalVisible] = useState(false)
 

@@ -6,16 +6,20 @@ import sharedScreens from 'src/screens/Shared/sharedScreens'
 import { useSelector } from 'react-redux'
 import { RootState } from 'src/store'
 import PleaseLogin from 'src/components/PleaseLogin'
+import { useTranslation } from 'react-i18next'
 
 const Stack = createNativeStackNavigator()
 
 const ScreenNotifications: React.FC = () => {
+  const { t } = useTranslation()
   const localRegistered = useSelector(
     (state: RootState) => state.instances.local.url
   )
 
   return (
-    <Stack.Navigator screenOptions={{ headerTitle: '通知' }}>
+    <Stack.Navigator
+      screenOptions={{ headerTitle: t('headers.notifications') }}
+    >
       <Stack.Screen name='Screen-Notifications-Root'>
         {() =>
           localRegistered ? <Timeline page='Notifications' /> : <PleaseLogin />

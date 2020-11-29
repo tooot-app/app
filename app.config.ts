@@ -13,11 +13,22 @@ export default (): ExpoConfig => ({
   developmentClient: { silentLaunch: true },
   scheme: 'mastodonct',
   ios: {
+    infoPlist: {
+      CFBundleAllowMixedLocalizations: true
+    },
     splash: {
       image: './assets/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff'
     }
   },
-  assetBundlePatterns: ['**/*']
+  locales: {
+    zh: {
+      CFBundleDisplayName: '我的嘟嘟'
+    },
+    en: {
+      CFBundleDisplayName: 'My Toots'
+    }
+  },
+  assetBundlePatterns: ['assets/*']
 })

@@ -5,7 +5,8 @@ import { Provider } from 'react-redux'
 
 import ThemeManager from 'src/utils/styles/ThemeManager'
 import { Index } from 'src/Index'
-import { store } from 'src/store'
+import { persistor, store } from 'src/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const queryCache = new QueryCache()
 
@@ -30,7 +31,16 @@ const App: React.FC = () => {
       <ThemeManager>
         <ReactQueryCacheProvider queryCache={queryCache}>
           <Provider store={store}>
-            <Index />
+            <PersistGate persistor={persistor}>
+              {bootstrapped => {
+                if (bootstrapped) {
+                  require('src/i18n/i18n')
+                  return <Index />
+                } else {
+                  return <></>
+                }
+              }}
+            </PersistGate>
           </Provider>
         </ReactQueryCacheProvider>
       </ThemeManager>

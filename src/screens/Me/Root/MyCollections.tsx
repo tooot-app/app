@@ -1,17 +1,35 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { MenuContainer, MenuItem } from 'src/components/Menu'
 
-export interface Props {
-  id: Mastodon.Account['id']
-}
+const MyInfo: React.FC = () => {
+  const { t } = useTranslation()
+  const navigation = useNavigation()
 
-const MyInfo: React.FC<Props> = ({ id }) => {
   return (
     <MenuContainer>
-      <MenuItem icon='mail' title='私信' navigateTo='Screen-Me-Conversations' />
-      <MenuItem icon='bookmark' title='书签' navigateTo='Screen-Me-Bookmarks' />
-      <MenuItem icon='star' title='喜欢' navigateTo='Screen-Me-Favourites' />
-      <MenuItem icon='list' title='列表' navigateTo='Screen-Me-Lists' />
+      <MenuItem
+        iconFront='mail'
+        title={t('headers.me.conversations')}
+        onPress={() => navigation.navigate('Screen-Me-Conversations')}
+      />
+      <MenuItem
+        iconFront='bookmark'
+        title={t('headers.me.bookmarks')}
+        onPress={() => navigation.navigate('Screen-Me-Bookmarks')}
+      />
+      <MenuItem
+        iconFront='star'
+        title={t('headers.me.favourites')}
+        onPress={() => navigation.navigate('Screen-Me-Favourites')}
+      />
+      <MenuItem
+        iconFront='list'
+        title={t('headers.me.lists.root')}
+        onPress={() => navigation.navigate('Screen-Me-Lists')}
+      />
     </MenuContainer>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
@@ -7,8 +7,11 @@ import { Feather } from '@expo/vector-icons'
 
 import Timeline from './Timelines/Timeline'
 import sharedScreens from 'src/screens/Shared/sharedScreens'
-import { getRemoteUrl, InstancesState } from 'src/utils/slices/instancesSlice'
-import { RootState, store } from 'src/store'
+import {
+  getLocalUrl,
+  getRemoteUrl,
+  InstancesState
+} from 'src/utils/slices/instancesSlice'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from 'src/utils/getCurrentTab'
@@ -42,15 +45,10 @@ export interface Props {
 const Timelines: React.FC<Props> = ({ name, content }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
-  const localRegistered = useSelector(
-    (state: RootState) => state.instances.local.url
-  )
-  const publicDomain = getRemoteUrl(store.getState())
+  const localRegistered = useSelector(getLocalUrl)
+  const publicDomain = useSelector(getRemoteUrl)
   const [segment, setSegment] = useState(0)
   const [renderHeader, setRenderHeader] = useState(false)
-  const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
-    false
-  )
 
   useEffect(() => {
     const nbr = setTimeout(() => setRenderHeader(true), 50)
@@ -60,8 +58,6 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   const horizontalPaging = useRef<FlatList>(null!)
 
   const onChangeSegment = useCallback(({ nativeEvent }) => {
-    setSegmentManuallyTriggered(true)
-    setSegment(nativeEvent.selectedSegmentIndex)
     horizontalPaging.current.scrollToIndex({
       index: nativeEvent.selectedSegmentIndex
     })
@@ -90,13 +86,8 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     },
     [localRegistered]
   )
-  const flOnMomentumScrollEnd = useCallback(
-    () => setSegmentManuallyTriggered(false),
-    []
-  )
   const flOnScroll = useCallback(
     ({ nativeEvent }) =>
-      !segmentManuallyTriggered &&
       setSegment(
         nativeEvent.contentOffset.x <= Dimensions.get('window').width / 2
           ? 0
@@ -114,12 +105,13 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
           ...(renderHeader &&
             localRegistered && {
               headerCenter: () => (
-                <SegmentedControl
-                  values={[content[0].title, content[1].title]}
-                  selectedIndex={segment}
-                  onChange={onChangeSegment}
-                  style={{ width: 150, height: 30 }}
-                />
+                <View style={styles.segmentsContainer}>
+                  <SegmentedControl
+                    values={[content[0].title, content[1].title]}
+                    selectedIndex={segment}
+                    onChange={onChangeSegment}
+                  />
+                </View>
               ),
               headerRight: () => (
                 <Feather
@@ -147,7 +139,6 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
               keyExtractor={flKeyExtrator}
               getItemLayout={flGetItemLayout}
               showsHorizontalScrollIndicator={false}
-              onMomentumScrollEnd={flOnMomentumScrollEnd}
             />
           )
         }}
@@ -159,6 +150,9 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
 }
 
 const styles = StyleSheet.create({
+  segmentsContainer: {
+    flexBasis: '60%'
+  },
   flatList: {
     width: Dimensions.get('window').width,
     height: '100%'

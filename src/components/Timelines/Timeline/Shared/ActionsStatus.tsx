@@ -8,17 +8,15 @@ import {
   Text,
   View
 } from 'react-native'
-import Toast from 'react-native-toast-message'
 import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
-import { findIndex } from 'lodash'
 
 import client from 'src/api/client'
 import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
-import { store } from 'src/store'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import constants from 'src/utils/styles/constants'
 import { toast } from 'src/components/toast'
+import { useSelector } from 'react-redux'
 
 const fireMutation = async ({
   id,
@@ -87,7 +85,7 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
 
-  const localAccountId = getLocalAccountId(store.getState())
+  const localAccountId = useSelector(getLocalAccountId)
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const queryCache = useQueryCache()

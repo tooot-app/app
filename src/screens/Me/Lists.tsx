@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { ActivityIndicator, Text } from 'react-native'
 import { useQuery } from 'react-query'
@@ -6,6 +7,7 @@ import { MenuContainer, MenuItem } from 'src/components/Menu'
 import { listsFetch } from 'src/utils/fetches/listsFetch'
 
 const ScreenMeLists: React.FC = () => {
+  const navigation = useNavigation()
   const { status, data } = useQuery(['Lists'], listsFetch)
 
   let lists
@@ -20,13 +22,14 @@ const ScreenMeLists: React.FC = () => {
       lists = data?.map((d: Mastodon.List, i: number) => (
         <MenuItem
           key={i}
-          icon='list'
+          iconFront='list'
           title={d.title}
-          navigateTo='Screen-Me-Lists-List'
-          navigateToParams={{
-            list: d.id,
-            title: d.title
-          }}
+          onPress={() =>
+            navigation.navigate('Screen-Me-Lists-List', {
+              list: d.id,
+              title: d.title
+            })
+          }
         />
       ))
       break

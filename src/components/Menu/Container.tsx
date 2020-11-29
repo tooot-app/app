@@ -4,11 +4,24 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import constants from 'src/utils/styles/constants'
 
-const MenuContainer: React.FC = ({ ...props }) => {
+export interface Props {
+  children: React.ReactNode
+  marginTop?: boolean
+}
+
+const MenuContainer: React.FC<Props> = ({ ...props }) => {
   const { theme } = useTheme()
 
   return (
-    <View style={[styles.base, { borderTopColor: theme.separator }]}>
+    <View
+      style={[
+        styles.base,
+        {
+          borderTopColor: theme.separator,
+          marginTop: props.marginTop ? constants.GLOBAL_PAGE_PADDING : 0
+        }
+      ]}
+    >
       {props.children}
     </View>
   )
@@ -17,7 +30,7 @@ const MenuContainer: React.FC = ({ ...props }) => {
 const styles = StyleSheet.create({
   base: {
     borderTopWidth: 1,
-    marginBottom: constants.SPACING_M
+    marginBottom: constants.GLOBAL_PAGE_PADDING
   }
 })
 
