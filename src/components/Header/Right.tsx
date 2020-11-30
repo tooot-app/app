@@ -28,11 +28,11 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
 
   return (
     <Pressable onPress={onPress} style={styles.base}>
-      {text && <Text style={[styles.text, { color: theme.link }]}>{text}</Text>}
+      {text && <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>}
       {icon && (
         <Feather
           name={icon}
-          color={theme.link}
+          color={theme.primary}
           size={StyleConstants.Font.Size.L}
         />
       )}

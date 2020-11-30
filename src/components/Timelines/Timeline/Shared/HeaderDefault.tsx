@@ -166,7 +166,7 @@ const HeaderDefault: React.FC<Props> = ({
     <View>
       <View style={styles.nameAndAction}>
         <View style={styles.name}>
-          {emojis ? (
+          {emojis?.length ? (
             <Emojis
               content={name}
               emojis={emojis}
@@ -174,7 +174,10 @@ const HeaderDefault: React.FC<Props> = ({
               fontBold={true}
             />
           ) : (
-            <Text numberOfLines={1} style={{ color: theme.primary }}>
+            <Text
+              numberOfLines={1}
+              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
+            >
               {name}
             </Text>
           )}
@@ -193,6 +196,7 @@ const HeaderDefault: React.FC<Props> = ({
           />
         )}
       </View>
+
       <View style={styles.meta}>
         <View>
           <Text style={[styles.created_at, { color: theme.secondary }]}>
@@ -224,7 +228,7 @@ const HeaderDefault: React.FC<Props> = ({
       >
         {accountId !== localAccountId && (
           <BottomSheetRow
-            onPressFunction={() => {
+            onPress={() => {
               setModalVisible(false)
               mutateAction({
                 id: accountId,
@@ -238,7 +242,7 @@ const HeaderDefault: React.FC<Props> = ({
         )}
         {accountId !== localAccountId && (
           <BottomSheetRow
-            onPressFunction={() => {
+            onPress={() => {
               setModalVisible(false)
               mutateAction({
                 id: accountId,
@@ -252,7 +256,7 @@ const HeaderDefault: React.FC<Props> = ({
         )}
         {domain !== localDomain && (
           <BottomSheetRow
-            onPressFunction={() => {
+            onPress={() => {
               setModalVisible(false)
               mutateAction({
                 id: domain,
@@ -265,7 +269,7 @@ const HeaderDefault: React.FC<Props> = ({
         )}
         {accountId !== localAccountId && (
           <BottomSheetRow
-            onPressFunction={() => {
+            onPress={() => {
               setModalVisible(false)
               mutateAction({
                 id: accountId,
@@ -288,17 +292,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   name: {
-    flexBasis: '80%',
+    flexBasis: '90%',
     flexDirection: 'row'
   },
+  nameWithoutEmoji: {
+    fontSize: StyleConstants.Font.Size.M,
+    fontWeight: StyleConstants.Font.Weight.Bold
+  },
   action: {
-    flexBasis: '20%',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   },
   account: {
     flexShrink: 1,
-    marginLeft: StyleConstants.Spacing.XS,
-    lineHeight: StyleConstants.Font.Size.M + 2
+    marginLeft: StyleConstants.Spacing.XS
+    // lineHeight: StyleConstants.Font.LineHeight.M
   },
   meta: {
     flexDirection: 'row',

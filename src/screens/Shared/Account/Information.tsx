@@ -7,6 +7,7 @@ import ParseContent from 'src/components/ParseContent'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTranslation } from 'react-i18next'
+import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
 
 export interface Props {
   account: Mastodon.Account | undefined
@@ -17,7 +18,6 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
   const { theme } = useTheme()
   const [avatarLoaded, setAvatarLoaded] = useState(false)
 
-  // add emoji support
   return (
     <View style={styles.information}>
       {/* <Text>Moved or not: {account.moved}</Text> */}
@@ -29,27 +29,69 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
         />
       </ShimmerPlaceholder>
 
-      <Text style={[styles.display_name, { color: theme.primary }]}>
-        {account?.display_name || account?.username}
-        {account?.bot && (
-          <Feather name='hard-drive' style={styles.display_name} />
+      <View style={styles.display_name}>
+        {account?.emojis ? (
+          <Emojis
+            content={account?.display_name || account?.username}
+            emojis={account.emojis}
+            size={StyleConstants.Font.Size.L}
+            fontBold={true}
+          />
+        ) : (
+          <Text
+            style={{
+              color: theme.primary,
+              fontSize: StyleConstants.Font.Size.L,
+              fontWeight: StyleConstants.Font.Weight.Bold
+            }}
+          >
+            {account?.display_name || account?.username}
+          </Text>
         )}
-      </Text>
+      </View>
 
-      <Text style={[styles.account, { color: theme.secondary }]}>
-        @{account?.acct}
-        {account?.locked && <Feather name='lock' />}
-      </Text>
+      <View style={styles.account}>
+        <Text
+          style={{
+            color: theme.secondary,
+            fontSize: StyleConstants.Font.Size.M
+          }}
+          selectable
+        >
+          @{account?.acct}
+        </Text>
+        {account?.locked && (
+          <Feather
+            name='lock'
+            style={styles.account_types}
+            color={theme.secondary}
+          />
+        )}
+        {account?.bot && (
+          <Feather
+            name='hard-drive'
+            style={styles.account_types}
+            color={theme.secondary}
+          />
+        )}
+      </View>
 
-      {account?.fields && (
-        <View style={styles.fields}>
+      {account?.fields && account.fields.length > 0 && (
+        <View style={[styles.fields, { borderTopColor: theme.border }]}>
           {account.fields.map((field, index) => (
-            <View key={index} style={{ flex: 1, flexDirection: 'row' }}>
-              <Text
+            <View
+              key={index}
+              style={[styles.field, { borderBottomColor: theme.border }]}
+            >
+              <View
                 style={{
-                  width: '30%',
-                  alignSelf: 'center',
-                  color: theme.primary
+                  flexBasis: '30%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRightWidth: 1,
+                  borderRightColor: theme.border,
+                  paddingLeft: StyleConstants.Spacing.S,
+                  paddingRight: StyleConstants.Spacing.S
                 }}
               >
                 <ParseContent
@@ -57,17 +99,31 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
                   size={StyleConstants.Font.Size.M}
                   emojis={account.emojis}
                   showFullLink
-                />{' '}
-                {field.verified_at && <Feather name='check-circle' />}
-              </Text>
-              <Text style={{ width: '70%', color: theme.primary }}>
+                />
+                {field.verified_at && (
+                  <Feather
+                    name='check-circle'
+                    size={StyleConstants.Font.Size.M}
+                    color={theme.primary}
+                  />
+                )}
+              </View>
+              <View
+                style={{
+                  flexBasis: '70%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingLeft: StyleConstants.Spacing.S,
+                  paddingRight: StyleConstants.Spacing.S
+                }}
+              >
                 <ParseContent
                   content={field.value}
                   size={StyleConstants.Font.Size.M}
                   emojis={account.emojis}
                   showFullLink
                 />
-              </Text>
+              </View>
             </View>
           ))}
         </View>
@@ -83,41 +139,46 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
         </View>
       )}
 
-      {account?.created_at && (
-        <View style={styles.created_at}>
-          <Feather name='calendar' size={StyleConstants.Font.Size.M + 2} />
-          <Text
-            style={{
-              color: theme.primary,
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS
-            }}
-          >
-            {t('content.created_at', {
-              date: new Date(account.created_at).toLocaleDateString('zh-CN', {
+      <View style={styles.created_at}>
+        <Feather
+          name='calendar'
+          size={StyleConstants.Font.Size.M + 2}
+          color={theme.secondary}
+          style={styles.created_at_icon}
+        />
+        <Text
+          style={{
+            color: theme.secondary,
+            fontSize: StyleConstants.Font.Size.M
+          }}
+        >
+          {t(
+            'content.created_at',
+            {
+              date: new Date(account?.created_at!).toLocaleDateString('zh-CN', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })
-            })}
-          </Text>
-        </View>
-      )}
+            } || null
+          )}
+        </Text>
+      </View>
 
       <View style={styles.summary}>
         <Text style={{ color: theme.primary }}>
           {t('content.summary.statuses_count', {
-            count: account?.statuses_count
+            count: account?.statuses_count || 0
           })}
         </Text>
-        <Text style={{ color: theme.primary }}>
+        <Text style={{ color: theme.primary, textAlign: 'center' }}>
           {t('content.summary.followers_count', {
-            count: account?.followers_count
+            count: account?.followers_count || 0
           })}
         </Text>
-        <Text style={{ color: theme.primary }}>
+        <Text style={{ color: theme.primary, textAlign: 'right' }}>
           {t('content.summary.following_count', {
-            count: account?.following_count
+            count: account?.following_count || 0
           })}
         </Text>
       </View>
@@ -136,26 +197,40 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   display_name: {
-    fontSize: StyleConstants.Font.Size.L,
-    fontWeight: StyleConstants.Font.Weight.Bold,
+    flexDirection: 'row',
     marginTop: StyleConstants.Spacing.M,
     marginBottom: StyleConstants.Spacing.XS
   },
   account: {
-    fontSize: StyleConstants.Font.Size.M,
-    marginBottom: StyleConstants.Spacing.S
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: StyleConstants.Spacing.L
   },
+  account_types: { marginLeft: StyleConstants.Spacing.S },
   fields: {
-    marginBottom: StyleConstants.Spacing.S
+    borderTopWidth: 0.5,
+    marginBottom: StyleConstants.Spacing.M
+  },
+  field: {
+    flex: 1,
+    flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    paddingTop: StyleConstants.Spacing.S,
+    paddingBottom: StyleConstants.Spacing.S
   },
   note: {
-    marginBottom: StyleConstants.Spacing.M
+    marginBottom: StyleConstants.Spacing.L
   },
   created_at: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: StyleConstants.Spacing.M
   },
+  created_at_icon: {
+    marginRight: StyleConstants.Spacing.XS
+  },
   summary: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }

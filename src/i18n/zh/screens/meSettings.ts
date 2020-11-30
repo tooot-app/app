@@ -17,6 +17,10 @@ export default {
         dark: '深色模式',
         cancel: '$t(common:buttons.cancel)'
       }
-    }
+    },
+    copyrights: {
+      heading: '版权信息'
+    },
+    version: '版本 v{{version}}'
   }
 }

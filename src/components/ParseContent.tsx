@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
-import { Text } from 'react-native'
-import HTMLView, { HTMLViewNode } from 'react-native-htmlview'
+import { StyleSheet, Text, View } from 'react-native'
+import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
 import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import { Feather } from '@expo/vector-icons'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -75,6 +77,11 @@ const renderNode = ({
             })
           }}
         >
+          <Feather
+            name='external-link'
+            size={StyleConstants.Font.Size.M}
+            color={theme.link}
+          />{' '}
           {showFullLink ? href : domain[1]}
         </Text>
       )
@@ -88,7 +95,7 @@ export interface Props {
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   showFullLink?: boolean
-  linesTruncated?: number
+  numberOfLines?: number
 }
 
 const ParseContent: React.FC<Props> = ({
@@ -97,7 +104,7 @@ const ParseContent: React.FC<Props> = ({
   emojis,
   mentions,
   showFullLink = false,
-  linesTruncated = 10
+  numberOfLines = 10
 }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
@@ -117,7 +124,11 @@ const ParseContent: React.FC<Props> = ({
     []
   )
   const rootComponent = useCallback(({ children }) => {
-    return <Text numberOfLines={linesTruncated}>{children}</Text>
+    return (
+      <Text numberOfLines={numberOfLines} style={styles.root}>
+        {children}
+      </Text>
+    )
   }, [])
 
   return (
@@ -129,5 +140,11 @@ const ParseContent: React.FC<Props> = ({
     />
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    lineHeight: StyleConstants.Font.LineHeight.M
+  }
+})
 
 export default ParseContent

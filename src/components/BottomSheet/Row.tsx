@@ -6,16 +6,16 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
-  onPressFunction: () => void
+  onPress: () => void
   icon: string
   text: string
 }
 
-const BottomSheetRow: React.FC<Props> = ({ onPressFunction, icon, text }) => {
+const BottomSheetRow: React.FC<Props> = ({ onPress, icon, text }) => {
   const { theme } = useTheme()
 
   return (
-    <Pressable onPress={() => onPressFunction()} style={styles.pressable}>
+    <Pressable onPress={onPress} style={styles.pressable}>
       <Feather
         name={icon}
         color={theme.primary}
@@ -28,6 +28,7 @@ const BottomSheetRow: React.FC<Props> = ({ onPressFunction, icon, text }) => {
 
 const styles = StyleSheet.create({
   pressable: {
+    width: '100%',
     flexDirection: 'row',
     marginBottom: StyleConstants.Spacing.L
   },

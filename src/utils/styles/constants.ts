@@ -4,9 +4,10 @@ export const StyleConstants = {
   Font: {
     Size: {
       S: 12,
-      M: 14,
+      M: 16,
       L: 18
     },
+    LineHeight: { M: 20 },
     Weight: {
       Bold: '600' as '600'
     }
@@ -19,7 +20,7 @@ export const StyleConstants = {
     L: Base * 6,
     XL: Base * 10,
     Global: {
-      PagePadding: Base * 6
+      PagePadding: Base * 4
     }
   },
 

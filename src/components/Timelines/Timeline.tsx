@@ -80,7 +80,7 @@ const Timeline: React.FC<Props> = ({
         },
         { previous: true }
       ),
-    [disableRefresh]
+    [disableRefresh, flattenData]
   )
   const flOnEndReach = useCallback(
     () =>
@@ -89,7 +89,7 @@ const Timeline: React.FC<Props> = ({
         direction: 'next',
         id: flattenData[flattenData.length - 1].id
       }),
-    [disableRefresh]
+    [disableRefresh, flattenData]
   )
 
   let content
@@ -110,7 +110,7 @@ const Timeline: React.FC<Props> = ({
           scrollEnabled={scrollEnabled} // For timeline in Account view
           ItemSeparatorComponent={flItemSeparatorComponent}
           refreshing={!disableRefresh && isLoading}
-          onEndReachedThreshold={!disableRefresh ? 0.5 : null}
+          onEndReachedThreshold={!disableRefresh ? 1 : null}
           // require getItemLayout
           // {...(flattenPointer[0] && { initialScrollIndex: flattenPointer[0] })}
         />

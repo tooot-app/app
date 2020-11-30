@@ -60,7 +60,7 @@ export const Index: React.FC = () => {
                   name = 'bell'
                   break
                 case 'Screen-Me':
-                  name = focused ? 'smile' : 'meh'
+                  name = focused ? 'meh' : 'smile'
                   break
                 default:
                   name = 'alert-octagon'

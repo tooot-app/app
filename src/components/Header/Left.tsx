@@ -17,11 +17,11 @@ const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
   return (
     <Pressable onPress={onPress} style={styles.base}>
       {text ? (
-        <Text style={[styles.text, { color: theme.link }]}>{text}</Text>
+        <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>
       ) : (
         <Feather
           name={icon || 'chevron-left'}
-          color={theme.link}
+          color={theme.primary}
           size={StyleConstants.Font.Size.L}
         />
       )}

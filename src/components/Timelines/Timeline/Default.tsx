@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
   statusView: {
     flex: 1,
     flexDirection: 'column',
-    padding: StyleConstants.Spacing.Global.PagePadding
+    padding: StyleConstants.Spacing.Global.PagePadding,
+    paddingBottom: StyleConstants.Spacing.M
   },
   status: {
     flex: 1,

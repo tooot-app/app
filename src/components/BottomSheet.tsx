@@ -77,7 +77,7 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
             {
               top,
               backgroundColor: theme.background,
-              paddingBottom: insets.bottom
+              paddingBottom: insets.bottom || StyleConstants.Spacing.L
             }
           ]}
         >
@@ -108,15 +108,16 @@ const styles = StyleSheet.create({
   },
   handle: {
     alignSelf: 'center',
-    width: StyleConstants.Spacing.Global.PagePadding * 8,
-    height: StyleConstants.Spacing.Global.PagePadding / 2,
+    width: StyleConstants.Spacing.S * 8,
+    height: StyleConstants.Spacing.S / 2,
     borderRadius: 100,
     top: -StyleConstants.Spacing.M * 2
   },
   cancel: {
     padding: StyleConstants.Spacing.S,
     borderWidth: 1,
-    borderRadius: 100
+    borderRadius: 100,
+    // marginBottom: StyleConstants.Spacing.L
   },
   text: {
     fontSize: StyleConstants.Font.Size.L,

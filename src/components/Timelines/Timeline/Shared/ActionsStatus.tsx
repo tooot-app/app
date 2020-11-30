@@ -1,13 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import {
-  ActionSheetIOS,
-  Clipboard,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
@@ -17,6 +9,8 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { toast } from 'src/components/toast'
 import { useSelector } from 'react-redux'
 import { StyleConstants } from 'src/utils/styles/constants'
+import BottomSheet from 'src/components/BottomSheet'
+import BottomSheetRow from 'src/components/BottomSheet/Row'
 
 const fireMutation = async ({
   id,
@@ -275,96 +269,85 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
         />
       </View>
 
-      <Modal
-        animationType='fade'
-        presentationStyle='overFullScreen'
-        transparent
+      <BottomSheet
         visible={bottomSheetVisible}
+        handleDismiss={() => setBottomSheetVisible(false)}
       >
-        <Pressable
-          style={styles.modalBackground}
-          onPress={() => setBottomSheetVisible(false)}
-        >
-          <View style={styles.modalSheet}>
-            <Pressable
-              onPress={() =>
-                ActionSheetIOS.showShareActionSheetWithOptions(
-                  {
-                    url: status.uri,
-                    excludedActivityTypes: [
-                      'com.apple.UIKit.activity.Mail',
-                      'com.apple.UIKit.activity.Print',
-                      'com.apple.UIKit.activity.SaveToCameraRoll',
-                      'com.apple.UIKit.activity.OpenInIBooks'
-                    ]
-                  },
-                  () => {},
-                  () => {
-                    setBottomSheetVisible(false)
-                    toast({ type: 'success', content: '分享成功' })
-                  }
-                )
+        <BottomSheetRow
+          onPress={() => {
+            ActionSheetIOS.showShareActionSheetWithOptions(
+              {
+                url: status.uri,
+                excludedActivityTypes: [
+                  'com.apple.UIKit.activity.Mail',
+                  'com.apple.UIKit.activity.Print',
+                  'com.apple.UIKit.activity.SaveToCameraRoll',
+                  'com.apple.UIKit.activity.OpenInIBooks'
+                ]
+              },
+              () => {},
+              () => {
+                setBottomSheetVisible(false)
+                toast({ type: 'success', content: '分享成功' })
               }
-            >
-              <Text>分享</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                Clipboard.setString(status.uri)
-                setBottomSheetVisible(false)
-                toast({ type: 'success', content: '链接复制成功' })
-              }}
-            >
-              <Text>复制链接</Text>
-            </Pressable>
-            {status.account.id === localAccountId && (
-              <Pressable
-                onPress={() => {
-                  setBottomSheetVisible(false)
-                  mutateAction({
-                    id: status.id,
-                    type: 'delete',
-                    stateKey: 'id'
-                  })
-                }}
-              >
-                <Text>删除</Text>
-              </Pressable>
-            )}
-            <Text>（删除并重发）</Text>
-            <Pressable
-              onPress={() => {
-                setBottomSheetVisible(false)
-                mutateAction({
-                  id: status.id,
-                  type: 'mute',
-                  stateKey: 'muted',
-                  prevState: status.muted
-                })
-              }}
-            >
-              <Text>{status.muted ? '取消静音' : '静音'}</Text>
-            </Pressable>
-            {/* Also note that reblogs cannot be pinned. */}
-            {status.account.id === localAccountId && (
-              <Pressable
-                onPress={() => {
-                  setBottomSheetVisible(false)
-                  mutateAction({
-                    id: status.id,
-                    type: 'pin',
-                    stateKey: 'pinned',
-                    prevState: status.pinned
-                  })
-                }}
-              >
-                <Text>{status.pinned ? '取消置顶' : '置顶'}</Text>
-              </Pressable>
-            )}
-            <Text>静音用户，屏蔽用户，屏蔽域名，举报用户</Text>
-          </View>
-        </Pressable>
-      </Modal>
+            )
+          }}
+          icon='share'
+          text={'分享嘟嘟'}
+        />
+        {status.account.id === localAccountId && (
+          <BottomSheetRow
+            onPress={() => {
+              setBottomSheetVisible(false)
+              mutateAction({
+                id: status.id,
+                type: 'delete',
+                stateKey: 'id'
+              })
+            }}
+            icon='trash'
+            text='删除嘟嘟'
+          />
+        )}
+        {status.account.id === localAccountId && (
+          <BottomSheetRow
+            onPress={() => {
+              console.warn('功能未开发')
+            }}
+            icon='trash'
+            text='删除并重发'
+          />
+        )}
+        <BottomSheetRow
+          onPress={() => {
+            setBottomSheetVisible(false)
+            mutateAction({
+              id: status.id,
+              type: 'mute',
+              stateKey: 'muted',
+              prevState: status.muted
+            })
+          }}
+          icon='volume-x'
+          text={status.muted ? '取消静音' : '静音'}
+        />
+        {/* Also note that reblogs cannot be pinned. */}
+        {status.account.id === localAccountId && (
+          <BottomSheetRow
+            onPress={() => {
+              setBottomSheetVisible(false)
+              mutateAction({
+                id: status.id,
+                type: 'pin',
+                stateKey: 'pinned',
+                prevState: status.pinned
+              })
+            }}
+            icon='anchor'
+            text={status.pinned ? '取消置顶' : '置顶'}
+          />
+        )}
+      </BottomSheet>
     </>
   )
 }

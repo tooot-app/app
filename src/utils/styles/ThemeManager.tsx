@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Appearance } from 'react-native-appearance'
+import { useColorScheme } from 'react-native-appearance'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getTheme } from 'src/utils/styles/themes'
 import { getSettingsTheme } from '../slices/settingsSlice'
@@ -19,11 +19,10 @@ export const ManageThemeContext = createContext<ContextType>({
 export const useTheme = () => useContext(ManageThemeContext)
 
 const ThemeManager: React.FC = ({ children }) => {
+  const osTheme = useColorScheme()
   const userTheme = useSelector(getSettingsTheme)
   const currentMode =
-    userTheme === 'auto'
-      ? (Appearance.getColorScheme() as 'light' | 'dark')
-      : userTheme
+    userTheme === 'auto' ? (osTheme as 'light' | 'dark') : userTheme
 
   const [mode, setMode] = useState(currentMode)
 

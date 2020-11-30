@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
@@ -22,19 +22,20 @@ const Emojis: React.FC<Props> = ({
   const styles = StyleSheet.create({
     text: {
       fontSize: size,
-      lineHeight: size + 2,
       color: theme.primary,
       ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
     },
     image: {
       width: size,
-      height: size
+      height: size,
+      paddingTop: 1,
+      marginBottom: -1
     }
   })
   const hasEmojis = content.match(regexEmoji)
 
-  return hasEmojis ? (
-    <>
+  return (
+    <Text>
       {content.split(regexEmoji).map((str, i) => {
         if (str.match(regexEmoji)) {
           const emojiShortcode = str.split(regexEmoji)[1]
@@ -46,23 +47,26 @@ const Emojis: React.FC<Props> = ({
               {emojiShortcode}
             </Text>
           ) : (
-            <Image
-              key={i}
-              source={{ uri: emojis[emojiIndex].url }}
-              style={styles.image}
-            />
+            <View key={i} style={styles.image}>
+              <Image
+                key={i}
+                resizeMode='contain'
+                source={{ uri: emojis[emojiIndex].url }}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </View>
           )
         } else {
-          return (
+          return str ? (
             <Text key={i} style={styles.text}>
               {str}
             </Text>
+          ) : (
+            undefined
           )
         }
       })}
-    </>
-  ) : (
-    <Text style={styles.text}>{content}</Text>
+    </Text>
   )
 }
 
