@@ -31,7 +31,7 @@ const MenuContainer: React.FC<Props> = ({ ...props }) => {
 const styles = StyleSheet.create({
   base: {
     borderTopWidth: 1,
-    marginBottom: StyleConstants.Spacing.Global.PagePadding
+    marginBottom: StyleConstants.Spacing.L
   }
 })
 

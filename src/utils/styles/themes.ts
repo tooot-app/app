@@ -5,6 +5,8 @@ export type ColorDefinitions =
   | 'secondary'
   | 'disabled'
   | 'background'
+  | 'backgroundGradientStart'
+  | 'backgroundGradientEnd'
   | 'link'
   | 'border'
   | 'separator'
@@ -33,6 +35,14 @@ const themeColors: {
   background: {
     light: 'rgb(255, 255, 255)',
     dark: 'rgb(0, 0, 0)'
+  },
+  backgroundGradientStart: {
+    light: 'rgba(255, 255, 255, 0.5)',
+    dark: 'rgba(0, 0, 0, 0.5)'
+  },
+  backgroundGradientEnd: {
+    light: 'rgba(255, 255, 255, 1)',
+    dark: 'rgba(0, 0, 0, 1)'
   },
   link: {
     light: 'rgb(0, 122, 255)',

@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { Pressable, StyleSheet, Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
@@ -7,12 +7,14 @@ import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from 'src/utils/styles/constants'
+import { LinearGradient } from 'expo-linear-gradient'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
   theme,
   node,
   index,
+  size,
   navigation,
   mentions,
   showFullLink
@@ -20,6 +22,7 @@ const renderNode = ({
   theme: any
   node: any
   index: number
+  size: number
   navigation: any
   mentions?: Mastodon.Mention[]
   showFullLink: boolean
@@ -32,7 +35,7 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={{ color: theme.link }}
+            style={{ color: theme.link, fontSize: size }}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
               navigation.push('Screen-Shared-Hashtag', {
@@ -48,7 +51,7 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={{ color: theme.link }}
+            style={{ color: theme.link, fontSize: size }}
             onPress={() => {
               const username = href.split(new RegExp(/@(.*)/))
               const usernameIndex = mentions.findIndex(
@@ -69,7 +72,7 @@ const renderNode = ({
       return (
         <Text
           key={index}
-          style={{ color: theme.link }}
+          style={{ color: theme.link, fontSize: size }}
           onPress={() => {
             navigation.navigate('Screen-Shared-Webview', {
               uri: href,
@@ -77,11 +80,7 @@ const renderNode = ({
             })
           }}
         >
-          <Feather
-            name='external-link'
-            size={StyleConstants.Font.Size.M}
-            color={theme.link}
-          />{' '}
+          <Feather name='external-link' size={size} color={theme.link} />{' '}
           {showFullLink ? href : domain[1]}
         </Text>
       )
@@ -111,7 +110,15 @@ const ParseContent: React.FC<Props> = ({
 
   const renderNodeCallback = useCallback(
     (node, index) =>
-      renderNode({ theme, node, index, navigation, mentions, showFullLink }),
+      renderNode({
+        theme,
+        node,
+        index,
+        size,
+        navigation,
+        mentions,
+        showFullLink
+      }),
     []
   )
   const textComponent = useCallback(
@@ -124,10 +131,62 @@ const ParseContent: React.FC<Props> = ({
     []
   )
   const rootComponent = useCallback(({ children }) => {
+    const { theme } = useTheme()
+    const [textLoaded, setTextLoaded] = useState(false)
+    const [totalLines, setTotalLines] = useState<number | undefined>()
+    const [lineHeight, setLineHeight] = useState<number | undefined>()
+    const [shownLines, setShownLines] = useState(numberOfLines)
+
     return (
-      <Text numberOfLines={numberOfLines} style={styles.root}>
-        {children}
-      </Text>
+      <>
+        <Text
+          numberOfLines={
+            totalLines && totalLines > numberOfLines ? shownLines : totalLines
+          }
+          style={styles.root}
+          onTextLayout={({ nativeEvent }) => {
+            if (!textLoaded) {
+              setTextLoaded(true)
+              setTotalLines(nativeEvent.lines.length)
+              setLineHeight(nativeEvent.lines[0].height)
+            }
+          }}
+        >
+          {children}
+        </Text>
+        {totalLines && lineHeight && totalLines > shownLines && (
+          <Pressable
+            onPress={() => {
+              setShownLines(totalLines)
+            }}
+            style={{
+              marginTop: -lineHeight
+            }}
+          >
+            <LinearGradient
+              colors={[
+                theme.backgroundGradientStart,
+                theme.backgroundGradientEnd
+              ]}
+              locations={[0, lineHeight / (StyleConstants.Font.Size.S * 5)]}
+              style={{
+                paddingTop: StyleConstants.Font.Size.S * 2,
+                paddingBottom: StyleConstants.Font.Size.S
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: StyleConstants.Font.Size.S,
+                  color: theme.primary
+                }}
+              >
+                展开全文
+              </Text>
+            </LinearGradient>
+          </Pressable>
+        )}
+      </>
     )
   }, [])
 

@@ -12,13 +12,15 @@ export interface Props {
   emojis: Mastodon.Emoji[]
   mentions: Mastodon.Mention[]
   spoiler_text?: string
+  numberOfLines?: number
 }
 
 const Content: React.FC<Props> = ({
   content,
   emojis,
   mentions,
-  spoiler_text
+  spoiler_text,
+  numberOfLines
 }) => {
   const { theme } = useTheme()
   const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
@@ -28,11 +30,13 @@ const Content: React.FC<Props> = ({
       {content &&
         (spoiler_text ? (
           <>
-            <Text>
+            <Text style={{ fontSize: StyleConstants.Font.Size.M }}>
               {spoiler_text}{' '}
               <Text
                 onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}
-                style={{ color: theme.link }}
+                style={{
+                  color: theme.link
+                }}
               >
                 {spoilerCollapsed ? '点击展开' : '点击收起'}
               </Text>
@@ -43,6 +47,7 @@ const Content: React.FC<Props> = ({
                 size={StyleConstants.Font.Size.M}
                 emojis={emojis}
                 mentions={mentions}
+                {...(numberOfLines && { numberOfLines: numberOfLines })}
               />
             </Collapsible>
           </>
@@ -52,6 +57,7 @@ const Content: React.FC<Props> = ({
             size={StyleConstants.Font.Size.M}
             emojis={emojis}
             mentions={mentions}
+            {...(numberOfLines && { numberOfLines: numberOfLines })}
           />
         ))}
     </>

@@ -33,7 +33,6 @@ const App: React.FC = () => {
           <PersistGate persistor={persistor}>
             {bootstrapped => {
               if (bootstrapped) {
-                console.log('Bootstrapped!')
                 require('src/i18n/i18n')
                 return (
                   <ThemeManager>
