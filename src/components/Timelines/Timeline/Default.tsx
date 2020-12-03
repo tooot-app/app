@@ -43,7 +43,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
           <TimelineContent status={actualStatus} />
         )}
         {actualStatus.poll && (
-          <TimelinePoll queryKey={queryKey} poll={actualStatus.poll} />
+          <TimelinePoll queryKey={queryKey} status={actualStatus} />
         )}
         {actualStatus.media_attachments.length > 0 && (
           <TimelineAttachment status={actualStatus} width={contentWidth} />
@@ -90,10 +90,14 @@ const styles = StyleSheet.create({
 
 export default React.memo(TimelineDefault, (prev, next) => {
   let skipUpdate = true
-  skipUpdate = prev.item.id === next.item.id
-  skipUpdate = prev.item.replies_count === next.item.replies_count
-  skipUpdate = prev.item.favourited === next.item.favourited
-  skipUpdate = prev.item.reblogged === next.item.reblogged
-  skipUpdate = prev.item.bookmarked === next.item.bookmarked
+  skipUpdate =
+    prev.item.id === next.item.id &&
+    prev.item.replies_count === next.item.replies_count &&
+    prev.item.favourited === next.item.favourited &&
+    prev.item.reblogged === next.item.reblogged &&
+    prev.item.bookmarked === next.item.bookmarked &&
+    prev.item.poll?.voted === next.item.poll?.voted &&
+    prev.item.reblog?.poll?.voted === next.item.reblog?.poll?.voted
+
   return skipUpdate
 })

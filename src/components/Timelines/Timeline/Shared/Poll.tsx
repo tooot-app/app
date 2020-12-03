@@ -25,7 +25,6 @@ const fireMutation = async ({
       formData.append('choices[]', option)
     }
   })
-  console.log(formData)
 
   const res = await client({
     method: 'post',
@@ -49,12 +48,10 @@ const fireMutation = async ({
 
 export interface Props {
   queryKey: App.QueryKey
-  poll: Mastodon.Poll
+  status: Mastodon.Status
 }
 
-const TimelinePoll: React.FC<Props> = ({ queryKey, poll }) => {
-  console.log('render poll ' + Math.random())
-  console.log(poll)
+const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
   const { theme } = useTheme()
 
   const queryCache = useQueryCache()
@@ -68,25 +65,28 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll }) => {
           toots: paging.toots.map((toot: any) => {
             if (toot.poll?.id === id) {
               const poll = toot.poll
-              console.log('update votes')
-              console.log(
-                Object.keys(options)
-                  .filter(option => options[option])
-                  .map(option => parseInt(option))
+              const myVotes = Object.keys(options).filter(
+                // @ts-ignore
+                option => options[option]
               )
-              console.log(toot.poll)
+              const myVotesInt = myVotes.map(option => parseInt(option))
+
               toot.poll = {
                 ...toot.poll,
+                votes_count: poll.votes_count
+                  ? poll.votes_count + myVotes.length
+                  : myVotes.length,
                 voters_count: poll.voters_count ? poll.voters_count + 1 : 1,
                 voted: true,
-                own_votes: [
-                  Object.keys(options)
-                    // @ts-ignore
-                    .filter(option => options[option])
-                    .map(option => parseInt(option))
-                ]
+                own_votes: myVotesInt,
+                // @ts-ignore
+                options: poll.options.map((o, i) => {
+                  if (myVotesInt.includes(i)) {
+                    o.votes_count = o.votes_count + 1
+                  }
+                  return o
+                })
               }
-              console.log(toot.poll)
             }
             return toot
           }),
@@ -217,7 +217,6 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll }) => {
             <Button
               onPress={() => {
                 if (poll.multiple) {
-                  console.log(multipleOptions)
                   mutateAction({ id: poll.id, options: multipleOptions })
                 } else {
                   mutateAction({ id: poll.id, options: singleOptions })
@@ -299,4 +298,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default TimelinePoll
+export default React.memo(
+  TimelinePoll,
+  (prev, next) => prev.status.poll.voted === next.status.poll.voted
+)
