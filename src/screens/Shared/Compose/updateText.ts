@@ -9,16 +9,27 @@ const updateText = ({
   postState: PostState
   newText: string
 }) => {
-  onChangeText({
-    content: postState.text.raw
-      ? [
-          postState.text.raw.slice(0, postState.selection.start),
-          newText,
-          postState.text.raw.slice(postState.selection.end)
-        ].join('')
-      : newText,
-    disableDebounce: true
-  })
+  if (postState.text.raw.length) {
+    const contentFront = postState.text.raw.slice(0, postState.selection.start)
+    const contentRear = postState.text.raw.slice(postState.selection.end)
+
+    const whiteSpaceFront = /\s/g.test(contentFront.slice(-1))
+    const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
+
+    const newTextWithSpace = `${whiteSpaceFront ? '' : ' '}${newText}${
+      whiteSpaceRear ? '' : ' '
+    }`
+
+    onChangeText({
+      content: [contentFront, newTextWithSpace, contentRear].join(''),
+      disableDebounce: true
+    })
+  } else {
+    onChangeText({
+      content: `${newText} `,
+      disableDebounce: true
+    })
+  }
 }
 
 export default updateText

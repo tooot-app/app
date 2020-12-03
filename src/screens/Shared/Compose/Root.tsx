@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   useCallback,
   useEffect,
+  useRef,
   useState
 } from 'react'
 import {
@@ -21,20 +22,24 @@ import * as ImagePicker from 'expo-image-picker'
 import { debounce, differenceWith, isEqual } from 'lodash'
 
 import Autolinker from 'src/modules/autolinker'
-import PostEmojis from './PostEmojis'
-import PostPoll from './PostPoll'
-import PostSuggestions from './PostSuggestions'
+import ComposeEmojis from './Emojis'
+import ComposePoll from './Poll'
+import ComposeSuggestions from './Suggestions'
 import { emojisFetch } from 'src/utils/fetches/emojisFetch'
 import { PostAction, PostState } from 'src/screens/Shared/Compose'
 import addAttachments from './addAttachments'
-import PostAttachments from './PostAttachments'
+import ComposeAttachments from './Attachments'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from 'src/utils/styles/constants'
+import ComposeActions from './Actions'
 
 export interface Props {
   postState: PostState
   postDispatch: Dispatch<PostAction>
 }
 
-const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
+const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
+  const { theme } = useTheme()
   useEffect(() => {
     ;(async () => {
       const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
@@ -43,8 +48,6 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
       }
     })()
   }, [])
-
-  const [editorMinHeight, setEditorMinHeight] = useState(0)
 
   const { data: emojisData } = useQuery(['Emojis'], emojisFetch)
   useEffect(() => {
@@ -153,33 +156,49 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
     })
   }, [])
 
-  const getVisibilityIcon = () => {
-    switch (postState.visibility) {
-      case 'public':
-        return 'globe'
-      case 'unlisted':
-        return 'unlock'
-      case 'private':
-        return 'lock'
-      case 'direct':
-        return 'mail'
+  const textInputRef = useRef<TextInput>(null)
+
+  const renderOverlay = (overlay: PostState['overlay']) => {
+    switch (overlay) {
+      case 'emojis':
+        return (
+          <View style={styles.emojis}>
+            <ComposeEmojis
+              textInputRef={textInputRef}
+              onChangeText={onChangeText}
+              postState={postState}
+              postDispatch={postDispatch}
+            />
+          </View>
+        )
+      case 'suggestions':
+        return (
+          <View style={styles.suggestions}>
+            <ComposeSuggestions
+              onChangeText={onChangeText}
+              postState={postState}
+              postDispatch={postDispatch}
+            />
+          </View>
+        )
     }
   }
 
   return (
     <View style={styles.base}>
       <ScrollView
-        style={styles.contentView}
+        style={[styles.contentView]}
         alwaysBounceVertical={false}
         keyboardDismissMode='interactive'
+        // child touch event not picked up
+        keyboardShouldPersistTaps='always'
       >
         <TextInput
           style={[
-            styles.textInput
-            // {
-            //   flex: postState.overlay ? 0 : 1,
-            //   minHeight: editorMinHeight + 14
-            // }
+            styles.textInput,
+            {
+              color: theme.primary
+            }
           ]}
           autoCapitalize='none'
           autoCorrect={false}
@@ -187,10 +206,8 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
           enablesReturnKeyAutomatically
           multiline
           placeholder='想说点什么'
+          placeholderTextColor={theme.secondary}
           onChangeText={content => onChangeText({ content })}
-          onContentSizeChange={({ nativeEvent }) => {
-            setEditorMinHeight(nativeEvent.contentSize.height)
-          }}
           onSelectionChange={({
             nativeEvent: {
               selection: { start, end }
@@ -198,13 +215,17 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
           }) => {
             postDispatch({ type: 'selection', payload: { start, end } })
           }}
+          ref={textInputRef}
           scrollEnabled
         >
           <Text>{postState.text.formatted}</Text>
         </TextInput>
+
+        {renderOverlay(postState.overlay)}
+
         {postState.attachments.length > 0 && (
           <View style={styles.attachments}>
-            <PostAttachments
+            <ComposeAttachments
               postState={postState}
               postDispatch={postDispatch}
             />
@@ -212,94 +233,15 @@ const PostMain: React.FC<Props> = ({ postState, postDispatch }) => {
         )}
         {postState.poll.active && (
           <View style={styles.poll}>
-            <PostPoll postState={postState} postDispatch={postDispatch} />
+            <ComposePoll postState={postState} postDispatch={postDispatch} />
           </View>
-        )}
-        {postState.overlay === 'suggestions' ? (
-          <View style={styles.suggestions}>
-            <PostSuggestions
-              onChangeText={onChangeText}
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        ) : (
-          <></>
-        )}
-        {postState.overlay === 'emojis' ? (
-          <View style={styles.emojis}>
-            <PostEmojis
-              onChangeText={onChangeText}
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        ) : (
-          <></>
         )}
       </ScrollView>
-      <Pressable style={styles.additions} onPress={() => Keyboard.dismiss()}>
-        <Feather
-          name='paperclip'
-          size={24}
-          color={postState.poll.active ? 'gray' : 'black'}
-          onPress={async () =>
-            !postState.poll.active &&
-            (await addAttachments({ postState, postDispatch }))
-          }
-        />
-        <Feather
-          name='bar-chart-2'
-          size={24}
-          color={postState.attachments.length > 0 ? 'gray' : 'black'}
-          onPress={() =>
-            postState.attachments.length === 0 &&
-            postDispatch({
-              type: 'poll',
-              payload: { ...postState.poll, active: !postState.poll.active }
-            })
-          }
-        />
-        <Feather
-          name={getVisibilityIcon()}
-          size={24}
-          onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
-              {
-                options: ['公开', '不公开', '仅关注着', '私信', '取消'],
-                cancelButtonIndex: 4
-              },
-              buttonIndex => {
-                switch (buttonIndex) {
-                  case 0:
-                    postDispatch({ type: 'visibility', payload: 'public' })
-                    break
-                  case 1:
-                    postDispatch({ type: 'visibility', payload: 'unlisted' })
-                    break
-                  case 2:
-                    postDispatch({ type: 'visibility', payload: 'private' })
-                    break
-                  case 3:
-                    postDispatch({ type: 'visibility', payload: 'direct' })
-                    break
-                }
-              }
-            )
-          }
-        />
-        <Feather
-          name='smile'
-          size={24}
-          color={postState.emojis?.length ? 'black' : 'white'}
-          onPress={() => {
-            if (postState.emojis?.length && postState.overlay === null) {
-              postDispatch({ type: 'overlay', payload: 'emojis' })
-            }
-          }}
-        />
-        <Text>{postState.text.count}</Text>
-      </Pressable>
+      <ComposeActions
+        textInputRef={textInputRef}
+        postState={postState}
+        postDispatch={postDispatch}
+      />
     </View>
   )
 }
@@ -308,36 +250,29 @@ const styles = StyleSheet.create({
   base: {
     flex: 1
   },
-  contentView: {
-    flex: 1,
-    backgroundColor: 'gray'
-  },
+  contentView: { flex: 1 },
   textInput: {
-    backgroundColor: 'lightgray',
-    paddingBottom: 20
+    fontSize: StyleConstants.Font.Size.M,
+    marginTop: StyleConstants.Spacing.S,
+    marginBottom: StyleConstants.Spacing.M,
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding
   },
   attachments: {
     flex: 1,
     height: 100
   },
   poll: {
-    height: 100
+    flex: 1,
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   suggestions: {
     flex: 1,
     backgroundColor: 'lightyellow'
   },
   emojis: {
-    flex: 1,
-    backgroundColor: 'lightblue'
-  },
-  additions: {
-    height: 44,
-    backgroundColor: 'red',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    flex: 1
   }
 })
 
-export default PostMain
+export default ComposeRoot

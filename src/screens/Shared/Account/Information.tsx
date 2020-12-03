@@ -208,13 +208,13 @@ const styles = StyleSheet.create({
   },
   account_types: { marginLeft: StyleConstants.Spacing.S },
   fields: {
-    borderTopWidth: 0.5,
+    borderTopWidth: StyleSheet.hairlineWidth,
     marginBottom: StyleConstants.Spacing.M
   },
   field: {
     flex: 1,
     flexDirection: 'row',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     paddingTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.S
   },

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: StyleConstants.Avatar.L,
     marginTop: StyleConstants.Spacing.M,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 6
   },
   left: {

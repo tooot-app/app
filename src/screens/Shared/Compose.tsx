@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useNavigation } from '@react-navigation/native'
 
 import { store } from 'src/store'
-import PostMain from './Compose/PostMain'
+import ComposeRoot from './Compose/Root'
 import client from 'src/api/client'
 import { getLocalAccountPreferences } from 'src/utils/slices/instancesSlice'
 import { HeaderLeft, HeaderRight } from 'src/components/Header'
@@ -105,7 +105,7 @@ export type PostAction =
 
 const postInitialState: PostState = {
   text: {
-    count: 0,
+    count: 500,
     raw: '',
     formatted: undefined
   },
@@ -285,13 +285,15 @@ const Compose: React.FC = () => {
                 <HeaderRight
                   onPress={async () => tootPost()}
                   text='发嘟嘟'
-                  disabled={postState.text.raw.length < 1}
+                  disabled={
+                    postState.text.raw.length < 1 || postState.text.count < 0
+                  }
                 />
               )
             }}
           >
             {() => (
-              <PostMain postState={postState} postDispatch={postDispatch} />
+              <ComposeRoot postState={postState} postDispatch={postDispatch} />
             )}
           </Stack.Screen>
         </Stack.Navigator>

@@ -12,6 +12,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
+import Button from './Button'
 
 export interface Props {
   children: React.ReactNode
@@ -85,12 +86,10 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
             style={[styles.handle, { backgroundColor: theme.background }]}
           />
           {children}
-          <Pressable
+          <Button
             onPress={() => closeModal.start(() => handleDismiss())}
-            style={[styles.cancel, { borderColor: theme.primary }]}
-          >
-            <Text style={[styles.text, { color: theme.primary }]}>取消</Text>
-          </Pressable>
+            text='取消'
+          />
         </Animated.View>
       </View>
     </Modal>
@@ -111,17 +110,6 @@ const styles = StyleSheet.create({
     height: StyleConstants.Spacing.S / 2,
     borderRadius: 100,
     top: -StyleConstants.Spacing.M * 2
-  },
-  cancel: {
-    padding: StyleConstants.Spacing.S,
-    marginLeft: StyleConstants.Spacing.L,
-    marginRight: StyleConstants.Spacing.L,
-    borderWidth: 1,
-    borderRadius: 100
-  },
-  text: {
-    fontSize: StyleConstants.Font.Size.L,
-    textAlign: 'center'
   }
 })
 

@@ -9,7 +9,7 @@ export interface Props {
   postDispatch: Dispatch<PostAction>
 }
 
-const PostAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
+const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
   return (
     <View style={styles.base}>
       {postState.attachments.map((attachment, index) => (
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default PostAttachments
+export default ComposeAttachments

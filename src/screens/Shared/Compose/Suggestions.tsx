@@ -46,7 +46,7 @@ export interface Props {
   postDispatch: Dispatch<PostAction>
 }
 
-const PostSuggestions: React.FC<Props> = ({
+const ComposeSuggestions: React.FC<Props> = ({
   onChangeText,
   postState,
   postDispatch
@@ -94,4 +94,4 @@ const PostSuggestions: React.FC<Props> = ({
   return content
 }
 
-export default PostSuggestions
+export default ComposeSuggestions

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
@@ -13,6 +13,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import { useTranslation } from 'react-i18next'
 import { StyleConstants } from 'src/utils/styles/constants'
+import Button from 'src/components/Button'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -145,9 +146,9 @@ const Login: React.FC = () => {
         returnKeyType='go'
       />
       <Button
-        title={t('content.login.button')}
-        disabled={!data?.uri}
         onPress={async () => await createApplication()}
+        text={t('content.login.button')}
+        disabled={!data?.uri}
       />
       {isSuccess && data && data.uri && (
         <View>
