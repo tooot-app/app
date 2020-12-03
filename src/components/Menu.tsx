@@ -1,5 +1,5 @@
 import MenuContainer from './Menu/Container'
 import MenuHeader from './Menu/Header'
-import MenuItem from './Menu/Item'
+import MenuRow from './Menu/Row'
 
-export { MenuContainer, MenuHeader, MenuItem }
+export { MenuContainer, MenuHeader, MenuRow }

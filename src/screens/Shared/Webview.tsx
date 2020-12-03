@@ -5,9 +5,9 @@ import { ActionSheetIOS } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { WebView } from 'react-native-webview'
 import BottomSheet from 'src/components/BottomSheet'
-import BottomSheetRow from 'src/components/BottomSheet/Row'
 
 import { HeaderLeft, HeaderRight } from 'src/components/Header'
+import { MenuContainer, MenuRow } from 'src/components/Menu'
 
 const Stack = createNativeStackNavigator()
 
@@ -63,35 +63,37 @@ const ScreenSharedWebview: React.FC<Props> = ({
               visible={bottomSheet}
               handleDismiss={() => showBottomSheet(false)}
             >
-              <BottomSheetRow
-                onPress={() => {
-                  ActionSheetIOS.showShareActionSheetWithOptions(
-                    {
-                      url: uri,
-                      excludedActivityTypes: [
-                        'com.apple.UIKit.activity.Mail',
-                        'com.apple.UIKit.activity.Print',
-                        'com.apple.UIKit.activity.SaveToCameraRoll',
-                        'com.apple.UIKit.activity.OpenInIBooks'
-                      ]
-                    },
-                    () => {},
-                    () => {
-                      showBottomSheet(false)
-                    }
-                  )
-                }}
-                icon='share'
-                text={'分享链接'}
-              />
-              <BottomSheetRow
-                onPress={() => {
-                  showBottomSheet(false)
-                  webview.current?.reload()
-                }}
-                icon='refresh-cw'
-                text='刷新'
-              />
+              <MenuContainer>
+                <MenuRow
+                  onPress={() => {
+                    ActionSheetIOS.showShareActionSheetWithOptions(
+                      {
+                        url: uri,
+                        excludedActivityTypes: [
+                          'com.apple.UIKit.activity.Mail',
+                          'com.apple.UIKit.activity.Print',
+                          'com.apple.UIKit.activity.SaveToCameraRoll',
+                          'com.apple.UIKit.activity.OpenInIBooks'
+                        ]
+                      },
+                      () => {},
+                      () => {
+                        showBottomSheet(false)
+                      }
+                    )
+                  }}
+                  iconFront='share'
+                  title={'分享链接'}
+                />
+                <MenuRow
+                  onPress={() => {
+                    showBottomSheet(false)
+                    webview.current?.reload()
+                  }}
+                  iconFront='refresh-cw'
+                  title='刷新'
+                />
+              </MenuContainer>
             </BottomSheet>
           </>
         )}

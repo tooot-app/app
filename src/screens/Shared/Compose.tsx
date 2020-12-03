@@ -1,11 +1,5 @@
 import React, { ReactNode, useEffect, useReducer, useState } from 'react'
-import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Pressable,
-  Text
-} from 'react-native'
+import { Alert, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useNavigation } from '@react-navigation/native'
@@ -14,6 +8,7 @@ import { store } from 'src/store'
 import PostMain from './Compose/PostMain'
 import client from 'src/api/client'
 import { getLocalAccountPreferences } from 'src/utils/slices/instancesSlice'
+import { HeaderLeft, HeaderRight } from 'src/components/Header'
 
 const Stack = createNativeStackNavigator()
 
@@ -271,7 +266,7 @@ const Compose: React.FC = () => {
             name='PostMain'
             options={{
               headerLeft: () => (
-                <Pressable
+                <HeaderLeft
                   onPress={() =>
                     Alert.alert('确认取消编辑？', '', [
                       { text: '继续编辑', style: 'cancel' },
@@ -282,19 +277,20 @@ const Compose: React.FC = () => {
                       }
                     ])
                   }
-                >
-                  <Text>退出编辑</Text>
-                </Pressable>
+                  text='退出编辑'
+                />
               ),
               headerCenter: () => <></>,
               headerRight: () => (
-                <Pressable onPress={async () => tootPost()}>
-                  <Text>发嘟嘟</Text>
-                </Pressable>
+                <HeaderRight
+                  onPress={async () => tootPost()}
+                  text='发嘟嘟'
+                  disabled={postState.text.raw.length < 1}
+                />
               )
             }}
           >
-            {props => (
+            {() => (
               <PostMain postState={postState} postDispatch={postDispatch} />
             )}
           </Stack.Screen>

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { ActivityIndicator, Text } from 'react-native'
 import { useQuery } from 'react-query'
-import { MenuContainer, MenuItem } from 'src/components/Menu'
+import { MenuContainer, MenuRow } from 'src/components/Menu'
 
 import { listsFetch } from 'src/utils/fetches/listsFetch'
 
@@ -20,7 +20,7 @@ const ScreenMeLists: React.FC = () => {
       break
     case 'success':
       lists = data?.map((d: Mastodon.List, i: number) => (
-        <MenuItem
+        <MenuRow
           key={i}
           iconFront='list'
           title={d.title}

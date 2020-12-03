@@ -1,36 +1,36 @@
-import React from 'react'
+import React, { Children } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   children: React.ReactNode
-  marginTop?: boolean
 }
 
-const MenuContainer: React.FC<Props> = ({ ...props }) => {
+const MenuContainer: React.FC<Props> = ({ children }) => {
   const { theme } = useTheme()
+  // @ts-ignore
+  const firstChild = Children.toArray(children)[0].type.name
 
   return (
     <View
       style={[
         styles.base,
         {
-          borderTopColor: theme.separator,
-          marginTop: props.marginTop
-            ? StyleConstants.Spacing.Global.PagePadding
-            : 0
+          ...(firstChild !== 'MenuHeader' && {
+            borderTopColor: theme.separator,
+            borderTopWidth: 1
+          })
         }
       ]}
     >
-      {props.children}
+      {children}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    borderTopWidth: 1,
     marginBottom: StyleConstants.Spacing.L
   }
 })

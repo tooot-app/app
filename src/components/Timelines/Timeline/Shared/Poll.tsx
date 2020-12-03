@@ -1,52 +1,302 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+import React, { useMemo, useState } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { useMutation, useQueryCache } from 'react-query'
+import client from 'src/api/client'
+import Button from 'src/components/Button'
+import { toast } from 'src/components/toast'
+import relativeTime from 'src/utils/relativeTime'
+import { StyleConstants } from 'src/utils/styles/constants'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import Emojis from './Emojis'
 
+const fireMutation = async ({
+  id,
+  options
+}: {
+  id: string
+  options: { [key: number]: boolean }
+}) => {
+  const formData = new FormData()
+  Object.keys(options).forEach(option => {
+    // @ts-ignore
+    if (options[option]) {
+      formData.append('choices[]', option)
+    }
+  })
+  console.log(formData)
+
+  const res = await client({
+    method: 'post',
+    instance: 'local',
+    endpoint: `polls/${id}/votes`,
+    body: formData
+  })
+
+  if (res.body.id === id) {
+    toast({ type: 'success', content: '投票成功成功' })
+    return Promise.resolve()
+  } else {
+    toast({
+      type: 'error',
+      content: '隐藏域名失败，请重试',
+      autoHide: false
+    })
+    return Promise.reject()
+  }
+}
+
 export interface Props {
+  queryKey: App.QueryKey
   poll: Mastodon.Poll
 }
-// When haven't voted, result should not be shown but intead let people vote
-const Poll: React.FC<Props> = ({ poll }) => {
+
+const TimelinePoll: React.FC<Props> = ({ queryKey, poll }) => {
+  console.log('render poll ' + Math.random())
+  console.log(poll)
+  const { theme } = useTheme()
+
+  const queryCache = useQueryCache()
+  const [mutateAction] = useMutation(fireMutation, {
+    onMutate: ({ id, options }) => {
+      queryCache.cancelQueries(queryKey)
+      const oldData = queryCache.getQueryData(queryKey)
+
+      queryCache.setQueryData(queryKey, old =>
+        (old as {}[]).map((paging: any) => ({
+          toots: paging.toots.map((toot: any) => {
+            if (toot.poll?.id === id) {
+              const poll = toot.poll
+              console.log('update votes')
+              console.log(
+                Object.keys(options)
+                  .filter(option => options[option])
+                  .map(option => parseInt(option))
+              )
+              console.log(toot.poll)
+              toot.poll = {
+                ...toot.poll,
+                voters_count: poll.voters_count ? poll.voters_count + 1 : 1,
+                voted: true,
+                own_votes: [
+                  Object.keys(options)
+                    // @ts-ignore
+                    .filter(option => options[option])
+                    .map(option => parseInt(option))
+                ]
+              }
+              console.log(toot.poll)
+            }
+            return toot
+          }),
+          pointer: paging.pointer
+        }))
+      )
+
+      return oldData
+    },
+    onError: (err, _, oldData) => {
+      toast({ type: 'error', content: '请重试' })
+      queryCache.setQueryData(queryKey, oldData)
+    }
+  })
+
+  const pollExpiration = useMemo(() => {
+    // how many voted
+    if (poll.expired) {
+      return (
+        <Text style={[styles.expiration, { color: theme.secondary }]}>
+          投票已结束
+        </Text>
+      )
+    } else {
+      return (
+        <Text style={[styles.expiration, { color: theme.secondary }]}>
+          截止至{relativeTime(poll.expires_at)}
+        </Text>
+      )
+    }
+  }, [])
+
+  const [singleOptions, setSingleOptions] = useState({
+    ...[false, false, false, false].slice(0, poll.options.length)
+  })
+  const [multipleOptions, setMultipleOptions] = useState({
+    ...[false, false, false, false].slice(0, poll.options.length)
+  })
+  const isSelected = (index: number) => {
+    if (poll.multiple) {
+      return multipleOptions[index] ? 'check-square' : 'square'
+    } else {
+      return singleOptions[index] ? 'check-circle' : 'circle'
+    }
+  }
+
   return (
-    <View>
-      {poll.options.map((option, index) => (
-        <View key={index}>
-          <View style={{ flexDirection: 'row' }}>
-            <Text>
-              {Math.round((option.votes_count / poll.votes_count) * 100)}%
-            </Text>
-            <Emojis
-              content={option.title}
-              emojis={poll.emojis}
-              size={14}
+    <View style={styles.base}>
+      {poll.options.map((option, index) =>
+        poll.voted ? (
+          <View key={index} style={styles.poll}>
+            <View style={styles.optionSelected}>
+              <View style={styles.contentSelected}>
+                <Emojis
+                  content={option.title}
+                  emojis={poll.emojis}
+                  size={StyleConstants.Font.Size.M}
+                  numberOfLines={1}
+                />
+                {poll.own_votes!.includes(index) && (
+                  <Feather
+                    style={styles.voted}
+                    name={poll.multiple ? 'check-square' : 'check-circle'}
+                    size={StyleConstants.Font.Size.M}
+                    color={theme.primary}
+                  />
+                )}
+              </View>
+              <Text style={[styles.percentage, { color: theme.primary }]}>
+                {Math.round((option.votes_count / poll.votes_count) * 100)}%
+              </Text>
+            </View>
+
+            <View
+              style={[
+                styles.background,
+                {
+                  width: `${Math.round(
+                    (option.votes_count / poll.votes_count) * 100
+                  )}%`,
+                  backgroundColor: theme.border
+                }
+              ]}
             />
           </View>
-          <View
-            style={{
-              width: `${Math.round(
-                (option.votes_count / poll.votes_count) * 100
-              )}%`,
-              height: 5,
-              backgroundColor: 'blue'
-            }}
-          />
-        </View>
-      ))}
+        ) : (
+          <View key={index} style={styles.poll}>
+            <Pressable
+              style={[styles.optionUnselected]}
+              onPress={() => {
+                if (poll.multiple) {
+                  setMultipleOptions({
+                    ...multipleOptions,
+                    [index]: !multipleOptions[index]
+                  })
+                } else {
+                  setSingleOptions({
+                    ...[
+                      index === 0,
+                      index === 1,
+                      index === 2,
+                      index === 3
+                    ].slice(0, poll.options.length)
+                  })
+                }
+              }}
+            >
+              <Feather
+                style={styles.votedNot}
+                name={isSelected(index)}
+                size={StyleConstants.Font.Size.L}
+                color={theme.primary}
+              />
+              <View style={styles.contentUnselected}>
+                <Emojis
+                  content={option.title}
+                  emojis={poll.emojis}
+                  size={StyleConstants.Font.Size.M}
+                />
+              </View>
+            </Pressable>
+          </View>
+        )
+      )}
+      <View style={styles.meta}>
+        {!poll.expired && !poll.own_votes?.length && (
+          <View style={styles.button}>
+            <Button
+              onPress={() => {
+                if (poll.multiple) {
+                  console.log(multipleOptions)
+                  mutateAction({ id: poll.id, options: multipleOptions })
+                } else {
+                  mutateAction({ id: poll.id, options: singleOptions })
+                }
+              }}
+              text='投票'
+            />
+          </View>
+        )}
+        <Text style={[styles.votes, { color: theme.secondary }]}>
+          已投{poll.voters_count}人{' • '}
+        </Text>
+        {pollExpiration}
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  avatar: {
-    width: 50,
-    height: 50,
-    marginRight: 8
+  base: {
+    marginTop: StyleConstants.Spacing.M
   },
-  image: {
-    width: '100%',
-    height: '100%'
+  poll: {
+    minHeight: StyleConstants.Font.LineHeight.M * 1.5,
+    marginBottom: StyleConstants.Spacing.XS
+  },
+  optionSelected: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: StyleConstants.Spacing.M,
+    paddingRight: StyleConstants.Spacing.M
+  },
+  optionUnselected: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  contentSelected: {
+    flexBasis: '80%',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  contentUnselected: {
+    flexBasis: '90%'
+  },
+  voted: {
+    marginLeft: StyleConstants.Spacing.S
+  },
+  votedNot: {
+    marginRight: StyleConstants.Spacing.S
+  },
+  percentage: {
+    fontSize: StyleConstants.Font.Size.M
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    minWidth: 1,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6
+  },
+  meta: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: StyleConstants.Spacing.XS
+  },
+  button: {
+    marginRight: StyleConstants.Spacing.M
+  },
+  votes: {
+    fontSize: StyleConstants.Font.Size.S
+  },
+  expiration: {
+    fontSize: StyleConstants.Font.Size.S
   }
 })
 
-export default Poll
+export default TimelinePoll

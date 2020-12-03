@@ -2,11 +2,13 @@ import { DefaultTheme, DarkTheme } from '@react-navigation/native'
 
 export type ColorDefinitions =
   | 'primary'
+  | 'primaryOverlay'
   | 'secondary'
   | 'disabled'
   | 'background'
   | 'backgroundGradientStart'
   | 'backgroundGradientEnd'
+  | 'backgroundOverlay'
   | 'link'
   | 'border'
   | 'separator'
@@ -23,6 +25,10 @@ const themeColors: {
   primary: {
     light: 'rgb(0, 0, 0)',
     dark: 'rgb(255, 255, 255)'
+  },
+  primaryOverlay: {
+    light: 'rgb(255, 255, 255)',
+    dark: 'rgb(0, 0, 0)'
   },
   secondary: {
     light: 'rgb(153, 153, 153)',
@@ -43,6 +49,10 @@ const themeColors: {
   backgroundGradientEnd: {
     light: 'rgba(255, 255, 255, 1)',
     dark: 'rgba(0, 0, 0, 1)'
+  },
+  backgroundOverlay: {
+    light: 'rgba(0, 0, 0, 0.5)',
+    dark: 'rgb(255, 255, 255, 0.5)'
   },
   link: {
     light: 'rgb(0, 122, 255)',

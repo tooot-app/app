@@ -8,7 +8,7 @@ export interface Props {
   card: Mastodon.Card
 }
 
-const Card: React.FC<Props> = ({ card }) => {
+const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
   const navigation = useNavigation()
   const onPress = useCallback(() => {
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(Card, () => true)
+export default React.memo(TimelineCard, () => true)

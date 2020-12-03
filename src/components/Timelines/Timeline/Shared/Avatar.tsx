@@ -4,22 +4,21 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
-  uri: string
-  id: string
+  account: Mastodon.Account
 }
 
-const Avatar: React.FC<Props> = ({ uri, id }) => {
+const TimelineAvatar: React.FC<Props> = ({ account }) => {
   const navigation = useNavigation()
   // Need to fix go back root
   const onPress = useCallback(() => {
     navigation.navigate('Screen-Shared-Account', {
-      id: id
+      id: account.id
     })
   }, [])
 
   return (
     <Pressable style={styles.avatar} onPress={onPress}>
-      <Image source={{ uri: uri }} style={styles.image} />
+      <Image source={{ uri: account.avatar }} style={styles.image} />
     </Pressable>
   )
 }
@@ -37,4 +36,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(Avatar, () => true)
+export default React.memo(TimelineAvatar, () => true)

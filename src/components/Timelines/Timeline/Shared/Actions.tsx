@@ -1,16 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
 import client from 'src/api/client'
-import { getLocalAccountId } from 'src/utils/slices/instancesSlice'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { toast } from 'src/components/toast'
-import { useSelector } from 'react-redux'
 import { StyleConstants } from 'src/utils/styles/constants'
-import BottomSheet from 'src/components/BottomSheet'
-import BottomSheetRow from 'src/components/BottomSheet/Row'
 
 const fireMutation = async ({
   id,
@@ -19,14 +15,8 @@ const fireMutation = async ({
   prevState
 }: {
   id: string
-  type: 'favourite' | 'reblog' | 'bookmark' | 'mute' | 'pin' | 'delete'
-  stateKey:
-    | 'favourited'
-    | 'reblogged'
-    | 'bookmarked'
-    | 'muted'
-    | 'pinned'
-    | 'id'
+  type: 'favourite' | 'reblog' | 'bookmark'
+  stateKey: 'favourited' | 'reblogged' | 'bookmarked'
   prevState?: boolean
 }) => {
   let res
@@ -34,8 +24,6 @@ const fireMutation = async ({
     case 'favourite':
     case 'reblog':
     case 'bookmark':
-    case 'mute':
-    case 'pin':
       res = await client({
         method: 'post',
         instance: 'local',
@@ -50,21 +38,6 @@ const fireMutation = async ({
         return Promise.reject()
       }
       break
-    case 'delete':
-      res = await client({
-        method: 'delete',
-        instance: 'local',
-        endpoint: `statuses/${id}`
-      })
-
-      if (res.body[stateKey] === id) {
-        toast({ type: 'success', content: '删除成功' })
-        return Promise.resolve(res.body)
-      } else {
-        toast({ type: 'error', content: '删除失败' })
-        return Promise.reject()
-      }
-      break
   }
 }
 
@@ -73,14 +46,11 @@ export interface Props {
   status: Mastodon.Status
 }
 
-const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
+const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
   const { theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
-
-  const localAccountId = useSelector(getLocalAccountId)
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false)
 
   const queryCache = useQueryCache()
   const [mutateAction] = useMutation(fireMutation, {
@@ -92,27 +62,12 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
         case 'favourite':
         case 'reblog':
         case 'bookmark':
-        case 'mute':
-        case 'pin':
           queryCache.setQueryData(queryKey, old =>
             (old as {}[]).map((paging: any) => ({
               toots: paging.toots.map((toot: any) => {
                 if (toot.id === id) {
                   toot[stateKey] =
                     typeof prevState === 'boolean' ? !prevState : true
-                }
-                return toot
-              }),
-              pointer: paging.pointer
-            }))
-          )
-          break
-        case 'delete':
-          queryCache.setQueryData(queryKey, old =>
-            (old as {}[]).map((paging: any) => ({
-              toots: paging.toots.map((toot: any, index: number) => {
-                if (toot.id === id) {
-                  paging.toots.splice(index, 1)
                 }
                 return toot
               }),
@@ -161,7 +116,23 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
       }),
     [status.bookmarked]
   )
-  const onPressShare = useCallback(() => setBottomSheetVisible(true), [])
+  const onPressShare = useCallback(
+    () =>
+      ActionSheetIOS.showShareActionSheetWithOptions(
+        {
+          url: status.uri,
+          excludedActivityTypes: [
+            'com.apple.UIKit.activity.Mail',
+            'com.apple.UIKit.activity.Print',
+            'com.apple.UIKit.activity.SaveToCameraRoll',
+            'com.apple.UIKit.activity.OpenInIBooks'
+          ]
+        },
+        () => {},
+        () => {}
+      ),
+    []
+  )
 
   const childrenReply = useMemo(
     () => (
@@ -268,86 +239,6 @@ const ActionsStatus: React.FC<Props> = ({ queryKey, status }) => {
           children={childrenShare}
         />
       </View>
-
-      <BottomSheet
-        visible={bottomSheetVisible}
-        handleDismiss={() => setBottomSheetVisible(false)}
-      >
-        <BottomSheetRow
-          onPress={() => {
-            ActionSheetIOS.showShareActionSheetWithOptions(
-              {
-                url: status.uri,
-                excludedActivityTypes: [
-                  'com.apple.UIKit.activity.Mail',
-                  'com.apple.UIKit.activity.Print',
-                  'com.apple.UIKit.activity.SaveToCameraRoll',
-                  'com.apple.UIKit.activity.OpenInIBooks'
-                ]
-              },
-              () => {},
-              () => {
-                setBottomSheetVisible(false)
-                toast({ type: 'success', content: '分享成功' })
-              }
-            )
-          }}
-          icon='share'
-          text={'分享嘟嘟'}
-        />
-        {status.account.id === localAccountId && (
-          <BottomSheetRow
-            onPress={() => {
-              setBottomSheetVisible(false)
-              mutateAction({
-                id: status.id,
-                type: 'delete',
-                stateKey: 'id'
-              })
-            }}
-            icon='trash'
-            text='删除嘟嘟'
-          />
-        )}
-        {status.account.id === localAccountId && (
-          <BottomSheetRow
-            onPress={() => {
-              console.warn('功能未开发')
-            }}
-            icon='trash'
-            text='删除并重发'
-          />
-        )}
-        <BottomSheetRow
-          onPress={() => {
-            setBottomSheetVisible(false)
-            mutateAction({
-              id: status.id,
-              type: 'mute',
-              stateKey: 'muted',
-              prevState: status.muted
-            })
-          }}
-          icon='volume-x'
-          text={status.muted ? '取消静音' : '静音'}
-        />
-        {/* Also note that reblogs cannot be pinned. */}
-        {status.account.id === localAccountId && (
-          <BottomSheetRow
-            onPress={() => {
-              setBottomSheetVisible(false)
-              mutateAction({
-                id: status.id,
-                type: 'pin',
-                stateKey: 'pinned',
-                prevState: status.pinned
-              })
-            }}
-            icon='anchor'
-            text={status.pinned ? '取消置顶' : '置顶'}
-          />
-        )}
-      </BottomSheet>
     </>
   )
 }
@@ -363,22 +254,7 @@ const styles = StyleSheet.create({
     width: '20%',
     flexDirection: 'row',
     justifyContent: 'center'
-  },
-  modalBackground: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end'
-  },
-  modalSheet: {
-    width: '100%',
-    height: '50%',
-    backgroundColor: 'white',
-    flex: 1
   }
 })
 
-export default ActionsStatus
+export default TimelineActions

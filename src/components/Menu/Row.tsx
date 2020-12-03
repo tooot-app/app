@@ -43,29 +43,31 @@ const Core: React.FC<Props> = ({
           {title}
         </Text>
       </View>
-      <View style={styles.back}>
-        {content && (
-          <Text
-            style={[styles.content, { color: theme.secondary }]}
-            numberOfLines={1}
-          >
-            {content}
-          </Text>
-        )}
-        {iconBack && (
-          <Feather
-            name={iconBack}
-            size={StyleConstants.Font.Size.M + 2}
-            color={theme[iconBackColor]}
-            style={styles.iconBack}
-          />
-        )}
-      </View>
+      {(content || iconBack) && (
+        <View style={styles.back}>
+          {content && (
+            <Text
+              style={[styles.content, { color: theme.secondary }]}
+              numberOfLines={1}
+            >
+              {content}
+            </Text>
+          )}
+          {iconBack && (
+            <Feather
+              name={iconBack}
+              size={StyleConstants.Font.Size.M + 2}
+              color={theme[iconBackColor]}
+              style={styles.iconBack}
+            />
+          )}
+        </View>
+      )}
     </View>
   )
 }
 
-const MenuItem: React.FC<Props> = ({ ...props }) => {
+const MenuRow: React.FC<Props> = ({ ...props }) => {
   const { theme } = useTheme()
 
   return props.onPress ? (
@@ -95,11 +97,13 @@ const styles = StyleSheet.create({
   },
   front: {
     flex: 1,
+    flexBasis: '70%',
     flexDirection: 'row',
     alignItems: 'center'
   },
   back: {
     flex: 1,
+    flexBasis: '30%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center'
@@ -108,6 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   text: {
+    flex: 1,
     fontSize: StyleConstants.Font.Size.M
   },
   content: {
@@ -118,4 +123,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MenuItem
+export default MenuRow

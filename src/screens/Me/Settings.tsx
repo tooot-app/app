@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { MenuContainer, MenuItem } from 'src/components/Menu'
+import { MenuContainer, MenuRow } from 'src/components/Menu'
 import {
   changeLanguage,
   changeTheme,
@@ -23,7 +23,7 @@ const ScreenMeSettings: React.FC = () => {
   return (
     <>
       <MenuContainer marginTop={true}>
-        <MenuItem
+        <MenuRow
           title={t('content.language.heading')}
           content={t(`content.language.options.${settingsLanguage}`)}
           iconBack='chevron-right'
@@ -52,7 +52,7 @@ const ScreenMeSettings: React.FC = () => {
             )
           }
         />
-        <MenuItem
+        <MenuRow
           title={t('content.theme.heading')}
           content={t(`content.theme.options.${settingsTheme}`)}
           iconBack='chevron-right'
@@ -87,10 +87,10 @@ const ScreenMeSettings: React.FC = () => {
         />
       </MenuContainer>
       <MenuContainer>
-        <MenuItem
+        <MenuRow
           title={t('content.copyrights.heading')}
           iconBack='chevron-right'
-        ></MenuItem>
+        />
         <Text style={[styles.version, { color: theme.secondary }]}>
           {t('content.version', { version: '1.0.0' })}
         </Text>

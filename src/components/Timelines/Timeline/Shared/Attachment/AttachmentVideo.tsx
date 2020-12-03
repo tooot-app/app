@@ -1,27 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Video } from 'expo-av'
 import { Feather } from '@expo/vector-icons'
 
 export interface Props {
   media_attachments: Mastodon.Attachment[]
-  sensitive: boolean
   width: number
 }
 
-const AttachmentVideo: React.FC<Props> = ({
-  media_attachments,
-  sensitive,
-  width
-}) => {
-  const videoPlayer = useRef()
-  const [mediaSensitive, setMediaSensitive] = useState(sensitive)
+const AttachmentVideo: React.FC<Props> = ({ media_attachments, width }) => {
+  const videoPlayer = useRef<Video>(null)
   const [videoPlay, setVideoPlay] = useState(false)
 
   const video = media_attachments[0]
   const videoWidth = width
   const videoHeight =
-    (width / video.meta.original.width) * video.meta.original.height
+    video.meta?.original?.width && video.meta?.original?.height
+      ? (width / video.meta.original.width) * video.meta.original.height
+      : (width / 16) * 9
+
+  const onPressVideo = useCallback(() => {
+    // @ts-ignore
+    videoPlayer.current.presentFullscreenPlayer()
+    setVideoPlay(true)
+  }, [])
 
   return (
     <View
@@ -39,17 +41,13 @@ const AttachmentVideo: React.FC<Props> = ({
         }}
         resizeMode='cover'
         usePoster
-        posterSourceThe={{ uri: video.preview_url }}
+        posterSource={{ uri: video.preview_url }}
         useNativeControls
         shouldPlay={videoPlay}
       />
-      {!videoPlay && (
+      {videoPlayer.current && !videoPlay && (
         <Pressable
-          onPress={() => {
-            setMediaSensitive(false)
-            videoPlayer.current.presentFullscreenPlayer()
-            setVideoPlay(true)
-          }}
+          onPress={onPressVideo}
           style={{
             position: 'absolute',
             top: 0,

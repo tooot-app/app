@@ -10,13 +10,15 @@ export interface Props {
   emojis: Mastodon.Emoji[]
   size: number
   fontBold?: boolean
+  numberOfLines?: number
 }
 
 const Emojis: React.FC<Props> = ({
   content,
   emojis,
   size,
-  fontBold = false
+  fontBold = false,
+  numberOfLines
 }) => {
   const { theme } = useTheme()
   const styles = StyleSheet.create({
@@ -35,7 +37,7 @@ const Emojis: React.FC<Props> = ({
   const hasEmojis = content.match(regexEmoji)
 
   return (
-    <Text>
+    <Text numberOfLines={numberOfLines || undefined}>
       {content.split(regexEmoji).map((str, i) => {
         if (str.match(regexEmoji)) {
           const emojiShortcode = str.split(regexEmoji)[1]

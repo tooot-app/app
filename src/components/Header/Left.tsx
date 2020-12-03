@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingRight: StyleConstants.Spacing.S
   },
   text: {
-    fontSize: StyleConstants.Font.Size.L
+    fontSize: StyleConstants.Font.Size.M
   }
 })
 

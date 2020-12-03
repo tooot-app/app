@@ -9,7 +9,7 @@ import Content from './Shared/Content'
 import Poll from './Shared/Poll'
 import Attachment from './Shared/Attachment'
 import Card from './Shared/Card'
-import ActionsStatus from './Shared/ActionsStatus'
+import ActionsStatus from './Shared/Actions'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {

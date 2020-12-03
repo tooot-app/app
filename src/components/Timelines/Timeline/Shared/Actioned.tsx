@@ -7,19 +7,19 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
+  account: Mastodon.Account
   action: 'favourite' | 'follow' | 'mention' | 'poll' | 'reblog'
-  name?: string
-  emojis?: Mastodon.Emoji[]
   notification?: boolean
 }
 
-const Actioned: React.FC<Props> = ({
+const TimelineActioned: React.FC<Props> = ({
+  account,
+
   action,
-  name,
-  emojis,
   notification = false
 }) => {
   const { theme } = useTheme()
+  const name = account.display_name || account.username
   const iconColor = theme.primary
 
   let icon
@@ -74,20 +74,18 @@ const Actioned: React.FC<Props> = ({
   return (
     <View style={styles.actioned}>
       {icon}
-      {content ? (
+      {content && (
         <View style={styles.content}>
-          {emojis ? (
+          {account.emojis ? (
             <Emojis
               content={content}
-              emojis={emojis}
+              emojis={account.emojis}
               size={StyleConstants.Font.Size.S}
             />
           ) : (
             <Text>{content}</Text>
           )}
         </View>
-      ) : (
-        <></>
       )}
     </View>
   )
@@ -107,4 +105,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(Actioned)
+export default React.memo(TimelineActioned, () => true)

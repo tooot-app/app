@@ -48,10 +48,10 @@ declare namespace Mastodon {
     // Others
     remote_url?: string
     text_url?: string
-    meta: {
-      original: { width: number; height: number; size: string; aspect: number }
-      small: { width: number; height: number; size: string; aspect: number }
-      focus:
+    meta?: {
+      original?: { width: number; height: number; size: string; aspect: number }
+      small?: { width: number; height: number; size: string; aspect: number }
+      focus?:
         | { x: number; y: number }
         | {
             length: string

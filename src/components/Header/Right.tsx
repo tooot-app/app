@@ -6,6 +6,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 type PropsBase = {
+  disabled?: boolean
   onPress: () => void
 }
 
@@ -20,6 +21,7 @@ export interface PropsIcon extends PropsBase {
 }
 
 const HeaderRight: React.FC<PropsText | PropsIcon> = ({
+  disabled,
   onPress,
   text,
   icon
@@ -27,12 +29,21 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
   const { theme } = useTheme()
 
   return (
-    <Pressable onPress={onPress} style={styles.base}>
-      {text && <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>}
+    <Pressable {...(!disabled && { onPress })} style={styles.base}>
+      {text && (
+        <Text
+          style={[
+            styles.text,
+            { color: disabled ? theme.secondary : theme.primary }
+          ]}
+        >
+          {text}
+        </Text>
+      )}
       {icon && (
         <Feather
           name={icon}
-          color={theme.primary}
+          color={disabled ? theme.secondary : theme.primary}
           size={StyleConstants.Font.Size.L}
         />
       )}
@@ -45,7 +56,7 @@ const styles = StyleSheet.create({
     paddingLeft: StyleConstants.Spacing.S
   },
   text: {
-    fontSize: StyleConstants.Font.Size.L
+    fontSize: StyleConstants.Font.Size.M
   }
 })
 

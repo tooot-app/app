@@ -1,75 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Image, Modal, StyleSheet, Pressable, View } from 'react-native'
+import React, { useState } from 'react'
+import { Image, Modal, StyleSheet, Pressable, View } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
   media_attachments: Mastodon.Attachment[]
-  sensitive: boolean
   width: number
 }
 
-const AttachmentImage: React.FC<Props> = ({
-  media_attachments,
-  sensitive,
-  width
-}) => {
-  const [mediaSensitive, setMediaSensitive] = useState(sensitive)
+const AttachmentImage: React.FC<Props> = ({ media_attachments }) => {
   const [imageModalVisible, setImageModalVisible] = useState(false)
   const [imageModalIndex, setImageModalIndex] = useState(0)
-  useEffect(() => {
-    if (sensitive && mediaSensitive === false) {
-      setTimeout(() => {
-        setMediaSensitive(true)
-      }, 10000)
-    }
-  }, [mediaSensitive])
 
-  let images: { url: string; width: number; height: number }[] = []
+  let images: {
+    url: string
+    width: number | undefined
+    height: number | undefined
+  }[] = []
   const imagesNode = media_attachments.map((m, i) => {
     images.push({
       url: m.url,
-      width: m.meta.original.width,
-      height: m.meta.original.height
+      width: m.meta?.original?.width || undefined,
+      height: m.meta?.original?.height || undefined
     })
     return (
       <Pressable
         key={i}
-        style={{ flexGrow: 1, height: width / 2, margin: 4 }}
+        style={[styles.imageContainer]}
         onPress={() => {
           setImageModalIndex(i)
           setImageModalVisible(true)
         }}
       >
-        <Image
-          source={{ uri: m.preview_url }}
-          style={styles.image}
-          blurRadius={mediaSensitive ? width / 5 : 0}
-        />
+        <Image source={{ uri: m.preview_url }} style={styles.image} />
       </Pressable>
     )
   })
 
   return (
     <>
-      <View style={styles.media}>
-        {imagesNode}
-        {mediaSensitive && (
-          <View
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%'
-            }}
-          >
-            <Button
-              title='Press me'
-              onPress={() => {
-                setMediaSensitive(false)
-              }}
-            />
-          </View>
-        )}
-      </View>
+      <View style={[styles.media]}>{imagesNode}</View>
+
       <Modal
         visible={imageModalVisible}
         transparent={true}
@@ -82,6 +53,7 @@ const AttachmentImage: React.FC<Props> = ({
           enableSwipeDown={true}
           swipeDownThreshold={100}
           useNativeDriver={true}
+          saveToLocalByLongPress={false}
         />
       </Modal>
     </>
@@ -91,16 +63,18 @@ const AttachmentImage: React.FC<Props> = ({
 const styles = StyleSheet.create({
   media: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
     alignContent: 'stretch'
   },
+  imageContainer: {
+    flex: 1,
+    flexBasis: '50%',
+    padding: StyleConstants.Spacing.XS / 2
+  },
   image: {
-    width: '100%',
-    height: '100%'
+    flex: 1
   }
 })
 
-export default AttachmentImage
+export default React.memo(AttachmentImage, () => true)

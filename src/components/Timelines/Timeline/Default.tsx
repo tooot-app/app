@@ -2,14 +2,15 @@ import React, { useCallback, useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Actioned from './Shared/Actioned'
-import Avatar from './Shared/Avatar'
-import HeaderDefault from './Shared/HeaderDefault'
-import Content from './Shared/Content'
-import Poll from './Shared/Poll'
-import Attachment from './Shared/Attachment'
-import Card from './Shared/Card'
-import ActionsStatus from './Shared/ActionsStatus'
+import TimelineActioned from './Shared/Actioned'
+import TimelineActions from './Shared/Actions'
+import TimelineAttachment from './Shared/Attachment'
+import TimelineAvatar from './Shared/Avatar'
+import TimelineCard from './Shared/Card'
+import TimelineContent from './Shared/Content'
+import TimelineHeaderDefault from './Shared/HeaderDefault'
+import TimelinePoll from './Shared/Poll'
+
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
@@ -22,6 +23,11 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
+  const contentWidth =
+    Dimensions.get('window').width -
+    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
+    StyleConstants.Avatar.S - // Avatar width
+    StyleConstants.Spacing.S // Avatar margin to the right
 
   const pressableToot = useCallback(
     () =>
@@ -33,73 +39,37 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const childrenToot = useMemo(
     () => (
       <>
-        {actualStatus.content ? (
-          <Content
-            content={actualStatus.content}
-            emojis={actualStatus.emojis}
-            mentions={actualStatus.mentions}
-            spoiler_text={actualStatus.spoiler_text}
-            // tags={actualStatus.tags}
-          />
-        ) : (
-          <></>
+        {actualStatus.content.length > 0 && (
+          <TimelineContent status={actualStatus} />
         )}
-        {actualStatus.poll && <Poll poll={actualStatus.poll} />}
+        {actualStatus.poll && (
+          <TimelinePoll queryKey={queryKey} poll={actualStatus.poll} />
+        )}
         {actualStatus.media_attachments.length > 0 && (
-          <Attachment
-            media_attachments={actualStatus.media_attachments}
-            sensitive={actualStatus.sensitive}
-            width={
-              Dimensions.get('window').width - StyleConstants.Spacing.M * 2 - 50 - 8
-            }
-          />
+          <TimelineAttachment status={actualStatus} width={contentWidth} />
         )}
-        {actualStatus.card && <Card card={actualStatus.card} />}
+        {actualStatus.card && <TimelineCard card={actualStatus.card} />}
       </>
     ),
-    []
+    [actualStatus.poll?.voted]
   )
 
-  const statusView = useMemo(() => {
-    return (
-      <View style={styles.statusView}>
-        {item.reblog && (
-          <Actioned
-            action='reblog'
-            name={item.account.display_name || item.account.username}
-            emojis={item.account.emojis}
-          />
-        )}
-        <View style={styles.status}>
-          <Avatar
-            uri={actualStatus.account.avatar}
-            id={actualStatus.account.id}
-          />
-          <View style={styles.details}>
-            <HeaderDefault
-              queryKey={queryKey}
-              accountId={actualStatus.account.id}
-              domain={actualStatus.uri.split(new RegExp(/\/\/(.*?)\//))[1]}
-              name={
-                actualStatus.account.display_name ||
-                actualStatus.account.username
-              }
-              emojis={actualStatus.account.emojis}
-              account={actualStatus.account.acct}
-              created_at={item.created_at}
-              visibility={item.visibility}
-              application={item.application}
-            />
-            {/* Can pass toot info to next page to speed up performance */}
-            <Pressable onPress={pressableToot} children={childrenToot} />
-            <ActionsStatus queryKey={queryKey} status={actualStatus} />
-          </View>
+  return (
+    <View style={styles.statusView}>
+      {item.reblog && (
+        <TimelineActioned action='reblog' account={item.account} />
+      )}
+      <View style={styles.status}>
+        <TimelineAvatar account={actualStatus.account} />
+        <View style={styles.details}>
+          <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
+          {/* Can pass toot info to next page to speed up performance */}
+          <Pressable onPress={pressableToot} children={childrenToot} />
+          <TimelineActions queryKey={queryKey} status={actualStatus} />
         </View>
       </View>
-    )
-  }, [item])
-
-  return statusView
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -114,8 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   details: {
-    flex: 1,
-    flexGrow: 1
+    flex: 1
   }
 })
 

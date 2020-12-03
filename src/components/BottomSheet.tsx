@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   container: {
-    padding: StyleConstants.Spacing.L,
     paddingTop: StyleConstants.Spacing.M
   },
   handle: {
@@ -115,9 +114,10 @@ const styles = StyleSheet.create({
   },
   cancel: {
     padding: StyleConstants.Spacing.S,
+    marginLeft: StyleConstants.Spacing.L,
+    marginRight: StyleConstants.Spacing.L,
     borderWidth: 1,
-    borderRadius: 100,
-    // marginBottom: StyleConstants.Spacing.L
+    borderRadius: 100
   },
   text: {
     fontSize: StyleConstants.Font.Size.L,
