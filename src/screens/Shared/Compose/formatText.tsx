@@ -12,17 +12,21 @@ export interface Params {
   disableDebounce?: boolean
 }
 
-const debouncedSuggestions = debounce((postDispatch, tag) => {
-  console.log('debounced!!!')
-  postDispatch({ type: 'tag', payload: tag })
-}, 500)
+const debouncedSuggestions = debounce(
+  (postDispatch, tag) => {
+    postDispatch({ type: 'tag', payload: tag })
+  },
+  500,
+  {
+    trailing: true
+  }
+)
 
 let prevTags: PostState['tag'][] = []
 
 const formatText = ({
   postDispatch,
   content,
-  refetch,
   disableDebounce = false
 }: Params) => {
   const tags: PostState['tag'][] = []
@@ -54,24 +58,14 @@ const formatText = ({
     }
   })
 
-  const changedTag = differenceWith(prevTags, tags, isEqual)
+  const changedTag = differenceWith(tags, prevTags, isEqual)
   // quick delete causes flicking of suggestion box
-  if (
-    changedTag.length > 0 &&
-    tags.length > 0 &&
-    content.length > 0 &&
-    !disableDebounce
-  ) {
-    // console.log('changedTag length')
-    // console.log(changedTag.length)
-    // console.log('tags length')
-    // console.log(tags.length)
-    // console.log('changed Tag')
-    // console.log(changedTag)
+  if (changedTag.length && !disableDebounce) {
     if (changedTag[0]!.type !== 'url') {
       debouncedSuggestions(postDispatch, changedTag[0])
     }
   } else {
+    debouncedSuggestions.cancel()
     postDispatch({ type: 'tag', payload: undefined })
   }
   prevTags = tags

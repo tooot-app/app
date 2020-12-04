@@ -3,7 +3,7 @@ const Base = 4
 export const StyleConstants = {
   Font: {
     Size: {
-      S: 12,
+      S: 14,
       M: 16,
       L: 18
     },

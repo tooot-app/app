@@ -32,7 +32,6 @@ const fireMutation = async ({
       }
       break
     case 'reports':
-      console.log('reporting')
       res = await client({
         method: 'post',
         instance: 'local',

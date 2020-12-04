@@ -42,7 +42,9 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
     { enabled: false }
   )
   useEffect(() => {
-    refetch()
+    if (postState.tag?.text) {
+      refetch()
+    }
   }, [postState.tag?.text])
 
   useEffect(() => {
