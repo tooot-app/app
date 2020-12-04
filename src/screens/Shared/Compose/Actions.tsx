@@ -106,16 +106,23 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='smile'
         size={24}
-        color={postState.emojis?.length ? theme.primary : theme.secondary}
-        onPress={() => {
-          if (postState.emojis?.length && postState.overlay === null) {
-            Keyboard.dismiss()
-            postDispatch({ type: 'overlay', payload: 'emojis' })
+        color={postState.emoji.emojis?.length ? theme.primary : theme.secondary}
+        {...(postState.emoji.emojis && {
+          onPress: () => {
+            if (postState.emoji.active) {
+              postDispatch({
+                type: 'emoji',
+                payload: { ...postState.emoji, active: false }
+              })
+            } else {
+              Keyboard.dismiss()
+              postDispatch({
+                type: 'emoji',
+                payload: { ...postState.emoji, active: true }
+              })
+            }
           }
-          if (postState.overlay === 'emojis') {
-            postDispatch({ type: 'overlay', payload: null })
-          }
-        }}
+        })}
       />
       <Text
         style={[

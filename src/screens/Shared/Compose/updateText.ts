@@ -1,13 +1,17 @@
-import { PostState } from '../Compose'
+import { Dispatch } from 'react'
+import { PostAction, PostState } from '../Compose'
+import formatText from './formatText'
 
 const updateText = ({
-  onChangeText,
   postState,
-  newText
+  postDispatch,
+  newText,
+  type
 }: {
-  onChangeText: any
   postState: PostState
+  postDispatch: Dispatch<PostAction>
   newText: string
+  type: 'emoji' | 'suggestion'
 }) => {
   if (postState.text.raw.length) {
     const contentFront = postState.text.raw.slice(0, postState.selection.start)
@@ -16,16 +20,18 @@ const updateText = ({
     const whiteSpaceFront = /\s/g.test(contentFront.slice(-1))
     const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
 
-    const newTextWithSpace = `${whiteSpaceFront ? '' : ' '}${newText}${
-      whiteSpaceRear ? '' : ' '
-    }`
+    const newTextWithSpace = `${
+      whiteSpaceFront || type === 'suggestion' ? '' : ' '
+    }${newText}${whiteSpaceRear ? '' : ' '}`
 
-    onChangeText({
+    formatText({
+      postDispatch,
       content: [contentFront, newTextWithSpace, contentRear].join(''),
       disableDebounce: true
     })
   } else {
-    onChangeText({
+    formatText({
+      postDispatch,
       content: `${newText} `,
       disableDebounce: true
     })

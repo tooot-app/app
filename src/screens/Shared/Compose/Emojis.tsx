@@ -17,30 +17,22 @@ import updateText from './updateText'
 
 export interface Props {
   textInputRef: React.RefObject<TextInput>
-  onChangeText: any
   postState: PostState
   postDispatch: Dispatch<PostAction>
 }
 
 const ComposeEmojis: React.FC<Props> = ({
   textInputRef,
-  onChangeText,
   postState,
   postDispatch
 }) => {
   const { theme } = useTheme()
 
-  let sortedEmojis: { title: string; data: Mastodon.Emoji[] }[] = []
-  forEach(
-    groupBy(sortBy(postState.emojis, ['category', 'shortcode']), 'category'),
-    (value, key) => sortedEmojis.push({ title: key, data: value })
-  )
-
   return (
     <View style={styles.base}>
       <SectionList
         horizontal
-        sections={sortedEmojis}
+        sections={postState.emoji.emojis!}
         keyExtractor={item => item.shortcode}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={[styles.group, { color: theme.secondary }]}>
@@ -56,12 +48,16 @@ const ComposeEmojis: React.FC<Props> = ({
                     key={emoji.shortcode}
                     onPress={() => {
                       updateText({
-                        onChangeText,
                         postState,
-                        newText: `:${emoji.shortcode}:`
+                        postDispatch,
+                        newText: `:${emoji.shortcode}:`,
+                        type: 'emoji'
                       })
                       textInputRef.current?.focus()
-                      postDispatch({ type: 'overlay', payload: null })
+                      postDispatch({
+                        type: 'emoji',
+                        payload: { ...postState.emoji, active: false }
+                      })
                     }}
                   >
                     <Image source={{ uri: emoji.url }} style={styles.emoji} />

@@ -19,7 +19,6 @@ export type PostState = {
     formatted: ReactNode
   }
   selection: { start: number; end: number }
-  overlay: null | 'suggestions' | 'emojis'
   tag:
     | {
         type: 'url' | 'accounts' | 'hashtags'
@@ -27,7 +26,10 @@ export type PostState = {
         offset: number
       }
     | undefined
-  emojis: Mastodon.Emoji[] | undefined
+  emoji: {
+    active: boolean
+    emojis: { title: string; data: Mastodon.Emoji[] }[] | undefined
+  }
   poll: {
     active: boolean
     total: number
@@ -68,16 +70,12 @@ export type PostAction =
       payload: PostState['selection']
     }
   | {
-      type: 'overlay'
-      payload: PostState['overlay']
-    }
-  | {
       type: 'tag'
       payload: PostState['tag']
     }
   | {
-      type: 'emojis'
-      payload: PostState['emojis']
+      type: 'emoji'
+      payload: PostState['emoji']
     }
   | {
       type: 'poll'
@@ -110,9 +108,8 @@ const postInitialState: PostState = {
     formatted: undefined
   },
   selection: { start: 0, end: 0 },
-  overlay: null,
   tag: undefined,
-  emojis: undefined,
+  emoji: { active: false, emojis: undefined },
   poll: {
     active: false,
     total: 2,
@@ -137,12 +134,10 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
       return { ...state, text: { ...state.text, ...action.payload } }
     case 'selection':
       return { ...state, selection: action.payload }
-    case 'overlay':
-      return { ...state, overlay: action.payload }
     case 'tag':
       return { ...state, tag: action.payload }
-    case 'emojis':
-      return { ...state, emojis: action.payload }
+    case 'emoji':
+      return { ...state, emoji: action.payload }
     case 'poll':
       return { ...state, poll: action.payload }
     case 'attachments/add':
