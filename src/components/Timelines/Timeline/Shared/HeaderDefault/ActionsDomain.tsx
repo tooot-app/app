@@ -10,8 +10,8 @@ const fireMutation = async ({ domain }: { domain: string }) => {
   const res = await client({
     method: 'post',
     instance: 'local',
-    endpoint: `domain_blocks`,
-    query: {
+    url: `domain_blocks`,
+    params: {
       domain: domain!
     }
   })

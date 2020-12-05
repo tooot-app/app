@@ -6,14 +6,14 @@ export const timelineFetch = async (
   key: string,
   {
     page,
-    query = {},
+    params = {},
     account,
     hashtag,
     list,
     toot
   }: {
     page: string
-    query?: {
+    params?: {
       [key: string]: string | number | boolean
     }
     account?: string
@@ -31,10 +31,10 @@ export const timelineFetch = async (
   if (pagination && pagination.id) {
     switch (pagination.direction) {
       case 'prev':
-        query.min_id = pagination.id
+        params.min_id = pagination.id
         break
       case 'next':
-        query.max_id = pagination.id
+        params.max_id = pagination.id
         break
     }
   }
@@ -44,18 +44,18 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: 'timelines/home',
-        query
+        url: 'timelines/home',
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Local':
-      query.local = 'true'
+      params.local = 'true'
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: 'timelines/public',
-        query
+        url: 'timelines/public',
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -63,8 +63,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: 'timelines/public',
-        query
+        url: 'timelines/public',
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -72,8 +72,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'remote',
-        endpoint: 'timelines/public',
-        query
+        url: 'timelines/public',
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -81,8 +81,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: 'notifications',
-        query
+        url: 'notifications',
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -90,8 +90,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `accounts/${account}/statuses`,
-        query: {
+        url: `accounts/${account}/statuses`,
+        params: {
           pinned: 'true'
         }
       })
@@ -99,8 +99,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `accounts/${account}/statuses`,
-        query: {
+        url: `accounts/${account}/statuses`,
+        params: {
           exclude_replies: 'true'
         }
       })
@@ -111,8 +111,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `accounts/${account}/statuses`,
-        query
+        url: `accounts/${account}/statuses`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -120,8 +120,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `accounts/${account}/statuses`,
-        query: {
+        url: `accounts/${account}/statuses`,
+        params: {
           only_media: 'true'
         }
       })
@@ -131,8 +131,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `timelines/tag/${hashtag}`,
-        query
+        url: `timelines/tag/${hashtag}`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -140,8 +140,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `conversations`,
-        query
+        url: `conversations`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -149,8 +149,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `bookmarks`,
-        query
+        url: `bookmarks`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -158,8 +158,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `favourites`,
-        query
+        url: `favourites`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -167,8 +167,8 @@ export const timelineFetch = async (
       res = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `timelines/list/${list}`,
-        query
+        url: `timelines/list/${list}`,
+        params
       })
       return Promise.resolve({ toots: res.body, pointer: null })
 
@@ -176,12 +176,12 @@ export const timelineFetch = async (
       const current = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `statuses/${toot}`
+        url: `statuses/${toot}`
       })
       const context = await client({
         method: 'get',
         instance: 'local',
-        endpoint: `statuses/${toot}/context`
+        url: `statuses/${toot}/context`
       })
       return Promise.resolve({
         toots: [

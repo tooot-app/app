@@ -29,7 +29,7 @@ const fireMutation = async ({
   const res = await client({
     method: 'post',
     instance: 'local',
-    endpoint: `polls/${id}/votes`,
+    url: `polls/${id}/votes`,
     body: formData
   })
 

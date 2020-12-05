@@ -16,8 +16,8 @@ export const searchFetch = async (
     version: 'v2',
     method: 'get',
     instance: 'local',
-    endpoint: 'search',
-    query: { type, q: term, limit }
+    url: 'search',
+    params: { type, q: term, limit }
   })
   return Promise.resolve(res.body)
 }

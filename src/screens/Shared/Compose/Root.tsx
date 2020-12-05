@@ -73,7 +73,7 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
 
   const textInputRef = useRef<TextInput>(null)
 
-  const listFooter = useMemo(() => {
+  const listFooter = () => {
     return (
       <>
         {postState.emoji.active && (
@@ -86,7 +86,8 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
           </View>
         )}
 
-        {postState.attachments.length > 0 && (
+        {(postState.attachments.length > 0 ||
+          postState.attachmentUploadProgress) && (
           <View style={styles.attachments}>
             <ComposeAttachments
               postState={postState}
@@ -101,11 +102,7 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
         )}
       </>
     )
-  }, [
-    postState.emoji.active,
-    postState.attachments.length,
-    postState.poll.active
-  ])
+  }
 
   const listEmpty = useMemo(() => {
     if (isFetching) {
@@ -215,8 +212,7 @@ const styles = StyleSheet.create({
   contentView: { flex: 1 },
 
   attachments: {
-    flex: 1,
-    height: 100
+    flex: 1
   },
   poll: {
     flex: 1,

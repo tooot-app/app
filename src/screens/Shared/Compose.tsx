@@ -34,11 +34,10 @@ export type PostState = {
     active: boolean
     total: number
     options: {
-      '1': string
-      '2': string
-      '3': string
-      '4': string
-      [key: string]: string
+      '1': string | undefined
+      '2': string | undefined
+      '3': string | undefined
+      '4': string | undefined
     }
     multiple: boolean
     expire:
@@ -51,12 +50,8 @@ export type PostState = {
       | '604800'
       | string
   }
-  attachments: {
-    id: string
-    url: string
-    preview_url: string
-    description: string
-  }[]
+  attachments: Mastodon.Attachment[]
+  attachmentUploadProgress: { progress: number; aspect: number } | undefined
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
 }
 
@@ -82,19 +77,12 @@ export type PostAction =
       payload: PostState['poll']
     }
   | {
-      type: 'attachments/add'
-      payload: {
-        id: string
-        url: string
-        preview_url: string
-        description: string
-      }
+      type: 'attachments'
+      payload: PostState['attachments']
     }
   | {
-      type: 'attachments/remove'
-      payload: {
-        id: string
-      }
+      type: 'attachmentUploadProgress'
+      payload: PostState['attachmentUploadProgress']
     }
   | {
       type: 'visibility'
@@ -114,15 +102,16 @@ const postInitialState: PostState = {
     active: false,
     total: 2,
     options: {
-      '1': '',
-      '2': '',
-      '3': '',
-      '4': ''
+      '1': undefined,
+      '2': undefined,
+      '3': undefined,
+      '4': undefined
     },
     multiple: false,
     expire: '86400'
   },
   attachments: [],
+  attachmentUploadProgress: undefined,
   visibility:
     getLocalAccountPreferences(store.getState())[
       'posting:default:visibility'
@@ -140,13 +129,10 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
       return { ...state, emoji: action.payload }
     case 'poll':
       return { ...state, poll: action.payload }
-    case 'attachments/add':
-      return { ...state, attachments: state.attachments.concat(action.payload) }
-    case 'attachments/remove':
-      return {
-        ...state,
-        attachments: state.attachments.filter(a => a.id !== action.payload.id)
-      }
+    case 'attachments':
+      return { ...state, attachments: action.payload }
+    case 'attachmentUploadProgress':
+      return { ...state, attachmentUploadProgress: action.payload }
     case 'visibility':
       return { ...state, visibility: action.payload }
     default:
@@ -186,27 +172,29 @@ const Compose: React.FC = () => {
       ])
     } else {
       const formData = new FormData()
+
       formData.append('status', postState.text.raw)
+
       if (postState.poll.active) {
         Object.values(postState.poll.options)
-          .filter(e => e.length)
-          .forEach(e => {
-            formData.append('poll[options][]', e)
-          })
+          .filter(e => e?.length)
+          .forEach(e => formData.append('poll[options][]', e!))
         formData.append('poll[expires_in]', postState.poll.expire)
         formData.append('poll[multiple]', postState.poll.multiple.toString())
       }
-      if (postState.attachments.length > 0) {
-        postState.attachments.forEach(attachment =>
-          formData.append('media_ids[]', attachment.id)
+
+      if (postState.attachments.length) {
+        postState.attachments.forEach(e =>
+          formData.append('media_ids[]', e!.id)
         )
       }
+
       formData.append('visibility', postState.visibility)
 
       client({
         method: 'post',
         instance: 'local',
-        endpoint: 'statuses',
+        url: 'statuses',
         headers: {
           'Idempotency-Key': Date.now().toString() + Math.random().toString()
         },

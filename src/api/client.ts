@@ -1,37 +1,38 @@
+import axios from 'axios'
 import { store, RootState } from 'src/store'
-import ky from 'ky'
 
 const client = async ({
-  version = 'v1',
   method,
   instance,
-  instanceUrl,
-  endpoint,
+  instanceDomain,
+  version = 'v1',
+  url,
+  params,
   headers,
-  query,
-  body
+  body,
+  onUploadProgress
 }: {
-  version?: 'v1' | 'v2'
   method: 'get' | 'post' | 'put' | 'delete'
   instance: 'local' | 'remote'
-  instanceUrl?: string
-  endpoint: string
-  headers?: { [key: string]: string }
-  query?: {
+  instanceDomain?: string
+  version?: 'v1' | 'v2'
+  url: string
+  params?: {
     [key: string]: string | number | boolean
   }
+  headers?: { [key: string]: string }
   body?: FormData
+  onUploadProgress?: (progressEvent: any) => void
 }): Promise<any> => {
   const state: RootState['instances'] = store.getState().instances
-  const url =
-    instance === 'remote' ? instanceUrl || state.remote.url : state.local.url
+  const domain =
+    instance === 'remote' ? instanceDomain || state.remote.url : state.local.url
 
-  let response
-  // try {
-  response = await ky(endpoint, {
-    method: method,
-    prefixUrl: `https://${url}/api/${version}`,
-    searchParams: query,
+  return axios({
+    method,
+    baseURL: `https://${domain}/api/${version}/`,
+    url,
+    params,
     headers: {
       'Content-Type': 'application/json',
       ...headers,
@@ -39,28 +40,35 @@ const client = async ({
         Authorization: `Bearer ${state.local.token}`
       })
     },
-    ...(body && { body: body }),
-    throwHttpErrors: false
+    ...(body && { data: body }),
+    ...(onUploadProgress && { onUploadProgress: onUploadProgress })
   })
-  // } catch (error) {
-  //   return Promise.reject('ky error: ' + error.json())
-  // }
-  console.log('Query: /' + endpoint)
-  if (response.ok) {
-    return Promise.resolve({
-      headers: response.headers,
-      body: await response.json()
+    .then(response =>
+      Promise.resolve({
+        headers: response.headers,
+        body: response.data
+      })
+    )
+    .catch(error => {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('axios error', error.response)
+        return Promise.reject({
+          headers: error.response.headers,
+          body: error.response.data.error
+        })
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.error('axios error', error)
+        return Promise.reject()
+      } else {
+        console.error('axios error', error.message)
+        return Promise.reject({ body: error.message })
+      }
     })
-  } else {
-    let errorResponse
-    try {
-      errorResponse = await response.json()
-    } catch (error) {
-      return Promise.reject({ body: 'Nothing found' })
-    }
-    console.error(response.status + ': ' + errorResponse.error)
-    return Promise.reject({ body: errorResponse.error })
-  }
 }
 
 export default client

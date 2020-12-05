@@ -1,35 +1,55 @@
 import { Dispatch } from 'react'
 import { ActionSheetIOS, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
-import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 
 import { PostAction, PostState } from '../Compose'
 import client from 'src/api/client'
+import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 
-const uploadAttachment = async (uri: ImageInfo['uri']) => {
-  const filename = uri.split('/').pop()
+const uploadAttachment = async ({
+  result,
+  postState,
+  postDispatch
+}: {
+  result: ImageInfo
+  postState: PostState
+  postDispatch: Dispatch<PostAction>
+}) => {
+  const filename = result.uri.split('/').pop()
 
   const match = /\.(\w+)$/.exec(filename!)
   const type = match ? `image/${match[1]}` : `image`
 
   const formData = new FormData()
-  formData.append('file', { uri: uri, name: filename, type: type })
+  // @ts-ignore
+  formData.append('file', { uri: result.uri, name: filename, type: type })
 
-  return client({
+  client({
     method: 'post',
     instance: 'local',
-    endpoint: 'media',
-    body: formData
+    url: 'media',
+    body: formData,
+    onUploadProgress: p => {
+      postDispatch({
+        type: 'attachmentUploadProgress',
+        payload: {
+          progress: p.loaded / p.total,
+          aspect: result.width / result.height
+        }
+      })
+    }
   })
-    .then(res => {
-      if (res.body.id && res.body.type !== 'unknown') {
-        console.log('url: ' + res.body.preview_url)
-        return Promise.resolve({
-          id: res.body.id,
-          url: res.body.url,
-          preview_url: res.body.preview_url,
-          description: res.body.description
+    .then(({ body }: { body: Mastodon.Attachment }) => {
+      postDispatch({
+        type: 'attachmentUploadProgress',
+        payload: undefined
+      })
+      if (body.id) {
+        postDispatch({
+          type: 'attachments',
+          payload: postState.attachments.concat([body])
         })
+        return Promise.resolve()
       } else {
         Alert.alert('上传失败', '', [
           {
@@ -50,12 +70,11 @@ const uploadAttachment = async (uri: ImageInfo['uri']) => {
 }
 
 const addAttachments = async ({
-  postState,
-  postDispatch
+  ...params
 }: {
   postState: PostState
   postDispatch: Dispatch<PostAction>
-}) => {
+}): Promise<any> => {
   ActionSheetIOS.showActionSheetWithOptions(
     {
       options: ['从相册选取', '现照', '取消'],
@@ -63,19 +82,13 @@ const addAttachments = async ({
     },
     async buttonIndex => {
       if (buttonIndex === 0) {
-        let result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
           exif: false
         })
 
         if (!result.cancelled) {
-          const response = await uploadAttachment(result.uri)
-          if (response.id) {
-            postDispatch({
-              type: 'attachments/add',
-              payload: response
-            })
-          }
+          await uploadAttachment({ result, ...params })
         }
       } else if (buttonIndex === 1) {
         // setResult(Math.floor(Math.random() * 100) + 1)

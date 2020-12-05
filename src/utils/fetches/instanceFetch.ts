@@ -7,8 +7,8 @@ export const instanceFetch = async (
   const res = await client({
     method: 'get',
     instance: 'remote',
-    instanceUrl: instance,
-    endpoint: `instance`
+    instanceDomain: instance,
+    url: `instance`
   })
   return Promise.resolve(res.body)
 }

@@ -62,8 +62,8 @@ const Login: React.FC = () => {
     const res = await client({
       method: 'post',
       instance: 'remote',
-      instanceUrl: instance,
-      endpoint: `apps`,
+      instanceDomain: instance,
+      url: `apps`,
       body: formData
     })
     if (res.body?.client_id.length > 0) {

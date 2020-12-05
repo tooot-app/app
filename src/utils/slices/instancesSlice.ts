@@ -50,16 +50,16 @@ export const updateLocal = createAsyncThunk(
     } = await client({
       method: 'get',
       instance: 'remote',
-      instanceUrl: url,
-      endpoint: `accounts/verify_credentials`,
+      instanceDomain: url,
+      url: `accounts/verify_credentials`,
       headers: { Authorization: `Bearer ${token}` }
     })
 
     const { body: preferences } = await client({
       method: 'get',
       instance: 'remote',
-      instanceUrl: url,
-      endpoint: `preferences`,
+      instanceDomain: url,
+      url: `preferences`,
       headers: { Authorization: `Bearer ${token}` }
     })
 
@@ -91,14 +91,11 @@ const instancesSlice = createSlice({
 })
 
 export const getLocalUrl = (state: RootState) => state.instances.local.url
+export const getLocalToken = (state: RootState) => state.instances.local.token
 export const getRemoteUrl = (state: RootState) => state.instances.remote.url
 export const getLocalAccountId = (state: RootState) =>
   state.instances.local.account.id
 export const getLocalAccountPreferences = (state: RootState) =>
   state.instances.local.account.preferences
 
-// export const {
-//   updateLocalInstance,
-//   updateLocalAccount
-// } = instancesSlice.actions
 export default instancesSlice.reducer

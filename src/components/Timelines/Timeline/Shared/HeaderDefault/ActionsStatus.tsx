@@ -22,7 +22,7 @@ const fireMutation = async ({
       res = await client({
         method: 'post',
         instance: 'local',
-        endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
+        url: `statuses/${id}/${prevState ? 'un' : ''}${type}`
       }) // bug in response from Mastodon
 
       if (!res.body[stateKey] === prevState) {
@@ -37,7 +37,7 @@ const fireMutation = async ({
       res = await client({
         method: 'delete',
         instance: 'local',
-        endpoint: `statuses/${id}`
+        url: `statuses/${id}`
       })
 
       if (res.body[stateKey] === id) {

@@ -20,7 +20,7 @@ const fireMutation = async ({
       res = await client({
         method: 'post',
         instance: 'local',
-        endpoint: `accounts/${id}/${type}`
+        url: `accounts/${id}/${type}`
       })
 
       if (res.body[stateKey!] === true) {
@@ -35,8 +35,8 @@ const fireMutation = async ({
       res = await client({
         method: 'post',
         instance: 'local',
-        endpoint: `reports`,
-        query: {
+        url: `reports`,
+        params: {
           account_id: id!
         }
       })

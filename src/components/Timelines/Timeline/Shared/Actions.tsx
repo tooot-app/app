@@ -27,7 +27,7 @@ const fireMutation = async ({
       res = await client({
         method: 'post',
         instance: 'local',
-        endpoint: `statuses/${id}/${prevState ? 'un' : ''}${type}`
+        url: `statuses/${id}/${prevState ? 'un' : ''}${type}`
       }) // bug in response from Mastodon
 
       if (!res.body[stateKey] === prevState) {

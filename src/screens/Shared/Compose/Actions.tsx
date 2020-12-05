@@ -8,6 +8,8 @@ import {
   Text,
   TextInput
 } from 'react-native'
+import { useSelector } from 'react-redux'
+import { getLocalToken, getLocalUrl } from 'src/utils/slices/instancesSlice'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, PostState } from '../Compose'
@@ -25,6 +27,8 @@ const ComposeActions: React.FC<Props> = ({
   postDispatch
 }) => {
   const { theme } = useTheme()
+  const localUrl = useSelector(getLocalUrl)
+  const localToken = useSelector(getLocalToken)
 
   const getVisibilityIcon = () => {
     switch (postState.visibility) {
@@ -50,20 +54,30 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='aperture'
         size={24}
-        color={postState.poll.active ? theme.secondary : theme.primary}
-        onPress={async () =>
-          !postState.poll.active &&
-          (await addAttachments({ postState, postDispatch }))
+        color={
+          postState.poll.active || postState.attachments.length >= 4
+            ? theme.secondary
+            : theme.primary
         }
+        onPress={async () => {
+          if (!postState.poll.active && postState.attachments.length < 4) {
+            await addAttachments({ postState, postDispatch })
+          }
+        }}
       />
       <Feather
         name='bar-chart-2'
         size={24}
         color={
-          postState.attachments.length > 0 ? theme.secondary : theme.primary
+          postState.attachments.length || postState.attachmentUploadProgress
+            ? theme.secondary
+            : theme.primary
         }
         onPress={() => {
-          if (postState.attachments.length === 0) {
+          if (
+            !postState.attachments.length &&
+            !postState.attachmentUploadProgress
+          ) {
             postDispatch({
               type: 'poll',
               payload: { ...postState.poll, active: !postState.poll.active }
