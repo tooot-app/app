@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons'
-import React, { Dispatch } from 'react'
+import React, { Dispatch, useCallback, useMemo } from 'react'
 import {
   ActionSheetIOS,
   Keyboard,
@@ -8,8 +8,6 @@ import {
   Text,
   TextInput
 } from 'react-native'
-import { useSelector } from 'react-redux'
-import { getLocalToken, getLocalUrl } from 'src/utils/slices/instancesSlice'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, PostState } from '../Compose'
@@ -27,8 +25,6 @@ const ComposeActions: React.FC<Props> = ({
   postDispatch
 }) => {
   const { theme } = useTheme()
-  const localUrl = useSelector(getLocalUrl)
-  const localToken = useSelector(getLocalToken)
 
   const getVisibilityIcon = () => {
     switch (postState.visibility) {
@@ -43,6 +39,63 @@ const ComposeActions: React.FC<Props> = ({
     }
   }
 
+  const attachmentColor = useMemo(() => {
+    if (postState.poll.active) return theme.disabled
+    if (postState.attachmentUploadProgress) return theme.primary
+
+    if (postState.attachments.length) {
+      return theme.primary
+    } else {
+      return theme.secondary
+    }
+  }, [
+    postState.poll.active,
+    postState.attachments,
+    postState.attachmentUploadProgress
+  ])
+  const attachmentOnPress = useCallback(async () => {
+    if (postState.poll.active) return
+    if (postState.attachmentUploadProgress) return
+
+    if (!postState.attachments.length) {
+      return await addAttachments({ postState, postDispatch })
+    }
+  }, [
+    postState.poll.active,
+    postState.attachments,
+    postState.attachmentUploadProgress
+  ])
+
+  const pollColor = useMemo(() => {
+    if (postState.attachments.length) return theme.disabled
+    if (postState.attachmentUploadProgress) return theme.disabled
+
+    if (postState.poll.active) {
+      return theme.primary
+    } else {
+      return theme.secondary
+    }
+  }, [
+    postState.poll.active,
+    postState.attachments,
+    postState.attachmentUploadProgress
+  ])
+  const pollOnPress = useCallback(() => {
+    if (!postState.attachments.length && !postState.attachmentUploadProgress) {
+      postDispatch({
+        type: 'poll',
+        payload: { ...postState.poll, active: !postState.poll.active }
+      })
+    }
+    if (postState.poll.active) {
+      textInputRef.current?.focus()
+    }
+  }, [
+    postState.poll.active,
+    postState.attachments,
+    postState.attachmentUploadProgress
+  ])
+
   return (
     <Pressable
       style={[
@@ -54,43 +107,14 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='aperture'
         size={24}
-        color={
-          postState.poll.active || postState.attachments.length >= 4
-            ? theme.disabled
-            : postState.attachments.length
-            ? theme.primary
-            : theme.secondary
-        }
-        onPress={async () => {
-          if (!postState.poll.active && postState.attachments.length < 4) {
-            await addAttachments({ postState, postDispatch })
-          }
-        }}
+        color={attachmentColor}
+        onPress={attachmentOnPress}
       />
       <Feather
         name='bar-chart-2'
         size={24}
-        color={
-          postState.attachments.length || postState.attachmentUploadProgress
-            ? theme.disabled
-            : postState.poll.active
-            ? theme.primary
-            : theme.secondary
-        }
-        onPress={() => {
-          if (
-            !postState.attachments.length &&
-            !postState.attachmentUploadProgress
-          ) {
-            postDispatch({
-              type: 'poll',
-              payload: { ...postState.poll, active: !postState.poll.active }
-            })
-          }
-          if (postState.poll.active) {
-            textInputRef.current?.focus()
-          }
-        }}
+        color={pollColor}
+        onPress={pollOnPress}
       />
       <Feather
         name={getVisibilityIcon()}
@@ -124,7 +148,9 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='smile'
         size={24}
-        color={postState.emoji.emojis?.length ? theme.secondary : theme.disabled}
+        color={
+          postState.emoji.emojis?.length ? theme.secondary : theme.disabled
+        }
         {...(postState.emoji.emojis && {
           onPress: () => {
             if (postState.emoji.active) {

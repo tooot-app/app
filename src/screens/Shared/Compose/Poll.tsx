@@ -12,7 +12,7 @@ import { Feather } from '@expo/vector-icons'
 import { PostAction, PostState } from '../Compose'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
-import Button from 'src/components/Button'
+import { ButtonRow } from 'src/components/Button'
 import { MenuContainer, MenuRow } from 'src/components/Menu'
 
 export interface Props {
@@ -73,7 +73,7 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
       </View>
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>
-          <Button
+          <ButtonRow
             onPress={() =>
               postState.poll.total > 2 &&
               postDispatch({
@@ -86,7 +86,7 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
             buttonSize='S'
           />
         </View>
-        <Button
+        <ButtonRow
           onPress={() =>
             postState.poll.total < 4 &&
             postDispatch({

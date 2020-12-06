@@ -1,12 +1,20 @@
 import React, { Dispatch, useCallback } from 'react'
-import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 
 import { PostAction, PostState } from '../Compose'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+import { ButtonRound } from 'src/components/Button'
+import addAttachments from './addAttachments'
 
 const DEFAULT_HEIGHT = 200
 
@@ -19,34 +27,7 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
   const { theme } = useTheme()
   const navigation = useNavigation()
 
-  const imageActions = ({
-    type,
-    icon,
-    onPress
-  }: {
-    type: 'edit' | 'delete'
-    icon: string
-    onPress: () => void
-  }) => {
-    return (
-      <Pressable
-        style={[
-          styles.actions,
-          styles[type],
-          { backgroundColor: theme.backgroundOverlay }
-        ]}
-        onPress={onPress}
-      >
-        <Feather
-          name={icon}
-          size={StyleConstants.Font.Size.L}
-          color={theme.primaryOverlay}
-        />
-      </Pressable>
-    )
-  }
-
-  const renderImage = useCallback(
+  const renderAttachment = useCallback(
     ({
       item,
       index
@@ -60,7 +41,12 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
             style={[
               styles.image,
               {
-                width: (item.meta?.original?.aspect || 1) * DEFAULT_HEIGHT
+                width:
+                  ((item as Mastodon.AttachmentImage).meta?.original?.aspect ||
+                    (item as Mastodon.AttachmentVideo).meta?.original.width! /
+                      (item as Mastodon.AttachmentVideo).meta?.original
+                        .height! ||
+                    1) * DEFAULT_HEIGHT
               }
             ]}
             source={{
@@ -70,47 +56,99 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
                   : item.preview_url
             }}
           />
-          {imageActions({
-            type: 'delete',
-            icon: 'x',
-            onPress: () =>
+          {(item as Mastodon.AttachmentVideo).meta?.original?.duration && (
+            <Text
+              style={[
+                styles.duration,
+                {
+                  color: theme.background,
+                  backgroundColor: theme.backgroundOverlay
+                }
+              ]}
+            >
+              {(item as Mastodon.AttachmentVideo).meta?.original.duration}
+            </Text>
+          )}
+          <ButtonRound
+            icon='x'
+            onPress={() =>
               postDispatch({
                 type: 'attachments',
                 payload: postState.attachments.filter(e => e.id !== item.id)
               })
-          })}
-          {imageActions({
-            type: 'edit',
-            icon: 'edit',
-            onPress: () =>
+            }
+            styles={styles.delete}
+          />
+          <ButtonRound
+            icon='edit'
+            onPress={() =>
               navigation.navigate('Screen-Shared-Compose-EditAttachment', {
                 attachment: item,
                 postDispatch
               })
-          })}
+            }
+            styles={styles.edit}
+          />
         </View>
       )
     },
     []
   )
 
+  const listFooter = useCallback(() => {
+    return (
+      <ShimmerPlaceholder
+        style={styles.progressContainer}
+        visible={postState.attachmentUploadProgress === undefined}
+        width={
+          (postState.attachmentUploadProgress?.aspect || 3 / 2) * DEFAULT_HEIGHT
+        }
+        height={200}
+      >
+        {postState.attachments.length > 0 &&
+          postState.attachments[0].type === 'image' &&
+          postState.attachments.length < 4 && (
+            <Pressable
+              style={{
+                width: DEFAULT_HEIGHT,
+                height: DEFAULT_HEIGHT,
+                backgroundColor: theme.border
+              }}
+              onPress={async () =>
+                await addAttachments({ postState, postDispatch })
+              }
+            >
+              <ButtonRound
+                icon='upload-cloud'
+                onPress={async () =>
+                  await addAttachments({ postState, postDispatch })
+                }
+                styles={{
+                  top:
+                    (DEFAULT_HEIGHT -
+                      StyleConstants.Spacing.Global.PagePadding) /
+                    2,
+                  left:
+                    (DEFAULT_HEIGHT -
+                      StyleConstants.Spacing.Global.PagePadding) /
+                    2
+                }}
+                coordinate='center'
+              />
+            </Pressable>
+          )}
+      </ShimmerPlaceholder>
+    )
+  }, [postState.attachmentUploadProgress])
+
   return (
     <View style={styles.base}>
       <FlatList
         horizontal
+        extraData={postState.attachmentUploadProgress}
         data={postState.attachments}
-        renderItem={renderImage}
-        ListFooterComponent={
-          <ShimmerPlaceholder
-            style={styles.progressContainer}
-            visible={postState.attachmentUploadProgress === undefined}
-            width={
-              (postState.attachmentUploadProgress?.aspect || 16 / 9) *
-              DEFAULT_HEIGHT
-            }
-            height={200}
-          />
-        }
+        renderItem={renderAttachment}
+        ListFooterComponent={listFooter}
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -130,10 +168,16 @@ const styles = StyleSheet.create({
     marginTop: StyleConstants.Spacing.Global.PagePadding,
     marginBottom: StyleConstants.Spacing.Global.PagePadding
   },
-  actions: {
+  duration: {
     position: 'absolute',
-    padding: StyleConstants.Spacing.S * 1.5,
-    borderRadius: StyleConstants.Spacing.XL
+    bottom:
+      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    left: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    fontSize: StyleConstants.Font.Size.S,
+    paddingLeft: StyleConstants.Spacing.S,
+    paddingRight: StyleConstants.Spacing.S,
+    paddingTop: StyleConstants.Spacing.XS,
+    paddingBottom: StyleConstants.Spacing.XS
   },
   edit: {
     bottom:
@@ -155,4 +199,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ComposeAttachments
+export default React.memo(ComposeAttachments, () => true)

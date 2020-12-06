@@ -28,6 +28,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { PostAction } from '../Compose'
 import client from 'src/api/client'
+import AttachmentVideo from 'src/components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
 
 const Stack = createNativeStackNavigator()
 
@@ -45,11 +46,6 @@ const ComposeEditAttachment: React.FC<Props> = ({
     params: { attachment, postDispatch }
   }
 }) => {
-  const imageDimensionis = {
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').width / attachment.meta?.original?.aspect!
-  }
-
   const navigation = useNavigation()
 
   const { theme } = useTheme()
@@ -66,12 +62,14 @@ const ComposeEditAttachment: React.FC<Props> = ({
         attachment.description = altText
         needUpdate = true
       }
-      if (focus.current.x !== 0 || focus.current.y !== 0) {
-        attachment.meta!.focus = {
-          x: focus.current.x > 1 ? 1 : focus.current.x,
-          y: focus.current.y > 1 ? 1 : focus.current.y
+      if (attachment.type === 'image') {
+        if (focus.current.x !== 0 || focus.current.y !== 0) {
+          attachment.meta!.focus = {
+            x: focus.current.x > 1 ? 1 : focus.current.x,
+            y: focus.current.y > 1 ? 1 : focus.current.y
+          }
+          needUpdate = true
         }
-        needUpdate = true
       }
       if (needUpdate) {
         postDispatch({ type: 'attachmentEdit', payload: attachment })
@@ -81,13 +79,36 @@ const ComposeEditAttachment: React.FC<Props> = ({
     return unsubscribe
   }, [navigation, altText])
 
+  const videoPlayback = useCallback(() => {
+    return (
+      <AttachmentVideo
+        media_attachments={[attachment as Mastodon.AttachmentVideo]}
+        width={Dimensions.get('screen').width}
+      />
+    )
+  }, [])
+
   const imageFocus = useCallback(() => {
+    const imageDimensionis = {
+      width: Dimensions.get('screen').width,
+      height:
+        Dimensions.get('screen').width /
+        (attachment as Mastodon.AttachmentImage).meta?.original?.aspect!
+    }
+
     const panFocus = useRef(
       new Animated.ValueXY(
-        attachment.meta.focus?.x && attachment.meta.focus?.y
+        (attachment as Mastodon.AttachmentImage).meta?.focus?.x &&
+        (attachment as Mastodon.AttachmentImage).meta?.focus?.y
           ? {
-              x: (attachment.meta.focus.x * imageDimensionis.width) / 2,
-              y: (-attachment.meta.focus.y * imageDimensionis.height) / 2
+              x:
+                ((attachment as Mastodon.AttachmentImage).meta!.focus!.x *
+                  imageDimensionis.width) /
+                2,
+              y:
+                (-(attachment as Mastodon.AttachmentImage).meta!.focus!.y *
+                  imageDimensionis.height) /
+                2
             }
           : { x: 0, y: 0 }
       )
@@ -280,6 +301,14 @@ const ComposeEditAttachment: React.FC<Props> = ({
                   return (
                     <ScrollView style={{ flex: 1 }}>
                       {imageFocus()}
+                      {altTextInput()}
+                    </ScrollView>
+                  )
+                case 'video':
+                case 'gifv':
+                  return (
+                    <ScrollView style={{ flex: 1 }}>
+                      {videoPlayback()}
                       {altTextInput()}
                     </ScrollView>
                   )

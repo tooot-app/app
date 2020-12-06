@@ -1,4 +1,3 @@
-import ImagePicker from 'expo-image-picker'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { Dispatch, useEffect, useMemo, useRef } from 'react'
 import {
@@ -25,6 +24,7 @@ import ComposeEmojis from './Emojis'
 import ComposePoll from './Poll'
 import ComposeTextInput from './TextInput'
 import updateText from './updateText'
+import * as Permissions from 'expo-permissions'
 
 export interface Props {
   postState: PostState
@@ -50,10 +50,15 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
 
   useEffect(() => {
     ;(async () => {
-      const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!')
-      }
+      Permissions.askAsync(Permissions.CAMERA)
+      // const permissionGaleery = await ImagePicker.requestCameraRollPermissionsAsync()
+      // if (permissionGaleery.status !== 'granted') {
+      //   alert('Sorry, we need camera roll permissions to make this work!')
+      // }
+      // const permissionCamera = await ImagePicker.requestCameraPermissionsAsync()
+      // if (permissionCamera.status !== 'granted') {
+      //   alert('Sorry, we need camera roll permissions to make this work!')
+      // }
     })()
   }, [])
 
@@ -73,37 +78,6 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
   }, [emojisData])
 
   const textInputRef = useRef<TextInput>(null)
-
-  const listFooter = () => {
-    return (
-      <>
-        {postState.emoji.active && (
-          <View style={styles.emojis}>
-            <ComposeEmojis
-              textInputRef={textInputRef}
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        )}
-
-        {(postState.attachments.length > 0 ||
-          postState.attachmentUploadProgress) && (
-          <View style={styles.attachments}>
-            <ComposeAttachments
-              postState={postState}
-              postDispatch={postDispatch}
-            />
-          </View>
-        )}
-        {postState.poll.active && (
-          <View style={styles.poll}>
-            <ComposePoll postState={postState} postDispatch={postDispatch} />
-          </View>
-        )}
-      </>
-    )
-  }
 
   const listEmpty = useMemo(() => {
     if (isFetching) {
@@ -125,7 +99,38 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
             textInputRef={textInputRef}
           />
         }
-        ListFooterComponent={listFooter}
+        ListFooterComponent={
+          <>
+            {postState.emoji.active && (
+              <View style={styles.emojis}>
+                <ComposeEmojis
+                  textInputRef={textInputRef}
+                  postState={postState}
+                  postDispatch={postDispatch}
+                />
+              </View>
+            )}
+
+            {(postState.attachments.length > 0 ||
+              postState.attachmentUploadProgress) && (
+              <View style={styles.attachments}>
+                <ComposeAttachments
+                  postState={postState}
+                  postDispatch={postDispatch}
+                />
+              </View>
+            )}
+
+            {postState.poll.active && (
+              <View style={styles.poll}>
+                <ComposePoll
+                  postState={postState}
+                  postDispatch={postDispatch}
+                />
+              </View>
+            )}
+          </>
+        }
         ListEmptyComponent={listEmpty}
         data={postState.tag && isSuccess ? data[postState.tag.type] : []}
         renderItem={({ item, index }) => (

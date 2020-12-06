@@ -1,10 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { Pressable, View } from 'react-native'
+import { View } from 'react-native'
 import { Video } from 'expo-av'
-import { Feather } from '@expo/vector-icons'
+import { ButtonRound } from 'src/components/Button'
 
 export interface Props {
-  media_attachments: Mastodon.Attachment[]
+  media_attachments: Mastodon.AttachmentVideo[]
   width: number
 }
 
@@ -19,7 +19,7 @@ const AttachmentVideo: React.FC<Props> = ({ media_attachments, width }) => {
       ? (width / video.meta.original.width) * video.meta.original.height
       : (width / 16) * 9
 
-  const onPressVideo = useCallback(() => {
+  const playOnPress = useCallback(() => {
     // @ts-ignore
     videoPlayer.current.presentFullscreenPlayer()
     setVideoPlay(true)
@@ -46,22 +46,13 @@ const AttachmentVideo: React.FC<Props> = ({ media_attachments, width }) => {
         shouldPlay={videoPlay}
       />
       {videoPlayer.current && !videoPlay && (
-        <Pressable
-          onPress={onPressVideo}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.25)'
-          }}
-        >
-          <Feather name='play' size={36} color='black' />
-        </Pressable>
+        <ButtonRound
+          icon='play'
+          size='L'
+          onPress={playOnPress}
+          styles={{ top: videoHeight / 2, left: videoWidth / 2 }}
+          coordinate='center'
+        />
       )}
     </View>
   )

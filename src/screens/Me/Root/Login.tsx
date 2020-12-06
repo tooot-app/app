@@ -13,7 +13,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import { useTranslation } from 'react-i18next'
 import { StyleConstants } from 'src/utils/styles/constants'
-import Button from 'src/components/Button'
+import { ButtonRow } from 'src/components/Button'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -145,7 +145,7 @@ const Login: React.FC = () => {
         placeholderTextColor={theme.secondary}
         returnKeyType='go'
       />
-      <Button
+      <ButtonRow
         onPress={async () => await createApplication()}
         text={t('content.login.button')}
         disabled={!data?.uri}

@@ -10,7 +10,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
-import Button from './Button'
+import { ButtonRow } from './Button'
 
 export interface Props {
   children: React.ReactNode
@@ -84,7 +84,7 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
             style={[styles.handle, { backgroundColor: theme.background }]}
           />
           {children}
-          <Button
+          <ButtonRow
             onPress={() => closeModal.start(() => handleDismiss())}
             text='取消'
           />

@@ -51,7 +51,7 @@ export type PostState = {
       | string
   }
   attachments: Mastodon.Attachment[]
-  attachmentUploadProgress: { progress: number; aspect: number } | undefined
+  attachmentUploadProgress: { progress: number; aspect?: number } | undefined
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
 }
 

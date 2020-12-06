@@ -23,7 +23,8 @@ const ComposeTextInput: React.FC<Props> = ({
       style={[
         styles.textInput,
         {
-          color: theme.primary
+          color: theme.primary,
+          borderBottomColor: theme.border
         }
       ]}
       autoCapitalize='none'
@@ -58,9 +59,10 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: StyleConstants.Font.Size.M,
     marginTop: StyleConstants.Spacing.S,
-    marginBottom: StyleConstants.Spacing.M,
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding
+    paddingBottom: StyleConstants.Spacing.M,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginRight: StyleConstants.Spacing.Global.PagePadding,
+    borderBottomWidth: 0.5
   }
 })
 

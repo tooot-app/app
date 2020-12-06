@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
 import client from 'src/api/client'
-import Button from 'src/components/Button'
+import { ButtonRow } from 'src/components/Button'
 import { toast } from 'src/components/toast'
 import relativeTime from 'src/utils/relativeTime'
 import { StyleConstants } from 'src/utils/styles/constants'
@@ -214,7 +214,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
       <View style={styles.meta}>
         {!poll.expired && !poll.own_votes?.length && (
           <View style={styles.button}>
-            <Button
+            <ButtonRow
               onPress={() => {
                 if (poll.multiple) {
                   mutateAction({ id: poll.id, options: multipleOptions })

@@ -22,6 +22,7 @@
     "expo-image-picker": "~9.1.1",
     "expo-linear-gradient": "~8.3.0",
     "expo-localization": "^9.0.0",
+    "expo-permissions": "~9.3.0",
     "expo-secure-store": "~9.2.0",
     "expo-splash-screen": "~0.6.1",
     "expo-status-bar": "~1.0.2",

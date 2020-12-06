@@ -11,18 +11,18 @@ const uploadAttachment = async ({
   postState,
   postDispatch
 }: {
-  result: ImageInfo
+  result: NonNullable<ImageInfo>
   postState: PostState
   postDispatch: Dispatch<PostAction>
 }) => {
-  const filename = result.uri.split('/').pop()
-
-  const match = /\.(\w+)$/.exec(filename!)
-  const type = match ? `image/${match[1]}` : `image`
-
   const formData = new FormData()
   // @ts-ignore
-  formData.append('file', { uri: result.uri, name: filename, type: type })
+  formData.append('file', {
+    // @ts-ignore
+    uri: result.uri,
+    name: result.uri.split('/').pop(),
+    type: 'image/jpeg/jpg'
+  })
 
   client({
     method: 'post',
@@ -54,7 +54,12 @@ const uploadAttachment = async ({
       } else {
         Alert.alert('上传失败', '', [
           {
-            text: '返回重试'
+            text: '返回重试',
+            onPress: () =>
+              postDispatch({
+                type: 'attachmentUploadProgress',
+                payload: undefined
+              })
           }
         ])
         return Promise.reject()
@@ -63,7 +68,12 @@ const uploadAttachment = async ({
     .catch(() => {
       Alert.alert('上传失败', '', [
         {
-          text: '返回重试'
+          text: '返回重试',
+          onPress: () =>
+            postDispatch({
+              type: 'attachmentUploadProgress',
+              payload: undefined
+            })
         }
       ])
       return Promise.reject()
@@ -89,10 +99,18 @@ const addAttachments = async ({
         })
 
         if (!result.cancelled) {
+          console.log(result)
           await uploadAttachment({ result, ...params })
         }
       } else if (buttonIndex === 1) {
-        // setResult(Math.floor(Math.random() * 100) + 1)
+        const result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          exif: false
+        })
+
+        if (!result.cancelled) {
+          await uploadAttachment({ result, ...params })
+        }
       }
     }
   )
