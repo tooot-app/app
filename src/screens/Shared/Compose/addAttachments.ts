@@ -48,7 +48,7 @@ const uploadAttachment = async ({
         body.local_url = result.uri
         postDispatch({
           type: 'attachments',
-          payload: postState.attachments.concat([body])
+          payload: { uploads: postState.attachments.uploads.concat([body]) }
         })
         return Promise.resolve()
       } else {
@@ -99,7 +99,6 @@ const addAttachments = async ({
         })
 
         if (!result.cancelled) {
-          console.log(result)
           await uploadAttachment({ result, ...params })
         }
       } else if (buttonIndex === 1) {

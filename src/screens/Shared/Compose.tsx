@@ -67,7 +67,7 @@ export type PostState = {
       | '604800'
       | string
   }
-  attachments: Mastodon.Attachment[]
+  attachments: { sensitive: boolean; uploads: Mastodon.Attachment[] }
   attachmentUploadProgress: { progress: number; aspect?: number } | undefined
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
 }
@@ -95,7 +95,7 @@ export type PostAction =
     }
   | {
       type: 'attachments'
-      payload: PostState['attachments']
+      payload: Partial<PostState['attachments']>
     }
   | {
       type: 'attachmentUploadProgress'
@@ -138,7 +138,7 @@ const postInitialState: PostState = {
     multiple: false,
     expire: '86400'
   },
-  attachments: [],
+  attachments: { sensitive: false, uploads: [] },
   attachmentUploadProgress: undefined,
   visibility:
     getLocalAccountPreferences(store.getState())[
@@ -158,15 +158,21 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
     case 'poll':
       return { ...state, poll: action.payload }
     case 'attachments':
-      return { ...state, attachments: action.payload }
+      return {
+        ...state,
+        attachments: { ...state.attachments, ...action.payload }
+      }
     case 'attachmentUploadProgress':
       return { ...state, attachmentUploadProgress: action.payload }
     case 'attachmentEdit':
       return {
         ...state,
-        attachments: state.attachments.map(attachment =>
-          attachment.id === action.payload.id ? action.payload : attachment
-        )
+        attachments: {
+          ...state.attachments,
+          uploads: state.attachments.uploads.map(upload =>
+            upload.id === action.payload.id ? action.payload : upload
+          )
+        }
       }
     case 'visibility':
       return { ...state, visibility: action.payload }
@@ -226,8 +232,9 @@ const Compose: React.FC = () => {
         formData.append('poll[multiple]', postState.poll.multiple.toString())
       }
 
-      if (postState.attachments.length) {
-        postState.attachments.forEach(e =>
+      if (postState.attachments.uploads.length) {
+        formData.append('sensitive', postState.attachments.sensitive.toString())
+        postState.attachments.uploads.forEach(e =>
           formData.append('media_ids[]', e!.id)
         )
       }
@@ -248,7 +255,8 @@ const Compose: React.FC = () => {
               postState.poll.options['3'] +
               postState.poll.multiple +
               postState.poll.expire +
-              postState.attachments.map(attachment => attachment.id) +
+              postState.attachments.sensitive +
+              postState.attachments.uploads.map(upload => upload.id) +
               postState.visibility
           ).toString()
         },

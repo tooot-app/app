@@ -15,6 +15,7 @@ import { useNavigation } from '@react-navigation/native'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
 import { ButtonRound } from 'src/components/Button'
 import addAttachments from './addAttachments'
+import { Feather } from '@expo/vector-icons'
 
 const DEFAULT_HEIGHT = 200
 
@@ -74,7 +75,11 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
             onPress={() =>
               postDispatch({
                 type: 'attachments',
-                payload: postState.attachments.filter(e => e.id !== item.id)
+                payload: {
+                  uploads: postState.attachments.uploads.filter(
+                    e => e.id !== item.id
+                  )
+                }
               })
             }
             styles={styles.delete}
@@ -105,9 +110,9 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
         }
         height={200}
       >
-        {postState.attachments.length > 0 &&
-          postState.attachments[0].type === 'image' &&
-          postState.attachments.length < 4 && (
+        {postState.attachments.uploads.length > 0 &&
+          postState.attachments.uploads[0].type === 'image' &&
+          postState.attachments.uploads.length < 4 && (
             <Pressable
               style={{
                 width: DEFAULT_HEIGHT,
@@ -139,19 +144,39 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
           )}
       </ShimmerPlaceholder>
     )
-  }, [postState.attachmentUploadProgress])
+  }, [postState.attachmentUploadProgress, postState.attachments.uploads])
 
   return (
     <View style={styles.base}>
-      <FlatList
-        horizontal
-        extraData={postState.attachmentUploadProgress}
-        data={postState.attachments}
-        renderItem={renderAttachment}
-        ListFooterComponent={listFooter}
-        showsHorizontalScrollIndicator={false}
-        keyboardShouldPersistTaps='handled'
-      />
+      <Pressable
+        style={styles.sensitive}
+        onPress={() =>
+          postDispatch({
+            type: 'attachments',
+            payload: { sensitive: !postState.attachments.sensitive }
+          })
+        }
+      >
+        <Feather
+          name={postState.attachments.sensitive ? 'check-circle' : 'circle'}
+          size={StyleConstants.Font.Size.L}
+          color={theme.primary}
+        />
+        <Text style={[styles.sensitiveText, { color: theme.primary }]}>
+          标记媒体为敏感内容
+        </Text>
+      </Pressable>
+      <View style={styles.imageContainer}>
+        <FlatList
+          horizontal
+          extraData={postState.attachments.uploads.length}
+          data={postState.attachments.uploads}
+          renderItem={renderAttachment}
+          ListFooterComponent={listFooter}
+          showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps='handled'
+        />
+      </View>
     </View>
   )
 }
@@ -159,8 +184,20 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    flexDirection: 'row',
     marginRight: StyleConstants.Spacing.Global.PagePadding,
+    marginTop: StyleConstants.Spacing.M
+  },
+  sensitive: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: StyleConstants.Spacing.Global.PagePadding
+  },
+  sensitiveText: {
+    fontSize: StyleConstants.Font.Size.M,
+    marginLeft: StyleConstants.Spacing.S
+  },
+  imageContainer: {
     height: DEFAULT_HEIGHT
   },
   image: {
@@ -200,4 +237,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(ComposeAttachments, () => true)
+export default ComposeAttachments

@@ -43,31 +43,31 @@ const ComposeActions: React.FC<Props> = ({
     if (postState.poll.active) return theme.disabled
     if (postState.attachmentUploadProgress) return theme.primary
 
-    if (postState.attachments.length) {
+    if (postState.attachments.uploads.length) {
       return theme.primary
     } else {
       return theme.secondary
     }
   }, [
     postState.poll.active,
-    postState.attachments,
+    postState.attachments.uploads,
     postState.attachmentUploadProgress
   ])
   const attachmentOnPress = useCallback(async () => {
     if (postState.poll.active) return
     if (postState.attachmentUploadProgress) return
 
-    if (!postState.attachments.length) {
+    if (!postState.attachments.uploads.length) {
       return await addAttachments({ postState, postDispatch })
     }
   }, [
     postState.poll.active,
-    postState.attachments,
+    postState.attachments.uploads,
     postState.attachmentUploadProgress
   ])
 
   const pollColor = useMemo(() => {
-    if (postState.attachments.length) return theme.disabled
+    if (postState.attachments.uploads.length) return theme.disabled
     if (postState.attachmentUploadProgress) return theme.disabled
 
     if (postState.poll.active) {
@@ -77,11 +77,14 @@ const ComposeActions: React.FC<Props> = ({
     }
   }, [
     postState.poll.active,
-    postState.attachments,
+    postState.attachments.uploads,
     postState.attachmentUploadProgress
   ])
   const pollOnPress = useCallback(() => {
-    if (!postState.attachments.length && !postState.attachmentUploadProgress) {
+    if (
+      !postState.attachments.uploads.length &&
+      !postState.attachmentUploadProgress
+    ) {
       postDispatch({
         type: 'poll',
         payload: { ...postState.poll, active: !postState.poll.active }
@@ -92,7 +95,7 @@ const ComposeActions: React.FC<Props> = ({
     }
   }, [
     postState.poll.active,
-    postState.attachments,
+    postState.attachments.uploads,
     postState.attachmentUploadProgress
   ])
 

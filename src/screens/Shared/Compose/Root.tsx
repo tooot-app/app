@@ -121,7 +121,7 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
               </View>
             )}
 
-            {(postState.attachments.length > 0 ||
+            {(postState.attachments.uploads.length > 0 ||
               postState.attachmentUploadProgress) && (
               <View style={styles.attachments}>
                 <ComposeAttachments
