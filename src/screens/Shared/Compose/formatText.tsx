@@ -3,6 +3,7 @@ import React, { createElement, Dispatch } from 'react'
 import { Text } from 'react-native'
 import { RefetchOptions } from 'react-query/types/core/query'
 import Autolinker from 'src/modules/autolinker'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, PostState } from '../Compose'
 
 export interface Params {
@@ -10,6 +11,16 @@ export interface Params {
   content: string
   refetch?: (options?: RefetchOptions | undefined) => Promise<any>
   disableDebounce?: boolean
+}
+
+const TagText = ({ text }: { text: string }) => {
+  const { theme } = useTheme()
+
+  return (
+    <Text style={{ color: theme.link }} key={Math.random()}>
+      {text}
+    </Text>
+  )
 }
 
 const debouncedSuggestions = debounce(
@@ -77,11 +88,7 @@ const formatText = ({
     const prevPart = parts.shift()
     children.push(prevPart)
     contentLength = contentLength + (prevPart ? prevPart.length : 0)
-    children.push(
-      <Text style={{ color: 'red' }} key={Math.random()}>
-        {tag!.text}
-      </Text>
-    )
+    children.push(<TagText text={tag!.text} />)
     switch (tag!.type) {
       case 'url':
         contentLength = contentLength + 23

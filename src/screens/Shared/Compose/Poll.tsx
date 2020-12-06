@@ -1,12 +1,5 @@
 import React, { Dispatch, useEffect, useState } from 'react'
-import {
-  ActionSheetIOS,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from 'react-native'
+import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import { PostAction, PostState } from '../Compose'
@@ -41,35 +34,51 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
   return (
     <View style={[styles.base, { borderColor: theme.border }]}>
       <View style={styles.options}>
-        {[...Array(postState.poll.total)].map((e, i) => (
-          <View key={i} style={styles.option}>
-            <Feather
-              name={postState.poll.multiple ? 'square' : 'circle'}
-              size={StyleConstants.Font.Size.L}
-              color={theme.secondary}
-            />
-            <TextInput
-              {...(i === 0 && firstRender && { autoFocus: true })}
-              style={[
-                styles.textInput,
-                { borderColor: theme.border, color: theme.primary }
-              ]}
-              placeholder={`选项 ${i}`}
-              placeholderTextColor={theme.secondary}
-              maxLength={50}
-              value={postState.poll.options[i]}
-              onChangeText={e =>
-                postDispatch({
-                  type: 'poll',
-                  payload: {
-                    ...postState.poll,
-                    options: { ...postState.poll.options, [i]: e }
+        {[...Array(postState.poll.total)].map((e, i) => {
+          const restOptions = Object.keys(postState.poll.options).filter(
+            o => parseInt(o) !== i && parseInt(o) < postState.poll.total
+          )
+          let hasConflict = false
+          restOptions.forEach(o => {
+            // @ts-ignore
+            if (postState.poll.options[o] === postState.poll.options[i]) {
+              hasConflict = true
+            }
+          })
+          return (
+            <View key={i} style={styles.option}>
+              <Feather
+                name={postState.poll.multiple ? 'square' : 'circle'}
+                size={StyleConstants.Font.Size.L}
+                color={theme.secondary}
+              />
+              <TextInput
+                {...(i === 0 && firstRender && { autoFocus: true })}
+                style={[
+                  styles.textInput,
+                  {
+                    borderColor: theme.border,
+                    color: hasConflict ? theme.error : theme.primary
                   }
-                })
-              }
-            />
-          </View>
-        ))}
+                ]}
+                placeholder={`选项`}
+                placeholderTextColor={theme.secondary}
+                maxLength={50}
+                // @ts-ignore
+                value={postState.poll.options[i]}
+                onChangeText={e =>
+                  postDispatch({
+                    type: 'poll',
+                    payload: {
+                      ...postState.poll,
+                      options: { ...postState.poll.options, [i]: e }
+                    }
+                  })
+                }
+              />
+            </View>
+          )
+        })}
       </View>
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>

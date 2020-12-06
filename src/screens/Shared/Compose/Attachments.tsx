@@ -150,6 +150,7 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
         renderItem={renderAttachment}
         ListFooterComponent={listFooter}
         showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps='handled'
       />
     </View>
   )

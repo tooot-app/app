@@ -31,6 +31,7 @@ const ComposeEmojis: React.FC<Props> = ({
     <View style={styles.base}>
       <SectionList
         horizontal
+        keyboardShouldPersistTaps='handled'
         sections={postState.emoji.emojis!}
         keyExtractor={item => item.shortcode}
         renderSectionHeader={({ section: { title } }) => (

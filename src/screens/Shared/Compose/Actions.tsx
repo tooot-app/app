@@ -96,6 +96,30 @@ const ComposeActions: React.FC<Props> = ({
     postState.attachmentUploadProgress
   ])
 
+  const emojiColor = useMemo(() => {
+    if (!postState.emoji.emojis) return theme.disabled
+    if (postState.emoji.active) {
+      return theme.primary
+    } else {
+      return theme.secondary
+    }
+  }, [postState.emoji.active, postState.emoji.emojis])
+  const emojiOnPress = useCallback(() => {
+    if (postState.emoji.emojis) {
+      if (postState.emoji.active) {
+        postDispatch({
+          type: 'emoji',
+          payload: { ...postState.emoji, active: false }
+        })
+      } else {
+        postDispatch({
+          type: 'emoji',
+          payload: { ...postState.emoji, active: true }
+        })
+      }
+    }
+  }, [postState.emoji.active, postState.emoji.emojis])
+
   return (
     <Pressable
       style={[
@@ -148,25 +172,8 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='smile'
         size={24}
-        color={
-          postState.emoji.emojis?.length ? theme.secondary : theme.disabled
-        }
-        {...(postState.emoji.emojis && {
-          onPress: () => {
-            if (postState.emoji.active) {
-              postDispatch({
-                type: 'emoji',
-                payload: { ...postState.emoji, active: false }
-              })
-            } else {
-              Keyboard.dismiss()
-              postDispatch({
-                type: 'emoji',
-                payload: { ...postState.emoji, active: true }
-              })
-            }
-          }
-        })}
+        color={emojiColor}
+        onPress={emojiOnPress}
       />
       <Text
         style={[

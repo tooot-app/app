@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingBottom: StyleConstants.Spacing.M,
     marginLeft: StyleConstants.Spacing.Global.PagePadding,
     marginRight: StyleConstants.Spacing.Global.PagePadding,
-    borderBottomWidth: 0.5
+    // borderBottomWidth: 0.5
   }
 })
 

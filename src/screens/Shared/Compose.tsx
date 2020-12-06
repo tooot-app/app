@@ -34,10 +34,10 @@ export type PostState = {
     active: boolean
     total: number
     options: {
+      '0': string | undefined
       '1': string | undefined
       '2': string | undefined
       '3': string | undefined
-      '4': string | undefined
     }
     multiple: boolean
     expire:

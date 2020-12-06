@@ -92,6 +92,7 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
         progressViewStyle='bar'
       />
       <FlatList
+        keyboardShouldPersistTaps='handled'
         ListHeaderComponent={
           <ComposeTextInput
             postState={postState}
@@ -237,8 +238,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.S,
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginRight: StyleConstants.Spacing.Global.PagePadding,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   accountAvatar: {
@@ -259,8 +260,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.S,
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginRight: StyleConstants.Spacing.Global.PagePadding,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   hashtagText: {
