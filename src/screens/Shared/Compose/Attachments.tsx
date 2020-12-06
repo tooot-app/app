@@ -1,15 +1,14 @@
 import React, { Dispatch, useCallback } from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  StyleSheet,
-  View
-} from 'react-native'
+import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import { PostAction, PostState } from '../Compose'
 import { StyleConstants } from 'src/utils/styles/constants'
+import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useNavigation } from '@react-navigation/native'
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+
+const DEFAULT_HEIGHT = 200
 
 export interface Props {
   postState: PostState
@@ -17,57 +16,82 @@ export interface Props {
 }
 
 const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
-  const renderImage = useCallback(({ item, index }) => {
-    return (
-      <View key={index}>
-        <Image
-          style={[
-            styles.image,
-            {
-              width: (item.meta?.original?.aspect || 1) * 200
-            }
-          ]}
-          source={{ uri: item!.preview_url }}
-        />
-        <Feather
-          name='edit'
-          size={24}
-          color='white'
-          style={styles.buttonEdit}
-        />
-        <Feather
-          name='trash-2'
-          size={24}
-          color='white'
-          style={styles.buttonRemove}
-          onPress={() =>
-            postDispatch({
-              type: 'attachments',
-              payload: postState.attachments.filter(e => e.id !== item.id)
-            })
-          }
-        />
-      </View>
-    )
-  }, [])
+  const { theme } = useTheme()
+  const navigation = useNavigation()
 
-  const listFooter = useCallback(() => {
-    return postState.attachmentUploadProgress ? (
-      <View
-        style={{
-          width: postState.attachmentUploadProgress.aspect * 200,
-          height: 200,
-          flex: 1,
-          backgroundColor: 'gray',
-          marginLeft: StyleConstants.Spacing.Global.PagePadding,
-          marginTop: StyleConstants.Spacing.Global.PagePadding,
-          marginBottom: StyleConstants.Spacing.Global.PagePadding
-        }}
+  const imageActions = ({
+    type,
+    icon,
+    onPress
+  }: {
+    type: 'edit' | 'delete'
+    icon: string
+    onPress: () => void
+  }) => {
+    return (
+      <Pressable
+        style={[
+          styles.actions,
+          styles[type],
+          { backgroundColor: theme.backgroundOverlay }
+        ]}
+        onPress={onPress}
       >
-        <ActivityIndicator />
-      </View>
-    ) : null
-  }, [postState.attachmentUploadProgress])
+        <Feather
+          name={icon}
+          size={StyleConstants.Font.Size.L}
+          color={theme.primaryOverlay}
+        />
+      </Pressable>
+    )
+  }
+
+  const renderImage = useCallback(
+    ({
+      item,
+      index
+    }: {
+      item: Mastodon.Attachment & { local_url?: string }
+      index: number
+    }) => {
+      return (
+        <View key={index}>
+          <Image
+            style={[
+              styles.image,
+              {
+                width: (item.meta?.original?.aspect || 1) * DEFAULT_HEIGHT
+              }
+            ]}
+            source={{
+              uri:
+                item.type === 'image'
+                  ? item.local_url || item.preview_url
+                  : item.preview_url
+            }}
+          />
+          {imageActions({
+            type: 'delete',
+            icon: 'x',
+            onPress: () =>
+              postDispatch({
+                type: 'attachments',
+                payload: postState.attachments.filter(e => e.id !== item.id)
+              })
+          })}
+          {imageActions({
+            type: 'edit',
+            icon: 'edit',
+            onPress: () =>
+              navigation.navigate('Screen-Shared-Compose-EditAttachment', {
+                attachment: item
+              })
+          })}
+        </View>
+      )
+    },
+    []
+  )
 
   return (
     <View style={styles.base}>
@@ -75,7 +99,18 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
         horizontal
         data={postState.attachments}
         renderItem={renderImage}
-        ListFooterComponent={listFooter}
+        ListFooterComponent={
+          <ShimmerPlaceholder
+            style={styles.progressContainer}
+            visible={postState.attachmentUploadProgress === undefined}
+            width={
+              (postState.attachmentUploadProgress?.aspect || 16 / 9) *
+              DEFAULT_HEIGHT
+            }
+            height={200}
+          />
+        }
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   )
@@ -86,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginRight: StyleConstants.Spacing.Global.PagePadding,
-    height: 200
+    height: DEFAULT_HEIGHT
   },
   image: {
     flex: 1,
@@ -94,15 +129,28 @@ const styles = StyleSheet.create({
     marginTop: StyleConstants.Spacing.Global.PagePadding,
     marginBottom: StyleConstants.Spacing.Global.PagePadding
   },
-  buttonEdit: {
+  actions: {
     position: 'absolute',
-    top: 0,
-    left: 0
+    padding: StyleConstants.Spacing.S * 1.5,
+    borderRadius: StyleConstants.Spacing.XL
   },
-  buttonRemove: {
-    position: 'absolute',
-    top: 0,
-    right: 0
+  edit: {
+    bottom:
+      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    right: StyleConstants.Spacing.S
+  },
+  delete: {
+    top: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    right: StyleConstants.Spacing.S
+  },
+  progressContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: DEFAULT_HEIGHT,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginTop: StyleConstants.Spacing.Global.PagePadding,
+    marginBottom: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

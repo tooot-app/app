@@ -56,8 +56,10 @@ const ComposeActions: React.FC<Props> = ({
         size={24}
         color={
           postState.poll.active || postState.attachments.length >= 4
-            ? theme.secondary
-            : theme.primary
+            ? theme.disabled
+            : postState.attachments.length
+            ? theme.primary
+            : theme.secondary
         }
         onPress={async () => {
           if (!postState.poll.active && postState.attachments.length < 4) {
@@ -70,8 +72,10 @@ const ComposeActions: React.FC<Props> = ({
         size={24}
         color={
           postState.attachments.length || postState.attachmentUploadProgress
-            ? theme.secondary
-            : theme.primary
+            ? theme.disabled
+            : postState.poll.active
+            ? theme.primary
+            : theme.secondary
         }
         onPress={() => {
           if (
@@ -91,7 +95,7 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name={getVisibilityIcon()}
         size={24}
-        color={theme.primary}
+        color={theme.secondary}
         onPress={() =>
           ActionSheetIOS.showActionSheetWithOptions(
             {
@@ -120,7 +124,7 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='smile'
         size={24}
-        color={postState.emoji.emojis?.length ? theme.primary : theme.secondary}
+        color={postState.emoji.emojis?.length ? theme.secondary : theme.disabled}
         {...(postState.emoji.emojis && {
           onPress: () => {
             if (postState.emoji.active) {
@@ -141,7 +145,7 @@ const ComposeActions: React.FC<Props> = ({
       <Text
         style={[
           styles.count,
-          { color: postState.text.count < 0 ? theme.error : theme.primary }
+          { color: postState.text.count < 0 ? theme.error : theme.secondary }
         ]}
       >
         {postState.text.count}

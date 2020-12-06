@@ -5,6 +5,7 @@ import ScreenSharedHashtag from 'src/screens/Shared/Hashtag'
 import ScreenSharedToot from 'src/screens/Shared/Toot'
 import ScreenSharedWebview from 'src/screens/Shared/Webview'
 import Compose from 'src/screens/Shared/Compose'
+import ComposeEditAttachment from './Compose/EditAttachment'
 import ScreenSharedSearch from './Search'
 import { useTranslation } from 'react-i18next'
 
@@ -50,6 +51,14 @@ const sharedScreens = (Stack: any) => {
       key='Screen-Shared-Compose'
       name='Screen-Shared-Compose'
       component={Compose}
+      options={{
+        stackPresentation: 'fullScreenModal'
+      }}
+    />,
+    <Stack.Screen
+      key='Screen-Shared-Compose-EditAttachment'
+      name='Screen-Shared-Compose-EditAttachment'
+      component={ComposeEditAttachment}
       options={{
         stackPresentation: 'fullScreenModal'
       }}

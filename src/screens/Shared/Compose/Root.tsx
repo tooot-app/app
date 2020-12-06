@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   Pressable,
+  ProgressViewIOS,
   StyleSheet,
   Text,
   TextInput,
@@ -112,6 +113,10 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
 
   return (
     <View style={styles.base}>
+      <ProgressViewIOS
+        progress={postState.attachmentUploadProgress?.progress || 0}
+        progressViewStyle='bar'
+      />
       <FlatList
         ListHeaderComponent={
           <ComposeTextInput

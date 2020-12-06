@@ -39,12 +39,13 @@ const uploadAttachment = async ({
       })
     }
   })
-    .then(({ body }: { body: Mastodon.Attachment }) => {
+    .then(({ body }: { body: Mastodon.Attachment & { local_url: string } }) => {
       postDispatch({
         type: 'attachmentUploadProgress',
         payload: undefined
       })
       if (body.id) {
+        body.local_url = result.uri
         postDispatch({
           type: 'attachments',
           payload: postState.attachments.concat([body])
