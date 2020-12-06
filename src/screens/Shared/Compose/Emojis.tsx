@@ -48,12 +48,14 @@ const ComposeEmojis: React.FC<Props> = ({
                     key={emoji.shortcode}
                     onPress={() => {
                       updateText({
+                        origin: textInputRef.current?.isFocused()
+                          ? 'text'
+                          : 'spoiler',
                         postState,
                         postDispatch,
                         newText: `:${emoji.shortcode}:`,
                         type: 'emoji'
                       })
-                      textInputRef.current?.focus()
                       postDispatch({
                         type: 'emoji',
                         payload: { ...postState.emoji, active: false }

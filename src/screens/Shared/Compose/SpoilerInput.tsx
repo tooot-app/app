@@ -8,20 +8,20 @@ import formatText from './formatText'
 export interface Props {
   postState: PostState
   postDispatch: Dispatch<PostAction>
-  textInputRef: RefObject<TextInput>
+  // textInputRef: RefObject<TextInput>
 }
 
-const ComposeTextInput: React.FC<Props> = ({
+const ComposeSpoilerInput: React.FC<Props> = ({
   postState,
   postDispatch,
-  textInputRef
+  // textInputRef
 }) => {
   const { theme } = useTheme()
 
   return (
     <TextInput
       style={[
-        styles.textInput,
+        styles.spoilerInput,
         {
           color: theme.primary,
           borderBottomColor: theme.border
@@ -32,11 +32,11 @@ const ComposeTextInput: React.FC<Props> = ({
       autoFocus
       enablesReturnKeyAutomatically
       multiline
-      placeholder='想说点什么'
+      placeholder='折叠部分的警告信息'
       placeholderTextColor={theme.secondary}
       onChangeText={content =>
         formatText({
-          origin: 'text',
+          origin: 'spoiler',
           postDispatch,
           content
         })
@@ -46,29 +46,32 @@ const ComposeTextInput: React.FC<Props> = ({
           selection: { start, end }
         }
       }) => {
-        postDispatch({ type: 'text', payload: { selection: { start, end } } })
+        postDispatch({
+          type: 'spoiler',
+          payload: { selection: { start, end } }
+        })
       }}
-      ref={textInputRef}
+      // ref={textInputRef}
       scrollEnabled
     >
-      <Text>{postState.text.formatted}</Text>
+      <Text>{postState.spoiler.formatted}</Text>
     </TextInput>
   )
 }
 
 const styles = StyleSheet.create({
-  textInput: {
+  spoilerInput: {
     fontSize: StyleConstants.Font.Size.M,
     marginTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.M,
     marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginRight: StyleConstants.Spacing.Global.PagePadding
-    // borderBottomWidth: 0.5
+    marginRight: StyleConstants.Spacing.Global.PagePadding,
+    borderBottomWidth: 0.5
   }
 })
 
 export default React.memo(
-  ComposeTextInput,
+  ComposeSpoilerInput,
   (prev, next) =>
-    prev.postState.text.formatted === next.postState.text.formatted
+    prev.postState.spoiler.formatted === next.postState.spoiler.formatted
 )

@@ -21,7 +21,11 @@ const TimelineContent: React.FC<Props> = ({ status, numberOfLines }) => {
       {status.spoiler_text ? (
         <>
           <Text style={{ fontSize: StyleConstants.Font.Size.M }}>
-            {status.spoiler_text}{' '}
+            <ParseContent
+              content={status.spoiler_text}
+              size={StyleConstants.Font.Size.M}
+              emojis={status.emojis}
+            />{' '}
             <Text
               onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}
               style={{

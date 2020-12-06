@@ -119,7 +119,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
             id: accountId
           })
         }}
-        iconFront='alert-triangle'
+        iconFront='flag'
         title={`举报 @${account}`}
       />
     </MenuContainer>

@@ -170,19 +170,22 @@ const ComposeActions: React.FC<Props> = ({
         }
       />
       <Feather
+        name='alert-triangle'
+        size={24}
+        color={postState.spoiler.active ? theme.primary : theme.secondary}
+        onPress={() =>
+          postDispatch({
+            type: 'spoiler',
+            payload: { active: !postState.spoiler.active }
+          })
+        }
+      />
+      <Feather
         name='smile'
         size={24}
         color={emojiColor}
         onPress={emojiOnPress}
       />
-      <Text
-        style={[
-          styles.count,
-          { color: postState.text.count < 0 ? theme.error : theme.secondary }
-        ]}
-      >
-        {postState.text.count}
-      </Text>
     </Pressable>
   )
 }

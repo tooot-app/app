@@ -7,6 +7,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, PostState } from '../Compose'
 
 export interface Params {
+  origin: 'text' | 'spoiler'
   postDispatch: Dispatch<PostAction>
   content: string
   refetch?: (options?: RefetchOptions | undefined) => Promise<any>
@@ -36,6 +37,7 @@ const debouncedSuggestions = debounce(
 let prevTags: PostState['tag'][] = []
 
 const formatText = ({
+  origin,
   postDispatch,
   content,
   disableDebounce = false
@@ -70,7 +72,6 @@ const formatText = ({
   })
 
   const changedTag = differenceWith(tags, prevTags, isEqual)
-  // quick delete causes flicking of suggestion box
   if (changedTag.length && !disableDebounce) {
     if (changedTag[0]!.type !== 'url') {
       debouncedSuggestions(postDispatch, changedTag[0])
@@ -107,9 +108,9 @@ const formatText = ({
   contentLength = contentLength + _content.length
 
   postDispatch({
-    type: 'text',
+    type: origin,
     payload: {
-      count: 500 - contentLength,
+      count: contentLength,
       raw: content,
       formatted: createElement(Text, null, children)
     }

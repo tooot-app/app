@@ -22,6 +22,7 @@ import ComposeActions from './Actions'
 import ComposeAttachments from './Attachments'
 import ComposeEmojis from './Emojis'
 import ComposePoll from './Poll'
+import ComposeSpoilerInput from './SpoilerInput'
 import ComposeTextInput from './TextInput'
 import updateText from './updateText'
 import * as Permissions from 'expo-permissions'
@@ -94,11 +95,19 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
       <FlatList
         keyboardShouldPersistTaps='handled'
         ListHeaderComponent={
-          <ComposeTextInput
-            postState={postState}
-            postDispatch={postDispatch}
-            textInputRef={textInputRef}
-          />
+          <>
+            {postState.spoiler.active ? (
+              <ComposeSpoilerInput
+                postState={postState}
+                postDispatch={postDispatch}
+              />
+            ) : null}
+            <ComposeTextInput
+              postState={postState}
+              postDispatch={postDispatch}
+              textInputRef={textInputRef}
+            />
+          </>
         }
         ListFooterComponent={
           <>
@@ -138,19 +147,26 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
           <Pressable
             key={index}
             onPress={() => {
+              const focusedInput = textInputRef.current?.isFocused()
+                ? 'text'
+                : 'spoiler'
               updateText({
+                origin: focusedInput,
                 postState: {
                   ...postState,
-                  selection: {
-                    start: postState.tag!.offset,
-                    end: postState.tag!.offset + postState.tag!.text.length + 1
+                  [focusedInput]: {
+                    ...postState[focusedInput],
+                    selection: {
+                      start: postState.tag!.offset,
+                      end:
+                        postState.tag!.offset + postState.tag!.text.length + 1
+                    }
                   }
                 },
                 postDispatch,
                 newText: item.acct ? `@${item.acct}` : `#${item.name}`,
                 type: 'suggestion'
               })
-              textInputRef.current?.focus()
             }}
             style={styles.suggestion}
           >
