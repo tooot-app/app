@@ -84,7 +84,8 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
             icon: 'edit',
             onPress: () =>
               navigation.navigate('Screen-Shared-Compose-EditAttachment', {
-                attachment: item
+                attachment: item,
+                postDispatch
               })
           })}
         </View>

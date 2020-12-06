@@ -1,3 +1,137 @@
+type AttachmentImage = {
+  // Base
+  id: string
+  type: 'image'
+  url: string
+  preview_url: string
+
+  // Others
+  remote_url?: string
+  text_url?: string
+  meta?: {
+    original?: { width: number; height: number; size: string; aspect: number }
+    small?: { width: number; height: number; size: string; aspect: number }
+    focus?: { x: number; y: number }
+  }
+  description?: string
+  blurhash?: string
+}
+
+type AttachmentVideo = {
+  // Base
+  id: string
+  type: 'video'
+  url: string
+  preview_url: string
+
+  // Others
+  remote_url?: string
+  text_url?: string
+  meta?: {
+    length: string
+    duration: number
+    fps: number
+    size: string
+    width: number
+    height: number
+    aspect: number
+    audio_encode: string
+    audio_bitrate: string
+    audio_channels: string
+    original: {
+      width: number
+      height: number
+      frame_rate: string
+      duration: number
+      bitrate: number
+    }
+    small: {
+      width: number
+      height: number
+      size: string
+      aspect: number
+    }
+  }
+  description?: string
+  blurhash?: string
+}
+
+type AttachmentGifv = {
+  // Base
+  id: string
+  type: 'gifv'
+  url: string
+  preview_url: string
+
+  // Others
+  remote_url?: string
+  text_url?: string
+  meta?: {
+    length: string
+    duration: number
+    fps: number
+    size: string
+    width: number
+    height: number
+    aspect: number
+    original: {
+      width: number
+      height: number
+      frame_rate: string
+      duration: number
+      bitrate: number
+    }
+    small: {
+      width: number
+      height: number
+      size: string
+      aspect: number
+    }
+  }
+  description?: string
+  blurhash?: string
+}
+
+type AttachmentAudio = {
+  // Base
+  id: string
+  type: 'audio'
+  url: string
+  preview_url: string
+
+  // Others
+  remote_url?: string
+  text_url?: string
+  meta?: {
+    length: string
+    duration: number
+    audio_encode: string
+    audio_bitrate: string
+    audio_channels: string
+    original: {
+      duration: number
+      bitrate: number
+    }
+  }
+  description?: string
+  blurhash?: string
+}
+
+type AttachmentUnknown = {
+  // Base
+  id: string
+  type: 'unknown'
+  url: string
+  preview_url: string
+
+  // Others
+  remote_url?: string
+  text_url?: string
+  meta?: any
+  description?: string
+  blurhash?: string
+}
+
 declare namespace Mastodon {
   type Account = {
     // Base
@@ -38,83 +172,12 @@ declare namespace Mastodon {
     vapid_key?: string
   }
 
-  type Attachment = {
-    // Base
-    id: string
-    type: 'unknown' | 'image' | 'gifv' | 'video' | 'audio'
-    url: string
-    preview_url?: string
-
-    // Others
-    remote_url?: string
-    text_url?: string
-    meta?: {
-      original?: { width: number; height: number; size: string; aspect: number }
-      small?: { width: number; height: number; size: string; aspect: number }
-      focus?:
-        | { x: number; y: number }
-        | {
-            length: string
-            duration: number
-            fps: number
-            size: string
-            width: number
-            height: number
-            aspect: number
-            audio_encode: string
-            audio_bitrate: string
-            audio_channels: string
-            original: {
-              width: number
-              height: number
-              frame_rate: string
-              duration: number
-              bitrate: number
-            }
-            small: {
-              width: number
-              height: number
-              size: string
-              aspect: number
-            }
-          }
-        | {
-            length: string
-            duration: number
-            fps: number
-            size: string
-            width: number
-            height: number
-            aspect: number
-            original: {
-              width: number
-              height: number
-              frame_rate: string
-              duration: number
-              bitrate: number
-            }
-            small: {
-              width: number
-              height: number
-              size: string
-              aspect: number
-            }
-          }
-        | {
-            length: string
-            duration: number
-            audio_encode: string
-            audio_bitrate: string
-            audio_channels: string
-            original: {
-              duration: number
-              bitrate: number
-            }
-          }
-    }
-    description?: string
-    blurhash?: string
-  }
+  type Attachment =
+    | AttachmentImage
+    | AttachmentVideo
+    | AttachmentGifv
+    | AttachmentAudio
+    | AttachmentUnknown
 
   type Card = {
     // Base

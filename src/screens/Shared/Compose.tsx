@@ -85,6 +85,10 @@ export type PostAction =
       payload: PostState['attachmentUploadProgress']
     }
   | {
+      type: 'attachmentEdit'
+      payload: Mastodon.Attachment & { local_url?: string }
+    }
+  | {
       type: 'visibility'
       payload: PostState['visibility']
     }
@@ -133,6 +137,13 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
       return { ...state, attachments: action.payload }
     case 'attachmentUploadProgress':
       return { ...state, attachmentUploadProgress: action.payload }
+    case 'attachmentEdit':
+      return {
+        ...state,
+        attachments: state.attachments.map(attachment =>
+          attachment.id === action.payload.id ? action.payload : attachment
+        )
+      }
     case 'visibility':
       return { ...state, visibility: action.payload }
     default:

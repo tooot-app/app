@@ -1,11 +1,17 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, {
+  Dispatch,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import {
+  Alert,
   Animated,
   Dimensions,
   Image,
   KeyboardAvoidingView,
-  PanResponder,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,6 +26,8 @@ import { HeaderLeft, HeaderRight } from 'src/components/Header'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PanGestureHandler } from 'react-native-gesture-handler'
+import { PostAction } from '../Compose'
+import client from 'src/api/client'
 
 const Stack = createNativeStackNavigator()
 
@@ -27,28 +35,63 @@ export interface Props {
   route: {
     params: {
       attachment: Mastodon.Attachment & { local_url: string }
+      postDispatch: Dispatch<PostAction>
     }
   }
 }
 
 const ComposeEditAttachment: React.FC<Props> = ({
   route: {
-    params: { attachment }
+    params: { attachment, postDispatch }
   }
 }) => {
+  const imageDimensionis = {
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').width / attachment.meta?.original?.aspect!
+  }
+
   const navigation = useNavigation()
+
   const { theme } = useTheme()
 
-  const [altText, setAltText] = useState<string | undefined>()
+  const [altText, setAltText] = useState<string | undefined>(
+    attachment.description
+  )
+  const focus = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', () => {
+      let needUpdate = false
+      if (altText) {
+        attachment.description = altText
+        needUpdate = true
+      }
+      if (focus.current.x !== 0 || focus.current.y !== 0) {
+        attachment.meta!.focus = {
+          x: focus.current.x > 1 ? 1 : focus.current.x,
+          y: focus.current.y > 1 ? 1 : focus.current.y
+        }
+        needUpdate = true
+      }
+      if (needUpdate) {
+        postDispatch({ type: 'attachmentEdit', payload: attachment })
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, altText])
 
   const imageFocus = useCallback(() => {
-    const imageDimensionis = {
-      width: Dimensions.get('screen').width,
-      height:
-        Dimensions.get('screen').width / attachment.meta?.original?.aspect!
-    }
-
-    const panFocus = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+    const panFocus = useRef(
+      new Animated.ValueXY(
+        attachment.meta.focus?.x && attachment.meta.focus?.y
+          ? {
+              x: (attachment.meta.focus.x * imageDimensionis.width) / 2,
+              y: (-attachment.meta.focus.y * imageDimensionis.height) / 2
+            }
+          : { x: 0, y: 0 }
+      )
+    ).current
     const panX = panFocus.x.interpolate({
       inputRange: [-imageDimensionis.width / 2, imageDimensionis.width / 2],
       outputRange: [-imageDimensionis.width / 2, imageDimensionis.width / 2],
@@ -59,6 +102,12 @@ const ComposeEditAttachment: React.FC<Props> = ({
       outputRange: [-imageDimensionis.height / 2, imageDimensionis.height / 2],
       extrapolate: 'clamp'
     })
+    panFocus.addListener(e => {
+      focus.current = {
+        x: e.x / (imageDimensionis.width / 2),
+        y: -e.y / (imageDimensionis.height / 2)
+      }
+    })
     const handleGesture = Animated.event(
       [{ nativeEvent: { translationX: panFocus.x, translationY: panFocus.y } }],
       { useNativeDriver: true }
@@ -68,62 +117,66 @@ const ComposeEditAttachment: React.FC<Props> = ({
     }, [])
 
     return (
-      <View style={{ overflow: 'hidden' }}>
-        <Image
-          style={{
-            width: imageDimensionis.width,
-            height: imageDimensionis.height
-          }}
-          source={{
-            uri: attachment.local_url || attachment.preview_url
-          }}
-        />
-        <PanGestureHandler
-          onGestureEvent={handleGesture}
-          onHandlerStateChange={onHandlerStateChange}
-        >
-          <Animated.View
-            style={[
-              {
-                position: 'absolute',
-                top: -500 + imageDimensionis.height / 2,
-                left: -500 + imageDimensionis.width / 2,
-                transform: [{ translateX: panX }, { translateY: panY }]
-              }
-            ]}
+      <>
+        <View style={{ overflow: 'hidden' }}>
+          <Image
+            style={{
+              width: imageDimensionis.width,
+              height: imageDimensionis.height
+            }}
+            source={{
+              uri: attachment.local_url || attachment.preview_url
+            }}
+          />
+          <PanGestureHandler
+            onGestureEvent={handleGesture}
+            onHandlerStateChange={onHandlerStateChange}
           >
-            <Svg width='1000px' height='1000px' viewBox='0 0 1000 1000'>
-              <G>
-                <G id='Mask'>
-                  <Path
-                    d={
-                      'M1000,0 L1000,1000 L0,1000 L0,0 L1000,0 Z M500,467 C481.774603,467 467,481.774603 467,500 C467,518.225397 481.774603,533 500,533 C518.225397,533 533,518.225397 533,500 C533,481.774603 518.225397,467 500,467 Z'
-                    }
-                    fillOpacity='0.35'
-                    fill='#000000'
-                  />
-                  <G transform='translate(467.000000, 467.000000)'>
-                    <Circle
-                      stroke='#FFFFFF'
-                      strokeWidth='2'
-                      cx='33'
-                      cy='33'
-                      r='33'
+            <Animated.View
+              style={[
+                {
+                  position: 'absolute',
+                  top: -1000 + imageDimensionis.height / 2,
+                  left: -1000 + imageDimensionis.width / 2,
+                  transform: [{ translateX: panX }, { translateY: panY }]
+                }
+              ]}
+            >
+              <Svg width='2000' height='2000' viewBox='0 0 2000 2000'>
+                <G>
+                  <G id='Mask'>
+                    <Path
+                      d={
+                        'M2000,0 L2000,2000 L0,2000 L0,0 L2000,0 Z M1000,967 C981.774603,967 967,981.774603 967,1000 C967,1018.2254 981.774603,1033 1000,1033 C1018.2254,1033 1033,1018.2254 1033,1000 C1033,981.774603 1018.2254,967 1000,967 Z'
+                      }
+                      fill={theme.backgroundOverlay}
                     />
-                    <Circle fill='#FFFFFF' cx='33' cy='33' r='2' />
+                    <G transform='translate(967, 967)'>
+                      <Circle
+                        stroke={theme.background}
+                        strokeWidth='2'
+                        cx='33'
+                        cy='33'
+                        r='33'
+                      />
+                      <Circle fill={theme.background} cx='33' cy='33' r='2' />
+                    </G>
                   </G>
                 </G>
-              </G>
-            </Svg>
-          </Animated.View>
-        </PanGestureHandler>
-      </View>
+              </Svg>
+            </Animated.View>
+          </PanGestureHandler>
+        </View>
+        <Text style={[styles.imageFocusText, { color: theme.primary }]}>
+          在预览图上拖动圆圈，以选择缩略图的焦点。
+        </Text>
+      </>
     )
   }, [])
 
   const altTextInput = useCallback(() => {
     return (
-      <>
+      <View style={styles.altTextContainer}>
         <Text style={[styles.altTextInputHeading, { color: theme.primary }]}>
           为附件添加文字说明
         </Text>
@@ -139,13 +192,14 @@ const ComposeEditAttachment: React.FC<Props> = ({
           }
           placeholderTextColor={theme.secondary}
           scrollEnabled
+          value={altText}
         />
         <Text style={[styles.altTextLength, { color: theme.secondary }]}>
-          {1500 - (altText?.length || 0)}
+          {altText?.length || 0} / 1500
         </Text>
-      </>
+      </View>
     )
-  }, [altText?.length])
+  }, [altText])
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
@@ -158,25 +212,76 @@ const ComposeEditAttachment: React.FC<Props> = ({
               headerLeft: () => (
                 <HeaderLeft text='取消' onPress={() => navigation.goBack()} />
               ),
-              headerRight: () => <HeaderRight text='应用' onPress={() => {}} />
+              headerRight: () => (
+                <HeaderRight
+                  text='应用'
+                  onPress={() => {
+                    const formData = new FormData()
+
+                    if (altText) {
+                      formData.append('description', altText)
+                    }
+
+                    if (focus.current.x !== 0 || focus.current.y !== 0) {
+                      formData.append(
+                        'focus',
+                        `${focus.current.x},${focus.current.y}`
+                      )
+                    }
+
+                    client({
+                      method: 'put',
+                      instance: 'local',
+                      url: `media/${attachment.id}`,
+                      ...(formData && { body: formData })
+                    })
+                      .then(
+                        res => {
+                          if (res.body.id === attachment.id) {
+                            Alert.alert('修改成功', '', [
+                              {
+                                text: '好的',
+                                onPress: () => {
+                                  navigation.goBack()
+                                }
+                              }
+                            ])
+                          } else {
+                            Alert.alert('修改失败', '', [
+                              {
+                                text: '返回重试'
+                              }
+                            ])
+                          }
+                        },
+                        error => {
+                          Alert.alert('修改失败', error.body, [
+                            {
+                              text: '返回重试'
+                            }
+                          ])
+                        }
+                      )
+                      .catch(() => {
+                        Alert.alert('修改失败', '', [
+                          {
+                            text: '返回重试'
+                          }
+                        ])
+                      })
+                  }}
+                />
+              )
             }}
           >
             {() => {
               switch (attachment.type) {
                 case 'image':
                   return (
-                    <View style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1 }}>
                       {imageFocus()}
-                      <Text
-                        style={[
-                          styles.imageFocusText,
-                          { color: theme.primary }
-                        ]}
-                      >
-                        在预览图上点击或拖动圆圈，以选择缩略图的焦点。
-                      </Text>
-                      <View style={styles.editContainer}>{altTextInput()}</View>
-                    </View>
+                      {altTextInput()}
+                    </ScrollView>
                   )
               }
               return null
@@ -189,14 +294,14 @@ const ComposeEditAttachment: React.FC<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  editContainer: { padding: StyleConstants.Spacing.Global.PagePadding },
   imageFocusText: {
-    fontSize: StyleConstants.Font.Size.M
+    fontSize: StyleConstants.Font.Size.M,
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
+  altTextContainer: { padding: StyleConstants.Spacing.Global.PagePadding },
   altTextInputHeading: {
     fontSize: StyleConstants.Font.Size.M,
-    fontWeight: StyleConstants.Font.Weight.Bold,
-    marginTop: StyleConstants.Spacing.XL
+    fontWeight: StyleConstants.Font.Weight.Bold
   },
   altTextInput: {
     height: 200,
@@ -215,4 +320,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ComposeEditAttachment
+export default React.memo(ComposeEditAttachment, () => true)

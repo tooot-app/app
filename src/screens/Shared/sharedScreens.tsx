@@ -60,7 +60,7 @@ const sharedScreens = (Stack: any) => {
       name='Screen-Shared-Compose-EditAttachment'
       component={ComposeEditAttachment}
       options={{
-        stackPresentation: 'fullScreenModal'
+        stackPresentation: 'modal',
       }}
     />,
     <Stack.Screen
