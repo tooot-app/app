@@ -17,11 +17,7 @@ export interface Params {
 const TagText = ({ text }: { text: string }) => {
   const { theme } = useTheme()
 
-  return (
-    <Text style={{ color: theme.link }} key={Math.random()}>
-      {text}
-    </Text>
-  )
+  return <Text style={{ color: theme.link }}>{text}</Text>
 }
 
 const debouncedSuggestions = debounce(
@@ -65,7 +61,8 @@ const formatText = ({
       tags.push({
         type: newType,
         text: props.getMatchedText(),
-        offset: props.getOffset()
+        offset: props.getOffset(),
+        length: props.getMatchedText().length
       })
       return
     }
@@ -82,27 +79,30 @@ const formatText = ({
   }
   prevTags = tags
   let _content = content
+  let pointer = 0
   let contentLength: number = 0
   const children = []
-  tags.forEach(tag => {
-    const parts = _content.split(tag!.text)
-    const prevPart = parts.shift()
-    children.push(prevPart)
-    contentLength = contentLength + (prevPart ? prevPart.length : 0)
-    children.push(<TagText text={tag!.text} />)
+  tags.forEach((tag, index) => {
+    const prev = _content.substr(0, tag!.offset - pointer)
+    const main = _content.substr(tag!.offset - pointer, tag!.length)
+    const next = _content.substr(tag!.offset - pointer + tag!.length)
+    children.push(prev)
+    contentLength = contentLength + prev.length
+    children.push(<TagText key={index} text={main} />)
     switch (tag!.type) {
       case 'url':
         contentLength = contentLength + 23
         break
       case 'accounts':
         contentLength =
-          contentLength + tag!.text.split(new RegExp('(@.*)@?'))[1].length
+          contentLength + main.split(new RegExp('(@.*)@?'))[1].length
         break
       case 'hashtags':
-        contentLength = contentLength + tag!.text.length
+        contentLength = contentLength + main.length
         break
     }
-    _content = parts.join()
+    _content = next
+    pointer = pointer + prev.length + tag!.length
   })
   children.push(_content)
   contentLength = contentLength + _content.length
