@@ -36,14 +36,14 @@ export interface Props {
   route: {
     params: {
       attachment: Mastodon.Attachment & { local_url: string }
-      postDispatch: Dispatch<PostAction>
+      composeDispatch: Dispatch<PostAction>
     }
   }
 }
 
 const ComposeEditAttachment: React.FC<Props> = ({
   route: {
-    params: { attachment, postDispatch }
+    params: { attachment, composeDispatch }
   }
 }) => {
   const navigation = useNavigation()
@@ -72,7 +72,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
         }
       }
       if (needUpdate) {
-        postDispatch({ type: 'attachmentEdit', payload: attachment })
+        composeDispatch({ type: 'attachmentEdit', payload: attachment })
       }
     })
 

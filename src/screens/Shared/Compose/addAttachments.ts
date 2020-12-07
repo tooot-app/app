@@ -2,18 +2,18 @@ import { Dispatch } from 'react'
 import { ActionSheetIOS, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import client from 'src/api/client'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 
 const uploadAttachment = async ({
   result,
-  postState,
-  postDispatch
+  composeState,
+  composeDispatch
 }: {
   result: NonNullable<ImageInfo>
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }) => {
   const formData = new FormData()
   // @ts-ignore
@@ -30,7 +30,7 @@ const uploadAttachment = async ({
     url: 'media',
     body: formData,
     onUploadProgress: p => {
-      postDispatch({
+      composeDispatch({
         type: 'attachmentUploadProgress',
         payload: {
           progress: p.loaded / p.total,
@@ -40,15 +40,15 @@ const uploadAttachment = async ({
     }
   })
     .then(({ body }: { body: Mastodon.Attachment & { local_url: string } }) => {
-      postDispatch({
+      composeDispatch({
         type: 'attachmentUploadProgress',
         payload: undefined
       })
       if (body.id) {
         body.local_url = result.uri
-        postDispatch({
+        composeDispatch({
           type: 'attachments',
-          payload: { uploads: postState.attachments.uploads.concat([body]) }
+          payload: { uploads: composeState.attachments.uploads.concat([body]) }
         })
         return Promise.resolve()
       } else {
@@ -56,7 +56,7 @@ const uploadAttachment = async ({
           {
             text: '返回重试',
             onPress: () =>
-              postDispatch({
+              composeDispatch({
                 type: 'attachmentUploadProgress',
                 payload: undefined
               })
@@ -70,7 +70,7 @@ const uploadAttachment = async ({
         {
           text: '返回重试',
           onPress: () =>
-            postDispatch({
+            composeDispatch({
               type: 'attachmentUploadProgress',
               payload: undefined
             })
@@ -83,8 +83,8 @@ const uploadAttachment = async ({
 const addAttachments = async ({
   ...params
 }: {
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }): Promise<any> => {
   ActionSheetIOS.showActionSheetWithOptions(
     {

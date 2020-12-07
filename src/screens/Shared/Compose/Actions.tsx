@@ -10,24 +10,24 @@ import {
 } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import addAttachments from './addAttachments'
 
 export interface Props {
   textInputRef: React.RefObject<TextInput>
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }
 
 const ComposeActions: React.FC<Props> = ({
   textInputRef,
-  postState,
-  postDispatch
+  composeState,
+  composeDispatch
 }) => {
   const { theme } = useTheme()
 
   const getVisibilityIcon = () => {
-    switch (postState.visibility) {
+    switch (composeState.visibility) {
       case 'public':
         return 'globe'
       case 'unlisted':
@@ -40,88 +40,88 @@ const ComposeActions: React.FC<Props> = ({
   }
 
   const attachmentColor = useMemo(() => {
-    if (postState.poll.active) return theme.disabled
-    if (postState.attachmentUploadProgress) return theme.primary
+    if (composeState.poll.active) return theme.disabled
+    if (composeState.attachmentUploadProgress) return theme.primary
 
-    if (postState.attachments.uploads.length) {
+    if (composeState.attachments.uploads.length) {
       return theme.primary
     } else {
       return theme.secondary
     }
   }, [
-    postState.poll.active,
-    postState.attachments.uploads,
-    postState.attachmentUploadProgress
+    composeState.poll.active,
+    composeState.attachments.uploads,
+    composeState.attachmentUploadProgress
   ])
   const attachmentOnPress = useCallback(async () => {
-    if (postState.poll.active) return
-    if (postState.attachmentUploadProgress) return
+    if (composeState.poll.active) return
+    if (composeState.attachmentUploadProgress) return
 
-    if (!postState.attachments.uploads.length) {
-      return await addAttachments({ postState, postDispatch })
+    if (!composeState.attachments.uploads.length) {
+      return await addAttachments({ composeState, composeDispatch })
     }
   }, [
-    postState.poll.active,
-    postState.attachments.uploads,
-    postState.attachmentUploadProgress
+    composeState.poll.active,
+    composeState.attachments.uploads,
+    composeState.attachmentUploadProgress
   ])
 
   const pollColor = useMemo(() => {
-    if (postState.attachments.uploads.length) return theme.disabled
-    if (postState.attachmentUploadProgress) return theme.disabled
+    if (composeState.attachments.uploads.length) return theme.disabled
+    if (composeState.attachmentUploadProgress) return theme.disabled
 
-    if (postState.poll.active) {
+    if (composeState.poll.active) {
       return theme.primary
     } else {
       return theme.secondary
     }
   }, [
-    postState.poll.active,
-    postState.attachments.uploads,
-    postState.attachmentUploadProgress
+    composeState.poll.active,
+    composeState.attachments.uploads,
+    composeState.attachmentUploadProgress
   ])
   const pollOnPress = useCallback(() => {
     if (
-      !postState.attachments.uploads.length &&
-      !postState.attachmentUploadProgress
+      !composeState.attachments.uploads.length &&
+      !composeState.attachmentUploadProgress
     ) {
-      postDispatch({
+      composeDispatch({
         type: 'poll',
-        payload: { ...postState.poll, active: !postState.poll.active }
+        payload: { ...composeState.poll, active: !composeState.poll.active }
       })
     }
-    if (postState.poll.active) {
+    if (composeState.poll.active) {
       textInputRef.current?.focus()
     }
   }, [
-    postState.poll.active,
-    postState.attachments.uploads,
-    postState.attachmentUploadProgress
+    composeState.poll.active,
+    composeState.attachments.uploads,
+    composeState.attachmentUploadProgress
   ])
 
   const emojiColor = useMemo(() => {
-    if (!postState.emoji.emojis) return theme.disabled
-    if (postState.emoji.active) {
+    if (!composeState.emoji.emojis) return theme.disabled
+    if (composeState.emoji.active) {
       return theme.primary
     } else {
       return theme.secondary
     }
-  }, [postState.emoji.active, postState.emoji.emojis])
+  }, [composeState.emoji.active, composeState.emoji.emojis])
   const emojiOnPress = useCallback(() => {
-    if (postState.emoji.emojis) {
-      if (postState.emoji.active) {
-        postDispatch({
+    if (composeState.emoji.emojis) {
+      if (composeState.emoji.active) {
+        composeDispatch({
           type: 'emoji',
-          payload: { ...postState.emoji, active: false }
+          payload: { ...composeState.emoji, active: false }
         })
       } else {
-        postDispatch({
+        composeDispatch({
           type: 'emoji',
-          payload: { ...postState.emoji, active: true }
+          payload: { ...composeState.emoji, active: true }
         })
       }
     }
-  }, [postState.emoji.active, postState.emoji.emojis])
+  }, [composeState.emoji.active, composeState.emoji.emojis])
 
   return (
     <Pressable
@@ -156,16 +156,16 @@ const ComposeActions: React.FC<Props> = ({
             buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  postDispatch({ type: 'visibility', payload: 'public' })
+                  composeDispatch({ type: 'visibility', payload: 'public' })
                   break
                 case 1:
-                  postDispatch({ type: 'visibility', payload: 'unlisted' })
+                  composeDispatch({ type: 'visibility', payload: 'unlisted' })
                   break
                 case 2:
-                  postDispatch({ type: 'visibility', payload: 'private' })
+                  composeDispatch({ type: 'visibility', payload: 'private' })
                   break
                 case 3:
-                  postDispatch({ type: 'visibility', payload: 'direct' })
+                  composeDispatch({ type: 'visibility', payload: 'direct' })
                   break
               }
             }
@@ -175,11 +175,11 @@ const ComposeActions: React.FC<Props> = ({
       <Feather
         name='alert-triangle'
         size={24}
-        color={postState.spoiler.active ? theme.primary : theme.secondary}
+        color={composeState.spoiler.active ? theme.primary : theme.secondary}
         onPress={() =>
-          postDispatch({
+          composeDispatch({
             type: 'spoiler',
-            payload: { active: !postState.spoiler.active }
+            payload: { active: !composeState.spoiler.active }
           })
         }
       />

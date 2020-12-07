@@ -41,7 +41,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
   const onPressAction = useCallback(() => setBottomSheetVisible(true), [])
   const onPressApplication = useCallback(() => {
-    navigation.navigate('Webview', {
+    navigation.navigate('Screen-Shared-Webview', {
       uri: status.application!.website
     })
   }, [])

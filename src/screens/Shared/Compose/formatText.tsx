@@ -4,11 +4,11 @@ import { Text } from 'react-native'
 import { RefetchOptions } from 'react-query/types/core/query'
 import Autolinker from 'src/modules/autolinker'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 
 export interface Params {
   origin: 'text' | 'spoiler'
-  postDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<PostAction>
   content: string
   refetch?: (options?: RefetchOptions | undefined) => Promise<any>
   disableDebounce?: boolean
@@ -25,8 +25,8 @@ const TagText = ({ text }: { text: string }) => {
 }
 
 const debouncedSuggestions = debounce(
-  (postDispatch, tag) => {
-    postDispatch({ type: 'tag', payload: tag })
+  (composeDispatch, tag) => {
+    composeDispatch({ type: 'tag', payload: tag })
   },
   500,
   {
@@ -34,15 +34,15 @@ const debouncedSuggestions = debounce(
   }
 )
 
-let prevTags: PostState['tag'][] = []
+let prevTags: ComposeState['tag'][] = []
 
 const formatText = ({
   origin,
-  postDispatch,
+  composeDispatch,
   content,
   disableDebounce = false
 }: Params) => {
-  const tags: PostState['tag'][] = []
+  const tags: ComposeState['tag'][] = []
   Autolinker.link(content, {
     email: false,
     phone: false,
@@ -74,11 +74,11 @@ const formatText = ({
   const changedTag = differenceWith(tags, prevTags, isEqual)
   if (changedTag.length && !disableDebounce) {
     if (changedTag[0]!.type !== 'url') {
-      debouncedSuggestions(postDispatch, changedTag[0])
+      debouncedSuggestions(composeDispatch, changedTag[0])
     }
   } else {
     debouncedSuggestions.cancel()
-    postDispatch({ type: 'tag', payload: undefined })
+    composeDispatch({ type: 'tag', payload: undefined })
   }
   prevTags = tags
   let _content = content
@@ -107,7 +107,7 @@ const formatText = ({
   children.push(_content)
   contentLength = contentLength + _content.length
 
-  postDispatch({
+  composeDispatch({
     type: origin,
     payload: {
       count: contentLength,

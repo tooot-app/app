@@ -7,6 +7,8 @@ import client from 'src/api/client'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { toast } from 'src/components/toast'
 import { StyleConstants } from 'src/utils/styles/constants'
+import { useNavigation } from '@react-navigation/native'
+import getCurrentTab from 'src/utils/getCurrentTab'
 
 const fireMutation = async ({
   id,
@@ -47,6 +49,7 @@ export interface Props {
 }
 
 const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
+  const navigation = useNavigation()
   const { theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
@@ -85,7 +88,15 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
     }
   })
 
-  const onPressReply = useCallback(() => {}, [])
+  const onPressReply = useCallback(() => {
+    navigation.navigate(getCurrentTab(navigation), {
+      screen: 'Screen-Shared-Compose',
+      params: {
+        type: 'reply',
+        incomingStatus: status
+      }
+    })
+  }, [])
   const onPressReblog = useCallback(
     () =>
       mutateAction({

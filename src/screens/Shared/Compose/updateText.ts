@@ -1,27 +1,27 @@
 import { Dispatch } from 'react'
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import formatText from './formatText'
 
 const updateText = ({
   origin,
-  postState,
-  postDispatch,
+  composeState,
+  composeDispatch,
   newText,
   type
 }: {
   origin: 'text' | 'spoiler'
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
   newText: string
   type: 'emoji' | 'suggestion'
 }) => {
-  if (postState[origin].raw.length) {
-    const contentFront = postState[origin].raw.slice(
+  if (composeState[origin].raw.length) {
+    const contentFront = composeState[origin].raw.slice(
       0,
-      postState[origin].selection.start
+      composeState[origin].selection.start
     )
-    const contentRear = postState[origin].raw.slice(
-      postState[origin].selection.end
+    const contentRear = composeState[origin].raw.slice(
+      composeState[origin].selection.end
     )
 
     const whiteSpaceFront = /\s/g.test(contentFront.slice(-1))
@@ -33,14 +33,14 @@ const updateText = ({
 
     formatText({
       origin,
-      postDispatch,
+      composeDispatch,
       content: [contentFront, newTextWithSpace, contentRear].join(''),
       disableDebounce: true
     })
   } else {
     formatText({
       origin,
-      postDispatch,
+      composeDispatch,
       content: `${newText} `,
       disableDebounce: true
     })

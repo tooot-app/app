@@ -2,18 +2,18 @@ import React, { Dispatch, RefObject } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import formatText from './formatText'
 
 export interface Props {
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
   textInputRef: RefObject<TextInput>
 }
 
 const ComposeTextInput: React.FC<Props> = ({
-  postState,
-  postDispatch,
+  composeState,
+  composeDispatch,
   textInputRef
 }) => {
   const { theme } = useTheme()
@@ -37,7 +37,7 @@ const ComposeTextInput: React.FC<Props> = ({
       onChangeText={content =>
         formatText({
           origin: 'text',
-          postDispatch,
+          composeDispatch,
           content
         })
       }
@@ -46,12 +46,12 @@ const ComposeTextInput: React.FC<Props> = ({
           selection: { start, end }
         }
       }) => {
-        postDispatch({ type: 'text', payload: { selection: { start, end } } })
+        composeDispatch({ type: 'text', payload: { selection: { start, end } } })
       }}
       ref={textInputRef}
       scrollEnabled
     >
-      <Text>{postState.text.formatted}</Text>
+      <Text>{composeState.text.formatted}</Text>
     </TextInput>
   )
 }
@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
 export default React.memo(
   ComposeTextInput,
   (prev, next) =>
-    prev.postState.text.formatted === next.postState.text.formatted
+    prev.composeState.text.formatted === next.composeState.text.formatted
 )

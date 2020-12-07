@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
@@ -20,11 +20,11 @@ import { Feather } from '@expo/vector-icons'
 const DEFAULT_HEIGHT = 200
 
 export interface Props {
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }
 
-const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
+const ComposeAttachments: React.FC<Props> = ({ composeState, composeDispatch }) => {
   const { theme } = useTheme()
   const navigation = useNavigation()
 
@@ -73,10 +73,10 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
           <ButtonRound
             icon='x'
             onPress={() =>
-              postDispatch({
+              composeDispatch({
                 type: 'attachments',
                 payload: {
-                  uploads: postState.attachments.uploads.filter(
+                  uploads: composeState.attachments.uploads.filter(
                     e => e.id !== item.id
                   )
                 }
@@ -89,7 +89,7 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
             onPress={() =>
               navigation.navigate('Screen-Shared-Compose-EditAttachment', {
                 attachment: item,
-                postDispatch
+                composeDispatch
               })
             }
             styles={styles.edit}
@@ -104,15 +104,15 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
     return (
       <ShimmerPlaceholder
         style={styles.progressContainer}
-        visible={postState.attachmentUploadProgress === undefined}
+        visible={composeState.attachmentUploadProgress === undefined}
         width={
-          (postState.attachmentUploadProgress?.aspect || 3 / 2) * DEFAULT_HEIGHT
+          (composeState.attachmentUploadProgress?.aspect || 3 / 2) * DEFAULT_HEIGHT
         }
         height={200}
       >
-        {postState.attachments.uploads.length > 0 &&
-          postState.attachments.uploads[0].type === 'image' &&
-          postState.attachments.uploads.length < 4 && (
+        {composeState.attachments.uploads.length > 0 &&
+          composeState.attachments.uploads[0].type === 'image' &&
+          composeState.attachments.uploads.length < 4 && (
             <Pressable
               style={{
                 width: DEFAULT_HEIGHT,
@@ -120,13 +120,13 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
                 backgroundColor: theme.border
               }}
               onPress={async () =>
-                await addAttachments({ postState, postDispatch })
+                await addAttachments({ composeState, composeDispatch })
               }
             >
               <ButtonRound
                 icon='upload-cloud'
                 onPress={async () =>
-                  await addAttachments({ postState, postDispatch })
+                  await addAttachments({ composeState, composeDispatch })
                 }
                 styles={{
                   top:
@@ -144,21 +144,21 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
           )}
       </ShimmerPlaceholder>
     )
-  }, [postState.attachmentUploadProgress, postState.attachments.uploads])
+  }, [composeState.attachmentUploadProgress, composeState.attachments.uploads])
 
   return (
     <View style={styles.base}>
       <Pressable
         style={styles.sensitive}
         onPress={() =>
-          postDispatch({
+          composeDispatch({
             type: 'attachments',
-            payload: { sensitive: !postState.attachments.sensitive }
+            payload: { sensitive: !composeState.attachments.sensitive }
           })
         }
       >
         <Feather
-          name={postState.attachments.sensitive ? 'check-circle' : 'circle'}
+          name={composeState.attachments.sensitive ? 'check-circle' : 'circle'}
           size={StyleConstants.Font.Size.L}
           color={theme.primary}
         />
@@ -169,8 +169,8 @@ const ComposeAttachments: React.FC<Props> = ({ postState, postDispatch }) => {
       <View style={styles.imageContainer}>
         <FlatList
           horizontal
-          extraData={postState.attachments.uploads.length}
-          data={postState.attachments.uploads}
+          extraData={composeState.attachments.uploads.length}
+          data={composeState.attachments.uploads}
           renderItem={renderAttachment}
           ListFooterComponent={listFooter}
           showsHorizontalScrollIndicator={false}

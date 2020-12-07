@@ -11,19 +11,19 @@ import {
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import updateText from './updateText'
 
 export interface Props {
   textInputRef: React.RefObject<TextInput>
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }
 
 const ComposeEmojis: React.FC<Props> = ({
   textInputRef,
-  postState,
-  postDispatch
+  composeState,
+  composeDispatch
 }) => {
   const { theme } = useTheme()
 
@@ -32,7 +32,7 @@ const ComposeEmojis: React.FC<Props> = ({
       <SectionList
         horizontal
         keyboardShouldPersistTaps='handled'
-        sections={postState.emoji.emojis!}
+        sections={composeState.emoji.emojis!}
         keyExtractor={item => item.shortcode}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={[styles.group, { color: theme.secondary }]}>
@@ -51,14 +51,14 @@ const ComposeEmojis: React.FC<Props> = ({
                         origin: textInputRef.current?.isFocused()
                           ? 'text'
                           : 'spoiler',
-                        postState,
-                        postDispatch,
+                        composeState,
+                        composeDispatch,
                         newText: `:${emoji.shortcode}:`,
                         type: 'emoji'
                       })
-                      postDispatch({
+                      composeDispatch({
                         type: 'emoji',
-                        payload: { ...postState.emoji, active: false }
+                        payload: { ...composeState.emoji, active: false }
                       })
                     }}
                   >

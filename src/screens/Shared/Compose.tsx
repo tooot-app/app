@@ -19,10 +19,11 @@ import { getLocalAccountPreferences } from 'src/utils/slices/instancesSlice'
 import { HeaderLeft, HeaderRight } from 'src/components/Header'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
+import formatText from './Compose/formatText'
 
 const Stack = createNativeStackNavigator()
 
-export type PostState = {
+export type ComposeState = {
   spoiler: {
     active: boolean
     count: number
@@ -70,36 +71,37 @@ export type PostState = {
   attachments: { sensitive: boolean; uploads: Mastodon.Attachment[] }
   attachmentUploadProgress: { progress: number; aspect?: number } | undefined
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
+  replyToStatus?: Mastodon.Status
 }
 
 export type PostAction =
   | {
       type: 'spoiler'
-      payload: Partial<PostState['spoiler']>
+      payload: Partial<ComposeState['spoiler']>
     }
   | {
       type: 'text'
-      payload: Partial<PostState['text']>
+      payload: Partial<ComposeState['text']>
     }
   | {
       type: 'tag'
-      payload: PostState['tag']
+      payload: ComposeState['tag']
     }
   | {
       type: 'emoji'
-      payload: PostState['emoji']
+      payload: ComposeState['emoji']
     }
   | {
       type: 'poll'
-      payload: PostState['poll']
+      payload: ComposeState['poll']
     }
   | {
       type: 'attachments'
-      payload: Partial<PostState['attachments']>
+      payload: Partial<ComposeState['attachments']>
     }
   | {
       type: 'attachmentUploadProgress'
-      payload: PostState['attachmentUploadProgress']
+      payload: ComposeState['attachmentUploadProgress']
     }
   | {
       type: 'attachmentEdit'
@@ -107,10 +109,10 @@ export type PostAction =
     }
   | {
       type: 'visibility'
-      payload: PostState['visibility']
+      payload: ComposeState['visibility']
     }
 
-const postInitialState: PostState = {
+const composeInitialState: ComposeState = {
   spoiler: {
     active: false,
     count: 0,
@@ -143,9 +145,75 @@ const postInitialState: PostState = {
   visibility:
     getLocalAccountPreferences(store.getState())[
       'posting:default:visibility'
-    ] || 'public'
+    ] || 'public',
+  replyToStatus: undefined
 }
-const postReducer = (state: PostState, action: PostAction): PostState => {
+const composeExistingState = ({
+  type,
+  incomingStatus
+}: {
+  type: 'reply' | 'edit'
+  incomingStatus: Mastodon.Status
+}): ComposeState => {
+  switch (type) {
+    case 'edit':
+      return {
+        ...composeInitialState,
+        ...(incomingStatus.spoiler_text?.length && {
+          spoiler: {
+            active: true,
+            count: incomingStatus.spoiler_text.length,
+            raw: incomingStatus.spoiler_text,
+            formatted: incomingStatus.spoiler_text,
+            selection: { start: 0, end: 0 }
+          }
+        }),
+        text: {
+          count: incomingStatus.text!.length,
+          raw: incomingStatus.text!,
+          formatted: undefined,
+          selection: { start: 0, end: 0 }
+        },
+        ...(incomingStatus.poll && {
+          poll: {
+            active: true,
+            total: incomingStatus.poll.options.length,
+            options: {
+              '0': incomingStatus.poll.options[0].title || undefined,
+              '1': incomingStatus.poll.options[1].title || undefined,
+              '2': incomingStatus.poll.options[2].title || undefined,
+              '3': incomingStatus.poll.options[3].title || undefined
+            },
+            multiple: incomingStatus.poll.multiple,
+            expire: '86400' // !!!
+          }
+        }),
+        ...(incomingStatus.media_attachments && {
+          attachments: {
+            sensitive: incomingStatus.sensitive,
+            uploads: incomingStatus.media_attachments
+          }
+        }),
+        visibility: incomingStatus.visibility
+      }
+    case 'reply':
+      const replyPlaceholder = `@${
+        incomingStatus.reblog
+          ? incomingStatus.reblog.account.acct
+          : incomingStatus.account.acct
+      } `
+      return {
+        ...composeInitialState,
+        text: {
+          count: replyPlaceholder.length,
+          raw: replyPlaceholder,
+          formatted: undefined,
+          selection: { start: 0, end: 0 }
+        }
+      }
+  }
+}
+const postReducer = (state: ComposeState, action: PostAction): ComposeState => {
   switch (action.type) {
     case 'spoiler':
       return { ...state, spoiler: { ...state.spoiler, ...action.payload } }
@@ -181,11 +249,20 @@ const postReducer = (state: PostState, action: PostAction): PostState => {
   }
 }
 
-const Compose: React.FC = () => {
-  const { theme } = useTheme()
-  const navigation = useNavigation()
+export interface Props {
+  route: {
+    params:
+      | {
+          type?: 'reply' | 'edit'
+          incomingStatus: Mastodon.Status
+        }
+      | undefined
+  }
+}
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
+const Compose: React.FC<Props> = ({ route: { params } }) => {
+  const navigation = useNavigation()
+  const { theme } = useTheme()
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
@@ -205,11 +282,53 @@ const Compose: React.FC = () => {
     setHasKeyboard(false)
   }
 
-  const [postState, postDispatch] = useReducer(postReducer, postInitialState)
+  const [composeState, composeDispatch] = useReducer(
+    postReducer,
+    params?.type && params?.incomingStatus
+      ? composeExistingState({
+          type: params.type,
+          incomingStatus: params.incomingStatus
+        })
+      : composeInitialState
+  )
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  useEffect(() => {
+    switch (params?.type) {
+      case 'edit':
+        if (params.incomingStatus.spoiler_text) {
+          formatText({
+            origin: 'spoiler',
+            composeDispatch,
+            content: params.incomingStatus.spoiler_text,
+            disableDebounce: true
+          })
+        }
+        formatText({
+          origin: 'text',
+          composeDispatch,
+          content: params.incomingStatus.text!,
+          disableDebounce: true
+        })
+        break
+      case 'reply':
+        formatText({
+          origin: 'text',
+          composeDispatch,
+          content: `@${
+            params.incomingStatus.reblog
+              ? params.incomingStatus.reblog.account.acct
+              : params.incomingStatus.account.acct
+          } `,
+          disableDebounce: true
+        })
+        break
+    }
+  }, [params?.type])
 
   const tootPost = async () => {
     setIsSubmitting(true)
-    if (postState.text.count < 0) {
+    if (composeState.text.count < 0) {
       Alert.alert('字数超限', '', [
         {
           text: '返回继续编辑'
@@ -218,28 +337,31 @@ const Compose: React.FC = () => {
     } else {
       const formData = new FormData()
 
-      if (postState.spoiler.active) {
-        formData.append('spoiler_text', postState.spoiler.raw)
+      if (composeState.spoiler.active) {
+        formData.append('spoiler_text', composeState.spoiler.raw)
       }
 
-      formData.append('status', postState.text.raw)
+      formData.append('status', composeState.text.raw)
 
-      if (postState.poll.active) {
-        Object.values(postState.poll.options)
+      if (composeState.poll.active) {
+        Object.values(composeState.poll.options)
           .filter(e => e?.length)
           .forEach(e => formData.append('poll[options][]', e!))
-        formData.append('poll[expires_in]', postState.poll.expire)
-        formData.append('poll[multiple]', postState.poll.multiple.toString())
+        formData.append('poll[expires_in]', composeState.poll.expire)
+        formData.append('poll[multiple]', composeState.poll.multiple.toString())
       }
 
-      if (postState.attachments.uploads.length) {
-        formData.append('sensitive', postState.attachments.sensitive.toString())
-        postState.attachments.uploads.forEach(e =>
+      if (composeState.attachments.uploads.length) {
+        formData.append(
+          'sensitive',
+          composeState.attachments.sensitive.toString()
+        )
+        composeState.attachments.uploads.forEach(e =>
           formData.append('media_ids[]', e!.id)
         )
       }
 
-      formData.append('visibility', postState.visibility)
+      formData.append('visibility', composeState.visibility)
 
       client({
         method: 'post',
@@ -247,17 +369,17 @@ const Compose: React.FC = () => {
         url: 'statuses',
         headers: {
           'Idempotency-Key': sha256(
-            postState.spoiler.raw +
-              postState.text.raw +
-              postState.poll.options['0'] +
-              postState.poll.options['1'] +
-              postState.poll.options['2'] +
-              postState.poll.options['3'] +
-              postState.poll.multiple +
-              postState.poll.expire +
-              postState.attachments.sensitive +
-              postState.attachments.uploads.map(upload => upload.id) +
-              postState.visibility
+            composeState.spoiler.raw +
+              composeState.text.raw +
+              composeState.poll.options['0'] +
+              composeState.poll.options['1'] +
+              composeState.poll.options['2'] +
+              composeState.poll.options['3'] +
+              composeState.poll.multiple +
+              composeState.poll.expire +
+              composeState.attachments.sensitive +
+              composeState.attachments.uploads.map(upload => upload.id) +
+              composeState.visibility
           ).toString()
         },
         body: formData
@@ -305,8 +427,8 @@ const Compose: React.FC = () => {
   }
 
   const totalTextCount =
-    (postState.spoiler.active ? postState.spoiler.count : 0) +
-    postState.text.count
+    (composeState.spoiler.active ? composeState.spoiler.count : 0) +
+    composeState.text.count
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
@@ -354,14 +476,17 @@ const Compose: React.FC = () => {
                     onPress={async () => tootPost()}
                     text='发嘟嘟'
                     disabled={
-                      postState.text.raw.length < 1 || totalTextCount > 500
+                      composeState.text.raw.length < 1 || totalTextCount > 500
                     }
                   />
                 )
             }}
           >
             {() => (
-              <ComposeRoot postState={postState} postDispatch={postDispatch} />
+              <ComposeRoot
+                composeState={composeState}
+                composeDispatch={composeDispatch}
+              />
             )}
           </Stack.Screen>
         </Stack.Navigator>
@@ -377,4 +502,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Compose
+export default React.memo(Compose, () => true)

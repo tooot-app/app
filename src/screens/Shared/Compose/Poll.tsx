@@ -2,18 +2,18 @@ import React, { Dispatch, useEffect, useState } from 'react'
 import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { ButtonRow } from 'src/components/Button'
 import { MenuContainer, MenuRow } from 'src/components/Menu'
 
 export interface Props {
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }
 
-const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
+const ComposePoll: React.FC<Props> = ({ composeState, composeDispatch }) => {
   const { theme } = useTheme()
 
   const expireMapping: { [key: string]: string } = {
@@ -34,21 +34,21 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
   return (
     <View style={[styles.base, { borderColor: theme.border }]}>
       <View style={styles.options}>
-        {[...Array(postState.poll.total)].map((e, i) => {
-          const restOptions = Object.keys(postState.poll.options).filter(
-            o => parseInt(o) !== i && parseInt(o) < postState.poll.total
+        {[...Array(composeState.poll.total)].map((e, i) => {
+          const restOptions = Object.keys(composeState.poll.options).filter(
+            o => parseInt(o) !== i && parseInt(o) < composeState.poll.total
           )
           let hasConflict = false
           restOptions.forEach(o => {
             // @ts-ignore
-            if (postState.poll.options[o] === postState.poll.options[i]) {
+            if (composeState.poll.options[o] === composeState.poll.options[i]) {
               hasConflict = true
             }
           })
           return (
             <View key={i} style={styles.option}>
               <Feather
-                name={postState.poll.multiple ? 'square' : 'circle'}
+                name={composeState.poll.multiple ? 'square' : 'circle'}
                 size={StyleConstants.Font.Size.L}
                 color={theme.secondary}
               />
@@ -65,13 +65,13 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
                 placeholderTextColor={theme.secondary}
                 maxLength={50}
                 // @ts-ignore
-                value={postState.poll.options[i]}
+                value={composeState.poll.options[i]}
                 onChangeText={e =>
-                  postDispatch({
+                  composeDispatch({
                     type: 'poll',
                     payload: {
-                      ...postState.poll,
-                      options: { ...postState.poll.options, [i]: e }
+                      ...composeState.poll,
+                      options: { ...composeState.poll.options, [i]: e }
                     }
                   })
                 }
@@ -84,34 +84,34 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
         <View style={styles.firstButton}>
           <ButtonRow
             onPress={() =>
-              postState.poll.total > 2 &&
-              postDispatch({
+              composeState.poll.total > 2 &&
+              composeDispatch({
                 type: 'poll',
-                payload: { ...postState.poll, total: postState.poll.total - 1 }
+                payload: { ...composeState.poll, total: composeState.poll.total - 1 }
               })
             }
             icon='minus'
-            disabled={!(postState.poll.total > 2)}
+            disabled={!(composeState.poll.total > 2)}
             buttonSize='S'
           />
         </View>
         <ButtonRow
           onPress={() =>
-            postState.poll.total < 4 &&
-            postDispatch({
+            composeState.poll.total < 4 &&
+            composeDispatch({
               type: 'poll',
-              payload: { ...postState.poll, total: postState.poll.total + 1 }
+              payload: { ...composeState.poll, total: composeState.poll.total + 1 }
             })
           }
           icon='plus'
-          disabled={!(postState.poll.total < 4)}
+          disabled={!(composeState.poll.total < 4)}
           buttonSize='S'
         />
       </View>
       <MenuContainer>
         <MenuRow
           title='可选项'
-          content={postState.poll.multiple ? '多选' : '单选'}
+          content={composeState.poll.multiple ? '多选' : '单选'}
           onPress={() =>
             ActionSheetIOS.showActionSheetWithOptions(
               {
@@ -120,9 +120,9 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
               },
               index =>
                 index < 2 &&
-                postDispatch({
+                composeDispatch({
                   type: 'poll',
-                  payload: { ...postState.poll, multiple: index === 1 }
+                  payload: { ...composeState.poll, multiple: index === 1 }
                 })
             )
           }
@@ -130,7 +130,7 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
         />
         <MenuRow
           title='有效期'
-          content={expireMapping[postState.poll.expire]}
+          content={expireMapping[composeState.poll.expire]}
           onPress={() =>
             ActionSheetIOS.showActionSheetWithOptions(
               {
@@ -139,10 +139,10 @@ const ComposePoll: React.FC<Props> = ({ postState, postDispatch }) => {
               },
               index =>
                 index < 7 &&
-                postDispatch({
+                composeDispatch({
                   type: 'poll',
                   payload: {
-                    ...postState.poll,
+                    ...composeState.poll,
                     expire: Object.keys(expireMapping)[index]
                   }
                 })

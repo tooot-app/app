@@ -299,9 +299,9 @@ declare namespace Mastodon {
     url?: string
     in_reply_to_id?: string
     in_reply_to_account_id?: string
-    reblog: Status
-    poll: Poll
-    card: Card
+    reblog?: Status
+    poll?: Poll
+    card?: Card
     language?: string
     text?: string
   }

@@ -1,8 +1,7 @@
 const getCurrentTab = (navigation: any) => {
-  const {
-    length,
-    [length - 1]: last
-  } = navigation.dangerouslyGetState().history
+  const { length, [length - 1]: last } =
+    navigation.dangerouslyGetState().history ||
+    navigation.dangerouslyGetParent()?.dangerouslyGetState().history
   return `Screen-${last.key.split(new RegExp(/Screen-(.*?)-/))[1]}`
 }
 

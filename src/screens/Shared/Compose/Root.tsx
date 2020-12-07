@@ -17,7 +17,7 @@ import { emojisFetch } from 'src/utils/fetches/emojisFetch'
 import { searchFetch } from 'src/utils/fetches/searchFetch'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, PostState } from '../Compose'
+import { PostAction, ComposeState } from '../Compose'
 import ComposeActions from './Actions'
 import ComposeAttachments from './Attachments'
 import ComposeEmojis from './Emojis'
@@ -28,26 +28,26 @@ import updateText from './updateText'
 import * as Permissions from 'expo-permissions'
 
 export interface Props {
-  postState: PostState
-  postDispatch: Dispatch<PostAction>
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
 }
 
-const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
+const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
   const { theme } = useTheme()
 
   const { isFetching, isSuccess, data, refetch } = useQuery(
     [
       'Search',
-      { type: postState.tag?.type, term: postState.tag?.text.substring(1) }
+      { type: composeState.tag?.type, term: composeState.tag?.text.substring(1) }
     ],
     searchFetch,
     { enabled: false }
   )
   useEffect(() => {
-    if (postState.tag?.text) {
+    if (composeState.tag?.text) {
       refetch()
     }
-  }, [postState.tag?.text])
+  }, [composeState.tag?.text])
 
   useEffect(() => {
     ;(async () => {
@@ -71,9 +71,9 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
         groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
         (value, key) => sortedEmojis.push({ title: key, data: value })
       )
-      postDispatch({
+      composeDispatch({
         type: 'emoji',
-        payload: { ...postState.emoji, emojis: sortedEmojis }
+        payload: { ...composeState.emoji, emojis: sortedEmojis }
       })
     }
   }, [emojisData])
@@ -89,60 +89,60 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
   return (
     <View style={styles.base}>
       <ProgressViewIOS
-        progress={postState.attachmentUploadProgress?.progress || 0}
+        progress={composeState.attachmentUploadProgress?.progress || 0}
         progressViewStyle='bar'
       />
       <FlatList
         keyboardShouldPersistTaps='handled'
         ListHeaderComponent={
           <>
-            {postState.spoiler.active ? (
+            {composeState.spoiler.active ? (
               <ComposeSpoilerInput
-                postState={postState}
-                postDispatch={postDispatch}
+                composeState={composeState}
+                composeDispatch={composeDispatch}
               />
             ) : null}
             <ComposeTextInput
-              postState={postState}
-              postDispatch={postDispatch}
+              composeState={composeState}
+              composeDispatch={composeDispatch}
               textInputRef={textInputRef}
             />
           </>
         }
         ListFooterComponent={
           <>
-            {postState.emoji.active && (
+            {composeState.emoji.active && (
               <View style={styles.emojis}>
                 <ComposeEmojis
                   textInputRef={textInputRef}
-                  postState={postState}
-                  postDispatch={postDispatch}
+                  composeState={composeState}
+                  composeDispatch={composeDispatch}
                 />
               </View>
             )}
 
-            {(postState.attachments.uploads.length > 0 ||
-              postState.attachmentUploadProgress) && (
+            {(composeState.attachments.uploads.length > 0 ||
+              composeState.attachmentUploadProgress) && (
               <View style={styles.attachments}>
                 <ComposeAttachments
-                  postState={postState}
-                  postDispatch={postDispatch}
+                  composeState={composeState}
+                  composeDispatch={composeDispatch}
                 />
               </View>
             )}
 
-            {postState.poll.active && (
+            {composeState.poll.active && (
               <View style={styles.poll}>
                 <ComposePoll
-                  postState={postState}
-                  postDispatch={postDispatch}
+                  composeState={composeState}
+                  composeDispatch={composeDispatch}
                 />
               </View>
             )}
           </>
         }
         ListEmptyComponent={listEmpty}
-        data={postState.tag && isSuccess ? data[postState.tag.type] : []}
+        data={composeState.tag && isSuccess ? data[composeState.tag.type] : []}
         renderItem={({ item, index }) => (
           <Pressable
             key={index}
@@ -152,18 +152,18 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
                 : 'spoiler'
               updateText({
                 origin: focusedInput,
-                postState: {
-                  ...postState,
+                composeState: {
+                  ...composeState,
                   [focusedInput]: {
-                    ...postState[focusedInput],
+                    ...composeState[focusedInput],
                     selection: {
-                      start: postState.tag!.offset,
+                      start: composeState.tag!.offset,
                       end:
-                        postState.tag!.offset + postState.tag!.text.length + 1
+                        composeState.tag!.offset + composeState.tag!.text.length + 1
                     }
                   }
                 },
-                postDispatch,
+                composeDispatch,
                 newText: item.acct ? `@${item.acct}` : `#${item.name}`,
                 type: 'suggestion'
               })
@@ -225,8 +225,8 @@ const ComposeRoot: React.FC<Props> = ({ postState, postDispatch }) => {
       />
       <ComposeActions
         textInputRef={textInputRef}
-        postState={postState}
-        postDispatch={postDispatch}
+        composeState={composeState}
+        composeDispatch={composeDispatch}
       />
     </View>
   )

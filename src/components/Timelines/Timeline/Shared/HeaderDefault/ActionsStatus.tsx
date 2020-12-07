@@ -1,8 +1,11 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { Alert } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
 import client from 'src/api/client'
 import { MenuContainer, MenuHeader, MenuRow } from 'src/components/Menu'
 import { toast } from 'src/components/toast'
+import getCurrentTab from 'src/utils/getCurrentTab'
 
 const fireMutation = async ({
   id,
@@ -62,6 +65,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
   status,
   setBottomSheetVisible
 }) => {
+  const navigation = useNavigation()
   const queryCache = useQueryCache()
   const [mutateAction] = useMutation(fireMutation, {
     onMutate: ({ id, type, stateKey, prevState }) => {
@@ -119,10 +123,38 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          console.warn('功能未开发')
+          Alert.alert(
+            '确认删除嘟嘟？',
+            '你确定要删除这条嘟文并重新编辑它吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。',
+            [
+              { text: '取消', style: 'cancel' },
+              {
+                text: '删除并重新编辑',
+                style: 'destructive',
+                onPress: async () => {
+                  await client({
+                    method: 'delete',
+                    instance: 'local',
+                    url: `statuses/${status.id}`
+                  })
+                    .then(res => {
+                      queryCache.invalidateQueries(queryKey)
+                      setBottomSheetVisible(false)
+                      navigation.navigate(getCurrentTab(navigation), {
+                        screen: 'Screen-Shared-Compose',
+                        params: { type: 'edit', incomingStatus: res.body }
+                      })
+                    })
+                    .catch(() => {
+                      toast({ type: 'error', content: '删除失败' })
+                    })
+                }
+              }
+            ]
+          )
         }}
         iconFront='trash'
-        title='删除并重发'
+        title='删除并重新编辑'
       />
       <MenuRow
         onPress={() => {
