@@ -43,7 +43,7 @@ declare namespace Mastodon {
     | AttachmentVideo
     | AttachmentGifv
     | AttachmentAudio
-    // | AttachmentUnknown
+  // | AttachmentUnknown
 
   type AttachmentImage = {
     // Base
@@ -265,6 +265,12 @@ declare namespace Mastodon {
     'posting:default:language'?: string
     'reading:expand:media'?: 'default' | 'show_all' | 'hide_all'
     'reading:expand:spoilers'?: boolean
+  }
+
+  type Results = {
+    accounts?: Account[]
+    statuses?: Status[]
+    hashtags?: Tag[]
   }
 
   type Status = {

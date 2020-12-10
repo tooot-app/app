@@ -19,5 +19,5 @@ export const searchFetch = async (
     url: 'search',
     params: { type, q: term, limit }
   })
-  return Promise.resolve(res.body)
+  return Promise.resolve(res.body[type])
 }

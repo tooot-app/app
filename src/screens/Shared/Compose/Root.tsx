@@ -1,5 +1,12 @@
 import { forEach, groupBy, sortBy } from 'lodash'
-import React, { Dispatch, useEffect, useMemo, useRef } from 'react'
+import React, {
+  Dispatch,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
 import {
   View,
   ActivityIndicator,
@@ -22,6 +29,7 @@ import ComposeActions from './Actions'
 import ComposeAttachments from './Attachments'
 import ComposeEmojis from './Emojis'
 import ComposePoll from './Poll'
+import ComposeReply from './Reply'
 import ComposeSpoilerInput from './SpoilerInput'
 import ComposeTextInput from './TextInput'
 import updateText from './updateText'
@@ -32,13 +40,91 @@ export interface Props {
   composeDispatch: Dispatch<PostAction>
 }
 
-const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
-  const { theme } = useTheme()
+const ListItem = React.memo(
+  ({
+    item,
+    composeState,
+    composeDispatch,
+    textInputRef
+  }: {
+    item: Mastodon.Account & Mastodon.Tag
+    composeState: ComposeState
+    composeDispatch: Dispatch<PostAction>
+    textInputRef: RefObject<TextInput>
+  }) => {
+    const { theme } = useTheme()
+    const onPress = useCallback(() => {
+      const focusedInput = textInputRef.current?.isFocused()
+        ? 'text'
+        : 'spoiler'
+      updateText({
+        origin: focusedInput,
+        composeState: {
+          ...composeState,
+          [focusedInput]: {
+            ...composeState[focusedInput],
+            selection: {
+              start: composeState.tag!.offset,
+              end: composeState.tag!.offset + composeState.tag!.text.length + 1
+            }
+          }
+        },
+        composeDispatch,
+        newText: item.acct ? `@${item.acct}` : `#${item.name}`,
+        type: 'suggestion'
+      })
+    }, [])
+    const children = useMemo(
+      () =>
+        item.acct ? (
+          <View style={[styles.account, { borderBottomColor: theme.border }]}>
+            <Image source={{ uri: item.avatar }} style={styles.accountAvatar} />
+            <View>
+              <Text style={[styles.accountName, { color: theme.primary }]}>
+                {item.emojis?.length ? (
+                  <Emojis
+                    content={item.display_name || item.username}
+                    emojis={item.emojis}
+                    size={StyleConstants.Font.Size.S}
+                  />
+                ) : (
+                  item.display_name || item.username
+                )}
+              </Text>
+              <Text style={[styles.accountAccount, { color: theme.primary }]}>
+                @{item.acct}
+              </Text>
+            </View>
+          </View>
+        ) : (
+          <View style={[styles.hashtag, { borderBottomColor: theme.border }]}>
+            <Text style={[styles.hashtagText, { color: theme.primary }]}>
+              #{item.name}
+            </Text>
+          </View>
+        ),
+      []
+    )
+    return (
+      <Pressable
+        key={item.url}
+        onPress={onPress}
+        style={styles.suggestion}
+        children={children}
+      />
+    )
+  },
+  () => true
+)
 
+const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
   const { isFetching, isSuccess, data, refetch } = useQuery(
     [
       'Search',
-      { type: composeState.tag?.type, term: composeState.tag?.text.substring(1) }
+      {
+        type: composeState.tag?.type,
+        term: composeState.tag?.text.substring(1)
+      }
     ],
     searchFetch,
     { enabled: false }
@@ -86,6 +172,128 @@ const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
     }
   }, [isFetching])
 
+  const listHeader = useMemo(() => {
+    return (
+      <>
+        {composeState.spoiler.active ? (
+          <ComposeSpoilerInput
+            composeState={composeState}
+            composeDispatch={composeDispatch}
+          />
+        ) : null}
+        <ComposeTextInput
+          composeState={composeState}
+          composeDispatch={composeDispatch}
+          textInputRef={textInputRef}
+        />
+      </>
+    )
+  }, [composeState.spoiler.active, composeState.text.formatted])
+
+  const listFooterEmojis = useMemo(
+    () =>
+      composeState.emoji.active && (
+        <View style={styles.emojis}>
+          <ComposeEmojis
+            textInputRef={textInputRef}
+            composeState={composeState}
+            composeDispatch={composeDispatch}
+          />
+        </View>
+      ),
+    [composeState.emoji.active]
+  )
+  const listFooterAttachments = useMemo(
+    () =>
+      (composeState.attachments.uploads.length > 0 ||
+        composeState.attachmentUploadProgress) && (
+        <View style={styles.attachments}>
+          <ComposeAttachments
+            composeState={composeState}
+            composeDispatch={composeDispatch}
+          />
+        </View>
+      ),
+    [composeState.attachments.uploads, composeState.attachmentUploadProgress]
+  )
+  // const listFooterPoll = useMemo(
+  //   () =>
+  //     composeState.poll.active && (
+  //       <View style={styles.poll}>
+  //         <ComposePoll
+  //           poll={composeState.poll}
+  //           composeDispatch={composeDispatch}
+  //         />
+  //       </View>
+  //     ),
+  //   [
+  //     composeState.poll.active,
+  //     composeState.poll.total,
+  //     composeState.poll.options['0'],
+  //     composeState.poll.options['1'],
+  //     composeState.poll.options['2'],
+  //     composeState.poll.options['3'],
+  //     composeState.poll.multiple,
+  //     composeState.poll.expire
+  //   ]
+  // )
+  const listFooterPoll = () =>
+    composeState.poll.active && (
+      <View style={styles.poll}>
+        <ComposePoll
+          poll={composeState.poll}
+          composeDispatch={composeDispatch}
+        />
+      </View>
+    )
+  const listFooterReply = useMemo(
+    () =>
+      composeState.replyToStatus && (
+        <View style={styles.replyTo}>
+          <ComposeReply replyToStatus={composeState.replyToStatus} />
+        </View>
+      ),
+    []
+  )
+  const listFooter = useMemo(() => {
+    return (
+      <>
+        {listFooterEmojis}
+        {listFooterAttachments}
+        {listFooterPoll()}
+        {listFooterReply}
+      </>
+    )
+  }, [
+    composeState.emoji.active,
+    composeState.attachments.uploads,
+    composeState.attachmentUploadProgress,
+    composeState.poll.active,
+    composeState.poll.total,
+    composeState.poll.options['0'],
+    composeState.poll.options['1'],
+    composeState.poll.options['2'],
+    composeState.poll.options['3'],
+    composeState.poll.multiple,
+    composeState.poll.expire
+  ])
+
+  const listKey = useCallback(
+    (item: Mastodon.Account | Mastodon.Tag) => item.url,
+    [isSuccess]
+  )
+  const listItem = useCallback(
+    ({ item }) =>
+      isSuccess ? (
+        <ListItem
+          item={item}
+          composeState={composeState}
+          composeDispatch={composeDispatch}
+          textInputRef={textInputRef}
+        />
+      ) : null,
+    [isSuccess]
+  )
   return (
     <View style={styles.base}>
       <ProgressViewIOS
@@ -94,134 +302,12 @@ const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
       />
       <FlatList
         keyboardShouldPersistTaps='handled'
-        ListHeaderComponent={
-          <>
-            {composeState.spoiler.active ? (
-              <ComposeSpoilerInput
-                composeState={composeState}
-                composeDispatch={composeDispatch}
-              />
-            ) : null}
-            <ComposeTextInput
-              composeState={composeState}
-              composeDispatch={composeDispatch}
-              textInputRef={textInputRef}
-            />
-          </>
-        }
-        ListFooterComponent={
-          <>
-            {composeState.emoji.active && (
-              <View style={styles.emojis}>
-                <ComposeEmojis
-                  textInputRef={textInputRef}
-                  composeState={composeState}
-                  composeDispatch={composeDispatch}
-                />
-              </View>
-            )}
-
-            {(composeState.attachments.uploads.length > 0 ||
-              composeState.attachmentUploadProgress) && (
-              <View style={styles.attachments}>
-                <ComposeAttachments
-                  composeState={composeState}
-                  composeDispatch={composeDispatch}
-                />
-              </View>
-            )}
-
-            {composeState.poll.active && (
-              <View style={styles.poll}>
-                <ComposePoll
-                  composeState={composeState}
-                  composeDispatch={composeDispatch}
-                />
-              </View>
-            )}
-          </>
-        }
+        ListHeaderComponent={listHeader}
+        ListFooterComponent={listFooter}
         ListEmptyComponent={listEmpty}
-        data={composeState.tag && isSuccess ? data[composeState.tag.type] : []}
-        renderItem={({ item, index }) => (
-          <Pressable
-            key={index}
-            onPress={() => {
-              const focusedInput = textInputRef.current?.isFocused()
-                ? 'text'
-                : 'spoiler'
-              updateText({
-                origin: focusedInput,
-                composeState: {
-                  ...composeState,
-                  [focusedInput]: {
-                    ...composeState[focusedInput],
-                    selection: {
-                      start: composeState.tag!.offset,
-                      end:
-                        composeState.tag!.offset + composeState.tag!.text.length + 1
-                    }
-                  }
-                },
-                composeDispatch,
-                newText: item.acct ? `@${item.acct}` : `#${item.name}`,
-                type: 'suggestion'
-              })
-            }}
-            style={styles.suggestion}
-          >
-            {item.acct ? (
-              <View
-                style={[
-                  styles.account,
-                  { borderBottomColor: theme.border },
-                  index === 0 && {
-                    borderTopWidth: StyleSheet.hairlineWidth,
-                    borderTopColor: theme.border
-                  }
-                ]}
-              >
-                <Image
-                  source={{ uri: item.avatar }}
-                  style={styles.accountAvatar}
-                />
-                <View>
-                  <Text style={[styles.accountName, { color: theme.primary }]}>
-                    {item.emojis.length ? (
-                      <Emojis
-                        content={item.display_name || item.username}
-                        emojis={item.emojis}
-                        size={StyleConstants.Font.Size.S}
-                      />
-                    ) : (
-                      item.display_name || item.username
-                    )}
-                  </Text>
-                  <Text
-                    style={[styles.accountAccount, { color: theme.primary }]}
-                  >
-                    @{item.acct}
-                  </Text>
-                </View>
-              </View>
-            ) : (
-              <View
-                style={[
-                  styles.hashtag,
-                  { borderBottomColor: theme.border },
-                  index === 0 && {
-                    borderTopWidth: StyleSheet.hairlineWidth,
-                    borderTopColor: theme.border
-                  }
-                ]}
-              >
-                <Text style={[styles.hashtagText, { color: theme.primary }]}>
-                  #{item.name}
-                </Text>
-              </View>
-            )}
-          </Pressable>
-        )}
+        data={data}
+        keyExtractor={listKey}
+        renderItem={listItem}
       />
       <ComposeActions
         textInputRef={textInputRef}
@@ -242,6 +328,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   poll: {
+    flex: 1,
+    padding: StyleConstants.Spacing.Global.PagePadding
+  },
+  replyTo: {
     flex: 1,
     padding: StyleConstants.Spacing.Global.PagePadding
   },

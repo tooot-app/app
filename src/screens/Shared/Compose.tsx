@@ -37,13 +37,12 @@ export type ComposeState = {
     formatted: ReactNode
     selection: { start: number; end: number }
   }
-  tag:
-    | {
-        type: 'url' | 'accounts' | 'hashtags'
-        text: string
-        offset: number
-      }
-    | undefined
+  tag?: {
+    type: 'url' | 'accounts' | 'hashtags'
+    text: string
+    offset: number
+    length: number
+  }
   emoji: {
     active: boolean
     emojis: { title: string; data: Mastodon.Emoji[] }[] | undefined
@@ -69,7 +68,7 @@ export type ComposeState = {
       | string
   }
   attachments: { sensitive: boolean; uploads: Mastodon.Attachment[] }
-  attachmentUploadProgress: { progress: number; aspect?: number } | undefined
+  attachmentUploadProgress?: { progress: number; aspect?: number }
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
   replyToStatus?: Mastodon.Status
 }
@@ -93,7 +92,7 @@ export type PostAction =
     }
   | {
       type: 'poll'
-      payload: ComposeState['poll']
+      payload: Partial<ComposeState['poll']>
     }
   | {
       type: 'attachments'
@@ -209,7 +208,8 @@ const composeExistingState = ({
           raw: replyPlaceholder,
           formatted: undefined,
           selection: { start: 0, end: 0 }
-        }
+        },
+        replyToStatus: incomingStatus.reblog || incomingStatus
       }
   }
 }
@@ -224,7 +224,7 @@ const postReducer = (state: ComposeState, action: PostAction): ComposeState => {
     case 'emoji':
       return { ...state, emoji: action.payload }
     case 'poll':
-      return { ...state, poll: action.payload }
+      return { ...state, poll: { ...state.poll, ...action.payload } }
     case 'attachments':
       return {
         ...state,

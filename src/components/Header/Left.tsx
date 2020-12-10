@@ -38,4 +38,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HeaderLeft
+export default React.memo(HeaderLeft, (prev, next) => {
+  let skipUpdate = true
+  skipUpdate = prev.text === next.text
+  skipUpdate = prev.icon === next.icon
+  return skipUpdate
+})

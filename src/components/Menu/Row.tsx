@@ -123,4 +123,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MenuRow
+export default React.memo(MenuRow, (prev, next) => {
+  let skipUpdate = true
+  skipUpdate = prev.content === next.content
+  return skipUpdate
+})

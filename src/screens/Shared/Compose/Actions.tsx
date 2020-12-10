@@ -1,13 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import React, { Dispatch, useCallback, useMemo } from 'react'
-import {
-  ActionSheetIOS,
-  Keyboard,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput
-} from 'react-native'
+import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, ComposeState } from '../Compose'
@@ -25,19 +18,6 @@ const ComposeActions: React.FC<Props> = ({
   composeDispatch
 }) => {
   const { theme } = useTheme()
-
-  const getVisibilityIcon = () => {
-    switch (composeState.visibility) {
-      case 'public':
-        return 'globe'
-      case 'unlisted':
-        return 'unlock'
-      case 'private':
-        return 'lock'
-      case 'direct':
-        return 'mail'
-    }
-  }
 
   const attachmentColor = useMemo(() => {
     if (composeState.poll.active) return theme.disabled
@@ -99,6 +79,54 @@ const ComposeActions: React.FC<Props> = ({
     composeState.attachmentUploadProgress
   ])
 
+  const visibilityIcon = useMemo(() => {
+    switch (composeState.visibility) {
+      case 'public':
+        return 'globe'
+      case 'unlisted':
+        return 'unlock'
+      case 'private':
+        return 'lock'
+      case 'direct':
+        return 'mail'
+    }
+  }, [composeState.visibility])
+  const visibilityOnPress = useCallback(
+    () =>
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['公开', '不公开', '仅关注着', '私信', '取消'],
+          cancelButtonIndex: 4
+        },
+        buttonIndex => {
+          switch (buttonIndex) {
+            case 0:
+              composeDispatch({ type: 'visibility', payload: 'public' })
+              break
+            case 1:
+              composeDispatch({ type: 'visibility', payload: 'unlisted' })
+              break
+            case 2:
+              composeDispatch({ type: 'visibility', payload: 'private' })
+              break
+            case 3:
+              composeDispatch({ type: 'visibility', payload: 'direct' })
+              break
+          }
+        }
+      ),
+    []
+  )
+
+  const spoilerOnPress = useCallback(
+    () =>
+      composeDispatch({
+        type: 'spoiler',
+        payload: { active: !composeState.spoiler.active }
+      }),
+    [composeState.spoiler.active]
+  )
+
   const emojiColor = useMemo(() => {
     if (!composeState.emoji.emojis) return theme.disabled
     if (composeState.emoji.active) {
@@ -124,12 +152,11 @@ const ComposeActions: React.FC<Props> = ({
   }, [composeState.emoji.active, composeState.emoji.emojis])
 
   return (
-    <Pressable
+    <View
       style={[
         styles.additions,
         { backgroundColor: theme.background, borderTopColor: theme.border }
       ]}
-      onPress={() => Keyboard.dismiss()}
     >
       <Feather
         name='aperture'
@@ -144,44 +171,16 @@ const ComposeActions: React.FC<Props> = ({
         onPress={pollOnPress}
       />
       <Feather
-        name={getVisibilityIcon()}
+        name={visibilityIcon}
         size={24}
         color={theme.secondary}
-        onPress={() =>
-          ActionSheetIOS.showActionSheetWithOptions(
-            {
-              options: ['公开', '不公开', '仅关注着', '私信', '取消'],
-              cancelButtonIndex: 4
-            },
-            buttonIndex => {
-              switch (buttonIndex) {
-                case 0:
-                  composeDispatch({ type: 'visibility', payload: 'public' })
-                  break
-                case 1:
-                  composeDispatch({ type: 'visibility', payload: 'unlisted' })
-                  break
-                case 2:
-                  composeDispatch({ type: 'visibility', payload: 'private' })
-                  break
-                case 3:
-                  composeDispatch({ type: 'visibility', payload: 'direct' })
-                  break
-              }
-            }
-          )
-        }
+        onPress={visibilityOnPress}
       />
       <Feather
         name='alert-triangle'
         size={24}
         color={composeState.spoiler.active ? theme.primary : theme.secondary}
-        onPress={() =>
-          composeDispatch({
-            type: 'spoiler',
-            payload: { active: !composeState.spoiler.active }
-          })
-        }
+        onPress={spoilerOnPress}
       />
       <Feather
         name='smile'
@@ -189,7 +188,7 @@ const ComposeActions: React.FC<Props> = ({
         color={emojiColor}
         onPress={emojiOnPress}
       />
-    </Pressable>
+    </View>
   )
 }
 

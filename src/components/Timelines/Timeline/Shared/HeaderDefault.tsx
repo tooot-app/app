@@ -15,7 +15,7 @@ import HeaderDefaultActionsStatus from './HeaderDefault/ActionsStatus'
 import HeaderDefaultActionsDomain from './HeaderDefault/ActionsDomain'
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey?: App.QueryKey
   status: Mastodon.Status
 }
 
@@ -83,11 +83,13 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
             @{account}
           </Text>
         </View>
-        <Pressable
-          style={styles.action}
-          onPress={onPressAction}
-          children={pressableAction}
-        />
+        {queryKey && (
+          <Pressable
+            style={styles.action}
+            onPress={onPressAction}
+            children={pressableAction}
+          />
+        )}
       </View>
 
       <View style={styles.meta}>
@@ -116,35 +118,37 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
         )}
       </View>
 
-      <BottomSheet
-        visible={modalVisible}
-        handleDismiss={() => setBottomSheetVisible(false)}
-      >
-        {status.account.id !== localAccountId && (
-          <HeaderDefaultActionsAccount
-            queryKey={queryKey}
-            accountId={status.account.id}
-            account={status.account.acct}
-            setBottomSheetVisible={setBottomSheetVisible}
-          />
-        )}
+      {queryKey && (
+        <BottomSheet
+          visible={modalVisible}
+          handleDismiss={() => setBottomSheetVisible(false)}
+        >
+          {status.account.id !== localAccountId && (
+            <HeaderDefaultActionsAccount
+              queryKey={queryKey}
+              accountId={status.account.id}
+              account={status.account.acct}
+              setBottomSheetVisible={setBottomSheetVisible}
+            />
+          )}
 
-        {status.account.id === localAccountId && (
-          <HeaderDefaultActionsStatus
-            queryKey={queryKey}
-            status={status}
-            setBottomSheetVisible={setBottomSheetVisible}
-          />
-        )}
+          {status.account.id === localAccountId && (
+            <HeaderDefaultActionsStatus
+              queryKey={queryKey}
+              status={status}
+              setBottomSheetVisible={setBottomSheetVisible}
+            />
+          )}
 
-        {domain !== localDomain && (
-          <HeaderDefaultActionsDomain
-            queryKey={queryKey}
-            domain={domain}
-            setBottomSheetVisible={setBottomSheetVisible}
-          />
-        )}
-      </BottomSheet>
+          {domain !== localDomain && (
+            <HeaderDefaultActionsDomain
+              queryKey={queryKey}
+              domain={domain}
+              setBottomSheetVisible={setBottomSheetVisible}
+            />
+          )}
+        </BottomSheet>
+      )}
     </View>
   )
 }

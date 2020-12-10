@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject } from 'react'
+import React, { Dispatch } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
@@ -8,13 +8,11 @@ import formatText from './formatText'
 export interface Props {
   composeState: ComposeState
   composeDispatch: Dispatch<PostAction>
-  // textInputRef: RefObject<TextInput>
 }
 
 const ComposeSpoilerInput: React.FC<Props> = ({
   composeState,
   composeDispatch,
-  // textInputRef
 }) => {
   const { theme } = useTheme()
 

@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react'
+import React, { Dispatch, useCallback, useMemo } from 'react'
 import {
   Image,
   Pressable,
@@ -20,57 +20,70 @@ export interface Props {
   composeDispatch: Dispatch<PostAction>
 }
 
-const ComposeEmojis: React.FC<Props> = ({
+const SingleEmoji = ({
+  emoji,
   textInputRef,
   composeState,
   composeDispatch
-}) => {
+}: { emoji: Mastodon.Emoji } & Props) => {
+  const onPress = useCallback(() => {
+    updateText({
+      origin: textInputRef.current?.isFocused() ? 'text' : 'spoiler',
+      composeState,
+      composeDispatch,
+      newText: `:${emoji.shortcode}:`,
+      type: 'emoji'
+    })
+    composeDispatch({
+      type: 'emoji',
+      payload: { ...composeState.emoji, active: false }
+    })
+  }, [])
+  const children = useMemo(
+    () => <Image source={{ uri: emoji.url }} style={styles.emoji} />,
+    []
+  )
+  return (
+    <Pressable key={emoji.shortcode} onPress={onPress} children={children} />
+  )
+}
+
+const ComposeEmojis: React.FC<Props> = ({ ...props }) => {
   const { theme } = useTheme()
+
+  const listHeader = useCallback(
+    ({ section: { title } }) => (
+      <Text style={[styles.group, { color: theme.secondary }]}>{title}</Text>
+    ),
+    []
+  )
+
+  const emojiList = useCallback(
+    section =>
+      section.data.map((emoji: Mastodon.Emoji) => (
+        <SingleEmoji key={emoji.shortcode} emoji={emoji} {...props} />
+      )),
+    []
+  )
+  const listItem = useCallback(
+    ({ section, index }) =>
+      index === 0 ? (
+        <View key={section.title} style={styles.emojis}>
+          {emojiList(section)}
+        </View>
+      ) : null,
+    []
+  )
 
   return (
     <View style={styles.base}>
       <SectionList
         horizontal
         keyboardShouldPersistTaps='handled'
-        sections={composeState.emoji.emojis!}
+        sections={props.composeState.emoji.emojis!}
         keyExtractor={item => item.shortcode}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={[styles.group, { color: theme.secondary }]}>
-            {title}
-          </Text>
-        )}
-        renderItem={({ section, index }) => {
-          if (index === 0) {
-            return (
-              <View key={section.title} style={styles.emojis}>
-                {section.data.map(emoji => (
-                  <Pressable
-                    key={emoji.shortcode}
-                    onPress={() => {
-                      updateText({
-                        origin: textInputRef.current?.isFocused()
-                          ? 'text'
-                          : 'spoiler',
-                        composeState,
-                        composeDispatch,
-                        newText: `:${emoji.shortcode}:`,
-                        type: 'emoji'
-                      })
-                      composeDispatch({
-                        type: 'emoji',
-                        payload: { ...composeState.emoji, active: false }
-                      })
-                    }}
-                  >
-                    <Image source={{ uri: emoji.url }} style={styles.emoji} />
-                  </Pressable>
-                ))}
-              </View>
-            )
-          } else {
-            return null
-          }
-        }}
+        renderSectionHeader={listHeader}
+        renderItem={listItem}
       />
     </View>
   )

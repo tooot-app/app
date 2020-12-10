@@ -79,4 +79,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ButtonRow
+export default React.memo(ButtonRow, (prev, next) => {
+  let skipUpdate = true
+  skipUpdate = prev.disabled === next.disabled
+  return skipUpdate
+})

@@ -60,4 +60,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HeaderRight
+export default React.memo(HeaderRight, (prev, next) => {
+  let skipUpdate = true
+  skipUpdate = prev.disabled === next.disabled
+  skipUpdate = prev.text === next.text
+  skipUpdate = prev.icon === next.icon
+  return skipUpdate
+})

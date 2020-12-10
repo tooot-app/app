@@ -46,7 +46,10 @@ const ComposeTextInput: React.FC<Props> = ({
           selection: { start, end }
         }
       }) => {
-        composeDispatch({ type: 'text', payload: { selection: { start, end } } })
+        composeDispatch({
+          type: 'text',
+          payload: { selection: { start, end } }
+        })
       }}
       ref={textInputRef}
       scrollEnabled
@@ -70,5 +73,6 @@ const styles = StyleSheet.create({
 export default React.memo(
   ComposeTextInput,
   (prev, next) =>
+    prev.composeState.text.raw === next.composeState.text.raw &&
     prev.composeState.text.formatted === next.composeState.text.formatted
 )
