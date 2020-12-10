@@ -1,22 +1,13 @@
 import { Feather } from '@expo/vector-icons'
-import React, { Dispatch, useCallback, useMemo } from 'react'
-import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
+import React, { useCallback, useContext, useMemo } from 'react'
+import { ActionSheetIOS, StyleSheet, View } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import addAttachments from './addAttachments'
 
-export interface Props {
-  textInputRef: React.RefObject<TextInput>
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-}
-
-const ComposeActions: React.FC<Props> = ({
-  textInputRef,
-  composeState,
-  composeDispatch
-}) => {
+const ComposeActions: React.FC = () => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   const attachmentColor = useMemo(() => {
@@ -71,7 +62,7 @@ const ComposeActions: React.FC<Props> = ({
       })
     }
     if (composeState.poll.active) {
-      textInputRef.current?.focus()
+      composeState.textInputFocus.refs.text.current?.focus()
     }
   }, [
     composeState.poll.active,

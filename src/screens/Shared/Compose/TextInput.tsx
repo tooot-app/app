@@ -1,21 +1,12 @@
-import React, { Dispatch, RefObject } from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import formatText from './formatText'
 
-export interface Props {
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-  textInputRef: RefObject<TextInput>
-}
-
-const ComposeTextInput: React.FC<Props> = ({
-  composeState,
-  composeDispatch,
-  textInputRef
-}) => {
+const ComposeTextInput: React.FC = () => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   return (
@@ -36,9 +27,15 @@ const ComposeTextInput: React.FC<Props> = ({
       placeholderTextColor={theme.secondary}
       onChangeText={content =>
         formatText({
-          origin: 'text',
+          textInput: 'text',
           composeDispatch,
           content
+        })
+      }
+      onFocus={() =>
+        composeDispatch({
+          type: 'textInputFocus',
+          payload: { current: 'text' }
         })
       }
       onSelectionChange={({
@@ -51,7 +48,7 @@ const ComposeTextInput: React.FC<Props> = ({
           payload: { selection: { start, end } }
         })
       }}
-      ref={textInputRef}
+      ref={composeState.textInputFocus.refs.text}
       scrollEnabled
     >
       <Text>{composeState.text.formatted}</Text>
@@ -70,9 +67,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(
-  ComposeTextInput,
-  (prev, next) =>
-    prev.composeState.text.raw === next.composeState.text.raw &&
-    prev.composeState.text.formatted === next.composeState.text.formatted
-)
+export default ComposeTextInput

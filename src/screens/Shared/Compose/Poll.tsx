@@ -1,22 +1,20 @@
-import React, { Dispatch, useCallback, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { ButtonRow } from 'src/components/Button'
 import { MenuContainer, MenuRow } from 'src/components/Menu'
 
-export interface Props {
-  poll: ComposeState['poll']
-  composeDispatch: Dispatch<PostAction>
-}
-
-const ComposePoll: React.FC<Props> = ({
-  poll: { total, options, multiple, expire },
-  composeDispatch
-}) => {
+const ComposePoll: React.FC = () => {
+  const {
+    composeState: {
+      poll: { total, options, multiple, expire }
+    },
+    composeDispatch
+  } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   const expireMapping: { [key: string]: string } = {
@@ -33,24 +31,6 @@ const ComposePoll: React.FC<Props> = ({
   useEffect(() => {
     setFirstRender(false)
   }, [])
-
-  const minusOnPress = useCallback(
-    () =>
-      total > 2 &&
-      composeDispatch({
-        type: 'poll',
-        payload: { total: total - 1 }
-      }),
-    [total]
-  )
-  console.log('total: ', total)
-  const plusOnPress = useCallback(() => {
-    total < 4 &&
-      composeDispatch({
-        type: 'poll',
-        payload: { total: total + 1 }
-      })
-  }, [total])
 
   return (
     <View style={[styles.base, { borderColor: theme.border }]}>
@@ -101,14 +81,28 @@ const ComposePoll: React.FC<Props> = ({
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>
           <ButtonRow
-            onPress={minusOnPress}
+            key={total + 'minus'}
+            onPress={() => {
+              total > 2 &&
+                composeDispatch({
+                  type: 'poll',
+                  payload: { total: total - 1 }
+                })
+            }}
             icon='minus'
             disabled={!(total > 2)}
             buttonSize='S'
           />
         </View>
         <ButtonRow
-          onPress={plusOnPress}
+          key={total + 'plus'}
+          onPress={() => {
+            total < 4 &&
+              composeDispatch({
+                type: 'poll',
+                payload: { total: total + 1 }
+              })
+          }}
           icon='plus'
           disabled={!(total < 4)}
           buttonSize='S'

@@ -16,14 +16,14 @@ setConsole({
   error: console.warn
 })
 
-if (__DEV__) {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-    trackHooks: true,
-    hotReloadBufferMs: 1000
-  })
-}
+// if (__DEV__) {
+//   const whyDidYouRender = require('@welldone-software/why-did-you-render')
+//   whyDidYouRender(React, {
+//     trackAllPureComponents: true,
+//     trackHooks: true,
+//     hotReloadBufferMs: 1000
+//   })
+// }
 
 const App: React.FC = () => {
   return (

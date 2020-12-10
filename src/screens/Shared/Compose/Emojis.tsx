@@ -1,34 +1,22 @@
-import React, { Dispatch, useCallback, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import {
   Image,
   Pressable,
   SectionList,
   StyleSheet,
   Text,
-  TextInput,
   View
 } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import updateText from './updateText'
 
-export interface Props {
-  textInputRef: React.RefObject<TextInput>
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-}
-
-const SingleEmoji = ({
-  emoji,
-  textInputRef,
-  composeState,
-  composeDispatch
-}: { emoji: Mastodon.Emoji } & Props) => {
+const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
   const onPress = useCallback(() => {
     updateText({
-      origin: textInputRef.current?.isFocused() ? 'text' : 'spoiler',
       composeState,
       composeDispatch,
       newText: `:${emoji.shortcode}:`,
@@ -48,7 +36,8 @@ const SingleEmoji = ({
   )
 }
 
-const ComposeEmojis: React.FC<Props> = ({ ...props }) => {
+const ComposeEmojis: React.FC = () => {
+  const { composeState } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   const listHeader = useCallback(
@@ -61,7 +50,7 @@ const ComposeEmojis: React.FC<Props> = ({ ...props }) => {
   const emojiList = useCallback(
     section =>
       section.data.map((emoji: Mastodon.Emoji) => (
-        <SingleEmoji key={emoji.shortcode} emoji={emoji} {...props} />
+        <SingleEmoji key={emoji.shortcode} emoji={emoji} />
       )),
     []
   )
@@ -80,7 +69,7 @@ const ComposeEmojis: React.FC<Props> = ({ ...props }) => {
       <SectionList
         horizontal
         keyboardShouldPersistTaps='handled'
-        sections={props.composeState.emoji.emojis!}
+        sections={composeState.emoji.emojis!}
         keyExtractor={item => item.shortcode}
         renderSectionHeader={listHeader}
         renderItem={listItem}
@@ -116,4 +105,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ComposeEmojis
+export default React.memo(ComposeEmojis, () => true)

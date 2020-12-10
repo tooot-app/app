@@ -349,4 +349,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(ComposeEditAttachment, () => true)
+export default ComposeEditAttachment

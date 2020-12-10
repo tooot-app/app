@@ -7,7 +7,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 import { PostAction, ComposeState } from '../Compose'
 
 export interface Params {
-  origin: 'text' | 'spoiler'
+  textInput: ComposeState['textInputFocus']['current']
   composeDispatch: Dispatch<PostAction>
   content: string
   refetch?: (options?: RefetchOptions | undefined) => Promise<any>
@@ -33,7 +33,7 @@ const debouncedSuggestions = debounce(
 let prevTags: ComposeState['tag'][] = []
 
 const formatText = ({
-  origin,
+  textInput,
   composeDispatch,
   content,
   disableDebounce = false
@@ -108,7 +108,7 @@ const formatText = ({
   contentLength = contentLength + _content.length
 
   composeDispatch({
-    type: origin,
+    type: textInput,
     payload: {
       count: contentLength,
       raw: content,

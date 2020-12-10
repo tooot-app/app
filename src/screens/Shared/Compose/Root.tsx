@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   RefObject,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef
@@ -24,21 +25,12 @@ import { emojisFetch } from 'src/utils/fetches/emojisFetch'
 import { searchFetch } from 'src/utils/fetches/searchFetch'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '../Compose'
+import { PostAction, ComposeState, ComposeContext } from '../Compose'
 import ComposeActions from './Actions'
-import ComposeAttachments from './Attachments'
-import ComposeEmojis from './Emojis'
-import ComposePoll from './Poll'
-import ComposeReply from './Reply'
-import ComposeSpoilerInput from './SpoilerInput'
-import ComposeTextInput from './TextInput'
 import updateText from './updateText'
 import * as Permissions from 'expo-permissions'
-
-export interface Props {
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-}
+import ComposeRootFooter from './Root/Footer'
+import ComposeRootHeader from './Root/Header'
 
 const ListItem = React.memo(
   ({
@@ -58,7 +50,6 @@ const ListItem = React.memo(
         ? 'text'
         : 'spoiler'
       updateText({
-        origin: focusedInput,
         composeState: {
           ...composeState,
           [focusedInput]: {
@@ -117,7 +108,9 @@ const ListItem = React.memo(
   () => true
 )
 
-const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
+const ComposeRoot: React.FC = () => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
+
   const { isFetching, isSuccess, data, refetch } = useQuery(
     [
       'Search',
@@ -172,112 +165,6 @@ const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
     }
   }, [isFetching])
 
-  const listHeader = useMemo(() => {
-    return (
-      <>
-        {composeState.spoiler.active ? (
-          <ComposeSpoilerInput
-            composeState={composeState}
-            composeDispatch={composeDispatch}
-          />
-        ) : null}
-        <ComposeTextInput
-          composeState={composeState}
-          composeDispatch={composeDispatch}
-          textInputRef={textInputRef}
-        />
-      </>
-    )
-  }, [composeState.spoiler.active, composeState.text.formatted])
-
-  const listFooterEmojis = useMemo(
-    () =>
-      composeState.emoji.active && (
-        <View style={styles.emojis}>
-          <ComposeEmojis
-            textInputRef={textInputRef}
-            composeState={composeState}
-            composeDispatch={composeDispatch}
-          />
-        </View>
-      ),
-    [composeState.emoji.active]
-  )
-  const listFooterAttachments = useMemo(
-    () =>
-      (composeState.attachments.uploads.length > 0 ||
-        composeState.attachmentUploadProgress) && (
-        <View style={styles.attachments}>
-          <ComposeAttachments
-            composeState={composeState}
-            composeDispatch={composeDispatch}
-          />
-        </View>
-      ),
-    [composeState.attachments.uploads, composeState.attachmentUploadProgress]
-  )
-  // const listFooterPoll = useMemo(
-  //   () =>
-  //     composeState.poll.active && (
-  //       <View style={styles.poll}>
-  //         <ComposePoll
-  //           poll={composeState.poll}
-  //           composeDispatch={composeDispatch}
-  //         />
-  //       </View>
-  //     ),
-  //   [
-  //     composeState.poll.active,
-  //     composeState.poll.total,
-  //     composeState.poll.options['0'],
-  //     composeState.poll.options['1'],
-  //     composeState.poll.options['2'],
-  //     composeState.poll.options['3'],
-  //     composeState.poll.multiple,
-  //     composeState.poll.expire
-  //   ]
-  // )
-  const listFooterPoll = () =>
-    composeState.poll.active && (
-      <View style={styles.poll}>
-        <ComposePoll
-          poll={composeState.poll}
-          composeDispatch={composeDispatch}
-        />
-      </View>
-    )
-  const listFooterReply = useMemo(
-    () =>
-      composeState.replyToStatus && (
-        <View style={styles.replyTo}>
-          <ComposeReply replyToStatus={composeState.replyToStatus} />
-        </View>
-      ),
-    []
-  )
-  const listFooter = useMemo(() => {
-    return (
-      <>
-        {listFooterEmojis}
-        {listFooterAttachments}
-        {listFooterPoll()}
-        {listFooterReply}
-      </>
-    )
-  }, [
-    composeState.emoji.active,
-    composeState.attachments.uploads,
-    composeState.attachmentUploadProgress,
-    composeState.poll.active,
-    composeState.poll.total,
-    composeState.poll.options['0'],
-    composeState.poll.options['1'],
-    composeState.poll.options['2'],
-    composeState.poll.options['3'],
-    composeState.poll.multiple,
-    composeState.poll.expire
-  ])
-
   const listKey = useCallback(
     (item: Mastodon.Account | Mastodon.Tag) => item.url,
     [isSuccess]
@@ -302,18 +189,14 @@ const ComposeRoot: React.FC<Props> = ({ composeState, composeDispatch }) => {
       />
       <FlatList
         keyboardShouldPersistTaps='handled'
-        ListHeaderComponent={listHeader}
-        ListFooterComponent={listFooter}
+        ListHeaderComponent={<ComposeRootHeader textInputRef={textInputRef} />}
+        ListFooterComponent={<ComposeRootFooter textInputRef={textInputRef} />}
         ListEmptyComponent={listEmpty}
         data={data}
         keyExtractor={listKey}
         renderItem={listItem}
       />
-      <ComposeActions
-        textInputRef={textInputRef}
-        composeState={composeState}
-        composeDispatch={composeDispatch}
-      />
+      <ComposeActions />
     </View>
   )
 }
@@ -323,18 +206,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   contentView: { flex: 1 },
-
-  attachments: {
-    flex: 1
-  },
-  poll: {
-    flex: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding
-  },
-  replyTo: {
-    flex: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding
-  },
   suggestion: {
     flex: 1
   },
@@ -374,9 +245,6 @@ const styles = StyleSheet.create({
     fontSize: StyleConstants.Font.Size.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
-  },
-  emojis: {
-    flex: 1
   }
 })
 

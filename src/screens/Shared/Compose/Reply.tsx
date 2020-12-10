@@ -1,6 +1,5 @@
-import React, { Dispatch, RefObject } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
+import React, { useContext } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import TimelineAttachment from 'src/components/Timelines/Timeline/Shared/Attachment'
@@ -8,26 +7,26 @@ import TimelineAvatar from 'src/components/Timelines/Timeline/Shared/Avatar'
 import TimelineCard from 'src/components/Timelines/Timeline/Shared/Card'
 import TimelineContent from 'src/components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderDefault from 'src/components/Timelines/Timeline/Shared/HeaderDefault'
+import { ComposeContext } from '../Compose'
 
-export interface Props {
-  replyToStatus: Mastodon.Status
-}
-
-const ComposeReply: React.FC<Props> = ({ replyToStatus }) => {
+const ComposeReply: React.FC = () => {
+  const {
+    composeState: { replyToStatus }
+  } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   return (
     <View style={styles.status}>
-      <TimelineAvatar account={replyToStatus.account} />
+      <TimelineAvatar account={replyToStatus!.account} />
       <View style={styles.details}>
-        <TimelineHeaderDefault status={replyToStatus} />
-        {replyToStatus.content.length > 0 && (
-          <TimelineContent status={replyToStatus} />
+        <TimelineHeaderDefault status={replyToStatus!} />
+        {replyToStatus!.content.length > 0 && (
+          <TimelineContent status={replyToStatus!} />
         )}
-        {replyToStatus.media_attachments.length > 0 && (
-          <TimelineAttachment status={replyToStatus} width={200} />
+        {replyToStatus!.media_attachments.length > 0 && (
+          <TimelineAttachment status={replyToStatus!} width={200} />
         )}
-        {replyToStatus.card && <TimelineCard card={replyToStatus.card} />}
+        {replyToStatus!.card && <TimelineCard card={replyToStatus!.card} />}
       </View>
     </View>
   )

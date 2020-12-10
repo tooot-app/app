@@ -1,11 +1,22 @@
-import React, { ReactNode, useEffect, useReducer, useState } from 'react'
+import React, {
+  createContext,
+  createRef,
+  Dispatch,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from 'react'
 import {
   ActivityIndicator,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
-  Text
+  Text,
+  TextInput
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -67,10 +78,17 @@ export type ComposeState = {
       | '604800'
       | string
   }
-  attachments: { sensitive: boolean; uploads: Mastodon.Attachment[] }
+  attachments: {
+    sensitive: boolean
+    uploads: (Mastodon.Attachment & { local_url?: string })[]
+  }
   attachmentUploadProgress?: { progress: number; aspect?: number }
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
   replyToStatus?: Mastodon.Status
+  textInputFocus: {
+    current: 'text' | 'spoiler'
+    refs: { text: RefObject<TextInput>; spoiler: RefObject<TextInput> }
+  }
 }
 
 export type PostAction =
@@ -110,6 +128,10 @@ export type PostAction =
       type: 'visibility'
       payload: ComposeState['visibility']
     }
+  | {
+      type: 'textInputFocus'
+      payload: Partial<ComposeState['textInputFocus']>
+    }
 
 const composeInitialState: ComposeState = {
   spoiler: {
@@ -145,7 +167,11 @@ const composeInitialState: ComposeState = {
     getLocalAccountPreferences(store.getState())[
       'posting:default:visibility'
     ] || 'public',
-  replyToStatus: undefined
+  replyToStatus: undefined,
+  textInputFocus: {
+    current: 'text',
+    refs: { text: createRef(), spoiler: createRef() }
+  }
 }
 const composeExistingState = ({
   type,
@@ -244,10 +270,21 @@ const postReducer = (state: ComposeState, action: PostAction): ComposeState => {
       }
     case 'visibility':
       return { ...state, visibility: action.payload }
+    case 'textInputFocus':
+      return {
+        ...state,
+        textInputFocus: { ...state.textInputFocus, ...action.payload }
+      }
     default:
       throw new Error('Unexpected action')
   }
 }
+
+type ContextType = {
+  composeState: ComposeState
+  composeDispatch: Dispatch<PostAction>
+}
+export const ComposeContext = createContext<ContextType>({} as ContextType)
 
 export interface Props {
   route: {
@@ -298,14 +335,14 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
       case 'edit':
         if (params.incomingStatus.spoiler_text) {
           formatText({
-            origin: 'spoiler',
+            textInput: 'spoiler',
             composeDispatch,
             content: params.incomingStatus.spoiler_text,
             disableDebounce: true
           })
         }
         formatText({
-          origin: 'text',
+          textInput: 'text',
           composeDispatch,
           content: params.incomingStatus.text!,
           disableDebounce: true
@@ -313,7 +350,7 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
         break
       case 'reply':
         formatText({
-          origin: 'text',
+          textInput: 'text',
           composeDispatch,
           content: `@${
             params.incomingStatus.reblog
@@ -429,6 +466,8 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
+  // doesn't work
+  const rawCount = composeState.text.raw.length
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
@@ -475,18 +514,17 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
                   <HeaderRight
                     onPress={async () => tootPost()}
                     text='发嘟嘟'
-                    disabled={
-                      composeState.text.raw.length < 1 || totalTextCount > 500
-                    }
+                    disabled={rawCount < 1 || totalTextCount > 500}
                   />
                 )
             }}
           >
             {() => (
-              <ComposeRoot
-                composeState={composeState}
-                composeDispatch={composeDispatch}
-              />
+              <ComposeContext.Provider
+                value={{ composeState, composeDispatch }}
+              >
+                <ComposeRoot />
+              </ComposeContext.Provider>
             )}
           </Stack.Screen>
         </Stack.Navigator>
@@ -502,4 +540,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(Compose, () => true)
+export default Compose

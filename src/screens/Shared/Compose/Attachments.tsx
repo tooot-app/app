@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import {
   FlatList,
   Image,
@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
@@ -19,12 +19,8 @@ import { Feather } from '@expo/vector-icons'
 
 const DEFAULT_HEIGHT = 200
 
-export interface Props {
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-}
-
-const ComposeAttachments: React.FC<Props> = ({ composeState, composeDispatch }) => {
+const ComposeAttachments: React.FC = () => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
   const navigation = useNavigation()
 
@@ -106,7 +102,8 @@ const ComposeAttachments: React.FC<Props> = ({ composeState, composeDispatch }) 
         style={styles.progressContainer}
         visible={composeState.attachmentUploadProgress === undefined}
         width={
-          (composeState.attachmentUploadProgress?.aspect || 3 / 2) * DEFAULT_HEIGHT
+          (composeState.attachmentUploadProgress?.aspect || 3 / 2) *
+          DEFAULT_HEIGHT
         }
         height={200}
       >

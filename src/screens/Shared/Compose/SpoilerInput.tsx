@@ -1,19 +1,12 @@
-import React, { Dispatch } from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from 'src/utils/styles/constants'
 import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '../Compose'
+import { ComposeContext } from '../Compose'
 import formatText from './formatText'
 
-export interface Props {
-  composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
-}
-
-const ComposeSpoilerInput: React.FC<Props> = ({
-  composeState,
-  composeDispatch,
-}) => {
+const ComposeSpoilerInput: React.FC = () => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   return (
@@ -34,7 +27,7 @@ const ComposeSpoilerInput: React.FC<Props> = ({
       placeholderTextColor={theme.secondary}
       onChangeText={content =>
         formatText({
-          origin: 'spoiler',
+          textInput: 'spoiler',
           composeDispatch,
           content
         })
@@ -49,7 +42,7 @@ const ComposeSpoilerInput: React.FC<Props> = ({
           payload: { selection: { start, end } }
         })
       }}
-      // ref={textInputRef}
+      ref={composeState.textInputFocus.refs.spoiler}
       scrollEnabled
     >
       <Text>{composeState.spoiler.formatted}</Text>
@@ -68,8 +61,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(
-  ComposeSpoilerInput,
-  (prev, next) =>
-    prev.composeState.spoiler.formatted === next.composeState.spoiler.formatted
-)
+export default ComposeSpoilerInput
