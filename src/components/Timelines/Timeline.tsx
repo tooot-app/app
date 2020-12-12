@@ -39,7 +39,16 @@ const Timeline: React.FC<Props> = ({
     return () => AppState.removeEventListener('change', handleAppStateChange)
   })
 
-  const queryKey: App.QueryKey = [page, { page, hashtag, list, toot, account }]
+  const queryKey: App.QueryKey = [
+    page,
+    {
+      page,
+      ...(hashtag && { hashtag }),
+      ...(list && { list }),
+      ...(toot && { toot }),
+      ...(account && { account })
+    }
+  ]
   const {
     isSuccess,
     isLoading,
@@ -50,7 +59,14 @@ const Timeline: React.FC<Props> = ({
     fetchMore,
     refetch
   } = useInfiniteQuery(queryKey, timelineFetch, {
-    getFetchMore: last => last?.toots.length > 0
+    getFetchMore: (last, all) => {
+      const allLastGroup = all[all.length - 1]!
+      return (
+        last?.toots.length > 0 &&
+        allLastGroup.toots[allLastGroup.toots.length - 1].id !==
+          last?.toots[last?.toots.length - 1].id
+      )
+    }
   })
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
@@ -71,7 +87,7 @@ const Timeline: React.FC<Props> = ({
   const flRenderItem = useCallback(({ item }) => {
     switch (page) {
       case 'Conversations':
-        return <TimelineConversation item={item} />
+        return <TimelineConversation item={item} queryKey={queryKey} />
       case 'Notifications':
         return <TimelineNotifications notification={item} queryKey={queryKey} />
       default:
