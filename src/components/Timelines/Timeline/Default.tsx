@@ -32,7 +32,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   const pressableToot = useCallback(
     () =>
       navigation.navigate('Screen-Shared-Toot', {
-        toot: actualStatus.id
+        toot: actualStatus
       }),
     []
   )

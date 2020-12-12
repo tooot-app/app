@@ -8,7 +8,7 @@ import { StyleConstants } from 'src/utils/styles/constants'
 export interface Props {
   onPress: () => void
   text?: string
-  icon?: string
+  icon?: any
 }
 
 const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
@@ -38,9 +38,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(HeaderLeft, (prev, next) => {
-  let skipUpdate = true
-  skipUpdate = prev.text === next.text
-  skipUpdate = prev.icon === next.icon
-  return skipUpdate
-})
+export default HeaderLeft

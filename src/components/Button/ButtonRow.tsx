@@ -12,13 +12,13 @@ type PropsBase = {
 
 export interface PropsText extends PropsBase {
   text: string
-  icon?: string
+  icon?: any
   size?: 'S' | 'M' | 'L'
 }
 
 export interface PropsIcon extends PropsBase {
   text?: string
-  icon: string
+  icon: any
   size?: 'S' | 'M' | 'L'
 }
 

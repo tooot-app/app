@@ -19,10 +19,10 @@ declare namespace App {
     Pages,
     {
       page: Pages
-      hashtag?: string
-      list?: string
-      toot?: string
-      account?: string
+      hashtag?: Mastodon.Tag['name']
+      list?: Mastodon.List['id']
+      toot?: Mastodon.Status
+      account?: Mastodon.Account['id']
     }
   ]
 }

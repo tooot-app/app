@@ -12,14 +12,14 @@ export const timelineFetch = async (
     list,
     toot
   }: {
-    page: string
+    page: App.Pages
     params?: {
       [key: string]: string | number | boolean
     }
-    account?: string
-    hashtag?: string
-    list?: string
-    toot?: string
+    hashtag?: Mastodon.Tag['name']
+    list?: Mastodon.List['id']
+    toot?: Mastodon.Status
+    account?: Mastodon.Account['id']
   },
   pagination: {
     direction: 'prev' | 'next'
@@ -173,23 +173,14 @@ export const timelineFetch = async (
       return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Toot':
-      const current = await client({
+      res = await client({
         method: 'get',
         instance: 'local',
-        url: `statuses/${toot}`
-      })
-      const context = await client({
-        method: 'get',
-        instance: 'local',
-        url: `statuses/${toot}/context`
+        url: `statuses/${toot!.id}/context`
       })
       return Promise.resolve({
-        toots: [
-          ...context.body.ancestors,
-          current.body,
-          ...context.body.descendants
-        ],
-        pointer: context.body.ancestors.length
+        toots: [...res.body.ancestors, toot, ...res.body.descendants],
+        pointer: res.body.ancestors.length
       })
 
     default:

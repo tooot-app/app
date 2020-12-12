@@ -7,7 +7,7 @@ import { useTheme } from 'src/utils/styles/ThemeManager'
 export interface Props {
   styles: any
   onPress: () => void
-  icon: string
+  icon: any
   size?: 'S' | 'M' | 'L'
   coordinate?: 'center' | 'default'
 }

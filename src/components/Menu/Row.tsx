@@ -7,7 +7,7 @@ import { ColorDefinitions } from 'src/utils/styles/themes'
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
-  iconFront?: string
+  iconFront?: any
   iconFrontColor?: ColorDefinitions
   title: string
   content?: string
