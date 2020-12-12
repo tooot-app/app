@@ -8,6 +8,7 @@ import TimelineConversation from 'src/components/Timelines/Timeline/Conversation
 import { timelineFetch } from 'src/utils/fetches/timelineFetch'
 import TimelineSeparator from './Timeline/Separator'
 import TimelineEmpty from './Timeline/Empty'
+import TimelineEnd from './Timeline/Shared/End'
 
 export interface Props {
   page: App.Pages
@@ -44,10 +45,13 @@ const Timeline: React.FC<Props> = ({
     isLoading,
     isError,
     isFetchingMore,
+    canFetchMore,
     data,
     fetchMore,
     refetch
-  } = useInfiniteQuery(queryKey, timelineFetch)
+  } = useInfiniteQuery(queryKey, timelineFetch, {
+    getFetchMore: last => last?.toots.length > 0
+  })
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
 
@@ -90,6 +94,7 @@ const Timeline: React.FC<Props> = ({
   const flOnEndReach = useCallback(
     () =>
       !disableRefresh &&
+      canFetchMore &&
       fetchMore({
         direction: 'next',
         id: flattenData[flattenData.length - 1].id
@@ -100,7 +105,7 @@ const Timeline: React.FC<Props> = ({
     if (isFetchingMore) {
       return <ActivityIndicator />
     } else {
-      return null
+      return <TimelineEnd />
     }
   }, [isFetchingMore])
   const onScrollToIndexFailed = useCallback(error => {

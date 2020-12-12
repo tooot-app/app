@@ -1,15 +1,16 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Actioned from './Shared/Actioned'
-import Avatar from './Shared/Avatar'
-import HeaderDefault from './Shared/HeaderDefault'
-import Content from './Shared/Content'
-import Poll from './Shared/Poll'
-import Attachment from './Shared/Attachment'
-import Card from './Shared/Card'
-import ActionsStatus from './Shared/Actions'
+import TimelineActioned from './Shared/Actioned'
+import TimelineActions from './Shared/Actions'
+import TimelineAttachment from './Shared/Attachment'
+import TimelineAvatar from './Shared/Avatar'
+import TimelineCard from './Shared/Card'
+import TimelineContent from './Shared/Content'
+import TimelineHeaderNotification from './Shared/HeaderNotification'
+import TimelinePoll from './Shared/Poll'
+
 import { StyleConstants } from 'src/utils/styles/constants'
 
 export interface Props {
@@ -22,75 +23,63 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const actualAccount = notification.status
     ? notification.status.account
     : notification.account
+  const contentWidth =
+    Dimensions.get('window').width -
+    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
+    StyleConstants.Avatar.S - // Avatar width
+    StyleConstants.Spacing.S // Avatar margin to the right
 
-  const statusView = useMemo(() => {
-    return (
-      <View style={styles.notificationView}>
-        <Actioned
-          action={notification.type}
-          name={
-            notification.account.display_name || notification.account.username
-          }
-          emojis={notification.account.emojis}
-          notification
-        />
-
-        <View style={styles.notification}>
-          <Avatar uri={actualAccount.avatar} id={actualAccount.id} />
-          <View style={styles.details}>
-            <HeaderDefault
-              name={actualAccount.display_name || actualAccount.username}
-              emojis={actualAccount.emojis}
-              account={actualAccount.acct}
-              created_at={notification.created_at}
+  const tootOnPress = useCallback(
+    () =>
+      navigation.navigate('Screen-Shared-Toot', {
+        toot: notification
+      }),
+    []
+  )
+  const tootChildren = useMemo(
+    () =>
+      notification.status ? (
+        <>
+          {notification.status.content.length > 0 && (
+            <TimelineContent status={notification.status} />
+          )}
+          {notification.status.poll && (
+            <TimelinePoll queryKey={queryKey} status={notification.status} />
+          )}
+          {notification.status.media_attachments.length > 0 && (
+            <TimelineAttachment
+              status={notification.status}
+              width={contentWidth}
             />
-            <Pressable
-              onPress={() =>
-                navigation.navigate('Screen-Shared-Toot', {
-                  toot: notification.id
-                })
-              }
-            >
-              {notification.status ? (
-                <>
-                  {notification.status.content && (
-                    <Content
-                      content={notification.status.content}
-                      emojis={notification.status.emojis}
-                      mentions={notification.status.mentions}
-                      spoiler_text={notification.status.spoiler_text}
-                      // tags={notification.notification.tags}
-                      // style={{ flex: 1 }}
-                    />
-                  )}
-                  {notification.status.poll && (
-                    <Poll poll={notification.status.poll} />
-                  )}
-                  {notification.status.media_attachments.length > 0 && (
-                    <Attachment
-                      media_attachments={notification.status.media_attachments}
-                      sensitive={notification.status.sensitive}
-                      width={Dimensions.get('window').width - 24 - 50 - 8}
-                    />
-                  )}
-                  {notification.status.card && (
-                    <Card card={notification.status.card} />
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
-            </Pressable>
-            {notification.status && (
-              <ActionsStatus queryKey={queryKey} status={notification.status} />
-            )}
-          </View>
+          )}
+          {notification.status.card && (
+            <TimelineCard card={notification.status.card} />
+          )}
+        </>
+      ) : null,
+    [notification.status?.poll?.voted]
+  )
+
+  return (
+    <View style={styles.notificationView}>
+      <TimelineActioned
+        action={notification.type}
+        account={notification.account}
+        notification
+      />
+
+      <View style={styles.notification}>
+        <TimelineAvatar account={actualAccount} />
+        <View style={styles.details}>
+          <TimelineHeaderNotification notification={notification} />
+          <Pressable onPress={tootOnPress} children={tootChildren} />
+          {notification.status && (
+            <TimelineActions queryKey={queryKey} status={notification.status} />
+          )}
         </View>
       </View>
-    )
-  }, [notification])
-
-  return statusView
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

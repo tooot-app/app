@@ -29,14 +29,14 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
     StyleConstants.Avatar.S - // Avatar width
     StyleConstants.Spacing.S // Avatar margin to the right
 
-  const pressableToot = useCallback(
+  const tootOnPress = useCallback(
     () =>
       navigation.navigate('Screen-Shared-Toot', {
         toot: actualStatus
       }),
     []
   )
-  const childrenToot = useMemo(
+  const tootChildren = useMemo(
     () => (
       <>
         {actualStatus.content.length > 0 && (
@@ -63,8 +63,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
         <TimelineAvatar account={actualStatus.account} />
         <View style={styles.details}>
           <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
-          {/* Can pass toot info to next page to speed up performance */}
-          <Pressable onPress={pressableToot} children={childrenToot} />
+          <Pressable onPress={tootOnPress} children={tootChildren} />
           <TimelineActions queryKey={queryKey} status={actualStatus} />
         </View>
       </View>

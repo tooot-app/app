@@ -20,7 +20,9 @@ export interface Props {
 }
 
 const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
-  const domain = status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const domain = status.uri
+    ? status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+    : ''
   const name = status.account.display_name || status.account.username
   const emojis = status.account.emojis
   const account = status.account.acct
@@ -173,7 +175,6 @@ const styles = StyleSheet.create({
   account: {
     flexShrink: 1,
     marginLeft: StyleConstants.Spacing.XS
-    // lineHeight: StyleConstants.Font.LineHeight.M
   },
   meta: {
     flexDirection: 'row',
