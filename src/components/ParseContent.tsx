@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
@@ -22,7 +22,7 @@ const renderNode = ({
   theme: any
   node: any
   index: number
-  size: number
+  size: 'M' | 'L'
   navigation: any
   mentions?: Mastodon.Mention[]
   showFullLink: boolean
@@ -35,7 +35,10 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={{ color: theme.link, fontSize: size }}
+            style={{
+              color: theme.link,
+              fontSize: StyleConstants.Font.Size[size]
+            }}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
               navigation.push('Screen-Shared-Hashtag', {
@@ -51,7 +54,10 @@ const renderNode = ({
         return (
           <Text
             key={index}
-            style={{ color: theme.link, fontSize: size }}
+            style={{
+              color: theme.link,
+              fontSize: StyleConstants.Font.Size[size]
+            }}
             onPress={() => {
               const username = href.split(new RegExp(/@(.*)/))
               const usernameIndex = mentions.findIndex(
@@ -72,7 +78,10 @@ const renderNode = ({
       return (
         <Text
           key={index}
-          style={{ color: theme.link, fontSize: size }}
+          style={{
+            color: theme.link,
+            fontSize: StyleConstants.Font.Size[size]
+          }}
           onPress={() => {
             navigation.navigate('Screen-Shared-Webview', {
               uri: href,
@@ -80,7 +89,11 @@ const renderNode = ({
             })
           }}
         >
-          <Feather name='external-link' size={size} color={theme.link} />{' '}
+          <Feather
+            name='external-link'
+            size={StyleConstants.Font.Size[size]}
+            color={theme.link}
+          />{' '}
           {showFullLink ? href : domain[1]}
         </Text>
       )
@@ -90,7 +103,7 @@ const renderNode = ({
 
 export interface Props {
   content: string
-  size: number
+  size: 'M' | 'L'
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   showFullLink?: boolean
@@ -124,7 +137,11 @@ const ParseContent: React.FC<Props> = ({
   const textComponent = useCallback(
     ({ children }) =>
       emojis && children ? (
-        <Emojis content={children.toString()} emojis={emojis} size={size} />
+        <Emojis
+          content={children.toString()}
+          emojis={emojis}
+          size={StyleConstants.Font.Size[size]}
+        />
       ) : (
         <Text>{children}</Text>
       ),
@@ -143,7 +160,7 @@ const ParseContent: React.FC<Props> = ({
           numberOfLines={
             totalLines && totalLines > numberOfLines ? shownLines : totalLines
           }
-          style={styles.root}
+          style={{ lineHeight: StyleConstants.Font.LineHeight[size] }}
           onTextLayout={({ nativeEvent }) => {
             if (!textLoaded) {
               setTextLoaded(true)
@@ -199,11 +216,5 @@ const ParseContent: React.FC<Props> = ({
     />
   )
 }
-
-const styles = StyleSheet.create({
-  root: {
-    lineHeight: StyleConstants.Font.LineHeight.M
-  }
-})
 
 export default ParseContent

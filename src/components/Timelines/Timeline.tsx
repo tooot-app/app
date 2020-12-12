@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react'
-import { ActivityIndicator, AppState, FlatList, StyleSheet } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import { AppState, FlatList, StyleSheet } from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from 'src/components/Timelines/Timeline/Notifications'
@@ -75,10 +75,33 @@ const Timeline: React.FC<Props> = ({
       case 'Notifications':
         return <TimelineNotifications notification={item} queryKey={queryKey} />
       default:
-        return <TimelineDefault item={item} queryKey={queryKey} />
+        return (
+          <TimelineDefault
+            item={item}
+            queryKey={queryKey}
+            {...(toot && toot.id === item.id && { highlighted: true })}
+          />
+        )
     }
   }, [])
-  const flItemSeparatorComponent = useCallback(() => <TimelineSeparator />, [])
+  const flItemSeparatorComponent = useCallback(
+    ({ leadingItem }) => (
+      <TimelineSeparator
+        {...(toot && toot.id === leadingItem.id && { highlighted: true })}
+      />
+    ),
+    []
+  )
+  const flItemEmptyComponent = useMemo(
+    () => (
+      <TimelineEmpty
+        isLoading={isLoading}
+        isError={isError}
+        refetch={refetch}
+      />
+    ),
+    [isLoading, isError]
+  )
   const flOnRefresh = useCallback(
     () =>
       !disableRefresh &&
@@ -102,11 +125,12 @@ const Timeline: React.FC<Props> = ({
     [flattenData]
   )
   const flFooter = useCallback(() => {
-    if (isFetchingMore) {
-      return <ActivityIndicator />
-    } else {
-      return <TimelineEnd />
-    }
+    return <TimelineEnd isFetchingMore={isFetchingMore} />
+    // if (isFetchingMore) {
+    //   return <ActivityIndicator />
+    // } else {
+    //   return <TimelineEnd />
+    // }
   }, [isFetchingMore])
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
@@ -127,18 +151,12 @@ const Timeline: React.FC<Props> = ({
       renderItem={flRenderItem}
       onEndReached={flOnEndReach}
       keyExtractor={flKeyExtrator}
-      ListFooterComponent={flFooter}
       scrollEnabled={scrollEnabled} // For timeline in Account view
+      ListFooterComponent={flFooter}
+      ListEmptyComponent={flItemEmptyComponent}
       ItemSeparatorComponent={flItemSeparatorComponent}
       onEndReachedThreshold={!disableRefresh ? 0.75 : null}
       refreshing={!disableRefresh && isLoading && flattenData.length > 0}
-      ListEmptyComponent={
-        <TimelineEmpty
-          isLoading={isLoading}
-          isError={isError}
-          refetch={refetch}
-        />
-      }
       {...(toot && isSuccess && { onScrollToIndexFailed })}
     />
   )

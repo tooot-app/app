@@ -25,7 +25,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
 
 const styles = StyleSheet.create({
   avatar: {
-    width: StyleConstants.Avatar.S,
+    flexBasis: StyleConstants.Avatar.S,
     height: StyleConstants.Avatar.S,
     marginRight: StyleConstants.Spacing.S
   },

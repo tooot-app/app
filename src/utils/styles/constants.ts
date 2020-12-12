@@ -7,7 +7,7 @@ export const StyleConstants = {
       M: 16,
       L: 18
     },
-    LineHeight: { M: 20 },
+    LineHeight: { M: 20, L: 24 },
     Weight: {
       Bold: '600' as '600'
     }

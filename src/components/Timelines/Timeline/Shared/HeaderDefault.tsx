@@ -60,7 +60,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
   )
 
   return (
-    <View>
+    <View style={styles.base}>
       <View style={styles.nameAndAction}>
         <View style={styles.name}>
           {emojis?.length ? (
@@ -156,13 +156,17 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 }
 
 const styles = StyleSheet.create({
+  base: {
+    flex: 1
+  },
   nameAndAction: {
-    width: '100%',
+    flex: 1,
+    flexBasis: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    alignItems: 'flex-start'
   },
   name: {
-    flexBasis: '90%',
+    flexBasis: '85%',
     flexDirection: 'row'
   },
   nameWithoutEmoji: {
@@ -170,7 +174,9 @@ const styles = StyleSheet.create({
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   action: {
-    alignItems: 'flex-end'
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   account: {
     flexShrink: 1,

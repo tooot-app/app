@@ -4,20 +4,34 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 import { StyleConstants } from 'src/utils/styles/constants'
 
-const TimelineSeparator = () => {
+export interface Props {
+  highlighted?: boolean
+}
+
+const TimelineSeparator: React.FC<Props> = ({ highlighted = false }) => {
   const { theme } = useTheme()
 
-  return <View style={[styles.base, { borderTopColor: theme.separator }]} />
+  return (
+    <View
+      style={[
+        styles.base,
+        {
+          borderTopColor: theme.separator,
+          marginLeft: highlighted
+            ? StyleConstants.Spacing.Global.PagePadding
+            : StyleConstants.Spacing.Global.PagePadding +
+              StyleConstants.Avatar.S +
+              StyleConstants.Spacing.S
+        }
+      ]}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
   base: {
     borderTopWidth: 1,
-    marginLeft:
-      StyleConstants.Spacing.M +
-      StyleConstants.Avatar.S +
-      StyleConstants.Spacing.S,
-    marginRight: StyleConstants.Spacing.M
+    marginRight: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

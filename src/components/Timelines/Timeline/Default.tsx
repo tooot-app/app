@@ -16,18 +16,25 @@ import { StyleConstants } from 'src/utils/styles/constants'
 export interface Props {
   item: Mastodon.Status
   queryKey: App.QueryKey
+  highlighted?: boolean
 }
 
 // When the poll is long
-const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
+const TimelineDefault: React.FC<Props> = ({
+  item,
+  queryKey,
+  highlighted = false
+}) => {
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
-  const contentWidth =
-    Dimensions.get('window').width -
-    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-    StyleConstants.Avatar.S - // Avatar width
-    StyleConstants.Spacing.S // Avatar margin to the right
+  const contentWidth = highlighted
+    ? Dimensions.get('window').width -
+      StyleConstants.Spacing.Global.PagePadding * 2 // Global page padding on both sides
+    : Dimensions.get('window').width -
+      StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
+      StyleConstants.Avatar.S - // Avatar width
+      StyleConstants.Spacing.S // Avatar margin to the right
 
   const tootOnPress = useCallback(
     () =>
@@ -38,9 +45,15 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
   )
   const tootChildren = useMemo(
     () => (
-      <>
+      <View
+        style={{
+          paddingLeft: highlighted
+            ? 0
+            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+        }}
+      >
         {actualStatus.content.length > 0 && (
-          <TimelineContent status={actualStatus} />
+          <TimelineContent status={actualStatus} highlighted={highlighted} />
         )}
         {actualStatus.poll && (
           <TimelinePoll queryKey={queryKey} status={actualStatus} />
@@ -49,7 +62,7 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
           <TimelineAttachment status={actualStatus} width={contentWidth} />
         )}
         {actualStatus.card && <TimelineCard card={actualStatus.card} />}
-      </>
+      </View>
     ),
     [actualStatus.poll?.voted]
   )
@@ -59,13 +72,19 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
       {item.reblog && (
         <TimelineActioned action='reblog' account={item.account} />
       )}
-      <View style={styles.status}>
+      <View style={styles.header}>
         <TimelineAvatar account={actualStatus.account} />
-        <View style={styles.details}>
-          <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
-          <Pressable onPress={tootOnPress} children={tootChildren} />
-          <TimelineActions queryKey={queryKey} status={actualStatus} />
-        </View>
+        <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
+      </View>
+      <Pressable onPress={tootOnPress} children={tootChildren} />
+      <View
+        style={{
+          paddingLeft: highlighted
+            ? 0
+            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+        }}
+      >
+        <TimelineActions queryKey={queryKey} status={actualStatus} />
       </View>
     </View>
   )
@@ -73,17 +92,17 @@ const TimelineDefault: React.FC<Props> = ({ item, queryKey }) => {
 
 const styles = StyleSheet.create({
   statusView: {
-    flex: 1,
-    flexDirection: 'column',
     padding: StyleConstants.Spacing.Global.PagePadding,
     paddingBottom: StyleConstants.Spacing.M
   },
-  status: {
+  header: {
     flex: 1,
-    flexDirection: 'row'
+    width: '100%',
+    flexDirection: 'row',
+    marginBottom: StyleConstants.Spacing.S
   },
-  details: {
-    flex: 1
+  content: {
+    paddingLeft: StyleConstants.Avatar.S + StyleConstants.Spacing.S
   }
 })
 

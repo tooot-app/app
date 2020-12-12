@@ -11,9 +11,14 @@ import { LinearGradient } from 'expo-linear-gradient'
 export interface Props {
   status: Mastodon.Status
   numberOfLines?: number
+  highlighted?: boolean
 }
 
-const TimelineContent: React.FC<Props> = ({ status, numberOfLines }) => {
+const TimelineContent: React.FC<Props> = ({
+  status,
+  numberOfLines,
+  highlighted = false
+}) => {
   const { theme } = useTheme()
   const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
   const lineHeight = 28
@@ -24,13 +29,13 @@ const TimelineContent: React.FC<Props> = ({ status, numberOfLines }) => {
         <>
           <ParseContent
             content={status.spoiler_text}
-            size={StyleConstants.Font.Size.M}
+            size={highlighted ? 'L' : 'M'}
             emojis={status.emojis}
           />
           <Collapsible collapsed={spoilerCollapsed} collapsedHeight={20}>
             <ParseContent
               content={status.content}
-              size={StyleConstants.Font.Size.M}
+              size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
               {...(numberOfLines && { numberOfLines: numberOfLines })}
@@ -68,7 +73,7 @@ const TimelineContent: React.FC<Props> = ({ status, numberOfLines }) => {
       ) : (
         <ParseContent
           content={status.content}
-          size={StyleConstants.Font.Size.M}
+          size={highlighted ? 'L' : 'M'}
           emojis={status.emojis}
           mentions={status.mentions}
           {...(numberOfLines && { numberOfLines: numberOfLines })}
