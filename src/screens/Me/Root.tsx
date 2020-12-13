@@ -14,7 +14,7 @@ const ScreenMeRoot: React.FC = () => {
   const localRegistered = useSelector(getLocalUrl)
 
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps='handled'>
       {localRegistered ? <MyInfo /> : <Login />}
       {localRegistered && <Collections />}
       <Settings />

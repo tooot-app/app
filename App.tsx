@@ -4,8 +4,8 @@ import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import { Index } from './src/Index'
-import { persistor, store } from './src/store'
+import { Index } from '@root/Index'
+import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
 
 const queryCache = new QueryCache()

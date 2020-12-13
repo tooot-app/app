@@ -18,6 +18,8 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import getCurrentTab from '@utils/getCurrentTab'
 import { toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { getLocalUrl } from './utils/slices/instancesSlice'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -31,6 +33,7 @@ export type RootStackParamList = {
 }
 
 export const Index: React.FC = () => {
+  const localInstance = useSelector(getLocalUrl)
   const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
   enum barStyle {
@@ -46,12 +49,14 @@ export const Index: React.FC = () => {
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let name: any
+              let updateColor: string = color
               switch (route.name) {
                 case 'Screen-Local':
                   name = 'home'
                   break
                 case 'Screen-Public':
                   name = 'globe'
+                  !focused && (updateColor = theme.secondary)
                   break
                 case 'Screen-Post':
                   name = 'plus'
@@ -61,30 +66,42 @@ export const Index: React.FC = () => {
                   break
                 case 'Screen-Me':
                   name = focused ? 'meh' : 'smile'
+                  !focused && (updateColor = theme.secondary)
                   break
                 default:
                   name = 'alert-octagon'
                   break
               }
-              return <Feather name={name} size={size} color={color} />
+              return <Feather name={name} size={size} color={updateColor} />
             }
           })}
           tabBarOptions={{
             activeTintColor: theme.primary,
-            inactiveTintColor: theme.secondary,
+            inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
             showLabel: false
           }}
         >
-          <Tab.Screen name='Screen-Local' component={ScreenLocal} />
+          <Tab.Screen
+            name='Screen-Local'
+            component={ScreenLocal}
+            listeners={{
+              tabPress: e => {
+                if (!localInstance) {
+                  e.preventDefault()
+                }
+              }
+            }}
+          />
           <Tab.Screen name='Screen-Public' component={ScreenPublic} />
           <Tab.Screen
             name='Screen-Post'
             listeners={({ navigation, route }) => ({
               tabPress: e => {
                 e.preventDefault()
-                navigation.navigate(getCurrentTab(navigation), {
-                  screen: 'Screen-Shared-Compose'
-                })
+                localInstance &&
+                  navigation.navigate(getCurrentTab(navigation), {
+                    screen: 'Screen-Shared-Compose'
+                  })
               }
             })}
           >
@@ -93,6 +110,13 @@ export const Index: React.FC = () => {
           <Tab.Screen
             name='Screen-Notifications'
             component={ScreenNotifications}
+            listeners={{
+              tabPress: e => {
+                if (!localInstance) {
+                  e.preventDefault()
+                }
+              }
+            }}
           />
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>

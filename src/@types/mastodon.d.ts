@@ -226,6 +226,32 @@ declare namespace Mastodon {
     title: string
   }
 
+  type Instance = {
+    // Base
+    uri: string
+    title: string
+    description: string
+    short_description: string
+    email: string
+    version: string
+    languages: string[]
+    registrations: boolean
+    approval_required: boolean
+    invites_enabled: boolean
+    urls: {
+      streaming_api: string
+    }
+    stats: {
+      user_count: number
+      status_count: number
+      domain_count: number
+    }
+
+    // Others
+    thumbnail?: string
+    contact_account?: Account
+  }
+
   type Mention = {
     // Base
     id: string

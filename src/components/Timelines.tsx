@@ -15,7 +15,6 @@ import {
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
-import PleaseLogin from '@components/PleaseLogin'
 
 const Stack = createNativeStackNavigator()
 
@@ -30,9 +29,7 @@ const Page = ({
     <View style={{ width: Dimensions.get('window').width }}>
       {localRegistered || page === 'RemotePublic' ? (
         <Timeline page={page} />
-      ) : (
-        <PleaseLogin />
-      )}
+      ) : null}
     </View>
   )
 }

@@ -6,11 +6,13 @@ import MenuButton from '@components/Menu/Button'
 import { MenuContainer } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
+import { useQueryCache } from 'react-query'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const queryCache = useQueryCache()
 
   const alertOption = {
     title: t('content.logout.alert.title'),
@@ -20,6 +22,7 @@ const Logout: React.FC = () => {
         text: t('content.logout.alert.buttons.logout'),
         style: 'destructive' as const,
         onPress: () => {
+          queryCache.clear()
           dispatch(updateLocal({}))
           navigation.navigate('Screen-Public', {
             screen: 'Screen-Public-Root',

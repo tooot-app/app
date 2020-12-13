@@ -28,13 +28,13 @@ const ScreenMe: React.FC = () => {
         name='Screen-Me-Root'
         component={ScreenMeRoot}
         options={
-          localRegistered
-            ? {
-                headerTranslucent: true,
-                headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-                headerCenter: () => <></>
-              }
-            : { headerTitle: t('headers.me.root') }
+          // localRegistered ?
+          {
+            headerTranslucent: true,
+            headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
+            headerCenter: () => <></>
+          }
+          // : { headerTitle: t('meRoot:heading') }
         }
       />
       <Stack.Screen

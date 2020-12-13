@@ -11,6 +11,7 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
+      // "@assets/*": ["./assets/*"],
       "@root/*": ["./src/*"],
       "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],

@@ -1,5 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+import {
+  Animated,
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native'
 import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
@@ -14,6 +28,9 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { StyleConstants } from '@utils/styles/constants'
 import { ButtonRow } from '@components/Button'
+import ParseContent from '@root/components/ParseContent'
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+import { Feather } from '@expo/vector-icons'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -26,7 +43,7 @@ const Login: React.FC = () => {
     clientSecret: string
   }>()
 
-  const { isSuccess, refetch, data } = useQuery(
+  const { isSuccess, isFetching, refetch, data } = useQuery(
     ['Instance', { instance }],
     instanceFetch,
     {
@@ -40,11 +57,13 @@ const Login: React.FC = () => {
       text => {
         setInstance(text)
         setApplicationData(undefined)
-        refetch()
+        if (text) {
+          refetch()
+        }
       },
       1000,
       {
-        leading: true
+        trailing: true
       }
     ),
     []
@@ -121,47 +140,217 @@ const Login: React.FC = () => {
     })()
   }, [response])
 
-  return (
-    <View style={styles.base}>
-      <TextInput
-        style={{
-          height: 50,
-          color: theme.primary,
-          borderColor: theme.border,
-          borderWidth: 1,
-          padding: StyleConstants.Spacing.M
-        }}
-        onChangeText={onChangeText}
-        autoCapitalize='none'
-        autoCorrect={false}
-        autoFocus
-        clearButtonMode='unless-editing'
-        keyboardType='url'
-        textContentType='URL'
-        onSubmitEditing={async () =>
-          isSuccess && data && data.uri && (await createApplication())
-        }
-        placeholder={t('content.login.server.placeholder')}
-        placeholderTextColor={theme.secondary}
-        returnKeyType='go'
-      />
-      <ButtonRow
-        onPress={async () => await createApplication()}
-        text={t('content.login.button')}
-        disabled={!data?.uri}
-      />
-      {isSuccess && data && data.uri && (
-        <View>
-          <Text style={{ color: theme.primary }}>{data.title}</Text>
+  const infoRef = createRef<ShimmerPlaceholder>()
+
+  const instanceInfo = useCallback(
+    ({
+      header,
+      content,
+      parse
+    }: {
+      header: string
+      content: string
+      parse?: boolean
+    }) => {
+      if (isFetching) {
+        Animated.loop(infoRef.current?.getAnimated()!).start()
+      }
+
+      return (
+        <View style={styles.instanceInfo}>
+          <Text style={[styles.instanceInfoHeader, { color: theme.primary }]}>
+            {header}
+          </Text>
+          <ShimmerPlaceholder
+            visible={data?.uri}
+            stopAutoRun
+            width={
+              Dimensions.get('screen').width -
+              StyleConstants.Spacing.Global.PagePadding * 4
+            }
+            height={StyleConstants.Font.Size.M}
+          >
+            <Text
+              style={[styles.instanceInfoContent, { color: theme.primary }]}
+            >
+              {parse ? (
+                <ParseContent content={content} size={'M'} numberOfLines={5} />
+              ) : (
+                content
+              )}
+            </Text>
+          </ShimmerPlaceholder>
         </View>
-      )}
-    </View>
+      )
+    },
+    [data?.uri, isFetching]
+  )
+
+  return (
+    <>
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('assets/screens/meRoot/welcome.png')}
+          style={{ resizeMode: 'contain', flex: 1, aspectRatio: 16 / 9 }}
+        />
+      </View>
+      <View style={styles.base}>
+        <View style={styles.inputRow}>
+          <TextInput
+            style={[
+              styles.textInput,
+              {
+                color: theme.primary,
+                borderBottomColor: theme.secondary
+              }
+            ]}
+            onChangeText={onChangeText}
+            autoCapitalize='none'
+            autoCorrect={false}
+            autoFocus
+            clearButtonMode='unless-editing'
+            keyboardType='url'
+            textContentType='URL'
+            onSubmitEditing={async () =>
+              isSuccess && data && data.uri && (await createApplication())
+            }
+            placeholder={t('content.login.server.placeholder')}
+            placeholderTextColor={theme.secondary}
+            returnKeyType='go'
+          />
+          <ButtonRow
+            onPress={async () => await createApplication()}
+            {...(isFetching
+              ? { icon: 'loader' }
+              : { text: t('content.login.button') as string })}
+            disabled={!data?.uri}
+          />
+        </View>
+        <View>
+          {instanceInfo({ header: '实例名称', content: data?.title })}
+          {instanceInfo({
+            header: '实例介绍',
+            content: data?.short_description,
+            parse: true
+          })}
+          <View style={styles.instanceStats}>
+            <View style={styles.instanceStat}>
+              <Text
+                style={[styles.instanceInfoHeader, { color: theme.primary }]}
+              >
+                用户总数
+              </Text>
+              <ShimmerPlaceholder
+                visible={data?.stats?.user_count}
+                stopAutoRun
+                width={StyleConstants.Font.Size.M * 4}
+                height={StyleConstants.Font.Size.M}
+              >
+                <Text
+                  style={[styles.instanceInfoContent, { color: theme.primary }]}
+                >
+                  {data?.stats?.user_count}
+                </Text>
+              </ShimmerPlaceholder>
+            </View>
+            <View style={[styles.instanceStat, { alignItems: 'center' }]}>
+              <Text
+                style={[styles.instanceInfoHeader, { color: theme.primary }]}
+              >
+                嘟嘟总数
+              </Text>
+              <ShimmerPlaceholder
+                visible={data?.stats?.user_count}
+                stopAutoRun
+                width={StyleConstants.Font.Size.M * 4}
+                height={StyleConstants.Font.Size.M}
+              >
+                <Text
+                  style={[styles.instanceInfoContent, { color: theme.primary }]}
+                >
+                  {data?.stats?.status_count}
+                </Text>
+              </ShimmerPlaceholder>
+            </View>
+            <View style={[styles.instanceStat, { alignItems: 'flex-end' }]}>
+              <Text
+                style={[styles.instanceInfoHeader, { color: theme.primary }]}
+              >
+                连结总数
+              </Text>
+              <ShimmerPlaceholder
+                visible={data?.stats?.user_count}
+                stopAutoRun
+                width={StyleConstants.Font.Size.M * 4}
+                height={StyleConstants.Font.Size.M}
+              >
+                <Text
+                  style={[styles.instanceInfoContent, { color: theme.primary }]}
+                >
+                  {data?.stats?.domain_count}
+                </Text>
+              </ShimmerPlaceholder>
+            </View>
+          </View>
+          <Text style={[styles.disclaimer, { color: theme.secondary }]}>
+            <Feather
+              name='lock'
+              size={StyleConstants.Font.Size.M}
+              color={theme.secondary}
+            />{' '}
+            本站不留存任何信息
+          </Text>
+        </View>
+      </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
     padding: StyleConstants.Spacing.Global.PagePadding
+  },
+  inputRow: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  textInput: {
+    flex: 1,
+    borderBottomWidth: 1.25,
+    paddingTop: StyleConstants.Spacing.S - 1.5,
+    paddingBottom: StyleConstants.Spacing.S - 1.5,
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding,
+    fontSize: StyleConstants.Font.Size.M,
+    marginRight: StyleConstants.Spacing.M
+  },
+  instanceInfo: {
+    marginTop: StyleConstants.Spacing.M,
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding
+  },
+  instanceInfoHeader: {
+    fontSize: StyleConstants.Font.Size.S,
+    fontWeight: StyleConstants.Font.Weight.Bold,
+    marginBottom: StyleConstants.Spacing.XS
+  },
+  instanceInfoContent: { fontSize: StyleConstants.Font.Size.M },
+  instanceStats: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: StyleConstants.Spacing.M,
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding,
+    marginBottom: StyleConstants.Spacing.M
+  },
+  instanceStat: {
+    flex: 1
+  },
+  disclaimer: {
+    fontSize: StyleConstants.Font.Size.S,
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding,
+    marginBottom: StyleConstants.Spacing.M
   }
 })
 

@@ -8,18 +8,17 @@ type PropsBase = {
   onPress: () => void
   disabled?: boolean
   buttonSize?: 'S' | 'M'
+  size?: 'S' | 'M' | 'L'
 }
 
 export interface PropsText extends PropsBase {
   text: string
   icon?: any
-  size?: 'S' | 'M' | 'L'
 }
 
 export interface PropsIcon extends PropsBase {
   text?: string
   icon: any
-  size?: 'S' | 'M' | 'L'
 }
 
 const ButtonRow: React.FC<PropsText | PropsIcon> = ({
@@ -71,16 +70,13 @@ const styles = StyleSheet.create({
   button: {
     paddingLeft: StyleConstants.Spacing.M,
     paddingRight: StyleConstants.Spacing.M,
-    borderWidth: 1,
-    borderRadius: 100
+    borderWidth: 1.25,
+    borderRadius: 100,
+    alignItems: 'center'
   },
   text: {
     textAlign: 'center'
   }
 })
 
-export default React.memo(ButtonRow, (prev, next) => {
-  let skipUpdate = true
-  skipUpdate = prev.disabled === next.disabled
-  return skipUpdate
-})
+export default ButtonRow

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { store, RootState } from '@root/store'
+import { store, RootState } from 'src/store'
 
 const client = async ({
   method,

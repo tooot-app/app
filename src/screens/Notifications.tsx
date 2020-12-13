@@ -5,7 +5,6 @@ import Timeline from '@components/Timelines/Timeline'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import { useSelector } from 'react-redux'
 import { RootState } from '@root/store'
-import PleaseLogin from '@components/PleaseLogin'
 import { useTranslation } from 'react-i18next'
 
 const Stack = createNativeStackNavigator()
@@ -21,9 +20,7 @@ const ScreenNotifications: React.FC = () => {
       screenOptions={{ headerTitle: t('notifications:heading') }}
     >
       <Stack.Screen name='Screen-Notifications-Root'>
-        {() =>
-          localRegistered ? <Timeline page='Notifications' /> : <PleaseLogin />
-        }
+        {() => (localRegistered ? <Timeline page='Notifications' /> : null)}
       </Stack.Screen>
 
       {sharedScreens(Stack)}

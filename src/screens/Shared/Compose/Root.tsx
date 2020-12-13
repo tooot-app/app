@@ -25,7 +25,11 @@ import { emojisFetch } from '@utils/fetches/emojisFetch'
 import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { PostAction, ComposeState, ComposeContext } from '@screens/Shared/Compose'
+import {
+  PostAction,
+  ComposeState,
+  ComposeContext
+} from '@screens/Shared/Compose'
 import ComposeActions from '@screens/Shared/Compose/Actions'
 import updateText from './updateText'
 import * as Permissions from 'expo-permissions'
@@ -189,7 +193,7 @@ const ComposeRoot: React.FC = () => {
       />
       <FlatList
         keyboardShouldPersistTaps='handled'
-        ListHeaderComponent={<ComposeRootHeader textInputRef={textInputRef} />}
+        ListHeaderComponent={<ComposeRootHeader />}
         ListFooterComponent={<ComposeRootFooter textInputRef={textInputRef} />}
         ListEmptyComponent={listEmpty}
         data={data}
