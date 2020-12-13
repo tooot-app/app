@@ -1,4 +1,5 @@
-import React from 'react'
+import * as SplashScreen from 'expo-splash-screen'
+import React, { useEffect, useState } from 'react'
 import { AppearanceProvider } from 'react-native-appearance'
 import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
 import { Provider } from 'react-redux'
@@ -26,6 +27,30 @@ setConsole({
 // }
 
 const App: React.FC = () => {
+  const [appLoaded, setAppLoaded] = useState(false)
+  useEffect(() => {
+    const delaySplash = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync()
+      } catch (e) {
+        console.warn(e)
+      }
+    }
+    delaySplash()
+  }, [])
+  useEffect(() => {
+    const hideSplash = async () => {
+      try {
+        await SplashScreen.hideAsync()
+      } catch (e) {
+        console.warn(e)
+      }
+    }
+    if (appLoaded) {
+      hideSplash()
+    }
+  }, [appLoaded])
+
   return (
     <AppearanceProvider>
       <ReactQueryCacheProvider queryCache={queryCache}>
@@ -33,6 +58,7 @@ const App: React.FC = () => {
           <PersistGate persistor={persistor}>
             {bootstrapped => {
               if (bootstrapped) {
+                setAppLoaded(true)
                 require('@root/i18n/i18n')
                 return (
                   <ThemeManager>
@@ -40,7 +66,7 @@ const App: React.FC = () => {
                   </ThemeManager>
                 )
               } else {
-                return <></>
+                return null
               }
             }}
           </PersistGate>

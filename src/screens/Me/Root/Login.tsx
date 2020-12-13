@@ -1,12 +1,5 @@
-import React, {
-  createRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
-  Animated,
   Dimensions,
   Image,
   StyleSheet,
@@ -18,7 +11,6 @@ import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
 import { instanceFetch } from '@utils/fetches/instanceFetch'
-import client from '@api/client'
 import * as AuthSession from 'expo-auth-session'
 import { useDispatch } from 'react-redux'
 import { updateLocal } from '@utils/slices/instancesSlice'
@@ -110,7 +102,7 @@ const Login: React.FC = () => {
           }
         )
         dispatch(updateLocal({ url: instanceDomain, token: accessToken }))
-        navigation.navigate('Screen-Local-Root')
+        navigation.navigate('Screen-Local')
       }
     })()
   }, [response])

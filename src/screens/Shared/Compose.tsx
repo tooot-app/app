@@ -163,10 +163,7 @@ const composeInitialState: ComposeState = {
   },
   attachments: { sensitive: false, uploads: [] },
   attachmentUploadProgress: undefined,
-  visibility:
-    getLocalAccountPreferences(store.getState())[
-      'posting:default:visibility'
-    ] || 'public',
+  visibility: 'public',
   visibilityLock: false,
   replyToStatus: undefined,
   textInputFocus: {
@@ -220,7 +217,12 @@ const composeExistingState = ({
             uploads: incomingStatus.media_attachments
           }
         }),
-        visibility: incomingStatus.visibility
+        visibility:
+          incomingStatus.visibility ||
+          getLocalAccountPreferences(store.getState())[
+            'posting:default:visibility'
+          ],
+        ...(incomingStatus.visibility === 'direct' && { visibilityLock: true })
       }
     case 'reply':
     case 'conversation':
@@ -337,7 +339,12 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
           type: params.type,
           incomingStatus: params.incomingStatus
         })
-      : composeInitialState
+      : {
+          ...composeInitialState,
+          visibility: getLocalAccountPreferences(store.getState())[
+            'posting:default:visibility'
+          ] as ComposeState['visibility']
+        }
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
 
