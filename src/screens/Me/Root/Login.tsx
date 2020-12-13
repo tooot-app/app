@@ -31,20 +31,21 @@ import { ButtonRow } from '@components/Button'
 import ParseContent from '@root/components/ParseContent'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
+import { applicationFetch } from '@root/utils/fetches/applicationFetch'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const { theme } = useTheme()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [instance, setInstance] = useState('')
+  const [instanceDomain, setInstanceDomain] = useState<string | undefined>()
   const [applicationData, setApplicationData] = useState<{
     clientId: string
     clientSecret: string
   }>()
 
-  const { isSuccess, isFetching, refetch, data } = useQuery(
-    ['Instance', { instance }],
+  const instanceQuery = useQuery(
+    ['Instance', { instanceDomain }],
     instanceFetch,
     {
       enabled: false,
@@ -52,49 +53,25 @@ const Login: React.FC = () => {
     }
   )
 
-  const onChangeText = useCallback(
-    debounce(
-      text => {
-        setInstance(text)
-        setApplicationData(undefined)
-        if (text) {
-          refetch()
-        }
-      },
-      1000,
-      {
-        trailing: true
-      }
-    ),
-    []
+  const applicationQuery = useQuery(
+    ['Application', { instanceDomain }],
+    applicationFetch,
+    {
+      enabled: false,
+      retry: false
+    }
   )
-
-  const createApplication = async () => {
-    if (applicationData) {
-      return Promise.resolve()
-    }
-    const formData = new FormData()
-    formData.append('client_name', 'test_dudu')
-    formData.append('redirect_uris', 'exp://127.0.0.1:19000')
-    formData.append('scopes', 'read write follow push')
-
-    const res = await client({
-      method: 'post',
-      instance: 'remote',
-      instanceDomain: instance,
-      url: `apps`,
-      body: formData
-    })
-    if (res.body?.client_id.length > 0) {
+  useEffect(() => {
+    if (
+      applicationQuery.data?.client_id.length &&
+      applicationQuery.data?.client_secret.length
+    ) {
       setApplicationData({
-        clientId: res.body.client_id,
-        clientSecret: res.body.client_secret
+        clientId: applicationQuery.data.client_id,
+        clientSecret: applicationQuery.data.client_secret
       })
-      return Promise.resolve()
-    } else {
-      return Promise.reject()
     }
-  }
+  }, [applicationQuery.data?.client_id])
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
@@ -104,10 +81,9 @@ const Login: React.FC = () => {
       redirectUri: 'exp://127.0.0.1:19000'
     },
     {
-      authorizationEndpoint: `https://${instance}/oauth/authorize`
+      authorizationEndpoint: `https://${instanceDomain}/oauth/authorize`
     }
   )
-
   useEffect(() => {
     ;(async () => {
       if (request?.clientId) {
@@ -115,7 +91,6 @@ const Login: React.FC = () => {
       }
     })()
   }, [request])
-
   useEffect(() => {
     ;(async () => {
       if (response?.type === 'success') {
@@ -131,16 +106,31 @@ const Login: React.FC = () => {
             }
           },
           {
-            tokenEndpoint: `https://${instance}/oauth/token`
+            tokenEndpoint: `https://${instanceDomain}/oauth/token`
           }
         )
-        dispatch(updateLocal({ url: instance, token: accessToken }))
+        dispatch(updateLocal({ url: instanceDomain, token: accessToken }))
         navigation.navigate('Screen-Local-Root')
       }
     })()
   }, [response])
 
-  const infoRef = createRef<ShimmerPlaceholder>()
+  const onChangeText = useCallback(
+    debounce(
+      text => {
+        setInstanceDomain(text)
+        setApplicationData(undefined)
+        if (text) {
+          instanceQuery.refetch()
+        }
+      },
+      1000,
+      {
+        trailing: true
+      }
+    ),
+    []
+  )
 
   const instanceInfo = useCallback(
     ({
@@ -152,17 +142,13 @@ const Login: React.FC = () => {
       content: string
       parse?: boolean
     }) => {
-      if (isFetching) {
-        Animated.loop(infoRef.current?.getAnimated()!).start()
-      }
-
       return (
         <View style={styles.instanceInfo}>
           <Text style={[styles.instanceInfoHeader, { color: theme.primary }]}>
             {header}
           </Text>
           <ShimmerPlaceholder
-            visible={data?.uri}
+            visible={instanceQuery.data?.uri}
             stopAutoRun
             width={
               Dimensions.get('screen').width -
@@ -183,7 +169,7 @@ const Login: React.FC = () => {
         </View>
       )
     },
-    [data?.uri, isFetching]
+    [instanceQuery.data?.uri]
   )
 
   return (
@@ -208,29 +194,41 @@ const Login: React.FC = () => {
             autoCapitalize='none'
             autoCorrect={false}
             autoFocus
-            clearButtonMode='unless-editing'
+            clearButtonMode='never'
             keyboardType='url'
             textContentType='URL'
-            onSubmitEditing={async () =>
-              isSuccess && data && data.uri && (await createApplication())
+            onSubmitEditing={() =>
+              instanceQuery.isSuccess &&
+              instanceQuery.data &&
+              instanceQuery.data.uri &&
+              applicationQuery.refetch()
             }
             placeholder={t('content.login.server.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
           />
           <ButtonRow
-            onPress={async () => await createApplication()}
-            {...(isFetching
+            onPress={() => {
+              applicationQuery.refetch()
+            }}
+            {...(instanceQuery.isFetching || applicationQuery.isFetching
               ? { icon: 'loader' }
               : { text: t('content.login.button') as string })}
-            disabled={!data?.uri}
+            disabled={
+              !instanceQuery.data?.uri ||
+              instanceQuery.isFetching ||
+              applicationQuery.isFetching
+            }
           />
         </View>
         <View>
-          {instanceInfo({ header: '实例名称', content: data?.title })}
+          {instanceInfo({
+            header: '实例名称',
+            content: instanceQuery.data?.title
+          })}
           {instanceInfo({
             header: '实例介绍',
-            content: data?.short_description,
+            content: instanceQuery.data?.short_description,
             parse: true
           })}
           <View style={styles.instanceStats}>
@@ -241,7 +239,7 @@ const Login: React.FC = () => {
                 用户总数
               </Text>
               <ShimmerPlaceholder
-                visible={data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
@@ -249,7 +247,7 @@ const Login: React.FC = () => {
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}
                 >
-                  {data?.stats?.user_count}
+                  {instanceQuery.data?.stats?.user_count}
                 </Text>
               </ShimmerPlaceholder>
             </View>
@@ -260,7 +258,7 @@ const Login: React.FC = () => {
                 嘟嘟总数
               </Text>
               <ShimmerPlaceholder
-                visible={data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
@@ -268,7 +266,7 @@ const Login: React.FC = () => {
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}
                 >
-                  {data?.stats?.status_count}
+                  {instanceQuery.data?.stats?.status_count}
                 </Text>
               </ShimmerPlaceholder>
             </View>
@@ -279,7 +277,7 @@ const Login: React.FC = () => {
                 连结总数
               </Text>
               <ShimmerPlaceholder
-                visible={data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
@@ -287,7 +285,7 @@ const Login: React.FC = () => {
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}
                 >
-                  {data?.stats?.domain_count}
+                  {instanceQuery.data?.stats?.domain_count}
                 </Text>
               </ShimmerPlaceholder>
             </View>
