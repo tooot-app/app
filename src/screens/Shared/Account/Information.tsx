@@ -96,7 +96,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
               >
                 <ParseContent
                   content={field.name}
-                  size={StyleConstants.Font.Size.M}
+                  size={'M'}
                   emojis={account.emojis}
                   showFullLink
                 />
@@ -119,7 +119,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
               >
                 <ParseContent
                   content={field.value}
-                  size={StyleConstants.Font.Size.M}
+                  size={'M'}
                   emojis={account.emojis}
                   showFullLink
                 />
@@ -133,7 +133,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
         <View style={styles.note}>
           <ParseContent
             content={account.note}
-            size={StyleConstants.Font.Size.M}
+            size={'M'}
             emojis={account.emojis}
           />
         </View>

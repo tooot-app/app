@@ -61,7 +61,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
   return (
     <View style={styles.base}>
-      <View style={styles.nameAndAction}>
+      <View style={styles.nameAndMeta}>
         <View style={styles.name}>
           {emojis?.length ? (
             <Emojis
@@ -85,40 +85,40 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
             @{account}
           </Text>
         </View>
-        {queryKey && (
-          <Pressable
-            style={styles.action}
-            onPress={onPressAction}
-            children={pressableAction}
-          />
-        )}
-      </View>
-
-      <View style={styles.meta}>
-        <View>
-          <Text style={[styles.created_at, { color: theme.secondary }]}>
-            {since}
-          </Text>
-        </View>
-        {status.visibility === 'private' && (
-          <Feather
-            name='lock'
-            size={StyleConstants.Font.Size.S}
-            color={theme.secondary}
-            style={styles.visibility}
-          />
-        )}
-        {status.application && status.application.name !== 'Web' && (
+        <View style={styles.meta}>
           <View>
-            <Text
-              onPress={onPressApplication}
-              style={[styles.application, { color: theme.secondary }]}
-            >
-              发自于 - {status.application.name}
+            <Text style={[styles.created_at, { color: theme.secondary }]}>
+              {since}
             </Text>
           </View>
-        )}
+          {status.visibility === 'private' && (
+            <Feather
+              name='lock'
+              size={StyleConstants.Font.Size.S}
+              color={theme.secondary}
+              style={styles.visibility}
+            />
+          )}
+          {status.application && status.application.name !== 'Web' && (
+            <View>
+              <Text
+                onPress={onPressApplication}
+                style={[styles.application, { color: theme.secondary }]}
+              >
+                发自于 - {status.application.name}
+              </Text>
+            </View>
+          )}
+        </View>
       </View>
+
+      {queryKey && (
+        <Pressable
+          style={styles.action}
+          onPress={onPressAction}
+          children={pressableAction}
+        />
+      )}
 
       {queryKey && (
         <BottomSheet
@@ -157,29 +157,21 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
 const styles = StyleSheet.create({
   base: {
-    flex: 1
-  },
-  nameAndAction: {
     flex: 1,
-    flexBasis: '100%',
-    flexDirection: 'row',
-    alignItems: 'flex-start'
+    flexDirection: 'row'
+  },
+  nameAndMeta: {
+    flexBasis: '80%'
   },
   name: {
-    flexBasis: '85%',
     flexDirection: 'row'
   },
   nameWithoutEmoji: {
     fontSize: StyleConstants.Font.Size.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
-  action: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
   account: {
-    flexShrink: 1,
+    flex: 1,
     marginLeft: StyleConstants.Spacing.XS
   },
   meta: {
@@ -197,6 +189,11 @@ const styles = StyleSheet.create({
   application: {
     fontSize: StyleConstants.Font.Size.S,
     marginLeft: StyleConstants.Spacing.S
+  },
+  action: {
+    flexBasis: '20%',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 })
 

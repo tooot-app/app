@@ -50,6 +50,7 @@ const Timeline: React.FC<Props> = ({
     }
   ]
   const {
+    status,
     isSuccess,
     isLoading,
     isError,
@@ -109,14 +110,8 @@ const Timeline: React.FC<Props> = ({
     []
   )
   const flItemEmptyComponent = useMemo(
-    () => (
-      <TimelineEmpty
-        isLoading={isLoading}
-        isError={isError}
-        refetch={refetch}
-      />
-    ),
-    [isLoading, isError]
+    () => <TimelineEmpty status={status} refetch={refetch} />,
+    [isLoading, isError, isSuccess]
   )
   const flOnRefresh = useCallback(
     () =>
@@ -124,7 +119,7 @@ const Timeline: React.FC<Props> = ({
       fetchMore(
         {
           direction: 'prev',
-          id: flattenData[0].id
+          id: flattenData.length ? flattenData[0].id : null
         },
         { previous: true }
       ),
@@ -142,11 +137,6 @@ const Timeline: React.FC<Props> = ({
   )
   const flFooter = useCallback(() => {
     return <TimelineEnd isFetchingMore={isFetchingMore} />
-    // if (isFetchingMore) {
-    //   return <ActivityIndicator />
-    // } else {
-    //   return <TimelineEnd />
-    // }
   }, [isFetchingMore])
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index

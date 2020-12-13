@@ -126,31 +126,29 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
 
   return (
     <View style={styles.base}>
-      <View style={{ flexBasis: '80%' }}>
-        <View style={styles.nameAndAction}>
-          <View style={styles.name}>
-            {emojis?.length ? (
-              <Emojis
-                content={name}
-                emojis={emojis}
-                size={StyleConstants.Font.Size.M}
-                fontBold={true}
-              />
-            ) : (
-              <Text
-                numberOfLines={1}
-                style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-              >
-                {name}
-              </Text>
-            )}
+      <View style={styles.nameAndMeta}>
+        <View style={styles.name}>
+          {emojis?.length ? (
+            <Emojis
+              content={name}
+              emojis={emojis}
+              size={StyleConstants.Font.Size.M}
+              fontBold={true}
+            />
+          ) : (
             <Text
-              style={[styles.account, { color: theme.secondary }]}
               numberOfLines={1}
+              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
             >
-              @{account}
+              {name}
             </Text>
-          </View>
+          )}
+          <Text
+            style={[styles.account, { color: theme.secondary }]}
+            numberOfLines={1}
+          >
+            @{account}
+          </Text>
         </View>
 
         <View style={styles.meta}>
@@ -180,6 +178,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
             )}
         </View>
       </View>
+
       {notification.type === 'follow' && (
         <View style={styles.relationship}>{relationshipIcon}</View>
       )}
@@ -192,21 +191,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  nameAndAction: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  nameAndMeta: {
+    width: '80%'
   },
   name: {
-    flexBasis: '90%',
     flexDirection: 'row'
   },
   nameWithoutEmoji: {
     fontSize: StyleConstants.Font.Size.M,
     fontWeight: StyleConstants.Font.Weight.Bold
-  },
-  action: {
-    alignItems: 'flex-end'
   },
   account: {
     flexShrink: 1,

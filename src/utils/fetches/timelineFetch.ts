@@ -143,6 +143,12 @@ export const timelineFetch = async (
         url: `conversations`,
         params
       })
+      if (pagination) {
+        // Bug in pull to refresh in conversations
+        res.body = res.body.filter(
+          (b: Mastodon.Conversation) => b.id !== pagination.id
+        )
+      }
       return Promise.resolve({ toots: res.body, pointer: null })
 
     case 'Bookmarks':

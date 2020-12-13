@@ -92,7 +92,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
     navigation.navigate(getCurrentTab(navigation), {
       screen: 'Screen-Shared-Compose',
       params: {
-        type: 'reply',
+        type: status.visibility === 'direct' ? 'conversation' : 'reply',
         incomingStatus: status
       }
     })

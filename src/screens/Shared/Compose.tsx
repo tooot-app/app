@@ -6,7 +6,6 @@ import React, {
   RefObject,
   useEffect,
   useReducer,
-  useRef,
   useState
 } from 'react'
 import {
@@ -84,6 +83,7 @@ export type ComposeState = {
   }
   attachmentUploadProgress?: { progress: number; aspect?: number }
   visibility: 'public' | 'unlisted' | 'private' | 'direct'
+  visibilityLock: boolean
   replyToStatus?: Mastodon.Status
   textInputFocus: {
     current: 'text' | 'spoiler'
@@ -167,6 +167,7 @@ const composeInitialState: ComposeState = {
     getLocalAccountPreferences(store.getState())[
       'posting:default:visibility'
     ] || 'public',
+  visibilityLock: false,
   replyToStatus: undefined,
   textInputFocus: {
     current: 'text',
@@ -177,7 +178,7 @@ const composeExistingState = ({
   type,
   incomingStatus
 }: {
-  type: 'reply' | 'edit'
+  type: 'reply' | 'conversation' | 'edit'
   incomingStatus: Mastodon.Status
 }): ComposeState => {
   switch (type) {
@@ -222,11 +223,17 @@ const composeExistingState = ({
         visibility: incomingStatus.visibility
       }
     case 'reply':
-      const replyPlaceholder = `@${
-        incomingStatus.reblog
-          ? incomingStatus.reblog.account.acct
-          : incomingStatus.account.acct
-      } `
+    case 'conversation':
+      const actualStatus = incomingStatus.reblog || incomingStatus
+      const allMentions = actualStatus.mentions.map(
+        mention => `@${mention.acct}`
+      )
+      let replyPlaceholder = allMentions.join(' ')
+      if (replyPlaceholder.length === 0) {
+        replyPlaceholder = `@${actualStatus.account.acct} `
+      } else {
+        replyPlaceholder = replyPlaceholder + ' '
+      }
       return {
         ...composeInitialState,
         text: {
@@ -235,6 +242,10 @@ const composeExistingState = ({
           formatted: undefined,
           selection: { start: 0, end: 0 }
         },
+        ...(type === 'conversation' && {
+          visibility: 'direct',
+          visibilityLock: true
+        }),
         replyToStatus: incomingStatus.reblog || incomingStatus
       }
   }
@@ -290,7 +301,7 @@ export interface Props {
   route: {
     params:
       | {
-          type?: 'reply' | 'edit'
+          type?: 'reply' | 'conversation' | 'edit'
           incomingStatus: Mastodon.Status
         }
       | undefined
@@ -349,14 +360,22 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
         })
         break
       case 'reply':
+      case 'conversation':
+        const actualStatus =
+          params.incomingStatus.reblog || params.incomingStatus
+        const allMentions = actualStatus.mentions.map(
+          mention => `@${mention.acct}`
+        )
+        let replyPlaceholder = allMentions.join(' ')
+        if (replyPlaceholder.length === 0) {
+          replyPlaceholder = `@${actualStatus.account.acct} `
+        } else {
+          replyPlaceholder = replyPlaceholder + ' '
+        }
         formatText({
           textInput: 'text',
           composeDispatch,
-          content: `@${
-            params.incomingStatus.reblog
-              ? params.incomingStatus.reblog.account.acct
-              : params.incomingStatus.account.acct
-          } `,
+          content: replyPlaceholder,
           disableDebounce: true
         })
         break
@@ -373,6 +392,10 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
       ])
     } else {
       const formData = new FormData()
+
+      if (params?.type === 'conversation' || params?.type === 'reply') {
+        formData.append('in_reply_to_id', composeState.replyToStatus!.id)
+      }
 
       if (composeState.spoiler.active) {
         formData.append('spoiler_text', composeState.spoiler.raw)
@@ -469,6 +492,12 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
   // doesn't work
   const rawCount = composeState.text.raw.length
 
+  const postButtonText = {
+    conversation: '回复私信',
+    reply: '发布回复',
+    edit: '发嘟嘟'
+  }
+
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
       <SafeAreaView
@@ -513,7 +542,7 @@ const Compose: React.FC<Props> = ({ route: { params } }) => {
                 ) : (
                   <HeaderRight
                     onPress={async () => tootPost()}
-                    text='发嘟嘟'
+                    text={params?.type ? postButtonText[params.type] : '发嘟嘟'}
                     disabled={rawCount < 1 || totalTextCount > 500}
                   />
                 )

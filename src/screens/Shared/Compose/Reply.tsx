@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import { useTheme } from 'src/utils/styles/ThemeManager'
 
 import TimelineAttachment from 'src/components/Timelines/Timeline/Shared/Attachment'
@@ -8,6 +8,7 @@ import TimelineCard from 'src/components/Timelines/Timeline/Shared/Card'
 import TimelineContent from 'src/components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderDefault from 'src/components/Timelines/Timeline/Shared/HeaderDefault'
 import { ComposeContext } from '../Compose'
+import { StyleConstants } from 'src/utils/styles/constants'
 
 const ComposeReply: React.FC = () => {
   const {
@@ -15,8 +16,14 @@ const ComposeReply: React.FC = () => {
   } = useContext(ComposeContext)
   const { theme } = useTheme()
 
+  const contentWidth =
+    Dimensions.get('window').width -
+    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
+    StyleConstants.Avatar.S - // Avatar width
+    StyleConstants.Spacing.S // Avatar margin to the right
+
   return (
-    <View style={styles.status}>
+    <View style={[styles.status, { borderTopColor: theme.border }]}>
       <TimelineAvatar account={replyToStatus!.account} />
       <View style={styles.details}>
         <TimelineHeaderDefault status={replyToStatus!} />
@@ -24,7 +31,7 @@ const ComposeReply: React.FC = () => {
           <TimelineContent status={replyToStatus!} />
         )}
         {replyToStatus!.media_attachments.length > 0 && (
-          <TimelineAttachment status={replyToStatus!} width={200} />
+          <TimelineAttachment status={replyToStatus!} width={contentWidth} />
         )}
         {replyToStatus!.card && <TimelineCard card={replyToStatus!.card} />}
       </View>
@@ -35,7 +42,9 @@ const ComposeReply: React.FC = () => {
 const styles = StyleSheet.create({
   status: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingTop: StyleConstants.Spacing.Global.PagePadding
   },
   details: {
     flex: 1

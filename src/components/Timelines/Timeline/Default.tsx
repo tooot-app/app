@@ -46,11 +46,14 @@ const TimelineDefault: React.FC<Props> = ({
   const tootChildren = useMemo(
     () => (
       <View
-        style={{
-          paddingLeft: highlighted
-            ? 0
-            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
-        }}
+        style={[
+          styles.content,
+          {
+            paddingLeft: highlighted
+              ? 0
+              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+          }
+        ]}
       >
         {actualStatus.content.length > 0 && (
           <TimelineContent status={actualStatus} highlighted={highlighted} />
@@ -98,11 +101,10 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     width: '100%',
-    flexDirection: 'row',
-    marginBottom: StyleConstants.Spacing.S
+    flexDirection: 'row'
   },
   content: {
-    paddingLeft: StyleConstants.Avatar.S + StyleConstants.Spacing.S
+    paddingTop: StyleConstants.Spacing.S
   }
 })
 

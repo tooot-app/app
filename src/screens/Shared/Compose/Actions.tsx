@@ -84,6 +84,7 @@ const ComposeActions: React.FC = () => {
   }, [composeState.visibility])
   const visibilityOnPress = useCallback(
     () =>
+      !composeState.visibilityLock &&
       ActionSheetIOS.showActionSheetWithOptions(
         {
           options: ['公开', '不公开', '仅关注着', '私信', '取消'],
@@ -164,7 +165,7 @@ const ComposeActions: React.FC = () => {
       <Feather
         name={visibilityIcon}
         size={24}
-        color={theme.secondary}
+        color={composeState.visibilityLock ? theme.disabled : theme.secondary}
         onPress={visibilityOnPress}
       />
       <Feather

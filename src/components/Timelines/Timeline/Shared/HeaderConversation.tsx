@@ -1,65 +1,164 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+import React, { useCallback, useMemo } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { useMutation, useQueryCache } from 'react-query'
+import client from 'src/api/client'
+import { toast } from 'src/components/toast'
 
 import relativeTime from 'src/utils/relativeTime'
+import { StyleConstants } from 'src/utils/styles/constants'
+import { useTheme } from 'src/utils/styles/ThemeManager'
 import Emojis from './Emojis'
 
 export interface Props {
+  queryKey: App.QueryKey
+  id: string
   account: Mastodon.Account
   created_at?: Mastodon.Status['created_at']
 }
 
-const HeaderConversation: React.FC<Props> = ({ account, created_at }) => {
+const fireMutation = async ({ id }: { id: string }) => {
+  const res = await client({
+    method: 'delete',
+    instance: 'local',
+    url: `conversations/${id}`
+  })
+  console.log(res)
+  if (!res.body.error) {
+    toast({ type: 'success', content: '删除私信成功' })
+    return Promise.resolve()
+  } else {
+    toast({
+      type: 'error',
+      content: '删除私信失败，请重试',
+      autoHide: false
+    })
+    return Promise.reject()
+  }
+}
+
+const HeaderConversation: React.FC<Props> = ({
+  queryKey,
+  id,
+  account,
+  created_at
+}) => {
+  const queryCache = useQueryCache()
+  const [mutateAction] = useMutation(fireMutation, {
+    onMutate: () => {
+      queryCache.cancelQueries(queryKey)
+      const oldData = queryCache.getQueryData(queryKey)
+
+      queryCache.setQueryData(queryKey, old =>
+        (old as {}[]).map((paging: any) => ({
+          toots: paging.toots.filter((toot: any) => toot.id !== id),
+          pointer: paging.pointer
+        }))
+      )
+
+      return oldData
+    },
+    onError: (err, _, oldData) => {
+      toast({ type: 'error', content: '请重试', autoHide: false })
+      queryCache.setQueryData(queryKey, oldData)
+    },
+    onSettled: () => {
+      queryCache.invalidateQueries(queryKey)
+    }
+  })
+
+  const { theme } = useTheme()
+
+  const actionOnPress = useCallback(() => mutateAction({ id }), [])
+
+  const actionChildren = useMemo(
+    () => (
+      <Feather
+        name='trash'
+        color={theme.secondary}
+        size={StyleConstants.Font.Size.M + 2}
+      />
+    ),
+    []
+  )
+
   return (
-    <View>
+    <View style={styles.base}>
       <View style={styles.nameAndDate}>
         <View style={styles.name}>
           {account.emojis ? (
             <Emojis
               content={account.display_name || account.username}
               emojis={account.emojis}
-              size={14}
+              size={StyleConstants.Font.Size.M}
+              fontBold={true}
             />
           ) : (
-            <Text numberOfLines={1}>
+            <Text
+              numberOfLines={1}
+              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
+            >
               {account.display_name || account.username}
             </Text>
           )}
+          <Text
+            style={[styles.account, { color: theme.secondary }]}
+            numberOfLines={1}
+          >
+            @{account.acct}
+          </Text>
         </View>
+
         {created_at && (
-          <View>
-            <Text style={styles.created_at}>{relativeTime(created_at)}</Text>
+          <View style={styles.meta}>
+            <Text style={[styles.created_at, { color: theme.secondary }]}>
+              {relativeTime(created_at)}
+            </Text>
           </View>
         )}
       </View>
-      <Text style={styles.account} numberOfLines={1}>
-        @{account.acct}
-      </Text>
+
+      <Pressable
+        style={styles.action}
+        onPress={actionOnPress}
+        children={actionChildren}
+      />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  base: {
+    flex: 1,
+    flexDirection: 'row'
+  },
   nameAndDate: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    width: '80%'
   },
   name: {
-    flexDirection: 'row',
-    marginRight: 8,
-    fontWeight: '900'
-  },
-  created_at: {
-    fontSize: 12,
-    lineHeight: 12,
-    marginTop: 8,
-    marginBottom: 8,
-    marginRight: 8
+    flexDirection: 'row'
   },
   account: {
-    lineHeight: 14,
-    flexShrink: 1
+    flexShrink: 1,
+    marginLeft: StyleConstants.Spacing.XS
+  },
+  nameWithoutEmoji: {
+    fontSize: StyleConstants.Font.Size.M,
+    fontWeight: StyleConstants.Font.Weight.Bold
+  },
+  meta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: StyleConstants.Spacing.XS,
+    marginBottom: StyleConstants.Spacing.S
+  },
+  created_at: {
+    fontSize: StyleConstants.Font.Size.S
+  },
+  action: {
+    flexBasis: '20%',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 })
 

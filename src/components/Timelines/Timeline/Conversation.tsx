@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -6,13 +6,33 @@ import TimelineAvatar from './Shared/Avatar'
 import TimelineHeaderConversation from './Shared/HeaderConversation'
 import TimelineContent from './Shared/Content'
 import { StyleConstants } from 'src/utils/styles/constants'
+import TimelineActions from './Shared/Actions'
 
 export interface Props {
   item: Mastodon.Conversation
+  queryKey: App.QueryKey
+  highlighted?: boolean
 }
 // Unread and mark as unread
-const TimelineConversation: React.FC<Props> = ({ item }) => {
+const TimelineConversation: React.FC<Props> = ({
+  item,
+  queryKey,
+  highlighted = false
+}) => {
   const navigation = useNavigation()
+
+  const conversationOnPress = useCallback(
+    () =>
+      item.last_status &&
+      navigation.navigate('Screen-Shared-Toot', {
+        toot: item.last_status
+      }),
+    []
+  )
+
+  const conversationChildren = useMemo(() => {
+    return item.last_status && <TimelineContent status={item.last_status} />
+  }, [])
 
   return (
     <View style={styles.statusView}>
@@ -20,25 +40,26 @@ const TimelineConversation: React.FC<Props> = ({ item }) => {
         <TimelineAvatar account={item.accounts[0]} />
         <View style={styles.details}>
           <TimelineHeaderConversation
+            queryKey={queryKey}
+            id={item.id}
             account={item.accounts[0]}
             created_at={item.last_status?.created_at}
           />
-          {/* Can pass toot info to next page to speed up performance */}
           <Pressable
-            onPress={() =>
-              item.last_status &&
-              navigation.navigate('Screen-Shared-Toot', {
-                toot: item.last_status.id
-              })
-            }
-          >
-            {item.last_status ? (
-              <TimelineContent status={item.last_status} />
-            ) : (
-              <></>
-            )}
-          </Pressable>
+            onPress={conversationOnPress}
+            children={conversationChildren}
+          />
         </View>
+      </View>
+
+      <View
+        style={{
+          paddingLeft: highlighted
+            ? 0
+            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+        }}
+      >
+        <TimelineActions queryKey={queryKey} status={item.last_status!} />
       </View>
     </View>
   )
