@@ -31,26 +31,41 @@ const TimelineConversation: React.FC<Props> = ({
   )
 
   const conversationChildren = useMemo(() => {
-    return item.last_status && <TimelineContent status={item.last_status} />
+    return (
+      item.last_status && (
+        <View
+          style={{
+            paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+            paddingLeft: highlighted
+              ? 0
+              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+          }}
+        >
+          <TimelineContent
+            status={item.last_status}
+            highlighted={highlighted}
+          />
+        </View>
+      )
+    )
   }, [])
 
   return (
-    <View style={styles.statusView}>
-      <View style={styles.status}>
+    <View style={styles.conversationView}>
+      <View style={styles.header}>
         <TimelineAvatar account={item.accounts[0]} />
-        <View style={styles.details}>
-          <TimelineHeaderConversation
-            queryKey={queryKey}
-            id={item.id}
-            account={item.accounts[0]}
-            created_at={item.last_status?.created_at}
-          />
-          <Pressable
-            onPress={conversationOnPress}
-            children={conversationChildren}
-          />
-        </View>
+        <TimelineHeaderConversation
+          queryKey={queryKey}
+          id={item.id}
+          account={item.accounts[0]}
+          created_at={item.last_status?.created_at}
+        />
       </View>
+
+      <Pressable
+        onPress={conversationOnPress}
+        children={conversationChildren}
+      />
 
       <View
         style={{
@@ -66,18 +81,15 @@ const TimelineConversation: React.FC<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  statusView: {
+  conversationView: {
     flex: 1,
     flexDirection: 'column',
     padding: StyleConstants.Spacing.Global.PagePadding
   },
-  status: {
+  header: {
     flex: 1,
+    width: '100%',
     flexDirection: 'row'
-  },
-  details: {
-    flex: 1,
-    flexGrow: 1
   }
 })
 

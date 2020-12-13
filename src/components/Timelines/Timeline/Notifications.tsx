@@ -16,32 +16,49 @@ import { StyleConstants } from '@utils/styles/constants'
 export interface Props {
   notification: Mastodon.Notification
   queryKey: App.QueryKey
+  highlighted?: boolean
 }
 
-const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
+const TimelineNotifications: React.FC<Props> = ({
+  notification,
+  queryKey,
+  highlighted = false
+}) => {
   const navigation = useNavigation()
   const actualAccount = notification.status
     ? notification.status.account
     : notification.account
-  const contentWidth =
-    Dimensions.get('window').width -
-    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-    StyleConstants.Avatar.S - // Avatar width
-    StyleConstants.Spacing.S // Avatar margin to the right
+  const contentWidth = highlighted
+    ? Dimensions.get('window').width -
+      StyleConstants.Spacing.Global.PagePadding * 2 // Global page padding on both sides
+    : Dimensions.get('window').width -
+      StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
+      StyleConstants.Avatar.S - // Avatar width
+      StyleConstants.Spacing.S // Avatar margin to the right
 
   const tootOnPress = useCallback(
     () =>
       navigation.navigate('Screen-Shared-Toot', {
-        toot: notification
+        toot: notification.status
       }),
     []
   )
   const tootChildren = useMemo(
     () =>
       notification.status ? (
-        <>
+        <View
+          style={{
+            paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+            paddingLeft: highlighted
+              ? 0
+              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+          }}
+        >
           {notification.status.content.length > 0 && (
-            <TimelineContent status={notification.status} />
+            <TimelineContent
+              status={notification.status}
+              highlighted={highlighted}
+            />
           )}
           {notification.status.poll && (
             <TimelinePoll queryKey={queryKey} status={notification.status} />
@@ -55,7 +72,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
           {notification.status.card && (
             <TimelineCard card={notification.status.card} />
           )}
-        </>
+        </View>
       ) : null,
     [notification.status?.poll?.voted]
   )
@@ -68,33 +85,37 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
         notification
       />
 
-      <View style={styles.notification}>
+      <View style={styles.header}>
         <TimelineAvatar account={actualAccount} />
-        <View style={styles.details}>
-          <TimelineHeaderNotification notification={notification} />
-          <Pressable onPress={tootOnPress} children={tootChildren} />
-          {notification.status && (
-            <TimelineActions queryKey={queryKey} status={notification.status} />
-          )}
-        </View>
+        <TimelineHeaderNotification notification={notification} />
       </View>
+
+      <Pressable onPress={tootOnPress} children={tootChildren} />
+
+      {notification.status && (
+        <View
+          style={{
+            paddingLeft: highlighted
+              ? 0
+              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+          }}
+        >
+          <TimelineActions queryKey={queryKey} status={notification.status} />
+        </View>
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   notificationView: {
-    flex: 1,
-    flexDirection: 'column',
-    padding: StyleConstants.Spacing.Global.PagePadding
+    padding: StyleConstants.Spacing.Global.PagePadding,
+    paddingBottom: StyleConstants.Spacing.M
   },
-  notification: {
+  header: {
     flex: 1,
+    width: '100%',
     flexDirection: 'row'
-  },
-  details: {
-    flex: 1,
-    flexGrow: 1
   }
 })
 

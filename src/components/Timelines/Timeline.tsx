@@ -9,6 +9,7 @@ import { timelineFetch } from '@utils/fetches/timelineFetch'
 import TimelineSeparator from '@components/Timelines/Timeline/Separator'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
+import { useScrollToTop } from '@react-navigation/native'
 
 export interface Props {
   page: App.Pages
@@ -147,6 +148,8 @@ const Timeline: React.FC<Props> = ({
       350
     )
   }, [])
+
+  useScrollToTop(flRef)
 
   return (
     <FlatList

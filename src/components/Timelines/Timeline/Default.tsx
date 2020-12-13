@@ -46,14 +46,12 @@ const TimelineDefault: React.FC<Props> = ({
   const tootChildren = useMemo(
     () => (
       <View
-        style={[
-          styles.content,
-          {
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
-          }
-        ]}
+        style={{
+          paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+          paddingLeft: highlighted
+            ? 0
+            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+        }}
       >
         {actualStatus.content.length > 0 && (
           <TimelineContent status={actualStatus} highlighted={highlighted} />
@@ -75,10 +73,12 @@ const TimelineDefault: React.FC<Props> = ({
       {item.reblog && (
         <TimelineActioned action='reblog' account={item.account} />
       )}
+
       <View style={styles.header}>
         <TimelineAvatar account={actualStatus.account} />
         <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
       </View>
+      
       <Pressable onPress={tootOnPress} children={tootChildren} />
       <View
         style={{
@@ -102,9 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     flexDirection: 'row'
-  },
-  content: {
-    paddingTop: StyleConstants.Spacing.S
   }
 })
 

@@ -55,10 +55,12 @@ const App: React.FC = () => {
     <AppearanceProvider>
       <ReactQueryCacheProvider queryCache={queryCache}>
         <Provider store={store}>
-          <PersistGate persistor={persistor}>
+          <PersistGate
+            persistor={persistor}
+            onBeforeLift={() => setAppLoaded(true)}
+          >
             {bootstrapped => {
               if (bootstrapped) {
-                setAppLoaded(true)
                 require('@root/i18n/i18n')
                 return (
                   <ThemeManager>
