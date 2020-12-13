@@ -2,9 +2,9 @@ import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { createElement, Dispatch } from 'react'
 import { Text } from 'react-native'
 import { RefetchOptions } from 'react-query/types/core/query'
-import Autolinker from 'src/modules/autolinker'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '../Compose'
+import Autolinker from '@root/modules/autolinker'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { PostAction, ComposeState } from '@screens/Shared/Compose'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']

@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   card: Mastodon.Card

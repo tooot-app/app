@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { AppState, FlatList, StyleSheet } from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
-import TimelineNotifications from 'src/components/Timelines/Timeline/Notifications'
-import TimelineDefault from 'src/components/Timelines/Timeline/Default'
-import TimelineConversation from 'src/components/Timelines/Timeline/Conversation'
-import { timelineFetch } from 'src/utils/fetches/timelineFetch'
-import TimelineSeparator from './Timeline/Separator'
-import TimelineEmpty from './Timeline/Empty'
-import TimelineEnd from './Timeline/Shared/End'
+import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
+import TimelineDefault from '@components/Timelines/Timeline/Default'
+import TimelineConversation from '@components/Timelines/Timeline/Conversation'
+import { timelineFetch } from '@utils/fetches/timelineFetch'
+import TimelineSeparator from '@components/Timelines/Timeline/Separator'
+import TimelineEmpty from '@components/Timelines/Timeline/Empty'
+import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
 
 export interface Props {
   page: App.Pages

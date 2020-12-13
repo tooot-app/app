@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { MenuContainer, MenuRow } from 'src/components/Menu'
+import { MenuContainer, MenuRow } from '@components/Menu'
 import {
   changeLanguage,
   changeTheme,
   getSettingsLanguage,
   getSettingsTheme
-} from 'src/utils/slices/settingsSlice'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+} from '@utils/slices/settingsSlice'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 const ScreenMeSettings: React.FC = () => {
   const { t, i18n } = useTranslation('meSettings')

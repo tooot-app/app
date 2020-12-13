@@ -1,12 +1,12 @@
 import React from 'react'
 
-import ScreenSharedAccount from 'src/screens/Shared/Account'
-import ScreenSharedHashtag from 'src/screens/Shared/Hashtag'
-import ScreenSharedToot from 'src/screens/Shared/Toot'
-import ScreenSharedWebview from 'src/screens/Shared/Webview'
-import Compose from 'src/screens/Shared/Compose'
-import ComposeEditAttachment from './Compose/EditAttachment'
-import ScreenSharedSearch from './Search'
+import ScreenSharedAccount from '@screens/Shared/Account'
+import ScreenSharedHashtag from '@screens/Shared/Hashtag'
+import ScreenSharedToot from '@screens/Shared/Toot'
+import ScreenSharedWebview from '@screens/Shared/Webview'
+import Compose from '@screens/Shared/Compose'
+import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
+import ScreenSharedSearch from '@screens/Shared/Search'
 import { useTranslation } from 'react-i18next'
 
 const sharedScreens = (Stack: any) => {

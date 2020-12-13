@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { ComposeContext } from '../../Compose'
-import ComposeAttachments from '../Attachments'
-import ComposeEmojis from '../Emojis'
-import ComposePoll from '../Poll'
-import ComposeReply from '../Reply'
+import { StyleConstants } from '@utils/styles/constants'
+import { ComposeContext } from '@screens/Shared/Compose'
+import ComposeAttachments from '@screens/Shared/Compose/Attachments'
+import ComposeEmojis from '@screens/Shared/Compose/Emojis'
+import ComposePoll from '@screens/Shared/Compose/Poll'
+import ComposeReply from '@screens/Shared/Compose/Reply'
 
 export interface Props {
   textInputRef: React.RefObject<TextInput>

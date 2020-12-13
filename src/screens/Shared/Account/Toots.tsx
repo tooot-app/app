@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 
-import Timeline from 'src/components/Timelines/Timeline'
+import Timeline from '@components/Timelines/Timeline'
 import { useTranslation } from 'react-i18next'
 
 export interface Props {

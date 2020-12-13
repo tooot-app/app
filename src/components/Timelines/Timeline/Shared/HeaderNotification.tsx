@@ -9,14 +9,14 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 
-import Emojis from './Emojis'
-import relativeTime from 'src/utils/relativeTime'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
+import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import relativeTime from '@utils/relativeTime'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import { useQuery } from 'react-query'
-import { relationshipFetch } from 'src/utils/fetches/relationshipFetch'
-import client from 'src/api/client'
-import { toast } from 'src/components/toast'
+import { relationshipFetch } from '@utils/fetches/relationshipFetch'
+import client from '@api/client'
+import { toast } from '@components/toast'
 
 export interface Props {
   notification: Mastodon.Notification

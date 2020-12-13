@@ -1,5 +1,5 @@
-import MenuContainer from './Menu/Container'
-import MenuHeader from './Menu/Header'
-import MenuRow from './Menu/Row'
+import MenuContainer from '@components/Menu/Container'
+import MenuHeader from '@components/Menu/Header'
+import MenuRow from '@components/Menu/Row'
 
 export { MenuContainer, MenuHeader, MenuRow }

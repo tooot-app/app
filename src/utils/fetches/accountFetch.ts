@@ -1,4 +1,4 @@
-import client from 'src/api/client'
+import client from '@api/client'
 
 export const accountFetch = async (key: string, { id }: { id: string }) => {
   const res = await client({

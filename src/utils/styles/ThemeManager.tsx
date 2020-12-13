@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native-appearance'
 import { useSelector } from 'react-redux'
-import { ColorDefinitions, getTheme } from 'src/utils/styles/themes'
-import { getSettingsTheme } from '../slices/settingsSlice'
+import { ColorDefinitions, getTheme } from '@utils/styles/themes'
+import { getSettingsTheme } from '@utils/slices/settingsSlice'
 
 type ContextType = {
   mode: 'light' | 'dark'

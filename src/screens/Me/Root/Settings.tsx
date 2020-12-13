@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { MenuContainer, MenuRow } from 'src/components/Menu'
+import { MenuContainer, MenuRow } from '@components/Menu'
 
 const Settings: React.FC = () => {
   const { t } = useTranslation('meRoot')

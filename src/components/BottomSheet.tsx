@@ -8,9 +8,9 @@ import {
   View
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { ButtonRow } from './Button'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { ButtonRow } from '@components/Button'
 
 export interface Props {
   children: React.ReactNode

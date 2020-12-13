@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   heading: string

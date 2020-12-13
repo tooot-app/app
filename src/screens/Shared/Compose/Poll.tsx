@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import { ComposeContext } from '../Compose'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { ButtonRow } from 'src/components/Button'
-import { MenuContainer, MenuRow } from 'src/components/Menu'
+import { ComposeContext } from '@screens/Shared/Compose'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { ButtonRow } from '@components/Button'
+import { MenuContainer, MenuRow } from '@components/Menu'
 
 const ComposePoll: React.FC = () => {
   const {

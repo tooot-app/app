@@ -1,4 +1,4 @@
-import client from 'src/api/client'
+import client from '@api/client'
 
 export const instanceFetch = async (
   key: string,

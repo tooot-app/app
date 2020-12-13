@@ -2,9 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import Emojis from './Emojis'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
+import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   account: Mastodon.Account

@@ -5,17 +5,17 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
 import { Feather } from '@expo/vector-icons'
 
-import Timeline from './Timelines/Timeline'
-import sharedScreens from 'src/screens/Shared/sharedScreens'
+import Timeline from '@components/Timelines/Timeline'
+import sharedScreens from '@screens/Shared/sharedScreens'
 import {
   getLocalUrl,
   getRemoteUrl,
   InstancesState
-} from 'src/utils/slices/instancesSlice'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+} from '@utils/slices/instancesSlice'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
-import getCurrentTab from 'src/utils/getCurrentTab'
-import PleaseLogin from './PleaseLogin'
+import getCurrentTab from '@utils/getCurrentTab'
+import PleaseLogin from '@components/PleaseLogin'
 
 const Stack = createNativeStackNavigator()
 

@@ -2,11 +2,11 @@ import React, { useCallback, useMemo } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import TimelineAvatar from './Shared/Avatar'
-import TimelineHeaderConversation from './Shared/HeaderConversation'
-import TimelineContent from './Shared/Content'
-import { StyleConstants } from 'src/utils/styles/constants'
-import TimelineActions from './Shared/Actions'
+import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
+import TimelineHeaderConversation from '@components/Timelines/Timeline/Shared/HeaderConversation'
+import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
+import { StyleConstants } from '@utils/styles/constants'
+import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 
 export interface Props {
   item: Mastodon.Conversation

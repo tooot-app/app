@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from 'src/store'
-import client from 'src/api/client'
+import { RootState } from '@root/store'
+import client from '@api/client'
 
 export type InstancesState = {
   local: {

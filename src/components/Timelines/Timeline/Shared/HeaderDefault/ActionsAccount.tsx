@@ -1,8 +1,8 @@
 import React from 'react'
 import { useMutation, useQueryCache } from 'react-query'
-import client from 'src/api/client'
-import { MenuContainer, MenuHeader, MenuRow } from 'src/components/Menu'
-import { toast } from 'src/components/toast'
+import client from '@api/client'
+import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
+import { toast } from '@components/toast'
 
 const fireMutation = async ({
   type,

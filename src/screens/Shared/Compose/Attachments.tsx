@@ -8,13 +8,13 @@ import {
   View
 } from 'react-native'
 
-import { ComposeContext } from '../Compose'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { ComposeContext } from '@screens/Shared/Compose'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
-import { ButtonRound } from 'src/components/Button'
-import addAttachments from './addAttachments'
+import { ButtonRound } from '@components/Button'
+import addAttachments from '@screens/Shared/Compose/addAttachments'
 import { Feather } from '@expo/vector-icons'
 
 const DEFAULT_HEIGHT = 200

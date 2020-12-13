@@ -22,14 +22,14 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import sha256 from 'crypto-js/sha256'
 
-import { store } from 'src/store'
-import ComposeRoot from './Compose/Root'
-import client from 'src/api/client'
-import { getLocalAccountPreferences } from 'src/utils/slices/instancesSlice'
-import { HeaderLeft, HeaderRight } from 'src/components/Header'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import formatText from './Compose/formatText'
+import { store } from '@root/store'
+import ComposeRoot from '@screens/Shared/Compose/Root'
+import client from '@api/client'
+import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import formatText from '@screens/Shared/Compose/formatText'
 
 const Stack = createNativeStackNavigator()
 

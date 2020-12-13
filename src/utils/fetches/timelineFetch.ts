@@ -1,6 +1,6 @@
 import { uniqBy } from 'lodash'
 
-import client from 'src/api/client'
+import client from '@api/client'
 
 export const timelineFetch = async (
   key: string,

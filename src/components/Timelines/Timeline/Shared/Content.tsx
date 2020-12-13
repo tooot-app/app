@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Pressable, Text } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 
-import ParseContent from 'src/components/ParseContent'
+import ParseContent from '@components/ParseContent'
 
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export interface Props {

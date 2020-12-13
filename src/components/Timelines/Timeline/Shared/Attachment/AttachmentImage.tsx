@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Image, Modal, StyleSheet, Pressable, View } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   media_attachments: Mastodon.Attachment[]

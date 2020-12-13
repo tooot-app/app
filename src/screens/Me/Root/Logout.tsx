@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { updateLocal } from 'src/utils/slices/instancesSlice'
-import MenuButton from 'src/components/Menu/Button'
-import { MenuContainer } from 'src/components/Menu'
+import { updateLocal } from '@utils/slices/instancesSlice'
+import MenuButton from '@components/Menu/Button'
+import { MenuContainer } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 

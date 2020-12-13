@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { ComposeContext } from '../Compose'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { ComposeContext } from '@screens/Shared/Compose'
 import formatText from './formatText'
 
 const ComposeSpoilerInput: React.FC = () => {

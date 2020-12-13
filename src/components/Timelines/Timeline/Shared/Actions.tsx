@@ -3,12 +3,12 @@ import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
-import client from 'src/api/client'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { toast } from 'src/components/toast'
-import { StyleConstants } from 'src/utils/styles/constants'
+import client from '@api/client'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { toast } from '@components/toast'
+import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
-import getCurrentTab from 'src/utils/getCurrentTab'
+import getCurrentTab from '@utils/getCurrentTab'
 
 const fireMutation = async ({
   id,

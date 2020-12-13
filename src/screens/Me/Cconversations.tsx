@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Timeline from 'src/components/Timelines/Timeline'
+import Timeline from '@components/Timelines/Timeline'
 
 const ScreenMeConversations: React.FC = () => {
   return <Timeline page='Conversations' />

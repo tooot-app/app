@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { RootState } from 'src/store'
+import { RootState } from '@root/store'
 // import client from 'src/api/client'
 
 export type SettingsState = {

@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-import TimelineAttachment from 'src/components/Timelines/Timeline/Shared/Attachment'
-import TimelineAvatar from 'src/components/Timelines/Timeline/Shared/Avatar'
-import TimelineCard from 'src/components/Timelines/Timeline/Shared/Card'
-import TimelineContent from 'src/components/Timelines/Timeline/Shared/Content'
-import TimelineHeaderDefault from 'src/components/Timelines/Timeline/Shared/HeaderDefault'
-import { ComposeContext } from '../Compose'
-import { StyleConstants } from 'src/utils/styles/constants'
+import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
+import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
+import TimelineCard from '@components/Timelines/Timeline/Shared/Card'
+import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
+import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderDefault'
+import { ComposeContext } from '@screens/Shared/Compose'
+import { StyleConstants } from '@utils/styles/constants'
 
 const ComposeReply: React.FC = () => {
   const {

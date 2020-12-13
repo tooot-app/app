@@ -1,10 +1,10 @@
 import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-import { ColorDefinitions } from 'src/utils/styles/themes'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { ColorDefinitions } from '@utils/styles/themes'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   iconFront?: any

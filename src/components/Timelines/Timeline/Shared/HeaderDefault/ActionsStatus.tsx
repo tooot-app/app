@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Alert } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
-import client from 'src/api/client'
-import { MenuContainer, MenuHeader, MenuRow } from 'src/components/Menu'
-import { toast } from 'src/components/toast'
-import getCurrentTab from 'src/utils/getCurrentTab'
+import client from '@api/client'
+import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
+import { toast } from '@components/toast'
+import getCurrentTab from '@utils/getCurrentTab'
 
 const fireMutation = async ({
   id,

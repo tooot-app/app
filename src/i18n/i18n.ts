@@ -2,13 +2,13 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import * as Localization from 'expo-localization'
 
-import zh from 'src/i18n/zh/_all'
-import en from 'src/i18n/en/_all'
+import zh from '@root/i18n/zh/_all'
+import en from '@root/i18n/en/_all'
 import {
   changeLanguage,
   getSettingsLanguage
-} from 'src/utils/slices/settingsSlice'
-import { store } from 'src/store'
+} from '@utils/slices/settingsSlice'
+import { store } from '@root/store'
 
 if (!getSettingsLanguage(store.getState())) {
   const deviceLocal = Localization.locale

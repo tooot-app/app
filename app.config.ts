@@ -13,6 +13,7 @@ export default (): ExpoConfig => ({
   developmentClient: { silentLaunch: true },
   scheme: 'mastodonct',
   ios: {
+    bundleIdentifier: 'com.xmflsct.mastodon-app',
     infoPlist: {
       CFBundleAllowMixedLocalizations: true
     },

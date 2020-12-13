@@ -8,8 +8,8 @@ import {
   Text,
   View
 } from 'react-native'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   text: string

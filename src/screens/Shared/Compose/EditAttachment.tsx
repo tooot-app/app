@@ -22,13 +22,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Circle, G, Path } from 'react-native-svg'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 
-import { HeaderLeft, HeaderRight } from 'src/components/Header'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { PostAction } from '../Compose'
-import client from 'src/api/client'
-import AttachmentVideo from 'src/components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
+import { PostAction } from '@screens/Shared/Compose'
+import client from '@api/client'
+import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
 
 const Stack = createNativeStackNavigator()
 

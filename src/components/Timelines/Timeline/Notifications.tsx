@@ -2,16 +2,16 @@ import React, { useCallback, useMemo } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import TimelineActioned from './Shared/Actioned'
-import TimelineActions from './Shared/Actions'
-import TimelineAttachment from './Shared/Attachment'
-import TimelineAvatar from './Shared/Avatar'
-import TimelineCard from './Shared/Card'
-import TimelineContent from './Shared/Content'
-import TimelineHeaderNotification from './Shared/HeaderNotification'
-import TimelinePoll from './Shared/Poll'
+import TimelineActioned from '@components/Timelines/Timeline/Shared/Actioned'
+import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
+import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
+import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
+import TimelineCard from '@components/Timelines/Timeline/Shared/Card'
+import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
+import TimelineHeaderNotification from '@components/Timelines/Timeline/Shared/HeaderNotification'
+import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 
-import { StyleConstants } from 'src/utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   notification: Mastodon.Notification

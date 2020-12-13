@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   account: Mastodon.Account

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { WebView } from 'react-native-webview'
-import BottomSheet from 'src/components/BottomSheet'
+import BottomSheet from '@components/BottomSheet'
 
-import { HeaderLeft, HeaderRight } from 'src/components/Header'
-import { MenuContainer, MenuRow } from 'src/components/Menu'
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { MenuContainer, MenuRow } from '@components/Menu'
 
 const Stack = createNativeStackNavigator()
 

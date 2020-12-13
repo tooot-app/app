@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { View } from 'react-native'
 import { Video } from 'expo-av'
-import { ButtonRound } from 'src/components/Button'
+import { ButtonRound } from '@components/Button'
 
 export interface Props {
   media_attachments: Mastodon.AttachmentVideo[]

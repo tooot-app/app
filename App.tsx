@@ -2,11 +2,11 @@ import React from 'react'
 import { AppearanceProvider } from 'react-native-appearance'
 import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
 import { Provider } from 'react-redux'
-
-import ThemeManager from 'src/utils/styles/ThemeManager'
-import { Index } from 'src/Index'
-import { persistor, store } from 'src/store'
 import { PersistGate } from 'redux-persist/integration/react'
+
+import { Index } from './src/Index'
+import { persistor, store } from './src/store'
+import ThemeManager from '@utils/styles/ThemeManager'
 
 const queryCache = new QueryCache()
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <PersistGate persistor={persistor}>
             {bootstrapped => {
               if (bootstrapped) {
-                require('src/i18n/i18n')
+                require('@root/i18n/i18n')
                 return (
                   <ThemeManager>
                     <Index />

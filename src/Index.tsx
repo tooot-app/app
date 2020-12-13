@@ -8,15 +8,15 @@ import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
 
-import ScreenLocal from 'src/screens/Local'
-import ScreenPublic from 'src/screens/Public'
-import ScreenNotifications from 'src/screens/Notifications'
-import ScreenMe from 'src/screens/Me'
+import ScreenLocal from '@screens/Local'
+import ScreenPublic from '@screens/Public'
+import ScreenNotifications from '@screens/Notifications'
+import ScreenMe from '@screens/Me'
 
-import { themes } from 'src/utils/styles/themes'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import getCurrentTab from 'src/utils/getCurrentTab'
-import { toastConfig } from 'src/components/toast'
+import { themes } from '@utils/styles/themes'
+import { useTheme } from '@utils/styles/ThemeManager'
+import getCurrentTab from '@utils/getCurrentTab'
+import { toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
 
 enableScreens()
@@ -45,7 +45,7 @@ export const Index: React.FC = () => {
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
-              let name: string
+              let name: any
               switch (route.name) {
                 case 'Screen-Local':
                   name = 'home'

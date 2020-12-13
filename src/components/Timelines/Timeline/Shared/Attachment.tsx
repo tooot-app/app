@@ -1,11 +1,11 @@
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-import AttachmentImage from './Attachment/AttachmentImage'
-import AttachmentVideo from './Attachment/AttachmentVideo'
+import AttachmentImage from '@components/Timelines/Timeline/Shared/Attachment/AttachmentImage'
+import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>

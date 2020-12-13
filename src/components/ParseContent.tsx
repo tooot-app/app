@@ -3,10 +3,10 @@ import { Pressable, Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
-import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
 import { LinearGradient } from 'expo-linear-gradient'
 
 // Prevent going to the same hashtag multiple times

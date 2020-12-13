@@ -2,13 +2,13 @@ import { Feather } from '@expo/vector-icons'
 import React, { useCallback, useMemo } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryCache } from 'react-query'
-import client from 'src/api/client'
-import { toast } from 'src/components/toast'
+import client from '@api/client'
+import { toast } from '@components/toast'
 
-import relativeTime from 'src/utils/relativeTime'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import Emojis from './Emojis'
+import relativeTime from '@utils/relativeTime'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 
 export interface Props {
   queryKey: App.QueryKey

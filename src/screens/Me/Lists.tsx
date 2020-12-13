@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { ActivityIndicator, Text } from 'react-native'
 import { useQuery } from 'react-query'
-import { MenuContainer, MenuRow } from 'src/components/Menu'
+import { MenuContainer, MenuRow } from '@components/Menu'
 
-import { listsFetch } from 'src/utils/fetches/listsFetch'
+import { listsFetch } from '@utils/fetches/listsFetch'
 
 const ScreenMeLists: React.FC = () => {
   const navigation = useNavigation()

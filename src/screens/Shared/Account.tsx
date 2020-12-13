@@ -4,10 +4,10 @@ import { ScrollView } from 'react-native'
 // import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
 
 import { useQuery } from 'react-query'
-import { accountFetch } from '../../utils/fetches/accountFetch'
-import AccountToots from './Account/Toots'
-import AccountHeader from './Account/Header'
-import AccountInformation from './Account/Information'
+import { accountFetch } from '@utils/fetches/accountFetch'
+import AccountToots from '@screens/Shared/Account/Toots'
+import AccountHeader from '@screens/Shared/Account/Header'
+import AccountInformation from '@screens/Shared/Account/Information'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 

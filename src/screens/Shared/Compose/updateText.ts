@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { PostAction, ComposeState } from '../Compose'
+import { PostAction, ComposeState } from '@screens/Shared/Compose'
 import formatText from './formatText'
 
 const updateText = ({

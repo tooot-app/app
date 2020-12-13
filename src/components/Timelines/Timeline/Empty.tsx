@@ -2,9 +2,9 @@ import { Feather } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { QueryStatus } from 'react-query'
-import { ButtonRow } from 'src/components/Button'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { ButtonRow } from '@components/Button'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   status: QueryStatus
@@ -43,7 +43,6 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
             <Text style={[styles.error, { color: theme.primary }]}>
               空无一物
             </Text>
-            <ButtonRow text='刷新试试' onPress={() => refetch()} />
           </>
         )
     }

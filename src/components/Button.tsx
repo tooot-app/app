@@ -1,4 +1,4 @@
-import ButtonRound from './Button/ButtonRound'
-import ButtonRow from './Button/ButtonRow'
+import ButtonRound from '@components/Button/ButtonRound'
+import ButtonRow from '@components/Button/ButtonRow'
 
 export { ButtonRound, ButtonRow }

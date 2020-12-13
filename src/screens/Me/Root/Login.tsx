@@ -3,17 +3,17 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQuery } from 'react-query'
 import { debounce } from 'lodash'
 
-import { instanceFetch } from 'src/utils/fetches/instanceFetch'
-import client from 'src/api/client'
+import { instanceFetch } from '@utils/fetches/instanceFetch'
+import client from '@api/client'
 import * as AuthSession from 'expo-auth-session'
 import { useDispatch } from 'react-redux'
-import { updateLocal } from 'src/utils/slices/instancesSlice'
+import { updateLocal } from '@utils/slices/instancesSlice'
 import { useNavigation } from '@react-navigation/native'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 import { useTranslation } from 'react-i18next'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { ButtonRow } from 'src/components/Button'
+import { StyleConstants } from '@utils/styles/constants'
+import { ButtonRow } from '@components/Button'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')

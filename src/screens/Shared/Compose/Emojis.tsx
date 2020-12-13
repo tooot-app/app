@@ -7,10 +7,10 @@ import {
   Text,
   View
 } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-import { ComposeContext } from '../Compose'
+import { ComposeContext } from '@screens/Shared/Compose'
 import updateText from './updateText'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {

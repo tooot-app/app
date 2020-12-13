@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 type PropsBase = {
   onPress: () => void

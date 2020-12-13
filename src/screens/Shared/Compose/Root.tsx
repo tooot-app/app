@@ -20,17 +20,17 @@ import {
   Image
 } from 'react-native'
 import { useQuery } from 'react-query'
-import Emojis from 'src/components/Timelines/Timeline/Shared/Emojis'
-import { emojisFetch } from 'src/utils/fetches/emojisFetch'
-import { searchFetch } from 'src/utils/fetches/searchFetch'
-import { StyleConstants } from 'src/utils/styles/constants'
-import { useTheme } from 'src/utils/styles/ThemeManager'
-import { PostAction, ComposeState, ComposeContext } from '../Compose'
-import ComposeActions from './Actions'
+import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import { emojisFetch } from '@utils/fetches/emojisFetch'
+import { searchFetch } from '@utils/fetches/searchFetch'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { PostAction, ComposeState, ComposeContext } from '@screens/Shared/Compose'
+import ComposeActions from '@screens/Shared/Compose/Actions'
 import updateText from './updateText'
 import * as Permissions from 'expo-permissions'
-import ComposeRootFooter from './Root/Footer'
-import ComposeRootHeader from './Root/Header'
+import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
+import ComposeRootHeader from '@screens/Shared/Compose/Root/Header'
 
 const ListItem = React.memo(
   ({

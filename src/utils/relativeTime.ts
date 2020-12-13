@@ -1,4 +1,4 @@
-import { store } from 'src/store'
+import { store } from '@root/store'
 
 const relativeTime = (date: string) => {
   const units = {

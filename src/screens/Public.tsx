@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Timelines from 'src/components/Timelines'
+import Timelines from '@components/Timelines'
 
 const ScreenPublic: React.FC = () => {
   const { t } = useTranslation()

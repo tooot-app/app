@@ -1,4 +1,4 @@
-import HeaderLeft from './Header/Left'
-import HeaderRight from './Header/Right'
+import HeaderLeft from '@components/Header/Left'
+import HeaderRight from '@components/Header/Right'
 
 export { HeaderLeft, HeaderRight }

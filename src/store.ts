@@ -2,8 +2,8 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { persistReducer, persistStore } from 'redux-persist'
 import createSecureStore from 'redux-persist-expo-securestore'
 
-import instancesSlice from 'src/utils/slices/instancesSlice'
-import settingsSlice from 'src/utils/slices/settingsSlice'
+import instancesSlice from '@utils/slices/instancesSlice'
+import settingsSlice from '@utils/slices/settingsSlice'
 
 const secureStorage = createSecureStore()
 

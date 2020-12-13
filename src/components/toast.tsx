@@ -2,9 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
-import { useTheme } from 'src/utils/styles/ThemeManager'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from 'src/utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Params {
   type: 'success' | 'error' | 'warning'
