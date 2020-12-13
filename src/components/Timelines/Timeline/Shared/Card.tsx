@@ -41,9 +41,7 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
           >
             {card.description}
           </Text>
-        ) : (
-          <></>
-        )}
+        ) : null}
         <Text numberOfLines={1} style={{ color: theme.secondary }}>
           {card.url}
         </Text>

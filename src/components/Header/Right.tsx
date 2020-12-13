@@ -29,7 +29,16 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
   const { theme } = useTheme()
 
   return (
-    <Pressable {...(!disabled && { onPress })} style={styles.base}>
+    <Pressable
+      {...(!disabled && { onPress })}
+      style={[
+        styles.base,
+        {
+          backgroundColor: theme.backgroundGradientStart,
+          ...(icon && { height: 44, width: 44 })
+        }
+      ]}
+    >
       {text && (
         <Text
           style={[
@@ -44,7 +53,7 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
         <Feather
           name={icon}
           color={disabled ? theme.secondary : theme.primary}
-          size={StyleConstants.Font.Size.L}
+          size={StyleConstants.Spacing.L}
         />
       )}
     </Pressable>
@@ -53,7 +62,10 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
 
 const styles = StyleSheet.create({
   base: {
-    paddingLeft: StyleConstants.Spacing.S
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100
   },
   text: {
     fontSize: StyleConstants.Font.Size.M

@@ -118,7 +118,7 @@ export const Index: React.FC = () => {
               }
             })}
           >
-            {() => <></>}
+            {() => null}
           </Tab.Screen>
           <Tab.Screen
             name='Screen-Notifications'

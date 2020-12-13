@@ -8,8 +8,11 @@ import Compose from '@screens/Shared/Compose'
 import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
 import ScreenSharedSearch from '@screens/Shared/Search'
 import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
+import { HeaderLeft } from '@root/components/Header'
 
 const sharedScreens = (Stack: any) => {
+  const navigation = useNavigation()
   const { t } = useTranslation()
 
   return [
@@ -20,7 +23,10 @@ const sharedScreens = (Stack: any) => {
       options={{
         headerTranslucent: true,
         headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-        headerCenter: () => <></>
+        headerCenter: () => null,
+        headerLeft: () => (
+          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
+        )
       }}
     />,
     <Stack.Screen
@@ -28,7 +34,10 @@ const sharedScreens = (Stack: any) => {
       name='Screen-Shared-Hashtag'
       component={ScreenSharedHashtag}
       options={({ route }: any) => ({
-        title: `#${decodeURIComponent(route.params.hashtag)}`
+        title: `#${decodeURIComponent(route.params.hashtag)}`,
+        headerLeft: () => (
+          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
+        )
       })}
     />,
     <Stack.Screen
@@ -36,7 +45,10 @@ const sharedScreens = (Stack: any) => {
       name='Screen-Shared-Toot'
       component={ScreenSharedToot}
       options={() => ({
-        title: t('sharedToot:heading')
+        title: t('sharedToot:heading'),
+        headerLeft: () => (
+          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
+        )
       })}
     />,
     <Stack.Screen
@@ -60,7 +72,7 @@ const sharedScreens = (Stack: any) => {
       name='Screen-Shared-Compose-EditAttachment'
       component={ComposeEditAttachment}
       options={{
-        stackPresentation: 'modal',
+        stackPresentation: 'modal'
       }}
     />,
     <Stack.Screen

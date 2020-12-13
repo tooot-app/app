@@ -15,6 +15,7 @@ import {
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
+import { HeaderRight } from './Header'
 
 const Stack = createNativeStackNavigator()
 
@@ -112,12 +113,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
                 </View>
               ),
               headerRight: () => (
-                <Feather
-                  name='search'
-                  size={24}
-                  color={theme.secondary}
-                  onPress={onPressSearch}
-                />
+                <HeaderRight icon='search' onPress={onPressSearch} />
               )
             })
         }}

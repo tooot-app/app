@@ -15,14 +15,23 @@ const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
   const { theme } = useTheme()
 
   return (
-    <Pressable onPress={onPress} style={styles.base}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.base,
+        {
+          backgroundColor: theme.backgroundGradientStart,
+          ...(icon && { height: 44, width: 44 })
+        }
+      ]}
+    >
       {text ? (
         <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>
       ) : (
         <Feather
           name={icon || 'chevron-left'}
           color={theme.primary}
-          size={StyleConstants.Font.Size.L}
+          size={StyleConstants.Spacing.L}
         />
       )}
     </Pressable>
@@ -31,7 +40,10 @@ const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
 
 const styles = StyleSheet.create({
   base: {
-    paddingRight: StyleConstants.Spacing.S
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100
   },
   text: {
     fontSize: StyleConstants.Font.Size.M
