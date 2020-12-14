@@ -25,6 +25,7 @@ const TimelineDefault: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  const isRemotePublic = queryKey[0] === 'RemotePublic'
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
@@ -38,6 +39,7 @@ const TimelineDefault: React.FC<Props> = ({
 
   const tootOnPress = useCallback(
     () =>
+      !isRemotePublic &&
       navigation.navigate('Screen-Shared-Toot', {
         toot: actualStatus
       }),
@@ -75,20 +77,29 @@ const TimelineDefault: React.FC<Props> = ({
       )}
 
       <View style={styles.header}>
-        <TimelineAvatar account={actualStatus.account} />
-        <TimelineHeaderDefault queryKey={queryKey} status={actualStatus} />
+        <TimelineAvatar
+          {...(!isRemotePublic && { queryKey })}
+          account={actualStatus.account}
+        />
+        <TimelineHeaderDefault
+          {...(!isRemotePublic && { queryKey })}
+          status={actualStatus}
+        />
       </View>
-      
+
       <Pressable onPress={tootOnPress} children={tootChildren} />
-      <View
-        style={{
-          paddingLeft: highlighted
-            ? 0
-            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
-        }}
-      >
-        <TimelineActions queryKey={queryKey} status={actualStatus} />
-      </View>
+
+      {!isRemotePublic && (
+        <View
+          style={{
+            paddingLeft: highlighted
+              ? 0
+              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+          }}
+        >
+          <TimelineActions queryKey={queryKey} status={actualStatus} />
+        </View>
+      )}
     </View>
   )
 }

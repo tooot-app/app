@@ -61,7 +61,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
   return (
     <View style={styles.base}>
-      <View style={styles.nameAndMeta}>
+      <View style={queryKey ? { flexBasis: '80%' } : { flexBasis: '100%' }}>
         <View style={styles.name}>
           {emojis?.length ? (
             <Emojis

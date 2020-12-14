@@ -185,7 +185,6 @@ const Login: React.FC = () => {
             onChangeText={onChangeText}
             autoCapitalize='none'
             autoCorrect={false}
-            autoFocus
             clearButtonMode='never'
             keyboardType='url'
             textContentType='URL'

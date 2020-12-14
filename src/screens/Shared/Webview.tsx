@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS } from 'react-native'
@@ -24,7 +23,6 @@ const ScreenSharedWebview: React.FC<Props> = ({
     params: { uri }
   }
 }) => {
-  const navigation = useNavigation()
   const { t } = useTranslation('sharedWebview')
   const [title, setTitle] = useState<string>(t('heading.loading'))
   const [bottomSheet, showBottomSheet] = useState(false)
@@ -34,7 +32,7 @@ const ScreenSharedWebview: React.FC<Props> = ({
     <Stack.Navigator>
       <Stack.Screen
         name='Screen-Shared-Webview-Root'
-        options={{
+        options={({ navigation }) => ({
           title,
           headerLeft: () => (
             <HeaderLeft
@@ -48,7 +46,7 @@ const ScreenSharedWebview: React.FC<Props> = ({
               onPress={() => showBottomSheet(true)}
             />
           )
-        }}
+        })}
       >
         {() => (
           <>

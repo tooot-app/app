@@ -19,7 +19,6 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useNavigation } from '@react-navigation/native'
 import sha256 from 'crypto-js/sha256'
 
 import { store } from '@root/store'
@@ -308,10 +307,10 @@ export interface Props {
         }
       | undefined
   }
+  navigation: any
 }
 
-const Compose: React.FC<Props> = ({ route: { params } }) => {
-  const navigation = useNavigation()
+const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   const { theme } = useTheme()
 
   const [hasKeyboard, setHasKeyboard] = useState(false)

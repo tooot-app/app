@@ -35,7 +35,7 @@ const HeaderRight: React.FC<PropsText | PropsIcon> = ({
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(icon && { height: 44, width: 44 })
+          ...(icon && { height: 44, width: 44, marginRight: -9 })
         }
       ]}
     >

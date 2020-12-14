@@ -61,14 +61,7 @@ const Timeline: React.FC<Props> = ({
     fetchMore,
     refetch
   } = useInfiniteQuery(queryKey, timelineFetch, {
-    getFetchMore: (last, all) => {
-      const allLastGroup = all[all.length - 1]!
-      return (
-        last?.toots.length > 0 &&
-        allLastGroup.toots[allLastGroup.toots.length - 1].id !==
-          last?.toots[last?.toots.length - 1].id
-      )
-    }
+    getFetchMore: last => last?.toots.length > 0
   })
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []

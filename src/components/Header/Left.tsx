@@ -5,13 +5,25 @@ import { Pressable, StyleSheet, Text } from 'react-native'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 
-export interface Props {
+type PropsBase = {
   onPress: () => void
-  text?: string
+}
+
+export interface PropsText extends PropsBase {
+  text: string
   icon?: any
 }
 
-const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
+export interface PropsIcon extends PropsBase {
+  text?: string
+  icon: any
+}
+
+const HeaderLeft: React.FC<PropsText | PropsIcon> = ({
+  onPress,
+  text,
+  icon
+}) => {
   const { theme } = useTheme()
 
   return (
@@ -21,7 +33,7 @@ const HeaderLeft: React.FC<Props> = ({ onPress, text, icon }) => {
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(icon && { height: 44, width: 44 })
+          ...(icon && { height: 44, width: 44, marginLeft: -9 })
         }
       ]}
     >

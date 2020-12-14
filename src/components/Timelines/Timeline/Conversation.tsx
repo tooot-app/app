@@ -53,7 +53,7 @@ const TimelineConversation: React.FC<Props> = ({
   return (
     <View style={styles.conversationView}>
       <View style={styles.header}>
-        <TimelineAvatar account={item.accounts[0]} />
+        <TimelineAvatar queryKey={queryKey} account={item.accounts[0]} />
         <TimelineHeaderConversation
           queryKey={queryKey}
           id={item.id}

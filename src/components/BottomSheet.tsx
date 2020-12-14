@@ -67,7 +67,7 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
   return (
     <Modal animated animationType='fade' visible={visible} transparent>
       <View
-        style={[styles.overlay, { backgroundColor: theme.border }]}
+        style={[styles.overlay, { backgroundColor: theme.backgroundOverlay }]}
         {...panResponder.panHandlers}
       >
         <Animated.View
@@ -84,10 +84,12 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
             style={[styles.handle, { backgroundColor: theme.background }]}
           />
           {children}
-          <ButtonRow
-            onPress={() => closeModal.start(() => handleDismiss())}
-            text='取消'
-          />
+          <View style={styles.button}>
+            <ButtonRow
+              onPress={() => closeModal.start(() => handleDismiss())}
+              text='取消'
+            />
+          </View>
         </Animated.View>
       </View>
     </Modal>
@@ -108,6 +110,10 @@ const styles = StyleSheet.create({
     height: StyleConstants.Spacing.S / 2,
     borderRadius: 100,
     top: -StyleConstants.Spacing.M * 2
+  },
+  button: {
+    paddingLeft: StyleConstants.Spacing.Global.PagePadding * 2,
+    paddingRight: StyleConstants.Spacing.Global.PagePadding * 2
   }
 })
 

@@ -42,7 +42,7 @@ export interface Props {
 
 const Timelines: React.FC<Props> = ({ name, content }) => {
   const navigation = useNavigation()
-  const { mode, theme } = useTheme()
+  const { mode } = useTheme()
   const localRegistered = useSelector(getLocalUrl)
   const publicDomain = useSelector(getRemoteUrl)
   const [segment, setSegment] = useState(0)

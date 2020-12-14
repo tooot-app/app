@@ -4,16 +4,18 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
+  queryKey?: App.QueryKey
   account: Mastodon.Account
 }
 
-const TimelineAvatar: React.FC<Props> = ({ account }) => {
+const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
   const navigation = useNavigation()
   // Need to fix go back root
   const onPress = useCallback(() => {
-    navigation.navigate('Screen-Shared-Account', {
-      id: account.id
-    })
+    queryKey &&
+      navigation.navigate('Screen-Shared-Account', {
+        id: account.id
+      })
   }, [])
 
   return (

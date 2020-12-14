@@ -13,7 +13,7 @@ export default (): ExpoConfig => ({
   developmentClient: { silentLaunch: true },
   scheme: 'mastodonct',
   ios: {
-    bundleIdentifier: 'com.xmflsct.mastodon-app',
+    bundleIdentifier: 'com.xmflsct.mastodon',
     infoPlist: {
       CFBundleAllowMixedLocalizations: true
     },
@@ -23,13 +23,13 @@ export default (): ExpoConfig => ({
       backgroundColor: '#ffffff'
     }
   },
-  locales: {
-    zh: {
-      CFBundleDisplayName: '我的嘟嘟'
-    },
-    en: {
-      CFBundleDisplayName: 'My Toots'
-    }
-  },
+  // locales: {
+  //   zh: {
+  //     CFBundleDisplayName: '我的嘟嘟'
+  //   },
+  //   en: {
+  //     CFBundleDisplayName: 'My Toots'
+  //   }
+  // },
   assetBundlePatterns: ['assets/*']
 })

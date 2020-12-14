@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native'
 import React, {
   Dispatch,
   useCallback,
@@ -39,15 +38,15 @@ export interface Props {
       composeDispatch: Dispatch<PostAction>
     }
   }
+  navigation: any
 }
 
 const ComposeEditAttachment: React.FC<Props> = ({
   route: {
     params: { attachment, composeDispatch }
-  }
+  },
+  navigation
 }) => {
-  const navigation = useNavigation()
-
   const { theme } = useTheme()
 
   const [altText, setAltText] = useState<string | undefined>(

@@ -12,12 +12,10 @@ import ScreenMeListsList from '@screens/Me/Root/Lists/List'
 import ScreenMeSettings from '@screens/Me/Settings'
 
 import { HeaderLeft } from '@root/components/Header'
-import { useNavigation } from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator()
 
 const ScreenMe: React.FC = () => {
-  const navigation = useNavigation()
   const { t } = useTranslation()
 
   return (
@@ -34,7 +32,7 @@ const ScreenMe: React.FC = () => {
       <Stack.Screen
         name='Screen-Me-Conversations'
         component={ScreenMeConversations}
-        options={{
+        options={({ navigation }: any) => ({
           headerTitle: t('meConversations:heading'),
           headerLeft: () => (
             <HeaderLeft
@@ -42,12 +40,12 @@ const ScreenMe: React.FC = () => {
               onPress={() => navigation.goBack()}
             />
           )
-        }}
+        })}
       />
       <Stack.Screen
         name='Screen-Me-Bookmarks'
         component={ScreenMeBookmarks}
-        options={{
+        options={({ navigation }: any) => ({
           headerTitle: t('meBookmarks:heading'),
           headerLeft: () => (
             <HeaderLeft
@@ -55,12 +53,12 @@ const ScreenMe: React.FC = () => {
               onPress={() => navigation.goBack()}
             />
           )
-        }}
+        })}
       />
       <Stack.Screen
         name='Screen-Me-Favourites'
         component={ScreenMeFavourites}
-        options={{
+        options={({ navigation }: any) => ({
           headerTitle: t('meFavourites:heading'),
           headerLeft: () => (
             <HeaderLeft
@@ -68,12 +66,12 @@ const ScreenMe: React.FC = () => {
               onPress={() => navigation.goBack()}
             />
           )
-        }}
+        })}
       />
       <Stack.Screen
         name='Screen-Me-Lists'
         component={ScreenMeLists}
-        options={{
+        options={({ navigation }: any) => ({
           headerTitle: t('meLists:heading'),
           headerLeft: () => (
             <HeaderLeft
@@ -81,12 +79,12 @@ const ScreenMe: React.FC = () => {
               onPress={() => navigation.goBack()}
             />
           )
-        }}
+        })}
       />
       <Stack.Screen
         name='Screen-Me-Lists-List'
         component={ScreenMeListsList}
-        options={({ route }: any) => ({
+        options={({ route, navigation }: any) => ({
           headerTitle: t('meListsList:heading', { list: route.params.title }),
           headerLeft: () => (
             <HeaderLeft
@@ -99,7 +97,7 @@ const ScreenMe: React.FC = () => {
       <Stack.Screen
         name='Screen-Me-Settings'
         component={ScreenMeSettings}
-        options={{
+        options={({ navigation }: any) => ({
           headerTitle: t('meSettings:heading'),
           headerLeft: () => (
             <HeaderLeft
@@ -107,7 +105,7 @@ const ScreenMe: React.FC = () => {
               onPress={() => navigation.goBack()}
             />
           )
-        }}
+        })}
       />
 
       {sharedScreens(Stack)}

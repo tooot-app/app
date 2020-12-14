@@ -12,7 +12,7 @@ const MenuHeader: React.FC<Props> = ({ heading }) => {
 
   return (
     <View style={[styles.base, { borderBottomColor: theme.separator }]}>
-      <Text>{heading}</Text>
+      <Text style={[styles.text, { color: theme.primary }]}>{heading}</Text>
     </View>
   )
 }
@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding,
     paddingBottom: StyleConstants.Spacing.S
+  },
+  text: {
+    fontSize: StyleConstants.Font.Size.S
   }
 })
 
