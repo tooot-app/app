@@ -64,12 +64,12 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
           ? updateData.following || updateData.requested
             ? 'un'
             : ''
-          : data.following || data.requested
+          : data!.following || data!.requested
           ? 'un'
           : ''
       }follow`
     }).then(res => {
-      if (res.body.id === (updateData && updateData.id) || data.id) {
+      if (res.body.id === (updateData && updateData.id) || data!.id) {
         setUpdateData(res.body)
         return Promise.resolve()
       } else {
@@ -100,9 +100,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                     : updateData.requested
                     ? 'loader'
                     : 'user-plus'
-                  : data.following
+                  : data!.following
                   ? 'user-check'
-                  : data.requested
+                  : data!.requested
                   ? 'loader'
                   : 'user-plus'
               }
@@ -111,7 +111,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                   ? updateData.following
                     ? theme.primary
                     : theme.secondary
-                  : data.following
+                  : data!.following
                   ? theme.primary
                   : theme.secondary
               }

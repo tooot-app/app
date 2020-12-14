@@ -1,6 +1,6 @@
 import client from '@api/client'
 
-export const listsFetch = async () => {
+export const listsFetch = async (): Promise<Mastodon.List[]> => {
   const res = await client({
     method: 'get',
     instance: 'local',

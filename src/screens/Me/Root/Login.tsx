@@ -131,7 +131,7 @@ const Login: React.FC = () => {
       parse
     }: {
       header: string
-      content: string
+      content?: string
       parse?: boolean
     }) => {
       return (
@@ -140,7 +140,7 @@ const Login: React.FC = () => {
             {header}
           </Text>
           <ShimmerPlaceholder
-            visible={instanceQuery.data?.uri}
+            visible={instanceQuery.data?.uri !== undefined}
             stopAutoRun
             width={
               Dimensions.get('screen').width -
@@ -152,7 +152,7 @@ const Login: React.FC = () => {
               style={[styles.instanceInfoContent, { color: theme.primary }]}
             >
               {parse ? (
-                <ParseContent content={content} size={'M'} numberOfLines={5} />
+                <ParseContent content={content!} size={'M'} numberOfLines={5} />
               ) : (
                 content
               )}
@@ -230,7 +230,7 @@ const Login: React.FC = () => {
                 用户总数
               </Text>
               <ShimmerPlaceholder
-                visible={instanceQuery.data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count !== undefined}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
@@ -249,7 +249,7 @@ const Login: React.FC = () => {
                 嘟嘟总数
               </Text>
               <ShimmerPlaceholder
-                visible={instanceQuery.data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count !== undefined}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
@@ -268,7 +268,7 @@ const Login: React.FC = () => {
                 连结总数
               </Text>
               <ShimmerPlaceholder
-                visible={instanceQuery.data?.stats?.user_count}
+                visible={instanceQuery.data?.stats?.user_count !== undefined}
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}

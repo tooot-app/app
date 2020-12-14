@@ -196,7 +196,7 @@ const ComposeRoot: React.FC = () => {
         ListHeaderComponent={<ComposeRootHeader />}
         ListFooterComponent={<ComposeRootFooter textInputRef={textInputRef} />}
         ListEmptyComponent={listEmpty}
-        data={data}
+        data={data as Mastodon.Account[] & Mastodon.Tag[]}
         keyExtractor={listKey}
         renderItem={listItem}
       />

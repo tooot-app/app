@@ -2,8 +2,8 @@ import client from '@api/client'
 
 export const applicationFetch = async (
   key: string,
-  { instanceDomain, body }: { instanceDomain: string; body: FormData }
-) => {
+  { instanceDomain }: { instanceDomain: string }
+): Promise<Mastodon.AppOauth> => {
   const formData = new FormData()
   formData.append('client_name', 'test_dudu')
   formData.append('redirect_uris', 'exp://127.0.0.1:19000')

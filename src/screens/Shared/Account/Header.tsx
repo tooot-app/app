@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Animated, Dimensions, Image, StyleSheet } from 'react-native'
 
 export interface Props {
-  uri: Mastodon.Account['header']
+  uri?: Mastodon.Account['header']
   limitHeight?: boolean
 }
 

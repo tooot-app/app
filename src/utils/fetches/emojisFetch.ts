@@ -1,6 +1,6 @@
 import client from '@api/client'
 
-export const emojisFetch = async () => {
+export const emojisFetch = async (): Promise<Mastodon.Emoji[]> => {
   const res = await client({
     method: 'get',
     instance: 'local',

@@ -38,6 +38,16 @@ declare namespace Mastodon {
     vapid_key?: string
   }
 
+  type AppOauth = {
+    id: string
+    name: string
+    website?: string
+    redirect_uri: string
+    client_id: string
+    client_secret: string
+    vapid_key: string
+  }
+
   type Attachment =
     | AttachmentImage
     | AttachmentVideo
