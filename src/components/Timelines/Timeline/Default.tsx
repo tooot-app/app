@@ -16,6 +16,8 @@ import { StyleConstants } from '@utils/styles/constants'
 export interface Props {
   item: Mastodon.Status
   queryKey: App.QueryKey
+  index: number
+  pinnedLength?: number
   highlighted?: boolean
 }
 
@@ -23,6 +25,8 @@ export interface Props {
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
+  index,
+  pinnedLength,
   highlighted = false
 }) => {
   const isRemotePublic = queryKey[0] === 'RemotePublic'
@@ -72,9 +76,11 @@ const TimelineDefault: React.FC<Props> = ({
 
   return (
     <View style={styles.statusView}>
-      {item.reblog && (
+      {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
-      )}
+      ) : pinnedLength && index < pinnedLength ? (
+        <TimelineActioned action='pinned' account={item.account} />
+      ) : null}
 
       <View style={styles.header}>
         <TimelineAvatar

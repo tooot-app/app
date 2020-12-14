@@ -65,13 +65,14 @@ const Timeline: React.FC<Props> = ({
   })
   const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
+  const flattenPinnedLength = data ? data.flatMap(d => [d?.pinnedLength]) : []
 
   const flRef = useRef<FlatList>(null)
   useEffect(() => {
     if (toot && isSuccess) {
       setTimeout(() => {
         flRef.current?.scrollToIndex({
-          index: flattenPointer[0],
+          index: flattenPointer[0]!,
           viewOffset: 100
         })
       }, 500)
@@ -79,7 +80,7 @@ const Timeline: React.FC<Props> = ({
   }, [isSuccess])
 
   const flKeyExtrator = useCallback(({ id }) => id, [])
-  const flRenderItem = useCallback(({ item }) => {
+  const flRenderItem = useCallback(({ item, index }) => {
     switch (page) {
       case 'Conversations':
         return <TimelineConversation item={item} queryKey={queryKey} />
@@ -90,6 +91,11 @@ const Timeline: React.FC<Props> = ({
           <TimelineDefault
             item={item}
             queryKey={queryKey}
+            index={index}
+            {...(flattenPinnedLength &&
+              flattenPinnedLength[0] && {
+                pinnedLength: flattenPinnedLength[0]
+              })}
             {...(toot && toot.id === item.id && { highlighted: true })}
           />
         )

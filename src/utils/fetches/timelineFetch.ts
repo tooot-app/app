@@ -25,7 +25,11 @@ export const timelineFetch = async (
     direction: 'prev' | 'next'
     id: string
   }
-) => {
+): Promise<{
+  toots: Mastodon.Status[]
+  pointer?: number
+  pinnedLength?: number
+}> => {
   let res
 
   if (pagination && pagination.id) {
@@ -47,7 +51,7 @@ export const timelineFetch = async (
         url: 'timelines/home',
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Local':
       params.local = 'true'
@@ -57,7 +61,7 @@ export const timelineFetch = async (
         url: 'timelines/public',
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'LocalPublic':
       res = await client({
@@ -66,7 +70,7 @@ export const timelineFetch = async (
         url: 'timelines/public',
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'RemotePublic':
       res = await client({
@@ -75,7 +79,7 @@ export const timelineFetch = async (
         url: 'timelines/public',
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Notifications':
       res = await client({
@@ -84,7 +88,7 @@ export const timelineFetch = async (
         url: 'notifications',
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Account_Default':
       res = await client({
@@ -95,6 +99,7 @@ export const timelineFetch = async (
           pinned: 'true'
         }
       })
+      const pinnedLength = res.body.length
       let toots: Mastodon.Status[] = res.body
       res = await client({
         method: 'get',
@@ -105,7 +110,7 @@ export const timelineFetch = async (
         }
       })
       toots = uniqBy([...toots, ...res.body], 'id')
-      return Promise.resolve({ toots: toots, pointer: null })
+      return Promise.resolve({ toots: toots, pinnedLength })
 
     case 'Account_All':
       res = await client({
@@ -114,7 +119,7 @@ export const timelineFetch = async (
         url: `accounts/${account}/statuses`,
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Account_Media':
       res = await client({
@@ -125,7 +130,7 @@ export const timelineFetch = async (
           only_media: 'true'
         }
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Hashtag':
       res = await client({
@@ -134,7 +139,7 @@ export const timelineFetch = async (
         url: `timelines/tag/${hashtag}`,
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Conversations':
       res = await client({
@@ -149,7 +154,7 @@ export const timelineFetch = async (
           (b: Mastodon.Conversation) => b.id !== pagination.id
         )
       }
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Bookmarks':
       res = await client({
@@ -158,7 +163,7 @@ export const timelineFetch = async (
         url: `bookmarks`,
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Favourites':
       res = await client({
@@ -167,7 +172,7 @@ export const timelineFetch = async (
         url: `favourites`,
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'List':
       res = await client({
@@ -176,7 +181,7 @@ export const timelineFetch = async (
         url: `timelines/list/${list}`,
         params
       })
-      return Promise.resolve({ toots: res.body, pointer: null })
+      return Promise.resolve({ toots: res.body })
 
     case 'Toot':
       res = await client({
@@ -188,8 +193,5 @@ export const timelineFetch = async (
         toots: [...res.body.ancestors, toot, ...res.body.descendants],
         pointer: res.body.ancestors.length
       })
-
-    default:
-      console.error('Page is not provided')
   }
 }

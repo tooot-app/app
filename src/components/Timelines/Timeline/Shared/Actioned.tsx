@@ -8,13 +8,12 @@ import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   account: Mastodon.Account
-  action: 'favourite' | 'follow' | 'mention' | 'poll' | 'reblog'
+  action: 'favourite' | 'follow' | 'mention' | 'poll' | 'reblog' | 'pinned'
   notification?: boolean
 }
 
 const TimelineActioned: React.FC<Props> = ({
   account,
-
   action,
   notification = false
 }) => {
@@ -25,6 +24,17 @@ const TimelineActioned: React.FC<Props> = ({
   let icon
   let content
   switch (action) {
+    case 'pinned':
+      icon = (
+        <Feather
+          name='anchor'
+          size={StyleConstants.Font.Size.S}
+          color={iconColor}
+          style={styles.icon}
+        />
+      )
+      content = `置顶`
+      break
     case 'favourite':
       icon = (
         <Feather
