@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { createRef, Dispatch, useEffect, useState } from 'react'
 import { Animated, Image, StyleSheet, Text, View } from 'react-native'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
@@ -9,14 +9,14 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTranslation } from 'react-i18next'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import { LinearGradient } from 'expo-linear-gradient'
-import { AccountContext } from '../Account'
+import { AccountAction } from '../Account'
 
 export interface Props {
+  accountDispatch?: Dispatch<AccountAction>
   account: Mastodon.Account | undefined
 }
 
-const AccountInformation: React.FC<Props> = ({ account }) => {
-  const { accountDispatch } = useContext(AccountContext)
+const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
   const { t } = useTranslation('sharedAccount')
   const { theme } = useTheme()
   const [avatarLoaded, setAvatarLoaded] = useState(false)
@@ -48,6 +48,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
     <View
       style={styles.information}
       onLayout={({ nativeEvent }) =>
+        accountDispatch &&
         accountDispatch({
           type: 'informationLayout',
           payload: {

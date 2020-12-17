@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { ScrollView } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Animated, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { getLocalUrl } from '@utils/slices/instancesSlice'
@@ -10,6 +10,8 @@ import Collections from '@screens/Me/Root/Collections'
 import Settings from '@screens/Me/Root/Settings'
 import Logout from '@screens/Me/Root/Logout'
 import { useScrollToTop } from '@react-navigation/native'
+import { AccountState } from '../Shared/Account'
+import AccountNav from '../Shared/Account/Nav'
 
 const ScreenMeRoot: React.FC = () => {
   const localRegistered = useSelector(getLocalUrl)
@@ -17,13 +19,34 @@ const ScreenMeRoot: React.FC = () => {
   const scrollRef = useRef<ScrollView>(null)
   useScrollToTop(scrollRef)
 
+  const scrollY = useRef(new Animated.Value(0)).current
+  const [data, setData] = useState<Mastodon.Account>()
+
   return (
-    <ScrollView ref={scrollRef} keyboardShouldPersistTaps='handled'>
-      {localRegistered ? <MyInfo /> : <Login />}
-      {localRegistered && <Collections />}
-      <Settings />
-      {localRegistered && <Logout />}
-    </ScrollView>
+    <>
+      {localRegistered && data ? (
+        <AccountNav
+          accountState={{ headerRatio: 0.4 } as AccountState}
+          scrollY={scrollY}
+          account={data}
+        />
+      ) : null}
+      <ScrollView
+        ref={scrollRef}
+        keyboardShouldPersistTaps='handled'
+        bounces={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={8}
+      >
+        {localRegistered ? <MyInfo setData={setData} /> : <Login />}
+        {localRegistered && <Collections />}
+        <Settings />
+        {localRegistered && <Logout />}
+      </ScrollView>
+    </>
   )
 }
 

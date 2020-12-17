@@ -44,7 +44,7 @@ const TimelineDefault: React.FC<Props> = ({
   const tootOnPress = useCallback(
     () =>
       !isRemotePublic &&
-      navigation.navigate('Screen-Shared-Toot', {
+      navigation.push('Screen-Shared-Toot', {
         toot: actualStatus
       }),
     []

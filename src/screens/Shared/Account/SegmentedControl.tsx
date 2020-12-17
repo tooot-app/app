@@ -1,18 +1,23 @@
 import SegmentedControl from '@react-native-community/segmented-control'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { useContext } from 'react'
+import React, { Dispatch } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AccountContext } from '../Account'
+import { AccountAction, AccountState } from '../Account'
 
 export interface Props {
+  accountState: AccountState
+  accountDispatch: Dispatch<AccountAction>
   scrollY: Animated.Value
 }
 
-const AccountSegmentedControl: React.FC<Props> = ({ scrollY }) => {
-  const { accountState, accountDispatch } = useContext(AccountContext)
+const AccountSegmentedControl: React.FC<Props> = ({
+  accountState,
+  accountDispatch,
+  scrollY
+}) => {
   const { t } = useTranslation('sharedAccount')
   const { mode, theme } = useTheme()
 
@@ -69,12 +74,10 @@ const AccountSegmentedControl: React.FC<Props> = ({ scrollY }) => {
 const styles = StyleSheet.create({
   base: {
     ...StyleSheet.absoluteFillObject,
-    position: 'absolute',
-    left: 0,
-    right: 0,
     zIndex: 99,
     borderTopWidth: StyleSheet.hairlineWidth,
-    padding: StyleConstants.Spacing.Global.PagePadding
+    padding: StyleConstants.Spacing.Global.PagePadding,
+    paddingBottom: StyleConstants.Spacing.Global.PagePadding * 3
   }
 })
 

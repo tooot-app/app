@@ -1,25 +1,39 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { Dispatch, useEffect, useRef, useState } from 'react'
 import { Animated, Dimensions, Image, StyleSheet } from 'react-native'
-import { AccountContext } from '../Account'
+import { AccountAction, AccountState } from '../Account'
 
 export interface Props {
-  uri?: Mastodon.Account['header']
+  accountState: AccountState
+  accountDispatch?: Dispatch<AccountAction>
+  account?: Mastodon.Account
   limitHeight?: boolean
 }
 
-const AccountHeader: React.FC<Props> = ({ uri, limitHeight = false }) => {
-  const { accountState, accountDispatch } = useContext(AccountContext)
+const AccountHeader: React.FC<Props> = ({
+  accountState,
+  accountDispatch,
+  account,
+  limitHeight = false
+}) => {
+  const [imageShown, setImageShown] = useState(true)
 
   useEffect(() => {
-    if (uri) {
-      if (uri.includes('/headers/original/missing.png')) {
+    if (account?.header) {
+      if (account.header.includes('/headers/original/missing.png')) {
         animateNewSize(accountState.headerRatio)
       } else {
+        if (account.header !== account.header_static) {
+          setImageShown(false)
+        }
         Image.getSize(
-          uri,
+          account.header,
           (width, height) => {
             if (!limitHeight) {
-              accountDispatch({ type: 'headerRatio', payload: height / width })
+              accountDispatch &&
+                accountDispatch({
+                  type: 'headerRatio',
+                  payload: height / width
+                })
             }
             animateNewSize(
               limitHeight ? accountState.headerRatio : height / width
@@ -30,10 +44,12 @@ const AccountHeader: React.FC<Props> = ({ uri, limitHeight = false }) => {
           }
         )
       }
-    } else {
-      animateNewSize(accountState.headerRatio)
     }
-  }, [uri])
+  }, [account])
+
+  const theImage = imageShown ? (
+    <Image source={{ uri: account?.header }} style={styles.image} />
+  ) : null
 
   const windowWidth = Dimensions.get('window').width
   const imageHeight = useRef(
@@ -44,12 +60,16 @@ const AccountHeader: React.FC<Props> = ({ uri, limitHeight = false }) => {
       toValue: windowWidth * ratio,
       duration: 350,
       useNativeDriver: false
-    }).start()
+    }).start(({ finished }) => {
+      if (finished) {
+        setImageShown(true)
+      }
+    })
   }
 
   return (
     <Animated.View style={[styles.imageContainer, { height: imageHeight }]}>
-      <Image source={{ uri: uri }} style={styles.image} />
+      {theImage}
     </Animated.View>
   )
 }

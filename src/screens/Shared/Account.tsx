@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useReducer, useRef } from 'react'
+import React, { useReducer, useRef } from 'react'
 import { Animated, ScrollView } from 'react-native'
 
 // import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
@@ -62,11 +62,6 @@ const accountReducer = (
       throw new Error('Unexpected action')
   }
 }
-type ContextType = {
-  accountState: AccountState
-  accountDispatch: Dispatch<AccountAction>
-}
-export const AccountContext = createContext<ContextType>({} as ContextType)
 
 const ScreenSharedAccount: React.FC<Props> = ({
   route: {
@@ -83,23 +78,38 @@ const ScreenSharedAccount: React.FC<Props> = ({
   )
 
   return (
-    <AccountContext.Provider value={{ accountState, accountDispatch }}>
-      <AccountNav scrollY={scrollY} account={data} />
-      <AccountSegmentedControl scrollY={scrollY} />
+    <>
+      <AccountNav
+        accountState={accountState}
+        scrollY={scrollY}
+        account={data}
+      />
+      <AccountSegmentedControl
+        accountState={accountState}
+        accountDispatch={accountDispatch}
+        scrollY={scrollY}
+      />
       <ScrollView
-        contentContainerStyle={{ zIndex: 99 }}
         bounces={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: false }
         )}
-        scrollEventThrottle={16}
+        scrollEventThrottle={8}
       >
-        <AccountHeader uri={data?.header} />
-        <AccountInformation account={data} />
-        <AccountToots id={id} />
+        <AccountHeader
+          accountState={accountState}
+          accountDispatch={accountDispatch}
+          account={data}
+        />
+        <AccountInformation accountDispatch={accountDispatch} account={data} />
+        <AccountToots
+          accountState={accountState}
+          accountDispatch={accountDispatch}
+          id={id}
+        />
       </ScrollView>
-    </AccountContext.Provider>
+    </>
   )
 }
 

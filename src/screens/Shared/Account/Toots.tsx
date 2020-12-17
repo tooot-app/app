@@ -1,32 +1,29 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { Dispatch, useCallback, useState } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
-import { TabView, SceneMap } from 'react-native-tab-view'
+import { SceneMap, TabView } from 'react-native-tab-view'
 
 import Timeline from '@components/Timelines/Timeline'
-import { AccountContext } from '../Account'
+import { AccountAction, AccountState } from '../Account'
 import { StyleConstants } from '@root/utils/styles/constants'
 
 export interface Props {
+  accountState: AccountState
+  accountDispatch: Dispatch<AccountAction>
   id: Mastodon.Account['id']
 }
 
-const AccountToots: React.FC<Props> = ({ id }) => {
-  const { accountState, accountDispatch } = useContext(AccountContext)
-
+const AccountToots: React.FC<Props> = ({
+  accountState,
+  accountDispatch,
+  id
+}) => {
   const [routes] = useState([
     { key: 'Account_Default' },
     { key: 'Account_All' },
     { key: 'Account_Media' }
   ])
   const singleScene = useCallback(
-    ({ route }) => (
-      <Timeline
-        page={route.key}
-        account={id}
-        disableRefresh
-        scrollEnabled={false}
-      />
-    ),
+    ({ route }) => <Timeline page={route.key} account={id} disableRefresh />,
     []
   )
   const renderScene = SceneMap({

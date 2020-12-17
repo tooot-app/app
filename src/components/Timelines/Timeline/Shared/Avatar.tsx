@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
+import { useNavigation } from '@react-navigation/native'
 
 export interface Props {
   queryKey?: App.QueryKey
@@ -13,7 +13,7 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
   // Need to fix go back root
   const onPress = useCallback(() => {
     queryKey &&
-      navigation.navigate('Screen-Shared-Account', {
+      navigation.push('Screen-Shared-Account', {
         id: account.id
       })
   }, [])

@@ -1,18 +1,18 @@
 import Emojis from '@root/components/Timelines/Timeline/Shared/Emojis'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AccountContext } from '../Account'
+import { AccountState } from '../Account'
 
 export interface Props {
+  accountState: AccountState
   scrollY: Animated.Value
   account: Mastodon.Account | undefined
 }
 
-const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
-  const { accountState } = useContext(AccountContext)
+const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
   const { theme } = useTheme()
   const headerHeight = useSafeAreaInsets().top + 44
 

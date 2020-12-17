@@ -19,7 +19,6 @@ export interface Props {
   toot?: Mastodon.Status
   account?: string
   disableRefresh?: boolean
-  scrollEnabled?: boolean
 }
 
 const Timeline: React.FC<Props> = ({
@@ -28,8 +27,7 @@ const Timeline: React.FC<Props> = ({
   list,
   toot,
   account,
-  disableRefresh = false,
-  scrollEnabled = true
+  disableRefresh = false
 }) => {
   setFocusHandler(handleFocus => {
     const handleAppStateChange = (appState: string) => {
@@ -160,7 +158,6 @@ const Timeline: React.FC<Props> = ({
       renderItem={flRenderItem}
       onEndReached={flOnEndReach}
       keyExtractor={flKeyExtrator}
-      scrollEnabled={scrollEnabled} // For timeline in Account view
       ListFooterComponent={flFooter}
       ListEmptyComponent={flItemEmptyComponent}
       ItemSeparatorComponent={flItemSeparatorComponent}

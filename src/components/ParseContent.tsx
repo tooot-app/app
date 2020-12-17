@@ -74,7 +74,7 @@ const renderNode = ({
         )
       }
     } else {
-      const domain = href.split(new RegExp(/:\/\/(.*?)\//))
+      const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
       return (
         <Text
           key={index}

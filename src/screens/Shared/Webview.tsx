@@ -51,6 +51,7 @@ const ScreenSharedWebview: React.FC<Props> = ({
         {() => (
           <>
             <WebView
+              allowsBackForwardNavigationGestures
               ref={webview}
               source={{ uri }}
               decelerationRate='normal'
