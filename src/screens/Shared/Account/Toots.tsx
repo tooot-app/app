@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 import { TabView, SceneMap } from 'react-native-tab-view'
 
@@ -13,7 +13,7 @@ export interface Props {
 const AccountToots: React.FC<Props> = ({ id }) => {
   const { accountState, accountDispatch } = useContext(AccountContext)
 
-  const [routes] = React.useState([
+  const [routes] = useState([
     { key: 'Account_Default' },
     { key: 'Account_All' },
     { key: 'Account_Media' }

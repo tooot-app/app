@@ -1,39 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
-import { Feather } from '@expo/vector-icons'
 
 import Timeline from '@components/Timelines/Timeline'
 import sharedScreens from '@screens/Shared/sharedScreens'
-import {
-  getLocalUrl,
-  getRemoteUrl,
-  InstancesState
-} from '@utils/slices/instancesSlice'
+import { getLocalUrl, getRemoteUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
 import { HeaderRight } from './Header'
+import { TabView } from 'react-native-tab-view'
 
 const Stack = createNativeStackNavigator()
-
-const Page = ({
-  item: { page },
-  localRegistered
-}: {
-  item: { page: App.Pages }
-  localRegistered: InstancesState['local']['url'] | undefined
-}) => {
-  return (
-    <View style={{ width: Dimensions.get('window').width }}>
-      {localRegistered || page === 'RemotePublic' ? (
-        <Timeline page={page} />
-      ) : null}
-    </View>
-  )
-}
 
 export interface Props {
   name: 'Screen-Local-Root' | 'Screen-Public-Root'
@@ -53,46 +33,22 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     return
   }, [])
 
-  const horizontalPaging = useRef<FlatList>(null!)
-
-  const onChangeSegment = useCallback(({ nativeEvent }) => {
-    horizontalPaging.current.scrollToIndex({
-      index: nativeEvent.selectedSegmentIndex
-    })
-  }, [])
   const onPressSearch = useCallback(() => {
     navigation.navigate(getCurrentTab(navigation), {
       screen: 'Screen-Shared-Search'
     })
   }, [])
 
-  const flGetItemLayout = useCallback(
-    (data, index) => ({
-      length: Dimensions.get('window').width,
-      offset: Dimensions.get('window').width * index,
-      index
-    }),
-    []
-  )
-  const flKeyExtrator = useCallback(({ page }) => page, [])
-  const flRenderItem = useCallback(
-    ({ item, index }) => {
-      if (!localRegistered && index === 0) {
-        return null
-      }
-      return <Page item={item} localRegistered={localRegistered} />
-    },
-    [localRegistered]
-  )
-  const flOnScroll = useCallback(
-    ({ nativeEvent }) =>
-      setSegment(
-        nativeEvent.contentOffset.x <= Dimensions.get('window').width / 2
-          ? 0
-          : 1
-      ),
-    []
-  )
+  const [routes] = useState(content.map(p => ({ key: p.page })))
+  const renderScene = ({
+    route
+  }: {
+    route: {
+      key: App.Pages
+    }
+  }) => {
+    return <Timeline page={route.key} />
+  }
 
   return (
     <Stack.Navigator>
@@ -108,7 +64,9 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
                     appearance={mode}
                     values={[content[0].title, content[1].title]}
                     selectedIndex={segment}
-                    onChange={onChangeSegment}
+                    onChange={({ nativeEvent }) =>
+                      setSegment(nativeEvent.selectedSegmentIndex)
+                    }
                   />
                 </View>
               ),
@@ -120,19 +78,16 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
       >
         {() => {
           return (
-            <FlatList
-              horizontal
-              pagingEnabled
-              data={content}
-              bounces={false}
-              onScroll={flOnScroll}
-              ref={horizontalPaging}
-              style={styles.flatList}
-              renderItem={flRenderItem}
-              extraData={localRegistered}
-              keyExtractor={flKeyExtrator}
-              getItemLayout={flGetItemLayout}
-              showsHorizontalScrollIndicator={false}
+            <TabView
+              style={styles.base}
+              navigationState={{ index: segment, routes }}
+              renderScene={renderScene}
+              renderTabBar={() => null}
+              onIndexChange={index => setSegment(index)}
+              initialLayout={{ width: Dimensions.get('window').width }}
+              lazy
+              swipeEnabled
+              swipeVelocityImpact={1}
             />
           )
         }}
@@ -147,9 +102,8 @@ const styles = StyleSheet.create({
   segmentsContainer: {
     flexBasis: '60%'
   },
-  flatList: {
-    width: Dimensions.get('window').width,
-    height: '100%'
+  base: {
+    width: Dimensions.get('window').width
   }
 })
 

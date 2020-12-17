@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { AppState, FlatList, StyleSheet } from 'react-native'
+import { AppState, StyleSheet } from 'react-native'
 import { setFocusHandler, useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
@@ -10,6 +10,7 @@ import TimelineSeparator from '@components/Timelines/Timeline/Separator'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
 import { useScrollToTop } from '@react-navigation/native'
+import { FlatList } from 'react-native-gesture-handler'
 
 export interface Props {
   page: App.Pages
@@ -67,7 +68,7 @@ const Timeline: React.FC<Props> = ({
   const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
   const flattenPinnedLength = data ? data.flatMap(d => [d?.pinnedLength]) : []
 
-  const flRef = useRef<FlatList>(null)
+  const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {
     if (toot && isSuccess) {
       setTimeout(() => {
