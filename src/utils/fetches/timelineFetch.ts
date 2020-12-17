@@ -91,26 +91,53 @@ export const timelineFetch = async (
       return Promise.resolve({ toots: res.body })
 
     case 'Account_Default':
-      res = await client({
-        method: 'get',
-        instance: 'local',
-        url: `accounts/${account}/statuses`,
-        params: {
-          pinned: 'true'
+      if (pagination && pagination.id) {
+        if (pagination.direction === 'prev') {
+          res = await client({
+            method: 'get',
+            instance: 'local',
+            url: `accounts/${account}/statuses`,
+            params: {
+              pinned: 'true',
+              ...params
+            }
+          })
+          return Promise.resolve({ toots: res.body })
+        } else {
+          res = await client({
+            method: 'get',
+            instance: 'local',
+            url: `accounts/${account}/statuses`,
+            params: {
+              exclude_replies: 'true',
+              ...params
+            }
+          })
+          return Promise.resolve({ toots: res.body })
         }
-      })
-      const pinnedLength = res.body.length
-      let toots: Mastodon.Status[] = res.body
-      res = await client({
-        method: 'get',
-        instance: 'local',
-        url: `accounts/${account}/statuses`,
-        params: {
-          exclude_replies: 'true'
-        }
-      })
-      toots = uniqBy([...toots, ...res.body], 'id')
-      return Promise.resolve({ toots: toots, pinnedLength })
+      } else {
+        res = await client({
+          method: 'get',
+          instance: 'local',
+          url: `accounts/${account}/statuses`,
+          params: {
+            pinned: 'true'
+          }
+        })
+        const pinnedLength = res.body.length
+        let toots: Mastodon.Status[] = res.body
+        res = await client({
+          method: 'get',
+          instance: 'local',
+          url: `accounts/${account}/statuses`,
+          params: {
+            exclude_replies: 'true'
+          }
+        })
+        toots = uniqBy([...toots, ...res.body], 'id')
+        return Promise.resolve({ toots: toots, pinnedLength })
+      }
+      break
 
     case 'Account_All':
       res = await client({

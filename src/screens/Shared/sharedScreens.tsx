@@ -18,14 +18,21 @@ const sharedScreens = (Stack: any) => {
       key='Screen-Shared-Account'
       name='Screen-Shared-Account'
       component={ScreenSharedAccount}
-      options={({ navigation }: any) => ({
-        headerTranslucent: true,
-        headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-        headerCenter: () => null,
-        headerLeft: () => (
-          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
-        )
-      })}
+      options={({ navigation }: any) => {
+        return {
+          headerTranslucent: true,
+          headerStyle: {
+            backgroundColor: `rgba(255, 255, 255, 0)`
+          },
+          headerCenter: () => null,
+          headerLeft: () => (
+            <HeaderLeft
+              icon='chevron-left'
+              onPress={() => navigation.goBack()}
+            />
+          )
+        }
+      }}
     />,
     <Stack.Screen
       key='Screen-Shared-Hashtag'

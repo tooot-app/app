@@ -39,7 +39,7 @@ const fireMutation = async ({
   } else {
     toast({
       type: 'error',
-      content: '隐藏域名失败，请重试',
+      content: '投票失败，请重试',
       autoHide: false
     })
     return Promise.reject()
@@ -104,7 +104,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
 
   const pollExpiration = useMemo(() => {
     // how many voted
-    if (poll.expired) {
+    if (poll!.expired) {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
           投票已结束
@@ -113,20 +113,20 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
     } else {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
-          截止至{relativeTime(poll.expires_at)}
+          {relativeTime(poll!.expires_at)}截止
         </Text>
       )
     }
   }, [])
 
   const [singleOptions, setSingleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll.options.length)
+    ...[false, false, false, false].slice(0, poll!.options.length)
   })
   const [multipleOptions, setMultipleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll.options.length)
+    ...[false, false, false, false].slice(0, poll!.options.length)
   })
   const isSelected = (index: number) => {
-    if (poll.multiple) {
+    if (poll!.multiple) {
       return multipleOptions[index] ? 'check-square' : 'square'
     } else {
       return singleOptions[index] ? 'check-circle' : 'circle'
@@ -135,28 +135,28 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
 
   return (
     <View style={styles.base}>
-      {poll.options.map((option, index) =>
-        poll.voted ? (
+      {poll!.options.map((option, index) =>
+        poll!.voted ? (
           <View key={index} style={styles.poll}>
             <View style={styles.optionSelected}>
               <View style={styles.contentSelected}>
                 <Emojis
                   content={option.title}
-                  emojis={poll.emojis}
+                  emojis={poll!.emojis}
                   size={StyleConstants.Font.Size.M}
                   numberOfLines={1}
                 />
-                {poll.own_votes!.includes(index) && (
+                {poll!.own_votes!.includes(index) && (
                   <Feather
                     style={styles.voted}
-                    name={poll.multiple ? 'check-square' : 'check-circle'}
+                    name={poll!.multiple ? 'check-square' : 'check-circle'}
                     size={StyleConstants.Font.Size.M}
                     color={theme.primary}
                   />
                 )}
               </View>
               <Text style={[styles.percentage, { color: theme.primary }]}>
-                {Math.round((option.votes_count / poll.votes_count) * 100)}%
+                {Math.round((option.votes_count / poll!.votes_count) * 100)}%
               </Text>
             </View>
 
@@ -165,7 +165,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
                 styles.background,
                 {
                   width: `${Math.round(
-                    (option.votes_count / poll.votes_count) * 100
+                    (option.votes_count / poll!.votes_count) * 100
                   )}%`,
                   backgroundColor: theme.border
                 }
@@ -177,7 +177,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
             <Pressable
               style={[styles.optionUnselected]}
               onPress={() => {
-                if (poll.multiple) {
+                if (poll!.multiple) {
                   setMultipleOptions({
                     ...multipleOptions,
                     [index]: !multipleOptions[index]
@@ -189,7 +189,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
                       index === 1,
                       index === 2,
                       index === 3
-                    ].slice(0, poll.options.length)
+                    ].slice(0, poll!.options.length)
                   })
                 }
               }}
@@ -203,7 +203,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
               <View style={styles.contentUnselected}>
                 <Emojis
                   content={option.title}
-                  emojis={poll.emojis}
+                  emojis={poll!.emojis}
                   size={StyleConstants.Font.Size.M}
                 />
               </View>
@@ -227,7 +227,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
           </View>
         )}
         <Text style={[styles.votes, { color: theme.secondary }]}>
-          已投{poll.voters_count}人{' • '}
+          已投{poll.voters_count || 0}人{' • '}
         </Text>
         {pollExpiration}
       </View>

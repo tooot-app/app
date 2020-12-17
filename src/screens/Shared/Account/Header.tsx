@@ -1,37 +1,44 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Animated, Dimensions, Image, StyleSheet } from 'react-native'
+import { AccountContext } from '../Account'
 
 export interface Props {
   uri?: Mastodon.Account['header']
   limitHeight?: boolean
 }
 
-const limitRatio = 0.4
-
 const AccountHeader: React.FC<Props> = ({ uri, limitHeight = false }) => {
+  const { accountState, accountDispatch } = useContext(AccountContext)
+
   useEffect(() => {
     if (uri) {
       if (uri.includes('/headers/original/missing.png')) {
-        animateNewSize(limitRatio)
+        animateNewSize(accountState.headerRatio)
       } else {
         Image.getSize(
           uri,
           (width, height) => {
-            animateNewSize(limitHeight ? limitRatio : height / width)
+            if (!limitHeight) {
+              accountDispatch({ type: 'headerRatio', payload: height / width })
+            }
+            animateNewSize(
+              limitHeight ? accountState.headerRatio : height / width
+            )
           },
           () => {
-            animateNewSize(limitRatio)
+            animateNewSize(accountState.headerRatio)
           }
         )
       }
     } else {
-      animateNewSize(limitRatio)
+      animateNewSize(accountState.headerRatio)
     }
   }, [uri])
 
   const windowWidth = Dimensions.get('window').width
-  const imageHeight = useRef(new Animated.Value(windowWidth * limitRatio))
-    .current
+  const imageHeight = useRef(
+    new Animated.Value(windowWidth * accountState.headerRatio)
+  ).current
   const animateNewSize = (ratio: number) => {
     Animated.timing(imageHeight, {
       toValue: windowWidth * ratio,

@@ -21,9 +21,10 @@ import { useTranslation } from 'react-i18next'
 import { StyleConstants } from '@utils/styles/constants'
 import { ButtonRow } from '@components/Button'
 import ParseContent from '@root/components/ParseContent'
-import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
 import { applicationFetch } from '@root/utils/fetches/applicationFetch'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -35,6 +36,8 @@ const Login: React.FC = () => {
     clientId: string
     clientSecret: string
   }>()
+
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
   const instanceQuery = useQuery(
     ['Instance', { instanceDomain }],

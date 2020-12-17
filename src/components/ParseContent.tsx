@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Pressable, Text } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
 
@@ -98,6 +98,12 @@ const renderNode = ({
         </Text>
       )
     }
+  } else {
+    if (node.name === 'p') {
+      if (!node.children.length) {
+        return <View key={index}></View> // bug when the tag is empty
+      }
+    }
   }
 }
 
@@ -134,26 +140,24 @@ const ParseContent: React.FC<Props> = ({
       }),
     []
   )
-  const textComponent = useCallback(
-    ({ children }) =>
-      emojis && children ? (
-        <Emojis
-          content={children.toString()}
-          emojis={emojis}
-          size={StyleConstants.Font.Size[size]}
-        />
-      ) : (
-        <Text>{children}</Text>
-      ),
-    []
-  )
+  const textComponent = useCallback(({ children }) => {
+    return emojis && children ? (
+      <Emojis
+        content={children.toString()}
+        emojis={emojis}
+        size={StyleConstants.Font.Size[size]}
+      />
+    ) : (
+      <Text>{children}</Text>
+    )
+  }, [])
   const rootComponent = useCallback(({ children }) => {
     const { theme } = useTheme()
     const [textLoaded, setTextLoaded] = useState(false)
     const [totalLines, setTotalLines] = useState<number | undefined>()
     const [lineHeight, setLineHeight] = useState<number | undefined>()
     const [shownLines, setShownLines] = useState(numberOfLines)
-
+    // console.log(children)
     return (
       <>
         <Text

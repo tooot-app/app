@@ -1,87 +1,60 @@
-import React, { useRef, useState } from 'react'
-import { Dimensions, FlatList, View } from 'react-native'
-import SegmentedControl from '@react-native-community/segmented-control'
+import React, { useCallback, useContext } from 'react'
+import { Dimensions, StyleSheet } from 'react-native'
+import { TabView, SceneMap } from 'react-native-tab-view'
 
 import Timeline from '@components/Timelines/Timeline'
-import { useTranslation } from 'react-i18next'
+import { AccountContext } from '../Account'
+import { StyleConstants } from '@root/utils/styles/constants'
 
 export interface Props {
   id: Mastodon.Account['id']
 }
 
 const AccountToots: React.FC<Props> = ({ id }) => {
-  const { t } = useTranslation('sharedAccount')
-  const [segment, setSegment] = useState(0)
-  const [segmentManuallyTriggered, setSegmentManuallyTriggered] = useState(
-    false
-  )
-  const horizontalPaging = useRef<any>()
+  const { accountState, accountDispatch } = useContext(AccountContext)
 
-  const pages: ['Account_Default', 'Account_All', 'Account_Media'] = [
-    'Account_Default',
-    'Account_All',
-    'Account_Media'
-  ]
+  const [routes] = React.useState([
+    { key: 'Account_Default' },
+    { key: 'Account_All' },
+    { key: 'Account_Media' }
+  ])
+  const singleScene = useCallback(
+    ({ route }) => (
+      <Timeline
+        page={route.key}
+        account={id}
+        disableRefresh
+        scrollEnabled={false}
+      />
+    ),
+    []
+  )
+  const renderScene = SceneMap({
+    Account_Default: singleScene,
+    Account_All: singleScene,
+    Account_Media: singleScene
+  })
 
   return (
-    <>
-      <SegmentedControl
-        values={[
-          t('content.segments.left'),
-          t('content.segments.middle'),
-          t('content.segments.right')
-        ]}
-        selectedIndex={segment}
-        onChange={({ nativeEvent }) => {
-          setSegmentManuallyTriggered(true)
-          setSegment(nativeEvent.selectedSegmentIndex)
-          horizontalPaging.current.scrollToIndex({
-            index: nativeEvent.selectedSegmentIndex
-          })
-        }}
-        style={{ width: '100%', height: 30 }}
-      />
-      <FlatList
-        style={{ width: Dimensions.get('window').width, height: '100%' }}
-        data={pages}
-        keyExtractor={page => page}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={{ width: Dimensions.get('window').width }}>
-              <Timeline
-                key={index}
-                page={item}
-                account={id}
-                disableRefresh
-                scrollEnabled={false}
-              />
-            </View>
-          )
-        }}
-        ref={horizontalPaging}
-        bounces={false}
-        getItemLayout={(data, index) => ({
-          length: Dimensions.get('window').width,
-          offset: Dimensions.get('window').width * index,
-          index
-        })}
-        horizontal
-        onMomentumScrollEnd={() => {
-          setSegmentManuallyTriggered(false)
-        }}
-        onScroll={({ nativeEvent }) =>
-          !segmentManuallyTriggered &&
-          setSegment(
-            nativeEvent.contentOffset.x <= Dimensions.get('window').width / 3
-              ? 0
-              : 1
-          )
-        }
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-      />
-    </>
+    <TabView
+      style={styles.base}
+      navigationState={{ index: accountState.segmentedIndex, routes }}
+      renderScene={renderScene}
+      renderTabBar={() => null}
+      onIndexChange={index =>
+        accountDispatch({ type: 'segmentedIndex', payload: index })
+      }
+      initialLayout={{ width: Dimensions.get('window').width }}
+      lazy
+      swipeEnabled
+    />
   )
 }
+
+const styles = StyleSheet.create({
+  base: {
+    marginTop: StyleConstants.Spacing.Global.PagePadding + 33
+  }
+})
 
 export default AccountToots

@@ -1,6 +1,6 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import { Animated, Image, StyleSheet, Text, View } from 'react-native'
-import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
 
 import ParseContent from '@components/ParseContent'
@@ -8,23 +8,27 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTranslation } from 'react-i18next'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import { LinearGradient } from 'expo-linear-gradient'
+import { AccountContext } from '../Account'
 
 export interface Props {
   account: Mastodon.Account | undefined
 }
 
 const AccountInformation: React.FC<Props> = ({ account }) => {
+  const { accountDispatch } = useContext(AccountContext)
   const { t } = useTranslation('sharedAccount')
   const { theme } = useTheme()
   const [avatarLoaded, setAvatarLoaded] = useState(false)
 
-  const shimmerAvatarRef = createRef<ShimmerPlaceholder>()
-  const shimmerNameRef = createRef<ShimmerPlaceholder>()
-  const shimmerAccountRef = createRef<ShimmerPlaceholder>()
-  const shimmerCreatedRef = createRef<ShimmerPlaceholder>()
-  const shimmerStatTootRef = createRef<ShimmerPlaceholder>()
-  const shimmerStatFolloingRef = createRef<ShimmerPlaceholder>()
-  const shimmerStatFollowerRef = createRef<ShimmerPlaceholder>()
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+  const shimmerAvatarRef = createRef<any>()
+  const shimmerNameRef = createRef<any>()
+  const shimmerAccountRef = createRef<any>()
+  const shimmerCreatedRef = createRef<any>()
+  const shimmerStatTootRef = createRef<any>()
+  const shimmerStatFolloingRef = createRef<any>()
+  const shimmerStatFollowerRef = createRef<any>()
   useEffect(() => {
     const informationAnimated = Animated.stagger(400, [
       Animated.parallel([
@@ -41,7 +45,18 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
   }, [])
 
   return (
-    <View style={styles.information}>
+    <View
+      style={styles.information}
+      onLayout={({ nativeEvent }) =>
+        accountDispatch({
+          type: 'informationLayout',
+          payload: {
+            y: nativeEvent.layout.y,
+            height: nativeEvent.layout.height
+          }
+        })
+      }
+    >
       {/* <Text>Moved or not: {account.moved}</Text> */}
       <ShimmerPlaceholder
         ref={shimmerAvatarRef}
@@ -246,7 +261,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
 const styles = StyleSheet.create({
   information: {
-    marginTop: -30 - StyleConstants.Spacing.Global.PagePadding,
+    marginTop: -StyleConstants.Spacing.Global.PagePadding * 3,
     padding: StyleConstants.Spacing.Global.PagePadding
   },
   avatar: {

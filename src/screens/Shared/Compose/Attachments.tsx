@@ -12,10 +12,11 @@ import { ComposeContext } from '@screens/Shared/Compose'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
-import ShimmerPlaceholder from 'react-native-shimmer-placeholder'
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { ButtonRound } from '@components/Button'
 import addAttachments from '@screens/Shared/Compose/addAttachments'
 import { Feather } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const DEFAULT_HEIGHT = 200
 
@@ -97,6 +98,8 @@ const ComposeAttachments: React.FC = () => {
   )
 
   const listFooter = useCallback(() => {
+    const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+
     return (
       <ShimmerPlaceholder
         style={styles.progressContainer}

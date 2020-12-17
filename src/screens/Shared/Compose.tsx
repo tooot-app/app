@@ -90,7 +90,7 @@ export type ComposeState = {
   }
 }
 
-export type PostAction =
+export type ComposeAction =
   | {
       type: 'spoiler'
       payload: Partial<ComposeState['spoiler']>
@@ -251,7 +251,10 @@ const composeExistingState = ({
       }
   }
 }
-const postReducer = (state: ComposeState, action: PostAction): ComposeState => {
+const composeReducer = (
+  state: ComposeState,
+  action: ComposeAction
+): ComposeState => {
   switch (action.type) {
     case 'spoiler':
       return { ...state, spoiler: { ...state.spoiler, ...action.payload } }
@@ -294,7 +297,7 @@ const postReducer = (state: ComposeState, action: PostAction): ComposeState => {
 
 type ContextType = {
   composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<ComposeAction>
 }
 export const ComposeContext = createContext<ContextType>({} as ContextType)
 
@@ -332,7 +335,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   }
 
   const [composeState, composeDispatch] = useReducer(
-    postReducer,
+    composeReducer,
     params?.type && params?.incomingStatus
       ? composeExistingState({
           type: params.type,
