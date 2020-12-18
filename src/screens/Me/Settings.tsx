@@ -22,7 +22,7 @@ const ScreenMeSettings: React.FC = () => {
 
   return (
     <>
-      <MenuContainer marginTop={true}>
+      <MenuContainer>
         <MenuRow
           title={t('content.language.heading')}
           content={t(`content.language.options.${settingsLanguage}`)}

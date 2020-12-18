@@ -15,7 +15,7 @@ import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/He
 import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsDomain'
 
 export interface Props {
-  queryKey?: App.QueryKey
+  queryKey?: QueryKey.Timeline
   status: Mastodon.Status
 }
 

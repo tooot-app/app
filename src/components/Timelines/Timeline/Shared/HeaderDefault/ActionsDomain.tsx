@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
@@ -30,7 +30,7 @@ const fireMutation = async ({ domain }: { domain: string }) => {
 }
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   domain: string
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -40,19 +40,19 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
   domain,
   setBottomSheetVisible
 }) => {
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
       return oldData
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试', autoHide: false })
-      queryCache.setQueryData(queryKey, oldData)
+      queryClient.setQueryData(queryKey, oldData)
     },
     onSettled: () => {
-      queryCache.invalidateQueries(queryKey)
+      queryClient.invalidateQueries(queryKey)
     }
   })
 
@@ -62,7 +62,7 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({ domain })
+          mutate({ domain })
         }}
         iconFront='cloud-off'
         title={`屏蔽域名 ${domain}`}

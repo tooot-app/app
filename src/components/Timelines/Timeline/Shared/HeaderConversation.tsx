@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import React, { useCallback, useMemo } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { toast } from '@components/toast'
 
@@ -11,7 +11,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   id: string
   account: Mastodon.Account
   created_at?: Mastodon.Status['created_at']
@@ -43,14 +43,14 @@ const HeaderConversation: React.FC<Props> = ({
   account,
   created_at
 }) => {
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
 
-      queryCache.setQueryData(queryKey, old =>
-        (old as {}[]).map((paging: any) => ({
+      queryClient.setQueryData(queryKey, (old: any) =>
+        old.pages.map((paging: any) => ({
           toots: paging.toots.filter((toot: any) => toot.id !== id),
           pointer: paging.pointer
         }))
@@ -60,16 +60,13 @@ const HeaderConversation: React.FC<Props> = ({
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试', autoHide: false })
-      queryCache.setQueryData(queryKey, oldData)
-    },
-    onSettled: () => {
-      queryCache.invalidateQueries(queryKey)
+      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
   const { theme } = useTheme()
 
-  const actionOnPress = useCallback(() => mutateAction({ id }), [])
+  const actionOnPress = useCallback(() => mutate({ id }), [])
 
   const actionChildren = useMemo(
     () => (

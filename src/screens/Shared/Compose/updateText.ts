@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { PostAction, ComposeState } from '@screens/Shared/Compose'
+import { ComposeAction, ComposeState } from '@screens/Shared/Compose'
 import formatText from './formatText'
 
 const updateText = ({
@@ -9,7 +9,7 @@ const updateText = ({
   type
 }: {
   composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<ComposeAction>
   newText: string
   type: 'emoji' | 'suggestion'
 }) => {

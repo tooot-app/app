@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { AppState, StyleSheet } from 'react-native'
-import { setFocusHandler, useInfiniteQuery } from 'react-query'
+import { StyleSheet } from 'react-native'
+import { useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
 import TimelineDefault from '@components/Timelines/Timeline/Default'
@@ -29,17 +29,7 @@ const Timeline: React.FC<Props> = ({
   account,
   disableRefresh = false
 }) => {
-  setFocusHandler(handleFocus => {
-    const handleAppStateChange = (appState: string) => {
-      if (appState === 'active') {
-        handleFocus()
-      }
-    }
-    AppState.addEventListener('change', handleAppStateChange)
-    return () => AppState.removeEventListener('change', handleAppStateChange)
-  })
-
-  const queryKey: App.QueryKey = [
+  const queryKey: QueryKey.Timeline = [
     page,
     {
       page,
@@ -51,24 +41,38 @@ const Timeline: React.FC<Props> = ({
   ]
   const {
     status,
-    isSuccess,
-    isLoading,
-    isError,
-    isFetchingMore,
-    canFetchMore,
     data,
-    fetchMore,
-    refetch
+    refetch,
+    hasPreviousPage,
+    fetchPreviousPage,
+    isFetchingPreviousPage,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
   } = useInfiniteQuery(queryKey, timelineFetch, {
-    getFetchMore: last => last?.toots.length > 0
+    getPreviousPageParam: firstPage => ({
+      direction: 'prev',
+      id: firstPage.toots[0].id
+    }),
+    getNextPageParam: lastPage =>
+      lastPage.toots.length
+        ? {
+            direction: 'next',
+            id: lastPage.toots[lastPage.toots.length - 1].id
+          }
+        : undefined
   })
-  const flattenData = data ? data.flatMap(d => [...d?.toots]) : []
-  const flattenPointer = data ? data.flatMap(d => [d?.pointer]) : []
-  const flattenPinnedLength = data ? data.flatMap(d => [d?.pinnedLength]) : []
+  const flattenData = data?.pages ? data.pages.flatMap(d => [...d?.toots]) : []
+  const flattenPointer = data?.pages
+    ? data.pages.flatMap(d => [d?.pointer])
+    : []
+  const flattenPinnedLength = data?.pages
+    ? data.pages.flatMap(d => [d?.pinnedLength])
+    : []
 
   const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {
-    if (toot && isSuccess) {
+    if (toot && status === 'success') {
       setTimeout(() => {
         flRef.current?.scrollToIndex({
           index: flattenPointer[0]!,
@@ -76,7 +80,7 @@ const Timeline: React.FC<Props> = ({
         })
       }, 500)
     }
-  }, [isSuccess])
+  }, [status])
 
   const flKeyExtrator = useCallback(({ id }) => id, [])
   const flRenderItem = useCallback(({ item, index }) => {
@@ -110,33 +114,16 @@ const Timeline: React.FC<Props> = ({
   )
   const flItemEmptyComponent = useMemo(
     () => <TimelineEmpty status={status} refetch={refetch} />,
-    [isLoading, isError, isSuccess]
+    [status]
   )
   const flOnRefresh = useCallback(
-    () =>
-      !disableRefresh &&
-      fetchMore(
-        {
-          direction: 'prev',
-          id: flattenData.length ? flattenData[0].id : null
-        },
-        { previous: true }
-      ),
-    [flattenData]
+    () => !disableRefresh && fetchPreviousPage(),
+    []
   )
-  const flOnEndReach = useCallback(
-    () =>
-      !disableRefresh &&
-      canFetchMore &&
-      fetchMore({
-        direction: 'next',
-        id: flattenData[flattenData.length - 1].id
-      }),
-    [flattenData]
-  )
+  const flOnEndReach = useCallback(() => fetchNextPage(), [])
   const flFooter = useCallback(() => {
-    return <TimelineEnd isFetchingMore={isFetchingMore} />
-  }, [isFetchingMore])
+    return <TimelineEnd hasNextPage={hasNextPage} />
+  }, [hasNextPage])
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
     flRef.current?.scrollToOffset({ offset })
@@ -159,11 +146,11 @@ const Timeline: React.FC<Props> = ({
       onEndReached={flOnEndReach}
       keyExtractor={flKeyExtrator}
       ListFooterComponent={flFooter}
+      refreshing={isFetchingPreviousPage}
       ListEmptyComponent={flItemEmptyComponent}
       ItemSeparatorComponent={flItemSeparatorComponent}
       onEndReachedThreshold={!disableRefresh ? 0.75 : null}
-      refreshing={!disableRefresh && isLoading && flattenData.length > 0}
-      {...(toot && isSuccess && { onScrollToIndexFailed })}
+      {...(toot && status === 'success' && { onScrollToIndexFailed })}
     />
   )
 }

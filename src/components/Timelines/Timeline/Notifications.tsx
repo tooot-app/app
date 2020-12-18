@@ -15,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   notification: Mastodon.Notification
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   highlighted?: boolean
 }
 

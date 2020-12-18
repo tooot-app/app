@@ -1,9 +1,12 @@
 import client from '@api/client'
 
-export const accountFetch = async (
-  key: string,
-  { id }: { id: string }
-): Promise<Mastodon.Account> => {
+export const accountFetch = async ({
+  queryKey
+}: {
+  queryKey: QueryKey.Account
+}): Promise<Mastodon.Account> => {
+  const [_, { id }] = queryKey
+
   const res = await client({
     method: 'get',
     instance: 'local',

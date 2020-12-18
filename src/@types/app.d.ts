@@ -14,8 +14,47 @@ declare namespace App {
     | 'Conversations'
     | 'Bookmarks'
     | 'Favourites'
+}
 
-  type QueryKey = [
+declare namespace QueryKey {
+  type Account = [
+    'Account',
+    {
+      id: Mastodon.Account['id']
+    }
+  ]
+
+  type Application = [
+    'Application',
+    {
+      instanceDomain: string
+    }
+  ]
+
+  type Instance = [
+    'Instance',
+    {
+      instanceDomain: string
+    }
+  ]
+
+  type Relationship = [
+    'Relationship',
+    {
+      id: Mastodon.Account['id']
+    }
+  ]
+
+  type Search = [
+    'Search',
+    {
+      type?: 'accounts' | 'hashtags' | 'statuses'
+      term: string
+      limit?: number
+    }
+  ]
+
+  type Timeline = [
     Pages,
     {
       page: Pages

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
@@ -56,7 +56,7 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   accountId: string
   account: string
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
@@ -68,19 +68,16 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
   account,
   setBottomSheetVisible
 }) => {
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
       return oldData
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试', autoHide: false })
-      queryCache.setQueryData(queryKey, oldData)
-    },
-    onSettled: () => {
-      queryCache.invalidateQueries(queryKey)
+      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
@@ -90,7 +87,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({
+          mutate({
             type: 'mute',
             id: accountId,
             stateKey: 'muting'
@@ -102,7 +99,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({
+          mutate({
             type: 'block',
             id: accountId,
             stateKey: 'blocking'
@@ -114,7 +111,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({
+          mutate({
             type: 'reports',
             id: accountId
           })

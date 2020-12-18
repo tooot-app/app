@@ -26,7 +26,7 @@ import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import {
-  PostAction,
+  ComposeAction,
   ComposeState,
   ComposeContext
 } from '@screens/Shared/Compose'
@@ -45,7 +45,7 @@ const ListItem = React.memo(
   }: {
     item: Mastodon.Account & Mastodon.Tag
     composeState: ComposeState
-    composeDispatch: Dispatch<PostAction>
+    composeDispatch: Dispatch<ComposeAction>
     textInputRef: RefObject<TextInput>
   }) => {
     const { theme } = useTheme()

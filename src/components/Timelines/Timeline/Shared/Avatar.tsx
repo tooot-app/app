@@ -4,7 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
 
 export interface Props {
-  queryKey?: App.QueryKey
+  queryKey?: QueryKey.Timeline
   account: Mastodon.Account
 }
 

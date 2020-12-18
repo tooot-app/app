@@ -4,7 +4,7 @@ import { Video } from 'expo-av'
 import { ButtonRound } from '@components/Button'
 
 export interface Props {
-  media_attachments: Mastodon.AttachmentVideo[]
+  media_attachments: Mastodon.Attachment[]
   width: number
 }
 

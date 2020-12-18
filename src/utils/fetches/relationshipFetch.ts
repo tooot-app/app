@@ -1,9 +1,12 @@
 import client from '@api/client'
 
-export const relationshipFetch = async (
-  key: string,
-  { id }: { id: string }
-): Promise<Mastodon.Relationship> => {
+export const relationshipFetch = async ({
+  queryKey
+}: {
+  queryKey: QueryKey.Relationship
+}): Promise<Mastodon.Relationship> => {
+  const [_, { id }] = queryKey
+
   const res = await client({
     method: 'get',
     instance: 'local',

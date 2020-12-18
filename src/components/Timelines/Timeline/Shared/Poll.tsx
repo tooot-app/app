@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { ButtonRow } from '@components/Button'
 import { toast } from '@components/toast'
@@ -47,21 +47,21 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: App.QueryKey
-  status: Mastodon.Status
+  queryKey: QueryKey.Timeline
+  status: Required<Mastodon.Status, 'poll'>
 }
 
 const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
   const { theme } = useTheme()
 
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: ({ id, options }) => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
 
-      queryCache.setQueryData(queryKey, old =>
-        (old as {}[]).map((paging: any) => ({
+      queryClient.setQueryData(queryKey, (old: any) =>
+        old.pages.map((paging: any) => ({
           toots: paging.toots.map((toot: any) => {
             if (toot.poll?.id === id) {
               const poll = toot.poll
@@ -98,13 +98,13 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试' })
-      queryCache.setQueryData(queryKey, oldData)
+      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
   const pollExpiration = useMemo(() => {
     // how many voted
-    if (poll!.expired) {
+    if (poll.expired) {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
           投票已结束
@@ -113,20 +113,20 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
     } else {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
-          {relativeTime(poll!.expires_at)}截止
+          {relativeTime(poll.expires_at)}截止
         </Text>
       )
     }
   }, [])
 
   const [singleOptions, setSingleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll!.options.length)
+    ...[false, false, false, false].slice(0, poll.options.length)
   })
   const [multipleOptions, setMultipleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll!.options.length)
+    ...[false, false, false, false].slice(0, poll.options.length)
   })
   const isSelected = (index: number) => {
-    if (poll!.multiple) {
+    if (poll.multiple) {
       return multipleOptions[index] ? 'check-square' : 'square'
     } else {
       return singleOptions[index] ? 'check-circle' : 'circle'
@@ -135,28 +135,28 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
 
   return (
     <View style={styles.base}>
-      {poll!.options.map((option, index) =>
-        poll!.voted ? (
+      {poll.options.map((option, index) =>
+        poll.voted ? (
           <View key={index} style={styles.poll}>
             <View style={styles.optionSelected}>
               <View style={styles.contentSelected}>
                 <Emojis
                   content={option.title}
-                  emojis={poll!.emojis}
+                  emojis={poll.emojis}
                   size={StyleConstants.Font.Size.M}
                   numberOfLines={1}
                 />
-                {poll!.own_votes!.includes(index) && (
+                {poll.own_votes!.includes(index) && (
                   <Feather
                     style={styles.voted}
-                    name={poll!.multiple ? 'check-square' : 'check-circle'}
+                    name={poll.multiple ? 'check-square' : 'check-circle'}
                     size={StyleConstants.Font.Size.M}
                     color={theme.primary}
                   />
                 )}
               </View>
               <Text style={[styles.percentage, { color: theme.primary }]}>
-                {Math.round((option.votes_count / poll!.votes_count) * 100)}%
+                {Math.round((option.votes_count / poll.votes_count) * 100)}%
               </Text>
             </View>
 
@@ -165,7 +165,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
                 styles.background,
                 {
                   width: `${Math.round(
-                    (option.votes_count / poll!.votes_count) * 100
+                    (option.votes_count / poll.votes_count) * 100
                   )}%`,
                   backgroundColor: theme.border
                 }
@@ -177,7 +177,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
             <Pressable
               style={[styles.optionUnselected]}
               onPress={() => {
-                if (poll!.multiple) {
+                if (poll.multiple) {
                   setMultipleOptions({
                     ...multipleOptions,
                     [index]: !multipleOptions[index]
@@ -189,7 +189,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
                       index === 1,
                       index === 2,
                       index === 3
-                    ].slice(0, poll!.options.length)
+                    ].slice(0, poll.options.length)
                   })
                 }
               }}
@@ -203,7 +203,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
               <View style={styles.contentUnselected}>
                 <Emojis
                   content={option.title}
-                  emojis={poll!.emojis}
+                  emojis={poll.emojis}
                   size={StyleConstants.Font.Size.M}
                 />
               </View>
@@ -217,9 +217,9 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
             <ButtonRow
               onPress={() => {
                 if (poll.multiple) {
-                  mutateAction({ id: poll.id, options: multipleOptions })
+                  mutate({ id: poll.id, options: multipleOptions })
                 } else {
-                  mutateAction({ id: poll.id, options: singleOptions })
+                  mutate({ id: poll.id, options: singleOptions })
                 }
               }}
               text='投票'

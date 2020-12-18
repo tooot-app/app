@@ -2,43 +2,28 @@ import { uniqBy } from 'lodash'
 
 import client from '@api/client'
 
-export const timelineFetch = async (
-  key: string,
-  {
-    page,
-    params = {},
-    account,
-    hashtag,
-    list,
-    toot
-  }: {
-    page: App.Pages
-    params?: {
-      [key: string]: string | number | boolean
-    }
-    hashtag?: Mastodon.Tag['name']
-    list?: Mastodon.List['id']
-    toot?: Mastodon.Status
-    account?: Mastodon.Account['id']
-  },
-  pagination: {
-    direction: 'prev' | 'next'
-    id: string
-  }
-): Promise<{
+export const timelineFetch = async ({
+  queryKey,
+  pageParam
+}: {
+  queryKey: QueryKey.Timeline
+  pageParam?: { direction: 'prev' | 'next'; id: Mastodon.Status['id'] }
+}): Promise<{
   toots: Mastodon.Status[]
   pointer?: number
   pinnedLength?: number
 }> => {
+  const [page, { account, hashtag, list, toot }] = queryKey
   let res
+  let params: { [key: string]: string } = {}
 
-  if (pagination && pagination.id) {
-    switch (pagination.direction) {
+  if (pageParam) {
+    switch (pageParam.direction) {
       case 'prev':
-        params.min_id = pagination.id
+        params.min_id = pageParam.id
         break
       case 'next':
-        params.max_id = pagination.id
+        params.max_id = pageParam.id
         break
     }
   }
@@ -91,8 +76,8 @@ export const timelineFetch = async (
       return Promise.resolve({ toots: res.body })
 
     case 'Account_Default':
-      if (pagination && pagination.id) {
-        if (pagination.direction === 'prev') {
+      if (pageParam) {
+        if (pageParam.direction === 'prev') {
           res = await client({
             method: 'get',
             instance: 'local',
@@ -175,10 +160,10 @@ export const timelineFetch = async (
         url: `conversations`,
         params
       })
-      if (pagination) {
+      if (pageParam) {
         // Bug in pull to refresh in conversations
         res.body = res.body.filter(
-          (b: Mastodon.Conversation) => b.id !== pagination.id
+          (b: Mastodon.Conversation) => b.id !== pageParam.id
         )
       }
       return Promise.resolve({ toots: res.body })
@@ -220,5 +205,7 @@ export const timelineFetch = async (
         toots: [...res.body.ancestors, toot, ...res.body.descendants],
         pointer: res.body.ancestors.length
       })
+    default:
+      return Promise.reject()
   }
 }

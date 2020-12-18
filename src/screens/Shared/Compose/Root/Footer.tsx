@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const ComposeRootFooter: React.FC<Props> = ({ textInputRef }) => {
-  const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { composeState } = useContext(ComposeContext)
 
   return (
     <>

@@ -15,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   item: Mastodon.Status
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   index: number
   pinnedLength?: number
   highlighted?: boolean

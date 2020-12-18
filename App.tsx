@@ -1,7 +1,7 @@
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useEffect, useState } from 'react'
 import { AppearanceProvider } from 'react-native-appearance'
-import { QueryCache, ReactQueryCacheProvider, setConsole } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -9,13 +9,7 @@ import { Index } from '@root/Index'
 import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
 
-const queryCache = new QueryCache()
-
-setConsole({
-  log: console.log,
-  warn: console.warn,
-  error: console.warn
-})
+const queryClient = new QueryClient()
 
 // if (__DEV__) {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render')
@@ -53,7 +47,7 @@ const App: React.FC = () => {
 
   return (
     <AppearanceProvider>
-      <ReactQueryCacheProvider queryCache={queryCache}>
+      <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <PersistGate
             persistor={persistor}
@@ -73,7 +67,7 @@ const App: React.FC = () => {
             }}
           </PersistGate>
         </Provider>
-      </ReactQueryCacheProvider>
+      </QueryClientProvider>
     </AppearanceProvider>
   )
 }

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Alert } from 'react-native'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
@@ -55,7 +55,7 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   status: Mastodon.Status
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -66,17 +66,17 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
   setBottomSheetVisible
 }) => {
   const navigation = useNavigation()
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: ({ id, type, stateKey, prevState }) => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
 
       switch (type) {
         case 'mute':
         case 'pin':
-          queryCache.setQueryData(queryKey, old =>
-            (old as {}[]).map((paging: any) => ({
+          queryClient.setQueryData(queryKey, (old: any) =>
+            old.pages.map((paging: any) => ({
               toots: paging.toots.map((toot: any) => {
                 if (toot.id === id) {
                   toot[stateKey] =
@@ -89,8 +89,8 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           )
           break
         case 'delete':
-          queryCache.setQueryData(queryKey, old =>
-            (old as {}[]).map((paging: any) => ({
+          queryClient.setQueryData(queryKey, (old: any) =>
+            old.pages.map((paging: any) => ({
               toots: paging.toots.filter((toot: any) => toot.id !== id),
               pointer: paging.pointer
             }))
@@ -102,7 +102,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试' })
-      queryCache.setQueryData(queryKey, oldData)
+      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
@@ -112,7 +112,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({
+          mutate({
             type: 'delete',
             id: status.id,
             stateKey: 'id'
@@ -138,7 +138,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                     url: `statuses/${status.id}`
                   })
                     .then(res => {
-                      queryCache.invalidateQueries(queryKey)
+                      queryClient.invalidateQueries(queryKey)
                       setBottomSheetVisible(false)
                       navigation.navigate(getCurrentTab(navigation), {
                         screen: 'Screen-Shared-Compose',
@@ -159,7 +159,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutateAction({
+          mutate({
             type: 'mute',
             id: status.id,
             stateKey: 'muted',
@@ -174,7 +174,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
         <MenuRow
           onPress={() => {
             setBottomSheetVisible(false)
-            mutateAction({
+            mutate({
               type: 'pin',
               id: status.id,
               stateKey: 'pinned',

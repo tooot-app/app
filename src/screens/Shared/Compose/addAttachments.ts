@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 import { ActionSheetIOS, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 
-import { PostAction, ComposeState } from '@screens/Shared/Compose'
+import { ComposeAction, ComposeState } from '@screens/Shared/Compose'
 import client from '@api/client'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 
@@ -13,7 +13,7 @@ const uploadAttachment = async ({
 }: {
   result: NonNullable<ImageInfo>
   composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<ComposeAction>
 }) => {
   const formData = new FormData()
   // @ts-ignore
@@ -84,7 +84,7 @@ const addAttachments = async ({
   ...params
 }: {
   composeState: ComposeState
-  composeDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<ComposeAction>
 }): Promise<any> => {
   ActionSheetIOS.showActionSheetWithOptions(
     {

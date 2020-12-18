@@ -1,16 +1,16 @@
 import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { createElement, Dispatch } from 'react'
 import { Text } from 'react-native'
-import { RefetchOptions } from 'react-query/types/core/query'
+import { FetchOptions } from 'react-query/types/core/query'
 import Autolinker from '@root/modules/autolinker'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { PostAction, ComposeState } from '@screens/Shared/Compose'
+import { ComposeAction, ComposeState } from '@screens/Shared/Compose'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']
-  composeDispatch: Dispatch<PostAction>
+  composeDispatch: Dispatch<ComposeAction>
   content: string
-  refetch?: (options?: RefetchOptions | undefined) => Promise<any>
+  refetch?: (options?: FetchOptions | undefined) => Promise<any>
   disableDebounce?: boolean
 }
 

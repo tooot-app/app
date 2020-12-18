@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryCache } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
 import client from '@api/client'
@@ -44,7 +44,7 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   status: Mastodon.Status
 }
 
@@ -55,20 +55,21 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
 
-  const queryCache = useQueryCache()
-  const [mutateAction] = useMutation(fireMutation, {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
     onMutate: ({ id, type, stateKey, prevState }) => {
-      queryCache.cancelQueries(queryKey)
-      const oldData = queryCache.getQueryData(queryKey)
+      queryClient.cancelQueries(queryKey)
+      const oldData = queryClient.getQueryData(queryKey)
 
       switch (type) {
         case 'favourite':
         case 'reblog':
         case 'bookmark':
-          queryCache.setQueryData(queryKey, old =>
-            (old as {}[]).map((paging: any) => ({
+          queryClient.setQueryData(queryKey, (old: any) => {
+            old.pages.map((paging: any) => ({
               toots: paging.toots.map((toot: any) => {
                 if (toot.id === id) {
+                  console.log(toot[stateKey])
                   toot[stateKey] =
                     typeof prevState === 'boolean' ? !prevState : true
                 }
@@ -76,7 +77,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
               }),
               pointer: paging.pointer
             }))
-          )
+            return old
+          })
           break
       }
 
@@ -84,7 +86,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
     },
     onError: (err, _, oldData) => {
       toast({ type: 'error', content: '请重试' })
-      queryCache.setQueryData(queryKey, oldData)
+      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
@@ -99,7 +101,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
   }, [])
   const onPressReblog = useCallback(
     () =>
-      mutateAction({
+      mutate({
         id: status.id,
         type: 'reblog',
         stateKey: 'reblogged',
@@ -109,7 +111,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
   )
   const onPressFavourite = useCallback(
     () =>
-      mutateAction({
+      mutate({
         id: status.id,
         type: 'favourite',
         stateKey: 'favourited',
@@ -119,7 +121,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
   )
   const onPressBookmark = useCallback(
     () =>
-      mutateAction({
+      mutate({
         id: status.id,
         type: 'bookmark',
         stateKey: 'bookmarked',

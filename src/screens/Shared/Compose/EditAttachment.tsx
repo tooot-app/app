@@ -25,7 +25,7 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { PostAction } from '@screens/Shared/Compose'
+import { ComposeAction } from '@screens/Shared/Compose'
 import client from '@api/client'
 import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
 
@@ -35,7 +35,7 @@ export interface Props {
   route: {
     params: {
       attachment: Mastodon.Attachment & { local_url: string }
-      composeDispatch: Dispatch<PostAction>
+      composeDispatch: Dispatch<ComposeAction>
     }
   }
   navigation: any

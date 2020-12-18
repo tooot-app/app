@@ -5,15 +5,15 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
-  isFetchingMore: false | 'previous' | 'next' | undefined
+  hasNextPage?: boolean
 }
 
-const TimelineEnd: React.FC<Props> = ({ isFetchingMore }) => {
+const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
   const { theme } = useTheme()
 
   return (
     <View style={styles.base}>
-      {isFetchingMore ? (
+      {hasNextPage ? (
         <ActivityIndicator />
       ) : (
         <Text style={[styles.text, { color: theme.secondary }]}>

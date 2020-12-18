@@ -10,7 +10,7 @@ import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 
 export interface Props {
   item: Mastodon.Conversation
-  queryKey: App.QueryKey
+  queryKey: QueryKey.Timeline
   highlighted?: boolean
 }
 // Unread and mark as unread
