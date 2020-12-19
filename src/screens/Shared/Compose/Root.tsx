@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     width: StyleConstants.Font.LineHeight.M * 2,
     height: StyleConstants.Font.LineHeight.M * 2,
     marginRight: StyleConstants.Spacing.S,
-    borderRadius: StyleConstants.Avatar.S
+    borderRadius: StyleConstants.Avatar.M
   },
   accountName: {
     fontSize: StyleConstants.Font.Size.S,

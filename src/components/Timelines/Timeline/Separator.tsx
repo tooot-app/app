@@ -20,7 +20,7 @@ const TimelineSeparator: React.FC<Props> = ({ highlighted = false }) => {
           marginLeft: highlighted
             ? StyleConstants.Spacing.Global.PagePadding
             : StyleConstants.Spacing.Global.PagePadding +
-              StyleConstants.Avatar.S +
+              StyleConstants.Avatar.M +
               StyleConstants.Spacing.S
         }
       ]}

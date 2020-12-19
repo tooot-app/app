@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   icon: {
-    marginLeft: StyleConstants.Avatar.S - StyleConstants.Font.Size.S,
+    marginLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
     marginRight: StyleConstants.Spacing.S
   },
   content: {

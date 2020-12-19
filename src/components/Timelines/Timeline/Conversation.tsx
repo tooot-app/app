@@ -38,7 +38,7 @@ const TimelineConversation: React.FC<Props> = ({
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
             paddingLeft: highlighted
               ? 0
-              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
           <TimelineContent
@@ -71,7 +71,7 @@ const TimelineConversation: React.FC<Props> = ({
         style={{
           paddingLeft: highlighted
             ? 0
-            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+            : StyleConstants.Avatar.M + StyleConstants.Spacing.S
         }}
       >
         <TimelineActions queryKey={queryKey} status={item.last_status!} />

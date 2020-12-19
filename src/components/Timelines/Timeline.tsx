@@ -120,10 +120,11 @@ const Timeline: React.FC<Props> = ({
     () => !disableRefresh && fetchPreviousPage(),
     []
   )
-  const flOnEndReach = useCallback(() => fetchNextPage(), [])
-  const flFooter = useCallback(() => {
-    return <TimelineEnd hasNextPage={hasNextPage} />
-  }, [hasNextPage])
+  const flOnEndReach = useCallback(() => !disableRefresh && fetchNextPage(), [])
+  const flFooter = useCallback(
+    () => (!disableRefresh ? <TimelineEnd hasNextPage={hasNextPage} /> : null),
+    [hasNextPage]
+  )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
     flRef.current?.scrollToOffset({ offset })

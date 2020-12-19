@@ -38,7 +38,7 @@ const TimelineDefault: React.FC<Props> = ({
       StyleConstants.Spacing.Global.PagePadding * 2 // Global page padding on both sides
     : Dimensions.get('window').width -
       StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-      StyleConstants.Avatar.S - // Avatar width
+      StyleConstants.Avatar.M - // Avatar width
       StyleConstants.Spacing.S // Avatar margin to the right
 
   const tootOnPress = useCallback(
@@ -56,7 +56,7 @@ const TimelineDefault: React.FC<Props> = ({
           paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
           paddingLeft: highlighted
             ? 0
-            : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+            : StyleConstants.Avatar.M + StyleConstants.Spacing.S
         }}
       >
         {actualStatus.content.length > 0 && (
@@ -100,7 +100,7 @@ const TimelineDefault: React.FC<Props> = ({
           style={{
             paddingLeft: highlighted
               ? 0
-              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
           <TimelineActions queryKey={queryKey} status={actualStatus} />

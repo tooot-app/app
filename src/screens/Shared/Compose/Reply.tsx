@@ -19,7 +19,7 @@ const ComposeReply: React.FC = () => {
   const contentWidth =
     Dimensions.get('window').width -
     StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-    StyleConstants.Avatar.S - // Avatar width
+    StyleConstants.Avatar.M - // Avatar width
     StyleConstants.Spacing.S // Avatar margin to the right
 
   return (

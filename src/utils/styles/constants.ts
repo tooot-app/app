@@ -25,7 +25,8 @@ export const StyleConstants = {
   },
 
   Avatar: {
-    S: 52,
+    S: 36,
+    M: 52,
     L: 104
   }
 }

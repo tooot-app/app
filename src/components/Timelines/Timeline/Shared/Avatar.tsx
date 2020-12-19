@@ -27,8 +27,8 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
 
 const styles = StyleSheet.create({
   avatar: {
-    flexBasis: StyleConstants.Avatar.S,
-    height: StyleConstants.Avatar.S,
+    flexBasis: StyleConstants.Avatar.M,
+    height: StyleConstants.Avatar.M,
     marginRight: StyleConstants.Spacing.S
   },
   image: {

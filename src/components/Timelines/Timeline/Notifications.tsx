@@ -33,7 +33,7 @@ const TimelineNotifications: React.FC<Props> = ({
       StyleConstants.Spacing.Global.PagePadding * 2 // Global page padding on both sides
     : Dimensions.get('window').width -
       StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-      StyleConstants.Avatar.S - // Avatar width
+      StyleConstants.Avatar.M - // Avatar width
       StyleConstants.Spacing.S // Avatar margin to the right
 
   const tootOnPress = useCallback(
@@ -51,7 +51,7 @@ const TimelineNotifications: React.FC<Props> = ({
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
             paddingLeft: highlighted
               ? 0
-              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
           {notification.status.content.length > 0 && (
@@ -97,7 +97,7 @@ const TimelineNotifications: React.FC<Props> = ({
           style={{
             paddingLeft: highlighted
               ? 0
-              : StyleConstants.Avatar.S + StyleConstants.Spacing.S
+              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
           <TimelineActions queryKey={queryKey} status={notification.status} />

@@ -42,20 +42,14 @@ const Login: React.FC = () => {
   const instanceQuery = useQuery(
     ['Instance', { instanceDomain }],
     instanceFetch,
-    {
-      enabled: false,
-      retry: false
-    }
+    { enabled: false, retry: false }
   )
-
   const applicationQuery = useQuery(
     ['Application', { instanceDomain }],
     applicationFetch,
-    {
-      enabled: false,
-      retry: false
-    }
+    { enabled: false, retry: false }
   )
+
   useEffect(() => {
     if (
       applicationQuery.data?.client_id.length &&
@@ -115,9 +109,6 @@ const Login: React.FC = () => {
       text => {
         setInstanceDomain(text)
         setApplicationData(undefined)
-        if (text) {
-          instanceQuery.refetch()
-        }
       },
       1000,
       {
@@ -126,6 +117,11 @@ const Login: React.FC = () => {
     ),
     []
   )
+  useEffect(() => {
+    if (instanceDomain) {
+      instanceQuery.refetch()
+    }
+  }, [instanceDomain])
 
   const instanceInfo = useCallback(
     ({
@@ -191,12 +187,19 @@ const Login: React.FC = () => {
             clearButtonMode='never'
             keyboardType='url'
             textContentType='URL'
-            onSubmitEditing={() =>
-              instanceQuery.isSuccess &&
-              instanceQuery.data &&
-              instanceQuery.data.uri &&
-              applicationQuery.refetch()
-            }
+            onSubmitEditing={({ nativeEvent: { text } }) => {
+              if (
+                text === instanceDomain &&
+                instanceQuery.isSuccess &&
+                instanceQuery.data &&
+                instanceQuery.data.uri
+              ) {
+                applicationQuery.refetch()
+              } else {
+                setInstanceDomain(text)
+                setApplicationData(undefined)
+              }
+            }}
             placeholder={t('content.login.server.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'

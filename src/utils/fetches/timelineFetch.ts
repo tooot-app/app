@@ -77,28 +77,29 @@ export const timelineFetch = async ({
 
     case 'Account_Default':
       if (pageParam) {
-        if (pageParam.direction === 'prev') {
-          res = await client({
-            method: 'get',
-            instance: 'local',
-            url: `accounts/${account}/statuses`,
-            params: {
-              pinned: 'true',
-              ...params
-            }
-          })
-          return Promise.resolve({ toots: res.body })
-        } else {
-          res = await client({
-            method: 'get',
-            instance: 'local',
-            url: `accounts/${account}/statuses`,
-            params: {
-              exclude_replies: 'true',
-              ...params
-            }
-          })
-          return Promise.resolve({ toots: res.body })
+        switch (pageParam.direction) {
+          case 'prev':
+            res = await client({
+              method: 'get',
+              instance: 'local',
+              url: `accounts/${account}/statuses`,
+              params: {
+                pinned: 'true',
+                ...params
+              }
+            })
+            return Promise.resolve({ toots: res.body })
+          case 'next':
+            res = await client({
+              method: 'get',
+              instance: 'local',
+              url: `accounts/${account}/statuses`,
+              params: {
+                exclude_replies: 'true',
+                ...params
+              }
+            })
+            return Promise.resolve({ toots: res.body })
         }
       } else {
         res = await client({
