@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { StyleSheet } from 'react-native'
-import { useInfiniteQuery } from 'react-query'
+import { InfiniteData, useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
 import TimelineDefault from '@components/Timelines/Timeline/Default'
@@ -11,6 +11,14 @@ import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
+
+export type TimelineData =
+  | InfiniteData<{
+      toots: Mastodon.Status[]
+      pointer?: number | undefined
+      pinnedLength?: number | undefined
+    }>
+  | undefined
 
 export interface Props {
   page: App.Pages

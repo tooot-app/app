@@ -44,6 +44,7 @@ const TimelineDefault: React.FC<Props> = ({
   const tootOnPress = useCallback(
     () =>
       !isRemotePublic &&
+      !highlighted &&
       navigation.push('Screen-Shared-Toot', {
         toot: actualStatus
       }),
@@ -63,7 +64,11 @@ const TimelineDefault: React.FC<Props> = ({
           <TimelineContent status={actualStatus} highlighted={highlighted} />
         )}
         {actualStatus.poll && (
-          <TimelinePoll queryKey={queryKey} status={actualStatus} />
+          <TimelinePoll
+            queryKey={queryKey}
+            poll={actualStatus.poll}
+            reblog={item.reblog ? true : false}
+          />
         )}
         {actualStatus.media_attachments.length > 0 && (
           <TimelineAttachment status={actualStatus} width={contentWidth} />
@@ -103,7 +108,11 @@ const TimelineDefault: React.FC<Props> = ({
               : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
-          <TimelineActions queryKey={queryKey} status={actualStatus} />
+          <TimelineActions
+            queryKey={queryKey}
+            status={actualStatus}
+            reblog={item.reblog ? true : false}
+          />
         </View>
       )}
     </View>
@@ -122,16 +131,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(TimelineDefault, (prev, next) => {
-  let skipUpdate = true
-  skipUpdate =
-    prev.item.id === next.item.id &&
-    prev.item.replies_count === next.item.replies_count &&
-    prev.item.favourited === next.item.favourited &&
-    prev.item.reblogged === next.item.reblogged &&
-    prev.item.bookmarked === next.item.bookmarked &&
-    prev.item.poll?.voted === next.item.poll?.voted &&
-    prev.item.reblog?.poll?.voted === next.item.reblog?.poll?.voted
-
-  return skipUpdate
-})
+export default TimelineDefault

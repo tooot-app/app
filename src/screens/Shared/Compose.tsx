@@ -179,6 +179,7 @@ const composeExistingState = ({
 }): ComposeState => {
   switch (type) {
     case 'edit':
+      console.log(incomingStatus)
       return {
         ...composeInitialState,
         ...(incomingStatus.spoiler_text?.length && {
@@ -201,10 +202,10 @@ const composeExistingState = ({
             active: true,
             total: incomingStatus.poll.options.length,
             options: {
-              '0': incomingStatus.poll.options[0].title || undefined,
-              '1': incomingStatus.poll.options[1].title || undefined,
-              '2': incomingStatus.poll.options[2].title || undefined,
-              '3': incomingStatus.poll.options[3].title || undefined
+              '0': incomingStatus.poll.options[0]?.title || undefined,
+              '1': incomingStatus.poll.options[1]?.title || undefined,
+              '2': incomingStatus.poll.options[2]?.title || undefined,
+              '3': incomingStatus.poll.options[3]?.title || undefined
             },
             multiple: incomingStatus.poll.multiple,
             expire: '86400' // !!!

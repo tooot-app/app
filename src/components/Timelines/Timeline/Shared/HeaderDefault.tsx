@@ -36,9 +36,12 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
   // causing full re-render
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setSince(relativeTime(status.created_at))
     }, 1000)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [since])
 
   const onPressAction = useCallback(() => setBottomSheetVisible(true), [])

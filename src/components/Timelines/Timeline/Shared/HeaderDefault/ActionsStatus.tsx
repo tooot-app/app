@@ -6,6 +6,8 @@ import client from '@api/client'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
 import getCurrentTab from '@utils/getCurrentTab'
+import { TimelineData } from '@root/components/Timelines/Timeline'
+import { findIndex } from 'lodash'
 
 const fireMutation = async ({
   id,
@@ -75,25 +77,39 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       switch (type) {
         case 'mute':
         case 'pin':
-          queryClient.setQueryData(queryKey, (old: any) =>
-            old.pages.map((paging: any) => ({
-              toots: paging.toots.map((toot: any) => {
-                if (toot.id === id) {
-                  toot[stateKey] =
-                    typeof prevState === 'boolean' ? !prevState : true
-                }
-                return toot
-              }),
-              pointer: paging.pointer
-            }))
-          )
+          queryClient.setQueryData<TimelineData>(queryKey, old => {
+            let tootIndex = -1
+            const pageIndex = findIndex(old?.pages, page => {
+              const tempIndex = findIndex(page.toots, ['id', id])
+              if (tempIndex >= 0) {
+                tootIndex = tempIndex
+                return true
+              } else {
+                return false
+              }
+            })
+
+            if (pageIndex >= 0 && tootIndex >= 0) {
+              old!.pages[pageIndex].toots[tootIndex][
+                stateKey as 'muted' | 'pinned'
+              ] = typeof prevState === 'boolean' ? !prevState : true
+            }
+
+            return old
+          })
           break
         case 'delete':
-          queryClient.setQueryData(queryKey, (old: any) =>
-            old.pages.map((paging: any) => ({
-              toots: paging.toots.filter((toot: any) => toot.id !== id),
-              pointer: paging.pointer
-            }))
+          console.log('deleting toot')
+          queryClient.setQueryData<TimelineData>(
+            queryKey,
+            old =>
+              old && {
+                ...old,
+                pages: old?.pages.map(paging => ({
+                  ...paging,
+                  toots: paging.toots.filter(toot => toot.id !== id)
+                }))
+              }
           )
           break
       }
@@ -167,7 +183,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           })
         }}
         iconFront='volume-x'
-        title={status.muted ? '取消隐藏对话' : '隐藏对话'}
+        title={status.muted ? '取消静音对话' : '静音对话'}
       />
       {/* Also note that reblogs cannot be pinned. */}
       {(status.visibility === 'public' || status.visibility === 'unlisted') && (

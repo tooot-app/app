@@ -10,6 +10,8 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
 import Emojis from './Emojis'
+import { TimelineData } from '../../Timeline'
+import { findIndex } from 'lodash'
 
 const fireMutation = async ({
   id,
@@ -48,10 +50,11 @@ const fireMutation = async ({
 
 export interface Props {
   queryKey: QueryKey.Timeline
-  status: Required<Mastodon.Status, 'poll'>
+  poll: NonNullable<Mastodon.Status['poll']>
+  reblog: boolean
 }
 
-const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
+const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
@@ -60,39 +63,58 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, status: { poll } }) => {
       queryClient.cancelQueries(queryKey)
       const oldData = queryClient.getQueryData(queryKey)
 
-      queryClient.setQueryData(queryKey, (old: any) =>
-        old.pages.map((paging: any) => ({
-          toots: paging.toots.map((toot: any) => {
-            if (toot.poll?.id === id) {
-              const poll = toot.poll
-              const myVotes = Object.keys(options).filter(
-                // @ts-ignore
-                option => options[option]
-              )
-              const myVotesInt = myVotes.map(option => parseInt(option))
+      const updatePoll = (poll: Mastodon.Poll): Mastodon.Poll => {
+        const myVotes = Object.keys(options).filter(
+          // @ts-ignore
+          option => options[option]
+        )
+        const myVotesInt = myVotes.map(option => parseInt(option))
 
-              toot.poll = {
-                ...toot.poll,
-                votes_count: poll.votes_count
-                  ? poll.votes_count + myVotes.length
-                  : myVotes.length,
-                voters_count: poll.voters_count ? poll.voters_count + 1 : 1,
-                voted: true,
-                own_votes: myVotesInt,
-                // @ts-ignore
-                options: poll.options.map((o, i) => {
-                  if (myVotesInt.includes(i)) {
-                    o.votes_count = o.votes_count + 1
-                  }
-                  return o
-                })
-              }
+        return {
+          ...poll,
+          votes_count: poll.votes_count
+            ? poll.votes_count + myVotes.length
+            : myVotes.length,
+          voters_count: poll.voters_count ? poll.voters_count + 1 : 1,
+          voted: true,
+          own_votes: myVotesInt,
+          options: poll.options.map((o, i) => {
+            if (myVotesInt.includes(i)) {
+              o.votes_count = o.votes_count + 1
             }
-            return toot
-          }),
-          pointer: paging.pointer
-        }))
-      )
+            return o
+          })
+        }
+      }
+
+      queryClient.setQueryData<TimelineData>(queryKey, old => {
+        let tootIndex = -1
+        const pageIndex = findIndex(old?.pages, page => {
+          const tempIndex = findIndex(page.toots, [
+            reblog ? 'reblog.poll.id' : 'poll.id',
+            id
+          ])
+          if (tempIndex >= 0) {
+            tootIndex = tempIndex
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (pageIndex >= 0 && tootIndex >= 0) {
+          if (reblog) {
+            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = updatePoll(
+              old!.pages[pageIndex].toots[tootIndex].reblog!.poll!
+            )
+          } else {
+            old!.pages[pageIndex].toots[tootIndex].poll = updatePoll(
+              old!.pages[pageIndex].toots[tootIndex].poll!
+            )
+          }
+        }
+        return old
+      })
 
       return oldData
     },
@@ -300,5 +322,5 @@ const styles = StyleSheet.create({
 
 export default React.memo(
   TimelinePoll,
-  (prev, next) => prev.status.poll.voted === next.status.poll.voted
+  (prev, next) => prev.poll.voted === next.poll.voted
 )

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
+import { InfiniteData, useMutation, useQueryClient } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
 import client from '@api/client'
@@ -9,6 +9,8 @@ import { toast } from '@components/toast'
 import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
+import { findIndex } from 'lodash'
+import { TimelineData } from '../../Timeline'
 
 const fireMutation = async ({
   id,
@@ -46,9 +48,10 @@ const fireMutation = async ({
 export interface Props {
   queryKey: QueryKey.Timeline
   status: Mastodon.Status
+  reblog: boolean
 }
 
-const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
+const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const iconColor = theme.secondary
@@ -65,18 +68,31 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status }) => {
         case 'favourite':
         case 'reblog':
         case 'bookmark':
-          queryClient.setQueryData(queryKey, (old: any) => {
-            old.pages.map((paging: any) => ({
-              toots: paging.toots.map((toot: any) => {
-                if (toot.id === id) {
-                  console.log(toot[stateKey])
-                  toot[stateKey] =
-                    typeof prevState === 'boolean' ? !prevState : true
-                }
-                return toot
-              }),
-              pointer: paging.pointer
-            }))
+          queryClient.setQueryData<TimelineData>(queryKey, old => {
+            let tootIndex = -1
+            const pageIndex = findIndex(old?.pages, page => {
+              const tempIndex = findIndex(page.toots, [
+                reblog ? 'reblog.id' : 'id',
+                id
+              ])
+              if (tempIndex >= 0) {
+                tootIndex = tempIndex
+                return true
+              } else {
+                return false
+              }
+            })
+
+            if (pageIndex >= 0 && tootIndex >= 0) {
+              if (reblog) {
+                old!.pages[pageIndex].toots[tootIndex].reblog![stateKey] =
+                  typeof prevState === 'boolean' ? !prevState : true
+              } else {
+                old!.pages[pageIndex].toots[tootIndex][stateKey] =
+                  typeof prevState === 'boolean' ? !prevState : true
+              }
+            }
+
             return old
           })
           break

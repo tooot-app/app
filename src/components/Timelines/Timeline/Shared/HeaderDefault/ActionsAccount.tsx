@@ -70,14 +70,8 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
 }) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation(fireMutation, {
-    onMutate: () => {
-      queryClient.cancelQueries(queryKey)
-      const oldData = queryClient.getQueryData(queryKey)
-      return oldData
-    },
-    onError: (err, _, oldData) => {
-      toast({ type: 'error', content: '请重试', autoHide: false })
-      queryClient.setQueryData(queryKey, oldData)
+    onSettled: () => {
+      queryClient.invalidateQueries(queryKey)
     }
   })
 
