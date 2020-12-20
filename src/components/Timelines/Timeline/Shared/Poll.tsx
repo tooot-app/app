@@ -18,26 +18,26 @@ const fireMutation = async ({
   options
 }: {
   id: string
-  options: { [key: number]: boolean }
+  options?: { [key: number]: boolean }
 }) => {
   const formData = new FormData()
-  Object.keys(options).forEach(option => {
-    // @ts-ignore
-    if (options[option]) {
-      formData.append('choices[]', option)
-    }
-  })
+  options &&
+    Object.keys(options).forEach(option => {
+      // @ts-ignore
+      if (options[option]) {
+        formData.append('choices[]', option)
+      }
+    })
 
   const res = await client({
-    method: 'post',
+    method: options ? 'post' : 'get',
     instance: 'local',
-    url: `polls/${id}/votes`,
-    body: formData
+    url: options ? `polls/${id}/votes` : `polls/${id}`,
+    ...(options && { body: formData })
   })
 
   if (res.body.id === id) {
-    toast({ type: 'success', content: '投票成功成功' })
-    return Promise.resolve()
+    return Promise.resolve(res.body as Mastodon.Poll)
   } else {
     toast({
       type: 'error',
@@ -52,40 +52,20 @@ export interface Props {
   queryKey: QueryKey.Timeline
   poll: NonNullable<Mastodon.Status['poll']>
   reblog: boolean
+  sameAccount: boolean
 }
 
-const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
+const TimelinePoll: React.FC<Props> = ({
+  queryKey,
+  poll,
+  reblog,
+  sameAccount
+}) => {
   const { theme } = useTheme()
-
   const queryClient = useQueryClient()
-  const { mutate } = useMutation(fireMutation, {
-    onMutate: ({ id, options }) => {
+  const mutation = useMutation(fireMutation, {
+    onSuccess: (data, { id }) => {
       queryClient.cancelQueries(queryKey)
-      const oldData = queryClient.getQueryData(queryKey)
-
-      const updatePoll = (poll: Mastodon.Poll): Mastodon.Poll => {
-        const myVotes = Object.keys(options).filter(
-          // @ts-ignore
-          option => options[option]
-        )
-        const myVotesInt = myVotes.map(option => parseInt(option))
-
-        return {
-          ...poll,
-          votes_count: poll.votes_count
-            ? poll.votes_count + myVotes.length
-            : myVotes.length,
-          voters_count: poll.voters_count ? poll.voters_count + 1 : 1,
-          voted: true,
-          own_votes: myVotesInt,
-          options: poll.options.map((o, i) => {
-            if (myVotesInt.includes(i)) {
-              o.votes_count = o.votes_count + 1
-            }
-            return o
-          })
-        }
-      }
 
       queryClient.setQueryData<TimelineData>(queryKey, old => {
         let tootIndex = -1
@@ -104,28 +84,49 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
 
         if (pageIndex >= 0 && tootIndex >= 0) {
           if (reblog) {
-            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = updatePoll(
-              old!.pages[pageIndex].toots[tootIndex].reblog!.poll!
-            )
+            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = data
           } else {
-            old!.pages[pageIndex].toots[tootIndex].poll = updatePoll(
-              old!.pages[pageIndex].toots[tootIndex].poll!
-            )
+            old!.pages[pageIndex].toots[tootIndex].poll = data
           }
         }
         return old
       })
-
-      return oldData
-    },
-    onError: (err, _, oldData) => {
-      toast({ type: 'error', content: '请重试' })
-      queryClient.setQueryData(queryKey, oldData)
     }
   })
 
+  const pollButton = () => {
+    if (!poll.expired) {
+      if (!sameAccount && !poll.voted) {
+        return (
+          <View style={styles.button}>
+            <ButtonRow
+              onPress={() => {
+                if (poll.multiple) {
+                  mutation.mutate({ id: poll.id, options: multipleOptions })
+                } else {
+                  mutation.mutate({ id: poll.id, options: singleOptions })
+                }
+              }}
+              {...(mutation.isLoading ? { icon: 'loader' } : { text: '投票' })}
+              disabled={mutation.isLoading}
+            />
+          </View>
+        )
+      } else {
+        return (
+          <View style={styles.button}>
+            <ButtonRow
+              onPress={() => mutation.mutate({ id: poll.id })}
+              {...(mutation.isLoading ? { icon: 'loader' } : { text: '刷新' })}
+              disabled={mutation.isLoading}
+            />
+          </View>
+        )
+      }
+    }
+  }
+
   const pollExpiration = useMemo(() => {
-    // how many voted
     if (poll.expired) {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
@@ -178,7 +179,10 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
                 )}
               </View>
               <Text style={[styles.percentage, { color: theme.primary }]}>
-                {Math.round((option.votes_count / poll.votes_count) * 100)}%
+                {poll.votes_count
+                  ? Math.round((option.votes_count / poll.voters_count) * 100)
+                  : 0}
+                %
               </Text>
             </View>
 
@@ -187,7 +191,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
                 styles.background,
                 {
                   width: `${Math.round(
-                    (option.votes_count / poll.votes_count) * 100
+                    (option.votes_count / poll.voters_count) * 100
                   )}%`,
                   backgroundColor: theme.border
                 }
@@ -234,20 +238,7 @@ const TimelinePoll: React.FC<Props> = ({ queryKey, poll, reblog }) => {
         )
       )}
       <View style={styles.meta}>
-        {!poll.expired && !poll.own_votes?.length && (
-          <View style={styles.button}>
-            <ButtonRow
-              onPress={() => {
-                if (poll.multiple) {
-                  mutate({ id: poll.id, options: multipleOptions })
-                } else {
-                  mutate({ id: poll.id, options: singleOptions })
-                }
-              }}
-              text='投票'
-            />
-          </View>
-        )}
+        {pollButton()}
         <Text style={[styles.votes, { color: theme.secondary }]}>
           已投{poll.voters_count || 0}人{' • '}
         </Text>
@@ -299,7 +290,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: '100%',
-    minWidth: 1,
+    minWidth: 2,
     borderTopRightRadius: 6,
     borderBottomRightRadius: 6
   },
@@ -320,7 +311,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(
-  TimelinePoll,
-  (prev, next) => prev.poll.voted === next.poll.voted
-)
+export default TimelinePoll

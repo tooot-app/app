@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
 import { findIndex } from 'lodash'
 import { TimelineData } from '../../Timeline'
+import { useSelector } from 'react-redux'
+import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 
 const fireMutation = async ({
   id,
@@ -49,9 +51,15 @@ export interface Props {
   queryKey: QueryKey.Timeline
   status: Mastodon.Status
   reblog: boolean
+  sameAccountRoot: boolean
 }
 
-const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
+const TimelineActions: React.FC<Props> = ({
+  queryKey,
+  status,
+  reblog,
+  sameAccountRoot
+}) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const iconColor = theme.secondary
@@ -65,9 +73,28 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       const oldData = queryClient.getQueryData(queryKey)
 
       switch (type) {
+        // Update each specific page
         case 'favourite':
         case 'reblog':
         case 'bookmark':
+          if (type === 'favourite' && queryKey[0] === 'Favourites') {
+            queryClient.invalidateQueries(['Favourites'])
+            break
+          }
+          if (
+            type === 'reblog' &&
+            queryKey[0] === 'Following' &&
+            prevState === true &&
+            sameAccountRoot
+          ) {
+            queryClient.invalidateQueries(['Following'])
+            break
+          }
+          if (type === 'bookmark' && queryKey[0] === 'Bookmarks') {
+            queryClient.invalidateQueries(['Bookmarks'])
+            break
+          }
+
           queryClient.setQueryData<TimelineData>(queryKey, old => {
             let tootIndex = -1
             const pageIndex = findIndex(old?.pages, page => {

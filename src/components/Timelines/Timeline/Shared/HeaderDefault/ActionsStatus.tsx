@@ -99,7 +99,6 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           })
           break
         case 'delete':
-          console.log('deleting toot')
           queryClient.setQueryData<TimelineData>(
             queryKey,
             old =>

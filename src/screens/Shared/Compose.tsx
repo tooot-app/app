@@ -29,6 +29,7 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import formatText from '@screens/Shared/Compose/formatText'
+import { useQueryClient } from 'react-query'
 
 const Stack = createNativeStackNavigator()
 
@@ -316,6 +317,7 @@ export interface Props {
 
 const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   const { theme } = useTheme()
+  const queryClient = useQueryClient()
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
@@ -449,7 +451,8 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
               composeState.poll.expire +
               composeState.attachments.sensitive +
               composeState.attachments.uploads.map(upload => upload.id) +
-              composeState.visibility
+              composeState.visibility +
+              (params?.type === 'edit' ? Math.random() : '')
           ).toString()
         },
         body: formData
@@ -462,7 +465,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
                 {
                   text: '好的',
                   onPress: () => {
-                    // clear homepage cache
+                    queryClient.invalidateQueries(['Following'])
                     navigation.goBack()
                   }
                 }

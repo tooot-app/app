@@ -39,7 +39,12 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     })
   }, [])
 
-  const [routes] = useState(content.map(p => ({ key: p.page })))
+  const routes = content
+    .filter(p =>
+      localRegistered ? p : p.page === 'RemotePublic' ? p : undefined
+    )
+    .map(p => ({ key: p.page }))
+
   const renderScene = ({
     route
   }: {
@@ -47,7 +52,11 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
       key: App.Pages
     }
   }) => {
-    return <Timeline page={route.key} />
+    return (
+      (localRegistered || route.key === 'RemotePublic') && (
+        <Timeline page={route.key} />
+      )
+    )
   }
 
   return (

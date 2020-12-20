@@ -23,7 +23,7 @@ const fireMutation = async ({ id }: { id: string }) => {
     instance: 'local',
     url: `conversations/${id}`
   })
-  console.log(res)
+
   if (!res.body.error) {
     toast({ type: 'success', content: '删除私信成功' })
     return Promise.resolve()

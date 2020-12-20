@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons'
 
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import relativeTime from '@utils/relativeTime'
-import { getLocalAccountId, getLocalUrl } from '@utils/slices/instancesSlice'
+import { getLocalUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import BottomSheet from '@components/BottomSheet'
 import { useSelector } from 'react-redux'
@@ -17,9 +17,14 @@ import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/He
 export interface Props {
   queryKey?: QueryKey.Timeline
   status: Mastodon.Status
+  sameAccount: boolean
 }
 
-const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
+const TimelineHeaderDefault: React.FC<Props> = ({
+  queryKey,
+  status,
+  sameAccount
+}) => {
   const domain = status.uri
     ? status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
     : ''
@@ -29,7 +34,6 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
   const { theme } = useTheme()
 
   const navigation = useNavigation()
-  const localAccountId = useSelector(getLocalAccountId)
   const localDomain = useSelector(getLocalUrl)
   const [since, setSince] = useState(relativeTime(status.created_at))
   const [modalVisible, setBottomSheetVisible] = useState(false)
@@ -46,9 +50,10 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
   const onPressAction = useCallback(() => setBottomSheetVisible(true), [])
   const onPressApplication = useCallback(() => {
-    navigation.navigate('Screen-Shared-Webview', {
-      uri: status.application!.website
-    })
+    status.application!.website &&
+      navigation.navigate('Screen-Shared-Webview', {
+        uri: status.application!.website
+      })
   }, [])
 
   const pressableAction = useMemo(
@@ -128,7 +133,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
           visible={modalVisible}
           handleDismiss={() => setBottomSheetVisible(false)}
         >
-          {status.account.id !== localAccountId && (
+          {!sameAccount && (
             <HeaderDefaultActionsAccount
               queryKey={queryKey}
               accountId={status.account.id}
@@ -137,7 +142,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
             />
           )}
 
-          {status.account.id === localAccountId && (
+          {sameAccount && (
             <HeaderDefaultActionsStatus
               queryKey={queryKey}
               status={status}

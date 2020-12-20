@@ -20,10 +20,18 @@ export const timelineFetch = async ({
   if (pageParam) {
     switch (pageParam.direction) {
       case 'prev':
-        params.min_id = pageParam.id
+        if (page === 'Bookmarks' || page === 'Favourites') {
+          params.max_id = pageParam.id
+        } else {
+          params.min_id = pageParam.id
+        }
         break
       case 'next':
-        params.max_id = pageParam.id
+        if (page === 'Bookmarks' || page === 'Favourites') {
+          params.min_id = pageParam.id
+        } else {
+          params.max_id = pageParam.id
+        }
         break
     }
   }

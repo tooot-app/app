@@ -74,7 +74,12 @@ const TimelineConversation: React.FC<Props> = ({
             : StyleConstants.Avatar.M + StyleConstants.Spacing.S
         }}
       >
-        <TimelineActions queryKey={queryKey} status={item.last_status!} />
+        <TimelineActions
+          queryKey={queryKey}
+          status={item.last_status!}
+          reblog={false}
+          sameAccountRoot={false}
+        />
       </View>
     </View>
   )

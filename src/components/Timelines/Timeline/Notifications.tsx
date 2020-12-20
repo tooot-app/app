@@ -12,6 +12,8 @@ import TimelineHeaderNotification from '@components/Timelines/Timeline/Shared/He
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 
 import { StyleConstants } from '@utils/styles/constants'
+import { useSelector } from 'react-redux'
+import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -24,6 +26,7 @@ const TimelineNotifications: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  const localAccountId = useSelector(getLocalAccountId)
   const navigation = useNavigation()
   const actualAccount = notification.status
     ? notification.status.account
@@ -61,7 +64,12 @@ const TimelineNotifications: React.FC<Props> = ({
             />
           )}
           {notification.status.poll && (
-            <TimelinePoll queryKey={queryKey} status={notification.status} />
+            <TimelinePoll
+              queryKey={queryKey}
+              poll={notification.status.poll}
+              reblog={false}
+              sameAccount={notification.account.id === localAccountId}
+            />
           )}
           {notification.status.media_attachments.length > 0 && (
             <TimelineAttachment
@@ -100,7 +108,12 @@ const TimelineNotifications: React.FC<Props> = ({
               : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
-          <TimelineActions queryKey={queryKey} status={notification.status} />
+          <TimelineActions
+            queryKey={queryKey}
+            status={notification.status}
+            reblog={false}
+            sameAccountRoot={notification.account.id === localAccountId}
+          />
         </View>
       )}
     </View>

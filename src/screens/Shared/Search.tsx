@@ -8,6 +8,7 @@ import { useTheme } from '@root/utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   SectionList,
@@ -70,42 +71,47 @@ const ScreenSharedSearch: React.FC = () => {
   }, [searchTerm])
 
   const listEmpty = useMemo(
-    () => (
-      <View style={styles.emptyBase}>
-        <Text
-          style={[
-            styles.emptyDefault,
-            styles.emptyFontSize,
-            { color: theme.primary }
-          ]}
-        >
-          输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
-          <Text style={styles.emptyFontBold}>话题标签</Text>或者
-          <Text style={styles.emptyFontBold}>嘟文</Text>
-        </Text>
-        <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-          高级搜索格式
-        </Text>
-        <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-          <Text style={{ color: theme.secondary }}>@username@domain</Text>
-          {'   '}
-          搜索用户
-        </Text>
-        <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-          <Text style={{ color: theme.secondary }}>#example</Text>
-          {'   '}搜索话题标签
-        </Text>
-        <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-          <Text style={{ color: theme.secondary }}>URL</Text>
-          {'   '}搜索指定嘟文
-        </Text>
-        <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-          <Text style={{ color: theme.secondary }}>URL</Text>
-          {'   '}搜索指定用户
-        </Text>
-      </View>
-    ),
-    []
+    () =>
+      status === 'loading' ? (
+        <View style={styles.emptyBase}>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <View style={styles.emptyBase}>
+          <Text
+            style={[
+              styles.emptyDefault,
+              styles.emptyFontSize,
+              { color: theme.primary }
+            ]}
+          >
+            输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
+            <Text style={styles.emptyFontBold}>话题标签</Text>或者
+            <Text style={styles.emptyFontBold}>嘟文</Text>
+          </Text>
+          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+            高级搜索格式
+          </Text>
+          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+            <Text style={{ color: theme.secondary }}>@username@domain</Text>
+            {'   '}
+            搜索用户
+          </Text>
+          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+            <Text style={{ color: theme.secondary }}>#example</Text>
+            {'   '}搜索话题标签
+          </Text>
+          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+            <Text style={{ color: theme.secondary }}>URL</Text>
+            {'   '}搜索指定嘟文
+          </Text>
+          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+            <Text style={{ color: theme.secondary }}>URL</Text>
+            {'   '}搜索指定用户
+          </Text>
+        </View>
+      ),
+    [status]
   )
   const sectionHeader = useCallback(
     ({ section: { title } }) => (
@@ -247,7 +253,6 @@ const ScreenSharedSearch: React.FC = () => {
         stickySectionHeadersEnabled
         sections={setctionData}
         ListEmptyComponent={listEmpty}
-        refreshing={status === 'loading'}
         keyboardShouldPersistTaps='always'
         renderSectionHeader={sectionHeader}
         renderSectionFooter={sectionFooter}

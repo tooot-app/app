@@ -40,7 +40,6 @@ const Timeline: React.FC<Props> = ({
   const queryKey: QueryKey.Timeline = [
     page,
     {
-      page,
       ...(hashtag && { hashtag }),
       ...(list && { list }),
       ...(toot && { toot }),
@@ -91,27 +90,32 @@ const Timeline: React.FC<Props> = ({
   }, [status])
 
   const flKeyExtrator = useCallback(({ id }) => id, [])
-  const flRenderItem = useCallback(({ item, index }) => {
-    switch (page) {
-      case 'Conversations':
-        return <TimelineConversation item={item} queryKey={queryKey} />
-      case 'Notifications':
-        return <TimelineNotifications notification={item} queryKey={queryKey} />
-      default:
-        return (
-          <TimelineDefault
-            item={item}
-            queryKey={queryKey}
-            index={index}
-            {...(flattenPinnedLength &&
-              flattenPinnedLength[0] && {
-                pinnedLength: flattenPinnedLength[0]
-              })}
-            {...(toot && toot.id === item.id && { highlighted: true })}
-          />
-        )
-    }
-  }, [])
+  const flRenderItem = useCallback(
+    ({ item, index }) => {
+      switch (page) {
+        case 'Conversations':
+          return <TimelineConversation item={item} queryKey={queryKey} />
+        case 'Notifications':
+          return (
+            <TimelineNotifications notification={item} queryKey={queryKey} />
+          )
+        default:
+          return (
+            <TimelineDefault
+              item={item}
+              queryKey={queryKey}
+              index={index}
+              {...(flattenPinnedLength &&
+                flattenPinnedLength[0] && {
+                  pinnedLength: flattenPinnedLength[0]
+                })}
+              {...(toot && toot.id === item.id && { highlighted: true })}
+            />
+          )
+      }
+    },
+    [flattenPinnedLength[0]]
+  )
   const flItemSeparatorComponent = useCallback(
     ({ leadingItem }) => (
       <TimelineSeparator

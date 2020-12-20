@@ -12,6 +12,8 @@ import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderD
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 
 import { StyleConstants } from '@utils/styles/constants'
+import { useSelector } from 'react-redux'
+import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 
 export interface Props {
   item: Mastodon.Status
@@ -29,6 +31,7 @@ const TimelineDefault: React.FC<Props> = ({
   pinnedLength,
   highlighted = false
 }) => {
+  const localAccountId = useSelector(getLocalAccountId)
   const isRemotePublic = queryKey[0] === 'RemotePublic'
   const navigation = useNavigation()
 
@@ -68,6 +71,7 @@ const TimelineDefault: React.FC<Props> = ({
             queryKey={queryKey}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
+            sameAccount={actualStatus.account.id === localAccountId}
           />
         )}
         {actualStatus.media_attachments.length > 0 && (
@@ -76,7 +80,7 @@ const TimelineDefault: React.FC<Props> = ({
         {actualStatus.card && <TimelineCard card={actualStatus.card} />}
       </View>
     ),
-    [actualStatus.poll?.voted]
+    [actualStatus.poll]
   )
 
   return (
@@ -95,6 +99,7 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineHeaderDefault
           {...(!isRemotePublic && { queryKey })}
           status={actualStatus}
+          sameAccount={actualStatus.account.id === localAccountId}
         />
       </View>
 
@@ -112,6 +117,7 @@ const TimelineDefault: React.FC<Props> = ({
             queryKey={queryKey}
             status={actualStatus}
             reblog={item.reblog ? true : false}
+            sameAccountRoot={item.account.id === localAccountId}
           />
         </View>
       )}

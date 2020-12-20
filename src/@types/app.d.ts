@@ -57,7 +57,6 @@ declare namespace QueryKey {
   type Timeline = [
     Pages,
     {
-      page: Pages
       hashtag?: Mastodon.Tag['name']
       list?: Mastodon.List['id']
       toot?: Mastodon.Status

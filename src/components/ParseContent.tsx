@@ -84,8 +84,7 @@ const renderNode = ({
           }}
           onPress={() => {
             navigation.navigate('Screen-Shared-Webview', {
-              uri: href,
-              domain: domain[1]
+              uri: href
             })
           }}
         >
