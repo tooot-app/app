@@ -18,6 +18,14 @@ export default {
         cancel: '$t(common:buttons.cancel)'
       }
     },
+    browser: {
+      heading: '打开链接',
+      options: {
+        internal: '应用内',
+        external: '系统浏览器',
+        cancel: '$t(common:buttons.cancel)'
+      }
+    },
     copyrights: {
       heading: '版权信息'
     },

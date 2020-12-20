@@ -3,7 +3,6 @@ import React from 'react'
 import ScreenSharedAccount from '@screens/Shared/Account'
 import ScreenSharedHashtag from '@screens/Shared/Hashtag'
 import ScreenSharedToot from '@screens/Shared/Toot'
-import ScreenSharedWebview from '@screens/Shared/Webview'
 import Compose from '@screens/Shared/Compose'
 import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
 import ScreenSharedSearch from '@screens/Shared/Search'
@@ -54,14 +53,6 @@ const sharedScreens = (Stack: any) => {
         headerLeft: () => (
           <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
         )
-      })}
-    />,
-    <Stack.Screen
-      key='Screen-Shared-Webview'
-      name='Screen-Shared-Webview'
-      component={ScreenSharedWebview}
-      options={() => ({
-        stackPresentation: 'modal'
       })}
     />,
     <Stack.Screen

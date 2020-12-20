@@ -2,12 +2,12 @@ import React, { useCallback, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
-
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { LinearGradient } from 'expo-linear-gradient'
+import openLink from '@root/utils/openLink'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -82,11 +82,7 @@ const renderNode = ({
             color: theme.link,
             fontSize: StyleConstants.Font.Size[size]
           }}
-          onPress={() => {
-            navigation.navigate('Screen-Shared-Webview', {
-              uri: href
-            })
-          }}
+          onPress={async () => await openLink(href)}
         >
           <Feather
             name='external-link'

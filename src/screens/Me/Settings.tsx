@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { MenuContainer, MenuRow } from '@components/Menu'
 import {
+  changeBrowser,
   changeLanguage,
   changeTheme,
+  getSettingsBrowser,
   getSettingsLanguage,
   getSettingsTheme
 } from '@utils/slices/settingsSlice'
@@ -18,6 +20,7 @@ const ScreenMeSettings: React.FC = () => {
   const { setTheme, theme } = useTheme()
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
+  const settingsBrowser = useSelector(getSettingsBrowser)
   const dispatch = useDispatch()
 
   return (
@@ -79,6 +82,33 @@ const ScreenMeSettings: React.FC = () => {
                   case 2:
                     dispatch(changeTheme('dark'))
                     setTheme('dark')
+                    break
+                }
+              }
+            )
+          }
+        />
+        <MenuRow
+          title={t('content.browser.heading')}
+          content={t(`content.browser.options.${settingsBrowser}`)}
+          iconBack='chevron-right'
+          onPress={() =>
+            ActionSheetIOS.showActionSheetWithOptions(
+              {
+                options: [
+                  t('content.browser.options.internal'),
+                  t('content.browser.options.external'),
+                  t('content.browser.options.cancel')
+                ],
+                cancelButtonIndex: 2
+              },
+              buttonIndex => {
+                switch (buttonIndex) {
+                  case 0:
+                    dispatch(changeBrowser('internal'))
+                    break
+                  case 1:
+                    dispatch(changeBrowser('external'))
                     break
                 }
               }

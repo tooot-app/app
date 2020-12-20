@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import openLink from '@root/utils/openLink'
 
 export interface Props {
   card: Mastodon.Card
@@ -10,17 +10,11 @@ export interface Props {
 
 const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
-  const navigation = useNavigation()
-  const onPress = useCallback(() => {
-    navigation.navigate('Screen-Shared-Webview', {
-      uri: card.url
-    })
-  }, [])
 
   return (
     <Pressable
       style={[styles.card, { borderColor: theme.border }]}
-      onPress={onPress}
+      onPress={async () => await openLink(card.url)}
     >
       {card.image && (
         <View style={styles.left}>

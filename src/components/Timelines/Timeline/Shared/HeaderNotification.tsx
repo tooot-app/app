@@ -8,7 +8,6 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
-
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import relativeTime from '@utils/relativeTime'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -17,6 +16,7 @@ import { useQuery } from 'react-query'
 import { relationshipFetch } from '@utils/fetches/relationshipFetch'
 import client from '@api/client'
 import { toast } from '@components/toast'
+import openLink from '@root/utils/openLink'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -49,11 +49,12 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     }, 1000)
   }, [since])
 
-  const applicationOnPress = useCallback(() => {
-    navigation.navigate('Screen-Shared-Webview', {
-      uri: notification.status?.application!.website
-    })
-  }, [])
+  const applicationOnPress = useCallback(
+    async () =>
+      notification.status?.application.website &&
+      (await openLink(notification.status.application.website)),
+    []
+  )
 
   const relationshipOnPress = useCallback(() => {
     client({

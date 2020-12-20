@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
-
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import relativeTime from '@utils/relativeTime'
 import { getLocalUrl } from '@utils/slices/instancesSlice'
@@ -13,6 +11,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
 import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsStatus'
 import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsDomain'
+import openLink from '@root/utils/openLink'
 
 export interface Props {
   queryKey?: QueryKey.Timeline
@@ -33,7 +32,6 @@ const TimelineHeaderDefault: React.FC<Props> = ({
   const account = status.account.acct
   const { theme } = useTheme()
 
-  const navigation = useNavigation()
   const localDomain = useSelector(getLocalUrl)
   const [since, setSince] = useState(relativeTime(status.created_at))
   const [modalVisible, setBottomSheetVisible] = useState(false)
@@ -49,12 +47,12 @@ const TimelineHeaderDefault: React.FC<Props> = ({
   }, [since])
 
   const onPressAction = useCallback(() => setBottomSheetVisible(true), [])
-  const onPressApplication = useCallback(() => {
-    status.application!.website &&
-      navigation.navigate('Screen-Shared-Webview', {
-        uri: status.application!.website
-      })
-  }, [])
+  const onPressApplication = useCallback(
+    async () =>
+      status.application!.website &&
+      (await openLink(status.application!.website)),
+    []
+  )
 
   const pressableAction = useMemo(
     () => (

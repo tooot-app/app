@@ -6,11 +6,13 @@ import { RootState } from '@root/store'
 export type SettingsState = {
   language: 'zh' | 'en' | undefined
   theme: 'light' | 'dark' | 'auto'
+  browser: 'internal' | 'external'
 }
 
 const initialState = {
   language: undefined,
-  theme: 'auto'
+  theme: 'auto',
+  browser: 'internal'
 }
 
 // export const updateLocal = createAsyncThunk(
@@ -70,6 +72,12 @@ const settingsSlice = createSlice({
       action: PayloadAction<NonNullable<SettingsState['theme']>>
     ) => {
       state.theme = action.payload
+    },
+    changeBrowser: (
+      state,
+      action: PayloadAction<NonNullable<SettingsState['browser']>>
+    ) => {
+      state.browser = action.payload
     }
   }
   // extraReducers: builder => {
@@ -81,6 +89,11 @@ const settingsSlice = createSlice({
 
 export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
+export const getSettingsBrowser = (state: RootState) => state.settings.browser
 
-export const { changeLanguage, changeTheme } = settingsSlice.actions
+export const {
+  changeLanguage,
+  changeTheme,
+  changeBrowser
+} = settingsSlice.actions
 export default settingsSlice.reducer
