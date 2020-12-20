@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { StyleSheet } from 'react-native'
+import { RefreshControl, StyleSheet } from 'react-native'
 import { InfiniteData, useInfiniteQuery } from 'react-query'
 
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
@@ -57,6 +57,9 @@ const Timeline: React.FC<Props> = ({
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery(queryKey, timelineFetch, {
+    select: data => {
+      return { ...data, pages: data.pages.filter(page => page.toots.length) }
+    },
     getPreviousPageParam: firstPage => ({
       direction: 'prev',
       id: firstPage.toots[0].id
@@ -137,6 +140,15 @@ const Timeline: React.FC<Props> = ({
     () => (!disableRefresh ? <TimelineEnd hasNextPage={hasNextPage} /> : null),
     [hasNextPage]
   )
+  const flRefreshControl = useMemo(
+    () => (
+      <RefreshControl
+        refreshing={isFetchingPreviousPage}
+        onRefresh={flOnRefresh}
+      />
+    ),
+    [isFetchingPreviousPage]
+  )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
     flRef.current?.scrollToOffset({ offset })
@@ -152,14 +164,16 @@ const Timeline: React.FC<Props> = ({
   return (
     <FlatList
       ref={flRef}
+      windowSize={11}
       data={flattenData}
+      initialNumToRender={5}
+      maxToRenderPerBatch={5}
       style={styles.flatList}
-      onRefresh={flOnRefresh}
       renderItem={flRenderItem}
       onEndReached={flOnEndReach}
       keyExtractor={flKeyExtrator}
       ListFooterComponent={flFooter}
-      refreshing={isFetchingPreviousPage}
+      refreshControl={flRefreshControl}
       ListEmptyComponent={flItemEmptyComponent}
       ItemSeparatorComponent={flItemSeparatorComponent}
       onEndReachedThreshold={!disableRefresh ? 0.75 : null}

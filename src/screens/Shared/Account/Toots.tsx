@@ -1,6 +1,6 @@
-import React, { Dispatch, useCallback, useState } from 'react'
+import React, { Dispatch } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
-import { SceneMap, TabView } from 'react-native-tab-view'
+import { TabView } from 'react-native-tab-view'
 
 import Timeline from '@components/Timelines/Timeline'
 import { AccountAction, AccountState } from '../Account'
@@ -17,33 +17,35 @@ const AccountToots: React.FC<Props> = ({
   accountDispatch,
   id
 }) => {
-  const [routes] = useState([
+  const routes: { key: App.Pages }[] = [
     { key: 'Account_Default' },
     { key: 'Account_All' },
     { key: 'Account_Media' }
-  ])
-  const singleScene = useCallback(
-    ({ route }) => <Timeline page={route.key} account={id} disableRefresh />,
-    []
-  )
-  const renderScene = SceneMap({
-    Account_Default: singleScene,
-    Account_All: singleScene,
-    Account_Media: singleScene
-  })
+  ]
+
+  const renderScene = ({
+    route
+  }: {
+    route: {
+      key: App.Pages
+    }
+  }) => {
+    console.log(route)
+    return <Timeline page={route.key} account={id} disableRefresh />
+  }
 
   return (
     <TabView
+      lazy
+      swipeEnabled
       style={styles.base}
-      navigationState={{ index: accountState.segmentedIndex, routes }}
       renderScene={renderScene}
       renderTabBar={() => null}
+      initialLayout={{ width: Dimensions.get('window').width }}
+      navigationState={{ index: accountState.segmentedIndex, routes }}
       onIndexChange={index =>
         accountDispatch({ type: 'segmentedIndex', payload: index })
       }
-      initialLayout={{ width: Dimensions.get('window').width }}
-      lazy
-      swipeEnabled
     />
   )
 }

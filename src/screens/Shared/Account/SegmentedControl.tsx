@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
     borderTopWidth: StyleSheet.hairlineWidth,
     padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: StyleConstants.Spacing.Global.PagePadding * 3
+    height: 33 + StyleConstants.Spacing.Global.PagePadding * 2
   }
 })
 

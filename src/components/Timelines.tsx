@@ -59,6 +59,21 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     )
   }
 
+  const screenComponent = useCallback(
+    () => (
+      <TabView
+        lazy
+        swipeEnabled
+        renderScene={renderScene}
+        renderTabBar={() => null}
+        onIndexChange={index => setSegment(index)}
+        navigationState={{ index: segment, routes }}
+        initialLayout={{ width: Dimensions.get('window').width }}
+      />
+    ),
+    [segment]
+  )
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -85,21 +100,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
             })
         }}
       >
-        {() => {
-          return (
-            <TabView
-              style={styles.base}
-              navigationState={{ index: segment, routes }}
-              renderScene={renderScene}
-              renderTabBar={() => null}
-              onIndexChange={index => setSegment(index)}
-              initialLayout={{ width: Dimensions.get('window').width }}
-              lazy
-              swipeEnabled
-              swipeVelocityImpact={1}
-            />
-          )
-        }}
+        {screenComponent}
       </Stack.Screen>
 
       {sharedScreens(Stack)}
@@ -110,9 +111,6 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
 const styles = StyleSheet.create({
   segmentsContainer: {
     flexBasis: '60%'
-  },
-  base: {
-    width: Dimensions.get('window').width
   }
 })
 
