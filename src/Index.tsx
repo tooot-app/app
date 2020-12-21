@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -16,7 +16,7 @@ import ScreenMe from '@screens/Me'
 import { themes } from '@utils/styles/themes'
 import { useTheme } from '@utils/styles/ThemeManager'
 import getCurrentTab from '@utils/getCurrentTab'
-import { toastConfig } from '@components/toast'
+import { toast, toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { getLocalUrl } from './utils/slices/instancesSlice'
@@ -32,7 +32,11 @@ export type RootStackParamList = {
   'Screen-Me': undefined
 }
 
-export const Index: React.FC = () => {
+export interface Props {
+  localCorrupt: boolean
+}
+
+export const Index: React.FC<Props> = ({ localCorrupt }) => {
   const localInstance = useSelector(getLocalUrl)
   const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
@@ -40,6 +44,18 @@ export const Index: React.FC = () => {
     light = 'dark-content',
     dark = 'light-content'
   }
+
+  useEffect(() => {
+    const showLocalCorrect = localCorrupt
+      ? toast({
+          type: 'error',
+          content: '登录已过期',
+          description: '请重新登录',
+          autoHide: false
+        })
+      : undefined
+    return showLocalCorrect
+  }, [localCorrupt])
 
   return (
     <>

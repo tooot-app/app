@@ -63,13 +63,21 @@ const ToastBase = ({ config }: { config: Config }) => {
     >
       <View style={styles.container}>
         <Feather
+          // @ts-ignore
           name={iconSet[config.type]}
           color={theme[config.type]}
           size={StyleConstants.Font.Size.M + 2}
         />
-        <Text style={[styles.text, { color: theme.primary }]}>
-          {config.text1}
-        </Text>
+        <View style={styles.texts}>
+          <Text style={[styles.text1, { color: theme.primary }]}>
+            {config.text1}
+          </Text>
+          {config.text2 && (
+            <Text style={[styles.text2, { color: theme.secondary }]}>
+              {config.text2}
+            </Text>
+          )}
+        </View>
       </View>
     </SafeAreaView>
   )
@@ -91,11 +99,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: StyleConstants.Spacing.M
   },
-  text: {
-    fontSize: StyleConstants.Font.Size.M,
+  texts: {
     marginLeft: StyleConstants.Spacing.S
+  },
+  text1: {
+    fontSize: StyleConstants.Font.Size.M
+  },
+  text2: {
+    fontSize: StyleConstants.Font.Size.S,
+    marginTop: StyleConstants.Spacing.S
   }
 })
 
