@@ -194,7 +194,7 @@ const ComposeRoot: React.FC = () => {
       <FlatList
         keyboardShouldPersistTaps='handled'
         ListHeaderComponent={<ComposeRootHeader />}
-        ListFooterComponent={<ComposeRootFooter textInputRef={textInputRef} />}
+        ListFooterComponent={<ComposeRootFooter />}
         ListEmptyComponent={listEmpty}
         data={data as Mastodon.Account[] & Mastodon.Tag[]}
         keyExtractor={listKey}

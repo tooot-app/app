@@ -56,22 +56,20 @@ const fireMutation = async ({
 }
 
 export interface Props {
-  queryKey: QueryKey.Timeline
-  accountId: string
-  account: string
+  queryKey?: QueryKey.Timeline
+  account: Mastodon.Account
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const HeaderDefaultActionsAccount: React.FC<Props> = ({
   queryKey,
-  accountId,
   account,
   setBottomSheetVisible
 }) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
-      queryClient.invalidateQueries(queryKey)
+      queryKey && queryClient.invalidateQueries(queryKey)
     }
   })
 
@@ -83,35 +81,35 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({
             type: 'mute',
-            id: accountId,
+            id: account.id,
             stateKey: 'muting'
           })
         }}
         iconFront='eye-off'
-        title={`隐藏 @${account} 的嘟嘟`}
+        title={`隐藏 @${account.acct} 的嘟嘟`}
       />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
           mutate({
             type: 'block',
-            id: accountId,
+            id: account.id,
             stateKey: 'blocking'
           })
         }}
         iconFront='x-circle'
-        title={`屏蔽用户 @${account}`}
+        title={`屏蔽用户 @${account.acct}`}
       />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
           mutate({
             type: 'reports',
-            id: accountId
+            id: account.id
           })
         }}
         iconFront='flag'
-        title={`举报 @${account}`}
+        title={`举报 @${account.acct}`}
       />
     </MenuContainer>
   )

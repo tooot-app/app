@@ -6,7 +6,6 @@ import {
   Text,
   View
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import relativeTime from '@utils/relativeTime'
@@ -29,7 +28,6 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
   const account = notification.account.acct
   const { theme } = useTheme()
 
-  const navigation = useNavigation()
   const [since, setSince] = useState(relativeTime(notification.created_at))
 
   const { status, data, refetch } = useQuery(

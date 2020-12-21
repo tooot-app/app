@@ -173,14 +173,15 @@ const composeInitialState: ComposeState = {
 }
 const composeExistingState = ({
   type,
-  incomingStatus
+  incomingStatus,
+  visibilityLock
 }: {
   type: 'reply' | 'conversation' | 'edit'
   incomingStatus: Mastodon.Status
+  visibilityLock?: boolean
 }): ComposeState => {
   switch (type) {
     case 'edit':
-      console.log(incomingStatus)
       return {
         ...composeInitialState,
         ...(incomingStatus.spoiler_text?.length && {
@@ -226,12 +227,12 @@ const composeExistingState = ({
         ...(incomingStatus.visibility === 'direct' && { visibilityLock: true })
       }
     case 'reply':
-    case 'conversation':
       const actualStatus = incomingStatus.reblog || incomingStatus
-      const allMentions = actualStatus.mentions.map(
-        mention => `@${mention.acct}`
-      )
+      const allMentions = Array.isArray(actualStatus.mentions)
+        ? actualStatus.mentions.map(mention => `@${mention.acct}`)
+        : []
       let replyPlaceholder = allMentions.join(' ')
+
       if (replyPlaceholder.length === 0) {
         replyPlaceholder = `@${actualStatus.account.acct} `
       } else {
@@ -245,11 +246,23 @@ const composeExistingState = ({
           formatted: undefined,
           selection: { start: 0, end: 0 }
         },
-        ...(type === 'conversation' && {
+        ...(visibilityLock && {
           visibility: 'direct',
           visibilityLock: true
         }),
-        replyToStatus: incomingStatus.reblog || incomingStatus
+        replyToStatus: actualStatus
+      }
+    case 'conversation':
+      return {
+        ...composeInitialState,
+        text: {
+          count: incomingStatus.account.acct.length + 2,
+          raw: `@${incomingStatus.account.acct} `,
+          formatted: undefined,
+          selection: { start: 0, end: 0 }
+        },
+        visibility: 'direct',
+        visibilityLock: true
       }
   }
 }
@@ -309,6 +322,7 @@ export interface Props {
       | {
           type?: 'reply' | 'conversation' | 'edit'
           incomingStatus: Mastodon.Status
+          visibilityLock?: boolean
         }
       | undefined
   }
@@ -342,7 +356,8 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     params?.type && params?.incomingStatus
       ? composeExistingState({
           type: params.type,
-          incomingStatus: params.incomingStatus
+          incomingStatus: params.incomingStatus,
+          visibilityLock: params.visibilityLock
         })
       : {
           ...composeInitialState,
@@ -372,7 +387,6 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         })
         break
       case 'reply':
-      case 'conversation':
         const actualStatus =
           params.incomingStatus.reblog || params.incomingStatus
         const allMentions = actualStatus.mentions.map(
@@ -388,6 +402,14 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
           textInput: 'text',
           composeDispatch,
           content: replyPlaceholder,
+          disableDebounce: true
+        })
+        break
+      case 'conversation':
+        formatText({
+          textInput: 'text',
+          composeDispatch,
+          content: `@${params.incomingStatus.account.acct} `,
           disableDebounce: true
         })
         break

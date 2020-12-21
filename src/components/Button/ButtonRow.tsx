@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, StyleProp, StyleSheet, Text, ViewStyle } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -9,6 +9,7 @@ type PropsBase = {
   disabled?: boolean
   buttonSize?: 'S' | 'M'
   size?: 'S' | 'M' | 'L'
+  style?: StyleProp<ViewStyle>
 }
 
 export interface PropsText extends PropsBase {
@@ -27,7 +28,8 @@ const ButtonRow: React.FC<PropsText | PropsIcon> = ({
   buttonSize = 'M',
   text,
   icon,
-  size = 'M'
+  size = 'M',
+  style: customStyle
 }) => {
   const { theme } = useTheme()
 
@@ -35,8 +37,15 @@ const ButtonRow: React.FC<PropsText | PropsIcon> = ({
     <Pressable
       {...(!disabled && { onPress })}
       style={[
+        customStyle,
         styles.button,
         {
+          paddingLeft:
+            StyleConstants.Spacing.M -
+            (icon ? StyleConstants.Font.Size[size] / 2 : 0),
+          paddingRight:
+            StyleConstants.Spacing.M -
+            (icon ? StyleConstants.Font.Size[size] / 2 : 0),
           borderColor: disabled ? theme.secondary : theme.primary,
           paddingTop: StyleConstants.Spacing[buttonSize === 'M' ? 'S' : 'XS'],
           paddingBottom: StyleConstants.Spacing[buttonSize === 'M' ? 'S' : 'XS']
@@ -68,8 +77,6 @@ const ButtonRow: React.FC<PropsText | PropsIcon> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingLeft: StyleConstants.Spacing.M,
-    paddingRight: StyleConstants.Spacing.M,
     borderWidth: 1.25,
     borderRadius: 100,
     alignItems: 'center'

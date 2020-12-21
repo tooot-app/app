@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react'
+import React, { Dispatch, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 
@@ -23,16 +23,18 @@ const AccountToots: React.FC<Props> = ({
     { key: 'Account_Media' }
   ]
 
-  const renderScene = ({
-    route
-  }: {
-    route: {
-      key: App.Pages
-    }
-  }) => {
-    console.log(route)
-    return <Timeline page={route.key} account={id} disableRefresh />
-  }
+  const renderScene = useCallback(
+    ({
+      route
+    }: {
+      route: {
+        key: App.Pages
+      }
+    }) => {
+      return <Timeline page={route.key} account={id} disableRefresh />
+    },
+    []
+  )
 
   return (
     <TabView

@@ -64,7 +64,7 @@ const renderNode = ({
                 m => m.username === username[1]
               )
               navigation.push('Screen-Shared-Account', {
-                id: mentions[usernameIndex].id
+                account: mentions[usernameIndex]
               })
             }}
           >

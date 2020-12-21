@@ -1,7 +1,5 @@
-import React, { useReducer, useRef } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { Animated, ScrollView } from 'react-native'
-
-// import * as relationshipsSlice from 'src/stacks/common/relationshipsSlice'
 
 import { useQuery } from 'react-query'
 import { accountFetch } from '@utils/fetches/accountFetch'
@@ -10,15 +8,24 @@ import AccountHeader from '@screens/Shared/Account/Header'
 import AccountInformation from '@screens/Shared/Account/Information'
 import AccountNav from './Account/Nav'
 import AccountSegmentedControl from './Account/SegmentedControl'
+import { HeaderRight } from '@root/components/Header'
+import BottomSheet from '@root/components/BottomSheet'
+import { useSelector } from 'react-redux'
+import {
+  getLocalAccountId,
+  getLocalUrl
+} from '@root/utils/slices/instancesSlice'
+import HeaderDefaultActionsAccount from '@root/components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
 export interface Props {
   route: {
     params: {
-      id: string
+      account: Mastodon.Account
     }
   }
+  navigation: any
 }
 
 export type AccountState = {
@@ -65,10 +72,13 @@ const accountReducer = (
 
 const ScreenSharedAccount: React.FC<Props> = ({
   route: {
-    params: { id }
-  }
+    params: { account }
+  },
+  navigation
 }) => {
-  const { data } = useQuery(['Account', { id }], accountFetch)
+  const localAccountId = useSelector(getLocalAccountId)
+  const localDomain = useSelector(getLocalUrl)
+  const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 
   // const stateRelationships = useSelector(relationshipsState)
   const scrollY = useRef(new Animated.Value(0)).current
@@ -76,6 +86,20 @@ const ScreenSharedAccount: React.FC<Props> = ({
     accountReducer,
     AccountInitialState
   )
+
+  const [modalVisible, setBottomSheetVisible] = useState(false)
+  useEffect(() => {
+    const updateHeaderRight = () =>
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderRight
+            icon='more-horizontal'
+            onPress={() => setBottomSheetVisible(true)}
+          />
+        )
+      })
+    return updateHeaderRight()
+  }, [])
 
   return (
     <>
@@ -106,9 +130,22 @@ const ScreenSharedAccount: React.FC<Props> = ({
         <AccountToots
           accountState={accountState}
           accountDispatch={accountDispatch}
-          id={id}
+          id={account.id}
         />
       </ScrollView>
+
+      <BottomSheet
+        visible={modalVisible}
+        handleDismiss={() => setBottomSheetVisible(false)}
+      >
+        {/* 添加到列表 */}
+        {localAccountId !== account.id && (
+          <HeaderDefaultActionsAccount
+            account={account}
+            setBottomSheetVisible={setBottomSheetVisible}
+          />
+        )}
+      </BottomSheet>
     </>
   )
 }

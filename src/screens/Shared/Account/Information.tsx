@@ -1,4 +1,4 @@
-import React, { createRef, Dispatch, useEffect, useState } from 'react'
+import React, { createRef, Dispatch, useEffect, useMemo, useState } from 'react'
 import { Animated, Image, StyleSheet, Text, View } from 'react-native'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
@@ -10,6 +10,41 @@ import { useTranslation } from 'react-i18next'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AccountAction } from '../Account'
+import { ButtonRow } from '@root/components/Button'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { relationshipFetch } from '@root/utils/fetches/relationshipFetch'
+import client from '@root/api/client'
+import { useNavigation } from '@react-navigation/native'
+import getCurrentTab from '@root/utils/getCurrentTab'
+
+const fireMutation = async ({
+  type,
+  id,
+  stateKey,
+  prevState
+}: {
+  type: 'follow'
+  id: string
+  stateKey: 'following'
+  prevState: boolean
+}) => {
+  let res
+  switch (type) {
+    case 'follow':
+      res = await client({
+        method: 'post',
+        instance: 'local',
+        url: `accounts/${id}/${prevState ? 'un' : ''}${type}`
+      })
+
+      if (res.body[stateKey] === !prevState) {
+        return Promise.resolve()
+      } else {
+        return Promise.reject()
+      }
+      break
+  }
+}
 
 export interface Props {
   accountDispatch?: Dispatch<AccountAction>
@@ -17,9 +52,41 @@ export interface Props {
 }
 
 const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
+  const navigation = useNavigation()
   const { t } = useTranslation('sharedAccount')
   const { theme } = useTheme()
   const [avatarLoaded, setAvatarLoaded] = useState(false)
+
+  const relationshipQueryKey = ['Relationship', { id: account?.id }]
+  const { status, data, refetch } = useQuery(
+    relationshipQueryKey,
+    relationshipFetch,
+    {
+      enabled: false
+    }
+  )
+  useEffect(() => {
+    if (account?.id) {
+      refetch()
+    }
+  }, [account])
+  const queryClient = useQueryClient()
+  const { mutate, status: mutateStatus } = useMutation(fireMutation, {
+    onMutate: () => {
+      queryClient.cancelQueries(relationshipQueryKey)
+      const oldData = queryClient.getQueryData(relationshipQueryKey)
+
+      queryClient.setQueryData(relationshipQueryKey, (old: any) => {
+        old && (old.following = !old?.following)
+        return old
+      })
+
+      return oldData
+    },
+    onError: (err, _, oldData) => {
+      queryClient.setQueryData(relationshipQueryKey, oldData)
+    }
+  })
 
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
   const shimmerAvatarRef = createRef<any>()
@@ -44,9 +111,35 @@ const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
     Animated.loop(informationAnimated).start()
   }, [])
 
+  const followingButton = useMemo(
+    () => (
+      <ButtonRow
+        {...(data
+          ? status !== 'success' ||
+            (mutateStatus !== 'success' && mutateStatus !== 'idle')
+            ? { icon: 'loader' }
+            : { text: `${data.following ? '正在' : ''}关注` }
+          : { icon: 'loader' })}
+        onPress={() =>
+          mutate({
+            type: 'follow',
+            id: account!.id,
+            stateKey: 'following',
+            prevState: data!.following
+          })
+        }
+        disabled={
+          status !== 'success' ||
+          (mutateStatus !== 'success' && mutateStatus !== 'idle')
+        }
+      />
+    ),
+    [data, status, mutateStatus]
+  )
+
   return (
     <View
-      style={styles.information}
+      style={styles.base}
       onLayout={({ nativeEvent }) =>
         accountDispatch &&
         accountDispatch({
@@ -59,18 +152,36 @@ const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
       }
     >
       {/* <Text>Moved or not: {account.moved}</Text> */}
-      <ShimmerPlaceholder
-        ref={shimmerAvatarRef}
-        visible={avatarLoaded}
-        width={StyleConstants.Avatar.L}
-        height={StyleConstants.Avatar.L}
-      >
-        <Image
-          source={{ uri: account?.avatar }}
-          style={styles.avatar}
-          onLoadEnd={() => setAvatarLoaded(true)}
-        />
-      </ShimmerPlaceholder>
+      <View style={styles.avatarAndActions}>
+        <ShimmerPlaceholder
+          ref={shimmerAvatarRef}
+          visible={avatarLoaded}
+          width={StyleConstants.Avatar.L}
+          height={StyleConstants.Avatar.L}
+        >
+          <Image
+            source={{ uri: account?.avatar }}
+            style={styles.avatar}
+            onLoadEnd={() => setAvatarLoaded(true)}
+          />
+        </ShimmerPlaceholder>
+        <View style={styles.actions}>
+          <ButtonRow
+            icon='mail'
+            onPress={() =>
+              navigation.navigate(getCurrentTab(navigation), {
+                screen: 'Screen-Shared-Compose',
+                params: {
+                  type: 'conversation',
+                  incomingStatus: { account }
+                }
+              })
+            }
+            style={{ marginRight: StyleConstants.Spacing.S }}
+          />
+          {followingButton}
+        </View>
+      </View>
 
       <ShimmerPlaceholder
         ref={shimmerNameRef}
@@ -261,14 +372,22 @@ const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
 }
 
 const styles = StyleSheet.create({
-  information: {
+  base: {
     marginTop: -StyleConstants.Spacing.Global.PagePadding * 3,
     padding: StyleConstants.Spacing.Global.PagePadding
+  },
+  avatarAndActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   avatar: {
     width: StyleConstants.Avatar.L,
     height: StyleConstants.Avatar.L,
     borderRadius: 8
+  },
+  actions: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row'
   },
   display_name: {
     flexDirection: 'row',

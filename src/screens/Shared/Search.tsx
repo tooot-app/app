@@ -157,9 +157,7 @@ const ScreenSharedSearch: React.FC = () => {
             ]}
             onPress={() => {
               navigation.goBack()
-              navigation.push('Screen-Shared-Account', {
-                id: item.id
-              })
+              navigation.push('Screen-Shared-Account', { account: item })
             }}
           >
             <Image

@@ -12,10 +12,7 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
   const navigation = useNavigation()
   // Need to fix go back root
   const onPress = useCallback(() => {
-    queryKey &&
-      navigation.push('Screen-Shared-Account', {
-        id: account.id
-      })
+    queryKey && navigation.push('Screen-Shared-Account', { account })
   }, [])
 
   return (

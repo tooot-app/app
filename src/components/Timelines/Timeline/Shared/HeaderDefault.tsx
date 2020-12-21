@@ -134,8 +134,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({
           {!sameAccount && (
             <HeaderDefaultActionsAccount
               queryKey={queryKey}
-              accountId={status.account.id}
-              account={status.account.acct}
+              account={status.account}
               setBottomSheetVisible={setBottomSheetVisible}
             />
           )}

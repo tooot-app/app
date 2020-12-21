@@ -26,7 +26,7 @@ const ComposeReply: React.FC = () => {
     <View style={[styles.status, { borderTopColor: theme.border }]}>
       <TimelineAvatar account={replyToStatus!.account} />
       <View style={styles.details}>
-        <TimelineHeaderDefault status={replyToStatus!} />
+        <TimelineHeaderDefault status={replyToStatus!} sameAccount={false} />
         {replyToStatus!.content.length > 0 && (
           <TimelineContent status={replyToStatus!} />
         )}
