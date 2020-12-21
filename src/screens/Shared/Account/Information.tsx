@@ -49,9 +49,14 @@ const fireMutation = async ({
 export interface Props {
   accountDispatch?: Dispatch<AccountAction>
   account: Mastodon.Account | undefined
+  disableActions?: boolean
 }
 
-const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
+const AccountInformation: React.FC<Props> = ({
+  accountDispatch,
+  account,
+  disableActions = false
+}) => {
   const navigation = useNavigation()
   const { t } = useTranslation('sharedAccount')
   const { theme } = useTheme()
@@ -165,22 +170,24 @@ const AccountInformation: React.FC<Props> = ({ accountDispatch, account }) => {
             onLoadEnd={() => setAvatarLoaded(true)}
           />
         </ShimmerPlaceholder>
-        <View style={styles.actions}>
-          <ButtonRow
-            icon='mail'
-            onPress={() =>
-              navigation.navigate(getCurrentTab(navigation), {
-                screen: 'Screen-Shared-Compose',
-                params: {
-                  type: 'conversation',
-                  incomingStatus: { account }
-                }
-              })
-            }
-            style={{ marginRight: StyleConstants.Spacing.S }}
-          />
-          {followingButton}
-        </View>
+        {!disableActions && (
+          <View style={styles.actions}>
+            <ButtonRow
+              icon='mail'
+              onPress={() =>
+                navigation.navigate(getCurrentTab(navigation), {
+                  screen: 'Screen-Shared-Compose',
+                  params: {
+                    type: 'conversation',
+                    incomingStatus: { account }
+                  }
+                })
+              }
+              style={{ marginRight: StyleConstants.Spacing.S }}
+            />
+            {followingButton}
+          </View>
+        )}
       </View>
 
       <ShimmerPlaceholder

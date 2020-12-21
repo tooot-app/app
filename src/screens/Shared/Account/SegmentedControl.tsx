@@ -35,7 +35,8 @@ const AccountSegmentedControl: React.FC<Props> = ({
         (accountState.informationLayout?.height || 0) +
         headerHeight
     ],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
+    easing: undefined
   })
 
   return (

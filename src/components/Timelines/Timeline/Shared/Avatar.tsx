@@ -17,7 +17,7 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
 
   return (
     <Pressable style={styles.avatar} onPress={onPress}>
-      <Image source={{ uri: account.avatar }} style={styles.image} />
+      <Image source={{ uri: account.avatar_static }} style={styles.image} />
     </Pressable>
   )
 }

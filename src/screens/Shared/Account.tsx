@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import { Animated, ScrollView } from 'react-native'
+import { Animated, LayoutAnimation, ScrollView } from 'react-native'
 
 import { useQuery } from 'react-query'
 import { accountFetch } from '@utils/fetches/accountFetch'
@@ -73,10 +73,10 @@ const ScreenSharedAccount: React.FC<Props> = ({
   },
   navigation
 }) => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   const localAccountId = useSelector(getLocalAccountId)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 
-  // const stateRelationships = useSelector(relationshipsState)
   const scrollY = useRef(new Animated.Value(0)).current
   const [accountState, accountDispatch] = useReducer(
     accountReducer,
@@ -104,11 +104,14 @@ const ScreenSharedAccount: React.FC<Props> = ({
         scrollY={scrollY}
         account={data}
       />
-      <AccountSegmentedControl
-        accountState={accountState}
-        accountDispatch={accountDispatch}
-        scrollY={scrollY}
-      />
+      {accountState.informationLayout?.height &&
+      accountState.informationLayout.y ? (
+        <AccountSegmentedControl
+          accountState={accountState}
+          accountDispatch={accountDispatch}
+          scrollY={scrollY}
+        />
+      ) : null}
       <ScrollView
         bounces={false}
         onScroll={Animated.event(

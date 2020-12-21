@@ -1,5 +1,5 @@
-import React, { Dispatch, useEffect, useRef, useState } from 'react'
-import { Animated, Dimensions, Image, StyleSheet } from 'react-native'
+import React, { Dispatch, useEffect, useState } from 'react'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import { AccountAction, AccountState } from '../Account'
 
 export interface Props {
@@ -15,62 +15,32 @@ const AccountHeader: React.FC<Props> = ({
   account,
   limitHeight = false
 }) => {
-  const [imageShown, setImageShown] = useState(true)
+  const [ratio, setRatio] = useState(accountState.headerRatio)
 
   useEffect(() => {
-    if (account?.header) {
-      if (account.header.includes('/headers/original/missing.png')) {
-        animateNewSize(accountState.headerRatio)
-      } else {
-        if (account.header !== account.header_static) {
-          setImageShown(false)
+    if (
+      account?.header &&
+      !account.header.includes('/headers/original/missing.png')
+    ) {
+      Image.getSize(account.header, (width, height) => {
+        if (!limitHeight) {
+          accountDispatch &&
+            accountDispatch({
+              type: 'headerRatio',
+              payload: height / width
+            })
         }
-        Image.getSize(
-          account.header,
-          (width, height) => {
-            if (!limitHeight) {
-              accountDispatch &&
-                accountDispatch({
-                  type: 'headerRatio',
-                  payload: height / width
-                })
-            }
-            animateNewSize(
-              limitHeight ? accountState.headerRatio : height / width
-            )
-          },
-          () => {
-            animateNewSize(accountState.headerRatio)
-          }
-        )
-      }
+        setRatio(limitHeight ? accountState.headerRatio : height / width)
+      })
     }
   }, [account])
 
-  const theImage = imageShown ? (
-    <Image source={{ uri: account?.header }} style={styles.image} />
-  ) : null
-
   const windowWidth = Dimensions.get('window').width
-  const imageHeight = useRef(
-    new Animated.Value(windowWidth * accountState.headerRatio)
-  ).current
-  const animateNewSize = (ratio: number) => {
-    Animated.timing(imageHeight, {
-      toValue: windowWidth * ratio,
-      duration: 350,
-      useNativeDriver: false
-    }).start(({ finished }) => {
-      if (finished) {
-        setImageShown(true)
-      }
-    })
-  }
 
   return (
-    <Animated.View style={[styles.imageContainer, { height: imageHeight }]}>
-      {theImage}
-    </Animated.View>
+    <View style={[styles.imageContainer, { height: windowWidth * ratio }]}>
+      <Image source={{ uri: account?.header }} style={styles.image} />
+    </View>
   )
 }
 

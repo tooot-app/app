@@ -13,6 +13,7 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
+  LayoutAnimation,
   StyleSheet,
   Text,
   TextInput
@@ -330,6 +331,7 @@ export interface Props {
 }
 
 const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   const { theme } = useTheme()
   const queryClient = useQueryClient()
 

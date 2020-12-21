@@ -50,14 +50,12 @@ const Timeline: React.FC<Props> = ({
     status,
     data,
     refetch,
-    isFetching,
     isSuccess,
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
     hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage
+    fetchNextPage
   } = useInfiniteQuery(queryKey, timelineFetch, {
     getPreviousPageParam: firstPage => {
       return firstPage.toots.length
@@ -67,7 +65,7 @@ const Timeline: React.FC<Props> = ({
           }
         : undefined
     },
-    getNextPageParam: (lastPage, all) => {
+    getNextPageParam: lastPage => {
       return lastPage.toots.length
         ? {
             direction: 'next',
@@ -96,8 +94,8 @@ const Timeline: React.FC<Props> = ({
     }
   }, [isSuccess])
 
-  const flKeyExtrator = useCallback(({ id }) => id, [])
-  const flRenderItem = useCallback(
+  const keyExtractor = useCallback(({ id }) => id, [])
+  const renderItem = useCallback(
     ({ item, index }) => {
       switch (page) {
         case 'Conversations':
@@ -123,7 +121,7 @@ const Timeline: React.FC<Props> = ({
     },
     [flattenPinnedLength[0]]
   )
-  const flItemSeparatorComponent = useCallback(
+  const ItemSeparatorComponent = useCallback(
     ({ leadingItem }) => (
       <TimelineSeparator
         {...(toot && toot.id === leadingItem.id && { highlighted: true })}
@@ -135,27 +133,19 @@ const Timeline: React.FC<Props> = ({
     () => <TimelineEmpty status={status} refetch={refetch} />,
     [status]
   )
-  const flOnRefresh = useCallback(() => {
-    !disableRefresh &&
-      (hasPreviousPage
-        ? fetchPreviousPage()
-        : !isFetching
-        ? refetch()
-        : undefined)
-  }, [hasPreviousPage, isFetching])
-  const flOnEndReach = useCallback(() => !disableRefresh && fetchNextPage(), [])
-  const flFooter = useCallback(
-    () => (!disableRefresh ? <TimelineEnd hasNextPage={hasNextPage} /> : null),
+  const onEndReached = useCallback(() => fetchNextPage(), [])
+  const ListFooterComponent = useCallback(
+    () => <TimelineEnd hasNextPage={hasNextPage} />,
     [hasNextPage]
   )
-  const flRefreshControl = useMemo(
+  const refreshControl = useMemo(
     () => (
       <RefreshControl
-        refreshing={isFetchingPreviousPage || isFetching}
-        onRefresh={flOnRefresh}
+        refreshing={isFetchingPreviousPage}
+        onRefresh={() => fetchPreviousPage()}
       />
     ),
-    [isFetchingPreviousPage, isFetching]
+    [isFetchingPreviousPage]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
@@ -177,14 +167,14 @@ const Timeline: React.FC<Props> = ({
       initialNumToRender={5}
       maxToRenderPerBatch={5}
       style={styles.flatList}
-      renderItem={flRenderItem}
-      onEndReached={flOnEndReach}
-      keyExtractor={flKeyExtrator}
-      ListFooterComponent={flFooter}
-      refreshControl={flRefreshControl}
+      renderItem={renderItem}
+      onEndReached={onEndReached}
+      keyExtractor={keyExtractor}
+      onEndReachedThreshold={0.75}
+      ListFooterComponent={ListFooterComponent}
       ListEmptyComponent={flItemEmptyComponent}
-      ItemSeparatorComponent={flItemSeparatorComponent}
-      onEndReachedThreshold={!disableRefresh ? 0.75 : null}
+      {...(!disableRefresh && { refreshControl })}
+      ItemSeparatorComponent={ItemSeparatorComponent}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
     />
   )

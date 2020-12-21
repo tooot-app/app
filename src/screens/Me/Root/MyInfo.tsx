@@ -28,7 +28,7 @@ const MyInfo: React.FC<Props> = ({ setData }) => {
         account={data}
         limitHeight
       />
-      <AccountInformation account={data} />
+      <AccountInformation account={data} disableActions />
     </>
   )
 }
