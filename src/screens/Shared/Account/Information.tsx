@@ -90,6 +90,9 @@ const AccountInformation: React.FC<Props> = ({
     },
     onError: (err, _, oldData) => {
       queryClient.setQueryData(relationshipQueryKey, oldData)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['Following'])
     }
   })
 
