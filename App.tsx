@@ -1,6 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useEffect, useState } from 'react'
-import { AppearanceProvider } from 'react-native-appearance'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -46,29 +45,27 @@ const App: React.FC = () => {
   }, [appLoaded])
 
   return (
-    <AppearanceProvider>
-      <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <PersistGate
-            persistor={persistor}
-            onBeforeLift={() => setAppLoaded(true)}
-          >
-            {bootstrapped => {
-              if (bootstrapped) {
-                require('@root/i18n/i18n')
-                return (
-                  <ThemeManager>
-                    <Index />
-                  </ThemeManager>
-                )
-              } else {
-                return null
-              }
-            }}
-          </PersistGate>
-        </Provider>
-      </QueryClientProvider>
-    </AppearanceProvider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <PersistGate
+          persistor={persistor}
+          onBeforeLift={() => setAppLoaded(true)}
+        >
+          {bootstrapped => {
+            if (bootstrapped) {
+              require('@root/i18n/i18n')
+              return (
+                <ThemeManager>
+                  <Index />
+                </ThemeManager>
+              )
+            } else {
+              return null
+            }
+          }}
+        </PersistGate>
+      </Provider>
+    </QueryClientProvider>
   )
 }
 

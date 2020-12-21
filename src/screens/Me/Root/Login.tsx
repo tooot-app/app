@@ -107,7 +107,7 @@ const Login: React.FC = () => {
   const onChangeText = useCallback(
     debounce(
       text => {
-        setInstanceDomain(text)
+        setInstanceDomain(text.replace(/^http(s)?\:\/\//i, ''))
         setApplicationData(undefined)
       },
       1000,

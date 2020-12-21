@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -26,12 +26,6 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   const localRegistered = useSelector(getLocalUrl)
   const publicDomain = useSelector(getRemoteUrl)
   const [segment, setSegment] = useState(0)
-  const [renderHeader, setRenderHeader] = useState(false)
-
-  useEffect(() => {
-    const nbr = setTimeout(() => setRenderHeader(true), 50)
-    return
-  }, [])
 
   const onPressSearch = useCallback(() => {
     navigation.navigate(getCurrentTab(navigation), {
@@ -40,9 +34,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   }, [])
 
   const routes = content
-    .filter(p =>
-      localRegistered ? p : p.page === 'RemotePublic' ? p : undefined
-    )
+    .filter(p => (localRegistered ? true : p.page === 'RemotePublic'))
     .map(p => ({ key: p.page }))
 
   const renderScene = ({
@@ -71,7 +63,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         initialLayout={{ width: Dimensions.get('window').width }}
       />
     ),
-    [segment]
+    [segment, localRegistered]
   )
 
   return (
@@ -80,24 +72,23 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         name={name}
         options={{
           headerTitle: name === 'Screen-Public-Root' ? publicDomain : '',
-          ...(renderHeader &&
-            localRegistered && {
-              headerCenter: () => (
-                <View style={styles.segmentsContainer}>
-                  <SegmentedControl
-                    appearance={mode}
-                    values={[content[0].title, content[1].title]}
-                    selectedIndex={segment}
-                    onChange={({ nativeEvent }) =>
-                      setSegment(nativeEvent.selectedSegmentIndex)
-                    }
-                  />
-                </View>
-              ),
-              headerRight: () => (
-                <HeaderRight icon='search' onPress={onPressSearch} />
-              )
-            })
+          ...(localRegistered && {
+            headerCenter: () => (
+              <View style={styles.segmentsContainer}>
+                <SegmentedControl
+                  appearance={mode}
+                  values={[content[0].title, content[1].title]}
+                  selectedIndex={segment}
+                  onChange={({ nativeEvent }) =>
+                    setSegment(nativeEvent.selectedSegmentIndex)
+                  }
+                />
+              </View>
+            ),
+            headerRight: () => (
+              <HeaderRight icon='search' onPress={onPressSearch} />
+            )
+          })
         }}
       >
         {screenComponent}

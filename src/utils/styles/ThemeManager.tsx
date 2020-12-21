@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { useColorScheme } from 'react-native-appearance'
+import { useColorScheme } from 'react-native'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getTheme } from '@utils/styles/themes'
 import { getSettingsTheme } from '@utils/slices/settingsSlice'

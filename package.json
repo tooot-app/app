@@ -36,7 +36,6 @@
     "react-dom": "16.13.1",
     "react-i18next": "^11.8.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz",
-    "react-native-appearance": "~0.3.3",
     "react-native-collapsible": "^1.5.3",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-htmlview": "^0.16.0",
