@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -18,12 +18,8 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import getCurrentTab from '@utils/getCurrentTab'
 import { toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  getLocalToken,
-  getLocalUrl,
-  updateLocal
-} from './utils/slices/instancesSlice'
+import { useSelector } from 'react-redux'
+import { getLocalUrl } from './utils/slices/instancesSlice'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -37,21 +33,13 @@ export type RootStackParamList = {
 }
 
 export const Index: React.FC = () => {
-  const dispatch = useDispatch()
   const localInstance = useSelector(getLocalUrl)
-  const localToken = useSelector(getLocalToken)
   const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
   }
-
-  useEffect(() => {
-    if (localInstance && localToken) {
-      dispatch(updateLocal({ url: localInstance, token: localToken }))
-    }
-  }, [])
 
   return (
     <>

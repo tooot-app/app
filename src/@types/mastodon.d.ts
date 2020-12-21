@@ -31,6 +31,32 @@ declare namespace Mastodon {
     source: Source
   }
 
+  type Announcement = {
+    // Base
+    id: string
+    text: string
+    published: boolean
+    all_day: boolean
+    created_at: string
+    updated_at: string
+    read: boolean
+    reactions: AnnouncementReaction[]
+
+    // Others
+    scheduled_at?: string
+    starts_at?: string
+    ends_at?: string
+  }
+
+  type AnnouncementReaction = {
+    // Base
+    name: string
+    count: number
+    me: boolean
+    url: string
+    static_url: string
+  }
+
   type Application = {
     // Base
     name: string

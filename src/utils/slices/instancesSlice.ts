@@ -82,7 +82,11 @@ const instancesSlice = createSlice({
       url: 'm.cmx.im'
     }
   } as InstancesState,
-  reducers: {},
+  reducers: {
+    resetLocal: state => {
+      state.local = initialStateLocal
+    }
+  },
   extraReducers: builder => {
     builder.addCase(updateLocal.fulfilled, (state, action) => {
       state.local = action.payload
@@ -97,5 +101,7 @@ export const getLocalAccountId = (state: RootState) =>
   state.instances.local.account.id
 export const getLocalAccountPreferences = (state: RootState) =>
   state.instances.local.account.preferences
+
+export const { resetLocal } = instancesSlice.actions
 
 export default instancesSlice.reducer

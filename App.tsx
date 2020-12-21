@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Index } from '@root/Index'
 import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
+import { resetLocal, updateLocal } from '@root/utils/slices/instancesSlice'
 
 const queryClient = new QueryClient()
 
@@ -49,7 +50,19 @@ const App: React.FC = () => {
       <Provider store={store}>
         <PersistGate
           persistor={persistor}
-          onBeforeLift={() => setAppLoaded(true)}
+          onBeforeLift={async () => {
+            const localUrl = store.getState().instances.local.url
+            const localToken = store.getState().instances.local.token
+            if (localUrl && localToken) {
+              const dispatchStatus = await store.dispatch(
+                updateLocal({ url: localUrl, token: localToken })
+              )
+              if (dispatchStatus.type.includes('/rejected')) {
+                store.dispatch(resetLocal())
+              }
+            }
+            setAppLoaded(true)
+          }}
         >
           {bootstrapped => {
             if (bootstrapped) {
