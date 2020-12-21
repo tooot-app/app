@@ -57,20 +57,22 @@ const Timeline: React.FC<Props> = ({
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery(queryKey, timelineFetch, {
-    select: data => {
-      return { ...data, pages: data.pages.filter(page => page.toots.length) }
+    getPreviousPageParam: firstPage => {
+      return firstPage.toots.length
+        ? {
+            direction: 'prev',
+            id: firstPage.toots[0].id
+          }
+        : undefined
     },
-    getPreviousPageParam: firstPage => ({
-      direction: 'prev',
-      id: firstPage.toots[0].id
-    }),
-    getNextPageParam: lastPage =>
-      lastPage.toots.length
+    getNextPageParam: (lastPage, all) => {
+      return lastPage.toots.length
         ? {
             direction: 'next',
             id: lastPage.toots[lastPage.toots.length - 1].id
           }
         : undefined
+    }
   })
   const flattenData = data?.pages ? data.pages.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data?.pages
@@ -131,10 +133,14 @@ const Timeline: React.FC<Props> = ({
     () => <TimelineEmpty status={status} refetch={refetch} />,
     [status]
   )
-  const flOnRefresh = useCallback(
-    () => !disableRefresh && fetchPreviousPage(),
-    []
-  )
+  const flOnRefresh = useCallback(() => {
+    !disableRefresh &&
+      (hasPreviousPage
+        ? fetchPreviousPage()
+        : status !== 'loading'
+        ? refetch()
+        : undefined)
+  }, [hasPreviousPage, status])
   const flOnEndReach = useCallback(() => !disableRefresh && fetchNextPage(), [])
   const flFooter = useCallback(
     () => (!disableRefresh ? <TimelineEnd hasNextPage={hasNextPage} /> : null),
@@ -143,11 +149,14 @@ const Timeline: React.FC<Props> = ({
   const flRefreshControl = useMemo(
     () => (
       <RefreshControl
-        refreshing={isFetchingPreviousPage}
+        refreshing={
+          isFetchingPreviousPage ||
+          (!isFetchingNextPage && status === 'loading')
+        }
         onRefresh={flOnRefresh}
       />
     ),
-    [isFetchingPreviousPage]
+    [isFetchingPreviousPage, isFetchingNextPage, status]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index

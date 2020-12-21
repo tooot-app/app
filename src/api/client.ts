@@ -24,6 +24,15 @@ const client = async ({
   body?: FormData
   onUploadProgress?: (progressEvent: any) => void
 }): Promise<any> => {
+  console.log(
+    'API call:',
+    'Method ->',
+    method,
+    'Endpoint ->',
+    url,
+    'Params ->',
+    params
+  )
   const state: RootState['instances'] = store.getState().instances
   const domain =
     instance === 'remote' ? instanceDomain || state.remote.url : state.local.url
