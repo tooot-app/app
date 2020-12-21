@@ -50,6 +50,8 @@ const Timeline: React.FC<Props> = ({
     status,
     data,
     refetch,
+    isFetching,
+    isSuccess,
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
@@ -84,7 +86,7 @@ const Timeline: React.FC<Props> = ({
 
   const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {
-    if (toot && status === 'success') {
+    if (toot && isSuccess) {
       setTimeout(() => {
         flRef.current?.scrollToIndex({
           index: flattenPointer[0]!,
@@ -92,7 +94,7 @@ const Timeline: React.FC<Props> = ({
         })
       }, 500)
     }
-  }, [status])
+  }, [isSuccess])
 
   const flKeyExtrator = useCallback(({ id }) => id, [])
   const flRenderItem = useCallback(
@@ -137,10 +139,10 @@ const Timeline: React.FC<Props> = ({
     !disableRefresh &&
       (hasPreviousPage
         ? fetchPreviousPage()
-        : status !== 'loading'
+        : !isFetching
         ? refetch()
         : undefined)
-  }, [hasPreviousPage, status])
+  }, [hasPreviousPage, isFetching])
   const flOnEndReach = useCallback(() => !disableRefresh && fetchNextPage(), [])
   const flFooter = useCallback(
     () => (!disableRefresh ? <TimelineEnd hasNextPage={hasNextPage} /> : null),
@@ -149,14 +151,11 @@ const Timeline: React.FC<Props> = ({
   const flRefreshControl = useMemo(
     () => (
       <RefreshControl
-        refreshing={
-          isFetchingPreviousPage ||
-          (!isFetchingNextPage && status === 'loading')
-        }
+        refreshing={isFetchingPreviousPage || isFetching}
         onRefresh={flOnRefresh}
       />
     ),
-    [isFetchingPreviousPage, isFetchingNextPage, status]
+    [isFetchingPreviousPage, isFetching]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
@@ -186,7 +185,7 @@ const Timeline: React.FC<Props> = ({
       ListEmptyComponent={flItemEmptyComponent}
       ItemSeparatorComponent={flItemSeparatorComponent}
       onEndReachedThreshold={!disableRefresh ? 0.75 : null}
-      {...(toot && status === 'success' && { onScrollToIndexFailed })}
+      {...(toot && isSuccess && { onScrollToIndexFailed })}
     />
   )
 }

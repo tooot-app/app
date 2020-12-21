@@ -5,6 +5,8 @@ import { TabView } from 'react-native-tab-view'
 import Timeline from '@components/Timelines/Timeline'
 import { AccountAction, AccountState } from '../Account'
 import { StyleConstants } from '@root/utils/styles/constants'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 export interface Props {
   accountState: AccountState
@@ -35,12 +37,20 @@ const AccountToots: React.FC<Props> = ({
     },
     []
   )
+  const headerHeight = useSafeAreaInsets().top + 44
+  const footerHeight = useSafeAreaInsets().bottom + useBottomTabBarHeight()
 
   return (
     <TabView
       lazy
       swipeEnabled
-      style={styles.base}
+      style={[
+        styles.base,
+        {
+          height:
+            Dimensions.get('window').height - headerHeight - footerHeight - 33
+        }
+      ]}
       renderScene={renderScene}
       renderTabBar={() => null}
       initialLayout={{ width: Dimensions.get('window').width }}

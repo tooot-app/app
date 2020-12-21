@@ -11,10 +11,7 @@ import AccountSegmentedControl from './Account/SegmentedControl'
 import { HeaderRight } from '@root/components/Header'
 import BottomSheet from '@root/components/BottomSheet'
 import { useSelector } from 'react-redux'
-import {
-  getLocalAccountId,
-  getLocalUrl
-} from '@root/utils/slices/instancesSlice'
+import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 import HeaderDefaultActionsAccount from '@root/components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
@@ -77,7 +74,6 @@ const ScreenSharedAccount: React.FC<Props> = ({
   navigation
 }) => {
   const localAccountId = useSelector(getLocalAccountId)
-  const localDomain = useSelector(getLocalUrl)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 
   // const stateRelationships = useSelector(relationshipsState)
