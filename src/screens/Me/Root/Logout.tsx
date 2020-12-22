@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { updateLocal } from '@utils/slices/instancesSlice'
+import { resetLocal } from '@utils/slices/instancesSlice'
 import MenuButton from '@components/Menu/Button'
 import { MenuContainer } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
@@ -23,7 +23,7 @@ const Logout: React.FC = () => {
         style: 'destructive' as const,
         onPress: () => {
           queryClient.clear()
-          dispatch(updateLocal({}))
+          dispatch(resetLocal())
           navigation.navigate('Screen-Public', {
             screen: 'Screen-Public-Root',
             params: { publicTab: true }

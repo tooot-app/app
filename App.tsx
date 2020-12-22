@@ -7,7 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Index } from '@root/Index'
 import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
-import { resetLocal, updateLocal } from '@root/utils/slices/instancesSlice'
+import { resetLocal } from '@root/utils/slices/instancesSlice'
 import client from '@root/api/client'
 
 const queryClient = new QueryClient()
@@ -66,8 +66,8 @@ const App: React.FC = () => {
             if (res.body.id !== store.getState().instances.local.account.id) {
               store.dispatch(resetLocal())
               setLocalCorrupt(true)
-              setAppLoaded(true)
             }
+            setAppLoaded(true)
           })
           .catch(() => {
             store.dispatch(resetLocal())

@@ -13,7 +13,7 @@ import { debounce } from 'lodash'
 import { instanceFetch } from '@utils/fetches/instanceFetch'
 import * as AuthSession from 'expo-auth-session'
 import { useDispatch } from 'react-redux'
-import { updateLocal } from '@utils/slices/instancesSlice'
+import { loginLocal } from '@utils/slices/instancesSlice'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -98,7 +98,7 @@ const Login: React.FC = () => {
             tokenEndpoint: `https://${instanceDomain}/oauth/token`
           }
         )
-        dispatch(updateLocal({ url: instanceDomain, token: accessToken }))
+        dispatch(loginLocal({ url: instanceDomain, token: accessToken }))
         navigation.navigate('Screen-Local')
       }
     })()

@@ -18,8 +18,11 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import getCurrentTab from '@utils/getCurrentTab'
 import { toast, toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { getLocalUrl } from './utils/slices/instancesSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getLocalUrl,
+  updateLocalAccountPreferences
+} from '@utils/slices/instancesSlice'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -37,6 +40,7 @@ export interface Props {
 }
 
 export const Index: React.FC<Props> = ({ localCorrupt }) => {
+  const dispatch = useDispatch()
   const localInstance = useSelector(getLocalUrl)
   const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
@@ -56,6 +60,12 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
       : undefined
     return showLocalCorrect
   }, [localCorrupt])
+
+  useEffect(() => {
+    if (localInstance) {
+      dispatch(updateLocalAccountPreferences())
+    }
+  }, [])
 
   return (
     <>

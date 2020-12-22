@@ -32,19 +32,28 @@ const initialStateLocal = {
   }
 }
 
-export const updateLocal = createAsyncThunk(
-  'instances/updateLocal',
+export const updateLocalAccountPreferences = createAsyncThunk(
+  'instances/updateLocalAccountPreferences',
+  async () => {
+    const { body: preferences } = await client({
+      method: 'get',
+      instance: 'local',
+      url: `preferences`
+    })
+
+    return preferences as Mastodon.Preferences
+  }
+)
+
+export const loginLocal = createAsyncThunk(
+  'instances/loginLocal',
   async ({
     url,
     token
   }: {
-    url?: InstancesState['local']['url']
-    token?: InstancesState['local']['token']
+    url: InstancesState['local']['url']
+    token: InstancesState['local']['token']
   }) => {
-    if (!url || !token) {
-      return initialStateLocal
-    }
-
     const {
       body: { id }
     } = await client({
@@ -70,7 +79,7 @@ export const updateLocal = createAsyncThunk(
         id,
         preferences
       }
-    }
+    } as InstancesState['local']
   }
 )
 
@@ -88,9 +97,13 @@ const instancesSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(updateLocal.fulfilled, (state, action) => {
-      state.local = action.payload
-    })
+    builder
+      .addCase(loginLocal.fulfilled, (state, action) => {
+        state.local = action.payload
+      })
+      .addCase(updateLocalAccountPreferences.fulfilled, (state, action) => {
+        state.local.account.preferences = action.payload
+      })
   }
 })
 
