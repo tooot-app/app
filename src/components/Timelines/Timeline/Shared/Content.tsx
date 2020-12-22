@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
-import { Pressable, Text } from 'react-native'
-import Collapsible from 'react-native-collapsible'
-
+import { LayoutAnimation, Pressable, Text, View } from 'react-native'
 import ParseContent from '@components/ParseContent'
-
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -19,8 +16,9 @@ const TimelineContent: React.FC<Props> = ({
   numberOfLines,
   highlighted = false
 }) => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   const { theme } = useTheme()
-  const [spoilerCollapsed, setSpoilerCollapsed] = useState(true)
+  const [spoilerCollapsed, setSpoilerCollapsed] = useState(false)
   const lineHeight = 28
 
   return (
@@ -31,16 +29,23 @@ const TimelineContent: React.FC<Props> = ({
             content={status.spoiler_text}
             size={highlighted ? 'L' : 'M'}
             emojis={status.emojis}
+            numberOfLines={999}
           />
-          <Collapsible collapsed={spoilerCollapsed} collapsedHeight={20}>
+          <View
+            style={{
+              flex: 1,
+              height: spoilerCollapsed ? StyleConstants.Font.Size.M : undefined,
+              marginTop: StyleConstants.Font.Size.M
+            }}
+          >
             <ParseContent
               content={status.content}
               size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
-              {...(numberOfLines && { numberOfLines: numberOfLines })}
+              numberOfLines={999}
             />
-          </Collapsible>
+          </View>
           <Pressable
             onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}
             style={{
@@ -48,11 +53,20 @@ const TimelineContent: React.FC<Props> = ({
             }}
           >
             <LinearGradient
-              colors={[
-                theme.backgroundGradientStart,
-                theme.backgroundGradientEnd
-              ]}
-              locations={[0, lineHeight / (StyleConstants.Font.Size.S * 5)]}
+              {...(spoilerCollapsed
+                ? {
+                    colors: [
+                      theme.backgroundGradientStart,
+                      theme.backgroundGradientEnd
+                    ],
+                    locations: [
+                      0,
+                      lineHeight / (StyleConstants.Font.Size.S * 4)
+                    ]
+                  }
+                : {
+                    colors: ['rgba(0, 0, 0, 0)']
+                  })}
               style={{
                 paddingTop: StyleConstants.Font.Size.S * 2,
                 paddingBottom: StyleConstants.Font.Size.S
