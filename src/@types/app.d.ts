@@ -24,6 +24,13 @@ declare namespace QueryKey {
     }
   ]
 
+  type Announcements = [
+    'Announcements',
+    {
+      showAll?: boolean
+    }
+  ]
+
   type Application = [
     'Application',
     {

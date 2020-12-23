@@ -11,7 +11,8 @@ export default {
       conversations: '$t(meConversations:heading)',
       bookmarks: '$t(meBookmarks:heading)',
       favourites: '$t(meFavourites:heading)',
-      lists: '$t(meLists:heading)'
+      lists: '$t(meLists:heading)',
+      announcements: '$t(sharedAnnouncements:heading)'
     },
     settings: '$t(meSettings:heading)',
     logout: {

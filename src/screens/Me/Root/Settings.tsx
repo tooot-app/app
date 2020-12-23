@@ -12,6 +12,7 @@ const Settings: React.FC = () => {
     <MenuContainer>
       <MenuRow
         iconFront='settings'
+        iconBack='chevron-right'
         title={t('content.settings')}
         onPress={() => navigation.navigate('Screen-Me-Settings')}
       />

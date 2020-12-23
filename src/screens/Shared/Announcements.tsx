@@ -47,16 +47,23 @@ const fireMutation = async ({
   }
 }
 
-const ScreenSharedAnnouncements: React.FC = ({ navigation }) => {
+const ScreenSharedAnnouncements: React.FC = ({
+  route: {
+    params: { showAll }
+  },
+  navigation
+}) => {
   const { mode, theme } = useTheme()
   const bottomTabBarHeight = useBottomTabBarHeight()
   const [index, setIndex] = useState(0)
   const invisibleTextInputRef = useRef<TextInput>(null)
 
-  const queryKey = ['Announcements']
+  const queryKey = ['Announcements', { showAll }]
   const { data, refetch } = useQuery(queryKey, announcementFetch, {
     select: announcements =>
-      announcements.filter(announcement => !announcement.read)
+      announcements.filter(announcement =>
+        showAll ? announcement : !announcement.read
+      )
   })
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
@@ -65,7 +72,7 @@ const ScreenSharedAnnouncements: React.FC = ({ navigation }) => {
   })
 
   useEffect(() => {
-    if (data?.length === 0) {
+    if (!showAll && data?.length === 0) {
       navigation.goBack()
     }
   }, [data])

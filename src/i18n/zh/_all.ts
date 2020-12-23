@@ -17,5 +17,5 @@ export default {
 
   sharedAccount: require('./screens/sharedAccount').default,
   sharedToot: require('./screens/sharedToot').default,
-  sharedWebview: require('./screens/sharedWebview').default
+  sharedAnnouncements: require('./screens/sharedAnnouncements').default
 }

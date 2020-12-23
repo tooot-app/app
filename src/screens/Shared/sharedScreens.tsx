@@ -1,6 +1,6 @@
 import { HeaderLeft } from '@root/components/Header'
 import ScreenSharedAccount from '@screens/Shared/Account'
-import ScreenSharedAnnouncements from '@screens/Shared/Announcement'
+import ScreenSharedAnnouncements from '@root/screens/Shared/Announcements'
 import ScreenSharedHashtag from '@screens/Shared/Hashtag'
 import ScreenSharedToot from '@screens/Shared/Toot'
 import Compose from '@screens/Shared/Compose'
