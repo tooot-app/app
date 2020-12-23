@@ -34,18 +34,21 @@ declare namespace Mastodon {
   type Announcement = {
     // Base
     id: string
-    text: string
-    published: boolean
+    content: string
     all_day: boolean
-    created_at: string
+    published_at: string
     updated_at: string
     read: boolean
-    reactions: AnnouncementReaction[]
 
     // Others
     scheduled_at?: string
     starts_at?: string
     ends_at?: string
+    reactions?: AnnouncementReaction[]
+    mentions?: Mention[]
+    statuses?: Status[]
+    tags?: Tag[]
+    emojis?: Emoji[]
   }
 
   type AnnouncementReaction = {

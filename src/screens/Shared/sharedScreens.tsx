@@ -1,13 +1,13 @@
-import React from 'react'
-
+import { HeaderLeft } from '@root/components/Header'
 import ScreenSharedAccount from '@screens/Shared/Account'
+import ScreenSharedAnnouncements from '@screens/Shared/Announcement'
 import ScreenSharedHashtag from '@screens/Shared/Hashtag'
 import ScreenSharedToot from '@screens/Shared/Toot'
 import Compose from '@screens/Shared/Compose'
 import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
 import ScreenSharedSearch from '@screens/Shared/Search'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { HeaderLeft } from '@root/components/Header'
 
 const sharedScreens = (Stack: any) => {
   const { t } = useTranslation()
@@ -77,6 +77,15 @@ const sharedScreens = (Stack: any) => {
       component={ScreenSharedSearch}
       options={{
         stackPresentation: 'modal'
+      }}
+    />,
+    <Stack.Screen
+      key='Screen-Shared-Announcements'
+      name='Screen-Shared-Announcements'
+      component={ScreenSharedAnnouncements}
+      options={{
+        stackPresentation: 'transparentModal',
+        stackAnimation: 'fade'
       }}
     />
   ]

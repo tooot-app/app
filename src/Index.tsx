@@ -1,9 +1,12 @@
 import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  NavigationContainerRef
+} from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -23,6 +26,9 @@ import {
   getLocalUrl,
   updateLocalAccountPreferences
 } from '@utils/slices/instancesSlice'
+import { useQuery } from 'react-query'
+import { announcementFetch } from './utils/fetches/announcementsFetch'
+import client from './api/client'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -67,10 +73,29 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
     }
   }, [])
 
+  const navigationRef = useRef<NavigationContainerRef>(null)
+  useEffect(() => {
+    client({
+      method: 'get',
+      instance: 'local',
+      url: `announcements`
+    })
+      .then(({ body }: { body?: Mastodon.Announcement[] }) => {
+        if (body?.filter(announcement => !announcement.read).length) {
+          navigationRef.current?.navigate('Screen-Shared-Announcements')
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   return (
     <>
       <StatusBar barStyle={barStyle[mode]} />
-      <NavigationContainer theme={themes[mode]} key={i18n.language}>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={themes[mode]}
+        key={i18n.language}
+      >
         <Tab.Navigator
           initialRouteName={localInstance ? 'Screen-Local' : 'Screen-Public'}
           screenOptions={({ route }) => ({
