@@ -45,14 +45,14 @@ const Core: React.FC<Props> = ({
       </View>
       {(content || iconBack) && (
         <View style={styles.back}>
-          {content && (
+          {content && content.length ? (
             <Text
               style={[styles.content, { color: theme.secondary }]}
               numberOfLines={1}
             >
               {content}
             </Text>
-          )}
+          ) : null}
           {iconBack && (
             <Feather
               name={iconBack}

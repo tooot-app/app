@@ -1,8 +1,9 @@
-import React from 'react'
+import prettyBytes from 'pretty-bytes'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
+import { CacheManager } from 'react-native-expo-image-cache'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { MenuContainer, MenuRow } from '@components/Menu'
 import {
   changeBrowser,
@@ -22,6 +23,13 @@ const ScreenMeSettings: React.FC = () => {
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
   const dispatch = useDispatch()
+
+  const [cacheSize, setCacheSize] = useState<number>()
+  useEffect(() => {
+    const getCacheSize = async () =>
+      setCacheSize(await CacheManager.getCacheSize())
+    getCacheSize()
+  }, [])
 
   return (
     <>
@@ -117,6 +125,15 @@ const ScreenMeSettings: React.FC = () => {
         />
       </MenuContainer>
       <MenuContainer>
+        <MenuRow
+          title={t('content.cache.heading')}
+          content={cacheSize ? prettyBytes(cacheSize) : undefined}
+          iconBack='chevron-right'
+          onPress={async () => {
+            await CacheManager.clearCache()
+            setCacheSize(0)
+          }}
+        />
         <MenuRow
           title={t('content.copyrights.heading')}
           iconBack='chevron-right'

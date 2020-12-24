@@ -26,6 +26,9 @@ export default {
         cancel: '$t(common:buttons.cancel)'
       }
     },
+    cache: {
+      heading: '清空缓存'
+    },
     copyrights: {
       heading: '版权信息'
     },

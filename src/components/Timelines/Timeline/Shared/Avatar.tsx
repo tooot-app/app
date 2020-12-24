@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react'
-import { Image, Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
+import { Image } from 'react-native-expo-image-cache'
 import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
+import { useTheme } from '@root/utils/styles/ThemeManager'
 
 export interface Props {
   queryKey?: QueryKey.Timeline
@@ -9,6 +11,7 @@ export interface Props {
 }
 
 const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
+  const { mode } = useTheme()
   const navigation = useNavigation()
   // Need to fix go back root
   const onPress = useCallback(() => {
@@ -17,7 +20,7 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
 
   return (
     <Pressable style={styles.avatar} onPress={onPress}>
-      <Image source={{ uri: account.avatar_static }} style={styles.image} />
+      <Image uri={account.avatar_static} style={styles.image} />
     </Pressable>
   )
 }
