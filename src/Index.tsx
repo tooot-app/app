@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native'
 import { enableScreens } from 'react-native-screens'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -23,12 +23,15 @@ import { toast, toastConfig } from '@components/toast'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  getLocalNotification,
   getLocalUrl,
-  updateLocalAccountPreferences
+  updateLocalAccountPreferences,
+  updateNotification
 } from '@utils/slices/instancesSlice'
-import { useQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from 'react-query'
 import { announcementFetch } from './utils/fetches/announcementsFetch'
 import client from './api/client'
+import { timelineFetch } from './utils/fetches/timelineFetch'
 
 enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
@@ -55,6 +58,7 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
     dark = 'light-content'
   }
 
+  // On launch display login credentials corrupt information
   useEffect(() => {
     const showLocalCorrect = localCorrupt
       ? toast({
@@ -67,25 +71,64 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
     return showLocalCorrect
   }, [localCorrupt])
 
+  // On launch check if there is any unread announcements
+  const navigationRef = useRef<NavigationContainerRef>(null)
+  useEffect(() => {
+    localInstance &&
+      client({
+        method: 'get',
+        instance: 'local',
+        url: `announcements`
+      })
+        .then(({ body }: { body?: Mastodon.Announcement[] }) => {
+          if (body?.filter(announcement => !announcement.read).length) {
+            navigationRef.current?.navigate('Screen-Shared-Announcements')
+          }
+        })
+        .catch(() => {})
+  }, [])
+
+  // On launch check if there is any unread noficiations
+  const queryNotification = useInfiniteQuery(
+    ['Notifications', {}] as QueryKey.Timeline,
+    timelineFetch,
+    { enabled: localInstance ? true : false, cacheTime: 1000 * 30 }
+  )
+  const prevNotification = useSelector(getLocalNotification)
+  useEffect(() => {
+    if (queryNotification.data?.pages) {
+      const flattenData = queryNotification.data.pages.flatMap(d => [
+        ...d?.toots
+      ])
+      const latestNotificationTime = flattenData.length
+        ? flattenData[0].created_at
+        : undefined
+
+      if (!prevNotification || !prevNotification.latestTime) {
+        dispatch(
+          updateNotification({
+            unread: true
+          })
+        )
+      } else if (
+        latestNotificationTime &&
+        new Date(prevNotification.latestTime) < new Date(latestNotificationTime)
+      ) {
+        dispatch(
+          updateNotification({
+            unread: true,
+            latestTime: latestNotificationTime
+          })
+        )
+      }
+    }
+  }, [queryNotification.data?.pages])
+
+  // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (localInstance) {
       dispatch(updateLocalAccountPreferences())
     }
-  }, [])
-
-  const navigationRef = useRef<NavigationContainerRef>(null)
-  useEffect(() => {
-    client({
-      method: 'get',
-      instance: 'local',
-      url: `announcements`
-    })
-      .then(({ body }: { body?: Mastodon.Announcement[] }) => {
-        if (body?.filter(announcement => !announcement.read).length) {
-          navigationRef.current?.navigate('Screen-Shared-Announcements')
-        }
-      })
-      .catch(() => {})
   }, [])
 
   return (
@@ -147,7 +190,7 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
           <Tab.Screen name='Screen-Public' component={ScreenPublic} />
           <Tab.Screen
             name='Screen-Post'
-            listeners={({ navigation, route }) => ({
+            listeners={({ navigation }) => ({
               tabPress: e => {
                 e.preventDefault()
                 localInstance &&
@@ -162,6 +205,10 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
           <Tab.Screen
             name='Screen-Notifications'
             component={ScreenNotifications}
+            options={{
+              tabBarBadge: prevNotification.unread ? '' : undefined,
+              tabBarBadgeStyle: { transform: [{ scale: 0.5 }] }
+            }}
             listeners={{
               tabPress: e => {
                 if (!localInstance) {

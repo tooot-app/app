@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '@root/store'
 import client from '@api/client'
@@ -11,13 +11,17 @@ export type InstancesState = {
       id: Mastodon.Account['id'] | undefined
       preferences: Mastodon.Preferences
     }
+    notification: {
+      unread: boolean
+      latestTime?: Mastodon.Notification['created_at']
+    }
   }
   remote: {
     url: string
   }
 }
 
-const initialStateLocal = {
+const initialStateLocal: InstancesState['local'] = {
   url: undefined,
   token: undefined,
   account: {
@@ -29,6 +33,10 @@ const initialStateLocal = {
       'reading:expand:media': undefined,
       'reading:expand:spoilers': undefined
     }
+  },
+  notification: {
+    unread: false,
+    latestTime: undefined
   }
 }
 
@@ -94,6 +102,15 @@ const instancesSlice = createSlice({
   reducers: {
     resetLocal: state => {
       state.local = initialStateLocal
+    },
+    updateNotification: (
+      state,
+      action: PayloadAction<Partial<InstancesState['local']['notification']>>
+    ) => {
+      state.local.notification = {
+        ...state.local.notification,
+        ...action.payload
+      }
     }
   },
   extraReducers: builder => {
@@ -109,12 +126,14 @@ const instancesSlice = createSlice({
 
 export const getLocalUrl = (state: RootState) => state.instances.local.url
 export const getLocalToken = (state: RootState) => state.instances.local.token
+export const getLocalNotification = (state: RootState) =>
+  state.instances.local.notification
 export const getRemoteUrl = (state: RootState) => state.instances.remote.url
 export const getLocalAccountId = (state: RootState) =>
   state.instances.local.account.id
 export const getLocalAccountPreferences = (state: RootState) =>
   state.instances.local.account.preferences
 
-export const { resetLocal } = instancesSlice.actions
+export const { resetLocal, updateNotification } = instancesSlice.actions
 
 export default instancesSlice.reducer

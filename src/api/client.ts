@@ -1,5 +1,8 @@
 import axios from 'axios'
+import chalk from 'chalk'
 import { store, RootState } from '@root/store'
+
+const ctx = new chalk.Instance({ level: 3 })
 
 const client = async ({
   method,
@@ -25,13 +28,13 @@ const client = async ({
   onUploadProgress?: (progressEvent: any) => void
 }): Promise<any> => {
   console.log(
-    'API call:',
-    'Method ->',
-    method,
-    'Endpoint ->',
-    url,
-    'Params ->',
-    params
+    ctx.bgGreen.bold(' API ') +
+      ' ' +
+      method +
+      ctx.green(' -> ') +
+      `/${url}` +
+      (params ? ctx.green(' -> ') : ''),
+    params ? params : ''
   )
   const state: RootState['instances'] = store.getState().instances
   const domain =
