@@ -20,7 +20,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import sha256 from 'crypto-js/sha256'
+import * as Crypto from 'expo-crypto'
 
 import { store } from '@root/store'
 import ComposeRoot from '@screens/Shared/Compose/Root'
@@ -464,7 +464,8 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         instance: 'local',
         url: 'statuses',
         headers: {
-          'Idempotency-Key': sha256(
+          'Idempotency-Key': await Crypto.digestStringAsync(
+            Crypto.CryptoDigestAlgorithm.SHA256,
             composeState.spoiler.raw +
               composeState.text.raw +
               composeState.poll.options['0'] +
@@ -477,7 +478,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
               composeState.attachments.uploads.map(upload => upload.id) +
               composeState.visibility +
               (params?.type === 'edit' ? Math.random() : '')
-          ).toString()
+          )
         },
         body: formData
       })
