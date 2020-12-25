@@ -128,7 +128,6 @@ export const timelineFetch = async ({
       return Promise.resolve({ toots: res.body })
 
     case 'Account_Media':
-      console.log(account)
       res = await client({
         method: 'get',
         instance: 'local',

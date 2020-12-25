@@ -4,17 +4,14 @@ export type ColorDefinitions =
   | 'primary'
   | 'primaryOverlay'
   | 'secondary'
-  | 'disabled'
+  | 'blue'
+  | 'red'
   | 'background'
   | 'backgroundGradientStart'
   | 'backgroundGradientEnd'
   | 'backgroundOverlay'
-  | 'link'
   | 'border'
   | 'separator'
-  | 'success'
-  | 'error'
-  | 'warning'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -23,40 +20,41 @@ const themeColors: {
   }
 } = {
   primary: {
-    light: 'rgb(0, 0, 0)',
-    dark: 'rgb(255, 255, 255)'
+    light: 'rgb(18, 18, 18)',
+    dark: 'rgb(218, 218, 218)'
   },
   primaryOverlay: {
-    light: 'rgb(255, 255, 255)',
-    dark: 'rgb(0, 0, 0)'
+    light: 'rgb(250, 250, 250)',
+    dark: 'rgb(218, 218, 218)'
   },
   secondary: {
-    light: 'rgb(153, 153, 153)',
-    dark: 'rgb(117, 117, 117)'
+    light: 'rgb(135, 135, 135)',
+    dark: 'rgb(135, 135, 135)'
   },
-  disabled: {
-    light: 'rgb(229, 229, 234)',
-    dark: 'rgb(44, 44, 46)'
+  blue: {
+    light: 'rgb(43, 144, 221)',
+    dark: 'rgb(43, 144, 221)'
   },
+  red: {
+    light: 'rgb(225, 45, 35)',
+    dark: 'rgb(225, 98, 89)'
+  },
+
   background: {
-    light: 'rgb(255, 255, 255)',
-    dark: 'rgb(0, 0, 0)'
+    light: 'rgb(250, 250, 250)',
+    dark: 'rgb(18, 18, 18)'
   },
   backgroundGradientStart: {
-    light: 'rgba(255, 255, 255, 0.5)',
-    dark: 'rgba(0, 0, 0, 0.5)'
+    light: 'rgba(250, 250, 250, 0.5)',
+    dark: 'rgba(18, 18, 18, 0.5)'
   },
   backgroundGradientEnd: {
-    light: 'rgba(255, 255, 255, 1)',
-    dark: 'rgba(0, 0, 0, 1)'
+    light: 'rgba(250, 250, 250, 1)',
+    dark: 'rgba(18, 18, 18, 1)'
   },
   backgroundOverlay: {
-    light: 'rgba(0, 0, 0, 0.5)',
+    light: 'rgba(18, 18, 18, 0.5)',
     dark: 'rgba(255, 255, 255, 0.5)'
-  },
-  link: {
-    light: 'rgb(0, 122, 255)',
-    dark: 'rgb(10, 132, 255)'
   },
   border: {
     light: 'rgba(0, 0, 0, 0.3)',
@@ -65,18 +63,6 @@ const themeColors: {
   separator: {
     light: 'rgba(0, 0, 0, 0.1)',
     dark: 'rgba(255, 255, 255, 0.1)'
-  },
-  success: {
-    light: 'rgb(52, 199, 89)',
-    dark: 'rgb(48, 209, 88)'
-  },
-  error: {
-    light: 'rgb(255, 59, 48)',
-    dark: 'rgb(255, 69, 58)'
-  },
-  warning: {
-    light: 'rgb(255, 149, 0)',
-    dark: 'rgb(255, 159, 10)'
   }
 }
 

@@ -93,8 +93,8 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
           minimumValue={0}
           maximumValue={audio.meta.original.duration * 1000}
           value={audioPosition}
-          minimumTrackTintColor={theme.secondary}
-          maximumTrackTintColor={theme.disabled}
+          minimumTrackTintColor={theme.primary}
+          maximumTrackTintColor={theme.secondary}
           onSlidingStart={() => {
             audioPlayer?.pauseAsync()
             setAudioPlaying(false)

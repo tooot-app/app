@@ -40,19 +40,15 @@ const ListItem = React.memo(
   ({
     item,
     composeState,
-    composeDispatch,
-    textInputRef
+    composeDispatch
   }: {
     item: Mastodon.Account & Mastodon.Tag
     composeState: ComposeState
     composeDispatch: Dispatch<ComposeAction>
-    textInputRef: RefObject<TextInput>
   }) => {
     const { theme } = useTheme()
     const onPress = useCallback(() => {
-      const focusedInput = textInputRef.current?.isFocused()
-        ? 'text'
-        : 'spoiler'
+      const focusedInput = composeState.textInputFocus.current
       updateText({
         composeState: {
           ...composeState,
@@ -161,8 +157,6 @@ const ComposeRoot: React.FC = () => {
     }
   }, [emojisData])
 
-  const textInputRef = useRef<TextInput>(null)
-
   const listEmpty = useMemo(() => {
     if (isFetching) {
       return <ActivityIndicator />
@@ -180,7 +174,6 @@ const ComposeRoot: React.FC = () => {
           item={item}
           composeState={composeState}
           composeDispatch={composeDispatch}
-          textInputRef={textInputRef}
         />
       ) : null,
     [isSuccess]

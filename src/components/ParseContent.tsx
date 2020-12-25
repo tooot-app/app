@@ -36,7 +36,7 @@ const renderNode = ({
           <Text
             key={index}
             style={{
-              color: theme.link,
+              color: theme.blue,
               fontSize: StyleConstants.Font.Size[size]
             }}
             onPress={() => {
@@ -55,7 +55,7 @@ const renderNode = ({
           <Text
             key={index}
             style={{
-              color: theme.link,
+              color: theme.blue,
               fontSize: StyleConstants.Font.Size[size]
             }}
             onPress={() => {
@@ -79,7 +79,7 @@ const renderNode = ({
         <Text
           key={index}
           style={{
-            color: theme.link,
+            color: theme.blue,
             fontSize: StyleConstants.Font.Size[size]
           }}
           onPress={async () => await openLink(href)}
@@ -87,7 +87,7 @@ const renderNode = ({
           <Feather
             name='external-link'
             size={StyleConstants.Font.Size[size]}
-            color={theme.link}
+            color={theme.blue}
           />{' '}
           {showFullLink ? href : domain[1]}
         </Text>
@@ -152,7 +152,7 @@ const ParseContent: React.FC<Props> = ({
     const [totalLines, setTotalLines] = useState<number | undefined>()
     const [lineHeight, setLineHeight] = useState<number | undefined>()
     const [shownLines, setShownLines] = useState(numberOfLines)
-    // console.log(children)
+
     return (
       <>
         <Text

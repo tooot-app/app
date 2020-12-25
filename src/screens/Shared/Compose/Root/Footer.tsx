@@ -9,7 +9,7 @@ import ComposeReply from '@screens/Shared/Compose/Reply'
 
 const ComposeRootFooter: React.FC = () => {
   const { composeState } = useContext(ComposeContext)
-  console.log(composeState)
+
   return (
     <>
       {composeState.emoji.active && (

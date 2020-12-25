@@ -27,7 +27,7 @@ const Core: React.FC<Props> = ({ text, destructive = false }) => {
 
   return (
     <View style={styles.core}>
-      <Text style={{ color: destructive ? theme.error : theme.primary }}>
+      <Text style={{ color: destructive ? theme.red : theme.primary }}>
         {text}
       </Text>
     </View>

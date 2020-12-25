@@ -44,6 +44,12 @@ const ComposeSpoilerInput: React.FC = () => {
       }}
       ref={composeState.textInputFocus.refs.spoiler}
       scrollEnabled
+      onFocus={() =>
+        composeDispatch({
+          type: 'textInputFocus',
+          payload: { current: 'spoiler' }
+        })
+      }
     >
       <Text>{composeState.spoiler.formatted}</Text>
     </TextInput>

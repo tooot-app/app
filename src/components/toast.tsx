@@ -53,6 +53,11 @@ const ToastBase = ({ config }: { config: Config }) => {
     error: 'x-circle',
     warning: 'alert-circle'
   }
+  enum colorMapping {
+    success = 'blue',
+    error = 'red',
+    warning = 'primary'
+  }
 
   return (
     <SafeAreaView
@@ -65,7 +70,7 @@ const ToastBase = ({ config }: { config: Config }) => {
         <Feather
           // @ts-ignore
           name={iconSet[config.type]}
-          color={theme[config.type]}
+          color={theme[colorMapping[config.type]]}
           size={StyleConstants.Font.Size.M + 2}
         />
         <View style={styles.texts}>

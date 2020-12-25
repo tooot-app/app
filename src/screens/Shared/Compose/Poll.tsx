@@ -59,7 +59,7 @@ const ComposePoll: React.FC = () => {
                   styles.textInput,
                   {
                     borderColor: theme.border,
-                    color: hasConflict ? theme.error : theme.primary
+                    color: hasConflict ? theme.red : theme.primary
                   }
                 ]}
                 placeholder={`选项`}

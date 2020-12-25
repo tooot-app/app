@@ -171,20 +171,25 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
           })}
           tabBarOptions={{
             activeTintColor: theme.primary,
-            inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
+            inactiveTintColor: theme.secondary,
             showLabel: false
           }}
         >
           <Tab.Screen
             name='Screen-Local'
             component={ScreenLocal}
-            listeners={{
+            listeners={({ navigation }) => ({
               tabPress: e => {
                 if (!localInstance) {
                   e.preventDefault()
+                  toast({
+                    type: 'error',
+                    content: '请先登录',
+                    onHide: () => navigation.navigate('Screen-Me')
+                  })
                 }
               }
-            }}
+            })}
           />
           <Tab.Screen name='Screen-Public' component={ScreenPublic} />
           <Tab.Screen
@@ -192,10 +197,17 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
             listeners={({ navigation }) => ({
               tabPress: e => {
                 e.preventDefault()
-                localInstance &&
+                if (localInstance) {
                   navigation.navigate(getCurrentTab(navigation), {
                     screen: 'Screen-Shared-Compose'
                   })
+                } else {
+                  toast({
+                    type: 'error',
+                    content: '请先登录',
+                    onHide: () => navigation.navigate('Screen-Me')
+                  })
+                }
               }
             })}
           >
@@ -207,15 +219,23 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               tabBarBadge:
                 prevNotification && prevNotification.unread ? '' : undefined,
-              tabBarBadgeStyle: { transform: [{ scale: 0.5 }] }
+              tabBarBadgeStyle: {
+                transform: [{ scale: 0.5 }],
+                backgroundColor: theme.red
+              }
             }}
-            listeners={{
+            listeners={({ navigation }) => ({
               tabPress: e => {
                 if (!localInstance) {
                   e.preventDefault()
+                  toast({
+                    type: 'error',
+                    content: '请先登录',
+                    onHide: () => navigation.navigate('Screen-Me')
+                  })
                 }
               }
-            }}
+            })}
           />
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>

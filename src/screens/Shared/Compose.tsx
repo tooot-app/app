@@ -31,6 +31,8 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import formatText from '@screens/Shared/Compose/formatText'
 import { useQueryClient } from 'react-query'
+import Toast from 'react-native-toast-message'
+import { toastConfig } from '@root/components/toast'
 
 const Stack = createNativeStackNavigator()
 
@@ -566,8 +568,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
                   style={[
                     styles.count,
                     {
-                      color:
-                        totalTextCount > 500 ? theme.error : theme.secondary
+                      color: totalTextCount > 500 ? theme.red : theme.secondary
                     }
                   ]}
                 >
@@ -596,6 +597,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
           </Stack.Screen>
         </Stack.Navigator>
       </SafeAreaView>
+      <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
     </KeyboardAvoidingView>
   )
 }

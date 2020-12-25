@@ -31,7 +31,10 @@ const ComposeReply: React.FC = () => {
           <TimelineContent status={replyToStatus!} />
         )}
         {replyToStatus!.media_attachments.length > 0 && (
-          <TimelineAttachment status={replyToStatus!} width={contentWidth} />
+          <TimelineAttachment
+            status={replyToStatus!}
+            contentWidth={contentWidth}
+          />
         )}
         {replyToStatus!.card && <TimelineCard card={replyToStatus!.card} />}
       </View>

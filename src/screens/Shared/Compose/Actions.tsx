@@ -1,17 +1,17 @@
 import { Feather } from '@expo/vector-icons'
-import React, { useCallback, useContext, useMemo } from 'react'
-import { ActionSheetIOS, StyleSheet, View } from 'react-native'
+import React, { RefObject, useCallback, useContext, useMemo } from 'react'
+import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeContext } from '@screens/Shared/Compose'
 import addAttachments from '@screens/Shared/Compose/addAttachments'
+import { toast } from '@root/components/toast'
 
 const ComposeActions: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
 
   const attachmentColor = useMemo(() => {
-    if (composeState.poll.active) return theme.disabled
     if (composeState.attachmentUploadProgress) return theme.primary
 
     if (composeState.attachments.uploads.length) {
@@ -25,7 +25,13 @@ const ComposeActions: React.FC = () => {
     composeState.attachmentUploadProgress
   ])
   const attachmentOnPress = useCallback(async () => {
-    if (composeState.poll.active) return
+    if (composeState.poll.active) {
+      toast({
+        type: 'error',
+        content: '长毛象不支持同时发布附件及投票'
+      })
+      return
+    }
     if (composeState.attachmentUploadProgress) return
 
     if (!composeState.attachments.uploads.length) {
@@ -38,9 +44,6 @@ const ComposeActions: React.FC = () => {
   ])
 
   const pollColor = useMemo(() => {
-    if (composeState.attachments.uploads.length) return theme.disabled
-    if (composeState.attachmentUploadProgress) return theme.disabled
-
     if (composeState.poll.active) {
       return theme.primary
     } else {
@@ -52,6 +55,17 @@ const ComposeActions: React.FC = () => {
     composeState.attachmentUploadProgress
   ])
   const pollOnPress = useCallback(() => {
+    if (
+      composeState.attachments.uploads.length ||
+      composeState.attachmentUploadProgress
+    ) {
+      toast({
+        type: 'error',
+        content: '长毛象不支持同时发布附件及投票'
+      })
+      return
+    }
+
     if (
       !composeState.attachments.uploads.length &&
       !composeState.attachmentUploadProgress
@@ -82,9 +96,8 @@ const ComposeActions: React.FC = () => {
         return 'mail'
     }
   }, [composeState.visibility])
-  const visibilityOnPress = useCallback(
-    () =>
-      !composeState.visibilityLock &&
+  const visibilityOnPress = useCallback(() => {
+    if (!composeState.visibilityLock) {
       ActionSheetIOS.showActionSheetWithOptions(
         {
           options: ['公开', '不公开', '仅关注着', '私信', '取消'],
@@ -106,21 +119,21 @@ const ComposeActions: React.FC = () => {
               break
           }
         }
-      ),
-    []
-  )
+      )
+    }
+  }, [])
 
-  const spoilerOnPress = useCallback(
-    () =>
-      composeDispatch({
-        type: 'spoiler',
-        payload: { active: !composeState.spoiler.active }
-      }),
-    [composeState.spoiler.active]
-  )
+  const spoilerOnPress = useCallback(() => {
+    if (composeState.spoiler.active) {
+      composeState.textInputFocus.refs.text.current?.focus()
+    }
+    composeDispatch({
+      type: 'spoiler',
+      payload: { active: !composeState.spoiler.active }
+    })
+  }, [composeState.spoiler.active, composeState.textInputFocus])
 
   const emojiColor = useMemo(() => {
-    if (!composeState.emoji.emojis) return theme.disabled
     if (composeState.emoji.active) {
       return theme.primary
     } else {
@@ -128,6 +141,14 @@ const ComposeActions: React.FC = () => {
     }
   }, [composeState.emoji.active, composeState.emoji.emojis])
   const emojiOnPress = useCallback(() => {
+    if (!composeState.emoji.emojis) {
+      toast({
+        type: 'error',
+        content: '提取emoji错误'
+      })
+      return
+    }
+
     if (composeState.emoji.emojis) {
       if (composeState.emoji.active) {
         composeDispatch({
@@ -165,7 +186,7 @@ const ComposeActions: React.FC = () => {
       <Feather
         name={visibilityIcon}
         size={24}
-        color={composeState.visibilityLock ? theme.disabled : theme.secondary}
+        color={composeState.visibilityLock ? theme.primary : theme.secondary}
         onPress={visibilityOnPress}
       />
       <Feather

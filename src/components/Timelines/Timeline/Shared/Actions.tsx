@@ -143,16 +143,19 @@ const TimelineActions: React.FC<Props> = ({
       }
     })
   }, [])
-  const onPressReblog = useCallback(
-    () =>
+  const onPressReblog = useCallback(() => {
+    if (status.visibility === 'private' || status.visibility === 'direct') {
+      console.log('awjerio')
+      toast({ type: 'error', content: '禁止转发' })
+    } else {
       mutate({
         id: status.id,
         type: 'reblog',
         stateKey: 'reblogged',
         prevState: status.reblogged
-      }),
-    [status.reblogged]
-  )
+      })
+    }
+  }, [status.reblogged])
   const onPressFavourite = useCallback(
     () =>
       mutate({
@@ -218,11 +221,7 @@ const TimelineActions: React.FC<Props> = ({
     () => (
       <Feather
         name='repeat'
-        color={
-          status.visibility === 'public' || status.visibility === 'unlisted'
-            ? iconColorAction(status.reblogged)
-            : theme.disabled
-        }
+        color={iconColorAction(status.reblogged)}
         size={StyleConstants.Font.Size.M + 2}
       />
     ),
@@ -270,11 +269,7 @@ const TimelineActions: React.FC<Props> = ({
 
         <Pressable
           style={styles.action}
-          onPress={
-            status.visibility === 'public' || status.visibility === 'unlisted'
-              ? onPressReblog
-              : null
-          }
+          onPress={onPressReblog}
           children={childrenReblog}
         />
 
