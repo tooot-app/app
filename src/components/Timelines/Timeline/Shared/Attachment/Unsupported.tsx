@@ -6,7 +6,7 @@ import { StyleConstants } from '@root/utils/styles/constants'
 import openLink from '@root/utils/openLink'
 
 export interface Props {
-  attachment: Mastodon.Attachment
+  attachment: Mastodon.AttachmentUnknown
 }
 
 const AttachmentUnsupported: React.FC<Props> = ({ attachment }) => {

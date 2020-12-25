@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -8,6 +8,8 @@ import AttachmentVideo from '@root/components/Timelines/Timeline/Shared/Attachme
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { useNavigation } from '@react-navigation/native'
 import AttachmentUnsupported from './Attachment/Unsupported'
+import AttachmentAudio from './Attachment/Audio'
+import { Feather } from '@expo/vector-icons'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
@@ -21,13 +23,6 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
   const onPressBlurView = useCallback(() => {
     setSensitiveShown(false)
   }, [])
-  useEffect(() => {
-    if (status.sensitive && sensitiveShown === false) {
-      setTimeout(() => {
-        setSensitiveShown(true)
-      }, 10000)
-    }
-  }, [sensitiveShown])
 
   let imageUrls: (IImageInfo & {
     preview_url: Mastodon.AttachmentImage['preview_url']
@@ -83,7 +78,13 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
               />
             )
           case 'audio':
-            return <Text key={index}>音频不支持</Text>
+            return (
+              <AttachmentAudio
+                key={index}
+                sensitiveShown={sensitiveShown}
+                audio={attachment}
+              />
+            )
           default:
             return <AttachmentUnsupported key={index} attachment={attachment} />
         }
@@ -100,23 +101,43 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
     >
       {attachments}
 
-      {status.sensitive && sensitiveShown && (
-        <Pressable style={styles.sensitiveBlur}>
+      {status.sensitive &&
+        (sensitiveShown ? (
+          <Pressable style={styles.sensitiveBlur}>
+            <Pressable
+              onPress={onPressBlurView}
+              style={[
+                styles.sensitiveBlurButton,
+                { backgroundColor: theme.backgroundOverlay }
+              ]}
+            >
+              <Text
+                style={[styles.sensitiveText, { color: theme.primaryOverlay }]}
+              >
+                显示敏感内容
+              </Text>
+            </Pressable>
+          </Pressable>
+        ) : (
           <Pressable
-            onPress={onPressBlurView}
             style={[
               styles.sensitiveBlurButton,
-              { backgroundColor: theme.backgroundOverlay }
+              {
+                backgroundColor: theme.backgroundOverlay,
+                position: 'absolute',
+                top: StyleConstants.Spacing.S,
+                left: StyleConstants.Spacing.S
+              }
             ]}
+            onPress={() => setSensitiveShown(!sensitiveShown)}
           >
-            <Text
-              style={[styles.sensitiveText, { color: theme.primaryOverlay }]}
-            >
-              显示敏感内容
-            </Text>
+            <Feather
+              name='eye-off'
+              size={StyleConstants.Font.Size.L}
+              color={theme.primaryOverlay}
+            />
           </Pressable>
-        </Pressable>
-      )}
+        ))}
     </View>
   )
 }

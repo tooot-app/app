@@ -82,7 +82,7 @@ declare namespace Mastodon {
     | AttachmentVideo
     | AttachmentGifv
     | AttachmentAudio
-  // | AttachmentUnknown
+    | AttachmentUnknown
 
   type AttachmentImage = {
     // Base
@@ -187,8 +187,9 @@ declare namespace Mastodon {
 
     // Others
     remote_url?: string
+    preview_remote_url?: string // undocumented
     text_url?: string
-    meta?: {
+    meta: {
       length: string
       duration: number
       audio_encode: string
@@ -203,20 +204,20 @@ declare namespace Mastodon {
     blurhash?: string
   }
 
-  // type AttachmentUnknown = {
-  //   // Base
-  //   id: string
-  //   type: 'unknown'
-  //   url: string
-  //   preview_url: string
+  type AttachmentUnknown = {
+    // Base
+    id: string
+    type: 'unknown'
+    url: string
+    preview_url: string
 
-  //   // Others
-  //   remote_url?: string
-  //   text_url?: string
-  //   meta?: any
-  //   description?: string
-  //   blurhash?: string
-  // }
+    // Others
+    remote_url?: string
+    text_url?: string
+    meta?: any
+    description?: string
+    blurhash?: string
+  }
 
   type Card = {
     // Base
