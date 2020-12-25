@@ -74,7 +74,7 @@ const TimelineNotifications: React.FC<Props> = ({
           {notification.status.media_attachments.length > 0 && (
             <TimelineAttachment
               status={notification.status}
-              width={contentWidth}
+              contentWidth={contentWidth}
             />
           )}
           {notification.status.card && (

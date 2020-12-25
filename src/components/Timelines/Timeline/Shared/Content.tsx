@@ -4,6 +4,7 @@ import ParseContent from '@components/ParseContent'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { LinearGradient } from 'expo-linear-gradient'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 export interface Props {
   status: Mastodon.Status
@@ -16,7 +17,7 @@ const TimelineContent: React.FC<Props> = ({
   numberOfLines,
   highlighted = false
 }) => {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  layoutAnimation()
   const { theme } = useTheme()
   const [spoilerCollapsed, setSpoilerCollapsed] = useState(false)
   const lineHeight = 28

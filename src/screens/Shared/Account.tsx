@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import { Animated, LayoutAnimation, ScrollView } from 'react-native'
+import { Animated, ScrollView } from 'react-native'
 
 import { useQuery } from 'react-query'
 import { accountFetch } from '@utils/fetches/accountFetch'
@@ -13,6 +13,7 @@ import BottomSheet from '@root/components/BottomSheet'
 import { useSelector } from 'react-redux'
 import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 import HeaderDefaultActionsAccount from '@root/components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
@@ -73,7 +74,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
   },
   navigation
 }) => {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  layoutAnimation()
   const localAccountId = useSelector(getLocalAccountId)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 

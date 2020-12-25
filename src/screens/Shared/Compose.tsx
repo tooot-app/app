@@ -4,6 +4,7 @@ import React, {
   Dispatch,
   ReactNode,
   RefObject,
+  useCallback,
   useEffect,
   useReducer,
   useState
@@ -13,7 +14,6 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
-  LayoutAnimation,
   StyleSheet,
   Text,
   TextInput
@@ -333,7 +333,6 @@ export interface Props {
 }
 
 const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   const { theme } = useTheme()
   const queryClient = useQueryClient()
 
@@ -538,6 +537,53 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     edit: '发嘟嘟'
   }
 
+  const headerLeft = useCallback(
+    () => (
+      <HeaderLeft
+        onPress={() =>
+          Alert.alert('确认取消编辑？', '', [
+            { text: '继续编辑', style: 'cancel' },
+            {
+              text: '退出编辑',
+              style: 'destructive',
+              onPress: () => navigation.goBack()
+            }
+          ])
+        }
+        text='退出编辑'
+      />
+    ),
+    []
+  )
+  const headerCenter = useCallback(
+    () => (
+      <Text
+        style={[
+          styles.count,
+          {
+            color: totalTextCount > 500 ? theme.red : theme.secondary
+          }
+        ]}
+      >
+        {totalTextCount} / 500
+      </Text>
+    ),
+    [totalTextCount]
+  )
+  const headerRight = useCallback(
+    () =>
+      isSubmitting ? (
+        <ActivityIndicator />
+      ) : (
+        <HeaderRight
+          onPress={async () => tootPost()}
+          text={params?.type ? postButtonText[params.type] : '发嘟嘟'}
+          disabled={rawCount < 1 || totalTextCount > 500}
+        />
+      ),
+    [isSubmitting, rawCount, totalTextCount]
+  )
+
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
       <SafeAreaView
@@ -547,45 +593,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         <Stack.Navigator>
           <Stack.Screen
             name='PostMain'
-            options={{
-              headerLeft: () => (
-                <HeaderLeft
-                  onPress={() =>
-                    Alert.alert('确认取消编辑？', '', [
-                      { text: '继续编辑', style: 'cancel' },
-                      {
-                        text: '退出编辑',
-                        style: 'destructive',
-                        onPress: () => navigation.goBack()
-                      }
-                    ])
-                  }
-                  text='退出编辑'
-                />
-              ),
-              headerCenter: () => (
-                <Text
-                  style={[
-                    styles.count,
-                    {
-                      color: totalTextCount > 500 ? theme.red : theme.secondary
-                    }
-                  ]}
-                >
-                  {totalTextCount} / 500
-                </Text>
-              ),
-              headerRight: () =>
-                isSubmitting ? (
-                  <ActivityIndicator />
-                ) : (
-                  <HeaderRight
-                    onPress={async () => tootPost()}
-                    text={params?.type ? postButtonText[params.type] : '发嘟嘟'}
-                    disabled={rawCount < 1 || totalTextCount > 500}
-                  />
-                )
-            }}
+            options={{ headerLeft, headerCenter, headerRight }}
           >
             {() => (
               <ComposeContext.Provider

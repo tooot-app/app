@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Animated, LayoutAnimation, ScrollView } from 'react-native'
+import { Animated, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { getLocalUrl } from '@utils/slices/instancesSlice'
@@ -12,9 +12,10 @@ import Logout from '@screens/Me/Root/Logout'
 import { useScrollToTop } from '@react-navigation/native'
 import { AccountState } from '../Shared/Account'
 import AccountNav from '../Shared/Account/Nav'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 const ScreenMeRoot: React.FC = () => {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  layoutAnimation()
   const localRegistered = useSelector(getLocalUrl)
 
   const scrollRef = useRef<ScrollView>(null)
