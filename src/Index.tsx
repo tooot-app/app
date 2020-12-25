@@ -5,7 +5,7 @@ import {
   NavigationContainerRef
 } from '@react-navigation/native'
 
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -27,8 +27,7 @@ import {
   updateLocalAccountPreferences,
   updateNotification
 } from '@utils/slices/instancesSlice'
-import { useInfiniteQuery, useQuery } from 'react-query'
-import { announcementFetch } from './utils/fetches/announcementsFetch'
+import { useInfiniteQuery } from 'react-query'
 import client from './api/client'
 import { timelineFetch } from './utils/fetches/timelineFetch'
 
@@ -80,7 +79,9 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
       })
         .then(({ body }: { body?: Mastodon.Announcement[] }) => {
           if (body?.filter(announcement => !announcement.read).length) {
-            navigationRef.current?.navigate('Screen-Shared-Announcements')
+            navigationRef.current?.navigate('Screen-Shared-Announcements', {
+              showAll: false
+            })
           }
         })
         .catch(() => {})

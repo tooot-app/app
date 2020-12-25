@@ -19,7 +19,7 @@ const ScreenMe: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
         name='Screen-Me-Root'
         component={ScreenMeRoot}

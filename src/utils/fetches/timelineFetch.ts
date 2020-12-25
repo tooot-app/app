@@ -117,7 +117,6 @@ export const timelineFetch = async ({
         toots = uniqBy([...toots, ...res.body], 'id')
         return Promise.resolve({ toots: toots, pinnedLength })
       }
-      break
 
     case 'Account_All':
       res = await client({

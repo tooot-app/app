@@ -224,7 +224,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} edges={['right', 'bottom', 'left']}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
           <Stack.Screen
             name='Screen-Shared-Compose-EditAttachment-Root'
             options={{

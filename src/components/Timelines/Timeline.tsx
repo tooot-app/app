@@ -133,9 +133,9 @@ const Timeline: React.FC<Props> = ({
     () => <TimelineEmpty status={status} refetch={refetch} />,
     [status]
   )
-  const onEndReached = useCallback(() => fetchNextPage(), [])
+  const onEndReached = useCallback(() => !disableRefresh && fetchNextPage(), [])
   const ListFooterComponent = useCallback(
-    () => <TimelineEnd hasNextPage={hasNextPage} />,
+    () => <TimelineEnd hasNextPage={!disableRefresh ? hasNextPage : false} />,
     [hasNextPage]
   )
   const refreshControl = useMemo(

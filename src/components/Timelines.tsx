@@ -67,7 +67,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   )
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
         name={name}
         options={{

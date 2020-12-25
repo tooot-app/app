@@ -85,7 +85,7 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
     []
   )
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
         name='Screen-Shared-ImagesViewer-Root'
         component={component}

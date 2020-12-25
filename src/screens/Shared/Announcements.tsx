@@ -3,6 +3,7 @@ import client from '@root/api/client'
 import { ButtonRow } from '@root/components/Button'
 import ParseContent from '@root/components/ParseContent'
 import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
+import relativeTime from '@root/utils/relativeTime'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -90,6 +91,9 @@ const ScreenSharedAnnouncements: React.FC = ({
             }
           ]}
         >
+          <Text style={[styles.published, { color: theme.secondary }]}>
+            发布于{relativeTime(item.published_at)}
+          </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
             <ParseContent
               content={item.content}
@@ -219,6 +223,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width,
     padding: StyleConstants.Spacing.Global.PagePadding,
     justifyContent: 'center'
+  },
+  published: {
+    fontSize: StyleConstants.Font.Size.S,
+    marginBottom: StyleConstants.Spacing.S
   },
   pressable: { ...StyleSheet.absoluteFillObject },
   announcement: {

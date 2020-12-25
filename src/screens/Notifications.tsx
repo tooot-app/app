@@ -24,7 +24,10 @@ const ScreenNotifications: React.FC = () => {
 
   return (
     <Stack.Navigator
-      screenOptions={{ headerTitle: t('notifications:heading') }}
+      screenOptions={{
+        headerTitle: t('notifications:heading'),
+        headerHideShadow: true
+      }}
     >
       <Stack.Screen name='Screen-Notifications-Root'>
         {() => (localRegistered ? <Timeline page='Notifications' /> : null)}
