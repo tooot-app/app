@@ -52,7 +52,7 @@ const themeColors: {
   },
   backgroundOverlay: {
     light: 'rgba(0, 0, 0, 0.5)',
-    dark: 'rgb(255, 255, 255, 0.5)'
+    dark: 'rgba(255, 255, 255, 0.5)'
   },
   link: {
     light: 'rgb(0, 122, 255)',

@@ -1,16 +1,14 @@
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
+import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-
+import client from '@root/api/client'
 import { Index } from '@root/Index'
 import { persistor, store } from '@root/store'
-import ThemeManager from '@utils/styles/ThemeManager'
 import { resetLocal } from '@root/utils/slices/instancesSlice'
-import client from '@root/api/client'
-
-const queryClient = new QueryClient()
+import ThemeManager from '@utils/styles/ThemeManager'
 
 // if (__DEV__) {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render')
@@ -20,6 +18,10 @@ const queryClient = new QueryClient()
 //     hotReloadBufferMs: 1000
 //   })
 // }
+
+const queryClient = new QueryClient()
+
+enableScreens()
 
 const App: React.FC = () => {
   const [appLoaded, setAppLoaded] = useState(false)

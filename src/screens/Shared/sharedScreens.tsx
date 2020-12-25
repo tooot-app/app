@@ -7,7 +7,9 @@ import Compose from '@screens/Shared/Compose'
 import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
 import ScreenSharedSearch from '@screens/Shared/Search'
 import React from 'react'
+import { Text } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import ScreenSharedImagesViewer from './ImagesViewer'
 
 const sharedScreens = (Stack: any) => {
   const { t } = useTranslation()
@@ -86,6 +88,15 @@ const sharedScreens = (Stack: any) => {
       options={{
         stackPresentation: 'transparentModal',
         stackAnimation: 'fade'
+      }}
+    />,
+    <Stack.Screen
+      key='Screen-Shared-ImagesViewer'
+      name='Screen-Shared-ImagesViewer'
+      component={ScreenSharedImagesViewer}
+      options={{
+        stackPresentation: 'transparentModal',
+        stackAnimation: 'none'
       }}
     />
   ]

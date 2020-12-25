@@ -4,7 +4,6 @@ import {
   NavigationContainer,
   NavigationContainerRef
 } from '@react-navigation/native'
-import { enableScreens } from 'react-native-screens'
 
 import React, { useEffect, useMemo, useRef } from 'react'
 import { StatusBar } from 'react-native'
@@ -33,7 +32,6 @@ import { announcementFetch } from './utils/fetches/announcementsFetch'
 import client from './api/client'
 import { timelineFetch } from './utils/fetches/timelineFetch'
 
-enableScreens()
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
 export type RootStackParamList = {
@@ -206,7 +204,8 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Notifications'
             component={ScreenNotifications}
             options={{
-              tabBarBadge: prevNotification.unread ? '' : undefined,
+              tabBarBadge:
+                prevNotification && prevNotification.unread ? '' : undefined,
               tabBarBadgeStyle: { transform: [{ scale: 0.5 }] }
             }}
             listeners={{

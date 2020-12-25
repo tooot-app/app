@@ -1,71 +1,23 @@
-import { BlurView } from 'expo-blur'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
-import AttachmentImage from '@components/Timelines/Timeline/Shared/Attachment/AttachmentImage'
-import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
+import AttachmentImage from '@root/components/Timelines/Timeline/Shared/Attachment/Image'
+import AttachmentVideo from '@root/components/Timelines/Timeline/Shared/Attachment/Video'
+import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
+import { useNavigation } from '@react-navigation/native'
+import AttachmentUnsupported from './Attachment/Unsupported'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
-  width: number
+  contentWidth: number
 }
 
-const TimelineAttachment: React.FC<Props> = ({ status, width }) => {
-  const { mode, theme } = useTheme()
-  const allTypes = status.media_attachments.map(m => m.type)
-  let attachment
-  let attachmentHeight
+const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
+  const { theme } = useTheme()
 
-  if (allTypes.includes('image')) {
-    attachment = (
-      <AttachmentImage
-        media_attachments={status.media_attachments}
-        width={width}
-      />
-    )
-    attachmentHeight = (width / 16) * 9
-  } else if (allTypes.includes('gifv')) {
-    attachment = (
-      <AttachmentVideo
-        media_attachments={status.media_attachments}
-        width={width}
-      />
-    )
-    attachmentHeight =
-      status.media_attachments[0].meta?.original?.width &&
-      status.media_attachments[0].meta?.original?.height
-        ? (width / status.media_attachments[0].meta.original.width) *
-          status.media_attachments[0].meta.original.height
-        : (width / 16) * 9
-  } else if (allTypes.includes('video')) {
-    attachment = (
-      <AttachmentVideo
-        media_attachments={status.media_attachments}
-        width={width}
-      />
-    )
-    attachmentHeight =
-      status.media_attachments[0].meta?.original?.width &&
-      status.media_attachments[0].meta?.original?.height
-        ? (width / status.media_attachments[0].meta.original.width) *
-          status.media_attachments[0].meta.original.height
-        : (width / 16) * 9
-  } else if (allTypes.includes('audio')) {
-    //   attachment = (
-    //     <AttachmentAudio
-    //       media_attachments={media_attachments}
-    //       sensitive={sensitive}
-    //       width={width}
-    //     />
-    //   )
-  } else {
-    attachment = <Text>文件不支持</Text>
-    attachmentHeight = 25
-  }
-
-  const [sensitiveShown, setSensitiveShown] = useState(true)
+  const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
     setSensitiveShown(false)
   }, [])
@@ -77,39 +29,117 @@ const TimelineAttachment: React.FC<Props> = ({ status, width }) => {
     }
   }, [sensitiveShown])
 
+  let imageUrls: (IImageInfo & {
+    preview_url: Mastodon.AttachmentImage['preview_url']
+    remote_url?: Mastodon.AttachmentImage['remote_url']
+    imageIndex: number
+  })[] = []
+  const navigation = useNavigation()
+  const navigateToImagesViewer = (imageIndex: number) =>
+    navigation.navigate('Screen-Shared-ImagesViewer', {
+      imageUrls,
+      imageIndex
+    })
+  const attachments = useMemo(
+    () =>
+      status.media_attachments.map((attachment, index) => {
+        switch (attachment.type) {
+          case 'image':
+            imageUrls.push({
+              url: attachment.url,
+              width: attachment.meta?.original?.width,
+              height: attachment.meta?.original?.height,
+              preview_url: attachment.preview_url,
+              remote_url: attachment.remote_url,
+              imageIndex: index
+            })
+            return (
+              <AttachmentImage
+                key={index}
+                sensitiveShown={sensitiveShown}
+                image={attachment}
+                imageIndex={index}
+                navigateToImagesViewer={navigateToImagesViewer}
+              />
+            )
+          case 'video':
+            return (
+              <AttachmentVideo
+                key={index}
+                sensitiveShown={sensitiveShown}
+                video={attachment}
+                width={contentWidth}
+                height={(contentWidth / 16) * 9}
+              />
+            )
+          case 'gifv':
+            return (
+              <AttachmentVideo
+                key={index}
+                sensitiveShown={sensitiveShown}
+                video={attachment}
+                width={contentWidth}
+                height={(contentWidth / 16) * 9}
+              />
+            )
+          case 'audio':
+            return <Text key={index}>音频不支持</Text>
+          default:
+            return <AttachmentUnsupported key={index} attachment={attachment} />
+        }
+      }),
+    [sensitiveShown]
+  )
+
   return (
     <View
-      style={{
-        width: width + StyleConstants.Spacing.XS,
-        height: attachmentHeight,
-        marginTop: StyleConstants.Spacing.S,
-        marginLeft: -StyleConstants.Spacing.XS / 2
-      }}
+      style={[
+        styles.base,
+        { width: contentWidth, height: (contentWidth / 16) * 9 }
+      ]}
     >
-      {attachment}
+      {attachments}
+
       {status.sensitive && sensitiveShown && (
-        <BlurView tint={mode} intensity={100} style={styles.blurView}>
-          <Pressable onPress={onPressBlurView} style={styles.blurViewPressable}>
-            <Text style={[styles.sensitiveText, { color: theme.primary }]}>
+        <Pressable style={styles.sensitiveBlur}>
+          <Pressable
+            onPress={onPressBlurView}
+            style={[
+              styles.sensitiveBlurButton,
+              { backgroundColor: theme.backgroundOverlay }
+            ]}
+          >
+            <Text
+              style={[styles.sensitiveText, { color: theme.primaryOverlay }]}
+            >
               显示敏感内容
             </Text>
           </Pressable>
-        </BlurView>
+        </Pressable>
       )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  blurView: {
+  base: {
+    marginTop: StyleConstants.Spacing.S,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignContent: 'stretch'
+  },
+  sensitiveBlur: {
     position: 'absolute',
     width: '100%',
-    height: '100%'
-  },
-  blurViewPressable: {
+    height: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  sensitiveBlurButton: {
+    padding: StyleConstants.Spacing.S,
+    borderRadius: 6
   },
   sensitiveText: {
     fontSize: StyleConstants.Font.Size.M

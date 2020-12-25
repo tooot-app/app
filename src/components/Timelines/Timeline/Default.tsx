@@ -75,7 +75,7 @@ const TimelineDefault: React.FC<Props> = ({
           />
         )}
         {actualStatus.media_attachments.length > 0 && (
-          <TimelineAttachment status={actualStatus} width={contentWidth} />
+          <TimelineAttachment status={actualStatus} contentWidth={contentWidth} />
         )}
         {actualStatus.card && <TimelineCard card={actualStatus.card} />}
       </View>

@@ -5,15 +5,13 @@ import ParseContent from '@root/components/ParseContent'
 import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import { BlurView } from 'expo-blur'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   Dimensions,
   Image,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View
 } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -53,10 +51,9 @@ const ScreenSharedAnnouncements: React.FC = ({
   },
   navigation
 }) => {
-  const { mode, theme } = useTheme()
+  const { theme } = useTheme()
   const bottomTabBarHeight = useBottomTabBarHeight()
   const [index, setIndex] = useState(0)
-  const invisibleTextInputRef = useRef<TextInput>(null)
 
   const queryKey = ['Announcements', { showAll }]
   const { data, refetch } = useQuery(queryKey, announcementFetch, {
@@ -170,17 +167,7 @@ const ScreenSharedAnnouncements: React.FC = ({
   )
 
   return (
-    <SafeAreaView style={styles.base}>
-      <TextInput
-        style={styles.invisibleTextInput}
-        ref={invisibleTextInputRef}
-        keyboardType='ascii-capable'
-      />
-      <BlurView
-        intensity={90}
-        tint={mode}
-        style={{ ...StyleSheet.absoluteFillObject }}
-      />
+    <SafeAreaView style={[styles.base, { backgroundColor: theme.background }]}>
       <View style={[styles.header, { height: bottomTabBarHeight }]}>
         <Text style={[styles.headerText, { color: theme.primary }]}>公告</Text>
       </View>

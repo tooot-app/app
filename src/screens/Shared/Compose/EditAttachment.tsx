@@ -27,7 +27,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { ComposeAction } from '@screens/Shared/Compose'
 import client from '@api/client'
-import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/AttachmentVideo'
+import AttachmentVideo from '@root/components/Timelines/Timeline/Shared/Attachment/Video'
 
 const Stack = createNativeStackNavigator()
 
