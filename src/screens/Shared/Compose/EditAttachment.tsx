@@ -230,11 +230,16 @@ const ComposeEditAttachment: React.FC<Props> = ({
             options={{
               title: '编辑附件',
               headerLeft: () => (
-                <HeaderLeft text='取消' onPress={() => navigation.goBack()} />
+                <HeaderLeft
+                  type='text'
+                  content='取消'
+                  onPress={() => navigation.goBack()}
+                />
               ),
               headerRight: () => (
                 <HeaderRight
-                  text='应用'
+                  type='text'
+                  content='应用'
                   onPress={() => {
                     const formData = new FormData()
 

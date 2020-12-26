@@ -1,52 +1,51 @@
-import { Feather } from '@expo/vector-icons'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native'
-
-import { useTheme } from '@utils/styles/ThemeManager'
+import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-type PropsBase = {
+export interface Props {
+  type?: 'icon' | 'text'
+  content?: string
+
   onPress: () => void
 }
 
-export interface PropsText extends PropsBase {
-  text: string
-  icon?: any
-}
-
-export interface PropsIcon extends PropsBase {
-  text?: string
-  icon: any
-}
-
-const HeaderLeft: React.FC<PropsText | PropsIcon> = ({
-  onPress,
-  text,
-  icon
-}) => {
+const HeaderLeft: React.FC<Props> = ({ type = 'icon', content, onPress }) => {
   const { theme } = useTheme()
+
+  const children = useMemo(() => {
+    switch (type) {
+      case 'icon':
+        return (
+          <Feather
+            name={content || ('chevron-left' as any)}
+            color={theme.primary}
+            size={StyleConstants.Spacing.M * 1.25}
+          />
+        )
+      case 'text':
+        return (
+          <Text
+            style={[styles.text, { color: theme.primary }]}
+            children={content}
+          />
+        )
+    }
+  }, [theme])
 
   return (
     <Pressable
       onPress={onPress}
+      children={children}
       style={[
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(icon && { height: 44, width: 44, marginLeft: -9 })
+          ...(type === 'icon' && { height: 44, width: 44, marginLeft: -9 })
         }
       ]}
-    >
-      {text ? (
-        <Text style={[styles.text, { color: theme.primary }]}>{text}</Text>
-      ) : (
-        <Feather
-          name={icon || 'chevron-left'}
-          color={theme.primary}
-          size={StyleConstants.Spacing.L}
-        />
-      )}
-    </Pressable>
+    />
   )
 }
 

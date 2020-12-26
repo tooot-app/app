@@ -540,6 +540,8 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   const headerLeft = useCallback(
     () => (
       <HeaderLeft
+        type='text'
+        content='退出编辑'
         onPress={() =>
           Alert.alert('确认取消编辑？', '', [
             { text: '继续编辑', style: 'cancel' },
@@ -550,7 +552,6 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
             }
           ])
         }
-        text='退出编辑'
       />
     ),
     []
@@ -571,16 +572,15 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     [totalTextCount]
   )
   const headerRight = useCallback(
-    () =>
-      isSubmitting ? (
-        <ActivityIndicator />
-      ) : (
-        <HeaderRight
-          onPress={async () => tootPost()}
-          text={params?.type ? postButtonText[params.type] : '发嘟嘟'}
-          disabled={rawCount < 1 || totalTextCount > 500}
-        />
-      ),
+    () => (
+      <HeaderRight
+        type='text'
+        content={params?.type ? postButtonText[params.type] : '发嘟嘟'}
+        onPress={async () => tootPost()}
+        loading={isSubmitting}
+        disabled={rawCount < 1 || totalTextCount > 500}
+      />
+    ),
     [isSubmitting, rawCount, totalTextCount]
   )
 
@@ -605,7 +605,6 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
           </Stack.Screen>
         </Stack.Navigator>
       </SafeAreaView>
-      <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
     </KeyboardAvoidingView>
   )
 }

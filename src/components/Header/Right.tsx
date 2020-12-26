@@ -1,62 +1,86 @@
+import React, { useMemo } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 import { Feather } from '@expo/vector-icons'
-import React from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
-
-import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
-type PropsBase = {
+export interface Props {
+  type?: 'icon' | 'text'
+  content?: string
+
+  loading?: boolean
   disabled?: boolean
+
   onPress: () => void
 }
 
-export interface PropsText extends PropsBase {
-  text: string
-  icon?: any
-}
-
-export interface PropsIcon extends PropsBase {
-  text?: string
-  icon: any
-}
-
-const HeaderRight: React.FC<PropsText | PropsIcon> = ({
+const HeaderRight: React.FC<Props> = ({
+  type = 'icon',
+  content,
+  loading,
   disabled,
-  onPress,
-  text,
-  icon
+  onPress
 }) => {
   const { theme } = useTheme()
 
+  const loadingSpinkit = useMemo(
+    () => (
+      <View style={{ position: 'absolute' }}>
+        <Chase
+          size={StyleConstants.Font.Size.M * 1.25}
+          color={theme.secondary}
+        />
+      </View>
+    ),
+    [theme]
+  )
+
+  const children = useMemo(() => {
+    switch (type) {
+      case 'icon':
+        return (
+          <>
+            <Feather
+              name={content as any}
+              color={disabled ? theme.secondary : theme.primary}
+              size={StyleConstants.Spacing.M * 1.25}
+              style={{ opacity: loading ? 0 : 1 }}
+            />
+            {loading && loadingSpinkit}
+          </>
+        )
+      case 'text':
+        return (
+          <>
+            <Text
+              style={[
+                styles.text,
+                {
+                  color: disabled ? theme.secondary : theme.primary,
+                  opacity: loading ? 0 : 1
+                }
+              ]}
+              children={content}
+            />
+            {loading && loadingSpinkit}
+          </>
+        )
+    }
+  }, [theme, loading, disabled])
+
   return (
     <Pressable
-      {...(!disabled && { onPress })}
+      {...(!disabled && !loading && { onPress })}
+      children={children}
       style={[
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(icon && { height: 44, width: 44, marginRight: -9 })
+          ...(type === 'icon' && { height: 44, width: 44, marginRight: -9 })
         }
       ]}
-    >
-      {text && (
-        <Text
-          style={[
-            styles.text,
-            { color: disabled ? theme.secondary : theme.primary }
-          ]}
-        >
-          {text}
-        </Text>
-      )}
-      {icon && (
-        <Feather
-          name={icon}
-          color={disabled ? theme.secondary : theme.primary}
-          size={StyleConstants.Spacing.L}
-        />
-      )}
-    </Pressable>
+    />
   )
 }
 

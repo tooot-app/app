@@ -93,7 +93,7 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
           contentStyle: { backgroundColor: 'black' },
           headerStyle: { backgroundColor: 'black' },
           headerLeft: () => (
-            <HeaderLeft icon='x' onPress={() => navigation.goBack()} />
+            <HeaderLeft content='x' onPress={() => navigation.goBack()} />
           ),
           headerCenter: () => (
             <Text style={styles.headerCenter}>
@@ -102,7 +102,7 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
           ),
           headerRight: () => (
             <HeaderRight
-              icon='share'
+              content='share'
               onPress={() =>
                 ActionSheetIOS.showShareActionSheetWithOptions(
                   {

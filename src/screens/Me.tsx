@@ -34,12 +34,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeConversations}
         options={({ navigation }: any) => ({
           headerTitle: t('meConversations:heading'),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
       <Stack.Screen
@@ -47,12 +42,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeBookmarks}
         options={({ navigation }: any) => ({
           headerTitle: t('meBookmarks:heading'),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
       <Stack.Screen
@@ -60,12 +50,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeFavourites}
         options={({ navigation }: any) => ({
           headerTitle: t('meFavourites:heading'),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
       <Stack.Screen
@@ -73,12 +58,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeLists}
         options={({ navigation }: any) => ({
           headerTitle: t('meLists:heading'),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
       <Stack.Screen
@@ -86,12 +66,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeListsList}
         options={({ route, navigation }: any) => ({
           headerTitle: t('meListsList:heading', { list: route.params.title }),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
       <Stack.Screen
@@ -99,12 +74,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeSettings}
         options={({ navigation }: any) => ({
           headerTitle: t('meSettings:heading'),
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         })}
       />
 

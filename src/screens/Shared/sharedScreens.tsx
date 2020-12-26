@@ -26,12 +26,7 @@ const sharedScreens = (Stack: any) => {
             backgroundColor: `rgba(255, 255, 255, 0)`
           },
           headerCenter: () => null,
-          headerLeft: () => (
-            <HeaderLeft
-              icon='chevron-left'
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
         }
       }}
     />,
@@ -41,9 +36,7 @@ const sharedScreens = (Stack: any) => {
       component={ScreenSharedHashtag}
       options={({ route, navigation }: any) => ({
         title: `#${decodeURIComponent(route.params.hashtag)}`,
-        headerLeft: () => (
-          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
-        )
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
     />,
     <Stack.Screen
@@ -52,9 +45,7 @@ const sharedScreens = (Stack: any) => {
       component={ScreenSharedToot}
       options={({ navigation }: any) => ({
         title: t('sharedToot:heading'),
-        headerLeft: () => (
-          <HeaderLeft icon='chevron-left' onPress={() => navigation.goBack()} />
-        )
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
     />,
     <Stack.Screen

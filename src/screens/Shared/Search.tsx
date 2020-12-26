@@ -242,7 +242,11 @@ const ScreenSharedSearch: React.FC = () => {
           />
         </View>
         <View style={styles.searchCancel}>
-          <HeaderRight text='取消' onPress={() => navigation.goBack()} />
+          <HeaderRight
+            type='text'
+            content='取消'
+            onPress={() => navigation.goBack()}
+          />
         </View>
       </View>
       <SectionList

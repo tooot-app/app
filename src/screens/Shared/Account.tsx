@@ -90,7 +90,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
       navigation.setOptions({
         headerRight: () => (
           <HeaderRight
-            icon='more-horizontal'
+            content='more-horizontal'
             onPress={() => setBottomSheetVisible(true)}
           />
         )

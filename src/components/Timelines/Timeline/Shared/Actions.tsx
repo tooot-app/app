@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
-import { InfiniteData, useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { Feather } from '@expo/vector-icons'
 
 import client from '@api/client'
@@ -11,8 +11,6 @@ import { useNavigation } from '@react-navigation/native'
 import getCurrentTab from '@utils/getCurrentTab'
 import { findIndex } from 'lodash'
 import { TimelineData } from '../../Timeline'
-import { useSelector } from 'react-redux'
-import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 
 const fireMutation = async ({
   id,
