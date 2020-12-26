@@ -11,7 +11,7 @@ const Collections: React.FC = () => {
   const navigation = useNavigation()
 
   const queryKey = ['Announcements', { showAll: true }]
-  const { data } = useQuery(queryKey, announcementFetch)
+  const { data, isFetching } = useQuery(queryKey, announcementFetch)
 
   const announcementContent = useMemo(() => {
     if (data) {
@@ -55,6 +55,7 @@ const Collections: React.FC = () => {
         iconBack='chevron-right'
         title={t('content.collections.announcements')}
         content={announcementContent}
+        loading={isFetching}
         onPress={() =>
           data &&
           data.length &&

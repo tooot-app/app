@@ -1,18 +1,22 @@
-import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import { useTheme } from '@utils/styles/ThemeManager'
-
-import { ColorDefinitions } from '@utils/styles/themes'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { ColorDefinitions } from '@utils/styles/themes'
+import React, { useMemo } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 
 export interface Props {
   iconFront?: any
   iconFrontColor?: ColorDefinitions
+
   title: string
   content?: string
+
   iconBack?: 'chevron-right' | 'check'
   iconBackColor?: ColorDefinitions
+
+  loading?: boolean
   onPress?: () => void
 }
 
@@ -22,11 +26,24 @@ const Core: React.FC<Props> = ({
   title,
   content,
   iconBack,
-  iconBackColor
+  iconBackColor,
+  loading = false
 }) => {
   const { theme } = useTheme()
   iconFrontColor = iconFrontColor || 'primary'
   iconBackColor = iconBackColor || 'secondary'
+
+  const loadingSpinkit = useMemo(
+    () => (
+      <View style={{ position: 'absolute' }}>
+        <Chase
+          size={StyleConstants.Font.Size.M * 1.25}
+          color={theme.secondary}
+        />
+      </View>
+    ),
+    [theme]
+  )
 
   return (
     <View style={styles.core}>
@@ -46,20 +63,32 @@ const Core: React.FC<Props> = ({
       {(content || iconBack) && (
         <View style={styles.back}>
           {content && content.length ? (
-            <Text
-              style={[styles.content, { color: theme.secondary }]}
-              numberOfLines={1}
-            >
-              {content}
-            </Text>
+            <>
+              <Text
+                style={[
+                  styles.content,
+                  {
+                    color: theme.secondary,
+                    opacity: !iconBack && loading ? 0 : 1
+                  }
+                ]}
+                numberOfLines={1}
+              >
+                {content}
+              </Text>
+              {loading && !iconBack && loadingSpinkit}
+            </>
           ) : null}
           {iconBack && (
-            <Feather
-              name={iconBack}
-              size={StyleConstants.Font.Size.M + 2}
-              color={theme[iconBackColor]}
-              style={styles.iconBack}
-            />
+            <>
+              <Feather
+                name={iconBack}
+                size={StyleConstants.Font.Size.M + 2}
+                color={theme[iconBackColor]}
+                style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+              />
+              {loading && loadingSpinkit}
+            </>
           )}
         </View>
       )}
@@ -68,16 +97,13 @@ const Core: React.FC<Props> = ({
 }
 
 const MenuRow: React.FC<Props> = ({ ...props }) => {
-  const { theme } = useTheme()
-
-  return props.onPress ? (
-    <Pressable style={styles.base} onPress={props.onPress}>
+  return (
+    <Pressable
+      style={styles.base}
+      {...(!props.loading && props.onPress && { onPress: props.onPress })}
+    >
       <Core {...props} />
     </Pressable>
-  ) : (
-    <View style={styles.base}>
-      <Core {...props} />
-    </View>
   )
 }
 
@@ -119,8 +145,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(MenuRow, (prev, next) => {
-  let skipUpdate = true
-  skipUpdate = prev.content === next.content
-  return skipUpdate
-})
+export default MenuRow

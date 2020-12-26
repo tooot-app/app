@@ -26,9 +26,7 @@ const ScreenMeSettings: React.FC = () => {
 
   const [cacheSize, setCacheSize] = useState<number>()
   useEffect(() => {
-    const getCacheSize = async () =>
-      setCacheSize(await CacheManager.getCacheSize())
-    getCacheSize()
+    CacheManager.getCacheSize().then(size => setCacheSize(size))
   }, [])
 
   return (
@@ -127,7 +125,7 @@ const ScreenMeSettings: React.FC = () => {
       <MenuContainer>
         <MenuRow
           title={t('content.cache.heading')}
-          content={cacheSize ? prettyBytes(cacheSize) : undefined}
+          content={cacheSize ? prettyBytes(cacheSize) : '暂无缓存'}
           iconBack='chevron-right'
           onPress={async () => {
             await CacheManager.clearCache()
