@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
-import { LayoutAnimation, Pressable, Text, View } from 'react-native'
+import React from 'react'
+import { View } from 'react-native'
 import ParseContent from '@components/ParseContent'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
-import { LinearGradient } from 'expo-linear-gradient'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 export interface Props {
   status: Mastodon.Status
@@ -17,11 +14,6 @@ const TimelineContent: React.FC<Props> = ({
   numberOfLines,
   highlighted = false
 }) => {
-  layoutAnimation()
-  const { theme } = useTheme()
-  const [spoilerCollapsed, setSpoilerCollapsed] = useState(false)
-  const lineHeight = 28
-
   return (
     <>
       {status.spoiler_text ? (
@@ -32,58 +24,16 @@ const TimelineContent: React.FC<Props> = ({
             emojis={status.emojis}
             numberOfLines={999}
           />
-          <View
-            style={{
-              flex: 1,
-              height: spoilerCollapsed ? StyleConstants.Font.Size.M : undefined,
-              marginTop: StyleConstants.Font.Size.M
-            }}
-          >
+          <View style={{ marginTop: StyleConstants.Font.Size.M }}>
             <ParseContent
               content={status.content}
               size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
-              numberOfLines={999}
+              numberOfLines={1}
+              expandHint='隐藏内容'
             />
           </View>
-          <Pressable
-            onPress={() => setSpoilerCollapsed(!spoilerCollapsed)}
-            style={{
-              marginTop: spoilerCollapsed ? -lineHeight : 0
-            }}
-          >
-            <LinearGradient
-              {...(spoilerCollapsed
-                ? {
-                    colors: [
-                      theme.backgroundGradientStart,
-                      theme.backgroundGradientEnd
-                    ],
-                    locations: [
-                      0,
-                      lineHeight / (StyleConstants.Font.Size.S * 4)
-                    ]
-                  }
-                : {
-                    colors: ['rgba(0, 0, 0, 0)']
-                  })}
-              style={{
-                paddingTop: StyleConstants.Font.Size.S * 2,
-                paddingBottom: StyleConstants.Font.Size.S
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: StyleConstants.Font.Size.S,
-                  color: theme.primary
-                }}
-              >
-                {spoilerCollapsed ? '展开' : '收起'}隐藏内容
-              </Text>
-            </LinearGradient>
-          </Pressable>
         </>
       ) : (
         <ParseContent
@@ -91,7 +41,7 @@ const TimelineContent: React.FC<Props> = ({
           size={highlighted ? 'L' : 'M'}
           emojis={status.emojis}
           mentions={status.mentions}
-          {...(numberOfLines && { numberOfLines: numberOfLines })}
+          numberOfLines={numberOfLines}
         />
       )}
     </>

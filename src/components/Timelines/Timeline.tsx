@@ -55,7 +55,8 @@ const Timeline: React.FC<Props> = ({
     fetchPreviousPage,
     isFetchingPreviousPage,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    isFetchingNextPage
   } = useInfiniteQuery(queryKey, timelineFetch, {
     getPreviousPageParam: firstPage => {
       return firstPage.toots.length
@@ -133,7 +134,10 @@ const Timeline: React.FC<Props> = ({
     () => <TimelineEmpty status={status} refetch={refetch} />,
     [status]
   )
-  const onEndReached = useCallback(() => !disableRefresh && fetchNextPage(), [])
+  const onEndReached = useCallback(
+    () => !disableRefresh && !isFetchingNextPage && fetchNextPage(),
+    [isFetchingNextPage]
+  )
   const ListFooterComponent = useCallback(
     () => <TimelineEnd hasNextPage={!disableRefresh ? hasNextPage : false} />,
     [hasNextPage]

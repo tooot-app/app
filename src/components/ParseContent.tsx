@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react'
+import { LinearGradient } from 'expo-linear-gradient'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useNavigation } from '@react-navigation/native'
@@ -6,8 +7,8 @@ import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
-import { LinearGradient } from 'expo-linear-gradient'
 import openLink from '@root/utils/openLink'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -96,7 +97,7 @@ const renderNode = ({
   } else {
     if (node.name === 'p') {
       if (!node.children.length) {
-        return <View key={index}></View> // bug when the tag is empty
+        return <View key={index} /> // bug when the tag is empty
       }
     }
   }
@@ -109,6 +110,7 @@ export interface Props {
   mentions?: Mastodon.Mention[]
   showFullLink?: boolean
   numberOfLines?: number
+  expandHint?: string
 }
 
 const ParseContent: React.FC<Props> = ({
@@ -117,7 +119,8 @@ const ParseContent: React.FC<Props> = ({
   emojis,
   mentions,
   showFullLink = false,
-  numberOfLines = 10
+  numberOfLines = 10,
+  expandHint = '全文'
 }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
@@ -136,55 +139,76 @@ const ParseContent: React.FC<Props> = ({
     []
   )
   const textComponent = useCallback(({ children }) => {
-    return emojis && children ? (
-      <Emojis
-        content={children.toString()}
-        emojis={emojis}
-        size={StyleConstants.Font.Size[size]}
-      />
-    ) : (
-      <Text>{children}</Text>
-    )
+    if (children) {
+      return emojis ? (
+        <Emojis
+          content={children.toString()}
+          emojis={emojis}
+          size={StyleConstants.Font.Size[size]}
+        />
+      ) : (
+        <Text>{children}</Text>
+      )
+    } else {
+      return null
+    }
   }, [])
   const rootComponent = useCallback(({ children }) => {
-    const { theme } = useTheme()
-    const [textLoaded, setTextLoaded] = useState(false)
-    const [totalLines, setTotalLines] = useState<number | undefined>()
-    const [lineHeight, setLineHeight] = useState<number | undefined>()
-    const [shownLines, setShownLines] = useState(numberOfLines)
+    // layoutAnimation()
+    const lineHeight = StyleConstants.Font.LineHeight[size]
+
+    const [heightOriginal, setHeightOriginal] = useState<number>()
+    const [heightTruncated, setHeightTruncated] = useState<number>()
+    const [allowExpand, setAllowExpand] = useState(false)
+    const [showAllText, setShowAllText] = useState(false)
+
+    const calNumberOfLines = useMemo(() => {
+      if (heightOriginal) {
+        if (!heightTruncated) {
+          return numberOfLines
+        } else {
+          if (allowExpand && !showAllText) {
+            return numberOfLines
+          } else {
+            return undefined
+          }
+        }
+      } else {
+        return undefined
+      }
+    }, [heightOriginal, heightTruncated, allowExpand, showAllText])
 
     return (
-      <>
+      <View>
         <Text
-          numberOfLines={
-            totalLines && totalLines > numberOfLines ? shownLines : totalLines
-          }
-          style={{ lineHeight: StyleConstants.Font.LineHeight[size] }}
-          onTextLayout={({ nativeEvent }) => {
-            if (!textLoaded) {
-              setTextLoaded(true)
-              setTotalLines(nativeEvent.lines.length)
-              setLineHeight(nativeEvent.lines[0].height)
+          style={{ lineHeight }}
+          children={children}
+          numberOfLines={calNumberOfLines}
+          onLayout={({ nativeEvent }) => {
+            if (!heightOriginal) {
+              setHeightOriginal(nativeEvent.layout.height)
+            } else {
+              if (!heightTruncated) {
+                setHeightTruncated(nativeEvent.layout.height)
+              } else {
+                if (heightOriginal > heightTruncated) {
+                  setAllowExpand(true)
+                }
+              }
             }
           }}
-        >
-          {children}
-        </Text>
-        {totalLines && lineHeight && totalLines > shownLines && (
+        />
+        {allowExpand && (
           <Pressable
-            onPress={() => {
-              setShownLines(totalLines)
-            }}
-            style={{
-              marginTop: -lineHeight
-            }}
+            onPress={() => setShowAllText(!showAllText)}
+            style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
           >
             <LinearGradient
               colors={[
                 theme.backgroundGradientStart,
                 theme.backgroundGradientEnd
               ]}
-              locations={[0, lineHeight / (StyleConstants.Font.Size.S * 5)]}
+              locations={[0, lineHeight / (StyleConstants.Font.Size.S * 4)]}
               style={{
                 paddingTop: StyleConstants.Font.Size.S * 2,
                 paddingBottom: StyleConstants.Font.Size.S
@@ -197,12 +221,12 @@ const ParseContent: React.FC<Props> = ({
                   color: theme.primary
                 }}
               >
-                展开全文
+                {`${showAllText ? '折叠' : '展开'}${expandHint}`}
               </Text>
             </LinearGradient>
           </Pressable>
         )}
-      </>
+      </View>
     )
   }, [])
 

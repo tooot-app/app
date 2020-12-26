@@ -10,14 +10,13 @@ import { persistor, store } from '@root/store'
 import { resetLocal } from '@root/utils/slices/instancesSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 
-// if (__DEV__) {
-//   const whyDidYouRender = require('@welldone-software/why-did-you-render')
-//   whyDidYouRender(React, {
-//     trackAllPureComponents: true,
-//     trackHooks: true,
-//     hotReloadBufferMs: 1000
-//   })
-// }
+if (__DEV__) {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render')
+  whyDidYouRender(React, {
+    trackHooks: true,
+    hotReloadBufferMs: 1000
+  })
+}
 
 const queryClient = new QueryClient()
 
