@@ -1,6 +1,5 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
@@ -8,25 +7,7 @@ export interface Props {
 }
 
 const MenuContainer: React.FC<Props> = ({ children }) => {
-  const { theme } = useTheme()
-  // @ts-ignore
-  const firstChild = Children.toArray(children)[0].type.name
-
-  return (
-    <View
-      style={[
-        styles.base,
-        {
-          ...(firstChild !== 'MenuHeader' && {
-            borderTopColor: theme.separator,
-            borderTopWidth: 1
-          })
-        }
-      ]}
-    >
-      {children}
-    </View>
-  )
+  return <View style={styles.base}>{children}</View>
 }
 
 const styles = StyleSheet.create({

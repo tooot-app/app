@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 import { Video } from 'expo-av'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 
@@ -64,7 +64,13 @@ const AttachmentVideo: React.FC<Props> = ({
             <Blurhash hash={video.blurhash} />
           </Surface>
         ) : (
-          <ButtonRow icon='play' size='L' onPress={playOnPress} />
+          <Button
+            type='icon'
+            content='play'
+            size='L'
+            overlay
+            onPress={playOnPress}
+          />
         )}
       </Pressable>
     </>

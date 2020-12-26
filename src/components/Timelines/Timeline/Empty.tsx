@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { QueryStatus } from 'react-query'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -29,7 +29,7 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
             <Text style={[styles.error, { color: theme.primary }]}>
               加载错误
             </Text>
-            <ButtonRow text='重试' onPress={() => refetch()} />
+            <Button type='text' content='重试' onPress={() => refetch()} />
           </>
         )
       case 'success':

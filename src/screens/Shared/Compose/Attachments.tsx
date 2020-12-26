@@ -13,7 +13,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-import { ButtonRound } from '@components/Button'
+import Button from '@components/Button'
 import addAttachments from '@screens/Shared/Compose/addAttachments'
 import { Feather } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -67,8 +67,13 @@ const ComposeAttachments: React.FC = () => {
               {(item as Mastodon.AttachmentVideo).meta?.original.duration}
             </Text>
           )}
-          <ButtonRound
-            icon='x'
+          <Button
+            type='icon'
+            content='x'
+            spacing='M'
+            round
+            overlay
+            style={styles.delete}
             onPress={() =>
               composeDispatch({
                 type: 'attachments',
@@ -79,17 +84,20 @@ const ComposeAttachments: React.FC = () => {
                 }
               })
             }
-            styles={styles.delete}
           />
-          <ButtonRound
-            icon='edit'
+          <Button
+            type='icon'
+            content='edit'
+            spacing='M'
+            round
+            overlay
+            style={styles.edit}
             onPress={() =>
               navigation.navigate('Screen-Shared-Compose-EditAttachment', {
                 attachment: item,
                 composeDispatch
               })
             }
-            styles={styles.edit}
           />
         </View>
       )
@@ -123,22 +131,28 @@ const ComposeAttachments: React.FC = () => {
                 await addAttachments({ composeState, composeDispatch })
               }
             >
-              <ButtonRound
-                icon='upload-cloud'
+              <Button
+                type='icon'
+                content='upload-cloud'
+                spacing='M'
+                round
+                overlay
                 onPress={async () =>
                   await addAttachments({ composeState, composeDispatch })
                 }
-                styles={{
+                style={{
+                  position: 'absolute',
                   top:
                     (DEFAULT_HEIGHT -
-                      StyleConstants.Spacing.Global.PagePadding) /
+                      StyleConstants.Spacing.M * 2 -
+                      StyleConstants.Font.Size.M) /
                     2,
                   left:
                     (DEFAULT_HEIGHT -
-                      StyleConstants.Spacing.Global.PagePadding) /
+                      StyleConstants.Spacing.M * 2 -
+                      StyleConstants.Font.Size.M) /
                     2
                 }}
-                coordinate='center'
               />
             </Pressable>
           )}
@@ -217,13 +231,15 @@ const styles = StyleSheet.create({
     paddingTop: StyleConstants.Spacing.XS,
     paddingBottom: StyleConstants.Spacing.XS
   },
-  edit: {
-    bottom:
-      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+  delete: {
+    position: 'absolute',
+    top: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
     right: StyleConstants.Spacing.S
   },
-  delete: {
-    top: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+  edit: {
+    position: 'absolute',
+    bottom:
+      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
     right: StyleConstants.Spacing.S
   },
   progressContainer: {

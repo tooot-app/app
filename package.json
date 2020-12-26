@@ -43,6 +43,7 @@
     "react-dom": "16.13.1",
     "react-i18next": "^11.8.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz",
+    "react-native-animated-spinkit": "^1.4.2",
     "react-native-expo-image-cache": "^4.1.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-htmlview": "^0.16.0",

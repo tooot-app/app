@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { Audio } from 'expo-av'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 import Slider from '@react-native-community/slider'
@@ -21,7 +21,10 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
   const [audioPosition, setAudioPosition] = useState(0)
   const playAudio = useCallback(async () => {
     if (!audioPlayer) {
-      await Audio.setAudioModeAsync({ interruptionModeIOS: 1 })
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        interruptionModeIOS: 1
+      })
       const { sound } = await Audio.Sound.createAsync(
         { uri: audio.url },
         {},
@@ -42,7 +45,7 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
 
   return (
     <>
-      <Pressable style={styles.overlay}>
+      <View style={styles.overlay}>
         {sensitiveShown ? (
           audio.blurhash && (
             <Surface
@@ -62,16 +65,18 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
                 source={{ uri: audio.preview_url || audio.preview_remote_url }}
               />
             )}
-            <ButtonRow
-              icon={audioPlaying ? 'pause' : 'play'}
+            <Button
+              type='icon'
+              content={audioPlaying ? 'pause' : 'play'}
               size='L'
+              overlay
               {...(audioPlaying
                 ? { onPress: pauseAudio }
                 : { onPress: playAudio })}
             />
           </>
         )}
-      </Pressable>
+      </View>
       <View
         style={{
           flex: 1,

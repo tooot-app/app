@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons'
 import { ComposeContext } from '@screens/Shared/Compose'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
-import { ButtonRow } from '@components/Button'
-import { MenuContainer, MenuRow } from '@components/Menu'
+import Button from '@components/Button'
+import { MenuRow } from '@components/Menu'
 
 const ComposePoll: React.FC = () => {
   const {
@@ -80,8 +80,7 @@ const ComposePoll: React.FC = () => {
       </View>
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>
-          <ButtonRow
-            key={total + 'minus'}
+          <Button
             onPress={() => {
               total > 2 &&
                 composeDispatch({
@@ -89,13 +88,13 @@ const ComposePoll: React.FC = () => {
                   payload: { total: total - 1 }
                 })
             }}
-            icon='minus'
+            type='icon'
+            content='minus'
+            round
             disabled={!(total > 2)}
-            buttonSize='S'
           />
         </View>
-        <ButtonRow
-          key={total + 'plus'}
+        <Button
           onPress={() => {
             total < 4 &&
               composeDispatch({
@@ -103,51 +102,50 @@ const ComposePoll: React.FC = () => {
                 payload: { total: total + 1 }
               })
           }}
-          icon='plus'
+          type='icon'
+          content='plus'
+          round
           disabled={!(total < 4)}
-          buttonSize='S'
         />
       </View>
-      <MenuContainer>
-        <MenuRow
-          title='可选项'
-          content={multiple ? '多选' : '单选'}
-          onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
-              {
-                options: ['单选', '多选', '取消'],
-                cancelButtonIndex: 2
-              },
-              index =>
-                index < 2 &&
-                composeDispatch({
-                  type: 'poll',
-                  payload: { multiple: index === 1 }
-                })
-            )
-          }
-          iconBack='chevron-right'
-        />
-        <MenuRow
-          title='有效期'
-          content={expireMapping[expire]}
-          onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
-              {
-                options: [...Object.values(expireMapping), '取消'],
-                cancelButtonIndex: 7
-              },
-              index =>
-                index < 7 &&
-                composeDispatch({
-                  type: 'poll',
-                  payload: { expire: Object.keys(expireMapping)[index] }
-                })
-            )
-          }
-          iconBack='chevron-right'
-        />
-      </MenuContainer>
+      <MenuRow
+        title='可选项'
+        content={multiple ? '多选' : '单选'}
+        onPress={() =>
+          ActionSheetIOS.showActionSheetWithOptions(
+            {
+              options: ['单选', '多选', '取消'],
+              cancelButtonIndex: 2
+            },
+            index =>
+              index < 2 &&
+              composeDispatch({
+                type: 'poll',
+                payload: { multiple: index === 1 }
+              })
+          )
+        }
+        iconBack='chevron-right'
+      />
+      <MenuRow
+        title='有效期'
+        content={expireMapping[expire]}
+        onPress={() =>
+          ActionSheetIOS.showActionSheetWithOptions(
+            {
+              options: [...Object.values(expireMapping), '取消'],
+              cancelButtonIndex: 7
+            },
+            index =>
+              index < 7 &&
+              composeDispatch({
+                type: 'poll',
+                payload: { expire: Object.keys(expireMapping)[index] }
+              })
+          )
+        }
+        iconBack='chevron-right'
+      />
     </View>
   )
 }
@@ -181,8 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginRight: StyleConstants.Spacing.M,
-    marginBottom: StyleConstants.Spacing.M
+    marginRight: StyleConstants.Spacing.M
   },
   firstButton: {
     marginRight: StyleConstants.Spacing.S

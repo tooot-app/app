@@ -1,6 +1,6 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import client from '@root/api/client'
-import { ButtonRow } from '@root/components/Button'
+import Button from '@root/components/Button'
 import ParseContent from '@root/components/ParseContent'
 import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
 import relativeTime from '@root/utils/relativeTime'
@@ -147,8 +147,9 @@ const ScreenSharedAnnouncements: React.FC = ({
               </Pressable> */}
             </View>
           ) : null}
-          <ButtonRow
-            text='标记已读'
+          <Button
+            type='text'
+            content='标记已读'
             onPress={() => mutate({ type: 'dismiss', announcementId: item.id })}
             style={styles.button}
           />

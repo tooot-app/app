@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 import { toast } from '@components/toast'
 import relativeTime from '@utils/relativeTime'
 import { StyleConstants } from '@utils/styles/constants'
@@ -18,14 +18,13 @@ const fireMutation = async ({
   options
 }: {
   id: string
-  options?: { [key: number]: boolean }
+  options?: boolean[]
 }) => {
   const formData = new FormData()
   options &&
-    Object.keys(options).forEach(option => {
-      // @ts-ignore
-      if (options[option]) {
-        formData.append('choices[]', option)
+    options.forEach((o, i) => {
+      if (options[i]) {
+        formData.append('choices[]', i.toString())
       }
     })
 
@@ -63,6 +62,11 @@ const TimelinePoll: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
   const queryClient = useQueryClient()
+
+  const [allOptions, setAllOptions] = useState(
+    new Array(poll.options.length).fill(false)
+  )
+
   const mutation = useMutation(fireMutation, {
     onSuccess: (data, { id }) => {
       queryClient.cancelQueries(queryKey)
@@ -99,26 +103,26 @@ const TimelinePoll: React.FC<Props> = ({
       if (!sameAccount && !poll.voted) {
         return (
           <View style={styles.button}>
-            <ButtonRow
-              onPress={() => {
-                if (poll.multiple) {
-                  mutation.mutate({ id: poll.id, options: multipleOptions })
-                } else {
-                  mutation.mutate({ id: poll.id, options: singleOptions })
-                }
-              }}
-              {...(mutation.isLoading ? { icon: 'loader' } : { text: '投票' })}
-              disabled={mutation.isLoading}
+            <Button
+              onPress={() =>
+                mutation.mutate({ id: poll.id, options: allOptions })
+              }
+              type='text'
+              content='投票'
+              loading={mutation.isLoading}
+              disabled={allOptions.filter(o => o !== false).length === 0}
             />
           </View>
         )
       } else {
         return (
           <View style={styles.button}>
-            <ButtonRow
+            <Button
               onPress={() => mutation.mutate({ id: poll.id })}
               {...(mutation.isLoading ? { icon: 'loader' } : { text: '刷新' })}
-              disabled={mutation.isLoading}
+              type='text'
+              content='刷新'
+              loading={mutation.isLoading}
             />
           </View>
         )
@@ -142,19 +146,13 @@ const TimelinePoll: React.FC<Props> = ({
     }
   }, [])
 
-  const [singleOptions, setSingleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll.options.length)
-  })
-  const [multipleOptions, setMultipleOptions] = useState({
-    ...[false, false, false, false].slice(0, poll.options.length)
-  })
-  const isSelected = (index: number) => {
-    if (poll.multiple) {
-      return multipleOptions[index] ? 'check-square' : 'square'
-    } else {
-      return singleOptions[index] ? 'check-circle' : 'circle'
-    }
-  }
+  const isSelected = useCallback(
+    (index: number): any =>
+      allOptions[index]
+        ? `check-${poll.multiple ? 'square' : 'circle'}`
+        : `${poll.multiple ? 'square' : 'circle'}`,
+    [allOptions]
+  )
 
   return (
     <View style={styles.base}>
@@ -162,21 +160,23 @@ const TimelinePoll: React.FC<Props> = ({
         poll.voted ? (
           <View key={index} style={styles.poll}>
             <View style={styles.optionSelected}>
+              <Feather
+                style={styles.voted}
+                name={poll.multiple ? 'check-square' : 'check-circle'}
+                size={StyleConstants.Font.Size.M}
+                color={
+                  poll.own_votes!.includes(index)
+                    ? theme.primary
+                    : theme.background
+                }
+              />
               <View style={styles.contentSelected}>
                 <Emojis
                   content={option.title}
                   emojis={poll.emojis}
                   size={StyleConstants.Font.Size.M}
-                  numberOfLines={1}
+                  numberOfLines={2}
                 />
-                {poll.own_votes!.includes(index) && (
-                  <Feather
-                    style={styles.voted}
-                    name={poll.multiple ? 'check-square' : 'check-circle'}
-                    size={StyleConstants.Font.Size.M}
-                    color={theme.primary}
-                  />
-                )}
               </View>
               <Text style={[styles.percentage, { color: theme.primary }]}>
                 {poll.votes_count
@@ -193,7 +193,7 @@ const TimelinePoll: React.FC<Props> = ({
                   width: `${Math.round(
                     (option.votes_count / poll.voters_count) * 100
                   )}%`,
-                  backgroundColor: theme.border
+                  backgroundColor: theme.disabled
                 }
               ]}
             />
@@ -204,19 +204,15 @@ const TimelinePoll: React.FC<Props> = ({
               style={[styles.optionUnselected]}
               onPress={() => {
                 if (poll.multiple) {
-                  setMultipleOptions({
-                    ...multipleOptions,
-                    [index]: !multipleOptions[index]
-                  })
+                  setAllOptions(
+                    allOptions.map((o, i) => (i === index ? !o : o))
+                  )
                 } else {
-                  setSingleOptions({
-                    ...[
-                      index === 0,
-                      index === 1,
-                      index === 2,
-                      index === 3
-                    ].slice(0, poll.options.length)
-                  })
+                  setAllOptions(
+                    allOptions.map((o, i) =>
+                      i === index ? !allOptions[index] : allOptions[index]
+                    )
+                  )
                 }
               }}
             >
@@ -231,6 +227,7 @@ const TimelinePoll: React.FC<Props> = ({
                   content={option.title}
                   emojis={poll.emojis}
                   size={StyleConstants.Font.Size.M}
+                  numberOfLines={2}
                 />
               </View>
             </Pressable>
@@ -253,15 +250,15 @@ const styles = StyleSheet.create({
     marginTop: StyleConstants.Spacing.M
   },
   poll: {
-    minHeight: StyleConstants.Font.LineHeight.M * 1.5,
-    marginBottom: StyleConstants.Spacing.XS
+    flex: 1,
+    minHeight: StyleConstants.Font.LineHeight.M * 2,
+    paddingVertical: StyleConstants.Spacing.XS
   },
   optionSelected: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: StyleConstants.Spacing.M,
     paddingRight: StyleConstants.Spacing.M
   },
   optionUnselected: {
@@ -269,30 +266,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   contentSelected: {
-    flexBasis: '80%',
+    flexShrink: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingRight: StyleConstants.Spacing.S
   },
   contentUnselected: {
-    flexBasis: '90%'
+    flexShrink: 1
   },
   voted: {
-    marginLeft: StyleConstants.Spacing.S
+    marginRight: StyleConstants.Spacing.S
   },
   votedNot: {
-    marginRight: StyleConstants.Spacing.S
+    paddingRight: StyleConstants.Spacing.S
   },
   percentage: {
     fontSize: StyleConstants.Font.Size.M
   },
   background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
+    height: StyleConstants.Spacing.XS,
     minWidth: 2,
-    borderTopRightRadius: 6,
-    borderBottomRightRadius: 6
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    marginTop: StyleConstants.Spacing.XS,
+    marginBottom: StyleConstants.Spacing.S
   },
   meta: {
     flex: 1,

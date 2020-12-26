@@ -11,21 +11,21 @@ const MenuHeader: React.FC<Props> = ({ heading }) => {
   const { theme } = useTheme()
 
   return (
-    <View style={[styles.base, { borderBottomColor: theme.separator }]}>
-      <Text style={[styles.text, { color: theme.primary }]}>{heading}</Text>
+    <View style={styles.base}>
+      <Text style={[styles.text, { color: theme.secondary }]}>{heading}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    borderBottomWidth: 1,
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding,
     paddingBottom: StyleConstants.Spacing.S
   },
   text: {
-    fontSize: StyleConstants.Font.Size.S
+    fontSize: StyleConstants.Font.Size.S,
+    fontWeight: StyleConstants.Font.Weight.Bold
   }
 })
 

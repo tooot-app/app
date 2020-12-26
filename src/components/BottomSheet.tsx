@@ -10,7 +10,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 
 export interface Props {
   children: React.ReactNode
@@ -84,12 +84,12 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
             style={[styles.handle, { backgroundColor: theme.background }]}
           />
           {children}
-          <View style={styles.button}>
-            <ButtonRow
-              onPress={() => closeModal.start(() => handleDismiss())}
-              text='取消'
-            />
-          </View>
+          <Button
+            type='text'
+            content='取消'
+            onPress={() => closeModal.start(() => handleDismiss())}
+            style={styles.button}
+          />
         </Animated.View>
       </View>
     </Modal>
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
     top: -StyleConstants.Spacing.M * 2
   },
   button: {
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding * 2,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding * 2
+    marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
   }
 })
 

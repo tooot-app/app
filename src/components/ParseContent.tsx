@@ -152,83 +152,86 @@ const ParseContent: React.FC<Props> = ({
       return null
     }
   }, [])
-  const rootComponent = useCallback(({ children }) => {
-    const lineHeight = StyleConstants.Font.LineHeight[size]
+  const rootComponent = useCallback(
+    ({ children }) => {
+      const lineHeight = StyleConstants.Font.LineHeight[size]
 
-    const [heightOriginal, setHeightOriginal] = useState<number>()
-    const [heightTruncated, setHeightTruncated] = useState<number>()
-    const [allowExpand, setAllowExpand] = useState(false)
-    const [showAllText, setShowAllText] = useState(false)
+      const [heightOriginal, setHeightOriginal] = useState<number>()
+      const [heightTruncated, setHeightTruncated] = useState<number>()
+      const [allowExpand, setAllowExpand] = useState(false)
+      const [showAllText, setShowAllText] = useState(false)
 
-    const calNumberOfLines = useMemo(() => {
-      if (heightOriginal) {
-        if (!heightTruncated) {
-          return numberOfLines
-        } else {
-          if (allowExpand && !showAllText) {
+      const calNumberOfLines = useMemo(() => {
+        if (heightOriginal) {
+          if (!heightTruncated) {
             return numberOfLines
           } else {
-            return undefined
-          }
-        }
-      } else {
-        return undefined
-      }
-    }, [heightOriginal, heightTruncated, allowExpand, showAllText])
-
-    return (
-      <View>
-        <Text
-          style={{ lineHeight }}
-          children={children}
-          numberOfLines={calNumberOfLines}
-          onLayout={({ nativeEvent }) => {
-            if (!heightOriginal) {
-              setHeightOriginal(nativeEvent.layout.height)
+            if (allowExpand && !showAllText) {
+              return numberOfLines
             } else {
-              if (!heightTruncated) {
-                setHeightTruncated(nativeEvent.layout.height)
+              return undefined
+            }
+          }
+        } else {
+          return undefined
+        }
+      }, [heightOriginal, heightTruncated, allowExpand, showAllText])
+
+      return (
+        <View>
+          <Text
+            style={{ lineHeight, color: theme.primary }}
+            children={children}
+            numberOfLines={calNumberOfLines}
+            onLayout={({ nativeEvent }) => {
+              if (!heightOriginal) {
+                setHeightOriginal(nativeEvent.layout.height)
               } else {
-                if (heightOriginal > heightTruncated) {
-                  setAllowExpand(true)
+                if (!heightTruncated) {
+                  setHeightTruncated(nativeEvent.layout.height)
+                } else {
+                  if (heightOriginal > heightTruncated) {
+                    setAllowExpand(true)
+                  }
                 }
               }
-            }
-          }}
-        />
-        {allowExpand && (
-          <Pressable
-            onPress={() => {
-              setShowAllText(!showAllText)
             }}
-            style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
-          >
-            <LinearGradient
-              colors={[
-                theme.backgroundGradientStart,
-                theme.backgroundGradientEnd
-              ]}
-              locations={[0, lineHeight / (StyleConstants.Font.Size.S * 4)]}
-              style={{
-                paddingTop: StyleConstants.Font.Size.S * 2,
-                paddingBottom: StyleConstants.Font.Size.S
+          />
+          {allowExpand && (
+            <Pressable
+              onPress={() => {
+                setShowAllText(!showAllText)
               }}
+              style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
             >
-              <Text
+              <LinearGradient
+                colors={[
+                  theme.backgroundGradientStart,
+                  theme.backgroundGradientEnd
+                ]}
+                locations={[0, lineHeight / (StyleConstants.Font.Size.S * 4)]}
                 style={{
-                  textAlign: 'center',
-                  fontSize: StyleConstants.Font.Size.S,
-                  color: theme.primary
+                  paddingTop: StyleConstants.Font.Size.S * 2,
+                  paddingBottom: StyleConstants.Font.Size.S
                 }}
               >
-                {`${showAllText ? '折叠' : '展开'}${expandHint}`}
-              </Text>
-            </LinearGradient>
-          </Pressable>
-        )}
-      </View>
-    )
-  }, [])
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: StyleConstants.Font.Size.S,
+                    color: theme.primary
+                  }}
+                >
+                  {`${showAllText ? '折叠' : '展开'}${expandHint}`}
+                </Text>
+              </LinearGradient>
+            </Pressable>
+          )}
+        </View>
+      )
+    },
+    [theme]
+  )
 
   return (
     <HTMLView

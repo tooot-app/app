@@ -71,14 +71,11 @@ const MenuRow: React.FC<Props> = ({ ...props }) => {
   const { theme } = useTheme()
 
   return props.onPress ? (
-    <Pressable
-      style={[styles.base, { borderBottomColor: theme.separator }]}
-      onPress={props.onPress}
-    >
+    <Pressable style={styles.base} onPress={props.onPress}>
       <Core {...props} />
     </Pressable>
   ) : (
-    <View style={[styles.base, { borderBottomColor: theme.separator }]}>
+    <View style={styles.base}>
       <Core {...props} />
     </View>
   )
@@ -86,8 +83,7 @@ const MenuRow: React.FC<Props> = ({ ...props }) => {
 
 const styles = StyleSheet.create({
   base: {
-    height: 50,
-    borderBottomWidth: 1
+    height: 50
   },
   core: {
     flex: 1,

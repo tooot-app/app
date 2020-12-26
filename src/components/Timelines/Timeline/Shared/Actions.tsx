@@ -78,7 +78,7 @@ const TimelineActions: React.FC<Props> = ({
         case 'reblog':
         case 'bookmark':
           if (type === 'favourite' && queryKey[0] === 'Favourites') {
-            queryClient.invalidateQueries(['Favourites'])
+            queryClient.invalidateQueries(['Favourites', {}])
             break
           }
           if (
@@ -91,7 +91,7 @@ const TimelineActions: React.FC<Props> = ({
             break
           }
           if (type === 'bookmark' && queryKey[0] === 'Bookmarks') {
-            queryClient.invalidateQueries(['Bookmarks'])
+            queryClient.invalidateQueries(['Bookmarks', {}])
             break
           }
 

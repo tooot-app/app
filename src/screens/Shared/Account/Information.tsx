@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AccountAction } from '../Account'
-import { ButtonRow } from '@root/components/Button'
+import Button from '@root/components/Button'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { relationshipFetch } from '@root/utils/fetches/relationshipFetch'
 import client from '@root/api/client'
@@ -121,13 +121,9 @@ const AccountInformation: React.FC<Props> = ({
 
   const followingButton = useMemo(
     () => (
-      <ButtonRow
-        {...(data
-          ? status !== 'success' ||
-            (mutateStatus !== 'success' && mutateStatus !== 'idle')
-            ? { icon: 'loader' }
-            : { text: `${data.following ? '正在' : ''}关注` }
-          : { icon: 'loader' })}
+      <Button
+        type='text'
+        content={`${data?.following ? '正在' : ''}关注`}
         onPress={() =>
           mutate({
             type: 'follow',
@@ -136,7 +132,7 @@ const AccountInformation: React.FC<Props> = ({
             prevState: data!.following
           })
         }
-        disabled={
+        loading={
           status !== 'success' ||
           (mutateStatus !== 'success' && mutateStatus !== 'idle')
         }
@@ -175,8 +171,10 @@ const AccountInformation: React.FC<Props> = ({
         </ShimmerPlaceholder>
         {!disableActions && (
           <View style={styles.actions}>
-            <ButtonRow
-              icon='mail'
+            <Button
+              type='icon'
+              content='mail'
+              round
               onPress={() =>
                 navigation.navigate(getCurrentTab(navigation), {
                   screen: 'Screen-Shared-Compose',
@@ -294,7 +292,8 @@ const AccountInformation: React.FC<Props> = ({
         </View>
       )}
 
-      {account?.note && (
+      {account?.note && account.note.length && account.note !== '<p></p>' ? (
+        // Empty notes might generate empty p tag
         <View style={styles.note}>
           <ParseContent
             content={account.note}
@@ -302,7 +301,7 @@ const AccountInformation: React.FC<Props> = ({
             emojis={account.emojis}
           />
         </View>
-      )}
+      ) : null}
 
       <ShimmerPlaceholder
         ref={shimmerCreatedRef}

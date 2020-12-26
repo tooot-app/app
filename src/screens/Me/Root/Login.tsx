@@ -19,7 +19,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 
 import { useTranslation } from 'react-i18next'
 import { StyleConstants } from '@utils/styles/constants'
-import { ButtonRow } from '@components/Button'
+import Button from '@components/Button'
 import ParseContent from '@root/components/ParseContent'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { Feather } from '@expo/vector-icons'
@@ -124,15 +124,7 @@ const Login: React.FC = () => {
   }, [instanceDomain])
 
   const instanceInfo = useCallback(
-    ({
-      header,
-      content,
-      parse
-    }: {
-      header: string
-      content?: string
-      parse?: boolean
-    }) => {
+    ({ header, content }: { header: string; content?: string }) => {
       return (
         <View style={styles.instanceInfo}>
           <Text style={[styles.instanceInfoHeader, { color: theme.primary }]}>
@@ -147,15 +139,7 @@ const Login: React.FC = () => {
             }
             height={StyleConstants.Font.Size.M}
           >
-            <Text
-              style={[styles.instanceInfoContent, { color: theme.primary }]}
-            >
-              {parse ? (
-                <ParseContent content={content!} size={'M'} numberOfLines={5} />
-              ) : (
-                content
-              )}
-            </Text>
+            <ParseContent content={content!} size={'M'} numberOfLines={5} />
           </ShimmerPlaceholder>
         </View>
       )
@@ -204,18 +188,12 @@ const Login: React.FC = () => {
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
           />
-          <ButtonRow
-            onPress={() => {
-              applicationQuery.refetch()
-            }}
-            {...(instanceQuery.isFetching || applicationQuery.isFetching
-              ? { icon: 'loader' }
-              : { text: t('content.login.button') as string })}
-            disabled={
-              !instanceQuery.data?.uri ||
-              instanceQuery.isFetching ||
-              applicationQuery.isFetching
-            }
+          <Button
+            type='text'
+            content={t('content.login.button')}
+            onPress={() => applicationQuery.refetch()}
+            disabled={!instanceQuery.data?.uri}
+            loading={instanceQuery.isFetching || applicationQuery.isFetching}
           />
         </View>
         <View>
@@ -225,8 +203,7 @@ const Login: React.FC = () => {
           })}
           {instanceInfo({
             header: '实例介绍',
-            content: instanceQuery.data?.short_description,
-            parse: true
+            content: instanceQuery.data?.short_description
           })}
           <View style={styles.instanceStats}>
             <View style={styles.instanceStat}>
@@ -306,18 +283,15 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.Global.PagePadding
   },
   inputRow: {
-    flex: 1,
     flexDirection: 'row'
   },
   textInput: {
     flex: 1,
-    borderBottomWidth: 1.25,
-    paddingTop: StyleConstants.Spacing.S - 1.5,
-    paddingBottom: StyleConstants.Spacing.S - 1.5,
+    borderBottomWidth: 1,
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding,
     fontSize: StyleConstants.Font.Size.M,
-    marginRight: StyleConstants.Spacing.M
+    marginRight: StyleConstants.Spacing.S
   },
   instanceInfo: {
     marginTop: StyleConstants.Spacing.M,

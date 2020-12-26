@@ -16,7 +16,7 @@ const TimelineSeparator: React.FC<Props> = ({ highlighted = false }) => {
       style={[
         styles.base,
         {
-          borderTopColor: theme.separator,
+          borderTopColor: theme.border,
           marginLeft: highlighted
             ? StyleConstants.Spacing.Global.PagePadding
             : StyleConstants.Spacing.Global.PagePadding +
@@ -30,7 +30,7 @@ const TimelineSeparator: React.FC<Props> = ({ highlighted = false }) => {
 
 const styles = StyleSheet.create({
   base: {
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
     marginRight: StyleConstants.Spacing.Global.PagePadding
   }
 })

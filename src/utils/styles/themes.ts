@@ -12,7 +12,6 @@ export type ColorDefinitions =
   | 'backgroundGradientEnd'
   | 'backgroundOverlay'
   | 'border'
-  | 'separator'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -62,12 +61,8 @@ const themeColors: {
     dark: 'rgba(0, 0, 0, 0.5)'
   },
   border: {
-    light: 'rgba(0, 0, 0, 0.3)',
-    dark: 'rgba(255, 255, 255, 0.16)'
-  },
-  separator: {
-    light: 'rgba(0, 0, 0, 0.1)',
-    dark: 'rgba(255, 255, 255, 0.1)'
+    light: 'rgba(18, 18, 18, 0.3)',
+    dark: 'rgba(255, 255, 255, 0.3)'
   }
 }
 
