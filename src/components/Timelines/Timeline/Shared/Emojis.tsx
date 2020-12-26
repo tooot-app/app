@@ -34,7 +34,6 @@ const Emojis: React.FC<Props> = ({
       marginBottom: -1
     }
   })
-  const hasEmojis = content.match(regexEmoji)
 
   return (
     <Text numberOfLines={numberOfLines || undefined}>
@@ -72,4 +71,4 @@ const Emojis: React.FC<Props> = ({
   )
 }
 
-export default Emojis
+export default React.memo(Emojis, () => true)

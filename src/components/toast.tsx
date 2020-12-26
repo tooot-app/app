@@ -56,7 +56,7 @@ const ToastBase = ({ config }: { config: Config }) => {
   enum colorMapping {
     success = 'blue',
     error = 'red',
-    warning = 'primary'
+    warning = 'secondary'
   }
 
   return (

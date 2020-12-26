@@ -3,7 +3,6 @@ import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Image, StyleSheet, Pressable } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 export interface Props {
   sensitiveShown: boolean
@@ -18,8 +17,6 @@ const AttachmentImage: React.FC<Props> = ({
   imageIndex,
   navigateToImagesViewer
 }) => {
-  layoutAnimation()
-
   let isMounted = false
   useEffect(() => {
     isMounted = true

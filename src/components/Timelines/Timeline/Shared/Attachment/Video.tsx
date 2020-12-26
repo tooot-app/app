@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 import { Video } from 'expo-av'
 import { ButtonRow } from '@components/Button'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 
@@ -19,8 +18,6 @@ const AttachmentVideo: React.FC<Props> = ({
   width,
   height
 }) => {
-  layoutAnimation()
-
   const videoPlayer = useRef<Video>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)

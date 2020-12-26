@@ -8,7 +8,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import openLink from '@root/utils/openLink'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -154,7 +153,6 @@ const ParseContent: React.FC<Props> = ({
     }
   }, [])
   const rootComponent = useCallback(({ children }) => {
-    // layoutAnimation()
     const lineHeight = StyleConstants.Font.LineHeight[size]
 
     const [heightOriginal, setHeightOriginal] = useState<number>()
@@ -200,7 +198,9 @@ const ParseContent: React.FC<Props> = ({
         />
         {allowExpand && (
           <Pressable
-            onPress={() => setShowAllText(!showAllText)}
+            onPress={() => {
+              setShowAllText(!showAllText)
+            }}
             style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
           >
             <LinearGradient

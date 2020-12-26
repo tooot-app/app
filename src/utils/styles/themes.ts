@@ -4,6 +4,7 @@ export type ColorDefinitions =
   | 'primary'
   | 'primaryOverlay'
   | 'secondary'
+  | 'disabled'
   | 'blue'
   | 'red'
   | 'background'
@@ -31,6 +32,10 @@ const themeColors: {
     light: 'rgb(135, 135, 135)',
     dark: 'rgb(135, 135, 135)'
   },
+  disabled: {
+    light: 'rgb(200, 200, 200)',
+    dark: 'rgb(66, 66, 66)'
+  },
   blue: {
     light: 'rgb(43, 144, 221)',
     dark: 'rgb(43, 144, 221)'
@@ -54,7 +59,7 @@ const themeColors: {
   },
   backgroundOverlay: {
     light: 'rgba(18, 18, 18, 0.5)',
-    dark: 'rgba(255, 255, 255, 0.5)'
+    dark: 'rgba(0, 0, 0, 0.5)'
   },
   border: {
     light: 'rgba(0, 0, 0, 0.3)',

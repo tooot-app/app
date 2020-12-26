@@ -171,7 +171,7 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
           })}
           tabBarOptions={{
             activeTintColor: theme.primary,
-            inactiveTintColor: theme.secondary,
+            inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
             showLabel: false
           }}
         >
@@ -182,11 +182,6 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
               tabPress: e => {
                 if (!localInstance) {
                   e.preventDefault()
-                  toast({
-                    type: 'error',
-                    content: '请先登录',
-                    onHide: () => navigation.navigate('Screen-Me')
-                  })
                 }
               }
             })}
@@ -200,12 +195,6 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
                 if (localInstance) {
                   navigation.navigate(getCurrentTab(navigation), {
                     screen: 'Screen-Shared-Compose'
-                  })
-                } else {
-                  toast({
-                    type: 'error',
-                    content: '请先登录',
-                    onHide: () => navigation.navigate('Screen-Me')
                   })
                 }
               }
@@ -224,15 +213,10 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
                 backgroundColor: theme.red
               }
             }}
-            listeners={({ navigation }) => ({
+            listeners={() => ({
               tabPress: e => {
                 if (!localInstance) {
                   e.preventDefault()
-                  toast({
-                    type: 'error',
-                    content: '请先登录',
-                    onHide: () => navigation.navigate('Screen-Me')
-                  })
                 }
               }
             })}

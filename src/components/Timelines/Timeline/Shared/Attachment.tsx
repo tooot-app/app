@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import AttachmentUnsupported from './Attachment/Unsupported'
 import AttachmentAudio from './Attachment/Audio'
 import { Feather } from '@expo/vector-icons'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
@@ -21,6 +22,7 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
 
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
+    layoutAnimation()
     setSensitiveShown(false)
   }, [])
 

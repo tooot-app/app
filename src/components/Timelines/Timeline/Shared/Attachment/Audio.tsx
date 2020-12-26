@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { Audio } from 'expo-av'
 import { ButtonRow } from '@components/Button'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 import Slider from '@react-native-community/slider'
@@ -15,8 +14,6 @@ export interface Props {
 }
 
 const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
-  layoutAnimation()
-
   const { theme } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
@@ -93,8 +90,8 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
           minimumValue={0}
           maximumValue={audio.meta.original.duration * 1000}
           value={audioPosition}
-          minimumTrackTintColor={theme.primary}
-          maximumTrackTintColor={theme.secondary}
+          minimumTrackTintColor={theme.secondary}
+          maximumTrackTintColor={theme.disabled}
           onSlidingStart={() => {
             audioPlayer?.pauseAsync()
             setAudioPlaying(false)

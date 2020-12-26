@@ -144,10 +144,7 @@ const TimelineActions: React.FC<Props> = ({
     })
   }, [])
   const onPressReblog = useCallback(() => {
-    if (status.visibility === 'private' || status.visibility === 'direct') {
-      console.log('awjerio')
-      toast({ type: 'error', content: '禁止转发' })
-    } else {
+    if (status.visibility !== 'private' && status.visibility !== 'direct') {
       mutate({
         id: status.id,
         type: 'reblog',
@@ -221,7 +218,11 @@ const TimelineActions: React.FC<Props> = ({
     () => (
       <Feather
         name='repeat'
-        color={iconColorAction(status.reblogged)}
+        color={
+          status.visibility === 'private' || status.visibility === 'direct'
+            ? theme.disabled
+            : iconColorAction(status.reblogged)
+        }
         size={StyleConstants.Font.Size.M + 2}
       />
     ),
