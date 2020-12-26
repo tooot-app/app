@@ -13,11 +13,22 @@ export interface Props {
 const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
 
+  let isMounted = false
+  useEffect(() => {
+    isMounted = true
+
+    return () => {
+      isMounted = false
+    }
+  })
   const [imageLoaded, setImageLoaded] = useState(false)
-  useEffect(
-    () => card.image && Image.getSize(card.image, () => setImageLoaded(true)),
-    []
-  )
+  useEffect(() => {
+    const preFetch = () =>
+      card.image &&
+      isMounted &&
+      Image.getSize(card.image, () => isMounted && setImageLoaded(true))
+    preFetch()
+  }, [isMounted])
   const cardVisual = useMemo(() => {
     if (imageLoaded) {
       return <Image source={{ uri: card.image }} style={styles.image} />

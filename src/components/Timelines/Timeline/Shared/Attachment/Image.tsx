@@ -20,30 +20,41 @@ const AttachmentImage: React.FC<Props> = ({
 }) => {
   layoutAnimation()
 
+  let isMounted = false
+  useEffect(() => {
+    isMounted = true
+
+    return () => {
+      isMounted = false
+    }
+  })
   const [imageVisible, setImageVisible] = useState<string>()
   const [imageLoadingFailed, setImageLoadingFailed] = useState(false)
-  useEffect(
-    () =>
+  useEffect(() => {
+    const preFetch = () =>
+      isMounted &&
       Image.getSize(
         image.preview_url,
-        () => setImageVisible(image.preview_url),
+        () => isMounted && setImageVisible(image.preview_url),
         () => {
-          Image.getSize(
-            image.url,
-            () => setImageVisible(image.url),
-            () =>
-              image.remote_url
-                ? Image.getSize(
-                    image.remote_url,
-                    () => setImageVisible(image.remote_url),
-                    () => setImageLoadingFailed(true)
-                  )
-                : setImageLoadingFailed(true)
-          )
+          isMounted &&
+            Image.getSize(
+              image.url,
+              () => isMounted && setImageVisible(image.url),
+              () =>
+                image.remote_url
+                  ? isMounted &&
+                    Image.getSize(
+                      image.remote_url,
+                      () => isMounted && setImageVisible(image.remote_url),
+                      () => isMounted && setImageLoadingFailed(true)
+                    )
+                  : isMounted && setImageLoadingFailed(true)
+            )
         }
-      ),
-    []
-  )
+      )
+    preFetch()
+  }, [isMounted])
 
   const children = useCallback(() => {
     if (imageVisible && !sensitiveShown) {

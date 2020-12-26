@@ -17,23 +17,33 @@ const AccountHeader: React.FC<Props> = ({
 }) => {
   const [ratio, setRatio] = useState(accountState.headerRatio)
 
+  let isMounted = false
+  useEffect(() => {
+    isMounted = true
+
+    return () => {
+      isMounted = false
+    }
+  })
   useEffect(() => {
     if (
       account?.header &&
       !account.header.includes('/headers/original/missing.png')
     ) {
-      Image.getSize(account.header, (width, height) => {
-        if (!limitHeight) {
-          accountDispatch &&
-            accountDispatch({
-              type: 'headerRatio',
-              payload: height / width
-            })
-        }
-        setRatio(limitHeight ? accountState.headerRatio : height / width)
-      })
+      isMounted &&
+        Image.getSize(account.header, (width, height) => {
+          if (!limitHeight) {
+            accountDispatch &&
+              accountDispatch({
+                type: 'headerRatio',
+                payload: height / width
+              })
+          }
+          isMounted &&
+            setRatio(limitHeight ? accountState.headerRatio : height / width)
+        })
     }
-  }, [account])
+  }, [account, isMounted])
 
   const windowWidth = Dimensions.get('window').width
 
