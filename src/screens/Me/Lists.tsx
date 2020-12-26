@@ -1,25 +1,18 @@
+import { MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import { ActivityIndicator, Text } from 'react-native'
-import { useQuery } from 'react-query'
-import { MenuContainer, MenuRow } from '@components/Menu'
-
+import TimelineEmpty from '@root/components/Timelines/Timeline/Empty'
 import { listsFetch } from '@utils/fetches/listsFetch'
+import React, { useMemo } from 'react'
+import { StyleSheet } from 'react-native'
+import { useQuery } from 'react-query'
 
 const ScreenMeLists: React.FC = () => {
   const navigation = useNavigation()
-  const { status, data } = useQuery(['Lists'], listsFetch)
+  const { status, data, refetch } = useQuery(['Lists'], listsFetch)
 
-  let lists
-  switch (status) {
-    case 'loading':
-      lists = <ActivityIndicator />
-      break
-    case 'error':
-      lists = <Text>载入错误</Text>
-      break
-    case 'success':
-      lists = data?.map((d: Mastodon.List, i: number) => (
+  const children = useMemo(() => {
+    if (status === 'success') {
+      return data?.map((d: Mastodon.List, i: number) => (
         <MenuRow
           key={i}
           iconFront='list'
@@ -32,10 +25,19 @@ const ScreenMeLists: React.FC = () => {
           }
         />
       ))
-      break
-  }
+    } else {
+      return <TimelineEmpty status={status} refetch={refetch} />
+    }
+  }, [status])
 
-  return <MenuContainer>{lists}</MenuContainer>
+  return <>{children}</>
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center'
+  }
+})
 
 export default ScreenMeLists

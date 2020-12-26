@@ -162,12 +162,16 @@ const TimelinePoll: React.FC<Props> = ({
             <View style={styles.optionSelected}>
               <Feather
                 style={styles.voted}
-                name={poll.multiple ? 'check-square' : 'check-circle'}
+                name={
+                  `${poll.own_votes!.includes(index) ? 'check-' : ''}${
+                    poll.multiple ? 'square' : 'circle'
+                  }` as any
+                }
                 size={StyleConstants.Font.Size.M}
                 color={
                   poll.own_votes!.includes(index)
                     ? theme.primary
-                    : theme.background
+                    : theme.disabled
                 }
               />
               <View style={styles.contentSelected}>
@@ -266,7 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   contentSelected: {
-    flexShrink: 1,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingRight: StyleConstants.Spacing.S

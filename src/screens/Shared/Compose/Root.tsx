@@ -1,40 +1,37 @@
-import { forEach, groupBy, sortBy } from 'lodash'
-import React, {
-  Dispatch,
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react'
-import {
-  View,
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  ProgressViewIOS,
-  StyleSheet,
-  Text,
-  TextInput,
-  Image
-} from 'react-native'
-import { useQuery } from 'react-query'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import { emojisFetch } from '@utils/fetches/emojisFetch'
-import { searchFetch } from '@utils/fetches/searchFetch'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
 import {
   ComposeAction,
   ComposeState,
   ComposeContext
 } from '@screens/Shared/Compose'
 import ComposeActions from '@screens/Shared/Compose/Actions'
-import updateText from './updateText'
-import * as Permissions from 'expo-permissions'
 import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
 import ComposeRootHeader from '@screens/Shared/Compose/Root/Header'
+import updateText from '@screens/Shared/Compose/updateText'
+import { emojisFetch } from '@utils/fetches/emojisFetch'
+import { searchFetch } from '@utils/fetches/searchFetch'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import * as Permissions from 'expo-permissions'
+import { forEach, groupBy, sortBy } from 'lodash'
+import React, {
+  Dispatch,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo
+} from 'react'
+import {
+  View,
+  FlatList,
+  Pressable,
+  ProgressViewIOS,
+  StyleSheet,
+  Text,
+  Image
+} from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
+import { useQuery } from 'react-query'
 
 const ListItem = React.memo(
   ({
@@ -109,6 +106,8 @@ const ListItem = React.memo(
 )
 
 const ComposeRoot: React.FC = () => {
+  const { theme } = useTheme()
+
   const { composeState, composeDispatch } = useContext(ComposeContext)
 
   const { isFetching, isSuccess, data, refetch } = useQuery(
@@ -159,7 +158,14 @@ const ComposeRoot: React.FC = () => {
 
   const listEmpty = useMemo(() => {
     if (isFetching) {
-      return <ActivityIndicator />
+      return (
+        <View style={styles.loading}>
+          <Chase
+            size={StyleConstants.Font.Size.M * 1.25}
+            color={theme.secondary}
+          />
+        </View>
+      )
     }
   }, [isFetching])
 
@@ -242,6 +248,10 @@ const styles = StyleSheet.create({
     fontSize: StyleConstants.Font.Size.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center'
   }
 })
 

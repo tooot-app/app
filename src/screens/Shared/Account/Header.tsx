@@ -42,6 +42,8 @@ const AccountHeader: React.FC<Props> = ({
           isMounted &&
             setRatio(limitHeight ? accountState.headerRatio : height / width)
         })
+    } else {
+      isMounted && setRatio(1 / 5)
     }
   }, [account, isMounted])
 

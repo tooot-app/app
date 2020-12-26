@@ -1,6 +1,7 @@
-import { Feather } from '@expo/vector-icons'
 import React from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
+import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -14,7 +15,7 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
   return (
     <View style={styles.base}>
       {hasNextPage ? (
-        <ActivityIndicator />
+        <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
       ) : (
         <Text style={[styles.text, { color: theme.secondary }]}>
           居然刷到底了，喝杯{' '}

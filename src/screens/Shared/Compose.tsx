@@ -528,7 +528,6 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
-  // doesn't work
   const rawCount = composeState.text.raw.length
 
   const postButtonText = {

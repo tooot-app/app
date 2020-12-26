@@ -1,8 +1,9 @@
-import { Feather } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 import { QueryStatus } from 'react-query'
 import Button from '@components/Button'
+import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -17,7 +18,9 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
   const children = useMemo(() => {
     switch (status) {
       case 'loading':
-        return <ActivityIndicator />
+        return (
+          <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+        )
       case 'error':
         return (
           <>

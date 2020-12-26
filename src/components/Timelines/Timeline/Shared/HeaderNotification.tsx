@@ -1,21 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
+import { useQuery } from 'react-query'
+import client from '@api/client'
 import { Feather } from '@expo/vector-icons'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import relativeTime from '@utils/relativeTime'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { StyleConstants } from '@utils/styles/constants'
-import { useQuery } from 'react-query'
-import { relationshipFetch } from '@utils/fetches/relationshipFetch'
-import client from '@api/client'
 import { toast } from '@components/toast'
 import openLink from '@root/utils/openLink'
+import relativeTime from '@utils/relativeTime'
+import { StyleConstants } from '@utils/styles/constants'
+import { relationshipFetch } from '@utils/fetches/relationshipFetch'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -87,7 +82,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     switch (status) {
       case 'idle':
       case 'loading':
-        return <ActivityIndicator />
+        return (
+          <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+        )
       case 'success':
         return (
           <Pressable onPress={relationshipOnPress}>

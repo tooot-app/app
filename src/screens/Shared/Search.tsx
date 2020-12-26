@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { HeaderRight } from '@root/components/Header'
+import ParseContent from '@root/components/ParseContent'
 import Emojis from '@root/components/Timelines/Timeline/Shared/Emojis'
 import { searchFetch } from '@root/utils/fetches/searchFetch'
 import { StyleConstants } from '@root/utils/styles/constants'
@@ -8,8 +9,8 @@ import { useTheme } from '@root/utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
   Pressable,
   SectionList,
   StyleSheet,
@@ -17,6 +18,7 @@ import {
   TextInput,
   View
 } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQuery } from 'react-query'
 
@@ -71,46 +73,52 @@ const ScreenSharedSearch: React.FC = () => {
   }, [searchTerm])
 
   const listEmpty = useMemo(
-    () =>
-      status === 'loading' ? (
-        <View style={styles.emptyBase}>
-          <ActivityIndicator />
-        </View>
-      ) : (
-        <View style={styles.emptyBase}>
-          <Text
-            style={[
-              styles.emptyDefault,
-              styles.emptyFontSize,
-              { color: theme.primary }
-            ]}
-          >
-            输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
-            <Text style={styles.emptyFontBold}>话题标签</Text>或者
-            <Text style={styles.emptyFontBold}>嘟文</Text>
-          </Text>
-          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-            高级搜索格式
-          </Text>
-          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-            <Text style={{ color: theme.secondary }}>@username@domain</Text>
-            {'   '}
-            搜索用户
-          </Text>
-          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-            <Text style={{ color: theme.secondary }}>#example</Text>
-            {'   '}搜索话题标签
-          </Text>
-          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-            <Text style={{ color: theme.secondary }}>URL</Text>
-            {'   '}搜索指定嘟文
-          </Text>
-          <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-            <Text style={{ color: theme.secondary }}>URL</Text>
-            {'   '}搜索指定用户
-          </Text>
-        </View>
-      ),
+    () => (
+      <View style={styles.emptyBase}>
+        {status === 'loading' ? (
+          <View style={styles.loading}>
+            <Chase
+              size={StyleConstants.Font.Size.M * 1.25}
+              color={theme.secondary}
+            />
+          </View>
+        ) : (
+          <>
+            <Text
+              style={[
+                styles.emptyDefault,
+                styles.emptyFontSize,
+                { color: theme.primary }
+              ]}
+            >
+              输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
+              <Text style={styles.emptyFontBold}>话题标签</Text>或者
+              <Text style={styles.emptyFontBold}>嘟文</Text>
+            </Text>
+            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              高级搜索格式
+            </Text>
+            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={{ color: theme.secondary }}>@username@domain</Text>
+              {'   '}
+              搜索用户
+            </Text>
+            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={{ color: theme.secondary }}>#example</Text>
+              {'   '}搜索话题标签
+            </Text>
+            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={{ color: theme.secondary }}>URL</Text>
+              {'   '}搜索指定嘟文
+            </Text>
+            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={{ color: theme.secondary }}>URL</Text>
+              {'   '}搜索指定用户
+            </Text>
+          </>
+        )}
+      </View>
+    ),
     [status]
   )
   const sectionHeader = useCallback(
@@ -204,63 +212,115 @@ const ScreenSharedSearch: React.FC = () => {
           </Pressable>
         )
       case 'statuses':
-        return <Text>{item.id || 'empty'}</Text>
+        return (
+          <Pressable
+            style={[
+              styles.itemDefault,
+              styles.itemAccount,
+              { borderBottomColor: theme.border }
+            ]}
+            onPress={() => {
+              navigation.goBack()
+              navigation.push('Screen-Shared-Toot', { toot: item })
+            }}
+          >
+            <Image
+              source={{ uri: item.account.avatar_static }}
+              style={styles.itemAccountAvatar}
+            />
+            <View>
+              {item.account.emojis?.length ? (
+                <Emojis
+                  content={item.account.display_name || item.account.username}
+                  emojis={item.account.emojis}
+                  size={StyleConstants.Font.Size.S}
+                  fontBold={true}
+                />
+              ) : (
+                <Text
+                  style={[styles.nameWithoutEmoji, { color: theme.primary }]}
+                >
+                  {item.account.display_name || item.account.username}
+                </Text>
+              )}
+              <Text
+                style={[styles.itemAccountAcct, { color: theme.secondary }]}
+              >
+                @{item.account.acct}
+              </Text>
+              {item.content && (
+                <View style={styles.itemStatus}>
+                  <ParseContent
+                    content={item.content}
+                    size='M'
+                    emojis={item.emojis}
+                    numberOfLines={2}
+                  />
+                </View>
+              )}
+            </View>
+          </Pressable>
+        )
       default:
         return null
     }
   }, [])
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
-      <View style={styles.searchBar}>
-        <View
-          style={[styles.searchField, { borderBottomColor: theme.secondary }]}
-        >
-          <Feather
-            name='search'
-            color={theme.primary}
-            size={StyleConstants.Font.Size.M}
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={[
-              styles.textInput,
-              {
-                color: theme.primary
+    <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
+        <View style={styles.searchBar}>
+          <View
+            style={[styles.searchField, { borderBottomColor: theme.secondary }]}
+          >
+            <Feather
+              name='search'
+              color={theme.primary}
+              size={StyleConstants.Font.Size.M}
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={[
+                styles.textInput,
+                {
+                  color: theme.primary
+                }
+              ]}
+              autoFocus
+              onChangeText={onChangeText}
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='never'
+              keyboardType='web-search'
+              onSubmitEditing={({ nativeEvent: { text } }) =>
+                setSearchTerm(text)
               }
-            ]}
-            autoFocus
-            onChangeText={onChangeText}
-            autoCapitalize='none'
-            autoCorrect={false}
-            clearButtonMode='never'
-            keyboardType='web-search'
-            onSubmitEditing={({ nativeEvent: { text } }) => setSearchTerm(text)}
-            placeholder={'搜索些什么'}
-            placeholderTextColor={theme.secondary}
-            returnKeyType='go'
-          />
+              placeholder={'搜索些什么'}
+              placeholderTextColor={theme.secondary}
+              returnKeyType='go'
+            />
+          </View>
+          <View style={styles.searchCancel}>
+            <HeaderRight
+              type='text'
+              content='取消'
+              onPress={() => navigation.goBack()}
+            />
+          </View>
         </View>
-        <View style={styles.searchCancel}>
-          <HeaderRight
-            type='text'
-            content='取消'
-            onPress={() => navigation.goBack()}
-          />
-        </View>
-      </View>
-      <SectionList
-        style={styles.base}
-        renderItem={listItem}
-        stickySectionHeadersEnabled
-        sections={setctionData}
-        ListEmptyComponent={listEmpty}
-        keyboardShouldPersistTaps='always'
-        renderSectionHeader={sectionHeader}
-        renderSectionFooter={sectionFooter}
-        keyExtractor={(item, index) => item + index}
-      />
-    </SafeAreaView>
+        <SectionList
+          style={styles.base}
+          renderItem={listItem}
+          stickySectionHeadersEnabled
+          sections={setctionData}
+          ListEmptyComponent={listEmpty}
+          keyboardShouldPersistTaps='always'
+          renderSectionHeader={sectionHeader}
+          renderSectionFooter={sectionFooter}
+          keyExtractor={(item, index) => item + index}
+        />
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -303,6 +363,7 @@ const styles = StyleSheet.create({
       StyleConstants.Spacing.M +
       StyleConstants.Spacing.S
   },
+  loading: { flex: 1, alignItems: 'center' },
   emptyFontSize: { fontSize: StyleConstants.Font.Size.S },
   emptyFontBold: {
     fontWeight: StyleConstants.Font.Weight.Bold
@@ -338,6 +399,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   itemAccountAvatar: {
+    alignSelf: 'flex-start',
     width: StyleConstants.Avatar.S,
     height: StyleConstants.Avatar.S,
     borderRadius: 6,
@@ -350,6 +412,9 @@ const styles = StyleSheet.create({
   itemAccountAcct: { marginTop: StyleConstants.Spacing.XS },
   itemHashtag: {
     fontSize: StyleConstants.Font.Size.M
+  },
+  itemStatus: {
+    marginTop: StyleConstants.Spacing.S
   }
 })
 
