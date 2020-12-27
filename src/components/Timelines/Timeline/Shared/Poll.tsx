@@ -212,11 +212,19 @@ const TimelinePoll: React.FC<Props> = ({
                     allOptions.map((o, i) => (i === index ? !o : o))
                   )
                 } else {
-                  setAllOptions(
-                    allOptions.map((o, i) =>
-                      i === index ? !allOptions[index] : allOptions[index]
+                  {
+                    const otherOptions =
+                      allOptions[index] === false ? false : undefined
+                    setAllOptions(
+                      allOptions.map((o, i) =>
+                        i === index
+                          ? !o
+                          : otherOptions !== undefined
+                          ? otherOptions
+                          : o
+                      )
                     )
-                  )
+                  }
                 }
               }}
             >
