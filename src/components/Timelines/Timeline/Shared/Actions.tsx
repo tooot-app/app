@@ -49,15 +49,9 @@ export interface Props {
   queryKey: QueryKey.Timeline
   status: Mastodon.Status
   reblog: boolean
-  sameAccountRoot: boolean
 }
 
-const TimelineActions: React.FC<Props> = ({
-  queryKey,
-  status,
-  reblog,
-  sameAccountRoot
-}) => {
+const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const iconColor = theme.secondary
@@ -71,33 +65,18 @@ const TimelineActions: React.FC<Props> = ({
       const oldData = queryClient.getQueryData(queryKey)
 
       switch (type) {
-        // Update each specific page
         case 'favourite':
         case 'reblog':
         case 'bookmark':
-          if (type === 'favourite' && queryKey[0] === 'Favourites') {
-            queryClient.invalidateQueries(['Favourites', {}])
-            break
-          }
-          if (
-            type === 'reblog' &&
-            queryKey[0] === 'Following' &&
-            prevState === true &&
-            sameAccountRoot
-          ) {
-            queryClient.invalidateQueries(['Following'])
-            break
-          }
-          if (type === 'bookmark' && queryKey[0] === 'Bookmarks') {
-            queryClient.invalidateQueries(['Bookmarks', {}])
-            break
-          }
-
           queryClient.setQueryData<TimelineData>(queryKey, old => {
             let tootIndex = -1
             const pageIndex = findIndex(old?.pages, page => {
               const tempIndex = findIndex(page.toots, [
-                reblog ? 'reblog.id' : 'id',
+                queryKey[0] === 'Notifications'
+                  ? 'status.id'
+                  : reblog
+                  ? 'reblog.id'
+                  : 'id',
                 id
               ])
               if (tempIndex >= 0) {
@@ -107,14 +86,29 @@ const TimelineActions: React.FC<Props> = ({
                 return false
               }
             })
+            console.log(queryKey)
+            console.log('pageIndex', pageIndex)
+            console.log('tootIndex', tootIndex)
 
             if (pageIndex >= 0 && tootIndex >= 0) {
-              if (reblog) {
-                old!.pages[pageIndex].toots[tootIndex].reblog![stateKey] =
-                  typeof prevState === 'boolean' ? !prevState : true
+              if (
+                (type === 'favourite' && queryKey[0] === 'Favourites') ||
+                (type === 'bookmark' && queryKey[0] === 'Bookmarks')
+              ) {
+                old!.pages[pageIndex].toots.splice(tootIndex, 1)
               } else {
-                old!.pages[pageIndex].toots[tootIndex][stateKey] =
-                  typeof prevState === 'boolean' ? !prevState : true
+                if (queryKey[0] === 'Notifications') {
+                  old!.pages[pageIndex].toots[tootIndex].status[stateKey] =
+                    typeof prevState === 'boolean' ? !prevState : true
+                } else {
+                  if (reblog) {
+                    old!.pages[pageIndex].toots[tootIndex].reblog![stateKey] =
+                      typeof prevState === 'boolean' ? !prevState : true
+                  } else {
+                    old!.pages[pageIndex].toots[tootIndex][stateKey] =
+                      typeof prevState === 'boolean' ? !prevState : true
+                  }
+                }
               }
             }
 

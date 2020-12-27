@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -44,18 +44,29 @@ const TimelineConversation: React.FC<Props> = ({
 
   const navigation = useNavigation()
 
-  const conversationOnPress = useCallback(() => {
+  const onPress = useCallback(() => {
     if (conversation.last_status) {
       conversation.unread && mutate({ id: conversation.id })
-      navigation.navigate('Screen-Shared-Toot', {
+      navigation.push('Screen-Shared-Toot', {
         toot: conversation.last_status
       })
     }
   }, [])
 
-  const conversationChildren = useMemo(() => {
-    return (
-      conversation.last_status && (
+  return (
+    <Pressable style={styles.conversationView} onPress={onPress}>
+      <View style={styles.header}>
+        <TimelineAvatar
+          queryKey={queryKey}
+          account={conversation.accounts[0]}
+        />
+        <TimelineHeaderConversation
+          queryKey={queryKey}
+          conversation={conversation}
+        />
+      </View>
+
+      {conversation.last_status ? (
         <View
           style={{
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
@@ -69,27 +80,7 @@ const TimelineConversation: React.FC<Props> = ({
             highlighted={highlighted}
           />
         </View>
-      )
-    )
-  }, [])
-
-  return (
-    <View style={styles.conversationView}>
-      <View style={styles.header}>
-        <TimelineAvatar
-          queryKey={queryKey}
-          account={conversation.accounts[0]}
-        />
-        <TimelineHeaderConversation
-          queryKey={queryKey}
-          conversation={conversation}
-        />
-      </View>
-
-      <Pressable
-        onPress={conversationOnPress}
-        children={conversationChildren}
-      />
+      ) : null}
 
       <View
         style={{
@@ -102,10 +93,9 @@ const TimelineConversation: React.FC<Props> = ({
           queryKey={queryKey}
           status={conversation.last_status!}
           reblog={false}
-          sameAccountRoot={false}
         />
       </View>
-    </View>
+    </Pressable>
   )
 }
 

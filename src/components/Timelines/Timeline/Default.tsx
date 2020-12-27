@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -44,7 +44,7 @@ const TimelineDefault: React.FC<Props> = ({
       StyleConstants.Avatar.M - // Avatar width
       StyleConstants.Spacing.S // Avatar margin to the right
 
-  const tootOnPress = useCallback(
+  const onPress = useCallback(
     () =>
       !isRemotePublic &&
       !highlighted &&
@@ -53,8 +53,26 @@ const TimelineDefault: React.FC<Props> = ({
       }),
     []
   )
-  const tootChildren = useMemo(
-    () => (
+  return (
+    <Pressable style={styles.statusView} onPress={onPress}>
+      {item.reblog ? (
+        <TimelineActioned action='reblog' account={item.account} />
+      ) : pinnedLength && index < pinnedLength ? (
+        <TimelineActioned action='pinned' account={item.account} />
+      ) : null}
+
+      <View style={styles.header}>
+        <TimelineAvatar
+          {...(!isRemotePublic && { queryKey })}
+          account={actualStatus.account}
+        />
+        <TimelineHeaderDefault
+          {...(!isRemotePublic && { queryKey })}
+          status={actualStatus}
+          sameAccount={actualStatus.account.id === localAccountId}
+        />
+      </View>
+
       <View
         style={{
           paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
@@ -75,35 +93,13 @@ const TimelineDefault: React.FC<Props> = ({
           />
         )}
         {actualStatus.media_attachments.length > 0 && (
-          <TimelineAttachment status={actualStatus} contentWidth={contentWidth} />
+          <TimelineAttachment
+            status={actualStatus}
+            contentWidth={contentWidth}
+          />
         )}
         {actualStatus.card && <TimelineCard card={actualStatus.card} />}
       </View>
-    ),
-    [actualStatus.poll]
-  )
-
-  return (
-    <View style={styles.statusView}>
-      {item.reblog ? (
-        <TimelineActioned action='reblog' account={item.account} />
-      ) : pinnedLength && index < pinnedLength ? (
-        <TimelineActioned action='pinned' account={item.account} />
-      ) : null}
-
-      <View style={styles.header}>
-        <TimelineAvatar
-          {...(!isRemotePublic && { queryKey })}
-          account={actualStatus.account}
-        />
-        <TimelineHeaderDefault
-          {...(!isRemotePublic && { queryKey })}
-          status={actualStatus}
-          sameAccount={actualStatus.account.id === localAccountId}
-        />
-      </View>
-
-      <Pressable onPress={tootOnPress} children={tootChildren} />
 
       {!isRemotePublic && (
         <View
@@ -117,11 +113,10 @@ const TimelineDefault: React.FC<Props> = ({
             queryKey={queryKey}
             status={actualStatus}
             reblog={item.reblog ? true : false}
-            sameAccountRoot={item.account.id === localAccountId}
           />
         </View>
       )}
-    </View>
+    </Pressable>
   )
 }
 

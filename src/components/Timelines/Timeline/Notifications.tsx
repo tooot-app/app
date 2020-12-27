@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -39,16 +39,28 @@ const TimelineNotifications: React.FC<Props> = ({
       StyleConstants.Avatar.M - // Avatar width
       StyleConstants.Spacing.S // Avatar margin to the right
 
-  const tootOnPress = useCallback(
+  const onPress = useCallback(
     () =>
-      navigation.navigate('Screen-Shared-Toot', {
+      navigation.push('Screen-Shared-Toot', {
         toot: notification.status
       }),
     []
   )
-  const tootChildren = useMemo(
-    () =>
-      notification.status ? (
+
+  return (
+    <Pressable style={styles.notificationView} onPress={onPress}>
+      <TimelineActioned
+        action={notification.type}
+        account={notification.account}
+        notification
+      />
+
+      <View style={styles.header}>
+        <TimelineAvatar queryKey={queryKey} account={actualAccount} />
+        <TimelineHeaderNotification notification={notification} />
+      </View>
+
+      {notification.status ? (
         <View
           style={{
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
@@ -81,24 +93,7 @@ const TimelineNotifications: React.FC<Props> = ({
             <TimelineCard card={notification.status.card} />
           )}
         </View>
-      ) : null,
-    [notification.status?.poll?.voted]
-  )
-
-  return (
-    <View style={styles.notificationView}>
-      <TimelineActioned
-        action={notification.type}
-        account={notification.account}
-        notification
-      />
-
-      <View style={styles.header}>
-        <TimelineAvatar queryKey={queryKey} account={actualAccount} />
-        <TimelineHeaderNotification notification={notification} />
-      </View>
-
-      <Pressable onPress={tootOnPress} children={tootChildren} />
+      ) : null}
 
       {notification.status && (
         <View
@@ -112,11 +107,10 @@ const TimelineNotifications: React.FC<Props> = ({
             queryKey={queryKey}
             status={notification.status}
             reblog={false}
-            sameAccountRoot={notification.account.id === localAccountId}
           />
         </View>
       )}
-    </View>
+    </Pressable>
   )
 }
 

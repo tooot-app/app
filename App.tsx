@@ -1,14 +1,15 @@
+import client from '@root/api/client'
+import { Index } from '@root/Index'
+import { persistor, store } from '@root/store'
+import { resetLocal } from '@root/utils/slices/instancesSlice'
+import ThemeManager from '@utils/styles/ThemeManager'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import client from '@root/api/client'
-import { Index } from '@root/Index'
-import { persistor, store } from '@root/store'
-import { resetLocal } from '@root/utils/slices/instancesSlice'
-import ThemeManager from '@utils/styles/ThemeManager'
+import * as Sentry from 'sentry-expo'
 
 if (__DEV__) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render')
@@ -17,6 +18,13 @@ if (__DEV__) {
     hotReloadBufferMs: 1000
   })
 }
+
+Sentry.init({
+  dsn:
+    'https://c9e29aa05f774aca8f36def98244ce04@o389581.ingest.sentry.io/5571975',
+  enableInExpoDevelopment: false,
+  debug: __DEV__
+})
 
 const queryClient = new QueryClient()
 
