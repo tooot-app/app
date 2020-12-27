@@ -46,7 +46,7 @@ const Button: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
 
-  useLayoutEffect(() => layoutAnimation(), [loading, disabled])
+  useLayoutEffect(() => layoutAnimation(), [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (

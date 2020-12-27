@@ -15,7 +15,6 @@ import AccountNav from '../Shared/Account/Nav'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 const ScreenMeRoot: React.FC = () => {
-  layoutAnimation()
   const localRegistered = useSelector(getLocalUrl)
 
   const scrollRef = useRef<ScrollView>(null)

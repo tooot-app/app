@@ -100,7 +100,9 @@ const Timeline: React.FC<Props> = ({
     ({ item, index }) => {
       switch (page) {
         case 'Conversations':
-          return <TimelineConversation item={item} queryKey={queryKey} />
+          return (
+            <TimelineConversation conversation={item} queryKey={queryKey} />
+          )
         case 'Notifications':
           return (
             <TimelineNotifications notification={item} queryKey={queryKey} />

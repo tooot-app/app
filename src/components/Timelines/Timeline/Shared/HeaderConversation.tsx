@@ -12,9 +12,7 @@ import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
 
 export interface Props {
   queryKey: QueryKey.Timeline
-  id: string
-  account: Mastodon.Account
-  created_at?: Mastodon.Status['created_at']
+  conversation: Mastodon.Conversation
 }
 
 const fireMutation = async ({ id }: { id: string }) => {
@@ -37,12 +35,7 @@ const fireMutation = async ({ id }: { id: string }) => {
   }
 }
 
-const HeaderConversation: React.FC<Props> = ({
-  queryKey,
-  id,
-  account,
-  created_at
-}) => {
+const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
@@ -51,7 +44,9 @@ const HeaderConversation: React.FC<Props> = ({
 
       queryClient.setQueryData(queryKey, (old: any) =>
         old.pages.map((paging: any) => ({
-          toots: paging.toots.filter((toot: any) => toot.id !== id),
+          toots: paging.toots.filter(
+            (toot: Mastodon.Conversation) => toot.id !== conversation.id
+          ),
           pointer: paging.pointer
         }))
       )
@@ -66,7 +61,7 @@ const HeaderConversation: React.FC<Props> = ({
 
   const { theme } = useTheme()
 
-  const actionOnPress = useCallback(() => mutate({ id }), [])
+  const actionOnPress = useCallback(() => mutate({ id: conversation.id }), [])
 
   const actionChildren = useMemo(
     () => (
@@ -83,10 +78,13 @@ const HeaderConversation: React.FC<Props> = ({
     <View style={styles.base}>
       <View style={styles.nameAndDate}>
         <View style={styles.name}>
-          {account.emojis ? (
+          {conversation.accounts[0].emojis ? (
             <Emojis
-              content={account.display_name || account.username}
-              emojis={account.emojis}
+              content={
+                conversation.accounts[0].display_name ||
+                conversation.accounts[0].username
+              }
+              emojis={conversation.accounts[0].emojis}
               size={StyleConstants.Font.Size.M}
               fontBold={true}
             />
@@ -95,24 +93,27 @@ const HeaderConversation: React.FC<Props> = ({
               numberOfLines={1}
               style={[styles.nameWithoutEmoji, { color: theme.primary }]}
             >
-              {account.display_name || account.username}
+              {conversation.accounts[0].display_name ||
+                conversation.accounts[0].username}
             </Text>
           )}
           <Text
             style={[styles.account, { color: theme.secondary }]}
             numberOfLines={1}
           >
-            @{account.acct}
+            @{conversation.accounts[0].acct}
           </Text>
         </View>
-
-        {created_at && (
-          <View style={styles.meta}>
+        <View style={styles.meta}>
+          {conversation.last_status?.created_at && (
             <Text style={[styles.created_at, { color: theme.secondary }]}>
-              {relativeTime(created_at)}
+              {relativeTime(conversation.last_status?.created_at)}
             </Text>
-          </View>
-        )}
+          )}
+          {conversation.unread && (
+            <Feather name='circle' color={theme.blue} style={styles.unread} />
+          )}
+        </View>
       </View>
 
       <Pressable
@@ -151,6 +152,9 @@ const styles = StyleSheet.create({
   },
   created_at: {
     fontSize: StyleConstants.Font.Size.S
+  },
+  unread: {
+    marginLeft: StyleConstants.Spacing.XS
   },
   action: {
     flexBasis: '20%',

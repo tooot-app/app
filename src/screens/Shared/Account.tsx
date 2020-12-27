@@ -74,7 +74,6 @@ const ScreenSharedAccount: React.FC<Props> = ({
   },
   navigation
 }) => {
-  layoutAnimation()
   const localAccountId = useSelector(getLocalAccountId)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 

@@ -7,32 +7,55 @@ import TimelineHeaderConversation from '@components/Timelines/Timeline/Shared/He
 import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import { StyleConstants } from '@utils/styles/constants'
 import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
+import client from '@root/api/client'
+import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
-  item: Mastodon.Conversation
+  conversation: Mastodon.Conversation
   queryKey: QueryKey.Timeline
   highlighted?: boolean
 }
-// Unread and mark as unread
+
+const fireMutation = async ({ id }: { id: Mastodon.Conversation['id'] }) => {
+  const res = await client({
+    method: 'post',
+    instance: 'local',
+    url: `conversations/${id}/read`
+  })
+
+  if (res.body.id === id) {
+    return Promise.resolve()
+  } else {
+    return Promise.reject()
+  }
+}
+
 const TimelineConversation: React.FC<Props> = ({
-  item,
+  conversation,
   queryKey,
   highlighted = false
 }) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation(fireMutation, {
+    onSettled: () => {
+      queryClient.invalidateQueries(queryKey)
+    }
+  })
+
   const navigation = useNavigation()
 
-  const conversationOnPress = useCallback(
-    () =>
-      item.last_status &&
+  const conversationOnPress = useCallback(() => {
+    if (conversation.last_status) {
+      conversation.unread && mutate({ id: conversation.id })
       navigation.navigate('Screen-Shared-Toot', {
-        toot: item.last_status
-      }),
-    []
-  )
+        toot: conversation.last_status
+      })
+    }
+  }, [])
 
   const conversationChildren = useMemo(() => {
     return (
-      item.last_status && (
+      conversation.last_status && (
         <View
           style={{
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
@@ -42,7 +65,7 @@ const TimelineConversation: React.FC<Props> = ({
           }}
         >
           <TimelineContent
-            status={item.last_status}
+            status={conversation.last_status}
             highlighted={highlighted}
           />
         </View>
@@ -53,12 +76,13 @@ const TimelineConversation: React.FC<Props> = ({
   return (
     <View style={styles.conversationView}>
       <View style={styles.header}>
-        <TimelineAvatar queryKey={queryKey} account={item.accounts[0]} />
+        <TimelineAvatar
+          queryKey={queryKey}
+          account={conversation.accounts[0]}
+        />
         <TimelineHeaderConversation
           queryKey={queryKey}
-          id={item.id}
-          account={item.accounts[0]}
-          created_at={item.last_status?.created_at}
+          conversation={conversation}
         />
       </View>
 
@@ -76,7 +100,7 @@ const TimelineConversation: React.FC<Props> = ({
       >
         <TimelineActions
           queryKey={queryKey}
-          status={item.last_status!}
+          status={conversation.last_status!}
           reblog={false}
           sameAccountRoot={false}
         />

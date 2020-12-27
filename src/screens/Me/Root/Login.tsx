@@ -138,6 +138,7 @@ const Login: React.FC = () => {
               StyleConstants.Spacing.Global.PagePadding * 4
             }
             height={StyleConstants.Font.Size.M}
+            shimmerColors={theme.shimmer}
           >
             <ParseContent content={content!} size={'M'} numberOfLines={5} />
           </ShimmerPlaceholder>
@@ -217,6 +218,7 @@ const Login: React.FC = () => {
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
+                shimmerColors={theme.shimmer}
               >
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}
@@ -236,6 +238,7 @@ const Login: React.FC = () => {
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
+                shimmerColors={theme.shimmer}
               >
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}
@@ -255,6 +258,7 @@ const Login: React.FC = () => {
                 stopAutoRun
                 width={StyleConstants.Font.Size.M * 4}
                 height={StyleConstants.Font.Size.M}
+                shimmerColors={theme.shimmer}
               >
                 <Text
                   style={[styles.instanceInfoContent, { color: theme.primary }]}

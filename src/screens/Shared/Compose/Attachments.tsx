@@ -117,6 +117,7 @@ const ComposeAttachments: React.FC = () => {
           DEFAULT_HEIGHT
         }
         height={200}
+        shimmerColors={theme.shimmer}
       >
         {composeState.attachments.uploads.length > 0 &&
           composeState.attachments.uploads[0].type === 'image' &&

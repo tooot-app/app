@@ -1,3 +1,4 @@
+import { useTheme } from '@root/utils/styles/ThemeManager'
 import React, { Dispatch, useEffect, useState } from 'react'
 import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import { AccountAction, AccountState } from '../Account'
@@ -15,6 +16,7 @@ const AccountHeader: React.FC<Props> = ({
   account,
   limitHeight = false
 }) => {
+  const { theme } = useTheme()
   const [ratio, setRatio] = useState(accountState.headerRatio)
 
   let isMounted = false
@@ -43,23 +45,25 @@ const AccountHeader: React.FC<Props> = ({
             setRatio(limitHeight ? accountState.headerRatio : height / width)
         })
     } else {
-      isMounted && setRatio(1 / 5)
+      isMounted && setRatio(1 / 3)
     }
   }, [account, isMounted])
 
   const windowWidth = Dimensions.get('window').width
 
   return (
-    <View style={[styles.imageContainer, { height: windowWidth * ratio }]}>
+    <View
+      style={{
+        height: windowWidth * ratio,
+        backgroundColor: theme.disabled
+      }}
+    >
       <Image source={{ uri: account?.header }} style={styles.image} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    backgroundColor: 'lightgray'
-  },
   image: {
     width: '100%',
     height: '100%'

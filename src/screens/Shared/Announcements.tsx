@@ -63,7 +63,7 @@ const ScreenSharedAnnouncements: React.FC = ({
         showAll ? announcement : !announcement.read
       )
   })
-  const { mutate } = useMutation(fireMutation, {
+  const queryMutation = useMutation(fireMutation, {
     onSettled: () => {
       refetch()
     }
@@ -77,7 +77,13 @@ const ScreenSharedAnnouncements: React.FC = ({
 
   const renderItem = useCallback(
     ({ item, index }: { item: Mastodon.Announcement; index: number }) => (
-      <View key={index} style={styles.announcementContainer}>
+      <View
+        key={index}
+        style={[
+          styles.announcementContainer,
+          { backgroundColor: theme.background }
+        ]}
+      >
         <Pressable
           style={styles.pressable}
           onPress={() => navigation.goBack()}
@@ -108,9 +114,17 @@ const ScreenSharedAnnouncements: React.FC = ({
               {item.reactions?.map(reaction => (
                 <Pressable
                   key={reaction.name}
-                  style={[styles.reaction, { borderColor: theme.primary }]}
+                  style={[
+                    styles.reaction,
+                    {
+                      borderColor: reaction.me ? theme.disabled : theme.primary,
+                      backgroundColor: reaction.me
+                        ? theme.disabled
+                        : theme.background
+                    }
+                  ]}
                   onPress={() =>
-                    mutate({
+                    queryMutation.mutate({
                       announcementId: item.id,
                       type: 'reaction',
                       name: reaction.name,
@@ -149,14 +163,21 @@ const ScreenSharedAnnouncements: React.FC = ({
           ) : null}
           <Button
             type='text'
-            content='标记已读'
-            onPress={() => mutate({ type: 'dismiss', announcementId: item.id })}
-            style={styles.button}
+            content={item.read ? '已读' : '标记阅读'}
+            loading={queryMutation.isLoading}
+            disabled={item.read}
+            onPress={() =>
+              !item.read &&
+              queryMutation.mutate({
+                type: 'dismiss',
+                announcementId: item.id
+              })
+            }
           />
         </View>
       </View>
     ),
-    []
+    [theme]
   )
 
   const onMomentumScrollEnd = useCallback(
@@ -240,9 +261,13 @@ const styles = StyleSheet.create({
   scrollView: {
     marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
   },
-  reactions: { flexDirection: 'row', flexWrap: 'wrap' },
+  reactions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
+  },
   reaction: {
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
     padding: StyleConstants.Spacing.Global.PagePadding / 2,
     marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
     marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
@@ -260,9 +285,6 @@ const styles = StyleSheet.create({
   reactionCount: {
     fontSize: StyleConstants.Font.Size.S,
     marginLeft: StyleConstants.Spacing.S
-  },
-  button: {
-    marginTop: StyleConstants.Spacing.Global.PagePadding / 2
   },
   indicators: {
     flexDirection: 'row',

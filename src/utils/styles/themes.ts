@@ -12,6 +12,7 @@ export type ColorDefinitions =
   | 'backgroundGradientEnd'
   | 'backgroundOverlay'
   | 'border'
+  | 'shimmer'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -63,6 +64,18 @@ const themeColors: {
   border: {
     light: 'rgba(18, 18, 18, 0.3)',
     dark: 'rgba(255, 255, 255, 0.3)'
+  },
+  shimmer: {
+    light: [
+      'rgba(18, 18, 18, 0.05)',
+      'rgba(18, 18, 18, 0.15)',
+      'rgba(18, 18, 18, 0.05)'
+    ],
+    dark: [
+      'rgba(250, 250, 250, 0.05)',
+      'rgba(250, 250, 250, 0.15)',
+      'rgba(250, 250, 250, 0.05)'
+    ]
   }
 }
 
@@ -83,10 +96,10 @@ const themes = {
       ...DefaultTheme.colors,
       primary: themeColors.primary.light,
       background: themeColors.background.light,
-      card: themeColors.background.light || 'rgba(249, 249, 249, 0.94)',
+      card: themeColors.background.light,
       text: themeColors.primary.light,
       border: themeColors.border.light,
-      notification: 'rgb(255, 59, 48)'
+      notification: themeColors.red.light
     }
   },
   dark: {
@@ -95,10 +108,10 @@ const themes = {
       ...DarkTheme.colors,
       primary: themeColors.primary.dark,
       background: themeColors.background.dark,
-      card: themeColors.background.dark || 'rgba(22, 22, 22, 0.94)',
+      card: themeColors.background.dark,
       text: themeColors.primary.dark,
       border: themeColors.border.dark,
-      notification: 'rgb(255, 69, 58)'
+      notification: themeColors.red.dark
     }
   }
 }
