@@ -20,18 +20,17 @@ export interface Props {
   onPress?: () => void
 }
 
-const Core: React.FC<Props> = ({
+const MenuRow: React.FC<Props> = ({
   iconFront,
-  iconFrontColor,
+  iconFrontColor = 'primary',
   title,
   content,
   iconBack,
-  iconBackColor,
-  loading = false
+  iconBackColor = 'secondary',
+  loading = false,
+  onPress
 }) => {
   const { theme } = useTheme()
-  iconFrontColor = iconFrontColor || 'primary'
-  iconBackColor = iconBackColor || 'secondary'
 
   const loadingSpinkit = useMemo(
     () => (
@@ -46,63 +45,62 @@ const Core: React.FC<Props> = ({
   )
 
   return (
-    <View style={styles.core}>
-      <View style={styles.front}>
-        {iconFront && (
-          <Feather
-            name={iconFront}
-            size={StyleConstants.Font.Size.M + 2}
-            color={theme[iconFrontColor]}
-            style={styles.iconFront}
-          />
-        )}
-        <Text style={[styles.text, { color: theme.primary }]} numberOfLines={1}>
-          {title}
-        </Text>
-      </View>
-      {(content || iconBack) && (
-        <View style={styles.back}>
-          {content && content.length ? (
-            <>
-              <Text
-                style={[
-                  styles.content,
-                  {
-                    color: theme.secondary,
-                    opacity: !iconBack && loading ? 0 : 1
-                  }
-                ]}
-                numberOfLines={1}
-              >
-                {content}
-              </Text>
-              {loading && !iconBack && loadingSpinkit}
-            </>
-          ) : null}
-          {iconBack && (
-            <>
-              <Feather
-                name={iconBack}
-                size={StyleConstants.Font.Size.M + 2}
-                color={theme[iconBackColor]}
-                style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
-              />
-              {loading && loadingSpinkit}
-            </>
-          )}
-        </View>
-      )}
-    </View>
-  )
-}
-
-const MenuRow: React.FC<Props> = ({ ...props }) => {
-  return (
     <Pressable
       style={styles.base}
-      {...(!props.loading && props.onPress && { onPress: props.onPress })}
+      onPress={onPress}
+      disabled={loading}
+      testID='base'
     >
-      <Core {...props} />
+      <View style={styles.core}>
+        <View style={styles.front}>
+          {iconFront && (
+            <Feather
+              name={iconFront}
+              size={StyleConstants.Font.Size.M + 2}
+              color={theme[iconFrontColor]}
+              style={styles.iconFront}
+            />
+          )}
+          <Text
+            style={[styles.text, { color: theme.primary }]}
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+        </View>
+        {(content || iconBack) && (
+          <View style={styles.back}>
+            {content && content.length ? (
+              <>
+                <Text
+                  style={[
+                    styles.content,
+                    {
+                      color: theme.secondary,
+                      opacity: !iconBack && loading ? 0 : 1
+                    }
+                  ]}
+                  numberOfLines={1}
+                >
+                  {content}
+                </Text>
+                {loading && !iconBack && loadingSpinkit}
+              </>
+            ) : null}
+            {iconBack && (
+              <>
+                <Feather
+                  name={iconBack}
+                  size={StyleConstants.Font.Size.M + 2}
+                  color={theme[iconBackColor]}
+                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                />
+                {loading && loadingSpinkit}
+              </>
+            )}
+          </View>
+        )}
+      </View>
     </Pressable>
   )
 }

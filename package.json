@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
@@ -66,9 +67,15 @@
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.7",
     "@expo/config": "^3.3.15",
+    "@jest/types": "^26.6.2",
+    "@testing-library/jest-native": "^3.4.3",
+    "@testing-library/react-hooks": "^3.7.0",
+    "@testing-library/react-native": "^7.1.0",
     "@types/crypto-js": "^4.0.1",
     "@types/gl-react-expo": "^3.16.2",
+    "@types/jest": "^26.0.19",
     "@types/lodash": "^4.14.164",
     "@types/node": "^14.14.7",
     "@types/react": "~16.9.35",
@@ -76,10 +83,33 @@
     "@types/react-native": "~0.63.2",
     "@types/react-navigation": "^3.4.0",
     "@types/react-redux": "^7.1.12",
+    "@types/react-test-renderer": "^17.0.0",
     "@welldone-software/why-did-you-render": "^6.0.3",
     "babel-plugin-module-resolver": "^4.1.0",
     "chalk": "^4.1.0",
+    "jest": "^26.6.3",
+    "jest-expo": "^40.0.1",
+    "react-test-renderer": "^16.13.1",
     "typescript": "~4.0.0"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src /**/*.{ts,tsx}",
+      "!**/coverage /**",
+      "!**/node_modules /**",
+      "!**/app.config.ts",
+      "!**/babel.config.js",
+      "!**/jest.setup.ts"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest/react-native.js",
+      "<rootDir>/jest/react-navigation.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ]
   },
   "private": true
 }

@@ -104,7 +104,7 @@ const renderNode = ({
 
 export interface Props {
   content: string
-  size: 'M' | 'L'
+  size?: 'M' | 'L'
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   showFullLink?: boolean
@@ -114,7 +114,7 @@ export interface Props {
 
 const ParseContent: React.FC<Props> = ({
   content,
-  size,
+  size = 'M',
   emojis,
   mentions,
   showFullLink = false,

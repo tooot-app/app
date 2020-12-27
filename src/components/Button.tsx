@@ -83,6 +83,7 @@ const Button: React.FC<Props> = ({
               size={StyleConstants.Font.Size[size] * (size === 'M' ? 1 : 1.5)}
               color={colorContent}
               style={{ opacity: loading ? 0 : 1 }}
+              testID='icon'
             />
             {loading && loadingSpinkit}
           </>
@@ -101,6 +102,7 @@ const Button: React.FC<Props> = ({
                 opacity: loading ? 0 : 1
               }}
               children={content}
+              testID='text'
             />
             {loading && loadingSpinkit}
           </>
@@ -136,8 +138,6 @@ const Button: React.FC<Props> = ({
 
   return (
     <Pressable
-      {...(!disabled && !loading && { onPress })}
-      children={children}
       style={[
         styles.button,
         {
@@ -150,6 +150,10 @@ const Button: React.FC<Props> = ({
         },
         customStyle
       ]}
+      testID='base'
+      onPress={onPress}
+      children={children}
+      disabled={disabled || loading}
     />
   )
 }
