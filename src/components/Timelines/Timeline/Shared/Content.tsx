@@ -22,6 +22,8 @@ const TimelineContent: React.FC<Props> = ({
             content={status.spoiler_text}
             size={highlighted ? 'L' : 'M'}
             emojis={status.emojis}
+            mentions={status.mentions}
+            tags={status.tags}
             numberOfLines={999}
           />
           <View style={{ marginTop: StyleConstants.Font.Size.M }}>
@@ -30,6 +32,7 @@ const TimelineContent: React.FC<Props> = ({
               size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
+              tags={status.tags}
               numberOfLines={1}
               expandHint='隐藏内容'
             />
@@ -41,6 +44,7 @@ const TimelineContent: React.FC<Props> = ({
           size={highlighted ? 'L' : 'M'}
           emojis={status.emojis}
           mentions={status.mentions}
+          tags={status.tags}
           numberOfLines={numberOfLines}
         />
       )}

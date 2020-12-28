@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -9,8 +9,8 @@ import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.ty
 import { useNavigation } from '@react-navigation/native'
 import AttachmentUnsupported from './Attachment/Unsupported'
 import AttachmentAudio from './Attachment/Audio'
-import { Feather } from '@expo/vector-icons'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
+import Button from '@root/components/Button'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
@@ -101,39 +101,26 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
       {status.sensitive &&
         (sensitiveShown ? (
           <Pressable style={styles.sensitiveBlur}>
-            <Pressable
+            <Button
+              type='text'
+              content='显示敏感内容'
+              overlay
               onPress={onPressBlurView}
-              style={[
-                styles.sensitiveBlurButton,
-                { backgroundColor: theme.backgroundOverlay }
-              ]}
-            >
-              <Text
-                style={[styles.sensitiveText, { color: theme.primaryOverlay }]}
-              >
-                显示敏感内容
-              </Text>
-            </Pressable>
-          </Pressable>
-        ) : (
-          <Pressable
-            style={[
-              styles.sensitiveBlurButton,
-              {
-                backgroundColor: theme.backgroundOverlay,
-                position: 'absolute',
-                top: StyleConstants.Spacing.S,
-                left: StyleConstants.Spacing.S
-              }
-            ]}
-            onPress={() => setSensitiveShown(!sensitiveShown)}
-          >
-            <Feather
-              name='eye-off'
-              size={StyleConstants.Font.Size.L}
-              color={theme.primaryOverlay}
             />
           </Pressable>
+        ) : (
+          <Button
+            type='icon'
+            content='eye-off'
+            round
+            overlay
+            onPress={() => setSensitiveShown(!sensitiveShown)}
+            style={{
+              position: 'absolute',
+              top: StyleConstants.Spacing.S,
+              left: StyleConstants.Spacing.S
+            }}
+          />
         ))}
     </View>
   )

@@ -8,6 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import openLink from '@root/utils/openLink'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -17,6 +18,7 @@ const renderNode = ({
   size,
   navigation,
   mentions,
+  tags,
   showFullLink
 }: {
   theme: any
@@ -25,6 +27,7 @@ const renderNode = ({
   size: 'M' | 'L'
   navigation: any
   mentions?: Mastodon.Mention[]
+  tags?: Mastodon.Tag[]
   showFullLink: boolean
 }) => {
   if (node.name == 'a') {
@@ -75,6 +78,8 @@ const renderNode = ({
       }
     } else {
       const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
+      const content = node.children && node.children[0].data
+      const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content)
       return (
         <Text
           key={index}
@@ -82,14 +87,24 @@ const renderNode = ({
             color: theme.blue,
             fontSize: StyleConstants.Font.Size[size]
           }}
-          onPress={async () => await openLink(href)}
+          onPress={async () =>
+            !shouldBeTag
+              ? await openLink(href)
+              : navigation.push('Screen-Shared-Hashtag', {
+                  hashtag: content.substring(1)
+                })
+          }
         >
-          <Feather
-            name='external-link'
-            size={StyleConstants.Font.Size[size]}
-            color={theme.blue}
-          />{' '}
-          {showFullLink ? href : domain[1]}
+          {!shouldBeTag ? (
+            <>
+              <Feather
+                name='external-link'
+                size={StyleConstants.Font.Size[size]}
+                color={theme.blue}
+              />{' '}
+            </>
+          ) : null}
+          {content || (showFullLink ? href : domain[1])}
         </Text>
       )
     }
@@ -107,6 +122,7 @@ export interface Props {
   size?: 'M' | 'L'
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
+  tags?: Mastodon.Tag[]
   showFullLink?: boolean
   numberOfLines?: number
   expandHint?: string
@@ -117,6 +133,7 @@ const ParseContent: React.FC<Props> = ({
   size = 'M',
   emojis,
   mentions,
+  tags,
   showFullLink = false,
   numberOfLines = 10,
   expandHint = '全文'
@@ -133,6 +150,7 @@ const ParseContent: React.FC<Props> = ({
         size,
         navigation,
         mentions,
+        tags,
         showFullLink
       }),
     []
@@ -180,7 +198,7 @@ const ParseContent: React.FC<Props> = ({
       return (
         <View>
           <Text
-            style={{ lineHeight, color: theme.primary }}
+            style={{ lineHeight, color: theme.primary, overflow: 'hidden' }}
             children={children}
             numberOfLines={calNumberOfLines}
             onLayout={({ nativeEvent }) => {
@@ -200,6 +218,7 @@ const ParseContent: React.FC<Props> = ({
           {allowExpand && (
             <Pressable
               onPress={() => {
+                layoutAnimation()
                 setShowAllText(!showAllText)
               }}
               style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}

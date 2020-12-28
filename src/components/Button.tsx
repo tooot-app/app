@@ -80,7 +80,7 @@ const Button: React.FC<Props> = ({
           <>
             <Feather
               name={content as any}
-              size={StyleConstants.Font.Size[size] * (size === 'M' ? 1 : 1.5)}
+              size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
               color={colorContent}
               style={{ opacity: loading ? 0 : 1 }}
               testID='icon'
@@ -95,7 +95,7 @@ const Button: React.FC<Props> = ({
               style={{
                 color: colorContent,
                 fontSize:
-                  StyleConstants.Font.Size[size] * (size === 'M' ? 1 : 1.5),
+                  StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 fontWeight: destructive
                   ? StyleConstants.Font.Weight.Bold
                   : undefined,

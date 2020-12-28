@@ -86,9 +86,6 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
                 return false
               }
             })
-            console.log(queryKey)
-            console.log('pageIndex', pageIndex)
-            console.log('tootIndex', tootIndex)
 
             if (pageIndex >= 0 && tootIndex >= 0) {
               if (

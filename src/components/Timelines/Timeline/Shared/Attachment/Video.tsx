@@ -47,7 +47,8 @@ const AttachmentVideo: React.FC<Props> = ({
         ref={videoPlayer}
         style={{
           width: '100%',
-          height: '100%'
+          height: '100%',
+          opacity: sensitiveShown ? 0 : 1
         }}
         resizeMode='cover'
         usePoster
