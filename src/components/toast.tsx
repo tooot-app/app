@@ -33,12 +33,12 @@ const toast = ({
   onHide
 }: Params) => {
   Toast.show({
-    type: type,
-    position: position,
+    type,
+    position,
     text1: content,
     text2: description,
-    visibilityTime: 2000,
-    autoHide: autoHide,
+    visibilityTime: 1500,
+    autoHide,
     topOffset: 0,
     bottomOffset: 0,
     onShow: onShow,

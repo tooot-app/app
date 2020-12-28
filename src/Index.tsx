@@ -5,7 +5,7 @@ import {
   NavigationContainerRef
 } from '@react-navigation/native'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Feather } from '@expo/vector-icons'
@@ -30,6 +30,7 @@ import {
 import { useInfiniteQuery } from 'react-query'
 import client from './api/client'
 import { timelineFetch } from './utils/fetches/timelineFetch'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
@@ -54,6 +55,19 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
     light = 'dark-content',
     dark = 'light-content'
   }
+
+  const isConnected = useNetInfo().isConnected
+  const [firstRender, setFirstRender] = useState(false)
+  useEffect(() => {
+    if (firstRender) {
+      // bug in netInfo on first render as false
+      if (isConnected !== false) {
+        toast({ type: 'error', content: '手机🈚️网络', autoHide: false })
+      }
+    } else {
+      setFirstRender(true)
+    }
+  }, [isConnected, firstRender])
 
   // On launch display login credentials corrupt information
   useEffect(() => {

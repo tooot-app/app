@@ -65,19 +65,21 @@ const client = async ({
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.error('axios error', error.response)
-        return Promise.reject({
-          headers: error.response.headers,
-          body: error.response.data.error
-        })
+        console.error(
+          ctx.bold(' API '),
+          ctx.bold('response'),
+          error.response.status,
+          error.response.data.error
+        )
+        return Promise.reject(error.response)
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.error('axios error', error)
+        console.error(ctx.bold(' API '), ctx.bold('request'), error)
         return Promise.reject()
       } else {
-        console.error('axios error', error.message)
+        console.error(ctx.bold(' API '), ctx.bold('other'), error.message)
         return Promise.reject({ body: error.message })
       }
     })
