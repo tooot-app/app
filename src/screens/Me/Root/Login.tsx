@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding,
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginRight: StyleConstants.Spacing.S
   },
   instanceInfo: {
@@ -303,11 +303,11 @@ const styles = StyleSheet.create({
     paddingRight: StyleConstants.Spacing.Global.PagePadding
   },
   instanceInfoHeader: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
   },
-  instanceInfoContent: { fontSize: StyleConstants.Font.Size.M },
+  instanceInfoContent: { ...StyleConstants.FontStyle.M },
   instanceStats: {
     flex: 1,
     flexDirection: 'row',
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   disclaimer: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding,
     marginBottom: StyleConstants.Spacing.M

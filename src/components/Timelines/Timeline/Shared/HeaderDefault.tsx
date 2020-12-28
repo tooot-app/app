@@ -68,12 +68,12 @@ const TimelineHeaderDefault: React.FC<Props> = ({
   return (
     <View style={styles.base}>
       <View style={queryKey ? { flexBasis: '80%' } : { flexBasis: '100%' }}>
-        <View style={styles.name}>
+        <View style={styles.nameAndAccount}>
           {emojis?.length ? (
             <Emojis
               content={name}
               emojis={emojis}
-              size={StyleConstants.Font.Size.M}
+              size='M'
               fontBold={true}
             />
           ) : (
@@ -168,11 +168,12 @@ const styles = StyleSheet.create({
   nameAndMeta: {
     flexBasis: '80%'
   },
-  name: {
-    flexDirection: 'row'
+  nameAndAccount: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   nameWithoutEmoji: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   account: {
@@ -186,13 +187,13 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   created_at: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   visibility: {
     marginLeft: StyleConstants.Spacing.S
   },
   application: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginLeft: StyleConstants.Spacing.S
   },
   action: {

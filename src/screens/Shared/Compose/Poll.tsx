@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 6,
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginLeft: StyleConstants.Spacing.S
   },
   controlAmount: {

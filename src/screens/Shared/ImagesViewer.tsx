@@ -123,7 +123,7 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
 const styles = StyleSheet.create({
   headerCenter: {
     color: 'white',
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   }
 })
 

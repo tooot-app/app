@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   headerText: {
-    fontSize: StyleConstants.Font.Size.M * 1.5,
+    ...StyleConstants.FontStyle.L,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   announcementContainer: {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   published: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.S
   },
   pressable: { ...StyleSheet.absoluteFillObject },
@@ -280,10 +280,10 @@ const styles = StyleSheet.create({
     height: StyleConstants.Font.LineHeight.M
   },
   reactionText: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M,
   },
   reactionCount: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginLeft: StyleConstants.Spacing.S
   },
   indicators: {

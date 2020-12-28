@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   error: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginTop: StyleConstants.Spacing.S,
     marginBottom: StyleConstants.Spacing.L
   }

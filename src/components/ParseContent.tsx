@@ -40,7 +40,7 @@ const renderNode = ({
             key={index}
             style={{
               color: theme.blue,
-              fontSize: StyleConstants.Font.Size[size]
+              ...StyleConstants.FontStyle[size]
             }}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
@@ -59,7 +59,7 @@ const renderNode = ({
             key={index}
             style={{
               color: theme.blue,
-              fontSize: StyleConstants.Font.Size[size]
+              ...StyleConstants.FontStyle[size]
             }}
             onPress={() => {
               const username = href.split(new RegExp(/@(.*)/))
@@ -79,13 +79,14 @@ const renderNode = ({
     } else {
       const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
       const content = node.children && node.children[0].data
-      const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content)
+      const shouldBeTag =
+        tags && tags.filter(tag => `#${tag.name}` === content).length > 0
       return (
         <Text
           key={index}
           style={{
             color: theme.blue,
-            fontSize: StyleConstants.Font.Size[size]
+            ...StyleConstants.FontStyle[size]
           }}
           onPress={async () =>
             !shouldBeTag
@@ -158,13 +159,9 @@ const ParseContent: React.FC<Props> = ({
   const textComponent = useCallback(({ children }) => {
     if (children) {
       return emojis ? (
-        <Emojis
-          content={children.toString()}
-          emojis={emojis}
-          size={StyleConstants.Font.Size[size]}
-        />
+        <Emojis content={children.toString()} emojis={emojis} size={size} />
       ) : (
-        <Text>{children}</Text>
+        <Text style={{ ...StyleConstants.FontStyle[size] }}>{children}</Text>
       )
     } else {
       return null
@@ -198,7 +195,7 @@ const ParseContent: React.FC<Props> = ({
       return (
         <View>
           <Text
-            style={{ lineHeight, color: theme.primary, overflow: 'hidden' }}
+            style={{ color: theme.primary, overflow: 'hidden' }}
             children={children}
             numberOfLines={calNumberOfLines}
             onLayout={({ nativeEvent }) => {
@@ -237,7 +234,7 @@ const ParseContent: React.FC<Props> = ({
                 <Text
                   style={{
                     textAlign: 'center',
-                    fontSize: StyleConstants.Font.Size.S,
+                    ...StyleConstants.FontStyle.S,
                     color: theme.primary
                   }}
                 >

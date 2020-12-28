@@ -178,7 +178,7 @@ const TimelinePoll: React.FC<Props> = ({
                 <Emojis
                   content={option.title}
                   emojis={poll.emojis}
-                  size={StyleConstants.Font.Size.M}
+                  size='M'
                   numberOfLines={2}
                 />
               </View>
@@ -238,7 +238,7 @@ const TimelinePoll: React.FC<Props> = ({
                 <Emojis
                   content={option.title}
                   emojis={poll.emojis}
-                  size={StyleConstants.Font.Size.M}
+                  size='M'
                   numberOfLines={2}
                 />
               </View>
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     paddingRight: StyleConstants.Spacing.S
   },
   percentage: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   },
   background: {
     height: StyleConstants.Spacing.XS,
@@ -313,10 +313,10 @@ const styles = StyleSheet.create({
     marginRight: StyleConstants.Spacing.M
   },
   votes: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   expiration: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   }
 })
 

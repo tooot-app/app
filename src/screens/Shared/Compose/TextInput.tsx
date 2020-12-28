@@ -58,12 +58,11 @@ const ComposeTextInput: React.FC = () => {
 
 const styles = StyleSheet.create({
   textInput: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.M,
     marginLeft: StyleConstants.Spacing.Global.PagePadding,
     marginRight: StyleConstants.Spacing.Global.PagePadding
-    // borderBottomWidth: 0.5
   }
 })
 

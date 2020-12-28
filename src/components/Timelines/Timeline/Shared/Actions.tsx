@@ -194,7 +194,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
           <Text
             style={{
               color: theme.secondary,
-              fontSize: StyleConstants.Font.Size.M,
+              ...StyleConstants.FontStyle.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
           >

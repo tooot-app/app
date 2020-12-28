@@ -611,7 +611,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
 const styles = StyleSheet.create({
   count: {
     textAlign: 'center',
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   }
 })
 

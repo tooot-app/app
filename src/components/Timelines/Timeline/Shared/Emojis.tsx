@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text } from 'react-native'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 
@@ -8,7 +8,7 @@ const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
 export interface Props {
   content: string
   emojis: Mastodon.Emoji[]
-  size: number
+  size?: 'S' | 'M' | 'L'
   fontBold?: boolean
   numberOfLines?: number
 }
@@ -16,22 +16,21 @@ export interface Props {
 const Emojis: React.FC<Props> = ({
   content,
   emojis,
-  size,
+  size = 'M',
   fontBold = false,
   numberOfLines
 }) => {
   const { theme } = useTheme()
   const styles = StyleSheet.create({
     text: {
-      fontSize: size,
       color: theme.primary,
+      ...StyleConstants.FontStyle[size],
       ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
     },
     image: {
-      width: size,
-      height: size,
-      paddingTop: 1,
-      marginBottom: -1
+      width: StyleConstants.Font.Size[size],
+      height: StyleConstants.Font.Size[size],
+      marginBottom: -2 // hacking
     }
   })
 
@@ -48,14 +47,12 @@ const Emojis: React.FC<Props> = ({
               {emojiShortcode}
             </Text>
           ) : (
-            <View key={i} style={styles.image}>
-              <Image
-                key={i}
-                resizeMode='contain'
-                source={{ uri: emojis[emojiIndex].url }}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </View>
+            <Image
+              key={i}
+              resizeMode='contain'
+              source={{ uri: emojis[emojiIndex].url }}
+              style={[styles.image]}
+            />
           )
         } else {
           return str ? (
@@ -71,4 +68,5 @@ const Emojis: React.FC<Props> = ({
   )
 }
 
-export default React.memo(Emojis, () => true)
+// export default React.memo(Emojis, () => true)
+export default Emojis

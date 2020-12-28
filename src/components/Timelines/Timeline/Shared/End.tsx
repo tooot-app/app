@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.M
   },
   text: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginLeft: StyleConstants.Spacing.S
   }
 })

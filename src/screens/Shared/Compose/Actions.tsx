@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   count: {
     textAlign: 'center',
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   }
 })

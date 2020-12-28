@@ -58,7 +58,7 @@ const ComposeSpoilerInput: React.FC = () => {
 
 const styles = StyleSheet.create({
   spoilerInput: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginTop: StyleConstants.Spacing.S,
     paddingBottom: StyleConstants.Spacing.M,
     marginLeft: StyleConstants.Spacing.Global.PagePadding,

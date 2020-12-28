@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   actionConversation: { marginRight: StyleConstants.Spacing.S },
   error: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   }
 })
 

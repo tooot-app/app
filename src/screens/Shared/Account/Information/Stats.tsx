@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   stat: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   }
 })
 

@@ -90,7 +90,7 @@ const TimelineActioned: React.FC<Props> = ({
             <Emojis
               content={content}
               emojis={account.emojis}
-              size={StyleConstants.Font.Size.S}
+              size='S'
             />
           ) : (
             <Text>{content}</Text>

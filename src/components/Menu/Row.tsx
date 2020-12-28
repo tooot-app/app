@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   },
   content: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   },
   iconBack: {
     marginLeft: 8

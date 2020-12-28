@@ -328,17 +328,17 @@ const ComposeEditAttachment: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   imageFocusText: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     padding: StyleConstants.Spacing.Global.PagePadding
   },
   altTextContainer: { padding: StyleConstants.Spacing.Global.PagePadding },
   altTextInputHeading: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   altTextInput: {
     height: 200,
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginTop: StyleConstants.Spacing.M,
     marginBottom: StyleConstants.Spacing.S,
     padding: StyleConstants.Spacing.Global.PagePadding,
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   altTextLength: {
     textAlign: 'right',
     marginRight: StyleConstants.Spacing.S,
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.M
   }
 })

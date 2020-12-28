@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   text: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   }
 })
 

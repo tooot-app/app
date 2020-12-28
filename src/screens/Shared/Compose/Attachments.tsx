@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     marginLeft: StyleConstants.Spacing.Global.PagePadding
   },
   sensitiveText: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginLeft: StyleConstants.Spacing.S
   },
   imageContainer: {
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     bottom:
       StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
     left: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     paddingLeft: StyleConstants.Spacing.S,
     paddingRight: StyleConstants.Spacing.S,
     paddingTop: StyleConstants.Spacing.XS,

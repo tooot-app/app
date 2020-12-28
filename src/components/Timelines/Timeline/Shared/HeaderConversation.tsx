@@ -85,7 +85,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
                 conversation.accounts[0].username
               }
               emojis={conversation.accounts[0].emojis}
-              size={StyleConstants.Font.Size.M}
+              size='M'
               fontBold={true}
             />
           ) : (
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginLeft: StyleConstants.Spacing.XS
   },
   nameWithoutEmoji: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   meta: {
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   created_at: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   unread: {
     marginLeft: StyleConstants.Spacing.XS

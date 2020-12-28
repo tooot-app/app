@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingBottom: StyleConstants.Spacing.S
   },
   text: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold
   }
 })

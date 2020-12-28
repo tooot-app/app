@@ -128,7 +128,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
             <Emojis
               content={name}
               emojis={emojis}
-              size={StyleConstants.Font.Size.M}
+              size='M'
               fontBold={true}
             />
           ) : (
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   nameWithoutEmoji: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   account: {
@@ -208,13 +208,13 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   created_at: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   visibility: {
     marginLeft: StyleConstants.Spacing.S
   },
   application: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginLeft: StyleConstants.Spacing.S
   },
   relationship: {

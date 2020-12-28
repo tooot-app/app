@@ -177,7 +177,7 @@ const ScreenSharedSearch: React.FC = () => {
                 <Emojis
                   content={item.display_name || item.username}
                   emojis={item.emojis}
-                  size={StyleConstants.Font.Size.S}
+                  size='S'
                   fontBold={true}
                 />
               ) : (
@@ -233,7 +233,7 @@ const ScreenSharedSearch: React.FC = () => {
                 <Emojis
                   content={item.account.display_name || item.account.username}
                   emojis={item.account.emojis}
-                  size={StyleConstants.Font.Size.S}
+                  size='S'
                   fontBold={true}
                 />
               ) : (
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     padding: StyleConstants.Spacing.S,
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     marginRight: StyleConstants.Spacing.S
   },
 
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
       StyleConstants.Spacing.S
   },
   loading: { flex: 1, alignItems: 'center' },
-  emptyFontSize: { fontSize: StyleConstants.Font.Size.S },
+  emptyFontSize: { ...StyleConstants.FontStyle.S },
   emptyFontBold: {
     fontWeight: StyleConstants.Font.Weight.Bold
   },
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   sectionHeaderText: {
-    fontSize: StyleConstants.Font.Size.M,
+    ...StyleConstants.FontStyle.M,
     fontWeight: StyleConstants.Font.Weight.Bold,
     textAlign: 'center'
   },
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S
   },
   sectionFooterText: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     textAlign: 'center'
   },
   itemDefault: {
@@ -406,12 +406,12 @@ const styles = StyleSheet.create({
     marginRight: StyleConstants.Spacing.S
   },
   nameWithoutEmoji: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   itemAccountAcct: { marginTop: StyleConstants.Spacing.XS },
   itemHashtag: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   },
   itemStatus: {
     marginTop: StyleConstants.Spacing.S

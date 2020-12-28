@@ -147,7 +147,7 @@ const ScreenMeSettings: React.FC = () => {
 const styles = StyleSheet.create({
   version: {
     textAlign: 'center',
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginTop: StyleConstants.Spacing.M
   }
 })

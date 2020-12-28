@@ -73,7 +73,7 @@ const ListItem = React.memo(
                   <Emojis
                     content={item.display_name || item.username}
                     emojis={item.emojis}
-                    size={StyleConstants.Font.Size.S}
+                    size='S'
                   />
                 ) : (
                   item.display_name || item.username
@@ -229,12 +229,12 @@ const styles = StyleSheet.create({
     borderRadius: StyleConstants.Avatar.M
   },
   accountName: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
   },
   accountAccount: {
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   hashtag: {
     flex: 1,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   hashtagText: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
   },

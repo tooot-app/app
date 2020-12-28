@@ -31,7 +31,7 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
           <Text
             style={{
               color: theme.secondary,
-              fontSize: StyleConstants.Font.Size.M
+              ...StyleConstants.FontStyle.M
             }}
             selectable
           >

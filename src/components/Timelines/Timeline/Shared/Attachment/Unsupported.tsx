@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     textAlign: 'center',
     marginBottom: StyleConstants.Spacing.S
   }

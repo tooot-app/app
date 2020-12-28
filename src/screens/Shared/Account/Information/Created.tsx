@@ -38,7 +38,7 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
           <Text
             style={{
               color: theme.secondary,
-              fontSize: StyleConstants.Font.Size.S
+              ...StyleConstants.FontStyle.S
             }}
           >
             {t('content.created_at', {

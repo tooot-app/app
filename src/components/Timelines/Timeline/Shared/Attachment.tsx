@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 6
   },
   sensitiveText: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   }
 })
 

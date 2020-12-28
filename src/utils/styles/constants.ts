@@ -2,15 +2,14 @@ const Base = 4
 
 export const StyleConstants = {
   Font: {
-    Size: {
-      S: 14,
-      M: 16,
-      L: 18
-    },
-    LineHeight: { M: 20, L: 24 },
-    Weight: {
-      Bold: '600' as '600'
-    }
+    Size: { S: 14, M: 16, L: 18 },
+    LineHeight: { S: 16, M: 20, L: 24 },
+    Weight: { Bold: '600' as '600' }
+  },
+  FontStyle: {
+    S: { fontSize: 14, lineHeight: 16 },
+    M: { fontSize: 16, lineHeight: 20 },
+    L: { fontSize: 20, lineHeight: 24 }
   },
 
   Spacing: {
@@ -19,14 +18,8 @@ export const StyleConstants = {
     M: Base * 4,
     L: Base * 6,
     XL: Base * 10,
-    Global: {
-      PagePadding: Base * 4
-    }
+    Global: { PagePadding: Base * 4 }
   },
 
-  Avatar: {
-    S: 36,
-    M: 52,
-    L: 104
-  }
+  Avatar: { S: 36, M: 52, L: 104 }
 }

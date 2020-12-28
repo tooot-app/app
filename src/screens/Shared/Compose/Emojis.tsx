@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   group: {
     position: 'absolute',
     left: StyleConstants.Spacing.L,
-    fontSize: StyleConstants.Font.Size.S
+    ...StyleConstants.FontStyle.S
   },
   emojis: {
     flex: 1,

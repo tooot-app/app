@@ -111,10 +111,10 @@ const styles = StyleSheet.create({
     marginLeft: StyleConstants.Spacing.S
   },
   text1: {
-    fontSize: StyleConstants.Font.Size.M
+    ...StyleConstants.FontStyle.M
   },
   text2: {
-    fontSize: StyleConstants.Font.Size.S,
+    ...StyleConstants.FontStyle.S,
     marginTop: StyleConstants.Spacing.S
   }
 })
