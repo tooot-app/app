@@ -44,7 +44,7 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
   }, [audioPlayer])
 
   return (
-    <>
+    <View style={styles.base}>
       <View style={styles.overlay}>
         {sensitiveShown ? (
           audio.blurhash && (
@@ -67,8 +67,9 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
             )}
             <Button
               type='icon'
-              content={audioPlaying ? 'pause' : 'play'}
+              content={audioPlaying ? 'pause-circle' : 'play-circle'}
               size='L'
+              round
               overlay
               {...(audioPlaying
                 ? { onPress: pauseAudio }
@@ -79,8 +80,9 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
       </View>
       <View
         style={{
-          flex: 1,
-          alignSelf: 'flex-end',
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
           backgroundColor: theme.backgroundOverlay,
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
           paddingVertical: StyleConstants.Spacing.XS,
@@ -106,11 +108,17 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
           }}
         />
       </View>
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  base: {
+    flex: 1,
+    flexBasis: '50%',
+    aspectRatio: 16 / 9,
+    padding: StyleConstants.Spacing.XS / 2
+  },
   background: { position: 'absolute', width: '100%', height: '100%' },
   overlay: {
     position: 'absolute',

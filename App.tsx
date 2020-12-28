@@ -1,3 +1,4 @@
+import NetInfo from '@react-native-community/netinfo'
 import client from '@root/api/client'
 import { Index } from '@root/Index'
 import { persistor, store } from '@root/store'
@@ -6,7 +7,7 @@ import ThemeManager from '@utils/styles/ThemeManager'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { enableScreens } from 'react-native-screens'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { onlineManager, QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import * as Sentry from 'sentry-expo'
@@ -19,6 +20,12 @@ if (__DEV__) {
   })
 }
 
+// onlineManager.setEventListener(setOnline => {
+//   return NetInfo.addEventListener(state => {
+//     setOnline(state.isConnected)
+//   })
+// })
+
 Sentry.init({
   dsn:
     'https://c9e29aa05f774aca8f36def98244ce04@o389581.ingest.sentry.io/5571975',
@@ -30,7 +37,15 @@ const queryClient = new QueryClient()
 
 enableScreens()
 
+NetInfo.fetch().then(state => {
+  console.log('Connection type', state.type)
+  console.log('Is connected?', state.isConnected)
+  console.log('Is internet', state.isInternetReachable)
+  console.log('Details', state.details)
+})
+
 const App: React.FC = () => {
+  useEffect(() => onlineManager.setOnline(false), [])
   const [appLoaded, setAppLoaded] = useState(false)
   const [startVerification, setStartVerification] = useState(false)
   const [localCorrupt, setLocalCorrupt] = useState(false)

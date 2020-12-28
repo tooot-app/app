@@ -54,7 +54,7 @@ const TimelineDefault: React.FC<Props> = ({
     []
   )
   return (
-    <Pressable style={styles.statusView} onPress={onPress} disabled={true}>
+    <Pressable style={styles.statusView} onPress={onPress}>
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
       ) : pinnedLength && index < pinnedLength ? (

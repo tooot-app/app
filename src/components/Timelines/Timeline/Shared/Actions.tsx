@@ -125,26 +125,28 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     }
   })
 
-  const onPressReply = useCallback(() => {
-    navigation.navigate(getCurrentTab(navigation), {
-      screen: 'Screen-Shared-Compose',
-      params: {
-        type: 'reply',
-        incomingStatus: status,
-        visibilityLock: status.visibility === 'direct'
-      }
-    })
-  }, [])
-  const onPressReblog = useCallback(() => {
-    if (status.visibility !== 'private' && status.visibility !== 'direct') {
+  const onPressReply = useCallback(
+    () =>
+      navigation.navigate(getCurrentTab(navigation), {
+        screen: 'Screen-Shared-Compose',
+        params: {
+          type: 'reply',
+          incomingStatus: status,
+          visibilityLock: status.visibility === 'direct'
+        }
+      }),
+    []
+  )
+  const onPressReblog = useCallback(
+    () =>
       mutate({
         id: status.id,
         type: 'reblog',
         stateKey: 'reblogged',
         prevState: status.reblogged
-      })
-    }
-  }, [status.reblogged])
+      }),
+    [status.reblogged]
+  )
   const onPressFavourite = useCallback(
     () =>
       mutate({
@@ -264,6 +266,9 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
           style={styles.action}
           onPress={onPressReblog}
           children={childrenReblog}
+          disabled={
+            status.visibility === 'private' || status.visibility === 'direct'
+          }
         />
 
         <Pressable

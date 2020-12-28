@@ -71,8 +71,9 @@ const HeaderRight: React.FC<Props> = ({
 
   return (
     <Pressable
-      {...(!disabled && !loading && { onPress })}
+      onPress={onPress}
       children={children}
+      disabled={disabled || loading}
       style={[
         styles.base,
         {

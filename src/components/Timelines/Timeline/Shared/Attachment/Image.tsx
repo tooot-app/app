@@ -72,25 +72,23 @@ const AttachmentImage: React.FC<Props> = ({
       )
     }
   }, [imageVisible, sensitiveShown])
-  const onPress = useCallback(() => {
-    if (imageVisible && !sensitiveShown) {
-      navigateToImagesViewer(imageIndex)
-    }
-  }, [imageVisible, sensitiveShown])
+  const onPress = useCallback(() => navigateToImagesViewer(imageIndex), [])
 
   return (
     <Pressable
-      style={[styles.imageContainer]}
+      style={[styles.base]}
       children={children}
       onPress={onPress}
+      disabled={!imageVisible || sensitiveShown}
     />
   )
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
+  base: {
     flex: 1,
     flexBasis: '50%',
+    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2
   },
   image: {

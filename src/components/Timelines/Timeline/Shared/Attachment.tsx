@@ -95,12 +95,7 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
   )
 
   return (
-    <View
-      style={[
-        styles.base,
-        { width: contentWidth, height: (contentWidth / 16) * 9 }
-      ]}
-    >
+    <View style={styles.base}>
       {attachments}
 
       {status.sensitive &&
@@ -150,7 +145,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'center',
     alignContent: 'stretch'
+  },
+  container: {
+    flexBasis: '50%',
+    aspectRatio: 16 / 9
   },
   sensitiveBlur: {
     position: 'absolute',

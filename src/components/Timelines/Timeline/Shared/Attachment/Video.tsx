@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { Video } from 'expo-av'
 import Button from '@components/Button'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
+import { StyleConstants } from '@root/utils/styles/constants'
 
 export interface Props {
   sensitiveShown: boolean
@@ -41,16 +42,17 @@ const AttachmentVideo: React.FC<Props> = ({
   }, [videoLoaded, videoPosition])
 
   return (
-    <>
+    <View style={styles.base}>
       <Video
         ref={videoPlayer}
         style={{
-          width,
-          height
+          width: '100%',
+          height: '100%'
         }}
         resizeMode='cover'
         usePoster
         posterSource={{ uri: video.preview_url }}
+        posterStyle={{ flex: 1 }}
         useNativeControls={false}
       />
       <Pressable style={styles.overlay}>
@@ -66,18 +68,25 @@ const AttachmentVideo: React.FC<Props> = ({
         ) : (
           <Button
             type='icon'
-            content='play'
+            content='play-circle'
             size='L'
+            round
             overlay
             onPress={playOnPress}
           />
         )}
       </Pressable>
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  base: {
+    flex: 1,
+    flexBasis: '50%',
+    aspectRatio: 16 / 9,
+    padding: StyleConstants.Spacing.XS / 2
+  },
   overlay: {
     position: 'absolute',
     width: '100%',
