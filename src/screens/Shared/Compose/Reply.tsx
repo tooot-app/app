@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingTop: StyleConstants.Spacing.Global.PagePadding
+    paddingTop: StyleConstants.Spacing.Global.PagePadding,
+    margin: StyleConstants.Spacing.Global.PagePadding
   },
   details: {
     flex: 1

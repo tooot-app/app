@@ -1,18 +1,15 @@
-import client from '@api/client'
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import { toast } from '@root/components/toast'
 import { store } from '@root/store'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import formatText from '@screens/Shared/Compose/formatText'
 import ComposeRoot from '@screens/Shared/Compose/Root'
 import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Crypto from 'expo-crypto'
 import React, {
   createContext,
-  createRef,
   Dispatch,
-  ReactNode,
-  RefObject,
   useCallback,
   useEffect,
   useReducer,
@@ -23,291 +20,20 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
-  Text,
-  TextInput
+  Text
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
+import ComposeEditAttachment from './Compose/EditAttachment'
+import ComposeEditAttachmentRoot from './Compose/EditAttachment/Root'
+import composeInitialState from './Compose/utils/initialState'
+import composeParseState from './Compose/utils/parseState'
+import composeSend from './Compose/utils/post'
+import composeReducer from './Compose/utils/reducer'
+import { ComposeAction, ComposeState } from './Compose/utils/types'
 
 const Stack = createNativeStackNavigator()
-
-export type ComposeState = {
-  spoiler: {
-    active: boolean
-    count: number
-    raw: string
-    formatted: ReactNode
-    selection: { start: number; end: number }
-  }
-  text: {
-    count: number
-    raw: string
-    formatted: ReactNode
-    selection: { start: number; end: number }
-  }
-  tag?: {
-    type: 'url' | 'accounts' | 'hashtags'
-    text: string
-    offset: number
-    length: number
-  }
-  emoji: {
-    active: boolean
-    emojis: { title: string; data: Mastodon.Emoji[] }[] | undefined
-  }
-  poll: {
-    active: boolean
-    total: number
-    options: {
-      '0': string | undefined
-      '1': string | undefined
-      '2': string | undefined
-      '3': string | undefined
-    }
-    multiple: boolean
-    expire:
-      | '300'
-      | '1800'
-      | '3600'
-      | '21600'
-      | '86400'
-      | '259200'
-      | '604800'
-      | string
-  }
-  attachments: {
-    sensitive: boolean
-    uploads: (Mastodon.Attachment & { local_url?: string })[]
-  }
-  attachmentUploadProgress?: { progress: number; aspect?: number }
-  visibility: 'public' | 'unlisted' | 'private' | 'direct'
-  visibilityLock: boolean
-  replyToStatus?: Mastodon.Status
-  textInputFocus: {
-    current: 'text' | 'spoiler'
-    refs: { text: RefObject<TextInput>; spoiler: RefObject<TextInput> }
-  }
-}
-
-export type ComposeAction =
-  | {
-      type: 'spoiler'
-      payload: Partial<ComposeState['spoiler']>
-    }
-  | {
-      type: 'text'
-      payload: Partial<ComposeState['text']>
-    }
-  | {
-      type: 'tag'
-      payload: ComposeState['tag']
-    }
-  | {
-      type: 'emoji'
-      payload: ComposeState['emoji']
-    }
-  | {
-      type: 'poll'
-      payload: Partial<ComposeState['poll']>
-    }
-  | {
-      type: 'attachments'
-      payload: Partial<ComposeState['attachments']>
-    }
-  | {
-      type: 'attachmentUploadProgress'
-      payload: ComposeState['attachmentUploadProgress']
-    }
-  | {
-      type: 'attachmentEdit'
-      payload: Mastodon.Attachment & { local_url?: string }
-    }
-  | {
-      type: 'visibility'
-      payload: ComposeState['visibility']
-    }
-  | {
-      type: 'textInputFocus'
-      payload: Partial<ComposeState['textInputFocus']>
-    }
-
-const composeInitialState: ComposeState = {
-  spoiler: {
-    active: false,
-    count: 0,
-    raw: '',
-    formatted: undefined,
-    selection: { start: 0, end: 0 }
-  },
-  text: {
-    count: 0,
-    raw: '',
-    formatted: undefined,
-    selection: { start: 0, end: 0 }
-  },
-  tag: undefined,
-  emoji: { active: false, emojis: undefined },
-  poll: {
-    active: false,
-    total: 2,
-    options: {
-      '0': undefined,
-      '1': undefined,
-      '2': undefined,
-      '3': undefined
-    },
-    multiple: false,
-    expire: '86400'
-  },
-  attachments: { sensitive: false, uploads: [] },
-  attachmentUploadProgress: undefined,
-  visibility: 'public',
-  visibilityLock: false,
-  replyToStatus: undefined,
-  textInputFocus: {
-    current: 'text',
-    refs: { text: createRef(), spoiler: createRef() }
-  }
-}
-const composeExistingState = ({
-  type,
-  incomingStatus,
-  visibilityLock
-}: {
-  type: 'reply' | 'conversation' | 'edit'
-  incomingStatus: Mastodon.Status
-  visibilityLock?: boolean
-}): ComposeState => {
-  switch (type) {
-    case 'edit':
-      return {
-        ...composeInitialState,
-        ...(incomingStatus.spoiler_text?.length && {
-          spoiler: {
-            active: true,
-            count: incomingStatus.spoiler_text.length,
-            raw: incomingStatus.spoiler_text,
-            formatted: incomingStatus.spoiler_text,
-            selection: { start: 0, end: 0 }
-          }
-        }),
-        text: {
-          count: incomingStatus.text!.length,
-          raw: incomingStatus.text!,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
-        ...(incomingStatus.poll && {
-          poll: {
-            active: true,
-            total: incomingStatus.poll.options.length,
-            options: {
-              '0': incomingStatus.poll.options[0]?.title || undefined,
-              '1': incomingStatus.poll.options[1]?.title || undefined,
-              '2': incomingStatus.poll.options[2]?.title || undefined,
-              '3': incomingStatus.poll.options[3]?.title || undefined
-            },
-            multiple: incomingStatus.poll.multiple,
-            expire: '86400' // !!!
-          }
-        }),
-        ...(incomingStatus.media_attachments && {
-          attachments: {
-            sensitive: incomingStatus.sensitive,
-            uploads: incomingStatus.media_attachments
-          }
-        }),
-        visibility:
-          incomingStatus.visibility ||
-          getLocalAccountPreferences(store.getState())[
-            'posting:default:visibility'
-          ],
-        ...(incomingStatus.visibility === 'direct' && { visibilityLock: true })
-      }
-    case 'reply':
-      const actualStatus = incomingStatus.reblog || incomingStatus
-      const allMentions = Array.isArray(actualStatus.mentions)
-        ? actualStatus.mentions.map(mention => `@${mention.acct}`)
-        : []
-      let replyPlaceholder = allMentions.join(' ')
-
-      if (replyPlaceholder.length === 0) {
-        replyPlaceholder = `@${actualStatus.account.acct} `
-      } else {
-        replyPlaceholder = replyPlaceholder + ' '
-      }
-      return {
-        ...composeInitialState,
-        text: {
-          count: replyPlaceholder.length,
-          raw: replyPlaceholder,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
-        ...(visibilityLock && {
-          visibility: 'direct',
-          visibilityLock: true
-        }),
-        replyToStatus: actualStatus
-      }
-    case 'conversation':
-      return {
-        ...composeInitialState,
-        text: {
-          count: incomingStatus.account.acct.length + 2,
-          raw: `@${incomingStatus.account.acct} `,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
-        visibility: 'direct',
-        visibilityLock: true
-      }
-  }
-}
-const composeReducer = (
-  state: ComposeState,
-  action: ComposeAction
-): ComposeState => {
-  switch (action.type) {
-    case 'spoiler':
-      return { ...state, spoiler: { ...state.spoiler, ...action.payload } }
-    case 'text':
-      return { ...state, text: { ...state.text, ...action.payload } }
-    case 'tag':
-      return { ...state, tag: action.payload }
-    case 'emoji':
-      return { ...state, emoji: action.payload }
-    case 'poll':
-      return { ...state, poll: { ...state.poll, ...action.payload } }
-    case 'attachments':
-      return {
-        ...state,
-        attachments: { ...state.attachments, ...action.payload }
-      }
-    case 'attachmentUploadProgress':
-      return { ...state, attachmentUploadProgress: action.payload }
-    case 'attachmentEdit':
-      return {
-        ...state,
-        attachments: {
-          ...state.attachments,
-          uploads: state.attachments.uploads.map(upload =>
-            upload.id === action.payload.id ? action.payload : upload
-          )
-        }
-      }
-    case 'visibility':
-      return { ...state, visibility: action.payload }
-    case 'textInputFocus':
-      return {
-        ...state,
-        textInputFocus: { ...state.textInputFocus, ...action.payload }
-      }
-    default:
-      throw new Error('Unexpected action')
-  }
-}
 
 type ContextType = {
   composeState: ComposeState
@@ -353,7 +79,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
   const [composeState, composeDispatch] = useReducer(
     composeReducer,
     params?.type && params?.incomingStatus
-      ? composeExistingState({
+      ? composeParseState({
           type: params.type,
           incomingStatus: params.incomingStatus,
           visibilityLock: params.visibilityLock
@@ -415,116 +141,9 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     }
   }, [params?.type])
 
-  const tootPost = async () => {
-    setIsSubmitting(true)
-    if (composeState.text.count < 0) {
-      Alert.alert('字数超限', '', [
-        {
-          text: '返回继续编辑'
-        }
-      ])
-    } else {
-      const formData = new FormData()
-
-      if (params?.type === 'conversation' || params?.type === 'reply') {
-        formData.append('in_reply_to_id', composeState.replyToStatus!.id)
-      }
-
-      if (composeState.spoiler.active) {
-        formData.append('spoiler_text', composeState.spoiler.raw)
-      }
-
-      formData.append('status', composeState.text.raw)
-
-      if (composeState.poll.active) {
-        Object.values(composeState.poll.options)
-          .filter(e => e?.length)
-          .forEach(e => formData.append('poll[options][]', e!))
-        formData.append('poll[expires_in]', composeState.poll.expire)
-        formData.append('poll[multiple]', composeState.poll.multiple.toString())
-      }
-
-      if (composeState.attachments.uploads.length) {
-        formData.append(
-          'sensitive',
-          composeState.attachments.sensitive.toString()
-        )
-        composeState.attachments.uploads.forEach(e =>
-          formData.append('media_ids[]', e!.id)
-        )
-      }
-
-      formData.append('visibility', composeState.visibility)
-
-      client({
-        method: 'post',
-        instance: 'local',
-        url: 'statuses',
-        headers: {
-          'Idempotency-Key': await Crypto.digestStringAsync(
-            Crypto.CryptoDigestAlgorithm.SHA256,
-            composeState.spoiler.raw +
-              composeState.text.raw +
-              composeState.poll.options['0'] +
-              composeState.poll.options['1'] +
-              composeState.poll.options['2'] +
-              composeState.poll.options['3'] +
-              composeState.poll.multiple +
-              composeState.poll.expire +
-              composeState.attachments.sensitive +
-              composeState.attachments.uploads.map(upload => upload.id) +
-              composeState.visibility +
-              (params?.type === 'edit' ? Math.random() : '')
-          )
-        },
-        body: formData
-      })
-        .then(
-          res => {
-            if (res.body.id) {
-              setIsSubmitting(false)
-              Alert.alert('发布成功', '', [
-                {
-                  text: '好的',
-                  onPress: () => {
-                    queryClient.invalidateQueries(['Following'])
-                    navigation.goBack()
-                  }
-                }
-              ])
-            } else {
-              setIsSubmitting(false)
-              Alert.alert('发布失败', '', [
-                {
-                  text: '返回重试'
-                }
-              ])
-            }
-          },
-          error => {
-            setIsSubmitting(false)
-            Alert.alert('发布失败', error.body, [
-              {
-                text: '返回重试'
-              }
-            ])
-          }
-        )
-        .catch(() => {
-          setIsSubmitting(false)
-          Alert.alert('发布失败', '', [
-            {
-              text: '返回重试'
-            }
-          ])
-        })
-    }
-  }
-
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
-  const rawCount = composeState.text.raw.length
 
   const postButtonText = {
     conversation: '回复私信',
@@ -539,12 +158,12 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         content='退出编辑'
         onPress={() =>
           Alert.alert('确认取消编辑？', '', [
-            { text: '继续编辑', style: 'cancel' },
             {
               text: '退出编辑',
               style: 'destructive',
               onPress: () => navigation.goBack()
-            }
+            },
+            { text: '继续编辑', style: 'cancel' }
           ])
         }
       />
@@ -571,21 +190,29 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
       <HeaderRight
         type='text'
         content={params?.type ? postButtonText[params.type] : '发嘟嘟'}
-        onPress={async () => tootPost()}
+        onPress={() => {
+          layoutAnimation()
+          setIsSubmitting(true)
+          composeSend(params, composeState)
+            .then(() => {
+              queryClient.invalidateQueries(['Following'])
+              navigation.goBack()
+              toast({ type: 'success', content: '发布成功' })
+            })
+            .catch(() => {
+              setIsSubmitting(false)
+              Alert.alert('发布失败', '', [
+                {
+                  text: '返回重试'
+                }
+              ])
+            })
+        }}
         loading={isSubmitting}
-        disabled={rawCount < 1 || totalTextCount > 500}
+        disabled={composeState.text.raw.length < 1 || totalTextCount > 500}
       />
     ),
-    [isSubmitting, rawCount, totalTextCount]
-  )
-
-  const screenComponent = useCallback(
-    () => (
-      <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-        <ComposeRoot />
-      </ComposeContext.Provider>
-    ),
-    []
+    [isSubmitting, composeState.text.raw, totalTextCount]
   )
 
   return (
@@ -594,13 +221,20 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         style={{ flex: 1 }}
         edges={hasKeyboard ? ['left', 'right'] : ['left', 'right', 'bottom']}
       >
-        <Stack.Navigator>
-          <Stack.Screen
-            name='Screen-Shared-Compose-Root'
-            options={{ headerLeft, headerCenter, headerRight }}
-            component={screenComponent}
-          />
-        </Stack.Navigator>
+        <ComposeContext.Provider value={{ composeState, composeDispatch }}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name='Screen-Shared-Compose-Root'
+              component={ComposeRoot}
+              options={{ headerLeft, headerCenter, headerRight }}
+            />
+            <Stack.Screen
+              name='Screen-Shared-Compose-EditAttachment'
+              component={ComposeEditAttachment}
+              options={{ stackPresentation: 'modal' }}
+            />
+          </Stack.Navigator>
+        </ComposeContext.Provider>
       </SafeAreaView>
     </KeyboardAvoidingView>
   )

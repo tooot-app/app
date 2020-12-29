@@ -1,4 +1,12 @@
-import React, { useCallback, useContext } from 'react'
+import { Feather } from '@expo/vector-icons'
+import Button from '@components/Button'
+import { useNavigation } from '@react-navigation/native'
+import { ComposeContext } from '@screens/Shared/Compose'
+import addAttachment from '@screens/Shared/Compose/addAttachment'
+import { ExtendedAttachment } from '@screens/Shared/Compose/utils/types'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useCallback, useContext, useMemo } from 'react'
 import {
   FlatList,
   Image,
@@ -7,16 +15,8 @@ import {
   Text,
   View
 } from 'react-native'
-
-import { ComposeContext } from '@screens/Shared/Compose'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { useNavigation } from '@react-navigation/native'
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-import Button from '@components/Button'
-import addAttachments from '@screens/Shared/Compose/addAttachments'
-import { Feather } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
+import { Chase } from 'react-native-animated-spinkit'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 const DEFAULT_HEIGHT = 200
 
@@ -25,36 +25,52 @@ const ComposeAttachments: React.FC = () => {
   const { theme } = useTheme()
   const navigation = useNavigation()
 
+  const sensitiveOnPress = useCallback(
+    () =>
+      composeDispatch({
+        type: 'attachments/sensitive',
+        payload: { sensitive: !composeState.attachments.sensitive }
+      }),
+    [composeState.attachments.sensitive]
+  )
+
   const renderAttachment = useCallback(
-    ({
-      item,
-      index
-    }: {
-      item: Mastodon.Attachment & { local_url?: string }
-      index: number
-    }) => {
+    ({ item, index }: { item: ExtendedAttachment; index: number }) => {
+      let calculatedWidth: number
+      if (item.local) {
+        calculatedWidth =
+          (item.local.width / item.local.height) * DEFAULT_HEIGHT
+      } else {
+        if (item.remote) {
+          if (item.remote.meta.original.aspect) {
+            calculatedWidth = item.remote.meta.original.aspect * DEFAULT_HEIGHT
+          } else if (
+            item.remote.meta.original.width &&
+            item.remote.meta.original.height
+          ) {
+            calculatedWidth =
+              (item.remote.meta.original.width /
+                item.remote.meta.original.height) *
+              DEFAULT_HEIGHT
+          } else {
+            calculatedWidth = DEFAULT_HEIGHT
+          }
+        } else {
+          calculatedWidth = DEFAULT_HEIGHT
+        }
+      }
       return (
-        <View key={index}>
+        <View
+          key={index}
+          style={[styles.container, { width: calculatedWidth }]}
+        >
           <Image
-            style={[
-              styles.image,
-              {
-                width:
-                  ((item as Mastodon.AttachmentImage).meta?.original?.aspect ||
-                    (item as Mastodon.AttachmentVideo).meta?.original.width! /
-                      (item as Mastodon.AttachmentVideo).meta?.original
-                        .height! ||
-                    1) * DEFAULT_HEIGHT
-              }
-            ]}
+            style={styles.image}
             source={{
-              uri:
-                item.type === 'image'
-                  ? item.local_url || item.preview_url
-                  : item.preview_url
+              uri: item.local?.local_thumbnail || item.remote?.preview_url
             }}
           />
-          {(item as Mastodon.AttachmentVideo).meta?.original?.duration && (
+          {item.remote?.meta?.original?.duration && (
             <Text
               style={[
                 styles.duration,
@@ -64,114 +80,100 @@ const ComposeAttachments: React.FC = () => {
                 }
               ]}
             >
-              {(item as Mastodon.AttachmentVideo).meta?.original.duration}
+              {item.remote.meta.original.duration}
             </Text>
           )}
-          <Button
-            type='icon'
-            content='x'
-            spacing='M'
-            round
-            overlay
-            style={styles.delete}
-            onPress={() =>
-              composeDispatch({
-                type: 'attachments',
-                payload: {
-                  uploads: composeState.attachments.uploads.filter(
-                    e => e.id !== item.id
-                  )
+          {item.uploading ? (
+            <View
+              style={[
+                styles.uploading,
+                { backgroundColor: theme.backgroundOverlay }
+              ]}
+            >
+              <Chase
+                size={StyleConstants.Font.Size.L * 2}
+                color={theme.primaryOverlay}
+              />
+            </View>
+          ) : (
+            <>
+              <Button
+                type='icon'
+                content='x'
+                spacing='M'
+                round
+                overlay
+                style={styles.delete}
+                onPress={() => {
+                  layoutAnimation()
+                  composeDispatch({
+                    type: 'attachment/delete',
+                    payload: item.remote!.id
+                  })
+                }}
+              />
+              <Button
+                type='icon'
+                content='edit'
+                spacing='M'
+                round
+                overlay
+                style={styles.edit}
+                onPress={() =>
+                  navigation.navigate('Screen-Shared-Compose-EditAttachment', {
+                    index
+                  })
                 }
-              })
-            }
-          />
-          <Button
-            type='icon'
-            content='edit'
-            spacing='M'
-            round
-            overlay
-            style={styles.edit}
-            onPress={() =>
-              navigation.navigate('Screen-Shared-Compose-EditAttachment', {
-                attachment: item,
-                composeDispatch
-              })
-            }
-          />
+              />
+            </>
+          )}
         </View>
       )
     },
     []
   )
 
-  const listFooter = useCallback(() => {
-    const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
-
-    return (
-      <ShimmerPlaceholder
-        style={styles.progressContainer}
-        visible={composeState.attachmentUploadProgress === undefined}
-        width={
-          (composeState.attachmentUploadProgress?.aspect || 3 / 2) *
-          DEFAULT_HEIGHT
-        }
-        height={200}
-        shimmerColors={theme.shimmer}
+  const listFooter = useMemo(
+    () => (
+      <Pressable
+        style={[
+          styles.container,
+          {
+            width: DEFAULT_HEIGHT,
+            backgroundColor: theme.backgroundOverlay
+          }
+        ]}
+        onPress={async () => await addAttachment({ composeDispatch })}
       >
-        {composeState.attachments.uploads.length > 0 &&
-          composeState.attachments.uploads[0].type === 'image' &&
-          composeState.attachments.uploads.length < 4 && (
-            <Pressable
-              style={{
-                width: DEFAULT_HEIGHT,
-                height: DEFAULT_HEIGHT,
-                backgroundColor: theme.border
-              }}
-              onPress={async () =>
-                await addAttachments({ composeState, composeDispatch })
-              }
-            >
-              <Button
-                type='icon'
-                content='upload-cloud'
-                spacing='M'
-                round
-                overlay
-                onPress={async () =>
-                  await addAttachments({ composeState, composeDispatch })
-                }
-                style={{
-                  position: 'absolute',
-                  top:
-                    (DEFAULT_HEIGHT -
-                      StyleConstants.Spacing.M * 2 -
-                      StyleConstants.Font.Size.M) /
-                    2,
-                  left:
-                    (DEFAULT_HEIGHT -
-                      StyleConstants.Spacing.M * 2 -
-                      StyleConstants.Font.Size.M) /
-                    2
-                }}
-              />
-            </Pressable>
-          )}
-      </ShimmerPlaceholder>
-    )
-  }, [composeState.attachmentUploadProgress, composeState.attachments.uploads])
+        <Button
+          type='icon'
+          content='upload-cloud'
+          spacing='M'
+          round
+          overlay
+          onPress={async () => await addAttachment({ composeDispatch })}
+          style={{
+            position: 'absolute',
+            top:
+              (DEFAULT_HEIGHT -
+                StyleConstants.Spacing.M * 2 -
+                StyleConstants.Font.Size.M) /
+              2,
+            left:
+              (DEFAULT_HEIGHT -
+                StyleConstants.Spacing.M * 2 -
+                StyleConstants.Font.Size.M) /
+              2
+          }}
+        />
+      </Pressable>
+    ),
+    []
+  )
 
   return (
     <View style={styles.base}>
-      <Pressable
-        style={styles.sensitive}
-        onPress={() =>
-          composeDispatch({
-            type: 'attachments',
-            payload: { sensitive: !composeState.attachments.sensitive }
-          })
-        }
-      >
+      <Pressable style={styles.sensitive} onPress={sensitiveOnPress}>
         <Feather
           name={composeState.attachments.sensitive ? 'check-circle' : 'circle'}
           size={StyleConstants.Font.Size.L}
@@ -181,17 +183,17 @@ const ComposeAttachments: React.FC = () => {
           标记媒体为敏感内容
         </Text>
       </Pressable>
-      <View style={styles.imageContainer}>
-        <FlatList
-          horizontal
-          extraData={composeState.attachments.uploads.length}
-          data={composeState.attachments.uploads}
-          renderItem={renderAttachment}
-          ListFooterComponent={listFooter}
-          showsHorizontalScrollIndicator={false}
-          keyboardShouldPersistTaps='handled'
-        />
-      </View>
+      <FlatList
+        horizontal
+        keyExtractor={item => item.local!.uri || item.remote!.url}
+        data={composeState.attachments.uploads}
+        renderItem={renderAttachment}
+        ListFooterComponent={
+          composeState.attachments.uploads.length < 4 ? listFooter : null
+        }
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps='handled'
+      />
     </View>
   )
 }
@@ -212,46 +214,41 @@ const styles = StyleSheet.create({
     ...StyleConstants.FontStyle.M,
     marginLeft: StyleConstants.Spacing.S
   },
-  imageContainer: {
-    height: DEFAULT_HEIGHT
-  },
-  image: {
-    flex: 1,
+  container: {
+    height: DEFAULT_HEIGHT,
     marginLeft: StyleConstants.Spacing.Global.PagePadding,
     marginTop: StyleConstants.Spacing.Global.PagePadding,
     marginBottom: StyleConstants.Spacing.Global.PagePadding
   },
+  image: {
+    width: '100%',
+    height: '100%'
+  },
   duration: {
     position: 'absolute',
-    bottom:
-      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
-    left: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    bottom: StyleConstants.Spacing.S,
+    left: StyleConstants.Spacing.S,
     ...StyleConstants.FontStyle.S,
     paddingLeft: StyleConstants.Spacing.S,
     paddingRight: StyleConstants.Spacing.S,
     paddingTop: StyleConstants.Spacing.XS,
     paddingBottom: StyleConstants.Spacing.XS
   },
+  uploading: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   delete: {
     position: 'absolute',
-    top: StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    top: StyleConstants.Spacing.S,
     right: StyleConstants.Spacing.S
   },
   edit: {
     position: 'absolute',
-    bottom:
-      StyleConstants.Spacing.Global.PagePadding + StyleConstants.Spacing.S,
+    bottom: StyleConstants.Spacing.S,
     right: StyleConstants.Spacing.S
-  },
-  progressContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: DEFAULT_HEIGHT,
-    marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginTop: StyleConstants.Spacing.Global.PagePadding,
-    marginBottom: StyleConstants.Spacing.Global.PagePadding
   }
 })
 
-export default ComposeAttachments
+export default React.memo(ComposeAttachments, () => true)

@@ -1,6 +1,6 @@
 import { Dispatch } from 'react'
-import { ComposeAction, ComposeState } from '@screens/Shared/Compose'
 import formatText from './formatText'
+import { ComposeAction, ComposeState } from './utils/types'
 
 const updateText = ({
   composeState,

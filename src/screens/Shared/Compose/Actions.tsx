@@ -1,11 +1,11 @@
 import { Feather } from '@expo/vector-icons'
-import React, { RefObject, useCallback, useContext, useMemo } from 'react'
-import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeContext } from '@screens/Shared/Compose'
-import addAttachments from '@screens/Shared/Compose/addAttachments'
-import { toast } from '@root/components/toast'
+import addAttachment from '@root/screens/Shared/Compose/addAttachment'
+import React, { useCallback, useContext, useMemo } from 'react'
+import { ActionSheetIOS, StyleSheet, View } from 'react-native'
+import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 const ComposeActions: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -13,50 +13,33 @@ const ComposeActions: React.FC = () => {
 
   const attachmentColor = useMemo(() => {
     if (composeState.poll.active) return theme.disabled
-    if (composeState.attachmentUploadProgress) return theme.primary
 
     if (composeState.attachments.uploads.length) {
       return theme.primary
     } else {
       return theme.secondary
     }
-  }, [
-    composeState.poll.active,
-    composeState.attachments.uploads,
-    composeState.attachmentUploadProgress
-  ])
+  }, [composeState.poll.active, composeState.attachments.uploads])
   const attachmentOnPress = useCallback(async () => {
     if (composeState.poll.active) return
-    if (composeState.attachmentUploadProgress) return
 
-    if (!composeState.attachments.uploads.length) {
-      return await addAttachments({ composeState, composeDispatch })
+    if (composeState.attachments.uploads.length < 4) {
+      return await addAttachment({ composeDispatch })
     }
-  }, [
-    composeState.poll.active,
-    composeState.attachments.uploads,
-    composeState.attachmentUploadProgress
-  ])
+  }, [composeState.poll.active, composeState.attachments.uploads])
 
   const pollColor = useMemo(() => {
     if (composeState.attachments.uploads.length) return theme.disabled
-    if (composeState.attachmentUploadProgress) return theme.disabled
 
     if (composeState.poll.active) {
       return theme.primary
     } else {
       return theme.secondary
     }
-  }, [
-    composeState.poll.active,
-    composeState.attachments.uploads,
-    composeState.attachmentUploadProgress
-  ])
+  }, [composeState.poll.active, composeState.attachments.uploads])
   const pollOnPress = useCallback(() => {
-    if (
-      !composeState.attachments.uploads.length &&
-      !composeState.attachmentUploadProgress
-    ) {
+    if (!composeState.attachments.uploads.length) {
+      layoutAnimation()
       composeDispatch({
         type: 'poll',
         payload: { ...composeState.poll, active: !composeState.poll.active }
@@ -65,11 +48,7 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) {
       composeState.textInputFocus.refs.text.current?.focus()
     }
-  }, [
-    composeState.poll.active,
-    composeState.attachments.uploads,
-    composeState.attachmentUploadProgress
-  ])
+  }, [composeState.poll.active, composeState.attachments.uploads])
 
   const visibilityIcon = useMemo(() => {
     switch (composeState.visibility) {
@@ -114,6 +93,7 @@ const ComposeActions: React.FC = () => {
     if (composeState.spoiler.active) {
       composeState.textInputFocus.refs.text.current?.focus()
     }
+    layoutAnimation()
     composeDispatch({
       type: 'spoiler',
       payload: { active: !composeState.spoiler.active }
@@ -132,11 +112,13 @@ const ComposeActions: React.FC = () => {
   const emojiOnPress = useCallback(() => {
     if (composeState.emoji.emojis) {
       if (composeState.emoji.active) {
+        layoutAnimation()
         composeDispatch({
           type: 'emoji',
           payload: { ...composeState.emoji, active: false }
         })
       } else {
+        layoutAnimation()
         composeDispatch({
           type: 'emoji',
           payload: { ...composeState.emoji, active: true }

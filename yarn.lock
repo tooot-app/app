@@ -4215,6 +4215,11 @@ expo-updates@~0.3.5:
     fbemitter "^2.1.1"
     uuid "^3.4.0"
 
+expo-video-thumbnails@~4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/expo-video-thumbnails/-/expo-video-thumbnails-4.4.0.tgz#962763c31d7768823f3162574c7805ffe4e04240"
+  integrity sha512-eykJaV9zt/HruYYAiptDoXy9rBDgrLMe1Sok9hKeQycqQPzs0Go5mEuU08TO4fm+lhSgCVBkJUDhZecDIQFinQ==
+
 expo-web-browser@^8.6.0, expo-web-browser@~8.6.0:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-8.6.0.tgz#121ad81b2597b8273739b630c278a6f6937b95ae"

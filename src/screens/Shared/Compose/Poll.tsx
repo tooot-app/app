@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6
+    borderRadius: 6,
+    margin: StyleConstants.Spacing.Global.PagePadding
   },
   options: {
     marginTop: StyleConstants.Spacing.M,

@@ -57,14 +57,6 @@ const sharedScreens = (Stack: any) => {
       }}
     />,
     <Stack.Screen
-      key='Screen-Shared-Compose-EditAttachment'
-      name='Screen-Shared-Compose-EditAttachment'
-      component={ComposeEditAttachment}
-      options={{
-        stackPresentation: 'modal'
-      }}
-    />,
-    <Stack.Screen
       key='Screen-Shared-Search'
       name='Screen-Shared-Search'
       component={ScreenSharedSearch}

@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import { FetchOptions } from 'react-query/types/core/query'
 import Autolinker from '@root/modules/autolinker'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { ComposeAction, ComposeState } from '@screens/Shared/Compose'
+import { ComposeAction, ComposeState } from './utils/types'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']

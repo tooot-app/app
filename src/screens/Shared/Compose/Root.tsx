@@ -25,7 +25,6 @@ import {
   View,
   FlatList,
   Pressable,
-  ProgressViewIOS,
   StyleSheet,
   Text,
   Image
@@ -95,7 +94,6 @@ const ListItem = React.memo(
     )
     return (
       <Pressable
-        key={item.url}
         onPress={onPress}
         style={styles.suggestion}
         children={children}
@@ -110,7 +108,7 @@ const ComposeRoot: React.FC = () => {
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
 
-  const { isFetching, isSuccess, data, refetch } = useQuery(
+  const { isFetching, data, refetch } = useQuery(
     [
       'Search',
       {
@@ -159,7 +157,7 @@ const ComposeRoot: React.FC = () => {
   const listEmpty = useMemo(() => {
     if (isFetching) {
       return (
-        <View style={styles.loading}>
+        <View key='listEmpty' style={styles.loading}>
           <Chase
             size={StyleConstants.Font.Size.M * 1.25}
             color={theme.secondary}
@@ -169,35 +167,27 @@ const ComposeRoot: React.FC = () => {
     }
   }, [isFetching])
 
-  const listKey = useCallback(
-    (item: Mastodon.Account | Mastodon.Tag) => item.url,
-    [isSuccess]
-  )
   const listItem = useCallback(
-    ({ item }) =>
-      isSuccess ? (
-        <ListItem
-          item={item}
-          composeState={composeState}
-          composeDispatch={composeDispatch}
-        />
-      ) : null,
-    [isSuccess]
+    ({ item }) => (
+      <ListItem
+        item={item}
+        composeState={composeState}
+        composeDispatch={composeDispatch}
+      />
+    ),
+    [composeState]
   )
+
   return (
     <View style={styles.base}>
-      <ProgressViewIOS
-        progress={composeState.attachmentUploadProgress?.progress || 0}
-        progressViewStyle='bar'
-      />
       <FlatList
         keyboardShouldPersistTaps='handled'
-        ListHeaderComponent={<ComposeRootHeader />}
-        ListFooterComponent={<ComposeRootFooter />}
+        ListHeaderComponent={ComposeRootHeader}
+        ListFooterComponent={ComposeRootFooter}
         ListEmptyComponent={listEmpty}
         data={data as Mastodon.Account[] & Mastodon.Tag[]}
-        keyExtractor={listKey}
         renderItem={listItem}
+        keyExtractor={(item: any) => item.acct || item.name}
       />
       <ComposeActions />
     </View>

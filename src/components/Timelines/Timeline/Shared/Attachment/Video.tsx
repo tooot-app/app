@@ -9,16 +9,9 @@ import { StyleConstants } from '@root/utils/styles/constants'
 export interface Props {
   sensitiveShown: boolean
   video: Mastodon.AttachmentVideo | Mastodon.AttachmentGifv
-  width: number
-  height: number
 }
 
-const AttachmentVideo: React.FC<Props> = ({
-  sensitiveShown,
-  video,
-  width,
-  height
-}) => {
+const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
   const videoPlayer = useRef<Video>(null)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)
