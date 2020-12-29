@@ -26,14 +26,14 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
               emojis={account.emojis}
               showFullLink
             />
-            {field.verified_at && (
+            {field.verified_at ? (
               <Feather
                 name='check-circle'
                 size={StyleConstants.Font.Size.M}
                 color={theme.primary}
                 style={styles.fieldCheck}
               />
-            )}
+            ) : null}
           </View>
           <View style={styles.fieldRight}>
             <ParseContent

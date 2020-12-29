@@ -124,7 +124,7 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
 
   return (
     <View style={styles.actions}>
-      {query.data && !query.data.blocked_by && (
+      {query.data && !query.data.blocked_by ? (
         <Button
           type='icon'
           content='mail'
@@ -140,7 +140,7 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
           }
           style={styles.actionConversation}
         />
-      )}
+      ) : null}
       {mainAction}
     </View>
   )

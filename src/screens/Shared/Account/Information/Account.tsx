@@ -37,16 +37,16 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
           >
             @{account?.acct}
           </Text>
-          {account?.locked && (
+          {account?.locked ? (
             <Feather name='lock' style={styles.type} color={theme.secondary} />
-          )}
-          {account?.bot && (
+          ) : null}
+          {account?.bot ? (
             <Feather
               name='hard-drive'
               style={styles.type}
               color={theme.secondary}
             />
-          )}
+          ) : null}
         </View>
       </ShimmerPlaceholder>
     )

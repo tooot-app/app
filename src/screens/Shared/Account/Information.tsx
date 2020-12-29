@@ -60,21 +60,25 @@ const AccountInformation: React.FC<Props> = ({
       {/* <Text>Moved or not: {account.moved}</Text> */}
       <View style={styles.avatarAndActions}>
         <AccountInformationAvatar ref={shimmerAvatarRef} account={account} />
-        {!disableActions && <AccountInformationActions account={account} />}
+        {!disableActions ? (
+          <AccountInformationActions account={account} />
+        ) : null}
       </View>
 
       <AccountInformationName ref={shimmerNameRef} account={account} />
 
       <AccountInformationAccount ref={shimmerAccountRef} account={account} />
 
-      {account?.fields && account.fields.length > 0 && (
+      {account?.fields && account.fields.length > 0 ? (
         <AccountInformationFields account={account} />
-      )}
+      ) : null}
 
-      {account?.note && account.note.length > 0 && account.note !== '<p></p>' && (
+      {account?.note &&
+      account.note.length > 0 &&
+      account.note !== '<p></p>' ? (
         // Empty notes might generate empty p tag
         <AccountInformationNotes account={account} />
-      )}
+      ) : null}
 
       <AccountInformationCreated ref={shimmerCreatedRef} account={account} />
 
