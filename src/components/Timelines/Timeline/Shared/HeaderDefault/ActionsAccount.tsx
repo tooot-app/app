@@ -57,7 +57,7 @@ const fireMutation = async ({
 
 export interface Props {
   queryKey?: QueryKey.Timeline
-  account: Mastodon.Account
+  account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 

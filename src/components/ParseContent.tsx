@@ -54,21 +54,19 @@ const renderNode = ({
           </Text>
         )
       } else if (classes.includes('mention') && mentions) {
+        const accountIndex = mentions.findIndex(mention => mention.url === href)
         return (
           <Text
             key={index}
             style={{
-              color: theme.blue,
+              color: accountIndex !== -1 ? theme.blue : undefined,
               ...StyleConstants.FontStyle[size]
             }}
             onPress={() => {
-              const username = href.split(new RegExp(/@(.*)/))
-              const usernameIndex = mentions.findIndex(
-                m => m.username === username[1]
-              )
-              navigation.push('Screen-Shared-Account', {
-                account: mentions[usernameIndex]
-              })
+              accountIndex !== -1 &&
+                navigation.push('Screen-Shared-Account', {
+                  account: mentions[accountIndex]
+                })
             }}
           >
             {node.children[0].data}
@@ -97,13 +95,11 @@ const renderNode = ({
           }
         >
           {!shouldBeTag ? (
-            <>
-              <Feather
-                name='external-link'
-                size={StyleConstants.Font.Size[size]}
-                color={theme.blue}
-              />{' '}
-            </>
+            <Feather
+              name='external-link'
+              size={StyleConstants.Font.Size[size]}
+              color={theme.blue}
+            />
           ) : null}
           {content || (showFullLink ? href : domain[1])}
         </Text>

@@ -20,7 +20,7 @@ import layoutAnimation from '@root/utils/styles/layoutAnimation'
 export interface Props {
   route: {
     params: {
-      account: Mastodon.Account
+      account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
     }
   }
   navigation: any

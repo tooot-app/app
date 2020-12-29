@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text } from 'react-native'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 
-const regexEmoji = new RegExp(/(:[a-z0-9_]+:)/)
+const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
 export interface Props {
   content: string
