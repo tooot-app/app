@@ -24,6 +24,8 @@
     "expo-av": "~8.7.0",
     "expo-blur": "~8.2.2",
     "expo-crypto": "~8.4.0",
+    "expo-firebase-analytics": "~2.6.0",
+    "expo-firebase-core": "~1.3.0",
     "expo-gl": "~9.2.0",
     "expo-image-picker": "~9.2.0",
     "expo-linear-gradient": "~8.4.0",

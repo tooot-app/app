@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo'
 import client from '@root/api/client'
-import { Index } from '@root/Index'
+import Index from '@root/Index'
 import { persistor, store } from '@root/store'
 import { resetLocal } from '@root/utils/slices/instancesSlice'
 import ThemeManager from '@utils/styles/ThemeManager'

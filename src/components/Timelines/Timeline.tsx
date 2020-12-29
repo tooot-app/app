@@ -11,6 +11,8 @@ import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
+import { useDispatch } from 'react-redux'
+import { updateNotification } from '@root/utils/slices/instancesSlice'
 
 export type TimelineData =
   | InfiniteData<{
@@ -82,6 +84,19 @@ const Timeline: React.FC<Props> = ({
   const flattenPinnedLength = data?.pages
     ? data.pages.flatMap(d => [d?.pinnedLength])
     : []
+
+  // Clear unread notification badge
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (page === 'Notifications' && flattenData.length) {
+      dispatch(
+        updateNotification({
+          unread: false,
+          latestTime: flattenData[0].created_at
+        })
+      )
+    }
+  }, [flattenData])
 
   const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {

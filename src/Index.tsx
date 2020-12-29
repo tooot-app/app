@@ -5,6 +5,7 @@ import {
   NavigationContainerRef
 } from '@react-navigation/native'
 
+import * as Analytics from 'expo-firebase-analytics'
 import React, { useEffect, useRef, useState } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
@@ -46,7 +47,7 @@ export interface Props {
   localCorrupt: boolean
 }
 
-export const Index: React.FC<Props> = ({ localCorrupt }) => {
+const Index: React.FC<Props> = ({ localCorrupt }) => {
   const dispatch = useDispatch()
   const localInstance = useSelector(getLocalUrl)
   const { i18n } = useTranslation()
@@ -98,14 +99,14 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
             })
           }
         })
-        .catch(() => {})
+        .catch(() => null)
   }, [])
 
   // On launch check if there is any unread noficiations
   const queryNotification = useInfiniteQuery(
-    ['Notifications', {}] as QueryKey.Timeline,
+    ['Notifications', {}],
     timelineFetch,
-    { enabled: localInstance ? true : false, cacheTime: 1000 * 30 }
+    { enabled: localInstance ? true : false }
   )
   const prevNotification = useSelector(getLocalNotification)
   useEffect(() => {
@@ -151,6 +152,9 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
         ref={navigationRef}
         theme={themes[mode]}
         key={i18n.language}
+        onStateChange={state => {
+          Analytics.setCurrentScreen(state?.routes[state.index].name)
+        }}
       >
         <Tab.Navigator
           initialRouteName={localInstance ? 'Screen-Local' : 'Screen-Public'}
@@ -243,3 +247,5 @@ export const Index: React.FC<Props> = ({ localCorrupt }) => {
     </>
   )
 }
+
+export default React.memo(Index, () => true)

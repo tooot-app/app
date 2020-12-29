@@ -13,7 +13,7 @@ export default (): ExpoConfig => ({
   developmentClient: { silentLaunch: true },
   scheme: 'mastodonct',
   ios: {
-    bundleIdentifier: 'com.xmflsct.mastodon',
+    bundleIdentifier: 'com.xmflsct.app.mastodon',
     infoPlist: {
       CFBundleAllowMixedLocalizations: true
     },
@@ -21,7 +21,8 @@ export default (): ExpoConfig => ({
       image: './assets/splash.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff'
-    }
+    },
+    googleServicesFile: './configs/GoogleService-Info.plist'
   },
   // locales: {
   //   zh: {
@@ -31,5 +32,18 @@ export default (): ExpoConfig => ({
   //     CFBundleDisplayName: 'My Toots'
   //   }
   // },
-  assetBundlePatterns: ['assets/*']
+  assetBundlePatterns: ['assets/*'],
+  web: {
+    config: {
+      firebase: {
+        apiKey: 'AIzaSyAnvo0jyD1WB0tv2FLenz-CSDS-RgaWWR4',
+        authDomain: 'xmflsct-mastodon-app.firebaseapp.com',
+        projectId: 'xmflsct-mastodon-app',
+        storageBucket: 'xmflsct-mastodon-app.appspot.com',
+        messagingSenderId: '661638997772',
+        appId: '1:661638997772:web:1e7aab28be7dc06d9f8b29',
+        measurementId: 'G-3J0FS8WV5J'
+      }
+    }
+  }
 })
