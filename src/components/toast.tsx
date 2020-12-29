@@ -63,7 +63,7 @@ const ToastBase = ({ config }: { config: Config }) => {
     <SafeAreaView
       style={[
         styles.base,
-        { backgroundColor: theme.background, shadowColor: theme.primary }
+        { backgroundColor: theme.background, borderBottomColor: theme.primary }
       ]}
     >
       <View style={styles.container}>
@@ -97,15 +97,14 @@ const toastConfig = {
 const styles = StyleSheet.create({
   base: {
     width: '100%',
-    shadowOpacity: 1,
-    shadowRadius: 6
+    borderBottomWidth: 1
   },
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: StyleConstants.Spacing.M
+    padding: StyleConstants.Spacing.L
   },
   texts: {
     marginLeft: StyleConstants.Spacing.S

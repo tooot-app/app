@@ -1,3 +1,12 @@
+import client from '@api/client'
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { store } from '@root/store'
+import formatText from '@screens/Shared/Compose/formatText'
+import ComposeRoot from '@screens/Shared/Compose/Root'
+import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import * as Crypto from 'expo-crypto'
 import React, {
   createContext,
   createRef,
@@ -10,7 +19,6 @@ import React, {
   useState
 } from 'react'
 import {
-  ActivityIndicator,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
@@ -20,19 +28,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import * as Crypto from 'expo-crypto'
-
-import { store } from '@root/store'
-import ComposeRoot from '@screens/Shared/Compose/Root'
-import client from '@api/client'
-import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
-import { HeaderLeft, HeaderRight } from '@components/Header'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-import formatText from '@screens/Shared/Compose/formatText'
 import { useQueryClient } from 'react-query'
-import Toast from 'react-native-toast-message'
-import { toastConfig } from '@root/components/toast'
 
 const Stack = createNativeStackNavigator()
 
@@ -583,6 +579,15 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     [isSubmitting, rawCount, totalTextCount]
   )
 
+  const screenComponent = useCallback(
+    () => (
+      <ComposeContext.Provider value={{ composeState, composeDispatch }}>
+        <ComposeRoot />
+      </ComposeContext.Provider>
+    ),
+    []
+  )
+
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
       <SafeAreaView
@@ -591,17 +596,10 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
       >
         <Stack.Navigator>
           <Stack.Screen
-            name='PostMain'
+            name='Screen-Shared-Compose-Root'
             options={{ headerLeft, headerCenter, headerRight }}
-          >
-            {() => (
-              <ComposeContext.Provider
-                value={{ composeState, composeDispatch }}
-              >
-                <ComposeRoot />
-              </ComposeContext.Provider>
-            )}
-          </Stack.Screen>
+            component={screenComponent}
+          />
         </Stack.Navigator>
       </SafeAreaView>
     </KeyboardAvoidingView>

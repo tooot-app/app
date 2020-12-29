@@ -63,14 +63,14 @@ const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
             <Emojis
               content={account?.display_name || account?.username}
               emojis={account.emojis}
-              size='L'
+              size='M'
               fontBold={true}
             />
           ) : (
             <Text
               style={{
                 color: theme.primary,
-                ...StyleConstants.FontStyle.L,
+                ...StyleConstants.FontStyle.M,
                 fontWeight: StyleConstants.Font.Weight.Bold
               }}
             >

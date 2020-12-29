@@ -8,7 +8,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { toast } from '@components/toast'
 import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
-import getCurrentTab from '@utils/getCurrentTab'
 import { findIndex } from 'lodash'
 import { TimelineData } from '../../Timeline'
 
@@ -124,13 +123,10 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
   const onPressReply = useCallback(
     () =>
-      navigation.navigate(getCurrentTab(navigation), {
-        screen: 'Screen-Shared-Compose',
-        params: {
-          type: 'reply',
-          incomingStatus: status,
-          visibilityLock: status.visibility === 'direct'
-        }
+      navigation.navigate('Screen-Shared-Compose', {
+        type: 'reply',
+        incomingStatus: status,
+        visibilityLock: status.visibility === 'direct'
       }),
     []
   )

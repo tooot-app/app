@@ -1,37 +1,30 @@
-import 'react-native-gesture-handler'
+import client from '@api/client'
+import { Feather } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   NavigationContainer,
   NavigationContainerRef
 } from '@react-navigation/native'
-
-import * as Analytics from 'expo-firebase-analytics'
-import React, { useEffect, useRef, useState } from 'react'
-import { StatusBar } from 'react-native'
-import Toast from 'react-native-toast-message'
-import { Feather } from '@expo/vector-icons'
-
 import ScreenLocal from '@screens/Local'
 import ScreenPublic from '@screens/Public'
 import ScreenNotifications from '@screens/Notifications'
 import ScreenMe from '@screens/Me'
-
-import { themes } from '@utils/styles/themes'
-import { useTheme } from '@utils/styles/ThemeManager'
-import getCurrentTab from '@utils/getCurrentTab'
-import { toast, toastConfig } from '@components/toast'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { timelineFetch } from '@utils/fetches/timelineFetch'
 import {
   getLocalNotification,
   getLocalUrl,
   updateLocalAccountPreferences,
   updateNotification
 } from '@utils/slices/instancesSlice'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { themes } from '@utils/styles/themes'
+import { toast, toastConfig } from '@components/toast'
+import * as Analytics from 'expo-firebase-analytics'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import { StatusBar } from 'react-native'
+import Toast from 'react-native-toast-message'
+import { useDispatch, useSelector } from 'react-redux'
 import { useInfiniteQuery } from 'react-query'
-import client from './api/client'
-import { timelineFetch } from './utils/fetches/timelineFetch'
-import { useNetInfo } from '@react-native-community/netinfo'
 
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
@@ -50,25 +43,27 @@ export interface Props {
 const Index: React.FC<Props> = ({ localCorrupt }) => {
   const dispatch = useDispatch()
   const localInstance = useSelector(getLocalUrl)
-  const { i18n } = useTranslation()
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
   }
 
-  const isConnected = useNetInfo().isConnected
-  const [firstRender, setFirstRender] = useState(false)
-  useEffect(() => {
-    if (firstRender) {
-      // bug in netInfo on first render as false
-      if (isConnected !== false) {
-        toast({ type: 'error', content: '手机🈚️网络', autoHide: false })
-      }
-    } else {
-      setFirstRender(true)
-    }
-  }, [isConnected, firstRender])
+  const routeNameRef = useRef<string | undefined>()
+  const navigationRef = useRef<NavigationContainerRef>(null)
+
+  // const isConnected = useNetInfo().isConnected
+  // const [firstRender, setFirstRender] = useState(false)
+  // useEffect(() => {
+  //   if (firstRender) {
+  //     // bug in netInfo on first render as false
+  //     if (isConnected !== false) {
+  //       toast({ type: 'error', content: '手机🈚️网络', autoHide: false })
+  //     }
+  //   } else {
+  //     setFirstRender(true)
+  //   }
+  // }, [isConnected, firstRender])
 
   // On launch display login credentials corrupt information
   useEffect(() => {
@@ -84,8 +79,8 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   }, [localCorrupt])
 
   // On launch check if there is any unread announcements
-  const navigationRef = useRef<NavigationContainerRef>(null)
   useEffect(() => {
+    console.log('Checking announcements')
     localInstance &&
       client({
         method: 'get',
@@ -99,7 +94,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             })
           }
         })
-        .catch(() => null)
+        .catch(() => {})
   }, [])
 
   // On launch check if there is any unread noficiations
@@ -145,104 +140,149 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
     }
   }, [])
 
+  // Callbacks
+  const navigationContainerOnReady = useCallback(
+    () =>
+      (routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name),
+    []
+  )
+  const navigationContainerOnStateChange = useCallback(() => {
+    const previousRouteName = routeNameRef.current
+    const currentRouteName = navigationRef.current?.getCurrentRoute()?.name
+
+    if (previousRouteName !== currentRouteName) {
+      Analytics.setCurrentScreen(currentRouteName)
+    }
+
+    routeNameRef.current = currentRouteName
+  }, [])
+  const tabNavigatorScreenOptions = useCallback(
+    ({ route }) => ({
+      tabBarIcon: ({
+        focused,
+        color,
+        size
+      }: {
+        focused: boolean
+        color: string
+        size: number
+      }) => {
+        let name: any
+        let updateColor: string = color
+        switch (route.name) {
+          case 'Screen-Local':
+            name = 'home'
+            break
+          case 'Screen-Public':
+            name = 'globe'
+            !focused && (updateColor = theme.secondary)
+            break
+          case 'Screen-Post':
+            name = 'plus'
+            break
+          case 'Screen-Notifications':
+            name = 'bell'
+            break
+          case 'Screen-Me':
+            name = focused ? 'meh' : 'smile'
+            !focused && (updateColor = theme.secondary)
+            break
+          default:
+            name = 'alert-octagon'
+            break
+        }
+        return <Feather name={name} size={size} color={updateColor} />
+      }
+    }),
+    []
+  )
+  const tabNavigatorTabBarOptions = useMemo(
+    () => ({
+      activeTintColor: theme.primary,
+      inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
+      showLabel: false
+    }),
+    []
+  )
+  const tabScreenLocalListeners = useCallback(
+    () => ({
+      tabPress: (e: any) => {
+        if (!localInstance) {
+          e.preventDefault()
+        }
+      }
+    }),
+    []
+  )
+  const tabScreenComposeListeners = useCallback(
+    ({ navigation }) => ({
+      tabPress: (e: any) => {
+        e.preventDefault()
+        if (localInstance) {
+          navigation.navigate('Screen-Shared-Compose')
+        }
+      }
+    }),
+    []
+  )
+  const tabScreenComposeComponent = useCallback(() => null, [])
+  const tabScreenNotificationsListeners = useCallback(
+    () => ({
+      tabPress: (e: any) => {
+        if (!localInstance) {
+          e.preventDefault()
+        }
+      }
+    }),
+    []
+  )
+  const tabScreenNotificationsOptions = useMemo(
+    () => ({
+      tabBarBadge: prevNotification && prevNotification.unread ? '' : undefined,
+      tabBarBadgeStyle: {
+        transform: [{ scale: 0.5 }],
+        backgroundColor: theme.red
+      }
+    }),
+    []
+  )
+
   return (
     <>
       <StatusBar barStyle={barStyle[mode]} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
-        key={i18n.language}
-        onStateChange={state => {
-          Analytics.setCurrentScreen(state?.routes[state.index].name)
-        }}
+        // key={i18n.language}
+        onReady={navigationContainerOnReady}
+        onStateChange={navigationContainerOnStateChange}
       >
         <Tab.Navigator
           initialRouteName={localInstance ? 'Screen-Local' : 'Screen-Public'}
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let name: any
-              let updateColor: string = color
-              switch (route.name) {
-                case 'Screen-Local':
-                  name = 'home'
-                  break
-                case 'Screen-Public':
-                  name = 'globe'
-                  !focused && (updateColor = theme.secondary)
-                  break
-                case 'Screen-Post':
-                  name = 'plus'
-                  break
-                case 'Screen-Notifications':
-                  name = 'bell'
-                  break
-                case 'Screen-Me':
-                  name = focused ? 'meh' : 'smile'
-                  !focused && (updateColor = theme.secondary)
-                  break
-                default:
-                  name = 'alert-octagon'
-                  break
-              }
-              return <Feather name={name} size={size} color={updateColor} />
-            }
-          })}
-          tabBarOptions={{
-            activeTintColor: theme.primary,
-            inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
-            showLabel: false
-          }}
+          screenOptions={tabNavigatorScreenOptions}
+          tabBarOptions={tabNavigatorTabBarOptions}
         >
           <Tab.Screen
             name='Screen-Local'
             component={ScreenLocal}
-            listeners={({ navigation }) => ({
-              tabPress: e => {
-                if (!localInstance) {
-                  e.preventDefault()
-                }
-              }
-            })}
+            listeners={tabScreenLocalListeners}
           />
           <Tab.Screen name='Screen-Public' component={ScreenPublic} />
           <Tab.Screen
             name='Screen-Post'
-            listeners={({ navigation }) => ({
-              tabPress: e => {
-                e.preventDefault()
-                if (localInstance) {
-                  navigation.navigate(getCurrentTab(navigation), {
-                    screen: 'Screen-Shared-Compose'
-                  })
-                }
-              }
-            })}
-          >
-            {() => null}
-          </Tab.Screen>
+            component={tabScreenComposeComponent}
+            listeners={tabScreenComposeListeners}
+          />
           <Tab.Screen
             name='Screen-Notifications'
             component={ScreenNotifications}
-            options={{
-              tabBarBadge:
-                prevNotification && prevNotification.unread ? '' : undefined,
-              tabBarBadgeStyle: {
-                transform: [{ scale: 0.5 }],
-                backgroundColor: theme.red
-              }
-            }}
-            listeners={() => ({
-              tabPress: e => {
-                if (!localInstance) {
-                  e.preventDefault()
-                }
-              }
-            })}
+            listeners={tabScreenNotificationsListeners}
+            options={tabScreenNotificationsOptions}
           />
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>
 
-        <Toast ref={(ref: any) => Toast.setRef(ref)} config={toastConfig} />
+        <Toast ref={Toast.setRef} config={toastConfig} />
       </NavigationContainer>
     </>
   )

@@ -3,7 +3,6 @@ import client from '@root/api/client'
 import Button from '@root/components/Button'
 import { toast } from '@root/components/toast'
 import { relationshipFetch } from '@root/utils/fetches/relationshipFetch'
-import getCurrentTab from '@root/utils/getCurrentTab'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
 import React, { useEffect, useMemo } from 'react'
@@ -130,12 +129,9 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
           content='mail'
           round
           onPress={() =>
-            navigation.navigate(getCurrentTab(navigation), {
-              screen: 'Screen-Shared-Compose',
-              params: {
-                type: 'conversation',
-                incomingStatus: { account }
-              }
+            navigation.navigate('Screen-Shared-Compose', {
+              type: 'conversation',
+              incomingStatus: { account }
             })
           }
           style={styles.actionConversation}

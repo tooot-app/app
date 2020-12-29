@@ -29,6 +29,10 @@ export default {
     cache: {
       heading: '清空缓存'
     },
+    analytics: {
+      heading: '帮助我们改进',
+      description: '允许我们收集不与用户相关联的使用信息'
+    },
     copyrights: {
       heading: '版权信息'
     },

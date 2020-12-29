@@ -2262,7 +2262,7 @@
     invariant "^2.2.4"
     lodash "^4.5.0"
 
-"@welldone-software/why-did-you-render@^6.0.3":
+"@welldone-software/why-did-you-render@^6.0.4":
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-6.0.4.tgz#f8787a603b94fe0ef8aa824aecefd72b0a6c9e2a"
   integrity sha512-hOExlpwqPK/A0XRqgg42jSpbOb6AJBdgrI/X3BRj65ItQks0KS/nIT8HWPt8rR+BJb6OD5bm+vc1pcWSmxwd6A==
@@ -2609,7 +2609,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.0:
+axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
@@ -8078,10 +8078,10 @@ react-dom@16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-i18next@^11.8.4:
-  version "11.8.4"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.4.tgz#5407d2edcaa704c38e4034e7ac06413914ed6e6d"
-  integrity sha512-QlPJfX+Roi+jEQ6frBSsLHHH+VWbUoCl6wZDT8XHMd6PsSgepjgD2sZf/h7F46JnHeuy0U+SxY3TtrJF+aDIyg==
+react-i18next@^11.8.5:
+  version "11.8.5"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.5.tgz#a093335822e36252cda6efc0f55facef6253643f"
+  integrity sha512-2jY/8NkhNv2KWBnZuhHxTn13aMxAbvhiDUNskm+1xVVnrPId78l8fA7fCyVeO3XU1kptM0t4MtvxV1Nu08cjLw==
   dependencies:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
@@ -8186,7 +8186,7 @@ react-native-tab-view@^2.15.2:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.15.2.tgz#4bc7832d33a119306614efee667509672a7ee64e"
   integrity sha512-2hxLkBnZtEKFDyfvNO5EUywhy3f/EiLOBO8SWqKj4BMBTO0QwnybaPE5MVF00Fhz+VA4+h/iI40Dkrrtq70dGg==
 
-react-native-toast-message@^1.3.4:
+react-native-toast-message@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-1.4.2.tgz#bda453dd7259587f2c5b3a1684ee5461569fe191"
   integrity sha512-Hp/APBQu/TCLlnMhwhqaosWiC/HgpVYXG2WGF2Zd2GF93nOcH516BUoDC0rvbncGx11IBUrUtt14RRm6LrcL6g==
@@ -8234,10 +8234,10 @@ react-navigation@*, react-navigation@^4.4.3:
     "@react-navigation/core" "^3.7.9"
     "@react-navigation/native" "^3.8.3"
 
-react-query@^3.3.2:
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.5.5.tgz#50bae84066e1f61dc9a14ee7db8ea1a224535698"
-  integrity sha512-WYZcHcAs5K5lPGT6CI8fz3lU62S8IfZhvB1K4aZH27wg9T6CWei+y7IRyZwti9X18LX134O4olgEuNth9LEX+w==
+react-query@^3.5.6:
+  version "3.5.6"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.5.6.tgz#ea52404002e91e6ce39d49bf4ae96bf62554cd23"
+  integrity sha512-Fv184wu9FWg35PkgyZmEveveeRr+6+rqefVWf2vI3fhmWywjo2uBUA3GHwKMKCEI7Xb6T+6SyQt23pXhJQle0w==
   dependencies:
     "@babel/runtime" "^7.5.5"
     match-sorter "^6.0.2"
@@ -9512,10 +9512,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@~4.0.0:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
-  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
+typescript@~4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.3.tgz#519d582bd94cba0cf8934c7d8e8467e473f53bb7"
+  integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.19:
   version "0.7.23"

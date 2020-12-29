@@ -5,7 +5,7 @@ export default (): ExpoConfig => ({
   description: 'This is a description',
   slug: 'mastodon-app',
   privacy: 'hidden',
-  version: '1.0.0',
+  version: '0.1.0',
   platforms: ['ios'],
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
@@ -33,6 +33,18 @@ export default (): ExpoConfig => ({
   //   }
   // },
   assetBundlePatterns: ['assets/*'],
+  hooks: {
+    postPublish: [
+      {
+        file: 'sentry-expo/upload-sourcemaps'
+        // config: {
+        //   organization: "your sentry organization's short name here",
+        //   project: "your sentry project's name here",
+        //   authToken: 'your auth token here'
+        // }
+      }
+    ]
+  },
   web: {
     config: {
       firebase: {

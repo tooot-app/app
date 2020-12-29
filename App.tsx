@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import NetInfo from '@react-native-community/netinfo'
 import client from '@root/api/client'
 import Index from '@root/Index'
@@ -5,9 +6,9 @@ import { persistor, store } from '@root/store'
 import { resetLocal } from '@root/utils/slices/instancesSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import chalk from 'chalk'
+import * as Analytics from 'expo-firebase-analytics'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Platform, Text } from 'react-native'
 import { enableScreens } from 'react-native-screens'
 import { onlineManager, QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
@@ -30,6 +31,8 @@ const startingLog = (type: 'log' | 'warn' | 'error', message: string) => {
 }
 
 if (__DEV__) {
+  Analytics.setDebugModeEnabled(true)
+
   startingLog('log', 'initializing wdyr')
   const whyDidYouRender = require('@welldone-software/why-did-you-render')
   whyDidYouRender(React, {

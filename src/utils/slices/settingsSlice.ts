@@ -1,61 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-
 import { RootState } from '@root/store'
-// import client from 'src/api/client'
+import * as Analytics from 'expo-firebase-analytics'
 
 export type SettingsState = {
   language: 'zh' | 'en' | undefined
   theme: 'light' | 'dark' | 'auto'
   browser: 'internal' | 'external'
+  analytics: boolean
 }
 
 const initialState = {
   language: undefined,
   theme: 'auto',
-  browser: 'internal'
+  browser: 'internal',
+  analytics: false
 }
 
-// export const updateLocal = createAsyncThunk(
-//   'instances/updateLocal',
-//   async ({
-//     url,
-//     token
-//   }: {
-//     url?: InstancesState['local']['url']
-//     token?: InstancesState['local']['token']
-//   }) => {
-//     if (!url || !token) {
-//       return initialStateLocal
-//     }
-
-//     const {
-//       body: { id }
-//     } = await client({
-//       method: 'get',
-//       instance: 'remote',
-//       instanceUrl: url,
-//       endpoint: `accounts/verify_credentials`,
-//       headers: { Authorization: `Bearer ${token}` }
-//     })
-
-//     const { body: preferences } = await client({
-//       method: 'get',
-//       instance: 'remote',
-//       instanceUrl: url,
-//       endpoint: `preferences`,
-//       headers: { Authorization: `Bearer ${token}` }
-//     })
-
-//     return {
-//       url,
-//       token,
-//       account: {
-//         id,
-//         preferences
-//       }
-//     }
-//   }
-// )
+export const changeAnalytics = createAsyncThunk(
+  'settings/changeAnalytics',
+  async (newValue: SettingsState['analytics']) => {
+    await Analytics.setAnalyticsCollectionEnabled(newValue)
+    return newValue
+  }
+)
 
 const settingsSlice = createSlice({
   name: 'settings',
@@ -79,17 +46,19 @@ const settingsSlice = createSlice({
     ) => {
       state.browser = action.payload
     }
+  },
+  extraReducers: builder => {
+    builder.addCase(changeAnalytics.fulfilled, (state, action) => {
+      state.analytics = action.payload
+    })
   }
-  // extraReducers: builder => {
-  //   builder.addCase(updateLocal.fulfilled, (state, action) => {
-  //     state.local = action.payload
-  //   })
-  // }
 })
 
 export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
 export const getSettingsBrowser = (state: RootState) => state.settings.browser
+export const getSettingsAnalytics = (state: RootState) =>
+  state.settings.analytics
 
 export const {
   changeLanguage,

@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
-import getCurrentTab from '@utils/getCurrentTab'
 import { TimelineData } from '@root/components/Timelines/Timeline'
 import { findIndex } from 'lodash'
 
@@ -155,9 +154,9 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                     .then(res => {
                       queryClient.invalidateQueries(queryKey)
                       setBottomSheetVisible(false)
-                      navigation.navigate(getCurrentTab(navigation), {
-                        screen: 'Screen-Shared-Compose',
-                        params: { type: 'edit', incomingStatus: res.body }
+                      navigation.navigate('Screen-Shared-Compose', {
+                        type: 'edit',
+                        incomingStatus: res.body
                       })
                     })
                     .catch(() => {

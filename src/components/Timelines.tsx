@@ -9,7 +9,6 @@ import sharedScreens from '@screens/Shared/sharedScreens'
 import { getLocalUrl, getRemoteUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useNavigation } from '@react-navigation/native'
-import getCurrentTab from '@utils/getCurrentTab'
 import { HeaderRight } from './Header'
 import { TabView } from 'react-native-tab-view'
 
@@ -28,9 +27,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   const [segment, setSegment] = useState(0)
 
   const onPressSearch = useCallback(() => {
-    navigation.navigate(getCurrentTab(navigation), {
-      screen: 'Screen-Shared-Search'
-    })
+    navigation.navigate('Screen-Shared-Search')
   }, [])
 
   const routes = content

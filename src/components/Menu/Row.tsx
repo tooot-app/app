@@ -3,7 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Switch, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 
 export interface Props {
@@ -11,7 +11,12 @@ export interface Props {
   iconFrontColor?: ColorDefinitions
 
   title: string
+  description?: string
   content?: string
+
+  switchValue?: boolean
+  switchDisabled?: boolean
+  switchOnValueChange?: () => void
 
   iconBack?: 'chevron-right' | 'check'
   iconBackColor?: ColorDefinitions
@@ -24,7 +29,11 @@ const MenuRow: React.FC<Props> = ({
   iconFront,
   iconFrontColor = 'primary',
   title,
+  description,
   content,
+  switchValue,
+  switchDisabled,
+  switchOnValueChange,
   iconBack,
   iconBackColor = 'secondary',
   loading = false,
@@ -61,45 +70,59 @@ const MenuRow: React.FC<Props> = ({
               style={styles.iconFront}
             />
           )}
-          <Text
-            style={[styles.text, { color: theme.primary }]}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
-        </View>
-        {(content || iconBack) && (
-          <View style={styles.back}>
-            {content && content.length ? (
-              <>
-                <Text
-                  style={[
-                    styles.content,
-                    {
-                      color: theme.secondary,
-                      opacity: !iconBack && loading ? 0 : 1
-                    }
-                  ]}
-                  numberOfLines={1}
-                >
-                  {content}
-                </Text>
-                {loading && !iconBack && loadingSpinkit}
-              </>
+          <View style={styles.main}>
+            <Text
+              style={[styles.title, { color: theme.primary }]}
+              numberOfLines={1}
+            >
+              {title}
+            </Text>
+            {description ? (
+              <Text style={[styles.description, { color: theme.secondary }]}>
+                {description}
+              </Text>
             ) : null}
-            {iconBack && (
-              <>
-                <Feather
-                  name={iconBack}
-                  size={StyleConstants.Font.Size.M + 2}
-                  color={theme[iconBackColor]}
-                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
-                />
-                {loading && loadingSpinkit}
-              </>
-            )}
           </View>
-        )}
+        </View>
+
+        <View style={styles.back}>
+          {content && content.length ? (
+            <>
+              <Text
+                style={[
+                  styles.content,
+                  {
+                    color: theme.secondary,
+                    opacity: !iconBack && loading ? 0 : 1
+                  }
+                ]}
+                numberOfLines={1}
+              >
+                {content}
+              </Text>
+              {loading && !iconBack && loadingSpinkit}
+            </>
+          ) : null}
+          {switchValue !== undefined ? (
+            <Switch
+              value={switchValue}
+              onValueChange={switchOnValueChange}
+              disabled={switchDisabled}
+              trackColor={{ true: theme.blue, false: theme.disabled }}
+            />
+          ) : null}
+          {iconBack ? (
+            <>
+              <Feather
+                name={iconBack}
+                size={StyleConstants.Font.Size.M + 2}
+                color={theme[iconBackColor]}
+                style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+              />
+              {loading && loadingSpinkit}
+            </>
+          ) : null}
+        </View>
       </View>
     </Pressable>
   )
@@ -131,9 +154,15 @@ const styles = StyleSheet.create({
   iconFront: {
     marginRight: 8
   },
-  text: {
-    flex: 1,
+  main: {
+    flex: 1
+  },
+  title: {
     ...StyleConstants.FontStyle.M
+  },
+  description: {
+    ...StyleConstants.FontStyle.S,
+    marginTop: StyleConstants.Spacing.XS
   },
   content: {
     ...StyleConstants.FontStyle.M

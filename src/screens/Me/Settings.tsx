@@ -1,20 +1,22 @@
-import prettyBytes from 'pretty-bytes'
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
-import { CacheManager } from 'react-native-expo-image-cache'
-import { useDispatch, useSelector } from 'react-redux'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import {
+  changeAnalytics,
   changeBrowser,
   changeLanguage,
   changeTheme,
+  getSettingsAnalytics,
   getSettingsBrowser,
   getSettingsLanguage,
   getSettingsTheme
 } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import prettyBytes from 'pretty-bytes'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
+import { CacheManager } from 'react-native-expo-image-cache'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ScreenMeSettings: React.FC = () => {
   const { t, i18n } = useTranslation('meSettings')
@@ -22,6 +24,7 @@ const ScreenMeSettings: React.FC = () => {
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const settingsAnalytics = useSelector(getSettingsAnalytics)
   const dispatch = useDispatch()
 
   const [cacheSize, setCacheSize] = useState<number>()
@@ -131,6 +134,14 @@ const ScreenMeSettings: React.FC = () => {
             await CacheManager.clearCache()
             setCacheSize(0)
           }}
+        />
+        <MenuRow
+          title={t('content.analytics.heading')}
+          description={t('content.analytics.description')}
+          switchValue={settingsAnalytics}
+          switchOnValueChange={() =>
+            dispatch(changeAnalytics(!settingsAnalytics))
+          }
         />
         <MenuRow
           title={t('content.copyrights.heading')}
