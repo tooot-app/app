@@ -17,10 +17,12 @@ export interface Props {
 }
 
 const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
-  const name =
-    notification.account.display_name || notification.account.username
-  const emojis = notification.account.emojis
-  const account = notification.account.acct
+  const actualAccount = notification.status
+    ? notification.status.account
+    : notification.account
+  const name = actualAccount.display_name || actualAccount.username
+  const emojis = actualAccount.emojis
+  const account = actualAccount.acct
   const { theme } = useTheme()
 
   const [since, setSince] = useState(relativeTime(notification.created_at))
@@ -123,14 +125,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
   return (
     <View style={styles.base}>
       <View style={styles.nameAndMeta}>
-        <View style={styles.name}>
+        <View style={styles.nameAndAccount}>
           {emojis?.length ? (
-            <Emojis
-              content={name}
-              emojis={emojis}
-              size='M'
-              fontBold={true}
-            />
+            <Emojis content={name} emojis={emojis} size='M' fontBold={true} />
           ) : (
             <Text
               numberOfLines={1}
@@ -190,8 +187,9 @@ const styles = StyleSheet.create({
   nameAndMeta: {
     width: '80%'
   },
-  name: {
-    flexDirection: 'row'
+  nameAndAccount: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   nameWithoutEmoji: {
     ...StyleConstants.FontStyle.M,

@@ -62,7 +62,7 @@ const TimelineActioned: React.FC<Props> = ({
         <Feather
           name='bar-chart-2'
           size={StyleConstants.Font.Size.S}
-          color='black'
+          color={iconColor}
           style={styles.icon}
         />
       )
@@ -87,11 +87,7 @@ const TimelineActioned: React.FC<Props> = ({
       {content && (
         <View style={styles.content}>
           {account.emojis ? (
-            <Emojis
-              content={content}
-              emojis={account.emojis}
-              size='S'
-            />
+            <Emojis content={content} emojis={account.emojis} size='S' />
           ) : (
             <Text>{content}</Text>
           )}

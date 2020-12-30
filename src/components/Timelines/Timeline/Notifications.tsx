@@ -55,45 +55,54 @@ const TimelineNotifications: React.FC<Props> = ({
         notification
       />
 
-      <View style={styles.header}>
-        <TimelineAvatar queryKey={queryKey} account={actualAccount} />
-        <TimelineHeaderNotification notification={notification} />
-      </View>
-
-      {notification.status ? (
-        <View
-          style={{
-            paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-          }}
-        >
-          {notification.status.content.length > 0 && (
-            <TimelineContent
-              status={notification.status}
-              highlighted={highlighted}
-            />
-          )}
-          {notification.status.poll && (
-            <TimelinePoll
-              queryKey={queryKey}
-              poll={notification.status.poll}
-              reblog={false}
-              sameAccount={notification.account.id === localAccountId}
-            />
-          )}
-          {notification.status.media_attachments.length > 0 && (
-            <TimelineAttachment
-              status={notification.status}
-              contentWidth={contentWidth}
-            />
-          )}
-          {notification.status.card && (
-            <TimelineCard card={notification.status.card} />
-          )}
+      <View
+        style={{
+          opacity:
+            notification.type === 'follow' || notification.type === 'mention'
+              ? 1
+              : 0.5
+        }}
+      >
+        <View style={styles.header}>
+          <TimelineAvatar queryKey={queryKey} account={actualAccount} />
+          <TimelineHeaderNotification notification={notification} />
         </View>
-      ) : null}
+
+        {notification.status ? (
+          <View
+            style={{
+              paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+              paddingLeft: highlighted
+                ? 0
+                : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            }}
+          >
+            {notification.status.content.length > 0 && (
+              <TimelineContent
+                status={notification.status}
+                highlighted={highlighted}
+              />
+            )}
+            {notification.status.poll && (
+              <TimelinePoll
+                queryKey={queryKey}
+                poll={notification.status.poll}
+                reblog={false}
+                sameAccount={notification.account.id === localAccountId}
+              />
+            )}
+            {notification.status.media_attachments.length > 0 && (
+              <TimelineAttachment
+                status={notification.status}
+                contentWidth={contentWidth}
+              />
+            )}
+            {notification.status.card && (
+              <TimelineCard card={notification.status.card} />
+            )}
+          </View>
+        ) : null}
+      </View>
 
       {notification.status && (
         <View

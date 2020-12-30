@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   name: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   account: {
     flexShrink: 1,
