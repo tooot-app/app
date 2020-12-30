@@ -1,4 +1,5 @@
 import client from '@root/api/client'
+import haptics from '@root/components/haptics'
 import { HeaderLeft, HeaderRight } from '@root/components/Header'
 import { ComposeContext } from '@screens/Shared/Compose'
 import React, {
@@ -103,6 +104,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
             body: formData
           })
             .then(() => {
+              haptics('Success')
               Alert.alert('修改成功', '', [
                 {
                   text: '好的',
@@ -114,6 +116,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
             })
             .catch(() => {
               setIsSubmitting(false)
+              haptics('Error')
               Alert.alert('修改失败', '', [
                 {
                   text: '返回重试',

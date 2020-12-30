@@ -11,6 +11,7 @@ import relativeTime from '@utils/relativeTime'
 import { StyleConstants } from '@utils/styles/constants'
 import { relationshipFetch } from '@utils/fetches/relationshipFetch'
 import { useTheme } from '@utils/styles/ThemeManager'
+import haptics from '@root/components/haptics'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -67,8 +68,10 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     }).then(res => {
       if (res.body.id === (updateData && updateData.id) || data!.id) {
         setUpdateData(res.body)
+        haptics('Success')
         return Promise.resolve()
       } else {
+        haptics('Error')
         toast({ type: 'error', content: '请重试', autoHide: false })
         return Promise.reject()
       }

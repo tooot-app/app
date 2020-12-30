@@ -1,6 +1,7 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import client from '@root/api/client'
 import Button from '@root/components/Button'
+import haptics from '@root/components/haptics'
 import ParseContent from '@root/components/ParseContent'
 import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
 import relativeTime from '@root/utils/relativeTime'
@@ -65,6 +66,7 @@ const ScreenSharedAnnouncements: React.FC = ({
   })
   const queryMutation = useMutation(fireMutation, {
     onSettled: () => {
+      haptics('Success')
       refetch()
     }
   })
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
     height: StyleConstants.Font.LineHeight.M
   },
   reactionText: {
-    ...StyleConstants.FontStyle.M,
+    ...StyleConstants.FontStyle.M
   },
   reactionCount: {
     ...StyleConstants.FontStyle.S,

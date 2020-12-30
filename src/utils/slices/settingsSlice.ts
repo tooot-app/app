@@ -13,7 +13,7 @@ const initialState = {
   language: undefined,
   theme: 'auto',
   browser: 'internal',
-  analytics: false
+  analytics: true
 }
 
 export const changeAnalytics = createAsyncThunk(

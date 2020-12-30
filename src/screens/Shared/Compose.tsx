@@ -1,4 +1,5 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import haptics from '@root/components/haptics'
 import { toast } from '@root/components/toast'
 import { store } from '@root/store'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
@@ -114,19 +115,10 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
       case 'reply':
         const actualStatus =
           params.incomingStatus.reblog || params.incomingStatus
-        const allMentions = actualStatus.mentions.map(
-          mention => `@${mention.acct}`
-        )
-        let replyPlaceholder = allMentions.join(' ')
-        if (replyPlaceholder.length === 0) {
-          replyPlaceholder = `@${actualStatus.account.acct} `
-        } else {
-          replyPlaceholder = replyPlaceholder + ' '
-        }
         formatText({
           textInput: 'text',
           composeDispatch,
-          content: replyPlaceholder,
+          content: `@${actualStatus.account.acct} `,
           disableDebounce: true
         })
         break
@@ -195,11 +187,13 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
           setIsSubmitting(true)
           composeSend(params, composeState)
             .then(() => {
+              haptics('Success')
               queryClient.invalidateQueries(['Following'])
               navigation.goBack()
               toast({ type: 'success', content: '发布成功' })
             })
             .catch(() => {
+              haptics('Error')
               setIsSubmitting(false)
               Alert.alert('发布失败', '', [
                 {

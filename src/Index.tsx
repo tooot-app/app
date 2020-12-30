@@ -202,7 +202,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
       showLabel: false
     }),
-    []
+    [theme, localInstance]
   )
   const tabScreenLocalListeners = useCallback(
     () => ({
@@ -212,7 +212,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         }
       }
     }),
-    []
+    [localInstance]
   )
   const tabScreenComposeListeners = useCallback(
     ({ navigation }) => ({
@@ -223,7 +223,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         }
       }
     }),
-    []
+    [localInstance]
   )
   const tabScreenComposeComponent = useCallback(() => null, [])
   const tabScreenNotificationsListeners = useCallback(
@@ -234,7 +234,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         }
       }
     }),
-    []
+    [localInstance]
   )
   const tabScreenNotificationsOptions = useMemo(
     () => ({
@@ -244,7 +244,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         backgroundColor: theme.red
       }
     }),
-    []
+    [theme, prevNotification]
   )
 
   return (

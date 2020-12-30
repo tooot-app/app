@@ -16,21 +16,6 @@ const composeParseState = ({
     case 'edit':
       return {
         ...composeInitialState,
-        ...(incomingStatus.spoiler_text?.length && {
-          spoiler: {
-            active: true,
-            count: incomingStatus.spoiler_text.length,
-            raw: incomingStatus.spoiler_text,
-            formatted: incomingStatus.spoiler_text,
-            selection: { start: 0, end: 0 }
-          }
-        }),
-        text: {
-          count: incomingStatus.text!.length,
-          raw: incomingStatus.text!,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
         ...(incomingStatus.poll && {
           poll: {
             active: true,
@@ -62,24 +47,8 @@ const composeParseState = ({
       }
     case 'reply':
       const actualStatus = incomingStatus.reblog || incomingStatus
-      const allMentions = Array.isArray(actualStatus.mentions)
-        ? actualStatus.mentions.map(mention => `@${mention.acct}`)
-        : []
-      let replyPlaceholder = allMentions.join(' ')
-
-      if (replyPlaceholder.length === 0) {
-        replyPlaceholder = `@${actualStatus.account.acct} `
-      } else {
-        replyPlaceholder = replyPlaceholder + ' '
-      }
       return {
         ...composeInitialState,
-        text: {
-          count: replyPlaceholder.length,
-          raw: replyPlaceholder,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
         ...(visibilityLock && {
           visibility: 'direct',
           visibilityLock: true

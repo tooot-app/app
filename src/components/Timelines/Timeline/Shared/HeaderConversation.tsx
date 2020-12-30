@@ -9,6 +9,7 @@ import relativeTime from '@utils/relativeTime'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import haptics from '@root/components/haptics'
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -50,10 +51,12 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
           pointer: paging.pointer
         }))
       )
+      haptics('Success')
 
       return oldData
     },
     onError: (err, _, oldData) => {
+      haptics('Error')
       toast({ type: 'error', content: '请重试', autoHide: false })
       queryClient.setQueryData(queryKey, oldData)
     }

@@ -1,3 +1,4 @@
+import haptics from '@root/components/haptics'
 import { HeaderLeft, HeaderRight } from '@root/components/Header'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { findIndex } from 'lodash'
@@ -108,8 +109,8 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
                   {
                     url: imageUrls[currentIndex].url
                   },
-                  () => null,
-                  () => null
+                  () => haptics('Success'),
+                  () => haptics('Error')
                 )
               }
             />

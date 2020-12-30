@@ -1,4 +1,19 @@
+import Button from '@components/Button'
+import ParseContent from '@components/ParseContent'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import analytics from '@root/components/analytics'
+import haptics from '@root/components/haptics'
+import { applicationFetch } from '@utils/fetches/applicationFetch'
+import { instanceFetch } from '@utils/fetches/instanceFetch'
+import { loginLocal } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import * as AuthSession from 'expo-auth-session'
+import { LinearGradient } from 'expo-linear-gradient'
+import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   Image,
@@ -7,24 +22,9 @@ import {
   TextInput,
   View
 } from 'react-native'
-import { useQuery } from 'react-query'
-import { debounce } from 'lodash'
-
-import { instanceFetch } from '@utils/fetches/instanceFetch'
-import * as AuthSession from 'expo-auth-session'
-import { useDispatch } from 'react-redux'
-import { loginLocal } from '@utils/slices/instancesSlice'
-import { useNavigation } from '@react-navigation/native'
-import { useTheme } from '@utils/styles/ThemeManager'
-
-import { useTranslation } from 'react-i18next'
-import { StyleConstants } from '@utils/styles/constants'
-import Button from '@components/Button'
-import ParseContent from '@root/components/ParseContent'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-import { Feather } from '@expo/vector-icons'
-import { applicationFetch } from '@root/utils/fetches/applicationFetch'
-import { LinearGradient } from 'expo-linear-gradient'
+import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 
 const Login: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -99,6 +99,10 @@ const Login: React.FC = () => {
           }
         )
         dispatch(loginLocal({ url: instanceDomain, token: accessToken }))
+        analytics('login', {
+          instance: instanceDomain!,
+          method: 'OAuth2'
+        })
         navigation.navigate('Screen-Local')
       }
     })()
@@ -179,6 +183,7 @@ const Login: React.FC = () => {
                 instanceQuery.data &&
                 instanceQuery.data.uri
               ) {
+                haptics('Success')
                 applicationQuery.refetch()
               } else {
                 setInstanceDomain(text)
@@ -192,7 +197,10 @@ const Login: React.FC = () => {
           <Button
             type='text'
             content={t('content.login.button')}
-            onPress={() => applicationQuery.refetch()}
+            onPress={() => {
+              haptics('Success')
+              applicationQuery.refetch()
+            }}
             disabled={!instanceQuery.data?.uri}
             loading={instanceQuery.isFetching || applicationQuery.isFetching}
           />

@@ -1,7 +1,3 @@
-import React, { useCallback } from 'react'
-import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-
 import TimelineActioned from '@components/Timelines/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
@@ -10,10 +6,12 @@ import TimelineCard from '@components/Timelines/Timeline/Shared/Card'
 import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderNotification from '@components/Timelines/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
-
+import { useNavigation } from '@react-navigation/native'
+import { getLocalAccountId } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import React, { useCallback } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -31,13 +29,6 @@ const TimelineNotifications: React.FC<Props> = ({
   const actualAccount = notification.status
     ? notification.status.account
     : notification.account
-  const contentWidth = highlighted
-    ? Dimensions.get('window').width -
-      StyleConstants.Spacing.Global.PagePadding * 2 // Global page padding on both sides
-    : Dimensions.get('window').width -
-      StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-      StyleConstants.Avatar.M - // Avatar width
-      StyleConstants.Spacing.S // Avatar margin to the right
 
   const onPress = useCallback(
     () =>
@@ -92,10 +83,7 @@ const TimelineNotifications: React.FC<Props> = ({
               />
             )}
             {notification.status.media_attachments.length > 0 && (
-              <TimelineAttachment
-                status={notification.status}
-                contentWidth={contentWidth}
-              />
+              <TimelineAttachment status={notification.status} />
             )}
             {notification.status.card && (
               <TimelineCard card={notification.status.card} />

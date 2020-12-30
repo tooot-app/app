@@ -17,6 +17,7 @@ import {
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
+import haptics from '@root/components/haptics'
 
 const DEFAULT_HEIGHT = 200
 
@@ -110,6 +111,7 @@ const ComposeAttachments: React.FC = () => {
                     type: 'attachment/delete',
                     payload: item.remote!.id
                   })
+                  haptics('Success')
                 }}
               />
               <Button

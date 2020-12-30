@@ -1,4 +1,5 @@
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
+import haptics from '@root/components/haptics'
 import { ComposeContext } from '@screens/Shared/Compose'
 import ComposeActions from '@screens/Shared/Compose/Actions'
 import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
@@ -57,6 +58,7 @@ const ListItem = React.memo(
         newText: item.acct ? `@${item.acct}` : `#${item.name}`,
         type: 'suggestion'
       })
+      haptics('Success')
     }, [])
     const children = useMemo(
       () =>

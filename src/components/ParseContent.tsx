@@ -77,7 +77,7 @@ const renderNode = ({
     } else {
       const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
       // Need example here
-      const content = node.children && node.children[0].data
+      const content = node.children && node.children[0] && node.children[0].data
       const shouldBeTag =
         tags && tags.filter(tag => `#${tag.name}` === content).length > 0
       return (

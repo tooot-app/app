@@ -12,6 +12,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import Emojis from './Emojis'
 import { TimelineData } from '../../Timeline'
 import { findIndex } from 'lodash'
+import haptics from '@root/components/haptics'
 
 const fireMutation = async ({
   id,
@@ -95,6 +96,8 @@ const TimelinePoll: React.FC<Props> = ({
         }
         return old
       })
+
+      haptics('Success')
     }
   })
 
@@ -207,6 +210,7 @@ const TimelinePoll: React.FC<Props> = ({
             <Pressable
               style={[styles.optionUnselected]}
               onPress={() => {
+                haptics('Light')
                 if (poll.multiple) {
                   setAllOptions(
                     allOptions.map((o, i) => (i === index ? !o : o))

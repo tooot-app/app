@@ -10,6 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
 import { findIndex } from 'lodash'
 import { TimelineData } from '../../Timeline'
+import haptics from '@root/components/haptics'
 
 const fireMutation = async ({
   id,
@@ -110,12 +111,14 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
             return old
           })
+          haptics('Success')
           break
       }
 
       return oldData
     },
     onError: (err, _, oldData) => {
+      haptics('Error')
       toast({ type: 'error', content: '请重试' })
       queryClient.setQueryData(queryKey, oldData)
     }
@@ -172,8 +175,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
             'com.apple.UIKit.activity.OpenInIBooks'
           ]
         },
-        () => {},
-        () => {}
+        () => haptics('Success'),
+        () => haptics('Error')
       ),
     []
   )

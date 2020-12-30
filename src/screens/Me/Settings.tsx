@@ -1,4 +1,5 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
+import haptics from '@root/components/haptics'
 import {
   changeAnalytics,
   changeBrowser,
@@ -52,10 +53,12 @@ const ScreenMeSettings: React.FC = () => {
               buttonIndex => {
                 switch (buttonIndex) {
                   case 0:
+                    haptics('Success')
                     dispatch(changeLanguage('zh'))
                     i18n.changeLanguage('zh')
                     break
                   case 1:
+                    haptics('Success')
                     dispatch(changeLanguage('en'))
                     i18n.changeLanguage('en')
                     break
@@ -82,13 +85,16 @@ const ScreenMeSettings: React.FC = () => {
               buttonIndex => {
                 switch (buttonIndex) {
                   case 0:
+                    haptics('Success')
                     dispatch(changeTheme('auto'))
                     break
                   case 1:
+                    haptics('Success')
                     dispatch(changeTheme('light'))
                     setTheme('light')
                     break
                   case 2:
+                    haptics('Success')
                     dispatch(changeTheme('dark'))
                     setTheme('dark')
                     break
@@ -114,9 +120,11 @@ const ScreenMeSettings: React.FC = () => {
               buttonIndex => {
                 switch (buttonIndex) {
                   case 0:
+                    haptics('Success')
                     dispatch(changeBrowser('internal'))
                     break
                   case 1:
+                    haptics('Success')
                     dispatch(changeBrowser('external'))
                     break
                 }
@@ -132,6 +140,7 @@ const ScreenMeSettings: React.FC = () => {
           iconBack='chevron-right'
           onPress={async () => {
             await CacheManager.clearCache()
+            haptics('Success')
             setCacheSize(0)
           }}
         />

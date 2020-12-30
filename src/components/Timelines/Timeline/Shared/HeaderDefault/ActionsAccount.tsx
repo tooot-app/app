@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
+import haptics from '@root/components/haptics'
 
 const fireMutation = async ({
   type,
@@ -69,6 +70,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
+      haptics('Success')
       queryKey && queryClient.invalidateQueries(queryKey)
     }
   })

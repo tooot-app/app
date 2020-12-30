@@ -12,6 +12,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 
 import { ComposeContext } from '@screens/Shared/Compose'
 import updateText from './updateText'
+import haptics from '@root/components/haptics'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -26,6 +27,7 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
       type: 'emoji',
       payload: { ...composeState.emoji, active: false }
     })
+    haptics('Success')
   }, [])
   const children = useMemo(
     () => <Image source={{ uri: emoji.url }} style={styles.emoji} />,

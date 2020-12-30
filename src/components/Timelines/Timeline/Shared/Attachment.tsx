@@ -1,29 +1,30 @@
+import Button from '@components/Button'
+import AttachmentAudio from '@components/Timelines/Timeline/Shared/Attachment/Audio'
+import AttachmentImage from '@components/Timelines/Timeline/Shared/Attachment/Image'
+import AttachmentUnsupported from '@components/Timelines/Timeline/Shared/Attachment/Unsupported'
+import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/Video'
+import { useNavigation } from '@react-navigation/native'
+import haptics from '@root/components/haptics'
+import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-
-import AttachmentImage from '@root/components/Timelines/Timeline/Shared/Attachment/Image'
-import AttachmentVideo from '@root/components/Timelines/Timeline/Shared/Attachment/Video'
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
-import { useNavigation } from '@react-navigation/native'
-import AttachmentUnsupported from './Attachment/Unsupported'
-import AttachmentAudio from './Attachment/Audio'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
-import Button from '@root/components/Button'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
-  contentWidth: number
 }
 
-const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
-  const { theme } = useTheme()
-
+const TimelineAttachment: React.FC<Props> = ({ status }) => {
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
     layoutAnimation()
     setSensitiveShown(false)
+    haptics('Medium')
+  }, [])
+  const onPressShow = useCallback(() => {
+    setSensitiveShown(true)
+    haptics('Medium')
   }, [])
 
   let imageUrls: (IImageInfo & {
@@ -65,8 +66,6 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
                 key={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
-                width={contentWidth}
-                height={(contentWidth / 16) * 9}
               />
             )
           case 'gifv':
@@ -75,8 +74,6 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
                 key={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
-                width={contentWidth}
-                height={(contentWidth / 16) * 9}
               />
             )
           case 'audio':
@@ -88,7 +85,13 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
               />
             )
           default:
-            return <AttachmentUnsupported key={index} attachment={attachment} />
+            return (
+              <AttachmentUnsupported
+                key={index}
+                sensitiveShown={sensitiveShown}
+                attachment={attachment}
+              />
+            )
         }
       }),
     [sensitiveShown]
@@ -114,7 +117,7 @@ const TimelineAttachment: React.FC<Props> = ({ status, contentWidth }) => {
             content='eye-off'
             round
             overlay
-            onPress={() => setSensitiveShown(!sensitiveShown)}
+            onPress={onPressShow}
             style={{
               position: 'absolute',
               top: StyleConstants.Spacing.S,

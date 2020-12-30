@@ -8,10 +8,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
+  sensitiveShown: boolean
   attachment: Mastodon.AttachmentUnknown
 }
 
-const AttachmentUnsupported: React.FC<Props> = ({ attachment }) => {
+const AttachmentUnsupported: React.FC<Props> = ({
+  sensitiveShown,
+  attachment
+}) => {
   const { theme } = useTheme()
   return (
     <View style={styles.base}>
@@ -26,22 +30,26 @@ const AttachmentUnsupported: React.FC<Props> = ({ attachment }) => {
           <Blurhash hash={attachment.blurhash} />
         </Surface>
       ) : null}
-      <Text
-        style={[
-          styles.text,
-          { color: attachment.blurhash ? theme.background : theme.primary }
-        ]}
-      >
-        文件不支持
-      </Text>
-      {attachment.remote_url ? (
-        <Button
-          type='text'
-          content='尝试远程链接'
-          size='S'
-          overlay
-          onPress={async () => await openLink(attachment.remote_url!)}
-        />
+      {!sensitiveShown ? (
+        <>
+          <Text
+            style={[
+              styles.text,
+              { color: attachment.blurhash ? theme.background : theme.primary }
+            ]}
+          >
+            文件不支持
+          </Text>
+          {attachment.remote_url ? (
+            <Button
+              type='text'
+              content='尝试远程链接'
+              size='S'
+              overlay
+              onPress={async () => await openLink(attachment.remote_url!)}
+            />
+          ) : null}
+        </>
       ) : null}
     </View>
   )
