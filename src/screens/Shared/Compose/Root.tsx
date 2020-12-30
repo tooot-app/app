@@ -1,9 +1,5 @@
 import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import {
-  ComposeAction,
-  ComposeState,
-  ComposeContext
-} from '@screens/Shared/Compose'
+import { ComposeContext } from '@screens/Shared/Compose'
 import ComposeActions from '@screens/Shared/Compose/Actions'
 import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
 import ComposeRootHeader from '@screens/Shared/Compose/Root/Header'
@@ -31,6 +27,7 @@ import {
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import { useQuery } from 'react-query'
+import { ComposeAction, ComposeState } from './utils/types'
 
 const ListItem = React.memo(
   ({
@@ -124,20 +121,6 @@ const ComposeRoot: React.FC = () => {
       refetch()
     }
   }, [composeState.tag?.text])
-
-  useEffect(() => {
-    ;(async () => {
-      Permissions.askAsync(Permissions.CAMERA)
-      // const permissionGaleery = await ImagePicker.requestCameraRollPermissionsAsync()
-      // if (permissionGaleery.status !== 'granted') {
-      //   alert('Sorry, we need camera roll permissions to make this work!')
-      // }
-      // const permissionCamera = await ImagePicker.requestCameraPermissionsAsync()
-      // if (permissionCamera.status !== 'granted') {
-      //   alert('Sorry, we need camera roll permissions to make this work!')
-      // }
-    })()
-  }, [])
 
   const { data: emojisData } = useQuery(['Emojis'], emojisFetch)
   useEffect(() => {

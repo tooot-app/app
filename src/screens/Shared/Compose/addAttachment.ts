@@ -3,7 +3,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { Dispatch } from 'react'
-import { ActionSheetIOS, Alert } from 'react-native'
+import { ActionSheetIOS, Alert, Linking } from 'react-native'
 import { ComposeAction } from './utils/types'
 
 export interface Props {
@@ -103,22 +103,56 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
     },
     async buttonIndex => {
       if (buttonIndex === 0) {
-        const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          exif: false
-        })
+        const {
+          status
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+        if (status !== 'granted') {
+          Alert.alert('🈚️读取权限', '需要相片权限才能上传照片', [
+            {
+              text: '取消',
+              style: 'cancel',
+              onPress: () => {}
+            },
+            {
+              text: '去系统设置',
+              style: 'default',
+              onPress: () => Linking.openURL('app-settings:')
+            }
+          ])
+        } else {
+          const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            exif: false
+          })
 
-        if (!result.cancelled) {
-          uploadAttachment(result)
+          if (!result.cancelled) {
+            uploadAttachment(result)
+          }
         }
       } else if (buttonIndex === 1) {
-        const result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          exif: false
-        })
+        const { status } = await ImagePicker.requestCameraPermissionsAsync()
+        if (status !== 'granted') {
+          Alert.alert('🈚️读取权限', '需要相机权限才能上传照片', [
+            {
+              text: '取消',
+              style: 'cancel',
+              onPress: () => {}
+            },
+            {
+              text: '去系统设置',
+              style: 'default',
+              onPress: () => Linking.openURL('app-settings:')
+            }
+          ])
+        } else {
+          const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            exif: false
+          })
 
-        if (!result.cancelled) {
-          uploadAttachment(result)
+          if (!result.cancelled) {
+            uploadAttachment(result)
+          }
         }
       }
     }
