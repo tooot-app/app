@@ -33,11 +33,11 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
     if (imageLoaded) {
       return <Image source={{ uri: card.image }} style={styles.image} />
     } else {
-      return (
+      return card.blurhash ? (
         <Surface style={styles.image}>
           <Blurhash hash={card.blurhash} />
         </Surface>
-      )
+      ) : null
     }
   }, [imageLoaded])
 

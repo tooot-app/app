@@ -51,14 +51,16 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
       />
       <Pressable style={styles.overlay}>
         {sensitiveShown ? (
-          <Surface
-            style={{
-              width: '100%',
-              height: '100%'
-            }}
-          >
-            <Blurhash hash={video.blurhash} />
-          </Surface>
+          video.blurhash ? (
+            <Surface
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+            >
+              <Blurhash hash={video.blurhash} />
+            </Surface>
+          ) : null
         ) : (
           <Button
             type='icon'
