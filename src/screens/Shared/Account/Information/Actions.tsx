@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import client from '@root/api/client'
 import Button from '@root/components/Button'
+import haptics from '@root/components/haptics'
 import { toast } from '@root/components/toast'
 import { relationshipFetch } from '@root/utils/fetches/relationshipFetch'
 import { StyleConstants } from '@root/utils/styles/constants'
@@ -55,8 +56,14 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
   }, [account])
   const queryClient = useQueryClient()
   const mutation = useMutation(fireMutation, {
-    onSuccess: data => queryClient.setQueryData(relationshipQueryKey, data),
-    onError: () => toast({ type: 'error', content: '关注失败，请重试' })
+    onSuccess: data => {
+      haptics('Success')
+      queryClient.setQueryData(relationshipQueryKey, data)
+    },
+    onError: () => {
+      haptics('Error')
+      toast({ type: 'error', content: '关注失败，请重试' })
+    }
   })
 
   const mainAction = useMemo(() => {

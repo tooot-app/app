@@ -34,19 +34,22 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     .filter(p => (localRegistered ? true : p.page === 'RemotePublic'))
     .map(p => ({ key: p.page }))
 
-  const renderScene = ({
-    route
-  }: {
-    route: {
-      key: App.Pages
-    }
-  }) => {
-    return (
-      (localRegistered || route.key === 'RemotePublic') && (
-        <Timeline page={route.key} />
+  const renderScene = useCallback(
+    ({
+      route
+    }: {
+      route: {
+        key: App.Pages
+      }
+    }) => {
+      return (
+        (localRegistered || route.key === 'RemotePublic') && (
+          <Timeline page={route.key} />
+        )
       )
-    )
-  }
+    },
+    [localRegistered]
+  )
 
   const screenComponent = useCallback(
     () => (

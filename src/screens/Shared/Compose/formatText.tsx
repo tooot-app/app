@@ -94,8 +94,12 @@ const formatText = ({
         contentLength = contentLength + 23
         break
       case 'accounts':
-        contentLength =
-          contentLength + main.split(new RegExp('(@.*)@?'))[1].length
+        if (main.match(/@/g)!.length > 1) {
+          contentLength =
+            contentLength + main.split(new RegExp('(@.*?)@'))[1].length
+        } else {
+          contentLength = contentLength + main.length
+        }
         break
       case 'hashtags':
         contentLength = contentLength + main.length

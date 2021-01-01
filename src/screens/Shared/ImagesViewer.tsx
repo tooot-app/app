@@ -109,8 +109,8 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
                   {
                     url: imageUrls[currentIndex].url
                   },
-                  () => haptics('Success'),
-                  () => haptics('Error')
+                  () => haptics('Error'),
+                  () => haptics('Success')
                 )
               }
             />

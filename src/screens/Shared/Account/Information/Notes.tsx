@@ -1,5 +1,5 @@
-import ParseContent from '@root/components/ParseContent'
-import { StyleConstants } from '@root/utils/styles/constants'
+import { ParseHTML } from '@components/Parse'
+import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
@@ -10,11 +10,7 @@ export interface Props {
 const AccountInformationNotes: React.FC<Props> = ({ account }) => {
   return (
     <View style={styles.note}>
-      <ParseContent
-        content={account.note!}
-        size={'M'}
-        emojis={account.emojis}
-      />
+      <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} />
     </View>
   )
 }

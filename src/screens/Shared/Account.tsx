@@ -13,7 +13,6 @@ import BottomSheet from '@root/components/BottomSheet'
 import { useSelector } from 'react-redux'
 import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
 import HeaderDefaultActionsAccount from '@root/components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
@@ -113,12 +112,12 @@ const ScreenSharedAccount: React.FC<Props> = ({
         />
       ) : null}
       <ScrollView
-        bounces={false}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: false }
         )}
-        scrollEventThrottle={8}
       >
         <AccountHeader
           accountState={accountState}

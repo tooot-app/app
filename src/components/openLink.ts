@@ -1,7 +1,7 @@
 import { store } from '@root/store'
+import { getSettingsBrowser } from '@utils/slices/settingsSlice'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
-import { getSettingsBrowser } from './slices/settingsSlice'
 
 const openLink = async (url: string) => {
   switch (getSettingsBrowser(store.getState())) {

@@ -1,14 +1,14 @@
+import openLink from '@components/openLink'
+import { ParseEmojis } from '@components/Parse'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
-import { useNavigation } from '@react-navigation/native'
-import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from '@utils/styles/constants'
-import openLink from '@root/utils/openLink'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -126,7 +126,7 @@ export interface Props {
   expandHint?: string
 }
 
-const ParseContent: React.FC<Props> = ({
+const ParseHTML: React.FC<Props> = ({
   content,
   size = 'M',
   emojis,
@@ -155,11 +155,7 @@ const ParseContent: React.FC<Props> = ({
   )
   const textComponent = useCallback(({ children }) => {
     if (children) {
-      return emojis ? (
-        <Emojis content={children.toString()} emojis={emojis} size={size} />
-      ) : (
-        <Text style={{ ...StyleConstants.FontStyle[size] }}>{children}</Text>
-      )
+      return <ParseEmojis content={children.toString()} emojis={emojis} />
     } else {
       return null
     }
@@ -170,7 +166,9 @@ const ParseContent: React.FC<Props> = ({
 
       const [heightOriginal, setHeightOriginal] = useState<number>()
       const [heightTruncated, setHeightTruncated] = useState<number>()
-      const [allowExpand, setAllowExpand] = useState(false)
+      const [allowExpand, setAllowExpand] = useState(
+        numberOfLines === 0 ? true : undefined
+      )
       const [showAllText, setShowAllText] = useState(false)
 
       const calNumberOfLines = useMemo(() => {
@@ -189,27 +187,36 @@ const ParseContent: React.FC<Props> = ({
         }
       }, [heightOriginal, heightTruncated, allowExpand, showAllText])
 
+      const onLayout = useCallback(
+        ({ nativeEvent }) => {
+          if (!heightOriginal) {
+            setHeightOriginal(nativeEvent.layout.height)
+          } else {
+            if (!heightTruncated) {
+              setHeightTruncated(nativeEvent.layout.height)
+            } else {
+              if (heightOriginal > heightTruncated) {
+                setAllowExpand(true)
+              }
+            }
+          }
+        },
+        [heightOriginal, heightTruncated]
+      )
+
       return (
         <View>
           <Text
-            style={{ color: theme.primary, overflow: 'hidden' }}
+            style={{
+              ...StyleConstants.FontStyle[size],
+              color: theme.primary,
+              overflow: 'hidden'
+            }}
             children={children}
             numberOfLines={calNumberOfLines}
-            onLayout={({ nativeEvent }) => {
-              if (!heightOriginal) {
-                setHeightOriginal(nativeEvent.layout.height)
-              } else {
-                if (!heightTruncated) {
-                  setHeightTruncated(nativeEvent.layout.height)
-                } else {
-                  if (heightOriginal > heightTruncated) {
-                    setAllowExpand(true)
-                  }
-                }
-              }
-            }}
+            onLayout={allowExpand === undefined ? onLayout : undefined}
           />
-          {allowExpand && (
+          {allowExpand ? (
             <Pressable
               onPress={() => {
                 layoutAnimation()
@@ -239,7 +246,7 @@ const ParseContent: React.FC<Props> = ({
                 </Text>
               </LinearGradient>
             </Pressable>
-          )}
+          ) : null}
         </View>
       )
     },
@@ -256,4 +263,4 @@ const ParseContent: React.FC<Props> = ({
   )
 }
 
-export default ParseContent
+export default ParseHTML

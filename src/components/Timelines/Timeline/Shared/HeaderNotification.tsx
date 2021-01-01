@@ -1,17 +1,17 @@
+import client from '@api/client'
+import { Feather } from '@expo/vector-icons'
+import haptics from '@components/haptics'
+import openLink from '@components/openLink'
+import { ParseEmojis } from '@components/Parse'
+import relativeTime from '@components/relativeTime'
+import { toast } from '@components/toast'
+import { relationshipFetch } from '@utils/fetches/relationshipFetch'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import { useQuery } from 'react-query'
-import client from '@api/client'
-import { Feather } from '@expo/vector-icons'
-import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import { toast } from '@components/toast'
-import openLink from '@root/utils/openLink'
-import relativeTime from '@utils/relativeTime'
-import { StyleConstants } from '@utils/styles/constants'
-import { relationshipFetch } from '@utils/fetches/relationshipFetch'
-import { useTheme } from '@utils/styles/ThemeManager'
-import haptics from '@root/components/haptics'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -129,16 +129,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     <View style={styles.base}>
       <View style={styles.nameAndMeta}>
         <View style={styles.nameAndAccount}>
-          {emojis?.length ? (
-            <Emojis content={name} emojis={emojis} size='M' fontBold={true} />
-          ) : (
-            <Text
-              numberOfLines={1}
-              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-            >
-              {name}
-            </Text>
-          )}
+          <Text numberOfLines={1}>
+            <ParseEmojis content={name} emojis={emojis} fontBold />
+          </Text>
           <Text
             style={[styles.account, { color: theme.secondary }]}
             numberOfLines={1}
@@ -193,10 +186,6 @@ const styles = StyleSheet.create({
   nameAndAccount: {
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  nameWithoutEmoji: {
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold
   },
   account: {
     flexShrink: 1,

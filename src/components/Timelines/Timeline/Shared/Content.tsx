@@ -1,7 +1,7 @@
+import { ParseHTML } from '@components/Parse'
+import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { View } from 'react-native'
-import ParseContent from '@components/ParseContent'
-import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   status: Mastodon.Status
@@ -18,28 +18,28 @@ const TimelineContent: React.FC<Props> = ({
     <>
       {status.spoiler_text ? (
         <>
-          <ParseContent
-            content={status.spoiler_text}
-            size={highlighted ? 'L' : 'M'}
-            emojis={status.emojis}
-            mentions={status.mentions}
-            tags={status.tags}
-            numberOfLines={999}
-          />
-          <View style={{ marginTop: StyleConstants.Font.Size.M }}>
-            <ParseContent
-              content={status.content}
+          <View style={{ marginBottom: StyleConstants.Font.Size.M }}>
+            <ParseHTML
+              content={status.spoiler_text}
               size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
-              numberOfLines={1}
-              expandHint='隐藏内容'
+              numberOfLines={999}
             />
           </View>
+          <ParseHTML
+            content={status.content}
+            size={highlighted ? 'L' : 'M'}
+            emojis={status.emojis}
+            mentions={status.mentions}
+            tags={status.tags}
+            numberOfLines={0}
+            expandHint='隐藏内容'
+          />
         </>
       ) : (
-        <ParseContent
+        <ParseHTML
           content={status.content}
           size={highlighted ? 'L' : 'M'}
           emojis={status.emojis}

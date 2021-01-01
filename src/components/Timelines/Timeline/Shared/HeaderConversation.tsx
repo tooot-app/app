@@ -1,15 +1,14 @@
+import client from '@api/client'
+import haptics from '@components/haptics'
+import { ParseEmojis } from '@components/Parse'
+import relativeTime from '@components/relativeTime'
+import { toast } from '@components/toast'
 import { Feather } from '@expo/vector-icons'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
-import client from '@api/client'
-import { toast } from '@components/toast'
-
-import relativeTime from '@utils/relativeTime'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import haptics from '@root/components/haptics'
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -43,6 +42,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
       queryClient.cancelQueries(queryKey)
       const oldData = queryClient.getQueryData(queryKey)
 
+      haptics('Success')
       queryClient.setQueryData(queryKey, (old: any) =>
         old.pages.map((paging: any) => ({
           toots: paging.toots.filter(
@@ -51,7 +51,6 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
           pointer: paging.pointer
         }))
       )
-      haptics('Success')
 
       return oldData
     },
@@ -80,26 +79,17 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
   return (
     <View style={styles.base}>
       <View style={styles.nameAndDate}>
-        <View style={styles.name}>
-          {conversation.accounts[0].emojis ? (
-            <Emojis
+        <View style={styles.namdAndAccount}>
+          <Text numberOfLines={1}>
+            <ParseEmojis
               content={
                 conversation.accounts[0].display_name ||
                 conversation.accounts[0].username
               }
               emojis={conversation.accounts[0].emojis}
-              size='M'
-              fontBold={true}
+              fontBold
             />
-          ) : (
-            <Text
-              numberOfLines={1}
-              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-            >
-              {conversation.accounts[0].display_name ||
-                conversation.accounts[0].username}
-            </Text>
-          )}
+          </Text>
           <Text
             style={[styles.account, { color: theme.secondary }]}
             numberOfLines={1}
@@ -136,17 +126,13 @@ const styles = StyleSheet.create({
   nameAndDate: {
     width: '80%'
   },
-  name: {
+  namdAndAccount: {
     flexDirection: 'row',
     alignItems: 'center'
   },
   account: {
     flexShrink: 1,
     marginLeft: StyleConstants.Spacing.XS
-  },
-  nameWithoutEmoji: {
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold
   },
   meta: {
     flexDirection: 'row',

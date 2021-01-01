@@ -29,6 +29,7 @@ export interface Props {
   toot?: Mastodon.Status
   account?: string
   disableRefresh?: boolean
+  disableInfinity?: boolean
 }
 
 const Timeline: React.FC<Props> = ({
@@ -37,7 +38,8 @@ const Timeline: React.FC<Props> = ({
   list,
   toot,
   account,
-  disableRefresh = false
+  disableRefresh = false,
+  disableInfinity = false
 }) => {
   const queryKey: QueryKey.Timeline = [
     page,
@@ -152,11 +154,11 @@ const Timeline: React.FC<Props> = ({
     [status]
   )
   const onEndReached = useCallback(
-    () => !disableRefresh && !isFetchingNextPage && fetchNextPage(),
+    () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
   )
   const ListFooterComponent = useCallback(
-    () => <TimelineEnd hasNextPage={!disableRefresh ? hasNextPage : false} />,
+    () => <TimelineEnd hasNextPage={!disableInfinity ? hasNextPage : false} />,
     [hasNextPage]
   )
   const refreshControl = useMemo(
@@ -197,6 +199,10 @@ const Timeline: React.FC<Props> = ({
       {...(!disableRefresh && { refreshControl })}
       ItemSeparatorComponent={ItemSeparatorComponent}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
+      maintainVisibleContentPosition={{
+        minIndexForVisible: 0,
+        autoscrollToTopThreshold: 2
+      }}
     />
   )
 }
@@ -206,5 +212,7 @@ const styles = StyleSheet.create({
     minHeight: '100%'
   }
 })
+
+// Timeline.whyDidYouRender = true
 
 export default Timeline

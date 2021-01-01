@@ -1,11 +1,10 @@
+import { HeaderRight } from '@components/Header'
+import { ParseEmojis, ParseHTML } from '@components/Parse'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { HeaderRight } from '@root/components/Header'
-import ParseContent from '@root/components/ParseContent'
-import Emojis from '@root/components/Timelines/Timeline/Shared/Emojis'
-import { searchFetch } from '@root/utils/fetches/searchFetch'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import { searchFetch } from '@utils/fetches/searchFetch'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -173,21 +172,16 @@ const ScreenSharedSearch: React.FC = () => {
               style={styles.itemAccountAvatar}
             />
             <View>
-              {item.emojis?.length ? (
-                <Emojis
+              <Text numberOfLines={1}>
+                <ParseEmojis
                   content={item.display_name || item.username}
                   emojis={item.emojis}
                   size='S'
-                  fontBold={true}
+                  fontBold
                 />
-              ) : (
-                <Text
-                  style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-                >
-                  {item.display_name || item.username}
-                </Text>
-              )}
+              </Text>
               <Text
+                numberOfLines={1}
                 style={[styles.itemAccountAcct, { color: theme.secondary }]}
               >
                 @{item.acct}
@@ -229,28 +223,23 @@ const ScreenSharedSearch: React.FC = () => {
               style={styles.itemAccountAvatar}
             />
             <View>
-              {item.account.emojis?.length ? (
-                <Emojis
+              <Text numberOfLines={1}>
+                <ParseEmojis
                   content={item.account.display_name || item.account.username}
                   emojis={item.account.emojis}
                   size='S'
-                  fontBold={true}
+                  fontBold
                 />
-              ) : (
-                <Text
-                  style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-                >
-                  {item.account.display_name || item.account.username}
-                </Text>
-              )}
+              </Text>
               <Text
+                numberOfLines={1}
                 style={[styles.itemAccountAcct, { color: theme.secondary }]}
               >
                 @{item.account.acct}
               </Text>
               {item.content && (
                 <View style={styles.itemStatus}>
-                  <ParseContent
+                  <ParseHTML
                     content={item.content}
                     size='M'
                     emojis={item.emojis}
@@ -404,10 +393,6 @@ const styles = StyleSheet.create({
     height: StyleConstants.Avatar.S,
     borderRadius: 6,
     marginRight: StyleConstants.Spacing.S
-  },
-  nameWithoutEmoji: {
-    ...StyleConstants.FontStyle.S,
-    fontWeight: StyleConstants.Font.Weight.Bold
   },
   itemAccountAcct: { marginTop: StyleConstants.Spacing.XS },
   itemHashtag: {

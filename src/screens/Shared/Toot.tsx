@@ -15,7 +15,7 @@ const ScreenSharedToot: React.FC<Props> = ({
     params: { toot }
   }
 }) => {
-  return <Timeline page='Toot' toot={toot} disableRefresh />
+  return <Timeline page='Toot' toot={toot} disableRefresh disableInfinity />
 }
 
 export default ScreenSharedToot

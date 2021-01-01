@@ -1,16 +1,15 @@
+import client from '@api/client'
+import haptics from '@components/haptics'
+import { TimelineData } from '@components/Timelines/Timeline'
+import { toast } from '@components/toast'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { findIndex } from 'lodash'
 import React, { useCallback, useMemo } from 'react'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
-import { Feather } from '@expo/vector-icons'
-
-import client from '@api/client'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { toast } from '@components/toast'
-import { StyleConstants } from '@utils/styles/constants'
-import { useNavigation } from '@react-navigation/native'
-import { findIndex } from 'lodash'
-import { TimelineData } from '../../Timeline'
-import haptics from '@root/components/haptics'
 
 const fireMutation = async ({
   id,
@@ -35,10 +34,8 @@ const fireMutation = async ({
       }) // bug in response from Mastodon
 
       if (!res.body[stateKey] === prevState) {
-        toast({ type: 'success', content: '功能成功' })
         return Promise.resolve(res.body)
       } else {
-        toast({ type: 'error', content: '功能错误' })
         return Promise.reject()
       }
       break
@@ -64,6 +61,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       queryClient.cancelQueries(queryKey)
       const oldData = queryClient.getQueryData(queryKey)
 
+      haptics('Success')
       switch (type) {
         case 'favourite':
         case 'reblog':
@@ -111,7 +109,6 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
             return old
           })
-          haptics('Success')
           break
       }
 
@@ -175,8 +172,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
             'com.apple.UIKit.activity.OpenInIBooks'
           ]
         },
-        () => haptics('Success'),
-        () => haptics('Error')
+        () => haptics('Error'),
+        () => haptics('Success')
       ),
     []
   )
@@ -294,12 +291,13 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'row',
-    marginTop: StyleConstants.Spacing.M
+    marginTop: StyleConstants.Spacing.S
   },
   action: {
     width: '20%',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingVertical: StyleConstants.Spacing.S
   }
 })
 

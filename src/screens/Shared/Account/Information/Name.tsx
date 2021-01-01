@@ -1,9 +1,9 @@
-import Emojis from '@root/components/Timelines/Timeline/Shared/Emojis'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import { ParseEmojis } from '@components/Parse'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { forwardRef } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import ShimmerPlaceholder, {
   createShimmerPlaceholder
 } from 'react-native-shimmer-placeholder'
@@ -28,26 +28,14 @@ const AccountInformationName = forwardRef<ShimmerPlaceholder, Props>(
         style={styles.name}
         shimmerColors={theme.shimmer}
       >
-        <View>
-          {account?.emojis ? (
-            <Emojis
-              content={account?.display_name || account?.username}
-              emojis={account.emojis}
-              size='L'
-              fontBold={true}
-            />
-          ) : (
-            <Text
-              style={{
-                color: theme.primary,
-                ...StyleConstants.FontStyle.L,
-                fontWeight: StyleConstants.Font.Weight.Bold
-              }}
-            >
-              {account?.display_name || account?.username}
-            </Text>
-          )}
-        </View>
+        {account ? (
+          <ParseEmojis
+            content={account.display_name || account.username}
+            emojis={account.emojis}
+            size='L'
+            fontBold
+          />
+        ) : null}
       </ShimmerPlaceholder>
     )
   }

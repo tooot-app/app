@@ -111,7 +111,7 @@ const TimelineDefault: React.FC<Props> = ({
 const styles = StyleSheet.create({
   statusView: {
     padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: StyleConstants.Spacing.M
+    paddingBottom: StyleConstants.Spacing.S
   },
   header: {
     flex: 1,

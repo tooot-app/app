@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons'
-import React, { useLayoutEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import {
   Pressable,
   StyleProp,
@@ -46,7 +46,7 @@ const Button: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
 
-  useLayoutEffect(() => layoutAnimation(), [content, loading, disabled])
+  useEffect(() => layoutAnimation(), [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (

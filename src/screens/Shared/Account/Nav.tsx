@@ -1,10 +1,10 @@
-import Emojis from '@root/components/Timelines/Timeline/Shared/Emojis'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import { ParseEmojis } from '@components/Parse'
+import { AccountState } from '@screens/Shared/Account'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AccountState } from '../Account'
 
 export interface Props {
   accountState: AccountState
@@ -59,24 +59,15 @@ const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
             }
           ]}
         >
-          {account?.emojis ? (
-            <Emojis
-              content={account?.display_name || account?.username}
-              emojis={account.emojis}
-              size='M'
-              fontBold={true}
-            />
-          ) : (
-            <Text
-              style={{
-                color: theme.primary,
-                ...StyleConstants.FontStyle.M,
-                fontWeight: StyleConstants.Font.Weight.Bold
-              }}
-            >
-              {account?.display_name || account?.username}
+          {account ? (
+            <Text numberOfLines={1}>
+              <ParseEmojis
+                content={account.display_name || account.username}
+                emojis={account.emojis}
+                fontBold
+              />
             </Text>
-          )}
+          ) : null}
         </Animated.View>
       </View>
     </Animated.View>

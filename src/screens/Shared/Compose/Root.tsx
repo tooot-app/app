@@ -1,5 +1,5 @@
-import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import haptics from '@root/components/haptics'
+import haptics from '@components/haptics'
+import { ParseEmojis } from '@components/Parse'
 import { ComposeContext } from '@screens/Shared/Compose'
 import ComposeActions from '@screens/Shared/Compose/Actions'
 import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
@@ -9,7 +9,6 @@ import { emojisFetch } from '@utils/fetches/emojisFetch'
 import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Permissions from 'expo-permissions'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, {
   Dispatch,
@@ -66,18 +65,20 @@ const ListItem = React.memo(
           <View style={[styles.account, { borderBottomColor: theme.border }]}>
             <Image source={{ uri: item.avatar }} style={styles.accountAvatar} />
             <View>
-              <Text style={[styles.accountName, { color: theme.primary }]}>
-                {item.emojis?.length ? (
-                  <Emojis
-                    content={item.display_name || item.username}
-                    emojis={item.emojis}
-                    size='S'
-                  />
-                ) : (
-                  item.display_name || item.username
-                )}
+              <Text
+                style={[styles.accountName, { color: theme.primary }]}
+                numberOfLines={1}
+              >
+                <ParseEmojis
+                  content={item.display_name || item.username}
+                  emojis={item.emojis}
+                  size='S'
+                />
               </Text>
-              <Text style={[styles.accountAccount, { color: theme.primary }]}>
+              <Text
+                style={[styles.accountAccount, { color: theme.primary }]}
+                numberOfLines={1}
+              >
                 @{item.acct}
               </Text>
             </View>

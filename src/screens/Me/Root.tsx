@@ -12,7 +12,6 @@ import Logout from '@screens/Me/Root/Logout'
 import { useScrollToTop } from '@react-navigation/native'
 import { AccountState } from '../Shared/Account'
 import AccountNav from '../Shared/Account/Nav'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 const ScreenMeRoot: React.FC = () => {
   const localRegistered = useSelector(getLocalUrl)

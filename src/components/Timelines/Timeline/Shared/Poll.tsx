@@ -1,18 +1,16 @@
+import client from '@api/client'
+import Button from '@components/Button'
+import haptics from '@components/haptics'
+import relativeTime from '@components/relativeTime'
+import { TimelineData } from '@components/Timelines/Timeline'
 import { Feather } from '@expo/vector-icons'
+import { ParseEmojis } from '@root/components/Parse'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { findIndex } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
-import client from '@api/client'
-import Button from '@components/Button'
-import { toast } from '@components/toast'
-import relativeTime from '@utils/relativeTime'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-
-import Emojis from './Emojis'
-import { TimelineData } from '../../Timeline'
-import { findIndex } from 'lodash'
-import haptics from '@root/components/haptics'
 
 const fireMutation = async ({
   id,
@@ -39,11 +37,6 @@ const fireMutation = async ({
   if (res.body.id === id) {
     return Promise.resolve(res.body as Mastodon.Poll)
   } else {
-    toast({
-      type: 'error',
-      content: '投票失败，请重试',
-      autoHide: false
-    })
     return Promise.reject()
   }
 }
@@ -61,7 +54,7 @@ const TimelinePoll: React.FC<Props> = ({
   reblog,
   sameAccount
 }) => {
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const queryClient = useQueryClient()
 
   const [allOptions, setAllOptions] = useState(
@@ -98,10 +91,13 @@ const TimelinePoll: React.FC<Props> = ({
       })
 
       haptics('Success')
+    },
+    onError: () => {
+      haptics('Error')
     }
   })
 
-  const pollButton = () => {
+  const pollButton = useMemo(() => {
     if (!poll.expired) {
       if (!sameAccount && !poll.voted) {
         return (
@@ -131,7 +127,7 @@ const TimelinePoll: React.FC<Props> = ({
         )
       }
     }
-  }
+  }, [poll.expired, poll.voted, allOptions, mutation.isLoading])
 
   const pollExpiration = useMemo(() => {
     if (poll.expired) {
@@ -147,7 +143,7 @@ const TimelinePoll: React.FC<Props> = ({
         </Text>
       )
     }
-  }, [])
+  }, [mode])
 
   const isSelected = useCallback(
     (index: number): any =>
@@ -157,101 +153,93 @@ const TimelinePoll: React.FC<Props> = ({
     [allOptions]
   )
 
+  const pollBodyDisallow = useMemo(() => {
+    return poll.options.map((option, index) => (
+      <View key={index} style={styles.optionContainer}>
+        <View style={styles.optionContent}>
+          <Feather
+            style={styles.optionSelection}
+            name={
+              `${poll.own_votes?.includes(index) ? 'check-' : ''}${
+                poll.multiple ? 'square' : 'circle'
+              }` as any
+            }
+            size={StyleConstants.Font.Size.M}
+            color={
+              poll.own_votes?.includes(index) ? theme.primary : theme.disabled
+            }
+          />
+          <Text style={styles.optionText}>
+            <ParseEmojis content={option.title} emojis={poll.emojis} />
+          </Text>
+          <Text style={[styles.optionPercentage, { color: theme.primary }]}>
+            {poll.votes_count
+              ? Math.round((option.votes_count / poll.voters_count) * 100)
+              : 0}
+            %
+          </Text>
+        </View>
+
+        <View
+          style={[
+            styles.background,
+            {
+              width: `${Math.round(
+                (option.votes_count / poll.voters_count) * 100
+              )}%`,
+              backgroundColor: theme.disabled
+            }
+          ]}
+        />
+      </View>
+    ))
+  }, [mode, poll.options])
+  const pollBodyAllow = useMemo(() => {
+    return poll.options.map((option, index) => (
+      <Pressable
+        key={index}
+        style={styles.optionContainer}
+        onPress={() => {
+          haptics('Light')
+          if (poll.multiple) {
+            setAllOptions(allOptions.map((o, i) => (i === index ? !o : o)))
+          } else {
+            {
+              const otherOptions =
+                allOptions[index] === false ? false : undefined
+              setAllOptions(
+                allOptions.map((o, i) =>
+                  i === index
+                    ? !o
+                    : otherOptions !== undefined
+                    ? otherOptions
+                    : o
+                )
+              )
+            }
+          }
+        }}
+      >
+        <View style={[styles.optionContent]}>
+          <Feather
+            style={styles.optionSelection}
+            name={isSelected(index)}
+            size={StyleConstants.Font.Size.L}
+            color={theme.primary}
+          />
+          <Text style={styles.optionText}>
+            <ParseEmojis content={option.title} emojis={poll.emojis} />
+          </Text>
+        </View>
+      </Pressable>
+    ))
+  }, [mode, allOptions])
+
   return (
     <View style={styles.base}>
-      {poll.options.map((option, index) =>
-        poll.voted ? (
-          <View key={index} style={styles.poll}>
-            <View style={styles.optionSelected}>
-              <Feather
-                style={styles.voted}
-                name={
-                  `${poll.own_votes!.includes(index) ? 'check-' : ''}${
-                    poll.multiple ? 'square' : 'circle'
-                  }` as any
-                }
-                size={StyleConstants.Font.Size.M}
-                color={
-                  poll.own_votes!.includes(index)
-                    ? theme.primary
-                    : theme.disabled
-                }
-              />
-              <View style={styles.contentSelected}>
-                <Emojis
-                  content={option.title}
-                  emojis={poll.emojis}
-                  size='M'
-                  numberOfLines={2}
-                />
-              </View>
-              <Text style={[styles.percentage, { color: theme.primary }]}>
-                {poll.votes_count
-                  ? Math.round((option.votes_count / poll.voters_count) * 100)
-                  : 0}
-                %
-              </Text>
-            </View>
-
-            <View
-              style={[
-                styles.background,
-                {
-                  width: `${Math.round(
-                    (option.votes_count / poll.voters_count) * 100
-                  )}%`,
-                  backgroundColor: theme.disabled
-                }
-              ]}
-            />
-          </View>
-        ) : (
-          <View key={index} style={styles.poll}>
-            <Pressable
-              style={[styles.optionUnselected]}
-              onPress={() => {
-                haptics('Light')
-                if (poll.multiple) {
-                  setAllOptions(
-                    allOptions.map((o, i) => (i === index ? !o : o))
-                  )
-                } else {
-                  {
-                    const otherOptions =
-                      allOptions[index] === false ? false : undefined
-                    setAllOptions(
-                      allOptions.map((o, i) =>
-                        i === index
-                          ? !o
-                          : otherOptions !== undefined
-                          ? otherOptions
-                          : o
-                      )
-                    )
-                  }
-                }
-              }}
-            >
-              <Feather
-                style={styles.votedNot}
-                name={isSelected(index)}
-                size={StyleConstants.Font.Size.L}
-                color={theme.primary}
-              />
-              <View style={styles.contentUnselected}>
-                <Emojis
-                  content={option.title}
-                  emojis={poll.emojis}
-                  size='M'
-                  numberOfLines={2}
-                />
-              </View>
-            </Pressable>
-          </View>
-        )
-      )}
+      {poll.expired || poll.voted ? pollBodyDisallow : pollBodyAllow}
       <View style={styles.meta}>
-        {pollButton()}
+        {pollButton}
         <Text style={[styles.votes, { color: theme.secondary }]}>
           已投{poll.voters_count || 0}人{' • '}
         </Text>
@@ -265,39 +253,24 @@ const styles = StyleSheet.create({
   base: {
     marginTop: StyleConstants.Spacing.M
   },
-  poll: {
+  optionContainer: {
     flex: 1,
-    minHeight: StyleConstants.Font.LineHeight.M * 2,
-    paddingVertical: StyleConstants.Spacing.XS
+    paddingVertical: StyleConstants.Spacing.S
   },
-  optionSelected: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingRight: StyleConstants.Spacing.M
-  },
-  optionUnselected: {
+  optionContent: {
     flex: 1,
     flexDirection: 'row'
   },
-  contentSelected: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingRight: StyleConstants.Spacing.S
+  optionText: {
+    flex: 1
   },
-  contentUnselected: {
-    flexShrink: 1
-  },
-  voted: {
+  optionSelection: {
     marginRight: StyleConstants.Spacing.S
   },
-  votedNot: {
-    paddingRight: StyleConstants.Spacing.S
-  },
-  percentage: {
-    ...StyleConstants.FontStyle.M
+  optionPercentage: {
+    ...StyleConstants.FontStyle.M,
+    alignSelf: 'center',
+    marginLeft: StyleConstants.Spacing.S
   },
   background: {
     height: StyleConstants.Spacing.XS,
@@ -314,7 +287,7 @@ const styles = StyleSheet.create({
     marginTop: StyleConstants.Spacing.XS
   },
   button: {
-    marginRight: StyleConstants.Spacing.M
+    marginRight: StyleConstants.Spacing.S
   },
   votes: {
     ...StyleConstants.FontStyle.S

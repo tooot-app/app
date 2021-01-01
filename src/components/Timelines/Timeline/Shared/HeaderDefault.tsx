@@ -1,17 +1,17 @@
+import BottomSheet from '@components/BottomSheet'
+import openLink from '@components/openLink'
+import { ParseEmojis } from '@components/Parse'
+import relativeTime from '@components/relativeTime'
+import { Feather } from '@expo/vector-icons'
+import { getLocalUrl } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
+import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsDomain'
+import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsStatus'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import Emojis from '@components/Timelines/Timeline/Shared/Emojis'
-import relativeTime from '@utils/relativeTime'
-import { getLocalUrl } from '@utils/slices/instancesSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
-import BottomSheet from '@components/BottomSheet'
 import { useSelector } from 'react-redux'
-import { StyleConstants } from '@utils/styles/constants'
-import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
-import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsStatus'
-import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsDomain'
-import openLink from '@root/utils/openLink'
 
 export interface Props {
   queryKey?: QueryKey.Timeline
@@ -69,21 +69,9 @@ const TimelineHeaderDefault: React.FC<Props> = ({
     <View style={styles.base}>
       <View style={queryKey ? { flexBasis: '80%' } : { flexBasis: '100%' }}>
         <View style={styles.nameAndAccount}>
-          {emojis?.length ? (
-            <Emojis
-              content={name}
-              emojis={emojis}
-              size='M'
-              fontBold={true}
-            />
-          ) : (
-            <Text
-              numberOfLines={1}
-              style={[styles.nameWithoutEmoji, { color: theme.primary }]}
-            >
-              {name}
-            </Text>
-          )}
+          <Text numberOfLines={1}>
+            <ParseEmojis content={name} emojis={emojis} fontBold />
+          </Text>
           <Text
             style={[styles.account, { color: theme.secondary }]}
             numberOfLines={1}
@@ -163,7 +151,8 @@ const TimelineHeaderDefault: React.FC<Props> = ({
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'baseline'
   },
   nameAndMeta: {
     flexBasis: '80%'
@@ -171,10 +160,6 @@ const styles = StyleSheet.create({
   nameAndAccount: {
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  nameWithoutEmoji: {
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold
   },
   account: {
     flex: 1,
@@ -199,7 +184,8 @@ const styles = StyleSheet.create({
   action: {
     flexBasis: '20%',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: StyleConstants.Spacing.S
   }
 })
 

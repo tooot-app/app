@@ -1,7 +1,7 @@
 import Button from '@components/Button'
-import openLink from '@root/utils/openLink'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import openLink from '@components/openLink'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 import React from 'react'
@@ -38,7 +38,7 @@ const AttachmentUnsupported: React.FC<Props> = ({
               { color: attachment.blurhash ? theme.background : theme.primary }
             ]}
           >
-            文件不支持
+            文件读取错误
           </Text>
           {attachment.remote_url ? (
             <Button

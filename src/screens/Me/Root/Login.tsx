@@ -1,9 +1,9 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
-import ParseContent from '@components/ParseContent'
+import haptics from '@components/haptics'
+import { ParseHTML } from '@components/Parse'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import analytics from '@root/components/analytics'
-import haptics from '@root/components/haptics'
 import { applicationFetch } from '@utils/fetches/applicationFetch'
 import { instanceFetch } from '@utils/fetches/instanceFetch'
 import { loginLocal } from '@utils/slices/instancesSlice'
@@ -144,7 +144,12 @@ const Login: React.FC = () => {
             height={StyleConstants.Font.Size.M}
             shimmerColors={theme.shimmer}
           >
-            <ParseContent content={content!} size={'M'} numberOfLines={5} />
+            <ParseHTML
+              content={content!}
+              size={'M'}
+              numberOfLines={5}
+              expandHint='介绍'
+            />
           </ShimmerPlaceholder>
         </View>
       )

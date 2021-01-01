@@ -1,6 +1,5 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import haptics from '@root/components/haptics'
-import { toast } from '@root/components/toast'
 import { store } from '@root/store'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import formatText from '@screens/Shared/Compose/formatText'
@@ -27,7 +26,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
 import ComposeEditAttachment from './Compose/EditAttachment'
-import ComposeEditAttachmentRoot from './Compose/EditAttachment/Root'
 import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composeSend from './Compose/utils/post'
@@ -190,7 +188,6 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
               haptics('Success')
               queryClient.invalidateQueries(['Following'])
               navigation.goBack()
-              toast({ type: 'success', content: '发布成功' })
             })
             .catch(() => {
               haptics('Error')

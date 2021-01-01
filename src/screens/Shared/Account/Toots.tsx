@@ -19,6 +19,9 @@ const AccountToots: React.FC<Props> = ({
   accountDispatch,
   id
 }) => {
+  const headerHeight = useSafeAreaInsets().top + 44
+  const footerHeight = useSafeAreaInsets().bottom + useBottomTabBarHeight()
+
   const routes: { key: App.Pages }[] = [
     { key: 'Account_Default' },
     { key: 'Account_All' },
@@ -37,20 +40,11 @@ const AccountToots: React.FC<Props> = ({
     },
     []
   )
-  const headerHeight = useSafeAreaInsets().top + 44
-  const footerHeight = useSafeAreaInsets().bottom + useBottomTabBarHeight()
 
   return (
     <TabView
       lazy
       swipeEnabled
-      style={[
-        styles.base,
-        {
-          height:
-            Dimensions.get('window').height - headerHeight - footerHeight - 33
-        }
-      ]}
       renderScene={renderScene}
       renderTabBar={() => null}
       initialLayout={{ width: Dimensions.get('window').width }}
@@ -58,6 +52,16 @@ const AccountToots: React.FC<Props> = ({
       onIndexChange={index =>
         accountDispatch({ type: 'segmentedIndex', payload: index })
       }
+      style={[
+        styles.base,
+        {
+          height:
+            Dimensions.get('window').height -
+            headerHeight -
+            footerHeight -
+            (33 + StyleConstants.Spacing.Global.PagePadding * 2)
+        }
+      ]}
     />
   )
 }
@@ -68,4 +72,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AccountToots
+export default React.memo(AccountToots, () => true)

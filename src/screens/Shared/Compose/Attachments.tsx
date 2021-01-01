@@ -6,7 +6,13 @@ import addAttachment from '@screens/Shared/Compose/addAttachment'
 import { ExtendedAttachment } from '@screens/Shared/Compose/utils/types'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
 import {
   FlatList,
   Image,
@@ -26,6 +32,9 @@ const ComposeAttachments: React.FC = () => {
   const { theme } = useTheme()
   const navigation = useNavigation()
 
+  const flatListRef = useRef<FlatList>(null)
+  let prevOffsets = useRef<number[]>()
+
   const sensitiveOnPress = useCallback(
     () =>
       composeDispatch({
@@ -35,35 +44,75 @@ const ComposeAttachments: React.FC = () => {
     [composeState.attachments.sensitive]
   )
 
+  const calculateWidth = useCallback(item => {
+    if (item.local) {
+      return (item.local.width / item.local.height) * DEFAULT_HEIGHT
+    } else {
+      if (item.remote) {
+        if (item.remote.meta.original.aspect) {
+          return item.remote.meta.original.aspect * DEFAULT_HEIGHT
+        } else if (
+          item.remote.meta.original.width &&
+          item.remote.meta.original.height
+        ) {
+          return (
+            (item.remote.meta.original.width /
+              item.remote.meta.original.height) *
+            DEFAULT_HEIGHT
+          )
+        } else {
+          return DEFAULT_HEIGHT
+        }
+      } else {
+        return DEFAULT_HEIGHT
+      }
+    }
+  }, [])
+
+  const snapToOffsets = useMemo(() => {
+    const attachmentsOffsets = composeState.attachments.uploads.map(
+      (_, index) => {
+        let currentOffset = 0
+        Array.from(Array(index).keys()).map(
+          i =>
+            (currentOffset =
+              currentOffset +
+              calculateWidth(composeState.attachments.uploads[i]) +
+              StyleConstants.Spacing.Global.PagePadding)
+        )
+        return currentOffset
+      }
+    )
+    return attachmentsOffsets.length < 4
+      ? [
+          ...attachmentsOffsets,
+          attachmentsOffsets.reduce((a, b) => a + b, 0) +
+            DEFAULT_HEIGHT +
+            StyleConstants.Spacing.Global.PagePadding
+        ]
+      : attachmentsOffsets
+  }, [composeState.attachments.uploads.length])
+
+  useEffect(() => {
+    if (
+      snapToOffsets.length >
+      (prevOffsets.current ? prevOffsets.current?.length : 0)
+    ) {
+      flatListRef.current?.scrollToOffset({
+        offset:
+          snapToOffsets[snapToOffsets.length - 2] +
+          snapToOffsets[snapToOffsets.length - 1]
+      })
+    }
+    prevOffsets.current = snapToOffsets
+  }, [snapToOffsets, prevOffsets])
+
   const renderAttachment = useCallback(
     ({ item, index }: { item: ExtendedAttachment; index: number }) => {
-      let calculatedWidth: number
-      if (item.local) {
-        calculatedWidth =
-          (item.local.width / item.local.height) * DEFAULT_HEIGHT
-      } else {
-        if (item.remote) {
-          if (item.remote.meta.original.aspect) {
-            calculatedWidth = item.remote.meta.original.aspect * DEFAULT_HEIGHT
-          } else if (
-            item.remote.meta.original.width &&
-            item.remote.meta.original.height
-          ) {
-            calculatedWidth =
-              (item.remote.meta.original.width /
-                item.remote.meta.original.height) *
-              DEFAULT_HEIGHT
-          } else {
-            calculatedWidth = DEFAULT_HEIGHT
-          }
-        } else {
-          calculatedWidth = DEFAULT_HEIGHT
-        }
-      }
       return (
         <View
           key={index}
-          style={[styles.container, { width: calculatedWidth }]}
+          style={[styles.container, { width: calculateWidth(item) }]}
         >
           <Image
             style={styles.image}
@@ -172,7 +221,6 @@ const ComposeAttachments: React.FC = () => {
     ),
     []
   )
-
   return (
     <View style={styles.base}>
       <Pressable style={styles.sensitive} onPress={sensitiveOnPress}>
@@ -187,14 +235,19 @@ const ComposeAttachments: React.FC = () => {
       </Pressable>
       <FlatList
         horizontal
-        keyExtractor={item => item.local!.uri || item.remote!.url}
-        data={composeState.attachments.uploads}
+        ref={flatListRef}
+        decelerationRate={0}
+        pagingEnabled={false}
+        snapToAlignment='center'
         renderItem={renderAttachment}
+        snapToOffsets={snapToOffsets}
+        keyboardShouldPersistTaps='handled'
+        showsHorizontalScrollIndicator={false}
+        data={composeState.attachments.uploads}
+        keyExtractor={item => item.local!.uri || item.remote!.url}
         ListFooterComponent={
           composeState.attachments.uploads.length < 4 ? listFooter : null
         }
-        showsHorizontalScrollIndicator={false}
-        keyboardShouldPersistTaps='handled'
       />
     </View>
   )

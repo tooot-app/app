@@ -1,12 +1,12 @@
+import client from '@api/client'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import client from '@root/api/client'
-import Button from '@root/components/Button'
-import haptics from '@root/components/haptics'
-import ParseContent from '@root/components/ParseContent'
-import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
-import relativeTime from '@root/utils/relativeTime'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import Button from '@components/Button'
+import haptics from '@components/haptics'
+import { ParseHTML } from '@components/Parse'
+import relativeTime from '@components/relativeTime'
+import { announcementFetch } from '@utils/fetches/announcementsFetch'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import {
   Dimensions,
@@ -103,7 +103,7 @@ const ScreenSharedAnnouncements: React.FC = ({
             发布于{relativeTime(item.published_at)}
           </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
-            <ParseContent
+            <ParseHTML
               content={item.content}
               size='M'
               emojis={item.emojis}

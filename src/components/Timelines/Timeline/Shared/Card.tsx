@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import openLink from '@root/utils/openLink'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 

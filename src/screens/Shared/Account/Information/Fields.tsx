@@ -1,7 +1,7 @@
+import { ParseHTML } from '@components/Parse'
 import { Feather } from '@expo/vector-icons'
-import ParseContent from '@root/components/ParseContent'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
@@ -20,7 +20,7 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
           style={[styles.field, { borderBottomColor: theme.border }]}
         >
           <View style={[styles.fieldLeft, { borderRightColor: theme.border }]}>
-            <ParseContent
+            <ParseHTML
               content={field.name}
               size={'M'}
               emojis={account.emojis}
@@ -36,7 +36,7 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
             ) : null}
           </View>
           <View style={styles.fieldRight}>
-            <ParseContent
+            <ParseHTML
               content={field.value}
               size={'M'}
               emojis={account.emojis}

@@ -16,6 +16,9 @@ const composeParseState = ({
     case 'edit':
       return {
         ...composeInitialState,
+        ...(incomingStatus.spoiler_text && {
+          spoiler: { ...composeInitialState.spoiler, active: true }
+        }),
         ...(incomingStatus.poll && {
           poll: {
             active: true,
