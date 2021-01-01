@@ -1,6 +1,5 @@
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
-import { ComposeContext } from '@screens/Shared/Compose'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { MutableRefObject, useCallback, useContext, useRef } from 'react'
 import {
   Animated,
@@ -12,6 +11,7 @@ import {
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Svg, { Circle, G, Path } from 'react-native-svg'
+import ComposeContext from '../utils/createContext'
 
 export interface Props {
   index: number

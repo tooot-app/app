@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { ComposeContext } from '@screens/Shared/Compose'
 import ComposeSpoilerInput from '@screens/Shared/Compose/SpoilerInput'
 import ComposeTextInput from '@screens/Shared/Compose/TextInput'
+import ComposeContext from '@screens/Shared/Compose//utils/createContext'
 
 const ComposeRootHeader: React.FC = () => {
   const { composeState } = useContext(ComposeContext)

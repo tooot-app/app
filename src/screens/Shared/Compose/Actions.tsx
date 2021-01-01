@@ -1,11 +1,11 @@
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { ComposeContext } from '@screens/Shared/Compose'
-import addAttachment from '@root/screens/Shared/Compose/addAttachment'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { ActionSheetIOS, StyleSheet, View } from 'react-native'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
+import addAttachment from './/addAttachment'
+import ComposeContext from './utils/createContext'
 
 const ComposeActions: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)

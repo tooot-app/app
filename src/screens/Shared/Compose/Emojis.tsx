@@ -1,3 +1,6 @@
+import haptics from '@components/haptics'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
 import {
   Image,
@@ -7,12 +10,8 @@ import {
   Text,
   View
 } from 'react-native'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-
-import { ComposeContext } from '@screens/Shared/Compose'
+import ComposeContext from './utils/createContext'
 import updateText from './updateText'
-import haptics from '@root/components/haptics'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)

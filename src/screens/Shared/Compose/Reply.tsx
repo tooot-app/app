@@ -1,26 +1,19 @@
-import React, { useContext } from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
-import { useTheme } from '@utils/styles/ThemeManager'
-
 import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
 import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
 import TimelineCard from '@components/Timelines/Timeline/Shared/Card'
 import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderDefault'
-import { ComposeContext } from '@screens/Shared/Compose'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import ComposeContext from './utils/createContext'
+import React, { useContext } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 const ComposeReply: React.FC = () => {
   const {
     composeState: { replyToStatus }
   } = useContext(ComposeContext)
   const { theme } = useTheme()
-
-  const contentWidth =
-    Dimensions.get('window').width -
-    StyleConstants.Spacing.Global.PagePadding * 2 - // Global page padding on both sides
-    StyleConstants.Avatar.M - // Avatar width
-    StyleConstants.Spacing.S // Avatar margin to the right
 
   return (
     <View style={[styles.status, { borderTopColor: theme.border }]}>
@@ -31,10 +24,7 @@ const ComposeReply: React.FC = () => {
           <TimelineContent status={replyToStatus!} />
         )}
         {replyToStatus!.media_attachments.length > 0 && (
-          <TimelineAttachment
-            status={replyToStatus!}
-            contentWidth={contentWidth}
-          />
+          <TimelineAttachment status={replyToStatus!} />
         )}
         {replyToStatus!.card && <TimelineCard card={replyToStatus!.card} />}
       </View>

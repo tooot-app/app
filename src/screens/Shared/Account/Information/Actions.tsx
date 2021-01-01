@@ -46,9 +46,7 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
   const navigation = useNavigation()
 
   const relationshipQueryKey = ['Relationship', { id: account?.id }]
-  const query = useQuery(relationshipQueryKey, relationshipFetch, {
-    enabled: false
-  })
+  const query = useQuery(relationshipQueryKey, relationshipFetch)
   useEffect(() => {
     if (account?.id) {
       query.refetch()

@@ -1,7 +1,6 @@
-import client from '@root/api/client'
-import haptics from '@root/components/haptics'
-import { HeaderLeft, HeaderRight } from '@root/components/Header'
-import { ComposeContext } from '@screens/Shared/Compose'
+import client from '@api/client'
+import haptics from '@components/haptics'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import React, {
   useCallback,
   useContext,
@@ -13,6 +12,7 @@ import { Alert, KeyboardAvoidingView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ComposeEditAttachmentRoot from './EditAttachment/Root'
+import ComposeContext from './utils/createContext'
 
 const Stack = createNativeStackNavigator()
 

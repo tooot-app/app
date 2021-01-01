@@ -1,10 +1,5 @@
 import haptics from '@components/haptics'
 import { ParseEmojis } from '@components/Parse'
-import { ComposeContext } from '@screens/Shared/Compose'
-import ComposeActions from '@screens/Shared/Compose/Actions'
-import ComposeRootFooter from '@screens/Shared/Compose/Root/Footer'
-import ComposeRootHeader from '@screens/Shared/Compose/Root/Header'
-import updateText from '@screens/Shared/Compose/updateText'
 import { emojisFetch } from '@utils/fetches/emojisFetch'
 import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
@@ -27,6 +22,11 @@ import {
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import { useQuery } from 'react-query'
+import ComposeActions from './Actions'
+import ComposeRootFooter from './Root/Footer'
+import ComposeRootHeader from './Root/Header'
+import updateText from './updateText'
+import ComposeContext from './utils/createContext'
 import { ComposeAction, ComposeState } from './utils/types'
 
 const ListItem = React.memo(

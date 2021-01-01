@@ -1,6 +1,5 @@
 import axios from 'axios'
 import chalk from 'chalk'
-import { store, RootState } from '@root/store'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -36,7 +35,8 @@ const client = async ({
       (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
-  const state: RootState['instances'] = store.getState().instances
+  const { store } = require('@root/store')
+  const state = store.getState().instances
   const domain =
     instance === 'remote' ? instanceDomain || state.remote.url : state.local.url
 

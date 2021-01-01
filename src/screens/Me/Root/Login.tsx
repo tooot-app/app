@@ -340,4 +340,6 @@ const styles = StyleSheet.create({
   }
 })
 
+Login.whyDidYouRender = true
+
 export default Login

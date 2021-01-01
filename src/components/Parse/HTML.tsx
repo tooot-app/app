@@ -1,5 +1,5 @@
 import openLink from '@components/openLink'
-import { ParseEmojis } from '@components/Parse'
+import ParseEmojis from '@components/Parse/Emojis'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'

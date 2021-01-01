@@ -1,5 +1,4 @@
 import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/Video'
-import { ComposeContext } from '@screens/Shared/Compose'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, {
@@ -10,6 +9,7 @@ import React, {
   useMemo
 } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import ComposeContext from '../utils/createContext'
 import ComposeEditAttachmentImage from './Image'
 
 export interface Props {

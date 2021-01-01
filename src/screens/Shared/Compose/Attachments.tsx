@@ -1,10 +1,9 @@
 import { Feather } from '@expo/vector-icons'
 import Button from '@components/Button'
+import haptics from '@components/haptics'
 import { useNavigation } from '@react-navigation/native'
-import { ComposeContext } from '@screens/Shared/Compose'
-import addAttachment from '@screens/Shared/Compose/addAttachment'
-import { ExtendedAttachment } from '@screens/Shared/Compose/utils/types'
 import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, {
   useCallback,
@@ -22,8 +21,9 @@ import {
   View
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
-import haptics from '@root/components/haptics'
+import addAttachment from './addAttachment'
+import ComposeContext from './utils/createContext'
+import { ExtendedAttachment } from './utils/types'
 
 const DEFAULT_HEIGHT = 200
 

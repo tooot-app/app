@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { ComposeContext } from '@screens/Shared/Compose'
 import formatText from './formatText'
+import ComposeContext from './utils/createContext'
 
 const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)

@@ -7,14 +7,7 @@ import ComposeRoot from '@screens/Shared/Compose/Root'
 import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  createContext,
-  Dispatch,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import {
   Alert,
   Keyboard,
@@ -26,19 +19,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
 import ComposeEditAttachment from './Compose/EditAttachment'
+import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composeSend from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
-import { ComposeAction, ComposeState } from './Compose/utils/types'
+import { ComposeState } from './Compose/utils/types'
 
 const Stack = createNativeStackNavigator()
-
-type ContextType = {
-  composeState: ComposeState
-  composeDispatch: Dispatch<ComposeAction>
-}
-export const ComposeContext = createContext<ContextType>({} as ContextType)
 
 export interface Props {
   route: {
