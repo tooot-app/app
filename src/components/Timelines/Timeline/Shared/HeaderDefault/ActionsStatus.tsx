@@ -1,59 +1,14 @@
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import { findIndex } from 'lodash'
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
+import haptics from '@components/haptics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
+import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
-import { TimelineData } from '@root/components/Timelines/Timeline'
-import { findIndex } from 'lodash'
-
-const fireMutation = async ({
-  id,
-  type,
-  stateKey,
-  prevState
-}: {
-  id: string
-  type: 'mute' | 'pin' | 'delete'
-  stateKey: 'muted' | 'pinned' | 'id'
-  prevState?: boolean
-}) => {
-  let res
-  switch (type) {
-    case 'mute':
-    case 'pin':
-      res = await client({
-        method: 'post',
-        instance: 'local',
-        url: `statuses/${id}/${prevState ? 'un' : ''}${type}`
-      }) // bug in response from Mastodon
-
-      if (!res.body[stateKey] === prevState) {
-        toast({ type: 'success', content: '功能成功' })
-        return Promise.resolve(res.body)
-      } else {
-        toast({ type: 'error', content: '功能错误' })
-        return Promise.reject()
-      }
-      break
-    case 'delete':
-      res = await client({
-        method: 'delete',
-        instance: 'local',
-        url: `statuses/${id}`
-      })
-
-      if (res.body[stateKey] === id) {
-        toast({ type: 'success', content: '删除成功' })
-        return Promise.resolve(res.body)
-      } else {
-        toast({ type: 'error', content: '删除失败' })
-        return Promise.reject()
-      }
-      break
-  }
-}
+import { useNavigation } from '@react-navigation/native'
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -67,19 +22,56 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
   setBottomSheetVisible
 }) => {
   const navigation = useNavigation()
+  const { t } = useTranslation()
+
   const queryClient = useQueryClient()
+  const fireMutation = useCallback(
+    ({ type, state }: { type: 'mute' | 'pin' | 'delete'; state?: boolean }) => {
+      switch (type) {
+        case 'mute':
+        case 'pin':
+          return client({
+            method: 'post',
+            instance: 'local',
+            url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
+          }) // bug in response from Mastodon, but onMutate ignore the error in response
+          break
+        case 'delete':
+          return client({
+            method: 'delete',
+            instance: 'local',
+            url: `statuses/${status.id}`
+          })
+          break
+      }
+    },
+    []
+  )
+  enum mapTypeToProp {
+    mute = 'muted',
+    pin = 'pinned'
+  }
   const { mutate } = useMutation(fireMutation, {
-    onMutate: ({ id, type, stateKey, prevState }) => {
+    onMutate: ({ type, state }) => {
       queryClient.cancelQueries(queryKey)
       const oldData = queryClient.getQueryData(queryKey)
 
       switch (type) {
         case 'mute':
         case 'pin':
+          haptics('Success')
+          toast({
+            type: 'success',
+            message: t('common:toastMessage.success.message', {
+              function: t(
+                `timeline:shared.header.default.actions.status.${type}.function`
+              )
+            })
+          })
           queryClient.setQueryData<TimelineData>(queryKey, old => {
             let tootIndex = -1
             const pageIndex = findIndex(old?.pages, page => {
-              const tempIndex = findIndex(page.toots, ['id', id])
+              const tempIndex = findIndex(page.toots, ['id', status.id])
               if (tempIndex >= 0) {
                 tootIndex = tempIndex
                 return true
@@ -89,9 +81,8 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
             })
 
             if (pageIndex >= 0 && tootIndex >= 0) {
-              old!.pages[pageIndex].toots[tootIndex][
-                stateKey as 'muted' | 'pinned'
-              ] = typeof prevState === 'boolean' ? !prevState : true
+              old!.pages[pageIndex].toots[tootIndex][mapTypeToProp[type]] =
+                typeof state === 'boolean' ? !state : true // State could be null from response
             }
 
             return old
@@ -105,7 +96,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                 ...old,
                 pages: old?.pages.map(paging => ({
                   ...paging,
-                  toots: paging.toots.filter(toot => toot.id !== id)
+                  toots: paging.toots.filter(toot => toot.id !== status.id)
                 }))
               }
           )
@@ -114,36 +105,45 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
 
       return oldData
     },
-    onError: (err, _, oldData) => {
-      toast({ type: 'error', content: '请重试' })
+    onError: (_, { type }, oldData) => {
+      toast({
+        type: 'error',
+        message: t('common:toastMessage.success.message', {
+          function: t(
+            `timeline:shared.header.default.actions.status.${type}.function`
+          )
+        })
+      })
       queryClient.setQueryData(queryKey, oldData)
     }
   })
 
   return (
     <MenuContainer>
-      <MenuHeader heading='关于嘟嘟' />
+      <MenuHeader
+        heading={t('timeline:shared.header.default.actions.status.heading')}
+      />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({
-            type: 'delete',
-            id: status.id,
-            stateKey: 'id'
-          })
+          mutate({ type: 'delete' })
         }}
         iconFront='trash'
-        title='删除嘟嘟'
+        title={t('timeline:shared.header.default.actions.status.delete.button')}
       />
       <MenuRow
         onPress={() => {
           Alert.alert(
-            '确认删除嘟嘟？',
-            '你确定要删除这条嘟文并重新编辑它吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。',
+            t('timeline:shared.header.default.actions.status.edit.alert.title'),
+            t(
+              'timeline:shared.header.default.actions.status.edit.alert.message'
+            ),
             [
-              { text: '取消', style: 'cancel' },
+              { text: t('common:buttons.cancel'), style: 'cancel' },
               {
-                text: '删除并重新编辑',
+                text: t(
+                  'timeline:shared.header.default.actions.status.edit.alert.confirm'
+                ),
                 style: 'destructive',
                 onPress: async () => {
                   await client({
@@ -160,7 +160,14 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                       })
                     })
                     .catch(() => {
-                      toast({ type: 'error', content: '删除失败' })
+                      toast({
+                        type: 'error',
+                        message: t('common:toastMessage.success.message', {
+                          function: t(
+                            `timeline:shared.header.default.actions.status.edit.function`
+                          )
+                        })
+                      })
                     })
                 }
               }
@@ -168,35 +175,41 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           )
         }}
         iconFront='trash'
-        title='删除并重新编辑'
+        title={t('timeline:shared.header.default.actions.status.edit.button')}
       />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({
-            type: 'mute',
-            id: status.id,
-            stateKey: 'muted',
-            prevState: status.muted
-          })
+          mutate({ type: 'mute', state: status.muted })
         }}
         iconFront='volume-x'
-        title={status.muted ? '取消静音对话' : '静音对话'}
+        title={
+          status.muted
+            ? t(
+                'timeline:shared.header.default.actions.status.mute.button.negative'
+              )
+            : t(
+                'timeline:shared.header.default.actions.status.mute.button.positive'
+              )
+        }
       />
       {/* Also note that reblogs cannot be pinned. */}
       {(status.visibility === 'public' || status.visibility === 'unlisted') && (
         <MenuRow
           onPress={() => {
             setBottomSheetVisible(false)
-            mutate({
-              type: 'pin',
-              id: status.id,
-              stateKey: 'pinned',
-              prevState: status.pinned
-            })
+            mutate({ type: 'pin', state: status.pinned })
           }}
           iconFront='anchor'
-          title={status.pinned ? '取消置顶' : '置顶'}
+          title={
+            status.pinned
+              ? t(
+                  'timeline:shared.header.default.actions.status.pin.button.negative'
+                )
+              : t(
+                  'timeline:shared.header.default.actions.status.pin.button.positive'
+                )
+          }
         />
       )}
     </MenuContainer>

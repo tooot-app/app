@@ -8,39 +8,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
-
-const fireMutation = async ({
-  id,
-  type,
-  stateKey,
-  prevState
-}: {
-  id: string
-  type: 'favourite' | 'reblog' | 'bookmark'
-  stateKey: 'favourited' | 'reblogged' | 'bookmarked'
-  prevState?: boolean
-}) => {
-  let res
-  switch (type) {
-    case 'favourite':
-    case 'reblog':
-    case 'bookmark':
-      res = await client({
-        method: 'post',
-        instance: 'local',
-        url: `statuses/${id}/${prevState ? 'un' : ''}${type}`
-      }) // bug in response from Mastodon
-
-      if (!res.body[stateKey] === prevState) {
-        return Promise.resolve(res.body)
-      } else {
-        return Promise.reject()
-      }
-      break
-  }
-}
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -50,14 +20,32 @@ export interface Props {
 
 const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const navigation = useNavigation()
+  const { t } = useTranslation()
   const { theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
 
   const queryClient = useQueryClient()
+  const fireMutation = useCallback(
+    async ({
+      type,
+      state
+    }: {
+      type: 'favourite' | 'reblog' | 'bookmark'
+      stateKey: 'favourited' | 'reblogged' | 'bookmarked'
+      state?: boolean
+    }) => {
+      return client({
+        method: 'post',
+        instance: 'local',
+        url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
+      }) // bug in response from Mastodon
+    },
+    []
+  )
   const { mutate } = useMutation(fireMutation, {
-    onMutate: ({ id, type, stateKey, prevState }) => {
+    onMutate: ({ type, stateKey, state }) => {
       queryClient.cancelQueries(queryKey)
       const oldData = queryClient.getQueryData(queryKey)
 
@@ -75,7 +63,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
                   : reblog
                   ? 'reblog.id'
                   : 'id',
-                id
+                status.id
               ])
               if (tempIndex >= 0) {
                 tootIndex = tempIndex
@@ -94,14 +82,14 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
               } else {
                 if (queryKey[0] === 'Notifications') {
                   old!.pages[pageIndex].toots[tootIndex].status[stateKey] =
-                    typeof prevState === 'boolean' ? !prevState : true
+                    typeof state === 'boolean' ? !state : true
                 } else {
                   if (reblog) {
                     old!.pages[pageIndex].toots[tootIndex].reblog![stateKey] =
-                      typeof prevState === 'boolean' ? !prevState : true
+                      typeof state === 'boolean' ? !state : true
                   } else {
                     old!.pages[pageIndex].toots[tootIndex][stateKey] =
-                      typeof prevState === 'boolean' ? !prevState : true
+                      typeof state === 'boolean' ? !state : true
                   }
                 }
               }
@@ -114,9 +102,14 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
       return oldData
     },
-    onError: (err, _, oldData) => {
+    onError: (_, { type }, oldData) => {
       haptics('Error')
-      toast({ type: 'error', content: '请重试' })
+      toast({
+        type: 'error',
+        message: t('common:toastMessage.success.message', {
+          function: t(`timeline:shared.actions.${type}.function`)
+        })
+      })
       queryClient.setQueryData(queryKey, oldData)
     }
   })
@@ -133,30 +126,27 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const onPressReblog = useCallback(
     () =>
       mutate({
-        id: status.id,
         type: 'reblog',
         stateKey: 'reblogged',
-        prevState: status.reblogged
+        state: status.reblogged
       }),
     [status.reblogged]
   )
   const onPressFavourite = useCallback(
     () =>
       mutate({
-        id: status.id,
         type: 'favourite',
         stateKey: 'favourited',
-        prevState: status.favourited
+        state: status.favourited
       }),
     [status.favourited]
   )
   const onPressBookmark = useCallback(
     () =>
       mutate({
-        id: status.id,
         type: 'bookmark',
         stateKey: 'bookmarked',
-        prevState: status.bookmarked
+        state: status.bookmarked
       }),
     [status.bookmarked]
   )

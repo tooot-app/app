@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 export interface Params {
   type: 'success' | 'error' | 'warning'
   position?: 'top' | 'bottom'
-  content: string
+  message: string
   description?: string
   autoHide?: boolean
   onShow?: () => void
@@ -19,14 +19,14 @@ export interface Params {
 type Config = {
   type: Params['type']
   position: Params['position']
-  text1: Params['content']
+  text1: Params['message']
   text2: Params['description']
 }
 
 const toast = ({
   type,
   position = 'top',
-  content,
+  message,
   description,
   autoHide = true,
   onShow,
@@ -35,7 +35,7 @@ const toast = ({
   Toast.show({
     type,
     position,
-    text1: content,
+    text1: message,
     text2: description,
     visibilityTime: 1500,
     autoHide,

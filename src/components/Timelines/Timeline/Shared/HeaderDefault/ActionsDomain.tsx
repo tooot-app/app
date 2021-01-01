@@ -1,33 +1,11 @@
-import React from 'react'
-import { useMutation, useQueryClient } from 'react-query'
 import client from '@api/client'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
 import { toast } from '@components/toast'
-
-const fireMutation = async ({ domain }: { domain: string }) => {
-  const res = await client({
-    method: 'post',
-    instance: 'local',
-    url: `domain_blocks`,
-    params: {
-      domain: domain!
-    }
-  })
-
-  if (!res.body.error) {
-    toast({ type: 'success', content: '隐藏域名成功' })
-    return Promise.resolve()
-  } else {
-    toast({
-      type: 'error',
-      content: '隐藏域名失败，请重试',
-      autoHide: false
-    })
-    return Promise.reject()
-  }
-}
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -40,23 +18,46 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
   domain,
   setBottomSheetVisible
 }) => {
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const fireMutation = useCallback(() => {
+    return client({
+      method: 'post',
+      instance: 'local',
+      url: `domain_blocks`,
+      params: {
+        domain: domain!
+      }
+    })
+  }, [])
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
+      toast({
+        type: 'success',
+        message: t('common:toastMessage.success.message', {
+          function: t(
+            `timeline:shared.header.default.actions.domain.block.function`
+          )
+        })
+      })
       queryClient.invalidateQueries(queryKey)
     }
   })
 
   return (
     <MenuContainer>
-      <MenuHeader heading='关于域名' />
+      <MenuHeader
+        heading={t(`timeline:shared.header.default.actions.domain.heading`)}
+      />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ domain })
+          mutate()
         }}
         iconFront='cloud-off'
-        title={`屏蔽域名 ${domain}`}
+        title={t(`timeline:shared.header.default.actions.domain.block.button`, {
+          domain
+        })}
       />
     </MenuContainer>
   )

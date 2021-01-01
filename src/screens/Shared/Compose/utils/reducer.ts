@@ -1,4 +1,4 @@
-import { ComposeAction, ComposeState } from "./types"
+import { ComposeAction, ComposeState } from './types'
 
 const composeReducer = (
   state: ComposeState,

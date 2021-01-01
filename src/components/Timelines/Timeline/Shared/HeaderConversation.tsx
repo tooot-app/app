@@ -1,42 +1,41 @@
 import client from '@api/client'
 import haptics from '@components/haptics'
-import { ParseEmojis } from '@components/Parse'
-import relativeTime from '@components/relativeTime'
 import { toast } from '@components/toast'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
+import HeaderSharedAccount from './HeaderShared/Account'
+import HeaderSharedCreated from './HeaderShared/Created'
 
 export interface Props {
   queryKey: QueryKey.Timeline
   conversation: Mastodon.Conversation
 }
 
-const fireMutation = async ({ id }: { id: string }) => {
-  const res = await client({
-    method: 'delete',
-    instance: 'local',
-    url: `conversations/${id}`
-  })
-
-  if (!res.body.error) {
-    toast({ type: 'success', content: '删除私信成功' })
-    return Promise.resolve()
-  } else {
-    toast({
-      type: 'error',
-      content: '删除私信失败，请重试',
-      autoHide: false
-    })
-    return Promise.reject()
-  }
-}
-
 const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
   const queryClient = useQueryClient()
+  const fireMutation = useCallback(async () => {
+    const res = await client({
+      method: 'delete',
+      instance: 'local',
+      url: `conversations/${conversation.id}`
+    })
+
+    if (!res.body.error) {
+      toast({ type: 'success', message: '删除私信成功' })
+      return Promise.resolve()
+    } else {
+      toast({
+        type: 'error',
+        message: '删除私信失败，请重试',
+        autoHide: false
+      })
+      return Promise.reject()
+    }
+  }, [])
   const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
       queryClient.cancelQueries(queryKey)
@@ -56,14 +55,14 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
     },
     onError: (err, _, oldData) => {
       haptics('Error')
-      toast({ type: 'error', content: '请重试', autoHide: false })
+      toast({ type: 'error', message: '请重试', autoHide: false })
       queryClient.setQueryData(queryKey, oldData)
     }
   })
 
   const { theme } = useTheme()
 
-  const actionOnPress = useCallback(() => mutate({ id: conversation.id }), [])
+  const actionOnPress = useCallback(() => mutate(), [])
 
   const actionChildren = useMemo(
     () => (
@@ -78,31 +77,14 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
   return (
     <View style={styles.base}>
-      <View style={styles.nameAndDate}>
-        <View style={styles.namdAndAccount}>
-          <Text numberOfLines={1}>
-            <ParseEmojis
-              content={
-                conversation.accounts[0].display_name ||
-                conversation.accounts[0].username
-              }
-              emojis={conversation.accounts[0].emojis}
-              fontBold
-            />
-          </Text>
-          <Text
-            style={[styles.account, { color: theme.secondary }]}
-            numberOfLines={1}
-          >
-            @{conversation.accounts[0].acct}
-          </Text>
-        </View>
+      <View style={styles.nameAndMeta}>
+        <HeaderSharedAccount account={conversation.accounts[0]} />
         <View style={styles.meta}>
-          {conversation.last_status?.created_at && (
-            <Text style={[styles.created_at, { color: theme.secondary }]}>
-              {relativeTime(conversation.last_status?.created_at)}
-            </Text>
-          )}
+          {conversation.last_status?.created_at ? (
+            <HeaderSharedCreated
+              created_at={conversation.last_status?.created_at}
+            />
+          ) : null}
           {conversation.unread && (
             <Feather name='circle' color={theme.blue} style={styles.unread} />
           )}
@@ -123,16 +105,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  nameAndDate: {
-    width: '80%'
-  },
-  namdAndAccount: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  account: {
-    flexShrink: 1,
-    marginLeft: StyleConstants.Spacing.XS
+  nameAndMeta: {
+    flex: 4
   },
   meta: {
     flexDirection: 'row',
@@ -147,7 +121,7 @@ const styles = StyleSheet.create({
     marginLeft: StyleConstants.Spacing.XS
   },
   action: {
-    flexBasis: '20%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center'
   }

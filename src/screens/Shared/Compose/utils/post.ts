@@ -3,7 +3,7 @@ import { Props } from '@screens/Shared/Compose'
 import { ComposeState } from '@screens/Shared/Compose/utils/types'
 import * as Crypto from 'expo-crypto'
 
-const composeSend = async (
+const composePost = async (
   params: Props['route']['params'],
   composeState: ComposeState
 ) => {
@@ -71,4 +71,4 @@ const composeSend = async (
   }
 }
 
-export default composeSend
+export default composePost

@@ -9,6 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 
@@ -55,6 +56,7 @@ const TimelinePoll: React.FC<Props> = ({
   sameAccount
 }) => {
   const { mode, theme } = useTheme()
+  const { t, i18n } = useTranslation('timeline')
   const queryClient = useQueryClient()
 
   const [allOptions, setAllOptions] = useState(
@@ -107,7 +109,7 @@ const TimelinePoll: React.FC<Props> = ({
                 mutation.mutate({ id: poll.id, options: allOptions })
               }
               type='text'
-              content='投票'
+              content={t('shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
               disabled={allOptions.filter(o => o !== false).length === 0}
             />
@@ -118,9 +120,8 @@ const TimelinePoll: React.FC<Props> = ({
           <View style={styles.button}>
             <Button
               onPress={() => mutation.mutate({ id: poll.id })}
-              {...(mutation.isLoading ? { icon: 'loader' } : { text: '刷新' })}
               type='text'
-              content='刷新'
+              content={t('shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}
             />
           </View>
@@ -133,17 +134,19 @@ const TimelinePoll: React.FC<Props> = ({
     if (poll.expired) {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
-          投票已结束
+          {t('shared.poll.meta.expiration.expired')}
         </Text>
       )
     } else {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
-          {relativeTime(poll.expires_at)}截止
+          {t('shared.poll.meta.expiration.until', {
+            at: relativeTime(poll.expires_at, i18n.language)
+          })}
         </Text>
       )
     }
-  }, [mode])
+  }, [mode, poll.expired, poll.expires_at])
 
   const isSelected = useCallback(
     (index: number): any =>
@@ -241,7 +244,7 @@ const TimelinePoll: React.FC<Props> = ({
       <View style={styles.meta}>
         {pollButton}
         <Text style={[styles.votes, { color: theme.secondary }]}>
-          已投{poll.voters_count || 0}人{' • '}
+          {t('shared.poll.meta.voted', { count: poll.voters_count })}
         </Text>
         {pollExpiration}
       </View>
@@ -270,7 +273,9 @@ const styles = StyleSheet.create({
   optionPercentage: {
     ...StyleConstants.FontStyle.M,
     alignSelf: 'center',
-    marginLeft: StyleConstants.Spacing.S
+    marginLeft: StyleConstants.Spacing.S,
+    flexBasis: '20%',
+    textAlign: 'center'
   },
   background: {
     height: StyleConstants.Spacing.XS,

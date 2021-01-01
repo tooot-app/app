@@ -1,13 +1,14 @@
 import Button from '@components/Button'
+import haptics from '@components/haptics'
 import AttachmentAudio from '@components/Timelines/Timeline/Shared/Attachment/Audio'
 import AttachmentImage from '@components/Timelines/Timeline/Shared/Attachment/Image'
 import AttachmentUnsupported from '@components/Timelines/Timeline/Shared/Attachment/Unsupported'
 import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
-import haptics from '@root/components/haptics'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 
@@ -16,6 +17,8 @@ export interface Props {
 }
 
 const TimelineAttachment: React.FC<Props> = ({ status }) => {
+  const { t } = useTranslation('timeline')
+
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
     layoutAnimation()
@@ -106,7 +109,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
           <Pressable style={styles.sensitiveBlur}>
             <Button
               type='text'
-              content='显示敏感内容'
+              content={t('shared.attachment.sensitive.button')}
               overlay
               onPress={onPressBlurView}
             />

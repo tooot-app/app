@@ -1,9 +1,10 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import React from 'react'
+import { Trans } from 'react-i18next'
+import { StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 
 export interface Props {
   hasNextPage?: boolean
@@ -18,13 +19,16 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
         <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
       ) : (
         <Text style={[styles.text, { color: theme.secondary }]}>
-          居然刷到底了，喝杯{' '}
-          <Feather
-            name='coffee'
-            size={StyleConstants.Font.Size.S}
-            color={theme.secondary}
-          />{' '}
-          吧
+          <Trans
+            i18nKey='timeline:shared.end.message' // optional -> fallbacks to defaults if not provided
+            components={[
+              <Feather
+                name='coffee'
+                size={StyleConstants.Font.Size.S}
+                color={theme.secondary}
+              />
+            ]}
+          />
         </Text>
       )}
     </View>

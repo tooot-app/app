@@ -22,7 +22,7 @@ import ComposeEditAttachment from './Compose/EditAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
-import composeSend from './Compose/utils/post'
+import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
 import { ComposeState } from './Compose/utils/types'
 
@@ -171,7 +171,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         onPress={() => {
           layoutAnimation()
           setIsSubmitting(true)
-          composeSend(params, composeState)
+          composePost(params, composeState)
             .then(() => {
               haptics('Success')
               queryClient.invalidateQueries(['Following'])
@@ -191,7 +191,7 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
         disabled={composeState.text.raw.length < 1 || totalTextCount > 500}
       />
     ),
-    [isSubmitting, composeState.text.raw, totalTextCount]
+    [isSubmitting, totalTextCount, composeState]
   )
 
   return (

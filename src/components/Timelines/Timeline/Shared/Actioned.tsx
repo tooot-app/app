@@ -1,10 +1,11 @@
+import { ParseEmojis } from '@components/Parse'
 import { Feather } from '@expo/vector-icons'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { StyleConstants } from '@utils/styles/constants'
-import React, { useCallback, useMemo } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
-import { ParseEmojis } from '@root/components/Parse'
 import { useNavigation } from '@react-navigation/native'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Pressable, StyleSheet, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account
@@ -17,6 +18,7 @@ const TimelineActioned: React.FC<Props> = ({
   action,
   notification = false
 }) => {
+  const { t } = useTranslation('timeline')
   const { theme } = useTheme()
   const navigation = useNavigation()
   const name = account.display_name || account.username
@@ -41,7 +43,7 @@ const TimelineActioned: React.FC<Props> = ({
               color={iconColor}
               style={styles.icon}
             />
-            {content('置顶')}
+            {content(t('shared.actioned.pinned'))}
           </>
         )
         break
@@ -55,7 +57,7 @@ const TimelineActioned: React.FC<Props> = ({
               style={styles.icon}
             />
             <Pressable onPress={onPress}>
-              {content(`${name} 喜欢了你的嘟嘟`)}
+              {content(t('shared.actioned.favourite', { name }))}
             </Pressable>
           </>
         )
@@ -70,7 +72,7 @@ const TimelineActioned: React.FC<Props> = ({
               style={styles.icon}
             />
             <Pressable onPress={onPress}>
-              {content(`${name} 开始关注你`)}
+              {content(t('shared.actioned.follow', { name }))}
             </Pressable>
           </>
         )
@@ -84,7 +86,7 @@ const TimelineActioned: React.FC<Props> = ({
               color={iconColor}
               style={styles.icon}
             />
-            {content('你参与的投票已结束')}
+            {content(t('shared.actioned.poll'))}
           </>
         )
         break
@@ -98,7 +100,11 @@ const TimelineActioned: React.FC<Props> = ({
               style={styles.icon}
             />
             <Pressable onPress={onPress}>
-              {content(`${name} 转嘟了${notification ? '你的嘟嘟' : ''}`)}
+              {content(
+                notification
+                  ? t('shared.actioned.reblog.notification', { name })
+                  : t('shared.actioned.reblog.default', { name })
+              )}
             </Pressable>
           </>
         )

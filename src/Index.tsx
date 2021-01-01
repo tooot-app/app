@@ -70,7 +70,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
     const showLocalCorrect = localCorrupt
       ? toast({
           type: 'error',
-          content: '登录已过期',
+          message: '登录已过期',
           description: '请重新登录',
           autoHide: false
         })
@@ -253,7 +253,6 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
-        // key={i18n.language}
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
       >

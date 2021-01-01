@@ -85,44 +85,48 @@ const MenuRow: React.FC<Props> = ({
           </View>
         </View>
 
-        <View style={styles.back}>
-          {content && content.length ? (
-            <>
-              <Text
-                style={[
-                  styles.content,
-                  {
-                    color: theme.secondary,
-                    opacity: !iconBack && loading ? 0 : 1
-                  }
-                ]}
-                numberOfLines={1}
-              >
-                {content}
-              </Text>
-              {loading && !iconBack && loadingSpinkit}
-            </>
-          ) : null}
-          {switchValue !== undefined ? (
-            <Switch
-              value={switchValue}
-              onValueChange={switchOnValueChange}
-              disabled={switchDisabled}
-              trackColor={{ true: theme.blue, false: theme.disabled }}
-            />
-          ) : null}
-          {iconBack ? (
-            <>
-              <Feather
-                name={iconBack}
-                size={StyleConstants.Font.Size.M + 2}
-                color={theme[iconBackColor]}
-                style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+        {(content && content.length) ||
+        switchValue !== undefined ||
+        iconBack ? (
+          <View style={styles.back}>
+            {content && content.length ? (
+              <>
+                <Text
+                  style={[
+                    styles.content,
+                    {
+                      color: theme.secondary,
+                      opacity: !iconBack && loading ? 0 : 1
+                    }
+                  ]}
+                  numberOfLines={1}
+                >
+                  {content}
+                </Text>
+                {loading && !iconBack && loadingSpinkit}
+              </>
+            ) : null}
+            {switchValue !== undefined ? (
+              <Switch
+                value={switchValue}
+                onValueChange={switchOnValueChange}
+                disabled={switchDisabled}
+                trackColor={{ true: theme.blue, false: theme.disabled }}
               />
-              {loading && loadingSpinkit}
-            </>
-          ) : null}
-        </View>
+            ) : null}
+            {iconBack ? (
+              <>
+                <Feather
+                  name={iconBack}
+                  size={StyleConstants.Font.Size.M + 2}
+                  color={theme[iconBackColor]}
+                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                />
+                {loading && loadingSpinkit}
+              </>
+            ) : null}
+          </View>
+        ) : null}
       </View>
     </Pressable>
   )
@@ -139,17 +143,16 @@ const styles = StyleSheet.create({
     paddingRight: StyleConstants.Spacing.Global.PagePadding
   },
   front: {
-    flex: 1,
-    flexBasis: '70%',
+    flex: 2,
     flexDirection: 'row',
     alignItems: 'center'
   },
   back: {
     flex: 1,
-    flexBasis: '30%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: StyleConstants.Spacing.M
   },
   iconFront: {
     marginRight: 8

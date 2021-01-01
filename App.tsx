@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler'
 import NetInfo from '@react-native-community/netinfo'
 import client from '@root/api/client'
 import Index from '@root/Index'
@@ -173,4 +172,4 @@ const App: React.FC = () => {
   )
 }
 
-export default App
+export default React.memo(App, () => true)

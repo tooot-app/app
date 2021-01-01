@@ -1,6 +1,7 @@
 import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 export interface Props {
@@ -14,6 +15,8 @@ const TimelineContent: React.FC<Props> = ({
   numberOfLines,
   highlighted = false
 }) => {
+  const { t } = useTranslation('timeline')
+
   return (
     <>
       {status.spoiler_text ? (
@@ -35,7 +38,7 @@ const TimelineContent: React.FC<Props> = ({
             mentions={status.mentions}
             tags={status.tags}
             numberOfLines={0}
-            expandHint='隐藏内容'
+            expandHint={t('shared.content.expandHint')}
           />
         </>
       ) : (

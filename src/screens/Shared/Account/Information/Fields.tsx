@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingBottom: StyleConstants.Spacing.S
   },
   fieldLeft: {
-    flexBasis: '30%',
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   fieldCheck: { marginLeft: StyleConstants.Spacing.XS },
   fieldRight: {
-    flexBasis: '70%',
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: StyleConstants.Spacing.S,

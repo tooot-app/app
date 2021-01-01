@@ -1,13 +1,14 @@
 import client from '@api/client'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
 import relativeTime from '@components/relativeTime'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { announcementFetch } from '@utils/fetches/announcementsFetch'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   Image,
@@ -56,6 +57,7 @@ const ScreenSharedAnnouncements: React.FC = ({
   const { theme } = useTheme()
   const bottomTabBarHeight = useBottomTabBarHeight()
   const [index, setIndex] = useState(0)
+  const { t, i18n } = useTranslation()
 
   const queryKey = ['Announcements', { showAll }]
   const { data, refetch } = useQuery(queryKey, announcementFetch, {
@@ -100,7 +102,7 @@ const ScreenSharedAnnouncements: React.FC = ({
           ]}
         >
           <Text style={[styles.published, { color: theme.secondary }]}>
-            发布于{relativeTime(item.published_at)}
+            发布于 {relativeTime(item.published_at, i18n.language)}
           </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
             <ParseHTML

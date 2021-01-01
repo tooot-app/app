@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
-import { QueryStatus } from 'react-query'
 import Button from '@components/Button'
 import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, Text, View } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
+import { QueryStatus } from 'react-query'
 
 export interface Props {
   status: QueryStatus
@@ -13,7 +14,8 @@ export interface Props {
 }
 
 const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
+  const { t, i18n } = useTranslation('timeline')
 
   const children = useMemo(() => {
     switch (status) {
@@ -30,9 +32,13 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
               color={theme.primary}
             />
             <Text style={[styles.error, { color: theme.primary }]}>
-              加载错误
+              {t('empty.error.message')}
             </Text>
-            <Button type='text' content='重试' onPress={() => refetch()} />
+            <Button
+              type='text'
+              content={t('empty.error.button')}
+              onPress={() => refetch()}
+            />
           </>
         )
       case 'success':
@@ -44,12 +50,12 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
               color={theme.primary}
             />
             <Text style={[styles.error, { color: theme.primary }]}>
-              空无一物
+              {t('empty.success.message')}
             </Text>
           </>
         )
     }
-  }, [status])
+  }, [mode, i18n.language, status])
   return <View style={styles.base} children={children} />
 }
 

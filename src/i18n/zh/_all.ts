@@ -17,5 +17,7 @@ export default {
 
   sharedAccount: require('./screens/sharedAccount').default,
   sharedToot: require('./screens/sharedToot').default,
-  sharedAnnouncements: require('./screens/sharedAnnouncements').default
+  sharedAnnouncements: require('./screens/sharedAnnouncements').default,
+
+  timeline: require('./components/timeline').default
 }

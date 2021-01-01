@@ -1,7 +1,4 @@
 import BottomSheet from '@components/BottomSheet'
-import openLink from '@components/openLink'
-import { ParseEmojis } from '@components/Parse'
-import relativeTime from '@components/relativeTime'
 import { Feather } from '@expo/vector-icons'
 import { getLocalUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -9,9 +6,13 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
 import HeaderDefaultActionsDomain from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsDomain'
 import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsStatus'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import HeaderSharedApplication from './HeaderShared/Application'
+import HeaderSharedVisibility from './HeaderShared/Visibility'
+import HeaderSharedCreated from './HeaderShared/Created'
+import HeaderSharedAccount from './HeaderShared/Account'
 
 export interface Props {
   queryKey?: QueryKey.Timeline
@@ -27,32 +28,12 @@ const TimelineHeaderDefault: React.FC<Props> = ({
   const domain = status.uri
     ? status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
     : ''
-  const name = status.account.display_name || status.account.username
-  const emojis = status.account.emojis
-  const account = status.account.acct
   const { theme } = useTheme()
 
   const localDomain = useSelector(getLocalUrl)
-  const [since, setSince] = useState(relativeTime(status.created_at))
   const [modalVisible, setBottomSheetVisible] = useState(false)
 
-  // causing full re-render
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSince(relativeTime(status.created_at))
-    }, 1000)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [since])
-
   const onPressAction = useCallback(() => setBottomSheetVisible(true), [])
-  const onPressApplication = useCallback(
-    async () =>
-      status.application!.website &&
-      (await openLink(status.application!.website)),
-    []
-  )
 
   const pressableAction = useMemo(
     () => (
@@ -67,42 +48,12 @@ const TimelineHeaderDefault: React.FC<Props> = ({
 
   return (
     <View style={styles.base}>
-      <View style={queryKey ? { flexBasis: '80%' } : { flexBasis: '100%' }}>
-        <View style={styles.nameAndAccount}>
-          <Text numberOfLines={1}>
-            <ParseEmojis content={name} emojis={emojis} fontBold />
-          </Text>
-          <Text
-            style={[styles.account, { color: theme.secondary }]}
-            numberOfLines={1}
-          >
-            @{account}
-          </Text>
-        </View>
+      <View style={styles.accountAndMeta}>
+        <HeaderSharedAccount account={status.account} />
         <View style={styles.meta}>
-          <View>
-            <Text style={[styles.created_at, { color: theme.secondary }]}>
-              {since}
-            </Text>
-          </View>
-          {status.visibility === 'private' && (
-            <Feather
-              name='lock'
-              size={StyleConstants.Font.Size.S}
-              color={theme.secondary}
-              style={styles.visibility}
-            />
-          )}
-          {status.application && status.application.name !== 'Web' && (
-            <View>
-              <Text
-                onPress={onPressApplication}
-                style={[styles.application, { color: theme.secondary }]}
-              >
-                发自于 - {status.application.name}
-              </Text>
-            </View>
-          )}
+          <HeaderSharedCreated created_at={status.created_at} />
+          <HeaderSharedVisibility visibility={status.visibility} />
+          <HeaderSharedApplication application={status.application} />
         </View>
       </View>
 
@@ -154,16 +105,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'baseline'
   },
-  nameAndMeta: {
-    flexBasis: '80%'
-  },
-  nameAndAccount: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  account: {
-    flex: 1,
-    marginLeft: StyleConstants.Spacing.XS
+  accountAndMeta: {
+    flex: 4
   },
   meta: {
     flexDirection: 'row',
@@ -174,15 +117,8 @@ const styles = StyleSheet.create({
   created_at: {
     ...StyleConstants.FontStyle.S
   },
-  visibility: {
-    marginLeft: StyleConstants.Spacing.S
-  },
-  application: {
-    ...StyleConstants.FontStyle.S,
-    marginLeft: StyleConstants.Spacing.S
-  },
   action: {
-    flexBasis: '20%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingBottom: StyleConstants.Spacing.S

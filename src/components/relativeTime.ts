@@ -1,6 +1,4 @@
-import { store } from '@root/store'
-
-const relativeTime = (date: string) => {
+const relativeTime = (date: string, language: string) => {
   const units = {
     year: 24 * 60 * 60 * 1000 * 365,
     month: (24 * 60 * 60 * 1000 * 365) / 12,
@@ -10,7 +8,7 @@ const relativeTime = (date: string) => {
     second: 1000
   }
 
-  const rtf = new Intl.RelativeTimeFormat(store.getState().settings.language, {
+  const rtf = new Intl.RelativeTimeFormat(language, {
     numeric: 'auto'
   })
 
