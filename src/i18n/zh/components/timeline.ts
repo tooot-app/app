@@ -57,16 +57,16 @@ export default {
           account: {
             heading: '关于用户',
             mute: {
-              function: '隐藏 {{acct}} 的嘟文',
-              button: '隐藏 {{acct}} 的嘟文'
+              function: '隐藏 @{{acct}} 的嘟文',
+              button: '隐藏 @{{acct}} 的嘟文'
             },
             block: {
-              function: '屏蔽 {{acct}}',
-              button: '屏蔽 {{acct}}'
+              function: '屏蔽 @{{acct}}',
+              button: '屏蔽 @{{acct}}'
             },
             report: {
-              function: '举报 {{acct}}',
-              button: '举报 {{acct}}'
+              function: '举报 @{{acct}}',
+              button: '举报 @{{acct}}'
             }
           },
           domain: {

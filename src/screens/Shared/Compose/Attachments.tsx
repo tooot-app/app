@@ -1,6 +1,6 @@
-import { Feather } from '@expo/vector-icons'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -149,7 +149,7 @@ const ComposeAttachments: React.FC = () => {
             <>
               <Button
                 type='icon'
-                content='x'
+                content='X'
                 spacing='M'
                 round
                 overlay
@@ -165,7 +165,7 @@ const ComposeAttachments: React.FC = () => {
               />
               <Button
                 type='icon'
-                content='edit'
+                content='Edit'
                 spacing='M'
                 round
                 overlay
@@ -198,7 +198,7 @@ const ComposeAttachments: React.FC = () => {
       >
         <Button
           type='icon'
-          content='upload-cloud'
+          content='UploadCloud'
           spacing='M'
           round
           overlay
@@ -224,8 +224,8 @@ const ComposeAttachments: React.FC = () => {
   return (
     <View style={styles.base}>
       <Pressable style={styles.sensitive} onPress={sensitiveOnPress}>
-        <Feather
-          name={composeState.attachments.sensitive ? 'check-circle' : 'circle'}
+        <Icon
+          name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
           size={StyleConstants.Font.Size.L}
           color={theme.primary}
         />

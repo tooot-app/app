@@ -39,7 +39,7 @@ const ScreenMeSettings: React.FC = () => {
         <MenuRow
           title={t('content.language.heading')}
           content={t(`content.language.options.${settingsLanguage}`)}
-          iconBack='chevron-right'
+          iconBack='ChevronRight'
           onPress={() =>
             ActionSheetIOS.showActionSheetWithOptions(
               {
@@ -70,7 +70,7 @@ const ScreenMeSettings: React.FC = () => {
         <MenuRow
           title={t('content.theme.heading')}
           content={t(`content.theme.options.${settingsTheme}`)}
-          iconBack='chevron-right'
+          iconBack='ChevronRight'
           onPress={() =>
             ActionSheetIOS.showActionSheetWithOptions(
               {
@@ -106,7 +106,7 @@ const ScreenMeSettings: React.FC = () => {
         <MenuRow
           title={t('content.browser.heading')}
           content={t(`content.browser.options.${settingsBrowser}`)}
-          iconBack='chevron-right'
+          iconBack='ChevronRight'
           onPress={() =>
             ActionSheetIOS.showActionSheetWithOptions(
               {
@@ -137,7 +137,7 @@ const ScreenMeSettings: React.FC = () => {
         <MenuRow
           title={t('content.cache.heading')}
           content={cacheSize ? prettyBytes(cacheSize) : '暂无缓存'}
-          iconBack='chevron-right'
+          iconBack='ChevronRight'
           onPress={async () => {
             await CacheManager.clearCache()
             haptics('Success')
@@ -154,7 +154,7 @@ const ScreenMeSettings: React.FC = () => {
         />
         <MenuRow
           title={t('content.copyrights.heading')}
-          iconBack='chevron-right'
+          iconBack='ChevronRight'
         />
         <Text style={[styles.version, { color: theme.secondary }]}>
           {t('content.version', { version: '1.0.0' })}

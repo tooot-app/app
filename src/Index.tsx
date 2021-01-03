@@ -1,5 +1,5 @@
 import client from '@api/client'
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   NavigationContainer,
@@ -37,7 +37,7 @@ export type RootStackParamList = {
 }
 
 export interface Props {
-  localCorrupt: boolean
+  localCorrupt?: string
 }
 
 const Index: React.FC<Props> = ({ localCorrupt }) => {
@@ -71,7 +71,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       ? toast({
           type: 'error',
           message: '登录已过期',
-          description: '请重新登录',
+          description: localCorrupt.length ? localCorrupt : undefined,
           autoHide: false
         })
       : undefined
@@ -171,27 +171,27 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         let updateColor: string = color
         switch (route.name) {
           case 'Screen-Local':
-            name = 'home'
+            name = 'Home'
             break
           case 'Screen-Public':
-            name = 'globe'
+            name = 'Globe'
             !focused && (updateColor = theme.secondary)
             break
           case 'Screen-Post':
-            name = 'plus'
+            name = 'Plus'
             break
           case 'Screen-Notifications':
-            name = 'bell'
+            name = 'Bell'
             break
           case 'Screen-Me':
-            name = focused ? 'meh' : 'smile'
+            name = focused ? 'Meh' : 'Smile'
             !focused && (updateColor = theme.secondary)
             break
           default:
-            name = 'alert-octagon'
+            name = 'AlertOctagon'
             break
         }
-        return <Feather name={name} size={size} color={updateColor} />
+        return <Icon name={name} size={size} color={updateColor} />
       }
     }),
     []

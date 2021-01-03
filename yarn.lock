@@ -8119,6 +8119,11 @@ react-native-expo-image-cache@^4.1.0:
     crypto-js "^3.1.9-1"
     lodash "^4.17.4"
 
+react-native-feather@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-feather/-/react-native-feather-1.0.2.tgz#9b02a32f313088084da5ebb0130659fa582edf43"
+  integrity sha512-SxMCMyGQeDtZtl2mhssoFTsfFKh/eH6S11+720BPGYYXz1iaYwQ4G/xqFxWOvQOQK2qtOTvkFOBlabbKwBMuhQ==
+
 react-native-gesture-handler@~1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.8.0.tgz#18f61f51da50320f938957b0ee79bc58f47449dc"

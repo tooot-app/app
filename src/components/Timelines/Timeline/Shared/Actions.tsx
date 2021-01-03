@@ -1,8 +1,8 @@
 import client from '@api/client'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
-import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -171,8 +171,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const childrenReply = useMemo(
     () => (
       <>
-        <Feather
-          name='message-circle'
+        <Icon
+          name='MessageCircle'
           color={iconColor}
           size={StyleConstants.Font.Size.M + 2}
         />
@@ -193,8 +193,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const childrenReblog = useMemo(
     () => (
-      <Feather
-        name='repeat'
+      <Icon
+        name='Repeat'
         color={
           status.visibility === 'private' || status.visibility === 'direct'
             ? theme.disabled
@@ -207,8 +207,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const childrenFavourite = useMemo(
     () => (
-      <Feather
-        name='heart'
+      <Icon
+        name='Heart'
         color={iconColorAction(status.favourited)}
         size={StyleConstants.Font.Size.M + 2}
       />
@@ -217,8 +217,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const childrenBookmark = useMemo(
     () => (
-      <Feather
-        name='bookmark'
+      <Icon
+        name='Bookmark'
         color={iconColorAction(status.bookmarked)}
         size={StyleConstants.Font.Size.M + 2}
       />
@@ -227,8 +227,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const childrenShare = useMemo(
     () => (
-      <Feather
-        name='share-2'
+      <Icon
+        name='Share2'
         color={iconColor}
         size={StyleConstants.Font.Size.M + 2}
       />

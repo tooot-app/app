@@ -27,32 +27,32 @@ const Collections: React.FC = () => {
   return (
     <MenuContainer>
       <MenuRow
-        iconFront='mail'
-        iconBack='chevron-right'
+        iconFront='Mail'
+        iconBack='ChevronRight'
         title={t('content.collections.conversations')}
         onPress={() => navigation.navigate('Screen-Me-Conversations')}
       />
       <MenuRow
-        iconFront='bookmark'
-        iconBack='chevron-right'
+        iconFront='Bookmark'
+        iconBack='ChevronRight'
         title={t('content.collections.bookmarks')}
         onPress={() => navigation.navigate('Screen-Me-Bookmarks')}
       />
       <MenuRow
-        iconFront='star'
-        iconBack='chevron-right'
+        iconFront='Star'
+        iconBack='ChevronRight'
         title={t('content.collections.favourites')}
         onPress={() => navigation.navigate('Screen-Me-Favourites')}
       />
       <MenuRow
-        iconFront='list'
-        iconBack='chevron-right'
+        iconFront='List'
+        iconBack='ChevronRight'
         title={t('content.collections.lists')}
         onPress={() => navigation.navigate('Screen-Me-Lists')}
       />
       <MenuRow
-        iconFront='clipboard'
-        iconBack='chevron-right'
+        iconFront='Clipboard'
+        iconBack='ChevronRight'
         title={t('content.collections.announcements')}
         content={announcementContent}
         loading={isFetching}

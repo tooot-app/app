@@ -1,4 +1,7 @@
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
+import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useMemo } from 'react'
 import {
   Pressable,
@@ -9,9 +12,6 @@ import {
   ViewStyle
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 
 export interface Props {
   style?: StyleProp<ViewStyle>
@@ -23,6 +23,7 @@ export interface Props {
   destructive?: boolean
   disabled?: boolean
 
+  strokeWidth?: number
   size?: 'S' | 'M' | 'L'
   spacing?: 'XS' | 'S' | 'M' | 'L'
   round?: boolean
@@ -38,6 +39,7 @@ const Button: React.FC<Props> = ({
   loading = false,
   destructive = false,
   disabled = false,
+  strokeWidth,
   size = 'M',
   spacing = 'S',
   round = false,
@@ -78,12 +80,12 @@ const Button: React.FC<Props> = ({
       case 'icon':
         return (
           <>
-            <Feather
-              name={content as any}
-              size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
+            <Icon
+              name={content}
               color={colorContent}
+              strokeWidth={strokeWidth}
               style={{ opacity: loading ? 0 : 1 }}
-              testID='icon'
+              size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
             />
             {loading && loadingSpinkit}
           </>

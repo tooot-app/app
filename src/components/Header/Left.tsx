@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useMemo } from 'react'
+import { Pressable, StyleSheet, Text } from 'react-native'
 
 export interface Props {
   type?: 'icon' | 'text'
@@ -18,9 +18,9 @@ const HeaderLeft: React.FC<Props> = ({ type = 'icon', content, onPress }) => {
     switch (type) {
       case 'icon':
         return (
-          <Feather
-            name={content || ('chevron-left' as any)}
+          <Icon
             color={theme.primary}
+            name={content || 'ChevronLeft'}
             size={StyleConstants.Spacing.M * 1.25}
           />
         )

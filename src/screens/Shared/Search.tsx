@@ -1,6 +1,6 @@
 import { HeaderRight } from '@components/Header'
+import Icon from '@components/Icon'
 import { ParseEmojis, ParseHTML } from '@components/Parse'
-import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
@@ -262,8 +262,8 @@ const ScreenSharedSearch: React.FC = () => {
           <View
             style={[styles.searchField, { borderBottomColor: theme.secondary }]}
           >
-            <Feather
-              name='search'
+            <Icon
+              name='Search'
               color={theme.primary}
               size={StyleConstants.Font.Size.M}
               style={styles.searchIcon}

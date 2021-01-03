@@ -157,8 +157,8 @@ const ScreenSharedAnnouncements: React.FC = ({
                 style={[styles.reaction, { borderColor: theme.primary }]}
                 onPress={() => invisibleTextInputRef.current?.focus()}
               >
-                <Feather
-                  name='plus'
+                <Icon
+                  name='Plus'
                   size={StyleConstants.Font.Size.M}
                   color={theme.primary}
                 />

@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -12,8 +12,8 @@ const HeaderSharedVisibility: React.FC<Props> = ({ visibility }) => {
   const { theme } = useTheme()
 
   return visibility && visibility === 'private' ? (
-    <Feather
-      name='lock'
+    <Icon
+      name='Lock'
       size={StyleConstants.Font.Size.S}
       color={theme.secondary}
       style={styles.visibility}

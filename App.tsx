@@ -57,7 +57,7 @@ enableScreens()
 const App: React.FC = () => {
   startingLog('log', 'rendering App')
   const [appLoaded, setAppLoaded] = useState(false)
-  const [localCorrupt, setLocalCorrupt] = useState(false)
+  const [localCorrupt, setLocalCorrupt] = useState<string>()
 
   useEffect(() => {
     const onlineState = onlineManager.setEventListener(setOnline => {
@@ -118,16 +118,20 @@ const App: React.FC = () => {
               startingLog('log', 'local credential check passed')
               if (res.body.id !== store.getState().instances.local.account.id) {
                 store.dispatch(resetLocal())
-                setLocalCorrupt(true)
+                setLocalCorrupt('')
               }
               setAppLoaded(true)
             })
             .catch(error => {
               startingLog('error', 'local credential check failed')
-              if (error.status && typeof error.status === 'number') {
+              if (
+                error.status &&
+                typeof error.status === 'number' &&
+                error.status === 401
+              ) {
                 store.dispatch(resetLocal())
-                setLocalCorrupt(true)
               }
+              setLocalCorrupt(error.data.error)
               setAppLoaded(true)
             })
         } else {

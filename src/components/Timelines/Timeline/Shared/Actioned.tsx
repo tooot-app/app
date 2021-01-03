@@ -1,5 +1,5 @@
+import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
-import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -37,8 +37,8 @@ const TimelineActioned: React.FC<Props> = ({
       case 'pinned':
         return (
           <>
-            <Feather
-              name='anchor'
+            <Icon
+              name='Anchor'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -50,8 +50,8 @@ const TimelineActioned: React.FC<Props> = ({
       case 'favourite':
         return (
           <>
-            <Feather
-              name='heart'
+            <Icon
+              name='Heart'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -65,8 +65,8 @@ const TimelineActioned: React.FC<Props> = ({
       case 'follow':
         return (
           <>
-            <Feather
-              name='user-plus'
+            <Icon
+              name='UserPlus'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -80,8 +80,8 @@ const TimelineActioned: React.FC<Props> = ({
       case 'poll':
         return (
           <>
-            <Feather
-              name='bar-chart-2'
+            <Icon
+              name='BarChart2'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -93,8 +93,8 @@ const TimelineActioned: React.FC<Props> = ({
       case 'reblog':
         return (
           <>
-            <Feather
-              name='repeat'
+            <Icon
+              name='Repeat'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -118,12 +118,13 @@ const TimelineActioned: React.FC<Props> = ({
 const styles = StyleSheet.create({
   actioned: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: StyleConstants.Spacing.S,
     paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
     paddingRight: StyleConstants.Spacing.Global.PagePadding
   },
   icon: {
-    paddingRight: StyleConstants.Spacing.S
+    marginRight: StyleConstants.Spacing.S
   }
 })
 

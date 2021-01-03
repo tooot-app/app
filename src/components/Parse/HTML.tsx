@@ -1,6 +1,6 @@
+import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
-import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -96,10 +96,11 @@ const renderNode = ({
           }
         >
           {!shouldBeTag ? (
-            <Feather
-              name='external-link'
-              size={StyleConstants.Font.Size[size]}
+            <Icon
+              inline
               color={theme.blue}
+              name='ExternalLink'
+              size={StyleConstants.Font.Size[size]}
             />
           ) : null}
           {content || (showFullLink ? href : domain[1])}
@@ -166,37 +167,45 @@ const ParseHTML: React.FC<Props> = ({
 
       const [heightOriginal, setHeightOriginal] = useState<number>()
       const [heightTruncated, setHeightTruncated] = useState<number>()
-      const [allowExpand, setAllowExpand] = useState(
-        numberOfLines === 0 ? true : undefined
-      )
+      const [allowExpand, setAllowExpand] = useState(false)
       const [showAllText, setShowAllText] = useState(false)
 
       const calNumberOfLines = useMemo(() => {
-        if (heightOriginal) {
-          if (!heightTruncated) {
-            return numberOfLines
-          } else {
-            if (allowExpand && !showAllText) {
+        if (numberOfLines === 0) {
+          // For spoilers without calculation
+          return showAllText ? undefined : 1
+        } else {
+          if (heightOriginal) {
+            if (!heightTruncated) {
               return numberOfLines
             } else {
-              return undefined
+              if (allowExpand && !showAllText) {
+                return numberOfLines
+              } else {
+                return undefined
+              }
             }
+          } else {
+            return undefined
           }
-        } else {
-          return undefined
         }
       }, [heightOriginal, heightTruncated, allowExpand, showAllText])
 
       const onLayout = useCallback(
         ({ nativeEvent }) => {
-          if (!heightOriginal) {
-            setHeightOriginal(nativeEvent.layout.height)
+          if (numberOfLines === 0) {
+            // For spoilers without calculation
+            setAllowExpand(true)
           } else {
-            if (!heightTruncated) {
-              setHeightTruncated(nativeEvent.layout.height)
+            if (!heightOriginal) {
+              setHeightOriginal(nativeEvent.layout.height)
             } else {
-              if (heightOriginal > heightTruncated) {
-                setAllowExpand(true)
+              if (!heightTruncated) {
+                setHeightTruncated(nativeEvent.layout.height)
+              } else {
+                if (heightOriginal > heightTruncated) {
+                  setAllowExpand(true)
+                }
               }
             }
           }
@@ -214,7 +223,7 @@ const ParseHTML: React.FC<Props> = ({
             }}
             children={children}
             numberOfLines={calNumberOfLines}
-            onLayout={allowExpand === undefined ? onLayout : undefined}
+            onLayout={onLayout}
           />
           {allowExpand ? (
             <Pressable

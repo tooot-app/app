@@ -1,5 +1,5 @@
+import Icon from '@components/Icon'
 import { ParseHTML } from '@components/Parse'
-import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -27,8 +27,8 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
               showFullLink
             />
             {field.verified_at ? (
-              <Feather
-                name='check-circle'
+              <Icon
+                name='CheckCircle'
                 size={StyleConstants.Font.Size.M}
                 color={theme.primary}
                 style={styles.fieldCheck}

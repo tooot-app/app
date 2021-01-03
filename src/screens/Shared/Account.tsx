@@ -1,18 +1,20 @@
+import BottomSheet from '@components/BottomSheet'
+import { HeaderRight } from '@components/Header'
+import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
+import { accountFetch } from '@utils/fetches/accountFetch'
+import { getLocalAccountId } from '@utils/slices/instancesSlice'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { Animated, ScrollView } from 'react-native'
-
 import { useQuery } from 'react-query'
-import { accountFetch } from '@utils/fetches/accountFetch'
-import AccountToots from '@screens/Shared/Account/Toots'
-import AccountHeader from '@screens/Shared/Account/Header'
-import AccountInformation from '@screens/Shared/Account/Information'
+import { useSelector } from 'react-redux'
+import AccountHeader from './Account/Header'
+import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
 import AccountSegmentedControl from './Account/SegmentedControl'
-import { HeaderRight } from '@root/components/Header'
-import BottomSheet from '@root/components/BottomSheet'
-import { useSelector } from 'react-redux'
-import { getLocalAccountId } from '@root/utils/slices/instancesSlice'
-import HeaderDefaultActionsAccount from '@root/components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
+import AccountToots from './Account/Toots'
+import AccountContext from './Account/utils/createContext'
+import accountInitialState from './Account/utils/initialState'
+import accountReducer from './Account/utils/reducer'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
@@ -25,48 +27,6 @@ export interface Props {
   navigation: any
 }
 
-export type AccountState = {
-  headerRatio: number
-  informationLayout?: {
-    y: number
-    height: number
-  }
-  segmentedIndex: number
-}
-export type AccountAction =
-  | {
-      type: 'headerRatio'
-      payload: AccountState['headerRatio']
-    }
-  | {
-      type: 'informationLayout'
-      payload: AccountState['informationLayout']
-    }
-  | {
-      type: 'segmentedIndex'
-      payload: AccountState['segmentedIndex']
-    }
-const AccountInitialState: AccountState = {
-  headerRatio: 0.4,
-  informationLayout: { height: 0, y: 100 },
-  segmentedIndex: 0
-}
-const accountReducer = (
-  state: AccountState,
-  action: AccountAction
-): AccountState => {
-  switch (action.type) {
-    case 'headerRatio':
-      return { ...state, headerRatio: action.payload }
-    case 'informationLayout':
-      return { ...state, informationLayout: action.payload }
-    case 'segmentedIndex':
-      return { ...state, segmentedIndex: action.payload }
-    default:
-      throw new Error('Unexpected action')
-  }
-}
-
 const ScreenSharedAccount: React.FC<Props> = ({
   route: {
     params: { account }
@@ -76,10 +36,10 @@ const ScreenSharedAccount: React.FC<Props> = ({
   const localAccountId = useSelector(getLocalAccountId)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 
-  const scrollY = useRef(new Animated.Value(0)).current
+  const scrollY = useRef(new Animated.Value(0))
   const [accountState, accountDispatch] = useReducer(
     accountReducer,
-    AccountInitialState
+    accountInitialState
   )
 
   const [modalVisible, setBottomSheetVisible] = useState(false)
@@ -88,7 +48,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
       navigation.setOptions({
         headerRight: () => (
           <HeaderRight
-            content='more-horizontal'
+            content='MoreHorizontal'
             onPress={() => setBottomSheetVisible(true)}
           />
         )
@@ -97,39 +57,23 @@ const ScreenSharedAccount: React.FC<Props> = ({
   }, [])
 
   return (
-    <>
-      <AccountNav
-        accountState={accountState}
-        scrollY={scrollY}
-        account={data}
-      />
+    <AccountContext.Provider value={{ accountState, accountDispatch }}>
+      <AccountNav scrollY={scrollY} account={data} />
       {accountState.informationLayout?.height &&
       accountState.informationLayout.y ? (
-        <AccountSegmentedControl
-          accountState={accountState}
-          accountDispatch={accountDispatch}
-          scrollY={scrollY}
-        />
+        <AccountSegmentedControl scrollY={scrollY} />
       ) : null}
       <ScrollView
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          [{ nativeEvent: { contentOffset: { y: scrollY.current } } }],
           { useNativeDriver: false }
         )}
       >
-        <AccountHeader
-          accountState={accountState}
-          accountDispatch={accountDispatch}
-          account={data}
-        />
-        <AccountInformation accountDispatch={accountDispatch} account={data} />
-        <AccountToots
-          accountState={accountState}
-          accountDispatch={accountDispatch}
-          id={account.id}
-        />
+        <AccountHeader account={data} />
+        <AccountInformation account={data} />
+        <AccountToots id={account.id} />
       </ScrollView>
 
       <BottomSheet
@@ -144,7 +88,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
           />
         )}
       </BottomSheet>
-    </>
+    </AccountContext.Provider>
   )
 }
 

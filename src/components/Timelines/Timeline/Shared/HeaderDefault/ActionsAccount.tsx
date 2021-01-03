@@ -84,7 +84,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({ type: 'mute' })
         }}
-        iconFront='eye-off'
+        iconFront='EyeOff'
         title={t('timeline:shared.header.default.actions.account.mute.button', {
           acct: account.acct
         })}
@@ -94,7 +94,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({ type: 'block' })
         }}
-        iconFront='x-circle'
+        iconFront='XCircle'
         title={t(
           'timeline:shared.header.default.actions.account.block.button',
           {
@@ -107,7 +107,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({ type: 'reports' })
         }}
-        iconFront='flag'
+        iconFront='Flag'
         title={t(
           'timeline:shared.header.default.actions.account.report.button',
           {

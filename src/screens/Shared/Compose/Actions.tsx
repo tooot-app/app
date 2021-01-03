@@ -1,9 +1,9 @@
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { ActionSheetIOS, StyleSheet, View } from 'react-native'
+import { ActionSheetIOS, Pressable, StyleSheet, View } from 'react-native'
 import addAttachment from './/addAttachment'
 import ComposeContext from './utils/createContext'
 
@@ -53,13 +53,13 @@ const ComposeActions: React.FC = () => {
   const visibilityIcon = useMemo(() => {
     switch (composeState.visibility) {
       case 'public':
-        return 'globe'
+        return 'Globe'
       case 'unlisted':
-        return 'unlock'
+        return 'Unlock'
       case 'private':
-        return 'lock'
+        return 'Lock'
       case 'direct':
-        return 'mail'
+        return 'Mail'
     }
   }, [composeState.visibility])
   const visibilityOnPress = useCallback(() => {
@@ -134,35 +134,41 @@ const ComposeActions: React.FC = () => {
         { backgroundColor: theme.background, borderTopColor: theme.border }
       ]}
     >
-      <Feather
-        name='aperture'
-        size={24}
-        color={attachmentColor}
+      <Pressable
         onPress={attachmentOnPress}
+        children={<Icon name='Aperture' size={24} color={attachmentColor} />}
       />
-      <Feather
-        name='bar-chart-2'
-        size={24}
-        color={pollColor}
+      <Pressable
         onPress={pollOnPress}
+        children={<Icon name='BarChart2' size={24} color={pollColor} />}
       />
-      <Feather
-        name={visibilityIcon}
-        size={24}
-        color={composeState.visibilityLock ? theme.disabled : theme.secondary}
+      <Pressable
         onPress={visibilityOnPress}
+        children={
+          <Icon
+            name={visibilityIcon}
+            size={24}
+            color={
+              composeState.visibilityLock ? theme.disabled : theme.secondary
+            }
+          />
+        }
       />
-      <Feather
-        name='alert-triangle'
-        size={24}
-        color={composeState.spoiler.active ? theme.primary : theme.secondary}
+      <Pressable
         onPress={spoilerOnPress}
+        children={
+          <Icon
+            name='AlertTriangle'
+            size={24}
+            color={
+              composeState.spoiler.active ? theme.primary : theme.secondary
+            }
+          />
+        }
       />
-      <Feather
-        name='smile'
-        size={24}
-        color={emojiColor}
+      <Pressable
         onPress={emojiOnPress}
+        children={<Icon name='Smile' size={24} color={emojiColor} />}
       />
     </View>
   )

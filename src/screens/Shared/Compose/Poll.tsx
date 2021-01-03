@@ -1,6 +1,6 @@
 import Button from '@components/Button'
+import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
-import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
@@ -47,8 +47,8 @@ const ComposePoll: React.FC = () => {
           })
           return (
             <View key={i} style={styles.option}>
-              <Feather
-                name={multiple ? 'square' : 'circle'}
+              <Icon
+                name={multiple ? 'Square' : 'Circle'}
                 size={StyleConstants.Font.Size.L}
                 color={theme.secondary}
               />
@@ -88,7 +88,7 @@ const ComposePoll: React.FC = () => {
                 })
             }}
             type='icon'
-            content='minus'
+            content='Minus'
             round
             disabled={!(total > 2)}
           />
@@ -102,7 +102,7 @@ const ComposePoll: React.FC = () => {
               })
           }}
           type='icon'
-          content='plus'
+          content='Plus'
           round
           disabled={!(total < 4)}
         />
@@ -124,7 +124,7 @@ const ComposePoll: React.FC = () => {
               })
           )
         }
-        iconBack='chevron-right'
+        iconBack='ChevronRight'
       />
       <MenuRow
         title='有效期'
@@ -143,7 +143,7 @@ const ComposePoll: React.FC = () => {
               })
           )
         }
-        iconBack='chevron-right'
+        iconBack='ChevronRight'
       />
     </View>
   )

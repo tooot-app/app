@@ -64,7 +64,7 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
         ) : (
           <Button
             type='icon'
-            content='play-circle'
+            content='PlayCircle'
             size='L'
             round
             overlay

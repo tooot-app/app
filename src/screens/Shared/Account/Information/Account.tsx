@@ -1,6 +1,6 @@
-import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import Icon from '@components/Icon'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { forwardRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
@@ -38,13 +38,19 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
             @{account?.acct}
           </Text>
           {account?.locked ? (
-            <Feather name='lock' style={styles.type} color={theme.secondary} />
-          ) : null}
-          {account?.bot ? (
-            <Feather
-              name='hard-drive'
+            <Icon
+              name='Lock'
               style={styles.type}
               color={theme.secondary}
+              size={StyleConstants.Font.Size.M}
+            />
+          ) : null}
+          {account?.bot ? (
+            <Icon
+              name='HardDrive'
+              style={styles.type}
+              color={theme.secondary}
+              size={StyleConstants.Font.Size.M}
             />
           ) : null}
         </View>

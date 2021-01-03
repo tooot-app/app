@@ -194,10 +194,16 @@ export const timelineFetch = async ({
       res = await client({
         method: 'get',
         instance: 'local',
-        url: `statuses/${toot!.id}/context`
+        url: `statuses/${toot}`
+      })
+      const theToot = res.body
+      res = await client({
+        method: 'get',
+        instance: 'local',
+        url: `statuses/${toot}/context`
       })
       return Promise.resolve({
-        toots: [...res.body.ancestors, toot, ...res.body.descendants],
+        toots: [...res.body.ancestors, theToot, ...res.body.descendants],
         pointer: res.body.ancestors.length
       })
     default:

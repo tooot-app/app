@@ -1,5 +1,5 @@
 import Button from '@components/Button'
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
@@ -26,8 +26,8 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
       case 'error':
         return (
           <>
-            <Feather
-              name='frown'
+            <Icon
+              name='Frown'
               size={StyleConstants.Font.Size.L}
               color={theme.primary}
             />
@@ -44,8 +44,8 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
       case 'success':
         return (
           <>
-            <Feather
-              name='smartphone'
+            <Icon
+              name='Smartphone'
               size={StyleConstants.Font.Size.L}
               color={theme.primary}
             />

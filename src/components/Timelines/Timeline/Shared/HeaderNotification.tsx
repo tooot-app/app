@@ -1,6 +1,6 @@
 import client from '@api/client'
-import { Feather } from '@expo/vector-icons'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { toast } from '@components/toast'
 import { relationshipFetch } from '@utils/fetches/relationshipFetch'
 import { StyleConstants } from '@utils/styles/constants'
@@ -9,10 +9,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import { useQuery } from 'react-query'
-import HeaderSharedApplication from './HeaderShared/Application'
-import HeaderSharedVisibility from './HeaderShared/Visibility'
-import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedAccount from './HeaderShared/Account'
+import HeaderSharedApplication from './HeaderShared/Application'
+import HeaderSharedCreated from './HeaderShared/Created'
+import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -73,19 +73,19 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
       case 'success':
         return (
           <Pressable onPress={relationshipOnPress}>
-            <Feather
+            <Icon
               name={
                 updateData
                   ? updateData.following
-                    ? 'user-check'
+                    ? 'UserCheck'
                     : updateData.requested
-                    ? 'loader'
-                    : 'user-plus'
+                    ? 'Loader'
+                    : 'UserPlus'
                   : data!.following
-                  ? 'user-check'
+                  ? 'UserCheck'
                   : data!.requested
-                  ? 'loader'
-                  : 'user-plus'
+                  ? 'Loader'
+                  : 'UserPlus'
               }
               color={
                 updateData

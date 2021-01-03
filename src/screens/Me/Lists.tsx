@@ -15,7 +15,7 @@ const ScreenMeLists: React.FC = () => {
       return data?.map((d: Mastodon.List, i: number) => (
         <MenuRow
           key={i}
-          iconFront='list'
+          iconFront='List'
           title={d.title}
           onPress={() =>
             navigation.navigate('Screen-Me-Lists-List', {

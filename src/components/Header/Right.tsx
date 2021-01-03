@@ -1,13 +1,13 @@
+import Icon from '@components/Icon'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   type?: 'icon' | 'text'
-  content?: string
+  content: string
 
   loading?: boolean
   disabled?: boolean
@@ -41,11 +41,11 @@ const HeaderRight: React.FC<Props> = ({
       case 'icon':
         return (
           <>
-            <Feather
-              name={content as any}
-              color={disabled ? theme.secondary : theme.primary}
-              size={StyleConstants.Spacing.M * 1.25}
+            <Icon
+              name={content}
               style={{ opacity: loading ? 0 : 1 }}
+              size={StyleConstants.Spacing.M * 1.25}
+              color={disabled ? theme.secondary : theme.primary}
             />
             {loading && loadingSpinkit}
           </>

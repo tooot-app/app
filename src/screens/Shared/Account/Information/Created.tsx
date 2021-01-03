@@ -1,6 +1,6 @@
-import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import Icon from '@components/Icon'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,8 +29,8 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
         shimmerColors={theme.shimmer}
       >
         <View style={styles.created}>
-          <Feather
-            name='calendar'
+          <Icon
+            name='Calendar'
             size={StyleConstants.Font.Size.S}
             color={theme.secondary}
             style={styles.icon}

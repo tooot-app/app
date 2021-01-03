@@ -1,5 +1,5 @@
 import BottomSheet from '@components/BottomSheet'
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { getLocalUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -9,10 +9,10 @@ import HeaderDefaultActionsStatus from '@components/Timelines/Timeline/Shared/He
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import HeaderSharedApplication from './HeaderShared/Application'
-import HeaderSharedVisibility from './HeaderShared/Visibility'
-import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedAccount from './HeaderShared/Account'
+import HeaderSharedApplication from './HeaderShared/Application'
+import HeaderSharedCreated from './HeaderShared/Created'
+import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
   queryKey?: QueryKey.Timeline
@@ -37,8 +37,8 @@ const TimelineHeaderDefault: React.FC<Props> = ({
 
   const pressableAction = useMemo(
     () => (
-      <Feather
-        name='more-horizontal'
+      <Icon
+        name='MoreHorizontal'
         color={theme.secondary}
         size={StyleConstants.Font.Size.M + 2}
       />
@@ -102,8 +102,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'baseline'
+    flexDirection: 'row'
   },
   accountAndMeta: {
     flex: 4

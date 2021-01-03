@@ -54,7 +54,7 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate()
         }}
-        iconFront='cloud-off'
+        iconFront='CloudOff'
         title={t(`timeline:shared.header.default.actions.domain.block.button`, {
           domain
         })}

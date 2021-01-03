@@ -86,7 +86,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
               </View>
             ),
             headerRight: () => (
-              <HeaderRight content='search' onPress={onPressSearch} />
+              <HeaderRight content='Search' onPress={onPressSearch} />
             )
           })
         }}

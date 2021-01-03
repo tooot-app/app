@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
@@ -18,7 +18,7 @@ export interface Props {
   switchDisabled?: boolean
   switchOnValueChange?: () => void
 
-  iconBack?: 'chevron-right' | 'check'
+  iconBack?: 'ChevronRight' | 'Check'
   iconBackColor?: ColorDefinitions
 
   loading?: boolean
@@ -63,7 +63,7 @@ const MenuRow: React.FC<Props> = ({
       <View style={styles.core}>
         <View style={styles.front}>
           {iconFront && (
-            <Feather
+            <Icon
               name={iconFront}
               size={StyleConstants.Font.Size.M + 2}
               color={theme[iconFrontColor]}
@@ -116,7 +116,7 @@ const MenuRow: React.FC<Props> = ({
             ) : null}
             {iconBack ? (
               <>
-                <Feather
+                <Icon
                   name={iconBack}
                   size={StyleConstants.Font.Size.M + 2}
                   color={theme[iconBackColor]}

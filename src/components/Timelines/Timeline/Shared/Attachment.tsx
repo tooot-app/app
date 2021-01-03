@@ -117,7 +117,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
         ) : (
           <Button
             type='icon'
-            content='eye-off'
+            content='EyeOff'
             round
             overlay
             onPress={onPressShow}

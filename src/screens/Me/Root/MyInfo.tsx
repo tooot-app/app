@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
-import { useQuery } from 'react-query'
-
-import { accountFetch } from '@utils/fetches/accountFetch'
 import AccountHeader from '@screens/Shared/Account/Header'
 import AccountInformation from '@screens/Shared/Account/Information'
-import { useSelector } from 'react-redux'
+import { accountFetch } from '@utils/fetches/accountFetch'
 import { getLocalAccountId } from '@utils/slices/instancesSlice'
-import { AccountState } from '@root/screens/Shared/Account'
+import React, { useEffect } from 'react'
+import { useQuery } from 'react-query'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   setData: React.Dispatch<React.SetStateAction<Mastodon.Account | undefined>>
@@ -23,11 +21,7 @@ const MyInfo: React.FC<Props> = ({ setData }) => {
 
   return (
     <>
-      <AccountHeader
-        accountState={{ headerRatio: 0.4 } as AccountState}
-        account={data}
-        limitHeight
-      />
+      <AccountHeader account={data} limitHeight />
       <AccountInformation account={data} disableActions />
     </>
   )

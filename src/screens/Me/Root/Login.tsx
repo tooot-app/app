@@ -1,8 +1,8 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { ParseHTML } from '@components/Parse'
-import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { applicationFetch } from '@utils/fetches/applicationFetch'
 import { instanceFetch } from '@utils/fetches/instanceFetch'
@@ -282,8 +282,8 @@ const Login: React.FC = () => {
             </View>
           </View>
           <Text style={[styles.disclaimer, { color: theme.secondary }]}>
-            <Feather
-              name='lock'
+            <Icon
+              name='Lock'
               size={StyleConstants.Font.Size.M}
               color={theme.secondary}
             />{' '}

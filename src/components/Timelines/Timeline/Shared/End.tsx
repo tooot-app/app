@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -22,8 +22,9 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
           <Trans
             i18nKey='timeline:shared.end.message' // optional -> fallbacks to defaults if not provided
             components={[
-              <Feather
-                name='coffee'
+              <Icon
+                inline
+                name='Coffee'
                 size={StyleConstants.Font.Size.S}
                 color={theme.secondary}
               />
@@ -43,8 +44,7 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.M
   },
   text: {
-    ...StyleConstants.FontStyle.S,
-    marginLeft: StyleConstants.Spacing.S
+    ...StyleConstants.FontStyle.S
   }
 })
 

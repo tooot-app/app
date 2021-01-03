@@ -1,21 +1,15 @@
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { Dispatch, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Dimensions, Image, StyleSheet, View } from 'react-native'
-import { AccountAction, AccountState } from '../Account'
+import AccountContext from './utils/createContext'
 
 export interface Props {
-  accountState: AccountState
-  accountDispatch?: Dispatch<AccountAction>
   account?: Mastodon.Account
   limitHeight?: boolean
 }
 
-const AccountHeader: React.FC<Props> = ({
-  accountState,
-  accountDispatch,
-  account,
-  limitHeight = false
-}) => {
+const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
+  const { accountState, accountDispatch } = useContext(AccountContext)
   const { theme } = useTheme()
   const [ratio, setRatio] = useState(accountState.headerRatio)
 
@@ -70,4 +64,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AccountHeader
+export default React.memo(
+  AccountHeader,
+  (_, next) => next.account === undefined
+)

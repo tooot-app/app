@@ -1,18 +1,18 @@
 import { ParseEmojis } from '@components/Parse'
-import { AccountState } from '@screens/Shared/Account'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { MutableRefObject, useContext } from 'react'
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import AccountContext from './utils/createContext'
 
 export interface Props {
-  accountState: AccountState
-  scrollY: Animated.Value
+  scrollY: MutableRefObject<Animated.Value>
   account: Mastodon.Account | undefined
 }
 
-const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
+const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
+  const { accountState } = useContext(AccountContext)
   const { theme } = useTheme()
   const headerHeight = useSafeAreaInsets().top + 44
 
@@ -29,7 +29,7 @@ const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
         styles.base,
         {
           backgroundColor: theme.background,
-          opacity: scrollY.interpolate({
+          opacity: scrollY.current.interpolate({
             inputRange: [0, 200],
             outputRange: [0, 1],
             extrapolate: 'clamp'
@@ -51,7 +51,7 @@ const AccountNav: React.FC<Props> = ({ accountState, scrollY, account }) => {
           style={[
             styles.display_name,
             {
-              marginTop: scrollY.interpolate({
+              marginTop: scrollY.current.interpolate({
                 inputRange: [nameY, nameY + 20],
                 outputRange: [50, 0],
                 extrapolate: 'clamp'
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AccountNav
+export default React.memo(AccountNav, (_, next) => next.account === undefined)

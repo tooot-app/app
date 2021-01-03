@@ -12,11 +12,11 @@
     "baseUrl": "./",
     "paths": {
       // "@assets/*": ["./assets/*"],
-      "@root/*": ["./src/*"],
       "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
       "@screens/*": ["./src/screens/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@root/*": ["./src/*"],
     }
   },
   "exclude": ["node_modules"]

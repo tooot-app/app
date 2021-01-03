@@ -1,10 +1,10 @@
+import Icon from '@components/Icon'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { Feather } from '@expo/vector-icons'
-import { StyleConstants } from '@utils/styles/constants'
 
 export interface Params {
   type: 'success' | 'error' | 'warning'
@@ -49,9 +49,9 @@ const toast = ({
 const ToastBase = ({ config }: { config: Config }) => {
   const { theme } = useTheme()
   const iconSet = {
-    success: 'check-circle',
-    error: 'x-circle',
-    warning: 'alert-circle'
+    success: 'CheckCircle',
+    error: 'XCircle',
+    warning: 'AlertCircle'
   }
   enum colorMapping {
     success = 'blue',
@@ -67,11 +67,10 @@ const ToastBase = ({ config }: { config: Config }) => {
       ]}
     >
       <View style={styles.container}>
-        <Feather
-          // @ts-ignore
+        <Icon
           name={iconSet[config.type]}
+          size={StyleConstants.Font.Size.M}
           color={theme[colorMapping[config.type]]}
-          size={StyleConstants.Font.Size.M + 2}
         />
         <View style={styles.texts}>
           <Text style={[styles.text1, { color: theme.primary }]}>
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: StyleConstants.Spacing.L
+    padding: StyleConstants.Spacing.M
   },
   texts: {
     marginLeft: StyleConstants.Spacing.S
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     ...StyleConstants.FontStyle.S,
-    marginTop: StyleConstants.Spacing.S
+    marginTop: StyleConstants.Spacing.XS
   }
 })
 

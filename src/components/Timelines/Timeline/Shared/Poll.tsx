@@ -1,9 +1,9 @@
 import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import relativeTime from '@components/relativeTime'
 import { TimelineData } from '@components/Timelines/Timeline'
-import { Feather } from '@expo/vector-icons'
 import { ParseEmojis } from '@root/components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -151,8 +151,8 @@ const TimelinePoll: React.FC<Props> = ({
   const isSelected = useCallback(
     (index: number): any =>
       allOptions[index]
-        ? `check-${poll.multiple ? 'square' : 'circle'}`
-        : `${poll.multiple ? 'square' : 'circle'}`,
+        ? `Check${poll.multiple ? 'Square' : 'Circle'}`
+        : `${poll.multiple ? 'Square' : 'Circle'}`,
     [allOptions]
   )
 
@@ -160,11 +160,11 @@ const TimelinePoll: React.FC<Props> = ({
     return poll.options.map((option, index) => (
       <View key={index} style={styles.optionContainer}>
         <View style={styles.optionContent}>
-          <Feather
+          <Icon
             style={styles.optionSelection}
             name={
-              `${poll.own_votes?.includes(index) ? 'check-' : ''}${
-                poll.multiple ? 'square' : 'circle'
+              `${poll.own_votes?.includes(index) ? 'Check' : ''}${
+                poll.multiple ? 'Square' : 'Circle'
               }` as any
             }
             size={StyleConstants.Font.Size.M}
@@ -224,7 +224,7 @@ const TimelinePoll: React.FC<Props> = ({
         }}
       >
         <View style={[styles.optionContent]}>
-          <Feather
+          <Icon
             style={styles.optionSelection}
             name={isSelected(index)}
             size={StyleConstants.Font.Size.L}

@@ -1,28 +1,23 @@
 import SegmentedControl from '@react-native-community/segmented-control'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { Dispatch } from 'react'
+import React, { MutableRefObject, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AccountAction, AccountState } from '../Account'
+import AccountContext from './utils/createContext'
 
 export interface Props {
-  accountState: AccountState
-  accountDispatch: Dispatch<AccountAction>
-  scrollY: Animated.Value
+  scrollY: MutableRefObject<Animated.Value>
 }
 
-const AccountSegmentedControl: React.FC<Props> = ({
-  accountState,
-  accountDispatch,
-  scrollY
-}) => {
+const AccountSegmentedControl: React.FC<Props> = ({ scrollY }) => {
+  const { accountState, accountDispatch } = useContext(AccountContext)
   const { t } = useTranslation('sharedAccount')
   const { mode, theme } = useTheme()
 
   const headerHeight = useSafeAreaInsets().top + 44
-  const translateY = scrollY.interpolate({
+  const translateY = scrollY.current.interpolate({
     inputRange: [
       0,
       (accountState.informationLayout?.y || 0) +
@@ -82,4 +77,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AccountSegmentedControl
+export default React.memo(AccountSegmentedControl, () => true)

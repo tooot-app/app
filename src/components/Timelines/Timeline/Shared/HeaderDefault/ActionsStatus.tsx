@@ -128,7 +128,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({ type: 'delete' })
         }}
-        iconFront='trash'
+        iconFront='Trash'
         title={t('timeline:shared.header.default.actions.status.delete.button')}
       />
       <MenuRow
@@ -174,7 +174,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
             ]
           )
         }}
-        iconFront='trash'
+        iconFront='Trash'
         title={t('timeline:shared.header.default.actions.status.edit.button')}
       />
       <MenuRow
@@ -182,7 +182,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
           setBottomSheetVisible(false)
           mutate({ type: 'mute', state: status.muted })
         }}
-        iconFront='volume-x'
+        iconFront='VolumeX'
         title={
           status.muted
             ? t(
@@ -200,7 +200,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
             setBottomSheetVisible(false)
             mutate({ type: 'pin', state: status.pinned })
           }}
-          iconFront='anchor'
+          iconFront='Anchor'
           title={
             status.pinned
               ? t(

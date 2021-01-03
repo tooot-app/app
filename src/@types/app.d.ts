@@ -66,7 +66,7 @@ declare namespace QueryKey {
     {
       hashtag?: Mastodon.Tag['name']
       list?: Mastodon.List['id']
-      toot?: Mastodon.Status
+      toot?: Mastodon.Status['id']
       account?: Mastodon.Account['id']
     }
   ]

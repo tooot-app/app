@@ -131,7 +131,7 @@ const AccountInformationActions: React.FC<Props> = ({ account }) => {
       {query.data && !query.data.blocked_by ? (
         <Button
           type='icon'
-          content='mail'
+          content='Mail'
           round
           onPress={() =>
             navigation.navigate('Screen-Shared-Compose', {

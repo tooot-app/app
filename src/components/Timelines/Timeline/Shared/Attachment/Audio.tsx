@@ -67,7 +67,7 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
             )}
             <Button
               type='icon'
-              content={audioPlaying ? 'pause-circle' : 'play-circle'}
+              content={audioPlaying ? 'PauseCircle' : 'PlayCircle'}
               size='L'
               round
               overlay

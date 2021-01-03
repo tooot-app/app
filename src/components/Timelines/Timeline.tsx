@@ -24,10 +24,10 @@ export type TimelineData =
 
 export interface Props {
   page: App.Pages
-  hashtag?: string
-  list?: string
-  toot?: Mastodon.Status
-  account?: string
+  hashtag?: Mastodon.Tag['name']
+  list?: Mastodon.List['id']
+  toot?: Mastodon.Status['id']
+  account?: Mastodon.Account['id']
   disableRefresh?: boolean
   disableInfinity?: boolean
 }
@@ -134,7 +134,7 @@ const Timeline: React.FC<Props> = ({
                 flattenPinnedLength[0] && {
                   pinnedLength: flattenPinnedLength[0]
                 })}
-              {...(toot && toot.id === item.id && { highlighted: true })}
+              {...(toot === item.id && { highlighted: true })}
             />
           )
       }
@@ -144,7 +144,7 @@ const Timeline: React.FC<Props> = ({
   const ItemSeparatorComponent = useCallback(
     ({ leadingItem }) => (
       <TimelineSeparator
-        {...(toot && toot.id === leadingItem.id && { highlighted: true })}
+        {...(toot === leadingItem.id && { highlighted: true })}
       />
     ),
     []

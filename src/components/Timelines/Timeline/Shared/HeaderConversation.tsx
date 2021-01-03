@@ -1,7 +1,7 @@
 import client from '@api/client'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { toast } from '@components/toast'
-import { Feather } from '@expo/vector-icons'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
@@ -66,8 +66,8 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
   const actionChildren = useMemo(
     () => (
-      <Feather
-        name='trash'
+      <Icon
+        name='Trash'
         color={theme.secondary}
         size={StyleConstants.Font.Size.M + 2}
       />
@@ -86,7 +86,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
             />
           ) : null}
           {conversation.unread && (
-            <Feather name='circle' color={theme.blue} style={styles.unread} />
+            <Icon name='Circle' color={theme.blue} style={styles.unread} />
           )}
         </View>
       </View>

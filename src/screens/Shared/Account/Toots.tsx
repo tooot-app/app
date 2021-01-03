@@ -1,24 +1,18 @@
-import React, { Dispatch, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { TabView } from 'react-native-tab-view'
-
 import Timeline from '@components/Timelines/Timeline'
-import { AccountAction, AccountState } from '../Account'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { StyleConstants } from '@utils/styles/constants'
+import React, { useContext } from 'react'
+import { Dimensions, StyleSheet } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { TabView } from 'react-native-tab-view'
+import AccountContext from './utils/createContext'
 
 export interface Props {
-  accountState: AccountState
-  accountDispatch: Dispatch<AccountAction>
   id: Mastodon.Account['id']
 }
 
-const AccountToots: React.FC<Props> = ({
-  accountState,
-  accountDispatch,
-  id
-}) => {
+const AccountToots: React.FC<Props> = ({ id }) => {
+  const { accountState, accountDispatch } = useContext(AccountContext)
   const headerHeight = useSafeAreaInsets().top + 44
   const footerHeight = useSafeAreaInsets().bottom + useBottomTabBarHeight()
 
@@ -28,18 +22,15 @@ const AccountToots: React.FC<Props> = ({
     { key: 'Account_Media' }
   ]
 
-  const renderScene = useCallback(
-    ({
-      route
-    }: {
-      route: {
-        key: App.Pages
-      }
-    }) => {
-      return <Timeline page={route.key} account={id} disableRefresh />
-    },
-    []
-  )
+  const renderScene = ({
+    route
+  }: {
+    route: {
+      key: App.Pages
+    }
+  }) => {
+    return <Timeline page={route.key} account={id} disableRefresh />
+  }
 
   return (
     <TabView

@@ -1,5 +1,5 @@
 import { StyleConstants } from '@utils/styles/constants'
-import React, { createRef, Dispatch, useCallback, useEffect } from 'react'
+import React, { createRef, useCallback, useContext, useEffect } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import AccountInformationAvatar from './Information/Avatar'
 import AccountInformationName from './Information/Name'
@@ -9,19 +9,18 @@ import AccountInformationStats from './Information/Stats'
 import AccountInformationActions from './Information/Actions'
 import AccountInformationFields from './Information/Fields'
 import AccountInformationNotes from './Information/Notes'
-import { AccountAction } from '../Account'
+import AccountContext from './utils/createContext'
 
 export interface Props {
-  accountDispatch?: Dispatch<AccountAction>
   account: Mastodon.Account | undefined
   disableActions?: boolean
 }
 
 const AccountInformation: React.FC<Props> = ({
-  accountDispatch,
   account,
   disableActions = false
 }) => {
+  const { accountDispatch } = useContext(AccountContext)
   const shimmerAvatarRef = createRef<any>()
   const shimmerNameRef = createRef<any>()
   const shimmerAccountRef = createRef<any>()
@@ -98,4 +97,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AccountInformation
+export default React.memo(
+  AccountInformation,
+  (_, next) => next.account === undefined
+)
