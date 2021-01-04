@@ -3,7 +3,7 @@ const Base = 4
 export const StyleConstants = {
   Font: {
     Size: { S: 14, M: 16, L: 18 },
-    LineHeight: { S: 18, M: 22, L: 30 },
+    LineHeight: { S: 18, M: 22, L: 26 },
     Weight: { Bold: '600' as '600' }
   },
   FontStyle: {
@@ -21,5 +21,5 @@ export const StyleConstants = {
     Global: { PagePadding: Base * 4 }
   },
 
-  Avatar: { S: 36, M: 52, L: 104 }
+  Avatar: { S: 40, M: 52, L: 104 }
 }

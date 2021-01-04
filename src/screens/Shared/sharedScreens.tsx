@@ -1,15 +1,15 @@
-import { HeaderLeft } from '@root/components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import ScreenSharedAccount from '@screens/Shared/Account'
-import ScreenSharedAnnouncements from '@root/screens/Shared/Announcements'
+import ScreenSharedAnnouncements from '@screens/Shared/Announcements'
 import ScreenSharedHashtag from '@screens/Shared/Hashtag'
+import ScreenSharedImagesViewer from '@screens/Shared/ImagesViewer'
+import ScreenSharedRelationships from '@screens/Shared/Relationships'
 import ScreenSharedToot from '@screens/Shared/Toot'
 import Compose from '@screens/Shared/Compose'
-import ComposeEditAttachment from '@screens/Shared/Compose/EditAttachment'
 import ScreenSharedSearch from '@screens/Shared/Search'
 import React from 'react'
-import { Text } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import ScreenSharedImagesViewer from './ImagesViewer'
+import { View } from 'react-native'
 
 const sharedScreens = (Stack: any) => {
   const { t } = useTranslation()
@@ -60,9 +60,9 @@ const sharedScreens = (Stack: any) => {
       key='Screen-Shared-Search'
       name='Screen-Shared-Search'
       component={ScreenSharedSearch}
-      options={{
-        stackPresentation: 'modal'
-      }}
+      options={({ navigation }: any) => ({
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      })}
     />,
     <Stack.Screen
       key='Screen-Shared-Announcements'
@@ -81,6 +81,15 @@ const sharedScreens = (Stack: any) => {
         stackPresentation: 'transparentModal',
         stackAnimation: 'none'
       }}
+    />,
+    <Stack.Screen
+      key='Screen-Shared-Relationships'
+      name='Screen-Shared-Relationships'
+      component={ScreenSharedRelationships}
+      options={({ route, navigation }: any) => ({
+        title: route.params.account.display_name || route.params.account.name,
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      })}
     />
   ]
 }

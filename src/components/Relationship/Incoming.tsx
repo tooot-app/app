@@ -15,7 +15,7 @@ export interface Props {
 const RelationshipIncoming: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
-  const relationshipQueryKey = ['Relationship', { id }]
+  const relationshipQueryKey: QueryKey.Relationship = ['Relationship', { id }]
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(

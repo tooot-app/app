@@ -1,9 +1,11 @@
 import client from '@api/client'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { findIndex } from 'lodash'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -33,14 +35,24 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
       const oldData = queryClient.getQueryData(queryKey)
 
       haptics('Success')
-      queryClient.setQueryData(queryKey, (old: any) =>
-        old.pages.map((paging: any) => ({
-          toots: paging.toots.filter(
-            (toot: Mastodon.Conversation) => toot.id !== conversation.id
-          ),
-          pointer: paging.pointer
-        }))
-      )
+      queryClient.setQueryData<TimelineData>(queryKey, old => {
+        let tootIndex = -1
+        const pageIndex = findIndex(old?.pages, page => {
+          const tempIndex = findIndex(page.toots, ['id', conversation.id])
+          if (tempIndex >= 0) {
+            tootIndex = tempIndex
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (pageIndex >= 0 && tootIndex >= 0) {
+          old!.pages[pageIndex].toots.splice(tootIndex, 1)
+        }
+
+        return old
+      })
 
       return oldData
     },

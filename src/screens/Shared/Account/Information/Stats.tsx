@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -13,6 +14,7 @@ export interface Props {
 }
 
 const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
+  const navigation = useNavigation()
   const { theme } = useTheme()
   const { t } = useTranslation('sharedAccount')
   const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
@@ -55,10 +57,17 @@ const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
         shimmerColors={theme.shimmer}
       >
         <Text
-          style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
+          style={[styles.stat, { color: theme.primary, textAlign: 'right' }]}
+          onPress={() =>
+            account &&
+            navigation.push('Screen-Shared-Relationships', {
+              account,
+              initialType: 'following'
+            })
+          }
         >
-          {t('content.summary.followers_count', {
-            count: account?.followers_count || 0
+          {t('content.summary.following_count', {
+            count: account?.following_count || 0
           })}
         </Text>
       </ShimmerPlaceholder>
@@ -70,10 +79,17 @@ const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
         shimmerColors={theme.shimmer}
       >
         <Text
-          style={[styles.stat, { color: theme.primary, textAlign: 'right' }]}
+          style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
+          onPress={() =>
+            account &&
+            navigation.push('Screen-Shared-Relationships', {
+              account,
+              initialType: 'followers'
+            })
+          }
         >
-          {t('content.summary.following_count', {
-            count: account?.following_count || 0
+          {t('content.summary.followers_count', {
+            count: account?.followers_count || 0
           })}
         </Text>
       </ShimmerPlaceholder>

@@ -23,7 +23,6 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
             i18nKey='timeline:shared.end.message' // optional -> fallbacks to defaults if not provided
             components={[
               <Icon
-                inline
                 name='Coffee'
                 size={StyleConstants.Font.Size.S}
                 color={theme.secondary}

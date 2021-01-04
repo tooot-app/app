@@ -15,10 +15,12 @@ import { useSelector } from 'react-redux'
 
 export interface Props {
   item: Mastodon.Status
-  queryKey: QueryKey.Timeline
+  queryKey?: QueryKey.Timeline
   index: number
   pinnedLength?: number
   highlighted?: boolean
+  disableDetails?: boolean
+  disableOnPress?: boolean
 }
 
 // When the poll is long
@@ -27,17 +29,18 @@ const TimelineDefault: React.FC<Props> = ({
   queryKey,
   index,
   pinnedLength,
-  highlighted = false
+  highlighted = false,
+  disableDetails = false,
+  disableOnPress = false
 }) => {
   const localAccountId = useSelector(getLocalAccountId)
-  const isRemotePublic = queryKey[0] === 'RemotePublic'
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
 
   const onPress = useCallback(
     () =>
-      !isRemotePublic &&
+      !disableOnPress &&
       !highlighted &&
       navigation.push('Screen-Shared-Toot', {
         toot: actualStatus
@@ -55,11 +58,11 @@ const TimelineDefault: React.FC<Props> = ({
 
       <View style={styles.header}>
         <TimelineAvatar
-          {...(!isRemotePublic && { queryKey })}
+          queryKey={disableOnPress ? undefined : queryKey}
           account={actualStatus.account}
         />
         <TimelineHeaderDefault
-          {...(!isRemotePublic && { queryKey })}
+          queryKey={disableOnPress ? undefined : queryKey}
           status={actualStatus}
           sameAccount={actualStatus.account.id === localAccountId}
         />
@@ -74,9 +77,13 @@ const TimelineDefault: React.FC<Props> = ({
         }}
       >
         {actualStatus.content.length > 0 && (
-          <TimelineContent status={actualStatus} highlighted={highlighted} />
+          <TimelineContent
+            status={actualStatus}
+            highlighted={highlighted}
+            disableDetails={disableDetails}
+          />
         )}
-        {actualStatus.poll && (
+        {queryKey && actualStatus.poll && (
           <TimelinePoll
             queryKey={queryKey}
             poll={actualStatus.poll}
@@ -84,13 +91,15 @@ const TimelineDefault: React.FC<Props> = ({
             sameAccount={actualStatus.account.id === localAccountId}
           />
         )}
-        {actualStatus.media_attachments.length > 0 && (
+        {!disableDetails && actualStatus.media_attachments.length > 0 && (
           <TimelineAttachment status={actualStatus} />
         )}
-        {actualStatus.card && <TimelineCard card={actualStatus.card} />}
+        {!disableDetails && actualStatus.card && (
+          <TimelineCard card={actualStatus.card} />
+        )}
       </View>
 
-      {!isRemotePublic && (
+      {queryKey && !disableDetails && (
         <View
           style={{
             paddingLeft: highlighted

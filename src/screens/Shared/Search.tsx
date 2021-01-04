@@ -1,24 +1,22 @@
-import { HeaderRight } from '@components/Header'
-import Icon from '@components/Icon'
-import { ParseEmojis, ParseHTML } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
+import ComponentAccount from '@root/components/Account'
+import ComponentSeparator from '@root/components/Separator'
+import TimelineDefault from '@root/components/Timelines/Timeline/Default'
 import { searchFetch } from '@utils/fetches/searchFetch'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  Image,
   KeyboardAvoidingView,
   Pressable,
   SectionList,
   StyleSheet,
   Text,
-  TextInput,
   View
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { TextInput } from 'react-native-gesture-handler'
 import { useQuery } from 'react-query'
 
 const ScreenSharedSearch: React.FC = () => {
@@ -30,6 +28,42 @@ const ScreenSharedSearch: React.FC = () => {
     searchFetch,
     { enabled: false }
   )
+
+  useEffect(() => {
+    const updateHeaderRight = () =>
+      navigation.setOptions({
+        headerCenter: () => (
+          <View style={styles.searchBar}>
+            <Text
+              style={{ ...StyleConstants.FontStyle.M, color: theme.primary }}
+            >
+              搜索
+            </Text>
+            <TextInput
+              style={[
+                styles.textInput,
+                {
+                  color: theme.primary
+                }
+              ]}
+              autoFocus
+              onChangeText={onChangeText}
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='never'
+              keyboardType='web-search'
+              onSubmitEditing={({ nativeEvent: { text } }) =>
+                setSearchTerm(text)
+              }
+              placeholder={'些什么'}
+              placeholderTextColor={theme.secondary}
+              returnKeyType='go'
+            />
+          </View>
+        )
+      })
+    return updateHeaderRight()
+  }, [])
 
   const [setctionData, setSectionData] = useState<
     { title: string; data: any }[]
@@ -74,48 +108,50 @@ const ScreenSharedSearch: React.FC = () => {
   const listEmpty = useMemo(
     () => (
       <View style={styles.emptyBase}>
-        {status === 'loading' ? (
-          <View style={styles.loading}>
-            <Chase
-              size={StyleConstants.Font.Size.M * 1.25}
-              color={theme.secondary}
-            />
-          </View>
-        ) : (
-          <>
-            <Text
-              style={[
-                styles.emptyDefault,
-                styles.emptyFontSize,
-                { color: theme.primary }
-              ]}
-            >
-              输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
-              <Text style={styles.emptyFontBold}>话题标签</Text>或者
-              <Text style={styles.emptyFontBold}>嘟文</Text>
-            </Text>
-            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-              高级搜索格式
-            </Text>
-            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-              <Text style={{ color: theme.secondary }}>@username@domain</Text>
-              {'   '}
-              搜索用户
-            </Text>
-            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-              <Text style={{ color: theme.secondary }}>#example</Text>
-              {'   '}搜索话题标签
-            </Text>
-            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-              <Text style={{ color: theme.secondary }}>URL</Text>
-              {'   '}搜索指定嘟文
-            </Text>
-            <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
-              <Text style={{ color: theme.secondary }}>URL</Text>
-              {'   '}搜索指定用户
-            </Text>
-          </>
-        )}
+        <View>
+          {status === 'loading' ? (
+            <View style={styles.loading}>
+              <Chase
+                size={StyleConstants.Font.Size.M * 1.25}
+                color={theme.secondary}
+              />
+            </View>
+          ) : (
+            <>
+              <Text
+                style={[
+                  styles.emptyDefault,
+                  styles.emptyFontSize,
+                  { color: theme.primary }
+                ]}
+              >
+                输入关键词搜索<Text style={styles.emptyFontBold}>用户</Text>、
+                <Text style={styles.emptyFontBold}>话题标签</Text>或者
+                <Text style={styles.emptyFontBold}>嘟文</Text>
+              </Text>
+              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+                高级搜索格式
+              </Text>
+              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+                <Text style={{ color: theme.secondary }}>@username@domain</Text>
+                {'   '}
+                搜索用户
+              </Text>
+              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+                <Text style={{ color: theme.secondary }}>#example</Text>
+                {'   '}搜索话题标签
+              </Text>
+              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+                <Text style={{ color: theme.secondary }}>URL</Text>
+                {'   '}搜索指定嘟文
+              </Text>
+              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+                <Text style={{ color: theme.secondary }}>URL</Text>
+                {'   '}搜索指定用户
+              </Text>
+            </>
+          )}
+        </View>
       </View>
     ),
     [status]
@@ -123,10 +159,7 @@ const ScreenSharedSearch: React.FC = () => {
   const sectionHeader = useCallback(
     ({ section: { title } }) => (
       <View
-        style={[
-          styles.sectionHeader,
-          { borderBottomColor: theme.border, backgroundColor: theme.background }
-        ]}
+        style={[styles.sectionHeader, { backgroundColor: theme.background }]}
       >
         <Text style={[styles.sectionHeaderText, { color: theme.primary }]}>
           {title}
@@ -152,43 +185,10 @@ const ScreenSharedSearch: React.FC = () => {
       ) : null,
     [searchTerm]
   )
-  const listItem = useCallback(({ item, section }) => {
+  const listItem = useCallback(({ item, section, index }) => {
     switch (section.title) {
       case 'accounts':
-        return (
-          <Pressable
-            style={[
-              styles.itemDefault,
-              styles.itemAccount,
-              { borderBottomColor: theme.border }
-            ]}
-            onPress={() => {
-              navigation.goBack()
-              navigation.push('Screen-Shared-Account', { account: item })
-            }}
-          >
-            <Image
-              source={{ uri: item.avatar_static }}
-              style={styles.itemAccountAvatar}
-            />
-            <View>
-              <Text numberOfLines={1}>
-                <ParseEmojis
-                  content={item.display_name || item.username}
-                  emojis={item.emojis}
-                  size='S'
-                  fontBold
-                />
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={[styles.itemAccountAcct, { color: theme.secondary }]}
-              >
-                @{item.acct}
-              </Text>
-            </View>
-          </Pressable>
-        )
+        return <ComponentAccount account={item} />
       case 'hashtags':
         return (
           <Pressable
@@ -206,50 +206,7 @@ const ScreenSharedSearch: React.FC = () => {
           </Pressable>
         )
       case 'statuses':
-        return (
-          <Pressable
-            style={[
-              styles.itemDefault,
-              styles.itemAccount,
-              { borderBottomColor: theme.border }
-            ]}
-            onPress={() => {
-              navigation.goBack()
-              navigation.push('Screen-Shared-Toot', { toot: item })
-            }}
-          >
-            <Image
-              source={{ uri: item.account.avatar_static }}
-              style={styles.itemAccountAvatar}
-            />
-            <View>
-              <Text numberOfLines={1}>
-                <ParseEmojis
-                  content={item.account.display_name || item.account.username}
-                  emojis={item.account.emojis}
-                  size='S'
-                  fontBold
-                />
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={[styles.itemAccountAcct, { color: theme.secondary }]}
-              >
-                @{item.account.acct}
-              </Text>
-              {item.content && (
-                <View style={styles.itemStatus}>
-                  <ParseHTML
-                    content={item.content}
-                    size='M'
-                    emojis={item.emojis}
-                    numberOfLines={2}
-                  />
-                </View>
-              )}
-            </View>
-          </Pressable>
-        )
+        return <TimelineDefault item={item} index={index} disableDetails />
       default:
         return null
     }
@@ -257,100 +214,42 @@ const ScreenSharedSearch: React.FC = () => {
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
-        <View style={styles.searchBar}>
-          <View
-            style={[styles.searchField, { borderBottomColor: theme.secondary }]}
-          >
-            <Icon
-              name='Search'
-              color={theme.primary}
-              size={StyleConstants.Font.Size.M}
-              style={styles.searchIcon}
-            />
-            <TextInput
-              style={[
-                styles.textInput,
-                {
-                  color: theme.primary
-                }
-              ]}
-              autoFocus
-              onChangeText={onChangeText}
-              autoCapitalize='none'
-              autoCorrect={false}
-              clearButtonMode='never'
-              keyboardType='web-search'
-              onSubmitEditing={({ nativeEvent: { text } }) =>
-                setSearchTerm(text)
-              }
-              placeholder={'搜索些什么'}
-              placeholderTextColor={theme.secondary}
-              returnKeyType='go'
-            />
-          </View>
-          <View style={styles.searchCancel}>
-            <HeaderRight
-              type='text'
-              content='取消'
-              onPress={() => navigation.goBack()}
-            />
-          </View>
-        </View>
-        <SectionList
-          style={styles.base}
-          renderItem={listItem}
-          stickySectionHeadersEnabled
-          sections={setctionData}
-          ListEmptyComponent={listEmpty}
-          keyboardShouldPersistTaps='always'
-          renderSectionHeader={sectionHeader}
-          renderSectionFooter={sectionFooter}
-          keyExtractor={(item, index) => item + index}
-        />
-      </SafeAreaView>
+      <SectionList
+        style={styles.base}
+        renderItem={listItem}
+        stickySectionHeadersEnabled
+        sections={setctionData}
+        ListEmptyComponent={listEmpty}
+        keyboardShouldPersistTaps='always'
+        renderSectionHeader={sectionHeader}
+        renderSectionFooter={sectionFooter}
+        keyExtractor={(item, index) => item + index}
+        SectionSeparatorComponent={ComponentSeparator}
+        ItemSeparatorComponent={ComponentSeparator}
+      />
     </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    flex: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingTop: 0
+    minHeight: '100%'
   },
   searchBar: {
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: 0,
+    flexBasis: '80%',
     flexDirection: 'row',
     alignItems: 'center'
   },
-  searchField: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1.25
-  },
-  searchIcon: {
-    marginLeft: StyleConstants.Spacing.S
-  },
-  searchCancel: {
-    paddingHorizontal: StyleConstants.Spacing.S,
-    marginLeft: StyleConstants.Spacing.S
-  },
   textInput: {
-    flex: 1,
-    padding: StyleConstants.Spacing.S,
     ...StyleConstants.FontStyle.M,
-    marginRight: StyleConstants.Spacing.S
+    paddingLeft: StyleConstants.Spacing.XS,
+    marginBottom:
+      (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2
   },
-
   emptyBase: {
-    marginTop: StyleConstants.Spacing.M,
-    marginLeft:
-      StyleConstants.Spacing.S +
-      StyleConstants.Spacing.M +
-      StyleConstants.Spacing.S
+    marginVertical: StyleConstants.Spacing.Global.PagePadding,
+    // paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+    alignItems: 'center'
   },
   loading: { flex: 1, alignItems: 'center' },
   emptyFontSize: { ...StyleConstants.FontStyle.S },
@@ -364,8 +263,7 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   sectionHeader: {
-    padding: StyleConstants.Spacing.M,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    padding: StyleConstants.Spacing.M
   },
   sectionHeaderText: {
     ...StyleConstants.FontStyle.M,
@@ -383,23 +281,8 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S * 1.5,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-  itemAccount: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  itemAccountAvatar: {
-    alignSelf: 'flex-start',
-    width: StyleConstants.Avatar.S,
-    height: StyleConstants.Avatar.S,
-    borderRadius: 6,
-    marginRight: StyleConstants.Spacing.S
-  },
-  itemAccountAcct: { marginTop: StyleConstants.Spacing.XS },
   itemHashtag: {
     ...StyleConstants.FontStyle.M
-  },
-  itemStatus: {
-    marginTop: StyleConstants.Spacing.S
   }
 })
 

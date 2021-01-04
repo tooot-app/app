@@ -17,39 +17,20 @@ declare namespace App {
 }
 
 declare namespace QueryKey {
-  type Account = [
-    'Account',
-    {
-      id: Mastodon.Account['id']
-    }
-  ]
+  type Account = ['Account', { id: Mastodon.Account['id'] }]
 
-  type Announcements = [
-    'Announcements',
-    {
-      showAll?: boolean
-    }
-  ]
+  type Announcements = ['Announcements', { showAll?: boolean }]
 
-  type Application = [
-    'Application',
-    {
-      instanceDomain: string
-    }
-  ]
+  type Application = ['Application', { instanceDomain: string }]
 
-  type Instance = [
-    'Instance',
-    {
-      instanceDomain: string
-    }
-  ]
+  type Instance = ['Instance', { instanceDomain: string }]
 
-  type Relationship = [
-    'Relationship',
-    {
-      id: Mastodon.Account['id']
-    }
+  type Relationship = ['Relationship', { id: Mastodon.Account['id'] }]
+
+  type Relationships = [
+    'Relationships',
+    'following' | 'followers',
+    { id: Mastodon.Account['id'] }
   ]
 
   type Search = [

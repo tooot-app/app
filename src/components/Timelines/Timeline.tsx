@@ -1,18 +1,18 @@
+import ComponentSeparator from '@components/Separator'
+import TimelineConversation from '@components/Timelines/Timeline/Conversation'
+import TimelineDefault from '@components/Timelines/Timeline/Default'
+import TimelineEmpty from '@components/Timelines/Timeline/Empty'
+import TimelineEnd from '@root/components/Timelines/Timeline/End'
+import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
+import { useScrollToTop } from '@react-navigation/native'
+import { timelineFetch } from '@utils/fetches/timelineFetch'
+import { updateNotification } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
-import { InfiniteData, useInfiniteQuery } from 'react-query'
-
-import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
-import TimelineDefault from '@components/Timelines/Timeline/Default'
-import TimelineConversation from '@components/Timelines/Timeline/Conversation'
-import { timelineFetch } from '@utils/fetches/timelineFetch'
-import TimelineSeparator from '@components/Timelines/Timeline/Separator'
-import TimelineEmpty from '@components/Timelines/Timeline/Empty'
-import TimelineEnd from '@components/Timelines/Timeline/Shared/End'
-import { useScrollToTop } from '@react-navigation/native'
 import { FlatList } from 'react-native-gesture-handler'
+import { InfiniteData, useInfiniteQuery } from 'react-query'
 import { useDispatch } from 'react-redux'
-import { updateNotification } from '@root/utils/slices/instancesSlice'
 
 export type TimelineData =
   | InfiniteData<{
@@ -130,6 +130,10 @@ const Timeline: React.FC<Props> = ({
               item={item}
               queryKey={queryKey}
               index={index}
+              {...(queryKey[0] === 'RemotePublic' && {
+                disableDetails: true,
+                disableOnPress: true
+              })}
               {...(flattenPinnedLength &&
                 flattenPinnedLength[0] && {
                   pinnedLength: flattenPinnedLength[0]
@@ -143,8 +147,13 @@ const Timeline: React.FC<Props> = ({
   )
   const ItemSeparatorComponent = useCallback(
     ({ leadingItem }) => (
-      <TimelineSeparator
-        {...(toot === leadingItem.id && { highlighted: true })}
+      <ComponentSeparator
+        {...(toot === leadingItem.id
+          ? { extraMarginLeft: 0 }
+          : {
+              extraMarginLeft:
+                StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            })}
       />
     ),
     []

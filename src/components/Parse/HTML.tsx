@@ -27,7 +27,8 @@ const renderNode = ({
   navigation,
   mentions,
   tags,
-  showFullLink
+  showFullLink,
+  disableDetails
 }: {
   theme: any
   node: any
@@ -37,6 +38,7 @@ const renderNode = ({
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
+  disableDetails: boolean
 }) => {
   if (node.name == 'a') {
     const classes = node.attribs.class
@@ -52,9 +54,10 @@ const renderNode = ({
             }}
             onPress={() => {
               const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-              navigation.push('Screen-Shared-Hashtag', {
-                hashtag: tag[1] || tag[2]
-              })
+              !disableDetails &&
+                navigation.push('Screen-Shared-Hashtag', {
+                  hashtag: tag[1] || tag[2]
+                })
             }}
           >
             {node.children[0].data}
@@ -72,6 +75,7 @@ const renderNode = ({
             }}
             onPress={() => {
               accountIndex !== -1 &&
+                !disableDetails &&
                 navigation.push('Screen-Shared-Account', {
                   account: mentions[accountIndex]
                 })
@@ -96,7 +100,7 @@ const renderNode = ({
             ...StyleConstants.FontStyle[size]
           }}
           onPress={async () =>
-            !shouldBeTag
+            !disableDetails && !shouldBeTag
               ? await openLink(href)
               : navigation.push('Screen-Shared-Hashtag', {
                   hashtag: content.substring(1)
@@ -132,6 +136,7 @@ export interface Props {
   showFullLink?: boolean
   numberOfLines?: number
   expandHint?: string
+  disableDetails?: boolean
 }
 
 const ParseHTML: React.FC<Props> = ({
@@ -142,7 +147,8 @@ const ParseHTML: React.FC<Props> = ({
   tags,
   showFullLink = false,
   numberOfLines = 10,
-  expandHint = '全文'
+  expandHint = '全文',
+  disableDetails = false
 }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
@@ -157,7 +163,8 @@ const ParseHTML: React.FC<Props> = ({
         navigation,
         mentions,
         tags,
-        showFullLink
+        showFullLink,
+        disableDetails
       }),
     []
   )

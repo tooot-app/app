@@ -8,12 +8,14 @@ export interface Props {
   status: Mastodon.Status
   numberOfLines?: number
   highlighted?: boolean
+  disableDetails?: boolean
 }
 
 const TimelineContent: React.FC<Props> = ({
   status,
   numberOfLines,
-  highlighted = false
+  highlighted = false,
+  disableDetails = false
 }) => {
   const { t } = useTranslation('timeline')
 
@@ -29,6 +31,7 @@ const TimelineContent: React.FC<Props> = ({
               mentions={status.mentions}
               tags={status.tags}
               numberOfLines={999}
+              disableDetails={disableDetails}
             />
           </View>
           <ParseHTML
@@ -39,6 +42,7 @@ const TimelineContent: React.FC<Props> = ({
             tags={status.tags}
             numberOfLines={0}
             expandHint={t('shared.content.expandHint')}
+            disableDetails={disableDetails}
           />
         </>
       ) : (
@@ -49,6 +53,7 @@ const TimelineContent: React.FC<Props> = ({
           mentions={status.mentions}
           tags={status.tags}
           numberOfLines={numberOfLines}
+          disableDetails={disableDetails}
         />
       )}
     </>

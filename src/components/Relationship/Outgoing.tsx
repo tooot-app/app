@@ -14,7 +14,7 @@ export interface Props {
 const RelationshipOutgoing: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
-  const relationshipQueryKey = ['Relationship', { id }]
+  const relationshipQueryKey: QueryKey.Relationship = ['Relationship', { id }]
   const query = useQuery(relationshipQueryKey, relationshipFetch)
 
   const queryClient = useQueryClient()
