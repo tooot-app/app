@@ -40,6 +40,16 @@ const composeReducer = (
           )
         }
       }
+    case 'attachment/upload/fail':
+      return {
+        ...state,
+        attachments: {
+          ...state.attachments,
+          uploads: state.attachments.uploads.filter(
+            upload => upload.local.hash !== action.payload
+          )
+        }
+      }
     case 'attachment/delete':
       return {
         ...state,

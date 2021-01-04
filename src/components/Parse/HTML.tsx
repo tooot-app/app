@@ -9,6 +9,8 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Animated, {
+  measure,
+  useAnimatedRef,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -103,7 +105,6 @@ const renderNode = ({
         >
           {!shouldBeTag ? (
             <Icon
-              inline
               color={theme.blue}
               name='ExternalLink'
               size={StyleConstants.Font.Size[size]}
@@ -162,7 +163,13 @@ const ParseHTML: React.FC<Props> = ({
   )
   const textComponent = useCallback(({ children }) => {
     if (children) {
-      return <ParseEmojis content={children.toString()} emojis={emojis} />
+      return (
+        <ParseEmojis
+          content={children.toString()}
+          emojis={emojis}
+          size={size}
+        />
+      )
     } else {
       return null
     }
@@ -171,14 +178,15 @@ const ParseHTML: React.FC<Props> = ({
     ({ children }) => {
       const lineHeight = StyleConstants.Font.LineHeight[size]
 
+      const [lines, setLines] = useState<number | undefined>(undefined)
       const [heightOriginal, setHeightOriginal] = useState<number>()
       const [heightTruncated, setHeightTruncated] = useState<number>()
-      const [allowExpand, setAllowExpand] = useState(false)
-      const [showAllText, setShowAllText] = useState(false)
+      const [expandAllow, setExpandAllow] = useState(false)
+      const [expanded, setExpanded] = useState(false)
 
       const viewHeight = useDerivedValue(() => {
-        if (allowExpand) {
-          if (showAllText) {
+        if (expandAllow) {
+          if (expanded) {
             return heightOriginal as number
           } else {
             return heightTruncated as number
@@ -186,49 +194,29 @@ const ParseHTML: React.FC<Props> = ({
         } else {
           return heightOriginal as number
         }
-      }, [heightOriginal, heightTruncated, allowExpand, showAllText])
+      }, [heightOriginal, heightTruncated, expandAllow, expanded])
       const ViewHeight = useAnimatedStyle(() => {
         return {
-          height: allowExpand
-            ? showAllText
+          height: expandAllow
+            ? expanded
               ? withTiming(viewHeight.value)
               : withTiming(viewHeight.value)
-            : undefined
+            : viewHeight.value
         }
       })
 
-      const calNumberOfLines = useMemo(() => {
-        if (numberOfLines === 0) {
-          // For spoilers without calculation
-          return showAllText ? undefined : 1
-        } else {
-          if (heightOriginal) {
-            if (!heightTruncated) {
-              return numberOfLines
-            } else {
-              return undefined
-            }
-          } else {
-            return undefined
-          }
-        }
-      }, [heightOriginal, heightTruncated, allowExpand, showAllText])
-
       const onLayout = useCallback(
         ({ nativeEvent }) => {
-          if (numberOfLines === 0) {
-            // For spoilers without calculation
-            setAllowExpand(true)
+          if (!heightOriginal) {
+            setHeightOriginal(nativeEvent.layout.height)
+            setLines(numberOfLines === 0 ? 1 : numberOfLines)
           } else {
-            if (!heightOriginal) {
-              setHeightOriginal(nativeEvent.layout.height)
+            if (!heightTruncated) {
+              setHeightTruncated(nativeEvent.layout.height)
+              setLines(undefined)
             } else {
-              if (!heightTruncated) {
-                setHeightTruncated(nativeEvent.layout.height)
-              } else {
-                if (heightOriginal > heightTruncated) {
-                  setAllowExpand(true)
-                }
+              if (heightOriginal > heightTruncated) {
+                setExpandAllow(true)
               }
             }
           }
@@ -239,21 +227,21 @@ const ParseHTML: React.FC<Props> = ({
       return (
         <View>
           <Animated.View style={[ViewHeight, { overflow: 'hidden' }]}>
-            <Text
+            <Animated.Text
+              children={children}
+              onLayout={onLayout}
+              numberOfLines={lines}
               style={{
                 ...StyleConstants.FontStyle[size],
                 color: theme.primary,
-                height: allowExpand ? heightOriginal : undefined
+                height: expandAllow ? heightOriginal : undefined
               }}
-              children={children}
-              numberOfLines={calNumberOfLines}
-              onLayout={onLayout}
             />
           </Animated.View>
-          {allowExpand ? (
+          {expandAllow ? (
             <Pressable
-              onPress={() => setShowAllText(!showAllText)}
-              style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
+              onPress={() => setExpanded(!expanded)}
+              style={{ marginTop: expanded ? 0 : -lineHeight * 1.25 }}
             >
               <LinearGradient
                 colors={[
@@ -273,7 +261,7 @@ const ParseHTML: React.FC<Props> = ({
                     color: theme.primary
                   }}
                 >
-                  {`${showAllText ? '折叠' : '展开'}${expandHint}`}
+                  {`${expanded ? '折叠' : '展开'}${expandHint}`}
                 </Text>
               </LinearGradient>
             </Pressable>

@@ -27,8 +27,7 @@ const ParseEmojis: React.FC<Props> = ({
     },
     image: {
       width: StyleConstants.Font.Size[size],
-      height: StyleConstants.Font.Size[size],
-      marginBottom: -StyleConstants.Font.Size[size] * 0.125
+      height: StyleConstants.Font.Size[size]
     }
   })
 
@@ -51,7 +50,6 @@ const ParseEmojis: React.FC<Props> = ({
                   {/* When emoji starts a paragraph, lineHeight will break */}
                   {i === 0 ? <Text> </Text> : null}
                   <Image
-                    // resizeMode='contain'
                     source={{ uri: emojis[emojiIndex].url }}
                     style={[styles.image]}
                   />

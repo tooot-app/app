@@ -1,6 +1,6 @@
 export type ExtendedAttachment = {
   remote?: Mastodon.Attachment
-  local?: ImageInfo & { local_thumbnail?: string }
+  local?: ImageInfo & { local_thumbnail?: string; hash?: string }
   uploading?: boolean
 }
 
@@ -93,6 +93,10 @@ export type ComposeAction =
   | {
       type: 'attachment/upload/end'
       payload: { remote: Mastodon.Attachment; local: ImageInfo }
+    }
+  | {
+      type: 'attachment/upload/fail'
+      payload: ExtendedAttachment['local']['hash']
     }
   | {
       type: 'attachment/delete'

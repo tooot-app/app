@@ -41,6 +41,7 @@ const client = async ({
     instance === 'remote' ? instanceDomain || state.remote.url : state.local.url
 
   return axios({
+    timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
     baseURL: `https://${domain}/api/${version}/`,
     url,

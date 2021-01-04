@@ -141,19 +141,18 @@ const ComposeAttachments: React.FC = () => {
               ]}
             >
               <Chase
-                size={StyleConstants.Font.Size.L * 2}
+                size={StyleConstants.Font.Size.L * 1.5}
                 color={theme.primaryOverlay}
               />
             </View>
           ) : (
-            <>
+            <View style={styles.actions}>
               <Button
                 type='icon'
                 content='X'
                 spacing='M'
                 round
                 overlay
-                style={styles.delete}
                 onPress={() => {
                   layoutAnimation()
                   composeDispatch({
@@ -169,14 +168,13 @@ const ComposeAttachments: React.FC = () => {
                 spacing='M'
                 round
                 overlay
-                style={styles.edit}
                 onPress={() =>
                   navigation.navigate('Screen-Shared-Compose-EditAttachment', {
                     index
                   })
                 }
               />
-            </>
+            </View>
           )}
         </View>
       )
@@ -294,15 +292,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  delete: {
-    position: 'absolute',
-    top: StyleConstants.Spacing.S,
-    right: StyleConstants.Spacing.S
-  },
-  edit: {
-    position: 'absolute',
-    bottom: StyleConstants.Spacing.S,
-    right: StyleConstants.Spacing.S
+  actions: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'space-between',
+    alignContent: 'flex-end',
+    alignItems: 'flex-end',
+    padding: StyleConstants.Spacing.S
   }
 })
 

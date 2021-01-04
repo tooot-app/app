@@ -9,7 +9,7 @@ export const StyleConstants = {
   FontStyle: {
     S: { fontSize: 14, lineHeight: 18 },
     M: { fontSize: 16, lineHeight: 22 },
-    L: { fontSize: 20, lineHeight: 30 }
+    L: { fontSize: 20, lineHeight: 26 }
   },
 
   Spacing: {

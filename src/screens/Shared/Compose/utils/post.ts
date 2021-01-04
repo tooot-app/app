@@ -40,7 +40,7 @@ const composePost = async (
 
   formData.append('visibility', composeState.visibility)
 
-  const res = await client({
+  return client({
     method: 'post',
     instance: 'local',
     url: 'statuses',
@@ -63,12 +63,6 @@ const composePost = async (
     },
     body: formData
   })
-
-  if (res.body.id) {
-    return Promise.resolve()
-  } else {
-    return Promise.resolve()
-  }
 }
 
 export default composePost

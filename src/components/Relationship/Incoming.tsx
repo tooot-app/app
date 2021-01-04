@@ -32,7 +32,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
     onSuccess: ({ body }) => {
       haptics('Success')
       queryClient.setQueryData(relationshipQueryKey, body)
-      queryClient.invalidateQueries(['Notifications', {}])
+      queryClient.refetchQueries(['Notifications'])
     },
     onError: (err: any, { type }) => {
       haptics('Error')

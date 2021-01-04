@@ -1,5 +1,6 @@
 import client from '@api/client'
 import * as ImagePicker from 'expo-image-picker'
+import * as Crypto from 'expo-crypto'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { Dispatch } from 'react'
@@ -11,13 +12,17 @@ export interface Props {
 }
 
 const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
-  const uploadAttachment = (result: ImageInfo) => {
+  const uploadAttachment = async (result: ImageInfo) => {
+    const hash = await Crypto.digestStringAsync(
+      Crypto.CryptoDigestAlgorithm.SHA256,
+      result.uri + Math.random()
+    )
     switch (result.type) {
       case 'image':
         composeDispatch({
           type: 'attachment/upload/start',
           payload: {
-            local: { ...result, local_thumbnail: result.uri },
+            local: { ...result, local_thumbnail: result.uri, hash },
             uploading: true
           }
         })
@@ -28,7 +33,7 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
             composeDispatch({
               type: 'attachment/upload/start',
               payload: {
-                local: { ...result, local_thumbnail: uri },
+                local: { ...result, local_thumbnail: uri, hash },
                 uploading: true
               }
             })
@@ -37,7 +42,7 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
             composeDispatch({
               type: 'attachment/upload/start',
               payload: {
-                local: result,
+                local: { ...result, hash },
                 uploading: true
               }
             })
@@ -47,7 +52,7 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
         composeDispatch({
           type: 'attachment/upload/start',
           payload: {
-            local: result,
+            local: { ...result, hash },
             uploading: true
           }
         })
@@ -62,7 +67,7 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
       type: 'image/jpeg/jpg'
     })
 
-    client({
+    return client({
       method: 'post',
       instance: 'local',
       url: 'media',
@@ -74,25 +79,30 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
             type: 'attachment/upload/end',
             payload: { remote: body, local: result }
           })
-          return Promise.resolve()
         } else {
+          composeDispatch({
+            type: 'attachment/upload/fail',
+            payload: hash
+          })
           Alert.alert('上传失败', '', [
             {
               text: '返回重试',
               onPress: () => {}
             }
           ])
-          return Promise.reject()
         }
       })
       .catch(() => {
+        composeDispatch({
+          type: 'attachment/upload/fail',
+          payload: hash
+        })
         Alert.alert('上传失败', '', [
           {
             text: '返回重试',
             onPress: () => {}
           }
         ])
-        return Promise.reject()
       })
   }
 

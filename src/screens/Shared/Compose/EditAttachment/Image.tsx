@@ -29,10 +29,16 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
   const theAttachmentRemote = composeState.attachments.uploads[index].remote!
   const theAttachmentLocal = composeState.attachments.uploads[index].local!
 
+  const imageWidthBase =
+    theAttachmentRemote.meta?.original?.aspect < 1
+      ? Dimensions.get('screen').width *
+        theAttachmentRemote.meta?.original?.aspect
+      : Dimensions.get('screen').width
+  const padding = (Dimensions.get('screen').width - imageWidthBase) / 2
   const imageDimensionis = {
-    width: Dimensions.get('screen').width,
+    width: imageWidthBase,
     height:
-      Dimensions.get('screen').width /
+      imageWidthBase /
       (theAttachmentRemote as Mastodon.AttachmentImage).meta?.original?.aspect!
   }
 
@@ -75,8 +81,14 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
         {
           translateX: interpolate(
             panX.value,
-            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
-            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
+            [
+              -imageDimensionis.width / 2 + padding,
+              imageDimensionis.width / 2 + padding
+            ],
+            [
+              -imageDimensionis.width / 2 + padding,
+              imageDimensionis.width / 2 + padding
+            ],
             Extrapolate.CLAMP
           )
         },
@@ -94,7 +106,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
 
   return (
     <>
-      <View style={{ overflow: 'hidden' }}>
+      <View style={{ overflow: 'hidden', flex: 1, alignItems: 'center' }}>
         <Image
           style={{
             width: imageDimensionis.width,
@@ -126,13 +138,13 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
                   />
                   <G transform='translate(967, 967)'>
                     <Circle
-                      stroke={theme.background}
+                      stroke={theme.primaryOverlay}
                       strokeWidth='2'
                       cx='33'
                       cy='33'
                       r='33'
                     />
-                    <Circle fill={theme.background} cx='33' cy='33' r='2' />
+                    <Circle fill={theme.primaryOverlay} cx='33' cy='33' r='2' />
                   </G>
                 </G>
               </G>

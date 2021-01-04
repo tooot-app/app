@@ -174,7 +174,23 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
           composePost(params, composeState)
             .then(() => {
               haptics('Success')
-              queryClient.invalidateQueries(['Following'])
+              queryClient.invalidateQueries(['Following', {}])
+              if (
+                params?.type &&
+                (params.type === 'reply' || params.type === 'conversation')
+              ) {
+                queryClient.invalidateQueries(
+                  [
+                    'Toot',
+                    {
+                      toot: params.incomingStatus.reblog
+                        ? params.incomingStatus.reblog.id
+                        : params.incomingStatus.id
+                    }
+                  ],
+                  { exact: true, active: true }
+                )
+              }
               navigation.goBack()
             })
             .catch(() => {

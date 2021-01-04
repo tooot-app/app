@@ -102,7 +102,11 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   const queryNotification = useInfiniteQuery(
     ['Notifications', {}],
     timelineFetch,
-    { enabled: localInstance ? true : false }
+    {
+      enabled: localInstance ? true : false,
+      refetchInterval: 1000 * 60,
+      refetchIntervalInBackground: true
+    }
   )
   const prevNotification = useSelector(getLocalNotification)
   useEffect(() => {

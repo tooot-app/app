@@ -38,10 +38,19 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
         return <ComposeEditAttachmentImage index={index} focus={focus} />
       case 'video':
       case 'gifv':
+        const video = composeState.attachments.uploads[index]
         return (
           <AttachmentVideo
             sensitiveShown={false}
-            video={theAttachment as Mastodon.AttachmentVideo}
+            video={
+              video.local
+                ? ({
+                    url: video.local.uri,
+                    preview_url: video.local.local_thumbnail,
+                    blurhash: video.remote?.blurhash
+                  } as Mastodon.AttachmentVideo)
+                : (video.remote! as Mastodon.AttachmentVideo)
+            }
           />
         )
     }
@@ -56,7 +65,6 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
           为附件添加文字说明
         </Text>
         <TextInput
-          autoFocus
           style={[styles.altTextInput, { borderColor: theme.border }]}
           autoCapitalize='none'
           autoCorrect={false}
