@@ -1,14 +1,19 @@
 import SegmentedControl from '@react-native-community/segmented-control'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { MutableRefObject, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Animated, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle
+} from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AccountContext from './utils/createContext'
 
 export interface Props {
-  scrollY: MutableRefObject<Animated.Value>
+  scrollY: Animated.SharedValue<number>
 }
 
 const AccountSegmentedControl: React.FC<Props> = ({ scrollY }) => {
@@ -17,32 +22,40 @@ const AccountSegmentedControl: React.FC<Props> = ({ scrollY }) => {
   const { mode, theme } = useTheme()
 
   const headerHeight = useSafeAreaInsets().top + 44
-  const translateY = scrollY.current.interpolate({
-    inputRange: [
-      0,
-      (accountState.informationLayout?.y || 0) +
-        (accountState.informationLayout?.height || 0) -
-        headerHeight
-    ],
-    outputRange: [
-      0,
-      -(accountState.informationLayout?.y || 0) -
-        (accountState.informationLayout?.height || 0) +
-        headerHeight
-    ],
-    extrapolate: 'clamp',
-    easing: undefined
+  const styleTransform = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            scrollY.value,
+            [
+              0,
+              (accountState.informationLayout?.y || 0) +
+                (accountState.informationLayout?.height || 0) -
+                headerHeight
+            ],
+            [
+              0,
+              -(accountState.informationLayout?.y || 0) -
+                (accountState.informationLayout?.height || 0) +
+                headerHeight
+            ],
+            Extrapolate.CLAMP
+          )
+        }
+      ]
+    }
   })
 
   return (
     <Animated.View
       style={[
         styles.base,
+        styleTransform,
         {
           top:
             (accountState.informationLayout?.y || 0) +
             (accountState.informationLayout?.height || 0),
-          transform: [{ translateY }],
           borderTopColor: theme.border,
           backgroundColor: theme.background
         }

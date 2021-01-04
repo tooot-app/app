@@ -1,14 +1,16 @@
 import client from '@api/client'
+import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { toast, toastConfig } from '@components/toast'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   NavigationContainer,
   NavigationContainerRef
 } from '@react-navigation/native'
 import ScreenLocal from '@screens/Local'
-import ScreenPublic from '@screens/Public'
-import ScreenNotifications from '@screens/Notifications'
 import ScreenMe from '@screens/Me'
+import ScreenNotifications from '@screens/Notifications'
+import ScreenPublic from '@screens/Public'
 import { timelineFetch } from '@utils/fetches/timelineFetch'
 import {
   getLocalNotification,
@@ -18,13 +20,12 @@ import {
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
-import { toast, toastConfig } from '@components/toast'
 import * as Analytics from 'expo-firebase-analytics'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
-import { useDispatch, useSelector } from 'react-redux'
 import { useInfiniteQuery } from 'react-query'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
@@ -214,12 +215,13 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
     }),
     [localInstance]
   )
-  const tabScreenComposeListeners = useCallback(
-    ({ navigation }) => ({
+  const tabScreenComposeListeners = useMemo(
+    () => ({
       tabPress: (e: any) => {
         e.preventDefault()
         if (localInstance) {
-          navigation.navigate('Screen-Shared-Compose')
+          haptics('Medium')
+          navigationRef.current?.navigate('Screen-Shared-Compose')
         }
       }
     }),

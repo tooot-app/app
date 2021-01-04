@@ -3,12 +3,18 @@ import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import Animated, {
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring,
+  withTiming
+} from 'react-native-reanimated'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -170,6 +176,27 @@ const ParseHTML: React.FC<Props> = ({
       const [allowExpand, setAllowExpand] = useState(false)
       const [showAllText, setShowAllText] = useState(false)
 
+      const viewHeight = useDerivedValue(() => {
+        if (allowExpand) {
+          if (showAllText) {
+            return heightOriginal as number
+          } else {
+            return heightTruncated as number
+          }
+        } else {
+          return heightOriginal as number
+        }
+      }, [heightOriginal, heightTruncated, allowExpand, showAllText])
+      const ViewHeight = useAnimatedStyle(() => {
+        return {
+          height: allowExpand
+            ? showAllText
+              ? withTiming(viewHeight.value)
+              : withTiming(viewHeight.value)
+            : undefined
+        }
+      })
+
       const calNumberOfLines = useMemo(() => {
         if (numberOfLines === 0) {
           // For spoilers without calculation
@@ -179,11 +206,7 @@ const ParseHTML: React.FC<Props> = ({
             if (!heightTruncated) {
               return numberOfLines
             } else {
-              if (allowExpand && !showAllText) {
-                return numberOfLines
-              } else {
-                return undefined
-              }
+              return undefined
             }
           } else {
             return undefined
@@ -215,22 +238,21 @@ const ParseHTML: React.FC<Props> = ({
 
       return (
         <View>
-          <Text
-            style={{
-              ...StyleConstants.FontStyle[size],
-              color: theme.primary,
-              overflow: 'hidden'
-            }}
-            children={children}
-            numberOfLines={calNumberOfLines}
-            onLayout={onLayout}
-          />
+          <Animated.View style={[ViewHeight, { overflow: 'hidden' }]}>
+            <Text
+              style={{
+                ...StyleConstants.FontStyle[size],
+                color: theme.primary,
+                height: allowExpand ? heightOriginal : undefined
+              }}
+              children={children}
+              numberOfLines={calNumberOfLines}
+              onLayout={onLayout}
+            />
+          </Animated.View>
           {allowExpand ? (
             <Pressable
-              onPress={() => {
-                layoutAnimation()
-                setShowAllText(!showAllText)
-              }}
+              onPress={() => setShowAllText(!showAllText)}
               style={{ marginTop: showAllText ? 0 : -lineHeight * 1.25 }}
             >
               <LinearGradient

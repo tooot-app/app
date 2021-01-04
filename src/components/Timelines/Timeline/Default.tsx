@@ -58,11 +58,11 @@ const TimelineDefault: React.FC<Props> = ({
           {...(!isRemotePublic && { queryKey })}
           account={actualStatus.account}
         />
-        {/* <TimelineHeaderDefault
+        <TimelineHeaderDefault
           {...(!isRemotePublic && { queryKey })}
           status={actualStatus}
           sameAccount={actualStatus.account.id === localAccountId}
-        /> */}
+        />
       </View>
 
       <View

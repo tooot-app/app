@@ -5,6 +5,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
+import * as Sentry from 'sentry-expo'
 
 export interface Params {
   type: 'success' | 'error' | 'warning'
@@ -73,11 +74,17 @@ const ToastBase = ({ config }: { config: Config }) => {
           color={theme[colorMapping[config.type]]}
         />
         <View style={styles.texts}>
-          <Text style={[styles.text1, { color: theme.primary }]}>
+          <Text
+            style={[styles.text1, { color: theme.primary }]}
+            numberOfLines={2}
+          >
             {config.text1}
           </Text>
           {config.text2 && (
-            <Text style={[styles.text2, { color: theme.secondary }]}>
+            <Text
+              style={[styles.text2, { color: theme.secondary }]}
+              numberOfLines={2}
+            >
               {config.text2}
             </Text>
           )}
@@ -89,8 +96,11 @@ const ToastBase = ({ config }: { config: Config }) => {
 
 const toastConfig = {
   success: (config: Config) => <ToastBase config={config} />,
-  error: (config: Config) => <ToastBase config={config} />,
-  warning: (config: Config) => <ToastBase config={config} />
+  warning: (config: Config) => <ToastBase config={config} />,
+  error: (config: Config) => {
+    Sentry.Native.captureException([config.text1, config.text2])
+    return <ToastBase config={config} />
+  }
 }
 
 const styles = StyleSheet.create({

@@ -4,7 +4,10 @@ import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/H
 import { accountFetch } from '@utils/fetches/accountFetch'
 import { getLocalAccountId } from '@utils/slices/instancesSlice'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import { Animated, ScrollView } from 'react-native'
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from 'react-native-reanimated'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import AccountHeader from './Account/Header'
@@ -36,7 +39,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
   const localAccountId = useSelector(getLocalAccountId)
   const { data } = useQuery(['Account', { id: account.id }], accountFetch)
 
-  const scrollY = useRef(new Animated.Value(0))
+  const scrollY = useSharedValue(0)
   const [accountState, accountDispatch] = useReducer(
     accountReducer,
     accountInitialState
@@ -56,6 +59,10 @@ const ScreenSharedAccount: React.FC<Props> = ({
     return updateHeaderRight()
   }, [])
 
+  const onScroll = useAnimatedScrollHandler(event => {
+    scrollY.value = event.contentOffset.y
+  })
+
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
       <AccountNav scrollY={scrollY} account={data} />
@@ -63,18 +70,15 @@ const ScreenSharedAccount: React.FC<Props> = ({
       accountState.informationLayout.y ? (
         <AccountSegmentedControl scrollY={scrollY} />
       ) : null}
-      <ScrollView
+      <Animated.ScrollView
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY.current } } }],
-          { useNativeDriver: false }
-        )}
+        onScroll={onScroll}
       >
         <AccountHeader account={data} />
         <AccountInformation account={data} />
         <AccountToots id={account.id} />
-      </ScrollView>
+      </Animated.ScrollView>
 
       <BottomSheet
         visible={modalVisible}

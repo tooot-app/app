@@ -13,15 +13,18 @@ export interface Props {
 
 const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
   const videoPlayer = useRef<Video>(null)
+  const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)
   const playOnPress = useCallback(async () => {
+    setVideoLoading(true)
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })
     }
     await videoPlayer.current?.setPositionAsync(videoPosition)
     await videoPlayer.current?.presentFullscreenPlayer()
     videoPlayer.current?.playAsync()
+    setVideoLoading(false)
     videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
       if (props.isLoaded) {
         setVideoLoaded(true)
@@ -46,7 +49,7 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
         resizeMode='cover'
         usePoster
         posterSource={{ uri: video.preview_url }}
-        posterStyle={{ flex: 1 }}
+        posterStyle={{ resizeMode: 'cover' }}
         useNativeControls={false}
       />
       <Pressable style={styles.overlay}>
@@ -63,12 +66,13 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
           ) : null
         ) : (
           <Button
-            type='icon'
-            content='PlayCircle'
-            size='L'
             round
             overlay
+            size='L'
+            type='icon'
+            content='PlayCircle'
             onPress={playOnPress}
+            loading={videoLoading}
           />
         )}
       </Pressable>

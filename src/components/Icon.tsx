@@ -6,6 +6,7 @@ export interface Props {
   name: string
   size: number
   color: string
+  fill?: string
   strokeWidth?: number
   inline?: boolean // When used in line of text, need to drag it down
   style?: StyleProp<ViewStyle>
@@ -15,6 +16,7 @@ const Icon: React.FC<Props> = ({
   name,
   size,
   color,
+  fill,
   strokeWidth = 2,
   inline = false,
   style
@@ -36,6 +38,7 @@ const Icon: React.FC<Props> = ({
         width: size,
         height: size,
         color,
+        fill,
         strokeWidth
       })}
     </View>

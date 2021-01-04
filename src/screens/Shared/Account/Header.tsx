@@ -1,6 +1,11 @@
-import { useTheme } from '@root/utils/styles/ThemeManager'
-import React, { useContext, useEffect, useState } from 'react'
-import { Dimensions, Image, StyleSheet, View } from 'react-native'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useContext, useEffect } from 'react'
+import { Dimensions, Image } from 'react-native'
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated'
 import AccountContext from './utils/createContext'
 
 export interface Props {
@@ -11,58 +16,39 @@ export interface Props {
 const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
   const { accountState, accountDispatch } = useContext(AccountContext)
   const { theme } = useTheme()
-  const [ratio, setRatio] = useState(accountState.headerRatio)
 
-  let isMounted = false
-  useEffect(() => {
-    isMounted = true
-
-    return () => {
-      isMounted = false
+  const height = useSharedValue(
+    Dimensions.get('screen').width * accountState.headerRatio
+  )
+  const styleHeight = useAnimatedStyle(() => {
+    return {
+      height: withTiming(height.value)
     }
   })
+
   useEffect(() => {
     if (
       account?.header &&
       !account.header.includes('/headers/original/missing.png')
     ) {
-      isMounted &&
-        Image.getSize(account.header, (width, height) => {
-          if (!limitHeight) {
-            accountDispatch &&
-              accountDispatch({
-                type: 'headerRatio',
-                payload: height / width
-              })
-          }
-          isMounted &&
-            setRatio(limitHeight ? accountState.headerRatio : height / width)
-        })
-    } else {
-      isMounted && setRatio(1 / 3)
+      Image.getSize(account.header, (width, height) => {
+        if (!limitHeight) {
+          accountDispatch({
+            type: 'headerRatio',
+            payload: height / width
+          })
+        }
+      })
     }
-  }, [account, isMounted])
-
-  const windowWidth = Dimensions.get('window').width
+  }, [account])
 
   return (
-    <View
-      style={{
-        height: windowWidth * ratio,
-        backgroundColor: theme.disabled
-      }}
-    >
-      <Image source={{ uri: account?.header }} style={styles.image} />
-    </View>
+    <Animated.Image
+      source={{ uri: account?.header }}
+      style={[styleHeight, { backgroundColor: theme.disabled }]}
+    />
   )
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: '100%'
-  }
-})
 
 export default React.memo(
   AccountHeader,

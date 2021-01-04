@@ -102,13 +102,20 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
       return oldData
     },
-    onError: (_, { type }, oldData) => {
+    onError: (err: any, { type }, oldData) => {
       haptics('Error')
       toast({
         type: 'error',
-        message: t('common:toastMessage.success.message', {
+        message: t('common:toastMessage.error.message', {
           function: t(`timeline:shared.actions.${type}.function`)
-        })
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          })
       })
       queryClient.setQueryData(queryKey, oldData)
     }
@@ -118,8 +125,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     () =>
       navigation.navigate('Screen-Shared-Compose', {
         type: 'reply',
-        incomingStatus: status,
-        visibilityLock: status.visibility === 'direct'
+        incomingStatus: status
       }),
     []
   )

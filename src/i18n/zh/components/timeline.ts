@@ -12,7 +12,9 @@ export default {
     actioned: {
       pinned: '置顶',
       favourite: '{{name}} 喜欢了你的嘟嘟',
+      status: '{{name}} 刚刚发嘟',
       follow: '{{name}} 开始关注你',
+      follow_request: '{{name}} 请求关注',
       poll: '您参与的投票已结束',
       reblog: {
         default: '{{name}} 转嘟了',
@@ -51,6 +53,11 @@ export default {
     header: {
       shared: {
         application: '发自于 {{application}}'
+      },
+      conversation: {
+        delete: {
+          function: '删除私信'
+        }
       },
       default: {
         actions: {

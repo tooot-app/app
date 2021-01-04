@@ -6,6 +6,7 @@ import { resetLocal } from '@root/utils/slices/instancesSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import chalk from 'chalk'
 import * as Analytics from 'expo-firebase-analytics'
+import { Audio } from 'expo-av'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { enableScreens } from 'react-native-screens'
@@ -50,6 +51,12 @@ Sentry.init({
 
 startingLog('log', 'initializing react-query')
 const queryClient = new QueryClient()
+
+startingLog('log', 'setting audio playback default options')
+Audio.setAudioModeAsync({
+  playsInSilentModeIOS: true,
+  interruptionModeIOS: 1
+})
 
 startingLog('log', 'initializing native screen')
 enableScreens()

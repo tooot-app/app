@@ -65,7 +65,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({
         />
       )}
 
-      {queryKey && (
+      {queryKey && modalVisible && (
         <BottomSheet
           visible={modalVisible}
           handleDismiss={() => setBottomSheetVisible(false)}

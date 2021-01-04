@@ -5,6 +5,7 @@ import { toast } from '@components/toast'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 import HeaderSharedAccount from './HeaderShared/Account'
@@ -16,25 +17,15 @@ export interface Props {
 }
 
 const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
+  const { t } = useTranslation()
+
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(async () => {
-    const res = await client({
+  const fireMutation = useCallback(() => {
+    return client({
       method: 'delete',
       instance: 'local',
       url: `conversations/${conversation.id}`
     })
-
-    if (!res.body.error) {
-      toast({ type: 'success', message: '删除私信成功' })
-      return Promise.resolve()
-    } else {
-      toast({
-        type: 'error',
-        message: '删除私信失败，请重试',
-        autoHide: false
-      })
-      return Promise.reject()
-    }
   }, [])
   const { mutate } = useMutation(fireMutation, {
     onMutate: () => {
@@ -53,9 +44,22 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
       return oldData
     },
-    onError: (err, _, oldData) => {
+    onError: (err: any, _, oldData) => {
       haptics('Error')
-      toast({ type: 'error', message: '请重试', autoHide: false })
+      toast({
+        type: 'error',
+        message: t('common:toastMessage.error.message', {
+          function: t(`timeline:shared.header.conversation.delete.function`)
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          }),
+        autoHide: false
+      })
       queryClient.setQueryData(queryKey, oldData)
     }
   })
@@ -85,9 +89,6 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
               created_at={conversation.last_status?.created_at}
             />
           ) : null}
-          {conversation.unread && (
-            <Icon name='Circle' color={theme.blue} style={styles.unread} />
-          )}
         </View>
       </View>
 
@@ -116,9 +117,6 @@ const styles = StyleSheet.create({
   },
   created_at: {
     ...StyleConstants.FontStyle.S
-  },
-  unread: {
-    marginLeft: StyleConstants.Spacing.XS
   },
   action: {
     flex: 1,

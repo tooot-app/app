@@ -13,9 +13,9 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import prettyBytes from 'pretty-bytes'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
+import { ActionSheetIOS, Button, StyleSheet, Text, View } from 'react-native'
 import { CacheManager } from 'react-native-expo-image-cache'
 import { useDispatch, useSelector } from 'react-redux'
 

@@ -57,5 +57,8 @@ export default (): ExpoConfig => ({
         measurementId: 'G-3J0FS8WV5J'
       }
     }
+  },
+  experiments: {
+    turboModules: true
   }
 })

@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import {
   Pressable,
   StyleProp,
@@ -12,6 +12,7 @@ import {
   ViewStyle
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
+import Animated from 'react-native-reanimated'
 
 export interface Props {
   style?: StyleProp<ViewStyle>
@@ -48,7 +49,14 @@ const Button: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
 
-  useEffect(() => layoutAnimation(), [content, loading, disabled])
+  const mounted = useRef(false)
+  useEffect(() => {
+    if (mounted.current) {
+      layoutAnimation()
+    } else {
+      mounted.current = true
+    }
+  }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (
@@ -139,24 +147,26 @@ const Button: React.FC<Props> = ({
   }
 
   return (
-    <Pressable
-      style={[
-        styles.button,
-        {
-          borderWidth: overlay ? 0 : 1,
-          borderColor: colorBorder,
-          backgroundColor: colorBackground,
-          paddingVertical: StyleConstants.Spacing[spacing],
-          paddingHorizontal:
-            StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
-        },
-        customStyle
-      ]}
-      testID='base'
-      onPress={onPress}
-      children={children}
-      disabled={disabled || loading}
-    />
+    <Animated.View>
+      <Pressable
+        style={[
+          styles.button,
+          {
+            borderWidth: overlay ? 0 : 1,
+            borderColor: colorBorder,
+            backgroundColor: colorBackground,
+            paddingVertical: StyleConstants.Spacing[spacing],
+            paddingHorizontal:
+              StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
+          },
+          customStyle
+        ]}
+        testID='base'
+        onPress={onPress}
+        children={children}
+        disabled={disabled || loading}
+      />
+    </Animated.View>
   )
 }
 

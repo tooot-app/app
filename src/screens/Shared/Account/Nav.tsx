@@ -1,13 +1,18 @@
 import { ParseEmojis } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { MutableRefObject, useContext } from 'react'
-import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
+import React, { useContext } from 'react'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle
+} from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AccountContext from './utils/createContext'
 
 export interface Props {
-  scrollY: MutableRefObject<Animated.Value>
+  scrollY: Animated.SharedValue<number>
   account: Mastodon.Account | undefined
 }
 
@@ -23,19 +28,28 @@ const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
     StyleConstants.Spacing.M -
     headerHeight
 
+  const styleOpacity = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, 200], [0, 1], Extrapolate.CLAMP)
+    }
+  })
+  const styleMarginTop = useAnimatedStyle(() => {
+    return {
+      marginTop: interpolate(
+        scrollY.value,
+        [nameY, nameY + 20],
+        [50, 0],
+        Extrapolate.CLAMP
+      )
+    }
+  })
+
   return (
     <Animated.View
       style={[
         styles.base,
-        {
-          backgroundColor: theme.background,
-          opacity: scrollY.current.interpolate({
-            inputRange: [0, 200],
-            outputRange: [0, 1],
-            extrapolate: 'clamp'
-          }),
-          height: headerHeight
-        }
+        styleOpacity,
+        { backgroundColor: theme.background, height: headerHeight }
       ]}
     >
       <View
@@ -47,18 +61,7 @@ const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
           }
         ]}
       >
-        <Animated.View
-          style={[
-            styles.display_name,
-            {
-              marginTop: scrollY.current.interpolate({
-                inputRange: [nameY, nameY + 20],
-                outputRange: [50, 0],
-                extrapolate: 'clamp'
-              })
-            }
-          ]}
-        >
+        <Animated.View style={[styles.display_name, styleMarginTop]}>
           {account ? (
             <Text numberOfLines={1}>
               <ParseEmojis
@@ -89,4 +92,5 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(AccountNav, (_, next) => next.account === undefined)
+// export default React.memo(AccountNav, (_, next) => next.account === undefined)
+export default AccountNav

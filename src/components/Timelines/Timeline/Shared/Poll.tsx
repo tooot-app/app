@@ -5,6 +5,7 @@ import Icon from '@components/Icon'
 import relativeTime from '@components/relativeTime'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { ParseEmojis } from '@root/components/Parse'
+import { toast } from '@root/components/toast'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
@@ -12,35 +13,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
-
-const fireMutation = async ({
-  id,
-  options
-}: {
-  id: string
-  options?: boolean[]
-}) => {
-  const formData = new FormData()
-  options &&
-    options.forEach((o, i) => {
-      if (options[i]) {
-        formData.append('choices[]', i.toString())
-      }
-    })
-
-  const res = await client({
-    method: options ? 'post' : 'get',
-    instance: 'local',
-    url: options ? `polls/${id}/votes` : `polls/${id}`,
-    ...(options && { body: formData })
-  })
-
-  if (res.body.id === id) {
-    return Promise.resolve(res.body as Mastodon.Poll)
-  } else {
-    return Promise.reject()
-  }
-}
 
 export interface Props {
   queryKey: QueryKey.Timeline
@@ -57,14 +29,33 @@ const TimelinePoll: React.FC<Props> = ({
 }) => {
   const { mode, theme } = useTheme()
   const { t, i18n } = useTranslation('timeline')
-  const queryClient = useQueryClient()
 
   const [allOptions, setAllOptions] = useState(
     new Array(poll.options.length).fill(false)
   )
 
+  const queryClient = useQueryClient()
+  const fireMutation = useCallback(
+    ({ type }: { type: 'vote' | 'refresh' }) => {
+      const formData = new FormData()
+      type === 'vote' &&
+        allOptions.forEach((o, i) => {
+          if (allOptions[i]) {
+            formData.append('choices[]', i.toString())
+          }
+        })
+
+      return client({
+        method: type === 'vote' ? 'post' : 'get',
+        instance: 'local',
+        url: type === 'vote' ? `polls/${poll.id}/votes` : `polls/${poll.id}`,
+        ...(type === 'vote' && { body: formData })
+      })
+    },
+    [allOptions]
+  )
   const mutation = useMutation(fireMutation, {
-    onSuccess: (data, { id }) => {
+    onSuccess: ({ body }) => {
       queryClient.cancelQueries(queryKey)
 
       queryClient.setQueryData<TimelineData>(queryKey, old => {
@@ -72,7 +63,7 @@ const TimelinePoll: React.FC<Props> = ({
         const pageIndex = findIndex(old?.pages, page => {
           const tempIndex = findIndex(page.toots, [
             reblog ? 'reblog.poll.id' : 'poll.id',
-            id
+            poll.id
           ])
           if (tempIndex >= 0) {
             tootIndex = tempIndex
@@ -84,9 +75,9 @@ const TimelinePoll: React.FC<Props> = ({
 
         if (pageIndex >= 0 && tootIndex >= 0) {
           if (reblog) {
-            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = data
+            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = body
           } else {
-            old!.pages[pageIndex].toots[tootIndex].poll = data
+            old!.pages[pageIndex].toots[tootIndex].poll = body
           }
         }
         return old
@@ -94,8 +85,21 @@ const TimelinePoll: React.FC<Props> = ({
 
       haptics('Success')
     },
-    onError: () => {
+    onError: (err: any) => {
       haptics('Error')
+      toast({
+        type: 'error',
+        message: '投票错误',
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          }),
+        autoHide: false
+      })
+      queryClient.invalidateQueries(queryKey)
     }
   })
 
@@ -105,9 +109,7 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() =>
-                mutation.mutate({ id: poll.id, options: allOptions })
-              }
+              onPress={() => mutation.mutate({ type: 'vote' })}
               type='text'
               content={t('shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
@@ -119,7 +121,7 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() => mutation.mutate({ id: poll.id })}
+              onPress={() => mutation.mutate({ type: 'refresh' })}
               type='text'
               content={t('shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}

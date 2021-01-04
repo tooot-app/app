@@ -1,16 +1,19 @@
-import React, { useEffect, useRef } from 'react'
-import {
-  Animated,
-  Dimensions,
-  Modal,
-  PanResponder,
-  StyleSheet,
-  View
-} from 'react-native'
+import React from 'react'
+import { Dimensions, Modal, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 import Button from '@components/Button'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import Animated, {
+  Extrapolate,
+  interpolate,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated'
 
 export interface Props {
   children: React.ReactNode
@@ -22,76 +25,63 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
   const { theme } = useTheme()
   const insets = useSafeAreaInsets()
 
-  const panY = useRef(new Animated.Value(Dimensions.get('screen').height))
-    .current
-  const top = panY.interpolate({
-    inputRange: [-1, 0, 1],
-    outputRange: [0, 0, 1]
-  })
-  const resetModal = Animated.timing(panY, {
-    toValue: 0,
-    duration: 300,
-    useNativeDriver: false
-  })
-
-  const closeModal = Animated.timing(panY, {
-    toValue: Dimensions.get('screen').height,
-    duration: 350,
-    useNativeDriver: false
-  })
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, { dy: panY }], {
-        useNativeDriver: false
-      }),
-      onPanResponderRelease: (e, gs) => {
-        if (gs.dy > 0 && gs.vy > 1) {
-          return closeModal.start(() => handleDismiss())
-        } else if (gs.dy === 0 && gs.vy === 0) {
-          return closeModal.start(() => handleDismiss())
-        }
-        return resetModal.start()
-      }
-    })
-  ).current
-
-  useEffect(() => {
-    if (visible) {
-      resetModal.start()
+  const screenHeight = Dimensions.get('screen').height
+  const panY = useSharedValue(0)
+  const styleTop = useAnimatedStyle(() => {
+    return {
+      top: interpolate(
+        panY.value,
+        [0, screenHeight],
+        [0, screenHeight],
+        Extrapolate.CLAMP
+      )
     }
-  }, [visible])
+  })
+  const callDismiss = () => {
+    handleDismiss()
+  }
+  const onGestureEvent = useAnimatedGestureHandler({
+    onActive: ({ translationY }) => {
+      panY.value = translationY
+    },
+    onEnd: ({ velocityY }) => {
+      if (velocityY > 500) {
+        runOnJS(callDismiss)()
+      } else {
+        panY.value = withTiming(0)
+      }
+    }
+  })
 
   return (
     <Modal animated animationType='fade' visible={visible} transparent>
-      <View
-        style={[styles.overlay, { backgroundColor: theme.backgroundOverlay }]}
-        {...panResponder.panHandlers}
-      >
+      <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View
-          style={[
-            styles.container,
-            {
-              top,
-              backgroundColor: theme.background,
-              paddingBottom: insets.bottom || StyleConstants.Spacing.L
-            }
-          ]}
+          style={[styles.overlay, { backgroundColor: theme.backgroundOverlay }]}
         >
-          <View
-            style={[styles.handle, { backgroundColor: theme.background }]}
-          />
-          {children}
-          <Button
-            type='text'
-            content='取消'
-            onPress={() => closeModal.start(() => handleDismiss())}
-            style={styles.button}
-          />
+          <Animated.View
+            style={[
+              styles.container,
+              styleTop,
+              {
+                backgroundColor: theme.background,
+                paddingBottom: insets.bottom || StyleConstants.Spacing.L
+              }
+            ]}
+          >
+            <View
+              style={[styles.handle, { backgroundColor: theme.primaryOverlay }]}
+            />
+            {children}
+            <Button
+              type='text'
+              content='取消'
+              onPress={() => handleDismiss()}
+              style={styles.button}
+            />
+          </Animated.View>
         </Animated.View>
-      </View>
+      </PanGestureHandler>
     </Modal>
   )
 }

@@ -1,21 +1,20 @@
-import React, { useCallback, useState } from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
-import SegmentedControl from '@react-native-community/segmented-control'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useSelector } from 'react-redux'
-
+import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
+import SegmentedControl from '@react-native-community/segmented-control'
+import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import { getLocalUrl, getRemoteUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { useNavigation } from '@react-navigation/native'
-import { HeaderRight } from './Header'
+import React, { useCallback, useState } from 'react'
+import { Dimensions, StyleSheet, View } from 'react-native'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
+import { useSelector } from 'react-redux'
 
 const Stack = createNativeStackNavigator()
 
 export interface Props {
-  name: 'Screen-Local-Root' | 'Screen-Public-Root'
+  name: 'Local' | 'Public'
   content: { title: string; page: App.Pages }[]
 }
 
@@ -27,7 +26,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   const [segment, setSegment] = useState(0)
 
   const onPressSearch = useCallback(() => {
-    navigation.navigate('Screen-Shared-Search')
+    navigation.navigate(`Screen-${name}`, { screen: 'Screen-Shared-Search' })
   }, [])
 
   const routes = content
@@ -69,9 +68,9 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   return (
     <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
-        name={name}
+        name={`Screen-${name}-Root`}
         options={{
-          headerTitle: name === 'Screen-Public-Root' ? publicDomain : '',
+          headerTitle: name === 'Public' ? publicDomain : '',
           ...(localRegistered && {
             headerCenter: () => (
               <View style={styles.segmentsContainer}>

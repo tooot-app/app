@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react'
-import { Image, Pressable, StyleSheet, View } from 'react-native'
-import { Audio } from 'expo-av'
 import Button from '@components/Button'
+import { Slider } from '@sharcoux/slider'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { Audio } from 'expo-av'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
-import Slider from '@react-native-community/slider'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
+import React, { useCallback, useState } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
 
 export interface Props {
   sensitiveShown: boolean
@@ -21,10 +21,6 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
   const [audioPosition, setAudioPosition] = useState(0)
   const playAudio = useCallback(async () => {
     if (!audioPlayer) {
-      await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-        interruptionModeIOS: 1
-      })
       const { sound } = await Audio.Sound.createAsync(
         { uri: audio.url },
         {},
@@ -44,7 +40,7 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
   }, [audioPlayer])
 
   return (
-    <View style={styles.base}>
+    <View style={[styles.base, { backgroundColor: theme.disabled }]}>
       <View style={styles.overlay}>
         {sensitiveShown ? (
           audio.blurhash && (
@@ -80,32 +76,33 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
       </View>
       <View
         style={{
-          position: 'absolute',
-          bottom: 0,
+          alignSelf: 'flex-end',
           width: '100%',
+          height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
           backgroundColor: theme.backgroundOverlay,
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          paddingVertical: StyleConstants.Spacing.XS,
-          borderRadius: 6,
+          borderRadius: 100,
           opacity: sensitiveShown ? 0.35 : undefined
         }}
       >
         <Slider
-          style={{
-            width: '100%'
-          }}
           minimumValue={0}
           maximumValue={audio.meta.original.duration * 1000}
           value={audioPosition}
           minimumTrackTintColor={theme.secondary}
           maximumTrackTintColor={theme.disabled}
-          onSlidingStart={() => {
-            audioPlayer?.pauseAsync()
-            setAudioPlaying(false)
-          }}
-          onSlidingComplete={value => {
-            setAudioPosition(value)
-          }}
+          // onSlidingStart={() => {
+          //   console.log('yes!!!')
+          //   audioPlayer?.pauseAsync()
+          //   setAudioPlaying(false)
+          // }}
+          // onSlidingComplete={value => {
+          //   console.log('no!!!')
+          //   setAudioPosition(value)
+          // }}
+          enabled={false} // Bug in above sliding actions
+          thumbSize={StyleConstants.Spacing.M}
+          thumbTintColor={theme.primaryOverlay}
         />
       </View>
     </View>
@@ -117,7 +114,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexBasis: '50%',
     aspectRatio: 16 / 9,
-    padding: StyleConstants.Spacing.XS / 2
+    padding: StyleConstants.Spacing.XS / 2,
+    flexDirection: 'row'
   },
   background: { position: 'absolute', width: '100%', height: '100%' },
   overlay: {

@@ -303,7 +303,14 @@ declare namespace Mastodon {
   type Notification = {
     // Base
     id: string
-    type: 'follow' | 'mention' | 'reblog' | 'favourite' | 'poll'
+    type:
+      | 'follow'
+      | 'follow_request'
+      | 'mention'
+      | 'reblog'
+      | 'favourite'
+      | 'poll'
+      | 'status'
     created_at: string
     account: Account
 

@@ -1,17 +1,14 @@
-import { getLocalAccountPreferences } from '@root/utils/slices/instancesSlice'
 import { store } from '@root/store'
+import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
-const composeParseState = ({
-  type,
-  incomingStatus,
-  visibilityLock
-}: {
+export interface Props {
   type: 'reply' | 'conversation' | 'edit'
   incomingStatus: Mastodon.Status
-  visibilityLock?: boolean
-}): ComposeState => {
+}
+
+const composeParseState = ({ type, incomingStatus }: Props): ComposeState => {
   switch (type) {
     case 'edit':
       return {
@@ -52,10 +49,8 @@ const composeParseState = ({
       const actualStatus = incomingStatus.reblog || incomingStatus
       return {
         ...composeInitialState,
-        ...(visibilityLock && {
-          visibility: 'direct',
-          visibilityLock: true
-        }),
+        visibility: actualStatus.visibility,
+        visibilityLock: actualStatus.visibility === 'direct',
         replyToStatus: actualStatus
       }
     case 'conversation':

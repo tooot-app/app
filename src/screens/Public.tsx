@@ -8,7 +8,7 @@ const ScreenPublic: React.FC = () => {
 
   return (
     <Timelines
-      name='Screen-Public-Root'
+      name='Public'
       content={[
         { title: t('public:heading.segments.left'), page: 'LocalPublic' },
         { title: t('public:heading.segments.right'), page: 'RemotePublic' }

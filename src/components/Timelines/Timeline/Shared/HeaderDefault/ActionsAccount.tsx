@@ -18,6 +18,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
   setBottomSheetVisible
 }) => {
   const { t } = useTranslation()
+  
   const queryClient = useQueryClient()
   const fireMutation = useCallback(
     async ({ type }: { type: 'mute' | 'block' | 'reports' }) => {
@@ -57,7 +58,7 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
         })
       })
     },
-    onError: (_, { type }) => {
+    onError: (err: any, { type }) => {
       haptics('Error')
       toast({
         type: 'error',
@@ -66,7 +67,14 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
             `timeline:shared.header.default.actions.account.${type}.function`,
             { acct: account.acct }
           )
-        })
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          })
       })
     },
     onSettled: () => {

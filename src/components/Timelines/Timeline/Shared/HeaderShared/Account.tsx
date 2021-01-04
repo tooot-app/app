@@ -6,20 +6,26 @@ import { StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account
+  withoutName?: boolean
 }
 
-const HeaderSharedAccount: React.FC<Props> = ({ account }) => {
+const HeaderSharedAccount: React.FC<Props> = ({
+  account,
+  withoutName = false
+}) => {
   const { theme } = useTheme()
 
   return (
     <View style={styles.base}>
-      <Text numberOfLines={1}>
-        <ParseEmojis
-          content={account.display_name || account.username}
-          emojis={account.emojis}
-          fontBold
-        />
-      </Text>
+      {withoutName ? null : (
+        <Text style={styles.name} numberOfLines={1}>
+          <ParseEmojis
+            content={account.display_name || account.username}
+            emojis={account.emojis}
+            fontBold
+          />
+        </Text>
+      )}
       <Text style={[styles.acct, { color: theme.secondary }]} numberOfLines={1}>
         @{account.acct}
       </Text>
@@ -32,9 +38,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  name: {
+    marginRight: StyleConstants.Spacing.XS
+  },
   acct: {
-    flexShrink: 1,
-    marginLeft: StyleConstants.Spacing.XS
+    flexShrink: 1
   }
 })
 

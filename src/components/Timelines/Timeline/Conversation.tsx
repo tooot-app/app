@@ -9,6 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 import client from '@root/api/client'
 import { useMutation, useQueryClient } from 'react-query'
+import { useTheme } from '@root/utils/styles/ThemeManager'
 
 export interface Props {
   conversation: Mastodon.Conversation
@@ -35,6 +36,8 @@ const TimelineConversation: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  const { theme } = useTheme()
+
   const queryClient = useQueryClient()
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
@@ -54,7 +57,19 @@ const TimelineConversation: React.FC<Props> = ({
   }, [])
 
   return (
-    <Pressable style={styles.conversationView} onPress={onPress}>
+    <Pressable
+      style={[
+        styles.base,
+        conversation.unread && {
+          borderLeftWidth: StyleConstants.Spacing.XS,
+          borderLeftColor: theme.blue,
+          paddingLeft:
+            StyleConstants.Spacing.Global.PagePadding -
+            StyleConstants.Spacing.XS
+        }
+      ]}
+      onPress={onPress}
+    >
       <View style={styles.header}>
         <TimelineAvatar
           queryKey={queryKey}
@@ -100,7 +115,7 @@ const TimelineConversation: React.FC<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  conversationView: {
+  base: {
     flex: 1,
     flexDirection: 'column',
     padding: StyleConstants.Spacing.Global.PagePadding

@@ -32,6 +32,7 @@ const TimelineNotifications: React.FC<Props> = ({
 
   const onPress = useCallback(
     () =>
+      notification.status &&
       navigation.push('Screen-Shared-Toot', {
         toot: notification.status
       }),
@@ -49,7 +50,10 @@ const TimelineNotifications: React.FC<Props> = ({
       <View
         style={{
           opacity:
-            notification.type === 'follow' || notification.type === 'mention'
+            notification.type === 'follow' ||
+            notification.type === 'follow_request' ||
+            notification.type === 'mention' ||
+            notification.type === 'status'
               ? 1
               : 0.5
         }}

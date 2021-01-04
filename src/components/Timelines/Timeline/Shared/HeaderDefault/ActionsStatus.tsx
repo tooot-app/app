@@ -105,14 +105,21 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
 
       return oldData
     },
-    onError: (_, { type }, oldData) => {
+    onError: (err: any, { type }, oldData) => {
       toast({
         type: 'error',
-        message: t('common:toastMessage.success.message', {
+        message: t('common:toastMessage.error.message', {
           function: t(
             `timeline:shared.header.default.actions.status.${type}.function`
           )
-        })
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          })
       })
       queryClient.setQueryData(queryKey, oldData)
     }

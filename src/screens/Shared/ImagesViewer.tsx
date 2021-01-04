@@ -1,6 +1,6 @@
-import haptics from '@root/components/haptics'
-import { HeaderLeft, HeaderRight } from '@root/components/Header'
-import { StyleConstants } from '@root/utils/styles/constants'
+import haptics from '@components/haptics'
+import { HeaderLeft, HeaderRight } from '@components/Header'
+import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { ActionSheetIOS, Image, StyleSheet, Text } from 'react-native'
@@ -22,13 +22,13 @@ export interface Props {
       imageIndex: number
     }
   }
+  navigation: any
 }
 
 const TheImage = ({
   style,
   source,
-  imageUrls,
-  imageIndex
+  imageUrls
 }: {
   style: any
   source: { uri: string }
@@ -37,7 +37,6 @@ const TheImage = ({
     remote_url: Mastodon.AttachmentImage['remote_url']
     imageIndex: number
   })[]
-  imageIndex: number
 }) => {
   const [imageVisible, setImageVisible] = useState(false)
   Image.getSize(source.uri, () => setImageVisible(true))
@@ -47,8 +46,7 @@ const TheImage = ({
       source={{
         uri: imageVisible
           ? source.uri
-          : imageUrls[findIndex(imageUrls, ['imageIndex', imageIndex])]
-              .preview_url
+          : imageUrls[findIndex(imageUrls, ['url', source.uri])].preview_url
       }}
     />
   )
@@ -68,19 +66,18 @@ const ScreenSharedImagesViewer: React.FC<Props> = ({
   const component = useCallback(
     () => (
       <ImageViewer
-        style={{ flex: 1, marginBottom: 44 + safeAreaInsets.bottom }}
-        imageUrls={imageUrls}
         index={initialIndex}
-        onSwipeDown={() => navigation.goBack()}
+        imageUrls={imageUrls}
+        pageAnimateTime={250}
         enableSwipeDown={true}
-        swipeDownThreshold={100}
         useNativeDriver={true}
-        saveToLocalByLongPress={false}
+        swipeDownThreshold={100}
         renderIndicator={() => <></>}
+        saveToLocalByLongPress={false}
+        onSwipeDown={() => navigation.goBack()}
+        style={{ flex: 1, marginBottom: 44 + safeAreaInsets.bottom }}
         onChange={index => index !== undefined && setCurrentIndex(index)}
-        renderImage={props => (
-          <TheImage {...props} imageUrls={imageUrls} imageIndex={imageIndex} />
-        )}
+        renderImage={props => <TheImage {...props} imageUrls={imageUrls} />}
       />
     ),
     []

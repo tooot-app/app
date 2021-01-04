@@ -9,7 +9,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account
-  action: 'favourite' | 'follow' | 'poll' | 'reblog' | 'pinned' | 'mention'
+  action: Mastodon.Notification['type'] | ('reblog' | 'pinned')
   notification?: boolean
 }
 
@@ -77,6 +77,21 @@ const TimelineActioned: React.FC<Props> = ({
           </>
         )
         break
+      case 'follow_request':
+        return (
+          <>
+            <Icon
+              name='UserPlus'
+              size={StyleConstants.Font.Size.S}
+              color={iconColor}
+              style={styles.icon}
+            />
+            <Pressable onPress={onPress}>
+              {content(t('shared.actioned.follow_request', { name }))}
+            </Pressable>
+          </>
+        )
+        break
       case 'poll':
         return (
           <>
@@ -105,6 +120,21 @@ const TimelineActioned: React.FC<Props> = ({
                   ? t('shared.actioned.reblog.notification', { name })
                   : t('shared.actioned.reblog.default', { name })
               )}
+            </Pressable>
+          </>
+        )
+        break
+      case 'status':
+        return (
+          <>
+            <Icon
+              name='Activity'
+              size={StyleConstants.Font.Size.S}
+              color={iconColor}
+              style={styles.icon}
+            />
+            <Pressable onPress={onPress}>
+              {content(t('shared.actioned.status', { name }))}
             </Pressable>
           </>
         )

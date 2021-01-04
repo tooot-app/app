@@ -1,15 +1,16 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { MutableRefObject, useCallback, useContext, useRef } from 'react'
-import {
-  Animated,
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import React, { MutableRefObject, useContext } from 'react'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
+import Animated, {
+  Extrapolate,
+  interpolate,
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue
+} from 'react-native-reanimated'
 import Svg, { Circle, G, Path } from 'react-native-svg'
 import ComposeContext from '../utils/createContext'
 
@@ -35,48 +36,61 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
       (theAttachmentRemote as Mastodon.AttachmentImage).meta?.original?.aspect!
   }
 
-  const panFocus = useRef(
-    new Animated.ValueXY(
-      (theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.x &&
-      (theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.y
-        ? {
-            x:
-              ((theAttachmentRemote as Mastodon.AttachmentImage).meta!.focus!
-                .x *
-                imageDimensionis.width) /
-              2,
-            y:
-              (-(theAttachmentRemote as Mastodon.AttachmentImage).meta!.focus!
-                .y *
-                imageDimensionis.height) /
-              2
-          }
-        : { x: 0, y: 0 }
-    )
-  ).current
-  const panX = panFocus.x.interpolate({
-    inputRange: [-imageDimensionis.width / 2, imageDimensionis.width / 2],
-    outputRange: [-imageDimensionis.width / 2, imageDimensionis.width / 2],
-    extrapolate: 'clamp'
-  })
-  const panY = panFocus.y.interpolate({
-    inputRange: [-imageDimensionis.height / 2, imageDimensionis.height / 2],
-    outputRange: [-imageDimensionis.height / 2, imageDimensionis.height / 2],
-    extrapolate: 'clamp'
-  })
-  panFocus.addListener(e => {
-    focus.current = {
-      x: e.x / (imageDimensionis.width / 2),
-      y: -e.y / (imageDimensionis.height / 2)
+  const panX = useSharedValue(
+    (((theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.x || 0) *
+      imageDimensionis.width) /
+      2
+  )
+  const panY = useSharedValue(
+    (((theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.y || 0) *
+      imageDimensionis.height) /
+      2
+  )
+  const updateFocus = ({ x, y }: { x: number; y: number }) => {
+    focus.current = { x, y }
+  }
+  type PanContext = {
+    startX: number
+    startY: number
+  }
+  const onGestureEvent = useAnimatedGestureHandler({
+    onStart: (_, context: PanContext) => {
+      context.startX = panX.value
+      context.startY = panY.value
+    },
+    onActive: ({ translationX, translationY }, context: PanContext) => {
+      panX.value = context.startX + translationX
+      panY.value = context.startY + translationY
+    },
+    onEnd: ({ translationX, translationY }, context: PanContext) => {
+      runOnJS(updateFocus)({
+        x: (context.startX + translationX) / (imageDimensionis.width / 2),
+        y: (context.startY + translationY) / (imageDimensionis.height / 2)
+      })
     }
   })
-  const handleGesture = Animated.event(
-    [{ nativeEvent: { translationX: panFocus.x, translationY: panFocus.y } }],
-    { useNativeDriver: true }
-  )
-  const onHandlerStateChange = useCallback(() => {
-    panFocus.extractOffset()
-  }, [])
+  const styleTransform = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: interpolate(
+            panX.value,
+            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
+            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
+            Extrapolate.CLAMP
+          )
+        },
+        {
+          translateY: interpolate(
+            panY.value,
+            [-imageDimensionis.height / 2, imageDimensionis.height / 2],
+            [-imageDimensionis.height / 2, imageDimensionis.height / 2],
+            Extrapolate.CLAMP
+          )
+        }
+      ]
+    }
+  })
 
   return (
     <>
@@ -90,17 +104,14 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
             uri: theAttachmentLocal.uri || theAttachmentRemote.preview_url
           }}
         />
-        <PanGestureHandler
-          onGestureEvent={handleGesture}
-          onHandlerStateChange={onHandlerStateChange}
-        >
+        <PanGestureHandler onGestureEvent={onGestureEvent}>
           <Animated.View
             style={[
+              styleTransform,
               {
                 position: 'absolute',
                 top: -1000 + imageDimensionis.height / 2,
-                left: -1000 + imageDimensionis.width / 2,
-                transform: [{ translateX: panX }, { translateY: panY }]
+                left: -1000 + imageDimensionis.width / 2
               }
             ]}
           >

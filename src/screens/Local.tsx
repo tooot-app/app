@@ -8,7 +8,7 @@ const ScreenLocal: React.FC = () => {
 
   return (
     <Timelines
-      name='Screen-Local-Root'
+      name='Local'
       content={[
         { title: t('local:heading.segments.left'), page: 'Following' },
         { title: t('local:heading.segments.right'), page: 'Local' }
