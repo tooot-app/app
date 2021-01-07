@@ -3,15 +3,13 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { useQuery } from 'react-query'
-import { announcementFetch } from '@root/utils/fetches/announcementsFetch'
+import hookAnnouncement from '@utils/queryHooks/announcement'
 
 const Collections: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const navigation = useNavigation()
 
-  const queryKey = ['Announcements', { showAll: true }]
-  const { data, isFetching } = useQuery(queryKey, announcementFetch)
+  const { data, isFetching } = hookAnnouncement({ showAll: true })
 
   const announcementContent = useMemo(() => {
     if (data) {

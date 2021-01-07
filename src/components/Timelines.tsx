@@ -3,7 +3,7 @@ import Timeline from '@components/Timelines/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Shared/sharedScreens'
-import { getLocalUrl, getRemoteUrl } from '@utils/slices/instancesSlice'
+import { getLocalActiveIndex, getRemoteUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useState } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
@@ -21,7 +21,7 @@ export interface Props {
 const Timelines: React.FC<Props> = ({ name, content }) => {
   const navigation = useNavigation()
   const { mode } = useTheme()
-  const localRegistered = useSelector(getLocalUrl)
+  const localActiveIndex = useSelector(getLocalActiveIndex)
   const publicDomain = useSelector(getRemoteUrl)
   const [segment, setSegment] = useState(0)
 
@@ -30,7 +30,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   }, [])
 
   const routes = content
-    .filter(p => (localRegistered ? true : p.page === 'RemotePublic'))
+    .filter(p => (localActiveIndex !== null ? true : p.page === 'RemotePublic'))
     .map(p => ({ key: p.page }))
 
   const renderScene = useCallback(
@@ -42,12 +42,12 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
       }
     }) => {
       return (
-        (localRegistered || route.key === 'RemotePublic') && (
+        (localActiveIndex !== null || route.key === 'RemotePublic') && (
           <Timeline page={route.key} />
         )
       )
     },
-    [localRegistered]
+    [localActiveIndex]
   )
 
   const screenComponent = useCallback(
@@ -62,7 +62,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         initialLayout={{ width: Dimensions.get('window').width }}
       />
     ),
-    [segment, localRegistered]
+    [segment, localActiveIndex]
   )
 
   return (
@@ -71,7 +71,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         name={`Screen-${name}-Root`}
         options={{
           headerTitle: name === 'Public' ? publicDomain : '',
-          ...(localRegistered && {
+          ...(localActiveIndex !== null && {
             headerCenter: () => (
               <View style={styles.segmentsContainer}>
                 <SegmentedControl

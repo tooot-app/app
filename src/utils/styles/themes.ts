@@ -12,7 +12,8 @@ export type ColorDefinitions =
   | 'backgroundGradientEnd'
   | 'backgroundOverlay'
   | 'border'
-  | 'shimmer'
+  | 'shimmerDefault'
+  | 'shimmerHighlight'
 
 const themeColors: {
   [key in ColorDefinitions]: {
@@ -65,17 +66,13 @@ const themeColors: {
     light: 'rgba(18, 18, 18, 0.3)',
     dark: 'rgba(255, 255, 255, 0.3)'
   },
-  shimmer: {
-    light: [
-      'rgba(18, 18, 18, 0.05)',
-      'rgba(18, 18, 18, 0.15)',
-      'rgba(18, 18, 18, 0.05)'
-    ],
-    dark: [
-      'rgba(250, 250, 250, 0.05)',
-      'rgba(250, 250, 250, 0.15)',
-      'rgba(250, 250, 250, 0.05)'
-    ]
+  shimmerDefault: {
+    light: 'rgba(18, 18, 18, 0.05)',
+    dark: 'rgba(250, 250, 250, 0.05)'
+  },
+  shimmerHighlight: {
+    light: 'rgba(18, 18, 18, 0.15)',
+    dark: 'rgba(250, 250, 250, 0.15)'
   }
 }
 

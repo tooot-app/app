@@ -1,8 +1,6 @@
 import Button from '@components/Button'
-import { useNavigation } from '@react-navigation/native'
-import analytics from '@root/components/analytics'
 import haptics from '@root/components/haptics'
-import { resetLocal } from '@utils/slices/instancesSlice'
+import { localRemoveInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +11,6 @@ import { useDispatch } from 'react-redux'
 const Logout: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
-  const navigation = useNavigation()
   const queryClient = useQueryClient()
 
   return (
@@ -36,12 +33,7 @@ const Logout: React.FC = () => {
               onPress: () => {
                 haptics('Success')
                 queryClient.clear()
-                dispatch(resetLocal())
-                analytics('logout')
-                navigation.navigate('Screen-Public', {
-                  screen: 'Screen-Public-Root',
-                  params: { publicTab: true }
-                })
+                dispatch(localRemoveInstance())
               }
             },
             {

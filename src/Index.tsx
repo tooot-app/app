@@ -11,39 +11,38 @@ import ScreenLocal from '@screens/Local'
 import ScreenMe from '@screens/Me'
 import ScreenNotifications from '@screens/Notifications'
 import ScreenPublic from '@screens/Public'
-import { timelineFetch } from '@utils/fetches/timelineFetch'
+import hookTimeline from '@utils/queryHooks/timeline'
 import {
+  getLocalActiveIndex,
   getLocalNotification,
-  getLocalUrl,
-  updateLocalAccountPreferences,
-  updateNotification
+  localUpdateAccountPreferences,
+  localUpdateNotification
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
 import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
-import { useInfiniteQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Tab = createBottomTabNavigator<RootStackParamList>()
-
-export type RootStackParamList = {
-  'Screen-Local': undefined
-  'Screen-Public': { publicTab: boolean }
-  'Screen-Post': undefined
-  'Screen-Notifications': undefined
-  'Screen-Me': undefined
-}
+const Tab = createBottomTabNavigator()
 
 export interface Props {
   localCorrupt?: string
 }
 
+export const navigationRef = createRef<NavigationContainerRef>()
+
 const Index: React.FC<Props> = ({ localCorrupt }) => {
   const dispatch = useDispatch()
-  const localInstance = useSelector(getLocalUrl)
+  const localActiveIndex = useSelector(getLocalActiveIndex)
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
@@ -51,7 +50,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   }
 
   const routeNameRef = useRef<string | undefined>()
-  const navigationRef = useRef<NavigationContainerRef>(null)
+  // const navigationRef = useRef<NavigationContainerRef>(null)
 
   // const isConnected = useNetInfo().isConnected
   // const [firstRender, setFirstRender] = useState(false)
@@ -82,14 +81,14 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // On launch check if there is any unread announcements
   useEffect(() => {
     console.log('Checking announcements')
-    localInstance &&
-      client({
+    localActiveIndex !== null &&
+      client<Mastodon.Announcement[]>({
         method: 'get',
         instance: 'local',
         url: `announcements`
       })
-        .then(({ body }: { body?: Mastodon.Announcement[] }) => {
-          if (body?.filter(announcement => !announcement.read).length) {
+        .then(res => {
+          if (res?.filter(announcement => !announcement.read).length) {
             navigationRef.current?.navigate('Screen-Shared-Announcements', {
               showAll: false
             })
@@ -99,15 +98,15 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
 
   // On launch check if there is any unread noficiations
-  const queryNotification = useInfiniteQuery(
-    ['Notifications', {}],
-    timelineFetch,
-    {
-      enabled: localInstance ? true : false,
+  const queryNotification = hookTimeline({
+    page: 'Notifications',
+    options: {
+      enabled: localActiveIndex !== null ? true : false,
       refetchInterval: 1000 * 60,
       refetchIntervalInBackground: true
     }
-  )
+  })
+
   const prevNotification = useSelector(getLocalNotification)
   useEffect(() => {
     if (queryNotification.data?.pages) {
@@ -120,7 +119,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
 
       if (!prevNotification || !prevNotification.latestTime) {
         dispatch(
-          updateNotification({
+          localUpdateNotification({
             unread: true
           })
         )
@@ -129,7 +128,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         new Date(prevNotification.latestTime) < new Date(latestNotificationTime)
       ) {
         dispatch(
-          updateNotification({
+          localUpdateNotification({
             unread: true,
             latestTime: latestNotificationTime
           })
@@ -140,8 +139,8 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
 
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
-    if (localInstance) {
-      dispatch(updateLocalAccountPreferences())
+    if (localActiveIndex !== null) {
+      dispatch(localUpdateAccountPreferences())
     }
   }, [])
 
@@ -204,51 +203,48 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   const tabNavigatorTabBarOptions = useMemo(
     () => ({
       activeTintColor: theme.primary,
-      inactiveTintColor: localInstance ? theme.secondary : theme.disabled,
+      inactiveTintColor:
+        localActiveIndex !== null ? theme.secondary : theme.disabled,
       showLabel: false
     }),
-    [theme, localInstance]
+    [theme, localActiveIndex]
   )
   const tabScreenLocalListeners = useCallback(
     () => ({
       tabPress: (e: any) => {
-        if (!localInstance) {
+        if (!(localActiveIndex !== null)) {
           e.preventDefault()
         }
       }
     }),
-    [localInstance]
+    [localActiveIndex]
   )
   const tabScreenComposeListeners = useMemo(
     () => ({
       tabPress: (e: any) => {
         e.preventDefault()
-        if (localInstance) {
+        if (localActiveIndex !== null) {
           haptics('Medium')
           navigationRef.current?.navigate('Screen-Shared-Compose')
         }
       }
     }),
-    [localInstance]
+    [localActiveIndex]
   )
   const tabScreenComposeComponent = useCallback(() => null, [])
   const tabScreenNotificationsListeners = useCallback(
     () => ({
       tabPress: (e: any) => {
-        if (!localInstance) {
+        if (!(localActiveIndex !== null)) {
           e.preventDefault()
         }
       }
     }),
-    [localInstance]
+    [localActiveIndex]
   )
   const tabScreenNotificationsOptions = useMemo(
     () => ({
-      tabBarBadge: prevNotification && prevNotification.unread ? '' : undefined,
-      tabBarBadgeStyle: {
-        transform: [{ scale: 0.5 }],
-        backgroundColor: theme.red
-      }
+      tabBarBadge: prevNotification && prevNotification.unread ? '' : undefined
     }),
     [theme, prevNotification]
   )
@@ -263,7 +259,9 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         onStateChange={navigationContainerOnStateChange}
       >
         <Tab.Navigator
-          initialRouteName={localInstance ? 'Screen-Local' : 'Screen-Public'}
+          initialRouteName={
+            localActiveIndex !== null ? 'Screen-Local' : 'Screen-Public'
+          }
           screenOptions={tabNavigatorScreenOptions}
           tabBarOptions={tabNavigatorTabBarOptions}
         >
@@ -282,7 +280,13 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Notifications'
             component={ScreenNotifications}
             listeners={tabScreenNotificationsListeners}
-            options={tabScreenNotificationsOptions}
+            options={{
+              tabBarBadgeStyle: {
+                transform: [{ scale: 0.5 }],
+                backgroundColor: theme.red
+              },
+              ...tabScreenNotificationsOptions
+            }}
           />
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>

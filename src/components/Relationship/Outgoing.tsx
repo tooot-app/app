@@ -2,10 +2,10 @@ import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { toast } from '@components/toast'
-import { relationshipFetch } from '@utils/fetches/relationshipFetch'
+import hookRelationship from '@utils/queryHooks/relationship'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -14,13 +14,13 @@ export interface Props {
 const RelationshipOutgoing: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
-  const relationshipQueryKey: QueryKey.Relationship = ['Relationship', { id }]
-  const query = useQuery(relationshipQueryKey, relationshipFetch)
+  const relationshipQueryKey = ['Relationship', { id }]
+  const query = hookRelationship({ id })
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(
     ({ type, state }: { type: 'follow' | 'block'; state: boolean }) => {
-      return client({
+      return client<Mastodon.Relationship>({
         method: 'post',
         instance: 'local',
         url: `accounts/${id}/${state ? 'un' : ''}${type}`
@@ -29,9 +29,9 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }) => {
     []
   )
   const mutation = useMutation(fireMutation, {
-    onSuccess: ({ body }) => {
+    onSuccess: res => {
       haptics('Success')
-      queryClient.setQueryData(relationshipQueryKey, body)
+      queryClient.setQueryData(relationshipQueryKey, res)
     },
     onError: (err: any, { type }) => {
       haptics('Error')

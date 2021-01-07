@@ -1,11 +1,13 @@
+import { RootState } from '@root/store'
 import axios from 'axios'
 import chalk from 'chalk'
 
 const ctx = new chalk.Instance({ level: 3 })
 
-const client = async ({
+const client = async <T = unknown>({
   method,
   instance,
+  localIndex,
   instanceDomain,
   version = 'v1',
   url,
@@ -16,6 +18,7 @@ const client = async ({
 }: {
   method: 'get' | 'post' | 'put' | 'delete'
   instance: 'local' | 'remote'
+  localIndex?: number
   instanceDomain?: string
   version?: 'v1' | 'v2'
   url: string
@@ -25,9 +28,30 @@ const client = async ({
   headers?: { [key: string]: string }
   body?: FormData
   onUploadProgress?: (progressEvent: any) => void
-}): Promise<any> => {
+}): Promise<T> => {
+  const { store } = require('@root/store')
+  const state = (store.getState() as RootState).instances
+  const theLocalIndex =
+    localIndex !== undefined ? localIndex : state.local.activeIndex
+
+  let domain = null
+  if (instance === 'remote') {
+    domain = instanceDomain || state.remote.url
+  } else {
+    if (theLocalIndex !== null && state.local.instances[theLocalIndex]) {
+      domain = state.local.instances[theLocalIndex].url
+    } else {
+      console.error(
+        ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
+      )
+      return Promise.reject()
+    }
+  }
+
   console.log(
     ctx.bgGreen.bold(' API ') +
+      ' ' +
+      domain +
       ' ' +
       method +
       ctx.green(' -> ') +
@@ -35,10 +59,6 @@ const client = async ({
       (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
-  const { store } = require('@root/store')
-  const state = store.getState().instances
-  const domain =
-    instance === 'remote' ? instanceDomain || state.remote.url : state.local.url
 
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
@@ -50,18 +70,13 @@ const client = async ({
       'Content-Type': 'application/json',
       ...headers,
       ...(instance === 'local' && {
-        Authorization: `Bearer ${state.local.token}`
+        Authorization: `Bearer ${state.local!.instances[theLocalIndex!].token}`
       })
     },
     ...(body && { data: body }),
     ...(onUploadProgress && { onUploadProgress: onUploadProgress })
   })
-    .then(response =>
-      Promise.resolve({
-        headers: response.headers,
-        body: response.data
-      })
-    )
+    .then(response => Promise.resolve(response.data))
     .catch(error => {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -70,7 +85,8 @@ const client = async ({
           ctx.bold(' API '),
           ctx.bold('response'),
           error.response.status,
-          error.response.data.error
+          error.response.data.error,
+          error.request
         )
         return Promise.reject(error.response)
       } else if (error.request) {

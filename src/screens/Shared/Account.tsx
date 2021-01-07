@@ -1,14 +1,13 @@
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
 import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
-import { accountFetch } from '@utils/fetches/accountFetch'
-import { getLocalAccountId } from '@utils/slices/instancesSlice'
+import hookAccount from '@utils/queryHooks/account'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
-import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
@@ -36,8 +35,8 @@ const ScreenSharedAccount: React.FC<Props> = ({
   },
   navigation
 }) => {
-  const localAccountId = useSelector(getLocalAccountId)
-  const { data } = useQuery(['Account', { id: account.id }], accountFetch)
+  const localAccount = useSelector(getLocalAccount)
+  const { data } = hookAccount({ id: account.id })
 
   const scrollY = useSharedValue(0)
   const [accountState, accountDispatch] = useReducer(
@@ -85,7 +84,7 @@ const ScreenSharedAccount: React.FC<Props> = ({
         handleDismiss={() => setBottomSheetVisible(false)}
       >
         {/* 添加到列表 */}
-        {localAccountId !== account.id && (
+        {localAccount?.id !== account.id && (
           <HeaderDefaultActionsAccount
             account={account}
             setBottomSheetVisible={setBottomSheetVisible}

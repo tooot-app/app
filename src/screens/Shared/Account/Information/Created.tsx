@@ -26,7 +26,7 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
         width={StyleConstants.Font.Size.S * 8}
         height={StyleConstants.Font.Size.S}
         style={{ marginBottom: StyleConstants.Spacing.M }}
-        shimmerColors={theme.shimmer}
+        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <View style={styles.created}>
           <Icon

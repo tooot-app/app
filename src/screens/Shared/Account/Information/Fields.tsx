@@ -25,6 +25,7 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
               size={'M'}
               emojis={account.emojis}
               showFullLink
+              numberOfLines={3}
             />
             {field.verified_at ? (
               <Icon
@@ -41,6 +42,7 @@ const AccountInformationFields: React.FC<Props> = ({ account }) => {
               size={'M'}
               emojis={account.emojis}
               showFullLink
+              numberOfLines={3}
             />
           </View>
         </View>

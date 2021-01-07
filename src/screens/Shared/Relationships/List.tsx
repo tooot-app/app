@@ -3,11 +3,10 @@ import ComponentSeparator from '@components/Separator'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@root/components/Timelines/Timeline/End'
 import { useScrollToTop } from '@react-navigation/native'
-import { relationshipsFetch } from '@utils/fetches/relationshipsFetch'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { useInfiniteQuery } from 'react-query'
+import hookRelationships from '@utils/queryHooks/relationships'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -15,8 +14,6 @@ export interface Props {
 }
 
 const RelationshipsList: React.FC<Props> = ({ id, type }) => {
-  const queryKey: QueryKey.Relationships = ['Relationships', type, { id }]
-
   const {
     status,
     data,
@@ -25,14 +22,18 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  } = useInfiniteQuery(queryKey, relationshipsFetch, {
-    getNextPageParam: lastPage => {
-      return lastPage.length
-        ? {
-            direction: 'next',
-            id: lastPage[lastPage.length - 1].id
-          }
-        : undefined
+  } = hookRelationships({
+    type,
+    id,
+    options: {
+      getNextPageParam: lastPage => {
+        return lastPage.length
+          ? {
+              direction: 'next',
+              id: lastPage[lastPage.length - 1].id
+            }
+          : undefined
+      }
     }
   })
   const flattenData = data?.pages ? data.pages.flatMap(d => [...d]) : []

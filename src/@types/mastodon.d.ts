@@ -67,7 +67,7 @@ declare namespace Mastodon {
     vapid_key?: string
   }
 
-  type AppOauth = {
+  type Apps = {
     id: string
     name: string
     website?: string

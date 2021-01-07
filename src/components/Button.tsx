@@ -23,6 +23,7 @@ export interface Props {
   loading?: boolean
   destructive?: boolean
   disabled?: boolean
+  active?: boolean
 
   strokeWidth?: number
   size?: 'S' | 'M' | 'L'
@@ -40,6 +41,7 @@ const Button: React.FC<Props> = ({
   loading = false,
   destructive = false,
   disabled = false,
+  active = false,
   strokeWidth,
   size = 'M',
   spacing = 'S',
@@ -68,10 +70,29 @@ const Button: React.FC<Props> = ({
   )
 
   const colorContent = useMemo(() => {
-    if (overlay) {
-      return theme.primaryOverlay
+    if (active) {
+      return theme.blue
     } else {
-      if (disabled) {
+      if (overlay) {
+        return theme.primaryOverlay
+      } else {
+        if (disabled) {
+          return theme.secondary
+        } else {
+          if (destructive) {
+            return theme.red
+          } else {
+            return theme.primary
+          }
+        }
+      }
+    }
+  }, [theme, disabled])
+  const colorBorder = useMemo(() => {
+    if (active) {
+      return theme.blue
+    } else {
+      if (disabled || loading) {
         return theme.secondary
       } else {
         if (destructive) {
@@ -81,7 +102,14 @@ const Button: React.FC<Props> = ({
         }
       }
     }
-  }, [theme, disabled])
+  }, [theme, loading, disabled])
+  const colorBackground = useMemo(() => {
+    if (overlay) {
+      return theme.backgroundOverlay
+    } else {
+      return theme.background
+    }
+  }, [theme])
 
   const children = useMemo(() => {
     switch (type) {
@@ -118,26 +146,7 @@ const Button: React.FC<Props> = ({
           </>
         )
     }
-  }, [theme, content, loading, disabled])
-
-  const colorBorder = useMemo(() => {
-    if (disabled || loading) {
-      return theme.secondary
-    } else {
-      if (destructive) {
-        return theme.red
-      } else {
-        return theme.primary
-      }
-    }
-  }, [theme, loading, disabled])
-  const colorBackground = useMemo(() => {
-    if (overlay) {
-      return theme.backgroundOverlay
-    } else {
-      return theme.background
-    }
-  }, [theme])
+  }, [theme, content, loading, disabled, active])
 
   enum spacingMapping {
     XS = 'S',
@@ -164,7 +173,7 @@ const Button: React.FC<Props> = ({
         testID='base'
         onPress={onPress}
         children={children}
-        disabled={disabled || loading}
+        disabled={disabled || active || loading}
       />
     </Animated.View>
   )

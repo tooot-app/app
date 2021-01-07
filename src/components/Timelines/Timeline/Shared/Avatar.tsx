@@ -3,9 +3,10 @@ import { Pressable, StyleSheet } from 'react-native'
 import { Image } from 'react-native-expo-image-cache'
 import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export interface Props {
-  queryKey?: QueryKey.Timeline
+  queryKey?: QueryKeyTimeline
   account: Mastodon.Account
 }
 

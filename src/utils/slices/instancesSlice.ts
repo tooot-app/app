@@ -1,70 +1,65 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-import { RootState } from '@root/store'
 import client from '@api/client'
+import analytics from '@components/analytics'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '@root/store'
+import * as AuthSession from 'expo-auth-session'
+
+export type InstanceLocal = {
+  appData: {
+    clientId: string
+    clientSecret: string
+  }
+  url: string
+  token: string
+  account: {
+    id: Mastodon.Account['id']
+    preferences: Mastodon.Preferences
+  }
+  notification: {
+    unread: boolean
+    latestTime?: Mastodon.Notification['created_at']
+  }
+}
 
 export type InstancesState = {
   local: {
-    url: string | undefined
-    token: string | undefined
-    account: {
-      id: Mastodon.Account['id'] | undefined
-      preferences: Mastodon.Preferences
-    }
-    notification: {
-      unread: boolean
-      latestTime?: Mastodon.Notification['created_at']
-    }
+    activeIndex: number | null
+    instances: InstanceLocal[]
   }
+
   remote: {
     url: string
   }
 }
 
-const initialStateLocal: InstancesState['local'] = {
-  url: undefined,
-  token: undefined,
-  account: {
-    id: undefined,
-    preferences: {
-      'posting:default:visibility': undefined,
-      'posting:default:sensitive': undefined,
-      'posting:default:language': undefined,
-      'reading:expand:media': undefined,
-      'reading:expand:spoilers': undefined
-    }
-  },
-  notification: {
-    unread: false,
-    latestTime: undefined
-  }
-}
-
-export const updateLocalAccountPreferences = createAsyncThunk(
-  'instances/updateLocalAccountPreferences',
-  async () => {
-    const { body: preferences } = await client({
+export const localUpdateAccountPreferences = createAsyncThunk(
+  'instances/localUpdateAccountPreferences',
+  async (): Promise<Mastodon.Preferences> => {
+    const preferences = await client<Mastodon.Preferences>({
       method: 'get',
       instance: 'local',
       url: `preferences`
     })
 
-    return preferences as Mastodon.Preferences
+    return Promise.resolve(preferences)
   }
 )
 
-export const loginLocal = createAsyncThunk(
-  'instances/loginLocal',
+export const localAddInstance = createAsyncThunk(
+  'instances/localAddInstance',
   async ({
     url,
-    token
+    token,
+    appData
   }: {
-    url: InstancesState['local']['url']
-    token: InstancesState['local']['token']
-  }) => {
-    const {
-      body: { id }
-    } = await client({
+    url: InstanceLocal['url']
+    token: InstanceLocal['token']
+    appData: InstanceLocal['appData']
+  }): Promise<InstanceLocal> => {
+    const store = require('@root/store')
+    const state = store.getState().instances
+
+    const { id } = await client<Mastodon.Account>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,
@@ -72,7 +67,16 @@ export const loginLocal = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
-    const { body: preferences } = await client({
+    // Overwrite existing account?
+    // if (
+    //   state.local.instances.filter(
+    //     instance => instance && instance.account && instance.account.id === id
+    //   ).length
+    // ) {
+    //   return Promise.reject()
+    // }
+
+    const preferences = await client<Mastodon.Preferences>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,
@@ -80,60 +84,153 @@ export const loginLocal = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
-    return {
+    return Promise.resolve({
+      appData,
       url,
       token,
       account: {
         id,
         preferences
+      },
+      notification: {
+        unread: false
       }
-    } as InstancesState['local']
+    })
+  }
+)
+export const localRemoveInstance = createAsyncThunk(
+  'instances/localRemoveInstance',
+  async (index?: InstancesState['local']['activeIndex']): Promise<number> => {
+    const store = require('@root/store')
+    const local = store.getState().instances.local
+
+    if (index) {
+      return Promise.resolve(index)
+    } else {
+      if (local.activeIndex !== null) {
+        const currentInstance = local.instances[local.activeIndex]
+
+        const revoked = await AuthSession.revokeAsync(
+          {
+            clientId: currentInstance.appData.clientId,
+            clientSecret: currentInstance.appData.clientSecret,
+            token: currentInstance.token,
+            scopes: ['read', 'write', 'follow', 'push']
+          },
+          {
+            revocationEndpoint: `https://${currentInstance.url}/oauth/revoke`
+          }
+        )
+        if (!revoked) {
+          console.warn('Revoking error')
+        }
+
+        return Promise.resolve(local.activeIndex)
+      } else {
+        throw new Error('Active index invalid, cannot remove instance')
+      }
+    }
   }
 )
 
+export const instancesInitialState: InstancesState = {
+  local: {
+    activeIndex: null,
+    instances: []
+  },
+  remote: {
+    url: 'm.cmx.im'
+  }
+}
+
 const instancesSlice = createSlice({
   name: 'instances',
-  initialState: {
-    local: initialStateLocal,
-    remote: {
-      url: 'm.cmx.im'
-    }
-  } as InstancesState,
+  initialState: instancesInitialState,
   reducers: {
-    resetLocal: state => {
-      state.local = initialStateLocal
-    },
-    updateNotification: (
+    localUpdateActiveIndex: (
       state,
-      action: PayloadAction<Partial<InstancesState['local']['notification']>>
+      action: PayloadAction<NonNullable<InstancesState['local']['activeIndex']>>
     ) => {
-      state.local.notification = {
-        ...state.local.notification,
+      if (action.payload < state.local.instances.length) {
+        state.local.activeIndex = action.payload
+      } else {
+        throw new Error('Set index cannot be found')
+      }
+    },
+    localUpdateNotification: (
+      state,
+      action: PayloadAction<Partial<InstanceLocal['notification']>>
+    ) => {
+      state.local.instances[state.local.activeIndex!].notification = {
+        ...state.local.instances[state.local.activeIndex!].notification,
         ...action.payload
       }
+    },
+    remoteUpdate: (
+      state,
+      action: PayloadAction<InstancesState['remote']['url']>
+    ) => {
+      state.remote.url = action.payload
     }
   },
   extraReducers: builder => {
     builder
-      .addCase(loginLocal.fulfilled, (state, action) => {
-        state.local = action.payload
+      .addCase(localAddInstance.fulfilled, (state, action) => {
+        state.local.instances.push(action.payload)
+        state.local.activeIndex = state.local.instances.length - 1
+
+        analytics('login')
       })
-      .addCase(updateLocalAccountPreferences.fulfilled, (state, action) => {
-        state.local.account.preferences = action.payload
+      .addCase(localAddInstance.rejected, (state, action) => {
+        console.error(state.local)
+        console.error(action.error)
+      })
+
+      .addCase(localRemoveInstance.fulfilled, (state, action) => {
+        state.local.instances.splice(action.payload, 1)
+        state.local.activeIndex = state.local.instances.length
+          ? state.local.instances.length - 1
+          : null
+
+        analytics('logout')
+      })
+      .addCase(localRemoveInstance.rejected, (state, action) => {
+        console.error(state.local)
+        console.error(action.error)
+      })
+
+      .addCase(localUpdateAccountPreferences.fulfilled, (state, action) => {
+        state.local.instances[state.local.activeIndex!].account.preferences =
+          action.payload
+      })
+      .addCase(localUpdateAccountPreferences.rejected, (_, action) => {
+        console.error(action.error)
       })
   }
 })
 
-export const getLocalUrl = (state: RootState) => state.instances.local.url
-export const getLocalToken = (state: RootState) => state.instances.local.token
-export const getLocalNotification = (state: RootState) =>
-  state.instances.local.notification
-export const getRemoteUrl = (state: RootState) => state.instances.remote.url
-export const getLocalAccountId = (state: RootState) =>
-  state.instances.local.account.id
-export const getLocalAccountPreferences = (state: RootState) =>
-  state.instances.local.account.preferences
+export const getLocalActiveIndex = ({ instances: { local } }: RootState) =>
+  local.activeIndex
+export const getLocalInstances = ({ instances: { local } }: RootState) =>
+  local.instances
+export const getLocalUrl = ({ instances: { local } }: RootState) =>
+  local.activeIndex ? local.instances[local.activeIndex].url : undefined
+// export const getLocalToken = ({ instances: { local } }: RootState) =>
+//   local && local.activeIndex && local.instances[local.activeIndex].token
+export const getLocalAccount = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].account
+    : undefined
+export const getLocalNotification = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].notification
+    : undefined
+export const getRemoteUrl = ({ instances: { remote } }: RootState) => remote.url
 
-export const { resetLocal, updateNotification } = instancesSlice.actions
+export const {
+  localUpdateActiveIndex,
+  localUpdateNotification,
+  remoteUpdate
+} = instancesSlice.actions
 
 export default instancesSlice.reducer

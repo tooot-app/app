@@ -67,17 +67,17 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
       type: 'image/jpeg/jpg'
     })
 
-    return client({
+    return client<Mastodon.Attachment>({
       method: 'post',
       instance: 'local',
       url: 'media',
       body: formData
     })
-      .then(({ body }: { body: Mastodon.Attachment }) => {
-        if (body.id) {
+      .then(res => {
+        if (res.id) {
           composeDispatch({
             type: 'attachment/upload/end',
-            payload: { remote: body, local: result }
+            payload: { remote: res, local: result }
           })
         } else {
           composeDispatch({

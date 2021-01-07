@@ -13,9 +13,10 @@ import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export interface Props {
-  queryKey?: QueryKey.Timeline
+  queryKey?: QueryKeyTimeline
   status: Mastodon.Status
   sameAccount: boolean
 }

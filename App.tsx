@@ -1,88 +1,38 @@
-import NetInfo from '@react-native-community/netinfo'
-import client from '@root/api/client'
 import Index from '@root/Index'
 import { persistor, store } from '@root/store'
-import { resetLocal } from '@root/utils/slices/instancesSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
-import chalk from 'chalk'
-import * as Analytics from 'expo-firebase-analytics'
-import { Audio } from 'expo-av'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { enableScreens } from 'react-native-screens'
-import { onlineManager, QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import * as Sentry from 'sentry-expo'
+import checkSecureStorageVersion from '@root/startup/checkSecureStorageVersion'
+import dev from '@root/startup/dev'
+import sentry from '@root/startup/sentry'
+import log from '@root/startup/log'
+import audio from '@root/startup/audio'
+import onlineStatus from '@root/startup/onlineStatus'
+import netInfo from '@root/startup/netInfo'
 
-const ctx = new chalk.Instance({ level: 3 })
-const startingLog = (type: 'log' | 'warn' | 'error', message: string) => {
-  switch (type) {
-    case 'log':
-      console.log(ctx.bgBlue.bold(' Start up ') + ' ' + message)
-      break
-    case 'warn':
-      console.log(ctx.bgBlue.bold(' Start up ') + ' ' + message)
-      break
-    case 'error':
-      console.log(ctx.bgBlue.bold(' Start up ') + ' ' + message)
-      break
-  }
-}
+dev()
+sentry()
+audio()
+onlineStatus()
 
-if (__DEV__) {
-  Analytics.setDebugModeEnabled(true)
-
-  startingLog('log', 'initializing wdyr')
-  const whyDidYouRender = require('@welldone-software/why-did-you-render')
-  whyDidYouRender(React, {
-    trackHooks: true,
-    hotReloadBufferMs: 1000
-  })
-}
-
-startingLog('log', 'initializing Sentry')
-Sentry.init({
-  dsn:
-    'https://c9e29aa05f774aca8f36def98244ce04@o389581.ingest.sentry.io/5571975',
-  enableInExpoDevelopment: false,
-  debug: __DEV__
-})
-
-startingLog('log', 'initializing react-query')
+log('log', 'react-query', 'initializing')
 const queryClient = new QueryClient()
 
-startingLog('log', 'setting audio playback default options')
-Audio.setAudioModeAsync({
-  playsInSilentModeIOS: true,
-  interruptionModeIOS: 1
-})
-
-startingLog('log', 'initializing native screen')
+log('log', 'react-native-screens', 'initializing')
 enableScreens()
 
 const App: React.FC = () => {
-  startingLog('log', 'rendering App')
-  const [appLoaded, setAppLoaded] = useState(false)
+  log('log', 'App', 'rendering App')
   const [localCorrupt, setLocalCorrupt] = useState<string>()
 
   useEffect(() => {
-    const onlineState = onlineManager.setEventListener(setOnline => {
-      startingLog('log', 'added onlineManager listener')
-      return NetInfo.addEventListener(state => {
-        startingLog('warn', `setting online state ${state.isConnected}`)
-        // @ts-ignore
-        setOnline(state.isConnected)
-      })
-    })
-    return () => {
-      onlineState
-    }
-  }, [])
-
-  useEffect(() => {
     const delaySplash = async () => {
-      startingLog('log', 'delay splash')
+      log('log', 'App', 'delay splash')
       try {
         await SplashScreen.preventAutoHideAsync()
       } catch (e) {
@@ -91,72 +41,29 @@ const App: React.FC = () => {
     }
     delaySplash()
   }, [])
-  useEffect(() => {
-    const hideSplash = async () => {
-      startingLog('log', 'hide splash')
-      try {
-        await SplashScreen.hideAsync()
-      } catch (e) {
-        console.warn(e)
-      }
-    }
-    if (appLoaded) {
-      hideSplash()
-    }
-  }, [appLoaded])
 
-  const onBeforeLift = useCallback(() => {
-    NetInfo.fetch().then(netInfo => {
-      startingLog('log', 'on before lift')
-      const localUrl = store.getState().instances.local.url
-      const localToken = store.getState().instances.local.token
-      if (netInfo.isConnected) {
-        startingLog('log', 'network connected')
-        if (localUrl && localToken) {
-          startingLog('log', 'checking locally stored credentials')
-          client({
-            method: 'get',
-            instance: 'remote',
-            instanceDomain: localUrl,
-            url: `accounts/verify_credentials`,
-            headers: { Authorization: `Bearer ${localToken}` }
-          })
-            .then(res => {
-              startingLog('log', 'local credential check passed')
-              if (res.body.id !== store.getState().instances.local.account.id) {
-                store.dispatch(resetLocal())
-                setLocalCorrupt('')
-              }
-              setAppLoaded(true)
-            })
-            .catch(error => {
-              startingLog('error', 'local credential check failed')
-              if (
-                error.status &&
-                typeof error.status === 'number' &&
-                error.status === 401
-              ) {
-                store.dispatch(resetLocal())
-              }
-              setLocalCorrupt(error.data.error)
-              setAppLoaded(true)
-            })
-        } else {
-          startingLog('log', 'no local credential found')
-          setAppLoaded(true)
-        }
-      } else {
-        startingLog('warn', 'network not connected')
-        setAppLoaded(true)
-      }
-    })
+  const onBeforeLift = useCallback(async () => {
+    const netInfoRes = await netInfo()
+
+    if (netInfoRes.corrupted && netInfoRes.corrupted.length) {
+      setLocalCorrupt(netInfoRes.corrupted)
+    }
+
+    log('log', 'App', 'hide splash')
+    try {
+      await SplashScreen.hideAsync()
+      return Promise.resolve()
+    } catch (e) {
+      console.warn(e)
+      return Promise.reject()
+    }
   }, [])
 
   const main = useCallback(
     bootstrapped => {
-      startingLog('log', 'bootstrapped')
-      if (bootstrapped && appLoaded) {
-        startingLog('log', 'loading actual app :)')
+      log('log', 'App', 'bootstrapped')
+      if (bootstrapped) {
+        log('log', 'App', 'loading actual app :)')
         require('@root/i18n/i18n')
         return (
           <ThemeManager>
@@ -167,7 +74,7 @@ const App: React.FC = () => {
         return null
       }
     },
-    [appLoaded]
+    [localCorrupt]
   )
 
   return (

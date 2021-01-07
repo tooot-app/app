@@ -1,24 +1,25 @@
 import { StyleConstants } from '@utils/styles/constants'
 import React, { createRef, useCallback, useContext, useEffect } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
-import AccountInformationAvatar from './Information/Avatar'
-import AccountInformationName from './Information/Name'
 import AccountInformationAccount from './Information/Account'
-import AccountInformationCreated from './Information/Created'
-import AccountInformationStats from './Information/Stats'
 import AccountInformationActions from './Information/Actions'
+import AccountInformationAvatar from './Information/Avatar'
+import AccountInformationCreated from './Information/Created'
 import AccountInformationFields from './Information/Fields'
+import AccountInformationName from './Information/Name'
 import AccountInformationNotes from './Information/Notes'
+import AccountInformationStats from './Information/Stats'
+import AccountInformationSwitch from './Information/Switch'
 import AccountContext from './utils/createContext'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  disableActions?: boolean
+  ownAccount?: boolean
 }
 
 const AccountInformation: React.FC<Props> = ({
   account,
-  disableActions = false
+  ownAccount = false
 }) => {
   const { accountDispatch } = useContext(AccountContext)
   const shimmerAvatarRef = createRef<any>()
@@ -59,9 +60,13 @@ const AccountInformation: React.FC<Props> = ({
       {/* <Text>Moved or not: {account.moved}</Text> */}
       <View style={styles.avatarAndActions}>
         <AccountInformationAvatar ref={shimmerAvatarRef} account={account} />
-        {!disableActions ? (
-          <AccountInformationActions account={account} />
-        ) : null}
+        <View style={styles.actions}>
+          {ownAccount ? (
+            <AccountInformationSwitch />
+          ) : (
+            <AccountInformationActions account={account} />
+          )}
+        </View>
       </View>
 
       <AccountInformationName ref={shimmerNameRef} account={account} />
@@ -94,6 +99,10 @@ const styles = StyleSheet.create({
   avatarAndActions: {
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  actions: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row'
   }
 })
 

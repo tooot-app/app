@@ -10,25 +10,12 @@ import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 import client from '@root/api/client'
 import { useMutation, useQueryClient } from 'react-query'
 import { useTheme } from '@root/utils/styles/ThemeManager'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export interface Props {
   conversation: Mastodon.Conversation
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   highlighted?: boolean
-}
-
-const fireMutation = async ({ id }: { id: Mastodon.Conversation['id'] }) => {
-  const res = await client({
-    method: 'post',
-    instance: 'local',
-    url: `conversations/${id}/read`
-  })
-
-  if (res.body.id === id) {
-    return Promise.resolve()
-  } else {
-    return Promise.reject()
-  }
 }
 
 const TimelineConversation: React.FC<Props> = ({
@@ -39,6 +26,13 @@ const TimelineConversation: React.FC<Props> = ({
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
+  const fireMutation = useCallback(() => {
+    return client<Mastodon.Conversation>({
+      method: 'post',
+      instance: 'local',
+      url: `conversations/${conversation.id}/read`
+    })
+  }, [])
   const { mutate } = useMutation(fireMutation, {
     onSettled: () => {
       queryClient.invalidateQueries(queryKey)
@@ -49,7 +43,7 @@ const TimelineConversation: React.FC<Props> = ({
 
   const onPress = useCallback(() => {
     if (conversation.last_status) {
-      conversation.unread && mutate({ id: conversation.id })
+      conversation.unread && mutate()
       navigation.push('Screen-Shared-Toot', {
         toot: conversation.last_status
       })

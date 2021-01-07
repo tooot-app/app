@@ -1,4 +1,4 @@
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderLeft } from '@components/Header'
 import ScreenSharedAccount from '@screens/Shared/Account'
 import ScreenSharedAnnouncements from '@screens/Shared/Announcements'
 import ScreenSharedHashtag from '@screens/Shared/Hashtag'
@@ -9,7 +9,6 @@ import Compose from '@screens/Shared/Compose'
 import ScreenSharedSearch from '@screens/Shared/Search'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
 
 const sharedScreens = (Stack: any) => {
   const { t } = useTranslation()

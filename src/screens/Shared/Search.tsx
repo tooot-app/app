@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import ComponentAccount from '@root/components/Account'
 import ComponentSeparator from '@root/components/Separator'
 import TimelineDefault from '@root/components/Timelines/Timeline/Default'
-import { searchFetch } from '@utils/fetches/searchFetch'
+import hookSearch from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
@@ -17,17 +17,15 @@ import {
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import { TextInput } from 'react-native-gesture-handler'
-import { useQuery } from 'react-query'
 
 const ScreenSharedSearch: React.FC = () => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const [searchTerm, setSearchTerm] = useState<string | undefined>()
-  const { status, data, refetch } = useQuery(
-    ['Search', { term: searchTerm }],
-    searchFetch,
-    { enabled: false }
-  )
+  const { status, data, refetch } = hookSearch({
+    term: searchTerm,
+    options: { enabled: false }
+  })
 
   useEffect(() => {
     const updateHeaderRight = () =>

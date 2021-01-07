@@ -1,14 +1,13 @@
 import { MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import TimelineEmpty from '@root/components/Timelines/Timeline/Empty'
-import { listsFetch } from '@utils/fetches/listsFetch'
+import hookLists from '@utils/queryHooks/lists'
 import React, { useMemo } from 'react'
 import { StyleSheet } from 'react-native'
-import { useQuery } from 'react-query'
 
 const ScreenMeLists: React.FC = () => {
   const navigation = useNavigation()
-  const { status, data, refetch } = useQuery(['Lists'], listsFetch)
+  const { status, data, refetch } = hookLists({})
 
   const children = useMemo(() => {
     if (status === 'success') {

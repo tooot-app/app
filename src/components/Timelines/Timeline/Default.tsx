@@ -7,7 +7,8 @@ import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
-import { getLocalAccountId } from '@utils/slices/instancesSlice'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -15,7 +16,7 @@ import { useSelector } from 'react-redux'
 
 export interface Props {
   item: Mastodon.Status
-  queryKey?: QueryKey.Timeline
+  queryKey?: QueryKeyTimeline
   index: number
   pinnedLength?: number
   highlighted?: boolean
@@ -33,7 +34,7 @@ const TimelineDefault: React.FC<Props> = ({
   disableDetails = false,
   disableOnPress = false
 }) => {
-  const localAccountId = useSelector(getLocalAccountId)
+  const localAccount = useSelector(getLocalAccount)
   const navigation = useNavigation()
 
   let actualStatus = item.reblog ? item.reblog : item
@@ -64,7 +65,7 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineHeaderDefault
           queryKey={disableOnPress ? undefined : queryKey}
           status={actualStatus}
-          sameAccount={actualStatus.account.id === localAccountId}
+          sameAccount={actualStatus.account.id === localAccount?.id}
         />
       </View>
 
@@ -88,7 +89,7 @@ const TimelineDefault: React.FC<Props> = ({
             queryKey={queryKey}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
-            sameAccount={actualStatus.account.id === localAccountId}
+            sameAccount={actualStatus.account.id === localAccount?.id}
           />
         )}
         {!disableDetails && actualStatus.media_attachments.length > 0 && (

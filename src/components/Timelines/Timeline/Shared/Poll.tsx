@@ -6,6 +6,7 @@ import relativeTime from '@components/relativeTime'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { ParseEmojis } from '@root/components/Parse'
 import { toast } from '@root/components/toast'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
@@ -15,7 +16,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   poll: NonNullable<Mastodon.Status['poll']>
   reblog: boolean
   sameAccount: boolean
@@ -45,7 +46,7 @@ const TimelinePoll: React.FC<Props> = ({
           }
         })
 
-      return client({
+      return client<Mastodon.Poll>({
         method: type === 'vote' ? 'post' : 'get',
         instance: 'local',
         url: type === 'vote' ? `polls/${poll.id}/votes` : `polls/${poll.id}`,
@@ -55,7 +56,7 @@ const TimelinePoll: React.FC<Props> = ({
     [allOptions]
   )
   const mutation = useMutation(fireMutation, {
-    onSuccess: ({ body }) => {
+    onSuccess: (res) => {
       queryClient.cancelQueries(queryKey)
 
       queryClient.setQueryData<TimelineData>(queryKey, old => {
@@ -75,9 +76,9 @@ const TimelinePoll: React.FC<Props> = ({
 
         if (pageIndex >= 0 && tootIndex >= 0) {
           if (reblog) {
-            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = body
+            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = res
           } else {
-            old!.pages[pageIndex].toots[tootIndex].poll = body
+            old!.pages[pageIndex].toots[tootIndex].poll = res
           }
         }
         return old

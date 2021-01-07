@@ -12,6 +12,9 @@ import ScreenMeListsList from '@screens/Me/Root/Lists/List'
 import ScreenMeSettings from '@screens/Me/Settings'
 
 import { HeaderLeft } from '@root/components/Header'
+import UpdateRemote from './Me/Settings/UpdateRemote'
+import { CommonActions } from '@react-navigation/native'
+import ScreenMeSwitch from './Me/Switch'
 
 const Stack = createNativeStackNavigator()
 
@@ -34,7 +37,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeConversations}
         options={({ navigation }: any) => ({
           headerTitle: t('meConversations:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
       <Stack.Screen
@@ -42,7 +45,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeBookmarks}
         options={({ navigation }: any) => ({
           headerTitle: t('meBookmarks:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
       <Stack.Screen
@@ -50,7 +53,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeFavourites}
         options={({ navigation }: any) => ({
           headerTitle: t('meFavourites:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
       <Stack.Screen
@@ -58,7 +61,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeLists}
         options={({ navigation }: any) => ({
           headerTitle: t('meLists:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
       <Stack.Screen
@@ -66,7 +69,7 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeListsList}
         options={({ route, navigation }: any) => ({
           headerTitle: t('meListsList:heading', { list: route.params.title }),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
       <Stack.Screen
@@ -74,7 +77,24 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeSettings}
         options={({ navigation }: any) => ({
           headerTitle: t('meSettings:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+        })}
+      />
+      <Stack.Screen
+        name='Screen-Me-Settings-UpdateRemote'
+        component={UpdateRemote}
+        options={({ navigation }: any) => ({
+          headerTitle: t('meSettingsUpdateRemote:heading'),
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+        })}
+      />
+      <Stack.Screen
+        name='Screen-Me-Switch'
+        component={ScreenMeSwitch}
+        options={({ navigation }: any) => ({
+          stackPresentation: 'fullScreenModal',
+          headerTitle: t('meSettings:heading'),
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
 

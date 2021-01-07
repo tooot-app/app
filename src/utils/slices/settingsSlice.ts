@@ -9,7 +9,7 @@ export type SettingsState = {
   analytics: boolean
 }
 
-const initialState = {
+export const settingsInitialState = {
   language: undefined,
   theme: 'auto',
   browser: 'internal',
@@ -26,7 +26,7 @@ export const changeAnalytics = createAsyncThunk(
 
 const settingsSlice = createSlice({
   name: 'settings',
-  initialState: initialState as SettingsState,
+  initialState: settingsInitialState as SettingsState,
   reducers: {
     changeLanguage: (
       state,

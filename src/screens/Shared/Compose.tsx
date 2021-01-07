@@ -4,7 +4,7 @@ import { store } from '@root/store'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import formatText from '@screens/Shared/Compose/formatText'
 import ComposeRoot from '@screens/Shared/Compose/Root'
-import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
@@ -24,7 +24,6 @@ import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
-import { ComposeState } from './Compose/utils/types'
 
 const Stack = createNativeStackNavigator()
 
@@ -34,7 +33,6 @@ export interface Props {
       | {
           type?: 'reply' | 'conversation' | 'edit'
           incomingStatus: Mastodon.Status
-          visibilityLock?: boolean
         }
       | undefined
   }
@@ -63,19 +61,21 @@ const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
     setHasKeyboard(false)
   }
 
+  const localAccount = getLocalAccount(store.getState())
   const [composeState, composeDispatch] = useReducer(
     composeReducer,
     params?.type && params?.incomingStatus
       ? composeParseState({
           type: params.type,
-          incomingStatus: params.incomingStatus,
-          visibilityLock: params.visibilityLock
+          incomingStatus: params.incomingStatus
         })
       : {
           ...composeInitialState,
-          visibility: getLocalAccountPreferences(store.getState())[
-            'posting:default:visibility'
-          ] as ComposeState['visibility']
+          visibility:
+            localAccount?.preferences &&
+            localAccount.preferences['posting:default:visibility']
+              ? localAccount.preferences['posting:default:visibility']
+              : 'public'
         }
   )
   const [isSubmitting, setIsSubmitting] = useState(false)

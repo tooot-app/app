@@ -41,9 +41,7 @@ i18next.use(initReactI18next).init({
   // react options
   interpolation: {
     escapeValue: false
-  },
-
-  debug: true
+  }
 })
 
 export default i18next

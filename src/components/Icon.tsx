@@ -1,4 +1,3 @@
-import { StyleConstants } from '@root/utils/styles/constants'
 import React, { createElement } from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 import * as FeatherIcon from 'react-native-feather'

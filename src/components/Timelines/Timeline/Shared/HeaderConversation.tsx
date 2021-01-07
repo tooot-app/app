@@ -3,6 +3,7 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
@@ -14,7 +15,7 @@ import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedCreated from './HeaderShared/Created'
 
 export interface Props {
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   conversation: Mastodon.Conversation
 }
 
@@ -23,7 +24,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(() => {
-    return client({
+    return client<Mastodon.Conversation>({
       method: 'delete',
       instance: 'local',
       url: `conversations/${conversation.id}`

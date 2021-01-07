@@ -3,12 +3,13 @@ import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
 import { toast } from '@components/toast'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   domain: string
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -21,7 +22,7 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const fireMutation = useCallback(() => {
-    return client({
+    return client<{}>({
       method: 'post',
       instance: 'local',
       url: `domain_blocks`,

@@ -5,16 +5,12 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useCallback, useMemo, useState } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { Image, Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Animated, {
-  measure,
-  useAnimatedRef,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
-  withSpring,
   withTiming
 } from 'react-native-reanimated'
 
@@ -40,11 +36,62 @@ const renderNode = ({
   showFullLink: boolean
   disableDetails: boolean
 }) => {
-  if (node.name == 'a') {
-    const classes = node.attribs.class
-    const href = node.attribs.href
-    if (classes) {
-      if (classes.includes('hashtag')) {
+  switch (node.name) {
+    case 'a':
+      const classes = node.attribs.class
+      const href = node.attribs.href
+      if (classes) {
+        if (classes.includes('hashtag')) {
+          return (
+            <Text
+              key={index}
+              style={{
+                color: theme.blue,
+                ...StyleConstants.FontStyle[size]
+              }}
+              onPress={() => {
+                const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
+                !disableDetails &&
+                  navigation.push('Screen-Shared-Hashtag', {
+                    hashtag: tag[1] || tag[2]
+                  })
+              }}
+            >
+              {node.children[0].data}
+              {node.children[1]?.children[0].data}
+            </Text>
+          )
+        } else if (classes.includes('mention') && mentions) {
+          const accountIndex = mentions.findIndex(
+            mention => mention.url === href
+          )
+          return (
+            <Text
+              key={index}
+              style={{
+                color: accountIndex !== -1 ? theme.blue : undefined,
+                ...StyleConstants.FontStyle[size]
+              }}
+              onPress={() => {
+                accountIndex !== -1 &&
+                  !disableDetails &&
+                  navigation.push('Screen-Shared-Account', {
+                    account: mentions[accountIndex]
+                  })
+              }}
+            >
+              {node.children[0].data}
+              {node.children[1]?.children[0].data}
+            </Text>
+          )
+        }
+      } else {
+        const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
+        // Need example here
+        const content =
+          node.children && node.children[0] && node.children[0].data
+        const shouldBeTag =
+          tags && tags.filter(tag => `#${tag.name}` === content).length > 0
         return (
           <Text
             key={index}
@@ -52,78 +99,31 @@ const renderNode = ({
               color: theme.blue,
               ...StyleConstants.FontStyle[size]
             }}
-            onPress={() => {
-              const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-              !disableDetails &&
-                navigation.push('Screen-Shared-Hashtag', {
-                  hashtag: tag[1] || tag[2]
-                })
-            }}
+            onPress={async () =>
+              !disableDetails && !shouldBeTag
+                ? await openLink(href)
+                : navigation.push('Screen-Shared-Hashtag', {
+                    hashtag: content.substring(1)
+                  })
+            }
           >
-            {node.children[0].data}
-            {node.children[1]?.children[0].data}
-          </Text>
-        )
-      } else if (classes.includes('mention') && mentions) {
-        const accountIndex = mentions.findIndex(mention => mention.url === href)
-        return (
-          <Text
-            key={index}
-            style={{
-              color: accountIndex !== -1 ? theme.blue : undefined,
-              ...StyleConstants.FontStyle[size]
-            }}
-            onPress={() => {
-              accountIndex !== -1 &&
-                !disableDetails &&
-                navigation.push('Screen-Shared-Account', {
-                  account: mentions[accountIndex]
-                })
-            }}
-          >
-            {node.children[0].data}
-            {node.children[1]?.children[0].data}
+            {!shouldBeTag ? (
+              <Icon
+                color={theme.blue}
+                name='ExternalLink'
+                size={StyleConstants.Font.Size[size]}
+              />
+            ) : null}
+            {content || (showFullLink ? href : domain[1])}
           </Text>
         )
       }
-    } else {
-      const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
-      // Need example here
-      const content = node.children && node.children[0] && node.children[0].data
-      const shouldBeTag =
-        tags && tags.filter(tag => `#${tag.name}` === content).length > 0
-      return (
-        <Text
-          key={index}
-          style={{
-            color: theme.blue,
-            ...StyleConstants.FontStyle[size]
-          }}
-          onPress={async () =>
-            !disableDetails && !shouldBeTag
-              ? await openLink(href)
-              : navigation.push('Screen-Shared-Hashtag', {
-                  hashtag: content.substring(1)
-                })
-          }
-        >
-          {!shouldBeTag ? (
-            <Icon
-              color={theme.blue}
-              name='ExternalLink'
-              size={StyleConstants.Font.Size[size]}
-            />
-          ) : null}
-          {content || (showFullLink ? href : domain[1])}
-        </Text>
-      )
-    }
-  } else {
-    if (node.name === 'p') {
+      break
+    case 'p':
       if (!node.children.length) {
         return <View key={index} /> // bug when the tag is empty
       }
-    }
+      break
   }
 }
 

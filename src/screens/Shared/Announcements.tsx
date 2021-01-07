@@ -4,7 +4,7 @@ import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
 import relativeTime from '@components/relativeTime'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import { announcementFetch } from '@utils/fetches/announcementsFetch'
+import hookAnnouncement from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ import {
 } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 
 const fireMutation = async ({
   announcementId,
@@ -34,13 +34,13 @@ const fireMutation = async ({
 }) => {
   switch (type) {
     case 'reaction':
-      return client({
+      return client<{}>({
         method: me ? 'delete' : 'put',
         instance: 'local',
         url: `announcements/${announcementId}/reactions/${name}`
       })
     case 'dismiss':
-      return client({
+      return client<{}>({
         method: 'post',
         instance: 'local',
         url: `announcements/${announcementId}/dismiss`
@@ -59,12 +59,14 @@ const ScreenSharedAnnouncements: React.FC = ({
   const [index, setIndex] = useState(0)
   const { t, i18n } = useTranslation()
 
-  const queryKey = ['Announcements', { showAll }]
-  const { data, refetch } = useQuery(queryKey, announcementFetch, {
-    select: announcements =>
-      announcements.filter(announcement =>
-        showAll ? announcement : !announcement.read
-      )
+  const { data, refetch } = hookAnnouncement({
+    showAll,
+    options: {
+      select: announcements =>
+        announcements.filter(announcement =>
+          showAll ? announcement : !announcement.read
+        )
+    }
   })
   const queryMutation = useMutation(fireMutation, {
     onSettled: () => {

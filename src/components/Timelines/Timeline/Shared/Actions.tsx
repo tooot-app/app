@@ -4,6 +4,7 @@ import Icon from '@components/Icon'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
 import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
@@ -13,7 +14,7 @@ import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   status: Mastodon.Status
   reblog: boolean
 }
@@ -36,7 +37,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       stateKey: 'favourited' | 'reblogged' | 'bookmarked'
       state?: boolean
     }) => {
-      return client({
+      return client<Mastodon.Status>({
         method: 'post',
         instance: 'local',
         url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
@@ -58,7 +59,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
             let tootIndex = -1
             const pageIndex = findIndex(old?.pages, page => {
               const tempIndex = findIndex(page.toots, [
-                queryKey[0] === 'Notifications'
+                queryKey[1].page === 'Notifications'
                   ? 'status.id'
                   : reblog
                   ? 'reblog.id'
@@ -75,12 +76,12 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
             if (pageIndex >= 0 && tootIndex >= 0) {
               if (
-                (type === 'favourite' && queryKey[0] === 'Favourites') ||
-                (type === 'bookmark' && queryKey[0] === 'Bookmarks')
+                (type === 'favourite' && queryKey[1].page === 'Favourites') ||
+                (type === 'bookmark' && queryKey[1].page === 'Bookmarks')
               ) {
                 old!.pages[pageIndex].toots.splice(tootIndex, 1)
               } else {
-                if (queryKey[0] === 'Notifications') {
+                if (queryKey[1].page === 'Notifications') {
                   old!.pages[pageIndex].toots[tootIndex].status[stateKey] =
                     typeof state === 'boolean' ? !state : true
                 } else {

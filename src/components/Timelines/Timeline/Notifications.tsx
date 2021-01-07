@@ -7,7 +7,8 @@ import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderNotification from '@components/Timelines/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
-import { getLocalAccountId } from '@utils/slices/instancesSlice'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -15,7 +16,7 @@ import { useSelector } from 'react-redux'
 
 export interface Props {
   notification: Mastodon.Notification
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   highlighted?: boolean
 }
 
@@ -24,7 +25,7 @@ const TimelineNotifications: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
-  const localAccountId = useSelector(getLocalAccountId)
+  const localAccount = useSelector(getLocalAccount)
   const navigation = useNavigation()
   const actualAccount = notification.status
     ? notification.status.account
@@ -83,7 +84,7 @@ const TimelineNotifications: React.FC<Props> = ({
                 queryKey={queryKey}
                 poll={notification.status.poll}
                 reblog={false}
-                sameAccount={notification.account.id === localAccountId}
+                sameAccount={notification.account.id === localAccount?.id}
               />
             )}
             {notification.status.media_attachments.length > 0 && (

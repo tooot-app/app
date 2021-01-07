@@ -26,7 +26,7 @@ const AccountInformationName = forwardRef<ShimmerPlaceholder, Props>(
         width={StyleConstants.Font.Size.L * 8}
         height={StyleConstants.Font.Size.L}
         style={styles.name}
-        shimmerColors={theme.shimmer}
+        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         {account ? (
           <ParseEmojis

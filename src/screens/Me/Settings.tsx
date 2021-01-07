@@ -1,5 +1,13 @@
+import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { useNavigation } from '@react-navigation/native'
 import haptics from '@root/components/haptics'
+import { persistor } from '@root/store'
+import {
+  getLocalActiveIndex,
+  getLocalInstances,
+  getRemoteUrl
+} from '@root/utils/slices/instancesSlice'
 import {
   changeAnalytics,
   changeBrowser,
@@ -13,18 +21,63 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import prettyBytes from 'pretty-bytes'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, Button, StyleSheet, Text, View } from 'react-native'
+import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
 import { CacheManager } from 'react-native-expo-image-cache'
 import { useDispatch, useSelector } from 'react-redux'
 
+const DevDebug: React.FC = () => {
+  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const localInstances = useSelector(getLocalInstances)
+
+  return (
+    <MenuContainer>
+      <MenuRow
+        title={'Local active index'}
+        content={typeof localActiveIndex + ' - ' + localActiveIndex}
+        onPress={() => {}}
+      />
+      <MenuRow
+        title={'Saved local instances'}
+        content={localInstances.length.toString()}
+        iconBack='ChevronRight'
+        onPress={() =>
+          ActionSheetIOS.showActionSheetWithOptions(
+            {
+              options: localInstances
+                .map(instance => {
+                  return instance.url + ': ' + instance.account.id
+                })
+                .concat(['Cancel']),
+              cancelButtonIndex: localInstances.length
+            },
+            buttonIndex => {}
+          )
+        }
+      />
+      <Button
+        type='text'
+        content={'Purge secure storage'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
+        }}
+        destructive
+        onPress={() => persistor.purge()}
+      />
+    </MenuContainer>
+  )
+}
+
 const ScreenMeSettings: React.FC = () => {
+  const navigation = useNavigation()
   const { t, i18n } = useTranslation('meSettings')
   const { setTheme, theme } = useTheme()
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const settingsRemote = useSelector(getRemoteUrl)
   const settingsAnalytics = useSelector(getSettingsAnalytics)
   const dispatch = useDispatch()
 
@@ -135,8 +188,17 @@ const ScreenMeSettings: React.FC = () => {
       </MenuContainer>
       <MenuContainer>
         <MenuRow
+          title={t('content.remote.heading')}
+          description={t('content.remote.description')}
+          content={settingsRemote}
+          iconBack='ChevronRight'
+          onPress={() => navigation.navigate('Screen-Me-Settings-UpdateRemote')}
+        />
+        <MenuRow
           title={t('content.cache.heading')}
-          content={cacheSize ? prettyBytes(cacheSize) : '暂无缓存'}
+          content={
+            cacheSize ? prettyBytes(cacheSize) : t('content.cache.empty')
+          }
           iconBack='ChevronRight'
           onPress={async () => {
             await CacheManager.clearCache()
@@ -144,6 +206,8 @@ const ScreenMeSettings: React.FC = () => {
             setCacheSize(0)
           }}
         />
+      </MenuContainer>
+      <MenuContainer>
         <MenuRow
           title={t('content.analytics.heading')}
           description={t('content.analytics.description')}
@@ -160,6 +224,8 @@ const ScreenMeSettings: React.FC = () => {
           {t('content.version', { version: '1.0.0' })}
         </Text>
       </MenuContainer>
+
+      {__DEV__ ? <DevDebug /> : null}
     </>
   )
 }

@@ -134,7 +134,7 @@ const MenuRow: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   base: {
-    height: 50
+    minHeight: 50
   },
   core: {
     flex: 1,

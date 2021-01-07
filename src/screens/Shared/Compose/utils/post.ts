@@ -40,7 +40,7 @@ const composePost = async (
 
   formData.append('visibility', composeState.visibility)
 
-  return client({
+  return client<Mastodon.Status>({
     method: 'post',
     instance: 'local',
     url: 'statuses',

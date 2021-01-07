@@ -15,12 +15,12 @@ export interface Props {
 const RelationshipIncoming: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
-  const relationshipQueryKey: QueryKey.Relationship = ['Relationship', { id }]
+  const relationshipQueryKey = ['Relationship', { id }]
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(
     ({ type }: { type: 'authorize' | 'reject' }) => {
-      return client({
+      return client<Mastodon.Relationship>({
         method: 'post',
         instance: 'local',
         url: `follow_requests/${id}/${type}`
@@ -29,9 +29,9 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
     []
   )
   const mutation = useMutation(fireMutation, {
-    onSuccess: ({ body }) => {
+    onSuccess: res => {
       haptics('Success')
-      queryClient.setQueryData(relationshipQueryKey, body)
+      queryClient.setQueryData(relationshipQueryKey, res)
       queryClient.refetchQueries(['Notifications'])
     },
     onError: (err: any, { type }) => {

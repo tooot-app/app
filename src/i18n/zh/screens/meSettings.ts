@@ -26,8 +26,13 @@ export default {
         cancel: '$t(common:buttons.cancel)'
       }
     },
+    remote: {
+      heading: '$t(meSettingsUpdateRemote:heading)',
+      description: '外站只能看不能玩'
+    },
     cache: {
-      heading: '清空缓存'
+      heading: '清空缓存',
+      empty: '暂无缓存'
     },
     analytics: {
       heading: '帮助我们改进',

@@ -2,12 +2,13 @@ import client from '@api/client'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 
 export interface Props {
-  queryKey?: QueryKey.Timeline
+  queryKey?: QueryKeyTimeline
   account: Pick<Mastodon.Account, 'id' | 'acct'>
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -25,14 +26,14 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       switch (type) {
         case 'mute':
         case 'block':
-          return client({
+          return client<Mastodon.Account>({
             method: 'post',
             instance: 'local',
             url: `accounts/${account.id}/${type}`
           })
           break
         case 'reports':
-          return client({
+          return client<Mastodon.Account>({
             method: 'post',
             instance: 'local',
             url: `reports`,

@@ -24,7 +24,7 @@ const AccountInformationAvatar = forwardRef<ShimmerPlaceholder, Props>(
         visible={avatarLoaded}
         width={StyleConstants.Avatar.L}
         height={StyleConstants.Avatar.L}
-        shimmerColors={theme.shimmer}
+        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <Image
           source={{ uri: account?.avatar }}

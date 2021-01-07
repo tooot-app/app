@@ -97,7 +97,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
             formData.append('focus', `${focus.current.x},${focus.current.y}`)
           }
 
-          client({
+          client<Mastodon.Attachment>({
             method: 'put',
             instance: 'local',
             url: `media/${theAttachment.id}`,

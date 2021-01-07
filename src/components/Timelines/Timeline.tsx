@@ -3,16 +3,17 @@ import TimelineConversation from '@components/Timelines/Timeline/Conversation'
 import TimelineDefault from '@components/Timelines/Timeline/Default'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@root/components/Timelines/Timeline/End'
+import TimelineHeader from '@components/Timelines/Timeline/Header'
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
 import { useScrollToTop } from '@react-navigation/native'
-import { timelineFetch } from '@utils/fetches/timelineFetch'
-import { updateNotification } from '@utils/slices/instancesSlice'
+import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { InfiniteData, useInfiniteQuery } from 'react-query'
+import { InfiniteData } from 'react-query'
 import { useDispatch } from 'react-redux'
+import hookTimeline, { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type TimelineData =
   | InfiniteData<{
@@ -41,15 +42,14 @@ const Timeline: React.FC<Props> = ({
   disableRefresh = false,
   disableInfinity = false
 }) => {
-  const queryKey: QueryKey.Timeline = [
+  const queryKeyParams = {
     page,
-    {
-      ...(hashtag && { hashtag }),
-      ...(list && { list }),
-      ...(toot && { toot }),
-      ...(account && { account })
-    }
-  ]
+    ...(hashtag && { hashtag }),
+    ...(list && { list }),
+    ...(toot && { toot }),
+    ...(account && { account })
+  }
+  const queryKey: QueryKeyTimeline = ['Timeline', queryKeyParams]
   const {
     status,
     data,
@@ -61,24 +61,28 @@ const Timeline: React.FC<Props> = ({
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  } = useInfiniteQuery(queryKey, timelineFetch, {
-    getPreviousPageParam: firstPage => {
-      return firstPage.toots.length
-        ? {
-            direction: 'prev',
-            id: firstPage.toots[0].id
-          }
-        : undefined
-    },
-    getNextPageParam: lastPage => {
-      return lastPage.toots.length
-        ? {
-            direction: 'next',
-            id: lastPage.toots[lastPage.toots.length - 1].id
-          }
-        : undefined
+  } = hookTimeline({
+    ...queryKeyParams,
+    options: {
+      getPreviousPageParam: firstPage => {
+        return firstPage.toots.length
+          ? {
+              direction: 'prev',
+              id: firstPage.toots[0].id
+            }
+          : undefined
+      },
+      getNextPageParam: lastPage => {
+        return lastPage.toots.length
+          ? {
+              direction: 'next',
+              id: lastPage.toots[lastPage.toots.length - 1].id
+            }
+          : undefined
+      }
     }
   })
+
   const flattenData = data?.pages ? data.pages.flatMap(d => [...d?.toots]) : []
   const flattenPointer = data?.pages
     ? data.pages.flatMap(d => [d?.pointer])
@@ -92,9 +96,9 @@ const Timeline: React.FC<Props> = ({
   useEffect(() => {
     if (page === 'Notifications' && flattenData.length) {
       dispatch(
-        updateNotification({
+        localUpdateNotification({
           unread: false,
-          latestTime: flattenData[0].created_at
+          latestTime: (flattenData[0] as Mastodon.Notification).created_at
         })
       )
     }
@@ -130,7 +134,7 @@ const Timeline: React.FC<Props> = ({
               item={item}
               queryKey={queryKey}
               index={index}
-              {...(queryKey[0] === 'RemotePublic' && {
+              {...(queryKey[1].page === 'RemotePublic' && {
                 disableDetails: true,
                 disableOnPress: true
               })}
@@ -166,6 +170,7 @@ const Timeline: React.FC<Props> = ({
     () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
   )
+  const ListHeaderComponent = useCallback(() => <TimelineHeader />, [])
   const ListFooterComponent = useCallback(
     () => <TimelineEnd hasNextPage={!disableInfinity ? hasNextPage : false} />,
     [hasNextPage]
@@ -207,6 +212,8 @@ const Timeline: React.FC<Props> = ({
       ListEmptyComponent={flItemEmptyComponent}
       {...(!disableRefresh && { refreshControl })}
       ItemSeparatorComponent={ItemSeparatorComponent}
+      {...(queryKey &&
+        queryKey[1].page === 'RemotePublic' && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
       maintainVisibleContentPosition={{
         minIndexForVisible: 0,

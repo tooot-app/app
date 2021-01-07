@@ -9,9 +9,10 @@ import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
 import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export interface Props {
-  queryKey: QueryKey.Timeline
+  queryKey: QueryKeyTimeline
   status: Mastodon.Status
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -30,14 +31,14 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       switch (type) {
         case 'mute':
         case 'pin':
-          return client({
+          return client<Mastodon.Status>({
             method: 'post',
             instance: 'local',
             url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
           }) // bug in response from Mastodon, but onMutate ignore the error in response
           break
         case 'delete':
-          return client({
+          return client<Mastodon.Status>({
             method: 'delete',
             instance: 'local',
             url: `statuses/${status.id}`
@@ -153,7 +154,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                 ),
                 style: 'destructive',
                 onPress: async () => {
-                  await client({
+                  await client<Mastodon.Status>({
                     method: 'delete',
                     instance: 'local',
                     url: `statuses/${status.id}`
@@ -163,7 +164,7 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                       setBottomSheetVisible(false)
                       navigation.navigate('Screen-Shared-Compose', {
                         type: 'edit',
-                        incomingStatus: res.body
+                        incomingStatus: res
                       })
                     })
                     .catch(() => {

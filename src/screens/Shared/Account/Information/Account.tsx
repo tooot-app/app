@@ -25,7 +25,7 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
         width={StyleConstants.Font.Size.M * 8}
         height={StyleConstants.Font.Size.M}
         style={{ marginBottom: StyleConstants.Spacing.L }}
-        shimmerColors={theme.shimmer}
+        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <View style={styles.account}>
           <Text

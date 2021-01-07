@@ -1,5 +1,5 @@
 import { store } from '@root/store'
-import { getLocalAccountPreferences } from '@utils/slices/instancesSlice'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
@@ -40,9 +40,10 @@ const composeParseState = ({ type, incomingStatus }: Props): ComposeState => {
         }),
         visibility:
           incomingStatus.visibility ||
-          getLocalAccountPreferences(store.getState())[
+          getLocalAccount(store.getState())?.preferences[
             'posting:default:visibility'
-          ],
+          ] ||
+          'public',
         ...(incomingStatus.visibility === 'direct' && { visibilityLock: true })
       }
     case 'reply':

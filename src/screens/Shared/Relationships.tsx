@@ -20,7 +20,6 @@ const ScreenSharedRelationships: React.FC<Props> = ({
     params: { account, initialType }
   }
 }) => {
-  console.log(account.id)
   const { mode } = useTheme()
   const navigation = useNavigation()
 
