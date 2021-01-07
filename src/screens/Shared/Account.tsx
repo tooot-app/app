@@ -3,7 +3,7 @@ import { HeaderRight } from '@components/Header'
 import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
 import hookAccount from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
-import React, { useEffect, useReducer, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -17,19 +17,11 @@ import AccountToots from './Account/Toots'
 import AccountContext from './Account/utils/createContext'
 import accountInitialState from './Account/utils/initialState'
 import accountReducer from './Account/utils/reducer'
+import { SharedAccountProp } from './sharedScreens'
 
 // Moved account example: https://m.cmx.im/web/accounts/27812
 
-export interface Props {
-  route: {
-    params: {
-      account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
-    }
-  }
-  navigation: any
-}
-
-const ScreenSharedAccount: React.FC<Props> = ({
+const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
   route: {
     params: { account }
   },

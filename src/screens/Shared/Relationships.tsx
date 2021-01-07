@@ -5,17 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 import RelationshipsList from './Relationships/List'
+import { SharedRelationshipsProp } from './sharedScreens'
 
-export interface Props {
-  route: {
-    params: {
-      account: Mastodon.Account
-      initialType: 'following' | 'followers'
-    }
-  }
-}
-
-const ScreenSharedRelationships: React.FC<Props> = ({
+const ScreenSharedRelationships: React.FC<SharedRelationshipsProp> = ({
   route: {
     params: { account, initialType }
   }
@@ -43,16 +35,15 @@ const ScreenSharedRelationships: React.FC<Props> = ({
     return updateHeaderRight()
   }, [])
 
-  const routes: { key: Props['route']['params']['initialType'] }[] = [
-    { key: 'following' },
-    { key: 'followers' }
-  ]
+  const routes: {
+    key: SharedRelationshipsProp['route']['params']['initialType']
+  }[] = [{ key: 'following' }, { key: 'followers' }]
 
   const renderScene = ({
     route
   }: {
     route: {
-      key: Props['route']['params']['initialType']
+      key: SharedRelationshipsProp['route']['params']['initialType']
     }
   }) => {
     return <RelationshipsList id={account.id} type={route.key} />

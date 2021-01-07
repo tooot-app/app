@@ -24,22 +24,14 @@ import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
+import { SharedComposeProp } from './sharedScreens'
 
 const Stack = createNativeStackNavigator()
 
-export interface Props {
-  route: {
-    params:
-      | {
-          type?: 'reply' | 'conversation' | 'edit'
-          incomingStatus: Mastodon.Status
-        }
-      | undefined
-  }
-  navigation: any
-}
-
-const Compose: React.FC<Props> = ({ route: { params }, navigation }) => {
+const Compose: React.FC<SharedComposeProp> = ({
+  route: { params },
+  navigation
+}) => {
   const { theme } = useTheme()
   const queryClient = useQueryClient()
 

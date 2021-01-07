@@ -1,16 +1,8 @@
-import React from 'react'
-
 import Timeline from '@components/Timelines/Timeline'
+import React from 'react'
+import { SharedTootProp } from './sharedScreens'
 
-export interface Props {
-  route: {
-    params: {
-      toot: Mastodon.Status
-    }
-  }
-}
-
-const ScreenSharedToot: React.FC<Props> = ({
+const ScreenSharedToot: React.FC<SharedTootProp> = ({
   route: {
     params: { toot }
   }

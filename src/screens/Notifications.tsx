@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useSelector } from 'react-redux'
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<Nav.NotificationsStackParamList>()
 
 const ScreenNotifications: React.FC = () => {
   const { t } = useTranslation()

@@ -20,6 +20,7 @@ import {
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useMutation } from 'react-query'
+import { SharedAnnouncementsProp } from './sharedScreens'
 
 const fireMutation = async ({
   announcementId,
@@ -48,9 +49,9 @@ const fireMutation = async ({
   }
 }
 
-const ScreenSharedAnnouncements: React.FC = ({
+const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
   route: {
-    params: { showAll }
+    params: { showAll = false }
   },
   navigation
 }) => {

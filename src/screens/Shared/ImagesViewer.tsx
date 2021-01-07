@@ -8,22 +8,9 @@ import ImageViewer from 'react-native-image-zoom-viewer'
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
+import { SharedImagesViewerProp } from './sharedScreens'
 
 const Stack = createNativeStackNavigator()
-
-export interface Props {
-  route: {
-    params: {
-      imageUrls: (IImageInfo & {
-        preview_url: Mastodon.AttachmentImage['preview_url']
-        remote_url: Mastodon.AttachmentImage['remote_url']
-        imageIndex: number
-      })[]
-      imageIndex: number
-    }
-  }
-  navigation: any
-}
 
 const TheImage = ({
   style,
@@ -52,7 +39,7 @@ const TheImage = ({
   )
 }
 
-const ScreenSharedImagesViewer: React.FC<Props> = ({
+const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
   route: {
     params: { imageUrls, imageIndex }
   },

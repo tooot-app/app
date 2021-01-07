@@ -2,7 +2,10 @@ import client from '@api/client'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { toast, toastConfig } from '@components/toast'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import {
+  BottomTabNavigationOptions,
+  createBottomTabNavigator
+} from '@react-navigation/bottom-tabs'
 import {
   NavigationContainer,
   NavigationContainerRef
@@ -32,7 +35,7 @@ import { StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<Nav.RootStackParamList>()
 
 export interface Props {
   localCorrupt?: string
@@ -50,7 +53,6 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   }
 
   const routeNameRef = useRef<string | undefined>()
-  // const navigationRef = useRef<NavigationContainerRef>(null)
 
   // const isConnected = useNetInfo().isConnected
   // const [firstRender, setFirstRender] = useState(false)
@@ -114,7 +116,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         ...d?.toots
       ])
       const latestNotificationTime = flattenData.length
-        ? flattenData[0].created_at
+        ? (flattenData[0] as Mastodon.Notification).created_at
         : undefined
 
       if (!prevNotification || !prevNotification.latestTime) {
@@ -161,7 +163,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
     routeNameRef.current = currentRouteName
   }, [])
   const tabNavigatorScreenOptions = useCallback(
-    ({ route }) => ({
+    ({ route }): BottomTabNavigationOptions => ({
       tabBarIcon: ({
         focused,
         color,

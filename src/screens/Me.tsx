@@ -1,22 +1,19 @@
-import React from 'react'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useTranslation } from 'react-i18next'
-
-import ScreenMeRoot from '@screens/Me/Root'
-import ScreenMeConversations from '@screens/Me/Cconversations'
+import { HeaderLeft } from '@components/Header'
 import ScreenMeBookmarks from '@screens/Me/Bookmarks'
+import ScreenMeConversations from '@screens/Me/Cconversations'
 import ScreenMeFavourites from '@screens/Me/Favourites'
 import ScreenMeLists from '@screens/Me/Lists'
-import sharedScreens from '@screens/Shared/sharedScreens'
+import ScreenMeRoot from '@screens/Me/Root'
 import ScreenMeListsList from '@screens/Me/Root/Lists/List'
 import ScreenMeSettings from '@screens/Me/Settings'
+import UpdateRemote from '@screens/Me/Settings/UpdateRemote'
+import ScreenMeSwitch from '@screens/Me/Switch'
+import sharedScreens from '@screens/Shared/sharedScreens'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 
-import { HeaderLeft } from '@root/components/Header'
-import UpdateRemote from './Me/Settings/UpdateRemote'
-import { CommonActions } from '@react-navigation/native'
-import ScreenMeSwitch from './Me/Switch'
-
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<Nav.MeStackParamList>()
 
 const ScreenMe: React.FC = () => {
   const { t } = useTranslation()
@@ -33,18 +30,18 @@ const ScreenMe: React.FC = () => {
         }}
       />
       <Stack.Screen
-        name='Screen-Me-Conversations'
-        component={ScreenMeConversations}
-        options={({ navigation }: any) => ({
-          headerTitle: t('meConversations:heading'),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-        })}
-      />
-      <Stack.Screen
         name='Screen-Me-Bookmarks'
         component={ScreenMeBookmarks}
         options={({ navigation }: any) => ({
           headerTitle: t('meBookmarks:heading'),
+          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+        })}
+      />
+      <Stack.Screen
+        name='Screen-Me-Conversations'
+        component={ScreenMeConversations}
+        options={({ navigation }: any) => ({
+          headerTitle: t('meConversations:heading'),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />

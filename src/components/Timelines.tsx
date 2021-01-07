@@ -11,10 +11,12 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
 import { useSelector } from 'react-redux'
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<
+  Nav.LocalStackParamList | Nav.RemoteStackParamList
+>()
 
 export interface Props {
-  name: 'Local' | 'Public'
+  name: 'Screen-Local-Root' | 'Screen-Public-Root'
   content: { title: string; page: App.Pages }[]
 }
 
@@ -68,9 +70,11 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
   return (
     <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
-        name={`Screen-${name}-Root`}
+        // @ts-ignore
+        name={name}
+        component={screenComponent}
         options={{
-          headerTitle: name === 'Public' ? publicDomain : '',
+          headerTitle: name === 'Screen-Public-Root' ? publicDomain : '',
           ...(localActiveIndex !== null && {
             headerCenter: () => (
               <View style={styles.segmentsContainer}>
@@ -89,9 +93,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
             )
           })
         }}
-      >
-        {screenComponent}
-      </Stack.Screen>
+      />
 
       {sharedScreens(Stack)}
     </Stack.Navigator>

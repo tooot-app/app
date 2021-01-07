@@ -1,18 +1,10 @@
-import React from 'react'
-
 import Timeline from '@components/Timelines/Timeline'
+import React from 'react'
+import { SharedHashtagProp } from './sharedScreens'
 
 // Show remote hashtag? Only when private, show local version?
 
-export interface Props {
-  route: {
-    params: {
-      hashtag: string
-    }
-  }
-}
-
-const ScreenSharedHashtag: React.FC<Props> = ({
+const ScreenSharedHashtag: React.FC<SharedHashtagProp> = ({
   route: {
     params: { hashtag }
   }
