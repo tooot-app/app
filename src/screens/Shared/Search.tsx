@@ -5,7 +5,6 @@ import TimelineDefault from '@root/components/Timelines/Timeline/Default'
 import hookSearch from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   KeyboardAvoidingView,
@@ -16,52 +15,18 @@ import {
   View
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import { TextInput } from 'react-native-gesture-handler'
 
-const ScreenSharedSearch: React.FC = () => {
+export interface Props {
+  searchTerm: string | undefined
+}
+
+const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
-  const [searchTerm, setSearchTerm] = useState<string | undefined>()
   const { status, data, refetch } = hookSearch({
     term: searchTerm,
     options: { enabled: false }
   })
-
-  useEffect(() => {
-    const updateHeaderRight = () =>
-      navigation.setOptions({
-        headerCenter: () => (
-          <View style={styles.searchBar}>
-            <Text
-              style={{ ...StyleConstants.FontStyle.M, color: theme.primary }}
-            >
-              搜索
-            </Text>
-            <TextInput
-              style={[
-                styles.textInput,
-                {
-                  color: theme.primary
-                }
-              ]}
-              autoFocus
-              onChangeText={onChangeText}
-              autoCapitalize='none'
-              autoCorrect={false}
-              clearButtonMode='never'
-              keyboardType='web-search'
-              onSubmitEditing={({ nativeEvent: { text } }) =>
-                setSearchTerm(text)
-              }
-              placeholder={'些什么'}
-              placeholderTextColor={theme.secondary}
-              returnKeyType='go'
-            />
-          </View>
-        )
-      })
-    return updateHeaderRight()
-  }, [])
 
   const [setctionData, setSectionData] = useState<
     { title: string; data: any }[]
@@ -89,12 +54,6 @@ const ScreenSharedSearch: React.FC = () => {
     [data]
   )
 
-  const onChangeText = useCallback(
-    debounce(text => setSearchTerm(text), 1000, {
-      trailing: true
-    }),
-    []
-  )
   useEffect(() => {
     if (searchTerm) {
       refetch()
@@ -233,20 +192,8 @@ const styles = StyleSheet.create({
   base: {
     minHeight: '100%'
   },
-  searchBar: {
-    flexBasis: '80%',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  textInput: {
-    ...StyleConstants.FontStyle.M,
-    paddingLeft: StyleConstants.Spacing.XS,
-    marginBottom:
-      (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2
-  },
   emptyBase: {
     marginVertical: StyleConstants.Spacing.Global.PagePadding,
-    // paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
     alignItems: 'center'
   },
   loading: { flex: 1, alignItems: 'center' },

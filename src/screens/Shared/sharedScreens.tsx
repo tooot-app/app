@@ -9,8 +9,13 @@ import ScreenSharedImagesViewer from '@screens/Shared/ImagesViewer'
 import ScreenSharedRelationships from '@screens/Shared/Relationships'
 import ScreenSharedSearch from '@screens/Shared/Search'
 import ScreenSharedToot from '@screens/Shared/Toot'
-import React from 'react'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import { debounce } from 'lodash'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet, Text, View } from 'react-native'
+import { TextInput } from 'react-native-gesture-handler'
 import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
 import {
   NativeStackNavigationEventMap,
@@ -69,7 +74,16 @@ const sharedScreens = (
     }: NativeStackNavigatorProps) => JSX.Element
   >
 ) => {
+  const { theme } = useTheme()
   const { t } = useTranslation()
+
+  const [searchTerm, setSearchTerm] = useState<string>()
+  const onChangeText = useCallback(
+    debounce(text => setSearchTerm(text), 1000, {
+      trailing: true
+    }),
+    []
+  )
 
   return [
     <Stack.Screen
@@ -134,11 +148,42 @@ const sharedScreens = (
     <Stack.Screen
       key='Screen-Shared-Search'
       name='Screen-Shared-Search'
-      component={ScreenSharedSearch}
       options={({ navigation }: any) => ({
-        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+        // https://github.com/react-navigation/react-navigation/issues/6746#issuecomment-583897436
+        headerCenter: () => (
+          <View style={styles.searchBar}>
+            <Text
+              style={{ ...StyleConstants.FontStyle.M, color: theme.primary }}
+            >
+              搜索
+            </Text>
+            <TextInput
+              style={[
+                styles.textInput,
+                {
+                  color: theme.primary
+                }
+              ]}
+              autoFocus
+              onChangeText={onChangeText}
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='never'
+              keyboardType='web-search'
+              onSubmitEditing={({ nativeEvent: { text } }) =>
+                setSearchTerm(text)
+              }
+              placeholder={'些什么'}
+              placeholderTextColor={theme.secondary}
+              returnKeyType='go'
+            />
+          </View>
+        )
       })}
-    />,
+    >
+      {() => <ScreenSharedSearch searchTerm={searchTerm} />}
+    </Stack.Screen>,
     <Stack.Screen
       key='Screen-Shared-Toot'
       name='Screen-Shared-Toot'
@@ -150,5 +195,19 @@ const sharedScreens = (
     />
   ]
 }
+
+const styles = StyleSheet.create({
+  searchBar: {
+    flexBasis: '80%',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  textInput: {
+    ...StyleConstants.FontStyle.M,
+    paddingLeft: StyleConstants.Spacing.XS,
+    marginBottom:
+      (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2
+  }
+})
 
 export default sharedScreens

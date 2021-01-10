@@ -52,7 +52,7 @@ const TimelineContent: React.FC<Props> = ({
           emojis={status.emojis}
           mentions={status.mentions}
           tags={status.tags}
-          numberOfLines={numberOfLines}
+          numberOfLines={highlighted ? 999 : numberOfLines}
           disableDetails={disableDetails}
         />
       )}
