@@ -15,7 +15,7 @@ exports[`Testing component menu row loading state 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "height": 50,
+      "minHeight": 50,
     }
   }
   testID="base"
@@ -34,28 +34,35 @@ exports[`Testing component menu row loading state 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "flex": 1,
-          "flexBasis": "70%",
+          "flex": 2,
           "flexDirection": "row",
         }
       }
     >
-      <Text
-        numberOfLines={1}
+      <View
         style={
-          Array [
-            Object {
-              "flex": 1,
-              "fontSize": 16,
-            },
-            Object {
-              "color": "rgb(18, 18, 18)",
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       >
-        test
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "rgb(18, 18, 18)",
+              },
+            ]
+          }
+        >
+          test
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -76,7 +83,7 @@ exports[`Testing component menu row on press event 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "height": 50,
+      "minHeight": 50,
     }
   }
   testID="base"
@@ -95,28 +102,35 @@ exports[`Testing component menu row on press event 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "flex": 1,
-          "flexBasis": "70%",
+          "flex": 2,
           "flexDirection": "row",
         }
       }
     >
-      <Text
-        numberOfLines={1}
+      <View
         style={
-          Array [
-            Object {
-              "flex": 1,
-              "fontSize": 16,
-            },
-            Object {
-              "color": "rgb(18, 18, 18)",
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       >
-        test
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "rgb(18, 18, 18)",
+              },
+            ]
+          }
+        >
+          test
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -137,7 +151,7 @@ exports[`Testing component menu row with title and content 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "height": 50,
+      "minHeight": 50,
     }
   }
   testID="base"
@@ -156,37 +170,44 @@ exports[`Testing component menu row with title and content 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "flex": 1,
-          "flexBasis": "70%",
+          "flex": 2,
           "flexDirection": "row",
         }
       }
     >
-      <Text
-        numberOfLines={1}
+      <View
         style={
-          Array [
-            Object {
-              "flex": 1,
-              "fontSize": 16,
-            },
-            Object {
-              "color": "rgb(18, 18, 18)",
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       >
-        test title
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "rgb(18, 18, 18)",
+              },
+            ]
+          }
+        >
+          test title
+        </Text>
+      </View>
     </View>
     <View
       style={
         Object {
           "alignItems": "center",
           "flex": 1,
-          "flexBasis": "30%",
           "flexDirection": "row",
           "justifyContent": "flex-end",
+          "marginLeft": 16,
         }
       }
     >
@@ -196,6 +217,7 @@ exports[`Testing component menu row with title and content 1`] = `
           Array [
             Object {
               "fontSize": 16,
+              "lineHeight": 22,
             },
             Object {
               "color": "rgb(135, 135, 135)",
@@ -226,7 +248,7 @@ exports[`Testing component menu row with title only 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "height": 50,
+      "minHeight": 50,
     }
   }
   testID="base"
@@ -245,28 +267,35 @@ exports[`Testing component menu row with title only 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "flex": 1,
-          "flexBasis": "70%",
+          "flex": 2,
           "flexDirection": "row",
         }
       }
     >
-      <Text
-        numberOfLines={1}
+      <View
         style={
-          Array [
-            Object {
-              "flex": 1,
-              "fontSize": 16,
-            },
-            Object {
-              "color": "rgb(18, 18, 18)",
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       >
-        test title
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 22,
+              },
+              Object {
+                "color": "rgb(18, 18, 18)",
+              },
+            ]
+          }
+        >
+          test title
+        </Text>
+      </View>
     </View>
   </View>
 </View>

@@ -16,11 +16,9 @@ const TimelineHeader = React.memo(
           一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字{' '}
           <Text
             style={{ color: theme.blue }}
-            onPress={() =>
-              navigation.navigate('Screen-Me', {
-                screen: 'Screen-Me-Settings-UpdateRemote'
-              })
-            }
+            onPress={() => {
+              navigation.navigate('Screen-Me')
+            }}
           >
             前往设置{' '}
             <Icon

@@ -2,7 +2,9 @@ import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { toast } from '@components/toast'
-import hookRelationship from '@utils/queryHooks/relationship'
+import hookRelationship, {
+  QueryKeyRelationship
+} from '@utils/queryHooks/relationship'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
@@ -14,7 +16,7 @@ export interface Props {
 const RelationshipOutgoing: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
-  const relationshipQueryKey = ['Relationship', { id }]
+  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
   const query = hookRelationship({ id })
 
   const queryClient = useQueryClient()
@@ -31,7 +33,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }) => {
   const mutation = useMutation(fireMutation, {
     onSuccess: res => {
       haptics('Success')
-      queryClient.setQueryData(relationshipQueryKey, res)
+      queryClient.setQueryData(queryKeyRelationship, res)
     },
     onError: (err: any, { type }) => {
       haptics('Error')

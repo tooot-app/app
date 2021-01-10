@@ -17,6 +17,7 @@ import {
   Text,
   View
 } from 'react-native'
+import { Chase } from 'react-native-animated-spinkit'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useMutation } from 'react-query'
@@ -199,6 +200,20 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
     []
   )
 
+  const ListEmptyComponent = useCallback(() => {
+    return (
+      <View
+        style={{
+          width: Dimensions.get('screen').width,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+      </View>
+    )
+  }, [])
+
   return (
     <SafeAreaView style={[styles.base, { backgroundColor: theme.background }]}>
       <View style={[styles.header, { height: bottomTabBarHeight }]}>
@@ -211,6 +226,7 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={onMomentumScrollEnd}
+        ListEmptyComponent={ListEmptyComponent}
       />
       <View style={[styles.indicators, { height: bottomTabBarHeight }]}>
         {data && data.length > 1 ? (

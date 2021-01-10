@@ -1,393 +1,474 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Testing component button static button apply custom styling 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "rgb(250, 250, 250)",
-        "borderColor": "rgb(18, 18, 18)",
-        "borderWidth": 1,
-        "paddingHorizontal": 16,
-        "paddingVertical": 8,
-      },
-      Object {
-        "backgroundColor": "black",
-      },
-    ]
-  }
-  testID="base"
->
-  <Text
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "color": "rgb(18, 18, 18)",
-        "fontSize": 16,
-        "fontWeight": undefined,
-        "opacity": 1,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(18, 18, 18)",
+          "borderWidth": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        Object {
+          "backgroundColor": "black",
+        },
+      ]
     }
-    testID="text"
+    testID="base"
   >
-    test
-  </Text>
+    <Text
+      style={
+        Object {
+          "color": "rgb(18, 18, 18)",
+          "fontSize": 16,
+          "fontWeight": undefined,
+          "opacity": 1,
+        }
+      }
+      testID="text"
+    >
+      test
+    </Text>
+  </View>
 </View>
 `;
 
 exports[`Testing component button static button disabled state 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "rgb(250, 250, 250)",
-        "borderColor": "rgb(135, 135, 135)",
-        "borderWidth": 1,
-        "paddingHorizontal": 16,
-        "paddingVertical": 8,
-      },
-      undefined,
-    ]
-  }
-  testID="base"
->
-  <Text
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "color": "rgb(135, 135, 135)",
-        "fontSize": 16,
-        "fontWeight": undefined,
-        "opacity": 1,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(135, 135, 135)",
+          "borderWidth": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        undefined,
+      ]
     }
-    testID="text"
+    testID="base"
   >
-    test
-  </Text>
+    <Text
+      style={
+        Object {
+          "color": "rgb(135, 135, 135)",
+          "fontSize": 16,
+          "fontWeight": undefined,
+          "opacity": 1,
+        }
+      }
+      testID="text"
+    >
+      test
+    </Text>
+  </View>
 </View>
 `;
 
 exports[`Testing component button static button loading state 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "rgb(250, 250, 250)",
-        "borderColor": "rgb(135, 135, 135)",
-        "borderWidth": 1,
-        "paddingHorizontal": 16,
-        "paddingVertical": 8,
-      },
-      undefined,
-    ]
-  }
-  testID="base"
->
-  <Text
-    style={
-      Object {
-        "color": "rgb(18, 18, 18)",
-        "fontSize": 16,
-        "fontWeight": undefined,
-        "opacity": 0,
-      }
-    }
-    testID="text"
-  >
-    test
-  </Text>
+<View>
   <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "position": "absolute",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(135, 135, 135)",
+          "borderWidth": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        undefined,
+      ]
     }
+    testID="base"
   >
+    <Text
+      style={
+        Object {
+          "color": "rgb(18, 18, 18)",
+          "fontSize": 16,
+          "fontWeight": undefined,
+          "opacity": 0,
+        }
+      }
+      testID="text"
+    >
+      test
+    </Text>
     <View
       style={
         Object {
-          "alignItems": "center",
-          "height": 16,
-          "justifyContent": "center",
-          "opacity": 1,
-          "transform": Array [
-            Object {
-              "rotate": "0deg",
-            },
-          ],
-          "width": 16,
+          "position": "absolute",
         }
       }
     >
       <View
         style={
           Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
-            "transform": Array [
-              Object {
-                "rotate": "73.27536734311887deg",
-              },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 0.7,
-              },
-            ],
-            "width": 4,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
-            "transform": Array [
-              Object {
-                "rotate": "46.49829517703514deg",
-              },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 0.8008696779414123,
-              },
-            ],
-            "width": 4,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
-            "transform": Array [
-              Object {
-                "rotate": "25.743213498935145deg",
-              },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 0.8875624559768125,
-              },
-            ],
-            "width": 4,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
-            "transform": Array [
-              Object {
-                "rotate": "11.201058030774364deg",
-              },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 0.9510040862404615,
-              },
-            ],
-            "width": 4,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
-            "transform": Array [
-              Object {
-                "rotate": "2.731234791722257deg",
-              },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 0.9881665278710133,
-              },
-            ],
-            "width": 4,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "backgroundColor": "rgb(135, 135, 135)",
-            "borderRadius": 2,
-            "height": 4,
-            "position": "absolute",
+            "alignItems": "center",
+            "height": 16,
+            "justifyContent": "center",
+            "opacity": 1,
             "transform": Array [
               Object {
                 "rotate": "0deg",
               },
-              Object {
-                "translateY": -6,
-              },
-              Object {
-                "scale": 1,
-              },
             ],
-            "width": 4,
+            "width": 16,
           }
         }
-      />
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "73.27536734311887deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 0.7,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "46.49829517703514deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 0.8008696779414123,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "25.743213498935145deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 0.8875624559768125,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "11.201058030774364deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 0.9510040862404615,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "2.731234791722257deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 0.9881665278710133,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(135, 135, 135)",
+              "borderRadius": 2,
+              "height": 4,
+              "position": "absolute",
+              "transform": Array [
+                Object {
+                  "rotate": "0deg",
+                },
+                Object {
+                  "translateY": -6,
+                },
+                Object {
+                  "scale": 1,
+                },
+              ],
+              "width": 4,
+            }
+          }
+        />
+      </View>
     </View>
   </View>
 </View>
 `;
 
 exports[`Testing component button static button with icon only 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "rgb(250, 250, 250)",
-        "borderColor": "rgb(18, 18, 18)",
-        "borderWidth": 1,
-        "paddingHorizontal": 16,
-        "paddingVertical": 8,
-      },
-      undefined,
-    ]
-  }
-  testID="base"
->
-  <Text />
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(18, 18, 18)",
+          "borderWidth": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="base"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "opacity": 1,
+          },
+          Object {
+            "alignItems": "center",
+            "height": 16,
+            "justifyContent": "center",
+            "width": 16,
+          },
+        ]
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={16}
+        bbWidth={16}
+        className=""
+        color={4279374354}
+        focusable={false}
+        height={16}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "flex": 0,
+              "height": 16,
+              "width": 16,
+            },
+          ]
+        }
+        tintColor={4279374354}
+        vbHeight={24}
+        vbWidth={24}
+        width={16}
+      >
+        <RNSVGGroup
+          propList={
+            Array [
+              "stroke",
+              "strokeWidth",
+              "strokeLinecap",
+              "strokeLinejoin",
+            ]
+          }
+          stroke={
+            Array [
+              2,
+            ]
+          }
+          strokeLinecap={1}
+          strokeLinejoin={1}
+          strokeWidth={2}
+        >
+          <RNSVGPath
+            d="M18 6L6 18M6 6l12 12"
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>
 </View>
 `;
 
 exports[`Testing component button static button with text only 1`] = `
-<View
-  accessible={true}
-  focusable={true}
-  onBlur={[Function]}
-  onClick={[Function]}
-  onFocus={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "justifyContent": "center",
-      },
-      Object {
-        "backgroundColor": "rgb(250, 250, 250)",
-        "borderColor": "rgb(18, 18, 18)",
-        "borderWidth": 1,
-        "paddingHorizontal": 16,
-        "paddingVertical": 8,
-      },
-      undefined,
-    ]
-  }
-  testID="base"
->
-  <Text
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "color": "rgb(18, 18, 18)",
-        "fontSize": 16,
-        "fontWeight": undefined,
-        "opacity": 1,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "backgroundColor": "rgb(250, 250, 250)",
+          "borderColor": "rgb(18, 18, 18)",
+          "borderWidth": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        undefined,
+      ]
     }
-    testID="text"
+    testID="base"
   >
-    Test Button
-  </Text>
+    <Text
+      style={
+        Object {
+          "color": "rgb(18, 18, 18)",
+          "fontSize": 16,
+          "fontWeight": undefined,
+          "opacity": 1,
+        }
+      }
+      testID="text"
+    >
+      Test Button
+    </Text>
+  </View>
 </View>
 `;

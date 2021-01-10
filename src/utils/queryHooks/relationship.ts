@@ -2,12 +2,15 @@ import client from '@api/client'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Relationship', { id: Mastodon.Account['id'] }]
+export type QueryKeyRelationship = [
+  'Relationship',
+  { id: Mastodon.Account['id'] }
+]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = ({ queryKey }: { queryKey: QueryKeyRelationship }) => {
   const { id } = queryKey[1]
 
-  return client<Mastodon.Relationship>({
+  return client<Mastodon.Relationship[]>({
     method: 'get',
     instance: 'local',
     url: `accounts/relationships`,
@@ -17,14 +20,21 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookRelationship = <TData = Mastodon.Relationship>({
+const hookRelationship = ({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
-  options?: UseQueryOptions<Mastodon.Relationship, AxiosError, TData>
+}: QueryKeyRelationship[1] & {
+  options?: UseQueryOptions<
+    Mastodon.Relationship[],
+    AxiosError,
+    Mastodon.Relationship
+  >
 }) => {
-  const queryKey: QueryKey = ['Relationship', { ...queryKeyParams }]
-  return useQuery(queryKey, queryFunction, options)
+  const queryKey: QueryKeyRelationship = ['Relationship', { ...queryKeyParams }]
+  return useQuery(queryKey, queryFunction, {
+    ...options,
+    select: data => data[0]
+  })
 }
 
 export default hookRelationship

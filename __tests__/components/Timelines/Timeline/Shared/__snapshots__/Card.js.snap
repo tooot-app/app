@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing component timeline card with text and description 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+        "borderWidth": 0.5,
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 104,
+        "marginTop": 16,
+      },
+      Object {
+        "borderColor": "rgba(18, 18, 18, 0.3)",
+      },
+    ]
+  }
+  testID="base"
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "padding": 8,
+      }
+    }
+  >
+    <Text
+      numberOfLines={2}
+      style={
+        Array [
+          Object {
+            "fontWeight": "600",
+            "marginBottom": 4,
+          },
+          Object {
+            "color": "rgb(18, 18, 18)",
+          },
+        ]
+      }
+      testID="title"
+    >
+      Title
+    </Text>
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "marginBottom": 4,
+          },
+          Object {
+            "color": "rgb(18, 18, 18)",
+          },
+        ]
+      }
+      testID="description"
+    >
+      Description
+    </Text>
+    <Text
+      numberOfLines={1}
+      style={
+        Object {
+          "color": "rgb(135, 135, 135)",
+        }
+      }
+    >
+      http://example.com
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Testing component timeline card with text only 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+        "borderWidth": 0.5,
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 104,
+        "marginTop": 16,
+      },
+      Object {
+        "borderColor": "rgba(18, 18, 18, 0.3)",
+      },
+    ]
+  }
+  testID="base"
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "padding": 8,
+      }
+    }
+  >
+    <Text
+      numberOfLines={2}
+      style={
+        Array [
+          Object {
+            "fontWeight": "600",
+            "marginBottom": 4,
+          },
+          Object {
+            "color": "rgb(18, 18, 18)",
+          },
+        ]
+      }
+      testID="title"
+    >
+      Title
+    </Text>
+    <Text
+      numberOfLines={1}
+      style={
+        Object {
+          "color": "rgb(135, 135, 135)",
+        }
+      }
+    >
+      http://example.com
+    </Text>
+  </View>
+</View>
+`;

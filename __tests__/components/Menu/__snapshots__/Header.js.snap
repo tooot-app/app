@@ -16,6 +16,7 @@ exports[`Testing component menu header with text only 1`] = `
         Object {
           "fontSize": 14,
           "fontWeight": "600",
+          "lineHeight": 20,
         },
         Object {
           "color": "rgb(135, 135, 135)",

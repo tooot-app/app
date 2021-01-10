@@ -17,7 +17,7 @@ import {
   NativeStackNavigatorProps
 } from 'react-native-screens/lib/typescript/types'
 
-type BaseScreens =
+export type BaseScreens =
   | Nav.LocalStackParamList
   | Nav.RemoteStackParamList
   | Nav.NotificationsStackParamList

@@ -16,11 +16,12 @@ const Stack = createNativeStackNavigator<
 >()
 
 export interface Props {
-  name: 'Screen-Local-Root' | 'Screen-Public-Root'
-  content: { title: string; page: App.Pages }[]
+  name: 'Local' | 'Public'
+  content: { title: string; page: App.Pages; remote?: boolean }[]
 }
 
 const Timelines: React.FC<Props> = ({ name, content }) => {
+  const remoteUrl = useSelector(getRemoteUrl)
   const navigation = useNavigation()
   const { mode } = useTheme()
   const localActiveIndex = useSelector(getLocalActiveIndex)
@@ -71,16 +72,19 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
       <Stack.Screen
         // @ts-ignore
-        name={name}
+        name={`Screen-${name}-Root`}
         component={screenComponent}
         options={{
-          headerTitle: name === 'Screen-Public-Root' ? publicDomain : '',
+          headerTitle: name === 'Public' ? publicDomain : '',
           ...(localActiveIndex !== null && {
             headerCenter: () => (
               <View style={styles.segmentsContainer}>
                 <SegmentedControl
                   appearance={mode}
-                  values={[content[0].title, content[1].title]}
+                  values={[
+                    content[0].title,
+                    content[1].remote ? remoteUrl : content[1].title
+                  ]}
                   selectedIndex={segment}
                   onChange={({ nativeEvent }) =>
                     setSegment(nativeEvent.selectedSegmentIndex)
@@ -102,7 +106,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
 
 const styles = StyleSheet.create({
   segmentsContainer: {
-    flexBasis: '60%'
+    flexBasis: '65%'
   }
 })
 

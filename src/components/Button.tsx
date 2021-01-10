@@ -58,7 +58,7 @@ const Button: React.FC<Props> = ({
     } else {
       mounted.current = true
     }
-  }, [content, loading, disabled])
+  }, [content, loading, disabled, active])
 
   const loadingSpinkit = useMemo(
     () => (

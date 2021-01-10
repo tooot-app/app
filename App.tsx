@@ -43,9 +43,12 @@ const App: React.FC = () => {
   }, [])
 
   const onBeforeLift = useCallback(async () => {
-    const netInfoRes = await netInfo()
+    let netInfoRes = undefined
+    try {
+      netInfoRes = await netInfo()
+    } catch {}
 
-    if (netInfoRes.corrupted && netInfoRes.corrupted.length) {
+    if (netInfoRes && netInfoRes.corrupted && netInfoRes.corrupted.length) {
       setLocalCorrupt(netInfoRes.corrupted)
     }
 

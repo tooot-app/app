@@ -20,13 +20,13 @@ import { useDispatch, useSelector } from 'react-redux'
 interface Props {
   index: NonNullable<InstancesState['local']['activeIndex']>
   instance: InstanceLocal
-  active?: boolean
+  disabled?: boolean
 }
 
 const AccountButton: React.FC<Props> = ({
   index,
   instance,
-  active = false
+  disabled = false
 }) => {
   const queryClient = useQueryClient()
   const navigation = useNavigation()
@@ -40,7 +40,7 @@ const AccountButton: React.FC<Props> = ({
   return (
     <Button
       type='text'
-      active={active}
+      disabled={disabled}
       loading={isLoading}
       style={styles.button}
       content={`@${data?.acct || '...'}@${instance.url}`}
@@ -78,7 +78,7 @@ const ScreenMeSwitchRoot = () => {
                     key={index}
                     index={index}
                     instance={instance}
-                    active={localActiveIndex === index}
+                    disabled={localActiveIndex === index}
                   />
                 ))
               : null}

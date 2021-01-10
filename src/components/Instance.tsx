@@ -5,15 +5,19 @@ import { useNavigation } from '@react-navigation/native'
 import hookApps from '@utils/queryHooks/apps'
 import hookInstance from '@utils/queryHooks/instance'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { InstanceLocal, remoteUpdate } from '@utils/slices/instancesSlice'
+import {
+  getLocalInstances,
+  InstanceLocal,
+  remoteUpdate
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
 import { toast } from './toast'
@@ -36,6 +40,7 @@ const ComponentInstance: React.FC<Props> = ({
   const { theme } = useTheme()
   const [instanceDomain, setInstanceDomain] = useState<string | undefined>()
   const [appData, setApplicationData] = useState<InstanceLocal['appData']>()
+  const localInstances = useSelector(getLocalInstances)
 
   const instanceQuery = hookInstance({
     instanceDomain,
@@ -79,12 +84,32 @@ const ComponentInstance: React.FC<Props> = ({
 
   const processUpdate = useCallback(() => {
     if (instanceDomain) {
-      haptics('Success')
       switch (type) {
         case 'local':
-          applicationQuery.refetch()
-          return
+          if (
+            localInstances &&
+            localInstances.filter(instance => instance.url === instanceDomain)
+              .length
+          ) {
+            Alert.alert(
+              '域名已存在',
+              '可以登录同个域名的另外一个账户，现有账户🈚️用',
+              [
+                { text: '取消', style: 'cancel' },
+                {
+                  text: '继续',
+                  onPress: () => {
+                    applicationQuery.refetch()
+                  }
+                }
+              ]
+            )
+          } else {
+            applicationQuery.refetch()
+          }
+          break
         case 'remote':
+          haptics('Success')
           const queryKey: QueryKeyTimeline = [
             'Timeline',
             { page: 'RemotePublic' }
@@ -92,8 +117,8 @@ const ComponentInstance: React.FC<Props> = ({
           dispatch(remoteUpdate(instanceDomain))
           queryClient.resetQueries(queryKey)
           toast({ type: 'success', message: '重置成功' })
-          navigation.navigate('Screen-Remote-Root')
-          return
+          navigation.navigate('Screen-Public', { screen: 'Screen-Public-Root' })
+          break
       }
     }
   }, [instanceDomain])
@@ -160,7 +185,7 @@ const ComponentInstance: React.FC<Props> = ({
             content={buttonContent}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri}
-            loading={instanceQuery.isFetching || applicationQuery.isFetching}
+            loading={instanceQuery.isLoading || applicationQuery.isLoading}
           />
         </View>
         <View>

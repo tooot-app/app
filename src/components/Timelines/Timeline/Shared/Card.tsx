@@ -13,22 +13,14 @@ export interface Props {
 const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
 
-  let isMounted = false
-  useEffect(() => {
-    isMounted = true
-
-    return () => {
-      isMounted = false
-    }
-  })
   const [imageLoaded, setImageLoaded] = useState(false)
   useEffect(() => {
-    const preFetch = () =>
-      card.image &&
-      isMounted &&
-      Image.getSize(card.image, () => isMounted && setImageLoaded(true))
-    preFetch()
-  }, [isMounted])
+    const preFetch = () => Image.getSize(card.image, () => setImageLoaded(true))
+
+    if (card.image) {
+      preFetch()
+    }
+  }, [])
   const cardVisual = useMemo(() => {
     if (imageLoaded) {
       return <Image source={{ uri: card.image }} style={styles.image} />
@@ -45,12 +37,18 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
     <Pressable
       style={[styles.card, { borderColor: theme.border }]}
       onPress={async () => await openLink(card.url)}
+      testID='base'
     >
-      {card.image && <View style={styles.left}>{cardVisual}</View>}
+      {card.image && (
+        <View style={styles.left} testID='image'>
+          {cardVisual}
+        </View>
+      )}
       <View style={styles.right}>
         <Text
           numberOfLines={2}
           style={[styles.rightTitle, { color: theme.primary }]}
+          testID='title'
         >
           {card.title}
         </Text>
@@ -58,6 +56,7 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
           <Text
             numberOfLines={1}
             style={[styles.rightDescription, { color: theme.primary }]}
+            testID='description'
           >
             {card.description}
           </Text>

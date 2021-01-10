@@ -1,12 +1,12 @@
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
-import { Image, Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import Animated, {
   useAnimatedStyle,
@@ -16,6 +16,7 @@ import Animated, {
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
+  routeParams,
   theme,
   node,
   index,
@@ -26,6 +27,7 @@ const renderNode = ({
   showFullLink,
   disableDetails
 }: {
+  routeParams?: any
   theme: any
   node: any
   index: number
@@ -42,6 +44,10 @@ const renderNode = ({
       const href = node.attribs.href
       if (classes) {
         if (classes.includes('hashtag')) {
+          const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
+          const differentTag = routeParams?.hashtag
+            ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
+            : true
           return (
             <Text
               key={index}
@@ -50,8 +56,8 @@ const renderNode = ({
                 ...StyleConstants.FontStyle[size]
               }}
               onPress={() => {
-                const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
                 !disableDetails &&
+                  differentTag &&
                   navigation.push('Screen-Shared-Hashtag', {
                     hashtag: tag[1] || tag[2]
                   })
@@ -65,6 +71,9 @@ const renderNode = ({
           const accountIndex = mentions.findIndex(
             mention => mention.url === href
           )
+          const differentAccount = routeParams?.account
+            ? routeParams.account.id !== mentions[accountIndex].id
+            : true
           return (
             <Text
               key={index}
@@ -75,6 +84,7 @@ const renderNode = ({
               onPress={() => {
                 accountIndex !== -1 &&
                   !disableDetails &&
+                  differentAccount &&
                   navigation.push('Screen-Shared-Account', {
                     account: mentions[accountIndex]
                   })
@@ -151,11 +161,13 @@ const ParseHTML: React.FC<Props> = ({
   disableDetails = false
 }) => {
   const navigation = useNavigation()
+  const route = useRoute()
   const { theme } = useTheme()
 
   const renderNodeCallback = useCallback(
     (node, index) =>
       renderNode({
+        routeParams: route.params,
         theme,
         node,
         index,

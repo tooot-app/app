@@ -1,4 +1,5 @@
 import Timelines from '@components/Timelines'
+import { getRemoteUrl } from '@utils/slices/instancesSlice'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,10 +8,14 @@ const ScreenPublic: React.FC = () => {
 
   return (
     <Timelines
-      name='Screen-Public-Root'
+      name='Public'
       content={[
         { title: t('public:heading.segments.left'), page: 'LocalPublic' },
-        { title: t('public:heading.segments.right'), page: 'RemotePublic' }
+        {
+          title: t('public:heading.segments.right'),
+          page: 'RemotePublic',
+          remote: true
+        }
       ]}
     />
   )

@@ -30,7 +30,7 @@ describe('Testing component button', () => {
     it('with icon only', () => {
       const onPress = jest.fn()
       const { getByTestId, toJSON } = render(
-        <Button type='icon' content='x' onPress={onPress} />
+        <Button type='icon' content='X' onPress={onPress} />
       )
       fireEvent.press(getByTestId('base'))
 

@@ -55,9 +55,10 @@ export const localAddInstance = createAsyncThunk(
     url: InstanceLocal['url']
     token: InstanceLocal['token']
     appData: InstanceLocal['appData']
-  }): Promise<InstanceLocal> => {
-    const store = require('@root/store')
-    const state = store.getState().instances
+  }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
+    const { store } = require('@root/store')
+    const instanceLocal: InstancesState['local'] = store.getState().instances
+      .local
 
     const { id } = await client<Mastodon.Account>({
       method: 'get',
@@ -67,14 +68,24 @@ export const localAddInstance = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
-    // Overwrite existing account?
-    // if (
-    //   state.local.instances.filter(
-    //     instance => instance && instance.account && instance.account.id === id
-    //   ).length
-    // ) {
-    //   return Promise.reject()
-    // }
+    let type: 'add' | 'overwrite'
+    if (
+      instanceLocal.instances.filter(instance => {
+        if (instance) {
+          if (instance.url === url && instance.account.id === id) {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
+      }).length
+    ) {
+      type = 'overwrite'
+    } else {
+      type = 'add'
+    }
 
     const preferences = await client<Mastodon.Preferences>({
       method: 'get',
@@ -85,15 +96,18 @@ export const localAddInstance = createAsyncThunk(
     })
 
     return Promise.resolve({
-      appData,
-      url,
-      token,
-      account: {
-        id,
-        preferences
-      },
-      notification: {
-        unread: false
+      type,
+      data: {
+        appData,
+        url,
+        token,
+        account: {
+          id,
+          preferences
+        },
+        notification: {
+          unread: false
+        }
       }
     })
   }
@@ -101,31 +115,37 @@ export const localAddInstance = createAsyncThunk(
 export const localRemoveInstance = createAsyncThunk(
   'instances/localRemoveInstance',
   async (index?: InstancesState['local']['activeIndex']): Promise<number> => {
-    const store = require('@root/store')
-    const local = store.getState().instances.local
+    const { store } = require('@root/store')
+    const instanceLocal: InstancesState['local'] = store.getState().instances
+      .local
 
     if (index) {
       return Promise.resolve(index)
     } else {
-      if (local.activeIndex !== null) {
-        const currentInstance = local.instances[local.activeIndex]
+      if (instanceLocal.activeIndex !== null) {
+        const currentInstance =
+          instanceLocal.instances[instanceLocal.activeIndex]
 
-        const revoked = await AuthSession.revokeAsync(
-          {
-            clientId: currentInstance.appData.clientId,
-            clientSecret: currentInstance.appData.clientSecret,
-            token: currentInstance.token,
-            scopes: ['read', 'write', 'follow', 'push']
-          },
-          {
-            revocationEndpoint: `https://${currentInstance.url}/oauth/revoke`
-          }
-        )
+        let revoked = undefined
+        try {
+          revoked = await AuthSession.revokeAsync(
+            {
+              clientId: currentInstance.appData.clientId,
+              clientSecret: currentInstance.appData.clientSecret,
+              token: currentInstance.token,
+              scopes: ['read', 'write', 'follow', 'push']
+            },
+            {
+              revocationEndpoint: `https://${currentInstance.url}/oauth/revoke`
+            }
+          )
+        } catch {}
+
         if (!revoked) {
           console.warn('Revoking error')
         }
 
-        return Promise.resolve(local.activeIndex)
+        return Promise.resolve(instanceLocal.activeIndex)
       } else {
         throw new Error('Active index invalid, cannot remove instance')
       }
@@ -176,8 +196,23 @@ const instancesSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(localAddInstance.fulfilled, (state, action) => {
-        state.local.instances.push(action.payload)
-        state.local.activeIndex = state.local.instances.length - 1
+        switch (action.payload.type) {
+          case 'add':
+            state.local.instances.push(action.payload.data)
+            state.local.activeIndex = state.local.instances.length - 1
+            break
+          case 'overwrite':
+            state.local.instances = state.local.instances.map(instance => {
+              if (
+                instance.url === action.payload.data.url &&
+                instance.account.id === action.payload.data.account.id
+              ) {
+                return action.payload.data
+              } else {
+                return instance
+              }
+            })
+        }
 
         analytics('login')
       })
