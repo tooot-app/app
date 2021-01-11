@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
-import hookAccountCheck from '@utils/queryHooks/accountCheck'
+import { useAccountCheckQuery } from '@utils/queryHooks/accountCheck'
 import {
   getLocalActiveIndex,
   getLocalInstances,
@@ -31,7 +31,7 @@ const AccountButton: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const { isLoading, data } = hookAccountCheck({
+  const { isLoading, data } = useAccountCheckQuery({
     id: instance.account.id,
     index,
     options: { retry: false }

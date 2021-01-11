@@ -1,11 +1,13 @@
-import client from '@api/client'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import React, { useCallback } from 'react'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
@@ -19,34 +21,10 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
   setBottomSheetVisible
 }) => {
   const { t } = useTranslation()
-  
+
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(
-    async ({ type }: { type: 'mute' | 'block' | 'reports' }) => {
-      switch (type) {
-        case 'mute':
-        case 'block':
-          return client<Mastodon.Account>({
-            method: 'post',
-            instance: 'local',
-            url: `accounts/${account.id}/${type}`
-          })
-          break
-        case 'reports':
-          return client<Mastodon.Account>({
-            method: 'post',
-            instance: 'local',
-            url: `reports`,
-            params: {
-              account_id: account.id!
-            }
-          })
-          break
-      }
-    },
-    []
-  )
-  const { mutate } = useMutation(fireMutation, {
+  const mutateion = useTimelineMutation({
+    queryClient,
     onSuccess: (_, { type }) => {
       haptics('Success')
       toast({
@@ -91,7 +69,12 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ type: 'mute' })
+          mutateion.mutate({
+            type: 'updateAccountProperty',
+            queryKey,
+            id: account.id,
+            payload: { property: 'mute' }
+          })
         }}
         iconFront='EyeOff'
         title={t('timeline:shared.header.default.actions.account.mute.button', {
@@ -101,7 +84,12 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ type: 'block' })
+          mutateion.mutate({
+            type: 'updateAccountProperty',
+            queryKey,
+            id: account.id,
+            payload: { property: 'block' }
+          })
         }}
         iconFront='XCircle'
         title={t(
@@ -114,7 +102,12 @@ const HeaderDefaultActionsAccount: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ type: 'reports' })
+          mutateion.mutate({
+            type: 'updateAccountProperty',
+            queryKey,
+            id: account.id,
+            payload: { property: 'reports' }
+          })
         }}
         iconFront='Flag'
         title={t(

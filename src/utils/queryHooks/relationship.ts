@@ -1,6 +1,11 @@
 import client from '@api/client'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
+} from 'react-query'
 
 export type QueryKeyRelationship = [
   'Relationship',
@@ -20,7 +25,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKeyRelationship }) => {
   })
 }
 
-const hookRelationship = ({
+const useRelationshipQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyRelationship[1] & {
@@ -37,4 +42,45 @@ const hookRelationship = ({
   })
 }
 
-export default hookRelationship
+type MutationVarsRelationship =
+  | {
+      id: Mastodon.Account['id']
+      type: 'incoming'
+      payload: { action: 'authorize' | 'reject' }
+    }
+  | {
+      id: Mastodon.Account['id']
+      type: 'outgoing'
+      payload: { action: 'follow' | 'block'; state: boolean }
+    }
+
+const mutationFunction = async (params: MutationVarsRelationship) => {
+  switch (params.type) {
+    case 'incoming':
+      return client<Mastodon.Relationship>({
+        method: 'post',
+        instance: 'local',
+        url: `follow_requests/${params.id}/${params.payload.action}`
+      })
+    case 'outgoing':
+      return client<Mastodon.Relationship>({
+        method: 'post',
+        instance: 'local',
+        url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${
+          params.payload.action
+        }`
+      })
+  }
+}
+
+const useRelationshipMutation = (
+  options: UseMutationOptions<
+    Mastodon.Relationship,
+    AxiosError,
+    MutationVarsRelationship
+  >
+) => {
+  return useMutation(mutationFunction, options)
+}
+
+export { useRelationshipQuery, useRelationshipMutation }

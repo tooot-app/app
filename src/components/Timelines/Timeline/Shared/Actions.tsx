@@ -1,17 +1,18 @@
-import client from '@api/client'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
 import { useNavigation } from '@react-navigation/native'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  MutationVarsTimelineUpdateStatusProperty,
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -28,87 +29,18 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     state ? theme.primary : theme.secondary
 
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(
-    async ({
-      type,
-      state
-    }: {
-      type: 'favourite' | 'reblog' | 'bookmark'
-      stateKey: 'favourited' | 'reblogged' | 'bookmarked'
-      state?: boolean
-    }) => {
-      return client<Mastodon.Status>({
-        method: 'post',
-        instance: 'local',
-        url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
-      }) // bug in response from Mastodon
-    },
-    []
-  )
-  const { mutate } = useMutation(fireMutation, {
-    onMutate: ({ type, stateKey, state }) => {
-      queryClient.cancelQueries(queryKey)
-      const oldData = queryClient.getQueryData(queryKey)
-
-      haptics('Success')
-      switch (type) {
-        case 'favourite':
-        case 'reblog':
-        case 'bookmark':
-          queryClient.setQueryData<TimelineData>(queryKey, old => {
-            let tootIndex = -1
-            const pageIndex = findIndex(old?.pages, page => {
-              const tempIndex = findIndex(page.toots, [
-                queryKey[1].page === 'Notifications'
-                  ? 'status.id'
-                  : reblog
-                  ? 'reblog.id'
-                  : 'id',
-                status.id
-              ])
-              if (tempIndex >= 0) {
-                tootIndex = tempIndex
-                return true
-              } else {
-                return false
-              }
-            })
-
-            if (pageIndex >= 0 && tootIndex >= 0) {
-              if (
-                (type === 'favourite' && queryKey[1].page === 'Favourites') ||
-                (type === 'bookmark' && queryKey[1].page === 'Bookmarks')
-              ) {
-                old!.pages[pageIndex].toots.splice(tootIndex, 1)
-              } else {
-                if (queryKey[1].page === 'Notifications') {
-                  old!.pages[pageIndex].toots[tootIndex].status[stateKey] =
-                    typeof state === 'boolean' ? !state : true
-                } else {
-                  if (reblog) {
-                    old!.pages[pageIndex].toots[tootIndex].reblog![stateKey] =
-                      typeof state === 'boolean' ? !state : true
-                  } else {
-                    old!.pages[pageIndex].toots[tootIndex][stateKey] =
-                      typeof state === 'boolean' ? !state : true
-                  }
-                }
-              }
-            }
-
-            return old
-          })
-          break
-      }
-
-      return oldData
-    },
-    onError: (err: any, { type }, oldData) => {
+  const mutation = useTimelineMutation({
+    queryClient,
+    onMutate: true,
+    onError: (err: any, params, oldData) => {
+      const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       haptics('Error')
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
-          function: t(`timeline:shared.actions.${type}.function`)
+          function: t(
+            `timeline:shared.actions.${correctParam.payload.property}.function`
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -132,28 +64,43 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const onPressReblog = useCallback(
     () =>
-      mutate({
-        type: 'reblog',
-        stateKey: 'reblogged',
-        state: status.reblogged
+      mutation.mutate({
+        type: 'updateStatusProperty',
+        queryKey,
+        id: status.id,
+        reblog,
+        payload: {
+          property: 'reblogged',
+          currentValue: status.reblogged
+        }
       }),
     [status.reblogged]
   )
   const onPressFavourite = useCallback(
     () =>
-      mutate({
-        type: 'favourite',
-        stateKey: 'favourited',
-        state: status.favourited
+      mutation.mutate({
+        type: 'updateStatusProperty',
+        queryKey,
+        id: status.id,
+        reblog,
+        payload: {
+          property: 'favourited',
+          currentValue: status.favourited
+        }
       }),
     [status.favourited]
   )
   const onPressBookmark = useCallback(
     () =>
-      mutate({
-        type: 'bookmark',
-        stateKey: 'bookmarked',
-        state: status.bookmarked
+      mutation.mutate({
+        type: 'updateStatusProperty',
+        queryKey,
+        id: status.id,
+        reblog,
+        payload: {
+          property: 'bookmarked',
+          currentValue: status.bookmarked
+        }
       }),
     [status.bookmarked]
   )

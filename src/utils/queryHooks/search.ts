@@ -28,7 +28,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookSearch = <TData = SearchResult>({
+const useSearchQuery = <TData = SearchResult>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
@@ -38,4 +38,4 @@ const hookSearch = <TData = SearchResult>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookSearch
+export { useSearchQuery }

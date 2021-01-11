@@ -2,8 +2,8 @@ import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
-import hookApps from '@utils/queryHooks/apps'
-import hookInstance from '@utils/queryHooks/instance'
+import { useAppsQuery } from '@utils/queryHooks/apps'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import {
   getLocalInstances,
@@ -42,11 +42,11 @@ const ComponentInstance: React.FC<Props> = ({
   const [appData, setApplicationData] = useState<InstanceLocal['appData']>()
   const localInstances = useSelector(getLocalInstances)
 
-  const instanceQuery = hookInstance({
+  const instanceQuery = useInstanceQuery({
     instanceDomain,
     options: { enabled: false, retry: false }
   })
-  const applicationQuery = hookApps({
+  const applicationQuery = useAppsQuery({
     instanceDomain,
     options: { enabled: false, retry: false }
   })

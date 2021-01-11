@@ -15,7 +15,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookInstance = <TData = Mastodon.Instance>({
+const useInstanceQuery = <TData = Mastodon.Instance>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
@@ -25,4 +25,4 @@ const hookInstance = <TData = Mastodon.Instance>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookInstance
+export { useInstanceQuery }

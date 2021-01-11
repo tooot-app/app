@@ -12,7 +12,7 @@ const queryFunction = () => {
   })
 }
 
-const hookLists = <TData = Mastodon.List[]>({
+const useListsQuery = <TData = Mastodon.List[]>({
   options
 }: {
   options?: UseQueryOptions<Mastodon.List[], AxiosError, TData>
@@ -21,4 +21,4 @@ const hookLists = <TData = Mastodon.List[]>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookLists
+export { useListsQuery }

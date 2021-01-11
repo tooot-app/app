@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
-import hookRelationship from '@utils/queryHooks/relationship'
+import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { StyleSheet } from 'react-native'
@@ -12,7 +12,7 @@ export interface Props {
 
 const Conversation = ({ account }: { account: Mastodon.Account }) => {
   const navigation = useNavigation()
-  const query = hookRelationship({ id: account.id })
+  const query = useRelationshipQuery({ id: account.id })
 
   return query.data && !query.data.blocked_by ? (
     <Button

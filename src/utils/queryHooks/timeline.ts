@@ -1,7 +1,16 @@
 import client from '@api/client'
+import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
-import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
+import {
+  MutationOptions,
+  QueryClient,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation
+} from 'react-query'
+import deleteItem from './timeline/deleteItem'
+import updateStatusProperty from './timeline/updateStatusProperty'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -14,7 +23,7 @@ export type QueryKeyTimeline = [
   }
 ]
 
-const queryFunction = async ({
+const queryFunction = ({
   queryKey,
   pageParam
 }: {
@@ -22,7 +31,6 @@ const queryFunction = async ({
   pageParam?: { direction: 'prev' | 'next'; id: Mastodon.Status['id'] }
 }) => {
   const { page, account, hashtag, list, toot } = queryKey[1]
-  let res
   let params: { [key: string]: string } = {}
 
   if (pageParam) {
@@ -46,74 +54,51 @@ const queryFunction = async ({
 
   switch (page) {
     case 'Following':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: 'timelines/home',
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Local':
-      params.local = 'true'
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: 'timelines/public',
-        params
-      })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
+        params: {
+          ...params,
+          local: 'true'
+        }
       })
 
     case 'LocalPublic':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: 'timelines/public',
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'RemotePublic':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'remote',
         url: 'timelines/public',
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Notifications':
-      res = await client<Mastodon.Notification[]>({
+      return client<Mastodon.Notification[]>({
         method: 'get',
         instance: 'local',
         url: 'notifications',
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Account_Default':
       if (pageParam && pageParam.direction === 'next') {
-        res = await client<Mastodon.Status[]>({
+        return client<Mastodon.Status[]>({
           method: 'get',
           instance: 'local',
           url: `accounts/${account}/statuses`,
@@ -122,53 +107,41 @@ const queryFunction = async ({
             ...params
           }
         })
-        return Promise.resolve({
-          toots: res,
-          pointer: undefined,
-          pinnedLength: undefined
-        })
       } else {
-        res = await client<Mastodon.Status[]>({
+        return client<(Mastodon.Status & { isPinned: boolean })[]>({
           method: 'get',
           instance: 'local',
           url: `accounts/${account}/statuses`,
           params: {
             pinned: 'true'
           }
-        })
-        const pinnedLength = res.length
-        let toots = res
-        res = await client<Mastodon.Status[]>({
-          method: 'get',
-          instance: 'local',
-          url: `accounts/${account}/statuses`,
-          params: {
-            exclude_replies: 'true'
-          }
-        })
-        toots = uniqBy([...toots, ...res], 'id')
-        return Promise.resolve({
-          toots: toots,
-          pointer: undefined,
-          pinnedLength
+        }).then(async res1 => {
+          let toots = res1.map(status => {
+            status.isPinned = true
+            return status
+          })
+          const res2 = await client<Mastodon.Status[]>({
+            method: 'get',
+            instance: 'local',
+            url: `accounts/${account}/statuses`,
+            params: {
+              exclude_replies: 'true'
+            }
+          })
+          return uniqBy([...toots, ...res2], 'id')
         })
       }
 
     case 'Account_All':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `accounts/${account}/statuses`,
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Account_Media':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `accounts/${account}/statuses`,
@@ -177,100 +150,62 @@ const queryFunction = async ({
           ...params
         }
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Hashtag':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `timelines/tag/${hashtag}`,
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Conversations':
-      res = await client<Mastodon.Conversation[]>({
+      return client<Mastodon.Conversation[]>({
         method: 'get',
         instance: 'local',
         url: `conversations`,
         params
       })
-      if (pageParam) {
-        // Bug in pull to refresh in conversations
-        res = res.filter(b => b.id !== pageParam.id)
-      }
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Bookmarks':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `bookmarks`,
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Favourites':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `favourites`,
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'List':
-      res = await client<Mastodon.Status[]>({
+      return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
         url: `timelines/list/${list}`,
         params
       })
-      return Promise.resolve({
-        toots: res,
-        pointer: undefined,
-        pinnedLength: undefined
-      })
 
     case 'Toot':
-      res = await client<Mastodon.Status>({
+      return client<Mastodon.Status>({
         method: 'get',
         instance: 'local',
         url: `statuses/${toot}`
-      })
-      const theToot = res
-      res = await client<{
-        ancestors: Mastodon.Status[]
-        descendants: Mastodon.Status[]
-      }>({
-        method: 'get',
-        instance: 'local',
-        url: `statuses/${toot}/context`
-      })
-      return Promise.resolve({
-        toots: [...res.ancestors, theToot, ...res.descendants],
-        pointer: res.ancestors.length,
-        pinnedLength: undefined
+      }).then(async res1 => {
+        const res2 = await client<{
+          ancestors: Mastodon.Status[]
+          descendants: Mastodon.Status[]
+        }>({
+          method: 'get',
+          instance: 'local',
+          url: `statuses/${toot}/context`
+        })
+        return [...res2.ancestors, res1, ...res2.descendants]
       })
     default:
       return Promise.reject()
@@ -278,7 +213,8 @@ const queryFunction = async ({
 }
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never
-const hookTimeline = <TData = Unpromise<ReturnType<typeof queryFunction>>>({
+export type TimelineData = Unpromise<ReturnType<typeof queryFunction>>
+const useTimelineQuery = <TData = TimelineData>({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
@@ -288,4 +224,199 @@ const hookTimeline = <TData = Unpromise<ReturnType<typeof queryFunction>>>({
   return useInfiniteQuery(queryKey, queryFunction, options)
 }
 
-export default hookTimeline
+// --- Separator ---
+
+enum MapPropertyToUrl {
+  bookmarked = 'bookmark',
+  favourited = 'favourite',
+  muted = 'mute',
+  pinned = 'pin',
+  reblogged = 'reblog'
+}
+
+export type MutationVarsTimelineUpdateStatusProperty = {
+  // This is status in general, including "status" inside conversation and notification
+  type: 'updateStatusProperty'
+  queryKey: QueryKeyTimeline
+  id: Mastodon.Status['id'] | Mastodon.Poll['id']
+  reblog?: boolean
+  payload:
+    | {
+        property: 'bookmarked' | 'favourited' | 'muted' | 'pinned' | 'reblogged'
+        currentValue: boolean
+      }
+    | {
+        property: 'poll'
+        id: Mastodon.Poll['id']
+        type: 'vote' | 'refresh'
+        options?: boolean[]
+        data?: Mastodon.Poll
+      }
+}
+
+export type MutationVarsTimelineUpdateAccountProperty = {
+  // This is status in general, including "status" inside conversation and notification
+  type: 'updateAccountProperty'
+  queryKey?: QueryKeyTimeline
+  id: Mastodon.Account['id']
+  payload: {
+    property: 'mute' | 'block' | 'reports'
+  }
+}
+
+export type MutationVarsTimelineDeleteItem = {
+  // This is for deleting status and conversation
+  type: 'deleteItem'
+  source: 'statuses' | 'conversations'
+  queryKey: QueryKeyTimeline
+  id: Mastodon.Conversation['id']
+}
+
+export type MutationVarsTimelineDomainBlock = {
+  // This is for deleting status and conversation
+  type: 'domainBlock'
+  queryKey: QueryKeyTimeline
+  domain: string
+}
+
+export type MutationVarsTimeline =
+  | MutationVarsTimelineUpdateStatusProperty
+  | MutationVarsTimelineUpdateAccountProperty
+  | MutationVarsTimelineDeleteItem
+  | MutationVarsTimelineDomainBlock
+
+const mutationFunction = async (params: MutationVarsTimeline) => {
+  switch (params.type) {
+    case 'updateStatusProperty':
+      switch (params.payload.property) {
+        case 'poll':
+          const formData = new FormData()
+          params.payload.type === 'vote' &&
+            params.payload.options!.forEach((option, index) => {
+              if (option) {
+                formData.append('choices[]', index.toString())
+              }
+            })
+
+          return client<Mastodon.Poll>({
+            method: params.payload.type === 'vote' ? 'post' : 'get',
+            instance: 'local',
+            url:
+              params.payload.type === 'vote'
+                ? `polls/${params.payload.id}/votes`
+                : `polls/${params.payload.id}`,
+            ...(params.payload.type === 'vote' && { body: formData })
+          })
+        default:
+          return client<Mastodon.Status>({
+            method: 'post',
+            instance: 'local',
+            url: `statuses/${params.id}/${
+              params.payload.currentValue ? 'un' : ''
+            }${MapPropertyToUrl[params.payload.property]}`
+          })
+      }
+    case 'updateAccountProperty':
+      switch (params.payload.property) {
+        case 'block':
+        case 'mute':
+          return client<Mastodon.Account>({
+            method: 'post',
+            instance: 'local',
+            url: `accounts/${params.id}/${params.payload.property}`
+          })
+        case 'reports':
+          return client<Mastodon.Account>({
+            method: 'post',
+            instance: 'local',
+            url: `reports`,
+            params: {
+              account_id: params.id
+            }
+          })
+      }
+    case 'deleteItem':
+      return client<Mastodon.Conversation>({
+        method: 'delete',
+        instance: 'local',
+        url: `${params.source}/${params.id}`
+      })
+    case 'domainBlock':
+      return client<any>({
+        method: 'post',
+        instance: 'local',
+        url: `domain_blocks`,
+        params: {
+          domain: params.domain
+        }
+      })
+  }
+}
+
+type MutationOptionsTimeline = MutationOptions<
+  Mastodon.Conversation | Mastodon.Notification | Mastodon.Status,
+  AxiosError,
+  MutationVarsTimeline
+>
+
+const useTimelineMutation = ({
+  queryClient,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess
+}: {
+  queryClient: QueryClient
+  onError?: MutationOptionsTimeline['onError']
+  onMutate?: boolean
+  onSettled?: MutationOptionsTimeline['onSettled']
+  onSuccess?: MutationOptionsTimeline['onSuccess'] | boolean
+}) => {
+  return useMutation<
+    Mastodon.Conversation | Mastodon.Notification | Mastodon.Status,
+    AxiosError,
+    MutationVarsTimeline
+  >(mutationFunction, {
+    onError,
+    onSettled,
+    ...(typeof onSuccess === 'function'
+      ? { onSuccess }
+      : {
+          onSuccess: (data, params) => {
+            queryClient.cancelQueries(params.queryKey)
+
+            haptics('Success')
+            switch (params.type) {
+              case 'updateStatusProperty':
+                switch (params.payload.property) {
+                  case 'poll':
+                    params.payload.data = (data as unknown) as Mastodon.Poll
+                    updateStatusProperty({ queryClient, ...params })
+                    break
+                }
+                break
+            }
+          }
+        }),
+    ...(onMutate && {
+      onMutate: params => {
+        queryClient.cancelQueries(params.queryKey)
+        let oldData
+        params.queryKey && (oldData = queryClient.getQueryData(params.queryKey))
+
+        haptics('Success')
+        switch (params.type) {
+          case 'updateStatusProperty':
+            updateStatusProperty({ queryClient, ...params })
+            break
+          case 'deleteItem':
+            deleteItem({ queryClient, ...params })
+            break
+        }
+        return oldData
+      }
+    })
+  })
+}
+
+export { useTimelineQuery, useTimelineMutation }

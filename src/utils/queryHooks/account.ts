@@ -14,7 +14,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookAccount = <TData = Mastodon.Account>({
+const useAccountQuery = <TData = Mastodon.Account>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
@@ -24,4 +24,4 @@ const hookAccount = <TData = Mastodon.Account>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookAccount
+export { useAccountQuery }

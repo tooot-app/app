@@ -7,6 +7,7 @@ import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 import RelationshipIncoming from '@root/components/Relationship/Incoming'
+import HeaderSharedMuted from './HeaderShared/Muted'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -30,6 +31,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
           <HeaderSharedVisibility
             visibility={notification.status?.visibility}
           />
+          <HeaderSharedMuted muted={notification.status?.muted} />
           <HeaderSharedApplication
             application={notification.status?.application}
           />

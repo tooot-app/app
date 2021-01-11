@@ -4,6 +4,7 @@ import { store } from '@root/store'
 import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import formatText from '@screens/Shared/Compose/formatText'
 import ComposeRoot from '@screens/Shared/Compose/Root'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -166,7 +167,11 @@ const Compose: React.FC<SharedComposeProp> = ({
           composePost(params, composeState)
             .then(() => {
               haptics('Success')
-              queryClient.invalidateQueries(['Following', {}])
+              const queryKey: QueryKeyTimeline = [
+                'Timeline',
+                { page: 'Following' }
+              ]
+              queryClient.invalidateQueries(queryKey)
               if (
                 params?.type &&
                 (params.type === 'reply' || params.type === 'conversation')

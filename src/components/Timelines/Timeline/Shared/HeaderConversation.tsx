@@ -1,18 +1,19 @@
-import client from '@api/client'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedCreated from './HeaderShared/Created'
+import HeaderSharedMuted from './HeaderShared/Muted'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -23,40 +24,9 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
   const { t } = useTranslation()
 
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(() => {
-    return client<Mastodon.Conversation>({
-      method: 'delete',
-      instance: 'local',
-      url: `conversations/${conversation.id}`
-    })
-  }, [])
-  const { mutate } = useMutation(fireMutation, {
-    onMutate: () => {
-      queryClient.cancelQueries(queryKey)
-      const oldData = queryClient.getQueryData(queryKey)
-
-      haptics('Success')
-      queryClient.setQueryData<TimelineData>(queryKey, old => {
-        let tootIndex = -1
-        const pageIndex = findIndex(old?.pages, page => {
-          const tempIndex = findIndex(page.toots, ['id', conversation.id])
-          if (tempIndex >= 0) {
-            tootIndex = tempIndex
-            return true
-          } else {
-            return false
-          }
-        })
-
-        if (pageIndex >= 0 && tootIndex >= 0) {
-          old!.pages[pageIndex].toots.splice(tootIndex, 1)
-        }
-
-        return old
-      })
-
-      return oldData
-    },
+  const mutation = useTimelineMutation({
+    queryClient,
+    onMutate: true,
     onError: (err: any, _, oldData) => {
       haptics('Error')
       toast({
@@ -79,7 +49,16 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
   const { theme } = useTheme()
 
-  const actionOnPress = useCallback(() => mutate(), [])
+  const actionOnPress = useCallback(
+    () =>
+      mutation.mutate({
+        type: 'deleteItem',
+        source: 'conversations',
+        queryKey,
+        id: conversation.id
+      }),
+    []
+  )
 
   const actionChildren = useMemo(
     () => (
@@ -102,6 +81,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
               created_at={conversation.last_status?.created_at}
             />
           ) : null}
+          <HeaderSharedMuted muted={conversation.last_status?.muted} />
         </View>
       </View>
 

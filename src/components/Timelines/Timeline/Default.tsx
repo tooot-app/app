@@ -17,8 +17,6 @@ import { useSelector } from 'react-redux'
 export interface Props {
   item: Mastodon.Status
   queryKey?: QueryKeyTimeline
-  index: number
-  pinnedLength?: number
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
@@ -28,8 +26,6 @@ export interface Props {
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
-  index,
-  pinnedLength,
   highlighted = false,
   disableDetails = false,
   disableOnPress = false
@@ -53,7 +49,7 @@ const TimelineDefault: React.FC<Props> = ({
     <Pressable style={styles.statusView} onPress={onPress}>
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
-      ) : pinnedLength && index < pinnedLength ? (
+      ) : item.isPinned ? (
         <TimelineActioned action='pinned' account={item.account} />
       ) : null}
 
@@ -84,14 +80,15 @@ const TimelineDefault: React.FC<Props> = ({
             disableDetails={disableDetails}
           />
         )}
-        {queryKey && actualStatus.poll && (
+        {queryKey && actualStatus.poll ? (
           <TimelinePoll
             queryKey={queryKey}
+            statusId={actualStatus.id}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
             sameAccount={actualStatus.account.id === localAccount?.id}
           />
-        )}
+        ) : null}
         {!disableDetails && actualStatus.media_attachments.length > 0 && (
           <TimelineAttachment status={actualStatus} />
         )}

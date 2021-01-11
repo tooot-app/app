@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import ComponentAccount from '@root/components/Account'
 import ComponentSeparator from '@root/components/Separator'
 import TimelineDefault from '@root/components/Timelines/Timeline/Default'
-import hookSearch from '@utils/queryHooks/search'
+import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -23,7 +23,7 @@ export interface Props {
 const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
-  const { status, data, refetch } = hookSearch({
+  const { status, data, refetch } = useSearchQuery({
     term: searchTerm,
     options: { enabled: false }
   })

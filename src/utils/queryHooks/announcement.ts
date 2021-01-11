@@ -1,10 +1,15 @@
 import client from '@api/client'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
+} from 'react-query'
 
-type QueryKey = ['Announcements', { showAll?: boolean }]
+type QueryKeyAnnouncement = ['Announcements', { showAll?: boolean }]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = ({ queryKey }: { queryKey: QueryKeyAnnouncement }) => {
   const { showAll } = queryKey[1]
 
   return client<Mastodon.Announcement[]>({
@@ -19,14 +24,52 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookAnnouncement = <TData = Mastodon.Announcement[]>({
+const useAnnouncementQuery = <TData = Mastodon.Announcement[]>({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
+}: QueryKeyAnnouncement[1] & {
   options?: UseQueryOptions<Mastodon.Announcement[], AxiosError, TData>
 }) => {
-  const queryKey: QueryKey = ['Announcements', { ...queryKeyParams }]
+  const queryKey: QueryKeyAnnouncement = [
+    'Announcements',
+    { ...queryKeyParams }
+  ]
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookAnnouncement
+type MutationVarsAnnouncement = {
+  id: Mastodon.Announcement['id']
+  type: 'reaction' | 'dismiss'
+  name?: Mastodon.AnnouncementReaction['name']
+  me?: boolean
+}
+
+const mutationFunction = async ({
+  id,
+  type,
+  name,
+  me
+}: MutationVarsAnnouncement) => {
+  switch (type) {
+    case 'reaction':
+      return client<{}>({
+        method: me ? 'delete' : 'put',
+        instance: 'local',
+        url: `announcements/${id}/reactions/${name}`
+      })
+    case 'dismiss':
+      return client<{}>({
+        method: 'post',
+        instance: 'local',
+        url: `announcements/${id}/dismiss`
+      })
+  }
+}
+
+const useAnnouncementMutation = (
+  options: UseMutationOptions<{}, AxiosError, MutationVarsAnnouncement>
+) => {
+  return useMutation(mutationFunction, options)
+}
+
+export { useAnnouncementQuery, useAnnouncementMutation }

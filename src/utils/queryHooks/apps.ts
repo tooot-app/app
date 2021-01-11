@@ -21,7 +21,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   })
 }
 
-const hookApps = <TData = Mastodon.Apps>({
+const useAppsQuery = <TData = Mastodon.Apps>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
@@ -31,4 +31,4 @@ const hookApps = <TData = Mastodon.Apps>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookApps
+export { useAppsQuery }

@@ -1,7 +1,7 @@
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
 import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
-import hookAccount from '@utils/queryHooks/account'
+import { useAccountQuery } from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import React, { useEffect, useReducer, useState } from 'react'
 import Animated, {
@@ -28,7 +28,7 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
   navigation
 }) => {
   const localAccount = useSelector(getLocalAccount)
-  const { data } = hookAccount({ id: account.id })
+  const { data } = useAccountQuery({ id: account.id })
 
   const scrollY = useSharedValue(0)
   const [accountState, accountDispatch] = useReducer(

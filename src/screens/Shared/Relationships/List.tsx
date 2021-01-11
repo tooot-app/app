@@ -1,12 +1,12 @@
 import ComponentAccount from '@components/Account'
 import ComponentSeparator from '@components/Separator'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
-import TimelineEnd from '@root/components/Timelines/Timeline/End'
+import TimelineEnd from '@components/Timelines/Timeline/End'
 import { useScrollToTop } from '@react-navigation/native'
+import { useRelationshipsQuery } from '@utils/queryHooks/relationships'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import hookRelationships from '@utils/queryHooks/relationships'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -22,7 +22,7 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  } = hookRelationships({
+  } = useRelationshipsQuery({
     type,
     id,
     options: {

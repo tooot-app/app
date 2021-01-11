@@ -14,6 +14,7 @@ import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import HeaderSharedMuted from './HeaderShared/Muted'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
@@ -54,6 +55,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({
         <View style={styles.meta}>
           <HeaderSharedCreated created_at={status.created_at} />
           <HeaderSharedVisibility visibility={status.visibility} />
+          <HeaderSharedMuted muted={status.muted} />
           <HeaderSharedApplication application={status.application} />
         </View>
       </View>
@@ -125,4 +127,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(TimelineHeaderDefault, () => true)
+export default React.memo(
+  TimelineHeaderDefault,
+  (prev, next) => prev.status.muted !== next.status.muted
+)

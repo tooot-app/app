@@ -1,22 +1,23 @@
-import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import relativeTime from '@components/relativeTime'
-import { TimelineData } from '@components/Timelines/Timeline'
 import { ParseEmojis } from '@root/components/Parse'
 import { toast } from '@root/components/toast'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
+  statusId: Mastodon.Status['id']
   poll: NonNullable<Mastodon.Status['poll']>
   reblog: boolean
   sameAccount: boolean
@@ -24,6 +25,7 @@ export interface Props {
 
 const TimelinePoll: React.FC<Props> = ({
   queryKey,
+  statusId,
   poll,
   reblog,
   sameAccount
@@ -36,56 +38,9 @@ const TimelinePoll: React.FC<Props> = ({
   )
 
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(
-    ({ type }: { type: 'vote' | 'refresh' }) => {
-      const formData = new FormData()
-      type === 'vote' &&
-        allOptions.forEach((o, i) => {
-          if (allOptions[i]) {
-            formData.append('choices[]', i.toString())
-          }
-        })
-
-      return client<Mastodon.Poll>({
-        method: type === 'vote' ? 'post' : 'get',
-        instance: 'local',
-        url: type === 'vote' ? `polls/${poll.id}/votes` : `polls/${poll.id}`,
-        ...(type === 'vote' && { body: formData })
-      })
-    },
-    [allOptions]
-  )
-  const mutation = useMutation(fireMutation, {
-    onSuccess: (res) => {
-      queryClient.cancelQueries(queryKey)
-
-      queryClient.setQueryData<TimelineData>(queryKey, old => {
-        let tootIndex = -1
-        const pageIndex = findIndex(old?.pages, page => {
-          const tempIndex = findIndex(page.toots, [
-            reblog ? 'reblog.poll.id' : 'poll.id',
-            poll.id
-          ])
-          if (tempIndex >= 0) {
-            tootIndex = tempIndex
-            return true
-          } else {
-            return false
-          }
-        })
-
-        if (pageIndex >= 0 && tootIndex >= 0) {
-          if (reblog) {
-            old!.pages[pageIndex].toots[tootIndex].reblog!.poll = res
-          } else {
-            old!.pages[pageIndex].toots[tootIndex].poll = res
-          }
-        }
-        return old
-      })
-
-      haptics('Success')
-    },
+  const mutation = useTimelineMutation({
+    queryClient,
+    onSuccess: true,
     onError: (err: any) => {
       haptics('Error')
       toast({
@@ -110,7 +65,20 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() => mutation.mutate({ type: 'vote' })}
+              onPress={() =>
+                mutation.mutate({
+                  type: 'updateStatusProperty',
+                  queryKey,
+                  id: statusId,
+                  reblog,
+                  payload: {
+                    property: 'poll',
+                    id: poll.id,
+                    type: 'vote',
+                    options: allOptions
+                  }
+                })
+              }
               type='text'
               content={t('shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
@@ -122,7 +90,19 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() => mutation.mutate({ type: 'refresh' })}
+              onPress={() =>
+                mutation.mutate({
+                  type: 'updateStatusProperty',
+                  queryKey,
+                  id: statusId,
+                  reblog,
+                  payload: {
+                    property: 'poll',
+                    id: poll.id,
+                    type: 'refresh'
+                  }
+                })
+              }
               type='text'
               content={t('shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}

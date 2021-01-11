@@ -1,13 +1,16 @@
-import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { toast } from '@components/toast'
-import { QueryKeyRelationship } from '@utils/queryHooks/relationship'
+import {
+  QueryKeyRelationship,
+  useRelationshipMutation
+} from '@utils/queryHooks/relationship'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -17,23 +20,18 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
-
+  const queryKeyNotification: QueryKeyTimeline = [
+    'Timeline',
+    { page: 'Notifications' }
+  ]
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(
-    ({ type }: { type: 'authorize' | 'reject' }) => {
-      return client<Mastodon.Relationship>({
-        method: 'post',
-        instance: 'local',
-        url: `follow_requests/${id}/${type}`
-      })
-    },
-    []
-  )
-  const mutation = useMutation(fireMutation, {
+  const mutation = useRelationshipMutation({
     onSuccess: res => {
       haptics('Success')
-      queryClient.setQueryData(queryKeyRelationship, res)
-      queryClient.refetchQueries(['Notifications'])
+      queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [
+        res
+      ])
+      queryClient.refetchQueries(queryKeyNotification)
     },
     onError: (err: any, { type }) => {
       haptics('Error')
@@ -60,14 +58,26 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
         type='icon'
         content='X'
         loading={mutation.isLoading}
-        onPress={() => mutation.mutate({ type: 'reject' })}
+        onPress={() =>
+          mutation.mutate({
+            id,
+            type: 'incoming',
+            payload: { action: 'reject' }
+          })
+        }
       />
       <Button
         round
         type='icon'
         content='Check'
         loading={mutation.isLoading}
-        onPress={() => mutation.mutate({ type: 'authorize' })}
+        onPress={() =>
+          mutation.mutate({
+            id,
+            type: 'incoming',
+            payload: { action: 'authorize' }
+          })
+        }
         style={styles.approve}
       />
     </View>

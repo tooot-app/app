@@ -33,7 +33,7 @@ const queryFunction = ({
   })
 }
 
-const hookRelationships = <TData = Mastodon.Account[]>({
+const useRelationshipsQuery = <TData = Mastodon.Account[]>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
@@ -43,4 +43,4 @@ const hookRelationships = <TData = Mastodon.Account[]>({
   return useInfiniteQuery(queryKey, queryFunction, options)
 }
 
-export default hookRelationships
+export { useRelationshipsQuery }

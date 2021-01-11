@@ -1,16 +1,18 @@
+import client from '@api/client'
+import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getLocalAccount } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-
-import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
-import TimelineHeaderConversation from '@components/Timelines/Timeline/Shared/HeaderConversation'
-import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
-import { StyleConstants } from '@utils/styles/constants'
-import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
-import client from '@root/api/client'
 import { useMutation, useQueryClient } from 'react-query'
-import { useTheme } from '@root/utils/styles/ThemeManager'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { useSelector } from 'react-redux'
+import TimelineActions from './Shared/Actions'
+import TimelineAvatar from './Shared/Avatar'
+import TimelineContent from './Shared/Content'
+import TimelineHeaderConversation from './Shared/HeaderConversation'
+import TimelinePoll from './Shared/Poll'
 
 export interface Props {
   conversation: Mastodon.Conversation
@@ -23,6 +25,7 @@ const TimelineConversation: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  const localAccount = useSelector(getLocalAccount)
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
@@ -88,6 +91,15 @@ const TimelineConversation: React.FC<Props> = ({
             status={conversation.last_status}
             highlighted={highlighted}
           />
+          {conversation.last_status.poll && (
+            <TimelinePoll
+              queryKey={queryKey}
+              statusId={conversation.last_status.id}
+              poll={conversation.last_status.poll}
+              reblog={false}
+              sameAccount={conversation.last_status.id === localAccount?.id}
+            />
+          )}
         </View>
       ) : null}
 

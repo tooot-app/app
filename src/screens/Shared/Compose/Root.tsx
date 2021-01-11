@@ -1,5 +1,5 @@
-import hookEmojis from '@utils/queryHooks/emojis'
-import hookSearch from '@utils/queryHooks/search'
+import { useEmojisQuery } from '@utils/queryHooks/emojis'
+import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
@@ -17,7 +17,7 @@ const ComposeRoot: React.FC = () => {
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
 
-  const { isFetching, data, refetch } = hookSearch({
+  const { isFetching, data, refetch } = useSearchQuery({
     type:
       composeState.tag?.type === 'accounts' ||
       composeState.tag?.type === 'hashtags'
@@ -37,7 +37,7 @@ const ComposeRoot: React.FC = () => {
     }
   }, [composeState.tag])
 
-  const { data: emojisData } = hookEmojis({})
+  const { data: emojisData } = useEmojisQuery({})
   useEffect(() => {
     if (emojisData && emojisData.length) {
       let sortedEmojis: { title: string; data: Mastodon.Emoji[] }[] = []

@@ -12,7 +12,6 @@ import {
   ViewStyle
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
-import Animated from 'react-native-reanimated'
 
 export interface Props {
   style?: StyleProp<ViewStyle>
@@ -156,7 +155,7 @@ const Button: React.FC<Props> = ({
   }
 
   return (
-    <Animated.View>
+    <View>
       <Pressable
         style={[
           styles.button,
@@ -175,7 +174,7 @@ const Button: React.FC<Props> = ({
         children={children}
         disabled={disabled || active || loading}
       />
-    </Animated.View>
+    </View>
   )
 }
 

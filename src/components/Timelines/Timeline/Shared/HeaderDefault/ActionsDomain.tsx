@@ -1,12 +1,15 @@
-import client from '@api/client'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
 import { toast } from '@components/toast'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import React, { useCallback } from 'react'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useQueryClient } from 'react-query'
+import { Alert } from 'react-native'
+import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -21,17 +24,8 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(() => {
-    return client<{}>({
-      method: 'post',
-      instance: 'local',
-      url: `domain_blocks`,
-      params: {
-        domain: domain!
-      }
-    })
-  }, [])
-  const { mutate } = useMutation(fireMutation, {
+  const mutation = useTimelineMutation({
+    queryClient,
     onSettled: () => {
       toast({
         type: 'success',
@@ -52,8 +46,27 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          setBottomSheetVisible(false)
-          mutate()
+          Alert.alert(
+            t('timeline:shared.header.default.actions.domain.alert.title'),
+            t('timeline:shared.header.default.actions.domain.alert.message'),
+            [
+              { text: t('common:buttons.cancel'), style: 'cancel' },
+              {
+                text: t(
+                  'timeline:shared.header.default.actions.domain.alert.confirm'
+                ),
+                style: 'destructive',
+                onPress: () => {
+                  setBottomSheetVisible(false)
+                  mutation.mutate({
+                    type: 'domainBlock',
+                    queryKey,
+                    domain: domain
+                  })
+                }
+              }
+            ]
+          )
         }}
         iconFront='CloudOff'
         title={t(`timeline:shared.header.default.actions.domain.block.button`, {

@@ -4,7 +4,10 @@ import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
 import relativeTime from '@components/relativeTime'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import hookAnnouncement from '@utils/queryHooks/announcement'
+import {
+  useAnnouncementMutation,
+  useAnnouncementQuery
+} from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -20,7 +23,6 @@ import {
 import { Chase } from 'react-native-animated-spinkit'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useMutation } from 'react-query'
 import { SharedAnnouncementsProp } from './sharedScreens'
 
 const fireMutation = async ({
@@ -61,7 +63,7 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
   const [index, setIndex] = useState(0)
   const { t, i18n } = useTranslation()
 
-  const { data, refetch } = hookAnnouncement({
+  const query = useAnnouncementQuery({
     showAll,
     options: {
       select: announcements =>
@@ -70,18 +72,18 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
         )
     }
   })
-  const queryMutation = useMutation(fireMutation, {
+  const mutation = useAnnouncementMutation({
     onSettled: () => {
       haptics('Success')
-      refetch()
+      query.refetch()
     }
   })
 
   useEffect(() => {
-    if (!showAll && data?.length === 0) {
+    if (!showAll && query.data?.length === 0) {
       navigation.goBack()
     }
-  }, [data])
+  }, [query.data])
 
   const renderItem = useCallback(
     ({ item, index }: { item: Mastodon.Announcement; index: number }) => (
@@ -132,8 +134,8 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
                     }
                   ]}
                   onPress={() =>
-                    queryMutation.mutate({
-                      announcementId: item.id,
+                    mutation.mutate({
+                      id: item.id,
                       type: 'reaction',
                       name: reaction.name,
                       me: reaction.me
@@ -172,13 +174,13 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
           <Button
             type='text'
             content={item.read ? '已读' : '标记阅读'}
-            loading={queryMutation.isLoading}
+            loading={mutation.isLoading}
             disabled={item.read}
             onPress={() =>
               !item.read &&
-              queryMutation.mutate({
-                type: 'dismiss',
-                announcementId: item.id
+              mutation.mutate({
+                id: item.id,
+                type: 'dismiss'
               })
             }
           />
@@ -221,7 +223,7 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
       </View>
       <FlatList
         horizontal
-        data={data}
+        data={query.data}
         pagingEnabled
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
@@ -229,9 +231,9 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
         ListEmptyComponent={ListEmptyComponent}
       />
       <View style={[styles.indicators, { height: bottomTabBarHeight }]}>
-        {data && data.length > 1 ? (
+        {query.data && query.data.length > 1 ? (
           <>
-            {data.map((d, i) => (
+            {query.data.map((d, i) => (
               <View
                 key={i}
                 style={[
@@ -239,7 +241,8 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
                   {
                     borderColor: theme.primary,
                     backgroundColor: i === index ? theme.primary : undefined,
-                    marginLeft: i === data.length ? 0 : StyleConstants.Spacing.S
+                    marginLeft:
+                      i === query.data.length ? 0 : StyleConstants.Spacing.S
                   }
                 ]}
               />

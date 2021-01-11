@@ -82,6 +82,7 @@ const TimelineNotifications: React.FC<Props> = ({
             {notification.status.poll && (
               <TimelinePoll
                 queryKey={queryKey}
+                statusId={notification.status.id}
                 poll={notification.status.poll}
                 reblog={false}
                 sameAccount={notification.account.id === localAccount?.id}

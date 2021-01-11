@@ -12,7 +12,7 @@ const queryFunction = () => {
   })
 }
 
-const hookEmojis = <TData = Mastodon.Emoji[]>({
+const useEmojisQuery = <TData = Mastodon.Emoji[]>({
   options
 }: {
   options?: UseQueryOptions<Mastodon.Emoji[], AxiosError, TData>
@@ -21,4 +21,4 @@ const hookEmojis = <TData = Mastodon.Emoji[]>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-export default hookEmojis
+export { useEmojisQuery }

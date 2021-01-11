@@ -14,7 +14,7 @@ import ScreenLocal from '@screens/Local'
 import ScreenMe from '@screens/Me'
 import ScreenNotifications from '@screens/Notifications'
 import ScreenPublic from '@screens/Public'
-import hookTimeline from '@utils/queryHooks/timeline'
+import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import {
   getLocalActiveIndex,
   getLocalNotification,
@@ -100,7 +100,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
 
   // On launch check if there is any unread noficiations
-  const queryNotification = hookTimeline({
+  const queryNotification = useTimelineQuery({
     page: 'Notifications',
     options: {
       enabled: localActiveIndex !== null ? true : false,
@@ -112,9 +112,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   const prevNotification = useSelector(getLocalNotification)
   useEffect(() => {
     if (queryNotification.data?.pages) {
-      const flattenData = queryNotification.data.pages.flatMap(d => [
-        ...d?.toots
-      ])
+      const flattenData = queryNotification.data.pages.flatMap(d => [...d])
       const latestNotificationTime = flattenData.length
         ? (flattenData[0] as Mastodon.Notification).created_at
         : undefined

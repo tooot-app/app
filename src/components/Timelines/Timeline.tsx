@@ -13,13 +13,12 @@ import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { InfiniteData } from 'react-query'
 import { useDispatch } from 'react-redux'
-import hookTimeline, { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { findIndex } from 'lodash'
 
-export type TimelineData =
+type TimelineData =
   | InfiniteData<{
       toots: Mastodon.Status[]
-      pointer?: number | undefined
-      pinnedLength?: number | undefined
     }>
   | undefined
 
@@ -61,35 +60,33 @@ const Timeline: React.FC<Props> = ({
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
-  } = hookTimeline({
+  } = useTimelineQuery({
     ...queryKeyParams,
     options: {
       getPreviousPageParam: firstPage => {
-        return firstPage.toots.length
+        return firstPage.length
           ? {
               direction: 'prev',
-              id: firstPage.toots[0].id
+              id: firstPage[0].last_status
+                ? firstPage[0].last_status.id
+                : firstPage[0].id
             }
           : undefined
       },
       getNextPageParam: lastPage => {
-        return lastPage.toots.length
+        return lastPage.length
           ? {
               direction: 'next',
-              id: lastPage.toots[lastPage.toots.length - 1].id
+              id: lastPage[lastPage.length - 1].last_status
+                ? lastPage[lastPage.length - 1].last_status.id
+                : lastPage[lastPage.length - 1].id
             }
           : undefined
       }
     }
   })
 
-  const flattenData = data?.pages ? data.pages.flatMap(d => [...d?.toots]) : []
-  const flattenPointer = data?.pages
-    ? data.pages.flatMap(d => [d?.pointer])
-    : []
-  const flattenPinnedLength = data?.pages
-    ? data.pages.flatMap(d => [d?.pinnedLength])
-    : []
+  const flattenData = data?.pages ? data.pages.flatMap(d => [...d]) : []
 
   // Clear unread notification badge
   const dispatch = useDispatch()
@@ -107,48 +104,41 @@ const Timeline: React.FC<Props> = ({
   const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {
     if (toot && isSuccess) {
+      const pointer = findIndex(flattenData, ['id', toot])
       setTimeout(() => {
         flRef.current?.scrollToIndex({
-          index: flattenPointer[0]!,
+          index: pointer,
           viewOffset: 100
         })
       }, 500)
     }
-  }, [isSuccess])
+  }, [isSuccess, flattenData])
 
   const keyExtractor = useCallback(({ id }) => id, [])
-  const renderItem = useCallback(
-    ({ item, index }) => {
-      switch (page) {
-        case 'Conversations':
-          return (
-            <TimelineConversation conversation={item} queryKey={queryKey} />
-          )
-        case 'Notifications':
-          return (
-            <TimelineNotifications notification={item} queryKey={queryKey} />
-          )
-        default:
-          return (
-            <TimelineDefault
-              item={item}
-              queryKey={queryKey}
-              index={index}
-              {...(queryKey[1].page === 'RemotePublic' && {
-                disableDetails: true,
-                disableOnPress: true
-              })}
-              {...(flattenPinnedLength &&
-                flattenPinnedLength[0] && {
-                  pinnedLength: flattenPinnedLength[0]
-                })}
-              {...(toot === item.id && { highlighted: true })}
-            />
-          )
-      }
-    },
-    [flattenPinnedLength[0]]
-  )
+  const renderItem = useCallback(({ item }) => {
+    switch (page) {
+      case 'Conversations':
+        return <TimelineConversation conversation={item} queryKey={queryKey} />
+      case 'Notifications':
+        return <TimelineNotifications notification={item} queryKey={queryKey} />
+      default:
+        // if (item.poll) {
+        //   console.log('Timeline')
+        //   console.log(item.poll)
+        // }
+        return (
+          <TimelineDefault
+            item={item}
+            queryKey={queryKey}
+            {...(queryKey[1].page === 'RemotePublic' && {
+              disableDetails: true,
+              disableOnPress: true
+            })}
+            {...(toot === item.id && { highlighted: true })}
+          />
+        )
+    }
+  }, [])
   const ItemSeparatorComponent = useCallback(
     ({ leadingItem }) => (
       <ComponentSeparator

@@ -1,15 +1,15 @@
-import { findIndex } from 'lodash'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useMutation, useQueryClient } from 'react-query'
-import client from '@api/client'
-import haptics from '@components/haptics'
+import { useQueryClient } from 'react-query'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
-import { TimelineData } from '@components/Timelines/Timeline'
 import { toast } from '@components/toast'
 import { useNavigation } from '@react-navigation/native'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  MutationVarsTimelineUpdateStatusProperty,
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -26,92 +26,19 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
   const { t } = useTranslation()
 
   const queryClient = useQueryClient()
-  const fireMutation = useCallback(
-    ({ type, state }: { type: 'mute' | 'pin' | 'delete'; state?: boolean }) => {
-      switch (type) {
-        case 'mute':
-        case 'pin':
-          return client<Mastodon.Status>({
-            method: 'post',
-            instance: 'local',
-            url: `statuses/${status.id}/${state ? 'un' : ''}${type}`
-          }) // bug in response from Mastodon, but onMutate ignore the error in response
-          break
-        case 'delete':
-          return client<Mastodon.Status>({
-            method: 'delete',
-            instance: 'local',
-            url: `statuses/${status.id}`
-          })
-          break
-      }
-    },
-    []
-  )
-  enum mapTypeToProp {
-    mute = 'muted',
-    pin = 'pinned'
-  }
-  const { mutate } = useMutation(fireMutation, {
-    onMutate: ({ type, state }) => {
-      queryClient.cancelQueries(queryKey)
-      const oldData = queryClient.getQueryData(queryKey)
-
-      switch (type) {
-        case 'mute':
-        case 'pin':
-          haptics('Success')
-          toast({
-            type: 'success',
-            message: t('common:toastMessage.success.message', {
-              function: t(
-                `timeline:shared.header.default.actions.status.${type}.function`
-              )
-            })
-          })
-          queryClient.setQueryData<TimelineData>(queryKey, old => {
-            let tootIndex = -1
-            const pageIndex = findIndex(old?.pages, page => {
-              const tempIndex = findIndex(page.toots, ['id', status.id])
-              if (tempIndex >= 0) {
-                tootIndex = tempIndex
-                return true
-              } else {
-                return false
-              }
-            })
-
-            if (pageIndex >= 0 && tootIndex >= 0) {
-              old!.pages[pageIndex].toots[tootIndex][mapTypeToProp[type]] =
-                typeof state === 'boolean' ? !state : true // State could be null from response
-            }
-
-            return old
-          })
-          break
-        case 'delete':
-          queryClient.setQueryData<TimelineData>(
-            queryKey,
-            old =>
-              old && {
-                ...old,
-                pages: old?.pages.map(paging => ({
-                  ...paging,
-                  toots: paging.toots.filter(toot => toot.id !== status.id)
-                }))
-              }
-          )
-          break
-      }
-
-      return oldData
-    },
-    onError: (err: any, { type }, oldData) => {
+  const mutation = useTimelineMutation({
+    queryClient,
+    onMutate: true,
+    onError: (err: any, params, oldData) => {
+      const theFunction = (params as MutationVarsTimelineUpdateStatusProperty)
+        .payload
+        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
+        : 'delete'
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(
-            `timeline:shared.header.default.actions.status.${type}.function`
+            `timeline:shared.header.default.actions.status.${theFunction}.function`
           )
         }),
         ...(err.status &&
@@ -134,7 +61,12 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ type: 'delete' })
+          mutation.mutate({
+            type: 'deleteItem',
+            source: 'statuses',
+            queryKey,
+            id: status.id
+          })
         }}
         iconFront='Trash'
         title={t('timeline:shared.header.default.actions.status.delete.button')}
@@ -154,29 +86,19 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
                 ),
                 style: 'destructive',
                 onPress: async () => {
-                  await client<Mastodon.Status>({
-                    method: 'delete',
-                    instance: 'local',
-                    url: `statuses/${status.id}`
+                  setBottomSheetVisible(false)
+                  const res = await mutation.mutateAsync({
+                    type: 'deleteItem',
+                    source: 'statuses',
+                    queryKey,
+                    id: status.id
                   })
-                    .then(res => {
-                      queryClient.invalidateQueries(queryKey)
-                      setBottomSheetVisible(false)
-                      navigation.navigate('Screen-Shared-Compose', {
-                        type: 'edit',
-                        incomingStatus: res
-                      })
+                  if (res.id) {
+                    navigation.navigate('Screen-Shared-Compose', {
+                      type: 'edit',
+                      incomingStatus: res
                     })
-                    .catch(() => {
-                      toast({
-                        type: 'error',
-                        message: t('common:toastMessage.success.message', {
-                          function: t(
-                            `timeline:shared.header.default.actions.status.edit.function`
-                          )
-                        })
-                      })
-                    })
+                  }
                 }
               }
             ]
@@ -188,7 +110,12 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
-          mutate({ type: 'mute', state: status.muted })
+          mutation.mutate({
+            type: 'updateStatusProperty',
+            queryKey,
+            id: status.id,
+            payload: { property: 'muted', currentValue: status.muted }
+          })
         }}
         iconFront='VolumeX'
         title={
@@ -206,7 +133,12 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
         <MenuRow
           onPress={() => {
             setBottomSheetVisible(false)
-            mutate({ type: 'pin', state: status.pinned })
+            mutation.mutate({
+              type: 'updateStatusProperty',
+              queryKey,
+              id: status.id,
+              payload: { property: 'pinned', currentValue: status.pinned }
+            })
           }}
           iconFront='Anchor'
           title={
