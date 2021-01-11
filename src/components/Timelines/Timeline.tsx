@@ -9,18 +9,12 @@ import { useScrollToTop } from '@react-navigation/native'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { RefreshControl, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { InfiniteData } from 'react-query'
 import { useDispatch } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
-
-type TimelineData =
-  | InfiniteData<{
-      toots: Mastodon.Status[]
-    }>
-  | undefined
+import CustomRefreshControl from '@components/CustomRefreshControl'
 
 export interface Props {
   page: App.Pages
@@ -54,6 +48,7 @@ const Timeline: React.FC<Props> = ({
     data,
     refetch,
     isSuccess,
+    isFetching,
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
@@ -122,10 +117,6 @@ const Timeline: React.FC<Props> = ({
       case 'Notifications':
         return <TimelineNotifications notification={item} queryKey={queryKey} />
       default:
-        // if (item.poll) {
-        //   console.log('Timeline')
-        //   console.log(item.poll)
-        // }
         return (
           <TimelineDefault
             item={item}
@@ -167,12 +158,15 @@ const Timeline: React.FC<Props> = ({
   )
   const refreshControl = useMemo(
     () => (
-      <RefreshControl
-        refreshing={isFetchingPreviousPage}
-        onRefresh={() => fetchPreviousPage()}
+      <CustomRefreshControl
+        queryKey={queryKey}
+        isFetchingPreviousPage={isFetchingNextPage}
+        isFetching={isFetching}
+        fetchPreviousPage={fetchPreviousPage}
+        refetch={refetch}
       />
     ),
-    [isFetchingPreviousPage]
+    [isFetchingPreviousPage, isFetching]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
@@ -218,7 +212,5 @@ const styles = StyleSheet.create({
     minHeight: '100%'
   }
 })
-
-// Timeline.whyDidYouRender = true
 
 export default Timeline

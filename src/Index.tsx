@@ -242,13 +242,6 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
     }),
     [localActiveIndex]
   )
-  const tabScreenNotificationsOptions = useMemo(
-    () => ({
-      tabBarBadge: prevNotification && prevNotification.unread ? '' : undefined
-    }),
-    [theme, prevNotification]
-  )
-
   return (
     <>
       <StatusBar barStyle={barStyle[mode]} />
@@ -280,13 +273,22 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Notifications'
             component={ScreenNotifications}
             listeners={tabScreenNotificationsListeners}
-            options={{
-              tabBarBadgeStyle: {
-                transform: [{ scale: 0.5 }],
-                backgroundColor: theme.red
-              },
-              ...tabScreenNotificationsOptions
-            }}
+            options={
+              prevNotification && prevNotification.unread
+                ? {
+                    tabBarBadge: '',
+                    tabBarBadgeStyle: {
+                      transform: [{ scale: 0.5 }],
+                      backgroundColor: theme.red
+                    }
+                  }
+                : {
+                    tabBarBadgeStyle: {
+                      transform: [{ scale: 0.5 }],
+                      backgroundColor: theme.red
+                    }
+                  }
+            }
           />
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>

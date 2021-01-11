@@ -15,10 +15,8 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
 
   const [imageLoaded, setImageLoaded] = useState(false)
   useEffect(() => {
-    const preFetch = () => Image.getSize(card.image, () => setImageLoaded(true))
-
     if (card.image) {
-      preFetch()
+      Image.getSize(card.image, () => setImageLoaded(true))
     }
   }, [])
   const cardVisual = useMemo(() => {

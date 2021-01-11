@@ -3,16 +3,12 @@ import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
-import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  withTiming
-} from 'react-native-reanimated'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -197,70 +193,36 @@ const ParseHTML: React.FC<Props> = ({
     ({ children }) => {
       const lineHeight = StyleConstants.Font.LineHeight[size]
 
-      const [lines, setLines] = useState<number | undefined>(undefined)
-      const [heightOriginal, setHeightOriginal] = useState<number>()
-      const [heightTruncated, setHeightTruncated] = useState<number>()
       const [expandAllow, setExpandAllow] = useState(false)
       const [expanded, setExpanded] = useState(false)
 
-      const viewHeight = useDerivedValue(() => {
-        if (expandAllow) {
-          if (expanded) {
-            return heightOriginal as number
-          } else {
-            return heightTruncated as number
-          }
-        } else {
-          return heightOriginal as number
+      const onTextLayout = useCallback(({ nativeEvent }) => {
+        if (
+          nativeEvent.lines &&
+          nativeEvent.lines.length === numberOfLines + 1
+        ) {
+          setExpandAllow(true)
         }
-      }, [heightOriginal, heightTruncated, expandAllow, expanded])
-      const ViewHeight = useAnimatedStyle(() => {
-        return {
-          height: expandAllow
-            ? expanded
-              ? withTiming(viewHeight.value)
-              : withTiming(viewHeight.value)
-            : viewHeight.value
-        }
-      })
-
-      const onLayout = useCallback(
-        ({ nativeEvent }) => {
-          if (!heightOriginal) {
-            setHeightOriginal(nativeEvent.layout.height)
-            setLines(numberOfLines === 0 ? 1 : numberOfLines)
-          } else {
-            if (!heightTruncated) {
-              setHeightTruncated(nativeEvent.layout.height)
-              setLines(undefined)
-            } else {
-              if (heightOriginal > heightTruncated) {
-                setExpandAllow(true)
-              }
-            }
-          }
-        },
-        [heightOriginal, heightTruncated]
-      )
+      }, [])
 
       return (
         <View>
-          <Animated.View style={[ViewHeight, { overflow: 'hidden' }]}>
-            <Animated.Text
-              children={children}
-              onLayout={onLayout}
-              numberOfLines={lines}
-              style={{
-                ...StyleConstants.FontStyle[size],
-                color: theme.primary,
-                height: expandAllow ? heightOriginal : undefined
-              }}
-            />
-          </Animated.View>
+          <Text
+            children={children}
+            onTextLayout={onTextLayout}
+            numberOfLines={expanded ? 999 : numberOfLines + 1}
+            style={{
+              ...StyleConstants.FontStyle[size],
+              color: theme.primary
+            }}
+          />
           {expandAllow ? (
             <Pressable
-              onPress={() => setExpanded(!expanded)}
-              style={{ marginTop: expanded ? 0 : -lineHeight * 1.25 }}
+              onPress={() => {
+                layoutAnimation()
+                setExpanded(!expanded)
+              }}
+              style={{ marginTop: expanded ? 0 : -lineHeight * 2.25 }}
             >
               <LinearGradient
                 colors={[
@@ -301,4 +263,5 @@ const ParseHTML: React.FC<Props> = ({
   )
 }
 
-export default ParseHTML
+// export default ParseHTML
+export default React.memo(ParseHTML, () => true)

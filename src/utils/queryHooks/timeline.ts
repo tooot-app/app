@@ -381,7 +381,8 @@ const useTimelineMutation = ({
     onSettled,
     ...(typeof onSuccess === 'function'
       ? { onSuccess }
-      : {
+      : onSuccess
+      ? {
           onSuccess: (data, params) => {
             queryClient.cancelQueries(params.queryKey)
 
@@ -397,7 +398,8 @@ const useTimelineMutation = ({
                 break
             }
           }
-        }),
+        }
+      : undefined),
     ...(onMutate && {
       onMutate: params => {
         queryClient.cancelQueries(params.queryKey)

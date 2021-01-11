@@ -61,7 +61,10 @@ const TimelineNotifications: React.FC<Props> = ({
       >
         <View style={styles.header}>
           <TimelineAvatar queryKey={queryKey} account={actualAccount} />
-          <TimelineHeaderNotification notification={notification} />
+          <TimelineHeaderNotification
+            queryKey={queryKey}
+            notification={notification}
+          />
         </View>
 
         {notification.status ? (

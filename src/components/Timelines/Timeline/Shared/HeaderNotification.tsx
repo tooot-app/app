@@ -1,6 +1,6 @@
 import { RelationshipOutgoing } from '@components/Relationship'
 import { StyleConstants } from '@utils/styles/constants'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
@@ -8,15 +8,41 @@ import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 import RelationshipIncoming from '@root/components/Relationship/Incoming'
 import HeaderSharedMuted from './HeaderShared/Muted'
+import HeaderActions from './HeaderActions/Root'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export interface Props {
+  queryKey: QueryKeyTimeline
   notification: Mastodon.Notification
 }
 
-const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
+const TimelineHeaderNotification: React.FC<Props> = ({
+  queryKey,
+  notification
+}) => {
+  const actions = useMemo(() => {
+    switch (notification.type) {
+      case 'follow':
+        return <RelationshipOutgoing id={notification.account.id} />
+      case 'follow_request':
+        return <RelationshipIncoming id={notification.account.id} />
+      default:
+        return notification.status ? (
+          <HeaderActions queryKey={queryKey} status={notification.status} />
+        ) : null
+    }
+  }, [notification.type])
   return (
     <View style={styles.base}>
-      <View style={styles.accountAndMeta}>
+      <View
+        style={{
+          flex:
+            notification.type === 'follow' ||
+            notification.type === 'follow_request'
+              ? 1
+              : 4
+        }}
+      >
         <HeaderSharedAccount
           account={
             notification.status
@@ -38,16 +64,17 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
         </View>
       </View>
 
-      {notification.type === 'follow' && (
-        <View style={styles.relationship}>
-          <RelationshipOutgoing id={notification.account.id} />
-        </View>
-      )}
-      {notification.type === 'follow_request' && (
-        <View style={styles.relationship}>
-          <RelationshipIncoming id={notification.account.id} />
-        </View>
-      )}
+      <View
+        style={[
+          styles.relationship,
+          notification.type === 'follow' ||
+          notification.type === 'follow_request'
+            ? { flexShrink: 1 }
+            : { flex: 1 }
+        ]}
+      >
+        {actions}
+      </View>
     </View>
   )
 }
@@ -55,13 +82,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start'
-  },
-  accountAndMeta: {
-    flex: 1,
-    flexGrow: 1
+    flexDirection: 'row'
   },
   meta: {
     flexDirection: 'row',
@@ -70,7 +91,6 @@ const styles = StyleSheet.create({
     marginBottom: StyleConstants.Spacing.S
   },
   relationship: {
-    flexShrink: 1,
     marginLeft: StyleConstants.Spacing.M
   }
 })

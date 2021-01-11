@@ -17,7 +17,7 @@ export interface Props {
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const HeaderDefaultActionsDomain: React.FC<Props> = ({
+const HeaderActionsDomain: React.FC<Props> = ({
   queryKey,
   domain,
   setBottomSheetVisible
@@ -77,4 +77,4 @@ const HeaderDefaultActionsDomain: React.FC<Props> = ({
   )
 }
 
-export default HeaderDefaultActionsDomain
+export default HeaderActionsDomain

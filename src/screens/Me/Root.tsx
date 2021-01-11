@@ -8,15 +8,29 @@ import accountReducer from '@screens/Shared/Account/utils/reducer'
 import accountInitialState from '@screens/Shared/Account/utils/initialState'
 import AccountContext from '@screens/Shared/Account/utils/createContext'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
-import React, { useReducer, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
 import ComponentInstance from '@components/Instance'
+import { StackScreenProps } from '@react-navigation/stack'
 
-const ScreenMeRoot: React.FC = () => {
+const ScreenMeRoot: React.FC<StackScreenProps<
+  Nav.MeStackParamList,
+  'Screen-Me-Root'
+>> = ({
+  route: {
+    params: { navigateAway }
+  },
+  navigation
+}) => {
+  useEffect(() => {
+    if (navigateAway) {
+      navigation.navigate(navigateAway)
+    }
+  }, [navigateAway])
   const localActiveIndex = useSelector(getLocalActiveIndex)
 
   const scrollRef = useRef<Animated.ScrollView>(null)

@@ -19,7 +19,7 @@ export const ManageThemeContext = createContext<ContextType>({
 
 export const useTheme = () => useContext(ManageThemeContext)
 
-const useColorSchemeDelay = (delay = 250) => {
+const useColorSchemeDelay = (delay = 500) => {
   const [colorScheme, setColorScheme] = React.useState(
     Appearance.getColorScheme()
   )

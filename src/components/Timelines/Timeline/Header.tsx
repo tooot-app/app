@@ -17,7 +17,10 @@ const TimelineHeader = React.memo(
           <Text
             style={{ color: theme.blue }}
             onPress={() => {
-              navigation.navigate('Screen-Me')
+              navigation.navigate('Screen-Me', {
+                screen: 'Screen-Me-Root',
+                params: { navigateAway: 'Screen-Me-Settings-UpdateRemote' }
+              })
             }}
           >
             前往设置{' '}

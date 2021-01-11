@@ -32,6 +32,17 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const mutation = useTimelineMutation({
     queryClient,
     onMutate: true,
+    onSuccess: (_, params) => {
+      const theParams = params as MutationVarsTimelineUpdateStatusProperty
+      if (
+        (queryKey[1].page === 'Bookmarks' &&
+          theParams.payload.property === 'bookmarked') ||
+        (queryKey[1].page === 'Favourites' &&
+          theParams.payload.property === 'favourited')
+      ) {
+        queryClient.invalidateQueries(queryKey)
+      }
+    },
     onError: (err: any, params, oldData) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       haptics('Error')

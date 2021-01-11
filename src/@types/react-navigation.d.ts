@@ -52,7 +52,7 @@ declare namespace Nav {
   } & SharedStackParamList
 
   type MeStackParamList = {
-    'Screen-Me-Root': undefined
+    'Screen-Me-Root': { navigateAway?: 'Screen-Me-Settings-UpdateRemote' }
     'Screen-Me-Bookmarks': undefined
     'Screen-Me-Conversations': undefined
     'Screen-Me-Favourites': undefined

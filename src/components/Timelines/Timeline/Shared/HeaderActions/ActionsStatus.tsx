@@ -17,7 +17,7 @@ export interface Props {
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const HeaderDefaultActionsStatus: React.FC<Props> = ({
+const HeaderActionsStatus: React.FC<Props> = ({
   queryKey,
   status,
   setBottomSheetVisible
@@ -156,4 +156,4 @@ const HeaderDefaultActionsStatus: React.FC<Props> = ({
   )
 }
 
-export default HeaderDefaultActionsStatus
+export default HeaderActionsStatus

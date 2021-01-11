@@ -11,7 +11,6 @@ const updateStatus = ({
 }) => {
   switch (payload.property) {
     case 'poll':
-      console.log(payload.data)
       if (reblog) {
         item.reblog!.poll = payload.data
       } else {

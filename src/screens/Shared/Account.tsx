@@ -1,6 +1,6 @@
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
-import HeaderDefaultActionsAccount from '@components/Timelines/Timeline/Shared/HeaderDefault/ActionsAccount'
+import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/ActionsAccount'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import React, { useEffect, useReducer, useState } from 'react'
@@ -77,7 +77,7 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
       >
         {/* 添加到列表 */}
         {localAccount?.id !== account.id && (
-          <HeaderDefaultActionsAccount
+          <HeaderActionsAccount
             account={account}
             setBottomSheetVisible={setBottomSheetVisible}
           />

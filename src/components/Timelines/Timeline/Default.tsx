@@ -15,7 +15,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  item: Mastodon.Status
+  item: Mastodon.Status & { isPinned?: boolean }
   queryKey?: QueryKeyTimeline
   highlighted?: boolean
   disableDetails?: boolean
@@ -61,7 +61,6 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineHeaderDefault
           queryKey={disableOnPress ? undefined : queryKey}
           status={actualStatus}
-          sameAccount={actualStatus.account.id === localAccount?.id}
         />
       </View>
 
