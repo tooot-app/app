@@ -15,10 +15,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { LogBox, Platform } from 'react-native'
-import Moment from 'react-moment'
-
-import moment from 'moment'
-import 'moment/min/locales'
 
 if (Platform.OS === 'android') {
   LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -28,8 +24,6 @@ dev()
 sentry()
 audio()
 onlineStatus()
-Moment.globalMoment = moment
-Moment.startPooledTimer(1000)
 
 log('log', 'react-query', 'initializing')
 const queryClient = new QueryClient()

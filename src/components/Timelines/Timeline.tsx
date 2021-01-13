@@ -9,13 +9,14 @@ import { useScrollToTop } from '@react-navigation/native'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { RefreshControl, StyleSheet } from 'react-native'
+import { Platform, RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
 import CustomRefreshControl from '@components/CustomRefreshControl'
 import { InfiniteData, useQueryClient } from 'react-query'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   page: App.Pages
@@ -36,6 +37,8 @@ const Timeline: React.FC<Props> = ({
   disableRefresh = false,
   disableInfinity = false
 }) => {
+  const { theme } = useTheme()
+
   const queryKeyParams = {
     page,
     ...(hashtag && { hashtag }),
@@ -163,8 +166,13 @@ const Timeline: React.FC<Props> = ({
   const refreshControl = useMemo(
     () => (
       <RefreshControl
+        {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          refreshCount.current < 2 ? isFetchingPreviousPage : isFetching
+          refreshCount.current < 2
+            ? Platform.OS === 'ios'
+              ? isFetchingPreviousPage
+              : isFetchingPreviousPage || isFetching
+            : isFetching
         }
         onRefresh={async () => {
           if (refreshCount.current < 2) {

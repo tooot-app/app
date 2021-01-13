@@ -107,7 +107,8 @@ const sharedScreens = (
       component={ScreenSharedAnnouncements}
       options={{
         stackPresentation: 'transparentModal',
-        stackAnimation: 'fade'
+        stackAnimation: 'fade',
+        headerShown: false
       }}
     />,
     <Stack.Screen
@@ -115,7 +116,8 @@ const sharedScreens = (
       name='Screen-Shared-Compose'
       component={Compose}
       options={{
-        stackPresentation: 'fullScreenModal'
+        stackPresentation: 'fullScreenModal',
+        headerShown: false
       }}
     />,
     <Stack.Screen
@@ -133,7 +135,8 @@ const sharedScreens = (
       component={ScreenSharedImagesViewer}
       options={{
         stackPresentation: 'transparentModal',
-        stackAnimation: 'none'
+        stackAnimation: 'none',
+        headerShown: false
       }}
     />,
     <Stack.Screen

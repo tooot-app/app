@@ -10,27 +10,40 @@ import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
-  showActionSheetWithOptions: (options: ActionSheetOptions, callback: (i: number) => void) => void
+  showActionSheetWithOptions: (
+    options: ActionSheetOptions,
+    callback: (i: number) => void
+  ) => void
 }
 
-const addAttachment = async ({ composeDispatch, showActionSheetWithOptions }: Props): Promise<any> => {
+const addAttachment = async ({
+  composeDispatch,
+  showActionSheetWithOptions
+}: Props): Promise<any> => {
   const uploadAttachment = async (result: ImageInfo) => {
     const hash = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
       result.uri + Math.random()
     )
+
+    let attachmentType: string
+    // https://github.com/expo/expo/issues/11214
+    const attachmentUri = result.uri.replace('file:/data', 'file:///data')
+
     switch (result.type) {
       case 'image':
+        attachmentType = `image/${attachmentUri.split('.')[1]}`
         composeDispatch({
           type: 'attachment/upload/start',
           payload: {
-            local: { ...result, local_thumbnail: result.uri, hash },
+            local: { ...result, local_thumbnail: attachmentUri, hash },
             uploading: true
           }
         })
         break
       case 'video':
-        VideoThumbnails.getThumbnailAsync(result.uri)
+        attachmentType = `video/${attachmentUri.split('.')[1]}`
+        VideoThumbnails.getThumbnailAsync(attachmentUri)
           .then(({ uri }) =>
             composeDispatch({
               type: 'attachment/upload/start',
@@ -51,6 +64,7 @@ const addAttachment = async ({ composeDispatch, showActionSheetWithOptions }: Pr
           )
         break
       default:
+        attachmentType = 'unknown'
         composeDispatch({
           type: 'attachment/upload/start',
           payload: {
@@ -64,9 +78,9 @@ const addAttachment = async ({ composeDispatch, showActionSheetWithOptions }: Pr
     const formData = new FormData()
     formData.append('file', {
       // @ts-ignore
-      uri: result.uri,
-      name: result.uri.split('/').pop(),
-      type: 'image/jpeg/jpg'
+      uri: attachmentUri,
+      name: attachmentType,
+      type: attachmentType
     })
 
     return client<Mastodon.Attachment>({

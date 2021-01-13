@@ -1,6 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
+import RelativeTime from '@components/RelativeTime'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import {
   useAnnouncementMutation,
@@ -10,7 +11,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Moment from 'react-moment'
 import {
   Dimensions,
   Image,
@@ -80,13 +80,7 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
           ]}
         >
           <Text style={[styles.published, { color: theme.secondary }]}>
-            发布于{' '}
-            <Moment
-              date={item.published_at}
-              locale={i18n.language}
-              element={Text}
-              fromNow
-            />
+            发布于 <RelativeTime date={item.published_at} />
           </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
             <ParseHTML

@@ -13,6 +13,7 @@ import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text
 } from 'react-native'
@@ -208,7 +209,10 @@ const Compose: React.FC<SharedComposeProp> = ({
   )
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
       <SafeAreaView
         style={{ flex: 1 }}
         edges={hasKeyboard ? ['left', 'right'] : ['left', 'right', 'bottom']}
@@ -223,7 +227,7 @@ const Compose: React.FC<SharedComposeProp> = ({
             <Stack.Screen
               name='Screen-Shared-Compose-EditAttachment'
               component={ComposeEditAttachment}
-              options={{ stackPresentation: 'modal' }}
+              options={{ stackPresentation: 'modal', headerShown: false }}
             />
           </Stack.Navigator>
         </ComposeContext.Provider>

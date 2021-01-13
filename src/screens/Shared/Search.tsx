@@ -8,6 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   KeyboardAvoidingView,
+  Platform,
   Pressable,
   SectionList,
   StyleSheet,
@@ -163,14 +164,17 @@ const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
           </Pressable>
         )
       case 'statuses':
-        return <TimelineDefault item={item} index={index} disableDetails />
+        return <TimelineDefault item={item} disableDetails />
       default:
         return null
     }
   }, [])
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
       <SectionList
         style={styles.base}
         renderItem={listItem}

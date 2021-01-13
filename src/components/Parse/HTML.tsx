@@ -45,9 +45,12 @@ const renderNode = ({
             ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
             : true
           return (
-            <Pressable
+            <Text
               key={index}
-              hitSlop={StyleConstants.Font.Size[size] / 2}
+              style={{
+                color: theme.blue,
+                ...StyleConstants.FontStyle[size]
+              }}
               onPress={() => {
                 !disableDetails &&
                   differentTag &&
@@ -56,16 +59,9 @@ const renderNode = ({
                   })
               }}
             >
-              <Text
-                style={{
-                  color: theme.blue,
-                  ...StyleConstants.FontStyle[size]
-                }}
-              >
-                {node.children[0].data}
-                {node.children[1]?.children[0].data}
-              </Text>
-            </Pressable>
+              {node.children[0].data}
+              {node.children[1]?.children[0].data}
+            </Text>
           )
         } else if (classes.includes('mention') && mentions) {
           const accountIndex = mentions.findIndex(
@@ -75,9 +71,12 @@ const renderNode = ({
             ? routeParams.account.id !== mentions[accountIndex].id
             : true
           return (
-            <Pressable
+            <Text
               key={index}
-              hitSlop={StyleConstants.Font.Size[size] / 2}
+              style={{
+                color: accountIndex !== -1 ? theme.blue : undefined,
+                ...StyleConstants.FontStyle[size]
+              }}
               onPress={() => {
                 accountIndex !== -1 &&
                   !disableDetails &&
@@ -87,16 +86,9 @@ const renderNode = ({
                   })
               }}
             >
-              <Text
-                style={{
-                  color: accountIndex !== -1 ? theme.blue : undefined,
-                  ...StyleConstants.FontStyle[size]
-                }}
-              >
-                {node.children[0].data}
-                {node.children[1]?.children[0].data}
-              </Text>
-            </Pressable>
+              {node.children[0].data}
+              {node.children[1]?.children[0].data}
+            </Text>
           )
         }
       } else {
@@ -107,9 +99,12 @@ const renderNode = ({
         const shouldBeTag =
           tags && tags.filter(tag => `#${tag.name}` === content).length > 0
         return (
-          <Pressable
+          <Text
             key={index}
-            hitSlop={StyleConstants.Font.Size[size] / 2}
+            style={{
+              color: theme.blue,
+              ...StyleConstants.FontStyle[size]
+            }}
             onPress={async () =>
               !disableDetails && !shouldBeTag
                 ? await openLink(href)
@@ -118,22 +113,15 @@ const renderNode = ({
                   })
             }
           >
-            <Text
-              style={{
-                color: theme.blue,
-                ...StyleConstants.FontStyle[size]
-              }}
-            >
-              {!shouldBeTag ? (
-                <Icon
-                  color={theme.blue}
-                  name='ExternalLink'
-                  size={StyleConstants.Font.Size[size]}
-                />
-              ) : null}
-              {content || (showFullLink ? href : domain[1])}
-            </Text>
-          </Pressable>
+            {!shouldBeTag ? (
+              <Icon
+                color={theme.blue}
+                name='ExternalLink'
+                size={StyleConstants.Font.Size[size]}
+              />
+            ) : null}
+            {content || (showFullLink ? href : domain[1])}
+          </Text>
         )
       }
       break

@@ -12,7 +12,13 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
@@ -59,7 +65,10 @@ const ScreenMeSwitchRoot = () => {
   const localActiveIndex = useSelector(getLocalActiveIndex)
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
       <ScrollView keyboardShouldPersistTaps='handled'>
         <View style={styles.firstSection}>
           <Text style={[styles.header, { color: theme.primary }]}>

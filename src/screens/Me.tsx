@@ -1,4 +1,4 @@
-import { HeaderLeft } from '@components/Header'
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import ScreenMeBookmarks from '@screens/Me/Bookmarks'
 import ScreenMeConversations from '@screens/Me/Cconversations'
 import ScreenMeFavourites from '@screens/Me/Favourites'
@@ -11,6 +11,7 @@ import UpdateRemote from '@screens/Me/UpdateRemote'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 
 const Stack = createNativeStackNavigator<Nav.MeStackParamList>()
@@ -19,7 +20,9 @@ const ScreenMe: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <Stack.Navigator screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
+    >
       <Stack.Screen
         name='Screen-Me-Root'
         component={ScreenMeRoot}
@@ -34,6 +37,11 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeBookmarks}
         options={({ navigation }: any) => ({
           headerTitle: t('meBookmarks:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meBookmarks:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -42,6 +50,11 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeConversations}
         options={({ navigation }: any) => ({
           headerTitle: t('meConversations:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meConversations:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -50,6 +63,11 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeFavourites}
         options={({ navigation }: any) => ({
           headerTitle: t('meFavourites:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meFavourites:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -58,6 +76,9 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeLists}
         options={({ navigation }: any) => ({
           headerTitle: t('meLists:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => <HeaderCenter content={t('meLists:heading')} />
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -66,6 +87,11 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeListsList}
         options={({ route, navigation }: any) => ({
           headerTitle: t('meListsList:heading', { list: route.params.title }),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meListsList:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -74,6 +100,11 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeSettings}
         options={({ navigation }: any) => ({
           headerTitle: t('meSettings:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meSettings:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -82,6 +113,11 @@ const ScreenMe: React.FC = () => {
         component={UpdateRemote}
         options={({ navigation }: any) => ({
           headerTitle: t('meSettingsUpdateRemote:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meSettingsUpdateRemote:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
@@ -90,7 +126,13 @@ const ScreenMe: React.FC = () => {
         component={ScreenMeSwitch}
         options={({ navigation }: any) => ({
           stackPresentation: 'fullScreenModal',
+          headerShown: false,
           headerTitle: t('meSettings:heading'),
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => (
+              <HeaderCenter content={t('meSettings:heading')} />
+            )
+          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />

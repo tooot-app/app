@@ -7,6 +7,7 @@ import {
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
 import {
+  getFocusedRouteNameFromRoute,
   NavigationContainer,
   NavigationContainerRef
 } from '@react-navigation/native'
@@ -31,7 +32,7 @@ import React, {
   useMemo,
   useRef
 } from 'react'
-import { StatusBar } from 'react-native'
+import { Platform, StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -172,6 +173,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       }) => {
         let name: any
         let updateColor: string = color
+        console.log()
         switch (route.name) {
           case 'Screen-Local':
             name = 'Home'
@@ -195,7 +197,16 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             break
         }
         return <Icon name={name} size={size} color={updateColor} />
-      }
+      },
+      ...(Platform.OS === 'android' && {
+        tabBarVisible:
+          getFocusedRouteNameFromRoute(route) !== 'Screen-Shared-Compose' &&
+          getFocusedRouteNameFromRoute(route) !==
+            'Screen-Shared-Announcements' &&
+          getFocusedRouteNameFromRoute(route) !==
+            'Screen-Shared-ImagesViewer' &&
+          getFocusedRouteNameFromRoute(route) !== 'Screen-Me-Switch'
+      })
     }),
     []
   )
@@ -204,7 +215,8 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       activeTintColor: theme.primary,
       inactiveTintColor:
         localActiveIndex !== null ? theme.secondary : theme.disabled,
-      showLabel: false
+      showLabel: false,
+      ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })
     }),
     [theme, localActiveIndex]
   )
@@ -292,7 +304,9 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>
 
-        {/* <Toast ref={Toast.setRef} config={toastConfig} /> */}
+        {Platform.OS === 'ios' ? (
+          <Toast ref={Toast.setRef} config={toastConfig} />
+        ) : null}
       </NavigationContainer>
     </>
   )

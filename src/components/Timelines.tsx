@@ -1,12 +1,12 @@
-import { HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import { getLocalActiveIndex, getRemoteUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useState } from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Dimensions, Platform, StyleSheet, View } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
 import { useSelector } from 'react-redux'
@@ -68,6 +68,40 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     [segment, localActiveIndex]
   )
 
+  const screenOptions = useMemo(() => {
+    if (localActiveIndex === null) {
+      if (name === 'Public') {
+        return {
+          headerTitle: publicDomain,
+          ...(Platform.OS === 'android' && {
+            headerCenter: () => <HeaderCenter content={publicDomain} />
+          })
+        }
+      }
+    } else {
+      return {
+        headerCenter: () => (
+          <View style={styles.segmentsContainer}>
+            <SegmentedControl
+              appearance={mode}
+              values={[
+                content[0].title,
+                content[1].remote ? remoteUrl : content[1].title
+              ]}
+              selectedIndex={segment}
+              onChange={({ nativeEvent }) =>
+                setSegment(nativeEvent.selectedSegmentIndex)
+              }
+            />
+          </View>
+        ),
+        headerRight: () => (
+          <HeaderRight content='Search' onPress={onPressSearch} />
+        )
+      }
+    }
+  }, [localActiveIndex, mode, segment])
+
   return (
     <Stack.Navigator
       screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
@@ -76,29 +110,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         // @ts-ignore
         name={`Screen-${name}-Root`}
         component={screenComponent}
-        options={{
-          headerTitle: name === 'Public' ? publicDomain : '',
-          ...(localActiveIndex !== null && {
-            headerCenter: () => (
-              <View style={styles.segmentsContainer}>
-                <SegmentedControl
-                  appearance={mode}
-                  values={[
-                    content[0].title,
-                    content[1].remote ? remoteUrl : content[1].title
-                  ]}
-                  selectedIndex={segment}
-                  onChange={({ nativeEvent }) =>
-                    setSegment(nativeEvent.selectedSegmentIndex)
-                  }
-                />
-              </View>
-            ),
-            headerRight: () => (
-              <HeaderRight content='Search' onPress={onPressSearch} />
-            )
-          })
-        }}
+        options={screenOptions}
       />
 
       {sharedScreens(Stack)}

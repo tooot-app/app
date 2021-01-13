@@ -122,30 +122,26 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
               styleTransform,
               {
                 position: 'absolute',
-                top: -1000 + imageDimensionis.height / 2,
-                left: -1000 + imageDimensionis.width / 2
+                top: -500 + imageDimensionis.height / 2,
+                left: -500 + imageDimensionis.width / 2
               }
             ]}
           >
-            <Svg width='2000' height='2000' viewBox='0 0 2000 2000'>
-              <G>
-                <G id='Mask'>
+            <Svg width='1000' height='1000' viewBox='0 0 1000 1000'>
+              <G stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+                <G>
                   <Path
-                    d={
-                      'M2000,0 L2000,2000 L0,2000 L0,0 L2000,0 Z M1000,967 C981.774603,967 967,981.774603 967,1000 C967,1018.2254 981.774603,1033 1000,1033 C1018.2254,1033 1033,1018.2254 1033,1000 C1033,981.774603 1018.2254,967 1000,967 Z'
-                    }
+                    d='M1000,0 L1000,1000 L0,1000 L0,0 L1000,0 Z M500,475 C486.192881,475 475,486.192881 475,500 C475,513.807119 486.192881,525 500,525 C513.807119,525 525,513.807119 525,500 C525,486.192881 513.807119,475 500,475 Z'
                     fill={theme.backgroundOverlay}
                   />
-                  <G transform='translate(967, 967)'>
-                    <Circle
-                      stroke={theme.primaryOverlay}
-                      strokeWidth='2'
-                      cx='33'
-                      cy='33'
-                      r='33'
-                    />
-                    <Circle fill={theme.primaryOverlay} cx='33' cy='33' r='2' />
-                  </G>
+                  <Circle
+                    stroke={theme.primaryOverlay}
+                    stroke-width='2'
+                    cx='500'
+                    cy='500'
+                    r='24'
+                  />
+                  <Circle fill={theme.primaryOverlay} cx='500' cy='500' r='2' />
                 </G>
               </G>
             </Svg>

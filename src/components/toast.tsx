@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import * as Sentry from 'sentry-expo'
@@ -33,18 +33,23 @@ const toast = ({
   onShow,
   onHide
 }: Params) => {
-  Toast.show({
-    type,
-    position,
-    text1: message,
-    text2: description,
-    visibilityTime: 1500,
-    autoHide,
-    topOffset: 0,
-    bottomOffset: 0,
-    onShow: onShow,
-    onHide: onHide
-  })
+  switch (Platform.OS) {
+    case 'ios':
+      return Toast.show({
+        type,
+        position,
+        text1: message,
+        text2: description,
+        visibilityTime: 1500,
+        autoHide,
+        topOffset: 0,
+        bottomOffset: 0,
+        onShow: onShow,
+        onHide: onHide
+      })
+    case 'android':
+      return ToastAndroid.show(message, ToastAndroid.SHORT)
+  }
 }
 
 const ToastBase = ({ config }: { config: Config }) => {

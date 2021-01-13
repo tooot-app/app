@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { Alert, KeyboardAvoidingView } from 'react-native'
+import { Alert, KeyboardAvoidingView, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ComposeEditAttachmentRoot from './EditAttachment/Root'
@@ -144,7 +144,10 @@ const ComposeEditAttachment: React.FC<Props> = ({
   )
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
       <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
         <Stack.Navigator screenOptions={{ headerTopInsetEnabled: false }}>
           <Stack.Screen

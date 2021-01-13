@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import relativeTime from '@components/relativeTime'
+import RelativeTime from '@components/RelativeTime'
 import { ParseEmojis } from '@root/components/Parse'
 import { toast } from '@root/components/toast'
 import {
@@ -13,7 +13,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import Moment from 'react-moment'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
@@ -127,14 +126,7 @@ const TimelinePoll: React.FC<Props> = ({
         <Text style={[styles.expiration, { color: theme.secondary }]}>
           <Trans
             i18nKey='timeline:shared.poll.meta.expiration.until'
-            components={[
-              <Moment
-                date={poll.expires_at}
-                locale={i18n.language}
-                element={Text}
-                fromNow
-              />
-            ]}
+            components={[<RelativeTime date={poll.expires_at} />]}
           />
         </Text>
       )
