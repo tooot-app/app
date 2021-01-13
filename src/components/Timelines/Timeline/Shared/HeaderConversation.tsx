@@ -65,7 +65,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
       <Icon
         name='Trash'
         color={theme.secondary}
-        size={StyleConstants.Font.Size.M + 2}
+        size={StyleConstants.Font.Size.L}
       />
     ),
     []

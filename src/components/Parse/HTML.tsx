@@ -45,12 +45,9 @@ const renderNode = ({
             ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
             : true
           return (
-            <Text
+            <Pressable
               key={index}
-              style={{
-                color: theme.blue,
-                ...StyleConstants.FontStyle[size]
-              }}
+              hitSlop={StyleConstants.Font.Size[size] / 2}
               onPress={() => {
                 !disableDetails &&
                   differentTag &&
@@ -59,9 +56,16 @@ const renderNode = ({
                   })
               }}
             >
-              {node.children[0].data}
-              {node.children[1]?.children[0].data}
-            </Text>
+              <Text
+                style={{
+                  color: theme.blue,
+                  ...StyleConstants.FontStyle[size]
+                }}
+              >
+                {node.children[0].data}
+                {node.children[1]?.children[0].data}
+              </Text>
+            </Pressable>
           )
         } else if (classes.includes('mention') && mentions) {
           const accountIndex = mentions.findIndex(
@@ -71,12 +75,9 @@ const renderNode = ({
             ? routeParams.account.id !== mentions[accountIndex].id
             : true
           return (
-            <Text
+            <Pressable
               key={index}
-              style={{
-                color: accountIndex !== -1 ? theme.blue : undefined,
-                ...StyleConstants.FontStyle[size]
-              }}
+              hitSlop={StyleConstants.Font.Size[size] / 2}
               onPress={() => {
                 accountIndex !== -1 &&
                   !disableDetails &&
@@ -86,9 +87,16 @@ const renderNode = ({
                   })
               }}
             >
-              {node.children[0].data}
-              {node.children[1]?.children[0].data}
-            </Text>
+              <Text
+                style={{
+                  color: accountIndex !== -1 ? theme.blue : undefined,
+                  ...StyleConstants.FontStyle[size]
+                }}
+              >
+                {node.children[0].data}
+                {node.children[1]?.children[0].data}
+              </Text>
+            </Pressable>
           )
         }
       } else {
@@ -99,12 +107,9 @@ const renderNode = ({
         const shouldBeTag =
           tags && tags.filter(tag => `#${tag.name}` === content).length > 0
         return (
-          <Text
+          <Pressable
             key={index}
-            style={{
-              color: theme.blue,
-              ...StyleConstants.FontStyle[size]
-            }}
+            hitSlop={StyleConstants.Font.Size[size] / 2}
             onPress={async () =>
               !disableDetails && !shouldBeTag
                 ? await openLink(href)
@@ -113,15 +118,22 @@ const renderNode = ({
                   })
             }
           >
-            {!shouldBeTag ? (
-              <Icon
-                color={theme.blue}
-                name='ExternalLink'
-                size={StyleConstants.Font.Size[size]}
-              />
-            ) : null}
-            {content || (showFullLink ? href : domain[1])}
-          </Text>
+            <Text
+              style={{
+                color: theme.blue,
+                ...StyleConstants.FontStyle[size]
+              }}
+            >
+              {!shouldBeTag ? (
+                <Icon
+                  color={theme.blue}
+                  name='ExternalLink'
+                  size={StyleConstants.Font.Size[size]}
+                />
+              ) : null}
+              {content || (showFullLink ? href : domain[1])}
+            </Text>
+          </Pressable>
         )
       }
       break
@@ -206,7 +218,7 @@ const ParseHTML: React.FC<Props> = ({
       }, [])
 
       return (
-        <View>
+        <View style={{ overflow: 'hidden' }}>
           <Text
             children={children}
             onTextLayout={onTextLayout}
@@ -222,14 +234,21 @@ const ParseHTML: React.FC<Props> = ({
                 layoutAnimation()
                 setExpanded(!expanded)
               }}
-              style={{ marginTop: expanded ? 0 : -lineHeight * 2.25 }}
+              style={{
+                marginTop: expanded
+                  ? 0
+                  : -lineHeight * (numberOfLines === 0 ? 1 : 2)
+              }}
             >
               <LinearGradient
                 colors={[
                   theme.backgroundGradientStart,
                   theme.backgroundGradientEnd
                 ]}
-                locations={[0, lineHeight / (StyleConstants.Font.Size.S * 4)]}
+                locations={[
+                  0,
+                  lineHeight / (StyleConstants.Font.Size[size] * 5)
+                ]}
                 style={{
                   paddingTop: StyleConstants.Font.Size.S * 2,
                   paddingBottom: StyleConstants.Font.Size.S

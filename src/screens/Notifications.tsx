@@ -16,7 +16,8 @@ const ScreenNotifications: React.FC = () => {
     <Stack.Navigator
       screenOptions={{
         headerTitle: t('notifications:heading'),
-        headerHideShadow: true
+        headerHideShadow: true,
+        headerTopInsetEnabled: false
       }}
     >
       <Stack.Screen name='Screen-Notifications-Root'>

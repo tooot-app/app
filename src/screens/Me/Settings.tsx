@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import haptics from '@root/components/haptics'
 import { persistor } from '@root/store'
@@ -23,11 +24,13 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import prettyBytes from 'pretty-bytes'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { CacheManager } from 'react-native-expo-image-cache'
+import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 
 const DevDebug: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet()
   const localActiveIndex = useSelector(getLocalActiveIndex)
   const localInstances = useSelector(getLocalInstances)
 
@@ -43,7 +46,7 @@ const DevDebug: React.FC = () => {
         content={localInstances.length.toString()}
         iconBack='ChevronRight'
         onPress={() =>
-          ActionSheetIOS.showActionSheetWithOptions(
+          showActionSheetWithOptions(
             {
               options: localInstances
                 .map(instance => {
@@ -71,6 +74,7 @@ const DevDebug: React.FC = () => {
 }
 
 const ScreenMeSettings: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet()
   const navigation = useNavigation()
   const { t, i18n } = useTranslation('meSettings')
   const { setTheme, theme } = useTheme()
@@ -87,15 +91,16 @@ const ScreenMeSettings: React.FC = () => {
   }, [])
 
   return (
-    <>
+    <ScrollView>
       <MenuContainer>
         <MenuRow
           title={t('content.language.heading')}
           content={t(`content.language.options.${settingsLanguage}`)}
           iconBack='ChevronRight'
           onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
+            showActionSheetWithOptions(
               {
+                title: t('content.language.heading'),
                 options: [
                   t('content.language.options.zh'),
                   t('content.language.options.en'),
@@ -107,13 +112,13 @@ const ScreenMeSettings: React.FC = () => {
                 switch (buttonIndex) {
                   case 0:
                     haptics('Success')
-                    dispatch(changeLanguage('zh'))
-                    i18n.changeLanguage('zh')
+                    dispatch(changeLanguage('zh-CN'))
+                    i18n.changeLanguage('zh-CN')
                     break
                   case 1:
                     haptics('Success')
-                    dispatch(changeLanguage('en'))
-                    i18n.changeLanguage('en')
+                    dispatch(changeLanguage('en-US'))
+                    i18n.changeLanguage('en-US')
                     break
                 }
               }
@@ -125,8 +130,9 @@ const ScreenMeSettings: React.FC = () => {
           content={t(`content.theme.options.${settingsTheme}`)}
           iconBack='ChevronRight'
           onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
+            showActionSheetWithOptions(
               {
+                title: t('content.theme.heading'),
                 options: [
                   t('content.theme.options.auto'),
                   t('content.theme.options.light'),
@@ -161,8 +167,9 @@ const ScreenMeSettings: React.FC = () => {
           content={t(`content.browser.options.${settingsBrowser}`)}
           iconBack='ChevronRight'
           onPress={() =>
-            ActionSheetIOS.showActionSheetWithOptions(
+            showActionSheetWithOptions(
               {
+                title: t('content.browser.heading'),
                 options: [
                   t('content.browser.options.internal'),
                   t('content.browser.options.external'),
@@ -226,7 +233,7 @@ const ScreenMeSettings: React.FC = () => {
       </MenuContainer>
 
       {__DEV__ ? <DevDebug /> : null}
-    </>
+    </ScrollView>
   )
 }
 

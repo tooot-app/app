@@ -9,6 +9,7 @@
     "test": "jest --watchAll"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.8.0",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "^5.9.7",
@@ -43,10 +44,12 @@
     "gl-react-expo": "^4.0.1",
     "i18next": "^19.8.4",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "pretty-bytes": "^5.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-i18next": "^11.8.5",
+    "react-moment": "^1.1.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz",
     "react-native-animated-spinkit": "^1.4.2",
     "react-native-expo-image-cache": "^4.1.0",

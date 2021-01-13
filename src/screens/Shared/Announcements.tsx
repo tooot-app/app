@@ -1,8 +1,6 @@
-import client from '@api/client'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
-import relativeTime from '@components/relativeTime'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import {
   useAnnouncementMutation,
@@ -12,6 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Moment from 'react-moment'
 import {
   Dimensions,
   Image,
@@ -24,33 +23,6 @@ import { Chase } from 'react-native-animated-spinkit'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { SharedAnnouncementsProp } from './sharedScreens'
-
-const fireMutation = async ({
-  announcementId,
-  type,
-  name,
-  me
-}: {
-  announcementId: Mastodon.Announcement['id']
-  type: 'reaction' | 'dismiss'
-  name?: Mastodon.AnnouncementReaction['name']
-  me?: boolean
-}) => {
-  switch (type) {
-    case 'reaction':
-      return client<{}>({
-        method: me ? 'delete' : 'put',
-        instance: 'local',
-        url: `announcements/${announcementId}/reactions/${name}`
-      })
-    case 'dismiss':
-      return client<{}>({
-        method: 'post',
-        instance: 'local',
-        url: `announcements/${announcementId}/dismiss`
-      })
-  }
-}
 
 const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
   route: {
@@ -108,7 +80,13 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
           ]}
         >
           <Text style={[styles.published, { color: theme.secondary }]}>
-            发布于 {relativeTime(item.published_at, i18n.language)}
+            发布于{' '}
+            <Moment
+              date={item.published_at}
+              locale={i18n.language}
+              element={Text}
+              fromNow
+            />
           </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
             <ParseHTML

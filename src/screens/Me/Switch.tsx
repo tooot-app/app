@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator()
 
 const ScreenMeSwitch: React.FC = ({ navigation }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
+    <Stack.Navigator screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}>
       <Stack.Screen
         name='Screen-Me-Switch-Root'
         component={ScreenMeSwitchRoot}

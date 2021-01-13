@@ -1,13 +1,15 @@
 import Icon from '@components/Icon'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
-import { ActionSheetIOS, Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import addAttachment from './/addAttachment'
 import ComposeContext from './utils/createContext'
 
 const ComposeActions: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
 
@@ -24,7 +26,10 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) return
 
     if (composeState.attachments.uploads.length < 4) {
-      return await addAttachment({ composeDispatch })
+      return await addAttachment({
+        composeDispatch,
+        showActionSheetWithOptions
+      })
     }
   }, [composeState.poll.active, composeState.attachments.uploads])
 
@@ -64,7 +69,7 @@ const ComposeActions: React.FC = () => {
   }, [composeState.visibility])
   const visibilityOnPress = useCallback(() => {
     if (!composeState.visibilityLock) {
-      ActionSheetIOS.showActionSheetWithOptions(
+      showActionSheetWithOptions(
         {
           options: ['公开', '不公开', '仅关注着', '私信', '取消'],
           cancelButtonIndex: 4

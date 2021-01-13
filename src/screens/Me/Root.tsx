@@ -20,17 +20,13 @@ import { StackScreenProps } from '@react-navigation/stack'
 const ScreenMeRoot: React.FC<StackScreenProps<
   Nav.MeStackParamList,
   'Screen-Me-Root'
->> = ({
-  route: {
-    params: { navigateAway }
-  },
-  navigation
-}) => {
+>> = ({ route: { params }, navigation }) => {
   useEffect(() => {
-    if (navigateAway) {
-      navigation.navigate(navigateAway)
+    if (params && params.navigateAway) {
+      console.log('oops')
+      navigation.navigate(params.navigateAway)
     }
-  }, [navigateAway])
+  }, [params])
   const localActiveIndex = useSelector(getLocalActiveIndex)
 
   const scrollRef = useRef<Animated.ScrollView>(null)

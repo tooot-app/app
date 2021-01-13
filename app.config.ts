@@ -24,6 +24,10 @@ export default (): ExpoConfig => ({
     },
     googleServicesFile: './configs/GoogleService-Info.plist'
   },
+  android: {
+    package: 'com.xmflsct.app.mastodon',
+    googleServicesFile: './configs/google-services.json'
+  },
   // locales: {
   //   zh: {
   //     CFBundleDisplayName: '我的嘟嘟'
@@ -57,8 +61,5 @@ export default (): ExpoConfig => ({
         measurementId: 'G-3J0FS8WV5J'
       }
     }
-  },
-  experiments: {
-    turboModules: true
   }
 })

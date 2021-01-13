@@ -1,4 +1,11 @@
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import Index from '@root/Index'
+import dev from '@root/startup/dev'
+import sentry from '@root/startup/sentry'
+import log from '@root/startup/log'
+import audio from '@root/startup/audio'
+import onlineStatus from '@root/startup/onlineStatus'
+import netInfo from '@root/startup/netInfo'
 import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as SplashScreen from 'expo-splash-screen'
@@ -7,17 +14,22 @@ import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import dev from '@root/startup/dev'
-import sentry from '@root/startup/sentry'
-import log from '@root/startup/log'
-import audio from '@root/startup/audio'
-import onlineStatus from '@root/startup/onlineStatus'
-import netInfo from '@root/startup/netInfo'
+import { LogBox, Platform } from 'react-native'
+import Moment from 'react-moment'
+
+import moment from 'moment'
+import 'moment/min/locales'
+
+if (Platform.OS === 'android') {
+  LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+}
 
 dev()
 sentry()
 audio()
 onlineStatus()
+Moment.globalMoment = moment
+Moment.startPooledTimer(1000)
 
 log('log', 'react-query', 'initializing')
 const queryClient = new QueryClient()
@@ -68,9 +80,11 @@ const App: React.FC = () => {
         log('log', 'App', 'loading actual app :)')
         require('@root/i18n/i18n')
         return (
-          <ThemeManager>
-            <Index localCorrupt={localCorrupt} />
-          </ThemeManager>
+          <ActionSheetProvider>
+            <ThemeManager>
+              <Index localCorrupt={localCorrupt} />
+            </ThemeManager>
+          </ActionSheetProvider>
         )
       } else {
         return null

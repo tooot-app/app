@@ -36,7 +36,7 @@ const HeaderActions = React.memo(
         <Icon
           name='MoreHorizontal'
           color={theme.secondary}
-          size={StyleConstants.Font.Size.M + 2}
+          size={StyleConstants.Font.Size.L}
         />
       ),
       []

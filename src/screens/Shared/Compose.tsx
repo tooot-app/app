@@ -214,7 +214,7 @@ const Compose: React.FC<SharedComposeProp> = ({
         edges={hasKeyboard ? ['left', 'right'] : ['left', 'right', 'bottom']}
       >
         <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ headerTopInsetEnabled: false }}>
             <Stack.Screen
               name='Screen-Shared-Compose-Root'
               component={ComposeRoot}

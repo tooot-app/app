@@ -4,14 +4,16 @@ import * as Crypto from 'expo-crypto'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { Dispatch } from 'react'
-import { ActionSheetIOS, Alert, Linking } from 'react-native'
+import { Alert, Linking } from 'react-native'
 import { ComposeAction } from './utils/types'
+import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
+  showActionSheetWithOptions: (options: ActionSheetOptions, callback: (i: number) => void) => void
 }
 
-const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
+const addAttachment = async ({ composeDispatch, showActionSheetWithOptions }: Props): Promise<any> => {
   const uploadAttachment = async (result: ImageInfo) => {
     const hash = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
@@ -106,7 +108,7 @@ const addAttachment = async ({ composeDispatch }: Props): Promise<any> => {
       })
   }
 
-  ActionSheetIOS.showActionSheetWithOptions(
+  showActionSheetWithOptions(
     {
       options: ['从相册选取', '现照', '取消'],
       cancelButtonIndex: 2

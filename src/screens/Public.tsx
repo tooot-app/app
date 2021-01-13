@@ -1,5 +1,4 @@
 import Timelines from '@components/Timelines'
-import { getRemoteUrl } from '@utils/slices/instancesSlice'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

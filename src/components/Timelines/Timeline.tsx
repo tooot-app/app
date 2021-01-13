@@ -9,12 +9,13 @@ import { useScrollToTop } from '@react-navigation/native'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { StyleSheet } from 'react-native'
+import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
 import CustomRefreshControl from '@components/CustomRefreshControl'
+import { InfiniteData, useQueryClient } from 'react-query'
 
 export interface Props {
   page: App.Pages
@@ -156,14 +157,35 @@ const Timeline: React.FC<Props> = ({
     () => <TimelineEnd hasNextPage={!disableInfinity ? hasNextPage : false} />,
     [hasNextPage]
   )
+
+  const queryClient = useQueryClient()
+  const refreshCount = useRef(0)
   const refreshControl = useMemo(
     () => (
-      <CustomRefreshControl
-        queryKey={queryKey}
-        isFetchingPreviousPage={isFetchingNextPage}
-        isFetching={isFetching}
-        fetchPreviousPage={fetchPreviousPage}
-        refetch={refetch}
+      <RefreshControl
+        refreshing={
+          refreshCount.current < 2 ? isFetchingPreviousPage : isFetching
+        }
+        onRefresh={async () => {
+          if (refreshCount.current < 2) {
+            await fetchPreviousPage()
+            refreshCount.current++
+          } else {
+            queryClient.setQueryData<InfiniteData<any> | undefined>(
+              queryKey,
+              data => {
+                if (data) {
+                  return {
+                    pages: data.pages.slice(1),
+                    pageParams: data.pageParams.slice(1)
+                  }
+                }
+              }
+            )
+            await refetch()
+            refreshCount.current = 0
+          }
+        }}
       />
     ),
     [isFetchingPreviousPage, isFetching]
@@ -199,10 +221,10 @@ const Timeline: React.FC<Props> = ({
       {...(queryKey &&
         queryKey[1].page === 'RemotePublic' && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
-      maintainVisibleContentPosition={{
-        minIndexForVisible: 0,
-        autoscrollToTopThreshold: 2
-      }}
+      // maintainVisibleContentPosition={{
+      //   minIndexForVisible: 0,
+      //   autoscrollToTopThreshold: 2
+      // }}
     />
   )
 }

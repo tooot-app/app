@@ -1,8 +1,8 @@
-import relativeTime from '@components/relativeTime'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import Moment from 'react-moment'
 import { StyleSheet, Text } from 'react-native'
 
 export interface Props {
@@ -13,16 +13,10 @@ const HeaderSharedCreated: React.FC<Props> = ({ created_at }) => {
   const { theme } = useTheme()
   const { i18n } = useTranslation()
 
-  const [since, setSince] = useState(relativeTime(created_at, i18n.language))
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSince(relativeTime(created_at, i18n.language))
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [since])
-
   return (
-    <Text style={[styles.created_at, { color: theme.secondary }]}>{since}</Text>
+    <Text style={[styles.created_at, { color: theme.secondary }]}>
+      <Moment date={created_at} locale={i18n.language} element={Text} fromNow />
+    </Text>
   )
 }
 

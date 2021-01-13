@@ -10,8 +10,10 @@ import {
 } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { maxBy } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
+import Moment from 'react-moment'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
@@ -123,16 +125,24 @@ const TimelinePoll: React.FC<Props> = ({
     } else {
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
-          {t('shared.poll.meta.expiration.until', {
-            at: relativeTime(poll.expires_at, i18n.language)
-          })}
+          <Trans
+            i18nKey='timeline:shared.poll.meta.expiration.until'
+            components={[
+              <Moment
+                date={poll.expires_at}
+                locale={i18n.language}
+                element={Text}
+                fromNow
+              />
+            ]}
+          />
         </Text>
       )
     }
   }, [mode, poll.expired, poll.expires_at])
 
   const isSelected = useCallback(
-    (index: number): any =>
+    (index: number): string =>
       allOptions[index]
         ? `Check${poll.multiple ? 'Square' : 'Circle'}`
         : `${poll.multiple ? 'Square' : 'Circle'}`,
@@ -140,6 +150,8 @@ const TimelinePoll: React.FC<Props> = ({
   )
 
   const pollBodyDisallow = useMemo(() => {
+    const maxValue = maxBy(poll.options, option => option.votes_count)
+      ?.votes_count
     return poll.options.map((option, index) => (
       <View key={index} style={styles.optionContainer}>
         <View style={styles.optionContent}>
@@ -152,7 +164,7 @@ const TimelinePoll: React.FC<Props> = ({
             }
             size={StyleConstants.Font.Size.M}
             color={
-              poll.own_votes?.includes(index) ? theme.primary : theme.disabled
+              poll.own_votes?.includes(index) ? theme.blue : theme.disabled
             }
           />
           <Text style={styles.optionText}>
@@ -160,7 +172,11 @@ const TimelinePoll: React.FC<Props> = ({
           </Text>
           <Text style={[styles.optionPercentage, { color: theme.primary }]}>
             {poll.votes_count
-              ? Math.round((option.votes_count / poll.voters_count) * 100)
+              ? Math.round(
+                  (option.votes_count /
+                    (poll.voters_count || poll.votes_count)) *
+                    100
+                )
               : 0}
             %
           </Text>
@@ -171,9 +187,11 @@ const TimelinePoll: React.FC<Props> = ({
             styles.background,
             {
               width: `${Math.round(
-                (option.votes_count / poll.voters_count) * 100
+                (option.votes_count / (poll.voters_count || poll.votes_count)) *
+                  100
               )}%`,
-              backgroundColor: theme.disabled
+              backgroundColor:
+                option.votes_count === maxValue ? theme.blue : theme.disabled
             }
           ]}
         />
@@ -221,14 +239,28 @@ const TimelinePoll: React.FC<Props> = ({
     ))
   }, [mode, allOptions])
 
+  const pollVoteCounts = useMemo(() => {
+    if (poll.voters_count !== null) {
+      return (
+        <Text style={[styles.votes, { color: theme.secondary }]}>
+          {t('shared.poll.meta.count.voters', { count: poll.voters_count })}
+        </Text>
+      )
+    } else if (poll.votes_count !== null) {
+      return (
+        <Text style={[styles.votes, { color: theme.secondary }]}>
+          {t('shared.poll.meta.count.votes', { count: poll.votes_count })}
+        </Text>
+      )
+    }
+  }, [poll.voters_count, poll.votes_count])
+
   return (
     <View style={styles.base}>
       {poll.expired || poll.voted ? pollBodyDisallow : pollBodyAllow}
       <View style={styles.meta}>
         {pollButton}
-        <Text style={[styles.votes, { color: theme.secondary }]}>
-          {t('shared.poll.meta.voted', { count: poll.voters_count })}
-        </Text>
+        {pollVoteCounts}
         {pollExpiration}
       </View>
     </View>

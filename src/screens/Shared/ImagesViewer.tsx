@@ -1,9 +1,14 @@
-import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
-import { ActionSheetIOS, Image, StyleSheet, Text } from 'react-native'
+import {
+  Image,
+  Platform,
+  Share,
+  StyleSheet,
+  Text
+} from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -69,8 +74,18 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
     ),
     []
   )
+
+  const onPress = useCallback(() => {
+    switch (Platform.OS) {
+      case 'ios':
+        return Share.share({ url: imageUrls[currentIndex].url })
+      case 'android':
+        return Share.share({ message: imageUrls[currentIndex].url })
+    }
+  }, [currentIndex])
+
   return (
-    <Stack.Navigator screenOptions={{ headerHideShadow: true }}>
+    <Stack.Navigator screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}>
       <Stack.Screen
         name='Screen-Shared-ImagesViewer-Root'
         component={component}
@@ -85,20 +100,7 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
               {currentIndex + 1} / {imageUrls.length}
             </Text>
           ),
-          headerRight: () => (
-            <HeaderRight
-              content='Share'
-              onPress={() =>
-                ActionSheetIOS.showShareActionSheetWithOptions(
-                  {
-                    url: imageUrls[currentIndex].url
-                  },
-                  () => haptics('Error'),
-                  () => haptics('Success')
-                )
-              }
-            />
-          )
+          headerRight: () => <HeaderRight content='Share' onPress={onPress} />
         }}
       />
     </Stack.Navigator>

@@ -65,7 +65,7 @@ const MenuRow: React.FC<Props> = ({
           {iconFront && (
             <Icon
               name={iconFront}
-              size={StyleConstants.Font.Size.M + 2}
+              size={StyleConstants.Font.Size.L}
               color={theme[iconFrontColor]}
               style={styles.iconFront}
             />
@@ -118,7 +118,7 @@ const MenuRow: React.FC<Props> = ({
               <>
                 <Icon
                   name={iconBack}
-                  size={StyleConstants.Font.Size.M + 2}
+                  size={StyleConstants.Font.Size.L}
                   color={theme[iconBackColor]}
                   style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
                 />
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   core: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: StyleConstants.Spacing.Global.PagePadding,
     paddingRight: StyleConstants.Spacing.Global.PagePadding
   },

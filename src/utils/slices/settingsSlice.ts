@@ -3,7 +3,7 @@ import { RootState } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
 
 export type SettingsState = {
-  language: 'zh' | 'en' | undefined
+  language: 'zh-CN' | 'en-US' | undefined
   theme: 'light' | 'dark' | 'auto'
   browser: 'internal' | 'external'
   analytics: boolean

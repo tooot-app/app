@@ -108,7 +108,6 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       refetchIntervalInBackground: true
     }
   })
-
   const prevNotification = useSelector(getLocalNotification)
   useEffect(() => {
     if (queryNotification.data?.pages) {
@@ -244,7 +243,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   )
   return (
     <>
-      <StatusBar barStyle={barStyle[mode]} />
+      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.background} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
@@ -293,7 +292,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
           <Tab.Screen name='Screen-Me' component={ScreenMe} />
         </Tab.Navigator>
 
-        <Toast ref={Toast.setRef} config={toastConfig} />
+        {/* <Toast ref={Toast.setRef} config={toastConfig} /> */}
       </NavigationContainer>
     </>
   )

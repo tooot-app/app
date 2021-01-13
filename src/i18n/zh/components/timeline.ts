@@ -123,11 +123,14 @@ export default {
           vote: '投票',
           refresh: '刷新'
         },
+        count: {
+          voters: '已投{{count}}人 • ',
+          votes: '{{count}}票 • '
+        },
         expiration: {
           expired: '投票已结束',
-          until: '{{at}}截止'
-        },
-        voted: '已投{{count}}人 • '
+          until: '<0 />截止'
+        }
       }
     }
   }

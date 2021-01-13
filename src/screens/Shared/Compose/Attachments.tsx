@@ -1,6 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -28,6 +29,7 @@ import { ExtendedAttachment } from './utils/types'
 const DEFAULT_HEIGHT = 200
 
 const ComposeAttachments: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { theme } = useTheme()
   const navigation = useNavigation()
@@ -192,7 +194,9 @@ const ComposeAttachments: React.FC = () => {
             backgroundColor: theme.backgroundOverlay
           }
         ]}
-        onPress={async () => await addAttachment({ composeDispatch })}
+        onPress={async () =>
+          await addAttachment({ composeDispatch, showActionSheetWithOptions })
+        }
       >
         <Button
           type='icon'
@@ -200,7 +204,9 @@ const ComposeAttachments: React.FC = () => {
           spacing='M'
           round
           overlay
-          onPress={async () => await addAttachment({ composeDispatch })}
+          onPress={async () =>
+            await addAttachment({ composeDispatch, showActionSheetWithOptions })
+          }
           style={{
             position: 'absolute',
             top:

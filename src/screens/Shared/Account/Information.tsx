@@ -73,18 +73,23 @@ const AccountInformation: React.FC<Props> = ({
 
       <AccountInformationAccount ref={shimmerAccountRef} account={account} />
 
-      {account?.fields && account.fields.length > 0 ? (
-        <AccountInformationFields account={account} />
+      {!ownAccount ? (
+        <>
+          {account?.fields && account.fields.length > 0 ? (
+            <AccountInformationFields account={account} />
+          ) : null}
+          {account?.note &&
+          account.note.length > 0 &&
+          account.note !== '<p></p>' ? (
+            // Empty notes might generate empty p tag
+            <AccountInformationNotes account={account} />
+          ) : null}
+          <AccountInformationCreated
+            ref={shimmerCreatedRef}
+            account={account}
+          />
+        </>
       ) : null}
-
-      {account?.note &&
-      account.note.length > 0 &&
-      account.note !== '<p></p>' ? (
-        // Empty notes might generate empty p tag
-        <AccountInformationNotes account={account} />
-      ) : null}
-
-      <AccountInformationCreated ref={shimmerCreatedRef} account={account} />
 
       <AccountInformationStats ref={shimmerStatsRef} account={account} />
     </View>

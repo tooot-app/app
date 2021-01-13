@@ -1,13 +1,15 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
-import { ActionSheetIOS, StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import ComposeContext from './utils/createContext'
 
 const ComposePoll: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet()
   const {
     composeState: {
       poll: { total, options, multiple, expire }
@@ -111,7 +113,7 @@ const ComposePoll: React.FC = () => {
         title='可选项'
         content={multiple ? '多选' : '单选'}
         onPress={() =>
-          ActionSheetIOS.showActionSheetWithOptions(
+          showActionSheetWithOptions(
             {
               options: ['单选', '多选', '取消'],
               cancelButtonIndex: 2
@@ -130,7 +132,7 @@ const ComposePoll: React.FC = () => {
         title='有效期'
         content={expireMapping[expire]}
         onPress={() =>
-          ActionSheetIOS.showActionSheetWithOptions(
+          showActionSheetWithOptions(
             {
               options: [...Object.values(expireMapping), '取消'],
               cancelButtonIndex: 7

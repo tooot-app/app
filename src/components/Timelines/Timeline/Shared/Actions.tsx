@@ -11,7 +11,14 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Platform,
+  Pressable,
+  Share,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { useQueryClient } from 'react-query'
 
 export interface Props {
@@ -35,12 +42,39 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     onSuccess: (_, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       if (
+        // Un-bookmark from bookmarks page
         (queryKey[1].page === 'Bookmarks' &&
           theParams.payload.property === 'bookmarked') ||
+        // Un-favourite from favourites page
         (queryKey[1].page === 'Favourites' &&
-          theParams.payload.property === 'favourited')
+          theParams.payload.property === 'favourited') ||
+        // Un-reblog from following page
+        (queryKey[1].page === 'Following' &&
+          theParams.payload.property === 'reblogged' &&
+          theParams.payload.currentValue === true)
       ) {
         queryClient.invalidateQueries(queryKey)
+      } else if (theParams.payload.property === 'reblogged') {
+        // When reblogged, update cache of following page
+        const tempQueryKey: QueryKeyTimeline = [
+          'Timeline',
+          { page: 'Following' }
+        ]
+        queryClient.invalidateQueries(tempQueryKey)
+      } else if (theParams.payload.property === 'favourited') {
+        // When favourited, update favourited page
+        const tempQueryKey: QueryKeyTimeline = [
+          'Timeline',
+          { page: 'Favourites' }
+        ]
+        queryClient.invalidateQueries(tempQueryKey)
+      } else if (theParams.payload.property === 'bookmarked') {
+        // When bookmarked, update bookmark page
+        const tempQueryKey: QueryKeyTimeline = [
+          'Timeline',
+          { page: 'Bookmarks' }
+        ]
+        queryClient.invalidateQueries(tempQueryKey)
       }
     },
     onError: (err: any, params, oldData) => {
@@ -115,23 +149,18 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       }),
     [status.bookmarked]
   )
-  const onPressShare = useCallback(
-    () =>
-      ActionSheetIOS.showShareActionSheetWithOptions(
-        {
-          url: status.uri,
-          excludedActivityTypes: [
-            'com.apple.UIKit.activity.Mail',
-            'com.apple.UIKit.activity.Print',
-            'com.apple.UIKit.activity.SaveToCameraRoll',
-            'com.apple.UIKit.activity.OpenInIBooks'
-          ]
-        },
-        () => haptics('Error'),
-        () => haptics('Success')
-      ),
-    []
-  )
+  const onPressShare = useCallback(() => {
+    switch (Platform.OS) {
+      case 'ios':
+        return Share.share({
+          url: status.uri
+        })
+      case 'android':
+        return Share.share({
+          message: status.uri
+        })
+    }
+  }, [])
 
   const childrenReply = useMemo(
     () => (
@@ -139,7 +168,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         <Icon
           name='MessageCircle'
           color={iconColor}
-          size={StyleConstants.Font.Size.M + 2}
+          size={StyleConstants.Font.Size.L}
         />
         {status.replies_count > 0 && (
           <Text
@@ -165,7 +194,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
             ? theme.disabled
             : iconColorAction(status.reblogged)
         }
-        size={StyleConstants.Font.Size.M + 2}
+        size={StyleConstants.Font.Size.L}
       />
     ),
     [status.reblogged]
@@ -175,7 +204,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       <Icon
         name='Heart'
         color={iconColorAction(status.favourited)}
-        size={StyleConstants.Font.Size.M + 2}
+        size={StyleConstants.Font.Size.L}
       />
     ),
     [status.favourited]
@@ -185,18 +214,14 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       <Icon
         name='Bookmark'
         color={iconColorAction(status.bookmarked)}
-        size={StyleConstants.Font.Size.M + 2}
+        size={StyleConstants.Font.Size.L}
       />
     ),
     [status.bookmarked]
   )
   const childrenShare = useMemo(
     () => (
-      <Icon
-        name='Share2'
-        color={iconColor}
-        size={StyleConstants.Font.Size.M + 2}
-      />
+      <Icon name='Share2' color={iconColor} size={StyleConstants.Font.Size.L} />
     ),
     []
   )
@@ -252,6 +277,7 @@ const styles = StyleSheet.create({
     width: '20%',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: StyleConstants.Spacing.S
   }
 })

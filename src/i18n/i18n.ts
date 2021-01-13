@@ -13,29 +13,24 @@ import { store } from '@root/store'
 if (!getSettingsLanguage(store.getState())) {
   const deviceLocal = Localization.locale
   if (deviceLocal.startsWith('zh')) {
-    store.dispatch(changeLanguage('zh'))
+    store.dispatch(changeLanguage('zh-CN'))
   } else {
-    store.dispatch(changeLanguage('en'))
+    store.dispatch(changeLanguage('en-US'))
   }
 }
-
 i18next.use(initReactI18next).init({
-  lng: getSettingsLanguage(store.getState()),
-  fallbackLng: 'en',
-  supportedLngs: ['zh', 'en'],
-  nonExplicitSupportedLngs: true,
+  lng: 'zh-CN',
+  fallbackLng: 'en-US',
+  supportedLngs: ['zh-CN', 'en-US'],
 
   ns: ['common'],
   defaultNS: 'common',
 
-  resources: {
-    zh: zh,
-    en: en
-  },
+  resources: { 'zh-CN': zh, 'en-US': en },
 
   saveMissing: true,
   missingKeyHandler: (lng, ns, key, fallbackValue) => {
-    console.warn('i18n missing: ' + ns + ' : ' + key)
+    console.log('i18n missing: ' + lng + ' - ' + ns + ' : ' + key)
   },
 
   // react options

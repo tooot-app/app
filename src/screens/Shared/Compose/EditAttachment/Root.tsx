@@ -65,7 +65,10 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
           为附件添加文字说明
         </Text>
         <TextInput
-          style={[styles.altTextInput, { borderColor: theme.border }]}
+          style={[
+            styles.altTextInput,
+            { borderColor: theme.border, color: theme.primary }
+          ]}
           autoCapitalize='none'
           autoCorrect={false}
           maxLength={1500}
