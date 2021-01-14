@@ -1,10 +1,11 @@
 import Timeline from '@components/Timelines/Timeline'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { TabView } from 'react-native-tab-view'
+import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import AccountContext from './utils/createContext'
 
 export interface Props {
@@ -32,10 +33,13 @@ const AccountToots: React.FC<Props> = ({ id }) => {
     return <Timeline page={route.key} account={id} disableRefresh />
   }
 
+  const renderPager = useCallback(props => <ViewPagerAdapter {...props} />, [])
+
   return (
     <TabView
       lazy
       swipeEnabled
+      renderPager={renderPager}
       renderScene={renderScene}
       renderTabBar={() => null}
       initialLayout={{ width: Dimensions.get('window').width }}

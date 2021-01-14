@@ -1,7 +1,8 @@
-import { createRef } from "react"
-import { ComposeState } from "./types"
+import { createRef } from 'react'
+import { ComposeState } from './types'
 
 const composeInitialState: ComposeState = {
+  posting: false,
   spoiler: {
     active: false,
     count: 0,

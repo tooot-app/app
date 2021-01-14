@@ -1,7 +1,6 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import haptics from '@root/components/haptics'
 import { store } from '@root/store'
-import layoutAnimation from '@root/utils/styles/layoutAnimation'
 import formatText from '@screens/Shared/Compose/formatText'
 import ComposeRoot from '@screens/Shared/Compose/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
@@ -58,11 +57,8 @@ const Compose: React.FC<SharedComposeProp> = ({
   const localAccount = getLocalAccount(store.getState())
   const [composeState, composeDispatch] = useReducer(
     composeReducer,
-    params?.type && params?.incomingStatus
-      ? composeParseState({
-          type: params.type,
-          incomingStatus: params.incomingStatus
-        })
+    params
+      ? composeParseState(params)
       : {
           ...composeInitialState,
           visibility:
@@ -72,7 +68,6 @@ const Compose: React.FC<SharedComposeProp> = ({
               : 'public'
         }
   )
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     switch (params?.type) {
@@ -163,8 +158,8 @@ const Compose: React.FC<SharedComposeProp> = ({
         type='text'
         content={params?.type ? postButtonText[params.type] : '发嘟嘟'}
         onPress={() => {
-          layoutAnimation()
-          setIsSubmitting(true)
+          composeDispatch({ type: 'posting', payload: true })
+
           composePost(params, composeState)
             .then(() => {
               haptics('Success')
@@ -173,27 +168,15 @@ const Compose: React.FC<SharedComposeProp> = ({
                 { page: 'Following' }
               ]
               queryClient.invalidateQueries(queryKey)
-              if (
-                params?.type &&
-                (params.type === 'reply' || params.type === 'conversation')
-              ) {
-                queryClient.invalidateQueries(
-                  [
-                    'Toot',
-                    {
-                      toot: params.incomingStatus.reblog
-                        ? params.incomingStatus.reblog.id
-                        : params.incomingStatus.id
-                    }
-                  ],
-                  { exact: true, active: true }
-                )
+
+              if (params?.queryKey && params.queryKey[1].page === 'Toot') {
+                queryClient.invalidateQueries(params.queryKey)
               }
               navigation.goBack()
             })
             .catch(() => {
               haptics('Error')
-              setIsSubmitting(false)
+              composeDispatch({ type: 'posting', payload: false })
               Alert.alert('发布失败', '', [
                 {
                   text: '返回重试'
@@ -201,11 +184,11 @@ const Compose: React.FC<SharedComposeProp> = ({
               ])
             })
         }}
-        loading={isSubmitting}
+        loading={composeState.posting}
         disabled={composeState.text.raw.length < 1 || totalTextCount > 500}
       />
     ),
-    [isSubmitting, totalTextCount, composeState]
+    [totalTextCount, composeState]
   )
 
   return (

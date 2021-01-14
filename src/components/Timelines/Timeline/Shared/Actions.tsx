@@ -103,7 +103,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     () =>
       navigation.navigate('Screen-Shared-Compose', {
         type: 'reply',
-        incomingStatus: status
+        incomingStatus: status,
+        queryKey
       }),
     []
   )

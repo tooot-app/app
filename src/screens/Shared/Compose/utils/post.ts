@@ -1,10 +1,10 @@
 import client from '@root/api/client'
-import { Props } from '@screens/Shared/Compose'
 import { ComposeState } from '@screens/Shared/Compose/utils/types'
+import { SharedComposeProp } from '@screens/Shared/sharedScreens'
 import * as Crypto from 'expo-crypto'
 
 const composePost = async (
-  params: Props['route']['params'],
+  params: SharedComposeProp['route']['params'],
   composeState: ComposeState
 ) => {
   const formData = new FormData()
@@ -43,7 +43,7 @@ const composePost = async (
   return client<Mastodon.Status>({
     method: 'post',
     instance: 'local',
-    url: 'statuses',
+    url: 'statusess',
     headers: {
       'Idempotency-Key': await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,

@@ -1,7 +1,8 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 
@@ -23,6 +24,15 @@ const HeaderRight: React.FC<Props> = ({
   onPress
 }) => {
   const { theme } = useTheme()
+
+  const mounted = useRef(false)
+  useEffect(() => {
+    if (mounted.current) {
+      layoutAnimation()
+    } else {
+      mounted.current = true
+    }
+  }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (

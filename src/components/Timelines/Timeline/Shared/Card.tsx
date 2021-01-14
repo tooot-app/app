@@ -10,6 +10,32 @@ export interface Props {
   card: Mastodon.Card
 }
 
+type CancelPromise = ((reason?: Error) => void) | undefined
+type ImageSize = { width: number; height: number }
+interface ImageSizeOperation {
+  start: () => Promise<ImageSize>
+  cancel: CancelPromise
+}
+const getImageSize = (uri: string): ImageSizeOperation => {
+  let cancel: CancelPromise
+  const start = (): Promise<ImageSize> =>
+    new Promise<{ width: number; height: number }>((resolve, reject) => {
+      cancel = reject
+      Image.getSize(
+        uri,
+        (width, height) => {
+          cancel = undefined
+          resolve({ width, height })
+        },
+        error => {
+          reject(error)
+        }
+      )
+    })
+
+  return { start, cancel }
+}
+
 const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
 
@@ -19,6 +45,26 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
       Image.getSize(card.image, () => setImageLoaded(true))
     }
   }, [])
+  useEffect(() => {
+    let cancel: CancelPromise
+    const sideEffect = async (): Promise<void> => {
+      try {
+        const operation = getImageSize(card.image)
+        cancel = operation.cancel
+        await operation.start()
+      } catch (error) {
+        if (__DEV__) console.warn(error)
+      }
+    }
+    if (card.image) {
+      sideEffect()
+    }
+    return () => {
+      if (cancel) {
+        cancel()
+      }
+    }
+  })
   const cardVisual = useMemo(() => {
     if (imageLoaded) {
       return <Image source={{ uri: card.image }} style={styles.image} />

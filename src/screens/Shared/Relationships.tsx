@@ -33,7 +33,7 @@ const ScreenSharedRelationships: React.FC<SharedRelationshipsProp> = ({
         )
       })
     return updateHeaderRight()
-  }, [])
+  }, [segment, mode])
 
   const routes: {
     key: SharedRelationshipsProp['route']['params']['initialType']
@@ -55,9 +55,9 @@ const ScreenSharedRelationships: React.FC<SharedRelationshipsProp> = ({
       swipeEnabled
       renderScene={renderScene}
       renderTabBar={() => null}
-      initialLayout={{ width: Dimensions.get('window').width }}
-      navigationState={{ index: segment, routes }}
       onIndexChange={index => setSegment(index)}
+      navigationState={{ index: segment, routes }}
+      initialLayout={{ width: Dimensions.get('window').width }}
     />
   )
 }

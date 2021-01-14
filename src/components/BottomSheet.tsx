@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Dimensions, Modal, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 import Button from '@components/Button'
-import { PanGestureHandler } from 'react-native-gesture-handler'
+import {
+  PanGestureHandler,
+  State,
+  TapGestureHandler
+} from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
   interpolate,
@@ -55,33 +59,44 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
 
   return (
     <Modal animated animationType='fade' visible={visible} transparent>
-      <PanGestureHandler onGestureEvent={onGestureEvent}>
+      <TapGestureHandler
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === State.ACTIVE) {
+            callDismiss()
+          }
+        }}
+      >
         <Animated.View
           style={[styles.overlay, { backgroundColor: theme.backgroundOverlay }]}
         >
-          <Animated.View
-            style={[
-              styles.container,
-              styleTop,
-              {
-                backgroundColor: theme.background,
-                paddingBottom: insets.bottom || StyleConstants.Spacing.L
-              }
-            ]}
-          >
-            <View
-              style={[styles.handle, { backgroundColor: theme.primaryOverlay }]}
-            />
-            {children}
-            <Button
-              type='text'
-              content='取消'
-              onPress={() => handleDismiss()}
-              style={styles.button}
-            />
-          </Animated.View>
+          <PanGestureHandler onGestureEvent={onGestureEvent}>
+            <Animated.View
+              style={[
+                styles.container,
+                styleTop,
+                {
+                  backgroundColor: theme.background,
+                  paddingBottom: insets.bottom || StyleConstants.Spacing.L
+                }
+              ]}
+            >
+              <View
+                style={[
+                  styles.handle,
+                  { backgroundColor: theme.primaryOverlay }
+                ]}
+              />
+              {children}
+              <Button
+                type='text'
+                content='取消'
+                onPress={() => handleDismiss()}
+                style={styles.button}
+              />
+            </Animated.View>
+          </PanGestureHandler>
         </Animated.View>
-      </PanGestureHandler>
+      </TapGestureHandler>
     </Modal>
   )
 }

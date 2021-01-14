@@ -14,8 +14,18 @@ declare namespace Nav {
     'Screen-Shared-Announcements': { showAll?: boolean }
     'Screen-Shared-Compose':
       | {
-          type?: 'reply' | 'conversation' | 'edit'
+          type: 'reply' | 'conversation' | 'edit'
           incomingStatus: Mastodon.Status
+          queryKey?: [
+            'Timeline',
+            {
+              page: App.Pages
+              hashtag?: Mastodon.Tag['name']
+              list?: Mastodon.List['id']
+              toot?: Mastodon.Status['id']
+              account?: Mastodon.Account['id']
+            }
+          ]
         }
       | undefined
     'Screen-Shared-Hashtag': {

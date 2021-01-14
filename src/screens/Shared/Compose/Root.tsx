@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import ComposeActions from './Actions'
+import ComposePosting from './Posting'
 import ComposeRootFooter from './Root/Footer'
 import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
@@ -89,6 +90,7 @@ const ComposeRoot: React.FC = () => {
         keyExtractor={({ item }) => item.acct || item.name}
       />
       <ComposeActions />
+      <ComposePosting />
     </View>
   )
 }

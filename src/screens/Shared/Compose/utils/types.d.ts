@@ -5,6 +5,7 @@ export type ExtendedAttachment = {
 }
 
 export type ComposeState = {
+  posting: boolean
   spoiler: {
     active: boolean
     count: number
@@ -62,6 +63,10 @@ export type ComposeState = {
 }
 
 export type ComposeAction =
+  | {
+      type: 'posting'
+      payload: ComposeState['posting']
+    }
   | {
       type: 'spoiler'
       payload: Partial<ComposeState['spoiler']>

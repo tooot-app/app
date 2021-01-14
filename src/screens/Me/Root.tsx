@@ -23,7 +23,6 @@ const ScreenMeRoot: React.FC<StackScreenProps<
 >> = ({ route: { params }, navigation }) => {
   useEffect(() => {
     if (params && params.navigateAway) {
-      console.log('oops')
       navigation.navigate(params.navigateAway)
     }
   }, [params])

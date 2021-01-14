@@ -9,6 +9,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Dimensions, Platform, StyleSheet, View } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
+import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
 
 const Stack = createNativeStackNavigator<
@@ -53,21 +54,6 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     [localActiveIndex]
   )
 
-  const screenComponent = useCallback(
-    () => (
-      <TabView
-        lazy
-        swipeEnabled
-        renderScene={renderScene}
-        renderTabBar={() => null}
-        onIndexChange={index => setSegment(index)}
-        navigationState={{ index: segment, routes }}
-        initialLayout={{ width: Dimensions.get('window').width }}
-      />
-    ),
-    [segment, localActiveIndex]
-  )
-
   const screenOptions = useMemo(() => {
     if (localActiveIndex === null) {
       if (name === 'Public') {
@@ -102,6 +88,8 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
     }
   }, [localActiveIndex, mode, segment])
 
+  const renderPager = useCallback(props => <ViewPagerAdapter {...props} />, [])
+
   return (
     <Stack.Navigator
       screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
@@ -109,9 +97,21 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
       <Stack.Screen
         // @ts-ignore
         name={`Screen-${name}-Root`}
-        component={screenComponent}
         options={screenOptions}
-      />
+      >
+        {() => (
+          <TabView
+            lazy
+            swipeEnabled
+            renderPager={renderPager}
+            renderScene={renderScene}
+            renderTabBar={() => null}
+            onIndexChange={index => setSegment(index)}
+            navigationState={{ index: segment, routes }}
+            initialLayout={{ width: Dimensions.get('window').width }}
+          />
+        )}
+      </Stack.Screen>
 
       {sharedScreens(Stack)}
     </Stack.Navigator>

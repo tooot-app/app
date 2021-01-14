@@ -5,6 +5,8 @@ const composeReducer = (
   action: ComposeAction
 ): ComposeState => {
   switch (action.type) {
+    case 'posting':
+      return { ...state, posting: action.payload }
     case 'spoiler':
       return { ...state, spoiler: { ...state.spoiler, ...action.payload } }
     case 'text':
