@@ -1,27 +1,25 @@
 import { ParseEmojis } from '@components/Parse'
-import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import GracefullyImage from './GracefullyImage'
 
 export interface Props {
   account: Mastodon.Account
+  onPress: () => void
 }
 
-const ComponentAccount: React.FC<Props> = ({ account }) => {
-  const navigation = useNavigation()
+const ComponentAccount: React.FC<Props> = ({ account, onPress }) => {
   const { theme } = useTheme()
 
   return (
     <Pressable
       style={[styles.itemDefault, styles.itemAccount]}
-      onPress={() => {
-        navigation.push('Screen-Shared-Account', { account })
-      }}
+      onPress={onPress}
     >
-      <Image
-        source={{ uri: account.avatar_static }}
+      <GracefullyImage
+        uri={{ original: account.avatar_static }}
         style={styles.itemAccountAvatar}
       />
       <View>

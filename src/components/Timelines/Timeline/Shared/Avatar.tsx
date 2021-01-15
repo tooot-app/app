@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
-import { Image } from 'react-native-expo-image-cache'
 import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import GracefullyImage from '@components/GracefullyImage'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
@@ -18,23 +17,21 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
   }, [])
 
   return (
-    <Pressable style={styles.avatar} onPress={onPress}>
-      <Image uri={account.avatar_static} style={styles.image} />
-    </Pressable>
+    <GracefullyImage
+      cache
+      onPress={onPress}
+      uri={{ original: account.avatar_static }}
+      dimension={{
+        width: StyleConstants.Avatar.M,
+        height: StyleConstants.Avatar.M
+      }}
+      style={{
+        borderRadius: 4,
+        overflow: 'hidden',
+        marginRight: StyleConstants.Spacing.S
+      }}
+    />
   )
 }
-
-const styles = StyleSheet.create({
-  avatar: {
-    flexBasis: StyleConstants.Avatar.M,
-    height: StyleConstants.Avatar.M,
-    marginRight: StyleConstants.Spacing.S
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 6
-  }
-})
 
 export default React.memo(TimelineAvatar, () => true)

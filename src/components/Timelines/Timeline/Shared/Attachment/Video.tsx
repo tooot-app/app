@@ -23,6 +23,7 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
     }
     await videoPlayer.current?.setPositionAsync(videoPosition)
     await videoPlayer.current?.presentFullscreenPlayer()
+    console.log('playing!!!')
     videoPlayer.current?.playAsync()
     setVideoLoading(false)
     videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
@@ -51,6 +52,11 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
         posterSource={{ uri: video.preview_url }}
         posterStyle={{ resizeMode: 'cover' }}
         useNativeControls={false}
+        onFullscreenUpdate={event => {
+          if (event.fullscreenUpdate === 3) {
+            videoPlayer.current?.pauseAsync()
+          }
+        }}
       />
       <Pressable style={styles.overlay}>
         {sensitiveShown ? (

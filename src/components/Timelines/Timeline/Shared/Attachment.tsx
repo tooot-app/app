@@ -101,8 +101,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
   )
 
   return (
-    <View style={styles.base}>
-      {attachments}
+    <View>
+      <View style={styles.container}>{attachments}</View>
 
       {status.sensitive &&
         (sensitiveShown ? (
@@ -123,7 +123,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             onPress={onPressShow}
             style={{
               position: 'absolute',
-              top: StyleConstants.Spacing.S,
+              top: StyleConstants.Spacing.S * 2,
               left: StyleConstants.Spacing.S
             }}
           />
@@ -133,17 +133,13 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
 }
 
 const styles = StyleSheet.create({
-  base: {
+  container: {
     marginTop: StyleConstants.Spacing.S,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignContent: 'stretch'
-  },
-  container: {
-    flexBasis: '50%',
-    aspectRatio: 16 / 9
   },
   sensitiveBlur: {
     position: 'absolute',

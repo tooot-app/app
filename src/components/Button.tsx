@@ -155,26 +155,24 @@ const Button: React.FC<Props> = ({
   }
 
   return (
-    <View>
-      <Pressable
-        style={[
-          styles.button,
-          {
-            borderWidth: overlay ? 0 : 1,
-            borderColor: colorBorder,
-            backgroundColor: colorBackground,
-            paddingVertical: StyleConstants.Spacing[spacing],
-            paddingHorizontal:
-              StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
-          },
-          customStyle
-        ]}
-        testID='base'
-        onPress={onPress}
-        children={children}
-        disabled={disabled || active || loading}
-      />
-    </View>
+    <Pressable
+      style={[
+        styles.button,
+        {
+          borderWidth: overlay ? 0 : 1,
+          borderColor: colorBorder,
+          backgroundColor: colorBackground,
+          paddingVertical: StyleConstants.Spacing[spacing],
+          paddingHorizontal:
+            StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
+        },
+        customStyle
+      ]}
+      testID='base'
+      onPress={onPress}
+      children={children}
+      disabled={disabled || active || loading}
+    />
   )
 }
 

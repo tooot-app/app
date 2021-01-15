@@ -1,8 +1,7 @@
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
-import React, { useCallback, useEffect, useState } from 'react'
-import { Image, StyleSheet, Pressable } from 'react-native'
+import React, { useCallback } from 'react'
+import { StyleSheet } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
+import GracefullyImage from '@components/GracefullyImage'
 
 export interface Props {
   sensitiveShown: boolean
@@ -17,69 +16,19 @@ const AttachmentImage: React.FC<Props> = ({
   imageIndex,
   navigateToImagesViewer
 }) => {
-  let isMounted = false
-  useEffect(() => {
-    isMounted = true
-
-    return () => {
-      isMounted = false
-    }
-  })
-  const [imageVisible, setImageVisible] = useState<string>()
-  const [imageLoadingFailed, setImageLoadingFailed] = useState(false)
-  useEffect(() => {
-    const preFetch = () =>
-      isMounted &&
-      Image.getSize(
-        image.preview_url,
-        () => isMounted && setImageVisible(image.preview_url),
-        () => {
-          isMounted &&
-            Image.getSize(
-              image.url,
-              () => isMounted && setImageVisible(image.url),
-              () =>
-                image.remote_url
-                  ? isMounted &&
-                    Image.getSize(
-                      image.remote_url,
-                      () => isMounted && setImageVisible(image.remote_url),
-                      () => isMounted && setImageLoadingFailed(true)
-                    )
-                  : isMounted && setImageLoadingFailed(true)
-            )
-        }
-      )
-    preFetch()
-  }, [isMounted])
-
-  const children = useCallback(() => {
-    if (imageVisible && !sensitiveShown) {
-      return <Image source={{ uri: imageVisible }} style={styles.image} />
-    } else {
-      return (
-        <Surface
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            top: StyleConstants.Spacing.XS / 2,
-            left: StyleConstants.Spacing.XS / 2
-          }}
-        >
-          <Blurhash hash={image.blurhash} />
-        </Surface>
-      )
-    }
-  }, [imageVisible, sensitiveShown])
   const onPress = useCallback(() => navigateToImagesViewer(imageIndex), [])
 
   return (
-    <Pressable
-      style={[styles.base]}
-      children={children}
+    <GracefullyImage
+      hidden={sensitiveShown}
+      uri={{
+        preview: image.preview_url,
+        original: image.url,
+        remote: image.remote_url
+      }}
+      blurhash={image.blurhash}
       onPress={onPress}
-      disabled={!imageVisible || sensitiveShown}
+      style={styles.base}
     />
   )
 }
@@ -90,9 +39,6 @@ const styles = StyleSheet.create({
     flexBasis: '50%',
     aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2
-  },
-  image: {
-    flex: 1
   }
 })
 

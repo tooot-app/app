@@ -1,3 +1,4 @@
+import ComponentSeparator from '@components/Separator'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
@@ -67,8 +68,9 @@ const ComposeRoot: React.FC = () => {
   }, [isFetching])
 
   const listItem = useCallback(
-    ({ item }) => (
+    ({ item, index }) => (
       <ComposeRootSuggestion
+        key={(item.id || item.name) + index}
         item={item}
         composeState={composeState}
         composeDispatch={composeDispatch}
@@ -85,9 +87,9 @@ const ComposeRoot: React.FC = () => {
         keyboardShouldPersistTaps='handled'
         ListHeaderComponent={ComposeRootHeader}
         ListFooterComponent={ComposeRootFooter}
+        ItemSeparatorComponent={ComponentSeparator}
         // @ts-ignore
         data={data ? data[composeState.tag?.type] : undefined}
-        keyExtractor={({ item }) => item.acct || item.name}
       />
       <ComposeActions />
       <ComposePosting />

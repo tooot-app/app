@@ -232,10 +232,10 @@ const Timeline: React.FC<Props> = ({
       {...(queryKey &&
         queryKey[1].page === 'RemotePublic' && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
-      // maintainVisibleContentPosition={{
-      //   minIndexForVisible: 0,
-      //   autoscrollToTopThreshold: 2
-      // }}
+      maintainVisibleContentPosition={{
+        minIndexForVisible: 0,
+        autoscrollToTopThreshold: 1
+      }}
       {...customProps}
     />
   )

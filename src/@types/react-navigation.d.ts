@@ -12,6 +12,7 @@ declare namespace Nav {
       account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
     }
     'Screen-Shared-Announcements': { showAll?: boolean }
+    'Screen-Shared-Attachments': { account: Mastodon.Account }
     'Screen-Shared-Compose':
       | {
           type: 'reply' | 'conversation' | 'edit'

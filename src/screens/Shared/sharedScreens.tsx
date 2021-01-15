@@ -1,4 +1,5 @@
 import { HeaderLeft } from '@components/Header'
+import { ParseEmojis } from '@components/Parse'
 import { StackNavigationState, TypedNavigator } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import ScreenSharedAccount from '@screens/Shared/Account'
@@ -21,6 +22,7 @@ import {
   NativeStackNavigationEventMap,
   NativeStackNavigatorProps
 } from 'react-native-screens/lib/typescript/types'
+import ScreenSharedAttachments from './Attachments'
 
 export type BaseScreens =
   | Nav.LocalStackParamList
@@ -36,6 +38,11 @@ export type SharedAccountProp = StackScreenProps<
 export type SharedAnnouncementsProp = StackScreenProps<
   BaseScreens,
   'Screen-Shared-Announcements'
+>
+
+export type SharedAttachmentsProp = StackScreenProps<
+  BaseScreens,
+  'Screen-Shared-Attachments'
 >
 
 export type SharedComposeProp = StackScreenProps<
@@ -56,6 +63,11 @@ export type SharedImagesViewerProp = StackScreenProps<
 export type SharedRelationshipsProp = StackScreenProps<
   BaseScreens,
   'Screen-Shared-Relationships'
+>
+
+export type SharedSearchProp = StackScreenProps<
+  BaseScreens,
+  'Screen-Shared-Search'
 >
 
 export type SharedTootProp = StackScreenProps<BaseScreens, 'Screen-Shared-Toot'>
@@ -112,6 +124,40 @@ const sharedScreens = (
       }}
     />,
     <Stack.Screen
+      key='Screen-Shared-Attachments'
+      name='Screen-Shared-Attachments'
+      component={ScreenSharedAttachments}
+      options={({
+        route: {
+          params: { account }
+        },
+        navigation
+      }: SharedAttachmentsProp) => {
+        return {
+          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+          headerCenter: () => (
+            <Text numberOfLines={1}>
+              <ParseEmojis
+                content={account.display_name || account.username}
+                emojis={account.emojis}
+                fontBold
+              />
+              <Text
+                style={{
+                  ...StyleConstants.FontStyle.M,
+                  color: theme.primary,
+                  fontWeight: StyleConstants.Font.Weight.Bold
+                }}
+              >
+                {' '}
+                的媒体
+              </Text>
+            </Text>
+          )
+        }
+      }}
+    />,
+    <Stack.Screen
       key='Screen-Shared-Compose'
       name='Screen-Shared-Compose'
       component={Compose}
@@ -124,7 +170,7 @@ const sharedScreens = (
       key='Screen-Shared-Hashtag'
       name='Screen-Shared-Hashtag'
       component={ScreenSharedHashtag}
-      options={({ route, navigation }: any) => ({
+      options={({ route, navigation }: SharedHashtagProp) => ({
         title: `#${decodeURIComponent(route.params.hashtag)}`,
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
@@ -143,15 +189,14 @@ const sharedScreens = (
       key='Screen-Shared-Relationships'
       name='Screen-Shared-Relationships'
       component={ScreenSharedRelationships}
-      options={({ route, navigation }: any) => ({
-        title: route.params.account.display_name || route.params.account.name,
+      options={({ navigation }: SharedRelationshipsProp) => ({
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
     />,
     <Stack.Screen
       key='Screen-Shared-Search'
       name='Screen-Shared-Search'
-      options={({ navigation }: any) => ({
+      options={({ navigation }: SharedSearchProp) => ({
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
         // https://github.com/react-navigation/react-navigation/issues/6746#issuecomment-583897436
         headerCenter: () => (
@@ -191,7 +236,7 @@ const sharedScreens = (
       key='Screen-Shared-Toot'
       name='Screen-Shared-Toot'
       component={ScreenSharedToot}
-      options={({ navigation }: any) => ({
+      options={({ navigation }: SharedTootProp) => ({
         title: t('sharedToot:heading'),
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}

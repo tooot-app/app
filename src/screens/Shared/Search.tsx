@@ -1,3 +1,4 @@
+import ComponentHashtag from '@components/Timelines/Hashtag'
 import { useNavigation } from '@react-navigation/native'
 import ComponentAccount from '@root/components/Account'
 import ComponentSeparator from '@root/components/Separator'
@@ -9,7 +10,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   SectionList,
   StyleSheet,
   Text,
@@ -146,22 +146,25 @@ const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
   const listItem = useCallback(({ item, section, index }) => {
     switch (section.title) {
       case 'accounts':
-        return <ComponentAccount account={item} />
+        return (
+          <ComponentAccount
+            account={item}
+            onPress={() => {
+              navigation.push('Screen-Shared-Account', { item })
+            }}
+          />
+        )
       case 'hashtags':
         return (
-          <Pressable
-            style={[styles.itemDefault, { borderBottomColor: theme.border }]}
+          <ComponentHashtag
+            tag={item}
             onPress={() => {
               navigation.goBack()
               navigation.push('Screen-Shared-Hashtag', {
                 hashtag: item.name
               })
             }}
-          >
-            <Text style={[styles.itemHashtag, { color: theme.primary }]}>
-              #{item.name}
-            </Text>
-          </Pressable>
+          />
         )
       case 'statuses':
         return <TimelineDefault item={item} disableDetails />
@@ -225,13 +228,6 @@ const styles = StyleSheet.create({
   sectionFooterText: {
     ...StyleConstants.FontStyle.S,
     textAlign: 'center'
-  },
-  itemDefault: {
-    padding: StyleConstants.Spacing.S * 1.5,
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  itemHashtag: {
-    ...StyleConstants.FontStyle.M
   }
 })
 

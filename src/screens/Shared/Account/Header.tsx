@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AccountContext from './utils/createContext'
 
 export interface Props {
@@ -16,9 +17,10 @@ export interface Props {
 const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
   const { accountState, accountDispatch } = useContext(AccountContext)
   const { theme } = useTheme()
+  const topInset = useSafeAreaInsets().top
 
   const height = useSharedValue(
-    Dimensions.get('screen').width * accountState.headerRatio
+    Dimensions.get('screen').width * accountState.headerRatio + topInset
   )
   const styleHeight = useAnimatedStyle(() => {
     return {
@@ -32,12 +34,12 @@ const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
       !account.header.includes('/headers/original/missing.png')
     ) {
       Image.getSize(account.header, (width, height) => {
-        if (!limitHeight) {
-          accountDispatch({
-            type: 'headerRatio',
-            payload: height / width
-          })
-        }
+        // if (!limitHeight) {
+        //   accountDispatch({
+        //     type: 'headerRatio',
+        //     payload: height / width
+        //   })
+        // }
       })
     }
   }, [account])

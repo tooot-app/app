@@ -43,7 +43,7 @@ const composePost = async (
   return client<Mastodon.Status>({
     method: 'post',
     instance: 'local',
-    url: 'statusess',
+    url: 'statuses',
     headers: {
       'Idempotency-Key': await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,

@@ -108,7 +108,7 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
             renderTabBar={() => null}
             onIndexChange={index => setSegment(index)}
             navigationState={{ index: segment, routes }}
-            initialLayout={{ width: Dimensions.get('window').width }}
+            initialLayout={{ width: Dimensions.get('screen').width }}
           />
         )}
       </Stack.Screen>

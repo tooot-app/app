@@ -26,13 +26,13 @@ const HeaderRight: React.FC<Props> = ({
   const { theme } = useTheme()
 
   const mounted = useRef(false)
-  useEffect(() => {
-    if (mounted.current) {
-      layoutAnimation()
-    } else {
-      mounted.current = true
-    }
-  }, [content, loading, disabled])
+  // useEffect(() => {
+  //   if (mounted.current) {
+  //     layoutAnimation()
+  //   } else {
+  //     mounted.current = true
+  //   }
+  // }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (

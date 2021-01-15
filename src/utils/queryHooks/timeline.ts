@@ -140,7 +140,7 @@ const queryFunction = ({
         params
       })
 
-    case 'Account_Media':
+    case 'Account_Attachments':
       return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',

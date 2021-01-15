@@ -4,9 +4,18 @@ import Timeline from '@components/Timelines/Timeline'
 import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/ActionsAccount'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState
+} from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
+import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
@@ -23,6 +32,8 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
   },
   navigation
 }) => {
+  const { theme } = useTheme()
+
   const localAccount = useSelector(getLocalAccount)
   const { data } = useAccountQuery({ id: account.id })
 
@@ -50,6 +61,16 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
     scrollY.value = nativeEvent.contentOffset.y
   }, [])
 
+  const ListHeaderComponent = useMemo(() => {
+    return (
+      <View style={[styles.header, { borderBottomColor: theme.border }]}>
+        <AccountHeader account={data} />
+        <AccountInformation account={data} />
+        <AccountAttachments account={data} />
+      </View>
+    )
+  }, [data])
+
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
       <AccountNav scrollY={scrollY} account={data} />
@@ -61,12 +82,7 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
         customProps={{
           onScroll,
           scrollEventThrottle: 16,
-          ListHeaderComponent: (
-            <>
-              <AccountHeader account={data} />
-              <AccountInformation account={data} />
-            </>
-          )
+          ListHeaderComponent
         }}
       />
 
@@ -85,5 +101,11 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
     </AccountContext.Provider>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    borderBottomWidth: 1
+  }
+})
 
 export default ScreenSharedAccount

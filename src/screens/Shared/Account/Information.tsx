@@ -1,6 +1,5 @@
 import { StyleConstants } from '@utils/styles/constants'
-import { useTheme } from '@utils/styles/ThemeManager'
-import React, { createRef, useCallback, useContext, useEffect } from 'react'
+import React, { createRef, useEffect } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import AccountInformationAccount from './Information/Account'
 import AccountInformationActions from './Information/Actions'
@@ -11,7 +10,6 @@ import AccountInformationName from './Information/Name'
 import AccountInformationNotes from './Information/Notes'
 import AccountInformationStats from './Information/Stats'
 import AccountInformationSwitch from './Information/Switch'
-import AccountContext from './utils/createContext'
 
 export interface Props {
   account: Mastodon.Account | undefined
@@ -22,10 +20,6 @@ const AccountInformation: React.FC<Props> = ({
   account,
   ownAccount = false
 }) => {
-  const { theme } = useTheme()
-  const { accountDispatch } = useContext(AccountContext)
-
-  const shimmerAvatarRef = createRef<any>()
   const shimmerNameRef = createRef<any>()
   const shimmerAccountRef = createRef<any>()
   const shimmerCreatedRef = createRef<any>()
@@ -33,7 +27,6 @@ const AccountInformation: React.FC<Props> = ({
   useEffect(() => {
     const informationAnimated = Animated.stagger(400, [
       Animated.parallel([
-        shimmerAvatarRef.current?.getAnimated(),
         shimmerNameRef.current?.getAnimated(),
         shimmerAccountRef.current?.getAnimated(),
         shimmerCreatedRef.current?.getAnimated(),
@@ -45,27 +38,11 @@ const AccountInformation: React.FC<Props> = ({
     Animated.loop(informationAnimated).start()
   }, [])
 
-  const onLayout = useCallback(
-    ({ nativeEvent }) =>
-      accountDispatch &&
-      accountDispatch({
-        type: 'informationLayout',
-        payload: {
-          y: nativeEvent.layout.y,
-          height: nativeEvent.layout.height
-        }
-      }),
-    []
-  )
-
   return (
-    <View
-      style={[styles.base, { borderBottomColor: theme.border }]}
-      onLayout={onLayout}
-    >
+    <View style={styles.base}>
       {/* <Text>Moved or not: {account.moved}</Text> */}
       <View style={styles.avatarAndActions}>
-        <AccountInformationAvatar ref={shimmerAvatarRef} account={account} />
+        <AccountInformationAvatar account={account} />
         <View style={styles.actions}>
           {ownAccount ? (
             <AccountInformationSwitch />
@@ -105,8 +82,7 @@ const AccountInformation: React.FC<Props> = ({
 const styles = StyleSheet.create({
   base: {
     marginTop: -StyleConstants.Spacing.Global.PagePadding * 3,
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   avatarAndActions: {
     flexDirection: 'row',

@@ -25,7 +25,11 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
         width={StyleConstants.Font.Size.M * 8}
         height={StyleConstants.Font.LineHeight.M}
         style={{ marginBottom: StyleConstants.Spacing.L }}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
+        shimmerColors={[
+          theme.shimmerDefault,
+          theme.shimmerHighlight,
+          theme.shimmerDefault
+        ]}
       >
         <View style={styles.account}>
           <Text
@@ -67,4 +71,7 @@ const styles = StyleSheet.create({
   type: { marginLeft: StyleConstants.Spacing.S }
 })
 
-export default AccountInformationAccount
+export default React.memo(
+  AccountInformationAccount,
+  (_, next) => next.account === undefined
+)

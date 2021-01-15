@@ -6,7 +6,8 @@ import { Audio } from 'expo-av'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import GracefullyImage from '@components/GracefullyImage'
 
 export interface Props {
   sensitiveShown: boolean
@@ -38,7 +39,7 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])
-
+  console.log(audio)
   return (
     <View style={[styles.base, { backgroundColor: theme.disabled }]}>
       <View style={styles.overlay}>
@@ -56,9 +57,11 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
         ) : (
           <>
             {(audio.preview_url || audio.preview_remote_url) && (
-              <Image
+              <GracefullyImage
+                uri={{
+                  original: audio.preview_url || audio.preview_remote_url
+                }}
                 style={styles.background}
-                source={{ uri: audio.preview_url || audio.preview_remote_url }}
               />
             )}
             <Button
