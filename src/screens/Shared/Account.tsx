@@ -1,19 +1,15 @@
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
+import Timeline from '@components/Timelines/Timeline'
 import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/ActionsAccount'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
-import React, { useEffect, useReducer, useState } from 'react'
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from 'react-native-reanimated'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { useSharedValue } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
-import AccountSegmentedControl from './Account/SegmentedControl'
-import AccountToots from './Account/Toots'
 import AccountContext from './Account/utils/createContext'
 import accountInitialState from './Account/utils/initialState'
 import accountReducer from './Account/utils/reducer'
@@ -50,26 +46,29 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
     return updateHeaderRight()
   }, [])
 
-  const onScroll = useAnimatedScrollHandler(event => {
-    scrollY.value = event.contentOffset.y
-  })
+  const onScroll = useCallback(({ nativeEvent }) => {
+    scrollY.value = nativeEvent.contentOffset.y
+  }, [])
 
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
       <AccountNav scrollY={scrollY} account={data} />
-      {accountState.informationLayout?.height &&
-      accountState.informationLayout.y ? (
-        <AccountSegmentedControl scrollY={scrollY} />
-      ) : null}
-      <Animated.ScrollView
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        onScroll={onScroll}
-      >
-        <AccountHeader account={data} />
-        <AccountInformation account={data} />
-        <AccountToots id={account.id} />
-      </Animated.ScrollView>
+
+      <Timeline
+        page='Account_Default'
+        account={account.id}
+        disableRefresh
+        customProps={{
+          onScroll,
+          scrollEventThrottle: 16,
+          ListHeaderComponent: (
+            <>
+              <AccountHeader account={data} />
+              <AccountInformation account={data} />
+            </>
+          )
+        }}
+      />
 
       <BottomSheet
         visible={modalVisible}

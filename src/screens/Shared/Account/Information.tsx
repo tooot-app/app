@@ -1,4 +1,5 @@
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { createRef, useCallback, useContext, useEffect } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import AccountInformationAccount from './Information/Account'
@@ -21,7 +22,9 @@ const AccountInformation: React.FC<Props> = ({
   account,
   ownAccount = false
 }) => {
+  const { theme } = useTheme()
   const { accountDispatch } = useContext(AccountContext)
+
   const shimmerAvatarRef = createRef<any>()
   const shimmerNameRef = createRef<any>()
   const shimmerAccountRef = createRef<any>()
@@ -56,7 +59,10 @@ const AccountInformation: React.FC<Props> = ({
   )
 
   return (
-    <View style={styles.base} onLayout={onLayout}>
+    <View
+      style={[styles.base, { borderBottomColor: theme.border }]}
+      onLayout={onLayout}
+    >
       {/* <Text>Moved or not: {account.moved}</Text> */}
       <View style={styles.avatarAndActions}>
         <AccountInformationAvatar ref={shimmerAvatarRef} account={account} />
@@ -99,7 +105,8 @@ const AccountInformation: React.FC<Props> = ({
 const styles = StyleSheet.create({
   base: {
     marginTop: -StyleConstants.Spacing.Global.PagePadding * 3,
-    padding: StyleConstants.Spacing.Global.PagePadding
+    padding: StyleConstants.Spacing.Global.PagePadding,
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   avatarAndActions: {
     flexDirection: 'row',

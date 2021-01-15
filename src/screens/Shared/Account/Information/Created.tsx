@@ -24,7 +24,7 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
         ref={ref}
         visible={account?.created_at !== undefined}
         width={StyleConstants.Font.Size.S * 8}
-        height={StyleConstants.Font.Size.S}
+        height={StyleConstants.Font.LineHeight.S}
         style={{ marginBottom: StyleConstants.Spacing.M }}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >

@@ -9,7 +9,12 @@ import { useScrollToTop } from '@react-navigation/native'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { Platform, RefreshControl, StyleSheet } from 'react-native'
+import {
+  FlatListProps,
+  Platform,
+  RefreshControl,
+  StyleSheet
+} from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
@@ -24,6 +29,7 @@ export interface Props {
   account?: Mastodon.Account['id']
   disableRefresh?: boolean
   disableInfinity?: boolean
+  customProps?: Partial<FlatListProps<any>>
 }
 
 const Timeline: React.FC<Props> = ({
@@ -33,7 +39,8 @@ const Timeline: React.FC<Props> = ({
   toot,
   account,
   disableRefresh = false,
-  disableInfinity = false
+  disableInfinity = false,
+  customProps
 }) => {
   const queryKeyParams = {
     page,
@@ -208,7 +215,6 @@ const Timeline: React.FC<Props> = ({
 
   return (
     <FlatList
-      bounces={!disableRefresh}
       ref={flRef}
       windowSize={11}
       data={flattenData}
@@ -230,6 +236,7 @@ const Timeline: React.FC<Props> = ({
       //   minIndexForVisible: 0,
       //   autoscrollToTopThreshold: 2
       // }}
+      {...customProps}
     />
   )
 }

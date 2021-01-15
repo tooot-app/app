@@ -7,13 +7,16 @@ export interface Props {
   account: Mastodon.Account
 }
 
-const AccountInformationNotes: React.FC<Props> = ({ account }) => {
-  return (
-    <View style={styles.note}>
-      <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} />
-    </View>
-  )
-}
+const AccountInformationNotes = React.memo(
+  ({ account }: Props) => {
+    return (
+      <View style={styles.note}>
+        <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} />
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   note: {

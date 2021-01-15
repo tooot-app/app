@@ -24,7 +24,7 @@ const AccountInformationName = forwardRef<ShimmerPlaceholder, Props>(
           account?.display_name !== undefined || account?.username !== undefined
         }
         width={StyleConstants.Font.Size.L * 8}
-        height={StyleConstants.Font.Size.L}
+        height={StyleConstants.Font.LineHeight.L}
         style={styles.name}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >

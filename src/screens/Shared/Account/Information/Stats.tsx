@@ -40,7 +40,7 @@ const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
         ref={ref1}
         visible={account !== undefined}
         width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.Size.S}
+        height={StyleConstants.Font.LineHeight.S}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <Text style={[styles.stat, { color: theme.primary }]}>
@@ -53,7 +53,7 @@ const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
         ref={ref2}
         visible={account !== undefined}
         width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.Size.S}
+        height={StyleConstants.Font.LineHeight.S}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <Text
@@ -75,7 +75,7 @@ const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
         ref={ref3}
         visible={account !== undefined}
         width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.Size.S}
+        height={StyleConstants.Font.LineHeight.S}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >
         <Text

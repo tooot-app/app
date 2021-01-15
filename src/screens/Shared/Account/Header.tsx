@@ -43,8 +43,8 @@ const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
   }, [account])
 
   return (
-    <Animated.View
-      // source={{ uri: account?.header }}
+    <Animated.Image
+      source={{ uri: account?.header }}
       style={[styleHeight, { backgroundColor: theme.disabled }]}
     />
   )

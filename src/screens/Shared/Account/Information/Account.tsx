@@ -23,7 +23,7 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
         ref={ref}
         visible={account?.acct !== undefined}
         width={StyleConstants.Font.Size.M * 8}
-        height={StyleConstants.Font.Size.M}
+        height={StyleConstants.Font.LineHeight.M}
         style={{ marginBottom: StyleConstants.Spacing.L }}
         shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
       >

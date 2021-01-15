@@ -9,47 +9,52 @@ export interface Props {
   account: Mastodon.Account
 }
 
-const AccountInformationFields: React.FC<Props> = ({ account }) => {
-  const { theme } = useTheme()
+const AccountInformationFields = React.memo(
+  ({ account }: Props) => {
+    const { theme } = useTheme()
 
-  return (
-    <View style={[styles.fields, { borderTopColor: theme.border }]}>
-      {account.fields.map((field, index) => (
-        <View
-          key={index}
-          style={[styles.field, { borderBottomColor: theme.border }]}
-        >
-          <View style={[styles.fieldLeft, { borderRightColor: theme.border }]}>
-            <ParseHTML
-              content={field.name}
-              size={'M'}
-              emojis={account.emojis}
-              showFullLink
-              numberOfLines={3}
-            />
-            {field.verified_at ? (
-              <Icon
-                name='CheckCircle'
-                size={StyleConstants.Font.Size.M}
-                color={theme.primary}
-                style={styles.fieldCheck}
+    return (
+      <View style={[styles.fields, { borderTopColor: theme.border }]}>
+        {account.fields.map((field, index) => (
+          <View
+            key={index}
+            style={[styles.field, { borderBottomColor: theme.border }]}
+          >
+            <View
+              style={[styles.fieldLeft, { borderRightColor: theme.border }]}
+            >
+              <ParseHTML
+                content={field.name}
+                size={'M'}
+                emojis={account.emojis}
+                showFullLink
+                numberOfLines={3}
               />
-            ) : null}
+              {field.verified_at ? (
+                <Icon
+                  name='CheckCircle'
+                  size={StyleConstants.Font.Size.M}
+                  color={theme.primary}
+                  style={styles.fieldCheck}
+                />
+              ) : null}
+            </View>
+            <View style={styles.fieldRight}>
+              <ParseHTML
+                content={field.value}
+                size={'M'}
+                emojis={account.emojis}
+                showFullLink
+                numberOfLines={3}
+              />
+            </View>
           </View>
-          <View style={styles.fieldRight}>
-            <ParseHTML
-              content={field.value}
-              size={'M'}
-              emojis={account.emojis}
-              showFullLink
-              numberOfLines={3}
-            />
-          </View>
-        </View>
-      ))}
-    </View>
-  )
-}
+        ))}
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   fields: {
