@@ -1,0 +1,26 @@
+name: Publish testing
+on:
+  push:
+    branches:
+      - testing
+jobs:
+  publish:
+    name: Install and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-username: ${{ secrets.EXPO_USERNAME }}
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+      - run: yarn install
+      - run: expo publish --release-channel=testing
+        env:
+          - SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          - SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          - SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
