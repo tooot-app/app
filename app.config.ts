@@ -28,16 +28,16 @@ export default (): ExpoConfig => ({
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']
   },
-  locales: {
-    zh: {
-      CFBundleDisplayName: '嘟嘟嘟',
-      NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
-      NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
-    },
-    en: {
-      CFBundleDisplayName: 'tooot'
-    }
-  },
+  // locales: {
+  //   zh: {
+  //     CFBundleDisplayName: '嘟嘟嘟',
+  //     NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
+  //     NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
+  //   },
+  //   en: {
+  //     CFBundleDisplayName: 'tooot'
+  //   }
+  // },
   assetBundlePatterns: ['assets/*'],
   hooks: {
     postPublish: [
