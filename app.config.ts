@@ -29,7 +29,11 @@ export default (): ExpoConfig => ({
     permissions: ['CAMERA', 'VIBRATE']
   },
   locales: {
-    zh: './src/i18n/zh/app.json',
+    zh: {
+      CFBundleDisplayName: '嘟嘟嘟',
+      NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
+      NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
+    },
     en: {
       CFBundleDisplayName: 'tooot'
     }
