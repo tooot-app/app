@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { InstanceLocal, localAddInstance } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
+import Constants from 'expo-constants'
 import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { useDispatch } from 'react-redux'
@@ -13,6 +14,18 @@ export interface Props {
 
 const InstanceAuth = React.memo(
   ({ instanceDomain, appData, goBack }: Props) => {
+    console.log(Constants.manifest.releaseChannel)
+    let redirectUri: string
+    switch (Constants.manifest.releaseChannel) {
+      case 'production':
+      case 'staging':
+      case 'testing':
+        redirectUri = 'tooot://expo-auth-session'
+        break
+      default:
+        redirectUri = 'exp://127.0.0.1:19000'
+        break
+    }
     const navigation = useNavigation()
     const queryClient = useQueryClient()
     const dispatch = useDispatch()
@@ -22,7 +35,7 @@ const InstanceAuth = React.memo(
         clientId: appData.clientId,
         clientSecret: appData.clientSecret,
         scopes: ['read', 'write', 'follow', 'push'],
-        redirectUri: 'exp://127.0.0.1:19000'
+        redirectUri
       },
       {
         authorizationEndpoint: `https://${instanceDomain}/oauth/authorize`
@@ -43,7 +56,7 @@ const InstanceAuth = React.memo(
               clientId: appData.clientId,
               clientSecret: appData.clientSecret,
               scopes: ['read', 'write', 'follow', 'push'],
-              redirectUri: 'exp://127.0.0.1:19000',
+              redirectUri,
               code: response.params.code,
               extraParams: {
                 grant_type: 'authorization_code'

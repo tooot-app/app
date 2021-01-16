@@ -1,14 +1,14 @@
 import Button from '@components/Button'
+import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
-import haptics from '@root/components/haptics'
 import { persistor } from '@root/store'
 import {
   getLocalActiveIndex,
   getLocalInstances,
   getRemoteUrl
-} from '@root/utils/slices/instancesSlice'
+} from '@utils/slices/instancesSlice'
 import {
   changeAnalytics,
   changeBrowser,
@@ -21,6 +21,7 @@ import {
 } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import Constants from 'expo-constants'
 import prettyBytes from 'pretty-bytes'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -232,7 +233,9 @@ const ScreenMeSettings: React.FC = () => {
         </Text>
       </MenuContainer>
 
-      {__DEV__ ? <DevDebug /> : null}
+      {__DEV__ || Constants.manifest.releaseChannel === 'testing' ? (
+        <DevDebug />
+      ) : null}
     </ScrollView>
   )
 }

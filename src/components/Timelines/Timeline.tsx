@@ -165,22 +165,16 @@ const Timeline: React.FC<Props> = ({
   )
 
   const queryClient = useQueryClient()
-  const refreshCount = useRef(0)
   const refreshControl = useMemo(
     () => (
       <RefreshControl
         {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          refreshCount.current < 2
-            ? Platform.OS === 'ios'
-              ? isFetchingPreviousPage
-              : isFetchingPreviousPage || isFetching
-            : isFetching
+          isFetchingPreviousPage || (isFetching && !isFetchingNextPage)
         }
-        onRefresh={async () => {
-          if (refreshCount.current < 2) {
-            await fetchPreviousPage()
-            refreshCount.current++
+        onRefresh={() => {
+          if (hasPreviousPage) {
+            fetchPreviousPage()
           } else {
             queryClient.setQueryData<InfiniteData<any> | undefined>(
               queryKey,
@@ -193,13 +187,12 @@ const Timeline: React.FC<Props> = ({
                 }
               }
             )
-            await refetch()
-            refreshCount.current = 0
+            refetch()
           }
         }}
       />
     ),
-    [isFetchingPreviousPage, isFetching]
+    [hasPreviousPage, isFetchingPreviousPage, isFetching, isFetchingNextPage]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
