@@ -1,41 +1,39 @@
 import { ExpoConfig } from '@expo/config'
 
 export default (): ExpoConfig => ({
-  name: 'mastodon-app',
-  description: 'This is a description',
-  slug: 'mastodon-app',
+  name: 'tooot',
+  description: 'tooot for mastodon',
+  slug: 'tooot',
   privacy: 'hidden',
+  sdkVersion: '40.0.0',
   version: '0.1.0',
-  platforms: ['ios'],
+  platforms: ['ios', 'android'],
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
   icon: './assets/icon.png',
-  developmentClient: { silentLaunch: true },
-  scheme: 'mastodonct',
+  splash: {
+    backgroundColor: '#FAFAFA',
+    image: './assets/splash.png'
+  },
+  scheme: 'tooot',
   ios: {
-    bundleIdentifier: 'com.xmflsct.app.mastodon',
+    bundleIdentifier: 'com.xmflsct.app.tooot',
+    googleServicesFile: './configs/GoogleService-Info.plist',
     infoPlist: {
       CFBundleAllowMixedLocalizations: true
-    },
-    splash: {
-      image: './assets/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
-    },
-    googleServicesFile: './configs/GoogleService-Info.plist'
+    }
   },
   android: {
-    package: 'com.xmflsct.app.mastodon',
-    googleServicesFile: './configs/google-services.json'
+    package: 'com.xmflsct.app.tooot',
+    googleServicesFile: './configs/google-services.json',
+    permissions: ['CAMERA', 'VIBRATE']
   },
-  // locales: {
-  //   zh: {
-  //     CFBundleDisplayName: '我的嘟嘟'
-  //   },
-  //   en: {
-  //     CFBundleDisplayName: 'My Toots'
-  //   }
-  // },
+  locales: {
+    zh: './src/i18n/zh/app.json',
+    en: {
+      CFBundleDisplayName: 'tooot'
+    }
+  },
   assetBundlePatterns: ['assets/*'],
   hooks: {
     postPublish: [

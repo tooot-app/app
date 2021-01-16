@@ -185,7 +185,7 @@ const ComponentInstance: React.FC<Props> = ({
             content={buttonContent}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri}
-            loading={instanceQuery.isLoading || applicationQuery.isLoading}
+            loading={instanceQuery.isFetching || applicationQuery.isFetching}
           />
         </View>
         <View>
