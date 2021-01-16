@@ -5,22 +5,26 @@ on:
       - testing
 jobs:
   publish:
-    name: Install and publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: -- Step 1 -- Checkout code
+        uses: actions/checkout@v2
+      - name: -- Step 2 -- Setup node
+        uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: expo/expo-github-action@v5
+      - name: -- Step 3 -- Use Expo action
+        uses: expo/expo-github-action@v5
         with:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_USERNAME }}
           expo-token: ${{ secrets.EXPO_TOKEN }}
           expo-cache: true
-      - run: yarn install
-      - run: expo publish --release-channel=testing
+      - name: -- Step 4 -- Install dependencies
+        run: yarn install
+      - name: -- Step 5 -- Publish
         env:
-          - SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          - SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          - SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: expo publish --release-channel=testing
