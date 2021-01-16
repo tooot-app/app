@@ -14,7 +14,6 @@ export interface Props {
 
 const InstanceAuth = React.memo(
   ({ instanceDomain, appData, goBack }: Props) => {
-    console.log(Constants.manifest.releaseChannel)
     let redirectUri: string
     switch (Constants.manifest.releaseChannel) {
       case 'production':

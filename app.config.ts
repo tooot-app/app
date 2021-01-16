@@ -17,7 +17,7 @@ export default (): ExpoConfig => ({
   },
   scheme: 'tooot',
   ios: {
-    buildNumber: '0.1.0',
+    buildNumber: '1.0',
     bundleIdentifier: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/GoogleService-Info.plist',
     infoPlist: {
@@ -25,7 +25,7 @@ export default (): ExpoConfig => ({
     }
   },
   android: {
-    versionCode: 0.1,
+    versionCode: 1,
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']

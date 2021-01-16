@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>661638997772-sqa4raeghhrieqt9guljhcul9b51dvna.apps.googleusercontent.com</string>
+	<string>661638997772-65g8ce369ugck3ii4ulk6jhb3ijg51kl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.661638997772-sqa4raeghhrieqt9guljhcul9b51dvna</string>
+	<string>com.googleusercontent.apps.661638997772-65g8ce369ugck3ii4ulk6jhb3ijg51kl</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAOS1Yq_uNVctG89LB6Dl1PVhb_FAQRbRg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.xmflsct.app.mastodon</string>
+	<string>com.xmflsct.app.tooot</string>
 	<key>PROJECT_ID</key>
 	<string>xmflsct-mastodon-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:661638997772:ios:30b6bc26a1c84b5a9f8b29</string>
+	<string>1:661638997772:ios:c8d2e09264a344b09f8b29</string>
 </dict>
 </plist>

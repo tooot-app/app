@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:661638997772:android:0f929e1c9ebd7f969f8b29",
+        "mobilesdk_app_id": "1:661638997772:android:4fd02851f757f8fa9f8b29",
         "android_client_info": {
-          "package_name": "com.xmflsct.app.mastodon"
+          "package_name": "com.xmflsct.app.tooot"
         }
       },
       "oauth_client": [
