@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
+import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
@@ -22,6 +23,8 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import Constants from 'expo-constants'
+import * as Linking from 'expo-linking'
+import * as StoreReview from 'expo-store-review'
 import prettyBytes from 'pretty-bytes'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -102,15 +105,14 @@ const ScreenMeSettings: React.FC = () => {
             const availableLanguages = Object.keys(
               i18n.services.resourceStore.data
             )
+            const options = availableLanguages
+              .map(language => t(`content.language.options.${language}`))
+              .concat(t('content.language.options.cancel'))
+
             showActionSheetWithOptions(
               {
                 title: t('content.language.heading'),
-                options: [
-                  ...availableLanguages.map(language =>
-                    t(`content.language.options.${language}`)
-                  ),
-                  t('content.language.options.cancel')
-                ],
+                options,
                 cancelButtonIndex: i18n.languages.length
               },
               buttonIndex => {
@@ -212,16 +214,42 @@ const ScreenMeSettings: React.FC = () => {
       </MenuContainer>
       <MenuContainer>
         <MenuRow
+          title={t('content.support.heading')}
+          content={
+            <Icon
+              name='Heart'
+              size={StyleConstants.Font.Size.M}
+              color={theme.red}
+            />
+          }
+          iconBack='ChevronRight'
+          onPress={() => Linking.openURL('https://www.patreon.com/xmflsct')}
+        />
+        <MenuRow
+          title={t('content.copyrights.heading')}
+          content={
+            <Icon
+              name='Star'
+              size={StyleConstants.Font.Size.M}
+              color='#FF9500'
+            />
+          }
+          iconBack='ChevronRight'
+          onPress={() =>
+            StoreReview.isAvailableAsync().then(() =>
+              StoreReview.requestReview()
+            )
+          }
+        />
+      </MenuContainer>
+      <MenuContainer>
+        <MenuRow
           title={t('content.analytics.heading')}
           description={t('content.analytics.description')}
           switchValue={settingsAnalytics}
           switchOnValueChange={() =>
             dispatch(changeAnalytics(!settingsAnalytics))
           }
-        />
-        <MenuRow
-          title={t('content.copyrights.heading')}
-          iconBack='ChevronRight'
         />
         <Text style={[styles.version, { color: theme.secondary }]}>
           {t('content.version', { version: Constants.manifest.version })}

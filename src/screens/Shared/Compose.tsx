@@ -4,6 +4,7 @@ import { store } from '@root/store'
 import formatText from '@screens/Shared/Compose/formatText'
 import ComposeRoot from '@screens/Shared/Compose/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { updateStoreReview } from '@utils/slices/contextsSlice'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -19,6 +20,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
+import { useDispatch } from 'react-redux'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
@@ -161,6 +163,7 @@ const Compose: React.FC<SharedComposeProp> = ({
     ),
     [totalTextCount]
   )
+  const dispatch = useDispatch()
   const headerRight = useCallback(
     () => (
       <HeaderRight
@@ -172,6 +175,7 @@ const Compose: React.FC<SharedComposeProp> = ({
           composePost(params, composeState)
             .then(() => {
               haptics('Success')
+              dispatch(updateStoreReview(1))
               const queryKey: QueryKeyTimeline = [
                 'Timeline',
                 { page: 'Following' }

@@ -57,9 +57,10 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentImage
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 image={attachment}
-                imageIndex={index}
                 navigateToImagesViewer={navigateToImagesViewer}
               />
             )
@@ -67,6 +68,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentVideo
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
               />
@@ -75,6 +78,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentVideo
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
               />
@@ -83,6 +88,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentAudio
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 audio={attachment}
               />
@@ -91,6 +98,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentUnsupported
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 attachment={attachment}
               />

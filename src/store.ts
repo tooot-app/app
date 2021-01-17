@@ -4,6 +4,7 @@ import {
   configureStore,
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
+import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
 import { persistReducer, persistStore } from 'redux-persist'
@@ -12,6 +13,12 @@ import createSecureStore from 'redux-persist-expo-securestore'
 const secureStorage = createSecureStore()
 
 const prefix = 'mastodon_app'
+
+const contextsPersistConfig = {
+  key: 'contexts',
+  prefix,
+  storage: AsyncStorage
+}
 
 const instancesPersistConfig = {
   key: 'instances',
@@ -35,6 +42,7 @@ const rootPersistConfig = {
 }
 
 const rootReducer = combineReducers({
+  contexts: persistReducer(contextsPersistConfig, contextsSlice),
   instances: persistReducer(instancesPersistConfig, instancesSlice),
   settings: persistReducer(settingsPersistConfig, settingsSlice)
 })

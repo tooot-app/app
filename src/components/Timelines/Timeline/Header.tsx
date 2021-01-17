@@ -2,11 +2,14 @@ import { useNavigation } from '@react-navigation/native'
 import Icon from '@root/components/Icon'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
+import { updatePublicRemoteNotice } from '@utils/slices/contextsSlice'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 const TimelineHeader = React.memo(
   () => {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
     const { theme } = useTheme()
 
@@ -17,6 +20,7 @@ const TimelineHeader = React.memo(
           <Text
             style={{ color: theme.blue }}
             onPress={() => {
+              dispatch(updatePublicRemoteNotice(1))
               navigation.navigate('Screen-Me', {
                 screen: 'Screen-Me-Root',
                 params: { navigateAway: 'Screen-Me-Settings-UpdateRemote' }

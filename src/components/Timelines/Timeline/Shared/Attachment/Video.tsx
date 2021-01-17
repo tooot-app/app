@@ -1,17 +1,25 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
-import { Video } from 'expo-av'
 import Button from '@components/Button'
+import { StyleConstants } from '@utils/styles/constants'
+import { Video } from 'expo-av'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
-import { StyleConstants } from '@root/utils/styles/constants'
+import React, { useCallback, useRef, useState } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
+import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   video: Mastodon.AttachmentVideo | Mastodon.AttachmentGifv
 }
 
-const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
+const AttachmentVideo: React.FC<Props> = ({
+  total,
+  index,
+  sensitiveShown,
+  video
+}) => {
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
@@ -23,7 +31,6 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
     }
     await videoPlayer.current?.setPositionAsync(videoPosition)
     await videoPlayer.current?.presentFullscreenPlayer()
-    console.log('playing!!!')
     videoPlayer.current?.playAsync()
     setVideoLoading(false)
     videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
@@ -39,7 +46,12 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
   }, [videoLoaded, videoPosition])
 
   return (
-    <View style={styles.base}>
+    <View
+      style={[
+        styles.base,
+        { aspectRatio: attachmentAspectRatio({ total, index }) }
+      ]}
+    >
       <Video
         ref={videoPlayer}
         style={{
@@ -90,7 +102,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2
   },
   overlay: {

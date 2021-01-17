@@ -14,24 +14,55 @@ import { Image as ImageCache } from 'react-native-expo-image-cache'
 import { useTheme } from '@utils/styles/ThemeManager'
 
 type CancelPromise = ((reason?: Error) => void) | undefined
-type ImageSize = { width: number; height: number }
 interface ImageSizeOperation {
-  start: () => Promise<ImageSize>
+  start: () => Promise<string>
   cancel: CancelPromise
 }
-const getImageSize = (uri: string): ImageSizeOperation => {
+const getImageSize = ({
+  preview,
+  original,
+  remote
+}: {
+  preview?: string
+  original: string
+  remote?: string
+}): ImageSizeOperation => {
   let cancel: CancelPromise
-  const start = (): Promise<ImageSize> =>
-    new Promise<{ width: number; height: number }>((resolve, reject) => {
+  const start = (): Promise<string> =>
+    new Promise<string>((resolve, reject) => {
       cancel = reject
       Image.getSize(
-        uri,
-        (width, height) => {
+        preview || '',
+        () => {
           cancel = undefined
-          resolve({ width, height })
+          resolve(preview!)
         },
-        error => {
-          reject(error)
+        () => {
+          cancel = reject
+          Image.getSize(
+            original,
+            () => {
+              cancel = undefined
+              resolve(original)
+            },
+            () => {
+              cancel = reject
+              if (!remote) {
+                reject()
+              } else {
+                Image.getSize(
+                  remote,
+                  () => {
+                    cancel = undefined
+                    resolve(remote)
+                  },
+                  error => {
+                    reject(error)
+                  }
+                )
+              }
+            }
+          )
         }
       )
     })
@@ -61,51 +92,22 @@ const GracefullyImage: React.FC<Props> = ({
   const { mode, theme } = useTheme()
 
   const [imageVisible, setImageVisible] = useState<string>()
-  const [imageLoadingFailed, setImageLoadingFailed] = useState(false)
+
   useEffect(() => {
+    let mounted = true
     let cancel: CancelPromise
     const sideEffect = async (): Promise<void> => {
       try {
-        if (uri.preview) {
-          const tryPreview = getImageSize(uri.preview)
-          cancel = tryPreview.cancel
-          const res = await tryPreview.start()
-          if (res) {
-            setImageVisible(uri.preview)
-            return
-          }
+        const prefetchImage = getImageSize(uri as { original: string })
+        cancel = prefetchImage.cancel
+        const res = await prefetchImage.start()
+        if (mounted) {
+          setImageVisible(res)
         }
+        return
       } catch (error) {
         if (__DEV__) console.warn('Image preview', error)
       }
-
-      try {
-        const tryOriginal = getImageSize(uri.original!)
-        cancel = tryOriginal.cancel
-        const res = await tryOriginal.start()
-        if (res) {
-          setImageVisible(uri.original!)
-          return
-        }
-      } catch (error) {
-        if (__DEV__) console.warn('Image original', error)
-      }
-
-      try {
-        if (uri.remote) {
-          const tryRemote = getImageSize(uri.remote)
-          cancel = tryRemote.cancel
-          const res = await tryRemote.start()
-          if (res) {
-            setImageVisible(uri.remote)
-            return
-          }
-        }
-      } catch (error) {
-        if (__DEV__) console.warn('Image remote', error)
-      }
-
-      setImageLoadingFailed(true)
     }
 
     if (uri.original) {
@@ -113,6 +115,7 @@ const GracefullyImage: React.FC<Props> = ({
     }
 
     return () => {
+      mounted = false
       if (cancel) {
         cancel()
       }

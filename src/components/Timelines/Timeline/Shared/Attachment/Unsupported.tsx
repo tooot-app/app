@@ -7,13 +7,18 @@ import { Surface } from 'gl-react-expo'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
+import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   attachment: Mastodon.AttachmentUnknown
 }
 
 const AttachmentUnsupported: React.FC<Props> = ({
+  total,
+  index,
   sensitiveShown,
   attachment
 }) => {
@@ -21,7 +26,12 @@ const AttachmentUnsupported: React.FC<Props> = ({
   const { theme } = useTheme()
 
   return (
-    <View style={styles.base}>
+    <View
+      style={[
+        styles.base,
+        { aspectRatio: attachmentAspectRatio({ total, index }) }
+      ]}
+    >
       {attachment.blurhash ? (
         <Surface
           style={{
@@ -62,7 +72,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2,
     justifyContent: 'center',
     alignItems: 'center'

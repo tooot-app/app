@@ -13,7 +13,7 @@ export interface Props {
 
   title: string
   description?: string
-  content?: string
+  content?: string | React.ReactNode
 
   switchValue?: boolean
   switchDisabled?: boolean
@@ -90,26 +90,28 @@ const MenuRow: React.FC<Props> = ({
             </View>
           </View>
 
-          {(content && content.length) ||
-          switchValue !== undefined ||
-          iconBack ? (
+          {content || switchValue !== undefined || iconBack ? (
             <View style={styles.back}>
-              {content && content.length ? (
-                <>
-                  <Text
-                    style={[
-                      styles.content,
-                      {
-                        color: theme.secondary,
-                        opacity: !iconBack && loading ? 0 : 1
-                      }
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {content}
-                  </Text>
-                  {loading && !iconBack && loadingSpinkit}
-                </>
+              {content ? (
+                typeof content === 'string' ? (
+                  <>
+                    <Text
+                      style={[
+                        styles.content,
+                        {
+                          color: theme.secondary,
+                          opacity: !iconBack && loading ? 0 : 1
+                        }
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {content}
+                    </Text>
+                    {loading && !iconBack && loadingSpinkit}
+                  </>
+                ) : (
+                  content
+                )
               ) : null}
               {switchValue !== undefined ? (
                 <Switch

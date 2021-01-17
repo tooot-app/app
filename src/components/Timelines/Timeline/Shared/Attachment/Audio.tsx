@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import GracefullyImage from '@components/GracefullyImage'
 import { Slider } from '@sharcoux/slider'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -7,14 +8,21 @@ import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import GracefullyImage from '@components/GracefullyImage'
+import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   audio: Mastodon.AttachmentAudio
 }
 
-const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
+const AttachmentAudio: React.FC<Props> = ({
+  total,
+  index,
+  sensitiveShown,
+  audio
+}) => {
   const { theme } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
@@ -39,9 +47,17 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])
-  console.log(audio)
+
   return (
-    <View style={[styles.base, { backgroundColor: theme.disabled }]}>
+    <View
+      style={[
+        styles.base,
+        {
+          backgroundColor: theme.disabled,
+          aspectRatio: attachmentAspectRatio({ total, index })
+        }
+      ]}
+    >
       <View style={styles.overlay}>
         {sensitiveShown ? (
           audio.blurhash && (
@@ -116,7 +132,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2,
     flexDirection: 'row'
   },

@@ -39,6 +39,7 @@
     "expo-secure-store": "~9.3.0",
     "expo-splash-screen": "~0.8.1",
     "expo-status-bar": "~1.0.3",
+    "expo-store-review": "~2.3.0",
     "expo-video-thumbnails": "~4.4.0",
     "expo-web-browser": "~8.6.0",
     "gl-react": "^4.0.1",

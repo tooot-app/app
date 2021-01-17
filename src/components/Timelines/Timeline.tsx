@@ -16,10 +16,11 @@ import {
   StyleSheet
 } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
 import { InfiniteData, useQueryClient } from 'react-query'
+import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
 
 export interface Props {
   page: App.Pages
@@ -212,6 +213,8 @@ const Timeline: React.FC<Props> = ({
     )
   }, [])
 
+  const publicRemoteNotice = useSelector(getPublicRemoteNotice).hidden
+
   useScrollToTop(flRef)
 
   return (
@@ -231,7 +234,8 @@ const Timeline: React.FC<Props> = ({
       {...(!disableRefresh && { refreshControl })}
       ItemSeparatorComponent={ItemSeparatorComponent}
       {...(queryKey &&
-        queryKey[1].page === 'RemotePublic' && { ListHeaderComponent })}
+        queryKey[1].page === 'RemotePublic' &&
+        !publicRemoteNotice && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
       maintainVisibleContentPosition={{
         minIndexForVisible: 0,

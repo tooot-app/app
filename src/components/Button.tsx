@@ -122,7 +122,7 @@ const Button: React.FC<Props> = ({
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
             />
-            {loading && loadingSpinkit}
+            {loading ? loadingSpinkit : null}
           </>
         )
       case 'text':
@@ -141,7 +141,7 @@ const Button: React.FC<Props> = ({
               children={content}
               testID='text'
             />
-            {loading && loadingSpinkit}
+            {loading ? loadingSpinkit : null}
           </>
         )
     }

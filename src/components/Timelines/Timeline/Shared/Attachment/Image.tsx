@@ -1,22 +1,25 @@
+import GracefullyImage from '@components/GracefullyImage'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
 import { StyleSheet } from 'react-native'
-import { StyleConstants } from '@utils/styles/constants'
-import GracefullyImage from '@components/GracefullyImage'
+import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   image: Mastodon.AttachmentImage
-  imageIndex: number
   navigateToImagesViewer: (imageIndex: number) => void
 }
 
 const AttachmentImage: React.FC<Props> = ({
+  total,
+  index,
   sensitiveShown,
   image,
-  imageIndex,
   navigateToImagesViewer
 }) => {
-  const onPress = useCallback(() => navigateToImagesViewer(imageIndex), [])
+  const onPress = useCallback(() => navigateToImagesViewer(index), [])
 
   return (
     <GracefullyImage
@@ -28,7 +31,10 @@ const AttachmentImage: React.FC<Props> = ({
       }}
       blurhash={image.blurhash}
       onPress={onPress}
-      style={styles.base}
+      style={[
+        styles.base,
+        { aspectRatio: attachmentAspectRatio({ total, index }) }
+      ]}
     />
   )
 }
@@ -37,7 +43,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2
   }
 })
