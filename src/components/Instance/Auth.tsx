@@ -8,12 +8,14 @@ import { useDispatch } from 'react-redux'
 
 export interface Props {
   instanceDomain: string
+  // Domain can be different than uri
+  instanceUri: Mastodon.Instance['uri']
   appData: InstanceLocal['appData']
   goBack?: boolean
 }
 
 const InstanceAuth = React.memo(
-  ({ instanceDomain, appData, goBack }: Props) => {
+  ({ instanceDomain, instanceUri, appData, goBack }: Props) => {
     let redirectUri: string
     switch (Constants.manifest.releaseChannel) {
       case 'production':
@@ -70,6 +72,7 @@ const InstanceAuth = React.memo(
             localAddInstance({
               url: instanceDomain,
               token: accessToken,
+              uri: instanceUri,
               appData
             })
           )

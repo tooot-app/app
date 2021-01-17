@@ -244,6 +244,7 @@ const ComponentInstance: React.FC<Props> = ({
       {type === 'local' && appData ? (
         <InstanceAuth
           instanceDomain={instanceDomain!}
+          instanceUri={instanceQuery.data!.uri}
           appData={appData}
           goBack={goBack}
         />

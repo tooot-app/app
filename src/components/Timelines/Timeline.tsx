@@ -56,6 +56,7 @@ const Timeline: React.FC<Props> = ({
     refetch,
     isSuccess,
     isFetching,
+    isLoading,
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
@@ -170,7 +171,8 @@ const Timeline: React.FC<Props> = ({
       <RefreshControl
         {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          isFetchingPreviousPage || (isFetching && !isFetchingNextPage)
+          isFetchingPreviousPage ||
+          (isFetching && !isFetchingNextPage && !isLoading)
         }
         onRefresh={() => {
           if (hasPreviousPage) {
@@ -192,7 +194,13 @@ const Timeline: React.FC<Props> = ({
         }}
       />
     ),
-    [hasPreviousPage, isFetchingPreviousPage, isFetching, isFetchingNextPage]
+    [
+      hasPreviousPage,
+      isFetchingPreviousPage,
+      isFetching,
+      isFetchingNextPage,
+      isLoading
+    ]
   )
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
@@ -209,10 +217,10 @@ const Timeline: React.FC<Props> = ({
   return (
     <FlatList
       ref={flRef}
-      windowSize={11}
+      windowSize={8}
       data={flattenData}
-      initialNumToRender={5}
-      maxToRenderPerBatch={5}
+      initialNumToRender={3}
+      maxToRenderPerBatch={3}
       style={styles.flatList}
       renderItem={renderItem}
       onEndReached={onEndReached}

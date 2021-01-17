@@ -154,7 +154,7 @@ const GracefullyImage: React.FC<Props> = ({
       children={children}
       style={[style, dimension && { ...dimension }]}
       {...(onPress
-        ? !imageVisible
+        ? hidden
           ? { disabled: true }
           : { onPress }
         : { disabled: true })}

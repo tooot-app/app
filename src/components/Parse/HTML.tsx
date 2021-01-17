@@ -68,7 +68,7 @@ const renderNode = ({
             mention => mention.url === href
           )
           const differentAccount = routeParams?.account
-            ? routeParams.account.id !== mentions[accountIndex].id
+            ? routeParams.account.id !== mentions[accountIndex]?.id
             : true
           return (
             <Text

@@ -123,19 +123,28 @@ const Compose: React.FC<SharedComposeProp> = ({
       <HeaderLeft
         type='text'
         content='退出编辑'
-        onPress={() =>
-          Alert.alert('确认取消编辑？', '', [
-            {
-              text: '退出编辑',
-              style: 'destructive',
-              onPress: () => navigation.goBack()
-            },
-            { text: '继续编辑', style: 'cancel' }
-          ])
-        }
+        onPress={() => {
+          if (
+            totalTextCount === 0 &&
+            composeState.attachments.uploads.length === 0 &&
+            composeState.poll.active === false
+          ) {
+            navigation.goBack()
+            return
+          } else {
+            Alert.alert('确认取消编辑？', '', [
+              {
+                text: '退出编辑',
+                style: 'destructive',
+                onPress: () => navigation.goBack()
+              },
+              { text: '继续编辑', style: 'cancel' }
+            ])
+          }
+        }}
       />
     ),
-    []
+    [totalTextCount]
   )
   const headerCenter = useCallback(
     () => (

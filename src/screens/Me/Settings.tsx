@@ -98,33 +98,28 @@ const ScreenMeSettings: React.FC = () => {
           title={t('content.language.heading')}
           content={t(`content.language.options.${settingsLanguage}`)}
           iconBack='ChevronRight'
-          onPress={() =>
+          onPress={() => {
+            const availableLanguages = Object.keys(
+              i18n.services.resourceStore.data
+            )
             showActionSheetWithOptions(
               {
                 title: t('content.language.heading'),
                 options: [
-                  t('content.language.options.zh'),
-                  t('content.language.options.en'),
+                  ...availableLanguages.map(language =>
+                    t(`content.language.options.${language}`)
+                  ),
                   t('content.language.options.cancel')
                 ],
-                cancelButtonIndex: 2
+                cancelButtonIndex: i18n.languages.length
               },
               buttonIndex => {
-                switch (buttonIndex) {
-                  case 0:
-                    haptics('Success')
-                    dispatch(changeLanguage('zh-CN'))
-                    i18n.changeLanguage('zh-CN')
-                    break
-                  case 1:
-                    haptics('Success')
-                    dispatch(changeLanguage('en-US'))
-                    i18n.changeLanguage('en-US')
-                    break
-                }
+                haptics('Success')
+                dispatch(changeLanguage(availableLanguages[buttonIndex]))
+                i18n.changeLanguage(availableLanguages[buttonIndex])
               }
             )
-          }
+          }}
         />
         <MenuRow
           title={t('content.theme.heading')}
@@ -229,7 +224,7 @@ const ScreenMeSettings: React.FC = () => {
           iconBack='ChevronRight'
         />
         <Text style={[styles.version, { color: theme.secondary }]}>
-          {t('content.version', { version: '1.0.0' })}
+          {t('content.version', { version: Constants.manifest.version })}
         </Text>
       </MenuContainer>
 

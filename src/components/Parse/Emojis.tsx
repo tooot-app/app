@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
+import { Image } from 'react-native-expo-image-cache'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { StyleConstants } from '@utils/styles/constants'
 
@@ -49,10 +50,7 @@ const ParseEmojis: React.FC<Props> = ({
                 <Text key={i}>
                   {/* When emoji starts a paragraph, lineHeight will break */}
                   {i === 0 ? <Text> </Text> : null}
-                  <Image
-                    source={{ uri: emojis[emojiIndex].url }}
-                    style={[styles.image]}
-                  />
+                  <Image uri={emojis[emojiIndex].url} style={[styles.image]} />
                 </Text>
               )
             } else {

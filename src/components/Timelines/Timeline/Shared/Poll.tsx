@@ -1,9 +1,9 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
-import { ParseEmojis } from '@root/components/Parse'
-import { toast } from '@root/components/toast'
+import { toast } from '@components/toast'
 import {
   QueryKeyTimeline,
   useTimelineMutation
@@ -32,7 +32,7 @@ const TimelinePoll: React.FC<Props> = ({
   sameAccount
 }) => {
   const { mode, theme } = useTheme()
-  const { t, i18n } = useTranslation('timeline')
+  const { t } = useTranslation('timeline')
 
   const [allOptions, setAllOptions] = useState(
     new Array(poll.options.length).fill(false)
@@ -220,7 +220,7 @@ const TimelinePoll: React.FC<Props> = ({
           <Icon
             style={styles.optionSelection}
             name={isSelected(index)}
-            size={StyleConstants.Font.Size.L}
+            size={StyleConstants.Font.Size.M}
             color={theme.primary}
           />
           <Text style={styles.optionText}>
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   optionSelection: {
+    paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
     marginRight: StyleConstants.Spacing.S
   },
   optionPercentage: {

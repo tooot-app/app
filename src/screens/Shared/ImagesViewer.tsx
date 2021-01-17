@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   Share,
+  StatusBar,
   StyleSheet,
   Text
 } from 'react-native'
@@ -57,20 +58,23 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
 
   const component = useCallback(
     () => (
-      <ImageViewer
-        index={initialIndex}
-        imageUrls={imageUrls}
-        pageAnimateTime={250}
-        enableSwipeDown={true}
-        useNativeDriver={true}
-        swipeDownThreshold={100}
-        renderIndicator={() => <></>}
-        saveToLocalByLongPress={false}
-        onSwipeDown={() => navigation.goBack()}
-        style={{ flex: 1, marginBottom: 44 + safeAreaInsets.bottom }}
-        onChange={index => index !== undefined && setCurrentIndex(index)}
-        renderImage={props => <TheImage {...props} imageUrls={imageUrls} />}
-      />
+      <>
+        <StatusBar barStyle='light-content' />
+        <ImageViewer
+          index={initialIndex}
+          imageUrls={imageUrls}
+          pageAnimateTime={250}
+          enableSwipeDown={true}
+          useNativeDriver={true}
+          swipeDownThreshold={100}
+          renderIndicator={() => <></>}
+          saveToLocalByLongPress={false}
+          onSwipeDown={() => navigation.goBack()}
+          style={{ flex: 1, marginBottom: 44 + safeAreaInsets.bottom }}
+          onChange={index => index !== undefined && setCurrentIndex(index)}
+          renderImage={props => <TheImage {...props} imageUrls={imageUrls} />}
+        />
+      </>
     ),
     []
   )
@@ -85,7 +89,9 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
   }, [currentIndex])
 
   return (
-    <Stack.Navigator screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
+    >
       <Stack.Screen
         name='Screen-Shared-ImagesViewer-Root'
         component={component}

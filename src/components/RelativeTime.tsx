@@ -5,22 +5,20 @@ import TimeAgo from 'react-timeago'
 // @ts-ignore
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
-import zh from '@root/i18n/zh/components/relativeTime'
-import en from '@root/i18n/en/components/relativeTime'
-
 export interface Props {
   date: string
 }
 
 const RelativeTime: React.FC<Props> = ({ date }) => {
-  const { i18n } = useTranslation()
-  const mapLanguageToTranslation: { [key: string]: Object } = {
-    'zh-CN': zh,
-    'en-US': en
-  }
-  const formatter = buildFormatter(mapLanguageToTranslation[i18n.language])
+  const { t } = useTranslation('relativeTime')
 
-  return <TimeAgo date={date} formatter={formatter} component={Text} />
+  return (
+    <TimeAgo
+      date={date}
+      component={Text}
+      formatter={buildFormatter(t('strings', { returnObjects: true }))}
+    />
+  )
 }
 
 export default RelativeTime

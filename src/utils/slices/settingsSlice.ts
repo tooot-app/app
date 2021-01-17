@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
+import * as Localization from 'expo-localization'
+
+export const supportedLngs = ['zh-Hans', 'en']
 
 export type SettingsState = {
-  language: 'zh-CN' | 'en-US' | undefined
+  language: 'zh-Hans' | 'en'
   theme: 'light' | 'dark' | 'auto'
   browser: 'internal' | 'external'
   analytics: boolean
 }
 
 export const settingsInitialState = {
-  language: undefined,
+  language: Localization.locale,
   theme: 'auto',
   browser: 'internal',
   analytics: true

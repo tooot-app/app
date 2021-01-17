@@ -201,16 +201,27 @@ const sharedScreens = (
         // https://github.com/react-navigation/react-navigation/issues/6746#issuecomment-583897436
         headerCenter: () => (
           <View style={styles.searchBar}>
-            <Text
-              style={{ ...StyleConstants.FontStyle.M, color: theme.primary }}
-            >
-              搜索
-            </Text>
+            <TextInput
+              editable={false}
+              children={
+                <Text
+                  style={[
+                    styles.textInput,
+                    {
+                      color: theme.primary
+                    }
+                  ]}
+                  children='搜索'
+                />
+              }
+            />
             <TextInput
               style={[
                 styles.textInput,
                 {
-                  color: theme.primary
+                  flex: 1,
+                  color: theme.primary,
+                  paddingLeft: StyleConstants.Spacing.XS
                 }
               ]}
               autoFocus
@@ -251,10 +262,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textInput: {
-    ...StyleConstants.FontStyle.M,
-    paddingLeft: StyleConstants.Spacing.XS,
-    marginBottom:
-      (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2
+    fontSize: StyleConstants.Font.Size.M
   }
 })
 

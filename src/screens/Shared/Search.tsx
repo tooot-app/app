@@ -150,7 +150,7 @@ const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
           <ComponentAccount
             account={item}
             onPress={() => {
-              navigation.push('Screen-Shared-Account', { item })
+              navigation.push('Screen-Shared-Account', { account: item })
             }}
           />
         )

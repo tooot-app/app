@@ -4,8 +4,8 @@ export default {
     language: {
       heading: '切换语言',
       options: {
-        zh: '简体中文',
-        en: 'English',
+        'en': 'English',
+        'zh-Hans': '简体中文',
         cancel: '$t(common:buttons.cancel)'
       }
     },

@@ -21,5 +21,6 @@ export default {
   sharedAnnouncements: require('./screens/sharedAnnouncements').default,
 
   relationship: require('./components/relationship').default,
+  relativeTime: require('./components/relativeTime').default,
   timeline: require('./components/timeline').default
 }

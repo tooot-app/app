@@ -15,6 +15,7 @@ export interface Props {
 
 const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
   ({ account }, ref) => {
+    const { i18n } = useTranslation()
     const { theme } = useTheme()
     const { t } = useTranslation('sharedAccount')
     const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
@@ -26,7 +27,11 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
         width={StyleConstants.Font.Size.S * 8}
         height={StyleConstants.Font.LineHeight.S}
         style={{ marginBottom: StyleConstants.Spacing.M }}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
+        shimmerColors={[
+          theme.shimmerDefault,
+          theme.shimmerHighlight,
+          theme.shimmerDefault
+        ]}
       >
         <View style={styles.created}>
           <Icon
@@ -42,11 +47,14 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
             }}
           >
             {t('content.created_at', {
-              date: new Date(account?.created_at!).toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })
+              date: new Date(account?.created_at!).toLocaleDateString(
+                i18n.language,
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                }
+              )
             })}
           </Text>
         </View>

@@ -3,6 +3,7 @@ import analytics from '@components/analytics'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import * as AuthSession from 'expo-auth-session'
+import * as Localization from 'expo-localization'
 
 export type InstanceLocal = {
   appData: {
@@ -11,6 +12,7 @@ export type InstanceLocal = {
   }
   url: string
   token: string
+  uri: Mastodon.Instance['uri']
   account: {
     id: Mastodon.Account['id']
     preferences: Mastodon.Preferences
@@ -50,10 +52,12 @@ export const localAddInstance = createAsyncThunk(
   async ({
     url,
     token,
+    uri,
     appData
   }: {
     url: InstanceLocal['url']
     token: InstanceLocal['token']
+    uri: Mastodon.Instance['uri']
     appData: InstanceLocal['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
     const { store } = require('@root/store')
@@ -101,6 +105,7 @@ export const localAddInstance = createAsyncThunk(
         appData,
         url,
         token,
+        uri,
         account: {
           id,
           preferences
@@ -159,7 +164,7 @@ export const instancesInitialState: InstancesState = {
     instances: []
   },
   remote: {
-    url: 'm.cmx.im'
+    url: Localization.locale.includes('zh') ? 'm.cmx.im' : 'mastodon.social'
   }
 }
 
