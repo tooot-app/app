@@ -1,18 +1,18 @@
 export default {
   heading: '我的长毛象',
   content: {
-    login: {
-      server: {
-        placeholder: '请输入服务器'
-      },
-      button: '登录'
-    },
     collections: {
       conversations: '$t(meConversations:heading)',
       bookmarks: '$t(meBookmarks:heading)',
       favourites: '$t(meFavourites:heading)',
       lists: '$t(meLists:heading)',
-      announcements: '$t(sharedAnnouncements:heading)'
+      announcements: {
+        heading: '$t(sharedAnnouncements:heading)',
+        content: {
+          unread: '{{amount}} 条未读公告',
+          read: '无未读公告'
+        }
+      }
     },
     settings: '$t(meSettings:heading)',
     logout: {

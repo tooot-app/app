@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const RelativeTime: React.FC<Props> = ({ date }) => {
-  const { t } = useTranslation('relativeTime')
+  const { t } = useTranslation('componentRelativeTime')
 
   return (
     <TimeAgo

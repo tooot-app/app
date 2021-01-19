@@ -11,14 +11,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Platform,
-  Pressable,
-  Share,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
 export interface Props {
@@ -29,7 +22,7 @@ export interface Props {
 
 const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   const navigation = useNavigation()
-  const { t } = useTranslation()
+  const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
@@ -84,7 +77,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(
-            `timeline:shared.actions.${correctParam.payload.property}.function`
+            `shared.actions.${correctParam.payload.property}.function`
           )
         }),
         ...(err.status &&
@@ -95,7 +88,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
             description: err.data.error
           })
       })
-      queryClient.setQueryData(queryKey, oldData)
+      queryClient.invalidateQueries(queryKey)
     }
   })
 
@@ -150,18 +143,6 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
       }),
     [status.bookmarked]
   )
-  const onPressShare = useCallback(() => {
-    switch (Platform.OS) {
-      case 'ios':
-        return Share.share({
-          url: status.uri
-        })
-      case 'android':
-        return Share.share({
-          message: status.uri
-        })
-    }
-  }, [])
 
   const childrenReply = useMemo(
     () => (
@@ -220,12 +201,6 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     ),
     [status.bookmarked]
   )
-  const childrenShare = useMemo(
-    () => (
-      <Icon name='Share2' color={iconColor} size={StyleConstants.Font.Size.L} />
-    ),
-    []
-  )
 
   return (
     <>
@@ -256,12 +231,6 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
           onPress={onPressBookmark}
           children={childrenBookmark}
         />
-
-        <Pressable
-          style={styles.action}
-          onPress={onPressShare}
-          children={childrenShare}
-        />
       </View>
     </>
   )
@@ -269,16 +238,13 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
 const styles = StyleSheet.create({
   actions: {
-    width: '100%',
-    flex: 1,
     flexDirection: 'row',
     marginTop: StyleConstants.Spacing.S
   },
   action: {
-    width: '20%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
     paddingVertical: StyleConstants.Spacing.S
   }
 })

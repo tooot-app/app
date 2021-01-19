@@ -9,6 +9,7 @@ import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Alert,
   Keyboard,
@@ -35,6 +36,7 @@ const Compose: React.FC<SharedComposeProp> = ({
   route: { params },
   navigation
 }) => {
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
   const queryClient = useQueryClient()
 
@@ -114,17 +116,11 @@ const Compose: React.FC<SharedComposeProp> = ({
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
 
-  const postButtonText = {
-    conversation: '回复私信',
-    reply: '发布回复',
-    edit: '发嘟嘟'
-  }
-
   const headerLeft = useCallback(
     () => (
       <HeaderLeft
         type='text'
-        content='退出编辑'
+        content={t('heading.left.button')}
         onPress={() => {
           if (
             totalTextCount === 0 &&
@@ -134,13 +130,16 @@ const Compose: React.FC<SharedComposeProp> = ({
             navigation.goBack()
             return
           } else {
-            Alert.alert('确认取消编辑？', '', [
+            Alert.alert(t('heading.left.alert.title'), undefined, [
               {
-                text: '退出编辑',
+                text: t('heading.left.alert.buttons.exit'),
                 style: 'destructive',
                 onPress: () => navigation.goBack()
               },
-              { text: '继续编辑', style: 'cancel' }
+              {
+                text: t('heading.left.alert.buttons.continue'),
+                style: 'cancel'
+              }
             ])
           }
         }}
@@ -168,7 +167,11 @@ const Compose: React.FC<SharedComposeProp> = ({
     () => (
       <HeaderRight
         type='text'
-        content={params?.type ? postButtonText[params.type] : '发嘟嘟'}
+        content={
+          params?.type
+            ? t(`heading.right.button.${params.type}`)
+            : t('heading.right.button.default')
+        }
         onPress={() => {
           composeDispatch({ type: 'posting', payload: true })
 
@@ -190,9 +193,9 @@ const Compose: React.FC<SharedComposeProp> = ({
             .catch(() => {
               haptics('Error')
               composeDispatch({ type: 'posting', payload: false })
-              Alert.alert('发布失败', '', [
+              Alert.alert(t('heading.right.alert.title'), undefined, [
                 {
-                  text: '返回重试'
+                  text: t('heading.right.alert.button')
                 }
               ])
             })

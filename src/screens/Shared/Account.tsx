@@ -1,7 +1,8 @@
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
-import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/ActionsAccount'
+import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/Account'
+import HeaderActionsShare from '@components/Timelines/Timeline/Shared/HeaderActions/Share'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -97,6 +98,12 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
             setBottomSheetVisible={setBottomSheetVisible}
           />
         )}
+
+        <HeaderActionsShare
+          url={account.url}
+          type='account'
+          setBottomSheetVisible={setBottomSheetVisible}
+        />
       </BottomSheet>
     </AccountContext.Provider>
   )

@@ -10,7 +10,7 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import {
   Dimensions,
   Image,
@@ -33,7 +33,7 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
   const { theme } = useTheme()
   const bottomTabBarHeight = useBottomTabBarHeight()
   const [index, setIndex] = useState(0)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation('sharedAnnouncements')
 
   const query = useAnnouncementQuery({
     showAll,
@@ -80,7 +80,10 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
           ]}
         >
           <Text style={[styles.published, { color: theme.secondary }]}>
-            发布于 <RelativeTime date={item.published_at} />
+            <Trans
+              i18nKey='sharedAnnouncements:content.published'
+              components={[<RelativeTime date={item.published_at} />]}
+            />
           </Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
             <ParseHTML
@@ -145,7 +148,9 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
           ) : null}
           <Button
             type='text'
-            content={item.read ? '已读' : '标记阅读'}
+            content={
+              item.read ? t('content.button.read') : t('content.button.unread')
+            }
             loading={mutation.isLoading}
             disabled={item.read}
             onPress={() =>

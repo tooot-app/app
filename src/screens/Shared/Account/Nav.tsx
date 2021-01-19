@@ -92,5 +92,4 @@ const styles = StyleSheet.create({
   }
 })
 
-// export default React.memo(AccountNav, (_, next) => next.account === undefined)
-export default AccountNav
+export default React.memo(AccountNav, (_, next) => next.account === undefined)

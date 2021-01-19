@@ -8,6 +8,7 @@ import React, {
   useContext,
   useMemo
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import ComposeContext from '../utils/createContext'
 import ComposeEditAttachmentImage from './Image'
@@ -28,6 +29,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
   altText,
   setAltText
 }) => {
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
   const { composeState } = useContext(ComposeContext)
   const theAttachment = composeState.attachments.uploads[index].remote!
@@ -41,6 +43,8 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
         const video = composeState.attachments.uploads[index]
         return (
           <AttachmentVideo
+            total={1}
+            index={0}
             sensitiveShown={false}
             video={
               video.local
@@ -62,7 +66,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
       {mediaDisplay}
       <View style={styles.altTextContainer}>
         <Text style={[styles.altTextInputHeading, { color: theme.primary }]}>
-          为附件添加文字说明
+          {t('content.editAttachment.content.altText.heading')}
         </Text>
         <TextInput
           style={[
@@ -74,9 +78,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
           maxLength={1500}
           multiline
           onChangeText={e => setAltText(e)}
-          placeholder={
-            '你可以为附件添加文字说明，以便更多人可以查看他们（包括视力障碍或视力受损人士）。\n\n优质的描述应该简洁明了，但要准确地描述照片中的内容，以便用户理解其含义。'
-          }
+          placeholder={t('content.editAttachment.content.altText.placeholder')}
           placeholderTextColor={theme.secondary}
           scrollEnabled
           value={altText}

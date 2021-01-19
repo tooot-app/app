@@ -7,6 +7,7 @@ import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 
@@ -191,6 +192,7 @@ const ParseHTML: React.FC<Props> = ({
   }, [])
   const rootComponent = useCallback(
     ({ children }) => {
+      const { t } = useTranslation('componentParse')
       const lineHeight = StyleConstants.Font.LineHeight[size]
 
       const [expandAllow, setExpandAllow] = useState(false)
@@ -249,7 +251,9 @@ const ParseHTML: React.FC<Props> = ({
                     color: theme.primary
                   }}
                 >
-                  {`${expanded ? '折叠' : '展开'}${expandHint}`}
+                  {expanded
+                    ? t('HTML.expanded.true', { hint: expandHint })
+                    : t('HTML.expanded.false', { hint: expandHint })}
                 </Text>
               </LinearGradient>
             </Pressable>

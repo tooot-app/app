@@ -1,8 +1,8 @@
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { Image } from 'react-native-expo-image-cache'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { StyleConstants } from '@utils/styles/constants'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 

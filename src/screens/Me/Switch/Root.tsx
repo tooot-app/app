@@ -12,6 +12,7 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   KeyboardAvoidingView,
   Platform,
@@ -59,7 +60,8 @@ const AccountButton: React.FC<Props> = ({
   )
 }
 
-const ScreenMeSwitchRoot = () => {
+const ScreenMeSwitchRoot: React.FC = () => {
+  const { t } = useTranslation('meSwitch')
   const { theme } = useTheme()
   const localInstances = useSelector(getLocalInstances)
   const localActiveIndex = useSelector(getLocalActiveIndex)
@@ -70,15 +72,11 @@ const ScreenMeSwitchRoot = () => {
       style={{ flex: 1 }}
     >
       <ScrollView keyboardShouldPersistTaps='handled'>
-        <View style={styles.firstSection}>
+        <View
+          style={[styles.firstSection, { borderBottomColor: theme.border }]}
+        >
           <Text style={[styles.header, { color: theme.primary }]}>
-            登录新的服务器
-          </Text>
-          <ComponentInstance type='local' disableHeaderImage goBack />
-        </View>
-        <View style={[styles.secondSection, { borderTopColor: theme.border }]}>
-          <Text style={[styles.header, { color: theme.primary }]}>
-            选择已有账号
+            {t('content.existing')}
           </Text>
           <View style={styles.accountButtons}>
             {localInstances.length
@@ -93,6 +91,13 @@ const ScreenMeSwitchRoot = () => {
               : null}
           </View>
         </View>
+
+        <View style={styles.secondSection}>
+          <Text style={[styles.header, { color: theme.primary }]}>
+            {t('content.new')}
+          </Text>
+          <ComponentInstance type='local' disableHeaderImage goBack />
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   )
@@ -105,12 +110,13 @@ const styles = StyleSheet.create({
     paddingVertical: StyleConstants.Spacing.S
   },
   firstSection: {
-    marginTop: StyleConstants.Spacing.S
+    marginTop: StyleConstants.Spacing.S,
+    marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+    paddingBottom: StyleConstants.Spacing.S,
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   secondSection: {
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    paddingTop: StyleConstants.Spacing.M,
-    borderTopWidth: StyleSheet.hairlineWidth
+    paddingTop: StyleConstants.Spacing.M
   },
   accountButtons: {
     flex: 1,

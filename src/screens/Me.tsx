@@ -7,7 +7,7 @@ import ScreenMeRoot from '@screens/Me/Root'
 import ScreenMeListsList from '@screens/Me/Root/Lists/List'
 import ScreenMeSettings from '@screens/Me/Settings'
 import ScreenMeSwitch from '@screens/Me/Switch'
-import UpdateRemote from '@screens/Me/UpdateRemote'
+import ScreenMeUpdateRemote from '@screens/Me/UpdateRemote'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -89,7 +89,9 @@ const ScreenMe: React.FC = () => {
           headerTitle: t('meListsList:heading', { list: route.params.title }),
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
-              <HeaderCenter content={t('meListsList:heading')} />
+              <HeaderCenter
+                content={t('meListsList:heading', { list: route.params.title })}
+              />
             )
           }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -110,7 +112,7 @@ const ScreenMe: React.FC = () => {
       />
       <Stack.Screen
         name='Screen-Me-Settings-UpdateRemote'
-        component={UpdateRemote}
+        component={ScreenMeUpdateRemote}
         options={({ navigation }: any) => ({
           headerTitle: t('meSettingsUpdateRemote:heading'),
           ...(Platform.OS === 'android' && {
@@ -127,17 +129,11 @@ const ScreenMe: React.FC = () => {
         options={({ navigation }: any) => ({
           stackPresentation: 'fullScreenModal',
           headerShown: false,
-          headerTitle: t('meSettings:heading'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => (
-              <HeaderCenter content={t('meSettings:heading')} />
-            )
-          }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
         })}
       />
 
-      {sharedScreens(Stack)}
+      {sharedScreens(Stack as any)}
     </Stack.Navigator>
   )
 }

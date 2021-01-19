@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -32,6 +33,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
   navigation
 }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { t } = useTranslation('sharedCompose')
   const theAttachment = composeState.attachments.uploads[index].remote!
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -71,7 +73,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
     () => (
       <HeaderLeft
         type='text'
-        content='取消'
+        content={t('content.editAttachment.header.left')}
         onPress={() => navigation.goBack()}
       />
     ),
@@ -81,7 +83,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
     () => (
       <HeaderRight
         type='text'
-        content='应用'
+        content={t('content.editAttachment.header.right.button')}
         loading={isSubmitting}
         onPress={() => {
           if (!altText && focus.current.x === 0 && focus.current.y === 0) {
@@ -105,24 +107,36 @@ const ComposeEditAttachment: React.FC<Props> = ({
           })
             .then(() => {
               haptics('Success')
-              Alert.alert('修改成功', '', [
-                {
-                  text: '好的',
-                  onPress: () => {
-                    navigation.goBack()
+              Alert.alert(
+                t('content.editAttachment.header.right.succeed.title'),
+                undefined,
+                [
+                  {
+                    text: t(
+                      'content.editAttachment.header.right.succeed.button'
+                    ),
+                    onPress: () => {
+                      navigation.goBack()
+                    }
                   }
-                }
-              ])
+                ]
+              )
             })
             .catch(() => {
               setIsSubmitting(false)
               haptics('Error')
-              Alert.alert('修改失败', '', [
-                {
-                  text: '返回重试',
-                  style: 'cancel'
-                }
-              ])
+              Alert.alert(
+                t('content.editAttachment.header.right.failed.title'),
+                undefined,
+                [
+                  {
+                    text: t(
+                      'content.editAttachment.header.right.failed.button'
+                    ),
+                    style: 'cancel'
+                  }
+                ]
+              )
             })
         }}
       />

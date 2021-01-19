@@ -18,7 +18,7 @@ const TimelineActioned: React.FC<Props> = ({
   action,
   notification = false
 }) => {
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
   const navigation = useNavigation()
   const name = account.display_name || account.username

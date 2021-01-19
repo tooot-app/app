@@ -85,8 +85,7 @@ const client = async <T = unknown>({
           ctx.bold(' API '),
           ctx.bold('response'),
           error.response.status,
-          error.response.data.error,
-          error.request
+          error.response.data.error
         )
         return Promise.reject(error.response)
       } else if (error.request) {

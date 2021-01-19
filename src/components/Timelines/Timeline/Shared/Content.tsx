@@ -17,7 +17,7 @@ const TimelineContent: React.FC<Props> = ({
   highlighted = false,
   disableDetails = false
 }) => {
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   return (
     <>

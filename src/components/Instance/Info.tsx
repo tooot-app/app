@@ -3,6 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 
@@ -24,6 +25,7 @@ const InstanceInfo = React.memo(
     potentialWidth,
     potentialLines = 1
   }: Props) => {
+    const { t } = useTranslation('componentInstance')
     const { theme } = useTheme()
     const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
@@ -40,14 +42,18 @@ const InstanceInfo = React.memo(
                 StyleConstants.Spacing.Global.PagePadding * 4
           }
           height={StyleConstants.Font.LineHeight.M * potentialLines}
-          shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
+          shimmerColors={[
+            theme.shimmerDefault,
+            theme.shimmerHighlight,
+            theme.shimmerDefault
+          ]}
         >
           {content ? (
             <ParseHTML
               content={content}
               size={'M'}
               numberOfLines={5}
-              expandHint='介绍'
+              expandHint={t('server.information.description.expandHint')}
             />
           ) : null}
         </ShimmerPlaceholder>

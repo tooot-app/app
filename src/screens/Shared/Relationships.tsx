@@ -2,6 +2,7 @@ import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 import RelationshipsList from './Relationships/List'
@@ -12,6 +13,7 @@ const ScreenSharedRelationships: React.FC<SharedRelationshipsProp> = ({
     params: { account, initialType }
   }
 }) => {
+  const { t } = useTranslation('sharedRelationships')
   const { mode } = useTheme()
   const navigation = useNavigation()
 
@@ -23,7 +25,7 @@ const ScreenSharedRelationships: React.FC<SharedRelationshipsProp> = ({
           <View style={styles.segmentsContainer}>
             <SegmentedControl
               appearance={mode}
-              values={['关注中', '关注者']}
+              values={[t('heading.segments.left'), t('heading.segments.right')]}
               selectedIndex={segment}
               onChange={({ nativeEvent }) =>
                 setSegment(nativeEvent.selectedSegmentIndex)

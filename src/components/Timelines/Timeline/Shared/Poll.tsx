@@ -5,6 +5,7 @@ import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import { toast } from '@components/toast'
 import {
+  MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
@@ -32,7 +33,7 @@ const TimelinePoll: React.FC<Props> = ({
   sameAccount
 }) => {
   const { mode, theme } = useTheme()
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   const [allOptions, setAllOptions] = useState(
     new Array(poll.options.length).fill(false)
@@ -42,19 +43,21 @@ const TimelinePoll: React.FC<Props> = ({
   const mutation = useTimelineMutation({
     queryClient,
     onSuccess: true,
-    onError: (err: any) => {
+    onError: (err: any, params) => {
+      const theParams = params as MutationVarsTimelineUpdateStatusProperty
       haptics('Error')
       toast({
         type: 'error',
-        message: '投票错误',
+        message: t('common:toastMessage.error.message', {
+          function: t(`shared.poll.meta.button.${theParams.payload.type}`)
+        }),
         ...(err.status &&
           typeof err.status === 'number' &&
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
             description: err.data.error
-          }),
-        autoHide: false
+          })
       })
       queryClient.invalidateQueries(queryKey)
     }

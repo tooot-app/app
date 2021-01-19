@@ -27,7 +27,14 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
         </View>
       </View>
 
-      {queryKey ? <HeaderActions queryKey={queryKey} status={status} /> : null}
+      {queryKey ? (
+        <HeaderActions
+          queryKey={queryKey}
+          status={status}
+          url={status.url || status.uri}
+          type='status'
+        />
+      ) : null}
     </View>
   )
 }

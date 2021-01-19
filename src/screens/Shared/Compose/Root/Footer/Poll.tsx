@@ -5,8 +5,9 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
-import ComposeContext from './utils/createContext'
+import ComposeContext from '../../utils/createContext'
 
 const ComposePoll: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
@@ -16,17 +17,8 @@ const ComposePoll: React.FC = () => {
     },
     composeDispatch
   } = useContext(ComposeContext)
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
-
-  const expireMapping: { [key: string]: string } = {
-    '300': '5分钟',
-    '1800': '30分钟',
-    '3600': '1小时',
-    '21600': '6小时',
-    '86400': '1天',
-    '259200': '3天',
-    '604800': '7天'
-  }
 
   const [firstRender, setFirstRender] = useState(true)
   useEffect(() => {
@@ -63,7 +55,11 @@ const ComposePoll: React.FC = () => {
                     color: hasConflict ? theme.red : theme.primary
                   }
                 ]}
-                placeholder={`选项`}
+                placeholder={
+                  multiple
+                    ? t('content.root.footer.poll.option.placeholder.multiple')
+                    : t('content.root.footer.poll.option.placeholder.single')
+                }
                 placeholderTextColor={theme.secondary}
                 maxLength={50}
                 // @ts-ignore
@@ -110,12 +106,20 @@ const ComposePoll: React.FC = () => {
         />
       </View>
       <MenuRow
-        title='可选项'
-        content={multiple ? '多选' : '单选'}
+        title={t('content.root.footer.poll.multiple.heading')}
+        content={
+          multiple
+            ? t('content.root.footer.poll.multiple.options.multiple')
+            : t('content.root.footer.poll.multiple.options.single')
+        }
         onPress={() =>
           showActionSheetWithOptions(
             {
-              options: ['单选', '多选', '取消'],
+              options: [
+                t('content.root.footer.poll.multiple.options.single'),
+                t('content.root.footer.poll.multiple.options.multiple'),
+                t('content.root.footer.poll.multiple.options.cancel')
+              ],
               cancelButtonIndex: 2
             },
             index =>
@@ -129,22 +133,36 @@ const ComposePoll: React.FC = () => {
         iconBack='ChevronRight'
       />
       <MenuRow
-        title='有效期'
-        content={expireMapping[expire]}
-        onPress={() =>
+        title={t('content.root.footer.poll.expiration.heading')}
+        content={t(`content.root.footer.poll.expiration.options.${expire}`)}
+        onPress={() => {
+          const expirations: [
+            '300',
+            '1800',
+            '3600',
+            '21600',
+            '86400',
+            '259200',
+            '604800'
+          ] = ['300', '1800', '3600', '21600', '86400', '259200', '604800']
           showActionSheetWithOptions(
             {
-              options: [...Object.values(expireMapping), '取消'],
+              options: [
+                ...expirations.map(e =>
+                  t(`content.root.footer.poll.expiration.options.${e}`)
+                ),
+                t('content.root.footer.poll.expiration.options.cancel')
+              ],
               cancelButtonIndex: 7
             },
             index =>
               index < 7 &&
               composeDispatch({
                 type: 'poll',
-                payload: { expire: Object.keys(expireMapping)[index] }
+                payload: { expire: expirations[index] }
               })
           )
-        }
+        }}
         iconBack='ChevronRight'
       />
     </View>

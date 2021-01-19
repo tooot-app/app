@@ -116,9 +116,11 @@ const ScreenMeSettings: React.FC = () => {
                 cancelButtonIndex: i18n.languages.length
               },
               buttonIndex => {
-                haptics('Success')
-                dispatch(changeLanguage(availableLanguages[buttonIndex]))
-                i18n.changeLanguage(availableLanguages[buttonIndex])
+                if (buttonIndex < i18n.languages.length) {
+                  haptics('Success')
+                  dispatch(changeLanguage(availableLanguages[buttonIndex]))
+                  i18n.changeLanguage(availableLanguages[buttonIndex])
+                }
               }
             )
           }}
@@ -226,7 +228,7 @@ const ScreenMeSettings: React.FC = () => {
           onPress={() => Linking.openURL('https://www.patreon.com/xmflsct')}
         />
         <MenuRow
-          title={t('content.copyrights.heading')}
+          title={t('content.review.heading')}
           content={
             <Icon
               name='Star'

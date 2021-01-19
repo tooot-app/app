@@ -5,8 +5,16 @@ export default {
       button: '重试'
     },
     success: {
-      message: '🈳️🈚️1一物'
+      message: '空无一物'
     }
+  },
+  end: {
+    message: '居然刷到底了，喝杯 <0 /> 吧'
+  },
+  header: {
+    explanation:
+      '围观的社区可能不属于已经登录的社区的已知连结，因此只可围观嘟文，不能进行操作。设置里可以切换想要围观的社区。',
+    button: '前往设置'
   },
   shared: {
     actioned: {
@@ -22,17 +30,14 @@ export default {
       }
     },
     actions: {
-      favourite: {
+      favourited: {
         function: '喜欢嘟文'
-        // button: '隐藏 {{acct}} 的嘟文'
       },
-      reblog: {
+      reblogged: {
         function: '转嘟'
-        // button: '屏蔽 {{acct}}'
       },
-      bookmark: {
+      bookmarked: {
         function: '收藏嘟文'
-        // button: '举报 {{acct}}'
       }
     },
     attachment: {
@@ -40,15 +45,12 @@ export default {
         button: '显示敏感内容'
       },
       unsupported: {
-        text: '文件读取错误',
+        text: '附件读取错误',
         button: '尝试远程链接'
       }
     },
     content: {
       expandHint: '隐藏内容'
-    },
-    end: {
-      message: '居然刷到底了，喝杯 <0 /> 吧'
     },
     header: {
       shared: {
@@ -59,59 +61,73 @@ export default {
           function: '删除私信'
         }
       },
-      default: {
-        actions: {
-          account: {
-            heading: '关于用户',
-            mute: {
-              function: '隐藏 @{{acct}} 的嘟文',
-              button: '隐藏 @{{acct}} 的嘟文'
-            },
-            block: {
-              function: '屏蔽 @{{acct}}',
-              button: '屏蔽 @{{acct}}'
-            },
-            report: {
-              function: '举报 @{{acct}}',
-              button: '举报 @{{acct}}'
+      actions: {
+        account: {
+          heading: '关于用户',
+          mute: {
+            function: '隐藏 @{{acct}} 的嘟文',
+            button: '隐藏 @{{acct}} 的嘟文'
+          },
+          block: {
+            function: '屏蔽 @{{acct}}',
+            button: '屏蔽 @{{acct}}'
+          },
+          reports: {
+            function: '举报 @{{acct}}',
+            button: '举报 @{{acct}}'
+          }
+        },
+        domain: {
+          heading: '关于社区',
+          block: {
+            function: '屏蔽社区',
+            button: '屏蔽社区 {{domain}}'
+          },
+          alert: {
+            title: '确定要屏蔽 {{domain}} 吗？',
+            message:
+              '多数情况下，隐藏或屏蔽特定用户即可。\n\n屏蔽之后，来自此社区的所有内容将不再出现在你的时间轴里。同时，来自该社区的关注者将被移除。请谨慎使用。',
+            buttons: {
+              confirm: '确定屏蔽整个社区',
+              cancel: '$t(common:buttons.cancel)'
+            }
+          }
+        },
+        share: {
+          status: { heading: '分享嘟文', button: '分享此条嘟文的链接' },
+          account: { heading: '分享用户', button: '分享此用户的链接' }
+        },
+        status: {
+          heading: '关于嘟文',
+          delete: {
+            function: '删除',
+            button: '删除此条嘟文'
+          },
+          edit: {
+            function: '删除',
+            button: '删除并重新编辑此条嘟文',
+            alert: {
+              title: '确认删除嘟文？',
+              message:
+                '确定要删除这条嘟文并重新编辑它吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。',
+              buttons: {
+                confirm: '删除并重新编辑',
+                cancel: '$t(common:buttons.cancel)'
+              }
             }
           },
-          domain: {
-            heading: '关于域名',
-            block: {
-              function: '屏蔽域名',
-              button: '屏蔽域名 {{domain}}'
+          mute: {
+            function: '静音',
+            button: {
+              positive: '静音此条嘟文及对话',
+              negative: '取消静音此条嘟文及对话'
             }
           },
-          status: {
-            heading: '关于嘟嘟',
-            delete: {
-              function: '删除',
-              button: '删除次条嘟文'
-            },
-            edit: {
-              function: '删除',
-              button: '删除并重新编辑次条嘟文',
-              alert: {
-                title: '确认删除嘟嘟？',
-                message:
-                  '你确定要删除这条嘟文并重新编辑它吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。',
-                confirm: '删除并重新编辑'
-              }
-            },
-            mute: {
-              function: '静音',
-              button: {
-                positive: '静音此条嘟文及对话',
-                negative: '取消静音此条嘟文及对话'
-              }
-            },
-            pin: {
-              function: '置顶',
-              button: {
-                positive: '置顶此条嘟文',
-                negative: '取消置顶此条嘟文'
-              }
+          pin: {
+            function: '置顶',
+            button: {
+              positive: '置顶此条嘟文',
+              negative: '取消置顶此条嘟文'
             }
           }
         }

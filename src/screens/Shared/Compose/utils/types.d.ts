@@ -39,15 +39,7 @@ export type ComposeState = {
       '3': string | undefined
     }
     multiple: boolean
-    expire:
-      | '300'
-      | '1800'
-      | '3600'
-      | '21600'
-      | '86400'
-      | '259200'
-      | '604800'
-      | string
+    expire: '300' | '1800' | '3600' | '21600' | '86400' | '259200' | '604800'
   }
   attachments: {
     sensitive: boolean

@@ -21,7 +21,7 @@ export interface Props {
 }
 
 const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -32,7 +32,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
-          function: t(`timeline:shared.header.conversation.delete.function`)
+          function: t(`shared.header.conversation.delete.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

@@ -7,17 +7,20 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
-import HeaderActionsAccount from './ActionsAccount'
-import HeaderActionsDomain from './ActionsDomain'
-import HeaderActionsStatus from './ActionsStatus'
+import HeaderActionsAccount from './Account'
+import HeaderActionsDomain from './Domain'
+import HeaderActionsShare from './Share'
+import HeaderActionsStatus from './Status'
 
 export interface Props {
   queryKey: QueryKeyTimeline
   status: Mastodon.Status
+  url?: string
+  type?: 'status' | 'account'
 }
 
 const HeaderActions = React.memo(
-  ({ queryKey, status }: Props) => {
+  ({ queryKey, status, url, type }: Props) => {
     const { theme } = useTheme()
 
     const localAccount = useSelector(getLocalAccount)
@@ -73,6 +76,14 @@ const HeaderActions = React.memo(
                 setBottomSheetVisible={setBottomSheetVisible}
               />
             )}
+
+            {url && type ? (
+              <HeaderActionsShare
+                url={url}
+                type={type}
+                setBottomSheetVisible={setBottomSheetVisible}
+              />
+            ) : null}
           </BottomSheet>
         )}
       </>

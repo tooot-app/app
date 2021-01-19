@@ -1,6 +1,7 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { MutableRefObject, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
@@ -23,6 +24,7 @@ export interface Props {
 }
 
 const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
 
   const { composeState } = useContext(ComposeContext)
@@ -149,7 +151,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
         </PanGestureHandler>
       </View>
       <Text style={[styles.imageFocusText, { color: theme.primary }]}>
-        在预览图上拖动圆圈，以选择缩略图的焦点。
+        {t('content.editAttachment.content.imageFocus')}
       </Text>
     </>
   )

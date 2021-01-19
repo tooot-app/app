@@ -1,6 +1,6 @@
 import ComponentAccount from '@components/Account'
 import haptics from '@components/haptics'
-import ComponentHashtag from '@components/Timelines/Hashtag'
+import ComponentHashtag from '@components/Hashtag'
 import React, { Dispatch, useCallback } from 'react'
 import updateText from '../updateText'
 import { ComposeAction, ComposeState } from '../utils/types'

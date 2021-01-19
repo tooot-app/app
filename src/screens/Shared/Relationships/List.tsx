@@ -2,7 +2,7 @@ import ComponentAccount from '@components/Account'
 import ComponentSeparator from '@components/Separator'
 import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@components/Timelines/Timeline/End'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { useRelationshipsQuery } from '@utils/queryHooks/relationships'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
@@ -14,6 +14,7 @@ export interface Props {
 }
 
 const RelationshipsList: React.FC<Props> = ({ id, type }) => {
+  const navigation = useNavigation()
   const {
     status,
     data,
@@ -42,7 +43,14 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(
-    ({ item }) => <ComponentAccount account={item} />,
+    ({ item }) => (
+      <ComponentAccount
+        account={item}
+        onPress={() =>
+          navigation.push('Screen-Shared-Account', { account: item })
+        }
+      />
+    ),
     []
   )
   const flItemEmptyComponent = useMemo(

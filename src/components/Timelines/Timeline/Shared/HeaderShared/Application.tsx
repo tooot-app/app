@@ -11,7 +11,7 @@ export interface Props {
 
 const HeaderSharedApplication: React.FC<Props> = ({ application }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   return application && application.name !== 'Web' ? (
     <Text

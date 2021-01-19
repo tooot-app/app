@@ -4,11 +4,13 @@ import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
 import { updatePublicRemoteNotice } from '@utils/slices/contextsSlice'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 const TimelineHeader = React.memo(
   () => {
+    const { t } = useTranslation('componentTimeline')
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const { theme } = useTheme()
@@ -16,7 +18,7 @@ const TimelineHeader = React.memo(
     return (
       <View style={[styles.base, { borderColor: theme.border }]}>
         <Text style={[styles.text, { color: theme.primary }]}>
-          一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字一大堆文字{' '}
+          {t('header.explanation')}
           <Text
             style={{ color: theme.blue }}
             onPress={() => {
@@ -27,7 +29,7 @@ const TimelineHeader = React.memo(
               })
             }}
           >
-            前往设置{' '}
+            {t('header.button')}
             <Icon
               name='ArrowRight'
               size={StyleConstants.Font.Size.S}

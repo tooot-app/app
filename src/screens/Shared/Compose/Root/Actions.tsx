@@ -4,13 +4,15 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import addAttachment from './/addAttachment'
-import ComposeContext from './utils/createContext'
+import ComposeContext from '../utils/createContext'
+import addAttachment from './Footer/addAttachment'
 
 const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
 
   const attachmentColor = useMemo(() => {
@@ -71,7 +73,14 @@ const ComposeActions: React.FC = () => {
     if (!composeState.visibilityLock) {
       showActionSheetWithOptions(
         {
-          options: ['公开', '不公开', '仅关注着', '私信', '取消'],
+          title: t('content.root.actions.visibility.title'),
+          options: [
+            t('content.root.actions.visibility.options.public'),
+            t('content.root.actions.visibility.options.unlisted'),
+            t('content.root.actions.visibility.options.private'),
+            t('content.root.actions.visibility.options.direct'),
+            t('content.root.actions.visibility.options.cancel')
+          ],
           cancelButtonIndex: 4
         },
         buttonIndex => {

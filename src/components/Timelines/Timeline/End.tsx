@@ -20,7 +20,7 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
       ) : (
         <Text style={[styles.text, { color: theme.secondary }]}>
           <Trans
-            i18nKey='timeline:shared.end.message'
+            i18nKey='componentTimeline:end.message'
             components={[
               <Icon
                 name='Coffee'

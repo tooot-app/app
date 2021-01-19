@@ -15,12 +15,18 @@ export default {
   meListsList: require('./screens/meListsList').default,
   meSettings: require('./screens/meSettings').default,
   meSettingsUpdateRemote: require('./screens/meSettingsUpdateRemote').default,
+  meSwitch: require('./screens/meSwitch').default,
 
   sharedAccount: require('./screens/sharedAccount').default,
-  sharedToot: require('./screens/sharedToot').default,
   sharedAnnouncements: require('./screens/sharedAnnouncements').default,
+  sharedCompose: require('./screens/sharedCompose').default,
+  sharedRelationships: require('./screens/sharedRelationships').default,
+  sharedSearch: require('./screens/sharedSearch').default,
+  sharedToot: require('./screens/sharedToot').default,
 
-  relationship: require('./components/relationship').default,
-  relativeTime: require('./components/relativeTime').default,
-  timeline: require('./components/timeline').default
+  componentInstance: require('./components/instance').default,
+  componentParse: require('./components/parse').default,
+  componentRelationship: require('./components/relationship').default,
+  componentRelativeTime: require('./components/relativeTime').default,
+  componentTimeline: require('./components/timeline').default
 }

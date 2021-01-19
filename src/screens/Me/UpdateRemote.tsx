@@ -3,7 +3,7 @@ import React from 'react'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const UpdateRemote: React.FC = () => {
+const ScreenMeUpdateRemote: React.FC = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -16,4 +16,4 @@ const UpdateRemote: React.FC = () => {
   )
 }
 
-export default UpdateRemote
+export default ScreenMeUpdateRemote

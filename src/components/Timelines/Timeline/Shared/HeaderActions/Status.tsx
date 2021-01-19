@@ -23,7 +23,7 @@ const HeaderActionsStatus: React.FC<Props> = ({
   setBottomSheetVisible
 }) => {
   const navigation = useNavigation()
-  const { t } = useTranslation()
+  const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -38,7 +38,7 @@ const HeaderActionsStatus: React.FC<Props> = ({
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(
-            `timeline:shared.header.default.actions.status.${theFunction}.function`
+            `shared.header.actions.status.${theFunction}.function`
           )
         }),
         ...(err.status &&
@@ -56,7 +56,7 @@ const HeaderActionsStatus: React.FC<Props> = ({
   return (
     <MenuContainer>
       <MenuHeader
-        heading={t('timeline:shared.header.default.actions.status.heading')}
+        heading={t('shared.header.actions.status.heading')}
       />
       <MenuRow
         onPress={() => {
@@ -69,20 +69,20 @@ const HeaderActionsStatus: React.FC<Props> = ({
           })
         }}
         iconFront='Trash'
-        title={t('timeline:shared.header.default.actions.status.delete.button')}
+        title={t('shared.header.actions.status.delete.button')}
       />
       <MenuRow
         onPress={() => {
           Alert.alert(
-            t('timeline:shared.header.default.actions.status.edit.alert.title'),
+            t('shared.header.actions.status.edit.alert.title'),
             t(
-              'timeline:shared.header.default.actions.status.edit.alert.message'
+              'shared.header.actions.status.edit.alert.message'
             ),
             [
-              { text: t('common:buttons.cancel'), style: 'cancel' },
+              { text: t('shared.header.actions.status.edit.alert.buttons.cancel'), style: 'cancel' },
               {
                 text: t(
-                  'timeline:shared.header.default.actions.status.edit.alert.confirm'
+                  'shared.header.actions.status.edit.alert.buttons.confirm'
                 ),
                 style: 'destructive',
                 onPress: async () => {
@@ -105,8 +105,8 @@ const HeaderActionsStatus: React.FC<Props> = ({
             ]
           )
         }}
-        iconFront='Trash'
-        title={t('timeline:shared.header.default.actions.status.edit.button')}
+        iconFront='Edit'
+        title={t('shared.header.actions.status.edit.button')}
       />
       <MenuRow
         onPress={() => {
@@ -122,10 +122,10 @@ const HeaderActionsStatus: React.FC<Props> = ({
         title={
           status.muted
             ? t(
-                'timeline:shared.header.default.actions.status.mute.button.negative'
+                'shared.header.actions.status.mute.button.negative'
               )
             : t(
-                'timeline:shared.header.default.actions.status.mute.button.positive'
+                'shared.header.actions.status.mute.button.positive'
               )
         }
       />
@@ -145,10 +145,10 @@ const HeaderActionsStatus: React.FC<Props> = ({
           title={
             status.pinned
               ? t(
-                  'timeline:shared.header.default.actions.status.pin.button.negative'
+                  'shared.header.actions.status.pin.button.negative'
                 )
               : t(
-                  'timeline:shared.header.default.actions.status.pin.button.positive'
+                  'shared.header.actions.status.pin.button.positive'
                 )
           }
         />

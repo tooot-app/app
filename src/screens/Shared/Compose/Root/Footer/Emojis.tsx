@@ -10,8 +10,8 @@ import {
   Text,
   View
 } from 'react-native'
-import ComposeContext from './utils/createContext'
-import updateText from './updateText'
+import ComposeContext from '../../utils/createContext'
+import updateText from '../../updateText'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)

@@ -1,12 +1,14 @@
-import React, { useContext } from 'react'
-import { StyleSheet, Text, TextInput } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import formatText from './formatText'
-import ComposeContext from './utils/createContext'
+import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, Text, TextInput } from 'react-native'
+import formatText from '../../formatText'
+import ComposeContext from '../../utils/createContext'
 
 const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
 
   return (
@@ -23,7 +25,7 @@ const ComposeTextInput: React.FC = () => {
       autoFocus
       enablesReturnKeyAutomatically
       multiline
-      placeholder='想说点什么'
+      placeholder={t('content.root.header.textInput.placeholder')}
       placeholderTextColor={theme.secondary}
       onChangeText={content =>
         formatText({

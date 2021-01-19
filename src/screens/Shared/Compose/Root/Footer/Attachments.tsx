@@ -13,6 +13,7 @@ import React, {
   useMemo,
   useRef
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FlatList,
   Image,
@@ -22,15 +23,16 @@ import {
   View
 } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
+import ComposeContext from '../../utils/createContext'
+import { ExtendedAttachment } from '../../utils/types'
 import addAttachment from './addAttachment'
-import ComposeContext from './utils/createContext'
-import { ExtendedAttachment } from './utils/types'
 
 const DEFAULT_HEIGHT = 200
 
 const ComposeAttachments: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
   const navigation = useNavigation()
 
@@ -234,7 +236,7 @@ const ComposeAttachments: React.FC = () => {
           color={theme.primary}
         />
         <Text style={[styles.sensitiveText, { color: theme.primary }]}>
-          标记媒体为敏感内容
+          {t('content.root.footer.attachments.sensitive')}
         </Text>
       </Pressable>
       <FlatList

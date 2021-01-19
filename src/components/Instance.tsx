@@ -12,6 +12,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Linking from 'expo-linking'
 import { debounce } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -36,7 +37,7 @@ const ComponentInstance: React.FC<Props> = ({
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
-  const { t } = useTranslation('meRoot')
+  const { t } = useTranslation('componentInstance')
   const { theme } = useTheme()
   const [instanceDomain, setInstanceDomain] = useState<string | undefined>()
   const [appData, setApplicationData] = useState<InstanceLocal['appData']>()
@@ -92,13 +93,14 @@ const ComponentInstance: React.FC<Props> = ({
               .length
           ) {
             Alert.alert(
-              '域名已存在',
-              '可以登录同个域名的另外一个账户，现有账户🈚️用',
+              t('update.local.alert.title'),
+              t('update.local.alert.message'),
               [
-                { text: '取消', style: 'cancel' },
+                { text: t('update.local.alert.buttons.cancel'), style: 'cancel' },
                 {
-                  text: '继续',
+                  text: t('update.local.alert.buttons.continue'),
                   onPress: () => {
+                    setApplicationData(undefined)
                     applicationQuery.refetch()
                   }
                 }
@@ -116,8 +118,8 @@ const ComponentInstance: React.FC<Props> = ({
           ]
           dispatch(remoteUpdate(instanceDomain))
           queryClient.resetQueries(queryKey)
-          toast({ type: 'success', message: '重置成功' })
-          navigation.navigate('Screen-Public', { screen: 'Screen-Public-Root' })
+          toast({ type: 'success', message: t('update.remote.succeed') })
+          navigation.goBack()
           break
       }
     }
@@ -143,9 +145,9 @@ const ComponentInstance: React.FC<Props> = ({
   const buttonContent = useMemo(() => {
     switch (type) {
       case 'local':
-        return t('content.login.button')
+        return t('server.button.local')
       case 'remote':
-        return '登记'
+        return t('server.button.remote')
     }
   }, [])
 
@@ -176,7 +178,7 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardType='url'
             textContentType='URL'
             onSubmitEditing={onSubmitEditing}
-            placeholder={t('content.login.server.placeholder')}
+            placeholder={t('server.textInput.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
           />
@@ -191,21 +193,21 @@ const ComponentInstance: React.FC<Props> = ({
         <View>
           <InstanceInfo
             visible={instanceQuery.data?.title !== undefined}
-            header='实例名称'
+            header={t('server.information.name')}
             content={instanceQuery.data?.title || undefined}
             potentialWidth={10}
           />
           <InstanceInfo
             visible={instanceQuery.data?.short_description !== undefined}
-            header='实例介绍'
+            header={t('server.information.description.heading')}
             content={instanceQuery.data?.short_description || undefined}
             potentialLines={5}
           />
           <View style={styles.instanceStats}>
             <InstanceInfo
               style={{ alignItems: 'flex-start' }}
-              visible={instanceQuery.data?.stats?.user_count !== null}
-              header='用户总数'
+              visible={instanceQuery.data?.stats?.user_count === null}
+              header={t('server.information.accounts')}
               content={
                 instanceQuery.data?.stats?.user_count?.toString() || undefined
               }
@@ -213,8 +215,8 @@ const ComponentInstance: React.FC<Props> = ({
             />
             <InstanceInfo
               style={{ alignItems: 'center' }}
-              visible={instanceQuery.data?.stats?.status_count !== null}
-              header='嘟嘟总数'
+              visible={instanceQuery.data?.stats?.status_count === null}
+              header={t('server.information.statuses')}
               content={
                 instanceQuery.data?.stats?.status_count?.toString() || undefined
               }
@@ -222,22 +224,31 @@ const ComponentInstance: React.FC<Props> = ({
             />
             <InstanceInfo
               style={{ alignItems: 'flex-end' }}
-              visible={instanceQuery.data?.stats?.domain_count !== null}
-              header='嘟嘟总数'
+              visible={instanceQuery.data?.stats?.domain_count === null}
+              header={t('server.information.domains')}
               content={
                 instanceQuery.data?.stats?.domain_count?.toString() || undefined
               }
               potentialWidth={4}
             />
           </View>
-          <Text style={[styles.disclaimer, { color: theme.secondary }]}>
+          <View style={styles.disclaimer}>
             <Icon
               name='Lock'
-              size={StyleConstants.Font.Size.M}
+              size={StyleConstants.Font.Size.S}
               color={theme.secondary}
-            />{' '}
-            本站不留存任何信息
-          </Text>
+              style={styles.disclaimerIcon}
+            />
+            <Text
+              style={[styles.disclaimerText, { color: theme.secondary }]}
+              onPress={() => Linking.openURL('https://tooot.app/privacy')}
+            >
+              {t('server.disclaimer')}
+              <Text style={{ color: theme.blue }}>
+                https://tooot.app/privacy
+              </Text>
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -275,9 +286,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   disclaimer: {
-    ...StyleConstants.FontStyle.S,
+    flexDirection: 'row',
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
     marginVertical: StyleConstants.Spacing.M
+  },
+  disclaimerIcon: {
+    marginTop:
+      (StyleConstants.Font.LineHeight.S - StyleConstants.Font.Size.S) / 2,
+    marginRight: StyleConstants.Spacing.XS
+  },
+  disclaimerText: {
+    flex: 1,
+    ...StyleConstants.FontStyle.S
   }
 })
 

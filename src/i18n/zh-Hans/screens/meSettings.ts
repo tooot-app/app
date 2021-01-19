@@ -19,24 +19,30 @@ export default {
       }
     },
     browser: {
-      heading: '打开链接',
+      heading: '外部链接',
       options: {
-        internal: '应用内',
-        external: '系统浏览器',
+        internal: '应用内打开',
+        external: '浏览器打开',
         cancel: '$t(common:buttons.cancel)'
       }
     },
     remote: {
       heading: '$t(meSettingsUpdateRemote:heading)',
-      description: '外站只能看不能玩'
+      description: '外站只能浏览不能玩'
     },
     cache: {
       heading: '清空缓存',
       empty: '暂无缓存'
     },
+    support: {
+      heading: '赞助 tooot 开发'
+    },
+    review: {
+      heading: '给 tooot 打分'
+    },
     analytics: {
       heading: '帮助我们改进',
-      description: '允许我们收集不与用户相关联的使用信息'
+      description: '收集不与用户相关联的使用信息'
     },
     version: '版本 v{{version}}'
   }

@@ -1,8 +1,8 @@
 export default {
   heading: {
     segments: {
-      left: '跨站关注',
-      right: '外站嘟嘟'
+      left: '关注中',
+      right: '关注者'
     }
   }
 }

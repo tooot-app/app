@@ -17,7 +17,7 @@ export interface Props {
 }
 
 const TimelineAttachment: React.FC<Props> = ({ status }) => {
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {

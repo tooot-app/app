@@ -20,30 +20,29 @@ const HeaderActionsAccount: React.FC<Props> = ({
   account,
   setBottomSheetVisible
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
   const mutateion = useTimelineMutation({
     queryClient,
-    onSuccess: (_, { type }) => {
+    onSuccess: (_, { payload: { property } }) => {
       haptics('Success')
       toast({
         type: 'success',
         message: t('common:toastMessage.success.message', {
-          function: t(
-            `timeline:shared.header.default.actions.account.${type}.function`,
-            { acct: account.acct }
-          )
+          function: t(`shared.header.actions.account.${property}.function`, {
+            acct: account.acct
+          })
         })
       })
     },
-    onError: (err: any, { type }) => {
+    onError: (err: any, { payload: { property } }) => {
       haptics('Error')
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(
-            `timeline:shared.header.default.actions.account.${type}.function`,
+            `shared.header.actions.account.${property}.function`,
             { acct: account.acct }
           )
         }),
@@ -64,7 +63,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
   return (
     <MenuContainer>
       <MenuHeader
-        heading={t('timeline:shared.header.default.actions.account.heading')}
+        heading={t('shared.header.actions.account.heading')}
       />
       <MenuRow
         onPress={() => {
@@ -77,7 +76,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
           })
         }}
         iconFront='EyeOff'
-        title={t('timeline:shared.header.default.actions.account.mute.button', {
+        title={t('shared.header.actions.account.mute.button', {
           acct: account.acct
         })}
       />
@@ -93,7 +92,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
         }}
         iconFront='XCircle'
         title={t(
-          'timeline:shared.header.default.actions.account.block.button',
+          'shared.header.actions.account.block.button',
           {
             acct: account.acct
           }
@@ -111,7 +110,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
         }}
         iconFront='Flag'
         title={t(
-          'timeline:shared.header.default.actions.account.report.button',
+          'shared.header.actions.account.reports.button',
           {
             acct: account.acct
           }

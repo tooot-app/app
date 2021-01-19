@@ -1,9 +1,8 @@
+import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
+import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { MenuContainer, MenuRow } from '@components/Menu'
-import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 
 const Collections: React.FC = () => {
   const { t } = useTranslation('meRoot')
@@ -15,9 +14,9 @@ const Collections: React.FC = () => {
     if (data) {
       const amount = data.filter(announcement => !announcement.read).length
       if (amount) {
-        return `${amount} 条未读公告`
+        return t('content.collections.announcements.content.unread', { amount })
       } else {
-        return '无未读公告'
+        return t('content.collections.announcements.content.read')
       }
     }
   }, [data])
@@ -51,7 +50,7 @@ const Collections: React.FC = () => {
       <MenuRow
         iconFront='Clipboard'
         iconBack='ChevronRight'
-        title={t('content.collections.announcements')}
+        title={t('content.collections.announcements.heading')}
         content={announcementContent}
         loading={isFetching}
         onPress={() =>

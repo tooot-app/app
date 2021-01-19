@@ -1,4 +1,3 @@
 export default {
-  heading: '对话',
-  content: {}
+  heading: '对话'
 }

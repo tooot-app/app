@@ -5,8 +5,9 @@ import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { Dispatch } from 'react'
 import { Alert, Linking } from 'react-native'
-import { ComposeAction } from './utils/types'
+import { ComposeAction } from '../../utils/types'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
+import i18next from 'i18next'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
@@ -75,6 +76,27 @@ const addAttachment = async ({
         break
     }
 
+    const uploadFailed = () => {
+      composeDispatch({
+        type: 'attachment/upload/fail',
+        payload: hash
+      })
+      Alert.alert(
+        i18next.t(
+          'sharedCompose:content.root.actions.attachment.failed.alert.title'
+        ),
+        undefined,
+        [
+          {
+            text: i18next.t(
+              'sharedCompose:content.root.actions.attachment.failed.alert.button'
+            ),
+            onPress: () => {}
+          }
+        ]
+      )
+    }
+
     const formData = new FormData()
     formData.append('file', {
       // @ts-ignore
@@ -96,35 +118,27 @@ const addAttachment = async ({
             payload: { remote: res, local: result }
           })
         } else {
-          composeDispatch({
-            type: 'attachment/upload/fail',
-            payload: hash
-          })
-          Alert.alert('上传失败', '', [
-            {
-              text: '返回重试',
-              onPress: () => {}
-            }
-          ])
+          uploadFailed()
         }
       })
       .catch(() => {
-        composeDispatch({
-          type: 'attachment/upload/fail',
-          payload: hash
-        })
-        Alert.alert('上传失败', '', [
-          {
-            text: '返回重试',
-            onPress: () => {}
-          }
-        ])
+        uploadFailed()
       })
   }
 
   showActionSheetWithOptions(
     {
-      options: ['从相册选取', '现照', '取消'],
+      options: [
+        i18next.t(
+          'sharedCompose:content.root.actions.attachment.actions.options.library'
+        ),
+        i18next.t(
+          'sharedCompose:content.root.actions.attachment.actions.options.photo'
+        ),
+        i18next.t(
+          'sharedCompose:content.root.actions.attachment.actions.options.cancel'
+        )
+      ],
       cancelButtonIndex: 2
     },
     async buttonIndex => {
@@ -133,18 +147,30 @@ const addAttachment = async ({
           status
         } = await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (status !== 'granted') {
-          Alert.alert('🈚️读取权限', '需要相片权限才能上传照片', [
-            {
-              text: '取消',
-              style: 'cancel',
-              onPress: () => {}
-            },
-            {
-              text: '去系统设置',
-              style: 'default',
-              onPress: () => Linking.openURL('app-settings:')
-            }
-          ])
+          Alert.alert(
+            i18next.t(
+              'sharedCompose:content.root.actions.attachment.actions.library.alert.title'
+            ),
+            i18next.t(
+              'sharedCompose:content.root.actions.attachment.actions.library.alert.message'
+            ),
+            [
+              {
+                text: i18next.t(
+                  'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.cancel'
+                ),
+                style: 'cancel',
+                onPress: () => {}
+              },
+              {
+                text: i18next.t(
+                  'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.settings'
+                ),
+                style: 'default',
+                onPress: () => Linking.openURL('app-settings:')
+              }
+            ]
+          )
         } else {
           const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -158,18 +184,30 @@ const addAttachment = async ({
       } else if (buttonIndex === 1) {
         const { status } = await ImagePicker.requestCameraPermissionsAsync()
         if (status !== 'granted') {
-          Alert.alert('🈚️读取权限', '需要相机权限才能上传照片', [
-            {
-              text: '取消',
-              style: 'cancel',
-              onPress: () => {}
-            },
-            {
-              text: '去系统设置',
-              style: 'default',
-              onPress: () => Linking.openURL('app-settings:')
-            }
-          ])
+          Alert.alert(
+            i18next.t(
+              'sharedCompose:content.root.actions.attachment.actions.photo.alert.title'
+            ),
+            i18next.t(
+              'sharedCompose:content.root.actions.attachment.actions.photo.alert.message'
+            ),
+            [
+              {
+                text: i18next.t(
+                  'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.cancel'
+                ),
+                style: 'cancel',
+                onPress: () => {}
+              },
+              {
+                text: i18next.t(
+                  'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.settings'
+                ),
+                style: 'default',
+                onPress: () => Linking.openURL('app-settings:')
+              }
+            ]
+          )
         } else {
           const result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,

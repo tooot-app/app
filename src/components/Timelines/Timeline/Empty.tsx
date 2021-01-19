@@ -15,7 +15,7 @@ export interface Props {
 
 const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
   const { mode, theme } = useTheme()
-  const { t, i18n } = useTranslation('timeline')
+  const { t, i18n } = useTranslation('componentTimeline')
 
   const children = useMemo(() => {
     switch (status) {

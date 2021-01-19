@@ -4,6 +4,5 @@ export default {
       left: '我的关注',
       right: '本站嘟嘟'
     }
-  },
-  content: {}
+  }
 }

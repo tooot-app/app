@@ -22,7 +22,7 @@ const AttachmentUnsupported: React.FC<Props> = ({
   sensitiveShown,
   attachment
 }) => {
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
 
   return (

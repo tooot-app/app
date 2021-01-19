@@ -1,4 +1,4 @@
-import { HeaderLeft } from '@components/Header'
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { ParseEmojis } from '@components/Parse'
 import { StackNavigationState, TypedNavigator } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -15,7 +15,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
 import {
@@ -211,7 +211,7 @@ const sharedScreens = (
                       color: theme.primary
                     }
                   ]}
-                  children='搜索'
+                  children={t('sharedSearch:content.header.prefix')}
                 />
               }
             />
@@ -233,7 +233,7 @@ const sharedScreens = (
               onSubmitEditing={({ nativeEvent: { text } }) =>
                 setSearchTerm(text)
               }
-              placeholder={'些什么'}
+              placeholder={t('sharedSearch:content.header.placeholder')}
               placeholderTextColor={theme.secondary}
               returnKeyType='go'
             />
@@ -248,7 +248,10 @@ const sharedScreens = (
       name='Screen-Shared-Toot'
       component={ScreenSharedToot}
       options={({ navigation }: SharedTootProp) => ({
-        title: t('sharedToot:heading'),
+        headerTitle: t('sharedToot:heading'),
+        ...(Platform.OS === 'android' && {
+          headerCenter: () => <HeaderCenter content={t('sharedToot:heading')} />
+        }),
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
     />

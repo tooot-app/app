@@ -1,4 +1,3 @@
 export default {
-  heading: '通知',
-  content: {}
+  heading: '通知'
 }

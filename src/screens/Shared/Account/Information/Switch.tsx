@@ -1,14 +1,16 @@
 import Button from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const AccountInformationSwitch: React.FC = () => {
   const navigation = useNavigation()
+  const { t } = useTranslation()
 
   return (
     <Button
       type='text'
-      content='切换账号'
+      content={t('meSwitch:heading')}
       onPress={() => navigation.navigate('Screen-Me-Switch')}
     />
   )

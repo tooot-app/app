@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import ComposeAttachments from '@screens/Shared/Compose/Attachments'
-import ComposeEmojis from '@screens/Shared/Compose/Emojis'
-import ComposePoll from '@screens/Shared/Compose/Poll'
-import ComposeReply from '@screens/Shared/Compose/Reply'
+import ComposeAttachments from '@screens/Shared/Compose/Root/Footer/Attachments'
+import ComposeEmojis from '@screens/Shared/Compose/Root/Footer/Emojis'
+import ComposePoll from '@screens/Shared/Compose/Root/Footer/Poll'
+import ComposeReply from '@screens/Shared/Compose/Root/Footer/Reply'
 import ComposeContext from '@screens/Shared/Compose//utils/createContext'
 
 const ComposeRootFooter: React.FC = () => {

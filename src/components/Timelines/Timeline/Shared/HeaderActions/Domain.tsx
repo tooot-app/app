@@ -22,7 +22,7 @@ const HeaderActionsDomain: React.FC<Props> = ({
   domain,
   setBottomSheetVisible
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     queryClient,
@@ -30,9 +30,7 @@ const HeaderActionsDomain: React.FC<Props> = ({
       toast({
         type: 'success',
         message: t('common:toastMessage.success.message', {
-          function: t(
-            `timeline:shared.header.default.actions.domain.block.function`
-          )
+          function: t(`shared.header.actions.domain.block.function`)
         })
       })
       queryClient.invalidateQueries(queryKey)
@@ -41,20 +39,19 @@ const HeaderActionsDomain: React.FC<Props> = ({
 
   return (
     <MenuContainer>
-      <MenuHeader
-        heading={t(`timeline:shared.header.default.actions.domain.heading`)}
-      />
+      <MenuHeader heading={t(`shared.header.actions.domain.heading`)} />
       <MenuRow
         onPress={() => {
           Alert.alert(
-            t('timeline:shared.header.default.actions.domain.alert.title'),
-            t('timeline:shared.header.default.actions.domain.alert.message'),
+            t('shared.header.actions.domain.alert.title', { domain }),
+            t('shared.header.actions.domain.alert.message'),
             [
-              { text: t('common:buttons.cancel'), style: 'cancel' },
               {
-                text: t(
-                  'timeline:shared.header.default.actions.domain.alert.confirm'
-                ),
+                text: t('shared.header.actions.domain.alert.buttons.cancel'),
+                style: 'cancel'
+              },
+              {
+                text: t('shared.header.actions.domain.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: () => {
                   setBottomSheetVisible(false)
@@ -69,7 +66,7 @@ const HeaderActionsDomain: React.FC<Props> = ({
           )
         }}
         iconFront='CloudOff'
-        title={t(`timeline:shared.header.default.actions.domain.block.button`, {
+        title={t(`shared.header.actions.domain.block.button`, {
           domain
         })}
       />

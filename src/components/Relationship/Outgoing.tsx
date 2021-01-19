@@ -16,7 +16,7 @@ export interface Props {
 
 const RelationshipOutgoing = React.memo(
   ({ id }: Props) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('componentRelationship')
 
     const query = useRelationshipQuery({ id })
 
@@ -30,12 +30,12 @@ const RelationshipOutgoing = React.memo(
           [res]
         )
       },
-      onError: (err: any, { type }) => {
+      onError: (err: any, { payload: { action } }) => {
         haptics('Error')
         toast({
           type: 'error',
           message: t('common:toastMessage.error.message', {
-            function: t(`relationship:${type}.function`)
+            function: t(`button.${action}.function`)
           }),
           ...(err.status &&
             typeof err.status === 'number' &&
@@ -52,15 +52,15 @@ const RelationshipOutgoing = React.memo(
     let onPress: () => void
 
     if (query.isError) {
-      content = t('relationship:button.error')
+      content = t('button.error')
       onPress = () => {}
     } else {
       if (query.data?.blocked_by) {
-        content = t('relationship:button.blocked_by')
+        content = t('button.blocked_by')
         onPress = () => null
       } else {
         if (query.data?.blocking) {
-          content = t('relationship:button.blocking')
+          content = t('button.blocking')
           onPress = () =>
             mutation.mutate({
               id,
@@ -72,7 +72,7 @@ const RelationshipOutgoing = React.memo(
             })
         } else {
           if (query.data?.following) {
-            content = t('relationship:button.following')
+            content = t('button.following')
             onPress = () =>
               mutation.mutate({
                 id,
@@ -84,7 +84,7 @@ const RelationshipOutgoing = React.memo(
               })
           } else {
             if (query.data?.requested) {
-              content = t('relationship:button.requested')
+              content = t('button.requested')
               onPress = () =>
                 mutation.mutate({
                   id,
@@ -95,7 +95,7 @@ const RelationshipOutgoing = React.memo(
                   }
                 })
             } else {
-              content = t('relationship:button.default')
+              content = t('button.default')
               onPress = () =>
                 mutation.mutate({
                   id,
