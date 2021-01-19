@@ -2,8 +2,8 @@ export default {
   strings: {
     prefixAgo: null,
     prefixFromNow: null,
-    suffixAgo: '之前',
-    suffixFromNow: '之后',
+    suffixAgo: '前',
+    suffixFromNow: '后',
     seconds: '%d秒',
     minute: '1分钟',
     minutes: '%d分钟',
@@ -15,7 +15,6 @@ export default {
     months: '%d月',
     year: '大约1年',
     years: '%d年',
-
     wordSeparator: ''
   }
 }

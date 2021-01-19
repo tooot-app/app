@@ -254,9 +254,13 @@ export const getLocalActiveIndex = ({ instances: { local } }: RootState) =>
 export const getLocalInstances = ({ instances: { local } }: RootState) =>
   local.instances
 export const getLocalUrl = ({ instances: { local } }: RootState) =>
-  local.activeIndex ? local.instances[local.activeIndex].url : undefined
-// export const getLocalToken = ({ instances: { local } }: RootState) =>
-//   local && local.activeIndex && local.instances[local.activeIndex].token
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].url
+    : undefined
+export const getLocalUri = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].url
+    : undefined
 export const getLocalAccount = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].account

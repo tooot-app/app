@@ -68,7 +68,7 @@ const Timeline: React.FC<Props> = ({
     ...queryKeyParams,
     options: {
       getPreviousPageParam: firstPage => {
-        return firstPage.length
+        return Array.isArray(firstPage) && firstPage.length
           ? {
               direction: 'prev',
               id: firstPage[0].last_status
@@ -78,7 +78,7 @@ const Timeline: React.FC<Props> = ({
           : undefined
       },
       getNextPageParam: lastPage => {
-        return lastPage.length
+        return Array.isArray(lastPage) && lastPage.length
           ? {
               direction: 'next',
               id: lastPage[lastPage.length - 1].last_status
@@ -176,22 +176,22 @@ const Timeline: React.FC<Props> = ({
           (isFetching && !isFetchingNextPage && !isLoading)
         }
         onRefresh={() => {
-          if (hasPreviousPage) {
-            fetchPreviousPage()
-          } else {
-            queryClient.setQueryData<InfiniteData<any> | undefined>(
-              queryKey,
-              data => {
-                if (data) {
-                  return {
-                    pages: data.pages.slice(1),
-                    pageParams: data.pageParams.slice(1)
-                  }
-                }
-              }
-            )
-            refetch()
-          }
+          // if (hasPreviousPage) {
+          //   fetchPreviousPage()
+          // } else {
+          //   queryClient.setQueryData<InfiniteData<any> | undefined>(
+          //     queryKey,
+          //     data => {
+          //       if (data) {
+          //         return {
+          //           pages: data.pages.slice(1),
+          //           pageParams: data.pageParams.slice(1)
+          //         }
+          //       }
+          //     }
+          //   )
+          refetch()
+          // }
         }}
       />
     ),

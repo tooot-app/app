@@ -1,31 +1,16 @@
 export default {
-  headers: {
-    local: {
-      segments: {
-        left: 'Following',
-        right: 'Local'
-      }
+  buttons: {
+    cancel: 'Cancel'
+  },
+  toastMessage: {
+    success: {
+      message: '{{function}} succeed'
     },
-    public: {
-      segments: {
-        left: 'Federated',
-        right: 'Others'
-      }
+    warning: {
+      message: ''
     },
-    notifications: 'Notifications',
-    me: {
-      root: 'My Mastodon',
-      conversations: 'Messages',
-      bookmarks: 'Booksmarks',
-      favourites: 'Favourites',
-      lists: {
-        root: 'Lists',
-        list: 'List {{list}}'
-      },
-      settings: {
-        root: 'Settings',
-        language: 'Language'
-      }
+    error: {
+      message: '{{function}} failed, please retry'
     }
   }
 }

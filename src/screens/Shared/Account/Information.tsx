@@ -54,7 +54,11 @@ const AccountInformation: React.FC<Props> = ({
 
       <AccountInformationName ref={shimmerNameRef} account={account} />
 
-      <AccountInformationAccount ref={shimmerAccountRef} account={account} />
+      <AccountInformationAccount
+        ref={shimmerAccountRef}
+        account={account}
+        ownAccount={ownAccount}
+      />
 
       {!ownAccount ? (
         <>

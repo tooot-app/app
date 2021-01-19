@@ -1,9 +1,8 @@
 export default {
-  heading: '对话',
   content: {
     header: {
       prefix: '搜索',
-      placeholder: '些什么'
+      placeholder: '什么呢'
     },
     empty: {
       general:

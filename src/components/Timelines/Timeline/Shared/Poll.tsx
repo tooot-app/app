@@ -128,7 +128,7 @@ const TimelinePoll: React.FC<Props> = ({
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
           <Trans
-            i18nKey='timeline:shared.poll.meta.expiration.until'
+            i18nKey='componentTimeline:shared.poll.meta.expiration.until'
             components={[<RelativeTime date={poll.expires_at} />]}
           />
         </Text>

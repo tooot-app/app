@@ -17,11 +17,10 @@ i18next.use(initReactI18next).init({
   resources: { 'zh-Hans': zh_Hans, en },
 
   saveMissing: true,
-  missingKeyHandler: (lng, ns, key, fallbackValue) => {
-    console.log('i18n missing: ' + lng + ' - ' + ns + ' : ' + key)
+  missingKeyHandler: (ns, key) => {
+    console.log('i18n missing: ' + ns + ' : ' + key)
   },
 
-  // react options
   interpolation: {
     escapeValue: false
   }

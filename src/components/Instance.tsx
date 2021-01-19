@@ -96,7 +96,10 @@ const ComponentInstance: React.FC<Props> = ({
               t('update.local.alert.title'),
               t('update.local.alert.message'),
               [
-                { text: t('update.local.alert.buttons.cancel'), style: 'cancel' },
+                {
+                  text: t('update.local.alert.buttons.cancel'),
+                  style: 'cancel'
+                },
                 {
                   text: t('update.local.alert.buttons.continue'),
                   onPress: () => {
@@ -232,23 +235,25 @@ const ComponentInstance: React.FC<Props> = ({
               potentialWidth={4}
             />
           </View>
-          <View style={styles.disclaimer}>
-            <Icon
-              name='Lock'
-              size={StyleConstants.Font.Size.S}
-              color={theme.secondary}
-              style={styles.disclaimerIcon}
-            />
-            <Text
-              style={[styles.disclaimerText, { color: theme.secondary }]}
-              onPress={() => Linking.openURL('https://tooot.app/privacy')}
-            >
-              {t('server.disclaimer')}
-              <Text style={{ color: theme.blue }}>
-                https://tooot.app/privacy
+          {type === 'local' ? (
+            <View style={styles.disclaimer}>
+              <Icon
+                name='Lock'
+                size={StyleConstants.Font.Size.S}
+                color={theme.secondary}
+                style={styles.disclaimerIcon}
+              />
+              <Text
+                style={[styles.disclaimerText, { color: theme.secondary }]}
+                onPress={() => Linking.openURL('https://tooot.app/privacy')}
+              >
+                {t('server.disclaimer')}
+                <Text style={{ color: theme.blue }}>
+                  https://tooot.app/privacy
+                </Text>
               </Text>
-            </Text>
-          </View>
+            </View>
+          ) : null}
         </View>
       </View>
 

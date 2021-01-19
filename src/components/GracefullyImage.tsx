@@ -106,7 +106,7 @@ const GracefullyImage: React.FC<Props> = ({
         }
         return
       } catch (error) {
-        if (__DEV__) console.warn('Image preview', error)
+        if (__DEV__) console.warn('Image', error)
       }
     }
 

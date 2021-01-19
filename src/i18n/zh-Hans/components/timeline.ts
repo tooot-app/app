@@ -19,14 +19,14 @@ export default {
   shared: {
     actioned: {
       pinned: '置顶',
-      favourite: '{{name}} 喜欢了你的嘟嘟',
+      favourite: '{{name}} 喜欢了你的嘟文',
       status: '{{name}} 刚刚发嘟',
       follow: '{{name}} 开始关注你',
-      follow_request: '{{name}} 请求关注',
-      poll: '您参与的投票已结束',
+      follow_request: '{{name}} 请求关注你',
+      poll: '你参与的投票已结束',
       reblog: {
         default: '{{name}} 转嘟了',
-        notification: '{{name}} 转嘟了您的嘟文'
+        notification: '{{name}} 转嘟了你的嘟文'
       }
     },
     actions: {

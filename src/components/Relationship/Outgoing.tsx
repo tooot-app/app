@@ -6,6 +6,7 @@ import {
   useRelationshipMutation,
   useRelationshipQuery
 } from '@utils/queryHooks/relationship'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
@@ -23,12 +24,16 @@ const RelationshipOutgoing = React.memo(
     const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
     const queryClient = useQueryClient()
     const mutation = useRelationshipMutation({
-      onSuccess: res => {
+      onSuccess: (res, { payload: { action } }) => {
         haptics('Success')
         queryClient.setQueryData<Mastodon.Relationship[]>(
           queryKeyRelationship,
           [res]
         )
+        if (action === 'follow' || action === 'block') {
+          const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
+          queryClient.invalidateQueries(queryKey)
+        }
       },
       onError: (err: any, { payload: { action } }) => {
         haptics('Error')

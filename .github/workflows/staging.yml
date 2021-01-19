@@ -1,8 +1,8 @@
-name: Publish testing
+name: Publish staging
 on:
   push:
     branches:
-      - testing
+      - staging
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -24,5 +24,5 @@ jobs:
         run: yarn install
       - name: -- Step 5 -- Publish
         env:
-          SENTRY_DEPLOY_ENV: testing
-        run: expo publish --release-channel=testing
+          SENTRY_DEPLOY_ENV: staging
+        run: expo publish --release-channel=staging

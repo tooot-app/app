@@ -1,4 +1,5 @@
 import { ExpoConfig } from '@expo/config'
+import 'dotenv/config'
 
 export default (): ExpoConfig => ({
   name: 'tooot',
@@ -30,23 +31,30 @@ export default (): ExpoConfig => ({
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']
   },
-  // locales: {
-  //   zh: {
-  //     CFBundleDisplayName: '嘟嘟嘟',
-  //     NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
-  //     NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
-  //   },
-  //   en: {
-  //     CFBundleDisplayName: 'tooot'
-  //   }
-  // },
+  locales: {
+    zh: './src/i18n/zh-Hans/system.json'
+    // en: {
+    //   NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
+    //   NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
+    // }
+  },
   assetBundlePatterns: ['assets/*'],
   hooks: {
     postPublish: [
       {
-        file: 'sentry-expo/upload-sourcemaps'
+        file: 'sentry-expo/upload-sourcemaps',
+        config: {
+          organization: process.env.SENTRY_ORGANIZATION,
+          project: process.env.SENTRY_PROJECT,
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          setCommits: process.env.GITHUB_SHA || undefined,
+          deployEnv: process.env.SENTRY_DEPLOY_ENV
+        }
       }
     ]
+  },
+  extra: {
+    sentryDSN: process.env.SENTRY_DSN
   },
   web: {
     config: {

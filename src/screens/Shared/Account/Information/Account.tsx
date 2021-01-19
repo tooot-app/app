@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import { getLocalUri } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -7,14 +8,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import ShimmerPlaceholder, {
   createShimmerPlaceholder
 } from 'react-native-shimmer-placeholder'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  ownAccount?: boolean
 }
 
 const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
-  ({ account }, ref) => {
+  ({ account, ownAccount }, ref) => {
     const { theme } = useTheme()
+    const localUri = useSelector(getLocalUri)
 
     const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
@@ -40,6 +44,7 @@ const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
             selectable
           >
             @{account?.acct}
+            {ownAccount ? `@${localUri}` : null}
           </Text>
           {account?.locked ? (
             <Icon

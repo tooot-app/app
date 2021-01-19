@@ -41,10 +41,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
-          function: t(
-            `shared.header.actions.account.${property}.function`,
-            { acct: account.acct }
-          )
+          function: t(`shared.header.actions.account.${property}.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -62,9 +59,7 @@ const HeaderActionsAccount: React.FC<Props> = ({
 
   return (
     <MenuContainer>
-      <MenuHeader
-        heading={t('shared.header.actions.account.heading')}
-      />
+      <MenuHeader heading={t('shared.header.actions.account.heading')} />
       <MenuRow
         onPress={() => {
           setBottomSheetVisible(false)
@@ -91,12 +86,9 @@ const HeaderActionsAccount: React.FC<Props> = ({
           })
         }}
         iconFront='XCircle'
-        title={t(
-          'shared.header.actions.account.block.button',
-          {
-            acct: account.acct
-          }
-        )}
+        title={t('shared.header.actions.account.block.button', {
+          acct: account.acct
+        })}
       />
       <MenuRow
         onPress={() => {
@@ -109,12 +101,9 @@ const HeaderActionsAccount: React.FC<Props> = ({
           })
         }}
         iconFront='Flag'
-        title={t(
-          'shared.header.actions.account.reports.button',
-          {
-            acct: account.acct
-          }
-        )}
+        title={t('shared.header.actions.account.reports.button', {
+          acct: account.acct
+        })}
       />
     </MenuContainer>
   )

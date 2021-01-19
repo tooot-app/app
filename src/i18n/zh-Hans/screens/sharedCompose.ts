@@ -26,17 +26,17 @@ export default {
   content: {
     root: {
       header: {
-        postingAs: '用 @{{acct}}@{{domain}} 发布',
+        postingAs: '以 @{{acct}}@{{domain}} 发嘟',
         spoilerInput: {
           placeholder: '折叠部分的警告信息'
         },
         textInput: {
-          placeholder: '想说点什么'
+          placeholder: '想说点什么呢'
         }
       },
       footer: {
         attachments: {
-          sensitive: '标记媒体为敏感内容'
+          sensitive: '标记附件为敏感内容'
         },
         poll: {
           option: {
@@ -79,9 +79,9 @@ export default {
             library: {
               alert: {
                 title: '无读取权限',
-                message: '需要相片权限才能上传附件',
+                message: '需要读取相册权限才能上传附件',
                 buttons: {
-                  settings: '去系统设置',
+                  settings: '去更新设置',
                   cancel: '取消上传'
                 }
               }
@@ -89,9 +89,9 @@ export default {
             photo: {
               alert: {
                 title: '无拍照权限',
-                message: '需要相机权限才能上传附件',
+                message: '需要使用相机权限才能上传附件',
                 buttons: {
-                  settings: '去系统设置',
+                  settings: '去更新设置',
                   cancel: '取消上传'
                 }
               }

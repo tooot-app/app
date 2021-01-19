@@ -169,27 +169,53 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
   )
   const childrenReblog = useMemo(
     () => (
-      <Icon
-        name='Repeat'
-        color={
-          status.visibility === 'private' || status.visibility === 'direct'
-            ? theme.disabled
-            : iconColorAction(status.reblogged)
-        }
-        size={StyleConstants.Font.Size.L}
-      />
+      <>
+        <Icon
+          name='Repeat'
+          color={
+            status.visibility === 'private' || status.visibility === 'direct'
+              ? theme.disabled
+              : iconColorAction(status.reblogged)
+          }
+          size={StyleConstants.Font.Size.L}
+        />
+        {status.reblogs_count > 0 && (
+          <Text
+            style={{
+              color: theme.secondary,
+              ...StyleConstants.FontStyle.M,
+              marginLeft: StyleConstants.Spacing.XS
+            }}
+          >
+            {status.reblogs_count}
+          </Text>
+        )}
+      </>
     ),
-    [status.reblogged]
+    [status.reblogged, status.reblogs_count]
   )
   const childrenFavourite = useMemo(
     () => (
-      <Icon
-        name='Heart'
-        color={iconColorAction(status.favourited)}
-        size={StyleConstants.Font.Size.L}
-      />
+      <>
+        <Icon
+          name='Heart'
+          color={iconColorAction(status.favourited)}
+          size={StyleConstants.Font.Size.L}
+        />
+        {status.favourites_count > 0 && (
+          <Text
+            style={{
+              color: theme.secondary,
+              ...StyleConstants.FontStyle.M,
+              marginLeft: StyleConstants.Spacing.XS
+            }}
+          >
+            {status.favourites_count}
+          </Text>
+        )}
+      </>
     ),
-    [status.favourited]
+    [status.favourited, status.favourites_count]
   )
   const childrenBookmark = useMemo(
     () => (
@@ -245,6 +271,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: StyleConstants.Spacing.S
   }
 })

@@ -1,3 +1,3 @@
 export default {
-  heading: '外站社区'
+  heading: '围观社区'
 }

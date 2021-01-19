@@ -73,6 +73,18 @@ const DevDebug: React.FC = () => {
         destructive
         onPress={() => persistor.purge()}
       />
+      <Button
+        type='text'
+        content={'Crash test'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
+        }}
+        destructive
+        onPress={() => {
+          throw new Error('Testing crash')
+        }}
+      />
     </MenuContainer>
   )
 }

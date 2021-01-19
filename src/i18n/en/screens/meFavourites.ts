@@ -1,4 +1,4 @@
 export default {
-  heading: '列表：{{list}}',
+  heading: 'Favourites',
   content: {}
 }
