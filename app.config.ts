@@ -19,6 +19,7 @@ export default (): ExpoConfig => ({
   scheme: 'tooot',
   ios: {
     buildNumber: '1.0',
+    config: { usesNonExemptEncryption: false },
     bundleIdentifier: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/GoogleService-Info.plist',
     infoPlist: {

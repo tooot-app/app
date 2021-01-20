@@ -5,16 +5,12 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import {
-  getLocalInstances,
-  InstanceLocal,
-  remoteUpdate
-} from '@utils/slices/instancesSlice'
+import { getLocalInstances, remoteUpdate } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Linking from 'expo-linking'
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -34,54 +30,39 @@ const ComponentInstance: React.FC<Props> = ({
   disableHeaderImage,
   goBack = false
 }) => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
-  const queryClient = useQueryClient()
   const { t } = useTranslation('componentInstance')
   const { theme } = useTheme()
-  const [instanceDomain, setInstanceDomain] = useState<string | undefined>()
-  const [appData, setApplicationData] = useState<InstanceLocal['appData']>()
+  const navigation = useNavigation()
+
   const localInstances = useSelector(getLocalInstances)
+  const dispatch = useDispatch()
+
+  const queryClient = useQueryClient()
+  const [instanceDomain, setInstanceDomain] = useState<string>()
 
   const instanceQuery = useInstanceQuery({
     instanceDomain,
     options: { enabled: false, retry: false }
   })
-  const applicationQuery = useAppsQuery({
+  const appsQuery = useAppsQuery({
     instanceDomain,
     options: { enabled: false, retry: false }
   })
-
-  useEffect(() => {
-    if (
-      applicationQuery.data?.client_id.length &&
-      applicationQuery.data?.client_secret.length
-    ) {
-      setApplicationData({
-        clientId: applicationQuery.data.client_id,
-        clientSecret: applicationQuery.data.client_secret
-      })
-    }
-  }, [applicationQuery.data?.client_id])
 
   const onChangeText = useCallback(
     debounce(
       text => {
         setInstanceDomain(text.replace(/^http(s)?\:\/\//i, ''))
-        setApplicationData(undefined)
+        appsQuery.remove()
+        if (text) {
+          instanceQuery.refetch()
+        }
       },
       1000,
-      {
-        trailing: true
-      }
+      { trailing: true }
     ),
     []
   )
-  useEffect(() => {
-    if (instanceDomain) {
-      instanceQuery.refetch()
-    }
-  }, [instanceDomain])
 
   const processUpdate = useCallback(() => {
     if (instanceDomain) {
@@ -103,14 +84,13 @@ const ComponentInstance: React.FC<Props> = ({
                 {
                   text: t('update.local.alert.buttons.continue'),
                   onPress: () => {
-                    setApplicationData(undefined)
-                    applicationQuery.refetch()
+                    appsQuery.refetch()
                   }
                 }
               ]
             )
           } else {
-            applicationQuery.refetch()
+            appsQuery.refetch()
           }
           break
         case 'remote':
@@ -137,9 +117,6 @@ const ComponentInstance: React.FC<Props> = ({
         instanceQuery.data.uri
       ) {
         processUpdate()
-      } else {
-        setInstanceDomain(text)
-        setApplicationData(undefined)
       }
     },
     [instanceDomain, instanceQuery.isSuccess, instanceQuery.data]
@@ -153,6 +130,28 @@ const ComponentInstance: React.FC<Props> = ({
         return t('server.button.remote')
     }
   }, [])
+
+  const requestAuth = useMemo(() => {
+    if (
+      instanceDomain &&
+      instanceQuery.data?.uri &&
+      appsQuery.data?.client_id &&
+      appsQuery.data.client_secret
+    ) {
+      return (
+        <InstanceAuth
+          key={Math.random()}
+          instanceDomain={instanceDomain}
+          instanceUri={instanceQuery.data.uri}
+          appData={{
+            clientId: appsQuery.data.client_id,
+            clientSecret: appsQuery.data.client_secret
+          }}
+          goBack={goBack}
+        />
+      )
+    }
+  }, [instanceDomain, instanceQuery.data, appsQuery.data])
 
   return (
     <>
@@ -190,7 +189,7 @@ const ComponentInstance: React.FC<Props> = ({
             content={buttonContent}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri}
-            loading={instanceQuery.isFetching || applicationQuery.isFetching}
+            loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
         <View>
@@ -208,8 +207,8 @@ const ComponentInstance: React.FC<Props> = ({
           />
           <View style={styles.instanceStats}>
             <InstanceInfo
-              style={{ alignItems: 'flex-start' }}
-              visible={instanceQuery.data?.stats?.user_count === null}
+              style={styles.stat1}
+              visible={instanceQuery.data?.stats?.user_count !== undefined}
               header={t('server.information.accounts')}
               content={
                 instanceQuery.data?.stats?.user_count?.toString() || undefined
@@ -217,8 +216,8 @@ const ComponentInstance: React.FC<Props> = ({
               potentialWidth={4}
             />
             <InstanceInfo
-              style={{ alignItems: 'center' }}
-              visible={instanceQuery.data?.stats?.status_count === null}
+              style={styles.stat2}
+              visible={instanceQuery.data?.stats?.status_count !== undefined}
               header={t('server.information.statuses')}
               content={
                 instanceQuery.data?.stats?.status_count?.toString() || undefined
@@ -226,8 +225,8 @@ const ComponentInstance: React.FC<Props> = ({
               potentialWidth={4}
             />
             <InstanceInfo
-              style={{ alignItems: 'flex-end' }}
-              visible={instanceQuery.data?.stats?.domain_count === null}
+              style={styles.stat3}
+              visible={instanceQuery.data?.stats?.domain_count !== undefined}
               header={t('server.information.domains')}
               content={
                 instanceQuery.data?.stats?.domain_count?.toString() || undefined
@@ -257,14 +256,7 @@ const ComponentInstance: React.FC<Props> = ({
         </View>
       </View>
 
-      {type === 'local' && appData ? (
-        <InstanceAuth
-          instanceDomain={instanceDomain!}
-          instanceUri={instanceQuery.data!.uri}
-          appData={appData}
-          goBack={goBack}
-        />
-      ) : null}
+      {type === 'local' ? requestAuth : null}
     </>
   )
 }
@@ -289,6 +281,15 @@ const styles = StyleSheet.create({
   instanceStats: {
     flex: 1,
     flexDirection: 'row'
+  },
+  stat1: {
+    alignItems: 'flex-start'
+  },
+  stat2: {
+    alignItems: 'center'
+  },
+  stat3: {
+    alignItems: 'flex-end'
   },
   disclaimer: {
     flexDirection: 'row',

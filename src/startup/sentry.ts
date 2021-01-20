@@ -5,8 +5,9 @@ import log from './log'
 const sentry = () => {
   log('log', 'Sentry', 'initializing')
   Sentry.init({
+    environment: Constants.manifest.releaseChannel || 'expo',
     dsn: Constants.manifest.extra.sentryDSN,
-    enableInExpoDevelopment: true,
+    enableInExpoDevelopment: false,
     debug: __DEV__
   })
 }
