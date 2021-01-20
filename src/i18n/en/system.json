@@ -1,0 +1,4 @@
+{
+  "NSCameraUsageDescription": "Allow camera access to upload attachments",
+  "NSPhotoLibraryUsageDescription": "Allow photo library access to upload attachments"
+}

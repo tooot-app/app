@@ -33,11 +33,8 @@ export default (): ExpoConfig => ({
     permissions: ['CAMERA', 'VIBRATE']
   },
   locales: {
+    en: './src/i18n/en/system.json',
     zh: './src/i18n/zh-Hans/system.json'
-    // en: {
-    //   NSCameraUsageDescription: '允许嘟嘟嘟用相机上传照片',
-    //   NSPhotoLibraryUsageDescription: '允许嘟嘟嘟用相册上传照片'
-    // }
   },
   assetBundlePatterns: ['assets/*'],
   hooks: {
