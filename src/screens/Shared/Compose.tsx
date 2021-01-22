@@ -192,7 +192,7 @@ const Compose: React.FC<SharedComposeProp> = ({
               navigation.goBack()
             })
             .catch(error => {
-              Sentry.Native.captureException(error)
+              // Sentry.Native.captureException(error)
               haptics('Error')
               composeDispatch({ type: 'posting', payload: false })
               Alert.alert(t('heading.right.alert.title'), undefined, [
