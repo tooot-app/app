@@ -10,7 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Linking from 'expo-linking'
 import { debounce } from 'lodash'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -42,6 +42,7 @@ const ComponentInstance: React.FC<Props> = ({
 
   const instanceQuery = useInstanceQuery({
     instanceDomain,
+    checkPublic: type === 'remote',
     options: { enabled: false, retry: false }
   })
   const appsQuery = useAppsQuery({
@@ -170,7 +171,12 @@ const ComponentInstance: React.FC<Props> = ({
               styles.textInput,
               {
                 color: theme.primary,
-                borderBottomColor: theme.border
+                borderBottomColor:
+                  type === 'remote' &&
+                  instanceQuery.data &&
+                  !instanceQuery.data.publicAllow
+                    ? theme.red
+                    : theme.border
               }
             ]}
             onChangeText={onChangeText}
@@ -188,10 +194,20 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={buttonContent}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri}
+            disabled={
+              !instanceQuery.data?.uri ||
+              (type === 'remote' && !instanceQuery.data.publicAllow)
+            }
             loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
+        {type === 'remote' &&
+        instanceQuery.data &&
+        !instanceQuery.data.publicAllow ? (
+          <Text style={[styles.privateInstance, { color: theme.red }]}>
+            {t('server.privateInstance')}
+          </Text>
+        ) : null}
         <View>
           <InstanceInfo
             visible={instanceQuery.data?.title !== undefined}
@@ -277,6 +293,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     ...StyleConstants.FontStyle.M,
     marginRight: StyleConstants.Spacing.M
+  },
+  privateInstance: {
+    ...StyleConstants.FontStyle.S,
+    fontWeight: StyleConstants.Font.Weight.Bold,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginTop: StyleConstants.Spacing.XS
   },
   instanceStats: {
     flex: 1,

@@ -50,7 +50,7 @@ const AccountButton: React.FC<Props> = ({
       disabled={disabled}
       loading={isLoading}
       style={styles.button}
-      content={`@${data?.acct || '...'}@${instance.url}`}
+      content={`@${data?.acct || '...'}@${instance.uri}${disabled ? ' ✓' : ''}`}
       onPress={() => {
         dispatch(localUpdateActiveIndex(index))
         queryClient.clear()
@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     marginTop: StyleConstants.Spacing.M
   },
   button: {
-    marginBottom: StyleConstants.Spacing.M
+    marginBottom: StyleConstants.Spacing.M,
+    marginRight: StyleConstants.Spacing.M
   }
 })
 

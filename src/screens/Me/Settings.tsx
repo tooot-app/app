@@ -125,10 +125,10 @@ const ScreenMeSettings: React.FC = () => {
               {
                 title: t('content.language.heading'),
                 options,
-                cancelButtonIndex: i18n.languages.length
+                cancelButtonIndex: options.length - 1
               },
               buttonIndex => {
-                if (buttonIndex < i18n.languages.length) {
+                if (buttonIndex < options.length) {
                   haptics('Success')
                   dispatch(changeLanguage(availableLanguages[buttonIndex]))
                   i18n.changeLanguage(availableLanguages[buttonIndex])

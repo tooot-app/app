@@ -79,43 +79,44 @@ const TimelineConversation: React.FC<Props> = ({
       </View>
 
       {conversation.last_status ? (
-        <View
-          style={{
-            paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-          }}
-        >
-          <TimelineContent
-            status={conversation.last_status}
-            highlighted={highlighted}
-          />
-          {conversation.last_status.poll && (
-            <TimelinePoll
-              queryKey={queryKey}
-              statusId={conversation.last_status.id}
-              poll={conversation.last_status.poll}
-              reblog={false}
-              sameAccount={conversation.last_status.id === localAccount?.id}
+        <>
+          <View
+            style={{
+              paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+              paddingLeft: highlighted
+                ? 0
+                : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            }}
+          >
+            <TimelineContent
+              status={conversation.last_status}
+              highlighted={highlighted}
             />
-          )}
-        </View>
+            {conversation.last_status.poll && (
+              <TimelinePoll
+                queryKey={queryKey}
+                statusId={conversation.last_status.id}
+                poll={conversation.last_status.poll}
+                reblog={false}
+                sameAccount={conversation.last_status.id === localAccount?.id}
+              />
+            )}
+          </View>
+          <View
+            style={{
+              paddingLeft: highlighted
+                ? 0
+                : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            }}
+          >
+            <TimelineActions
+              queryKey={queryKey}
+              status={conversation.last_status}
+              reblog={false}
+            />
+          </View>
+        </>
       ) : null}
-
-      <View
-        style={{
-          paddingLeft: highlighted
-            ? 0
-            : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-        }}
-      >
-        <TimelineActions
-          queryKey={queryKey}
-          status={conversation.last_status!}
-          reblog={false}
-        />
-      </View>
     </Pressable>
   )
 }

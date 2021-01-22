@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { FlatList, Image, StyleSheet, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -50,6 +50,14 @@ const ComposeRoot: React.FC = () => {
       composeDispatch({
         type: 'emoji',
         payload: { ...composeState.emoji, emojis: sortedEmojis }
+      })
+    }
+  }, [emojisData])
+  useEffect(() => {
+    if (emojisData && emojisData.length) {
+      // Prefetch first batch of emojis for faster loading experience
+      emojisData.slice(0, 40).forEach(emoji => {
+        Image.prefetch(emoji.url)
       })
     }
   }, [emojisData])

@@ -111,12 +111,10 @@ const AttachmentAudio: React.FC<Props> = ({
           minimumTrackTintColor={theme.secondary}
           maximumTrackTintColor={theme.disabled}
           // onSlidingStart={() => {
-          //   console.log('yes!!!')
           //   audioPlayer?.pauseAsync()
           //   setAudioPlaying(false)
           // }}
           // onSlidingComplete={value => {
-          //   console.log('no!!!')
           //   setAudioPosition(value)
           // }}
           enabled={false} // Bug in above sliding actions

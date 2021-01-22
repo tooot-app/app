@@ -292,7 +292,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
         case 'poll':
           const formData = new FormData()
           params.payload.type === 'vote' &&
-            params.payload.options!.forEach((option, index) => {
+            params.payload.options?.forEach((option, index) => {
               if (option) {
                 formData.append('choices[]', index.toString())
               }

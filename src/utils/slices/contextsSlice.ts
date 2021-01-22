@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
+import Constants from 'expo-constants'
 import * as StoreReview from 'expo-store-review'
 
 export const supportedLngs = ['zh-Hans', 'en']
@@ -37,9 +38,11 @@ const contextsSlice = createSlice({
   initialState: contextsInitialState as ContextsState,
   reducers: {
     updateStoreReview: (state, action: PayloadAction<1>) => {
-      state.storeReview.current = state.storeReview.current + action.payload
-      if (state.storeReview.current === state.storeReview.context) {
-        StoreReview.isAvailableAsync().then(() => StoreReview.requestReview())
+      if (Constants.manifest.releaseChannel === 'production') {
+        state.storeReview.current = state.storeReview.current + action.payload
+        if (state.storeReview.current === state.storeReview.context) {
+          StoreReview.isAvailableAsync().then(() => StoreReview.requestReview())
+        }
       }
     },
     updatePublicRemoteNotice: (state, action: PayloadAction<1>) => {

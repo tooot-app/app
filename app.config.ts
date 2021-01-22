@@ -17,26 +17,10 @@ export default (): ExpoConfig => ({
     image: './assets/splash.png'
   },
   scheme: 'tooot',
-  ios: {
-    buildNumber: '1.0',
-    config: { usesNonExemptEncryption: false },
-    bundleIdentifier: 'com.xmflsct.app.tooot',
-    googleServicesFile: './configs/GoogleService-Info.plist',
-    infoPlist: {
-      CFBundleAllowMixedLocalizations: true
-    }
-  },
-  android: {
-    versionCode: 1,
-    package: 'com.xmflsct.app.tooot',
-    googleServicesFile: './configs/google-services.json',
-    permissions: ['CAMERA', 'VIBRATE']
-  },
-  locales: {
-    en: './src/i18n/en/system.json',
-    zh: './src/i18n/zh-Hans/system.json'
-  },
   assetBundlePatterns: ['assets/*'],
+  extra: {
+    sentryDSN: process.env.SENTRY_DSN
+  },
   hooks: {
     postPublish: [
       {
@@ -51,8 +35,24 @@ export default (): ExpoConfig => ({
       }
     ]
   },
-  extra: {
-    sentryDSN: process.env.SENTRY_DSN
+  ios: {
+    buildNumber: '2',
+    config: { usesNonExemptEncryption: false },
+    bundleIdentifier: 'com.xmflsct.app.tooot',
+    googleServicesFile: './configs/GoogleService-Info.plist',
+    infoPlist: {
+      CFBundleAllowMixedLocalizations: true
+    }
+  },
+  locales: {
+    en: './src/i18n/en/system.json',
+    zh: './src/i18n/zh-Hans/system.json'
+  },
+  android: {
+    versionCode: 2,
+    package: 'com.xmflsct.app.tooot',
+    googleServicesFile: './configs/google-services.json',
+    permissions: ['CAMERA', 'VIBRATE']
   },
   web: {
     config: {

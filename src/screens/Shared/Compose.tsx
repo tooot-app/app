@@ -22,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
 import { useDispatch } from 'react-redux'
+import * as Sentry from 'sentry-expo'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
@@ -145,7 +146,7 @@ const Compose: React.FC<SharedComposeProp> = ({
         }}
       />
     ),
-    [totalTextCount]
+    [totalTextCount, composeState]
   )
   const headerCenter = useCallback(
     () => (
@@ -190,7 +191,8 @@ const Compose: React.FC<SharedComposeProp> = ({
               }
               navigation.goBack()
             })
-            .catch(() => {
+            .catch(error => {
+              Sentry.Native.captureException(error)
               haptics('Error')
               composeDispatch({ type: 'posting', payload: false })
               Alert.alert(t('heading.right.alert.title'), undefined, [
@@ -201,7 +203,13 @@ const Compose: React.FC<SharedComposeProp> = ({
             })
         }}
         loading={composeState.posting}
-        disabled={composeState.text.raw.length < 1 || totalTextCount > 500}
+        disabled={
+          composeState.text.raw.length < 1 ||
+          totalTextCount > 500 ||
+          (composeState.attachments.uploads.length > 0 &&
+            composeState.attachments.uploads.filter(upload => upload.uploading)
+              .length > 0)
+        }
       />
     ),
     [totalTextCount, composeState]

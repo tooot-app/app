@@ -1,6 +1,7 @@
 export default {
   server: {
     textInput: { placeholder: "Instance' domain" },
+    privateInstance: 'Private instance, peeping not allowed',
     button: {
       local: 'Login',
       remote: 'Peep'

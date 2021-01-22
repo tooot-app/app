@@ -35,11 +35,13 @@ const client = async <T = unknown>({
     localIndex !== undefined ? localIndex : state.local.activeIndex
 
   let domain = null
+  let token = null
   if (instance === 'remote') {
     domain = instanceDomain || state.remote.url
   } else {
     if (theLocalIndex !== null && state.local.instances[theLocalIndex]) {
       domain = state.local.instances[theLocalIndex].url
+      token = state.local.instances[theLocalIndex].token
     } else {
       console.error(
         ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
@@ -69,8 +71,8 @@ const client = async <T = unknown>({
     headers: {
       'Content-Type': 'application/json',
       ...headers,
-      ...(instance === 'local' && {
-        Authorization: `Bearer ${state.local!.instances[theLocalIndex!].token}`
+      ...(token && {
+        Authorization: `Bearer ${token}`
       })
     },
     ...(body && { data: body }),

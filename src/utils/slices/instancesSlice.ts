@@ -259,7 +259,7 @@ export const getLocalUrl = ({ instances: { local } }: RootState) =>
     : undefined
 export const getLocalUri = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
-    ? local.instances[local.activeIndex].url
+    ? local.instances[local.activeIndex].uri
     : undefined
 export const getLocalAccount = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null

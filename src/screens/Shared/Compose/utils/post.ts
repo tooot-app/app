@@ -9,7 +9,7 @@ const composePost = async (
 ) => {
   const formData = new FormData()
 
-  if (params?.type === 'conversation' || params?.type === 'reply') {
+  if (params?.type === 'reply') {
     formData.append('in_reply_to_id', composeState.replyToStatus!.id)
   }
 
@@ -20,9 +20,9 @@ const composePost = async (
   formData.append('status', composeState.text.raw)
 
   if (composeState.poll.active) {
-    Object.values(composeState.poll.options)
-      .filter(e => e?.length)
-      .forEach(e => formData.append('poll[options][]', e!))
+    Object.values(composeState.poll.options).forEach(
+      e => e && e.length && formData.append('poll[options][]', e)
+    )
     formData.append('poll[expires_in]', composeState.poll.expire)
     formData.append('poll[multiple]', composeState.poll.multiple.toString())
   }

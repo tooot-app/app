@@ -59,7 +59,9 @@ const AttachmentUnsupported: React.FC<Props> = ({
               content={t('shared.attachment.unsupported.button')}
               size='S'
               overlay
-              onPress={async () => await openLink(attachment.remote_url!)}
+              onPress={async () =>
+                attachment.remote_url && (await openLink(attachment.remote_url))
+              }
             />
           ) : null}
         </>

@@ -54,10 +54,11 @@ const ComposeEditAttachment: React.FC<Props> = ({
 
       if (theAttachment.type === 'image') {
         if (focus.current.x !== 0 || focus.current.y !== 0) {
-          theAttachment.meta!.focus = {
-            x: focus.current.x > 1 ? 1 : focus.current.x,
-            y: focus.current.y > 1 ? 1 : focus.current.y
-          }
+          theAttachment.meta &&
+            (theAttachment.meta.focus = {
+              x: focus.current.x > 1 ? 1 : focus.current.x,
+              y: focus.current.y > 1 ? 1 : focus.current.y
+            })
           needUpdate = true
         }
       }

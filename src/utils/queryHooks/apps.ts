@@ -21,7 +21,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   const { instanceDomain } = queryKey[1]
 
   const formData = new FormData()
-  formData.append('client_name', 'tooot📱')
+  formData.append('client_name', 'tooot')
   formData.append('website', 'https://tooot.app')
   formData.append('redirect_uris', redirectUri)
   formData.append('scopes', 'read write follow push')

@@ -47,7 +47,7 @@ const AccountInformationCreated = forwardRef<ShimmerPlaceholder, Props>(
             }}
           >
             {t('content.created_at', {
-              date: new Date(account?.created_at!).toLocaleDateString(
+              date: new Date(account?.created_at || '').toLocaleDateString(
                 i18n.language,
                 {
                   year: 'numeric',

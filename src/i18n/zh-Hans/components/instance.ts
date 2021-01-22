@@ -1,6 +1,7 @@
 export default {
   server: {
     textInput: { placeholder: '输入社区服务器地址' },
+    privateInstance: '非公开社区, 不能围观',
     button: {
       local: '登录',
       remote: '围观'

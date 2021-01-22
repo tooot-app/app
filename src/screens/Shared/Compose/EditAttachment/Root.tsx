@@ -32,31 +32,33 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
   const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
   const { composeState } = useContext(ComposeContext)
-  const theAttachment = composeState.attachments.uploads[index].remote!
+  const theAttachment = composeState.attachments.uploads[index].remote
 
   const mediaDisplay = useMemo(() => {
-    switch (theAttachment.type) {
-      case 'image':
-        return <ComposeEditAttachmentImage index={index} focus={focus} />
-      case 'video':
-      case 'gifv':
-        const video = composeState.attachments.uploads[index]
-        return (
-          <AttachmentVideo
-            total={1}
-            index={0}
-            sensitiveShown={false}
-            video={
-              video.local
-                ? ({
-                    url: video.local.uri,
-                    preview_url: video.local.local_thumbnail,
-                    blurhash: video.remote?.blurhash
-                  } as Mastodon.AttachmentVideo)
-                : (video.remote! as Mastodon.AttachmentVideo)
-            }
-          />
-        )
+    if (theAttachment) {
+      switch (theAttachment.type) {
+        case 'image':
+          return <ComposeEditAttachmentImage index={index} focus={focus} />
+        case 'video':
+        case 'gifv':
+          const video = composeState.attachments.uploads[index]
+          return (
+            <AttachmentVideo
+              total={1}
+              index={0}
+              sensitiveShown={false}
+              video={
+                video.local
+                  ? ({
+                      url: video.local.uri,
+                      preview_url: video.local.local_thumbnail,
+                      blurhash: video.remote?.blurhash
+                    } as Mastodon.AttachmentVideo)
+                  : (video.remote as Mastodon.AttachmentVideo)
+              }
+            />
+          )
+      }
     }
     return null
   }, [])

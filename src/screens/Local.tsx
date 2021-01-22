@@ -1,19 +1,11 @@
 import Timelines from '@components/Timelines'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 
-const ScreenLocal: React.FC = () => {
-  const { t } = useTranslation()
-
-  return (
-    <Timelines
-      name='Local'
-      content={[
-        { title: t('local:heading.segments.left'), page: 'Following' },
-        { title: t('local:heading.segments.right'), page: 'Local' }
-      ]}
-    />
-  )
-}
+const ScreenLocal = React.memo(
+  () => {
+    return <Timelines name='Local' />
+  },
+  () => true
+)
 
 export default ScreenLocal

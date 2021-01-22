@@ -69,8 +69,8 @@ const formatText = ({
   })
 
   const changedTag = differenceWith(tags, prevTags, isEqual)
-  if (changedTag.length && !disableDebounce) {
-    if (changedTag[0]!.type !== 'url') {
+  if (changedTag.length > 0 && !disableDebounce) {
+    if (changedTag[0]?.type !== 'url') {
       debouncedSuggestions(composeDispatch, changedTag[0])
     }
   } else {
@@ -83,30 +83,33 @@ const formatText = ({
   let contentLength: number = 0
   const children = []
   tags.forEach((tag, index) => {
-    const prev = _content.substr(0, tag!.offset - pointer)
-    const main = _content.substr(tag!.offset - pointer, tag!.length)
-    const next = _content.substr(tag!.offset - pointer + tag!.length)
-    children.push(prev)
-    contentLength = contentLength + prev.length
-    children.push(<TagText key={index} text={main} />)
-    switch (tag!.type) {
-      case 'url':
-        contentLength = contentLength + 23
-        break
-      case 'accounts':
-        if (main.match(/@/g)!.length > 1) {
-          contentLength =
-            contentLength + main.split(new RegExp('(@.*?)@'))[1].length
-        } else {
+    if (tag) {
+      const prev = _content.substr(0, tag.offset - pointer)
+      const main = _content.substr(tag.offset - pointer, tag.length)
+      const next = _content.substr(tag.offset - pointer + tag.length)
+      children.push(prev)
+      contentLength = contentLength + prev.length
+      children.push(<TagText key={index} text={main} />)
+      switch (tag.type) {
+        case 'url':
+          contentLength = contentLength + 23
+          break
+        case 'accounts':
+          const theMatch = main.match(/@/g)
+          if (theMatch && theMatch.length > 1) {
+            contentLength =
+              contentLength + main.split(new RegExp('(@.*?)@'))[1].length
+          } else {
+            contentLength = contentLength + main.length
+          }
+          break
+        case 'hashtags':
           contentLength = contentLength + main.length
-        }
-        break
-      case 'hashtags':
-        contentLength = contentLength + main.length
-        break
+          break
+      }
+      _content = next
+      pointer = pointer + prev.length + tag.length
     }
-    _content = next
-    pointer = pointer + prev.length + tag!.length
   })
   children.push(_content)
   contentLength = contentLength + _content.length

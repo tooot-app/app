@@ -1,7 +1,7 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import React, { useMemo } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { Image } from 'react-native-expo-image-cache'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
@@ -19,18 +19,26 @@ const ParseEmojis: React.FC<Props> = ({
   size = 'M',
   fontBold = false
 }) => {
-  const { theme } = useTheme()
-  const styles = StyleSheet.create({
-    text: {
-      color: theme.primary,
-      ...StyleConstants.FontStyle[size],
-      ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
-    },
-    image: {
-      width: StyleConstants.Font.Size[size],
-      height: StyleConstants.Font.Size[size]
-    }
-  })
+  const { mode, theme } = useTheme()
+  const styles = useMemo(() => {
+    return StyleSheet.create({
+      text: {
+        color: theme.primary,
+        ...StyleConstants.FontStyle[size],
+        ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
+      },
+      imageContainer: {
+        paddingVertical:
+          (StyleConstants.Font.LineHeight[size] -
+            StyleConstants.Font.Size[size]) /
+          3
+      },
+      image: {
+        width: StyleConstants.Font.Size[size],
+        height: StyleConstants.Font.Size[size]
+      }
+    })
+  }, [mode])
 
   return (
     <Text style={styles.text}>
@@ -50,7 +58,13 @@ const ParseEmojis: React.FC<Props> = ({
                 <Text key={i}>
                   {/* When emoji starts a paragraph, lineHeight will break */}
                   {i === 0 ? <Text> </Text> : null}
-                  <Image uri={emojis[emojiIndex].url} style={[styles.image]} />
+                  <View style={styles.imageContainer}>
+                    <Image
+                      transitionDuration={0}
+                      uri={emojis[emojiIndex].url}
+                      style={[styles.image]}
+                    />
+                  </View>
                 </Text>
               )
             } else {

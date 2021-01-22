@@ -28,20 +28,21 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
   const { theme } = useTheme()
 
   const { composeState } = useContext(ComposeContext)
-  const theAttachmentRemote = composeState.attachments.uploads[index].remote!
-  const theAttachmentLocal = composeState.attachments.uploads[index].local!
+  const theAttachmentRemote = composeState.attachments.uploads[index].remote
+  const theAttachmentLocal = composeState.attachments.uploads[index].local
 
   const imageWidthBase =
-    theAttachmentRemote.meta?.original?.aspect < 1
+    theAttachmentRemote?.meta?.original?.aspect < 1
       ? Dimensions.get('screen').width *
-        theAttachmentRemote.meta?.original?.aspect
+        theAttachmentRemote?.meta?.original?.aspect
       : Dimensions.get('screen').width
   const padding = (Dimensions.get('screen').width - imageWidthBase) / 2
   const imageDimensionis = {
     width: imageWidthBase,
     height:
       imageWidthBase /
-      (theAttachmentRemote as Mastodon.AttachmentImage).meta?.original?.aspect!
+      ((theAttachmentRemote as Mastodon.AttachmentImage).meta?.original
+        ?.aspect || 1)
   }
 
   const panX = useSharedValue(
@@ -115,7 +116,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
             height: imageDimensionis.height
           }}
           source={{
-            uri: theAttachmentLocal.uri || theAttachmentRemote.preview_url
+            uri: theAttachmentLocal?.uri || theAttachmentRemote?.preview_url
           }}
         />
         <PanGestureHandler onGestureEvent={onGestureEvent}>

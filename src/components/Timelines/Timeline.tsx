@@ -5,7 +5,7 @@ import TimelineEmpty from '@components/Timelines/Timeline/Empty'
 import TimelineEnd from '@root/components/Timelines/Timeline/End'
 import TimelineHeader from '@components/Timelines/Timeline/Header'
 import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -19,7 +19,6 @@ import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
-import { InfiniteData, useQueryClient } from 'react-query'
 import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
 
 export interface Props {
@@ -58,25 +57,12 @@ const Timeline: React.FC<Props> = ({
     isSuccess,
     isFetching,
     isLoading,
-    hasPreviousPage,
-    fetchPreviousPage,
-    isFetchingPreviousPage,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useTimelineQuery({
     ...queryKeyParams,
     options: {
-      getPreviousPageParam: firstPage => {
-        return Array.isArray(firstPage) && firstPage.length
-          ? {
-              direction: 'prev',
-              id: firstPage[0].last_status
-                ? firstPage[0].last_status.id
-                : firstPage[0].id
-            }
-          : undefined
-      },
       getNextPageParam: lastPage => {
         return Array.isArray(lastPage) && lastPage.length
           ? {
@@ -94,16 +80,23 @@ const Timeline: React.FC<Props> = ({
 
   // Clear unread notification badge
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   useEffect(() => {
-    if (page === 'Notifications' && flattenData.length) {
-      dispatch(
-        localUpdateNotification({
-          unread: false,
-          latestTime: (flattenData[0] as Mastodon.Notification).created_at
-        })
-      )
-    }
-  }, [flattenData])
+    const unsubscribe = navigation.addListener('focus', props => {
+      if (props.target && props.target.includes('Screen-Notifications-Root')) {
+        if (flattenData.length) {
+          dispatch(
+            localUpdateNotification({
+              unread: false,
+              latestTime: (flattenData[0] as Mastodon.Notification).created_at
+            })
+          )
+        }
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, flattenData])
 
   const flRef = useRef<FlatList<any>>(null)
   useEffect(() => {
@@ -166,43 +159,29 @@ const Timeline: React.FC<Props> = ({
     [hasNextPage]
   )
 
-  const queryClient = useQueryClient()
+  const isSwipeDown = useRef(false)
   const refreshControl = useMemo(
     () => (
       <RefreshControl
         {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          isFetchingPreviousPage ||
-          (isFetching && !isFetchingNextPage && !isLoading)
+          isSwipeDown.current && isFetching && !isFetchingNextPage && !isLoading
         }
         onRefresh={() => {
-          // if (hasPreviousPage) {
-          //   fetchPreviousPage()
-          // } else {
-          //   queryClient.setQueryData<InfiniteData<any> | undefined>(
-          //     queryKey,
-          //     data => {
-          //       if (data) {
-          //         return {
-          //           pages: data.pages.slice(1),
-          //           pageParams: data.pageParams.slice(1)
-          //         }
-          //       }
-          //     }
-          //   )
+          isSwipeDown.current = true
           refetch()
-          // }
         }}
       />
     ),
-    [
-      hasPreviousPage,
-      isFetchingPreviousPage,
-      isFetching,
-      isFetchingNextPage,
-      isLoading
-    ]
+    [isSwipeDown.current, isFetching, isFetchingNextPage, isLoading]
   )
+
+  useEffect(() => {
+    if (!isFetching) {
+      isSwipeDown.current = false
+    }
+  }, [isFetching])
+
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
     flRef.current?.scrollToOffset({ offset })

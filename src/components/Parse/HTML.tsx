@@ -154,12 +154,16 @@ const ParseHTML: React.FC<Props> = ({
   tags,
   showFullLink = false,
   numberOfLines = 10,
-  expandHint = '全文',
+  expandHint,
   disableDetails = false
 }) => {
   const navigation = useNavigation()
   const route = useRoute()
   const { theme } = useTheme()
+  const { t, i18n } = useTranslation('componentParse')
+  if (!expandHint) {
+    expandHint = t('HTML.defaultHint')
+  }
 
   const renderNodeCallback = useCallback(
     (node, index) =>
@@ -261,7 +265,7 @@ const ParseHTML: React.FC<Props> = ({
         </View>
       )
     },
-    [theme]
+    [theme, i18n.language]
   )
 
   return (

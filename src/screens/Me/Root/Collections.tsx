@@ -5,7 +5,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const Collections: React.FC = () => {
-  const { t } = useTranslation('meRoot')
+  const { t, i18n } = useTranslation('meRoot')
   const navigation = useNavigation()
 
   const { data, isFetching } = useAnnouncementQuery({ showAll: true })
@@ -19,7 +19,7 @@ const Collections: React.FC = () => {
         return t('content.collections.announcements.content.read')
       }
     }
-  }, [data])
+  }, [data, i18n.language])
 
   return (
     <MenuContainer>

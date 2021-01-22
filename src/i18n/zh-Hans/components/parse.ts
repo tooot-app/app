@@ -3,6 +3,7 @@ export default {
     expanded: {
       true: '折叠{{hint}}',
       false: '展开{{hint}}'
-    }
+    },
+    defaultHint: '全文'
   }
 }
