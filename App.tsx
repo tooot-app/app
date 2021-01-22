@@ -8,7 +8,6 @@ import onlineStatus from '@root/startup/onlineStatus'
 import netInfo from '@root/startup/netInfo'
 import { persistor, store } from '@root/store'
 import ThemeManager from '@utils/styles/ThemeManager'
-import Constants from 'expo-constants'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { enableScreens } from 'react-native-screens'
@@ -16,16 +15,11 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { LogBox, Platform } from 'react-native'
-import * as Sentry from 'sentry-expo'
 
 if (Platform.OS === 'android') {
   LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 }
 
-log('log', 'Sentry', 'initializing')
-Sentry.init({
-  dsn: Constants.manifest.extra.sentryDSN
-})
 
 dev()
 // sentry()
