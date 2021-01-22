@@ -1,3 +1,4 @@
+import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   combineReducers,
@@ -8,7 +9,6 @@ import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
 import { persistReducer, persistStore } from 'redux-persist'
-import createSecureStore from 'redux-persist-expo-securestore'
 
 const secureStorage = createSecureStore()
 
@@ -24,14 +24,13 @@ const instancesPersistConfig = {
   key: 'instances',
   prefix,
   version: 1,
-  storage: secureStorage,
-  debug: true
+  storage: secureStorage
 }
 
 const settingsPersistConfig = {
   key: 'settings',
   prefix,
-  storage: secureStorage
+  storage: AsyncStorage
 }
 
 const rootPersistConfig = {

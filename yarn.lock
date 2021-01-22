@@ -1936,6 +1936,13 @@
     "@babel/runtime" "^7.7.2"
     regenerator-runtime "^0.13.3"
 
+"@neverdull-agency/expo-unlimited-secure-store@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@neverdull-agency/expo-unlimited-secure-store/-/expo-unlimited-secure-store-1.0.10.tgz#1e78b502257b267fc918a85eaa41aa01a46d2007"
+  integrity sha512-3rGdoSvp6vFgcwMep+r38xVfHYuQKDKBUQ8Kl4UtOfWcQR4iCKb3WiB5GxPuooVFuV54IGp/r4/tMTi+pQoReA==
+  dependencies:
+    crypto-js "^3.1.9-1"
+
 "@react-native-async-storage/async-storage@^1.13.2":
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.13.3.tgz#bba0c69541de4da12f3a47fe07698fda84b16135"
@@ -8958,11 +8965,6 @@ redent@^2.0.0:
   dependencies:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
-
-redux-persist-expo-securestore@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/redux-persist-expo-securestore/-/redux-persist-expo-securestore-2.0.0.tgz#990d8c007c39a9a624b6311d09952b6b221a548e"
-  integrity sha512-swD6sC6QCCHyKBV0hFQIBEiO8ph2Nc6Bs96hZ7Qq5iciO/Mk2T6ZDRR8e23jWDjGK5I8uCr4in7ZVb+RPbENQA==
 
 redux-persist@^6.0.0:
   version "6.0.0"
