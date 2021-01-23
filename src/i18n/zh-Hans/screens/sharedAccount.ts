@@ -1,5 +1,6 @@
 export default {
   content: {
+    moved: '账户已迁移',
     created_at: '注册时间：{{date}}',
     summary: {
       statuses_count: '{{count}} 条嘟文',

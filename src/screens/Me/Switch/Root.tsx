@@ -1,7 +1,6 @@
 import Button from '@components/Button'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
-import { useAccountCheckQuery } from '@utils/queryHooks/accountCheck'
 import {
   getLocalActiveIndex,
   getLocalInstances,
@@ -38,19 +37,15 @@ const AccountButton: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const { isLoading, data } = useAccountCheckQuery({
-    id: instance.account.id,
-    index,
-    options: { retry: false }
-  })
 
   return (
     <Button
       type='text'
       disabled={disabled}
-      loading={isLoading}
       style={styles.button}
-      content={`@${data?.acct || '...'}@${instance.uri}${disabled ? ' ✓' : ''}`}
+      content={`@${instance.account.acct}@${instance.uri}${
+        disabled ? ' ✓' : ''
+      }`}
       onPress={() => {
         dispatch(localUpdateActiveIndex(index))
         queryClient.clear()

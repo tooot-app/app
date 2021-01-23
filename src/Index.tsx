@@ -17,6 +17,7 @@ import ScreenNotifications from '@screens/Notifications'
 import ScreenPublic from '@screens/Public'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import {
+  getLocalAccount,
   getLocalActiveIndex,
   getLocalNotification,
   localUpdateAccountPreferences,
@@ -32,7 +33,7 @@ import React, {
   useMemo,
   useRef
 } from 'react'
-import { Platform, StatusBar } from 'react-native'
+import { Image, Platform, StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -120,7 +121,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       if (!prevNotification || !prevNotification.latestTime) {
         dispatch(
           localUpdateNotification({
-            unread: true
+            unread: false
           })
         )
       } else if (
@@ -160,6 +161,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
 
     routeNameRef.current = currentRouteName
   }, [])
+  const localAccount = useSelector(getLocalAccount)
   const tabNavigatorScreenOptions = useCallback(
     ({ route }): BottomTabNavigationOptions => ({
       tabBarIcon: ({
@@ -171,32 +173,43 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         color: string
         size: number
       }) => {
-        let name: any
-        let updateColor: string = color
-        console.log()
         switch (route.name) {
           case 'Screen-Local':
-            name = 'Home'
-            break
+            return <Icon name='Home' size={size} color={color} />
           case 'Screen-Public':
-            name = 'Globe'
-            !focused && (updateColor = theme.secondary)
-            break
+            return (
+              <Icon
+                name='Globe'
+                size={size}
+                color={!focused ? theme.secondary : color}
+              />
+            )
           case 'Screen-Post':
-            name = 'Plus'
-            break
+            return <Icon name='Plus' size={size} color={color} />
           case 'Screen-Notifications':
-            name = 'Bell'
-            break
+            return <Icon name='Bell' size={size} color={color} />
           case 'Screen-Me':
-            name = focused ? 'Meh' : 'Smile'
-            !focused && (updateColor = theme.secondary)
-            break
+            return localActiveIndex !== null ? (
+              <Image
+                source={{ uri: localAccount?.avatarStatic }}
+                style={{
+                  width: size + 2,
+                  height: size + 2,
+                  borderRadius: size,
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? theme.secondary : color
+                }}
+              />
+            ) : (
+              <Icon
+                name={focused ? 'Meh' : 'Smile'}
+                size={size}
+                color={!focused ? theme.secondary : color}
+              />
+            )
           default:
-            name = 'AlertOctagon'
-            break
+            return <Icon name='AlertOctagon' size={size} color={color} />
         }
-        return <Icon name={name} size={size} color={updateColor} />
       },
       ...(Platform.OS === 'android' && {
         tabBarVisible:
@@ -208,7 +221,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
           getFocusedRouteNameFromRoute(route) !== 'Screen-Me-Switch'
       })
     }),
-    []
+    [localActiveIndex, localAccount]
   )
   const tabNavigatorTabBarOptions = useMemo(
     () => ({

@@ -27,15 +27,10 @@ const ParseEmojis: React.FC<Props> = ({
         ...StyleConstants.FontStyle[size],
         ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
       },
-      imageContainer: {
-        paddingVertical:
-          (StyleConstants.Font.LineHeight[size] -
-            StyleConstants.Font.Size[size]) /
-          3
-      },
       image: {
         width: StyleConstants.Font.Size[size],
-        height: StyleConstants.Font.Size[size]
+        height: StyleConstants.Font.Size[size],
+        transform: [{ translateY: size === 'L' ? -3 : -1 }]
       }
     })
   }, [mode])
@@ -58,13 +53,11 @@ const ParseEmojis: React.FC<Props> = ({
                 <Text key={i}>
                   {/* When emoji starts a paragraph, lineHeight will break */}
                   {i === 0 ? <Text> </Text> : null}
-                  <View style={styles.imageContainer}>
-                    <Image
-                      transitionDuration={0}
-                      uri={emojis[emojiIndex].url}
-                      style={[styles.image]}
-                    />
-                  </View>
+                  <Image
+                    transitionDuration={0}
+                    uri={emojis[emojiIndex].url}
+                    style={[styles.image]}
+                  />
                 </Text>
               )
             } else {

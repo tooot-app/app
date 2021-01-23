@@ -104,7 +104,8 @@ const renderNode = ({
             key={index}
             style={{
               color: theme.blue,
-              ...StyleConstants.FontStyle[size]
+              ...StyleConstants.FontStyle[size],
+              alignItems: 'center'
             }}
             onPress={async () =>
               !disableDetails && !shouldBeTag
@@ -114,14 +115,17 @@ const renderNode = ({
                   })
             }
           >
+            {content || (showFullLink ? href : domain[1])}
             {!shouldBeTag ? (
               <Icon
                 color={theme.blue}
                 name='ExternalLink'
                 size={StyleConstants.Font.Size[size]}
+                style={{
+                  transform: [{ translateY: size === 'L' ? -3 : -1 }]
+                }}
               />
             ) : null}
-            {content || (showFullLink ? href : domain[1])}
           </Text>
         )
       }

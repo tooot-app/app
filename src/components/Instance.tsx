@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import { Placeholder, Fade } from 'rn-placeholder'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
 import { toast } from './toast'
@@ -209,47 +210,60 @@ const ComponentInstance: React.FC<Props> = ({
           </Text>
         ) : null}
         <View>
-          <InstanceInfo
-            visible={instanceQuery.data?.title !== undefined}
-            header={t('server.information.name')}
-            content={instanceQuery.data?.title || undefined}
-            potentialWidth={10}
-          />
-          <InstanceInfo
-            visible={instanceQuery.data?.short_description !== undefined}
-            header={t('server.information.description.heading')}
-            content={instanceQuery.data?.short_description || undefined}
-            potentialLines={5}
-          />
-          <View style={styles.instanceStats}>
+          <Placeholder
+            {...(instanceQuery.isFetching && {
+              Animation: props => (
+                <Fade
+                  {...props}
+                  style={{ backgroundColor: theme.shimmerHighlight }}
+                />
+              )
+            })}
+          >
             <InstanceInfo
-              style={styles.stat1}
-              visible={instanceQuery.data?.stats?.user_count !== undefined}
-              header={t('server.information.accounts')}
-              content={
-                instanceQuery.data?.stats?.user_count?.toString() || undefined
-              }
-              potentialWidth={4}
+              visible={instanceQuery.data?.title !== undefined}
+              header={t('server.information.name')}
+              content={instanceQuery.data?.title || undefined}
+              potentialWidth={2}
             />
             <InstanceInfo
-              style={styles.stat2}
-              visible={instanceQuery.data?.stats?.status_count !== undefined}
-              header={t('server.information.statuses')}
-              content={
-                instanceQuery.data?.stats?.status_count?.toString() || undefined
-              }
-              potentialWidth={4}
+              visible={instanceQuery.data?.short_description !== undefined}
+              header={t('server.information.description.heading')}
+              content={instanceQuery.data?.short_description || undefined}
+              potentialLines={5}
             />
-            <InstanceInfo
-              style={styles.stat3}
-              visible={instanceQuery.data?.stats?.domain_count !== undefined}
-              header={t('server.information.domains')}
-              content={
-                instanceQuery.data?.stats?.domain_count?.toString() || undefined
-              }
-              potentialWidth={4}
-            />
-          </View>
+            <View style={styles.instanceStats}>
+              <InstanceInfo
+                style={styles.stat1}
+                visible={instanceQuery.data?.stats?.user_count !== undefined}
+                header={t('server.information.accounts')}
+                content={
+                  instanceQuery.data?.stats?.user_count?.toString() || undefined
+                }
+                potentialWidth={4}
+              />
+              <InstanceInfo
+                style={styles.stat2}
+                visible={instanceQuery.data?.stats?.status_count !== undefined}
+                header={t('server.information.statuses')}
+                content={
+                  instanceQuery.data?.stats?.status_count?.toString() ||
+                  undefined
+                }
+                potentialWidth={4}
+              />
+              <InstanceInfo
+                style={styles.stat3}
+                visible={instanceQuery.data?.stats?.domain_count !== undefined}
+                header={t('server.information.domains')}
+                content={
+                  instanceQuery.data?.stats?.domain_count?.toString() ||
+                  undefined
+                }
+                potentialWidth={4}
+              />
+            </View>
+          </Placeholder>
           {type === 'local' ? (
             <View style={styles.disclaimer}>
               <Icon
@@ -258,12 +272,12 @@ const ComponentInstance: React.FC<Props> = ({
                 color={theme.secondary}
                 style={styles.disclaimerIcon}
               />
-              <Text
-                style={[styles.disclaimerText, { color: theme.secondary }]}
-                onPress={() => Linking.openURL('https://tooot.app/privacy')}
-              >
+              <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
                 {t('server.disclaimer')}
-                <Text style={{ color: theme.blue }}>
+                <Text
+                  style={{ color: theme.blue }}
+                  onPress={() => Linking.openURL('https://tooot.app/privacy')}
+                >
                   https://tooot.app/privacy
                 </Text>
               </Text>

@@ -1,6 +1,8 @@
 import { StyleConstants } from '@utils/styles/constants'
-import React, { createRef, useEffect } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useCallback } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Placeholder, Fade } from 'rn-placeholder'
 import AccountInformationAccount from './Information/Account'
 import AccountInformationActions from './Information/Actions'
 import AccountInformationAvatar from './Information/Avatar'
@@ -20,65 +22,50 @@ const AccountInformation: React.FC<Props> = ({
   account,
   ownAccount = false
 }) => {
-  const shimmerNameRef = createRef<any>()
-  const shimmerAccountRef = createRef<any>()
-  const shimmerCreatedRef = createRef<any>()
-  const shimmerStatsRef = createRef<any>()
-  useEffect(() => {
-    const informationAnimated = Animated.stagger(400, [
-      Animated.parallel([
-        shimmerNameRef.current?.getAnimated(),
-        shimmerAccountRef.current?.getAnimated(),
-        shimmerCreatedRef.current?.getAnimated(),
-        shimmerStatsRef.current?.ref1.getAnimated(),
-        shimmerStatsRef.current?.ref2.getAnimated(),
-        shimmerStatsRef.current?.ref3.getAnimated()
-      ])
-    ])
-    Animated.loop(informationAnimated).start()
-  }, [])
+  const { mode, theme } = useTheme()
+
+  const animation = useCallback(
+    props => (
+      <Fade {...props} style={{ backgroundColor: theme.shimmerHighlight }} />
+    ),
+    [mode]
+  )
 
   return (
     <View style={styles.base}>
-      {/* <Text>Moved or not: {account.moved}</Text> */}
-      <View style={styles.avatarAndActions}>
-        <AccountInformationAvatar account={account} />
-        <View style={styles.actions}>
-          {ownAccount ? (
-            <AccountInformationSwitch />
-          ) : (
-            <AccountInformationActions account={account} />
-          )}
+      <Placeholder Animation={animation}>
+        <View style={styles.avatarAndActions}>
+          <AccountInformationAvatar account={account} />
+          <View style={styles.actions}>
+            {ownAccount ? (
+              <AccountInformationSwitch />
+            ) : (
+              <AccountInformationActions account={account} />
+            )}
+          </View>
         </View>
-      </View>
 
-      <AccountInformationName ref={shimmerNameRef} account={account} />
+        <AccountInformationName account={account} />
 
-      <AccountInformationAccount
-        ref={shimmerAccountRef}
-        account={account}
-        ownAccount={ownAccount}
-      />
+        <AccountInformationAccount account={account} ownAccount={ownAccount} />
 
-      {!ownAccount ? (
-        <>
-          {account?.fields && account.fields.length > 0 ? (
-            <AccountInformationFields account={account} />
-          ) : null}
-          {account?.note &&
-          account.note.length > 0 &&
-          account.note !== '<p></p>' ? (
-            // Empty notes might generate empty p tag
-            <AccountInformationNotes account={account} />
-          ) : null}
-          <AccountInformationCreated
-            ref={shimmerCreatedRef}
-            account={account}
-          />
-        </>
-      ) : null}
+        {!ownAccount ? (
+          <>
+            {account?.fields && account.fields.length > 0 ? (
+              <AccountInformationFields account={account} />
+            ) : null}
+            {account?.note &&
+            account.note.length > 0 &&
+            account.note !== '<p></p>' ? (
+              // Empty notes might generate empty p tag
+              <AccountInformationNotes account={account} />
+            ) : null}
+            <AccountInformationCreated account={account} />
+          </>
+        ) : null}
 
-      <AccountInformationStats ref={shimmerStatsRef} account={account} />
+        <AccountInformationStats account={account} ownAccount={ownAccount} />
+      </Placeholder>
     </View>
   )
 }

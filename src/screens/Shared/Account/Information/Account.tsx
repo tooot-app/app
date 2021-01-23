@@ -1,79 +1,109 @@
 import Icon from '@components/Icon'
-import { getLocalUri } from '@utils/slices/instancesSlice'
+import { getLocalAccount, getLocalUri } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { LinearGradient } from 'expo-linear-gradient'
-import React, { forwardRef } from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import ShimmerPlaceholder, {
-  createShimmerPlaceholder
-} from 'react-native-shimmer-placeholder'
 import { useSelector } from 'react-redux'
+import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
   ownAccount?: boolean
 }
 
-const AccountInformationAccount = forwardRef<ShimmerPlaceholder, Props>(
-  ({ account, ownAccount }, ref) => {
-    const { theme } = useTheme()
-    const localUri = useSelector(getLocalUri)
+const AccountInformationAccount: React.FC<Props> = ({
+  account,
+  ownAccount
+}) => {
+  const { theme } = useTheme()
+  const localAccount = useSelector(getLocalAccount)
+  const localUri = useSelector(getLocalUri)
 
-    const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+  const movedStyle = useMemo(
+    () =>
+      StyleSheet.create({
+        base: {
+          textDecorationLine: account?.moved ? 'line-through' : undefined
+        }
+      }),
+    [account?.moved]
+  )
+  const movedContent = useMemo(() => {
+    if (account?.moved) {
+      return (
+        <Text
+          style={[
+            styles.moved,
+            { color: theme.secondary, ...StyleConstants.FontStyle.M }
+          ]}
+          selectable
+        >
+          @{account.moved.acct}
+        </Text>
+      )
+    }
+  }, [account?.moved])
 
+  if (account || (ownAccount && localAccount !== undefined)) {
     return (
-      <ShimmerPlaceholder
-        ref={ref}
-        visible={account?.acct !== undefined}
-        width={StyleConstants.Font.Size.M * 8}
-        height={StyleConstants.Font.LineHeight.M}
-        style={{ marginBottom: StyleConstants.Spacing.L }}
-        shimmerColors={[
-          theme.shimmerDefault,
-          theme.shimmerHighlight,
-          theme.shimmerDefault
-        ]}
+      <View
+        style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
       >
-        <View style={styles.account}>
-          <Text
-            style={{
+        <Text
+          style={[
+            movedStyle.base,
+            {
               color: theme.secondary,
               ...StyleConstants.FontStyle.M
-            }}
-            selectable
-          >
-            @{account?.acct}
-            {ownAccount ? `@${localUri}` : null}
-          </Text>
-          {account?.locked ? (
-            <Icon
-              name='Lock'
-              style={styles.type}
-              color={theme.secondary}
-              size={StyleConstants.Font.Size.M}
-            />
-          ) : null}
-          {account?.bot ? (
-            <Icon
-              name='HardDrive'
-              style={styles.type}
-              color={theme.secondary}
-              size={StyleConstants.Font.Size.M}
-            />
-          ) : null}
-        </View>
-      </ShimmerPlaceholder>
+            }
+          ]}
+          selectable
+        >
+          @{ownAccount ? localAccount?.acct : account?.acct}
+          {ownAccount ? `@${localUri}` : null}
+        </Text>
+        {movedContent}
+        {account?.locked ? (
+          <Icon
+            name='Lock'
+            style={styles.type}
+            color={theme.secondary}
+            size={StyleConstants.Font.Size.M}
+          />
+        ) : null}
+        {account?.bot ? (
+          <Icon
+            name='HardDrive'
+            style={styles.type}
+            color={theme.secondary}
+            size={StyleConstants.Font.Size.M}
+          />
+        ) : null}
+      </View>
+    )
+  } else {
+    return (
+      <PlaceholderLine
+        width={StyleConstants.Font.Size.M * 2}
+        height={StyleConstants.Font.LineHeight.M}
+        color={theme.shimmerDefault}
+        noMargin
+        style={styles.base}
+      />
     )
   }
-)
+}
 
 const styles = StyleSheet.create({
-  account: {
-    flexDirection: 'row',
-    alignItems: 'center'
+  base: {
+    borderRadius: 0,
+    marginBottom: StyleConstants.Spacing.L
   },
-  type: { marginLeft: StyleConstants.Spacing.S }
+  type: { marginLeft: StyleConstants.Spacing.S },
+  moved: {
+    marginLeft: StyleConstants.Spacing.S
+  }
 })
 
 export default React.memo(

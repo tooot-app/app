@@ -1,106 +1,93 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
-import { LinearGradient } from 'expo-linear-gradient'
-import React, { createRef, forwardRef, useImperativeHandle } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import ShimmerPlaceholder, {
-  createShimmerPlaceholder
-} from 'react-native-shimmer-placeholder'
+import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  ownAccount?: boolean
 }
 
-const AccountInformationStats = forwardRef<any, Props>(({ account }, ref) => {
+const AccountInformationStats: React.FC<Props> = ({ account, ownAccount }) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const { t } = useTranslation('sharedAccount')
-  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
-
-  const ref1 = createRef<ShimmerPlaceholder>()
-  const ref2 = createRef<ShimmerPlaceholder>()
-  const ref3 = createRef<ShimmerPlaceholder>()
-  useImperativeHandle(ref, () => ({
-    get ref1 () {
-      return ref1.current
-    },
-    get ref2 () {
-      return ref2.current
-    },
-    get ref3 () {
-      return ref3.current
-    }
-  }))
 
   return (
-    <View style={styles.stats}>
-      <ShimmerPlaceholder
-        ref={ref1}
-        visible={account !== undefined}
-        width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.LineHeight.S}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
-      >
-        <Text style={[styles.stat, { color: theme.primary }]}>
-          {t('content.summary.statuses_count', {
+    <View style={[styles.stats, { flexDirection: 'row' }]}>
+      {account ? (
+        <Text
+          style={[styles.stat, { color: theme.primary }]}
+          children={t('content.summary.statuses_count', {
             count: account?.statuses_count || 0
           })}
-        </Text>
-      </ShimmerPlaceholder>
-      <ShimmerPlaceholder
-        ref={ref2}
-        visible={account !== undefined}
-        width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.LineHeight.S}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
-      >
+          onPress={() =>
+            ownAccount && navigation.push('Screen-Shared-Account', { account })
+          }
+        />
+      ) : (
+        <PlaceholderLine
+          width={StyleConstants.Font.Size.S * 1.25}
+          height={StyleConstants.Font.LineHeight.S}
+          color={theme.shimmerDefault}
+          noMargin
+          style={{ borderRadius: 0 }}
+        />
+      )}
+      {account ? (
         <Text
           style={[styles.stat, { color: theme.primary, textAlign: 'right' }]}
+          children={t('content.summary.following_count', {
+            count: account?.following_count || 0
+          })}
           onPress={() =>
-            account &&
             navigation.push('Screen-Shared-Relationships', {
               account,
               initialType: 'following'
             })
           }
-        >
-          {t('content.summary.following_count', {
-            count: account?.following_count || 0
-          })}
-        </Text>
-      </ShimmerPlaceholder>
-      <ShimmerPlaceholder
-        ref={ref3}
-        visible={account !== undefined}
-        width={StyleConstants.Font.Size.S * 5}
-        height={StyleConstants.Font.LineHeight.S}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
-      >
+        />
+      ) : (
+        <PlaceholderLine
+          width={StyleConstants.Font.Size.S * 1.25}
+          height={StyleConstants.Font.LineHeight.S}
+          color={theme.shimmerDefault}
+          noMargin
+          style={{ borderRadius: 0 }}
+        />
+      )}
+      {account ? (
         <Text
           style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
+          children={t('content.summary.followers_count', {
+            count: account?.followers_count || 0
+          })}
           onPress={() =>
-            account &&
             navigation.push('Screen-Shared-Relationships', {
               account,
               initialType: 'followers'
             })
           }
-        >
-          {t('content.summary.followers_count', {
-            count: account?.followers_count || 0
-          })}
-        </Text>
-      </ShimmerPlaceholder>
+        />
+      ) : (
+        <PlaceholderLine
+          width={StyleConstants.Font.Size.S * 1.25}
+          height={StyleConstants.Font.LineHeight.S}
+          color={theme.shimmerDefault}
+          noMargin
+          style={{ borderRadius: 0 }}
+        />
+      )}
     </View>
   )
-})
+}
 
 const styles = StyleSheet.create({
   stats: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'space-between'
   },
   stat: {

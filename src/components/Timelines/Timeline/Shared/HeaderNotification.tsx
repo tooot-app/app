@@ -54,9 +54,11 @@ const TimelineHeaderNotification: React.FC<Props> = ({
         />
         <View style={styles.meta}>
           <HeaderSharedCreated created_at={notification.created_at} />
-          <HeaderSharedVisibility
-            visibility={notification.status?.visibility}
-          />
+          {notification.status?.visibility ? (
+            <HeaderSharedVisibility
+              visibility={notification.status.visibility}
+            />
+          ) : null}
           <HeaderSharedMuted muted={notification.status?.muted} />
           <HeaderSharedApplication
             application={notification.status?.application}

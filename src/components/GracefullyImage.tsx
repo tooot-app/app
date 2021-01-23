@@ -4,6 +4,7 @@ import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useEffect, useState } from 'react'
 import {
   Image,
+  ImageStyle,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -78,6 +79,7 @@ export interface Props {
   dimension?: { width: number; height: number }
   onPress?: () => void
   style?: StyleProp<ViewStyle>
+  imageStyle?: StyleProp<ImageStyle>
 }
 
 const GracefullyImage: React.FC<Props> = ({
@@ -87,7 +89,8 @@ const GracefullyImage: React.FC<Props> = ({
   blurhash,
   dimension,
   onPress,
-  style
+  style,
+  imageStyle
 }) => {
   const { mode, theme } = useTheme()
 
@@ -125,9 +128,16 @@ const GracefullyImage: React.FC<Props> = ({
   const children = useCallback(() => {
     if (imageVisible && !hidden) {
       if (cache) {
-        return <ImageCache uri={imageVisible} style={styles.image} />
+        return (
+          <ImageCache uri={imageVisible} style={[styles.image, imageStyle]} />
+        )
       } else {
-        return <Image source={{ uri: imageVisible }} style={styles.image} />
+        return (
+          <Image
+            source={{ uri: imageVisible }}
+            style={[styles.image, imageStyle]}
+          />
+        )
       }
     } else if (blurhash) {
       return (
@@ -143,19 +153,17 @@ const GracefullyImage: React.FC<Props> = ({
           <Blurhash hash={blurhash} />
         </Surface>
       )
-    } else {
-      return (
-        <View
-          style={[styles.image, { backgroundColor: theme.shimmerDefault }]}
-        />
-      )
     }
   }, [hidden, mode, imageVisible])
 
   return (
     <Pressable
       children={children}
-      style={[style, dimension && { ...dimension }]}
+      style={[
+        style,
+        { backgroundColor: theme.shimmerDefault },
+        dimension && { ...dimension }
+      ]}
       {...(onPress
         ? hidden
           ? { disabled: true }

@@ -33,7 +33,13 @@ declare namespace Nav {
       hashtag: Mastodon.Tag['name']
     }
     'Screen-Shared-ImagesViewer': {
-      imageUrls: (IImageInfo & {
+      imageUrls: ({
+        url: string
+        width?: number
+        height?: number
+        originUrl?: string
+        props?: any
+      } & {
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url: Mastodon.AttachmentImage['remote_url']
         imageIndex: number

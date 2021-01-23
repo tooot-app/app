@@ -16,6 +16,13 @@ const updateNotification = ({
           typeof payload.currentValue === 'boolean'
             ? !payload.currentValue
             : true
+        if (payload.propertyCount) {
+          if (typeof payload.currentValue === 'boolean' && payload.currentValue) {
+            item.status[payload.propertyCount] = payload.countValue - 1
+          } else {
+            item.status[payload.propertyCount] = payload.countValue + 1
+          }
+        }
       }
       return item
   }

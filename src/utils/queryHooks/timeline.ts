@@ -242,8 +242,16 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   reblog?: boolean
   payload:
     | {
-        property: 'bookmarked' | 'favourited' | 'muted' | 'pinned' | 'reblogged'
+        property: 'bookmarked' | 'muted' | 'pinned'
         currentValue: boolean
+        propertyCount: undefined
+        countValue: undefined
+      }
+    | {
+        property: 'favourited' | 'reblogged'
+        currentValue: boolean
+        propertyCount: 'favourites_count' | 'reblogs_count'
+        countValue: number
       }
     | {
         property: 'poll'

@@ -110,7 +110,9 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         reblog,
         payload: {
           property: 'reblogged',
-          currentValue: status.reblogged
+          currentValue: status.reblogged,
+          propertyCount: 'reblogs_count',
+          countValue: status.reblogs_count
         }
       }),
     [status.reblogged]
@@ -124,7 +126,9 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         reblog,
         payload: {
           property: 'favourited',
-          currentValue: status.favourited
+          currentValue: status.favourited,
+          propertyCount: 'favourites_count',
+          countValue: status.favourites_count
         }
       }),
     [status.favourited]
@@ -138,7 +142,9 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         reblog,
         payload: {
           property: 'bookmarked',
-          currentValue: status.bookmarked
+          currentValue: status.bookmarked,
+          propertyCount: undefined,
+          countValue: undefined
         }
       }),
     [status.bookmarked]
@@ -156,7 +162,7 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
           <Text
             style={{
               color: theme.secondary,
-              ...StyleConstants.FontStyle.M,
+              fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
           >
@@ -182,8 +188,8 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         {status.reblogs_count > 0 && (
           <Text
             style={{
-              color: theme.secondary,
-              ...StyleConstants.FontStyle.M,
+              color: iconColorAction(status.reblogged),
+              fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
           >
@@ -205,9 +211,10 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
         {status.favourites_count > 0 && (
           <Text
             style={{
-              color: theme.secondary,
-              ...StyleConstants.FontStyle.M,
-              marginLeft: StyleConstants.Spacing.XS
+              color: iconColorAction(status.favourited),
+              fontSize: StyleConstants.Font.Size.M,
+              marginLeft: StyleConstants.Spacing.XS,
+              marginTop: 0
             }}
           >
             {status.favourites_count}
@@ -264,15 +271,14 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
 
 const styles = StyleSheet.create({
   actions: {
-    flexDirection: 'row',
-    marginTop: StyleConstants.Spacing.S
+    flexDirection: 'row'
   },
   action: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: StyleConstants.Spacing.S
+    minHeight: StyleConstants.Font.Size.L + StyleConstants.Spacing.S * 4
   }
 })
 

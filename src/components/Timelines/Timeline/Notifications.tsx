@@ -123,7 +123,7 @@ const TimelineNotifications: React.FC<Props> = ({
 const styles = StyleSheet.create({
   notificationView: {
     padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: StyleConstants.Spacing.M
+    paddingBottom: 0
   },
   header: {
     flex: 1,

@@ -2,48 +2,13 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
-import {
-  Image,
-  Platform,
-  Share,
-  StatusBar,
-  StyleSheet,
-  Text
-} from 'react-native'
+import { Image, Platform, Share, StatusBar, StyleSheet, Text } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
-import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { SharedImagesViewerProp } from './sharedScreens'
 
 const Stack = createNativeStackNavigator()
-
-const TheImage = ({
-  style,
-  source,
-  imageUrls
-}: {
-  style: any
-  source: { uri: string }
-  imageUrls: (IImageInfo & {
-    preview_url: Mastodon.AttachmentImage['preview_url']
-    remote_url: Mastodon.AttachmentImage['remote_url']
-    imageIndex: number
-  })[]
-}) => {
-  const [imageVisible, setImageVisible] = useState(false)
-  Image.getSize(source.uri, () => setImageVisible(true))
-  return (
-    <Image
-      style={style}
-      source={{
-        uri: imageVisible
-          ? source.uri
-          : imageUrls[findIndex(imageUrls, ['url', source.uri])].preview_url
-      }}
-    />
-  )
-}
 
 const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
   route: {
@@ -64,15 +29,17 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
           index={initialIndex}
           imageUrls={imageUrls}
           pageAnimateTime={250}
-          enableSwipeDown={true}
-          useNativeDriver={true}
+          enableSwipeDown
+          useNativeDriver
           swipeDownThreshold={100}
           renderIndicator={() => <></>}
           saveToLocalByLongPress={false}
           onSwipeDown={() => navigation.goBack()}
           style={{ flex: 1, marginBottom: 44 + safeAreaInsets.bottom }}
           onChange={index => index !== undefined && setCurrentIndex(index)}
-          renderImage={props => <TheImage {...props} imageUrls={imageUrls} />}
+          renderImage={prop => {
+            return <Image {...prop} resizeMode={'contain'} />
+          }}
         />
       </>
     ),

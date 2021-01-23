@@ -15,6 +15,8 @@ export type InstanceLocal = {
   uri: Mastodon.Instance['uri']
   account: {
     id: Mastodon.Account['id']
+    acct: Mastodon.Account['acct']
+    avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
   notification: {
@@ -64,7 +66,7 @@ export const localAddInstance = createAsyncThunk(
     const instanceLocal: InstancesState['local'] = store.getState().instances
       .local
 
-    const { id } = await client<Mastodon.Account>({
+    const { id, acct, avatar_static } = await client<Mastodon.Account>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,
@@ -108,6 +110,8 @@ export const localAddInstance = createAsyncThunk(
         uri,
         account: {
           id,
+          acct,
+          avatarStatic: avatar_static,
           preferences
         },
         notification: {
@@ -180,6 +184,19 @@ const instancesSlice = createSlice({
         state.local.activeIndex = action.payload
       } else {
         throw new Error('Set index cannot be found')
+      }
+    },
+    localUpdateAccount: (
+      state,
+      action: PayloadAction<
+        Pick<InstanceLocal['account'], 'acct' & 'avatarStatic'>
+      >
+    ) => {
+      if (state.local.activeIndex !== null) {
+        state.local.instances[state.local.activeIndex].account = {
+          ...state.local.instances[state.local.activeIndex].account,
+          ...action.payload
+        }
       }
     },
     localUpdateNotification: (
@@ -273,6 +290,7 @@ export const getRemoteUrl = ({ instances: { remote } }: RootState) => remote.url
 
 export const {
   localUpdateActiveIndex,
+  localUpdateAccount,
   localUpdateNotification,
   remoteUpdate
 } = instancesSlice.actions

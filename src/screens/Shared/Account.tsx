@@ -25,8 +25,6 @@ import accountInitialState from './Account/utils/initialState'
 import accountReducer from './Account/utils/reducer'
 import { SharedAccountProp } from './sharedScreens'
 
-// Moved account example: https://m.cmx.im/web/accounts/27812
-
 const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
   route: {
     params: { account }

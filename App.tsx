@@ -1,7 +1,7 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import Index from '@root/Index'
 import dev from '@root/startup/dev'
-// import sentry from '@root/startup/sentry'
+import sentry from '@root/startup/sentry'
 import log from '@root/startup/log'
 import audio from '@root/startup/audio'
 import onlineStatus from '@root/startup/onlineStatus'
@@ -22,7 +22,7 @@ if (Platform.OS === 'android') {
 
 
 dev()
-// sentry()
+sentry()
 audio()
 onlineStatus()
 

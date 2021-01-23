@@ -1,52 +1,80 @@
 import { ParseEmojis } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { LinearGradient } from 'expo-linear-gradient'
-import React, { forwardRef } from 'react'
-import { StyleSheet } from 'react-native'
-import ShimmerPlaceholder, {
-  createShimmerPlaceholder
-} from 'react-native-shimmer-placeholder'
+import React, { useMemo } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
 }
 
-const AccountInformationName = forwardRef<ShimmerPlaceholder, Props>(
-  ({ account }, ref) => {
-    const { theme } = useTheme()
-    const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+const AccountInformationName: React.FC<Props> = ({ account }) => {
+  const { theme } = useTheme()
 
-    return (
-      <ShimmerPlaceholder
-        ref={ref}
-        visible={
-          account?.display_name !== undefined || account?.username !== undefined
+  const movedStyle = useMemo(
+    () =>
+      StyleSheet.create({
+        base: {
+          textDecorationLine: account?.moved ? 'line-through' : undefined
         }
-        width={StyleConstants.Font.Size.L * 8}
-        height={StyleConstants.Font.LineHeight.L}
-        style={styles.name}
-        shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
-      >
-        {account ? (
+      }),
+    [account?.moved]
+  )
+  const movedContent = useMemo(() => {
+    if (account?.moved) {
+      return (
+        <View style={styles.moved}>
+          <ParseEmojis
+            content={account.moved.display_name || account.moved.username}
+            emojis={account.moved.emojis}
+            size='L'
+            fontBold
+          />
+        </View>
+      )
+    }
+  }, [account?.moved])
+
+  if (account) {
+    return (
+      <View style={[styles.base, { flexDirection: 'row' }]}>
+        <Text style={movedStyle.base}>
           <ParseEmojis
             content={account.display_name || account.username}
             emojis={account.emojis}
             size='L'
             fontBold
           />
-        ) : null}
-      </ShimmerPlaceholder>
+        </Text>
+        {movedContent}
+      </View>
+    )
+  } else {
+    return (
+      <PlaceholderLine
+        width={StyleConstants.Font.Size.L * 2}
+        height={StyleConstants.Font.LineHeight.L}
+        color={theme.shimmerDefault}
+        noMargin
+        style={styles.base}
+      />
     )
   }
-)
+}
 
 const styles = StyleSheet.create({
-  name: {
-    flexDirection: 'row',
+  base: {
+    borderRadius: 0,
     marginTop: StyleConstants.Spacing.M,
     marginBottom: StyleConstants.Spacing.XS
+  },
+  moved: {
+    marginLeft: StyleConstants.Spacing.S
   }
 })
 
-export default AccountInformationName
+export default React.memo(
+  AccountInformationName,
+  (_, next) => next.account === undefined
+)

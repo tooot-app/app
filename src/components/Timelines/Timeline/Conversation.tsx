@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexDirection: 'column',
-    padding: StyleConstants.Spacing.Global.PagePadding
+    padding: StyleConstants.Spacing.Global.PagePadding,
+    paddingBottom: 0
   },
   header: {
     flex: 1,
