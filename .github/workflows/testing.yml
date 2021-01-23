@@ -23,5 +23,9 @@ jobs:
         run: yarn install
       - name: -- Step 5 -- Publish
         env:
+          SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_DEPLOY_ENV: testing
         run: expo publish --release-channel=testing
