@@ -19,7 +19,6 @@ jobs:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_USERNAME }}
           expo-token: ${{ secrets.EXPO_TOKEN }}
-          expo-cache: true
       - name: -- Step 4 -- Install dependencies
         run: yarn install
       - name: -- Step 5 -- Publish
