@@ -1,7 +1,9 @@
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { toast } from '@components/toast'
 import {
+  MutationVarsTimelineUpdateAccountProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
@@ -11,7 +13,7 @@ import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
-  account: Pick<Mastodon.Account, 'id' | 'acct'>
+  account: Mastodon.Account
   setBottomSheetVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -25,23 +27,30 @@ const HeaderActionsAccount: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const mutateion = useTimelineMutation({
     queryClient,
-    onSuccess: (_, { payload: { property } }) => {
+    onSuccess: (_, params) => {
+      const theParams = params as MutationVarsTimelineUpdateAccountProperty
       haptics('Success')
       toast({
         type: 'success',
         message: t('common:toastMessage.success.message', {
-          function: t(`shared.header.actions.account.${property}.function`, {
-            acct: account.acct
-          })
+          function: t(
+            `shared.header.actions.account.${theParams.payload.property}.function`,
+            {
+              acct: account.acct
+            }
+          )
         })
       })
     },
-    onError: (err: any, { payload: { property } }) => {
+    onError: (err: any, params) => {
+      const theParams = params as MutationVarsTimelineUpdateAccountProperty
       haptics('Error')
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
-          function: t(`shared.header.actions.account.${property}.function`)
+          function: t(
+            `shared.header.actions.account.${theParams.payload.property}.function`
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -62,6 +71,9 @@ const HeaderActionsAccount: React.FC<Props> = ({
       <MenuHeader heading={t('shared.header.actions.account.heading')} />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_account_mute_press', {
+            page: queryKey && queryKey[1].page
+          })
           setBottomSheetVisible(false)
           mutateion.mutate({
             type: 'updateAccountProperty',
@@ -77,6 +89,9 @@ const HeaderActionsAccount: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_account_block_press', {
+            page: queryKey && queryKey[1].page
+          })
           setBottomSheetVisible(false)
           mutateion.mutate({
             type: 'updateAccountProperty',
@@ -92,6 +107,9 @@ const HeaderActionsAccount: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_account_reports_press', {
+            page: queryKey && queryKey[1].page
+          })
           setBottomSheetVisible(false)
           mutateion.mutate({
             type: 'updateAccountProperty',

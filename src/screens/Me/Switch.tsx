@@ -1,4 +1,5 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
+import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, StyleSheet } from 'react-native'
@@ -7,7 +8,10 @@ import ScreenMeSwitchRoot from './Switch/Root'
 
 const Stack = createNativeStackNavigator()
 
-const ScreenMeSwitch: React.FC = ({ navigation }) => {
+const ScreenMeSwitch: React.FC<StackScreenProps<
+  Nav.MeStackParamList,
+  'Screen-Me-Switch'
+>> = ({ navigation }) => {
   const { t } = useTranslation()
   return (
     <Stack.Navigator

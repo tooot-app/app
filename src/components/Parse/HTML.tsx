@@ -1,7 +1,9 @@
+import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -29,7 +31,7 @@ const renderNode = ({
   node: any
   index: number
   size: 'M' | 'L'
-  navigation: any
+  navigation: StackNavigationProp<Nav.LocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
@@ -53,6 +55,7 @@ const renderNode = ({
                 ...StyleConstants.FontStyle[size]
               }}
               onPress={() => {
+                analytics('status_hashtag_press')
                 !disableDetails &&
                   differentTag &&
                   navigation.push('Screen-Shared-Hashtag', {
@@ -79,6 +82,7 @@ const renderNode = ({
                 ...StyleConstants.FontStyle[size]
               }}
               onPress={() => {
+                analytics('status_mention_press')
                 accountIndex !== -1 &&
                   !disableDetails &&
                   differentAccount &&
@@ -107,13 +111,14 @@ const renderNode = ({
               ...StyleConstants.FontStyle[size],
               alignItems: 'center'
             }}
-            onPress={async () =>
+            onPress={async () => {
+              analytics('status_link_press')
               !disableDetails && !shouldBeTag
                 ? await openLink(href)
                 : navigation.push('Screen-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })
-            }
+            }}
           >
             {content || (showFullLink ? href : domain[1])}
             {!shouldBeTag ? (
@@ -161,7 +166,9 @@ const ParseHTML: React.FC<Props> = ({
   expandHint,
   disableDetails = false
 }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
   const route = useRoute()
   const { theme } = useTheme()
   const { t, i18n } = useTranslation('componentParse')
@@ -229,6 +236,7 @@ const ParseHTML: React.FC<Props> = ({
           {expandAllow ? (
             <Pressable
               onPress={() => {
+                analytics('status_readmore', { allow: expandAllow, expanded })
                 layoutAnimation()
                 setExpanded(!expanded)
               }}

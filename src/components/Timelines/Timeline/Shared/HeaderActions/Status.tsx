@@ -10,6 +10,7 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import analytics from '@components/analytics'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -37,9 +38,7 @@ const HeaderActionsStatus: React.FC<Props> = ({
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
-          function: t(
-            `shared.header.actions.status.${theFunction}.function`
-          )
+          function: t(`shared.header.actions.status.${theFunction}.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -55,11 +54,12 @@ const HeaderActionsStatus: React.FC<Props> = ({
 
   return (
     <MenuContainer>
-      <MenuHeader
-        heading={t('shared.header.actions.status.heading')}
-      />
+      <MenuHeader heading={t('shared.header.actions.status.heading')} />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_status_delete_press', {
+            page: queryKey && queryKey[1].page
+          })
           setBottomSheetVisible(false)
           mutation.mutate({
             type: 'deleteItem',
@@ -73,19 +73,31 @@ const HeaderActionsStatus: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_status_deleteedit_press', {
+            page: queryKey && queryKey[1].page
+          })
           Alert.alert(
             t('shared.header.actions.status.edit.alert.title'),
-            t(
-              'shared.header.actions.status.edit.alert.message'
-            ),
+            t('shared.header.actions.status.edit.alert.message'),
             [
-              { text: t('shared.header.actions.status.edit.alert.buttons.cancel'), style: 'cancel' },
+              {
+                text: t(
+                  'shared.header.actions.status.edit.alert.buttons.cancel'
+                ),
+                style: 'cancel'
+              },
               {
                 text: t(
                   'shared.header.actions.status.edit.alert.buttons.confirm'
                 ),
                 style: 'destructive',
                 onPress: async () => {
+                  analytics(
+                    'timeline_shared_headeractions_status_deleteedit_confirm',
+                    {
+                      page: queryKey && queryKey[1].page
+                    }
+                  )
                   setBottomSheetVisible(false)
                   const res = await mutation.mutateAsync({
                     type: 'deleteItem',
@@ -110,46 +122,54 @@ const HeaderActionsStatus: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_status_mute_press', {
+            page: queryKey && queryKey[1].page
+          })
           setBottomSheetVisible(false)
           mutation.mutate({
             type: 'updateStatusProperty',
             queryKey,
             id: status.id,
-            payload: { property: 'muted', currentValue: status.muted }
+            payload: {
+              property: 'muted',
+              currentValue: status.muted,
+              propertyCount: undefined,
+              countValue: undefined
+            }
           })
         }}
         iconFront='VolumeX'
         title={
           status.muted
-            ? t(
-                'shared.header.actions.status.mute.button.negative'
-              )
-            : t(
-                'shared.header.actions.status.mute.button.positive'
-              )
+            ? t('shared.header.actions.status.mute.button.negative')
+            : t('shared.header.actions.status.mute.button.positive')
         }
       />
       {/* Also note that reblogs cannot be pinned. */}
       {(status.visibility === 'public' || status.visibility === 'unlisted') && (
         <MenuRow
           onPress={() => {
+            analytics('timeline_shared_headeractions_status_pin_press', {
+              page: queryKey && queryKey[1].page
+            })
             setBottomSheetVisible(false)
             mutation.mutate({
               type: 'updateStatusProperty',
               queryKey,
               id: status.id,
-              payload: { property: 'pinned', currentValue: status.pinned }
+              payload: {
+                property: 'pinned',
+                currentValue: status.pinned,
+                propertyCount: undefined,
+                countValue: undefined
+              }
             })
           }}
           iconFront='Anchor'
           title={
             status.pinned
-              ? t(
-                  'shared.header.actions.status.pin.button.negative'
-                )
-              : t(
-                  'shared.header.actions.status.pin.button.positive'
-                )
+              ? t('shared.header.actions.status.pin.button.negative')
+              : t('shared.header.actions.status.pin.button.positive')
           }
         />
       )}

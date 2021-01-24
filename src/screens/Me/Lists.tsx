@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native'
 import TimelineEmpty from '@root/components/Timelines/Timeline/Empty'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
 
 const ScreenMeLists: React.FC = () => {
   const navigation = useNavigation()
@@ -31,12 +30,5 @@ const ScreenMeLists: React.FC = () => {
 
   return <>{children}</>
 }
-
-const styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    alignItems: 'center'
-  }
-})
 
 export default ScreenMeLists

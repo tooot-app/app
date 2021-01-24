@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
-import PostingAs from './Header/PostingAs'
+import ComposePostingAs from './Header/PostingAs'
 import ComposeSpoilerInput from './Header/SpoilerInput'
 import ComposeTextInput from './Header/TextInput'
 
@@ -22,10 +22,7 @@ const ComposeRootHeader: React.FC = () => {
         localInstances.length &&
         localInstances.length > 1 && (
           <View style={styles.postingAs}>
-            <PostingAs
-              id={localInstances[localActiveIndex].account.id}
-              domain={localInstances[localActiveIndex].uri}
-            />
+            <ComposePostingAs />
           </View>
         )}
       {composeState.spoiler.active ? <ComposeSpoilerInput /> : null}

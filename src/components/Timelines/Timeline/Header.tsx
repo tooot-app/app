@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import { useNavigation } from '@react-navigation/native'
 import Icon from '@root/components/Icon'
 import { StyleConstants } from '@root/utils/styles/constants'
@@ -22,6 +23,7 @@ const TimelineHeader = React.memo(
           <Text
             style={{ color: theme.blue }}
             onPress={() => {
+              analytics('timeline_remote_header_press')
               dispatch(updatePublicRemoteNotice(1))
               navigation.navigate('Screen-Me', {
                 screen: 'Screen-Me-Root',

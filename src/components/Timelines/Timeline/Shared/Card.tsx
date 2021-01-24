@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
@@ -15,7 +16,10 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
   return (
     <Pressable
       style={[styles.card, { borderColor: theme.border }]}
-      onPress={async () => await openLink(card.url)}
+      onPress={async () => {
+        analytics('timeline_shared_card_press')
+        await openLink(card.url)
+      }}
       testID='base'
     >
       {card.image && (
@@ -42,7 +46,10 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
             {card.description}
           </Text>
         ) : null}
-        <Text numberOfLines={1} style={{ color: theme.secondary }}>
+        <Text
+          numberOfLines={1}
+          style={[styles.rightLink, { color: theme.secondary }]}
+        >
           {card.url}
         </Text>
       </View>
@@ -54,14 +61,14 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: 'row',
-    height: StyleConstants.Font.LineHeight.M * 4.5,
+    height: StyleConstants.Font.LineHeight.M * 5,
     marginTop: StyleConstants.Spacing.M,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 6
   },
   left: {
-    width: StyleConstants.Font.LineHeight.M * 4.5,
-    height: StyleConstants.Font.LineHeight.M * 4.5
+    width: StyleConstants.Font.LineHeight.M * 5,
+    height: StyleConstants.Font.LineHeight.M * 5
   },
   image: {
     width: '100%',
@@ -74,11 +81,16 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S
   },
   rightTitle: {
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.XS,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   rightDescription: {
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.XS
+  },
+  rightLink: {
+    ...StyleConstants.FontStyle.S
   }
 })
 

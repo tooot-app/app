@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import TimelineActioned from '@components/Timelines/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
@@ -7,6 +8,7 @@ import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderNotification from '@components/Timelines/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -26,19 +28,20 @@ const TimelineNotifications: React.FC<Props> = ({
   highlighted = false
 }) => {
   const localAccount = useSelector(getLocalAccount)
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
   const actualAccount = notification.status
     ? notification.status.account
     : notification.account
 
-  const onPress = useCallback(
-    () =>
-      notification.status &&
+  const onPress = useCallback(() => {
+    analytics('timeline_notification_press')
+    notification.status &&
       navigation.push('Screen-Shared-Toot', {
         toot: notification.status
-      }),
-    []
-  )
+      })
+  }, [])
 
   return (
     <Pressable style={styles.notificationView} onPress={onPress}>
@@ -112,6 +115,11 @@ const TimelineNotifications: React.FC<Props> = ({
           <TimelineActions
             queryKey={queryKey}
             status={notification.status}
+            accts={([notification.status.account] as Mastodon.Account[] &
+              Mastodon.Mention[])
+              .concat(notification.status.mentions)
+              .filter(d => d.id !== localAccount?.id)
+              .map(d => d.acct)}
             reblog={false}
           />
         </View>

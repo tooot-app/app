@@ -34,7 +34,7 @@ const ScreenNotifications: React.FC = () => {
         }
       </Stack.Screen>
 
-      {sharedScreens(Stack)}
+      {sharedScreens(Stack as any)}
     </Stack.Navigator>
   )
 }

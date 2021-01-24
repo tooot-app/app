@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import BottomSheet from '@components/BottomSheet'
 import Icon from '@components/Icon'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
@@ -33,7 +34,12 @@ const HeaderActions = React.memo(
     const sameDomain = localDomain === statusDomain
 
     const [modalVisible, setBottomSheetVisible] = useState(false)
-    const onPress = useCallback(() => setBottomSheetVisible(true), [])
+    const onPress = useCallback(() => {
+      analytics('bottomsheet_open_press', {
+        page: queryKey[1].page
+      })
+      setBottomSheetVisible(true)
+    }, [])
     const children = useMemo(
       () => (
         <Icon

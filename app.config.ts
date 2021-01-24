@@ -19,7 +19,8 @@ export default (): ExpoConfig => ({
   scheme: 'tooot',
   assetBundlePatterns: ['assets/*'],
   extra: {
-    sentryDSN: process.env.SENTRY_DSN
+    sentryDSN: process.env.SENTRY_DSN,
+    sentryEnv: process.env.SENTRY_DEPLOY_ENV
   },
   hooks: {
     postPublish: [

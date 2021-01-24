@@ -1,8 +1,16 @@
+import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
-import { Image, Platform, Share, StatusBar, StyleSheet, Text } from 'react-native'
+import {
+  Image,
+  Platform,
+  Share,
+  StatusBar,
+  StyleSheet,
+  Text
+} from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -47,6 +55,7 @@ const ScreenSharedImagesViewer: React.FC<SharedImagesViewerProp> = ({
   )
 
   const onPress = useCallback(() => {
+    analytics('imageviewer_share_press')
     switch (Platform.OS) {
       case 'ios':
         return Share.share({ url: imageUrls[currentIndex].url })

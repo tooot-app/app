@@ -8,6 +8,7 @@ import { Alert, Linking } from 'react-native'
 import { ComposeAction } from '../../utils/types'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import i18next from 'i18next'
+import analytics from '@components/analytics'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
@@ -160,14 +161,23 @@ const addAttachment = async ({
                   'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.cancel'
                 ),
                 style: 'cancel',
-                onPress: () => {}
+                onPress: () => {
+                  analytics('compose_addattachment_medialibrary_nopermission', {
+                    action: 'cancel'
+                  })
+                }
               },
               {
                 text: i18next.t(
                   'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.settings'
                 ),
                 style: 'default',
-                onPress: () => Linking.openURL('app-settings:')
+                onPress: () => {
+                  analytics('compose_addattachment_medialibrary_nopermission', {
+                    action: 'settings'
+                  })
+                  Linking.openURL('app-settings:')
+                }
               }
             ]
           )
@@ -197,14 +207,23 @@ const addAttachment = async ({
                   'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.cancel'
                 ),
                 style: 'cancel',
-                onPress: () => {}
+                onPress: () => {
+                  analytics('compose_addattachment_camera_nopermission', {
+                    action: 'cancel'
+                  })
+                }
               },
               {
                 text: i18next.t(
                   'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.settings'
                 ),
                 style: 'default',
-                onPress: () => Linking.openURL('app-settings:')
+                onPress: () => {
+                  analytics('compose_addattachment_camera_nopermission', {
+                    action: 'settings'
+                  })
+                  Linking.openURL('app-settings:')
+                }
               }
             ]
           )

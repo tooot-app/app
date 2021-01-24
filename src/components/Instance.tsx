@@ -16,6 +16,7 @@ import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Placeholder, Fade } from 'rn-placeholder'
+import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
 import { toast } from './toast'
@@ -70,6 +71,7 @@ const ComponentInstance: React.FC<Props> = ({
     if (instanceDomain) {
       switch (type) {
         case 'local':
+          analytics('instance_local_login')
           if (
             localInstances &&
             localInstances.filter(instance => instance.url === instanceDomain)
@@ -96,6 +98,7 @@ const ComponentInstance: React.FC<Props> = ({
           }
           break
         case 'remote':
+          analytics('instance_remote_register')
           haptics('Success')
           const queryKey: QueryKeyTimeline = [
             'Timeline',
@@ -112,6 +115,7 @@ const ComponentInstance: React.FC<Props> = ({
 
   const onSubmitEditing = useCallback(
     ({ nativeEvent: { text } }) => {
+      analytics('instance_textinput_submit', { match: text === instanceDomain })
       if (
         text === instanceDomain &&
         instanceQuery.isSuccess &&
@@ -276,7 +280,10 @@ const ComponentInstance: React.FC<Props> = ({
                 {t('server.disclaimer')}
                 <Text
                   style={{ color: theme.blue }}
-                  onPress={() => Linking.openURL('https://tooot.app/privacy')}
+                  onPress={() => {
+                    analytics('view_privacy')
+                    Linking.openURL('https://tooot.app/privacy')
+                  }}
                 >
                   https://tooot.app/privacy
                 </Text>

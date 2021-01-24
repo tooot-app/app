@@ -9,13 +9,10 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  ownAccount?: boolean
+  myInfo: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({
-  account,
-  ownAccount
-}) => {
+const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { theme } = useTheme()
   const localAccount = useSelector(getLocalAccount)
   const localUri = useSelector(getLocalUri)
@@ -45,7 +42,7 @@ const AccountInformationAccount: React.FC<Props> = ({
     }
   }, [account?.moved])
 
-  if (account || (ownAccount && localAccount !== undefined)) {
+  if (account || (myInfo && localAccount !== undefined)) {
     return (
       <View
         style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
@@ -60,8 +57,8 @@ const AccountInformationAccount: React.FC<Props> = ({
           ]}
           selectable
         >
-          @{ownAccount ? localAccount?.acct : account?.acct}
-          {ownAccount ? `@${localUri}` : null}
+          @{myInfo ? localAccount?.acct : account?.acct}
+          {myInfo ? `@${localUri}` : null}
         </Text>
         {movedContent}
         {account?.locked ? (

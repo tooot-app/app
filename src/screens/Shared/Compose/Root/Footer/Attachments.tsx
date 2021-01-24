@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
@@ -39,14 +40,15 @@ const ComposeAttachments: React.FC = () => {
   const flatListRef = useRef<FlatList>(null)
   let prevOffsets = useRef<number[]>()
 
-  const sensitiveOnPress = useCallback(
-    () =>
-      composeDispatch({
-        type: 'attachments/sensitive',
-        payload: { sensitive: !composeState.attachments.sensitive }
-      }),
-    [composeState.attachments.sensitive]
-  )
+  const sensitiveOnPress = useCallback(() => {
+    analytics('compose_attachment_sensitive_press', {
+      current: composeState.attachments.sensitive
+    })
+    composeDispatch({
+      type: 'attachments/sensitive',
+      payload: { sensitive: !composeState.attachments.sensitive }
+    })
+  }, [composeState.attachments.sensitive])
 
   const calculateWidth = useCallback(item => {
     if (item.local) {
@@ -158,6 +160,7 @@ const ComposeAttachments: React.FC = () => {
                 round
                 overlay
                 onPress={() => {
+                  analytics('compose_attachment_delete')
                   layoutAnimation()
                   composeDispatch({
                     type: 'attachment/delete',
@@ -172,11 +175,12 @@ const ComposeAttachments: React.FC = () => {
                 spacing='M'
                 round
                 overlay
-                onPress={() =>
+                onPress={() => {
+                  analytics('compose_attachment_edit')
                   navigation.navigate('Screen-Shared-Compose-EditAttachment', {
                     index
                   })
-                }
+                }}
               />
             </View>
           )}
@@ -196,9 +200,10 @@ const ComposeAttachments: React.FC = () => {
             backgroundColor: theme.backgroundOverlay
           }
         ]}
-        onPress={async () =>
+        onPress={async () => {
+          analytics('compose_attachment_add_container_press')
           await addAttachment({ composeDispatch, showActionSheetWithOptions })
-        }
+        }}
       >
         <Button
           type='icon'
@@ -206,9 +211,10 @@ const ComposeAttachments: React.FC = () => {
           spacing='M'
           round
           overlay
-          onPress={async () =>
+          onPress={async () => {
+            analytics('compose_attachment_add_button_press')
             await addAttachment({ composeDispatch, showActionSheetWithOptions })
-          }
+          }}
           style={{
             position: 'absolute',
             top:

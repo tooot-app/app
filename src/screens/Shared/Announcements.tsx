@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
@@ -108,14 +109,17 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
                         : theme.background
                     }
                   ]}
-                  onPress={() =>
+                  onPress={() => {
+                    analytics('accnouncement_reaction_press', {
+                      current: reaction.me
+                    })
                     mutation.mutate({
                       id: item.id,
                       type: 'reaction',
                       name: reaction.name,
                       me: reaction.me
                     })
-                  }
+                  }}
                 >
                   {reaction.url ? (
                     <Image
@@ -153,13 +157,14 @@ const ScreenSharedAnnouncements: React.FC<SharedAnnouncementsProp> = ({
             }
             loading={mutation.isLoading}
             disabled={item.read}
-            onPress={() =>
+            onPress={() => {
+              analytics('accnouncement_read_press')
               !item.read &&
-              mutation.mutate({
-                id: item.id,
-                type: 'dismiss'
-              })
-            }
+                mutation.mutate({
+                  id: item.id,
+                  type: 'dismiss'
+                })
+            }}
           />
         </View>
       </View>

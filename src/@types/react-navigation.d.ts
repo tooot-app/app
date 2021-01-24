@@ -9,13 +9,13 @@ declare namespace Nav {
 
   type SharedStackParamList = {
     'Screen-Shared-Account': {
-      account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
+      account: Mastodon.Account | Mastodon.Mention
     }
     'Screen-Shared-Announcements': { showAll?: boolean }
     'Screen-Shared-Attachments': { account: Mastodon.Account }
     'Screen-Shared-Compose':
       | {
-          type: 'reply' | 'conversation' | 'edit'
+          type: 'edit'
           incomingStatus: Mastodon.Status
           queryKey?: [
             'Timeline',
@@ -27,6 +27,25 @@ declare namespace Nav {
               account?: Mastodon.Account['id']
             }
           ]
+        }
+      | {
+          type: 'reply'
+          incomingStatus: Mastodon.Status
+          accts: Mastodon.Account['acct'][]
+          queryKey?: [
+            'Timeline',
+            {
+              page: App.Pages
+              hashtag?: Mastodon.Tag['name']
+              list?: Mastodon.List['id']
+              toot?: Mastodon.Status['id']
+              account?: Mastodon.Account['id']
+            }
+          ]
+        }
+      | {
+          type: 'conversation'
+          accts: Mastodon.Account['acct'][]
         }
       | undefined
     'Screen-Shared-Hashtag': {

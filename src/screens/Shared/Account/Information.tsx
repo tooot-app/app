@@ -1,7 +1,9 @@
+import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import { Placeholder, Fade } from 'rn-placeholder'
 import AccountInformationAccount from './Information/Account'
 import AccountInformationActions from './Information/Actions'
@@ -15,13 +17,11 @@ import AccountInformationSwitch from './Information/Switch'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  ownAccount?: boolean
+  myInfo?: boolean // Showing from my info page
 }
 
-const AccountInformation: React.FC<Props> = ({
-  account,
-  ownAccount = false
-}) => {
+const AccountInformation: React.FC<Props> = ({ account, myInfo = false }) => {
+  const ownAccount = account?.id === useSelector(getLocalAccount)?.id
   const { mode, theme } = useTheme()
 
   const animation = useCallback(
@@ -35,21 +35,24 @@ const AccountInformation: React.FC<Props> = ({
     <View style={styles.base}>
       <Placeholder Animation={animation}>
         <View style={styles.avatarAndActions}>
-          <AccountInformationAvatar account={account} />
+          <AccountInformationAvatar account={account} myInfo={myInfo} />
           <View style={styles.actions}>
-            {ownAccount ? (
+            {myInfo ? (
               <AccountInformationSwitch />
             ) : (
-              <AccountInformationActions account={account} />
+              <AccountInformationActions
+                account={account}
+                ownAccount={ownAccount}
+              />
             )}
           </View>
         </View>
 
         <AccountInformationName account={account} />
 
-        <AccountInformationAccount account={account} ownAccount={ownAccount} />
+        <AccountInformationAccount account={account} myInfo={myInfo} />
 
-        {!ownAccount ? (
+        {!myInfo ? (
           <>
             {account?.fields && account.fields.length > 0 ? (
               <AccountInformationFields account={account} />
@@ -64,7 +67,7 @@ const AccountInformation: React.FC<Props> = ({
           </>
         ) : null}
 
-        <AccountInformationStats account={account} ownAccount={ownAccount} />
+        <AccountInformationStats account={account} myInfo={myInfo} />
       </Placeholder>
     </View>
   )

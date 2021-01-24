@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   accountAndMeta: {
-    flex: 4
+    flex: 5
   },
   meta: {
     flexDirection: 'row',

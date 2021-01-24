@@ -1,4 +1,5 @@
 import ComponentAccount from '@components/Account'
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
 import React, { Dispatch, useCallback } from 'react'
@@ -16,6 +17,9 @@ const ComposeRootSuggestion = React.memo(
     composeDispatch: Dispatch<ComposeAction>
   }) => {
     const onPress = useCallback(() => {
+      analytics('compose_suggestion_press', {
+        type: item.acct ? 'account' : 'hashtag'
+      })
       const focusedInput = composeState.textInputFocus.current
       updateText({
         composeState: {
@@ -36,9 +40,9 @@ const ComposeRootSuggestion = React.memo(
     }, [])
 
     return item.acct ? (
-      <ComponentAccount account={item} onPress={onPress} />
+      <ComponentAccount account={item} onPress={onPress} origin='suggestion' />
     ) : (
-      <ComponentHashtag tag={item} onPress={onPress} />
+      <ComponentHashtag hashtag={item} onPress={onPress} origin='suggestion' />
     )
   },
   () => true

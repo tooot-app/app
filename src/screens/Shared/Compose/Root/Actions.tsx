@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StyleConstants } from '@utils/styles/constants'
@@ -28,6 +29,9 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) return
 
     if (composeState.attachments.uploads.length < 4) {
+      analytics('compose_actions_attachment_press', {
+        count: composeState.attachments.uploads.length
+      })
       return await addAttachment({
         composeDispatch,
         showActionSheetWithOptions
@@ -46,6 +50,9 @@ const ComposeActions: React.FC = () => {
   }, [composeState.poll.active, composeState.attachments.uploads])
   const pollOnPress = useCallback(() => {
     if (!composeState.attachments.uploads.length) {
+      analytics('compose_actions_poll_press', {
+        current: composeState.poll.active
+      })
       layoutAnimation()
       composeDispatch({
         type: 'poll',
@@ -86,24 +93,43 @@ const ComposeActions: React.FC = () => {
         buttonIndex => {
           switch (buttonIndex) {
             case 0:
+              analytics('compose_actions_visibility_press', {
+                current: composeState.visibility,
+                new: 'public'
+              })
               composeDispatch({ type: 'visibility', payload: 'public' })
               break
             case 1:
+              analytics('compose_actions_visibility_press', {
+                current: composeState.visibility,
+                new: 'unlisted'
+              })
               composeDispatch({ type: 'visibility', payload: 'unlisted' })
               break
             case 2:
+              analytics('compose_actions_visibility_press', {
+                current: composeState.visibility,
+                new: 'private'
+              })
               composeDispatch({ type: 'visibility', payload: 'private' })
               break
             case 3:
+              analytics('compose_actions_visibility_press', {
+                current: composeState.visibility,
+                new: 'direct'
+              })
               composeDispatch({ type: 'visibility', payload: 'direct' })
               break
           }
         }
       )
     }
-  }, [])
+  }, [composeState.visibility])
 
   const spoilerOnPress = useCallback(() => {
+    analytics('compose_actions_spoiler_press', {
+      current: composeState.spoiler.active
+    })
     if (composeState.spoiler.active) {
       composeState.textInputFocus.refs.text.current?.focus()
     }
@@ -124,20 +150,15 @@ const ComposeActions: React.FC = () => {
     }
   }, [composeState.emoji.active, composeState.emoji.emojis])
   const emojiOnPress = useCallback(() => {
+    analytics('compose_actions_emojis_press', {
+      current: composeState.emoji.active
+    })
     if (composeState.emoji.emojis) {
-      if (composeState.emoji.active) {
-        layoutAnimation()
-        composeDispatch({
-          type: 'emoji',
-          payload: { ...composeState.emoji, active: false }
-        })
-      } else {
-        layoutAnimation()
-        composeDispatch({
-          type: 'emoji',
-          payload: { ...composeState.emoji, active: true }
-        })
-      }
+      layoutAnimation()
+      composeDispatch({
+        type: 'emoji',
+        payload: { ...composeState.emoji, active: !composeState.emoji.active }
+      })
     }
   }, [composeState.emoji.active, composeState.emoji.emojis])
 

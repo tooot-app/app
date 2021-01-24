@@ -1,11 +1,7 @@
+import analytics from '@components/analytics'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
-import { toast } from '@components/toast'
-import {
-  QueryKeyTimeline,
-  useTimelineMutation
-} from '@utils/queryHooks/timeline'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share } from 'react-native'
@@ -30,6 +26,7 @@ const HeaderActionsShare: React.FC<Props> = ({
         iconFront='Share2'
         title={t(`shared.header.actions.share.${type}.button`)}
         onPress={async () => {
+          analytics('timeline_shared_headeractions_share_press')
           switch (Platform.OS) {
             case 'ios':
               await Share.share({

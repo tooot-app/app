@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
 import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
+import analytics from './analytics'
 
 const Stack = createNativeStackNavigator<
   Nav.LocalStackParamList | Nav.RemoteStackParamList
@@ -41,6 +42,7 @@ const Timelines: React.FC<Props> = ({ name }) => {
   const localActiveIndex = useSelector(getLocalActiveIndex)
 
   const onPressSearch = useCallback(() => {
+    analytics('search_tap', { page: mapNameToContent[name][segment].page })
     navigation.navigate(`Screen-${name}`, { screen: 'Screen-Shared-Search' })
   }, [])
 

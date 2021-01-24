@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import BottomSheet from '@components/BottomSheet'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
@@ -49,7 +50,12 @@ const ScreenSharedAccount: React.FC<SharedAccountProp> = ({
         headerRight: () => (
           <HeaderRight
             content='MoreHorizontal'
-            onPress={() => setBottomSheetVisible(true)}
+            onPress={() => {
+              analytics('bottomsheet_open_press', {
+                page: 'account'
+              })
+              setBottomSheetVisible(true)
+            }}
           />
         )
       })

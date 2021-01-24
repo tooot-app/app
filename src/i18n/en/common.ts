@@ -1,4 +1,7 @@
 export default {
+  index: {
+    localCorrupt: 'Login expired, please login again'
+  },
   buttons: {
     cancel: 'Cancel'
   },

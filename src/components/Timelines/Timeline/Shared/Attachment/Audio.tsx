@@ -9,6 +9,7 @@ import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import attachmentAspectRatio from './aspectRatio'
+import analytics from '@components/analytics'
 
 export interface Props {
   total: number
@@ -29,6 +30,7 @@ const AttachmentAudio: React.FC<Props> = ({
   const [audioPlaying, setAudioPlaying] = useState(false)
   const [audioPosition, setAudioPosition] = useState(0)
   const playAudio = useCallback(async () => {
+    analytics('timeline_shared_attachment_audio_play_press', { id: audio.id })
     if (!audioPlayer) {
       const { sound } = await Audio.Sound.createAsync(
         { uri: audio.url },
@@ -44,6 +46,7 @@ const AttachmentAudio: React.FC<Props> = ({
     }
   }, [audioPlayer, audioPosition])
   const pauseAudio = useCallback(async () => {
+    analytics('timeline_shared_attachment_audio_pause_press', { id: audio.id })
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])

@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
@@ -49,6 +50,7 @@ const TimelinePoll: React.FC<Props> = ({
       toast({
         type: 'error',
         message: t('common:toastMessage.error.message', {
+          // @ts-ignore
           function: t(`shared.poll.meta.button.${theParams.payload.type}`)
         }),
         ...(err.status &&
@@ -69,7 +71,8 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() =>
+              onPress={() => {
+                analytics('timeline_shared_vote_vote_press')
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
@@ -82,7 +85,7 @@ const TimelinePoll: React.FC<Props> = ({
                     options: allOptions
                   }
                 })
-              }
+              }}
               type='text'
               content={t('shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
@@ -94,7 +97,8 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() =>
+              onPress={() => {
+                analytics('timeline_shared_vote_refresh_press')
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
@@ -106,7 +110,7 @@ const TimelinePoll: React.FC<Props> = ({
                     type: 'refresh'
                   }
                 })
-              }
+              }}
               type='text'
               content={t('shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}
@@ -199,6 +203,7 @@ const TimelinePoll: React.FC<Props> = ({
         key={index}
         style={styles.optionContainer}
         onPress={() => {
+          analytics('timeline_shared_vote_option_press')
           haptics('Light')
           if (poll.multiple) {
             setAllOptions(allOptions.map((o, i) => (i === index ? !o : o)))

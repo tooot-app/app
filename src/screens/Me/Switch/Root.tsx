@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
@@ -47,6 +48,7 @@ const AccountButton: React.FC<Props> = ({
         disabled ? ' ✓' : ''
       }`}
       onPress={() => {
+        analytics('switch_existing_press')
         dispatch(localUpdateActiveIndex(index))
         queryClient.clear()
         navigation.goBack()

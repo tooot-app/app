@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account
-  withoutName?: boolean
+  withoutName?: boolean // For notification follow request etc.
 }
 
 const HeaderSharedAccount: React.FC<Props> = ({

@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
@@ -42,6 +43,9 @@ const HeaderActionsDomain: React.FC<Props> = ({
       <MenuHeader heading={t(`shared.header.actions.domain.heading`)} />
       <MenuRow
         onPress={() => {
+          analytics('timeline_shared_headeractions_domain_block_press', {
+            page: queryKey[1].page
+          })
           Alert.alert(
             t('shared.header.actions.domain.alert.title', { domain }),
             t('shared.header.actions.domain.alert.message'),
@@ -54,6 +58,12 @@ const HeaderActionsDomain: React.FC<Props> = ({
                 text: t('shared.header.actions.domain.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: () => {
+                  analytics(
+                    'timeline_shared_headeractions_domain_block_confirm',
+                    {
+                      page: queryKey && queryKey[1].page
+                    }
+                  )
                   setBottomSheetVisible(false)
                   mutation.mutate({
                     type: 'domainBlock',

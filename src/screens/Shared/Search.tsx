@@ -1,8 +1,8 @@
 import ComponentAccount from '@components/Account'
+import analytics from '@components/analytics'
 import ComponentHashtag from '@components/Hashtag'
 import ComponentSeparator from '@components/Separator'
 import TimelineDefault from '@components/Timelines/Timeline/Default'
-import { useNavigation } from '@react-navigation/native'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -24,7 +24,6 @@ export interface Props {
 
 const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
   const { t } = useTranslation('sharedSearch')
-  const navigation = useNavigation()
   const { theme } = useTheme()
   const { status, data, refetch } = useSearchQuery({
     term: searchTerm,
@@ -158,28 +157,11 @@ const ScreenSharedSearch: React.FC<Props> = ({ searchTerm }) => {
   const listItem = useCallback(({ item, section }) => {
     switch (section.title) {
       case 'accounts':
-        return (
-          <ComponentAccount
-            account={item}
-            onPress={() => {
-              navigation.push('Screen-Shared-Account', { account: item })
-            }}
-          />
-        )
+        return <ComponentAccount account={item} origin='search' />
       case 'hashtags':
-        return (
-          <ComponentHashtag
-            tag={item}
-            onPress={() => {
-              navigation.goBack()
-              navigation.push('Screen-Shared-Hashtag', {
-                hashtag: item.name
-              })
-            }}
-          />
-        )
+        return <ComponentHashtag hashtag={item} origin='search' />
       case 'statuses':
-        return <TimelineDefault item={item} disableDetails />
+        return <TimelineDefault item={item} disableDetails origin='search' />
       default:
         return null
     }

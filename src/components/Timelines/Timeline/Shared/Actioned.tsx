@@ -1,6 +1,8 @@
+import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
@@ -20,7 +22,9 @@ const TimelineActioned: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
   const name = account.display_name || account.username
   const iconColor = theme.primary
 
@@ -29,6 +33,7 @@ const TimelineActioned: React.FC<Props> = ({
   )
 
   const onPress = useCallback(() => {
+    analytics('timeline_shared_actioned_press', { action })
     navigation.push('Screen-Shared-Account', { account })
   }, [])
 

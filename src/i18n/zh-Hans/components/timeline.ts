@@ -57,6 +57,7 @@ export default {
         application: '发自于 {{application}}'
       },
       conversation: {
+        withAccounts: '与',
         delete: {
           function: '删除私信'
         }
@@ -141,7 +142,7 @@ export default {
         },
         count: {
           voters: '已投{{count}}人 • ',
-          votes: '{{count}}票 • '
+          votes: '已投{{count}}票 • '
         },
         expiration: {
           expired: '投票已结束',

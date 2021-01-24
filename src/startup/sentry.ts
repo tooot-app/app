@@ -5,6 +5,7 @@ import log from './log'
 const sentry = () => {
   log('log', 'Sentry', 'initializing')
   Sentry.init({
+    environment: Constants.manifest.extra.sentryEnv,
     dsn: Constants.manifest.extra.sentryDSN,
     enableInExpoDevelopment: false,
     debug: __DEV__

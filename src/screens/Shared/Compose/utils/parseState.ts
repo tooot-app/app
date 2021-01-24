@@ -3,51 +3,50 @@ import { getLocalAccount } from '@utils/slices/instancesSlice'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
-export interface Props {
-  type: 'reply' | 'conversation' | 'edit'
-  incomingStatus: Mastodon.Status
-}
-
-const composeParseState = ({ type, incomingStatus }: Props): ComposeState => {
-  switch (type) {
+const composeParseState = (
+  params: NonNullable<Nav.SharedStackParamList['Screen-Shared-Compose']>
+): ComposeState => {
+  switch (params.type) {
     case 'edit':
       return {
         ...composeInitialState,
-        ...(incomingStatus.spoiler_text && {
+        ...(params.incomingStatus.spoiler_text && {
           spoiler: { ...composeInitialState.spoiler, active: true }
         }),
-        ...(incomingStatus.poll && {
+        ...(params.incomingStatus.poll && {
           poll: {
             active: true,
-            total: incomingStatus.poll.options.length,
+            total: params.incomingStatus.poll.options.length,
             options: {
-              '0': incomingStatus.poll.options[0]?.title || undefined,
-              '1': incomingStatus.poll.options[1]?.title || undefined,
-              '2': incomingStatus.poll.options[2]?.title || undefined,
-              '3': incomingStatus.poll.options[3]?.title || undefined
+              '0': params.incomingStatus.poll.options[0]?.title || undefined,
+              '1': params.incomingStatus.poll.options[1]?.title || undefined,
+              '2': params.incomingStatus.poll.options[2]?.title || undefined,
+              '3': params.incomingStatus.poll.options[3]?.title || undefined
             },
-            multiple: incomingStatus.poll.multiple,
+            multiple: params.incomingStatus.poll.multiple,
             expire: '86400' // !!!
           }
         }),
-        ...(incomingStatus.media_attachments && {
+        ...(params.incomingStatus.media_attachments && {
           attachments: {
-            sensitive: incomingStatus.sensitive,
-            uploads: incomingStatus.media_attachments.map(media => ({
+            sensitive: params.incomingStatus.sensitive,
+            uploads: params.incomingStatus.media_attachments.map(media => ({
               remote: media
             }))
           }
         }),
         visibility:
-          incomingStatus.visibility ||
+          params.incomingStatus.visibility ||
           getLocalAccount(store.getState())?.preferences[
             'posting:default:visibility'
           ] ||
           'public',
-        ...(incomingStatus.visibility === 'direct' && { visibilityLock: true })
+        ...(params.incomingStatus.visibility === 'direct' && {
+          visibilityLock: true
+        })
       }
     case 'reply':
-      const actualStatus = incomingStatus.reblog || incomingStatus
+      const actualStatus = params.incomingStatus.reblog || params.incomingStatus
       return {
         ...composeInitialState,
         visibility: actualStatus.visibility,
@@ -57,12 +56,6 @@ const composeParseState = ({ type, incomingStatus }: Props): ComposeState => {
     case 'conversation':
       return {
         ...composeInitialState,
-        text: {
-          count: incomingStatus.account.acct.length + 2,
-          raw: `@${incomingStatus.account.acct} `,
-          formatted: undefined,
-          selection: { start: 0, end: 0 }
-        },
         visibility: 'direct',
         visibilityLock: true
       }

@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
@@ -59,9 +60,10 @@ const AttachmentUnsupported: React.FC<Props> = ({
               content={t('shared.attachment.unsupported.button')}
               size='S'
               overlay
-              onPress={async () =>
+              onPress={async () => {
+                analytics('timeline_shared_attachment_unsupported_press')
                 attachment.remote_url && (await openLink(attachment.remote_url))
-              }
+              }}
             />
           ) : null}
         </>

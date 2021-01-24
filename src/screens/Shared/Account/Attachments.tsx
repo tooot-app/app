@@ -1,6 +1,8 @@
+import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -22,7 +24,9 @@ export interface Props {
 
 const AccountAttachments = React.memo(
   ({ account }: Props) => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<
+      StackNavigationProp<Nav.LocalStackParamList>
+    >()
     const { theme } = useTheme()
 
     const width =
@@ -58,9 +62,11 @@ const AccountAttachments = React.memo(
         if (index === 3) {
           return (
             <Pressable
-              onPress={() =>
-                navigation.push('Screen-Shared-Attachments', { account })
-              }
+              onPress={() => {
+                analytics('account_attachment_more_press')
+                account &&
+                  navigation.push('Screen-Shared-Attachments', { account })
+              }}
               children={
                 <View
                   style={{
@@ -92,9 +98,10 @@ const AccountAttachments = React.memo(
               blurhash={item.media_attachments[0].blurhash}
               dimension={{ width: width, height: width }}
               style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
-              onPress={() =>
+              onPress={() => {
+                analytics('account_attachment_item_press')
                 navigation.push('Screen-Shared-Toot', { toot: item })
-              }
+              }}
             />
           )
         }

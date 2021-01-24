@@ -33,6 +33,7 @@ import React, {
   useMemo,
   useRef
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, Platform, StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
@@ -70,11 +71,12 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // }, [isConnected, firstRender])
 
   // On launch display login credentials corrupt information
+  const { t } = useTranslation('common')
   useEffect(() => {
     const showLocalCorrect = localCorrupt
       ? toast({
           type: 'error',
-          message: '登录已过期',
+          message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
           autoHide: false
         })
@@ -193,8 +195,8 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
               <Image
                 source={{ uri: localAccount?.avatarStatic }}
                 style={{
-                  width: size + 2,
-                  height: size + 2,
+                  width: size,
+                  height: size,
                   borderRadius: size,
                   borderWidth: focused ? 2 : 0,
                   borderColor: focused ? theme.secondary : color

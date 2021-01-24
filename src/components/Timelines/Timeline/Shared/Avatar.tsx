@@ -3,6 +3,8 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useNavigation } from '@react-navigation/native'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import GracefullyImage from '@components/GracefullyImage'
+import { StackNavigationProp } from '@react-navigation/stack'
+import analytics from '@components/analytics'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
@@ -10,9 +12,12 @@ export interface Props {
 }
 
 const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
   // Need to fix go back root
   const onPress = useCallback(() => {
+    analytics('timeline_shared_avatar_press', { page: queryKey[1].page })
     queryKey && navigation.push('Screen-Shared-Account', { account })
   }, [])
 

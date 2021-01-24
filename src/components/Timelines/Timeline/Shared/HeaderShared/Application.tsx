@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -15,9 +16,12 @@ const HeaderSharedApplication: React.FC<Props> = ({ application }) => {
 
   return application && application.name !== 'Web' ? (
     <Text
-      onPress={async () =>
+      onPress={async () => {
+        analytics('timeline_shared_header_application_press', {
+          application
+        })
         application.website && (await openLink(application.website))
-      }
+      }}
       style={[styles.application, { color: theme.secondary }]}
     >
       {t('shared.header.shared.application', { application: application.name })}

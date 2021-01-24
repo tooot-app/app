@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { toast } from '@components/toast'
@@ -17,10 +18,16 @@ import { useQueryClient } from 'react-query'
 export interface Props {
   queryKey: QueryKeyTimeline
   status: Mastodon.Status
+  accts: Mastodon.Account['acct'][] // When replying to conversations
   reblog: boolean
 }
 
-const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
+const TimelineActions: React.FC<Props> = ({
+  queryKey,
+  status,
+  accts,
+  reblog
+}) => {
   const navigation = useNavigation()
   const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
@@ -92,63 +99,74 @@ const TimelineActions: React.FC<Props> = ({ queryKey, status, reblog }) => {
     }
   })
 
-  const onPressReply = useCallback(
-    () =>
-      navigation.navigate('Screen-Shared-Compose', {
-        type: 'reply',
-        incomingStatus: status,
-        queryKey
-      }),
-    []
-  )
-  const onPressReblog = useCallback(
-    () =>
-      mutation.mutate({
-        type: 'updateStatusProperty',
-        queryKey,
-        id: status.id,
-        reblog,
-        payload: {
-          property: 'reblogged',
-          currentValue: status.reblogged,
-          propertyCount: 'reblogs_count',
-          countValue: status.reblogs_count
-        }
-      }),
-    [status.reblogged]
-  )
-  const onPressFavourite = useCallback(
-    () =>
-      mutation.mutate({
-        type: 'updateStatusProperty',
-        queryKey,
-        id: status.id,
-        reblog,
-        payload: {
-          property: 'favourited',
-          currentValue: status.favourited,
-          propertyCount: 'favourites_count',
-          countValue: status.favourites_count
-        }
-      }),
-    [status.favourited]
-  )
-  const onPressBookmark = useCallback(
-    () =>
-      mutation.mutate({
-        type: 'updateStatusProperty',
-        queryKey,
-        id: status.id,
-        reblog,
-        payload: {
-          property: 'bookmarked',
-          currentValue: status.bookmarked,
-          propertyCount: undefined,
-          countValue: undefined
-        }
-      }),
-    [status.bookmarked]
-  )
+  const onPressReply = useCallback(() => {
+    analytics('timeline_shared_actions_reply_press', {
+      page: queryKey[1].page,
+      count: status.replies_count
+    })
+    navigation.navigate('Screen-Shared-Compose', {
+      type: 'reply',
+      incomingStatus: status,
+      accts,
+      queryKey
+    })
+  }, [status.replies_count])
+  const onPressReblog = useCallback(() => {
+    analytics('timeline_shared_actions_reblog_press', {
+      page: queryKey[1].page,
+      count: status.reblogs_count,
+      current: status.reblogged
+    })
+    mutation.mutate({
+      type: 'updateStatusProperty',
+      queryKey,
+      id: status.id,
+      reblog,
+      payload: {
+        property: 'reblogged',
+        currentValue: status.reblogged,
+        propertyCount: 'reblogs_count',
+        countValue: status.reblogs_count
+      }
+    })
+  }, [status.reblogged, status.reblogs_count])
+  const onPressFavourite = useCallback(() => {
+    analytics('timeline_shared_actions_favourite_press', {
+      page: queryKey[1].page,
+      count: status.favourites_count,
+      current: status.favourited
+    })
+    mutation.mutate({
+      type: 'updateStatusProperty',
+      queryKey,
+      id: status.id,
+      reblog,
+      payload: {
+        property: 'favourited',
+        currentValue: status.favourited,
+        propertyCount: 'favourites_count',
+        countValue: status.favourites_count
+      }
+    })
+  }, [status.favourited, status.favourites_count])
+  const onPressBookmark = useCallback(() => {
+    analytics('timeline_shared_actions_bookmark_press', {
+      page: queryKey[1].page,
+      current: status.bookmarked
+    })
+    mutation.mutate({
+      type: 'updateStatusProperty',
+      queryKey,
+      id: status.id,
+      reblog,
+      payload: {
+        property: 'bookmarked',
+        currentValue: status.bookmarked,
+        propertyCount: undefined,
+        countValue: undefined
+      }
+    })
+  }, [status.bookmarked])
 
   const childrenReply = useMemo(
     () => (

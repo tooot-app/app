@@ -6,6 +6,7 @@ import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import attachmentAspectRatio from './aspectRatio'
+import analytics from '@components/analytics'
 
 export interface Props {
   total: number
@@ -25,6 +26,13 @@ const AttachmentVideo: React.FC<Props> = ({
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)
   const playOnPress = useCallback(async () => {
+    analytics('timeline_shared_attachment_video_length', {
+      length: video.meta?.length
+    })
+    analytics('timeline_shared_attachment_vide_play_press', {
+      id: video.id,
+      timestamp: Date.now()
+    })
     setVideoLoading(true)
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })
@@ -66,6 +74,10 @@ const AttachmentVideo: React.FC<Props> = ({
         useNativeControls={false}
         onFullscreenUpdate={event => {
           if (event.fullscreenUpdate === 3) {
+            analytics('timeline_shared_attachment_video_pause_press', {
+              id: video.id,
+              timestamp: Date.now()
+            })
             videoPlayer.current?.pauseAsync()
           }
         }}

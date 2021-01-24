@@ -18,6 +18,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
+import analytics from './analytics'
 
 export interface Props {
   children: React.ReactNode
@@ -42,6 +43,7 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
     }
   })
   const callDismiss = () => {
+    analytics('bottomsheet_swipe_close')
     handleDismiss()
   }
   const onGestureEvent = useAnimatedGestureHandler({
@@ -90,7 +92,10 @@ const BottomSheet: React.FC<Props> = ({ children, visible, handleDismiss }) => {
               <Button
                 type='text'
                 content='取消'
-                onPress={() => handleDismiss()}
+                onPress={() => {
+                  analytics('bottomsheet_cancel')
+                  handleDismiss()
+                }}
                 style={styles.button}
               />
             </Animated.View>

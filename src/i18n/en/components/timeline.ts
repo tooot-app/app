@@ -57,6 +57,7 @@ export default {
         application: 'Tooted with {{application}}'
       },
       conversation: {
+        withAccounts: 'With',
         delete: {
           function: 'Delete direct message'
         }

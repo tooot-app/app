@@ -1,6 +1,8 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -9,22 +11,25 @@ import { StyleSheet } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  ownAccount: boolean
 }
 
-const GoToMoved = ({ account }: { account: Mastodon.Account }) => {
+const GoToMoved = ({ accountMoved }: { accountMoved: Mastodon.Account }) => {
   const { t } = useTranslation('sharedAccount')
-  const navigation = useNavigation()
-  const query = useRelationshipQuery({ id: account.id })
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
 
-  return query.data && !query.data.blocked_by ? (
+  return (
     <Button
       type='text'
       content={t('content.moved')}
-      onPress={() =>
-        navigation.push('Screen-Shared-Account', { account: account.moved })
-      }
+      onPress={() => {
+        analytics('account_gotomoved_press')
+        navigation.push('Screen-Shared-Account', { account: accountMoved })
+      }}
     />
-  ) : null
+  )
 }
 
 const Conversation = ({ account }: { account: Mastodon.Account }) => {
@@ -37,26 +42,30 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
       type='icon'
       content='Mail'
       style={styles.actionConversation}
-      onPress={() =>
+      onPress={() => {
+        analytics('account_DM_press')
         navigation.navigate('Screen-Shared-Compose', {
           type: 'conversation',
-          incomingStatus: { account }
+          accts: [account.acct]
         })
-      }
+      }}
     />
   ) : null
 }
 
-const AccountInformationActions: React.FC<Props> = ({ account }) => {
+const AccountInformationActions: React.FC<Props> = ({
+  account,
+  ownAccount
+}) => {
   return account && account.id ? (
     account.moved ? (
-      <GoToMoved account={account} />
-    ) : (
+      <GoToMoved accountMoved={account.moved} />
+    ) : !ownAccount ? (
       <>
         <Conversation account={account} />
         <RelationshipOutgoing id={account.id} />
       </>
-    )
+    ) : null
   ) : null
 }
 

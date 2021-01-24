@@ -1,39 +1,30 @@
-import { useAccountQuery } from '@utils/queryHooks/account'
-import { InstanceLocal } from '@utils/slices/instancesSlice'
+import { getLocalAccount, getLocalUri } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { useSelector } from 'react-redux'
 
-const ComposePostingAs: React.FC<{
-  id: Mastodon.Account['id']
-  domain: InstanceLocal['url']
-}> = ({ id, domain }) => {
-  const { t } = useTranslation('sharedCompose')
-  const { theme } = useTheme()
+const ComposePostingAs = React.memo(
+  () => {
+    const { t } = useTranslation('sharedCompose')
+    const { theme } = useTheme()
 
-  const { data, status } = useAccountQuery({ id })
+    const localAccount = useSelector(getLocalAccount)
+    const localUri = useSelector(getLocalUri)
 
-  switch (status) {
-    case 'loading':
-      return (
-        <Chase
-          size={StyleConstants.Font.LineHeight.M - 2}
-          color={theme.secondary}
-        />
-      )
-    case 'success':
-      return (
-        <Text style={[styles.text, { color: theme.secondary }]}>
-          {t('content.root.header.postingAs', { acct: data?.acct, domain })}
-        </Text>
-      )
-    default:
-      return null
-  }
-}
+    return (
+      <Text style={[styles.text, { color: theme.secondary }]}>
+        {t('content.root.header.postingAs', {
+          acct: localAccount?.acct,
+          domain: localUri
+        })}
+      </Text>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   text: {

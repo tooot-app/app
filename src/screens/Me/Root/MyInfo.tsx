@@ -22,7 +22,7 @@ const MyInfo: React.FC<Props> = ({ setData }) => {
   return (
     <>
       <AccountHeader account={data} limitHeight />
-      <AccountInformation account={data} ownAccount />
+      <AccountInformation account={data} myInfo />
     </>
   )
 }

@@ -1,4 +1,7 @@
 export default {
+  index: {
+    localCorrupt: '登录已过期，请重新登录'
+  },
   buttons: {
     cancel: '取消'
   },

@@ -12,10 +12,12 @@ import {
 } from 'react-native'
 import ComposeContext from '../../utils/createContext'
 import updateText from '../../updateText'
+import analytics from '@components/analytics'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const onPress = useCallback(() => {
+    analytics('compose_emoji_add')
     updateText({
       composeState,
       composeDispatch,

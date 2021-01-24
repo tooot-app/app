@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
@@ -129,7 +130,12 @@ const ScreenMeSettings: React.FC = () => {
               },
               buttonIndex => {
                 if (buttonIndex < options.length) {
+                  analytics('settings_language_press', {
+                    current: i18n.language,
+                    new: availableLanguages[buttonIndex]
+                  })
                   haptics('Success')
+                  // @ts-ignore
                   dispatch(changeLanguage(availableLanguages[buttonIndex]))
                   i18n.changeLanguage(availableLanguages[buttonIndex])
                 }
@@ -156,15 +162,27 @@ const ScreenMeSettings: React.FC = () => {
               buttonIndex => {
                 switch (buttonIndex) {
                   case 0:
+                    analytics('settings_appearance_press', {
+                      current: settingsTheme,
+                      new: 'auto'
+                    })
                     haptics('Success')
                     dispatch(changeTheme('auto'))
                     break
                   case 1:
+                    analytics('settings_appearance_press', {
+                      current: settingsTheme,
+                      new: 'light'
+                    })
                     haptics('Success')
                     dispatch(changeTheme('light'))
                     setTheme('light')
                     break
                   case 2:
+                    analytics('settings_appearance_press', {
+                      current: settingsTheme,
+                      new: 'dark'
+                    })
                     haptics('Success')
                     dispatch(changeTheme('dark'))
                     setTheme('dark')
@@ -192,10 +210,18 @@ const ScreenMeSettings: React.FC = () => {
               buttonIndex => {
                 switch (buttonIndex) {
                   case 0:
+                    analytics('settings_browser_press', {
+                      current: settingsBrowser,
+                      new: 'internal'
+                    })
                     haptics('Success')
                     dispatch(changeBrowser('internal'))
                     break
                   case 1:
+                    analytics('settings_browser_press', {
+                      current: settingsBrowser,
+                      new: 'external'
+                    })
                     haptics('Success')
                     dispatch(changeBrowser('external'))
                     break
@@ -220,6 +246,9 @@ const ScreenMeSettings: React.FC = () => {
           }
           iconBack='ChevronRight'
           onPress={async () => {
+            analytics('settings_cache_press', {
+              size: cacheSize ? prettyBytes(cacheSize) : 'empty'
+            })
             await CacheManager.clearCache()
             haptics('Success')
             setCacheSize(0)
@@ -237,7 +266,10 @@ const ScreenMeSettings: React.FC = () => {
             />
           }
           iconBack='ChevronRight'
-          onPress={() => Linking.openURL('https://www.patreon.com/xmflsct')}
+          onPress={() => {
+            analytics('settings_support_press')
+            Linking.openURL('https://www.patreon.com/xmflsct')
+          }}
         />
         <MenuRow
           title={t('content.review.heading')}
@@ -249,11 +281,12 @@ const ScreenMeSettings: React.FC = () => {
             />
           }
           iconBack='ChevronRight'
-          onPress={() =>
+          onPress={() => {
+            analytics('settings_review_press')
             StoreReview.isAvailableAsync().then(() =>
               StoreReview.requestReview()
             )
-          }
+          }}
         />
       </MenuContainer>
       <MenuContainer>

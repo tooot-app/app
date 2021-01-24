@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
@@ -79,6 +80,7 @@ const ComposePoll: React.FC = () => {
         <View style={styles.firstButton}>
           <Button
             onPress={() => {
+              analytics('compose_poll_reduce_press')
               total > 2 &&
                 composeDispatch({
                   type: 'poll',
@@ -93,6 +95,7 @@ const ComposePoll: React.FC = () => {
         </View>
         <Button
           onPress={() => {
+            analytics('compose_poll_increase_press')
             total < 4 &&
               composeDispatch({
                 type: 'poll',
@@ -122,12 +125,18 @@ const ComposePoll: React.FC = () => {
               ],
               cancelButtonIndex: 2
             },
-            index =>
-              index < 2 &&
-              composeDispatch({
-                type: 'poll',
-                payload: { multiple: index === 1 }
-              })
+            index => {
+              if (index < 2) {
+                analytics('compose_poll_expiration_press', {
+                  current: multiple,
+                  new: index === 1
+                })
+                composeDispatch({
+                  type: 'poll',
+                  payload: { multiple: index === 1 }
+                })
+              }
+            }
           )
         }
         iconBack='ChevronRight'
@@ -155,12 +164,18 @@ const ComposePoll: React.FC = () => {
               ],
               cancelButtonIndex: 7
             },
-            index =>
-              index < 7 &&
-              composeDispatch({
-                type: 'poll',
-                payload: { expire: expirations[index] }
-              })
+            index => {
+              if (index < 7) {
+                analytics('compose_poll_expiration_press', {
+                  current: expire,
+                  new: expirations[index]
+                })
+                composeDispatch({
+                  type: 'poll',
+                  payload: { expire: expirations[index] }
+                })
+              }
+            }
           )
         }}
         iconBack='ChevronRight'

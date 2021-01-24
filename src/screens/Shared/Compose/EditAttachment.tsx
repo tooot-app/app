@@ -1,4 +1,5 @@
 import client from '@api/client'
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import React, {
@@ -87,6 +88,7 @@ const ComposeEditAttachment: React.FC<Props> = ({
         content={t('content.editAttachment.header.right.button')}
         loading={isSubmitting}
         onPress={() => {
+          analytics('editattachment_confirm_press')
           if (!altText && focus.current.x === 0 && focus.current.y === 0) {
             navigation.goBack()
             return

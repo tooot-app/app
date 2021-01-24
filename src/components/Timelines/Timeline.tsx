@@ -1,13 +1,10 @@
 import ComponentSeparator from '@components/Separator'
-import TimelineConversation from '@components/Timelines/Timeline/Conversation'
-import TimelineDefault from '@components/Timelines/Timeline/Default'
-import TimelineEmpty from '@components/Timelines/Timeline/Empty'
-import TimelineEnd from '@root/components/Timelines/Timeline/End'
-import TimelineHeader from '@components/Timelines/Timeline/Header'
-import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
+import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import {
   FlatListProps,
@@ -17,9 +14,12 @@ import {
 } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
-import { findIndex } from 'lodash'
-import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
+import TimelineConversation from './Timeline/Conversation'
+import TimelineDefault from './Timeline/Default'
+import TimelineEmpty from './Timeline/Empty'
+import TimelineEnd from './Timeline/End'
+import TimelineHeader from './Timeline/Header'
+import TimelineNotifications from './Timeline/Notifications'
 
 export interface Props {
   page: App.Pages
@@ -99,8 +99,10 @@ const Timeline: React.FC<Props> = ({
   }, [navigation, flattenData])
 
   const flRef = useRef<FlatList<any>>(null)
+  const scrolled = useRef(false)
   useEffect(() => {
-    if (toot && isSuccess) {
+    if (toot && isSuccess && !scrolled.current) {
+      scrolled.current = true
       const pointer = findIndex(flattenData, ['id', toot])
       setTimeout(() => {
         flRef.current?.scrollToIndex({
@@ -109,7 +111,7 @@ const Timeline: React.FC<Props> = ({
         })
       }, 500)
     }
-  }, [isSuccess, flattenData])
+  }, [isSuccess, flattenData.length, scrolled])
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(({ item }) => {

@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import AttachmentAudio from '@components/Timelines/Timeline/Shared/Attachment/Audio'
@@ -21,13 +22,15 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
 
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
+    analytics('timeline_shared_attachment_blurview_press_show')
     layoutAnimation()
     setSensitiveShown(false)
-    haptics('Medium')
+    haptics('Light')
   }, [])
   const onPressShow = useCallback(() => {
+    analytics('timeline_shared_attachment_blurview_press_hide')
     setSensitiveShown(true)
-    haptics('Medium')
+    haptics('Light')
   }, [])
 
   let imageUrls: (IImageInfo & {

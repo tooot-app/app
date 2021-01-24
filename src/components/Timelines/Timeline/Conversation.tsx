@@ -1,5 +1,8 @@
 import client from '@api/client'
+import analytics from '@components/analytics'
+import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -9,10 +12,41 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useMutation, useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 import TimelineActions from './Shared/Actions'
-import TimelineAvatar from './Shared/Avatar'
 import TimelineContent from './Shared/Content'
 import TimelineHeaderConversation from './Shared/HeaderConversation'
 import TimelinePoll from './Shared/Poll'
+
+const Avatars: React.FC<{ accounts: Mastodon.Account[] }> = ({ accounts }) => {
+  return (
+    <View
+      style={{
+        borderRadius: 4,
+        overflow: 'hidden',
+        marginRight: StyleConstants.Spacing.S,
+        width: StyleConstants.Avatar.M,
+        height: StyleConstants.Avatar.M,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+      }}
+    >
+      {accounts.slice(0, 4).map(account => (
+        <GracefullyImage
+          key={account.id}
+          cache
+          uri={{ original: account.avatar_static }}
+          dimension={{
+            width: StyleConstants.Avatar.M,
+            height:
+              accounts.length > 2
+                ? StyleConstants.Avatar.M / 2
+                : StyleConstants.Avatar.M
+          }}
+          style={{ flex: 1, flexBasis: '50%' }}
+        />
+      ))}
+    </View>
+  )
+}
 
 export interface Props {
   conversation: Mastodon.Conversation
@@ -42,9 +76,11 @@ const TimelineConversation: React.FC<Props> = ({
     }
   })
 
-  const navigation = useNavigation()
-
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.LocalStackParamList>
+  >()
   const onPress = useCallback(() => {
+    analytics('timeline_conversation_press')
     if (conversation.last_status) {
       conversation.unread && mutate()
       navigation.push('Screen-Shared-Toot', {
@@ -68,10 +104,7 @@ const TimelineConversation: React.FC<Props> = ({
       onPress={onPress}
     >
       <View style={styles.header}>
-        <TimelineAvatar
-          queryKey={queryKey}
-          account={conversation.accounts[0]}
-        />
+        <Avatars accounts={conversation.accounts} />
         <TimelineHeaderConversation
           queryKey={queryKey}
           conversation={conversation}
@@ -112,6 +145,7 @@ const TimelineConversation: React.FC<Props> = ({
             <TimelineActions
               queryKey={queryKey}
               status={conversation.last_status}
+              accts={conversation.accounts.map(account => account.acct)}
               reblog={false}
             />
           </View>

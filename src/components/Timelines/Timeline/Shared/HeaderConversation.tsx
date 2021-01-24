@@ -1,5 +1,7 @@
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { ParseEmojis } from '@components/Parse'
 import { toast } from '@components/toast'
 import {
   QueryKeyTimeline,
@@ -9,11 +11,33 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
-import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
+
+const Names: React.FC<{ accounts: Mastodon.Account[] }> = ({ accounts }) => {
+  const { t } = useTranslation('componentTimeline')
+  const { theme } = useTheme()
+
+  return (
+    <Text numberOfLines={1}>
+      <Text style={[styles.namesLeading, { color: theme.secondary }]}>
+        {t('shared.header.conversation.withAccounts')}{' '}
+      </Text>
+      {accounts.map((account, index) => (
+        <Text key={account.id} numberOfLines={1}>
+          {index !== 0 ? ', ' : undefined}
+          <ParseEmojis
+            content={account.display_name || account.username}
+            emojis={account.emojis}
+            fontBold
+          />
+        </Text>
+      ))}
+    </Text>
+  )
+}
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -49,16 +73,15 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
 
   const { theme } = useTheme()
 
-  const actionOnPress = useCallback(
-    () =>
-      mutation.mutate({
-        type: 'deleteItem',
-        source: 'conversations',
-        queryKey,
-        id: conversation.id
-      }),
-    []
-  )
+  const actionOnPress = useCallback(() => {
+    analytics('timeline_conversation_delete_press')
+    mutation.mutate({
+      type: 'deleteItem',
+      source: 'conversations',
+      queryKey,
+      id: conversation.id
+    })
+  }, [])
 
   const actionChildren = useMemo(
     () => (
@@ -74,7 +97,7 @@ const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
   return (
     <View style={styles.base}>
       <View style={styles.nameAndMeta}>
-        <HeaderSharedAccount account={conversation.accounts[0]} />
+        <Names accounts={conversation.accounts} />
         <View style={styles.meta}>
           {conversation.last_status?.created_at ? (
             <HeaderSharedCreated
@@ -100,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   nameAndMeta: {
-    flex: 4
+    flex: 3
   },
   meta: {
     flexDirection: 'row',
@@ -115,6 +138,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  namesLeading: {
+    ...StyleConstants.FontStyle.M
   }
 })
 

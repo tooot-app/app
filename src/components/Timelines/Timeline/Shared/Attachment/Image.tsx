@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
@@ -19,7 +20,10 @@ const AttachmentImage: React.FC<Props> = ({
   image,
   navigateToImagesViewer
 }) => {
-  const onPress = useCallback(() => navigateToImagesViewer(index), [])
+  const onPress = useCallback(() => {
+    analytics('timeline_shared_attachment_image_press', { id: image.id })
+    navigateToImagesViewer(index)
+  }, [])
 
   return (
     <GracefullyImage

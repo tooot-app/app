@@ -17,7 +17,7 @@ const netInfo = async (): Promise<{
 
   if (netInfo.isConnected) {
     log('log', 'netInfo', 'network connected')
-    if (activeIndex) {
+    if (activeIndex !== null) {
       log('log', 'netInfo', 'checking locally stored credentials')
       return client<Mastodon.Account>({
         method: 'get',

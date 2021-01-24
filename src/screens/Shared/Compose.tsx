@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import haptics from '@root/components/haptics'
 import { store } from '@root/store'
@@ -93,20 +94,11 @@ const Compose: React.FC<SharedComposeProp> = ({
         })
         break
       case 'reply':
-        const actualStatus =
-          params.incomingStatus.reblog || params.incomingStatus
-        formatText({
-          textInput: 'text',
-          composeDispatch,
-          content: `@${actualStatus.account.acct} `,
-          disableDebounce: true
-        })
-        break
       case 'conversation':
         formatText({
           textInput: 'text',
           composeDispatch,
-          content: `@${params.incomingStatus.account.acct} `,
+          content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
           disableDebounce: true
         })
         break
@@ -123,23 +115,32 @@ const Compose: React.FC<SharedComposeProp> = ({
         type='text'
         content={t('heading.left.button')}
         onPress={() => {
+          analytics('compose_header_back_press')
           if (
             totalTextCount === 0 &&
             composeState.attachments.uploads.length === 0 &&
             composeState.poll.active === false
           ) {
+            analytics('compose_header_back_empty')
             navigation.goBack()
             return
           } else {
+            analytics('compose_header_back_state_occupied')
             Alert.alert(t('heading.left.alert.title'), undefined, [
               {
                 text: t('heading.left.alert.buttons.exit'),
                 style: 'destructive',
-                onPress: () => navigation.goBack()
+                onPress: () => {
+                  analytics('compose_header_back_occupied_confirm')
+                  navigation.goBack()
+                }
               },
               {
                 text: t('heading.left.alert.buttons.continue'),
-                style: 'cancel'
+                style: 'cancel',
+                onPress: () => {
+                  analytics('compose_header_back_occupied_cancel')
+                }
               }
             ])
           }
@@ -174,6 +175,7 @@ const Compose: React.FC<SharedComposeProp> = ({
             : t('heading.right.button.default')
         }
         onPress={() => {
+          analytics('compose_header_post_press')
           composeDispatch({ type: 'posting', payload: true })
 
           composePost(params, composeState)
@@ -186,13 +188,18 @@ const Compose: React.FC<SharedComposeProp> = ({
               ]
               queryClient.invalidateQueries(queryKey)
 
-              if (params?.queryKey && params.queryKey[1].page === 'Toot') {
-                queryClient.invalidateQueries(params.queryKey)
+              switch (params?.type) {
+                case 'edit':
+                case 'reply':
+                  if (params?.queryKey && params.queryKey[1].page === 'Toot') {
+                    queryClient.invalidateQueries(params.queryKey)
+                  }
+                  break
               }
               navigation.goBack()
             })
             .catch(error => {
-              // Sentry.Native.captureException(error)
+              Sentry.Native.captureException(error)
               haptics('Error')
               composeDispatch({ type: 'posting', payload: false })
               Alert.alert(t('heading.right.alert.title'), undefined, [
