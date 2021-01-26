@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "release": "./publish/publish.sh"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",

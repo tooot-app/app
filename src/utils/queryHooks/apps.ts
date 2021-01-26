@@ -1,22 +1,12 @@
 import client from '@api/client'
 import { AxiosError } from 'axios'
-import Constants from 'expo-constants'
+import * as AuthSession from 'expo-auth-session'
 import { useQuery, UseQueryOptions } from 'react-query'
 
 export type QueryKey = ['Apps', { instanceDomain?: string }]
 
 const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
-  let redirectUri: string
-  switch (Constants.manifest.releaseChannel) {
-    case 'production':
-    case 'staging':
-    case 'testing':
-      redirectUri = 'tooot://expo-auth-session'
-      break
-    default:
-      redirectUri = 'exp://127.0.0.1:19000'
-      break
-  }
+  const redirectUri = AuthSession.makeRedirectUri({ useProxy: false })
 
   const { instanceDomain } = queryKey[1]
 

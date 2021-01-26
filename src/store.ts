@@ -12,7 +12,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 
 const secureStorage = createSecureStore()
 
-const prefix = 'mastodon_app'
+const prefix = 'ajieorjaiojwoirjwe'
 
 const contextsPersistConfig = {
   key: 'contexts',

@@ -23,11 +23,11 @@ const Names: React.FC<{ accounts: Mastodon.Account[] }> = ({ accounts }) => {
   return (
     <Text numberOfLines={1}>
       <Text style={[styles.namesLeading, { color: theme.secondary }]}>
-        {t('shared.header.conversation.withAccounts')}{' '}
+        {t('shared.header.conversation.withAccounts')}
       </Text>
       {accounts.map((account, index) => (
         <Text key={account.id} numberOfLines={1}>
-          {index !== 0 ? ', ' : undefined}
+          {index !== 0 ? t('common:separator') : undefined}
           <ParseEmojis
             content={account.display_name || account.username}
             emojis={account.emojis}

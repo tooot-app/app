@@ -15,5 +15,6 @@ export default {
     error: {
       message: '{{function}}失败，请重试'
     }
-  }
+  },
+  separator: '，'
 }

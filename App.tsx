@@ -1,25 +1,26 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import i18n from '@root/i18n/i18n'
 import Index from '@root/Index'
-import dev from '@root/startup/dev'
-import sentry from '@root/startup/sentry'
-import log from '@root/startup/log'
 import audio from '@root/startup/audio'
-import onlineStatus from '@root/startup/onlineStatus'
+import dev from '@root/startup/dev'
+import log from '@root/startup/log'
 import netInfo from '@root/startup/netInfo'
+import onlineStatus from '@root/startup/onlineStatus'
+import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
+import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
+import { LogBox, Platform } from 'react-native'
 import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { LogBox, Platform } from 'react-native'
 
 if (Platform.OS === 'android') {
   LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 }
-
 
 dev()
 sentry()
@@ -68,12 +69,12 @@ const App: React.FC = () => {
     }
   }, [])
 
-  const main = useCallback(
+  const children = useCallback(
     bootstrapped => {
       log('log', 'App', 'bootstrapped')
       if (bootstrapped) {
         log('log', 'App', 'loading actual app :)')
-        require('@root/i18n/i18n')
+        i18n.changeLanguage(getSettingsLanguage(store.getState()))
         return (
           <ActionSheetProvider>
             <ThemeManager>
@@ -94,7 +95,7 @@ const App: React.FC = () => {
         <PersistGate
           persistor={persistor}
           onBeforeLift={onBeforeLift}
-          children={main}
+          children={children}
         />
       </Provider>
     </QueryClientProvider>

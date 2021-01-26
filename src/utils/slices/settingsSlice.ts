@@ -3,8 +3,6 @@ import { RootState } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
 import * as Localization from 'expo-localization'
 
-export const supportedLngs = ['zh-Hans', 'en']
-
 export type SettingsState = {
   language: 'zh-Hans' | 'en'
   theme: 'light' | 'dark' | 'auto'

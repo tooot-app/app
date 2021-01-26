@@ -38,7 +38,7 @@ const contextsSlice = createSlice({
   initialState: contextsInitialState as ContextsState,
   reducers: {
     updateStoreReview: (state, action: PayloadAction<1>) => {
-      if (Constants.manifest.releaseChannel === 'production') {
+      if (Constants.manifest.releaseChannel?.includes('production')) {
         state.storeReview.current = state.storeReview.current + action.payload
         if (state.storeReview.current === state.storeReview.context) {
           StoreReview.isAvailableAsync().then(() => StoreReview.requestReview())

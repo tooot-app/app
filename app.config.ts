@@ -37,7 +37,7 @@ export default (): ExpoConfig => ({
     ]
   },
   ios: {
-    buildNumber: '2',
+    buildNumber: '4',
     config: { usesNonExemptEncryption: false },
     bundleIdentifier: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/GoogleService-Info.plist',
@@ -50,7 +50,7 @@ export default (): ExpoConfig => ({
     zh: './src/i18n/zh-Hans/system.json'
   },
   android: {
-    versionCode: 2,
+    versionCode: 4,
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']

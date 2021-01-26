@@ -1,15 +1,12 @@
-import { store } from '@root/store'
-import { getSettingsLanguage, supportedLngs } from '@utils/slices/settingsSlice'
-import i18next from 'i18next'
+import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import en from '@root/i18n/en/_all'
 import zh_Hans from '@root/i18n/zh-Hans/_all'
 
-i18next.use(initReactI18next).init({
-  lng: getSettingsLanguage(store.getState()),
+i18n.use(initReactI18next).init({
+  lng: 'en',
   fallbackLng: 'en',
-  supportedLngs: supportedLngs,
 
   ns: ['common'],
   defaultNS: 'common',
@@ -23,7 +20,11 @@ i18next.use(initReactI18next).init({
 
   interpolation: {
     escapeValue: false
-  }
+  },
+  react: {
+    useSuspense: false
+  },
+  debug: true
 })
 
-export default i18next
+export default i18n

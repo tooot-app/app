@@ -15,5 +15,6 @@ export default {
     error: {
       message: '{{function}} failed, please retry'
     }
-  }
+  },
+  separator: ', '
 }

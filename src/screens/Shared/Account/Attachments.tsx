@@ -128,7 +128,7 @@ const AccountAttachments = React.memo(
       <Animated.View style={[styles.base, styleContainer]}>
         <FlatList
           horizontal
-          data={flattenData.splice(0, 4)}
+          data={flattenData.filter(status => !status.sensitive).splice(0, 4)}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
         />

@@ -24,7 +24,7 @@ const ScreenLocal = React.memo(
     }, [])
 
     return (
-      <Stack.Navigator
+      <Stack.Navigator 
         screenOptions={{
           headerLeft: () => null,
           headerRight: () => (

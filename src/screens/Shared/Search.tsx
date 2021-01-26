@@ -1,5 +1,4 @@
 import ComponentAccount from '@components/Account'
-import analytics from '@components/analytics'
 import ComponentHashtag from '@components/Hashtag'
 import ComponentSeparator from '@components/Separator'
 import TimelineDefault from '@components/Timelines/Timeline/Default'
