@@ -10,7 +10,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text, View } from 'react-native'
+import { Platform, Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 
 // Prevent going to the same hashtag multiple times
@@ -214,11 +214,17 @@ const ParseHTML: React.FC<Props> = ({
       const [expanded, setExpanded] = useState(false)
 
       const onTextLayout = useCallback(({ nativeEvent }) => {
-        if (
-          nativeEvent.lines &&
-          nativeEvent.lines.length === numberOfLines + 1
-        ) {
-          setExpandAllow(true)
+        switch (Platform.OS) {
+          case 'ios':
+            if (nativeEvent.lines.length === numberOfLines + 1) {
+              setExpandAllow(true)
+            }
+            break
+          case 'android':
+            if (nativeEvent.lines.length > numberOfLines + 1) {
+              setExpandAllow(true)
+            }
+            break
         }
       }, [])
 
