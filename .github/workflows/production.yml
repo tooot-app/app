@@ -28,4 +28,4 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_DEPLOY_ENV: production
-        run: expo publish --release-channel=${GITHUB_REF##*/}
+        run: expo publish --release-channel=${GITHUB_REF#refs/heads/}
