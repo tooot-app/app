@@ -2,7 +2,7 @@ name: Publish testing
 on:
   push:
     branches:
-      - 'testing-*'
+      - '*-testing'
 jobs:
   publish:
     runs-on: ubuntu-latest
