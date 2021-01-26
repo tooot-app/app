@@ -14,7 +14,6 @@ export default {
   meLists: require('./screens/meLists').default,
   meListsList: require('./screens/meListsList').default,
   meSettings: require('./screens/meSettings').default,
-  meSettingsUpdateRemote: require('./screens/meSettingsUpdateRemote').default,
   meSwitch: require('./screens/meSwitch').default,
 
   sharedAccount: require('./screens/sharedAccount').default,

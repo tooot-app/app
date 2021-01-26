@@ -3,6 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Pressable,
   StyleProp,
@@ -48,6 +49,7 @@ const Button: React.FC<Props> = ({
   overlay = false,
   onPress
 }) => {
+  const { i18n } = useTranslation()
   const { theme } = useTheme()
 
   const mounted = useRef(false)
@@ -145,7 +147,7 @@ const Button: React.FC<Props> = ({
           </>
         )
     }
-  }, [theme, content, loading, disabled, active])
+  }, [i18n.language, theme, content, loading, disabled, active])
 
   enum spacingMapping {
     XS = 'S',

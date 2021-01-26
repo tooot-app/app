@@ -7,7 +7,6 @@ import ScreenMeRoot from '@screens/Me/Root'
 import ScreenMeListsList from '@screens/Me/Root/Lists/List'
 import ScreenMeSettings from '@screens/Me/Settings'
 import ScreenMeSwitch from '@screens/Me/Switch'
-import ScreenMeUpdateRemote from '@screens/Me/UpdateRemote'
 import sharedScreens from '@screens/Shared/sharedScreens'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -105,19 +104,6 @@ const ScreenMe: React.FC = () => {
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
               <HeaderCenter content={t('meSettings:heading')} />
-            )
-          }),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-        })}
-      />
-      <Stack.Screen
-        name='Screen-Me-Settings-UpdateRemote'
-        component={ScreenMeUpdateRemote}
-        options={({ navigation }: any) => ({
-          headerTitle: t('meSettingsUpdateRemote:heading'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => (
-              <HeaderCenter content={t('meSettingsUpdateRemote:heading')} />
             )
           }),
           headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />

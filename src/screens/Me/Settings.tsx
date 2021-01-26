@@ -4,12 +4,10 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { useNavigation } from '@react-navigation/native'
 import { persistor } from '@root/store'
 import {
   getLocalActiveIndex,
-  getLocalInstances,
-  getRemoteUrl
+  getLocalInstances
 } from '@utils/slices/instancesSlice'
 import {
   changeAnalytics,
@@ -92,13 +90,11 @@ const DevDebug: React.FC = () => {
 
 const ScreenMeSettings: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
-  const navigation = useNavigation()
   const { t, i18n } = useTranslation('meSettings')
   const { setTheme, theme } = useTheme()
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-  const settingsRemote = useSelector(getRemoteUrl)
   const settingsAnalytics = useSelector(getSettingsAnalytics)
   const dispatch = useDispatch()
 
@@ -232,13 +228,6 @@ const ScreenMeSettings: React.FC = () => {
         />
       </MenuContainer>
       <MenuContainer>
-        <MenuRow
-          title={t('content.remote.heading')}
-          description={t('content.remote.description')}
-          content={settingsRemote}
-          iconBack='ChevronRight'
-          onPress={() => navigation.navigate('Screen-Me-Settings-UpdateRemote')}
-        />
         <MenuRow
           title={t('content.cache.heading')}
           content={

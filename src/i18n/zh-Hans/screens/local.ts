@@ -1,8 +1,3 @@
 export default {
-  heading: {
-    segments: {
-      left: '我的关注',
-      right: '本站嘟嘟'
-    }
-  }
+  heading: '我的关注'
 }

@@ -8,7 +8,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalInstances, remoteUpdate } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Linking from 'expo-linking'
+import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Placeholder, Fade } from 'rn-placeholder'
 import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
+import EULA from './Instance/EULA'
 import InstanceInfo from './Instance/Info'
 import { toast } from './toast'
 
@@ -159,6 +160,8 @@ const ComponentInstance: React.FC<Props> = ({
     }
   }, [instanceDomain, instanceQuery.data, appsQuery.data])
 
+  const [agreed, setAgreed] = useState(false)
+
   return (
     <>
       {!disableHeaderImage ? (
@@ -201,18 +204,15 @@ const ComponentInstance: React.FC<Props> = ({
             onPress={processUpdate}
             disabled={
               !instanceQuery.data?.uri ||
-              (type === 'remote' && !instanceQuery.data.publicAllow)
+              (type === 'remote' && !instanceQuery.data.publicAllow) ||
+              !agreed
             }
             loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
-        {type === 'remote' &&
-        instanceQuery.data &&
-        !instanceQuery.data.publicAllow ? (
-          <Text style={[styles.privateInstance, { color: theme.red }]}>
-            {t('server.privateInstance')}
-          </Text>
-        ) : null}
+
+        <EULA agreed={agreed} setAgreed={setAgreed} />
+
         <View>
           <Placeholder
             {...(instanceQuery.isFetching && {
@@ -277,15 +277,17 @@ const ComponentInstance: React.FC<Props> = ({
                 style={styles.disclaimerIcon}
               />
               <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
-                {t('server.disclaimer')}
+                {t('server.disclaimer.base')}
                 <Text
                   style={{ color: theme.blue }}
                   onPress={() => {
                     analytics('view_privacy')
-                    Linking.openURL('https://tooot.app/privacy')
+                    WebBrowser.openBrowserAsync(
+                      'https://tooot.app/privacy-policy'
+                    )
                   }}
                 >
-                  https://tooot.app/privacy
+                  {t('server.disclaimer.privacy')}
                 </Text>
               </Text>
             </View>

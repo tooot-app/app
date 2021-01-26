@@ -179,13 +179,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
           case 'Screen-Local':
             return <Icon name='Home' size={size} color={color} />
           case 'Screen-Public':
-            return (
-              <Icon
-                name='Globe'
-                size={size}
-                color={!focused ? theme.secondary : color}
-              />
-            )
+            return <Icon name='Globe' size={size} color={color} />
           case 'Screen-Post':
             return <Icon name='Plus' size={size} color={color} />
           case 'Screen-Notifications':
@@ -279,7 +273,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
       >
         <Tab.Navigator
           initialRouteName={
-            localActiveIndex !== null ? 'Screen-Local' : 'Screen-Public'
+            localActiveIndex !== null ? 'Screen-Local' : 'Screen-Me'
           }
           screenOptions={tabNavigatorScreenOptions}
           tabBarOptions={tabNavigatorTabBarOptions}

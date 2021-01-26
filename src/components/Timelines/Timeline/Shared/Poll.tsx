@@ -119,7 +119,7 @@ const TimelinePoll: React.FC<Props> = ({
         )
       }
     }
-  }, [poll.expired, poll.voted, allOptions, mutation.isLoading])
+  }, [mode, poll.expired, poll.voted, allOptions, mutation.isLoading])
 
   const pollExpiration = useMemo(() => {
     if (poll.expired) {

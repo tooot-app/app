@@ -2,6 +2,7 @@ export default {
   server: {
     textInput: { placeholder: '输入社区服务器地址' },
     privateInstance: '非公开社区, 不能围观',
+    EULA: { base: '我阅读并同意 ', EULA: '最终用户条款' },
     button: {
       local: '登录',
       remote: '围观'
@@ -13,8 +14,11 @@ export default {
       statuses: '嘟文总数',
       domains: '连结总数'
     },
-    disclaimer:
-      '登录过程将使用系统浏览器，你的账号登录信息tooot应用无法读取。详见：'
+    disclaimer: {
+      base:
+        '登录过程将使用系统浏览器，你的账号登录信息tooot应用无法读取。详见 ',
+      privacy: '隐私条款'
+    }
   },
   update: {
     local: {

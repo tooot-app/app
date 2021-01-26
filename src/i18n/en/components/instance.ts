@@ -2,6 +2,7 @@ export default {
   server: {
     textInput: { placeholder: "Instance' domain" },
     privateInstance: 'Private instance, peeping not allowed',
+    EULA: { base: 'I have read and agreed to ', EULA: 'EULA' },
     button: {
       local: 'Login',
       remote: 'Peep'
@@ -13,8 +14,11 @@ export default {
       statuses: 'Toots',
       domains: 'Universes'
     },
-    disclaimer:
-      "Logging in process uses system broswer that, your account informationo won't be visible to tooot app. Read more at: "
+    disclaimer: {
+      base:
+        "Logging in process uses system broswer that, your account informationo won't be visible to tooot app. Read more ",
+      privacy: 'privacy policy'
+    }
   },
   update: {
     local: {

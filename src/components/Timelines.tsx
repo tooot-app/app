@@ -1,54 +1,37 @@
-import { HeaderCenter, HeaderRight } from '@components/Header'
+import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Shared/sharedScreens'
-import { getLocalActiveIndex, getRemoteUrl } from '@utils/slices/instancesSlice'
+import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Platform, StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
 import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
 import analytics from './analytics'
 
-const Stack = createNativeStackNavigator<
-  Nav.LocalStackParamList | Nav.RemoteStackParamList
->()
+const Stack = createNativeStackNavigator<Nav.RemoteStackParamList>()
 
-export interface Props {
-  name: 'Local' | 'Public'
-}
-
-const Timelines: React.FC<Props> = ({ name }) => {
+const Timelines: React.FC = () => {
   const { t, i18n } = useTranslation()
-  const remoteUrl = useSelector(getRemoteUrl)
-  const mapNameToContent: {
-    [key: string]: { title: string; page: App.Pages }[]
-  } = {
-    Local: [
-      { title: t('local:heading.segments.left'), page: 'Following' },
-      { title: t('local:heading.segments.right'), page: 'Local' }
-    ],
-    Public: [
-      { title: t('public:heading.segments.left'), page: 'LocalPublic' },
-      { title: remoteUrl, page: 'RemotePublic' }
-    ]
-  }
+  const pages: { title: string; page: App.Pages }[] = [
+    { title: t('public:heading.segments.left'), page: 'LocalPublic' },
+    { title: t('public:heading.segments.right'), page: 'Local' }
+  ]
 
   const navigation = useNavigation()
   const localActiveIndex = useSelector(getLocalActiveIndex)
 
   const onPressSearch = useCallback(() => {
-    analytics('search_tap', { page: mapNameToContent[name][segment].page })
-    navigation.navigate(`Screen-${name}`, { screen: 'Screen-Shared-Search' })
+    analytics('search_tap', { page: pages[segment].page })
+    navigation.navigate('Screen-Public', { screen: 'Screen-Shared-Search' })
   }, [])
 
-  const routes = mapNameToContent[name]
-    .filter(p => (localActiveIndex !== null ? true : p.page === 'RemotePublic'))
-    .map(p => ({ key: p.page }))
+  const routes = pages.map(p => ({ key: p.page }))
 
   const renderScene = useCallback(
     ({
@@ -58,11 +41,7 @@ const Timelines: React.FC<Props> = ({ name }) => {
         key: App.Pages
       }
     }) => {
-      return (
-        (localActiveIndex !== null || route.key === 'RemotePublic') && (
-          <Timeline page={route.key} />
-        )
-      )
+      return localActiveIndex !== null && <Timeline page={route.key} />
     },
     [localActiveIndex]
   )
@@ -70,21 +49,12 @@ const Timelines: React.FC<Props> = ({ name }) => {
   const { mode } = useTheme()
   const [segment, setSegment] = useState(0)
   const screenOptions = useMemo(() => {
-    if (localActiveIndex === null) {
-      if (name === 'Public') {
-        return {
-          headerTitle: remoteUrl,
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => <HeaderCenter content={remoteUrl} />
-          })
-        }
-      }
-    } else {
+    if (localActiveIndex !== null) {
       return {
         headerCenter: () => (
           <SegmentedControl
             appearance={mode}
-            values={mapNameToContent[name].map(p => p.title)}
+            values={pages.map(p => p.title)}
             selectedIndex={segment}
             onChange={({ nativeEvent }) =>
               setSegment(nativeEvent.selectedSegmentIndex)
@@ -105,11 +75,7 @@ const Timelines: React.FC<Props> = ({ name }) => {
     <Stack.Navigator
       screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
     >
-      <Stack.Screen
-        // @ts-ignore
-        name={`Screen-${name}-Root`}
-        options={screenOptions}
-      >
+      <Stack.Screen name='Screen-Remote-Root' options={screenOptions}>
         {() => (
           <TabView
             lazy
@@ -124,7 +90,7 @@ const Timelines: React.FC<Props> = ({ name }) => {
         )}
       </Stack.Screen>
 
-      {sharedScreens(Stack)}
+      {sharedScreens(Stack as any)}
     </Stack.Navigator>
   )
 }
