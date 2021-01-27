@@ -15,8 +15,10 @@ export interface Props {
 
 const InstanceAuth = React.memo(
   ({ instanceDomain, instanceUri, appData, goBack }: Props) => {
-
-    const redirectUri = AuthSession.makeRedirectUri({ useProxy: false })
+    const redirectUri = AuthSession.makeRedirectUri({
+      native: 'tooot://instance-auth',
+      useProxy: false
+    })
 
     const navigation = useNavigation()
     const queryClient = useQueryClient()

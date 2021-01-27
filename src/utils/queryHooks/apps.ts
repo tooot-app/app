@@ -6,7 +6,10 @@ import { useQuery, UseQueryOptions } from 'react-query'
 export type QueryKey = ['Apps', { instanceDomain?: string }]
 
 const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
-  const redirectUri = AuthSession.makeRedirectUri({ useProxy: false })
+  const redirectUri = AuthSession.makeRedirectUri({
+    native: 'tooot://instance-auth',
+    useProxy: false
+  })
 
   const { instanceDomain } = queryKey[1]
 
