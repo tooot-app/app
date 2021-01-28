@@ -75,10 +75,11 @@ const AttachmentAudio: React.FC<Props> = ({
           )
         ) : (
           <>
-            {(audio.preview_url || audio.preview_remote_url) && (
+            {audio.preview_url && (
               <GracefullyImage
                 uri={{
-                  original: audio.preview_url || audio.preview_remote_url
+                  original: audio.preview_url,
+                  remote: audio.preview_remote_url
                 }}
                 style={styles.background}
               />

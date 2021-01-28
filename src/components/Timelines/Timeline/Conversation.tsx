@@ -32,7 +32,6 @@ const Avatars: React.FC<{ accounts: Mastodon.Account[] }> = ({ accounts }) => {
       {accounts.slice(0, 4).map(account => (
         <GracefullyImage
           key={account.id}
-          cache
           uri={{ original: account.avatar_static }}
           dimension={{
             width: StyleConstants.Avatar.M,

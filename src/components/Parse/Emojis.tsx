@@ -1,8 +1,8 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Image } from 'react-native-expo-image-cache'
+import { StyleSheet, Text } from 'react-native'
+import FastImage from 'react-native-fast-image'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
@@ -53,10 +53,9 @@ const ParseEmojis: React.FC<Props> = ({
                 <Text key={i}>
                   {/* When emoji starts a paragraph, lineHeight will break */}
                   {i === 0 ? <Text> </Text> : null}
-                  <Image
-                    transitionDuration={0}
-                    uri={emojis[emojiIndex].url}
-                    style={[styles.image]}
+                  <FastImage
+                    source={{ uri: emojis[emojiIndex].url }}
+                    style={styles.image}
                   />
                 </Text>
               )

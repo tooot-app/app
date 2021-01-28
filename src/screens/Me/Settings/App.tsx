@@ -12,10 +12,8 @@ import {
   getSettingsBrowser
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import prettyBytes from 'pretty-bytes'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { CacheManager } from 'react-native-expo-image-cache'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SettingsApp: React.FC = () => {
@@ -27,11 +25,6 @@ const SettingsApp: React.FC = () => {
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-
-  const [cacheSize, setCacheSize] = useState<number>()
-  useEffect(() => {
-    CacheManager.getCacheSize().then(size => setCacheSize(size))
-  }, [])
 
   return (
     <MenuContainer>
@@ -154,19 +147,6 @@ const SettingsApp: React.FC = () => {
             }
           )
         }
-      />
-      <MenuRow
-        title={t('content.cache.heading')}
-        content={cacheSize ? prettyBytes(cacheSize) : t('content.cache.empty')}
-        iconBack='ChevronRight'
-        onPress={async () => {
-          analytics('settings_cache_press', {
-            size: cacheSize ? prettyBytes(cacheSize) : 'empty'
-          })
-          await CacheManager.clearCache()
-          haptics('Success')
-          setCacheSize(0)
-        }}
       />
     </MenuContainer>
   )

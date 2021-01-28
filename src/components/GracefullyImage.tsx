@@ -1,80 +1,20 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { Surface } from 'gl-react-expo'
 import { Blurhash } from 'gl-react-blurhash'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
-  Image,
   ImageStyle,
   Pressable,
   StyleProp,
   StyleSheet,
-  View,
   ViewStyle
 } from 'react-native'
-import { Image as ImageCache } from 'react-native-expo-image-cache'
+import FastImage from 'react-native-fast-image'
 import { useTheme } from '@utils/styles/ThemeManager'
-
-type CancelPromise = ((reason?: Error) => void) | undefined
-interface ImageSizeOperation {
-  start: () => Promise<string>
-  cancel: CancelPromise
-}
-const getImageSize = ({
-  preview,
-  original,
-  remote
-}: {
-  preview?: string
-  original: string
-  remote?: string
-}): ImageSizeOperation => {
-  let cancel: CancelPromise
-  const start = (): Promise<string> =>
-    new Promise<string>((resolve, reject) => {
-      cancel = reject
-      Image.getSize(
-        preview || '',
-        () => {
-          cancel = undefined
-          resolve(preview!)
-        },
-        () => {
-          cancel = reject
-          Image.getSize(
-            original,
-            () => {
-              cancel = undefined
-              resolve(original)
-            },
-            () => {
-              cancel = reject
-              if (!remote) {
-                reject()
-              } else {
-                Image.getSize(
-                  remote,
-                  () => {
-                    cancel = undefined
-                    resolve(remote)
-                  },
-                  error => {
-                    reject(error)
-                  }
-                )
-              }
-            }
-          )
-        }
-      )
-    })
-
-  return { start, cancel }
-}
 
 export interface Props {
   hidden?: boolean
-  cache?: boolean
-  uri: { preview?: string; original?: string; remote?: string }
+  uri: { preview?: string; original: string; remote?: string }
   blurhash?: string
   dimension?: { width: number; height: number }
   onPress?: () => void
@@ -84,7 +24,6 @@ export interface Props {
 
 const GracefullyImage: React.FC<Props> = ({
   hidden = false,
-  cache = false,
   uri,
   blurhash,
   dimension,
@@ -93,68 +32,32 @@ const GracefullyImage: React.FC<Props> = ({
   imageStyle
 }) => {
   const { mode, theme } = useTheme()
-
-  const [imageVisible, setImageVisible] = useState<string>()
-
-  useEffect(() => {
-    let mounted = true
-    let cancel: CancelPromise
-    const sideEffect = async (): Promise<void> => {
-      try {
-        const prefetchImage = getImageSize(uri as { original: string })
-        cancel = prefetchImage.cancel
-        const res = await prefetchImage.start()
-        if (mounted) {
-          setImageVisible(res)
-        }
-        return
-      } catch (error) {
-        if (__DEV__) console.warn('Image', error)
-      }
-    }
-
-    if (uri.original) {
-      sideEffect()
-    }
-
-    return () => {
-      mounted = false
-      if (cancel) {
-        cancel()
-      }
-    }
-  }, [uri])
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   const children = useCallback(() => {
-    if (imageVisible && !hidden) {
-      if (cache) {
-        return (
-          <ImageCache uri={imageVisible} style={[styles.image, imageStyle]} />
-        )
-      } else {
-        return (
-          <Image
-            source={{ uri: imageVisible }}
-            style={[styles.image, imageStyle]}
-          />
-        )
-      }
-    } else if (blurhash) {
-      return (
-        <Surface
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            top: StyleConstants.Spacing.XS / 2,
-            left: StyleConstants.Spacing.XS / 2
-          }}
-        >
-          <Blurhash hash={blurhash} />
-        </Surface>
-      )
-    }
-  }, [hidden, mode, imageVisible])
+    return (
+      <>
+        <FastImage
+          source={{ uri: uri.preview || uri.original || uri.remote }}
+          style={[styles.image, imageStyle]}
+          onLoad={() => setImageLoaded(true)}
+        />
+        {blurhash && (hidden || !imageLoaded) ? (
+          <Surface
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              top: StyleConstants.Spacing.XS / 2,
+              left: StyleConstants.Spacing.XS / 2
+            }}
+          >
+            <Blurhash hash={blurhash} />
+          </Surface>
+        ) : null}
+      </>
+    )
+  }, [hidden, imageLoaded, mode, uri])
 
   return (
     <Pressable

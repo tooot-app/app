@@ -23,7 +23,6 @@ const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
 
   return (
     <GracefullyImage
-      cache
       onPress={onPress}
       uri={{ original: account.avatar_static }}
       dimension={{
