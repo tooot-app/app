@@ -4,10 +4,9 @@ import { Slider } from '@sharcoux/slider'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import analytics from '@components/analytics'
 
@@ -63,16 +62,15 @@ const AttachmentAudio: React.FC<Props> = ({
     >
       <View style={styles.overlay}>
         {sensitiveShown ? (
-          audio.blurhash && (
-            <Surface
+          audio.blurhash ? (
+            <Blurhash
+              blurhash={audio.blurhash}
               style={{
                 width: '100%',
                 height: '100%'
               }}
-            >
-              <Blurhash hash={audio.blurhash} />
-            </Surface>
-          )
+            />
+          ) : null
         ) : (
           <>
             {audio.preview_url && (

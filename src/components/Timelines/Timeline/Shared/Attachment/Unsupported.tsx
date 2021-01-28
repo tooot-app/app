@@ -3,11 +3,10 @@ import Button from '@components/Button'
 import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { Blurhash } from 'gl-react-blurhash'
-import { Surface } from 'gl-react-expo'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
+import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
@@ -34,15 +33,14 @@ const AttachmentUnsupported: React.FC<Props> = ({
       ]}
     >
       {attachment.blurhash ? (
-        <Surface
+        <Blurhash
+          blurhash={attachment.blurhash}
           style={{
             position: 'absolute',
             width: '100%',
             height: '100%'
           }}
-        >
-          <Blurhash hash={attachment.blurhash} />
-        </Surface>
+        />
       ) : null}
       {!sensitiveShown ? (
         <>

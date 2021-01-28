@@ -1,6 +1,4 @@
 import { StyleConstants } from '@utils/styles/constants'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
 import {
   ImageStyle,
@@ -9,6 +7,7 @@ import {
   StyleSheet,
   ViewStyle
 } from 'react-native'
+import { Blurhash } from 'react-native-blurhash'
 import FastImage from 'react-native-fast-image'
 import { useTheme } from '@utils/styles/ThemeManager'
 
@@ -43,7 +42,9 @@ const GracefullyImage: React.FC<Props> = ({
           onLoad={() => setImageLoaded(true)}
         />
         {blurhash && (hidden || !imageLoaded) ? (
-          <Surface
+          <Blurhash
+            decodeAsync
+            blurhash={blurhash}
             style={{
               width: '100%',
               height: '100%',
@@ -51,9 +52,7 @@ const GracefullyImage: React.FC<Props> = ({
               top: StyleConstants.Spacing.XS / 2,
               left: StyleConstants.Spacing.XS / 2
             }}
-          >
-            <Blurhash hash={blurhash} />
-          </Surface>
+          />
         ) : null}
       </>
     )

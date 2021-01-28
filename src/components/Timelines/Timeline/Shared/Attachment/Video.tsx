@@ -1,10 +1,9 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { Video } from 'expo-av'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
+import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import analytics from '@components/analytics'
 
@@ -85,14 +84,13 @@ const AttachmentVideo: React.FC<Props> = ({
       <Pressable style={styles.overlay}>
         {sensitiveShown ? (
           video.blurhash ? (
-            <Surface
+            <Blurhash
+              blurhash={video.blurhash}
               style={{
                 width: '100%',
                 height: '100%'
               }}
-            >
-              <Blurhash hash={video.blurhash} />
-            </Surface>
+            />
           ) : null
         ) : (
           <Button
