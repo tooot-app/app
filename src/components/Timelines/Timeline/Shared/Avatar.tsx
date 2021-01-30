@@ -13,12 +13,14 @@ export interface Props {
 
 const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   // Need to fix go back root
   const onPress = useCallback(() => {
-    analytics('timeline_shared_avatar_press', { page: queryKey[1].page })
-    queryKey && navigation.push('Screen-Shared-Account', { account })
+    analytics('timeline_shared_avatar_press', {
+      page: queryKey && queryKey[1].page
+    })
+    queryKey && navigation.push('Tab-Shared-Account', { account })
   }, [])
 
   return (

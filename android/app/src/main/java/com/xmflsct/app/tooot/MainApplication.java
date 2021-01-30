@@ -28,6 +28,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 
+  import com.facebook.react.bridge.JSIModulePackage; // <- react-native-reanimated-v2
+  import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- react-native-reanimated-v2
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
     new BasePackageList().getPackageList()
@@ -49,6 +52,11 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected String getJSMainModuleName() {
       return "index";
+    }
+
+    @Override // <- react-native-reanimated-v2
+    protected JSIModulePackage getJSIModulePackage() {
+      return new ReanimatedJSIModulePackage();
     }
 
     @Override

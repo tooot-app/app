@@ -8,8 +8,8 @@ import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 import RelationshipIncoming from '@root/components/Relationship/Incoming'
 import HeaderSharedMuted from './HeaderShared/Muted'
-import HeaderActions from './HeaderActions/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import ScreenActions from '@screens/Actions'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -28,7 +28,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({
         return <RelationshipIncoming id={notification.account.id} />
       default:
         return notification.status ? (
-          <HeaderActions queryKey={queryKey} status={notification.status} />
+          <ScreenActions queryKey={queryKey} status={notification.status} />
         ) : null
     }
   }, [notification.type])

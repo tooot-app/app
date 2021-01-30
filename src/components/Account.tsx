@@ -21,12 +21,12 @@ const ComponentAccount: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })
-    navigation.push('Screen-Shared-Account', { account })
+    navigation.push('Tab-Shared-Account', { account })
   }, [])
 
   return (

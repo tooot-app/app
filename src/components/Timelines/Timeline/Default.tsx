@@ -36,7 +36,7 @@ const TimelineDefault: React.FC<Props> = ({
 }) => {
   const localAccount = useSelector(getLocalAccount)
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
 
   let actualStatus = item.reblog ? item.reblog : item
@@ -47,7 +47,7 @@ const TimelineDefault: React.FC<Props> = ({
     })
     !disableOnPress &&
       !highlighted &&
-      navigation.push('Screen-Shared-Toot', {
+      navigation.push('Tab-Shared-Toot', {
         toot: actualStatus
       })
   }, [])

@@ -58,7 +58,7 @@ const renderNode = ({
                 analytics('status_hashtag_press')
                 !disableDetails &&
                   differentTag &&
-                  navigation.push('Screen-Shared-Hashtag', {
+                  navigation.push('Tab-Shared-Hashtag', {
                     hashtag: tag[1] || tag[2]
                   })
               }}
@@ -86,7 +86,7 @@ const renderNode = ({
                 accountIndex !== -1 &&
                   !disableDetails &&
                   differentAccount &&
-                  navigation.push('Screen-Shared-Account', {
+                  navigation.push('Tab-Shared-Account', {
                     account: mentions[accountIndex]
                   })
               }}
@@ -115,7 +115,7 @@ const renderNode = ({
               analytics('status_link_press')
               !disableDetails && !shouldBeTag
                 ? await openLink(href)
-                : navigation.push('Screen-Shared-Hashtag', {
+                : navigation.push('Tab-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })
             }}

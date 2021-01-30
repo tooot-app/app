@@ -104,7 +104,7 @@ const TimelineActions: React.FC<Props> = ({
       page: queryKey[1].page,
       count: status.replies_count
     })
-    navigation.navigate('Screen-Shared-Compose', {
+    navigation.navigate('Screen-Compose', {
       type: 'reply',
       incomingStatus: status,
       accts,

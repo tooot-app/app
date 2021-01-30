@@ -19,12 +19,12 @@ const ComponentHashtag: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })
-    navigation.push('Screen-Shared-Hashtag', { hashtag: hashtag.name })
+    navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
   }, [])
 
   return (

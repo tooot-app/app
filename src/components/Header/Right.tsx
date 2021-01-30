@@ -9,6 +9,7 @@ import { Chase } from 'react-native-animated-spinkit'
 export interface Props {
   type?: 'icon' | 'text'
   content: string
+  native?: boolean
 
   loading?: boolean
   disabled?: boolean
@@ -19,6 +20,7 @@ export interface Props {
 const HeaderRight: React.FC<Props> = ({
   type = 'icon',
   content,
+  native = true,
   loading,
   disabled,
   onPress
@@ -88,7 +90,11 @@ const HeaderRight: React.FC<Props> = ({
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(type === 'icon' && { height: 44, width: 44, marginRight: -9 })
+          ...(type === 'icon' && {
+            height: 44,
+            width: 44,
+            marginRight: native ? -9 : 9
+          })
         }
       ]}
     />

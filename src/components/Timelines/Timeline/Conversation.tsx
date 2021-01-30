@@ -76,13 +76,13 @@ const TimelineConversation: React.FC<Props> = ({
   })
 
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   const onPress = useCallback(() => {
     analytics('timeline_conversation_press')
     if (conversation.last_status) {
       conversation.unread && mutate()
-      navigation.push('Screen-Shared-Toot', {
+      navigation.push('Tab-Shared-Toot', {
         toot: conversation.last_status
       })
     }

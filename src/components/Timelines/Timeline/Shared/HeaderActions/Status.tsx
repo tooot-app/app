@@ -106,7 +106,7 @@ const HeaderActionsStatus: React.FC<Props> = ({
                     id: status.id
                   })
                   if (res.id) {
-                    navigation.navigate('Screen-Shared-Compose', {
+                    navigation.navigate('Screen-Compose', {
                       type: 'edit',
                       incomingStatus: res,
                       queryKey

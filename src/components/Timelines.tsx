@@ -2,7 +2,7 @@ import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
-import sharedScreens from '@screens/Shared/sharedScreens'
+import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
@@ -14,7 +14,7 @@ import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
 import analytics from './analytics'
 
-const Stack = createNativeStackNavigator<Nav.RemoteStackParamList>()
+const Stack = createNativeStackNavigator<Nav.TabPublicStackParamList>()
 
 const Timelines: React.FC = () => {
   const { t, i18n } = useTranslation()
@@ -28,7 +28,7 @@ const Timelines: React.FC = () => {
 
   const onPressSearch = useCallback(() => {
     analytics('search_tap', { page: pages[segment].page })
-    navigation.navigate('Screen-Public', { screen: 'Screen-Shared-Search' })
+    navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })
   }, [])
 
   const routes = pages.map(p => ({ key: p.page }))

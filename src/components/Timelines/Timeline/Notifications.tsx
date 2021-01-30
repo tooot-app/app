@@ -29,7 +29,7 @@ const TimelineNotifications: React.FC<Props> = ({
 }) => {
   const localAccount = useSelector(getLocalAccount)
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   const actualAccount = notification.status
     ? notification.status.account
@@ -38,7 +38,7 @@ const TimelineNotifications: React.FC<Props> = ({
   const onPress = useCallback(() => {
     analytics('timeline_notification_press')
     notification.status &&
-      navigation.push('Screen-Shared-Toot', {
+      navigation.push('Tab-Shared-Toot', {
         toot: notification.status
       })
   }, [])

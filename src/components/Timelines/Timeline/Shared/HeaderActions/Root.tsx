@@ -1,5 +1,5 @@
 import analytics from '@components/analytics'
-import BottomSheet from '@components/BottomSheet'
+import BottomSheet from '@screens/Tabs/Shared/node_modules/@screens/Actions/BottomSheet'
 import Icon from '@components/Icon'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount, getLocalUrl } from '@utils/slices/instancesSlice'

@@ -33,6 +33,7 @@ const AttachmentImage: React.FC<Props> = ({
         original: image.url,
         remote: image.remote_url
       }}
+      sharedElement={image.url}
       blurhash={image.blurhash}
       onPress={onPress}
       style={[

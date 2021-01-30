@@ -23,7 +23,7 @@ const TimelineActioned: React.FC<Props> = ({
   const { t } = useTranslation('componentTimeline')
   const { theme } = useTheme()
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   const name = account.display_name || account.username
   const iconColor = theme.primary
@@ -34,7 +34,7 @@ const TimelineActioned: React.FC<Props> = ({
 
   const onPress = useCallback(() => {
     analytics('timeline_shared_actioned_press', { action })
-    navigation.push('Screen-Shared-Account', { account })
+    navigation.push('Tab-Shared-Account', { account })
   }, [])
 
   const children = useMemo(() => {

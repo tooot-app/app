@@ -230,12 +230,6 @@ const ComponentInstance: React.FC<Props> = ({
               content={instanceQuery.data?.title || undefined}
               potentialWidth={2}
             />
-            <InstanceInfo
-              visible={instanceQuery.data?.short_description !== undefined}
-              header={t('server.information.description.heading')}
-              content={instanceQuery.data?.short_description || undefined}
-              potentialLines={5}
-            />
             <View style={styles.instanceStats}>
               <InstanceInfo
                 style={styles.stat1}

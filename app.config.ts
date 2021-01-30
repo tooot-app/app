@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 export default (): ExpoConfig => ({
   name: 'tooot',
-  description: 'tooot for mastodon',
+  description: 'tooot for Mastodon',
   slug: 'tooot',
   privacy: 'hidden',
   sdkVersion: '40.0.0',

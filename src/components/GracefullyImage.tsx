@@ -9,9 +9,11 @@ import {
 } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import FastImage from 'react-native-fast-image'
+import { SharedElement } from 'react-navigation-shared-element'
 import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
+  sharedElement?: string
   hidden?: boolean
   uri: { preview?: string; original: string; remote?: string }
   blurhash?: string
@@ -22,6 +24,7 @@ export interface Props {
 }
 
 const GracefullyImage: React.FC<Props> = ({
+  sharedElement,
   hidden = false,
   uri,
   blurhash,
@@ -36,11 +39,21 @@ const GracefullyImage: React.FC<Props> = ({
   const children = useCallback(() => {
     return (
       <>
-        <FastImage
-          source={{ uri: uri.preview || uri.original || uri.remote }}
-          style={[styles.image, imageStyle]}
-          onLoad={() => setImageLoaded(true)}
-        />
+        {sharedElement ? (
+          <SharedElement id={`image.${sharedElement}`} style={[styles.image]}>
+            <FastImage
+              source={{ uri: uri.preview || uri.original || uri.remote }}
+              style={[styles.image, imageStyle]}
+              onLoad={() => setImageLoaded(true)}
+            />
+          </SharedElement>
+        ) : (
+          <FastImage
+            source={{ uri: uri.preview || uri.original || uri.remote }}
+            style={[styles.image, imageStyle]}
+            onLoad={() => setImageLoaded(true)}
+          />
+        )}
         {blurhash && (hidden || !imageLoaded) ? (
           <Blurhash
             decodeAsync

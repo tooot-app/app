@@ -40,7 +40,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
   })[] = []
   const navigation = useNavigation()
   const navigateToImagesViewer = (imageIndex: number) =>
-    navigation.navigate('Screen-Shared-ImagesViewer', {
+    navigation.navigate('Screen-ImagesViewer', {
       imageUrls,
       imageIndex
     })

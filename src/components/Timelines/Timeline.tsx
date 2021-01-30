@@ -18,7 +18,6 @@ import TimelineConversation from './Timeline/Conversation'
 import TimelineDefault from './Timeline/Default'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineEnd from './Timeline/End'
-import TimelineHeader from './Timeline/Header'
 import TimelineNotifications from './Timeline/Notifications'
 
 export interface Props {
@@ -155,7 +154,6 @@ const Timeline: React.FC<Props> = ({
     () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
   )
-  const ListHeaderComponent = useCallback(() => <TimelineHeader />, [])
   const ListFooterComponent = useCallback(
     () => <TimelineEnd hasNextPage={!disableInfinity ? hasNextPage : false} />,
     [hasNextPage]

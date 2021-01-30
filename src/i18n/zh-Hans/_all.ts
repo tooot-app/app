@@ -18,6 +18,7 @@ export default {
 
   sharedAccount: require('./screens/sharedAccount').default,
   sharedAnnouncements: require('./screens/sharedAnnouncements').default,
+  sharedAttachments: require('./screens/sharedAttachments').default,
   sharedCompose: require('./screens/sharedCompose').default,
   sharedRelationships: require('./screens/sharedRelationships').default,
   sharedSearch: require('./screens/sharedSearch').default,
