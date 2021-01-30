@@ -122,7 +122,7 @@ const ScreenActions = React.memo(
                   />
                 )}
 
-                {sameAccount && (
+                {sameAccount && status && (
                   <ActionsStatus
                     navigation={navigation}
                     queryKey={queryKey}

@@ -212,9 +212,6 @@ const Timeline: React.FC<Props> = ({
       ListEmptyComponent={flItemEmptyComponent}
       {...(!disableRefresh && { refreshControl })}
       ItemSeparatorComponent={ItemSeparatorComponent}
-      {...(queryKey &&
-        queryKey[1].page === 'RemotePublic' &&
-        !publicRemoteNotice && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
       maintainVisibleContentPosition={{
         minIndexForVisible: 0,

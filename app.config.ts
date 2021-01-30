@@ -36,15 +36,6 @@ export default (): ExpoConfig => ({
       }
     ]
   },
-  ios: {
-    buildNumber: '4',
-    config: { usesNonExemptEncryption: false },
-    bundleIdentifier: 'com.xmflsct.app.tooot',
-    googleServicesFile: './configs/GoogleService-Info.plist',
-    infoPlist: {
-      CFBundleAllowMixedLocalizations: true
-    }
-  },
   locales: {
     en: './src/i18n/en/system.json',
     zh: './src/i18n/zh-Hans/system.json'
@@ -54,18 +45,5 @@ export default (): ExpoConfig => ({
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']
-  },
-  web: {
-    config: {
-      firebase: {
-        apiKey: 'AIzaSyAnvo0jyD1WB0tv2FLenz-CSDS-RgaWWR4',
-        authDomain: 'xmflsct-mastodon-app.firebaseapp.com',
-        projectId: 'xmflsct-mastodon-app',
-        storageBucket: 'xmflsct-mastodon-app.appspot.com',
-        messagingSenderId: '661638997772',
-        appId: '1:661638997772:web:1e7aab28be7dc06d9f8b29',
-        measurementId: 'G-3J0FS8WV5J'
-      }
-    }
   }
 })
