@@ -1,5 +1,6 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
+import haptics from '@components/haptics'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -48,6 +49,7 @@ const AccountButton: React.FC<Props> = ({
         disabled ? ' ✓' : ''
       }`}
       onPress={() => {
+        haptics('Light')
         analytics('switch_existing_press')
         dispatch(localUpdateActiveIndex(index))
         queryClient.clear()
@@ -77,14 +79,21 @@ const ScreenMeSwitchRoot: React.FC = () => {
           </Text>
           <View style={styles.accountButtons}>
             {localInstances.length
-              ? localInstances.map((instance, index) => (
-                  <AccountButton
-                    key={index}
-                    index={index}
-                    instance={instance}
-                    disabled={localActiveIndex === index}
-                  />
-                ))
+              ? localInstances
+                  .slice()
+                  .sort((a, b) =>
+                    `${a.uri}${a.account.acct}`.localeCompare(
+                      `${b.uri}${b.account.acct}`
+                    )
+                  )
+                  .map((instance, index) => (
+                    <AccountButton
+                      key={index}
+                      index={index}
+                      instance={instance}
+                      disabled={localActiveIndex === index}
+                    />
+                  ))
               : null}
           </View>
         </View>

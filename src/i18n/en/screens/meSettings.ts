@@ -40,6 +40,9 @@ export default {
     review: {
       heading: 'Review tooot'
     },
+    contact: {
+      heading: 'Contact tooot'
+    },
     analytics: {
       heading: 'Help us improve',
       description: 'Collecting only non-user relative usage'

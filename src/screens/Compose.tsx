@@ -229,7 +229,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
 
   return (
     <KeyboardAvoidingView
-      style={styles.base}
+      style={[styles.base, {backgroundColor: 'red'}]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <SafeAreaView
@@ -237,14 +237,17 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         edges={hasKeyboard ? ['top'] : ['top', 'bottom']}
       >
         <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-          <Stack.Navigator screenOptions={{ headerTopInsetEnabled: false }}>
+          <Stack.Navigator
+            screenOptions={{ headerTopInsetEnabled: false }}
+            initialRouteName='Screen-Compose-Root'
+          >
             <Stack.Screen
-              name='Tab-Compose-Root'
+              name='Screen-Compose-Root'
               component={ComposeRoot}
               options={{ headerLeft, headerCenter, headerRight }}
             />
             <Stack.Screen
-              name='Tab-Compose-EditAttachment'
+              name='Screen-Compose-EditAttachment'
               component={ComposeEditAttachment}
               options={{ stackPresentation: 'modal', headerShown: false }}
             />

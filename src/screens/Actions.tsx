@@ -2,7 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { getLocalAccount, getLocalUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import {
   PanGestureHandler,
@@ -31,20 +31,29 @@ export type ScreenAccountProp = StackScreenProps<
 >
 
 const ScreenActions = React.memo(
-  ({
-    route: {
-      params: { queryKey, status, url, type }
-    },
-    navigation
-  }: ScreenAccountProp) => {
+  ({ route: { params }, navigation }: ScreenAccountProp) => {
     const localAccount = useSelector(getLocalAccount)
-    const sameAccount = localAccount?.id === status.account.id
+    let sameAccount = false
+    switch (params.type) {
+      case 'status':
+        sameAccount = localAccount?.id === params.status.account.id
+        break
+      case 'account':
+        sameAccount = localAccount?.id === params.account.id
+        break
+    }
 
     const localDomain = useSelector(getLocalUrl)
-    const statusDomain = status.uri
-      ? status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
-      : ''
-    const sameDomain = localDomain === statusDomain
+    let sameDomain = true
+    let statusDomain: string
+    switch (params.type) {
+      case 'status':
+        statusDomain = params.status.uri
+          ? params.status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+          : ''
+        sameDomain = localDomain === statusDomain
+        break
+    }
 
     const { theme } = useTheme()
     const insets = useSafeAreaInsets()
@@ -82,6 +91,56 @@ const ScreenActions = React.memo(
       }
     })
 
+    const actions = useMemo(() => {
+      switch (params.type) {
+        case 'status':
+          return (
+            <>
+              {!sameAccount && (
+                <ActionsAccount
+                  queryKey={params.queryKey}
+                  account={params.status.account}
+                  dismiss={dismiss}
+                />
+              )}
+              {sameAccount && params.status && (
+                <ActionsStatus
+                  navigation={navigation}
+                  queryKey={params.queryKey}
+                  status={params.status}
+                  dismiss={dismiss}
+                />
+              )}
+              {!sameDomain && statusDomain && (
+                <ActionsDomain
+                  queryKey={params.queryKey}
+                  domain={statusDomain}
+                  dismiss={dismiss}
+                />
+              )}
+              <ActionsShare
+                url={params.status.url || params.status.uri}
+                type={params.type}
+                dismiss={dismiss}
+              />
+            </>
+          )
+        case 'account':
+          return (
+            <>
+              {!sameAccount && (
+                <ActionsAccount account={params.account} dismiss={dismiss} />
+              )}
+              <ActionsShare
+                url={params.account.url}
+                type={params.type}
+                dismiss={dismiss}
+              />
+            </>
+          )
+      }
+    }, [])
+
     return (
       <Animated.View style={{ flex: 1 }}>
         <TapGestureHandler
@@ -114,34 +173,7 @@ const ScreenActions = React.memo(
                     { backgroundColor: theme.primaryOverlay }
                   ]}
                 />
-                {!sameAccount && (
-                  <ActionsAccount
-                    queryKey={queryKey}
-                    account={status.account}
-                    dismiss={dismiss}
-                  />
-                )}
-
-                {sameAccount && status && (
-                  <ActionsStatus
-                    navigation={navigation}
-                    queryKey={queryKey}
-                    status={status}
-                    dismiss={dismiss}
-                  />
-                )}
-
-                {!sameDomain && (
-                  <ActionsDomain
-                    queryKey={queryKey}
-                    domain={statusDomain}
-                    dismiss={dismiss}
-                  />
-                )}
-
-                {url && type ? (
-                  <ActionsShare url={url} type={type} dismiss={dismiss} />
-                ) : null}
+                {actions}
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>

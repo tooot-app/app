@@ -8,15 +8,23 @@ const Collections: React.FC = () => {
   const { t, i18n } = useTranslation('meRoot')
   const navigation = useNavigation()
 
-  const { data, isFetching } = useAnnouncementQuery({ showAll: true })
+  const { data, isFetching } = useAnnouncementQuery({
+    showAll: true
+  })
 
   const announcementContent = useMemo(() => {
     if (data) {
-      const amount = data.filter(announcement => !announcement.read).length
-      if (amount) {
-        return t('content.collections.announcements.content.unread', { amount })
+      if (data.length === 0) {
+        return t('content.collections.announcements.content.empty')
       } else {
-        return t('content.collections.announcements.content.read')
+        const amount = data.filter(announcement => !announcement.read).length
+        if (amount) {
+          return t('content.collections.announcements.content.unread', {
+            amount
+          })
+        } else {
+          return t('content.collections.announcements.content.read')
+        }
       }
     }
   }, [data, i18n.language])
@@ -49,7 +57,7 @@ const Collections: React.FC = () => {
       />
       <MenuRow
         iconFront='Clipboard'
-        iconBack='ChevronRight'
+        iconBack={data && data.length === 0 ? undefined : 'ChevronRight'}
         title={t('content.collections.announcements.heading')}
         content={announcementContent}
         loading={isFetching}

@@ -6,6 +6,7 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import Constants from 'expo-constants'
 import * as Linking from 'expo-linking'
 import * as StoreReview from 'expo-store-review'
 import * as WebBrowser from 'expo-web-browser'
@@ -41,19 +42,30 @@ const SettingsTooot: React.FC = () => {
           Linking.openURL('https://www.patreon.com/xmflsct')
         }}
       />
+      {__DEV__ ||
+      ['production', 'development'].some(channel =>
+        Constants.manifest.releaseChannel?.includes(channel)
+      ) ? (
+        <MenuRow
+          title={t('content.review.heading')}
+          content={
+            <Icon
+              name='Star'
+              size={StyleConstants.Font.Size.M}
+              color='#FF9500'
+            />
+          }
+          iconBack='ChevronRight'
+          onPress={() => {
+            analytics('settings_review_press')
+            StoreReview.isAvailableAsync().then(() =>
+              StoreReview.requestReview()
+            )
+          }}
+        />
+      ) : null}
       <MenuRow
-        title={t('content.review.heading')}
-        content={
-          <Icon name='Star' size={StyleConstants.Font.Size.M} color='#FF9500' />
-        }
-        iconBack='ChevronRight'
-        onPress={() => {
-          analytics('settings_review_press')
-          StoreReview.isAvailableAsync().then(() => StoreReview.requestReview())
-        }}
-      />
-      <MenuRow
-        title={'联系 tooot'}
+        title={t('content.contact.heading')}
         loading={isLoading}
         content={
           <Icon

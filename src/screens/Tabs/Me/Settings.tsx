@@ -13,7 +13,10 @@ const ScreenMeSettings: React.FC = () => {
       <SettingsTooot />
       <SettingsAnalytics />
 
-      {__DEV__ || Constants.manifest.releaseChannel?.includes('testing') ? (
+      {__DEV__ ||
+      ['development'].some(channel =>
+        Constants.manifest.releaseChannel?.includes(channel)
+      ) ? (
         <SettingsDev />
       ) : null}
     </ScrollView>

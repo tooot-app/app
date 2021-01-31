@@ -200,7 +200,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             }}
             sharedElements={route => {
               const { imageIndex, imageUrls } = route.params
-              return [{ id: `image.${imageUrls[imageIndex].url}`, debug: true }]
+              return [{ id: `image.${imageUrls[imageIndex].url}` }]
             }}
           />
         </Stack.Navigator>

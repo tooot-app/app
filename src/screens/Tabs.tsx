@@ -26,7 +26,7 @@ import TabPublic from './Tabs/Public'
 export type ScreenTabsParamList = {
   'Tab-Local': NavigatorScreenParams<Nav.TabLocalStackParamList>
   'Tab-Public': NavigatorScreenParams<Nav.TabPublicStackParamList>
-  'Tab-Compose': NavigatorScreenParams<Nav.TabComposeStackParamList>
+  'Tab-Compose': NavigatorScreenParams<Nav.ScreenComposeStackParamList>
   'Tab-Notifications': NavigatorScreenParams<Nav.TabNotificationsStackParamList>
   'Tab-Me': NavigatorScreenParams<Nav.TabMeStackParamList>
 }

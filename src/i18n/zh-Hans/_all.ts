@@ -28,5 +28,7 @@ export default {
   componentParse: require('./components/parse').default,
   componentRelationship: require('./components/relationship').default,
   componentRelativeTime: require('./components/relativeTime').default,
-  componentTimeline: require('./components/timeline').default
+  componentTimeline: require('./components/timeline').default,
+
+  screenImageViewer: require('./screens/screenImageViewer').default
 }

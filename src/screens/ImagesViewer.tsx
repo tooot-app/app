@@ -1,14 +1,24 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
+import CameraRoll from '@react-native-community/cameraroll'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useLayoutEffect, useState } from 'react'
-import { Platform, Share, StyleSheet, Text } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import {
+  PermissionsAndroid,
+  Platform,
+  Share,
+  StyleSheet,
+  Text
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { SharedElement } from 'react-navigation-shared-element'
+import { toast } from '@components/toast'
 
 export type ScreenImagesViewerProp = StackScreenProps<
   Nav.RootStackParamList,
@@ -27,14 +37,70 @@ const ScreenImagesViewer = React.memo(
       findIndex(imageUrls, ['imageIndex', imageIndex])
     )
 
-    const onPress = useCallback(() => {
-      analytics('imageviewer_share_press')
-      switch (Platform.OS) {
-        case 'ios':
-          return Share.share({ url: imageUrls[currentIndex].url })
-        case 'android':
-          return Share.share({ message: imageUrls[currentIndex].url })
+    const hasAndroidPermission = async () => {
+      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+
+      const hasPermission = await PermissionsAndroid.check(permission)
+      if (hasPermission) {
+        return true
       }
+
+      const status = await PermissionsAndroid.request(permission)
+      return status === 'granted'
+    }
+    const saveImage = async () => {
+      if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+        return
+      }
+      CameraRoll.save(
+        imageUrls[imageIndex].originUrl ||
+          imageUrls[imageIndex].remote_url ||
+          imageUrls[imageIndex].preview_url
+      )
+        .then(() =>
+          toast({ type: 'success', message: t('content.save.success') })
+        )
+        .catch(() =>
+          toast({
+            type: 'error',
+            message: t('common:toastMessage.error.message', {
+              function: t('content.save.function')
+            })
+          })
+        )
+    }
+
+    const { t } = useTranslation('screenImageViewer')
+    const { showActionSheetWithOptions } = useActionSheet()
+    const onPress = useCallback(() => {
+      analytics('imageviewer_more_press')
+      showActionSheetWithOptions(
+        {
+          options: [
+            t('content.options.save'),
+            t('content.options.share'),
+            t('content.options.cancel')
+          ],
+          cancelButtonIndex: 2
+        },
+        async buttonIndex => {
+          switch (buttonIndex) {
+            case 0:
+              analytics('imageviewer_more_save_press')
+              saveImage()
+              break
+            case 1:
+              analytics('imageviewer_more_share_press')
+              switch (Platform.OS) {
+                case 'ios':
+                  return Share.share({ url: imageUrls[currentIndex].url })
+                case 'android':
+                  return Share.share({ message: imageUrls[currentIndex].url })
+              }
+              break
+          }
+        }
+      )
     }, [currentIndex])
 
     useLayoutEffect(
@@ -48,7 +114,11 @@ const ScreenImagesViewer = React.memo(
             </Text>
           ),
           headerRight: () => (
-            <HeaderRight content='Share' native={false} onPress={onPress} />
+            <HeaderRight
+              content='MoreHorizontal'
+              native={false}
+              onPress={onPress}
+            />
           )
         }),
       [currentIndex]
@@ -77,6 +147,7 @@ const ScreenImagesViewer = React.memo(
         style={{ flex: 1 }}
         onChange={index => index !== undefined && setCurrentIndex(index)}
         renderImage={renderImage}
+        onLongPress={saveImage}
       />
     )
   },

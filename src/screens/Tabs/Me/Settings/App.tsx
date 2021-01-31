@@ -25,7 +25,7 @@ const SettingsApp: React.FC = () => {
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-
+  console.log(settingsLanguage)
   return (
     <MenuContainer>
       <MenuRow
@@ -37,7 +37,9 @@ const SettingsApp: React.FC = () => {
             i18n.services.resourceStore.data
           )
           const options = availableLanguages
-            .map(language => t(`content.language.options.${language}`))
+            .map(language => {
+              return t(`content.language.options.${language}`)
+            })
             .concat(t('content.language.options.cancel'))
 
           showActionSheetWithOptions(
@@ -47,7 +49,7 @@ const SettingsApp: React.FC = () => {
               cancelButtonIndex: options.length - 1
             },
             buttonIndex => {
-              if (buttonIndex < options.length) {
+              if (buttonIndex < options.length - 1) {
                 analytics('settings_language_press', {
                   current: i18n.language,
                   new: availableLanguages[buttonIndex]

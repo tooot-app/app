@@ -9,12 +9,16 @@ interface IImageInfo {
 declare namespace Nav {
   type RootStackParamList = {
     'Screen-Tabs': undefined
-    'Screen-Actions': {
-      queryKey: QueryKeyTimeline
-      status: Mastodon.Status
-      url?: string
-      type?: 'status' | 'account'
-    }
+    'Screen-Actions':
+      | {
+          type: 'status'
+          queryKey: QueryKeyTimeline
+          status: Mastodon.Status
+        }
+      | {
+          type: 'account'
+          account: Mastodon.Account
+        }
     'Screen-Announcements': { showAll: boolean }
     'Screen-Compose':
       | {
@@ -61,6 +65,11 @@ declare namespace Nav {
     }
   }
 
+  type ScreenComposeStackParamList = {
+    'Screen-Compose-Root': undefined
+    'Screen-Compose-EditAttachment': { index: number }
+  }
+
   type ScreenTabsStackParamList = {
     'Tab-Local': undefined
     'Tab-Public': undefined
@@ -94,11 +103,6 @@ declare namespace Nav {
   type TabPublicStackParamList = {
     'Tab-Public-Root': undefined
   } & TabSharedStackParamList
-
-  type TabComposeStackParamList = {
-    'Tab-Compose-Root': undefined
-    'Tab-Compose-EditAttachment': unknown
-  }
 
   type TabNotificationsStackParamList = {
     'Tab-Notifications-Root': undefined

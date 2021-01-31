@@ -1,0 +1,82 @@
+$ExpoSDK = '40.0.0'
+$ExpoRelease = '40'
+
+fastlane_version '2.172.0'
+
+platform :ios do
+  desc 'Build and deploy'
+  private_lane :build do |options|
+    branch = 'RELEASE-TYPE'.gsub('RELEASE', $ExpoRelease).gsub('TYPE', options[:type])
+
+    case options[:type]
+    when 'staging', 'production'
+      ensure_git_branch(
+        branch: branch
+      )
+      ensure_git_status_clean
+      build_number = Time.new.strftime('%y%m%d%k')
+      increment_build_number build_number: build_number
+    end
+
+    match(
+      type: options[:type],
+      readonly: true
+    )
+
+    set_info_plist_value(
+      path: './ios/tooot/Supporting/Expo.plist',
+      key: 'EXUpdatesSDKVersion',
+      value: $ExpoSDK
+    )
+    set_info_plist_value(
+      path: './ios/tooot/Supporting/Expo.plist',
+      key: 'EXUpdatesReleaseChannel',
+      value: branch
+    )
+
+    case options[:type]
+    when 'development'
+      build_ios_app(
+        scheme: 'tooot',
+        silent: true,
+        include_bitcode: true,
+        workspace: './ios/tooot.xcworkspace',
+        output_directory: './build/ios',
+        output_name: 'development',
+        export_method: 'development'
+      )
+      install_on_device(
+        skip_wifi: true,
+        ipa: './build/ios/development.ipa'
+      )
+    when 'staging'
+      build_ios_app(
+        scheme: 'tooot',
+        workspace: './ios/tooot.xcworkspace'
+      )
+      upload_to_testflight(
+        api_key: '{"key_id": "KEY_ID", "issuer_id": "ISSUER_ID", "key_filepath": "appstore.p8"}'.gsub('KEY_ID', ENV['APP_STORE_KEY_ID']).gsub('ISSUER_ID', ENV['APP_STORE_ISSUER_ID']),
+        skip_submission: true
+      )
+    end
+  end
+
+  desc 'Build development to phone'
+  lane :development do
+    build(type: 'development')
+  end
+
+  desc 'Build staging to TestFlight'
+  lane :staging do
+    build(type: 'staging')
+  end
+
+  desc 'Build product to App Store'
+  lane :production do
+    build(type: 'production')
+  end
+end
+
+platform :android do
+  # Android Lanes
+end

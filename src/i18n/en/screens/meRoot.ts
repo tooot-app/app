@@ -9,7 +9,8 @@ export default {
         heading: '$t(sharedAnnouncements:heading)',
         content: {
           unread: '{{amount}} unread',
-          read: 'All read'
+          read: 'All read',
+          empty: 'None'
         }
       }
     },

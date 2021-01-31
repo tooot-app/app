@@ -1,21 +1,11 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
-import HeaderActionsAccount from '@components/Timelines/Timeline/Shared/HeaderActions/Account'
-import HeaderActionsShare from '@components/Timelines/Timeline/Shared/HeaderActions/Share'
 import { useAccountQuery } from '@utils/queryHooks/account'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
 import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
@@ -33,7 +23,6 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
 }) => {
   const { theme } = useTheme()
 
-  const localAccount = useSelector(getLocalAccount)
   const { data } = useAccountQuery({ id: account.id })
 
   const scrollY = useSharedValue(0)
@@ -42,7 +31,6 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
     accountInitialState
   )
 
-  const [modalVisible, setBottomSheetVisible] = useState(false)
   useEffect(() => {
     const updateHeaderRight = () =>
       navigation.setOptions({
@@ -53,7 +41,10 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
               analytics('bottomsheet_open_press', {
                 page: 'account'
               })
-              setBottomSheetVisible(true)
+              navigation.navigate('Screen-Actions', {
+                type: 'account',
+                account
+              })
             }}
           />
         )
@@ -89,25 +80,6 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
           ListHeaderComponent
         }}
       />
-
-      {/* <BottomSheet
-        visible={modalVisible}
-        handleDismiss={() => setBottomSheetVisible(false)}
-      >
-        添加到列表
-        {localAccount?.id !== account.id && (
-          <HeaderActionsAccount
-            account={account}
-            setBottomSheetVisible={setBottomSheetVisible}
-          />
-        )}
-
-        <HeaderActionsShare
-          url={account.url}
-          type='account'
-          setBottomSheetVisible={setBottomSheetVisible}
-        />
-      </BottomSheet> */}
     </AccountContext.Provider>
   )
 }

@@ -43,4 +43,5 @@
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
   </application>
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <application android:requestLegacyExternalStorage="true"/>
 </manifest>

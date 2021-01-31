@@ -66,7 +66,7 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
 const styles = StyleSheet.create({
   base: {
     borderRadius: 0,
-    marginTop: StyleConstants.Spacing.M,
+    marginTop: StyleConstants.Spacing.S,
     marginBottom: StyleConstants.Spacing.XS
   },
   moved: {

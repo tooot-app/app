@@ -1,8 +1,8 @@
-name: Publish testing
+name: Publish development
 on:
   push:
     branches:
-      - '*-testing'
+      - '*-development'
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -27,5 +27,5 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_DEPLOY_ENV: testing
+          SENTRY_DEPLOY_ENV: development
         run: expo publish --release-channel=${GITHUB_REF#refs/heads/}

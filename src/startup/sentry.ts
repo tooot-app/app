@@ -8,7 +8,11 @@ const sentry = () => {
     environment: Constants.manifest.extra.sentryEnv,
     dsn: Constants.manifest.extra.sentryDSN,
     enableInExpoDevelopment: false,
-    debug: __DEV__
+    debug:
+      __DEV__ ||
+      ['development'].some(channel =>
+        Constants.manifest.releaseChannel?.includes(channel)
+      )
   })
 }
 

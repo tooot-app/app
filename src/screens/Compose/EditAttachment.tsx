@@ -2,6 +2,7 @@ import client from '@api/client'
 import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, {
   useCallback,
   useContext,
@@ -18,16 +19,12 @@ import ComposeContext from './utils/createContext'
 
 const Stack = createNativeStackNavigator()
 
-export interface Props {
-  route: {
-    params: {
-      index: number
-    }
-  }
-  navigation: any
-}
+export type ScreenComposeEditAttachmentProp = StackScreenProps<
+  Nav.ScreenComposeStackParamList,
+  'Screen-Compose-EditAttachment'
+>
 
-const ComposeEditAttachment: React.FC<Props> = ({
+const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   route: {
     params: { index }
   },

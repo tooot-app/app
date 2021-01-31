@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect } from 'react'
 import {
@@ -29,6 +28,8 @@ const AccountAttachments = React.memo(
     >()
     const { theme } = useTheme()
 
+    const DISPLAY_AMOUNT = 6
+
     const width =
       (Dimensions.get('screen').width -
         StyleConstants.Spacing.Global.PagePadding * 2) /
@@ -38,7 +39,7 @@ const AccountAttachments = React.memo(
       page: 'Account_Attachments' as 'Account_Attachments',
       account: account?.id
     }
-    const { data, refetch } = useTimelineQuery({
+    const { data, refetch } = useTimelineQuery<Mastodon.Status[]>({
       ...queryKeyParams,
       options: { enabled: false }
     })
@@ -48,18 +49,16 @@ const AccountAttachments = React.memo(
       }
     }, [account])
 
-    const flattenData = (data?.pages
-      ? data.pages.flatMap(d => [...d])
-      : []) as Mastodon.Status[]
-    useEffect(() => {
-      if (flattenData.length) {
-        layoutAnimation()
-      }
-    }, [flattenData.length])
+    const flattenData = data?.pages
+      ? data.pages
+          .flatMap(d => [...d])
+          .filter(status => !status.sensitive)
+          .splice(0, DISPLAY_AMOUNT)
+      : []
 
     const renderItem = useCallback<ListRenderItem<Mastodon.Status>>(
       ({ item, index }) => {
-        if (index === 3) {
+        if (index === DISPLAY_AMOUNT - 1) {
           return (
             <Pressable
               onPress={() => {
@@ -128,7 +127,7 @@ const AccountAttachments = React.memo(
       <Animated.View style={[styles.base, styleContainer]}>
         <FlatList
           horizontal
-          data={flattenData.filter(status => !status.sensitive).splice(0, 4)}
+          data={flattenData}
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
         />

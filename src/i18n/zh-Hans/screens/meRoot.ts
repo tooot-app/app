@@ -9,7 +9,8 @@ export default {
         heading: '$t(sharedAnnouncements:heading)',
         content: {
           unread: '{{amount}} 条未读公告',
-          read: '无未读公告'
+          read: '无未读公告',
+          empty: '无公告'
         }
       }
     },

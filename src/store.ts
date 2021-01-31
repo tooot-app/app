@@ -12,7 +12,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 
 const secureStorage = createSecureStore()
 
-const prefix = 'ajieorjaiojwoirjwe'
+const prefix = 'tooot'
 
 const contextsPersistConfig = {
   key: 'contexts',

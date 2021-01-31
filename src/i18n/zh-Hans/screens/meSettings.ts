@@ -40,6 +40,9 @@ export default {
     review: {
       heading: '给 tooot 打分'
     },
+    contact: {
+      heading: '联系 tooot'
+    },
     analytics: {
       heading: '帮助我们改进',
       description: '收集不与用户相关联的使用信息'

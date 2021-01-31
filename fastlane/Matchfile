@@ -1,0 +1,10 @@
+git_url(ENV('MATCH_GIT_REPO'))
+git_user_email("me@xmflsct.com")
+git_private_key("./id_rsa")
+
+storage_mode("git")
+
+type("development")
+
+app_identifier(["com.xmflsct.app.tooot"])
+username(ENV['APP_STORE_EMAIL'])
