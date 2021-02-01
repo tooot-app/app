@@ -75,7 +75,7 @@ const AccountInformation: React.FC<Props> = ({ account, myInfo = false }) => {
 
 const styles = StyleSheet.create({
   base: {
-    marginTop: -StyleConstants.Spacing.Global.PagePadding * 3,
+    marginTop: -StyleConstants.Avatar.L / 2,
     padding: StyleConstants.Spacing.Global.PagePadding
   },
   avatarAndActions: {

@@ -90,7 +90,7 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
     }),
     [localActiveIndex, localAccount]
   )
-  const tabNavigatorTabBarOptions = useMemo(
+  const tabBarOptions = useMemo(
     () => ({
       activeTintColor: theme.primary,
       inactiveTintColor:
@@ -100,7 +100,7 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
     }),
     [theme, localActiveIndex]
   )
-  const tabScreenLocalListeners = useCallback(
+  const localListeners = useCallback(
     () => ({
       tabPress: (e: any) => {
         if (!(localActiveIndex !== null)) {
@@ -110,7 +110,7 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
     }),
     [localActiveIndex]
   )
-  const tabScreenComposeListeners = useMemo(
+  const composeListeners = useMemo(
     () => ({
       tabPress: (e: any) => {
         e.preventDefault()
@@ -122,8 +122,8 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
     }),
     [localActiveIndex]
   )
-  const tabScreenComposeComponent = useCallback(() => null, [])
-  const tabScreenNotificationsListeners = useCallback(
+  const composeComponent = useCallback(() => null, [])
+  const notificationsListeners = useCallback(
     () => ({
       tabPress: (e: any) => {
         if (!(localActiveIndex !== null)) {
@@ -144,66 +144,67 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
     }
   })
   const prevNotification = useSelector(getLocalNotification)
-  useEffect(() => {
-    if (queryNotification.data?.pages) {
-      const flattenData = queryNotification.data.pages.flatMap(d => [...d])
-      const latestNotificationTime = flattenData.length
-        ? (flattenData[0] as Mastodon.Notification).created_at
-        : undefined
+  const notificationsOptions = useMemo(() => {
+    const badge = {
+      show: {
+        tabBarBadge: '',
+        tabBarBadgeStyle: {
+          transform: [{ scale: 0.5 }],
+          backgroundColor: theme.red
+        }
+      },
+      hide: {
+        tabBarBadgeStyle: {
+          transform: [{ scale: 0.5 }],
+          backgroundColor: theme.red
+        }
+      }
+    }
+    const flattenData = queryNotification.data?.pages.flatMap(d => [...d])
+    const latestNotificationTime = flattenData?.length
+      ? (flattenData[0] as Mastodon.Notification).created_at
+      : undefined
 
-      if (!prevNotification || !prevNotification.latestTime) {
-        dispatch(localUpdateNotification({ unread: false }))
-      } else if (
+    if (prevNotification?.latestTime) {
+      if (
         latestNotificationTime &&
         new Date(prevNotification.latestTime) < new Date(latestNotificationTime)
       ) {
-        dispatch(
-          localUpdateNotification({
-            unread: true,
-            latestTime: latestNotificationTime
-          })
-        )
+        return badge.show
+      } else {
+        return badge.hide
+      }
+    } else {
+      if (latestNotificationTime) {
+        return badge.show
+      } else {
+        return badge.hide
       }
     }
-  }, [queryNotification.data?.pages])
+  }, [prevNotification, queryNotification.data?.pages])
 
   return (
     <Tab.Navigator
       initialRouteName={localActiveIndex !== null ? 'Tab-Local' : 'Tab-Me'}
       screenOptions={screenOptions}
-      tabBarOptions={tabNavigatorTabBarOptions}
+      tabBarOptions={tabBarOptions}
     >
       <Tab.Screen
         name='Tab-Local'
         component={TabLocal}
-        listeners={tabScreenLocalListeners}
+        listeners={localListeners}
       />
       <Tab.Screen name='Tab-Public' component={TabPublic} />
       <Tab.Screen
         name='Tab-Compose'
-        component={tabScreenComposeComponent}
-        listeners={tabScreenComposeListeners}
+        component={composeComponent}
+        listeners={composeListeners}
       />
       <Tab.Screen
         name='Tab-Notifications'
         component={TabNotifications}
-        listeners={tabScreenNotificationsListeners}
-        options={
-          prevNotification && prevNotification.unread
-            ? {
-                tabBarBadge: '',
-                tabBarBadgeStyle: {
-                  transform: [{ scale: 0.5 }],
-                  backgroundColor: theme.red
-                }
-              }
-            : {
-                tabBarBadgeStyle: {
-                  transform: [{ scale: 0.5 }],
-                  backgroundColor: theme.red
-                }
-              }
-        }
+        listeners={notificationsListeners}
+        options={notificationsOptions}
       />
       <Tab.Screen name='Tab-Me' component={TabMe} />
     </Tab.Navigator>

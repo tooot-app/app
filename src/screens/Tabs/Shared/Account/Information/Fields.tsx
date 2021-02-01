@@ -25,7 +25,7 @@ const AccountInformationFields = React.memo(
             >
               <ParseHTML
                 content={field.name}
-                size={'M'}
+                size={'S'}
                 emojis={account.emojis}
                 showFullLink
                 numberOfLines={5}
@@ -42,7 +42,7 @@ const AccountInformationFields = React.memo(
             <View style={styles.fieldRight}>
               <ParseHTML
                 content={field.value}
-                size={'M'}
+                size={'S'}
                 emojis={account.emojis}
                 showFullLink
                 numberOfLines={5}

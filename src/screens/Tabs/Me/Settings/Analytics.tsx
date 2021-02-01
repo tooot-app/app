@@ -29,7 +29,10 @@ const SettingsAnalytics: React.FC = () => {
         }
       />
       <Text style={[styles.version, { color: theme.secondary }]}>
-        {t('content.version', { version: Constants.manifest.version })}
+        {t('content.version', {
+          version: Constants.manifest.version,
+          releaseChannel: Constants.manifest.releaseChannel || 'dev'
+        })}
       </Text>
     </MenuContainer>
   )

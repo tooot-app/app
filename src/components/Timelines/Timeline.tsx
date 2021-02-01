@@ -82,11 +82,10 @@ const Timeline: React.FC<Props> = ({
   const navigation = useNavigation()
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', props => {
-      if (props.target && props.target.includes('Screen-Notifications-Root')) {
+      if (props.target && props.target.includes('Tab-Notifications-Root')) {
         if (flattenData.length) {
           dispatch(
             localUpdateNotification({
-              unread: false,
               latestTime: (flattenData[0] as Mastodon.Notification).created_at
             })
           )

@@ -47,6 +47,6 @@ export default {
       heading: 'Help us improve',
       description: 'Collecting only non-user relative usage'
     },
-    version: 'Version v{{version}}'
+    version: 'Version v{{version}}  ({{releaseChannel}})'
   }
 }

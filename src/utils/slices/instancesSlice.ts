@@ -20,7 +20,6 @@ export type InstanceLocal = {
     preferences: Mastodon.Preferences
   }
   notification: {
-    unread: boolean
     latestTime?: Mastodon.Notification['created_at']
   }
 }
@@ -115,7 +114,7 @@ export const localAddInstance = createAsyncThunk(
           preferences
         },
         notification: {
-          unread: false
+          latestTime: undefined
         }
       }
     })
@@ -203,10 +202,8 @@ const instancesSlice = createSlice({
       state,
       action: PayloadAction<Partial<InstanceLocal['notification']>>
     ) => {
-      state.local.instances[state.local.activeIndex!].notification = {
-        ...state.local.instances[state.local.activeIndex!].notification,
-        ...action.payload
-      }
+      state.local.instances[state.local.activeIndex!].notification =
+        action.payload
     },
     remoteUpdate: (
       state,

@@ -30,8 +30,8 @@ const renderNode = ({
   theme: any
   node: any
   index: number
-  size: 'M' | 'L'
-  navigation: StackNavigationProp<Nav.LocalStackParamList>
+  size: 'S' | 'M' | 'L'
+  navigation: StackNavigationProp<Nav.TabLocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
@@ -145,7 +145,7 @@ const renderNode = ({
 
 export interface Props {
   content: string
-  size?: 'M' | 'L'
+  size?: 'S' | 'M' | 'L'
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
@@ -167,7 +167,7 @@ const ParseHTML: React.FC<Props> = ({
   disableDetails = false
 }) => {
   const navigation = useNavigation<
-    StackNavigationProp<Nav.LocalStackParamList>
+    StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   const route = useRoute()
   const { theme } = useTheme()

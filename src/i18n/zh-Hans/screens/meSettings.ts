@@ -47,6 +47,6 @@ export default {
       heading: '帮助我们改进',
       description: '收集不与用户相关联的使用信息'
     },
-    version: '版本 v{{version}}'
+    version: '版本 v{{version}} ({{releaseChannel}})'
   }
 }

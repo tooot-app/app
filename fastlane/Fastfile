@@ -1,28 +1,12 @@
 $ExpoSDK = '40.0.0'
-$ExpoRelease = '40'
+$NativeVersion = '210201' # Update when there is native module change
 
 fastlane_version '2.172.0'
 
 platform :ios do
   desc 'Build and deploy'
   private_lane :build do |options|
-    branch = 'RELEASE-TYPE'.gsub('RELEASE', $ExpoRelease).gsub('TYPE', options[:type])
-
-    case options[:type]
-    when 'staging', 'production'
-      ensure_git_branch(
-        branch: branch
-      )
-      ensure_git_status_clean
-      build_number = Time.new.strftime('%y%m%d%k')
-      increment_build_number build_number: build_number
-    end
-
-    match(
-      type: options[:type],
-      readonly: true
-    )
-
+    branch = 'NATIVEVERSION-TYPE'.gsub('NATIVEVERSION', $NativeVersion).gsub('TYPE', options[:type])
     set_info_plist_value(
       path: './ios/tooot/Supporting/Expo.plist',
       key: 'EXUpdatesSDKVersion',
@@ -35,19 +19,35 @@ platform :ios do
     )
 
     case options[:type]
+    when 'staging', 'production'
+      ensure_git_branch(
+        branch: options[:type]
+      )
+      ensure_git_status_clean
+      increment_build_number(
+        build_number: $NativeVersion
+      )
+      app_store_connect_api_key(
+        key_filepath: "appstore.p8"
+      )
+    end
+
+    match(
+      type: options[:type],
+      readonly: true
+    )
+
+    case options[:type]
     when 'development'
       build_ios_app(
         scheme: 'tooot',
         silent: true,
         include_bitcode: true,
         workspace: './ios/tooot.xcworkspace',
-        output_directory: './build/ios',
-        output_name: 'development',
         export_method: 'development'
       )
       install_on_device(
-        skip_wifi: true,
-        ipa: './build/ios/development.ipa'
+        skip_wifi: true
       )
     when 'staging'
       build_ios_app(
@@ -55,8 +55,8 @@ platform :ios do
         workspace: './ios/tooot.xcworkspace'
       )
       upload_to_testflight(
-        api_key: '{"key_id": "KEY_ID", "issuer_id": "ISSUER_ID", "key_filepath": "appstore.p8"}'.gsub('KEY_ID', ENV['APP_STORE_KEY_ID']).gsub('ISSUER_ID', ENV['APP_STORE_ISSUER_ID']),
-        skip_submission: true
+        skip_submission: true,
+        notify_external_testers: false
       )
     end
   end

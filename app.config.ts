@@ -7,7 +7,7 @@ export default (): ExpoConfig => ({
   slug: 'tooot',
   privacy: 'hidden',
   sdkVersion: '40.0.0',
-  version: '0.1.0',
+  version: '0.8',
   platforms: ['ios', 'android'],
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
