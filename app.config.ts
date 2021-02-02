@@ -1,26 +1,20 @@
 import { ExpoConfig } from '@expo/config'
+import { versions } from './package.json'
 import 'dotenv/config'
+
+const toootVersion = `${versions.major}.${versions.minor}.${versions.patch}`
 
 export default (): ExpoConfig => ({
   name: 'tooot',
   description: 'tooot for Mastodon',
   slug: 'tooot',
+  version: toootVersion,
+  sdkVersion: versions.expo,
   privacy: 'hidden',
-  sdkVersion: '40.0.0',
-  version: '0.8',
-  platforms: ['ios', 'android'],
-  orientation: 'portrait',
-  userInterfaceStyle: 'automatic',
-  icon: './assets/icon.png',
-  splash: {
-    backgroundColor: '#FAFAFA',
-    image: './assets/splash.png'
-  },
-  scheme: 'tooot',
   assetBundlePatterns: ['assets/*'],
   extra: {
-    sentryDSN: process.env.SENTRY_DSN,
-    sentryEnv: process.env.SENTRY_DEPLOY_ENV
+    toootEnvironment: process.env.TOOOT_ENVIRONMENT,
+    sentryDSN: process.env.SENTRY_DSN
   },
   hooks: {
     postPublish: [
@@ -31,7 +25,7 @@ export default (): ExpoConfig => ({
           project: process.env.SENTRY_PROJECT,
           authToken: process.env.SENTRY_AUTH_TOKEN,
           setCommits: process.env.GITHUB_SHA || undefined,
-          deployEnv: process.env.SENTRY_DEPLOY_ENV
+          deployEnv: process.env.TOOOT_ENVIRONMENT
         }
       }
     ]

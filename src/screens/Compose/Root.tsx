@@ -53,14 +53,6 @@ const ComposeRoot: React.FC = () => {
       })
     }
   }, [emojisData])
-  useEffect(() => {
-    if (emojisData && emojisData.length) {
-      // Prefetch first batch of emojis for faster loading experience
-      emojisData.slice(0, 40).forEach(emoji => {
-        Image.prefetch(emoji.url)
-      })
-    }
-  }, [emojisData])
 
   const listEmpty = useMemo(() => {
     if (isFetching) {

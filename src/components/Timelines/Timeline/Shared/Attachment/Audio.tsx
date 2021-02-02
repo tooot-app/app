@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { Slider } from '@sharcoux/slider'
@@ -8,7 +9,6 @@ import React, { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
-import analytics from '@components/analytics'
 
 export interface Props {
   total: number

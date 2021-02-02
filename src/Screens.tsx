@@ -114,14 +114,18 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.background} />
+      <StatusBar barStyle={barStyle[mode]} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
       >
-        <Stack.Navigator mode='modal' initialRouteName='Screen-Tabs'>
+        <Stack.Navigator
+          mode='modal'
+          initialRouteName='Screen-Tabs'
+          screenOptions={{ cardStyle: { backgroundColor: theme.background } }}
+        >
           <Stack.Screen
             name='Screen-Tabs'
             component={ScreenTabs}

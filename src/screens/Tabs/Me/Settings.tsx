@@ -1,4 +1,4 @@
-import Constants from 'expo-constants'
+import * as Updates from 'expo-updates'
 import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import SettingsAnalytics from './Settings/Analytics'
@@ -15,7 +15,7 @@ const ScreenMeSettings: React.FC = () => {
 
       {__DEV__ ||
       ['development'].some(channel =>
-        Constants.manifest.releaseChannel?.includes(channel)
+        Updates.releaseChannel.includes(channel)
       ) ? (
         <SettingsDev />
       ) : null}

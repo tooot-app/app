@@ -114,7 +114,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
 
   return (
     <View>
-      <View style={styles.container}>{attachments}</View>
+      <View style={styles.container} children={attachments} />
 
       {status.sensitive &&
         (sensitiveShown ? (

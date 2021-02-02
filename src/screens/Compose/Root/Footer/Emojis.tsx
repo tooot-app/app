@@ -1,18 +1,12 @@
+import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
-import {
-  Image,
-  Pressable,
-  SectionList,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import updateText from '../../updateText'
-import analytics from '@components/analytics'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -31,7 +25,7 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
     haptics('Success')
   }, [])
   const children = useMemo(
-    () => <Image source={{ uri: emoji.url }} style={styles.emoji} />,
+    () => <FastImage source={{ uri: emoji.url }} style={styles.emoji} />,
     []
   )
   return (

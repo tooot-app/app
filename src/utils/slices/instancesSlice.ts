@@ -175,15 +175,13 @@ const instancesSlice = createSlice({
   name: 'instances',
   initialState: instancesInitialState,
   reducers: {
-    localUpdateActiveIndex: (
-      state,
-      action: PayloadAction<NonNullable<InstancesState['local']['activeIndex']>>
-    ) => {
-      if (action.payload < state.local.instances.length) {
-        state.local.activeIndex = action.payload
-      } else {
-        throw new Error('Set index cannot be found')
-      }
+    localUpdateActiveIndex: (state, action: PayloadAction<InstanceLocal>) => {
+      state.local.activeIndex = state.local.instances.findIndex(
+        instance =>
+          instance.url === action.payload.url &&
+          instance.token === action.payload.token &&
+          instance.account.id === action.payload.account.id
+      )
     },
     localUpdateAccount: (
       state,

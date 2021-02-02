@@ -202,6 +202,7 @@ const TimelineActions: React.FC<Props> = ({
               : iconColorAction(status.reblogged)
           }
           size={StyleConstants.Font.Size.L}
+          strokeWidth={status.reblogged ? 3 : undefined}
         />
         {status.reblogs_count > 0 && (
           <Text
@@ -225,6 +226,7 @@ const TimelineActions: React.FC<Props> = ({
           name='Heart'
           color={iconColorAction(status.favourited)}
           size={StyleConstants.Font.Size.L}
+          strokeWidth={status.favourited ? 3 : undefined}
         />
         {status.favourites_count > 0 && (
           <Text
@@ -248,6 +250,7 @@ const TimelineActions: React.FC<Props> = ({
         name='Bookmark'
         color={iconColorAction(status.bookmarked)}
         size={StyleConstants.Font.Size.L}
+        strokeWidth={status.bookmarked ? 3 : undefined}
       />
     ),
     [status.bookmarked]

@@ -1,79 +1,110 @@
-$ExpoSDK = '40.0.0'
-$NativeVersion = '210201' # Update when there is native module change
+fastlane_version "2.172.0"
 
-fastlane_version '2.172.0'
+ensure_env_vars(
+  env_vars: ["TOOOT_ENVIRONMENT"]
+)
+
+VERSIONS = read_json( json_path: "./package.json" )[:versions]
+ENVIRONMENT = ENV["TOOOT_ENVIRONMENT"]
+VERSION = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}"
+RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
+BUILD_NUMBER = Time.now.strftime("%y%m%d")
 
 platform :ios do
-  desc 'Build and deploy'
-  private_lane :build do |options|
-    branch = 'NATIVEVERSION-TYPE'.gsub('NATIVEVERSION', $NativeVersion).gsub('TYPE', options[:type])
-    set_info_plist_value(
-      path: './ios/tooot/Supporting/Expo.plist',
-      key: 'EXUpdatesSDKVersion',
-      value: $ExpoSDK
-    )
-    set_info_plist_value(
-      path: './ios/tooot/Supporting/Expo.plist',
-      key: 'EXUpdatesReleaseChannel',
-      value: branch
-    )
+  XCODEPROJ = "./ios/tooot.xcodeproj"
+  INFO_PLIST = "./ios/tooot/Info.plist"
+  EXPO_PLIST = "./ios/tooot/Supporting/Expo.plist"
 
-    case options[:type]
-    when 'staging', 'production'
-      ensure_git_branch(
-        branch: options[:type]
-      )
-      ensure_git_status_clean
-      increment_build_number(
-        build_number: $NativeVersion
-      )
-      app_store_connect_api_key(
-        key_filepath: "appstore.p8"
-      )
-    end
-
-    match(
-      type: options[:type],
-      readonly: true
-    )
-
-    case options[:type]
-    when 'development'
-      build_ios_app(
-        scheme: 'tooot',
-        silent: true,
-        include_bitcode: true,
-        workspace: './ios/tooot.xcworkspace',
-        export_method: 'development'
-      )
-      install_on_device(
-        skip_wifi: true
-      )
-    when 'staging'
-      build_ios_app(
-        scheme: 'tooot',
-        workspace: './ios/tooot.xcworkspace'
-      )
-      upload_to_testflight(
-        skip_submission: true,
-        notify_external_testers: false
-      )
+  desc "Prepare app store"
+  private_lane :prepare_appstore do
+    case ENVIRONMENT
+    when "staging", "production"
+      increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
+      app_store_connect_api_key
     end
   end
 
-  desc 'Build development to phone'
-  lane :development do
-    build(type: 'development')
+  desc "Expo release"
+  private_lane :expo_release do
+    yarn( package_path: "./package.json", flags: "release", command: RELEASE_CHANNEL )
   end
 
-  desc 'Build staging to TestFlight'
-  lane :staging do
-    build(type: 'staging')
+  desc "Get certificates"
+  private_lane :get_certificates do |options|
+    if ENV['CI'] == true
+      match( type: options[:type], readonly: true, keychain_name: KEYCHAIN_NAME, keychain_password: KEYCHAIN_PASS )
+    else
+      match( type: options[:type], readonly: true )
+    end
   end
 
-  desc 'Build product to App Store'
-  lane :production do
-    build(type: 'production')
+  desc "Build and deploy"
+  lane :build do
+    BUILD_DIRECTORY = "./ios/build"
+    SHOULD_BUILD_NATIVE = false
+
+    case ENVIRONMENT
+    when "staging", "production"
+      PREVIOUS_VERSION = get_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString" )
+      if VERSION.to_f > PREVIOUS_VERSION.to_f
+        SHOULD_BUILD_NATIVE = true
+        set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
+        set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
+        set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
+      end
+    when "development"
+      SHOULD_BUILD_NATIVE = true
+    end
+
+    if SHOULD_BUILD_NATIVE == true
+      prepare_appstore
+
+      KEYCHAIN_NAME = "tooot"
+      KEYCHAIN_PASS = SecureRandom.base64
+      if ENV['CI'] == true
+        create_keychain(
+          name: KEYCHAIN_NAME,
+          password: KEYCHAIN_PASS,
+          default_keychain: true,
+          unlock: true,
+          timeout: 3600,
+          lock_when_sleeps: true
+        )
+      end
+
+      case ENVIRONMENT
+      when "development"
+        get_certificates( type: "development" )
+        build_ios_app(
+          export_method: "development",
+          output_directory: BUILD_DIRECTORY,
+          output_name: VERSION + "-" + BUILD_NUMBER
+        )
+        install_on_device( skip_wifi: true )
+      when "staging"
+        get_certificates( type: "appstore" )
+        build_ios_app(
+          export_method: "app-store",
+          output_directory: BUILD_DIRECTORY,
+          output_name: VERSION + "-" + BUILD_NUMBER
+        )
+        upload_to_testflight(
+          demo_account_required: true,
+          distribute_external: true,
+          groups: "内测用户",
+          changelog: "Ready for testing"
+        )
+      when "production"
+        get_certificates( type: "appstore" )
+        build_ios_app(
+          export_method: "app-store",
+          output_directory: BUILD_DIRECTORY,
+          output_name: VERSION + "-" + BUILD_NUMBER
+        )
+      end
+    end
+
+    expo_release
   end
 end
 

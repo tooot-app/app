@@ -16,21 +16,11 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
-### ios development
+### ios build
 ```
-fastlane ios development
+fastlane ios build
 ```
-Build development to phone
-### ios staging
-```
-fastlane ios staging
-```
-Build staging to TestFlight
-### ios production
-```
-fastlane ios production
-```
-Build product to App Store
+Build and deploy
 
 ----
 

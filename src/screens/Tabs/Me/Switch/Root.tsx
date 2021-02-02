@@ -7,7 +7,6 @@ import {
   getLocalActiveIndex,
   getLocalInstances,
   InstanceLocal,
-  InstancesState,
   localUpdateActiveIndex
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -26,16 +25,11 @@ import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface Props {
-  index: NonNullable<InstancesState['local']['activeIndex']>
   instance: InstanceLocal
   disabled?: boolean
 }
 
-const AccountButton: React.FC<Props> = ({
-  index,
-  instance,
-  disabled = false
-}) => {
+const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
   const queryClient = useQueryClient()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -51,7 +45,7 @@ const AccountButton: React.FC<Props> = ({
       onPress={() => {
         haptics('Light')
         analytics('switch_existing_press')
-        dispatch(localUpdateActiveIndex(index))
+        dispatch(localUpdateActiveIndex(instance))
         queryClient.clear()
         navigation.goBack()
       }}
@@ -86,14 +80,20 @@ const ScreenMeSwitchRoot: React.FC = () => {
                       `${b.uri}${b.account.acct}`
                     )
                   )
-                  .map((instance, index) => (
-                    <AccountButton
-                      key={index}
-                      index={index}
-                      instance={instance}
-                      disabled={localActiveIndex === index}
-                    />
-                  ))
+                  .map((instance, index) => {
+                    const localAccount = localInstances[localActiveIndex!]
+                    return (
+                      <AccountButton
+                        key={index}
+                        instance={instance}
+                        disabled={
+                          instance.url === localAccount.url &&
+                          instance.token === localAccount.token &&
+                          instance.account.id === localAccount.account.id
+                        }
+                      />
+                    )
+                  })
               : null}
           </View>
         </View>

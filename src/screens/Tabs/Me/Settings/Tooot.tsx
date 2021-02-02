@@ -6,7 +6,7 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import Constants from 'expo-constants'
+import * as Updates from 'expo-updates'
 import * as Linking from 'expo-linking'
 import * as StoreReview from 'expo-store-review'
 import * as WebBrowser from 'expo-web-browser'
@@ -44,7 +44,7 @@ const SettingsTooot: React.FC = () => {
       />
       {__DEV__ ||
       ['production', 'development'].some(channel =>
-        Constants.manifest.releaseChannel?.includes(channel)
+        Updates.releaseChannel?.includes(channel)
       ) ? (
         <MenuRow
           title={t('content.review.heading')}

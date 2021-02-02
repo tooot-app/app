@@ -1,8 +1,11 @@
+import analytics from '@components/analytics'
+import Button from '@components/Button'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getLocalAccount, getLocalUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import {
   PanGestureHandler,
@@ -32,6 +35,8 @@ export type ScreenAccountProp = StackScreenProps<
 
 const ScreenActions = React.memo(
   ({ route: { params }, navigation }: ScreenAccountProp) => {
+    const { t } = useTranslation()
+
     const localAccount = useSelector(getLocalAccount)
     let sameAccount = false
     switch (params.type) {
@@ -174,6 +179,15 @@ const ScreenActions = React.memo(
                   ]}
                 />
                 {actions}
+                <Button
+                  type='text'
+                  content={t('common:buttons.cancel')}
+                  onPress={() => {
+                    analytics('bottomsheet_cancel')
+                    // dismiss()
+                  }}
+                  style={styles.button}
+                />
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>

@@ -27,6 +27,7 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
           uri={{ original: card.image }}
           blurhash={card.blurhash}
           style={styles.left}
+          imageStyle={styles.image}
         />
       )}
       <View style={styles.right}>
@@ -64,15 +65,13 @@ const styles = StyleSheet.create({
     height: StyleConstants.Font.LineHeight.M * 5,
     marginTop: StyleConstants.Spacing.M,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6
+    borderRadius: 6,
+    overflow: 'hidden'
   },
   left: {
-    width: StyleConstants.Font.LineHeight.M * 5,
-    height: StyleConstants.Font.LineHeight.M * 5
+    flexBasis: StyleConstants.Font.LineHeight.M * 5
   },
   image: {
-    width: '100%',
-    height: '100%',
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6
   },

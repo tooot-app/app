@@ -1,3 +1,2 @@
 git_user_email("me@xmflsct.com")
-git_private_key("./github.key")
 storage_mode("git")

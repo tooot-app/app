@@ -2,7 +2,7 @@ name: Publish production
 on:
   push:
     branches:
-      - '*-production'
+      - production
 jobs:
   publish:
     runs-on: ubuntu-latest

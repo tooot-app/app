@@ -1,11 +1,11 @@
-name: Publish staging
+name: Build staging
 on:
   push:
     branches:
-      - '*-staging'
+      - staging
 jobs:
-  publish:
-    runs-on: ubuntu-latest
+  build-ios:
+    runs-on: macos-latest
     steps:
       - name: -- Step 1 -- Checkout code
         uses: actions/checkout@v2
@@ -13,19 +13,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: -- Step 3 -- Use Expo action
-        uses: expo/expo-github-action@v5
-        with:
-          expo-version: 4.x
-          expo-username: ${{ secrets.EXPO_USERNAME }}
-          expo-token: ${{ secrets.EXPO_TOKEN }}
+      - name: -- Step 3 -- Setup ruby
+        uses: actions/setup-ruby@v1
       - name: -- Step 4 -- Install dependencies
         run: yarn install
-      - name: -- Step 5 -- Publish
+      - name: -- Step 5 -- Install native dependencies
+        run: npx pod-install
+      - name: -- Step 6 -- Run fastlane
         env:
+          TOOOT_ENVIRONMENT: staging
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_DEPLOY_ENV: staging
-        run: expo publish --release-channel=${GITHUB_REF#refs/heads/}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
+          MATCH_GIT_PRIVATE_KEY: ${{ MATCH_GIT_PRIVATE_KEY }}
+          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ APP_STORE_CONNECT_API_KEY_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ APP_STORE_CONNECT_API_KEY_KEY }}
+        run: yarn ios:build

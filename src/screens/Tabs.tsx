@@ -10,11 +10,10 @@ import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import {
   getLocalAccount,
   getLocalActiveIndex,
-  getLocalNotification,
-  localUpdateNotification
+  getLocalNotification
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useDispatch, useSelector } from 'react-redux'

@@ -229,7 +229,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
 
   return (
     <KeyboardAvoidingView
-      style={[styles.base, {backgroundColor: 'red'}]}
+      style={styles.base}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <SafeAreaView
