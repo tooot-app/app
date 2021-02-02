@@ -18,7 +18,7 @@ jobs:
       - name: -- Step 4 -- Install native dependencies
         run: npx pod-install
       - name: -- Step 5 -- Install ruby dependencies
-        run: gem install bundler && bundle install
+        run: bundle install
       - name: -- Step 6 -- Run fastlane
         env:
           TOOOT_ENVIRONMENT: staging

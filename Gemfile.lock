@@ -86,7 +86,6 @@ GEM
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-json (1.0.0)
-    fastlane-plugin-versioning (0.4.4)
     fastlane-plugin-yarn (1.2)
     gh_inspector (1.1.3)
     google-api-client (0.38.0)
@@ -200,8 +199,7 @@ PLATFORMS
 DEPENDENCIES
   fastlane
   fastlane-plugin-json
-  fastlane-plugin-versioning
   fastlane-plugin-yarn
 
 BUNDLED WITH
-   1.17.2
+   2.2.8
