@@ -109,5 +109,5 @@ platform :ios do
 end
 
 platform :android do
-  # Android Lanes
+
 end
