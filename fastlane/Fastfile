@@ -59,18 +59,7 @@ platform :ios do
     if SHOULD_BUILD_NATIVE == true
       prepare_appstore
 
-      KEYCHAIN_NAME = "tooot"
-      KEYCHAIN_PASS = SecureRandom.base64
-      if ENV['CI'] == true
-        create_keychain(
-          name: KEYCHAIN_NAME,
-          password: KEYCHAIN_PASS,
-          default_keychain: true,
-          unlock: true,
-          timeout: 3600,
-          lock_when_sleeps: true
-        )
-      end
+      setup_ci
 
       case ENVIRONMENT
       when "development"
