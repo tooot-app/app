@@ -3,7 +3,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "ios:build": "bundle exec fastlane ios build",
+    "app:build": "bundle exec fastlane build",
     "test": "jest --watchAll",
     "release": "scripts/release.sh"
   },
@@ -108,7 +108,7 @@
   "versions": {
     "native": "210201",
     "major": 0,
-    "minor": 8,
+    "minor": 2,
     "patch": 0,
     "expo": "40.0.0"
   }
