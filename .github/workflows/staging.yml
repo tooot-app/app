@@ -13,13 +13,19 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: -- Step 3 -- Install node dependencies
+      - name: -- Step 3 -- Use Expo action
+        uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-username: ${{ secrets.EXPO_USERNAME }}
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+      - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 4 -- Install native dependencies
+      - name: -- Step 5 -- Install native dependencies
         run: npx pod-install
-      - name: -- Step 5 -- Install ruby dependencies
+      - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - name: -- Step 7 -- Run fastlane
         env:
           TOOOT_ENVIRONMENT: staging
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
