@@ -32,7 +32,7 @@ platform :ios do
   desc "Get certificates"
   private_lane :get_certificates do |options|
     if ENV['CI'] == true
-      match( type: options[:type], readonly: true, keychain_name: KEYCHAIN_NAME, keychain_password: KEYCHAIN_PASS )
+      match( type: options[:type], readonly: true )
     else
       match( type: options[:type], readonly: true )
     end
