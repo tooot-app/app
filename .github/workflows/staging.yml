@@ -4,7 +4,7 @@ on:
     branches:
       - staging
 jobs:
-  build-ios:
+  build:
     runs-on: macos-latest
     steps:
       - name: -- Step 1 -- Checkout code
@@ -42,4 +42,4 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn ios:build
+        run: yarn app:build
