@@ -12,8 +12,10 @@ RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
 BUILD_NUMBER = ENV["GITHUB_RUN_NUMBER"]
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT
+when "development"
+  GITHUB_RELEASE= ""
 when "staging"
-  GITHUB_RELEASE = "v#{VERSION}(#{BUILD_NUMBER})"
+  GITHUB_RELEASE = "v#{VERSION} (#{BUILD_NUMBER})"
 when "production"
   GITHUB_RELEASE = "v#{VERSION}"
 end
@@ -89,13 +91,44 @@ private_lane :build_ios do
   end
 end
 
+desc "Build and deploy Android app"
+private_lane :build_android do
+  case ENVIRONMENT
+  when "development"
+    build_android_app(
+      task: 'assemble',
+      build_type: 'Debug',
+      project_dir: "./android",
+      properties: {
+        "android.injected.signing.store.file" => "keystore.jks",
+        "android.injected.signing.store.password" => "store_password",
+        "android.injected.signing.key.alias" => "key_alias",
+        "android.injected.signing.key.password" => "key_password",
+      }
+    )
+    puts lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+  when "staging"
+    match( type: "appstore", readonly: true )
+    build_ios_app( export_method: "app-store" )
+    upload_to_testflight(
+      demo_account_required: true,
+      distribute_external: true,
+      groups: "内测用户",
+      changelog: "Ready for testing"
+    )
+  when "production"
+    match( type: "appstore", readonly: true )
+    build_ios_app( export_method: "app-store" )
+  end
+end
+
 lane :build do
   releaseExists = get_github_release(url: GITHUB_REPO, version: GITHUB_RELEASE)
   if releaseExists
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
     puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
-    # build_ios
+    build_ios
     # build_android
     case ENVIRONMENT
     when "staging"
