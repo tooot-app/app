@@ -23,7 +23,7 @@ INFO_PLIST = "./ios/tooot/Info.plist"
 EXPO_PLIST = "./ios/tooot/Supporting/Expo.plist"
 
 desc "IOS: Prepare app store"
-private_lane :prepare_appstore do
+private_lane :prepare_appstore_ios do
   case ENVIRONMENT
   when "staging", "production"
     increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
@@ -32,7 +32,7 @@ private_lane :prepare_appstore do
 end
 
 desc 'IOS: Update version information'
-private_lane :update_versions do
+private_lane :update_versions_ios do
   set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
@@ -48,7 +48,9 @@ private_lane :github_release do
   end
   set_github_release(
     repository_name: GITHUB_REPO,
+    name: GITHUB_RELEASE,
     tag_name: GITHUB_RELEASE,
+    description: "No changelog provided",
     commitish: git_branch,
     is_prerelease: is_prerelease
   )
@@ -59,18 +61,17 @@ private_lane :expo_release do
   yarn( package_path: "./package.json", flags: "release", command: RELEASE_CHANNEL )
 end
 
-desc "Build and deploy"
+desc "Build and deploy iOS app"
 private_lane :build_ios do
   BUILD_DIRECTORY = "./ios/build"
 
-  update_versions
-  prepare_appstore
+  update_versions_ios
+  prepare_appstore_ios
   setup_ci
 
   case ENVIRONMENT
   when "development"
     match( type: "development", readonly: true )
-    match_certificates( type: "development" )
     build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY, output_name: "#{VERSION}-#{BUILD_NUMBER}" )
     install_on_device( skip_wifi: true )
   when "staging"
@@ -103,6 +104,6 @@ lane :build do
       github_release
     end
   end
-  expo_release
+  # expo_release
   rocket
 end
