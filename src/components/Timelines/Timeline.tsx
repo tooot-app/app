@@ -164,7 +164,13 @@ const Timeline: React.FC<Props> = ({
       <RefreshControl
         {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          isSwipeDown.current && isFetching && !isFetchingNextPage && !isLoading
+          Platform.OS === 'android'
+            ? (isSwipeDown.current && isFetching && !isFetchingNextPage) ||
+              isLoading
+            : isSwipeDown.current &&
+              isFetching &&
+              !isFetchingNextPage &&
+              !isLoading
         }
         onRefresh={() => {
           isSwipeDown.current = true

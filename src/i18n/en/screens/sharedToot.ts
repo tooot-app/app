@@ -1,3 +1,3 @@
 export default {
-  heading: 'Direct messages'
+  heading: 'Discussions'
 }

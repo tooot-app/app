@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
-import { FlatList, Image, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -70,7 +70,7 @@ const ComposeRoot: React.FC = () => {
   const listItem = useCallback(
     ({ item, index }) => (
       <ComposeRootSuggestion
-        key={(item.id || item.name) + index}
+        key={index}
         item={item}
         composeState={composeState}
         composeDispatch={composeDispatch}

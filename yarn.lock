@@ -2630,6 +2630,13 @@
   dependencies:
     compare-versions "^3.4.0"
 
+"@unimodules/core@~7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@unimodules/core/-/core-7.0.0.tgz#0311a9c7c0a661368ceef8891f758eb2e166bdf4"
+  integrity sha512-hKxNN6ad2VmmJqB3i1C8IJe27TcchY7YAKpkQhshjPxso61f7iM7AUFeG4vcU1vPH5d/X4Vk1ds8bWxaxg7nnw==
+  dependencies:
+    compare-versions "^3.4.0"
+
 "@unimodules/react-native-adapter@~5.7.0":
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-5.7.0.tgz#c5b7c660c5c69e77a7baeaed62be73cfe18dd7b0"
@@ -4564,6 +4571,13 @@ expo-random@~10.0.0:
   integrity sha512-7x0fDAZGDUUVhlfZ3lbYIfSYb6TIPq0VglbDRXvAZjvfHgefbCW2/+iZWTDYNA0ZOtzoM5dwWg4Z5fiXuAdsrQ==
   dependencies:
     base64-js "^1.3.0"
+
+expo-screen-capture@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/expo-screen-capture/-/expo-screen-capture-3.0.0.tgz#c35a94acca4274a0ea67c8e09e0b39c19fecc0a6"
+  integrity sha512-TXLIH/NcuMPNT5dUGKWdwZtBhA+N17A3cFk1cICHlalerGU5uyRYJalaJAY+U+WwAEpOAIehfonv1Qa87W58Nw==
+  dependencies:
+    "@unimodules/core" "~7.0.0"
 
 expo-secure-store@~9.3.0:
   version "9.3.0"

@@ -136,7 +136,14 @@ const sharedScreens = (
       name='Tab-Shared-Hashtag'
       component={TabSharedHashtag}
       options={({ route, navigation }: SharedHashtagProp) => ({
-        title: `#${decodeURIComponent(route.params.hashtag)}`,
+        headerTitle: `#${decodeURIComponent(route.params.hashtag)}`,
+        ...(Platform.OS === 'android' && {
+          headerCenter: () => (
+            <HeaderCenter
+              content={`#${decodeURIComponent(route.params.hashtag)}`}
+            />
+          )
+        }),
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}
     />,

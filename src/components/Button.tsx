@@ -3,7 +3,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   Pressable,
   StyleProp,
@@ -49,8 +48,7 @@ const Button: React.FC<Props> = ({
   overlay = false,
   onPress
 }) => {
-  const { i18n } = useTranslation()
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
 
   const mounted = useRef(false)
   useEffect(() => {
@@ -67,7 +65,7 @@ const Button: React.FC<Props> = ({
         <Chase size={StyleConstants.Font.Size[size]} color={theme.secondary} />
       </View>
     ),
-    [theme]
+    [mode]
   )
 
   const colorContent = useMemo(() => {
@@ -88,7 +86,7 @@ const Button: React.FC<Props> = ({
         }
       }
     }
-  }, [theme, disabled])
+  }, [mode, disabled])
   const colorBorder = useMemo(() => {
     if (active) {
       return theme.blue
@@ -103,14 +101,14 @@ const Button: React.FC<Props> = ({
         }
       }
     }
-  }, [theme, loading, disabled])
+  }, [mode, loading, disabled])
   const colorBackground = useMemo(() => {
     if (overlay) {
       return theme.backgroundOverlay
     } else {
       return theme.background
     }
-  }, [theme])
+  }, [mode])
 
   const children = useMemo(() => {
     switch (type) {
@@ -147,7 +145,7 @@ const Button: React.FC<Props> = ({
           </>
         )
     }
-  }, [i18n.language, theme, content, loading, disabled, active])
+  }, [mode, content, loading, disabled, active])
 
   enum spacingMapping {
     XS = 'S',

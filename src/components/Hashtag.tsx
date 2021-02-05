@@ -28,10 +28,7 @@ const ComponentHashtag: React.FC<Props> = ({
   }, [])
 
   return (
-    <Pressable
-      style={[styles.itemDefault, { borderBottomColor: theme.border }]}
-      onPress={customOnPress || onPress}
-    >
+    <Pressable style={styles.itemDefault} onPress={customOnPress || onPress}>
       <Text style={[styles.itemHashtag, { color: theme.primary }]}>
         #{hashtag.name}
       </Text>
@@ -41,8 +38,7 @@ const ComponentHashtag: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   itemDefault: {
-    padding: StyleConstants.Spacing.S * 1.5,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    padding: StyleConstants.Spacing.S * 1.5
   },
   itemHashtag: {
     ...StyleConstants.FontStyle.M

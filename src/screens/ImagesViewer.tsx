@@ -1,5 +1,5 @@
 import analytics from '@components/analytics'
-import { HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import CameraRoll from '@react-native-community/cameraroll'
@@ -8,13 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  PermissionsAndroid,
-  Platform,
-  Share,
-  StyleSheet,
-  Text
-} from 'react-native'
+import { PermissionsAndroid, Platform, Share, StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { SharedElement } from 'react-navigation-shared-element'
@@ -107,11 +101,9 @@ const ScreenImagesViewer = React.memo(
       () =>
         navigation.setOptions({
           headerTitle: () => (
-            <Text
-              style={[styles.headerCenter, { color: theme.primaryOverlay }]}
-            >
-              {currentIndex + 1} / {imageUrls.length}
-            </Text>
+            <HeaderCenter
+              content={`${currentIndex + 1} / ${imageUrls.length}`}
+            />
           ),
           headerRight: () => (
             <HeaderRight

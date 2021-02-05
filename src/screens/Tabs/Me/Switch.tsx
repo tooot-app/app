@@ -9,8 +9,8 @@ import ScreenMeSwitchRoot from './Switch/Root'
 const Stack = createNativeStackNavigator()
 
 const ScreenMeSwitch: React.FC<StackScreenProps<
-  Nav.MeStackParamList,
-  'Screen-Me-Switch'
+  Nav.TabMeStackParamList,
+  'Tab-Me-Switch'
 >> = ({ navigation }) => {
   const { t } = useTranslation()
   return (

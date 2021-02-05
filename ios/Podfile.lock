@@ -54,6 +54,8 @@ PODS:
     - UMPermissionsInterface
   - EXRandom (10.0.0):
     - React-Core
+  - EXScreenCapture (3.0.0):
+    - UMCore
   - EXSecureStore (9.3.0):
     - UMCore
   - EXSplashScreen (0.8.1):
@@ -465,7 +467,7 @@ PODS:
   - UMBarCodeScannerInterface (5.4.0)
   - UMCameraInterface (5.4.0)
   - UMConstantsInterface (5.4.0)
-  - UMCore (6.0.0)
+  - UMCore (7.0.0)
   - UMFaceDetectorInterface (5.4.0)
   - UMFileSystemInterface (5.4.0)
   - UMFontInterface (5.4.0)
@@ -501,6 +503,7 @@ DEPENDENCIES:
   - EXLocation (from `../node_modules/expo-location/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXRandom (from `../node_modules/expo-random/ios`)
+  - EXScreenCapture (from `../node_modules/expo-screen-capture/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXSQLite (from `../node_modules/expo-sqlite/ios`)
@@ -554,7 +557,7 @@ DEPENDENCIES:
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
-  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
+  - "UMCore (from `../node_modules/expo-screen-capture/node_modules/@unimodules/core/ios`)"
   - UMFaceDetectorInterface (from `../node_modules/unimodules-face-detector-interface/ios`)
   - UMFileSystemInterface (from `../node_modules/unimodules-file-system-interface/ios`)
   - UMFontInterface (from `../node_modules/unimodules-font-interface/ios`)
@@ -626,6 +629,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-permissions/ios"
   EXRandom:
     :path: "../node_modules/expo-random/ios"
+  EXScreenCapture:
+    :path: "../node_modules/expo-screen-capture/ios"
   EXSecureStore:
     :path: "../node_modules/expo-secure-store/ios"
   EXSplashScreen:
@@ -729,7 +734,7 @@ EXTERNAL SOURCES:
   UMConstantsInterface:
     :path: "../node_modules/unimodules-constants-interface/ios"
   UMCore:
-    :path: "../node_modules/@unimodules/core/ios"
+    :path: "../node_modules/expo-screen-capture/node_modules/@unimodules/core/ios"
   UMFaceDetectorInterface:
     :path: "../node_modules/unimodules-face-detector-interface/ios"
   UMFileSystemInterface:
@@ -771,6 +776,7 @@ SPEC CHECKSUMS:
   EXLocation: d55e2a37f61bcfb4eba9c813b3f4621d896c4c00
   EXPermissions: 17d4846ad1880f6891c74ae58ca1acb43e47ed47
   EXRandom: d7e0f3dd64810aabd27d59f8ecffee359177e2c3
+  EXScreenCapture: 5b8447139e56e2b922e93ccdc7c773c103fb44fd
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSplashScreen: 8c7c1112ce7611a853486af4737fe2298eda7657
   EXSQLite: bda6a286dded0637bb312ee781239dcca163ff4b
@@ -838,7 +844,7 @@ SPEC CHECKSUMS:
   UMBarCodeScannerInterface: 3f6c1b09ef4b867ce752b8c0b3893bcf9cd85f32
   UMCameraInterface: d516032121192fee9a6c93bdfff0bb2cc7282796
   UMConstantsInterface: 6825ea3832d26ed392ca6eff2df84edd69968fd0
-  UMCore: 97ba5041c9c92317ce61739f6d126a692c8ef4a8
+  UMCore: a882a262c77a535d46b058c150f957eface073f4
   UMFaceDetectorInterface: 60b36b07faa539205efce30b20c192e058b31c23
   UMFileSystemInterface: ab01294ce58a3c773aefb4a5b131ce589c199559
   UMFontInterface: 85fe1b845fb7caab45e04d9ce47e1677a5ce90a5

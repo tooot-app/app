@@ -33,7 +33,7 @@ const ComponentInstance: React.FC<Props> = ({
   disableHeaderImage,
   goBack = false
 }) => {
-  const { t } = useTranslation('componentInstance')
+  const { t, i18n } = useTranslation('componentInstance')
   const { theme } = useTheme()
   const navigation = useNavigation()
 
@@ -136,7 +136,7 @@ const ComponentInstance: React.FC<Props> = ({
       case 'remote':
         return t('server.button.remote')
     }
-  }, [])
+  }, [i18n.language])
 
   const requestAuth = useMemo(() => {
     if (

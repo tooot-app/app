@@ -1,4 +1,4 @@
-fastlane_version "2.172.0"
+fastlane_version "2.173.0"
 skip_docs
 
 ensure_env_vars(
@@ -15,7 +15,7 @@ case ENVIRONMENT
 when "development"
   GITHUB_RELEASE= ""
 when "staging"
-  GITHUB_RELEASE = "v#{VERSION} (#{BUILD_NUMBER})"
+  GITHUB_RELEASE = "v#{VERSION}(#{BUILD_NUMBER})"
 when "production"
   GITHUB_RELEASE = "v#{VERSION}"
 end
@@ -26,18 +26,21 @@ EXPO_PLIST = "./ios/tooot/Supporting/Expo.plist"
 
 desc "IOS: Prepare app store"
 private_lane :prepare_appstore_ios do
-  case ENVIRONMENT
-  when "staging", "production"
-    increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
-    app_store_connect_api_key
-  end
+  set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
+  increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
+  app_store_connect_api_key
 end
 
-desc 'IOS: Update version information'
-private_lane :update_versions_ios do
-  set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
+desc 'IOS: Update expo information'
+private_lane :update_expo_ios do
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
+end
+
+desc "ANDROID: Prepare play store"
+private_lane :prepare_playstore_android do
+  android_set_version_name( version_name: VERSION, gradle_file: "./android/app/build.gradle" )
+  android_set_version_code( version_code: BUILD_NUMBER, gradle_file: "./android/app/build.gradle" )
 end
 
 desc "Create new GitHub release"
@@ -67,8 +70,7 @@ desc "Build and deploy iOS app"
 private_lane :build_ios do
   BUILD_DIRECTORY = "./ios/build"
 
-  update_versions_ios
-  prepare_appstore_ios
+  update_expo_ios
   setup_ci
 
   case ENVIRONMENT
@@ -77,6 +79,7 @@ private_lane :build_ios do
     build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY, output_name: "#{VERSION}-#{BUILD_NUMBER}" )
     install_on_device( skip_wifi: true )
   when "staging"
+    prepare_appstore_ios
     match( type: "appstore", readonly: true )
     build_ios_app( export_method: "app-store" )
     upload_to_testflight(
@@ -86,6 +89,7 @@ private_lane :build_ios do
       changelog: "Ready for testing"
     )
   when "production"
+    prepare_appstore_ios
     match( type: "appstore", readonly: true )
     build_ios_app( export_method: "app-store" )
   end
@@ -93,32 +97,43 @@ end
 
 desc "Build and deploy Android app"
 private_lane :build_android do
+  sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
+
   case ENVIRONMENT
   when "development"
     build_android_app(
       task: 'assemble',
-      build_type: 'Debug',
+      build_type: 'debug',
+      project_dir: "./android"
+    )
+    adb(
+      command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+    )
+  when "staging"
+    prepare_playstore_android
+    build_android_app(
+      task: 'clean bundle',
+      build_type: 'release',
       project_dir: "./android",
+      print_command: false,
+      print_command_output: false,
       properties: {
-        "android.injected.signing.store.file" => "keystore.jks",
-        "android.injected.signing.store.password" => "store_password",
-        "android.injected.signing.key.alias" => "key_alias",
-        "android.injected.signing.key.password" => "key_password",
+        "expoSDK" => VERSIONS[:expo],
+        "releaseChannel" => RELEASE_CHANNEL,
+        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
+        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
       }
     )
-    puts lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
-  when "staging"
-    match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store" )
-    upload_to_testflight(
-      demo_account_required: true,
-      distribute_external: true,
-      groups: "内测用户",
-      changelog: "Ready for testing"
+    upload_to_play_store(
+      track: "alpha",
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   when "production"
-    match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store" )
   end
 end
 
@@ -129,7 +144,7 @@ lane :build do
   else
     puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
     build_ios
-    # build_android
+    build_android
     case ENVIRONMENT
     when "staging"
       github_release
@@ -137,6 +152,6 @@ lane :build do
       github_release
     end
   end
-  # expo_release
+  expo_release
   rocket
 end

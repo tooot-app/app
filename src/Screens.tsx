@@ -1,5 +1,5 @@
 import client from '@api/client'
-import { HeaderLeft } from '@components/Header'
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { toast, toastConfig } from '@components/toast'
 import {
   NavigationContainer,
@@ -17,9 +17,10 @@ import {
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
+import { addScreenshotListener } from 'expo-screen-capture'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StatusBar } from 'react-native'
+import { Alert, Platform, StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,6 +34,7 @@ export interface Props {
 export const navigationRef = createRef<NavigationContainerRef>()
 
 const Index: React.FC<Props> = ({ localCorrupt }) => {
+  const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
   const { mode, theme } = useTheme()
@@ -56,8 +58,18 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   //   }
   // }, [isConnected, firstRender])
 
+  // Prevent screenshot alert
+  useEffect(() => {
+    const screenshotListener = addScreenshotListener(() =>
+      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+        { text: t('screenshot.button'), style: 'destructive' }
+      ])
+    )
+    Platform.OS === 'ios' && screenshotListener
+    return () => screenshotListener.remove()
+  }, [])
+
   // On launch display login credentials corrupt information
-  const { t } = useTranslation('common')
   useEffect(() => {
     const showLocalCorrect = localCorrupt
       ? toast({
@@ -153,7 +165,12 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             component={ScreenAnnouncements}
             options={{
               gestureEnabled: false,
-              title: t('sharedAnnouncements:heading'),
+              headerTitle: t('sharedAnnouncements:heading'),
+              ...(Platform.OS === 'android' && {
+                headerCenter: () => (
+                  <HeaderCenter content={t('sharedAnnouncements:heading')} />
+                )
+              }),
               headerTransparent: true,
               headerLeft: () => (
                 <HeaderLeft

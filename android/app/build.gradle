@@ -135,8 +135,12 @@ android {
         applicationId 'com.xmflsct.app.tooot'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.1.0"
+        versionCode 50
+        versionName "0.2"
+        manifestPlaceholders = [
+            expoSDK: project.hasProperty('expoSDK') ? project.property('expoSDK') : "",
+            releaseChannel: project.hasProperty('releaseChannel') ? project.property('releaseChannel') : "default"
+        ]
     }
     splits {
         abi {
@@ -161,7 +165,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
