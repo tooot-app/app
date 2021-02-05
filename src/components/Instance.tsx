@@ -149,7 +149,7 @@ const ComponentInstance: React.FC<Props> = ({
         <InstanceAuth
           key={Math.random()}
           instanceDomain={instanceDomain}
-          instanceUri={instanceQuery.data.uri}
+          instance={instanceQuery.data}
           appData={{
             clientId: appsQuery.data.client_id,
             clientSecret: appsQuery.data.client_secret

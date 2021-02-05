@@ -13,6 +13,7 @@ export type InstanceLocal = {
   url: string
   token: string
   uri: Mastodon.Instance['uri']
+  max_toot_chars: number
   account: {
     id: Mastodon.Account['id']
     acct: Mastodon.Account['acct']
@@ -54,11 +55,13 @@ export const localAddInstance = createAsyncThunk(
     url,
     token,
     uri,
+    max_toot_chars = 500,
     appData
   }: {
     url: InstanceLocal['url']
     token: InstanceLocal['token']
     uri: Mastodon.Instance['uri']
+    max_toot_chars?: number
     appData: InstanceLocal['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
     const { store } = require('@root/store')
@@ -107,6 +110,7 @@ export const localAddInstance = createAsyncThunk(
         url,
         token,
         uri,
+        max_toot_chars,
         account: {
           id,
           acct,
@@ -273,6 +277,10 @@ export const getLocalUri = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].uri
     : undefined
+export const getLocalMaxTootChar = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].max_toot_chars
+    : 500
 export const getLocalAccount = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].account

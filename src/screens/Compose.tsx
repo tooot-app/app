@@ -7,7 +7,10 @@ import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import {
+  getLocalAccount,
+  getLocalMaxTootChar
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
@@ -23,7 +26,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import ComposeContext from './Compose/utils/createContext'
@@ -110,6 +113,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     }
   }, [params?.type])
 
+  const maxTootChars = useSelector(getLocalMaxTootChar)
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
@@ -160,14 +164,14 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         style={[
           styles.count,
           {
-            color: totalTextCount > 500 ? theme.red : theme.secondary
+            color: totalTextCount > maxTootChars ? theme.red : theme.secondary
           }
         ]}
       >
-        {totalTextCount} / 500
+        {totalTextCount} / {maxTootChars}
       </Text>
     ),
-    [totalTextCount]
+    [totalTextCount, maxTootChars]
   )
   const dispatch = useDispatch()
   const headerRight = useCallback(
@@ -217,14 +221,14 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         loading={composeState.posting}
         disabled={
           composeState.text.raw.length < 1 ||
-          totalTextCount > 500 ||
+          totalTextCount > maxTootChars ||
           (composeState.attachments.uploads.length > 0 &&
             composeState.attachments.uploads.filter(upload => upload.uploading)
               .length > 0)
         }
       />
     ),
-    [totalTextCount, composeState]
+    [totalTextCount, maxTootChars, composeState]
   )
 
   return (

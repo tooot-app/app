@@ -6,9 +6,9 @@ import {
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
 import contextsSlice from '@utils/slices/contextsSlice'
-import instancesSlice from '@utils/slices/instancesSlice'
+import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
-import { persistReducer, persistStore } from 'redux-persist'
+import { createMigrate, persistReducer, persistStore } from 'redux-persist'
 
 const secureStorage = createSecureStore()
 
@@ -20,11 +20,26 @@ const contextsPersistConfig = {
   storage: AsyncStorage
 }
 
+const instancesMigration = {
+  2: (state: InstancesState) => {
+    return {
+      ...state,
+      local: {
+        ...state.local,
+        instances: state.local.instances.map(instance => {
+          instance.max_toot_chars = 500
+          return instance
+        })
+      }
+    }
+  }
+}
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
-  version: 1,
-  storage: secureStorage
+  version: 2,
+  storage: secureStorage,
+  migrate: createMigrate(instancesMigration, { debug: true })
 }
 
 const settingsPersistConfig = {

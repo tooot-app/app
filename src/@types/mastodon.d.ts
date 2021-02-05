@@ -290,6 +290,9 @@ declare namespace Mastodon {
     // Others
     thumbnail?: string
     contact_account?: Account
+
+    // Custom
+    max_toot_chars?: number
   }
 
   type Mention = {
