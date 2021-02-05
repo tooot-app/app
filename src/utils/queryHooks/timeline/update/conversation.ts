@@ -19,6 +19,13 @@ const updateConversation = ({
           typeof payload.currentValue === 'boolean'
             ? !payload.currentValue
             : true
+        if (payload.propertyCount) {
+          if (typeof payload.currentValue === 'boolean' && payload.currentValue) {
+            item.last_status[payload.propertyCount] = payload.countValue - 1
+          } else {
+            item.last_status[payload.propertyCount] = payload.countValue + 1
+          }
+        }
       }
       return item
   }

@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import TimelineActioned from '@components/Timelines/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
@@ -7,6 +8,7 @@ import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
 import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -17,6 +19,7 @@ import { useSelector } from 'react-redux'
 export interface Props {
   item: Mastodon.Status & { isPinned?: boolean }
   queryKey?: QueryKeyTimeline
+  origin?: string
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
@@ -26,27 +29,42 @@ export interface Props {
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
+  origin,
   highlighted = false,
   disableDetails = false,
   disableOnPress = false
 }) => {
   const localAccount = useSelector(getLocalAccount)
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.TabLocalStackParamList>
+  >()
 
   let actualStatus = item.reblog ? item.reblog : item
 
-  const onPress = useCallback(
-    () =>
-      !disableOnPress &&
+  const onPress = useCallback(() => {
+    analytics('timeline_default_press', {
+      page: queryKey ? queryKey[1].page : origin
+    })
+    !disableOnPress &&
       !highlighted &&
-      navigation.push('Screen-Shared-Toot', {
+      navigation.push('Tab-Shared-Toot', {
         toot: actualStatus
-      }),
-    []
-  )
+      })
+  }, [])
 
   return (
-    <Pressable style={styles.statusView} onPress={onPress}>
+    <Pressable
+      style={[
+        styles.statusView,
+        {
+          paddingBottom:
+            disableDetails && disableOnPress
+              ? StyleConstants.Spacing.Global.PagePadding
+              : 0
+        }
+      ]}
+      onPress={onPress}
+    >
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
       ) : item.isPinned ? (
@@ -107,6 +125,11 @@ const TimelineDefault: React.FC<Props> = ({
           <TimelineActions
             queryKey={queryKey}
             status={actualStatus}
+            accts={([actualStatus.account] as Mastodon.Account[] &
+              Mastodon.Mention[])
+              .concat(actualStatus.mentions)
+              .filter(d => d.id !== localAccount?.id)
+              .map(d => d.acct)}
             reblog={item.reblog ? true : false}
           />
         </View>
@@ -118,7 +141,7 @@ const TimelineDefault: React.FC<Props> = ({
 const styles = StyleSheet.create({
   statusView: {
     padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: StyleConstants.Spacing.S
+    paddingBottom: 0
   },
   header: {
     flex: 1,

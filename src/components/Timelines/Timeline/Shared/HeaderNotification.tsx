@@ -1,15 +1,19 @@
-import { RelationshipOutgoing } from '@components/Relationship'
+import Icon from '@components/Icon'
+import {
+  RelationshipIncoming,
+  RelationshipOutgoing
+} from '@components/Relationship'
+import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
-import HeaderSharedVisibility from './HeaderShared/Visibility'
-import RelationshipIncoming from '@root/components/Relationship/Incoming'
 import HeaderSharedMuted from './HeaderShared/Muted'
-import HeaderActions from './HeaderActions/Root'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -20,6 +24,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({
   queryKey,
   notification
 }) => {
+  const navigation = useNavigation()
+  const { theme } = useTheme()
+
   const actions = useMemo(() => {
     switch (notification.type) {
       case 'follow':
@@ -27,11 +34,36 @@ const TimelineHeaderNotification: React.FC<Props> = ({
       case 'follow_request':
         return <RelationshipIncoming id={notification.account.id} />
       default:
-        return notification.status ? (
-          <HeaderActions queryKey={queryKey} status={notification.status} />
-        ) : null
+        if (notification.status) {
+          return (
+            <Pressable
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingBottom: StyleConstants.Spacing.S
+              }}
+              onPress={() =>
+                navigation.navigate('Screen-Actions', {
+                  queryKey,
+                  status,
+                  url: notification.status?.url || notification.status?.uri,
+                  type: 'status'
+                })
+              }
+              children={
+                <Icon
+                  name='MoreHorizontal'
+                  color={theme.secondary}
+                  size={StyleConstants.Font.Size.L}
+                />
+              }
+            />
+          )
+        }
     }
   }, [notification.type])
+
   return (
     <View style={styles.base}>
       <View
@@ -54,9 +86,11 @@ const TimelineHeaderNotification: React.FC<Props> = ({
         />
         <View style={styles.meta}>
           <HeaderSharedCreated created_at={notification.created_at} />
-          <HeaderSharedVisibility
-            visibility={notification.status?.visibility}
-          />
+          {notification.status?.visibility ? (
+            <HeaderSharedVisibility
+              visibility={notification.status.visibility}
+            />
+          ) : null}
           <HeaderSharedMuted muted={notification.status?.muted} />
           <HeaderSharedApplication
             application={notification.status?.application}

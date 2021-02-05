@@ -1,27 +1,41 @@
 import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import analytics from './analytics'
+import GracefullyImage from './GracefullyImage'
 
 export interface Props {
   account: Mastodon.Account
+  onPress?: () => void
+  origin?: string
 }
 
-const ComponentAccount: React.FC<Props> = ({ account }) => {
-  const navigation = useNavigation()
+const ComponentAccount: React.FC<Props> = ({
+  account,
+  onPress: customOnPress,
+  origin
+}) => {
   const { theme } = useTheme()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.TabLocalStackParamList>
+  >()
+
+  const onPress = useCallback(() => {
+    analytics('search_account_press', { page: origin })
+    navigation.push('Tab-Shared-Account', { account })
+  }, [])
 
   return (
     <Pressable
       style={[styles.itemDefault, styles.itemAccount]}
-      onPress={() => {
-        navigation.push('Screen-Shared-Account', { account })
-      }}
+      onPress={customOnPress || onPress}
     >
-      <Image
-        source={{ uri: account.avatar_static }}
+      <GracefullyImage
+        uri={{ original: account.avatar_static }}
         style={styles.itemAccountAvatar}
       />
       <View>

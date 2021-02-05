@@ -11,12 +11,11 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      // "@assets/*": ["./assets/*"],
       "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
       "@screens/*": ["./src/screens/*"],
       "@utils/*": ["./src/utils/*"],
-      "@root/*": ["./src/*"],
+      "@root/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules"]

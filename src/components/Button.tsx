@@ -48,7 +48,7 @@ const Button: React.FC<Props> = ({
   overlay = false,
   onPress
 }) => {
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
 
   const mounted = useRef(false)
   useEffect(() => {
@@ -65,7 +65,7 @@ const Button: React.FC<Props> = ({
         <Chase size={StyleConstants.Font.Size[size]} color={theme.secondary} />
       </View>
     ),
-    [theme]
+    [mode]
   )
 
   const colorContent = useMemo(() => {
@@ -86,7 +86,7 @@ const Button: React.FC<Props> = ({
         }
       }
     }
-  }, [theme, disabled])
+  }, [mode, disabled])
   const colorBorder = useMemo(() => {
     if (active) {
       return theme.blue
@@ -101,14 +101,14 @@ const Button: React.FC<Props> = ({
         }
       }
     }
-  }, [theme, loading, disabled])
+  }, [mode, loading, disabled])
   const colorBackground = useMemo(() => {
     if (overlay) {
       return theme.backgroundOverlay
     } else {
       return theme.background
     }
-  }, [theme])
+  }, [mode])
 
   const children = useMemo(() => {
     switch (type) {
@@ -122,7 +122,7 @@ const Button: React.FC<Props> = ({
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
             />
-            {loading && loadingSpinkit}
+            {loading ? loadingSpinkit : null}
           </>
         )
       case 'text':
@@ -141,11 +141,11 @@ const Button: React.FC<Props> = ({
               children={content}
               testID='text'
             />
-            {loading && loadingSpinkit}
+            {loading ? loadingSpinkit : null}
           </>
         )
     }
-  }, [theme, content, loading, disabled, active])
+  }, [mode, content, loading, disabled, active])
 
   enum spacingMapping {
     XS = 'S',
@@ -155,26 +155,24 @@ const Button: React.FC<Props> = ({
   }
 
   return (
-    <View>
-      <Pressable
-        style={[
-          styles.button,
-          {
-            borderWidth: overlay ? 0 : 1,
-            borderColor: colorBorder,
-            backgroundColor: colorBackground,
-            paddingVertical: StyleConstants.Spacing[spacing],
-            paddingHorizontal:
-              StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
-          },
-          customStyle
-        ]}
-        testID='base'
-        onPress={onPress}
-        children={children}
-        disabled={disabled || active || loading}
-      />
-    </View>
+    <Pressable
+      style={[
+        styles.button,
+        {
+          borderWidth: overlay ? 0 : 1,
+          borderColor: colorBorder,
+          backgroundColor: colorBackground,
+          paddingVertical: StyleConstants.Spacing[spacing],
+          paddingHorizontal:
+            StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
+        },
+        customStyle
+      ]}
+      testID='base'
+      onPress={onPress}
+      children={children}
+      disabled={disabled || active || loading}
+    />
   )
 }
 

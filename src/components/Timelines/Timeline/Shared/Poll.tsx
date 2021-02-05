@@ -1,10 +1,12 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
-import { ParseEmojis } from '@root/components/Parse'
-import { toast } from '@root/components/toast'
+import { toast } from '@components/toast'
 import {
+  MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
@@ -32,7 +34,7 @@ const TimelinePoll: React.FC<Props> = ({
   sameAccount
 }) => {
   const { mode, theme } = useTheme()
-  const { t, i18n } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   const [allOptions, setAllOptions] = useState(
     new Array(poll.options.length).fill(false)
@@ -42,19 +44,22 @@ const TimelinePoll: React.FC<Props> = ({
   const mutation = useTimelineMutation({
     queryClient,
     onSuccess: true,
-    onError: (err: any) => {
+    onError: (err: any, params) => {
+      const theParams = params as MutationVarsTimelineUpdateStatusProperty
       haptics('Error')
       toast({
         type: 'error',
-        message: '投票错误',
+        message: t('common:toastMessage.error.message', {
+          // @ts-ignore
+          function: t(`shared.poll.meta.button.${theParams.payload.type}`)
+        }),
         ...(err.status &&
           typeof err.status === 'number' &&
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
             description: err.data.error
-          }),
-        autoHide: false
+          })
       })
       queryClient.invalidateQueries(queryKey)
     }
@@ -66,7 +71,8 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() =>
+              onPress={() => {
+                analytics('timeline_shared_vote_vote_press')
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
@@ -79,7 +85,7 @@ const TimelinePoll: React.FC<Props> = ({
                     options: allOptions
                   }
                 })
-              }
+              }}
               type='text'
               content={t('shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
@@ -91,7 +97,8 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <View style={styles.button}>
             <Button
-              onPress={() =>
+              onPress={() => {
+                analytics('timeline_shared_vote_refresh_press')
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
@@ -103,7 +110,7 @@ const TimelinePoll: React.FC<Props> = ({
                     type: 'refresh'
                   }
                 })
-              }
+              }}
               type='text'
               content={t('shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}
@@ -112,7 +119,7 @@ const TimelinePoll: React.FC<Props> = ({
         )
       }
     }
-  }, [poll.expired, poll.voted, allOptions, mutation.isLoading])
+  }, [mode, poll.expired, poll.voted, allOptions, mutation.isLoading])
 
   const pollExpiration = useMemo(() => {
     if (poll.expired) {
@@ -125,7 +132,7 @@ const TimelinePoll: React.FC<Props> = ({
       return (
         <Text style={[styles.expiration, { color: theme.secondary }]}>
           <Trans
-            i18nKey='timeline:shared.poll.meta.expiration.until'
+            i18nKey='componentTimeline:shared.poll.meta.expiration.until'
             components={[<RelativeTime date={poll.expires_at} />]}
           />
         </Text>
@@ -196,6 +203,7 @@ const TimelinePoll: React.FC<Props> = ({
         key={index}
         style={styles.optionContainer}
         onPress={() => {
+          analytics('timeline_shared_vote_option_press')
           haptics('Light')
           if (poll.multiple) {
             setAllOptions(allOptions.map((o, i) => (i === index ? !o : o)))
@@ -220,7 +228,7 @@ const TimelinePoll: React.FC<Props> = ({
           <Icon
             style={styles.optionSelection}
             name={isSelected(index)}
-            size={StyleConstants.Font.Size.L}
+            size={StyleConstants.Font.Size.M}
             color={theme.primary}
           />
           <Text style={styles.optionText}>
@@ -275,6 +283,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   optionSelection: {
+    paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
     marginRight: StyleConstants.Spacing.S
   },
   optionPercentage: {

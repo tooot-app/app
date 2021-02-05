@@ -1,7 +1,10 @@
 import client from '@api/client'
 import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
-import { localRemoveInstance } from '@utils/slices/instancesSlice'
+import {
+  localRemoveInstance,
+  localUpdateAccount
+} from '@utils/slices/instancesSlice'
 import log from './log'
 
 const netInfo = async (): Promise<{
@@ -14,7 +17,7 @@ const netInfo = async (): Promise<{
 
   if (netInfo.isConnected) {
     log('log', 'netInfo', 'network connected')
-    if (activeIndex) {
+    if (activeIndex !== null) {
       log('log', 'netInfo', 'checking locally stored credentials')
       return client<Mastodon.Account>({
         method: 'get',
@@ -31,6 +34,12 @@ const netInfo = async (): Promise<{
             store.dispatch(localRemoveInstance(activeIndex))
             return Promise.resolve({ connected: true, corruputed: '' })
           } else {
+            store.dispatch(
+              localUpdateAccount({
+                acct: res.acct,
+                avatarStatic: res.avatar_static
+              })
+            )
             return Promise.resolve({ connected: true })
           }
         })

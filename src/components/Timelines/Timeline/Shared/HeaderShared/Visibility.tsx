@@ -5,20 +5,34 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 
 export interface Props {
-  visibility?: Mastodon.Status['visibility']
+  visibility: Mastodon.Status['visibility']
 }
 
 const HeaderSharedVisibility: React.FC<Props> = ({ visibility }) => {
   const { theme } = useTheme()
 
-  return visibility && visibility === 'private' ? (
-    <Icon
-      name='Lock'
-      size={StyleConstants.Font.Size.S}
-      color={theme.secondary}
-      style={styles.visibility}
-    />
-  ) : null
+  switch (visibility) {
+    case 'private':
+      return (
+        <Icon
+          name='Lock'
+          size={StyleConstants.Font.Size.S}
+          color={theme.secondary}
+          style={styles.visibility}
+        />
+      )
+    case 'direct':
+      return (
+        <Icon
+          name='Mail'
+          size={StyleConstants.Font.Size.S}
+          color={theme.secondary}
+          style={styles.visibility}
+        />
+      )
+    default:
+      return null
+  }
 }
 
 const styles = StyleSheet.create({

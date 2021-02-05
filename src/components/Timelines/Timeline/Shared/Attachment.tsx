@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import AttachmentAudio from '@components/Timelines/Timeline/Shared/Attachment/Audio'
@@ -17,17 +18,19 @@ export interface Props {
 }
 
 const TimelineAttachment: React.FC<Props> = ({ status }) => {
-  const { t } = useTranslation('timeline')
+  const { t } = useTranslation('componentTimeline')
 
   const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
   const onPressBlurView = useCallback(() => {
+    analytics('timeline_shared_attachment_blurview_press_show')
     layoutAnimation()
     setSensitiveShown(false)
-    haptics('Medium')
+    haptics('Light')
   }, [])
   const onPressShow = useCallback(() => {
+    analytics('timeline_shared_attachment_blurview_press_hide')
     setSensitiveShown(true)
-    haptics('Medium')
+    haptics('Light')
   }, [])
 
   let imageUrls: (IImageInfo & {
@@ -37,7 +40,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
   })[] = []
   const navigation = useNavigation()
   const navigateToImagesViewer = (imageIndex: number) =>
-    navigation.navigate('Screen-Shared-ImagesViewer', {
+    navigation.navigate('Screen-ImagesViewer', {
       imageUrls,
       imageIndex
     })
@@ -57,9 +60,10 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentImage
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 image={attachment}
-                imageIndex={index}
                 navigateToImagesViewer={navigateToImagesViewer}
               />
             )
@@ -67,6 +71,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentVideo
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
               />
@@ -75,6 +81,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentVideo
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
               />
@@ -83,6 +91,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentAudio
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 audio={attachment}
               />
@@ -91,6 +101,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             return (
               <AttachmentUnsupported
                 key={index}
+                total={status.media_attachments.length}
+                index={index}
                 sensitiveShown={sensitiveShown}
                 attachment={attachment}
               />
@@ -101,8 +113,8 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
   )
 
   return (
-    <View style={styles.base}>
-      {attachments}
+    <View>
+      <View style={styles.container} children={attachments} />
 
       {status.sensitive &&
         (sensitiveShown ? (
@@ -123,7 +135,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
             onPress={onPressShow}
             style={{
               position: 'absolute',
-              top: StyleConstants.Spacing.S,
+              top: StyleConstants.Spacing.S * 2,
               left: StyleConstants.Spacing.S
             }}
           />
@@ -133,17 +145,13 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
 }
 
 const styles = StyleSheet.create({
-  base: {
+  container: {
     marginTop: StyleConstants.Spacing.S,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignContent: 'stretch'
-  },
-  container: {
-    flexBasis: '50%',
-    aspectRatio: 16 / 9
   },
   sensitiveBlur: {
     position: 'absolute',

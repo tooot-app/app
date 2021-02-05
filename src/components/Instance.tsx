@@ -5,20 +5,20 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import {
-  getLocalInstances,
-  InstanceLocal,
-  remoteUpdate
-} from '@utils/slices/instancesSlice'
+import { getLocalInstances, remoteUpdate } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import { Placeholder, Fade } from 'rn-placeholder'
+import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
+import EULA from './Instance/EULA'
 import InstanceInfo from './Instance/Info'
 import { toast } from './toast'
 
@@ -33,82 +33,73 @@ const ComponentInstance: React.FC<Props> = ({
   disableHeaderImage,
   goBack = false
 }) => {
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
-  const queryClient = useQueryClient()
-  const { t } = useTranslation('meRoot')
+  const { t, i18n } = useTranslation('componentInstance')
   const { theme } = useTheme()
-  const [instanceDomain, setInstanceDomain] = useState<string | undefined>()
-  const [appData, setApplicationData] = useState<InstanceLocal['appData']>()
+  const navigation = useNavigation()
+
   const localInstances = useSelector(getLocalInstances)
+  const dispatch = useDispatch()
+
+  const queryClient = useQueryClient()
+  const [instanceDomain, setInstanceDomain] = useState<string>()
 
   const instanceQuery = useInstanceQuery({
     instanceDomain,
+    checkPublic: type === 'remote',
     options: { enabled: false, retry: false }
   })
-  const applicationQuery = useAppsQuery({
+  const appsQuery = useAppsQuery({
     instanceDomain,
     options: { enabled: false, retry: false }
   })
-
-  useEffect(() => {
-    if (
-      applicationQuery.data?.client_id.length &&
-      applicationQuery.data?.client_secret.length
-    ) {
-      setApplicationData({
-        clientId: applicationQuery.data.client_id,
-        clientSecret: applicationQuery.data.client_secret
-      })
-    }
-  }, [applicationQuery.data?.client_id])
 
   const onChangeText = useCallback(
     debounce(
       text => {
         setInstanceDomain(text.replace(/^http(s)?\:\/\//i, ''))
-        setApplicationData(undefined)
+        appsQuery.remove()
+        if (text) {
+          instanceQuery.refetch()
+        }
       },
       1000,
-      {
-        trailing: true
-      }
+      { trailing: true }
     ),
     []
   )
-  useEffect(() => {
-    if (instanceDomain) {
-      instanceQuery.refetch()
-    }
-  }, [instanceDomain])
 
   const processUpdate = useCallback(() => {
     if (instanceDomain) {
       switch (type) {
         case 'local':
+          analytics('instance_local_login')
           if (
             localInstances &&
             localInstances.filter(instance => instance.url === instanceDomain)
               .length
           ) {
             Alert.alert(
-              '域名已存在',
-              '可以登录同个域名的另外一个账户，现有账户🈚️用',
+              t('update.local.alert.title'),
+              t('update.local.alert.message'),
               [
-                { text: '取消', style: 'cancel' },
                 {
-                  text: '继续',
+                  text: t('update.local.alert.buttons.cancel'),
+                  style: 'cancel'
+                },
+                {
+                  text: t('update.local.alert.buttons.continue'),
                   onPress: () => {
-                    applicationQuery.refetch()
+                    appsQuery.refetch()
                   }
                 }
               ]
             )
           } else {
-            applicationQuery.refetch()
+            appsQuery.refetch()
           }
           break
         case 'remote':
+          analytics('instance_remote_register')
           haptics('Success')
           const queryKey: QueryKeyTimeline = [
             'Timeline',
@@ -116,8 +107,8 @@ const ComponentInstance: React.FC<Props> = ({
           ]
           dispatch(remoteUpdate(instanceDomain))
           queryClient.resetQueries(queryKey)
-          toast({ type: 'success', message: '重置成功' })
-          navigation.navigate('Screen-Public', { screen: 'Screen-Public-Root' })
+          toast({ type: 'success', message: t('update.remote.succeed') })
+          navigation.goBack()
           break
       }
     }
@@ -125,6 +116,7 @@ const ComponentInstance: React.FC<Props> = ({
 
   const onSubmitEditing = useCallback(
     ({ nativeEvent: { text } }) => {
+      analytics('instance_textinput_submit', { match: text === instanceDomain })
       if (
         text === instanceDomain &&
         instanceQuery.isSuccess &&
@@ -132,9 +124,6 @@ const ComponentInstance: React.FC<Props> = ({
         instanceQuery.data.uri
       ) {
         processUpdate()
-      } else {
-        setInstanceDomain(text)
-        setApplicationData(undefined)
       }
     },
     [instanceDomain, instanceQuery.isSuccess, instanceQuery.data]
@@ -143,11 +132,35 @@ const ComponentInstance: React.FC<Props> = ({
   const buttonContent = useMemo(() => {
     switch (type) {
       case 'local':
-        return t('content.login.button')
+        return t('server.button.local')
       case 'remote':
-        return '登记'
+        return t('server.button.remote')
     }
-  }, [])
+  }, [i18n.language])
+
+  const requestAuth = useMemo(() => {
+    if (
+      instanceDomain &&
+      instanceQuery.data?.uri &&
+      appsQuery.data?.client_id &&
+      appsQuery.data.client_secret
+    ) {
+      return (
+        <InstanceAuth
+          key={Math.random()}
+          instanceDomain={instanceDomain}
+          instanceUri={instanceQuery.data.uri}
+          appData={{
+            clientId: appsQuery.data.client_id,
+            clientSecret: appsQuery.data.client_secret
+          }}
+          goBack={goBack}
+        />
+      )
+    }
+  }, [instanceDomain, instanceQuery.data, appsQuery.data])
+
+  const [agreed, setAgreed] = useState(false)
 
   return (
     <>
@@ -166,7 +179,12 @@ const ComponentInstance: React.FC<Props> = ({
               styles.textInput,
               {
                 color: theme.primary,
-                borderBottomColor: theme.border
+                borderBottomColor:
+                  type === 'remote' &&
+                  instanceQuery.data &&
+                  !instanceQuery.data.publicAllow
+                    ? theme.red
+                    : theme.border
               }
             ]}
             onChangeText={onChangeText}
@@ -176,7 +194,7 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardType='url'
             textContentType='URL'
             onSubmitEditing={onSubmitEditing}
-            placeholder={t('content.login.server.placeholder')}
+            placeholder={t('server.textInput.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
           />
@@ -184,70 +202,94 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={buttonContent}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri}
-            loading={instanceQuery.isLoading || applicationQuery.isLoading}
+            disabled={
+              !instanceQuery.data?.uri ||
+              (type === 'remote' && !instanceQuery.data.publicAllow) ||
+              !agreed
+            }
+            loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
+
+        <EULA agreed={agreed} setAgreed={setAgreed} />
+
         <View>
-          <InstanceInfo
-            visible={instanceQuery.data?.title !== undefined}
-            header='实例名称'
-            content={instanceQuery.data?.title || undefined}
-            potentialWidth={10}
-          />
-          <InstanceInfo
-            visible={instanceQuery.data?.short_description !== undefined}
-            header='实例介绍'
-            content={instanceQuery.data?.short_description || undefined}
-            potentialLines={5}
-          />
-          <View style={styles.instanceStats}>
+          <Placeholder
+            {...(instanceQuery.isFetching && {
+              Animation: props => (
+                <Fade
+                  {...props}
+                  style={{ backgroundColor: theme.shimmerHighlight }}
+                />
+              )
+            })}
+          >
             <InstanceInfo
-              style={{ alignItems: 'flex-start' }}
-              visible={instanceQuery.data?.stats?.user_count !== null}
-              header='用户总数'
-              content={
-                instanceQuery.data?.stats?.user_count?.toString() || undefined
-              }
-              potentialWidth={4}
+              visible={instanceQuery.data?.title !== undefined}
+              header={t('server.information.name')}
+              content={instanceQuery.data?.title || undefined}
+              potentialWidth={2}
             />
-            <InstanceInfo
-              style={{ alignItems: 'center' }}
-              visible={instanceQuery.data?.stats?.status_count !== null}
-              header='嘟嘟总数'
-              content={
-                instanceQuery.data?.stats?.status_count?.toString() || undefined
-              }
-              potentialWidth={4}
-            />
-            <InstanceInfo
-              style={{ alignItems: 'flex-end' }}
-              visible={instanceQuery.data?.stats?.domain_count !== null}
-              header='嘟嘟总数'
-              content={
-                instanceQuery.data?.stats?.domain_count?.toString() || undefined
-              }
-              potentialWidth={4}
-            />
-          </View>
-          <Text style={[styles.disclaimer, { color: theme.secondary }]}>
-            <Icon
-              name='Lock'
-              size={StyleConstants.Font.Size.M}
-              color={theme.secondary}
-            />{' '}
-            本站不留存任何信息
-          </Text>
+            <View style={styles.instanceStats}>
+              <InstanceInfo
+                style={styles.stat1}
+                visible={instanceQuery.data?.stats?.user_count !== undefined}
+                header={t('server.information.accounts')}
+                content={
+                  instanceQuery.data?.stats?.user_count?.toString() || undefined
+                }
+                potentialWidth={4}
+              />
+              <InstanceInfo
+                style={styles.stat2}
+                visible={instanceQuery.data?.stats?.status_count !== undefined}
+                header={t('server.information.statuses')}
+                content={
+                  instanceQuery.data?.stats?.status_count?.toString() ||
+                  undefined
+                }
+                potentialWidth={4}
+              />
+              <InstanceInfo
+                style={styles.stat3}
+                visible={instanceQuery.data?.stats?.domain_count !== undefined}
+                header={t('server.information.domains')}
+                content={
+                  instanceQuery.data?.stats?.domain_count?.toString() ||
+                  undefined
+                }
+                potentialWidth={4}
+              />
+            </View>
+          </Placeholder>
+          {type === 'local' ? (
+            <View style={styles.disclaimer}>
+              <Icon
+                name='Lock'
+                size={StyleConstants.Font.Size.S}
+                color={theme.secondary}
+                style={styles.disclaimerIcon}
+              />
+              <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
+                {t('server.disclaimer.base')}
+                <Text
+                  style={{ color: theme.blue }}
+                  onPress={() => {
+                    analytics('view_privacy')
+                    WebBrowser.openBrowserAsync(
+                      'https://tooot.app/privacy-policy'
+                    )
+                  }}
+                >
+                  {t('server.disclaimer.privacy')}
+                </Text>
+              </Text>
+            </View>
+          ) : null}
         </View>
       </View>
 
-      {type === 'local' && appData ? (
-        <InstanceAuth
-          instanceDomain={instanceDomain!}
-          appData={appData}
-          goBack={goBack}
-        />
-      ) : null}
+      {type === 'local' ? requestAuth : null}
     </>
   )
 }
@@ -269,14 +311,38 @@ const styles = StyleSheet.create({
     ...StyleConstants.FontStyle.M,
     marginRight: StyleConstants.Spacing.M
   },
+  privateInstance: {
+    ...StyleConstants.FontStyle.S,
+    fontWeight: StyleConstants.Font.Weight.Bold,
+    marginLeft: StyleConstants.Spacing.Global.PagePadding,
+    marginTop: StyleConstants.Spacing.XS
+  },
   instanceStats: {
     flex: 1,
     flexDirection: 'row'
   },
+  stat1: {
+    alignItems: 'flex-start'
+  },
+  stat2: {
+    alignItems: 'center'
+  },
+  stat3: {
+    alignItems: 'flex-end'
+  },
   disclaimer: {
-    ...StyleConstants.FontStyle.S,
+    flexDirection: 'row',
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
     marginVertical: StyleConstants.Spacing.M
+  },
+  disclaimerIcon: {
+    marginTop:
+      (StyleConstants.Font.LineHeight.S - StyleConstants.Font.Size.S) / 2,
+    marginRight: StyleConstants.Spacing.XS
+  },
+  disclaimerText: {
+    flex: 1,
+    ...StyleConstants.FontStyle.S
   }
 })
 

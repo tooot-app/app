@@ -1,22 +1,37 @@
+import Button from '@components/Button'
+import { StyleConstants } from '@utils/styles/constants'
+import { Video } from 'expo-av'
 import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { Video } from 'expo-av'
-import Button from '@components/Button'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
-import { StyleConstants } from '@root/utils/styles/constants'
+import { Blurhash } from 'react-native-blurhash'
+import attachmentAspectRatio from './aspectRatio'
+import analytics from '@components/analytics'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   video: Mastodon.AttachmentVideo | Mastodon.AttachmentGifv
 }
 
-const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
+const AttachmentVideo: React.FC<Props> = ({
+  total,
+  index,
+  sensitiveShown,
+  video
+}) => {
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)
   const playOnPress = useCallback(async () => {
+    analytics('timeline_shared_attachment_video_length', {
+      length: video.meta?.length
+    })
+    analytics('timeline_shared_attachment_vide_play_press', {
+      id: video.id,
+      timestamp: Date.now()
+    })
     setVideoLoading(true)
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })
@@ -38,7 +53,12 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
   }, [videoLoaded, videoPosition])
 
   return (
-    <View style={styles.base}>
+    <View
+      style={[
+        styles.base,
+        { aspectRatio: attachmentAspectRatio({ total, index }) }
+      ]}
+    >
       <Video
         ref={videoPlayer}
         style={{
@@ -51,18 +71,26 @@ const AttachmentVideo: React.FC<Props> = ({ sensitiveShown, video }) => {
         posterSource={{ uri: video.preview_url }}
         posterStyle={{ resizeMode: 'cover' }}
         useNativeControls={false}
+        onFullscreenUpdate={event => {
+          if (event.fullscreenUpdate === 3) {
+            analytics('timeline_shared_attachment_video_pause_press', {
+              id: video.id,
+              timestamp: Date.now()
+            })
+            videoPlayer.current?.pauseAsync()
+          }
+        }}
       />
       <Pressable style={styles.overlay}>
         {sensitiveShown ? (
           video.blurhash ? (
-            <Surface
+            <Blurhash
+              blurhash={video.blurhash}
               style={{
                 width: '100%',
                 height: '100%'
               }}
-            >
-              <Blurhash hash={video.blurhash} />
-            </Surface>
+            />
           ) : null
         ) : (
           <Button
@@ -84,7 +112,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2
   },
   overlay: {

@@ -2,7 +2,6 @@ import RelativeTime from '@components/RelativeTime'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 
 export interface Props {
@@ -11,7 +10,6 @@ export interface Props {
 
 const HeaderSharedCreated: React.FC<Props> = ({ created_at }) => {
   const { theme } = useTheme()
-  const { i18n } = useTranslation()
 
   return (
     <Text style={[styles.created_at, { color: theme.secondary }]}>

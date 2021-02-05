@@ -1,11 +1,7 @@
 import * as Analytics from 'expo-firebase-analytics'
-import * as Sentry from 'sentry-expo'
 
-const analytics = (event: string, params?: { [key: string]: string }) => {
-  Analytics.logEvent(event, params).catch(
-    error => {}
-    // Sentry.Native.captureException(error)
-  )
+const analytics = (event: string, params?: { [key: string]: any }) => {
+  Analytics.logEvent(event, params)
 }
 
 export default analytics

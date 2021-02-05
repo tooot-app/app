@@ -1,25 +1,35 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
+import GracefullyImage from '@components/GracefullyImage'
 import { Slider } from '@sharcoux/slider'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
 import React, { useCallback, useState } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Blurhash } from 'react-native-blurhash'
+import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
+  total: number
+  index: number
   sensitiveShown: boolean
   audio: Mastodon.AttachmentAudio
 }
 
-const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
+const AttachmentAudio: React.FC<Props> = ({
+  total,
+  index,
+  sensitiveShown,
+  audio
+}) => {
   const { theme } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
   const [audioPlaying, setAudioPlaying] = useState(false)
   const [audioPosition, setAudioPosition] = useState(0)
   const playAudio = useCallback(async () => {
+    analytics('timeline_shared_attachment_audio_play_press', { id: audio.id })
     if (!audioPlayer) {
       const { sound } = await Audio.Sound.createAsync(
         { uri: audio.url },
@@ -35,30 +45,41 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
     }
   }, [audioPlayer, audioPosition])
   const pauseAudio = useCallback(async () => {
+    analytics('timeline_shared_attachment_audio_pause_press', { id: audio.id })
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])
 
   return (
-    <View style={[styles.base, { backgroundColor: theme.disabled }]}>
+    <View
+      style={[
+        styles.base,
+        {
+          backgroundColor: theme.disabled,
+          aspectRatio: attachmentAspectRatio({ total, index })
+        }
+      ]}
+    >
       <View style={styles.overlay}>
         {sensitiveShown ? (
-          audio.blurhash && (
-            <Surface
+          audio.blurhash ? (
+            <Blurhash
+              blurhash={audio.blurhash}
               style={{
                 width: '100%',
                 height: '100%'
               }}
-            >
-              <Blurhash hash={audio.blurhash} />
-            </Surface>
-          )
+            />
+          ) : null
         ) : (
           <>
-            {(audio.preview_url || audio.preview_remote_url) && (
-              <Image
+            {audio.preview_url && (
+              <GracefullyImage
+                uri={{
+                  original: audio.preview_url,
+                  remote: audio.preview_remote_url
+                }}
                 style={styles.background}
-                source={{ uri: audio.preview_url || audio.preview_remote_url }}
               />
             )}
             <Button
@@ -92,12 +113,10 @@ const AttachmentAudio: React.FC<Props> = ({ sensitiveShown, audio }) => {
           minimumTrackTintColor={theme.secondary}
           maximumTrackTintColor={theme.disabled}
           // onSlidingStart={() => {
-          //   console.log('yes!!!')
           //   audioPlayer?.pauseAsync()
           //   setAudioPlaying(false)
           // }}
           // onSlidingComplete={value => {
-          //   console.log('no!!!')
           //   setAudioPosition(value)
           // }}
           enabled={false} // Bug in above sliding actions
@@ -113,7 +132,6 @@ const styles = StyleSheet.create({
   base: {
     flex: 1,
     flexBasis: '50%',
-    aspectRatio: 16 / 9,
     padding: StyleConstants.Spacing.XS / 2,
     flexDirection: 'row'
   },

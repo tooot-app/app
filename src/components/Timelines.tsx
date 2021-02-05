@@ -1,40 +1,37 @@
-import { HeaderCenter, HeaderRight } from '@components/Header'
+import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
-import sharedScreens from '@screens/Shared/sharedScreens'
-import { getLocalActiveIndex, getRemoteUrl } from '@utils/slices/instancesSlice'
+import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
+import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Dimensions, Platform, StyleSheet, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
+import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
+import analytics from './analytics'
 
-const Stack = createNativeStackNavigator<
-  Nav.LocalStackParamList | Nav.RemoteStackParamList
->()
+const Stack = createNativeStackNavigator<Nav.TabPublicStackParamList>()
 
-export interface Props {
-  name: 'Local' | 'Public'
-  content: { title: string; page: App.Pages; remote?: boolean }[]
-}
+const Timelines: React.FC = () => {
+  const { t, i18n } = useTranslation()
+  const pages: { title: string; page: App.Pages }[] = [
+    { title: t('public:heading.segments.left'), page: 'LocalPublic' },
+    { title: t('public:heading.segments.right'), page: 'Local' }
+  ]
 
-const Timelines: React.FC<Props> = ({ name, content }) => {
-  const remoteUrl = useSelector(getRemoteUrl)
   const navigation = useNavigation()
-  const { mode } = useTheme()
   const localActiveIndex = useSelector(getLocalActiveIndex)
-  const publicDomain = useSelector(getRemoteUrl)
-  const [segment, setSegment] = useState(0)
 
   const onPressSearch = useCallback(() => {
-    navigation.navigate(`Screen-${name}`, { screen: 'Screen-Shared-Search' })
+    analytics('search_tap', { page: pages[segment].page })
+    navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })
   }, [])
 
-  const routes = content
-    .filter(p => (localActiveIndex !== null ? true : p.page === 'RemotePublic'))
-    .map(p => ({ key: p.page }))
+  const routes = pages.map(p => ({ key: p.page }))
 
   const renderScene = useCallback(
     ({
@@ -44,76 +41,56 @@ const Timelines: React.FC<Props> = ({ name, content }) => {
         key: App.Pages
       }
     }) => {
-      return (
-        (localActiveIndex !== null || route.key === 'RemotePublic') && (
-          <Timeline page={route.key} />
-        )
-      )
+      return localActiveIndex !== null && <Timeline page={route.key} />
     },
     [localActiveIndex]
   )
 
-  const screenComponent = useCallback(
-    () => (
-      <TabView
-        lazy
-        swipeEnabled
-        renderScene={renderScene}
-        renderTabBar={() => null}
-        onIndexChange={index => setSegment(index)}
-        navigationState={{ index: segment, routes }}
-        initialLayout={{ width: Dimensions.get('window').width }}
-      />
-    ),
-    [segment, localActiveIndex]
-  )
-
+  const { mode } = useTheme()
+  const [segment, setSegment] = useState(0)
   const screenOptions = useMemo(() => {
-    if (localActiveIndex === null) {
-      if (name === 'Public') {
-        return {
-          headerTitle: publicDomain,
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => <HeaderCenter content={publicDomain} />
-          })
-        }
-      }
-    } else {
+    if (localActiveIndex !== null) {
       return {
         headerCenter: () => (
-          <View style={styles.segmentsContainer}>
-            <SegmentedControl
-              appearance={mode}
-              values={[
-                content[0].title,
-                content[1].remote ? remoteUrl : content[1].title
-              ]}
-              selectedIndex={segment}
-              onChange={({ nativeEvent }) =>
-                setSegment(nativeEvent.selectedSegmentIndex)
-              }
-            />
-          </View>
+          <SegmentedControl
+            appearance={mode}
+            values={pages.map(p => p.title)}
+            selectedIndex={segment}
+            onChange={({ nativeEvent }) =>
+              setSegment(nativeEvent.selectedSegmentIndex)
+            }
+            style={styles.segmentsContainer}
+          />
         ),
         headerRight: () => (
           <HeaderRight content='Search' onPress={onPressSearch} />
         )
       }
     }
-  }, [localActiveIndex, mode, segment])
+  }, [localActiveIndex, mode, segment, i18n.language])
+
+  const renderPager = useCallback(props => <ViewPagerAdapter {...props} />, [])
 
   return (
     <Stack.Navigator
       screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
     >
-      <Stack.Screen
-        // @ts-ignore
-        name={`Screen-${name}-Root`}
-        component={screenComponent}
-        options={screenOptions}
-      />
+      <Stack.Screen name='Screen-Remote-Root' options={screenOptions}>
+        {() => (
+          <TabView
+            lazy
+            swipeEnabled
+            renderPager={renderPager}
+            renderScene={renderScene}
+            renderTabBar={() => null}
+            onIndexChange={index => setSegment(index)}
+            navigationState={{ index: segment, routes }}
+            initialLayout={{ width: Dimensions.get('screen').width }}
+          />
+        )}
+      </Stack.Screen>
 
-      {sharedScreens(Stack)}
+      {sharedScreens(Stack as any)}
     </Stack.Navigator>
   )
 }

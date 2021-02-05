@@ -1,13 +1,17 @@
+import Constants from 'expo-constants'
+import * as Updates from 'expo-updates'
 import * as Sentry from 'sentry-expo'
-import log from "./log"
+import log from './log'
 
 const sentry = () => {
   log('log', 'Sentry', 'initializing')
   Sentry.init({
-    dsn:
-      'https://c9e29aa05f774aca8f36def98244ce04@o389581.ingest.sentry.io/5571975',
+    dsn: Constants.manifest.extra.sentryDSN,
+    environment: Constants.manifest.extra.toootEnvironment,
     enableInExpoDevelopment: false,
-    debug: __DEV__
+    debug:
+      __DEV__ ||
+      ['development'].some(channel => Updates.releaseChannel.includes(channel))
   })
 }
 

@@ -1,31 +1,25 @@
 export default {
-  headers: {
-    local: {
-      segments: {
-        left: 'Following',
-        right: 'Local'
-      }
+  screenshot: {
+    title: 'Privacy Protection',
+    message: 'Please do not disclose other user\'s identity, such as username, avatar, etc. Thank you!',
+    button: 'Confirm'
+  },
+  index: {
+    localCorrupt: 'Login expired, please login again'
+  },
+  buttons: {
+    cancel: 'Cancel'
+  },
+  toastMessage: {
+    success: {
+      message: '{{function}} succeed'
     },
-    public: {
-      segments: {
-        left: 'Federated',
-        right: 'Others'
-      }
+    warning: {
+      message: ''
     },
-    notifications: 'Notifications',
-    me: {
-      root: 'My Mastodon',
-      conversations: 'Messages',
-      bookmarks: 'Booksmarks',
-      favourites: 'Favourites',
-      lists: {
-        root: 'Lists',
-        list: 'List {{list}}'
-      },
-      settings: {
-        root: 'Settings',
-        language: 'Language'
-      }
+    error: {
+      message: '{{function}} failed, please retry'
     }
-  }
+  },
+  separator: ', '
 }

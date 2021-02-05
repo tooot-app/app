@@ -5,7 +5,6 @@ import React from 'react'
 import { Platform, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
-import * as Sentry from 'sentry-expo'
 
 export interface Params {
   type: 'success' | 'error' | 'warning'
@@ -103,7 +102,7 @@ const toastConfig = {
   success: (config: Config) => <ToastBase config={config} />,
   warning: (config: Config) => <ToastBase config={config} />,
   error: (config: Config) => {
-    Sentry.Native.captureException([config.text1, config.text2])
+    // Sentry.Native.captureException([config.text1, config.text2])
     return <ToastBase config={config} />
   }
 }

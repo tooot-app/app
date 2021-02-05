@@ -1,65 +1,125 @@
+interface IImageInfo {
+  url: string
+  width?: number
+  height?: number
+  originUrl?: string
+  props?: any
+}
+
 declare namespace Nav {
   type RootStackParamList = {
-    'Screen-Local': undefined
-    'Screen-Public': undefined
-    'Screen-Post': undefined
-    'Screen-Notifications': undefined
-    'Screen-Me': undefined
-  }
-
-  type SharedStackParamList = {
-    'Screen-Shared-Account': {
-      account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
-    }
-    'Screen-Shared-Announcements': { showAll?: boolean }
-    'Screen-Shared-Compose':
+    'Screen-Tabs': undefined
+    'Screen-Actions':
       | {
-          type?: 'reply' | 'conversation' | 'edit'
+          type: 'status'
+          queryKey: QueryKeyTimeline
+          status: Mastodon.Status
+        }
+      | {
+          type: 'account'
+          account: Mastodon.Account
+        }
+    'Screen-Announcements': { showAll: boolean }
+    'Screen-Compose':
+      | {
+          type: 'edit'
           incomingStatus: Mastodon.Status
+          queryKey?: [
+            'Timeline',
+            {
+              page: App.Pages
+              hashtag?: Mastodon.Tag['name']
+              list?: Mastodon.List['id']
+              toot?: Mastodon.Status['id']
+              account?: Mastodon.Account['id']
+            }
+          ]
+        }
+      | {
+          type: 'reply'
+          incomingStatus: Mastodon.Status
+          accts: Mastodon.Account['acct'][]
+          queryKey?: [
+            'Timeline',
+            {
+              page: App.Pages
+              hashtag?: Mastodon.Tag['name']
+              list?: Mastodon.List['id']
+              toot?: Mastodon.Status['id']
+              account?: Mastodon.Account['id']
+            }
+          ]
+        }
+      | {
+          type: 'conversation'
+          accts: Mastodon.Account['acct'][]
         }
       | undefined
-    'Screen-Shared-Hashtag': {
-      hashtag: Mastodon.Tag['name']
-    }
-    'Screen-Shared-ImagesViewer': {
+    'Screen-ImagesViewer': {
       imageUrls: (IImageInfo & {
         preview_url: Mastodon.AttachmentImage['preview_url']
-        remote_url: Mastodon.AttachmentImage['remote_url']
+        remote_url?: Mastodon.AttachmentImage['remote_url']
         imageIndex: number
       })[]
       imageIndex: number
     }
-    'Screen-Shared-Relationships': {
+  }
+
+  type ScreenComposeStackParamList = {
+    'Screen-Compose-Root': undefined
+    'Screen-Compose-EditAttachment': { index: number }
+  }
+
+  type ScreenTabsStackParamList = {
+    'Tab-Local': undefined
+    'Tab-Public': undefined
+    'Tab-Compose': undefined
+    'Tab-Notifications': undefined
+    'Tab-Me': undefined
+  }
+
+  type TabSharedStackParamList = {
+    'Tab-Shared-Account': {
+      account: Mastodon.Account | Mastodon.Mention
+    }
+    'Tab-Shared-Attachments': { account: Mastodon.Account }
+    'Tab-Shared-Hashtag': {
+      hashtag: Mastodon.Tag['name']
+    }
+    'Tab-Shared-Relationships': {
       account: Mastodon.Account
       initialType: 'following' | 'followers'
     }
-    'Screen-Shared-Search': undefined
-    'Screen-Shared-Toot': {
+    'Tab-Shared-Search': undefined
+    'Tab-Shared-Toot': {
       toot: Mastodon.Status
     }
   }
 
-  type LocalStackParamList = {
-    'Screen-Local-Root': undefined
-  } & SharedStackParamList
+  type TabLocalStackParamList = {
+    'Tab-Local-Root': undefined
+  } & TabSharedStackParamList
 
-  type RemoteStackParamList = {
-    'Screen-Remote-Root': undefined
-  } & SharedStackParamList
+  type TabPublicStackParamList = {
+    'Tab-Public-Root': undefined
+  } & TabSharedStackParamList
 
-  type NotificationsStackParamList = {
-    'Screen-Notifications-Root': undefined
-  } & SharedStackParamList
+  type TabNotificationsStackParamList = {
+    'Tab-Notifications-Root': undefined
+  } & TabSharedStackParamList
 
-  type MeStackParamList = {
-    'Screen-Me-Root': { navigateAway?: 'Screen-Me-Settings-UpdateRemote' }
-    'Screen-Me-Bookmarks': undefined
-    'Screen-Me-Conversations': undefined
-    'Screen-Me-Favourites': undefined
-    'Screen-Me-Lists': undefined
-    'Screen-Me-Lists-List': undefined
-    'Screen-Me-Settings': undefined
-    'Screen-Me-Settings-UpdateRemote': undefined
-    'Screen-Me-Switch': undefined
-  } & SharedStackParamList
+  type TabMeStackParamList = {
+    'Tab-Me-Root': undefined
+    'Tab-Me-Bookmarks': undefined
+    'Tab-Me-Conversations': undefined
+    'Tab-Me-Favourites': undefined
+    'Tab-Me-Lists': undefined
+    'Tab-Me-Lists-List': {
+      list: Mastodon.List['id']
+      title: Mastodon.List['title']
+    }
+    'Tab-Me-Settings': undefined
+    'Tab-Me-Settings-UpdateRemote': undefined
+    'Tab-Me-Switch': undefined
+  } & TabSharedStackParamList
 }

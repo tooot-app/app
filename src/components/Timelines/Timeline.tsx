@@ -1,22 +1,24 @@
 import ComponentSeparator from '@components/Separator'
-import TimelineConversation from '@components/Timelines/Timeline/Conversation'
-import TimelineDefault from '@components/Timelines/Timeline/Default'
-import TimelineEmpty from '@components/Timelines/Timeline/Empty'
-import TimelineEnd from '@root/components/Timelines/Timeline/End'
-import TimelineHeader from '@components/Timelines/Timeline/Header'
-import TimelineNotifications from '@components/Timelines/Timeline/Notifications'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
+import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
 import { localUpdateNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { Platform, RefreshControl, StyleSheet } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
-import { useDispatch } from 'react-redux'
-import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
-import CustomRefreshControl from '@components/CustomRefreshControl'
-import { InfiniteData, useQueryClient } from 'react-query'
-import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import {
+  FlatListProps,
+  Platform,
+  RefreshControl,
+  StyleSheet
+} from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
+import TimelineConversation from './Timeline/Conversation'
+import TimelineDefault from './Timeline/Default'
+import TimelineEmpty from './Timeline/Empty'
+import TimelineEnd from './Timeline/End'
+import TimelineNotifications from './Timeline/Notifications'
 
 export interface Props {
   page: App.Pages
@@ -26,6 +28,7 @@ export interface Props {
   account?: Mastodon.Account['id']
   disableRefresh?: boolean
   disableInfinity?: boolean
+  customProps?: Partial<FlatListProps<any>>
 }
 
 const Timeline: React.FC<Props> = ({
@@ -35,10 +38,9 @@ const Timeline: React.FC<Props> = ({
   toot,
   account,
   disableRefresh = false,
-  disableInfinity = false
+  disableInfinity = false,
+  customProps
 }) => {
-  const { theme } = useTheme()
-
   const queryKeyParams = {
     page,
     ...(hashtag && { hashtag }),
@@ -53,27 +55,15 @@ const Timeline: React.FC<Props> = ({
     refetch,
     isSuccess,
     isFetching,
-    hasPreviousPage,
-    fetchPreviousPage,
-    isFetchingPreviousPage,
+    isLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useTimelineQuery({
     ...queryKeyParams,
     options: {
-      getPreviousPageParam: firstPage => {
-        return firstPage.length
-          ? {
-              direction: 'prev',
-              id: firstPage[0].last_status
-                ? firstPage[0].last_status.id
-                : firstPage[0].id
-            }
-          : undefined
-      },
       getNextPageParam: lastPage => {
-        return lastPage.length
+        return Array.isArray(lastPage) && lastPage.length
           ? {
               direction: 'next',
               id: lastPage[lastPage.length - 1].last_status
@@ -89,20 +79,28 @@ const Timeline: React.FC<Props> = ({
 
   // Clear unread notification badge
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   useEffect(() => {
-    if (page === 'Notifications' && flattenData.length) {
-      dispatch(
-        localUpdateNotification({
-          unread: false,
-          latestTime: (flattenData[0] as Mastodon.Notification).created_at
-        })
-      )
-    }
-  }, [flattenData])
+    const unsubscribe = navigation.addListener('focus', props => {
+      if (props.target && props.target.includes('Tab-Notifications-Root')) {
+        if (flattenData.length) {
+          dispatch(
+            localUpdateNotification({
+              latestTime: (flattenData[0] as Mastodon.Notification).created_at
+            })
+          )
+        }
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, flattenData])
 
   const flRef = useRef<FlatList<any>>(null)
+  const scrolled = useRef(false)
   useEffect(() => {
-    if (toot && isSuccess) {
+    if (toot && isSuccess && !scrolled.current) {
+      scrolled.current = true
       const pointer = findIndex(flattenData, ['id', toot])
       setTimeout(() => {
         flRef.current?.scrollToIndex({
@@ -111,7 +109,7 @@ const Timeline: React.FC<Props> = ({
         })
       }, 500)
     }
-  }, [isSuccess, flattenData])
+  }, [isSuccess, flattenData.length, scrolled])
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(({ item }) => {
@@ -155,49 +153,40 @@ const Timeline: React.FC<Props> = ({
     () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
   )
-  const ListHeaderComponent = useCallback(() => <TimelineHeader />, [])
   const ListFooterComponent = useCallback(
     () => <TimelineEnd hasNextPage={!disableInfinity ? hasNextPage : false} />,
     [hasNextPage]
   )
 
-  const queryClient = useQueryClient()
-  const refreshCount = useRef(0)
+  const isSwipeDown = useRef(false)
   const refreshControl = useMemo(
     () => (
       <RefreshControl
         {...(Platform.OS === 'android' && { enabled: true })}
         refreshing={
-          refreshCount.current < 2
-            ? Platform.OS === 'ios'
-              ? isFetchingPreviousPage
-              : isFetchingPreviousPage || isFetching
-            : isFetching
+          Platform.OS === 'android'
+            ? (isSwipeDown.current && isFetching && !isFetchingNextPage) ||
+              isLoading
+            : isSwipeDown.current &&
+              isFetching &&
+              !isFetchingNextPage &&
+              !isLoading
         }
-        onRefresh={async () => {
-          if (refreshCount.current < 2) {
-            await fetchPreviousPage()
-            refreshCount.current++
-          } else {
-            queryClient.setQueryData<InfiniteData<any> | undefined>(
-              queryKey,
-              data => {
-                if (data) {
-                  return {
-                    pages: data.pages.slice(1),
-                    pageParams: data.pageParams.slice(1)
-                  }
-                }
-              }
-            )
-            await refetch()
-            refreshCount.current = 0
-          }
+        onRefresh={() => {
+          isSwipeDown.current = true
+          refetch()
         }}
       />
     ),
-    [isFetchingPreviousPage, isFetching]
+    [isSwipeDown.current, isFetching, isFetchingNextPage, isLoading]
   )
+
+  useEffect(() => {
+    if (!isFetching) {
+      isSwipeDown.current = false
+    }
+  }, [isFetching])
+
   const onScrollToIndexFailed = useCallback(error => {
     const offset = error.averageItemLength * error.index
     flRef.current?.scrollToOffset({ offset })
@@ -208,15 +197,17 @@ const Timeline: React.FC<Props> = ({
     )
   }, [])
 
+  const publicRemoteNotice = useSelector(getPublicRemoteNotice).hidden
+
   useScrollToTop(flRef)
 
   return (
     <FlatList
       ref={flRef}
-      windowSize={11}
+      windowSize={8}
       data={flattenData}
-      initialNumToRender={5}
-      maxToRenderPerBatch={5}
+      initialNumToRender={3}
+      maxToRenderPerBatch={3}
       style={styles.flatList}
       renderItem={renderItem}
       onEndReached={onEndReached}
@@ -226,13 +217,12 @@ const Timeline: React.FC<Props> = ({
       ListEmptyComponent={flItemEmptyComponent}
       {...(!disableRefresh && { refreshControl })}
       ItemSeparatorComponent={ItemSeparatorComponent}
-      {...(queryKey &&
-        queryKey[1].page === 'RemotePublic' && { ListHeaderComponent })}
       {...(toot && isSuccess && { onScrollToIndexFailed })}
-      // maintainVisibleContentPosition={{
-      //   minIndexForVisible: 0,
-      //   autoscrollToTopThreshold: 2
-      // }}
+      maintainVisibleContentPosition={{
+        minIndexForVisible: 0,
+        autoscrollToTopThreshold: 1
+      }}
+      {...customProps}
     />
   )
 }

@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import analytics from '@components/analytics'
+import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { Surface } from 'gl-react-expo'
-import { Blurhash } from 'gl-react-blurhash'
+import React from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
   card: Mastodon.Card
@@ -13,34 +13,22 @@ export interface Props {
 const TimelineCard: React.FC<Props> = ({ card }) => {
   const { theme } = useTheme()
 
-  const [imageLoaded, setImageLoaded] = useState(false)
-  useEffect(() => {
-    if (card.image) {
-      Image.getSize(card.image, () => setImageLoaded(true))
-    }
-  }, [])
-  const cardVisual = useMemo(() => {
-    if (imageLoaded) {
-      return <Image source={{ uri: card.image }} style={styles.image} />
-    } else {
-      return card.blurhash ? (
-        <Surface style={styles.image}>
-          <Blurhash hash={card.blurhash} />
-        </Surface>
-      ) : null
-    }
-  }, [imageLoaded])
-
   return (
     <Pressable
       style={[styles.card, { borderColor: theme.border }]}
-      onPress={async () => await openLink(card.url)}
+      onPress={async () => {
+        analytics('timeline_shared_card_press')
+        await openLink(card.url)
+      }}
       testID='base'
     >
       {card.image && (
-        <View style={styles.left} testID='image'>
-          {cardVisual}
-        </View>
+        <GracefullyImage
+          uri={{ original: card.image }}
+          blurhash={card.blurhash}
+          style={styles.left}
+          imageStyle={styles.image}
+        />
       )}
       <View style={styles.right}>
         <Text
@@ -59,7 +47,10 @@ const TimelineCard: React.FC<Props> = ({ card }) => {
             {card.description}
           </Text>
         ) : null}
-        <Text numberOfLines={1} style={{ color: theme.secondary }}>
+        <Text
+          numberOfLines={1}
+          style={[styles.rightLink, { color: theme.secondary }]}
+        >
           {card.url}
         </Text>
       </View>
@@ -71,17 +62,16 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: 'row',
-    height: StyleConstants.Avatar.L,
+    height: StyleConstants.Font.LineHeight.M * 5,
     marginTop: StyleConstants.Spacing.M,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6
+    borderRadius: 6,
+    overflow: 'hidden'
   },
   left: {
-    width: StyleConstants.Avatar.L
+    flexBasis: StyleConstants.Font.LineHeight.M * 5
   },
   image: {
-    width: '100%',
-    height: '100%',
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6
   },
@@ -90,11 +80,16 @@ const styles = StyleSheet.create({
     padding: StyleConstants.Spacing.S
   },
   rightTitle: {
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.XS,
     fontWeight: StyleConstants.Font.Weight.Bold
   },
   rightDescription: {
+    ...StyleConstants.FontStyle.S,
     marginBottom: StyleConstants.Spacing.XS
+  },
+  rightLink: {
+    ...StyleConstants.FontStyle.S
   }
 })
 

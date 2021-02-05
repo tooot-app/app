@@ -3,6 +3,7 @@ import analytics from '@components/analytics'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import * as AuthSession from 'expo-auth-session'
+import * as Localization from 'expo-localization'
 
 export type InstanceLocal = {
   appData: {
@@ -11,12 +12,14 @@ export type InstanceLocal = {
   }
   url: string
   token: string
+  uri: Mastodon.Instance['uri']
   account: {
     id: Mastodon.Account['id']
+    acct: Mastodon.Account['acct']
+    avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
   notification: {
-    unread: boolean
     latestTime?: Mastodon.Notification['created_at']
   }
 }
@@ -50,17 +53,19 @@ export const localAddInstance = createAsyncThunk(
   async ({
     url,
     token,
+    uri,
     appData
   }: {
     url: InstanceLocal['url']
     token: InstanceLocal['token']
+    uri: Mastodon.Instance['uri']
     appData: InstanceLocal['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
     const { store } = require('@root/store')
     const instanceLocal: InstancesState['local'] = store.getState().instances
       .local
 
-    const { id } = await client<Mastodon.Account>({
+    const { id, acct, avatar_static } = await client<Mastodon.Account>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,
@@ -101,12 +106,15 @@ export const localAddInstance = createAsyncThunk(
         appData,
         url,
         token,
+        uri,
         account: {
           id,
+          acct,
+          avatarStatic: avatar_static,
           preferences
         },
         notification: {
-          unread: false
+          latestTime: undefined
         }
       }
     })
@@ -159,7 +167,7 @@ export const instancesInitialState: InstancesState = {
     instances: []
   },
   remote: {
-    url: 'm.cmx.im'
+    url: Localization.locale.includes('zh') ? 'm.cmx.im' : 'mastodon.social'
   }
 }
 
@@ -167,24 +175,33 @@ const instancesSlice = createSlice({
   name: 'instances',
   initialState: instancesInitialState,
   reducers: {
-    localUpdateActiveIndex: (
+    localUpdateActiveIndex: (state, action: PayloadAction<InstanceLocal>) => {
+      state.local.activeIndex = state.local.instances.findIndex(
+        instance =>
+          instance.url === action.payload.url &&
+          instance.token === action.payload.token &&
+          instance.account.id === action.payload.account.id
+      )
+    },
+    localUpdateAccount: (
       state,
-      action: PayloadAction<NonNullable<InstancesState['local']['activeIndex']>>
+      action: PayloadAction<
+        Pick<InstanceLocal['account'], 'acct' & 'avatarStatic'>
+      >
     ) => {
-      if (action.payload < state.local.instances.length) {
-        state.local.activeIndex = action.payload
-      } else {
-        throw new Error('Set index cannot be found')
+      if (state.local.activeIndex !== null) {
+        state.local.instances[state.local.activeIndex].account = {
+          ...state.local.instances[state.local.activeIndex].account,
+          ...action.payload
+        }
       }
     },
     localUpdateNotification: (
       state,
       action: PayloadAction<Partial<InstanceLocal['notification']>>
     ) => {
-      state.local.instances[state.local.activeIndex!].notification = {
-        ...state.local.instances[state.local.activeIndex!].notification,
-        ...action.payload
-      }
+      state.local.instances[state.local.activeIndex!].notification =
+        action.payload
     },
     remoteUpdate: (
       state,
@@ -249,9 +266,13 @@ export const getLocalActiveIndex = ({ instances: { local } }: RootState) =>
 export const getLocalInstances = ({ instances: { local } }: RootState) =>
   local.instances
 export const getLocalUrl = ({ instances: { local } }: RootState) =>
-  local.activeIndex ? local.instances[local.activeIndex].url : undefined
-// export const getLocalToken = ({ instances: { local } }: RootState) =>
-//   local && local.activeIndex && local.instances[local.activeIndex].token
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].url
+    : undefined
+export const getLocalUri = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].uri
+    : undefined
 export const getLocalAccount = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].account
@@ -264,6 +285,7 @@ export const getRemoteUrl = ({ instances: { remote } }: RootState) => remote.url
 
 export const {
   localUpdateActiveIndex,
+  localUpdateAccount,
   localUpdateNotification,
   remoteUpdate
 } = instancesSlice.actions

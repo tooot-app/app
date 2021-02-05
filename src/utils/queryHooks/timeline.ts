@@ -140,7 +140,7 @@ const queryFunction = ({
         params
       })
 
-    case 'Account_Media':
+    case 'Account_Attachments':
       return client<Mastodon.Status[]>({
         method: 'get',
         instance: 'local',
@@ -242,8 +242,16 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   reblog?: boolean
   payload:
     | {
-        property: 'bookmarked' | 'favourited' | 'muted' | 'pinned' | 'reblogged'
+        property: 'bookmarked' | 'muted' | 'pinned'
         currentValue: boolean
+        propertyCount: undefined
+        countValue: undefined
+      }
+    | {
+        property: 'favourited' | 'reblogged'
+        currentValue: boolean
+        propertyCount: 'favourites_count' | 'reblogs_count'
+        countValue: number
       }
     | {
         property: 'poll'
@@ -292,7 +300,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
         case 'poll':
           const formData = new FormData()
           params.payload.type === 'vote' &&
-            params.payload.options!.forEach((option, index) => {
+            params.payload.options?.forEach((option, index) => {
               if (option) {
                 formData.append('choices[]', index.toString())
               }

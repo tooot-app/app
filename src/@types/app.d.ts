@@ -10,7 +10,7 @@ declare namespace App {
     | 'Toot'
     | 'Account_Default'
     | 'Account_All'
-    | 'Account_Media'
+    | 'Account_Attachments'
     | 'Conversations'
     | 'Bookmarks'
     | 'Favourites'

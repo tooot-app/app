@@ -1,13 +1,15 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
+import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
 
 export interface Props {
   type?: 'icon' | 'text'
   content: string
+  native?: boolean
 
   loading?: boolean
   disabled?: boolean
@@ -18,11 +20,21 @@ export interface Props {
 const HeaderRight: React.FC<Props> = ({
   type = 'icon',
   content,
+  native = true,
   loading,
   disabled,
   onPress
 }) => {
   const { theme } = useTheme()
+
+  const mounted = useRef(false)
+  // useEffect(() => {
+  //   if (mounted.current) {
+  //     layoutAnimation()
+  //   } else {
+  //     mounted.current = true
+  //   }
+  // }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (
@@ -78,7 +90,11 @@ const HeaderRight: React.FC<Props> = ({
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(type === 'icon' && { height: 44, width: 44, marginRight: -9 })
+          ...(type === 'icon' && {
+            height: 44,
+            width: 44,
+            marginRight: native ? -9 : 9
+          })
         }
       ]}
     />

@@ -3,8 +3,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { Pressable, StyleSheet, Switch, Text, View } from 'react-native'
+import { StyleSheet, Switch, Text, View } from 'react-native'
 import { Chase } from 'react-native-animated-spinkit'
+import { State, TapGestureHandler } from 'react-native-gesture-handler'
 
 export interface Props {
   iconFront?: any
@@ -12,13 +13,13 @@ export interface Props {
 
   title: string
   description?: string
-  content?: string
+  content?: string | React.ReactNode
 
   switchValue?: boolean
   switchDisabled?: boolean
   switchOnValueChange?: () => void
 
-  iconBack?: 'ChevronRight' | 'Check'
+  iconBack?: 'ChevronRight' | 'ExternalLink'
   iconBackColor?: ColorDefinitions
 
   loading?: boolean
@@ -54,81 +55,88 @@ const MenuRow: React.FC<Props> = ({
   )
 
   return (
-    <Pressable
-      style={styles.base}
-      onPress={onPress}
-      disabled={loading}
-      testID='base'
-    >
-      <View style={styles.core}>
-        <View style={styles.front}>
-          {iconFront && (
-            <Icon
-              name={iconFront}
-              size={StyleConstants.Font.Size.L}
-              color={theme[iconFrontColor]}
-              style={styles.iconFront}
-            />
-          )}
-          <View style={styles.main}>
-            <Text
-              style={[styles.title, { color: theme.primary }]}
-              numberOfLines={1}
-            >
-              {title}
-            </Text>
-            {description ? (
-              <Text style={[styles.description, { color: theme.secondary }]}>
-                {description}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-
-        {(content && content.length) ||
-        switchValue !== undefined ||
-        iconBack ? (
-          <View style={styles.back}>
-            {content && content.length ? (
-              <>
-                <Text
-                  style={[
-                    styles.content,
-                    {
-                      color: theme.secondary,
-                      opacity: !iconBack && loading ? 0 : 1
-                    }
-                  ]}
-                  numberOfLines={1}
-                >
-                  {content}
-                </Text>
-                {loading && !iconBack && loadingSpinkit}
-              </>
-            ) : null}
-            {switchValue !== undefined ? (
-              <Switch
-                value={switchValue}
-                onValueChange={switchOnValueChange}
-                disabled={switchDisabled}
-                trackColor={{ true: theme.blue, false: theme.disabled }}
+    <View style={styles.base}>
+      <TapGestureHandler
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === State.ACTIVE) {
+            if (!loading) {
+              onPress && onPress()
+            }
+          }
+        }}
+      >
+        <View style={styles.core}>
+          <View style={styles.front}>
+            {iconFront && (
+              <Icon
+                name={iconFront}
+                size={StyleConstants.Font.Size.L}
+                color={theme[iconFrontColor]}
+                style={styles.iconFront}
               />
-            ) : null}
-            {iconBack ? (
-              <>
-                <Icon
-                  name={iconBack}
-                  size={StyleConstants.Font.Size.L}
-                  color={theme[iconBackColor]}
-                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
-                />
-                {loading && loadingSpinkit}
-              </>
-            ) : null}
+            )}
+            <View style={styles.main}>
+              <Text
+                style={[styles.title, { color: theme.primary }]}
+                numberOfLines={1}
+              >
+                {title}
+              </Text>
+              {description ? (
+                <Text style={[styles.description, { color: theme.secondary }]}>
+                  {description}
+                </Text>
+              ) : null}
+            </View>
           </View>
-        ) : null}
-      </View>
-    </Pressable>
+
+          {content || switchValue !== undefined || iconBack ? (
+            <View style={styles.back}>
+              {content ? (
+                typeof content === 'string' ? (
+                  <>
+                    <Text
+                      style={[
+                        styles.content,
+                        {
+                          color: theme.secondary,
+                          opacity: !iconBack && loading ? 0 : 1
+                        }
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {content}
+                    </Text>
+                    {loading && !iconBack && loadingSpinkit}
+                  </>
+                ) : (
+                  content
+                )
+              ) : null}
+              {switchValue !== undefined ? (
+                <Switch
+                  value={switchValue}
+                  onValueChange={switchOnValueChange}
+                  disabled={switchDisabled}
+                  trackColor={{ true: theme.blue, false: theme.disabled }}
+                />
+              ) : null}
+              {iconBack ? (
+                <>
+                  <Icon
+                    name={iconBack}
+                    size={StyleConstants.Font.Size.L}
+                    color={theme[iconBackColor]}
+                    style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                  />
+                  {loading && loadingSpinkit}
+                </>
+              ) : null}
+            </View>
+          ) : null}
+        </View>
+      </TapGestureHandler>
+    </View>
   )
 }
 

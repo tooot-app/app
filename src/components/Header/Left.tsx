@@ -7,11 +7,17 @@ import { Pressable, StyleSheet, Text } from 'react-native'
 export interface Props {
   type?: 'icon' | 'text'
   content?: string
+  native?: boolean
 
   onPress: () => void
 }
 
-const HeaderLeft: React.FC<Props> = ({ type = 'icon', content, onPress }) => {
+const HeaderLeft: React.FC<Props> = ({
+  type = 'icon',
+  content,
+  native = true,
+  onPress
+}) => {
   const { theme } = useTheme()
 
   const children = useMemo(() => {
@@ -42,7 +48,11 @@ const HeaderLeft: React.FC<Props> = ({ type = 'icon', content, onPress }) => {
         styles.base,
         {
           backgroundColor: theme.backgroundGradientStart,
-          ...(type === 'icon' && { height: 44, width: 44, marginLeft: -9 })
+          ...(type === 'icon' && {
+            height: 44,
+            width: 44,
+            marginLeft: native ? -9 : 9
+          })
         }
       ]}
     />

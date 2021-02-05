@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
@@ -15,7 +16,7 @@ export interface Props {
 
 const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
   const { mode, theme } = useTheme()
-  const { t, i18n } = useTranslation('timeline')
+  const { t, i18n } = useTranslation('componentTimeline')
 
   const children = useMemo(() => {
     switch (status) {
@@ -37,7 +38,10 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
             <Button
               type='text'
               content={t('empty.error.button')}
-              onPress={() => refetch()}
+              onPress={() => {
+                analytics('timeline_error_press_refetch')
+                refetch()
+              }}
             />
           </>
         )

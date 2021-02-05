@@ -1,13 +1,16 @@
+import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Platform, Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 
 // Prevent going to the same hashtag multiple times
@@ -27,8 +30,8 @@ const renderNode = ({
   theme: any
   node: any
   index: number
-  size: 'M' | 'L'
-  navigation: any
+  size: 'S' | 'M' | 'L'
+  navigation: StackNavigationProp<Nav.TabLocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
@@ -52,9 +55,10 @@ const renderNode = ({
                 ...StyleConstants.FontStyle[size]
               }}
               onPress={() => {
+                analytics('status_hashtag_press')
                 !disableDetails &&
                   differentTag &&
-                  navigation.push('Screen-Shared-Hashtag', {
+                  navigation.push('Tab-Shared-Hashtag', {
                     hashtag: tag[1] || tag[2]
                   })
               }}
@@ -68,7 +72,7 @@ const renderNode = ({
             mention => mention.url === href
           )
           const differentAccount = routeParams?.account
-            ? routeParams.account.id !== mentions[accountIndex].id
+            ? routeParams.account.id !== mentions[accountIndex]?.id
             : true
           return (
             <Text
@@ -78,10 +82,11 @@ const renderNode = ({
                 ...StyleConstants.FontStyle[size]
               }}
               onPress={() => {
+                analytics('status_mention_press')
                 accountIndex !== -1 &&
                   !disableDetails &&
                   differentAccount &&
-                  navigation.push('Screen-Shared-Account', {
+                  navigation.push('Tab-Shared-Account', {
                     account: mentions[accountIndex]
                   })
               }}
@@ -103,24 +108,29 @@ const renderNode = ({
             key={index}
             style={{
               color: theme.blue,
-              ...StyleConstants.FontStyle[size]
+              ...StyleConstants.FontStyle[size],
+              alignItems: 'center'
             }}
-            onPress={async () =>
+            onPress={async () => {
+              analytics('status_link_press')
               !disableDetails && !shouldBeTag
                 ? await openLink(href)
-                : navigation.push('Screen-Shared-Hashtag', {
+                : navigation.push('Tab-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })
-            }
+            }}
           >
+            {content || (showFullLink ? href : domain[1])}
             {!shouldBeTag ? (
               <Icon
                 color={theme.blue}
                 name='ExternalLink'
                 size={StyleConstants.Font.Size[size]}
+                style={{
+                  transform: [{ translateY: size === 'L' ? -3 : -1 }]
+                }}
               />
             ) : null}
-            {content || (showFullLink ? href : domain[1])}
           </Text>
         )
       }
@@ -135,7 +145,7 @@ const renderNode = ({
 
 export interface Props {
   content: string
-  size?: 'M' | 'L'
+  size?: 'S' | 'M' | 'L'
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
@@ -153,12 +163,18 @@ const ParseHTML: React.FC<Props> = ({
   tags,
   showFullLink = false,
   numberOfLines = 10,
-  expandHint = '全文',
+  expandHint,
   disableDetails = false
 }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<
+    StackNavigationProp<Nav.TabLocalStackParamList>
+  >()
   const route = useRoute()
   const { theme } = useTheme()
+  const { t, i18n } = useTranslation('componentParse')
+  if (!expandHint) {
+    expandHint = t('HTML.defaultHint')
+  }
 
   const renderNodeCallback = useCallback(
     (node, index) =>
@@ -191,17 +207,24 @@ const ParseHTML: React.FC<Props> = ({
   }, [])
   const rootComponent = useCallback(
     ({ children }) => {
+      const { t } = useTranslation('componentParse')
       const lineHeight = StyleConstants.Font.LineHeight[size]
 
       const [expandAllow, setExpandAllow] = useState(false)
       const [expanded, setExpanded] = useState(false)
 
       const onTextLayout = useCallback(({ nativeEvent }) => {
-        if (
-          nativeEvent.lines &&
-          nativeEvent.lines.length === numberOfLines + 1
-        ) {
-          setExpandAllow(true)
+        switch (Platform.OS) {
+          case 'ios':
+            if (nativeEvent.lines.length === numberOfLines + 1) {
+              setExpandAllow(true)
+            }
+            break
+          case 'android':
+            if (nativeEvent.lines.length > numberOfLines + 1) {
+              setExpandAllow(true)
+            }
+            break
         }
       }, [])
 
@@ -219,6 +242,7 @@ const ParseHTML: React.FC<Props> = ({
           {expandAllow ? (
             <Pressable
               onPress={() => {
+                analytics('status_readmore', { allow: expandAllow, expanded })
                 layoutAnimation()
                 setExpanded(!expanded)
               }}
@@ -249,7 +273,9 @@ const ParseHTML: React.FC<Props> = ({
                     color: theme.primary
                   }}
                 >
-                  {`${expanded ? '折叠' : '展开'}${expandHint}`}
+                  {expanded
+                    ? t('HTML.expanded.true', { hint: expandHint })
+                    : t('HTML.expanded.false', { hint: expandHint })}
                 </Text>
               </LinearGradient>
             </Pressable>
@@ -257,7 +283,7 @@ const ParseHTML: React.FC<Props> = ({
         </View>
       )
     },
-    [theme]
+    [theme, i18n.language]
   )
 
   return (

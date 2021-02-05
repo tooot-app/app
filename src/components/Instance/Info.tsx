@@ -1,10 +1,10 @@
 import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   style?: ViewStyle
@@ -16,41 +16,36 @@ export interface Props {
 }
 
 const InstanceInfo = React.memo(
-  ({
-    style,
-    visible,
-    header,
-    content,
-    potentialWidth,
-    potentialLines = 1
-  }: Props) => {
+  ({ style, header, content, potentialWidth, potentialLines = 1 }: Props) => {
+    const { t } = useTranslation('componentInstance')
     const { theme } = useTheme()
-    const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
     return (
       <View style={[styles.base, style]}>
         <Text style={[styles.header, { color: theme.primary }]}>{header}</Text>
-        <ShimmerPlaceholder
-          visible={visible}
-          stopAutoRun
-          width={
-            potentialWidth
-              ? potentialWidth * StyleConstants.Font.Size.M
-              : Dimensions.get('screen').width -
-                StyleConstants.Spacing.Global.PagePadding * 4
-          }
-          height={StyleConstants.Font.LineHeight.M * potentialLines}
-          shimmerColors={[theme.shimmerDefault, theme.shimmerHighlight, theme.shimmerDefault]}
-        >
-          {content ? (
-            <ParseHTML
-              content={content}
-              size={'M'}
-              numberOfLines={5}
-              expandHint='介绍'
+        {content ? (
+          <ParseHTML
+            content={content}
+            size={'M'}
+            numberOfLines={5}
+            expandHint={t('server.information.description.expandHint')}
+          />
+        ) : (
+          Array.from(Array(potentialLines)).map((_, i) => (
+            <PlaceholderLine
+              key={i}
+              width={
+                potentialWidth
+                  ? potentialWidth * StyleConstants.Font.Size.M
+                  : undefined
+              }
+              height={StyleConstants.Font.LineHeight.M}
+              color={theme.shimmerDefault}
+              noMargin
+              style={{ borderRadius: 0 }}
             />
-          ) : null}
-        </ShimmerPlaceholder>
+          ))
+        )}
       </View>
     )
   }

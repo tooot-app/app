@@ -25,7 +25,7 @@ declare namespace Mastodon {
     following_count: number
 
     // Others
-    moved?: Status
+    moved?: Account
     fields: Field[]
     bot: boolean
     source: Source

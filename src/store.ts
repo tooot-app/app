@@ -1,30 +1,36 @@
+import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   combineReducers,
   configureStore,
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
+import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
 import { persistReducer, persistStore } from 'redux-persist'
-import createSecureStore from 'redux-persist-expo-securestore'
 
 const secureStorage = createSecureStore()
 
-const prefix = 'mastodon_app'
+const prefix = 'tooot'
+
+const contextsPersistConfig = {
+  key: 'contexts',
+  prefix,
+  storage: AsyncStorage
+}
 
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
   version: 1,
-  storage: secureStorage,
-  debug: true
+  storage: secureStorage
 }
 
 const settingsPersistConfig = {
   key: 'settings',
   prefix,
-  storage: secureStorage
+  storage: AsyncStorage
 }
 
 const rootPersistConfig = {
@@ -35,6 +41,7 @@ const rootPersistConfig = {
 }
 
 const rootReducer = combineReducers({
+  contexts: persistReducer(contextsPersistConfig, contextsSlice),
   instances: persistReducer(instancesPersistConfig, instancesSlice),
   settings: persistReducer(settingsPersistConfig, settingsSlice)
 })

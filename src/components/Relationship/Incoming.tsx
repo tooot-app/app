@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { toast } from '@components/toast'
@@ -58,26 +59,28 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
         type='icon'
         content='X'
         loading={mutation.isLoading}
-        onPress={() =>
+        onPress={() => {
+          analytics('relationship_incoming_press_reject')
           mutation.mutate({
             id,
             type: 'incoming',
             payload: { action: 'reject' }
           })
-        }
+        }}
       />
       <Button
         round
         type='icon'
         content='Check'
         loading={mutation.isLoading}
-        onPress={() =>
+        onPress={() => {
+          analytics('relationship_incoming_press_authorize')
           mutation.mutate({
             id,
             type: 'incoming',
             payload: { action: 'authorize' }
           })
-        }
+        }}
         style={styles.approve}
       />
     </View>

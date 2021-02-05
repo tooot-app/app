@@ -1,0 +1,9 @@
+*.key
+*.jks
+*.p8
+*.p12
+
+/README.md
+/report.xml
+Preview.html
+screenshots
