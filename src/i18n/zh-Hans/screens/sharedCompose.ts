@@ -5,8 +5,9 @@ export default {
       alert: {
         title: '确认退出编辑？',
         buttons: {
-          exit: '退出编辑',
-          continue: '继续编辑'
+          save: '保存草稿',
+          delete: '删除草稿',
+          cancel: '继续编辑'
         }
       }
     },
@@ -114,19 +115,15 @@ export default {
             cancel: '$t(common:buttons.cancel)'
           }
         }
-      }
+      },
+      drafts: '草稿 ({{count}})'
     },
     editAttachment: {
       header: {
-        left: '取消修改',
+        title: '编辑附件',
         right: {
-          button: '应用修改',
-          succeed: {
-            title: '修改成功',
-            button: '好的'
-          },
           failed: {
-            title: '修改失败',
+            title: '编辑失败',
             button: '返回重试'
           }
         }
@@ -138,6 +135,14 @@ export default {
             '你可以为附件添加文字说明，以便更多人可以查看他们（包括视力障碍或视力受损人士）。\n\n优质的描述应该简洁明了，但要准确地描述照片中的内容，以便用户理解其含义。'
         },
         imageFocus: '在预览图上拖动圆圈，以选择缩略图的焦点'
+      }
+    },
+    draftsList: {
+      header: {
+        title: '草稿'
+      },
+      content: {
+        textEmpty: '无正文内容'
       }
     }
   }

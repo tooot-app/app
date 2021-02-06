@@ -7,7 +7,7 @@ import {
   getLocalActiveIndex,
   getLocalInstances,
   InstanceLocal,
-  localUpdateActiveIndex
+  updateLocalActiveIndex
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -46,7 +46,7 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
         haptics('Light')
         analytics('switch_existing_press')
         queryClient.clear()
-        dispatch(localUpdateActiveIndex(instance))
+        dispatch(updateLocalActiveIndex(instance))
         navigation.goBack()
       }}
     />

@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
 import {
   localRemoveInstance,
-  localUpdateAccount
+  updateLocalAccount
 } from '@utils/slices/instancesSlice'
 import log from './log'
 
@@ -35,7 +35,7 @@ const netInfo = async (): Promise<{
             return Promise.resolve({ connected: true, corruputed: '' })
           } else {
             store.dispatch(
-              localUpdateAccount({
+              updateLocalAccount({
                 acct: res.acct,
                 avatarStatic: res.avatar_static
               })

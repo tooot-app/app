@@ -34,12 +34,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
 
       {queryKey ? (
         <Pressable
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingBottom: StyleConstants.Spacing.S
-          }}
+          style={styles.action}
           onPress={() =>
             navigation.navigate('Screen-Actions', {
               queryKey,
@@ -77,6 +72,12 @@ const styles = StyleSheet.create({
   },
   created_at: {
     ...StyleConstants.FontStyle.S
+  },
+  action: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingBottom: StyleConstants.Spacing.S
   }
 })
 

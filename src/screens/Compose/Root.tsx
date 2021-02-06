@@ -13,6 +13,7 @@ import ComposeRootFooter from './Root/Footer'
 import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
+import ComposeDrafts from './Root/Drafts'
 
 const ComposeRoot: React.FC = () => {
   const { theme } = useTheme()
@@ -68,9 +69,8 @@ const ComposeRoot: React.FC = () => {
   }, [isFetching])
 
   const listItem = useCallback(
-    ({ item, index }) => (
+    ({ item }) => (
       <ComposeRootSuggestion
-        key={index}
         item={item}
         composeState={composeState}
         composeDispatch={composeDispatch}
@@ -90,8 +90,10 @@ const ComposeRoot: React.FC = () => {
         ItemSeparatorComponent={ComponentSeparator}
         // @ts-ignore
         data={data ? data[composeState.tag?.type] : undefined}
+        keyExtractor={() => Math.random().toString()}
       />
       <ComposeActions />
+      <ComposeDrafts />
       <ComposePosting />
     </View>
   )

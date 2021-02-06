@@ -6,7 +6,7 @@ import TimeAgo from 'react-timeago'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
 export interface Props {
-  date: string
+  date: string | number
 }
 
 const RelativeTime: React.FC<Props> = ({ date }) => {

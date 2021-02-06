@@ -1,15 +1,14 @@
 import client from '@root/api/client'
 import { ComposeState } from '@screens/Compose/utils/types'
-import { SharedComposeProp } from '@screens/Tabs/Shared/sharedScreens'
 import * as Crypto from 'expo-crypto'
 
 const composePost = async (
-  params: SharedComposeProp['route']['params'],
+  params: Nav.RootStackParamList['Screen-Compose'],
   composeState: ComposeState
 ) => {
   const formData = new FormData()
 
-  if (params?.type === 'reply') {
+  if (composeState.replyToStatus) {
     formData.append('in_reply_to_id', composeState.replyToStatus!.id)
   }
 

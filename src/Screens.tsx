@@ -12,7 +12,7 @@ import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
 import {
   getLocalActiveIndex,
-  localUpdateAccountPreferences
+  updateLocalAccountPreferences
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
@@ -103,7 +103,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (localActiveIndex !== null) {
-      dispatch(localUpdateAccountPreferences())
+      dispatch(updateLocalAccountPreferences())
     }
   }, [])
 

@@ -250,7 +250,9 @@ const ComposeAttachments: React.FC = () => {
         keyboardShouldPersistTaps='handled'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
-        keyExtractor={item => item.local?.uri || item.remote?.url}
+        keyExtractor={item =>
+          item.local?.url || item.remote?.url || Math.random().toString()
+        }
         ListFooterComponent={
           composeState.attachments.uploads.length < 4 ? listFooter : null
         }

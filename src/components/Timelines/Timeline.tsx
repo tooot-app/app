@@ -1,8 +1,7 @@
 import ComponentSeparator from '@components/Separator'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
-import { getPublicRemoteNotice } from '@utils/slices/contextsSlice'
-import { localUpdateNotification } from '@utils/slices/instancesSlice'
+import { updateLocalNotification } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -13,7 +12,7 @@ import {
   StyleSheet
 } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import TimelineConversation from './Timeline/Conversation'
 import TimelineDefault from './Timeline/Default'
 import TimelineEmpty from './Timeline/Empty'
@@ -85,7 +84,7 @@ const Timeline: React.FC<Props> = ({
       if (props.target && props.target.includes('Tab-Notifications-Root')) {
         if (flattenData.length) {
           dispatch(
-            localUpdateNotification({
+            updateLocalNotification({
               latestTime: (flattenData[0] as Mastodon.Notification).created_at
             })
           )
@@ -196,8 +195,6 @@ const Timeline: React.FC<Props> = ({
       350
     )
   }, [])
-
-  const publicRemoteNotice = useSelector(getPublicRemoteNotice).hidden
 
   useScrollToTop(flRef)
 

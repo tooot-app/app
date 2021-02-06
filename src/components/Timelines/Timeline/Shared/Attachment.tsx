@@ -33,7 +33,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
     haptics('Light')
   }, [])
 
-  let imageUrls: (IImageInfo & {
+  let imageUrls: (App.IImageInfo & {
     preview_url: Mastodon.AttachmentImage['preview_url']
     remote_url?: Mastodon.AttachmentImage['remote_url']
     imageIndex: number

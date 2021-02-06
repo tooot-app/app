@@ -60,6 +60,7 @@
     "react-native-screens": "~2.17.1",
     "react-native-shared-element": "^0.7.0",
     "react-native-svg": "12.1.0",
+    "react-native-swipe-list-view": "^3.2.6",
     "react-native-tab-view": "^2.15.2",
     "react-native-tab-view-viewpager-adapter": "^1.1.0",
     "react-native-toast-message": "^1.4.3",

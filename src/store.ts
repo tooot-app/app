@@ -28,6 +28,7 @@ const instancesMigration = {
         ...state.local,
         instances: state.local.instances.map(instance => {
           instance.max_toot_chars = 500
+          instance.drafts = []
           return instance
         })
       }

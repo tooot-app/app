@@ -5,8 +5,9 @@ export default {
       alert: {
         title: 'Cancel editing?',
         buttons: {
-          exit: 'Confirm',
-          continue: 'Continue'
+          save: 'Save draft',
+          delete: 'Delete draft',
+          cancel: 'Cancel'
         }
       }
     },
@@ -114,19 +115,16 @@ export default {
             cancel: '$t(common:buttons.cancel)'
           }
         }
-      }
+      },
+      drafts: 'Draft ({{count}})',
+      drafts_plural: 'Drafts ({{count}})'
     },
     editAttachment: {
       header: {
-        left: 'Cancel',
+        title: 'Edit attachment',
         right: {
-          button: 'Apply',
-          succeed: {
-            title: 'Apply update succeed',
-            button: 'Ok'
-          },
           failed: {
-            title: 'Apply update failed',
+            title: 'Editing failed',
             button: 'Try again'
           }
         }
@@ -138,6 +136,14 @@ export default {
             'You can add a description, sometimes called alt-text, to your media so they are accessible to even more people, including those who are blind or visually impaired.\n\nGood descriptions are concise, but present what is in your media accurately enough to understand their context.'
         },
         imageFocus: 'Drag the focus circle to update focus point'
+      }
+    },
+    draftsList: {
+      header: {
+        title: 'Draft'
+      },
+      content: {
+        textEmpty: 'Content empty'
       }
     }
   }

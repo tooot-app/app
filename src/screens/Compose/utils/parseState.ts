@@ -4,12 +4,14 @@ import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
 const composeParseState = (
-  params: NonNullable<Nav.SharedStackParamList['Screen-Compose']>
+  params: NonNullable<Nav.RootStackParamList['Screen-Compose']>
 ): ComposeState => {
   switch (params.type) {
     case 'edit':
       return {
         ...composeInitialState,
+        dirty: true,
+        timestamp: Date.now(),
         ...(params.incomingStatus.spoiler_text && {
           spoiler: { ...composeInitialState.spoiler, active: true }
         }),
@@ -49,6 +51,8 @@ const composeParseState = (
       const actualStatus = params.incomingStatus.reblog || params.incomingStatus
       return {
         ...composeInitialState,
+        dirty: true,
+        timestamp: Date.now(),
         visibility: actualStatus.visibility,
         visibilityLock: actualStatus.visibility === 'direct',
         replyToStatus: actualStatus
@@ -56,6 +60,8 @@ const composeParseState = (
     case 'conversation':
       return {
         ...composeInitialState,
+        dirty: true,
+        timestamp: Date.now(),
         visibility: 'direct',
         visibilityLock: true
       }

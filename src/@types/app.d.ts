@@ -14,4 +14,12 @@ declare namespace App {
     | 'Conversations'
     | 'Bookmarks'
     | 'Favourites'
+
+  interface IImageInfo {
+    url: string
+    width?: number
+    height?: number
+    originUrl?: string
+    props?: any
+  }
 }

@@ -1,7 +1,7 @@
 import client from '@api/client'
 import analytics from '@components/analytics'
 import haptics from '@components/haptics'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, {
   useCallback,
@@ -71,8 +71,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   const headerLeft = useCallback(
     () => (
       <HeaderLeft
-        type='text'
-        content={t('content.editAttachment.header.left')}
+        type='icon'
+        content='ChevronDown'
         onPress={() => navigation.goBack()}
       />
     ),
@@ -81,8 +81,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   const headerRight = useCallback(
     () => (
       <HeaderRight
-        type='text'
-        content={t('content.editAttachment.header.right.button')}
+        type='icon'
+        content='Save'
         loading={isSubmitting}
         onPress={() => {
           analytics('editattachment_confirm_press')
@@ -107,20 +107,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
           })
             .then(() => {
               haptics('Success')
-              Alert.alert(
-                t('content.editAttachment.header.right.succeed.title'),
-                undefined,
-                [
-                  {
-                    text: t(
-                      'content.editAttachment.header.right.succeed.button'
-                    ),
-                    onPress: () => {
-                      navigation.goBack()
-                    }
-                  }
-                ]
-              )
+              navigation.goBack()
             })
             .catch(() => {
               setIsSubmitting(false)
@@ -167,7 +154,18 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
           <Stack.Screen
             name='Screen-Compose-EditAttachment-Root'
             children={children}
-            options={{ headerLeft, headerRight, headerCenter: () => null }}
+            options={{
+              headerLeft,
+              headerRight,
+              headerTitle: t('content.editAttachment.header.title'),
+              ...(Platform.OS === 'android' && {
+                headerCenter: () => (
+                  <HeaderCenter
+                    content={t('content.editAttachment.header.title')}
+                  />
+                )
+              })
+            }}
           />
         </Stack.Navigator>
       </SafeAreaView>

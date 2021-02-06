@@ -27,7 +27,7 @@ const themeColors: {
   },
   primaryOverlay: {
     light: 'rgb(250, 250, 250)',
-    dark: 'rgb(180, 180, 180)'
+    dark: 'rgb(200, 200, 200)'
   },
   secondary: {
     light: 'rgb(135, 135, 135)',
@@ -43,7 +43,7 @@ const themeColors: {
   },
   red: {
     light: 'rgb(225, 45, 35)',
-    dark: 'rgb(225, 98, 89)'
+    dark: 'rgb(225, 78, 79)'
   },
 
   background: {
