@@ -224,6 +224,24 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     [composeState]
   )
   const dispatch = useDispatch()
+  const headerRightDisabled = useMemo(() => {
+    if (totalTextCount > maxTootChars) {
+      return true
+    }
+    if (
+      composeState.attachments.uploads.filter(upload => upload.uploading)
+        .length > 0
+    ) {
+      return true
+    }
+    if (
+      composeState.attachments.uploads.length === 0 &&
+      composeState.text.raw.length === 0
+    ) {
+      return true
+    }
+    return false
+  }, [totalTextCount, composeState.attachments.uploads, composeState.text.raw])
   const headerRight = useCallback(
     () => (
       <HeaderRight
@@ -270,13 +288,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             })
         }}
         loading={composeState.posting}
-        disabled={
-          composeState.text.raw.length < 1 ||
-          totalTextCount > maxTootChars ||
-          (composeState.attachments.uploads.length > 0 &&
-            composeState.attachments.uploads.filter(upload => upload.uploading)
-              .length > 0)
-        }
+        disabled={headerRightDisabled}
       />
     ),
     [totalTextCount, composeState]
