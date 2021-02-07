@@ -255,6 +255,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
                   }
                   break
               }
+              removeDraft()
               navigation.goBack()
             })
             .catch(error => {
@@ -301,8 +302,9 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
               component={ComposeRoot}
               options={{
                 headerLeft,
-                headerTitle: `${totalTextCount} / ${maxTootChars}${__DEV__ &&
-                  ` Dirty: ${composeState.dirty.toString()}`}`,
+                headerTitle: `${totalTextCount} / ${maxTootChars}${
+                  __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
+                }`,
                 headerTitleStyle: {
                   fontWeight:
                     totalTextCount > maxTootChars
