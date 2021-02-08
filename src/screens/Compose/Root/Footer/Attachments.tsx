@@ -16,7 +16,7 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
@@ -140,8 +140,8 @@ const ComposeAttachments: React.FC = () => {
                 { backgroundColor: theme.backgroundOverlay }
               ]}
             >
-              <Chase
-                size={StyleConstants.Font.Size.L * 1.5}
+              <Circle
+                size={StyleConstants.Font.Size.L}
                 color={theme.primaryOverlay}
               />
             </View>

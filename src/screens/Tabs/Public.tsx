@@ -1,6 +1,6 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'

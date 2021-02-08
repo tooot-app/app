@@ -6,7 +6,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import { QueryStatus } from 'react-query'
 
 export interface Props {
@@ -22,7 +22,7 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
     switch (status) {
       case 'loading':
         return (
-          <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+          <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
         )
       case 'error':
         return (
@@ -60,7 +60,12 @@ const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
         )
     }
   }, [mode, i18n.language, status])
-  return <View style={styles.base} children={children} />
+  return (
+    <View
+      style={[styles.base, { backgroundColor: theme.background }]}
+      children={children}
+    />
+  )
 }
 
 const styles = StyleSheet.create({

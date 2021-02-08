@@ -1,10 +1,9 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
   type?: 'icon' | 'text'
@@ -27,19 +26,10 @@ const HeaderRight: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
 
-  const mounted = useRef(false)
-  // useEffect(() => {
-  //   if (mounted.current) {
-  //     layoutAnimation()
-  //   } else {
-  //     mounted.current = true
-  //   }
-  // }, [content, loading, disabled])
-
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Chase
+        <Flow
           size={StyleConstants.Font.Size.M * 1.25}
           color={theme.secondary}
         />

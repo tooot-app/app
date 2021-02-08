@@ -21,7 +21,7 @@ import {
   Text,
   View
 } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -191,7 +191,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
           alignItems: 'center'
         }}
       >
-        <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+        <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
       </View>
     )
   }, [])

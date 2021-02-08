@@ -1,7 +1,7 @@
 import client from '@api/client'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
-import HeaderSharedCreated from '@components/Timelines/Timeline/Shared/HeaderShared/Created'
+import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { useNavigation } from '@react-navigation/native'
 import { getLocalDrafts, removeLocalDraft } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'

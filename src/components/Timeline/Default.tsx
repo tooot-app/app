@@ -1,17 +1,18 @@
 import analytics from '@components/analytics'
-import TimelineActioned from '@components/Timelines/Timeline/Shared/Actioned'
-import TimelineActions from '@components/Timelines/Timeline/Shared/Actions'
-import TimelineAttachment from '@components/Timelines/Timeline/Shared/Attachment'
-import TimelineAvatar from '@components/Timelines/Timeline/Shared/Avatar'
-import TimelineCard from '@components/Timelines/Timeline/Shared/Card'
-import TimelineContent from '@components/Timelines/Timeline/Shared/Content'
-import TimelineHeaderDefault from '@components/Timelines/Timeline/Shared/HeaderDefault'
-import TimelinePoll from '@components/Timelines/Timeline/Shared/Poll'
+import TimelineActioned from '@components/Timeline/Shared/Actioned'
+import TimelineActions from '@components/Timeline/Shared/Actions'
+import TimelineAttachment from '@components/Timeline/Shared/Attachment'
+import TimelineAvatar from '@components/Timeline/Shared/Avatar'
+import TimelineCard from '@components/Timeline/Shared/Card'
+import TimelineContent from '@components/Timeline/Shared/Content'
+import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
+import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -34,6 +35,7 @@ const TimelineDefault: React.FC<Props> = ({
   disableDetails = false,
   disableOnPress = false
 }) => {
+  const { theme } = useTheme()
   const localAccount = useSelector(getLocalAccount)
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
@@ -57,6 +59,7 @@ const TimelineDefault: React.FC<Props> = ({
       style={[
         styles.statusView,
         {
+          backgroundColor: theme.background,
           paddingBottom:
             disableDetails && disableOnPress
               ? StyleConstants.Spacing.Global.PagePadding
@@ -90,13 +93,14 @@ const TimelineDefault: React.FC<Props> = ({
             : StyleConstants.Avatar.M + StyleConstants.Spacing.S
         }}
       >
-        {actualStatus.content.length > 0 && (
-          <TimelineContent
-            status={actualStatus}
-            highlighted={highlighted}
-            disableDetails={disableDetails}
-          />
-        )}
+        {typeof actualStatus.content === 'string' &&
+          actualStatus.content.length > 0 && (
+            <TimelineContent
+              status={actualStatus}
+              highlighted={highlighted}
+              disableDetails={disableDetails}
+            />
+          )}
         {queryKey && actualStatus.poll ? (
           <TimelinePoll
             queryKey={queryKey}

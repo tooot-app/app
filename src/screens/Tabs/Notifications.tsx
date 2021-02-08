@@ -1,5 +1,5 @@
 import { HeaderCenter } from '@components/Header'
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { updateLocalNotification } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'

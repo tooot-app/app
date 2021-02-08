@@ -11,7 +11,7 @@ import {
   View,
   ViewStyle
 } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
   style?: StyleProp<ViewStyle>
@@ -62,7 +62,7 @@ const Button: React.FC<Props> = ({
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Chase size={StyleConstants.Font.Size[size]} color={theme.secondary} />
+        <Flow size={StyleConstants.Font.Size[size]} color={theme.secondary} />
       </View>
     ),
     [mode]

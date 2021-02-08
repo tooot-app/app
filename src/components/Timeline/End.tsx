@@ -4,7 +4,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
   hasNextPage?: boolean
@@ -16,7 +16,7 @@ const TimelineEnd: React.FC<Props> = ({ hasNextPage }) => {
   return (
     <View style={styles.base}>
       {hasNextPage ? (
-        <Chase size={StyleConstants.Font.Size.L} color={theme.secondary} />
+        <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
       ) : (
         <Text style={[styles.text, { color: theme.secondary }]}>
           <Trans

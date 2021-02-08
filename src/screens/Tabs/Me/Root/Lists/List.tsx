@@ -1,18 +1,11 @@
+import Timeline from '@components/Timeline'
+import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 
-import Timeline from '@components/Timelines/Timeline'
-
-// Show remote hashtag? Only when private, show local version?
-
-export interface Props {
-  route: {
-    params: {
-      list: string
-    }
-  }
-}
-
-const ScreenMeListsList: React.FC<Props> = ({
+const ScreenMeListsList: React.FC<StackScreenProps<
+  Nav.TabMeStackParamList,
+  'Tab-Me-Lists-List'
+>> = ({
   route: {
     params: { list }
   }

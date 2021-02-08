@@ -1,17 +1,16 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
-import AttachmentAudio from '@components/Timelines/Timeline/Shared/Attachment/Audio'
-import AttachmentImage from '@components/Timelines/Timeline/Shared/Attachment/Image'
-import AttachmentUnsupported from '@components/Timelines/Timeline/Shared/Attachment/Unsupported'
-import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/Video'
+import AttachmentAudio from '@components/Timeline/Shared/Attachment/Audio'
+import AttachmentImage from '@components/Timeline/Shared/Attachment/Image'
+import AttachmentUnsupported from '@components/Timeline/Shared/Attachment/Unsupported'
+import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { IImageInfo } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>

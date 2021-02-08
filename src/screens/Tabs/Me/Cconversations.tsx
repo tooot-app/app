@@ -1,9 +1,11 @@
+import Timeline from '@components/Timeline'
 import React from 'react'
 
-import Timeline from '@components/Timelines/Timeline'
-
-const ScreenMeConversations: React.FC = () => {
-  return <Timeline page='Conversations' />
-}
+const ScreenMeConversations = React.memo(
+  () => {
+    return <Timeline page='Conversations' />
+  },
+  () => true
+)
 
 export default ScreenMeConversations

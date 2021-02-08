@@ -4,7 +4,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
 import { StyleSheet, Switch, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Flow } from 'react-native-animated-spinkit'
 import { State, TapGestureHandler } from 'react-native-gesture-handler'
 
 export interface Props {
@@ -45,7 +45,7 @@ const MenuRow: React.FC<Props> = ({
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Chase
+        <Flow
           size={StyleConstants.Font.Size.M * 1.25}
           color={theme.secondary}
         />

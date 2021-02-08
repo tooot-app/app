@@ -25,7 +25,7 @@ const SettingsApp: React.FC = () => {
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-  console.log(settingsLanguage)
+
   return (
     <MenuContainer>
       <MenuRow

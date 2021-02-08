@@ -6,7 +6,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
 import ComposeRootFooter from './Root/Footer'
@@ -59,7 +59,7 @@ const ComposeRoot: React.FC = () => {
     if (isFetching) {
       return (
         <View key='listEmpty' style={styles.loading}>
-          <Chase
+          <Circle
             size={StyleConstants.Font.Size.M * 1.25}
             color={theme.secondary}
           />

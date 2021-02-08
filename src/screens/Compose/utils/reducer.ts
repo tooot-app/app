@@ -7,7 +7,6 @@ const composeReducer = (
   switch (action.type) {
     case 'loadDraft':
       const draft = action.payload
-      console.log(draft.text)
       return {
         ...state,
         ...(draft.spoiler?.length && {

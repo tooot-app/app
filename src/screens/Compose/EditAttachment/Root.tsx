@@ -1,4 +1,4 @@
-import AttachmentVideo from '@components/Timelines/Timeline/Shared/Attachment/Video'
+import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, {

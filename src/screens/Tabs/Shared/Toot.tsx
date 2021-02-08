@@ -1,4 +1,4 @@
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import React from 'react'
 import { SharedTootProp } from './sharedScreens'
 

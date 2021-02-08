@@ -1,6 +1,6 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
