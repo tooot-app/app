@@ -17,6 +17,7 @@ import {
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { useDispatch, useSelector } from 'react-redux'
 import formatText from '../formatText'
@@ -153,20 +154,24 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   return (
     <>
-      <SwipeListView
-        data={localDrafts}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        disableRightSwipe={true}
-        rightOpenValue={-actionWidth}
-        // previewRowKey={
-        //   localDrafts?.length ? localDrafts[0].timestamp.toString() : undefined
-        // }
-        // previewDuration={350}
-        // previewOpenValue={-actionWidth / 2}
-        ItemSeparatorComponent={ComponentSeparator}
-        keyExtractor={item => item.timestamp.toString()}
-      />
+      <PanGestureHandler enabled={true}>
+        <SwipeListView
+          data={localDrafts}
+          renderItem={renderItem}
+          renderHiddenItem={renderHiddenItem}
+          disableRightSwipe={true}
+          rightOpenValue={-actionWidth}
+          previewRowKey={
+            localDrafts?.length
+              ? localDrafts[0].timestamp.toString()
+              : undefined
+          }
+          // previewDuration={350}
+          previewOpenValue={-actionWidth / 2}
+          ItemSeparatorComponent={ComponentSeparator}
+          keyExtractor={item => item.timestamp.toString()}
+        />
+      </PanGestureHandler>
       <Modal
         transparent
         animationType='fade'
