@@ -12,13 +12,15 @@ export interface Props {
   index: number
   sensitiveShown: boolean
   video: Mastodon.AttachmentVideo | Mastodon.AttachmentGifv
+  gifv?: boolean
 }
 
 const AttachmentVideo: React.FC<Props> = ({
   total,
   index,
   sensitiveShown,
-  video
+  video,
+  gifv = false
 }) => {
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
@@ -92,7 +94,7 @@ const AttachmentVideo: React.FC<Props> = ({
               }}
             />
           ) : null
-        ) : (
+        ) : gifv ? null : (
           <Button
             round
             overlay

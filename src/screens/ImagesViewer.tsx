@@ -100,11 +100,8 @@ const ScreenImagesViewer = React.memo(
     useLayoutEffect(
       () =>
         navigation.setOptions({
-          headerTitle: () => (
-            <HeaderCenter
-              content={`${currentIndex + 1} / ${imageUrls.length}`}
-            />
-          ),
+          headerTitle: `${currentIndex + 1} / ${imageUrls.length}`,
+          headerTintColor: theme.primaryOverlay,
           headerRight: () => (
             <HeaderRight
               content='MoreHorizontal'

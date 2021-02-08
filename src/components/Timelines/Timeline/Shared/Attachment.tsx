@@ -85,6 +85,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
                 index={index}
                 sensitiveShown={sensitiveShown}
                 video={attachment}
+                gifv
               />
             )
           case 'audio':

@@ -69,6 +69,7 @@
     "react-query": "^3.6.0",
     "react-redux": "^7.2.2",
     "react-timeago": "^5.2.0",
+    "reconnecting-websocket": "^4.4.0",
     "redux-persist": "^6.0.0",
     "rn-placeholder": "^3.0.3",
     "sentry-expo": "^3.0.4",

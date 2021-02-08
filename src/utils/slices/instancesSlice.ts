@@ -15,6 +15,7 @@ export type InstanceLocal = {
   url: string
   token: string
   uri: Mastodon.Instance['uri']
+  urls: Mastodon.Instance['urls']
   max_toot_chars: number
   account: {
     id: Mastodon.Account['id']
@@ -23,6 +24,7 @@ export type InstanceLocal = {
     preferences: Mastodon.Preferences
   }
   notification: {
+    readTime?: Mastodon.Notification['created_at']
     latestTime?: Mastodon.Notification['created_at']
   }
   drafts: ComposeStateDraft[]
@@ -57,13 +59,13 @@ export const localAddInstance = createAsyncThunk(
   async ({
     url,
     token,
-    uri,
+    instance,
     max_toot_chars = 500,
     appData
   }: {
     url: InstanceLocal['url']
     token: InstanceLocal['token']
-    uri: Mastodon.Instance['uri']
+    instance: Mastodon.Instance
     max_toot_chars?: number
     appData: InstanceLocal['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
@@ -112,7 +114,8 @@ export const localAddInstance = createAsyncThunk(
         appData,
         url,
         token,
-        uri,
+        uri: instance.uri,
+        urls: instance.urls,
         max_toot_chars,
         account: {
           id,
@@ -121,6 +124,7 @@ export const localAddInstance = createAsyncThunk(
           preferences
         },
         notification: {
+          readTime: undefined,
           latestTime: undefined
         },
         drafts: []
@@ -209,8 +213,10 @@ const instancesSlice = createSlice({
       action: PayloadAction<Partial<InstanceLocal['notification']>>
     ) => {
       if (state.local.activeIndex !== null) {
-        state.local.instances[state.local.activeIndex].notification =
-          action.payload
+        state.local.instances[state.local.activeIndex].notification = {
+          ...state.local.instances[state.local.activeIndex].notification,
+          ...action.payload
+        }
       }
     },
     updateLocalDraft: (state, action: PayloadAction<ComposeStateDraft>) => {
@@ -297,6 +303,8 @@ export const getLocalActiveIndex = ({ instances: { local } }: RootState) =>
   local.activeIndex
 export const getLocalInstances = ({ instances: { local } }: RootState) =>
   local.instances
+export const getLocalInstance = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null ? local.instances[local.activeIndex] : undefined
 export const getLocalUrl = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].url
@@ -304,6 +312,10 @@ export const getLocalUrl = ({ instances: { local } }: RootState) =>
 export const getLocalUri = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null
     ? local.instances[local.activeIndex].uri
+    : undefined
+export const getLocalUrls = ({ instances: { local } }: RootState) =>
+  local.activeIndex !== null
+    ? local.instances[local.activeIndex].urls
     : undefined
 export const getLocalMaxTootChar = ({ instances: { local } }: RootState) =>
   local.activeIndex !== null

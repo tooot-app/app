@@ -65,7 +65,7 @@ const InstanceAuth = React.memo(
             localAddInstance({
               url: instanceDomain,
               token: accessToken,
-              uri: instance.uri,
+              instance,
               max_toot_chars: instance.max_toot_chars,
               appData
             })

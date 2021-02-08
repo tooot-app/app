@@ -421,4 +421,25 @@ declare namespace Mastodon {
     url: string
     // history: types
   }
+
+  type WebSocketStream =
+    | 'user'
+    | 'public'
+    | 'public:local'
+    | 'hashtag'
+    | 'hashtag:local'
+    | 'list'
+    | 'direct'
+  type WebSocket =
+    | {
+        stream: WebSocketStream[]
+        event: 'update'
+        payload: string // Status
+      }
+    | { stream: WebSocketStream[]; event: 'delete'; payload: Status['id'] }
+    | {
+        stream: WebSocketStream[]
+        event: 'notification'
+        payload: string // Notification
+      }
 }

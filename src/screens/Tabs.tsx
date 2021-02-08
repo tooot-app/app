@@ -1,3 +1,4 @@
+import useWebsocket from '@api/websocket'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import {
@@ -6,17 +7,17 @@ import {
 } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import {
   getLocalAccount,
   getLocalActiveIndex,
+  getLocalInstances,
   getLocalNotification
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
@@ -39,7 +40,6 @@ const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 
 const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
   const { theme } = useTheme()
-  const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
   const localAccount = useSelector(getLocalAccount)
 
@@ -134,53 +134,8 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
   )
 
   // On launch check if there is any unread noficiations
-  const queryNotification = useTimelineQuery({
-    page: 'Notifications',
-    options: {
-      enabled: localActiveIndex !== null ? true : false,
-      refetchInterval: 1000 * 60,
-      refetchIntervalInBackground: true
-    }
-  })
-  const prevNotification = useSelector(getLocalNotification)
-  const notificationsOptions = useMemo(() => {
-    const badge = {
-      show: {
-        tabBarBadge: '',
-        tabBarBadgeStyle: {
-          transform: [{ scale: 0.5 }],
-          backgroundColor: theme.red
-        }
-      },
-      hide: {
-        tabBarBadgeStyle: {
-          transform: [{ scale: 0.5 }],
-          backgroundColor: theme.red
-        }
-      }
-    }
-    const flattenData = queryNotification.data?.pages.flatMap(d => [...d])
-    const latestNotificationTime = flattenData?.length
-      ? (flattenData[0] as Mastodon.Notification).created_at
-      : undefined
-
-    if (prevNotification?.latestTime) {
-      if (
-        latestNotificationTime &&
-        new Date(prevNotification.latestTime) < new Date(latestNotificationTime)
-      ) {
-        return badge.show
-      } else {
-        return badge.hide
-      }
-    } else {
-      if (latestNotificationTime) {
-        return badge.show
-      } else {
-        return badge.hide
-      }
-    }
-  }, [prevNotification, queryNotification.data?.pages])
+  useWebsocket({ stream: 'user', event: 'notification' })
+  const localNotification = useSelector(getLocalNotification)
 
   return (
     <Tab.Navigator
@@ -203,7 +158,19 @@ const ScreenTabs: React.FC<ScreenTabsProp> = ({ navigation }) => {
         name='Tab-Notifications'
         component={TabNotifications}
         listeners={notificationsListeners}
-        options={notificationsOptions}
+        options={{
+          tabBarBadge: localNotification?.latestTime
+            ? !localNotification.readTime ||
+              new Date(localNotification.readTime) <
+                new Date(localNotification.latestTime)
+              ? ''
+              : undefined
+            : undefined,
+          tabBarBadgeStyle: {
+            transform: [{ scale: 0.5 }],
+            backgroundColor: theme.red
+          }
+        }}
       />
       <Tab.Screen name='Tab-Me' component={TabMe} />
     </Tab.Navigator>

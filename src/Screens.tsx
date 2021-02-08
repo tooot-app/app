@@ -17,10 +17,10 @@ import {
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
-import { addScreenshotListener } from 'expo-screen-capture'
+// import { addScreenshotListener } from 'expo-screen-capture'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Platform, StatusBar } from 'react-native'
+import { Platform, StatusBar } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,7 +33,7 @@ export interface Props {
 
 export const navigationRef = createRef<NavigationContainerRef>()
 
-const Index: React.FC<Props> = ({ localCorrupt }) => {
+const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
@@ -59,15 +59,15 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // }, [isConnected, firstRender])
 
   // Prevent screenshot alert
-  useEffect(() => {
-    const screenshotListener = addScreenshotListener(() =>
-      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
-        { text: t('screenshot.button'), style: 'destructive' }
-      ])
-    )
-    Platform.OS === 'ios' && screenshotListener
-    return () => screenshotListener.remove()
-  }, [])
+  // useEffect(() => {
+  //   const screenshotListener = addScreenshotListener(() =>
+  //     Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+  //       { text: t('screenshot.button'), style: 'destructive' }
+  //     ])
+  //   )
+  //   Platform.OS === 'ios' && screenshotListener
+  //   return () => screenshotListener.remove()
+  // }, [])
 
   // On launch display login credentials corrupt information
   useEffect(() => {
@@ -234,4 +234,4 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   )
 }
 
-export default React.memo(Index, () => true)
+export default React.memo(Screens, () => true)

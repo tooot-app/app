@@ -33,12 +33,28 @@ const instancesMigration = {
         })
       }
     }
+  },
+  3: (state: InstancesState) => {
+    return {
+      ...state,
+      local: {
+        ...state.local,
+        instances: state.local.instances.map(instance => {
+          if (!instance.urls) {
+            instance.urls = {
+              streaming_api: `wss://${instance.url}`
+            }
+          }
+          return instance
+        })
+      }
+    }
   }
 }
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
-  version: 2,
+  version: 3,
   storage: secureStorage,
   migrate: createMigrate(instancesMigration, { debug: true })
 }

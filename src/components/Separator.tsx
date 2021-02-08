@@ -15,6 +15,7 @@ const ComponentSeparator = React.memo(
     return (
       <View
         style={{
+          backgroundColor: theme.background,
           borderTopColor: theme.border,
           borderTopWidth: StyleSheet.hairlineWidth,
           marginLeft:

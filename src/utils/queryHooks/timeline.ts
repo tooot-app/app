@@ -80,14 +80,6 @@ const queryFunction = ({
         params
       })
 
-    case 'RemotePublic':
-      return client<Mastodon.Status[]>({
-        method: 'get',
-        instance: 'remote',
-        url: 'timelines/public',
-        params
-      })
-
     case 'Notifications':
       return client<Mastodon.Notification[]>({
         method: 'get',

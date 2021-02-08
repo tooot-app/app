@@ -1,23 +1,22 @@
 import { HeaderCenter } from '@components/Header'
 import Timeline from '@components/Timelines/Timeline'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
-import React from 'react'
+import { updateLocalNotification } from '@utils/slices/instancesSlice'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { Platform, ViewToken } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Stack = createNativeStackNavigator<Nav.TabNotificationsStackParamList>()
 
-const TabNotifications: React.FC = () => {
-  const { t } = useTranslation()
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+const TabNotifications = React.memo(
+  () => {
+    const { t } = useTranslation()
+    const dispatch = useDispatch()
 
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerLeft: () => null,
+    const screenOptions = useMemo(
+      () => ({
         headerTitle: t('notifications:heading'),
         ...(Platform.OS === 'android' && {
           headerCenter: () => (
@@ -26,17 +25,53 @@ const TabNotifications: React.FC = () => {
         }),
         headerHideShadow: true,
         headerTopInsetEnabled: false
-      }}
-    >
-      <Stack.Screen name='Tab-Notifications-Root'>
-        {() =>
-          localActiveIndex !== null ? <Timeline page='Notifications' /> : null
-        }
-      </Stack.Screen>
+      }),
+      []
+    )
+    const children = useCallback(
+      ({ navigation }) => (
+        <Timeline
+          page='Notifications'
+          customProps={{
+            viewabilityConfigCallbackPairs: [
+              {
+                onViewableItemsChanged: ({
+                  viewableItems
+                }: {
+                  viewableItems: ViewToken[]
+                }) => {
+                  if (
+                    navigation.isFocused() &&
+                    viewableItems.length &&
+                    viewableItems[0].index === 0
+                  ) {
+                    dispatch(
+                      updateLocalNotification({
+                        readTime: viewableItems[0].item.created_at
+                      })
+                    )
+                  }
+                },
+                viewabilityConfig: {
+                  minimumViewTime: 100,
+                  itemVisiblePercentThreshold: 60
+                }
+              }
+            ]
+          }}
+        />
+      ),
+      []
+    )
 
-      {sharedScreens(Stack as any)}
-    </Stack.Navigator>
-  )
-}
+    return (
+      <Stack.Navigator screenOptions={screenOptions}>
+        <Stack.Screen name='Tab-Notifications-Root' children={children} />
+        {sharedScreens(Stack as any)}
+      </Stack.Navigator>
+    )
+  },
+  () => true
+)
 
 export default TabNotifications
