@@ -36,7 +36,10 @@ const TimelineDefault: React.FC<Props> = ({
   disableOnPress = false
 }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(getLocalAccount)
+  const localAccount = useSelector(
+    getLocalAccount,
+    (prev, next) => prev?.id === next?.id
+  )
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()

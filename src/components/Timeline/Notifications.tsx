@@ -29,7 +29,10 @@ const TimelineNotifications: React.FC<Props> = ({
   highlighted = false
 }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(getLocalAccount)
+  const localAccount = useSelector(
+    getLocalAccount,
+    (prev, next) => prev?.id === next?.id
+  )
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()

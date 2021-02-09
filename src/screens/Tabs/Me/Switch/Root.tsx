@@ -45,8 +45,8 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
       onPress={() => {
         haptics('Light')
         analytics('switch_existing_press')
-        queryClient.clear()
         dispatch(updateLocalActiveIndex(instance))
+        queryClient.clear()
         navigation.goBack()
       }}
     />

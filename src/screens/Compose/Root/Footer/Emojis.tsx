@@ -18,12 +18,12 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
       newText: `:${emoji.shortcode}:`,
       type: 'emoji'
     })
-    composeDispatch({
-      type: 'emoji',
-      payload: { ...composeState.emoji, active: false }
-    })
+    // composeDispatch({
+    //   type: 'emoji',
+    //   payload: { ...composeState.emoji, active: false }
+    // })
     haptics('Success')
-  }, [])
+  }, [composeState])
   const children = useMemo(
     () => <FastImage source={{ uri: emoji.url }} style={styles.emoji} />,
     []

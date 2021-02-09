@@ -1,5 +1,4 @@
 import client from '@api/client'
-import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { toast, toastConfig } from '@components/toast'
 import {
   NavigationContainer,
@@ -21,11 +20,11 @@ import * as Analytics from 'expo-firebase-analytics'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, StatusBar } from 'react-native'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import Toast from 'react-native-toast-message'
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Stack = createSharedElementStackNavigator<Nav.RootStackParamList>()
+const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
 
 export interface Props {
   localCorrupt?: string
@@ -133,11 +132,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
       >
-        <Stack.Navigator
-          mode='modal'
-          initialRouteName='Screen-Tabs'
-          screenOptions={{ cardStyle: { backgroundColor: theme.background } }}
-        >
+        <Stack.Navigator initialRouteName='Screen-Tabs'>
           <Stack.Screen
             name='Screen-Tabs'
             component={ScreenTabs}
@@ -148,80 +143,31 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Actions'
             component={ScreenActions}
             options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
+              stackPresentation: 'transparentModal',
+              stackAnimation: 'fade'
             }}
           />
           <Stack.Screen
             name='Screen-Announcements'
             component={ScreenAnnouncements}
             options={{
-              gestureEnabled: false,
-              headerTitle: t('sharedAnnouncements:heading'),
-              ...(Platform.OS === 'android' && {
-                headerCenter: () => (
-                  <HeaderCenter content={t('sharedAnnouncements:heading')} />
-                )
-              }),
-              headerTransparent: true,
-              headerLeft: () => (
-                <HeaderLeft
-                  content='X'
-                  native={false}
-                  onPress={() => navigationRef.current?.goBack()}
-                />
-              ),
-              animationTypeForReplace: 'pop',
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
+              stackPresentation: 'transparentModal',
+              stackAnimation: 'fade'
             }}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
-            options={{ gestureEnabled: false, headerShown: false }}
+            options={{
+              stackPresentation: 'fullScreenModal'
+            }}
           />
           <Stack.Screen
             name='Screen-ImagesViewer'
             component={ScreenImagesViewer}
             options={{
-              gestureEnabled: false,
-              headerTransparent: true,
-              headerLeft: () => (
-                <HeaderLeft
-                  content='X'
-                  native={false}
-                  onPress={() => navigationRef.current?.goBack()}
-                />
-              ),
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
-            }}
-            sharedElements={route => {
-              const { imageIndex, imageUrls } = route.params
-              return [{ id: `image.${imageUrls[imageIndex].url}` }]
+              stackPresentation: 'fullScreenModal',
+              stackAnimation: 'fade'
             }}
           />
         </Stack.Navigator>

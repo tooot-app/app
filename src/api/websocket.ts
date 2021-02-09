@@ -4,7 +4,7 @@ import {
   updateLocalNotification
 } from '@utils/slices/instancesSlice'
 import { useEffect, useRef } from 'react'
-import { InfiniteData, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
@@ -17,7 +17,12 @@ const useWebsocket = ({
 }) => {
   const queryClient = useQueryClient()
   const dispatch = useDispatch()
-  const localInstance = useSelector(getLocalInstance)
+  const localInstance = useSelector(
+    getLocalInstance,
+    (prev, next) =>
+      prev?.urls.streaming_api === next?.urls.streaming_api &&
+      prev?.token === next?.token
+  )
 
   const rws = useRef<ReconnectingWebSocket>()
   useEffect(() => {
@@ -40,16 +45,7 @@ const useWebsocket = ({
               'Timeline',
               { page: 'Notifications' }
             ]
-            const queryData = queryClient.getQueryData(queryKey)
-            queryData !== undefined &&
-              queryClient.setQueryData<
-                InfiniteData<Mastodon.Notification[]> | undefined
-              >(queryKey, old => {
-                if (old) {
-                  old.pages[0].unshift(payload)
-                  return old
-                }
-              })
+            queryClient.invalidateQueries(queryKey)
             break
         }
       }

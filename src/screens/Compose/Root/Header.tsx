@@ -14,7 +14,10 @@ import ComposeTextInput from './Header/TextInput'
 const ComposeRootHeader: React.FC = () => {
   const { composeState } = useContext(ComposeContext)
   const localActiveIndex = useSelector(getLocalActiveIndex)
-  const localInstances = useSelector(getLocalInstances)
+  const localInstances = useSelector(
+    getLocalInstances,
+    (prev, next) => prev.length === next.length
+  )
 
   return (
     <>

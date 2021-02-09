@@ -29,7 +29,7 @@ const ComponentInstance: React.FC<Props> = ({
   const { t } = useTranslation('componentInstance')
   const { theme } = useTheme()
 
-  const localInstances = useSelector(getLocalInstances)
+  const localInstances = useSelector(getLocalInstances, () => true)
   const [instanceDomain, setInstanceDomain] = useState<string>()
 
   const instanceQuery = useInstanceQuery({

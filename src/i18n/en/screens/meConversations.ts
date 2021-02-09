@@ -1,4 +1,4 @@
 export default {
-  heading: 'Direct messages',
+  heading: 'Direct Messages',
   content: {}
 }

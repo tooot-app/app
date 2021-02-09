@@ -1,6 +1,7 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -12,6 +13,7 @@ import Animated, {
   withTiming
 } from 'react-native-reanimated'
 import { InfiniteData, useQueryClient } from 'react-query'
+import { useSelector } from 'react-redux'
 import TimelineConversation from './Timeline/Conversation'
 import TimelineDefault from './Timeline/Default'
 import TimelineEmpty from './Timeline/Empty'
@@ -40,6 +42,8 @@ const Timeline: React.FC<Props> = ({
   disableInfinity = false,
   customProps
 }) => {
+  // Update timeline when account switched
+  useSelector(getLocalActiveIndex)
   const queryKeyParams = {
     page,
     ...(hashtag && { hashtag }),
@@ -218,7 +222,7 @@ const Timeline: React.FC<Props> = ({
         ref={flRef}
         windowSize={8}
         data={flattenData}
-        initialNumToRender={3}
+        initialNumToRender={6}
         maxToRenderPerBatch={3}
         style={styles.flatList}
         renderItem={renderItem}

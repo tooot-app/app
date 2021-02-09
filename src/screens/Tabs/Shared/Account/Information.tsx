@@ -21,7 +21,9 @@ export interface Props {
 }
 
 const AccountInformation: React.FC<Props> = ({ account, myInfo = false }) => {
-  const ownAccount = account?.id === useSelector(getLocalAccount)?.id
+  const ownAccount =
+    account?.id ===
+    useSelector(getLocalAccount, (prev, next) => prev?.id === next?.id)?.id
   const { mode, theme } = useTheme()
 
   const animation = useCallback(

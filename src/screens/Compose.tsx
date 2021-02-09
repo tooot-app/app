@@ -75,7 +75,12 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     setHasKeyboard(false)
   }
 
-  // const draft = useSelector(getLocalDraft, () => true)
+  const localAccount = useSelector(getLocalAccount, (prev, next) =>
+    prev?.preferences && next?.preferences
+      ? prev?.preferences['posting:default:visibility'] ===
+        next?.preferences['posting:default:visibility']
+      : true
+  )
   const initialReducerState = useMemo(() => {
     if (params) {
       return composeParseState(params)
@@ -92,7 +97,6 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     }
   }, [])
 
-  const localAccount = useSelector(getLocalAccount)
   const [composeState, composeDispatch] = useReducer(
     composeReducer,
     initialReducerState

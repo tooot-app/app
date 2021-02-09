@@ -1,17 +1,21 @@
 import analytics from '@components/analytics'
-import { HeaderRight } from '@components/Header'
-import { useActionSheet } from '@expo/react-native-action-sheet'
-import { StackScreenProps } from '@react-navigation/stack'
-import CameraRoll from '@react-native-community/cameraroll'
-import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { PermissionsAndroid, Platform, Share } from 'react-native'
-import FastImage from 'react-native-fast-image'
-import ImageViewer from 'react-native-image-zoom-viewer'
-import { SharedElement } from 'react-navigation-shared-element'
+import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { toast } from '@components/toast'
+import { useActionSheet } from '@expo/react-native-action-sheet'
+import CameraRoll from '@react-native-community/cameraroll'
+import { StackScreenProps } from '@react-navigation/stack'
+import ImageView from '@root/modules/react-native-image-viewing/src/index'
+import { findIndex } from 'lodash'
+import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  PermissionsAndroid,
+  Platform,
+  Share,
+  StyleSheet,
+  View
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export type ScreenImagesViewerProp = StackScreenProps<
   Nav.RootStackParamList,
@@ -24,7 +28,6 @@ const ScreenImagesViewer = ({
   },
   navigation
 }: ScreenImagesViewerProp) => {
-  const { theme } = useTheme()
   const [currentIndex, setCurrentIndex] = useState(
     findIndex(imageUrls, ['imageIndex', imageIndex])
   )
@@ -95,45 +98,53 @@ const ScreenImagesViewer = ({
     )
   }, [currentIndex])
 
-  useEffect(
-    () =>
-      navigation.setOptions({
-        headerTitle: `${currentIndex + 1} / ${imageUrls.length}`,
-        headerTintColor: theme.primaryOverlay,
-        headerRight: () => (
-          <HeaderRight
-            content='MoreHorizontal'
-            native={false}
-            onPress={onPress}
-          />
-        )
-      }),
+  const HeaderComponent = useCallback(
+    () => (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <HeaderLeft
+          content='X'
+          native={false}
+          onPress={() => navigation.goBack()}
+        />
+        <HeaderCenter
+          inverted
+          content={`${currentIndex + 1} / ${imageUrls.length}`}
+        />
+        <HeaderRight
+          content='MoreHorizontal'
+          native={false}
+          onPress={onPress}
+        />
+      </View>
+    ),
     [currentIndex]
   )
 
-  const renderImage = useCallback(
-    prop => (
-      <SharedElement id={`imageFail.${imageUrls[imageIndex].url}`}>
-        <FastImage {...prop} />
-      </SharedElement>
-    ),
-    []
-  )
-
   return (
-    <ImageViewer
-      index={imageIndex}
-      imageUrls={imageUrls}
-      enableSwipeDown
-      useNativeDriver
-      swipeDownThreshold={100}
-      renderIndicator={() => <></>}
-      saveToLocalByLongPress={false}
-      onSwipeDown={() => navigation.goBack()}
-      onChange={index => index && setCurrentIndex(index)}
-      renderImage={renderImage}
-    />
+    <SafeAreaView style={styles.base} edges={['top']}>
+      <ImageView
+        images={imageUrls.map(urls => ({ uri: urls.url }))}
+        imageIndex={imageIndex}
+        onImageIndexChange={index => setCurrentIndex(index)}
+        onRequestClose={() => navigation.goBack()}
+        HeaderComponent={HeaderComponent}
+      />
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  base: {
+    flex: 1,
+    backgroundColor: 'black'
+  }
+})
 
 export default ScreenImagesViewer

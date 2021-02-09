@@ -58,7 +58,10 @@ const TimelineConversation: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
-  const localAccount = useSelector(getLocalAccount)
+  const localAccount = useSelector(
+    getLocalAccount,
+    (prev, next) => prev?.id === next?.id
+  )
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
