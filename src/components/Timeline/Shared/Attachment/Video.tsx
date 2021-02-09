@@ -94,7 +94,7 @@ const AttachmentVideo: React.FC<Props> = ({
               }}
             />
           ) : null
-        ) : gifv ? null : (
+        ) : (
           <Button
             round
             overlay

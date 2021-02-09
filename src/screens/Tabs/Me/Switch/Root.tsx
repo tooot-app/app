@@ -102,7 +102,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
           <Text style={[styles.header, { color: theme.primary }]}>
             {t('content.new')}
           </Text>
-          <ComponentInstance type='local' disableHeaderImage goBack />
+          <ComponentInstance disableHeaderImage goBack />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
