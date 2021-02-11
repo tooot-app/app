@@ -8,6 +8,7 @@ import {
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
+import { getPreviousTab } from '@utils/slices/contextsSlice'
 import {
   getLocalAccount,
   getLocalActiveIndex,
@@ -41,7 +42,7 @@ const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
-    const { theme } = useTheme()
+    const { mode, theme } = useTheme()
     const dispatch = useDispatch()
     const localActiveIndex = useSelector(getLocalActiveIndex)
     const localAccount = useSelector(
@@ -103,7 +104,7 @@ const ScreenTabs = React.memo(
         showLabel: false,
         ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })
       }),
-      [theme, localActiveIndex]
+      [mode, localActiveIndex]
     )
     const localListeners = useCallback(
       () => ({
@@ -167,7 +168,11 @@ const ScreenTabs = React.memo(
 
     return (
       <Tab.Navigator
-        initialRouteName={localActiveIndex !== null ? 'Tab-Local' : 'Tab-Me'}
+        initialRouteName={
+          localActiveIndex !== null
+            ? useSelector(getPreviousTab, () => true)
+            : 'Tab-Me'
+        }
         screenOptions={screenOptions}
         tabBarOptions={tabBarOptions}
       >

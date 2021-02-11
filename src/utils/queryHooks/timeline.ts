@@ -70,7 +70,7 @@ const queryFunction = ({
       })
 
     case 'Account_Default':
-      if (pageParam && pageParam.pointer === 'max_id') {
+      if (pageParam && pageParam.hasOwnProperty('max_id')) {
         return client<Mastodon.Status[]>({
           method: 'get',
           instance: 'local',
@@ -101,7 +101,7 @@ const queryFunction = ({
           })
           return {
             body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links.next && { links: { max_id: res2.links.next } }),
+            ...(res2.links.next && { links: { next: res2.links.next } }),
             pinned
           }
         })

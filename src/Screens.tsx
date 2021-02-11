@@ -9,6 +9,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import {
   getLocalActiveIndex,
   updateLocalAccountPreferences
@@ -36,7 +37,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
-  const { mode, theme } = useTheme()
+  const { mode } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
@@ -70,15 +71,20 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // On launch display login credentials corrupt information
   useEffect(() => {
-    const showLocalCorrect = localCorrupt
-      ? toast({
+    const showLocalCorrect = () => {
+      if (localCorrupt) {
+        toast({
           type: 'error',
           message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
           autoHide: false
         })
-      : undefined
-    return showLocalCorrect
+        navigationRef.current?.navigate('Screen-Tabs', {
+          screen: 'Tab-Me'
+        })
+      }
+    }
+    return showLocalCorrect()
   }, [localCorrupt])
 
   // On launch check if there is any unread announcements
@@ -115,6 +121,12 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const navigationContainerOnStateChange = useCallback(() => {
     const previousRouteName = routeNameRef.current
     const currentRouteName = navigationRef.current?.getCurrentRoute()?.name
+
+    const matchTabName = currentRouteName?.match(/(Tab-.*)-Root/)
+    if (matchTabName) {
+      //@ts-ignore
+      dispatch(updatePreviousTab(matchTabName[1]))
+    }
 
     if (previousRouteName !== currentRouteName) {
       Analytics.setCurrentScreen(currentRouteName)
