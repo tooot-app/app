@@ -140,7 +140,7 @@ export var alphaNumericCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
  * `[\p{L}\p{M}\p{Nd}]` escape ("all letters, combining marks, and decimal
  * numbers")
  */
-export var alphaNumericAndMarksCharsStr = alphaCharsAndMarksStr + decimalNumbersStr;
+export var alphaNumericAndMarksCharsStr = alphaCharsAndMarksStr + decimalNumbersStr + '-';
 // Simplified IP regular expression
 var ipStr = '(?:[' + decimalNumbersStr + ']{1,3}\\.){3}[' + decimalNumbersStr + ']{1,3}';
 // Protected domain label which do not allow "-" character on the beginning and the end of a single label

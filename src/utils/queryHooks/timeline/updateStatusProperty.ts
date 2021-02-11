@@ -32,9 +32,10 @@ const updateStatusProperty = ({
             return page
           } else {
             if (
-              typeof (page as Mastodon.Conversation[])[0].unread === 'boolean'
+              typeof (page.body as Mastodon.Conversation[])[0].unread ===
+              'boolean'
             ) {
-              const items = page as Mastodon.Conversation[]
+              const items = page.body as Mastodon.Conversation[]
               const tootIndex = findIndex(items, ['last_status.id', id])
               if (tootIndex >= 0) {
                 foundToot = true
@@ -42,16 +43,16 @@ const updateStatusProperty = ({
               }
               return page
             } else if (
-              typeof (page as Mastodon.Notification[])[0].type === 'string'
+              typeof (page.body as Mastodon.Notification[])[0].type === 'string'
             ) {
-              const items = page as Mastodon.Notification[]
+              const items = page.body as Mastodon.Notification[]
               const tootIndex = findIndex(items, ['status.id', id])
               if (tootIndex >= 0) {
                 foundToot = true
                 updateNotification({ item: items[tootIndex], payload })
               }
             } else {
-              const items = page as Mastodon.Status[]
+              const items = page.body as Mastodon.Status[]
               const tootIndex = findIndex(items, [
                 reblog ? 'reblog.id' : 'id',
                 id

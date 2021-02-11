@@ -14,7 +14,8 @@ export default {
         }
       }
     },
-    settings: '$t(meSettings:heading)',
+    accountSettings: 'Account Settings',
+    appSettings: '$t(meSettings:heading)',
     logout: {
       button: 'Log out',
       alert: {

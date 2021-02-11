@@ -100,16 +100,17 @@ const ActionsStatus: React.FC<Props> = ({
                     }
                   )
                   dismiss()
-                  const res = (await mutation.mutateAsync({
+                  const res = await mutation.mutateAsync({
                     type: 'deleteItem',
                     source: 'statuses',
                     queryKey,
                     id: status.id
-                  })) as Mastodon.Status
-                  if (res.id) {
+                  })
+                  if (res.body.id) {
+                    // @ts-ignore
                     navigation.navigate('Screen-Compose', {
                       type: 'edit',
-                      incomingStatus: res,
+                      incomingStatus: res.body,
                       queryKey
                     })
                   }

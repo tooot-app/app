@@ -27,7 +27,7 @@ const themeColors: {
   },
   primaryOverlay: {
     light: 'rgb(250, 250, 250)',
-    dark: 'rgb(180, 180, 180)'
+    dark: 'rgb(200, 200, 200)'
   },
   secondary: {
     light: 'rgb(135, 135, 135)',
@@ -43,20 +43,20 @@ const themeColors: {
   },
   red: {
     light: 'rgb(225, 45, 35)',
-    dark: 'rgb(225, 98, 89)'
+    dark: 'rgb(225, 78, 79)'
   },
 
   background: {
     light: 'rgb(250, 250, 250)',
-    dark: 'rgb(25, 25, 25)'
+    dark: 'rgb(18, 18, 18)'
   },
   backgroundGradientStart: {
     light: 'rgba(250, 250, 250, 0.5)',
-    dark: 'rgba(25, 25, 25, 0.5)'
+    dark: 'rgba(18, 18, 18, 0.5)'
   },
   backgroundGradientEnd: {
     light: 'rgba(250, 250, 250, 1)',
-    dark: 'rgba(25, 25, 25, 1)'
+    dark: 'rgba(18, 18, 18, 1)'
   },
   backgroundOverlay: {
     light: 'rgba(25, 25, 25, 0.5)',

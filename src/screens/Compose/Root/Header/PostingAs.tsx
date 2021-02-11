@@ -11,7 +11,10 @@ const ComposePostingAs = React.memo(
     const { t } = useTranslation('sharedCompose')
     const { theme } = useTheme()
 
-    const localAccount = useSelector(getLocalAccount)
+    const localAccount = useSelector(
+      getLocalAccount,
+      (prev, next) => prev?.acct === next?.acct
+    )
     const localUri = useSelector(getLocalUri)
 
     return (

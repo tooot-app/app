@@ -1,10 +1,23 @@
 export type ExtendedAttachment = {
   remote?: Mastodon.Attachment
-  local?: ImageInfo & { local_thumbnail?: string; hash?: string }
+  local?: App.IImageInfo & { local_thumbnail?: string; hash?: string }
   uploading?: boolean
 }
 
+export type ComposeStateDraft = {
+  timestamp: number
+  spoiler?: string
+  text?: string
+  poll?: ComposeState['poll']
+  attachments?: ComposeState['attachments']
+  visibility: ComposeState['visibility']
+  visibilityLock: ComposeState['visibilityLock']
+  replyToStatus?: ComposeState['replyToStatus']
+}
+
 export type ComposeState = {
+  dirty: boolean
+  timestamp: number
   posting: boolean
   spoiler: {
     active: boolean
@@ -55,6 +68,14 @@ export type ComposeState = {
 }
 
 export type ComposeAction =
+  | {
+      type: 'loadDraft'
+      payload: ComposeStateDraft
+    }
+  | {
+      type: 'dirty'
+      payload: ComposeState['dirty']
+    }
   | {
       type: 'posting'
       payload: ComposeState['posting']

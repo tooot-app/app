@@ -1,11 +1,8 @@
 import Button from '@components/Button'
-import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { useNavigation } from '@react-navigation/native'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getLocalInstances, remoteUpdate } from '@utils/slices/instancesSlice'
+import { getLocalInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
@@ -13,39 +10,30 @@ import { debounce } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
-import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Placeholder, Fade } from 'rn-placeholder'
 import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
 import EULA from './Instance/EULA'
 import InstanceInfo from './Instance/Info'
-import { toast } from './toast'
 
 export interface Props {
-  type: 'local' | 'remote'
   disableHeaderImage?: boolean
   goBack?: boolean
 }
 
 const ComponentInstance: React.FC<Props> = ({
-  type,
   disableHeaderImage,
   goBack = false
 }) => {
-  const { t, i18n } = useTranslation('componentInstance')
+  const { t } = useTranslation('componentInstance')
   const { theme } = useTheme()
-  const navigation = useNavigation()
 
-  const localInstances = useSelector(getLocalInstances)
-  const dispatch = useDispatch()
-
-  const queryClient = useQueryClient()
+  const localInstances = useSelector(getLocalInstances, () => true)
   const [instanceDomain, setInstanceDomain] = useState<string>()
 
   const instanceQuery = useInstanceQuery({
     instanceDomain,
-    checkPublic: type === 'remote',
     options: { enabled: false, retry: false }
   })
   const appsQuery = useAppsQuery({
@@ -70,46 +58,30 @@ const ComponentInstance: React.FC<Props> = ({
 
   const processUpdate = useCallback(() => {
     if (instanceDomain) {
-      switch (type) {
-        case 'local':
-          analytics('instance_local_login')
-          if (
-            localInstances &&
-            localInstances.filter(instance => instance.url === instanceDomain)
-              .length
-          ) {
-            Alert.alert(
-              t('update.local.alert.title'),
-              t('update.local.alert.message'),
-              [
-                {
-                  text: t('update.local.alert.buttons.cancel'),
-                  style: 'cancel'
-                },
-                {
-                  text: t('update.local.alert.buttons.continue'),
-                  onPress: () => {
-                    appsQuery.refetch()
-                  }
-                }
-              ]
-            )
-          } else {
-            appsQuery.refetch()
-          }
-          break
-        case 'remote':
-          analytics('instance_remote_register')
-          haptics('Success')
-          const queryKey: QueryKeyTimeline = [
-            'Timeline',
-            { page: 'RemotePublic' }
+      analytics('instance_local_login')
+      if (
+        localInstances &&
+        localInstances.filter(instance => instance.url === instanceDomain)
+          .length
+      ) {
+        Alert.alert(
+          t('update.local.alert.title'),
+          t('update.local.alert.message'),
+          [
+            {
+              text: t('update.local.alert.buttons.cancel'),
+              style: 'cancel'
+            },
+            {
+              text: t('update.local.alert.buttons.continue'),
+              onPress: () => {
+                appsQuery.refetch()
+              }
+            }
           ]
-          dispatch(remoteUpdate(instanceDomain))
-          queryClient.resetQueries(queryKey)
-          toast({ type: 'success', message: t('update.remote.succeed') })
-          navigation.goBack()
-          break
+        )
+      } else {
+        appsQuery.refetch()
       }
     }
   }, [instanceDomain])
@@ -129,15 +101,6 @@ const ComponentInstance: React.FC<Props> = ({
     [instanceDomain, instanceQuery.isSuccess, instanceQuery.data]
   )
 
-  const buttonContent = useMemo(() => {
-    switch (type) {
-      case 'local':
-        return t('server.button.local')
-      case 'remote':
-        return t('server.button.remote')
-    }
-  }, [i18n.language])
-
   const requestAuth = useMemo(() => {
     if (
       instanceDomain &&
@@ -149,7 +112,7 @@ const ComponentInstance: React.FC<Props> = ({
         <InstanceAuth
           key={Math.random()}
           instanceDomain={instanceDomain}
-          instanceUri={instanceQuery.data.uri}
+          instance={instanceQuery.data}
           appData={{
             clientId: appsQuery.data.client_id,
             clientSecret: appsQuery.data.client_secret
@@ -179,12 +142,9 @@ const ComponentInstance: React.FC<Props> = ({
               styles.textInput,
               {
                 color: theme.primary,
-                borderBottomColor:
-                  type === 'remote' &&
-                  instanceQuery.data &&
-                  !instanceQuery.data.publicAllow
-                    ? theme.red
-                    : theme.border
+                borderBottomColor: instanceQuery.isError
+                  ? theme.red
+                  : theme.border
               }
             ]}
             onChangeText={onChangeText}
@@ -200,13 +160,9 @@ const ComponentInstance: React.FC<Props> = ({
           />
           <Button
             type='text'
-            content={buttonContent}
+            content={t('server.button.local')}
             onPress={processUpdate}
-            disabled={
-              !instanceQuery.data?.uri ||
-              (type === 'remote' && !instanceQuery.data.publicAllow) ||
-              !agreed
-            }
+            disabled={!instanceQuery.data?.uri || !agreed}
             loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
@@ -262,34 +218,32 @@ const ComponentInstance: React.FC<Props> = ({
               />
             </View>
           </Placeholder>
-          {type === 'local' ? (
-            <View style={styles.disclaimer}>
-              <Icon
-                name='Lock'
-                size={StyleConstants.Font.Size.S}
-                color={theme.secondary}
-                style={styles.disclaimerIcon}
-              />
-              <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
-                {t('server.disclaimer.base')}
-                <Text
-                  style={{ color: theme.blue }}
-                  onPress={() => {
-                    analytics('view_privacy')
-                    WebBrowser.openBrowserAsync(
-                      'https://tooot.app/privacy-policy'
-                    )
-                  }}
-                >
-                  {t('server.disclaimer.privacy')}
-                </Text>
+          <View style={styles.disclaimer}>
+            <Icon
+              name='Lock'
+              size={StyleConstants.Font.Size.S}
+              color={theme.secondary}
+              style={styles.disclaimerIcon}
+            />
+            <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
+              {t('server.disclaimer.base')}
+              <Text
+                style={{ color: theme.blue }}
+                onPress={() => {
+                  analytics('view_privacy')
+                  WebBrowser.openBrowserAsync(
+                    'https://tooot.app/privacy-policy'
+                  )
+                }}
+              >
+                {t('server.disclaimer.privacy')}
               </Text>
-            </View>
-          ) : null}
+            </Text>
+          </View>
         </View>
       </View>
 
-      {type === 'local' ? requestAuth : null}
+      {requestAuth}
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { MenuRow } from '@components/Menu'
+import TimelineEmpty from '@components/Timeline/Empty'
 import { StackScreenProps } from '@react-navigation/stack'
-import TimelineEmpty from '@root/components/Timelines/Timeline/Empty'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import React, { useMemo } from 'react'
 

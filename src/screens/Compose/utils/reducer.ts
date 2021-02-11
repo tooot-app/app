@@ -5,6 +5,28 @@ const composeReducer = (
   action: ComposeAction
 ): ComposeState => {
   switch (action.type) {
+    case 'loadDraft':
+      const draft = action.payload
+      return {
+        ...state,
+        ...(draft.spoiler?.length && {
+          spoiler: {
+            ...state.spoiler,
+            active: true,
+            raw: draft.spoiler
+          }
+        }),
+        ...(draft.text?.length && {
+          text: { ...state.text, raw: draft.text }
+        }),
+        ...(draft.poll && { poll: draft.poll }),
+        ...(draft.attachments && { attachments: draft.attachments }),
+        visibility: draft.visibility,
+        visibilityLock: draft.visibilityLock,
+        replyToStatus: draft.replyToStatus
+      }
+    case 'dirty':
+      return { ...state, dirty: action.payload }
     case 'posting':
       return { ...state, posting: action.payload }
     case 'spoiler':
@@ -48,7 +70,7 @@ const composeReducer = (
         attachments: {
           ...state.attachments,
           uploads: state.attachments.uploads.filter(
-            upload => upload.local.hash !== action.payload
+            upload => upload.local?.hash !== action.payload
           )
         }
       }

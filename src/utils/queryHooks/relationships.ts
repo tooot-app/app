@@ -12,18 +12,10 @@ const queryFunction = ({
   pageParam
 }: {
   queryKey: QueryKey
-  pageParam?: { direction: 'next'; id: Mastodon.Status['id'] }
+  pageParam?: { [key: string]: string }
 }) => {
   const { type, id } = queryKey[1]
-  let params: { [key: string]: string } = {}
-
-  if (pageParam) {
-    switch (pageParam.direction) {
-      case 'next':
-        params.max_id = pageParam.id
-        break
-    }
-  }
+  let params: { [key: string]: string } = { ...pageParam }
 
   return client<Mastodon.Account[]>({
     method: 'get',
@@ -37,7 +29,14 @@ const useRelationshipsQuery = <TData = Mastodon.Account[]>({
   options,
   ...queryKeyParams
 }: QueryKey[1] & {
-  options?: UseInfiniteQueryOptions<Mastodon.Account[], AxiosError, TData>
+  options?: UseInfiniteQueryOptions<
+    {
+      body: Mastodon.Account[]
+      links?: { prev?: string; next?: string }
+    },
+    AxiosError,
+    TData
+  >
 }) => {
   const queryKey: QueryKey = ['Relationships', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, options)

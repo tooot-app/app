@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
 import {
   localRemoveInstance,
-  localUpdateAccount
+  updateLocalAccount
 } from '@utils/slices/instancesSlice'
 import log from './log'
 
@@ -27,7 +27,7 @@ const netInfo = async (): Promise<{
         .then(res => {
           log('log', 'netInfo', 'local credential check passed')
           if (
-            res.id !==
+            res.body.id !==
             store.getState().instances.local?.instances[activeIndex].account.id
           ) {
             log('error', 'netInfo', 'local id does not match remote id')
@@ -35,9 +35,9 @@ const netInfo = async (): Promise<{
             return Promise.resolve({ connected: true, corruputed: '' })
           } else {
             store.dispatch(
-              localUpdateAccount({
-                acct: res.acct,
-                avatarStatic: res.avatar_static
+              updateLocalAccount({
+                acct: res.body.acct,
+                avatarStatic: res.body.avatar_static
               })
             )
             return Promise.resolve({ connected: true })

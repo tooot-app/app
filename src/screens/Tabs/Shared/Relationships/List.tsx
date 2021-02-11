@@ -1,7 +1,7 @@
 import ComponentAccount from '@components/Account'
 import ComponentSeparator from '@components/Separator'
-import TimelineEmpty from '@components/Timelines/Timeline/Empty'
-import TimelineEnd from '@components/Timelines/Timeline/End'
+import TimelineEmpty from '@components/Timeline/Empty'
+import TimelineEnd from '@components/Timeline/End'
 import { useScrollToTop } from '@react-navigation/native'
 import { useRelationshipsQuery } from '@utils/queryHooks/relationships'
 import React, { useCallback, useMemo, useRef } from 'react'
@@ -26,17 +26,13 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
     type,
     id,
     options: {
-      getNextPageParam: lastPage => {
-        return lastPage.length
-          ? {
-              direction: 'next',
-              id: lastPage[lastPage.length - 1].id
-            }
-          : undefined
-      }
+      getPreviousPageParam: firstPage =>
+        firstPage.links?.prev && { since_id: firstPage.links.next },
+      getNextPageParam: lastPage =>
+        lastPage.links?.next && { max_id: lastPage.links.next }
     }
   })
-  const flattenData = data?.pages ? data.pages.flatMap(d => [...d]) : []
+  const flattenData = data?.pages ? data.pages.flatMap(d => [...d.body]) : []
 
   const flRef = useRef<FlatList<Mastodon.Account>>(null)
 

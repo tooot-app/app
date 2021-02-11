@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux'
 export interface Props {
   instanceDomain: string
   // Domain can be different than uri
-  instanceUri: Mastodon.Instance['uri']
+  instance: Mastodon.Instance
   appData: InstanceLocal['appData']
   goBack?: boolean
 }
 
 const InstanceAuth = React.memo(
-  ({ instanceDomain, instanceUri, appData, goBack }: Props) => {
+  ({ instanceDomain, instance, appData, goBack }: Props) => {
     const redirectUri = AuthSession.makeRedirectUri({
       native: 'tooot://instance-auth',
       useProxy: false
@@ -65,7 +65,8 @@ const InstanceAuth = React.memo(
             localAddInstance({
               url: instanceDomain,
               token: accessToken,
-              uri: instanceUri,
+              instance,
+              max_toot_chars: instance.max_toot_chars,
               appData
             })
           )

@@ -28,29 +28,10 @@ const queryFunction = ({
   pageParam
 }: {
   queryKey: QueryKeyTimeline
-  pageParam?: { direction: 'prev' | 'next'; id: Mastodon.Status['id'] }
+  pageParam?: { [key: string]: string }
 }) => {
   const { page, account, hashtag, list, toot } = queryKey[1]
-  let params: { [key: string]: string } = {}
-
-  if (pageParam) {
-    switch (pageParam.direction) {
-      case 'prev':
-        if (page === 'Bookmarks' || page === 'Favourites') {
-          params.max_id = pageParam.id
-        } else {
-          params.min_id = pageParam.id
-        }
-        break
-      case 'next':
-        if (page === 'Bookmarks' || page === 'Favourites') {
-          params.min_id = pageParam.id
-        } else {
-          params.max_id = pageParam.id
-        }
-        break
-    }
-  }
+  let params: { [key: string]: string } = { ...pageParam }
 
   switch (page) {
     case 'Following':
@@ -80,14 +61,6 @@ const queryFunction = ({
         params
       })
 
-    case 'RemotePublic':
-      return client<Mastodon.Status[]>({
-        method: 'get',
-        instance: 'remote',
-        url: 'timelines/public',
-        params
-      })
-
     case 'Notifications':
       return client<Mastodon.Notification[]>({
         method: 'get',
@@ -97,7 +70,7 @@ const queryFunction = ({
       })
 
     case 'Account_Default':
-      if (pageParam && pageParam.direction === 'next') {
+      if (pageParam && pageParam.hasOwnProperty('max_id')) {
         return client<Mastodon.Status[]>({
           method: 'get',
           instance: 'local',
@@ -116,10 +89,8 @@ const queryFunction = ({
             pinned: 'true'
           }
         }).then(async res1 => {
-          let toots = res1.map(status => {
-            status.isPinned = true
-            return status
-          })
+          let pinned: Mastodon.Status['id'][] = []
+          res1.body.forEach(status => pinned.push(status.id))
           const res2 = await client<Mastodon.Status[]>({
             method: 'get',
             instance: 'local',
@@ -128,7 +99,11 @@ const queryFunction = ({
               exclude_replies: 'true'
             }
           })
-          return uniqBy([...toots, ...res2], 'id')
+          return {
+            body: uniqBy([...res1.body, ...res2.body], 'id'),
+            ...(res2.links.next && { links: { next: res2.links.next } }),
+            pinned
+          }
         })
       }
 
@@ -205,7 +180,9 @@ const queryFunction = ({
           instance: 'local',
           url: `statuses/${toot}/context`
         })
-        return [...res2.ancestors, res1, ...res2.descendants]
+        return {
+          body: [...res2.body.ancestors, res1.body, ...res2.body.descendants]
+        }
       })
     default:
       return Promise.reject()
@@ -218,7 +195,18 @@ const useTimelineQuery = <TData = TimelineData>({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<any, AxiosError, TData>
+  options?: UseInfiniteQueryOptions<
+    {
+      body:
+        | Mastodon.Status[]
+        | Mastodon.Notification[]
+        | Mastodon.Conversation[]
+      links?: { prev?: string; next?: string }
+      pinned?: Mastodon.Status['id'][]
+    },
+    AxiosError,
+    TData
+  >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, options)
@@ -362,7 +350,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
 }
 
 type MutationOptionsTimeline = MutationOptions<
-  Mastodon.Conversation | Mastodon.Notification | Mastodon.Status,
+  { body: Mastodon.Conversation | Mastodon.Notification | Mastodon.Status },
   AxiosError,
   MutationVarsTimeline
 >
@@ -381,7 +369,7 @@ const useTimelineMutation = ({
   onSuccess?: MutationOptionsTimeline['onSuccess'] | boolean
 }) => {
   return useMutation<
-    Mastodon.Conversation | Mastodon.Notification | Mastodon.Status,
+    { body: Mastodon.Conversation | Mastodon.Notification | Mastodon.Status },
     AxiosError,
     MutationVarsTimeline
   >(mutationFunction, {

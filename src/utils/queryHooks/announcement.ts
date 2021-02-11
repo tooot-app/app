@@ -21,7 +21,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKeyAnnouncement }) => {
         with_dismissed: 'true'
       }
     })
-  })
+  }).then(res => res.body)
 }
 
 const useAnnouncementQuery = <TData = Mastodon.Announcement[]>({

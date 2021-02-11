@@ -2,29 +2,40 @@ import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
 import haptics from '@root/components/haptics'
-import { store } from '@root/store'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import {
+  getLocalAccount,
+  getLocalMaxTootChar,
+  removeLocalDraft,
+  updateLocalDraft
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { filter } from 'lodash'
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
-  Text
+  StyleSheet
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
+import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
@@ -52,7 +63,6 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     Keyboard.addListener('keyboardWillShow', _keyboardDidShow)
     Keyboard.addListener('keyboardWillHide', _keyboardDidHide)
 
-    // cleanup function
     return () => {
       Keyboard.removeListener('keyboardWillShow', _keyboardDidShow)
       Keyboard.removeListener('keyboardWillHide', _keyboardDidHide)
@@ -65,20 +75,56 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     setHasKeyboard(false)
   }
 
-  const localAccount = getLocalAccount(store.getState())
+  const localAccount = useSelector(getLocalAccount, (prev, next) =>
+    prev?.preferences && next?.preferences
+      ? prev?.preferences['posting:default:visibility'] ===
+        next?.preferences['posting:default:visibility']
+      : true
+  )
+  const initialReducerState = useMemo(() => {
+    if (params) {
+      return composeParseState(params)
+    } else {
+      return {
+        ...composeInitialState,
+        timestamp: Date.now(),
+        visibility:
+          localAccount?.preferences &&
+          localAccount.preferences['posting:default:visibility']
+            ? localAccount.preferences['posting:default:visibility']
+            : 'public'
+      }
+    }
+  }, [])
+
   const [composeState, composeDispatch] = useReducer(
     composeReducer,
-    params
-      ? composeParseState(params)
-      : {
-          ...composeInitialState,
-          visibility:
-            localAccount?.preferences &&
-            localAccount.preferences['posting:default:visibility']
-              ? localAccount.preferences['posting:default:visibility']
-              : 'public'
-        }
+    initialReducerState
   )
+
+  const maxTootChars = useSelector(getLocalMaxTootChar)
+  const totalTextCount =
+    (composeState.spoiler.active ? composeState.spoiler.count : 0) +
+    composeState.text.count
+
+  // If compose state is dirty, then disallow add back drafts
+  useEffect(() => {
+    composeDispatch({
+      type: 'dirty',
+      payload:
+        totalTextCount !== 0 ||
+        composeState.attachments.uploads.length !== 0 ||
+        (composeState.poll.active === true &&
+          filter(composeState.poll.options, o => {
+            return o !== undefined && o.length > 0
+          }).length > 0)
+    })
+  }, [
+    totalTextCount,
+    composeState.attachments.uploads.length,
+    composeState.poll.active,
+    composeState.poll.options
+  ])
 
   useEffect(() => {
     switch (params?.type) {
@@ -110,9 +156,31 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     }
   }, [params?.type])
 
-  const totalTextCount =
-    (composeState.spoiler.active ? composeState.spoiler.count : 0) +
-    composeState.text.count
+  const saveDraft = () => {
+    dispatch(
+      updateLocalDraft({
+        timestamp: composeState.timestamp,
+        spoiler: composeState.spoiler.raw,
+        text: composeState.text.raw,
+        poll: composeState.poll,
+        attachments: composeState.attachments,
+        visibility: composeState.visibility,
+        visibilityLock: composeState.visibilityLock,
+        replyToStatus: composeState.replyToStatus
+      })
+    )
+  }
+  const removeDraft = useCallback(() => {
+    dispatch(removeLocalDraft(composeState.timestamp))
+  }, [composeState.timestamp])
+  useEffect(() => {
+    const autoSave = composeState.dirty
+      ? setInterval(() => {
+          saveDraft()
+        }, 2000)
+      : removeDraft()
+    return () => autoSave && clearInterval(autoSave)
+  }, [composeState])
 
   const headerLeft = useCallback(
     () => (
@@ -121,11 +189,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         content={t('heading.left.button')}
         onPress={() => {
           analytics('compose_header_back_press')
-          if (
-            totalTextCount === 0 &&
-            composeState.attachments.uploads.length === 0 &&
-            composeState.poll.active === false
-          ) {
+          if (!composeState.dirty) {
             analytics('compose_header_back_empty')
             navigation.goBack()
             return
@@ -133,15 +197,24 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             analytics('compose_header_back_state_occupied')
             Alert.alert(t('heading.left.alert.title'), undefined, [
               {
-                text: t('heading.left.alert.buttons.exit'),
+                text: t('heading.left.alert.buttons.delete'),
                 style: 'destructive',
                 onPress: () => {
-                  analytics('compose_header_back_occupied_confirm')
+                  analytics('compose_header_back_occupied_save')
+                  removeDraft()
                   navigation.goBack()
                 }
               },
               {
-                text: t('heading.left.alert.buttons.continue'),
+                text: t('heading.left.alert.buttons.save'),
+                onPress: () => {
+                  analytics('compose_header_back_occupied_delete')
+                  saveDraft()
+                  navigation.goBack()
+                }
+              },
+              {
+                text: t('heading.left.alert.buttons.cancel'),
                 style: 'cancel',
                 onPress: () => {
                   analytics('compose_header_back_occupied_cancel')
@@ -152,24 +225,27 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         }}
       />
     ),
-    [totalTextCount, composeState]
-  )
-  const headerCenter = useCallback(
-    () => (
-      <Text
-        style={[
-          styles.count,
-          {
-            color: totalTextCount > 500 ? theme.red : theme.secondary
-          }
-        ]}
-      >
-        {totalTextCount} / 500
-      </Text>
-    ),
-    [totalTextCount]
+    [composeState]
   )
   const dispatch = useDispatch()
+  const headerRightDisabled = useMemo(() => {
+    if (totalTextCount > maxTootChars) {
+      return true
+    }
+    if (
+      composeState.attachments.uploads.filter(upload => upload.uploading)
+        .length > 0
+    ) {
+      return true
+    }
+    if (
+      composeState.attachments.uploads.length === 0 &&
+      composeState.text.raw.length === 0
+    ) {
+      return true
+    }
+    return false
+  }, [totalTextCount, composeState.attachments.uploads, composeState.text.raw])
   const headerRight = useCallback(
     () => (
       <HeaderRight
@@ -201,6 +277,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
                   }
                   break
               }
+              removeDraft()
               navigation.goBack()
             })
             .catch(error => {
@@ -215,13 +292,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             })
         }}
         loading={composeState.posting}
-        disabled={
-          composeState.text.raw.length < 1 ||
-          totalTextCount > 500 ||
-          (composeState.attachments.uploads.length > 0 &&
-            composeState.attachments.uploads.filter(upload => upload.uploading)
-              .length > 0)
-        }
+        disabled={headerRightDisabled}
       />
     ),
     [totalTextCount, composeState]
@@ -245,7 +316,27 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             <Stack.Screen
               name='Screen-Compose-Root'
               component={ComposeRoot}
-              options={{ headerLeft, headerCenter, headerRight }}
+              options={{
+                headerLeft,
+                headerTitle: `${totalTextCount} / ${maxTootChars}${
+                  __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
+                }`,
+                headerTitleStyle: {
+                  fontWeight:
+                    totalTextCount > maxTootChars
+                      ? StyleConstants.Font.Weight.Bold
+                      : StyleConstants.Font.Weight.Normal,
+                  fontSize: StyleConstants.Font.Size.M
+                },
+                headerTintColor:
+                  totalTextCount > maxTootChars ? theme.red : theme.secondary,
+                headerRight
+              }}
+            />
+            <Stack.Screen
+              name='Screen-Compose-DraftsList'
+              component={ComposeDraftsList}
+              options={{ stackPresentation: 'modal' }}
             />
             <Stack.Screen
               name='Screen-Compose-EditAttachment'
@@ -260,11 +351,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
 }
 
 const styles = StyleSheet.create({
-  base: { flex: 1 },
-  count: {
-    textAlign: 'center',
-    ...StyleConstants.FontStyle.M
-  }
+  base: { flex: 1 }
 })
 
 export default ScreenCompose

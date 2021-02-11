@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import FastImage, { ImageStyle } from 'react-native-fast-image'
-import { SharedElement } from 'react-navigation-shared-element'
 import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
@@ -73,23 +72,12 @@ const GracefullyImage = React.memo(
     const children = useCallback(() => {
       return (
         <>
-          {sharedElement ? (
-            <SharedElement id={`image.${sharedElement}`} style={[styles.image]}>
-              <FastImage
-                source={{ uri: sourceUri }}
-                style={[styles.image, imageStyle]}
-                onLoad={onLoad}
-                onError={onError}
-              />
-            </SharedElement>
-          ) : (
-            <FastImage
-              source={{ uri: sourceUri }}
-              style={[styles.image, imageStyle]}
-              onLoad={onLoad}
-              onError={onError}
-            />
-          )}
+          <FastImage
+            source={{ uri: sourceUri }}
+            style={[styles.image, imageStyle]}
+            onLoad={onLoad}
+            onError={onError}
+          />
           {blurhash &&
           (hidden || !(previewLoaded || originalLoaded || remoteLoaded)) ? (
             <Blurhash

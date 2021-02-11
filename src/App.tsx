@@ -1,6 +1,6 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import i18n from '@root/i18n/i18n'
-import Index from '@root/Screens'
+import Screens from '@root/Screens'
 import audio from '@root/startup/audio'
 import dev from '@root/startup/dev'
 import log from '@root/startup/log'
@@ -78,7 +78,7 @@ const App: React.FC = () => {
         return (
           <ActionSheetProvider>
             <ThemeManager>
-              <Index localCorrupt={localCorrupt} />
+              <Screens localCorrupt={localCorrupt} />
             </ThemeManager>
           </ActionSheetProvider>
         )

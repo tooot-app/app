@@ -25,7 +25,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     instance: 'local',
     url: 'search',
     params: { ...(type && { type }), ...(term && { q: term }), limit }
-  })
+  }).then(res => res.body)
 }
 
 const useSearchQuery = <TData = SearchResult>({

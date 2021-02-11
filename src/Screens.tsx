@@ -1,5 +1,4 @@
 import client from '@api/client'
-import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { toast, toastConfig } from '@components/toast'
 import {
   NavigationContainer,
@@ -10,22 +9,23 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import {
   getLocalActiveIndex,
-  localUpdateAccountPreferences
+  updateLocalAccountPreferences
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
-import { addScreenshotListener } from 'expo-screen-capture'
+// import { addScreenshotListener } from 'expo-screen-capture'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Platform, StatusBar } from 'react-native'
+import { Platform, StatusBar } from 'react-native'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import Toast from 'react-native-toast-message'
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Stack = createSharedElementStackNavigator<Nav.RootStackParamList>()
+const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
 
 export interface Props {
   localCorrupt?: string
@@ -33,11 +33,11 @@ export interface Props {
 
 export const navigationRef = createRef<NavigationContainerRef>()
 
-const Index: React.FC<Props> = ({ localCorrupt }) => {
+const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
-  const { mode, theme } = useTheme()
+  const { mode } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
@@ -59,27 +59,32 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // }, [isConnected, firstRender])
 
   // Prevent screenshot alert
-  useEffect(() => {
-    const screenshotListener = addScreenshotListener(() =>
-      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
-        { text: t('screenshot.button'), style: 'destructive' }
-      ])
-    )
-    Platform.OS === 'ios' && screenshotListener
-    return () => screenshotListener.remove()
-  }, [])
+  // useEffect(() => {
+  //   const screenshotListener = addScreenshotListener(() =>
+  //     Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+  //       { text: t('screenshot.button'), style: 'destructive' }
+  //     ])
+  //   )
+  //   Platform.OS === 'ios' && screenshotListener
+  //   return () => screenshotListener.remove()
+  // }, [])
 
   // On launch display login credentials corrupt information
   useEffect(() => {
-    const showLocalCorrect = localCorrupt
-      ? toast({
+    const showLocalCorrect = () => {
+      if (localCorrupt) {
+        toast({
           type: 'error',
           message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
           autoHide: false
         })
-      : undefined
-    return showLocalCorrect
+        navigationRef.current?.navigate('Screen-Tabs', {
+          screen: 'Tab-Me'
+        })
+      }
+    }
+    return showLocalCorrect()
   }, [localCorrupt])
 
   // On launch check if there is any unread announcements
@@ -91,7 +96,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         url: `announcements`
       })
         .then(res => {
-          if (res?.filter(announcement => !announcement.read).length) {
+          if (res.body.filter(announcement => !announcement.read).length) {
             navigationRef.current?.navigate('Screen-Announcements', {
               showAll: false
             })
@@ -103,7 +108,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (localActiveIndex !== null) {
-      dispatch(localUpdateAccountPreferences())
+      dispatch(updateLocalAccountPreferences())
     }
   }, [])
 
@@ -116,6 +121,12 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   const navigationContainerOnStateChange = useCallback(() => {
     const previousRouteName = routeNameRef.current
     const currentRouteName = navigationRef.current?.getCurrentRoute()?.name
+
+    const matchTabName = currentRouteName?.match(/(Tab-.*)-Root/)
+    if (matchTabName) {
+      //@ts-ignore
+      dispatch(updatePreviousTab(matchTabName[1]))
+    }
 
     if (previousRouteName !== currentRouteName) {
       Analytics.setCurrentScreen(currentRouteName)
@@ -133,11 +144,7 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
       >
-        <Stack.Navigator
-          mode='modal'
-          initialRouteName='Screen-Tabs'
-          screenOptions={{ cardStyle: { backgroundColor: theme.background } }}
-        >
+        <Stack.Navigator initialRouteName='Screen-Tabs'>
           <Stack.Screen
             name='Screen-Tabs'
             component={ScreenTabs}
@@ -148,80 +155,31 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Actions'
             component={ScreenActions}
             options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
+              stackPresentation: 'transparentModal',
+              stackAnimation: 'fade'
             }}
           />
           <Stack.Screen
             name='Screen-Announcements'
             component={ScreenAnnouncements}
             options={{
-              gestureEnabled: false,
-              headerTitle: t('sharedAnnouncements:heading'),
-              ...(Platform.OS === 'android' && {
-                headerCenter: () => (
-                  <HeaderCenter content={t('sharedAnnouncements:heading')} />
-                )
-              }),
-              headerTransparent: true,
-              headerLeft: () => (
-                <HeaderLeft
-                  content='X'
-                  native={false}
-                  onPress={() => navigationRef.current?.goBack()}
-                />
-              ),
-              animationTypeForReplace: 'pop',
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
+              stackPresentation: 'transparentModal',
+              stackAnimation: 'fade'
             }}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
-            options={{ gestureEnabled: false, headerShown: false }}
+            options={{
+              stackPresentation: 'fullScreenModal'
+            }}
           />
           <Stack.Screen
             name='Screen-ImagesViewer'
             component={ScreenImagesViewer}
             options={{
-              gestureEnabled: false,
-              headerTransparent: true,
-              headerLeft: () => (
-                <HeaderLeft
-                  content='X'
-                  native={false}
-                  onPress={() => navigationRef.current?.goBack()}
-                />
-              ),
-              cardStyle: { backgroundColor: 'transparent' },
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 1]
-                  })
-                }
-              })
-            }}
-            sharedElements={route => {
-              const { imageIndex, imageUrls } = route.params
-              return [{ id: `image.${imageUrls[imageIndex].url}` }]
+              stackPresentation: 'fullScreenModal',
+              stackAnimation: 'fade'
             }}
           />
         </Stack.Navigator>
@@ -234,4 +192,4 @@ const Index: React.FC<Props> = ({ localCorrupt }) => {
   )
 }
 
-export default React.memo(Index, () => true)
+export default React.memo(Screens, () => true)

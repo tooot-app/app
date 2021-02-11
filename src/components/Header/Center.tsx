@@ -5,16 +5,20 @@ import { StyleSheet, Text } from 'react-native'
 
 export interface Props {
   content: string
+  inverted?: boolean
 }
 
 // Used for Android mostly
 const HeaderCenter = React.memo(
-  ({ content }: Props) => {
+  ({ content, inverted = false }: Props) => {
     const { theme } = useTheme()
 
     return (
       <Text
-        style={[styles.text, { color: theme.primary }]}
+        style={[
+          styles.text,
+          { color: inverted ? theme.primaryOverlay : theme.primary }
+        ]}
         children={content}
       />
     )

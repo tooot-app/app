@@ -1,11 +1,3 @@
-interface IImageInfo {
-  url: string
-  width?: number
-  height?: number
-  originUrl?: string
-  props?: any
-}
-
 declare namespace Nav {
   type RootStackParamList = {
     'Screen-Tabs': undefined
@@ -56,7 +48,7 @@ declare namespace Nav {
         }
       | undefined
     'Screen-ImagesViewer': {
-      imageUrls: (IImageInfo & {
+      imageUrls: (App.IImageInfo & {
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
         imageIndex: number
@@ -68,6 +60,7 @@ declare namespace Nav {
   type ScreenComposeStackParamList = {
     'Screen-Compose-Root': undefined
     'Screen-Compose-EditAttachment': { index: number }
+    'Screen-Compose-DraftsList': { timestamp: number }
   }
 
   type ScreenTabsStackParamList = {

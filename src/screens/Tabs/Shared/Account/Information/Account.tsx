@@ -14,7 +14,10 @@ export interface Props {
 
 const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(getLocalAccount)
+  const localAccount = useSelector(
+    getLocalAccount,
+    (prev, next) => prev?.acct === next?.acct
+  )
   const localUri = useSelector(getLocalUri)
 
   const movedStyle = useMemo(

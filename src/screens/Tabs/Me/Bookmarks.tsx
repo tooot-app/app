@@ -1,9 +1,11 @@
+import Timeline from '@components/Timeline'
 import React from 'react'
 
-import Timeline from '@components/Timelines/Timeline'
-
-const ScreenMeBookmarks: React.FC = () => {
-  return <Timeline page='Bookmarks' />
-}
+const ScreenMeBookmarks = React.memo(
+  () => {
+    return <Timeline page='Bookmarks' />
+  },
+  () => true
+)
 
 export default ScreenMeBookmarks

@@ -1,8 +1,8 @@
+import TimelineDefault from '@components/Timeline/Default'
 import { useTheme } from '@utils/styles/ThemeManager'
-import ComposeContext from '../../utils/createContext'
 import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
-import TimelineDefault from '@root/components/Timelines/Timeline/Default'
+import ComposeContext from '../../utils/createContext'
 
 const ComposeReply: React.FC = () => {
   const {

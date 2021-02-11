@@ -113,10 +113,10 @@ const addAttachment = async ({
       body: formData
     })
       .then(res => {
-        if (res.id) {
+        if (res.body.id) {
           composeDispatch({
             type: 'attachment/upload/end',
-            payload: { remote: res, local: result }
+            payload: { remote: res.body, local: result }
           })
         } else {
           uploadFailed()

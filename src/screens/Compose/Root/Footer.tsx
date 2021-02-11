@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
 import ComposeAttachments from '@screens/Compose/Root/Footer/Attachments'
 import ComposeEmojis from '@screens/Compose/Root/Footer/Emojis'
 import ComposePoll from '@screens/Compose/Root/Footer/Poll'
 import ComposeReply from '@screens/Compose/Root/Footer/Reply'
 import ComposeContext from '@screens/Compose/utils/createContext'
+import React, { useContext } from 'react'
 
 const ComposeRootFooter: React.FC = () => {
   const { composeState } = useContext(ComposeContext)

@@ -44,7 +44,7 @@ const Collections: React.FC = () => {
         onPress={() => navigation.navigate('Tab-Me-Bookmarks')}
       />
       <MenuRow
-        iconFront='Star'
+        iconFront='Heart'
         iconBack='ChevronRight'
         title={t('content.collections.favourites')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}

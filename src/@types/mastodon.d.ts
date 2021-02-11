@@ -290,6 +290,9 @@ declare namespace Mastodon {
     // Others
     thumbnail?: string
     contact_account?: Account
+
+    // Custom
+    max_toot_chars?: number
   }
 
   type Mention = {
@@ -418,4 +421,25 @@ declare namespace Mastodon {
     url: string
     // history: types
   }
+
+  type WebSocketStream =
+    | 'user'
+    | 'public'
+    | 'public:local'
+    | 'hashtag'
+    | 'hashtag:local'
+    | 'list'
+    | 'direct'
+  type WebSocket =
+    | {
+        stream: WebSocketStream[]
+        event: 'update'
+        payload: string // Status
+      }
+    | { stream: WebSocketStream[]; event: 'delete'; payload: Status['id'] }
+    | {
+        stream: WebSocketStream[]
+        event: 'notification'
+        payload: string // Notification
+      }
 }

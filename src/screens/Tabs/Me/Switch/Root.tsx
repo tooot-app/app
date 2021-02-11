@@ -7,7 +7,7 @@ import {
   getLocalActiveIndex,
   getLocalInstances,
   InstanceLocal,
-  localUpdateActiveIndex
+  updateLocalActiveIndex
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -45,8 +45,8 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
       onPress={() => {
         haptics('Light')
         analytics('switch_existing_press')
+        dispatch(updateLocalActiveIndex(instance))
         queryClient.clear()
-        dispatch(localUpdateActiveIndex(instance))
         navigation.goBack()
       }}
     />
@@ -102,7 +102,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
           <Text style={[styles.header, { color: theme.primary }]}>
             {t('content.new')}
           </Text>
-          <ComponentInstance type='local' disableHeaderImage goBack />
+          <ComponentInstance disableHeaderImage goBack />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

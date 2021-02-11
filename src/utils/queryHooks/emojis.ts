@@ -9,7 +9,7 @@ const queryFunction = () => {
     method: 'get',
     instance: 'local',
     url: 'custom_emojis'
-  })
+  }).then(res => res.body)
 }
 
 const useEmojisQuery = <TData = Mastodon.Emoji[]>({

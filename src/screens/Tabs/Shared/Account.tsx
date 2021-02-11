@@ -1,6 +1,6 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
@@ -41,6 +41,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
               analytics('bottomsheet_open_press', {
                 page: 'account'
               })
+              // @ts-ignore
               navigation.navigate('Screen-Actions', {
                 type: 'account',
                 account

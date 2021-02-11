@@ -14,7 +14,8 @@ export default {
         }
       }
     },
-    settings: '$t(meSettings:heading)',
+    accountSettings: '账户设置',
+    appSettings: '$t(meSettings:heading)',
     logout: {
       button: '退出当前账号',
       alert: {

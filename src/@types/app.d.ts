@@ -3,7 +3,6 @@ declare namespace App {
     | 'Following'
     | 'Local'
     | 'LocalPublic'
-    | 'RemotePublic'
     | 'Notifications'
     | 'Hashtag'
     | 'List'
@@ -14,4 +13,11 @@ declare namespace App {
     | 'Conversations'
     | 'Bookmarks'
     | 'Favourites'
+
+  interface IImageInfo {
+    uri: string
+    width: number
+    height: number
+    type?: 'image' | 'video'
+  }
 }

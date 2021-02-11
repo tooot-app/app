@@ -15,7 +15,7 @@ case ENVIRONMENT
 when "development"
   GITHUB_RELEASE= ""
 when "staging"
-  GITHUB_RELEASE = "v#{VERSION}(#{BUILD_NUMBER})"
+  GITHUB_RELEASE = "v#{VERSION}-rc#{VERSIONS[:patch]}"
 when "production"
   GITHUB_RELEASE = "v#{VERSION}"
 end
@@ -44,20 +44,14 @@ private_lane :prepare_playstore_android do
 end
 
 desc "Create new GitHub release"
-private_lane :github_release do
-  case ENVIRONMENT
-  when "staging"
-    is_prerelease = true
-  when "production"
-    is_prerelease = false
-  end
+private_lane :github_release do |options|
   set_github_release(
     repository_name: GITHUB_REPO,
     name: GITHUB_RELEASE,
     tag_name: GITHUB_RELEASE,
     description: "No changelog provided",
     commitish: git_branch,
-    is_prerelease: is_prerelease
+    is_prerelease: options[:prerelease]
   )
 end
 
@@ -76,8 +70,10 @@ private_lane :build_ios do
   case ENVIRONMENT
   when "development"
     match( type: "development", readonly: true )
-    build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY, output_name: "#{VERSION}-#{BUILD_NUMBER}" )
-    install_on_device( skip_wifi: true )
+    if !is_ci
+      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY )
+      install_on_device( skip_wifi: true )
+    end
   when "staging"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
@@ -101,14 +97,16 @@ private_lane :build_android do
 
   case ENVIRONMENT
   when "development"
-    build_android_app(
-      task: 'assemble',
-      build_type: 'debug',
-      project_dir: "./android"
-    )
-    adb(
-      command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-    )
+    if !is_ci
+      build_android_app(
+        task: 'assemble',
+        build_type: 'debug',
+        project_dir: "./android"
+      )
+      adb(
+        command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+      )
+    end
   when "staging"
     prepare_playstore_android
     build_android_app(
@@ -127,7 +125,7 @@ private_lane :build_android do
       }
     )
     upload_to_play_store(
-      track: "alpha",
+      track: "beta",
       skip_upload_metadata: true,
       skip_upload_changelogs: true,
       skip_upload_images: true,
@@ -147,9 +145,9 @@ lane :build do
     build_android
     case ENVIRONMENT
     when "staging"
-      github_release
+      github_release(prerelease: true)
     when "production"
-      github_release
+      github_release(prerelease: false)
     end
   end
   expo_release

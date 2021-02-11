@@ -11,7 +11,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     method: 'get',
     instance: 'local',
     url: `accounts/${id}`
-  })
+  }).then(res => res.body)
 }
 
 const useAccountQuery = <TData = Mastodon.Account>({

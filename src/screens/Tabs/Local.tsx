@@ -1,10 +1,10 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
-import Timeline from '@components/Timelines/Timeline'
+import Timeline from '@components/Timeline'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -23,36 +23,43 @@ const TabLocal = React.memo(
     const { t } = useTranslation('local')
     const localActiveIndex = useSelector(getLocalActiveIndex)
 
-    const onPressSearch = useCallback(() => {
-      analytics('search_tap', { page: 'Local' })
-      navigation.navigate('Tab-Local', { screen: 'Tab-Shared-Search' })
-    }, [])
+    const screenOptions = useMemo(
+      () => ({
+        headerHideShadow: true,
+        headerTopInsetEnabled: false
+      }),
+      []
+    )
+    const screenOptionsRoot = useMemo(
+      () => ({
+        headerTitle: t('heading'),
+        ...(Platform.OS === 'android' && {
+          headerCenter: () => <HeaderCenter content={t('heading')} />
+        }),
+        headerRight: () => (
+          <HeaderRight
+            content='Search'
+            onPress={() => {
+              analytics('search_tap', { page: 'Local' })
+              navigation.navigate('Tab-Local', { screen: 'Tab-Shared-Search' })
+            }}
+          />
+        )
+      }),
+      []
+    )
+    const children = useCallback(
+      () => (localActiveIndex !== null ? <Timeline page='Following' /> : null),
+      []
+    )
 
     return (
-      <Stack.Navigator
-        screenOptions={{
-          headerLeft: () => null,
-          headerTitle: t('heading'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => <HeaderCenter content={t('heading')} />
-          }),
-          headerHideShadow: true,
-          headerTopInsetEnabled: false
-        }}
-      >
+      <Stack.Navigator screenOptions={screenOptions}>
         <Stack.Screen
           name='Tab-Local-Root'
-          options={{
-            headerRight: () => (
-              <HeaderRight content='Search' onPress={onPressSearch} />
-            )
-          }}
-        >
-          {() =>
-            localActiveIndex !== null ? <Timeline page='Following' /> : null
-          }
-        </Stack.Screen>
-
+          options={screenOptionsRoot}
+          children={children}
+        />
         {sharedScreens(Stack as any)}
       </Stack.Navigator>
     )

@@ -10,7 +10,10 @@ export interface Props {
 }
 
 const MyInfo: React.FC<Props> = ({ setData }) => {
-  const localAccount = useSelector(getLocalAccount)
+  const localAccount = useSelector(
+    getLocalAccount,
+    (prev, next) => prev?.id === next?.id
+  )
   const { data } = useAccountQuery({ id: localAccount!.id })
 
   useEffect(() => {

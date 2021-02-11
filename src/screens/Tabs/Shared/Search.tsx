@@ -1,7 +1,7 @@
 import ComponentAccount from '@components/Account'
 import ComponentHashtag from '@components/Hashtag'
 import ComponentSeparator from '@components/Separator'
-import TimelineDefault from '@components/Timelines/Timeline/Default'
+import TimelineDefault from '@components/Timeline/Default'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -15,7 +15,7 @@ import {
   Text,
   View
 } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
   searchTerm: string | undefined
@@ -76,7 +76,7 @@ const TabSharedSearch: React.FC<Props> = ({ searchTerm }) => {
         <View>
           {status === 'loading' ? (
             <View style={styles.loading}>
-              <Chase
+              <Circle
                 size={StyleConstants.Font.Size.M * 1.25}
                 color={theme.secondary}
               />

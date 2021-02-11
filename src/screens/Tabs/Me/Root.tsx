@@ -48,7 +48,7 @@ const ScreenMeRoot: React.FC = () => {
         {localActiveIndex !== null ? (
           <MyInfo setData={setData} />
         ) : (
-          <ComponentInstance type='local' />
+          <ComponentInstance />
         )}
         {localActiveIndex !== null ? <Collections /> : null}
         <Settings />

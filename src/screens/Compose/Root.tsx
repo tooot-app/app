@@ -6,13 +6,14 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
 import ComposeRootFooter from './Root/Footer'
 import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
+import ComposeDrafts from './Root/Drafts'
 
 const ComposeRoot: React.FC = () => {
   const { theme } = useTheme()
@@ -58,7 +59,7 @@ const ComposeRoot: React.FC = () => {
     if (isFetching) {
       return (
         <View key='listEmpty' style={styles.loading}>
-          <Chase
+          <Circle
             size={StyleConstants.Font.Size.M * 1.25}
             color={theme.secondary}
           />
@@ -68,9 +69,8 @@ const ComposeRoot: React.FC = () => {
   }, [isFetching])
 
   const listItem = useCallback(
-    ({ item, index }) => (
+    ({ item }) => (
       <ComposeRootSuggestion
-        key={index}
         item={item}
         composeState={composeState}
         composeDispatch={composeDispatch}
@@ -90,8 +90,10 @@ const ComposeRoot: React.FC = () => {
         ItemSeparatorComponent={ComponentSeparator}
         // @ts-ignore
         data={data ? data[composeState.tag?.type] : undefined}
+        keyExtractor={() => Math.random().toString()}
       />
       <ComposeActions />
+      <ComposeDrafts />
       <ComposePosting />
     </View>
   )

@@ -1,6 +1,6 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { MutableRefObject, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -18,7 +18,7 @@ import ComposeContext from '../utils/createContext'
 
 export interface Props {
   index: number
-  focus: MutableRefObject<{
+  focus: Animated.SharedValue<{
     x: number
     y: number
   }>
@@ -57,7 +57,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
       2
   )
   const updateFocus = ({ x, y }: { x: number; y: number }) => {
-    focus.current = { x, y }
+    focus.value = { x, y }
   }
   type PanContext = {
     startX: number
@@ -110,7 +110,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
 
   return (
     <>
-      <View style={{ overflow: 'hidden', flex: 1, alignItems: 'center' }}>
+      <View style={styles.base}>
         <FastImage
           style={{
             width: imageDimensionis.width,
@@ -160,6 +160,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
 }
 
 const styles = StyleSheet.create({
+  base: { overflow: 'hidden', flex: 1, alignItems: 'center' },
   imageFocusText: {
     ...StyleConstants.FontStyle.M,
     padding: StyleConstants.Spacing.Global.PagePadding

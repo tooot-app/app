@@ -16,7 +16,7 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import { Chase } from 'react-native-animated-spinkit'
+import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
@@ -32,7 +32,6 @@ const ComposeAttachments: React.FC = () => {
   const navigation = useNavigation()
 
   const flatListRef = useRef<FlatList>(null)
-  let prevOffsets = useRef<number[]>()
 
   const sensitiveOnPress = useCallback(() => {
     analytics('compose_attachment_sensitive_press', {
@@ -92,7 +91,7 @@ const ComposeAttachments: React.FC = () => {
         ]
       : attachmentsOffsets
   }, [composeState.attachments.uploads.length])
-
+  let prevOffsets = useRef<number[]>()
   useEffect(() => {
     if (
       snapToOffsets.length >
@@ -105,7 +104,7 @@ const ComposeAttachments: React.FC = () => {
       })
     }
     prevOffsets.current = snapToOffsets
-  }, [snapToOffsets, prevOffsets])
+  }, [snapToOffsets, prevOffsets.current])
 
   const renderAttachment = useCallback(
     ({ item, index }: { item: ExtendedAttachment; index: number }) => {
@@ -140,8 +139,8 @@ const ComposeAttachments: React.FC = () => {
                 { backgroundColor: theme.backgroundOverlay }
               ]}
             >
-              <Chase
-                size={StyleConstants.Font.Size.L * 1.5}
+              <Circle
+                size={StyleConstants.Font.Size.L}
                 color={theme.primaryOverlay}
               />
             </View>
@@ -250,7 +249,9 @@ const ComposeAttachments: React.FC = () => {
         keyboardShouldPersistTaps='handled'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
-        keyExtractor={item => item.local?.uri || item.remote?.url}
+        keyExtractor={item =>
+          item.local?.uri || item.remote?.url || Math.random().toString()
+        }
         ListFooterComponent={
           composeState.attachments.uploads.length < 4 ? listFooter : null
         }

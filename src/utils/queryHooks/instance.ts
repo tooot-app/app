@@ -2,43 +2,17 @@ import client from '@api/client'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = [
-  'Instance',
-  { instanceDomain?: string; checkPublic: boolean }
-]
+export type QueryKey = ['Instance', { instanceDomain?: string }]
 
-const queryFunction = async ({ queryKey }: { queryKey: QueryKey }) => {
-  const { instanceDomain, checkPublic } = queryKey[1]
+const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+  const { instanceDomain } = queryKey[1]
 
-  let res: Mastodon.Instance & { publicAllow?: boolean } = await client<
-    Mastodon.Instance
-  >({
+  return client<Mastodon.Instance>({
     method: 'get',
     instance: 'remote',
     instanceDomain,
     url: `instance`
-  })
-
-  if (checkPublic) {
-    let check
-    try {
-      check = await client<Mastodon.Status[]>({
-        method: 'get',
-        instance: 'remote',
-        instanceDomain,
-        url: `timelines/public`
-      })
-    } catch {}
-
-    if (check) {
-      res.publicAllow = true
-      return res
-    } else {
-      res.publicAllow = false
-      return res
-    }
-  }
-  return res
+  }).then(res => res.body)
 }
 
 const useInstanceQuery = <

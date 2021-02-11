@@ -1,7 +1,8 @@
 import { createRef } from 'react'
 import { ComposeState } from './types'
 
-const composeInitialState: ComposeState = {
+const composeInitialState: Omit<ComposeState, 'timestamp'> = {
+  dirty: false,
   posting: false,
   spoiler: {
     active: false,
