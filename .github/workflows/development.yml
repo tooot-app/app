@@ -20,7 +20,7 @@ jobs:
           expo-username: ${{ secrets.EXPO_USERNAME }}
           expo-token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 4 -- Install node dependencies
-        run: npx pod-install
+        run: yarn install
       - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
       - name: -- Step 6 -- Run fastlane
