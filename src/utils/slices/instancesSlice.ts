@@ -44,13 +44,13 @@ export type InstancesState = {
 export const updateLocalAccountPreferences = createAsyncThunk(
   'instances/updateLocalAccountPreferences',
   async (): Promise<Mastodon.Preferences> => {
-    const preferences = await client<Mastodon.Preferences>({
+    const res = await client<Mastodon.Preferences>({
       method: 'get',
       instance: 'local',
       url: `preferences`
     })
 
-    return Promise.resolve(preferences)
+    return Promise.resolve(res.body)
   }
 )
 
@@ -73,7 +73,9 @@ export const localAddInstance = createAsyncThunk(
     const instanceLocal: InstancesState['local'] = store.getState().instances
       .local
 
-    const { id, acct, avatar_static } = await client<Mastodon.Account>({
+    const {
+      body: { id, acct, avatar_static }
+    } = await client<Mastodon.Account>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,
@@ -100,7 +102,7 @@ export const localAddInstance = createAsyncThunk(
       type = 'add'
     }
 
-    const preferences = await client<Mastodon.Preferences>({
+    const { body: preferences } = await client<Mastodon.Preferences>({
       method: 'get',
       instance: 'remote',
       instanceDomain: url,

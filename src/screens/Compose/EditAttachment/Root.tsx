@@ -1,21 +1,16 @@
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useContext,
-  useMemo
-} from 'react'
+import React, { Dispatch, SetStateAction, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 import ComposeContext from '../utils/createContext'
 import ComposeEditAttachmentImage from './Image'
 
 export interface Props {
   index: number
-  focus: MutableRefObject<{
+  focus: Animated.SharedValue<{
     x: number
     y: number
   }>

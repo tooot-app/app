@@ -64,7 +64,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
                   url: `media/${attachment.remote?.id}`
                 })
                   .then(res => {
-                    if (res.id === attachment.remote?.id) {
+                    if (res.body.id === attachment.remote?.id) {
                       tempUploads.push(attachment)
                     }
                   })

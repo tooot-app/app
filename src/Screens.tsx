@@ -90,7 +90,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         url: `announcements`
       })
         .then(res => {
-          if (res?.filter(announcement => !announcement.read).length) {
+          if (res.body.filter(announcement => !announcement.read).length) {
             navigationRef.current?.navigate('Screen-Announcements', {
               showAll: false
             })

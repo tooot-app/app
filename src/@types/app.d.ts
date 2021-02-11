@@ -15,10 +15,9 @@ declare namespace App {
     | 'Favourites'
 
   interface IImageInfo {
-    url: string
-    width?: number
-    height?: number
-    originUrl?: string
-    props?: any
+    uri: string
+    width: number
+    height: number
+    type?: 'image' | 'video'
   }
 }

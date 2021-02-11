@@ -77,7 +77,9 @@ const SettingsTooot: React.FC = () => {
         iconBack='ChevronRight'
         onPress={() => {
           const foundAccounts = data?.accounts.filter(
-            account => account.acct === 'tooot@xmflsct.com'
+            account =>
+              account.acct === 'tooot@xmflsct.com' ||
+              account.url === 'https://social.xmflsct.com/@tooot'
           )
           if (foundAccounts?.length === 1) {
             navigation.navigate('Screen-Compose', {

@@ -19,7 +19,7 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKey }) => {
     instance: 'local',
     localIndex: index,
     url: `accounts/${id}`
-  })
+  }).then(res => res.body)
 }
 
 const useAccountCheckQuery = <TData = Mastodon.Account>({

@@ -46,7 +46,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({
               onPress={() =>
                 navigation.navigate('Screen-Actions', {
                   queryKey,
-                  status,
+                  status: notification.status,
                   url: notification.status?.url || notification.status?.uri,
                   type: 'status'
                 })

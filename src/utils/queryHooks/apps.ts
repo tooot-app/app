@@ -25,7 +25,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     instanceDomain,
     url: `apps`,
     body: formData
-  })
+  }).then(res => res.body)
 }
 
 const useAppsQuery = <TData = Mastodon.Apps>({

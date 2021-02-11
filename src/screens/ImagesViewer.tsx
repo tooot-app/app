@@ -28,6 +28,10 @@ const ScreenImagesViewer = ({
   },
   navigation
 }: ScreenImagesViewerProp) => {
+  if (imageUrls.length === 0) {
+    return null
+  }
+
   const [currentIndex, setCurrentIndex] = useState(
     findIndex(imageUrls, ['imageIndex', imageIndex])
   )

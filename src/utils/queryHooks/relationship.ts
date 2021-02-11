@@ -22,7 +22,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKeyRelationship }) => {
     params: {
       'id[]': id
     }
-  })
+  }).then(res => res.body)
 }
 
 const useRelationshipQuery = ({
@@ -61,7 +61,7 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
         method: 'post',
         instance: 'local',
         url: `follow_requests/${params.id}/${params.payload.action}`
-      })
+      }).then(res => res.body)
     case 'outgoing':
       return client<Mastodon.Relationship>({
         method: 'post',
@@ -69,7 +69,7 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
         url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${
           params.payload.action
         }`
-      })
+      }).then(res => res.body)
   }
 }
 

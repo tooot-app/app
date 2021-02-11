@@ -30,10 +30,6 @@ export default (): ExpoConfig => ({
       }
     ]
   },
-  locales: {
-    en: './src/i18n/en/system.json',
-    zh: './src/i18n/zh-Hans/system.json'
-  },
   android: {
     versionCode: 4,
     package: 'com.xmflsct.app.tooot',

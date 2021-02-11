@@ -39,7 +39,7 @@ const AccountAttachments = React.memo(
       page: 'Account_Attachments' as 'Account_Attachments',
       account: account?.id
     }
-    const { data, refetch } = useTimelineQuery<Mastodon.Status[]>({
+    const { data, refetch } = useTimelineQuery({
       ...queryKeyParams,
       options: { enabled: false }
     })
@@ -51,8 +51,8 @@ const AccountAttachments = React.memo(
 
     const flattenData = data?.pages
       ? data.pages
-          .flatMap(d => [...d])
-          .filter(status => !status.sensitive)
+          .flatMap(d => [...d.body])
+          .filter(status => !(status as Mastodon.Status).sensitive)
           .splice(0, DISPLAY_AMOUNT)
       : []
 

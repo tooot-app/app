@@ -3,15 +3,10 @@ import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native'
+import { useSharedValue } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ComposeEditAttachmentRoot from './EditAttachment/Root'
@@ -39,34 +34,31 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   const [altText, setAltText] = useState<string | undefined>(
     theAttachment.description
   )
-  const focus = useRef({ x: 0, y: 0 })
+  const focus = useSharedValue({
+    x: theAttachment.meta.focus.x,
+    y: theAttachment.meta.focus.y
+  })
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', () => {
-      let needUpdate = false
-
-      if (theAttachment.description !== altText) {
-        theAttachment.description = altText
-        needUpdate = true
-      }
-
-      if (theAttachment.type === 'image') {
-        if (focus.current.x !== 0 || focus.current.y !== 0) {
-          theAttachment.meta &&
-            (theAttachment.meta.focus = {
-              x: focus.current.x > 1 ? 1 : focus.current.x,
-              y: focus.current.y > 1 ? 1 : focus.current.y
-            })
-          needUpdate = true
+      composeDispatch({
+        type: 'attachment/edit',
+        payload: {
+          ...theAttachment,
+          description: altText,
+          meta: {
+            ...theAttachment.meta,
+            focus: {
+              x: focus.value.x > 1 ? 1 : focus.value.x,
+              y: focus.value.y > 1 ? 1 : focus.value.y
+            }
+          }
         }
-      }
-      if (needUpdate) {
-        composeDispatch({ type: 'attachment/edit', payload: theAttachment })
-      }
+      })
     })
 
     return unsubscribe
-  }, [focus, altText])
+  }, [focus.value.x, focus.value.y, altText])
 
   const headerLeft = useCallback(
     () => (
@@ -86,7 +78,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
         loading={isSubmitting}
         onPress={() => {
           analytics('editattachment_confirm_press')
-          if (!altText && focus.current.x === 0 && focus.current.y === 0) {
+          if (!altText && focus.value.x === 0 && focus.value.y === 0) {
             navigation.goBack()
             return
           }
@@ -95,8 +87,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
           if (altText) {
             formData.append('description', altText)
           }
-          if (focus.current.x !== 0 || focus.current.y !== 0) {
-            formData.append('focus', `${focus.current.x},${focus.current.y}`)
+          if (focus.value.x !== 0 || focus.value.y !== 0) {
+            formData.append('focus', `${focus.value.x},${focus.value.y}`)
           }
 
           client<Mastodon.Attachment>({
@@ -129,7 +121,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
       />
     ),
 
-    []
+    [isSubmitting, altText, focus.value.x, focus.value.y]
   )
 
   const children = useCallback(

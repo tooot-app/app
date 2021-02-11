@@ -1,6 +1,7 @@
 import { RootState } from '@root/store'
 import axios from 'axios'
 import chalk from 'chalk'
+import li from 'li'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -28,7 +29,7 @@ const client = async <T = unknown>({
   headers?: { [key: string]: string }
   body?: FormData
   onUploadProgress?: (progressEvent: any) => void
-}): Promise<T> => {
+}): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
   const { store } = require('@root/store')
   const state = (store.getState() as RootState).instances
   const theLocalIndex =
@@ -78,7 +79,19 @@ const client = async <T = unknown>({
     ...(body && { data: body }),
     ...(onUploadProgress && { onUploadProgress: onUploadProgress })
   })
-    .then(response => Promise.resolve(response.data))
+    .then(response => {
+      let prev
+      let next
+      if (response.headers.link) {
+        const headersLinks = li.parse(response.headers.link)
+        prev = headersLinks.prev?.match(/_id=([0-9]*)/)[1]
+        next = headersLinks.next?.match(/_id=([0-9]*)/)[1]
+      }
+      return Promise.resolve({
+        body: response.data,
+        links: { prev, next }
+      })
+    })
     .catch(error => {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -97,8 +110,13 @@ const client = async <T = unknown>({
         console.error(ctx.bold(' API '), ctx.bold('request'), error)
         return Promise.reject()
       } else {
-        console.error(ctx.bold(' API '), ctx.bold('other'), error.message)
-        return Promise.reject({ body: error.message })
+        console.error(
+          ctx.bold(' API '),
+          ctx.bold('internal'),
+          error.message,
+          url
+        )
+        return Promise.reject()
       }
     })
 }

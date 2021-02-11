@@ -48,15 +48,15 @@ const themeColors: {
 
   background: {
     light: 'rgb(250, 250, 250)',
-    dark: 'rgb(25, 25, 25)'
+    dark: 'rgb(18, 18, 18)'
   },
   backgroundGradientStart: {
     light: 'rgba(250, 250, 250, 0.5)',
-    dark: 'rgba(25, 25, 25, 0.5)'
+    dark: 'rgba(18, 18, 18, 0.5)'
   },
   backgroundGradientEnd: {
     light: 'rgba(250, 250, 250, 1)',
-    dark: 'rgba(25, 25, 25, 1)'
+    dark: 'rgba(18, 18, 18, 1)'
   },
   backgroundOverlay: {
     light: 'rgba(25, 25, 25, 0.5)',

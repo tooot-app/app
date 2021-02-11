@@ -12,7 +12,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     instance: 'remote',
     instanceDomain,
     url: `instance`
-  })
+  }).then(res => res.body)
 }
 
 const useInstanceQuery = <

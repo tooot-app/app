@@ -25,6 +25,7 @@ public class BasePackageList {
         new expo.modules.localization.LocalizationPackage(),
         new expo.modules.location.LocationPackage(),
         new expo.modules.permissions.PermissionsPackage(),
+        new expo.modules.screencapture.ScreenCapturePackage(),
         new expo.modules.securestore.SecureStorePackage(),
         new expo.modules.splashscreen.SplashScreenPackage(),
         new expo.modules.sqlite.SQLitePackage(),

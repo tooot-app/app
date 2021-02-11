@@ -24,6 +24,7 @@ export interface Props {
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
+  pinned: Mastodon.Status['id'][]
 }
 
 // When the poll is long
@@ -33,7 +34,8 @@ const TimelineDefault: React.FC<Props> = ({
   origin,
   highlighted = false,
   disableDetails = false,
-  disableOnPress = false
+  disableOnPress = false,
+  pinned
 }) => {
   const { theme } = useTheme()
   const localAccount = useSelector(
@@ -73,7 +75,7 @@ const TimelineDefault: React.FC<Props> = ({
     >
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
-      ) : item.isPinned ? (
+      ) : pinned && pinned.includes(item.id) ? (
         <TimelineActioned action='pinned' account={item.account} />
       ) : null}
 
@@ -113,9 +115,11 @@ const TimelineDefault: React.FC<Props> = ({
             sameAccount={actualStatus.account.id === localAccount?.id}
           />
         ) : null}
-        {!disableDetails && actualStatus.media_attachments.length > 0 && (
+        {!disableDetails &&
+        Array.isArray(actualStatus.media_attachments) &&
+        actualStatus.media_attachments.length ? (
           <TimelineAttachment status={actualStatus} />
-        )}
+        ) : null}
         {!disableDetails && actualStatus.card && (
           <TimelineCard card={actualStatus.card} />
         )}

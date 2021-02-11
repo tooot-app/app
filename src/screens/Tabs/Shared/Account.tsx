@@ -41,6 +41,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
               analytics('bottomsheet_open_press', {
                 page: 'account'
               })
+              // @ts-ignore
               navigation.navigate('Screen-Actions', {
                 type: 'account',
                 account

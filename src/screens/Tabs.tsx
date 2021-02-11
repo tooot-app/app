@@ -145,10 +145,11 @@ const ScreenTabs = React.memo(
       options: {
         notifyOnChangeProps: [],
         select: data => {
-          if (data.pages[0].length) {
+          if (data.pages[0].body.length) {
             dispatch(
               updateLocalNotification({
-                latestTime: data.pages[0][0].created_at
+                // @ts-ignore
+                latestTime: data.pages[0].body[0].created_at
               })
             )
           }

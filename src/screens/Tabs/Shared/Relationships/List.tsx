@@ -26,17 +26,13 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
     type,
     id,
     options: {
-      getNextPageParam: lastPage => {
-        return lastPage.length
-          ? {
-              direction: 'next',
-              id: lastPage[lastPage.length - 1].id
-            }
-          : undefined
-      }
+      getPreviousPageParam: firstPage =>
+        firstPage.links?.prev && { since_id: firstPage.links.next },
+      getNextPageParam: lastPage =>
+        lastPage.links?.next && { max_id: lastPage.links.next }
     }
   })
-  const flattenData = data?.pages ? data.pages.flatMap(d => [...d]) : []
+  const flattenData = data?.pages ? data.pages.flatMap(d => [...d.body]) : []
 
   const flRef = useRef<FlatList<Mastodon.Account>>(null)
 

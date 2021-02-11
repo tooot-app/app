@@ -22,7 +22,7 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
     //   type: 'emoji',
     //   payload: { ...composeState.emoji, active: false }
     // })
-    haptics('Success')
+    haptics('Light')
   }, [composeState])
   const children = useMemo(
     () => <FastImage source={{ uri: emoji.url }} style={styles.emoji} />,

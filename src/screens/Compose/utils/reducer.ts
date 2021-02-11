@@ -70,7 +70,7 @@ const composeReducer = (
         attachments: {
           ...state.attachments,
           uploads: state.attachments.uploads.filter(
-            upload => upload.local.hash !== action.payload
+            upload => upload.local?.hash !== action.payload
           )
         }
       }

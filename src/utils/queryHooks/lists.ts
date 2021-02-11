@@ -9,7 +9,7 @@ const queryFunction = () => {
     method: 'get',
     instance: 'local',
     url: 'lists'
-  })
+  }).then(res => res.body)
 }
 
 const useListsQuery = <TData = Mastodon.List[]>({

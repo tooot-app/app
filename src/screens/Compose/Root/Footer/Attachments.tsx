@@ -32,7 +32,6 @@ const ComposeAttachments: React.FC = () => {
   const navigation = useNavigation()
 
   const flatListRef = useRef<FlatList>(null)
-  let prevOffsets = useRef<number[]>()
 
   const sensitiveOnPress = useCallback(() => {
     analytics('compose_attachment_sensitive_press', {
@@ -92,7 +91,7 @@ const ComposeAttachments: React.FC = () => {
         ]
       : attachmentsOffsets
   }, [composeState.attachments.uploads.length])
-
+  let prevOffsets = useRef<number[]>()
   useEffect(() => {
     if (
       snapToOffsets.length >
@@ -105,7 +104,7 @@ const ComposeAttachments: React.FC = () => {
       })
     }
     prevOffsets.current = snapToOffsets
-  }, [snapToOffsets, prevOffsets])
+  }, [snapToOffsets, prevOffsets.current])
 
   const renderAttachment = useCallback(
     ({ item, index }: { item: ExtendedAttachment; index: number }) => {
@@ -251,7 +250,7 @@ const ComposeAttachments: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
         keyExtractor={item =>
-          item.local?.url || item.remote?.url || Math.random().toString()
+          item.local?.uri || item.remote?.url || Math.random().toString()
         }
         ListFooterComponent={
           composeState.attachments.uploads.length < 4 ? listFooter : null
