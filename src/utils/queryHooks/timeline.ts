@@ -379,7 +379,7 @@ const useTimelineMutation = ({
       ? { onSuccess }
       : onSuccess
       ? {
-          onSuccess: (data, params) => {
+          onSuccess: ({ body }, params) => {
             queryClient.cancelQueries(params.queryKey)
 
             haptics('Success')
@@ -387,7 +387,7 @@ const useTimelineMutation = ({
               case 'updateStatusProperty':
                 switch (params.payload.property) {
                   case 'poll':
-                    params.payload.data = (data as unknown) as Mastodon.Poll
+                    params.payload.data = (body as unknown) as Mastodon.Poll
                     updateStatusProperty({ queryClient, ...params })
                     break
                 }
