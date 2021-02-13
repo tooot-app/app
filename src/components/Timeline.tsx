@@ -3,9 +3,15 @@ import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { FlatListProps, StyleSheet } from 'react-native'
+import {
+  FlatListProps,
+  Platform,
+  RefreshControl,
+  StyleSheet
+} from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Animated, {
   useAnimatedStyle,
@@ -45,8 +51,11 @@ const Timeline: React.FC<Props> = ({
   disableInfinity = false,
   customProps
 }) => {
+  const { theme } = useTheme()
+
   // Update timeline when account switched
   useSelector(getLocalActiveIndex)
+
   const queryKeyParams = {
     page,
     ...(hashtag && { hashtag }),
@@ -249,6 +258,22 @@ const Timeline: React.FC<Props> = ({
     []
   )
 
+  const androidRefreshControl = useMemo(
+    () =>
+      Platform.OS === 'android' && {
+        refreshControl: (
+          <RefreshControl
+            enabled
+            colors={[theme.primary]}
+            progressBackgroundColor={theme.background}
+            refreshing={isFetching || isLoading}
+            // onRefresh={() => refetch()}
+          />
+        )
+      },
+    [isFetching, isLoading]
+  )
+
   return (
     <>
       <TimelineRefresh isLoading={isLoading} disable={disableRefresh} />
@@ -273,6 +298,7 @@ const Timeline: React.FC<Props> = ({
         maintainVisibleContentPosition={{
           minIndexForVisible: 0
         }}
+        {...androidRefreshControl}
         {...customProps}
       />
     </>
