@@ -51,6 +51,8 @@ declare namespace Nav {
     'Screen-ImagesViewer': {
       imageUrls: {
         url: Mastodon.AttachmentImage['url']
+        width?: number
+        height?: number
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
         imageIndex: number
