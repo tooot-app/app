@@ -12,6 +12,7 @@ import {
   PermissionsAndroid,
   Platform,
   Share,
+  StatusBar,
   StyleSheet,
   View
 } from 'react-native'
@@ -52,7 +53,7 @@ const ScreenImagesViewer = ({
       return
     }
     CameraRoll.save(
-      imageUrls[imageIndex].originUrl ||
+      imageUrls[imageIndex].url ||
         imageUrls[imageIndex].remote_url ||
         imageUrls[imageIndex].preview_url
     )
@@ -133,6 +134,7 @@ const ScreenImagesViewer = ({
 
   return (
     <SafeAreaView style={styles.base} edges={['top']}>
+      <StatusBar backgroundColor='rgb(0,0,0)' />
       <ImageView
         images={imageUrls.map(urls => ({ uri: urls.url }))}
         imageIndex={imageIndex}

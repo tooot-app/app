@@ -76,7 +76,7 @@ const Timeline: React.FC<Props> = ({
         firstPage.links?.prev && {
           min_id: firstPage.links.prev,
           // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-          limit: '8'
+          limit: '6'
         },
 
       getNextPageParam: lastPage =>

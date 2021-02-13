@@ -49,11 +49,12 @@ declare namespace Nav {
         }
       | undefined
     'Screen-ImagesViewer': {
-      imageUrls: (App.IImageInfo & {
+      imageUrls: {
+        url: Mastodon.AttachmentImage['url']
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
         imageIndex: number
-      })[]
+      }[]
       imageIndex: number
     }
   }

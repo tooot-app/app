@@ -50,8 +50,6 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
           case 'image':
             imageUrls.push({
               url: attachment.url,
-              width: attachment.meta?.original?.width,
-              height: attachment.meta?.original?.height,
               preview_url: attachment.preview_url,
               remote_url: attachment.remote_url,
               imageIndex: index
