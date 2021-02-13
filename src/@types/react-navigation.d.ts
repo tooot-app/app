@@ -5,6 +5,7 @@ declare namespace Nav {
       | {
           type: 'status'
           queryKey: QueryKeyTimeline
+          rootQueryKey?: QueryKeyTimeline
           status: Mastodon.Status
         }
       | {
@@ -86,6 +87,7 @@ declare namespace Nav {
     'Tab-Shared-Search': undefined
     'Tab-Shared-Toot': {
       toot: Mastodon.Status
+      rootQueryKey: any
     }
   }
 

@@ -1,22 +1,27 @@
+import Icon from '@components/Icon'
+import { useNavigation } from '@react-navigation/native'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
-import HeaderSharedVisibility from './HeaderShared/Visibility'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import HeaderSharedMuted from './HeaderShared/Muted'
-import { useNavigation } from '@react-navigation/native'
-import Icon from '@components/Icon'
-import { useTheme } from '@utils/styles/ThemeManager'
+import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
 }
 
-const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
+const TimelineHeaderDefault: React.FC<Props> = ({
+  queryKey,
+  rootQueryKey,
+  status
+}) => {
   const navigation = useNavigation()
   const { theme } = useTheme()
 
@@ -38,6 +43,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({ queryKey, status }) => {
           onPress={() =>
             navigation.navigate('Screen-Actions', {
               queryKey,
+              rootQueryKey,
               status,
               url: status.url || status.uri,
               type: 'status'

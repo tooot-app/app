@@ -13,11 +13,17 @@ import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   account: Mastodon.Account
   dismiss: () => void
 }
 
-const ActionsAccount: React.FC<Props> = ({ queryKey, account, dismiss }) => {
+const ActionsAccount: React.FC<Props> = ({
+  queryKey,
+  rootQueryKey,
+  account,
+  dismiss
+}) => {
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
@@ -59,6 +65,7 @@ const ActionsAccount: React.FC<Props> = ({ queryKey, account, dismiss }) => {
     },
     onSettled: () => {
       queryKey && queryClient.invalidateQueries(queryKey)
+      rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
 

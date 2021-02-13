@@ -107,6 +107,7 @@ const ScreenActionsRoot = React.memo(
               {!sameAccount && (
                 <ActionsAccount
                   queryKey={params.queryKey}
+                  rootQueryKey={params.rootQueryKey}
                   account={params.status.account}
                   dismiss={dismiss}
                 />
@@ -115,6 +116,7 @@ const ScreenActionsRoot = React.memo(
                 <ActionsStatus
                   navigation={navigation}
                   queryKey={params.queryKey}
+                  rootQueryKey={params.rootQueryKey}
                   status={params.status}
                   dismiss={dismiss}
                 />
@@ -122,6 +124,7 @@ const ScreenActionsRoot = React.memo(
               {!sameDomain && statusDomain && (
                 <ActionsDomain
                   queryKey={params.queryKey}
+                  rootQueryKey={params.rootQueryKey}
                   domain={statusDomain}
                   dismiss={dismiss}
                 />

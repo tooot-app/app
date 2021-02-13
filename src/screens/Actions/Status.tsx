@@ -11,10 +11,12 @@ import {
 } from '@utils/queryHooks/timeline'
 import analytics from '@components/analytics'
 import { StackNavigationProp } from '@react-navigation/stack'
+import deleteItem from '@utils/queryHooks/timeline/deleteItem'
 
 export interface Props {
   navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Actions'>
   queryKey: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
   dismiss: () => void
 }
@@ -22,6 +24,7 @@ export interface Props {
 const ActionsStatus: React.FC<Props> = ({
   navigation,
   queryKey,
+  rootQueryKey,
   status,
   dismiss
 }) => {
@@ -66,6 +69,7 @@ const ActionsStatus: React.FC<Props> = ({
             type: 'deleteItem',
             source: 'statuses',
             queryKey,
+            rootQueryKey,
             id: status.id
           })
         }}
@@ -106,6 +110,11 @@ const ActionsStatus: React.FC<Props> = ({
                     queryKey,
                     id: status.id
                   })
+                  deleteItem({
+                    queryClient,
+                    rootQueryKey,
+                    id: status.id
+                  })
                   if (res.body.id) {
                     // @ts-ignore
                     navigation.navigate('Screen-Compose', {
@@ -131,6 +140,7 @@ const ActionsStatus: React.FC<Props> = ({
           mutation.mutate({
             type: 'updateStatusProperty',
             queryKey,
+            rootQueryKey,
             id: status.id,
             payload: {
               property: 'muted',
@@ -158,6 +168,7 @@ const ActionsStatus: React.FC<Props> = ({
             mutation.mutate({
               type: 'updateStatusProperty',
               queryKey,
+              rootQueryKey,
               id: status.id,
               payload: {
                 property: 'pinned',

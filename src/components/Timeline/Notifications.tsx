@@ -44,7 +44,8 @@ const TimelineNotifications: React.FC<Props> = ({
     analytics('timeline_notification_press')
     notification.status &&
       navigation.push('Tab-Shared-Toot', {
-        toot: notification.status
+        toot: notification.status,
+        rootQueryKey: queryKey
       })
   }, [])
 

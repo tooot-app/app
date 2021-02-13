@@ -14,11 +14,17 @@ import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   domain: string
   dismiss: () => void
 }
 
-const ActionsDomain: React.FC<Props> = ({ queryKey, domain, dismiss }) => {
+const ActionsDomain: React.FC<Props> = ({
+  queryKey,
+  rootQueryKey,
+  domain,
+  dismiss
+}) => {
   const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -31,6 +37,7 @@ const ActionsDomain: React.FC<Props> = ({ queryKey, domain, dismiss }) => {
         })
       })
       queryClient.invalidateQueries(queryKey)
+      rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
 

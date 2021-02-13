@@ -86,7 +86,8 @@ const TimelineConversation: React.FC<Props> = ({
     if (conversation.last_status) {
       conversation.unread && mutate()
       navigation.push('Tab-Shared-Toot', {
-        toot: conversation.last_status
+        toot: conversation.last_status,
+        rootQueryKey: queryKey
       })
     }
   }, [])

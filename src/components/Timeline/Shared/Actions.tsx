@@ -17,6 +17,7 @@ import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
   accts: Mastodon.Account['acct'][] // When replying to conversations
   reblog: boolean
@@ -24,6 +25,7 @@ export interface Props {
 
 const TimelineActions: React.FC<Props> = ({
   queryKey,
+  rootQueryKey,
   status,
   accts,
   reblog
@@ -120,6 +122,7 @@ const TimelineActions: React.FC<Props> = ({
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
+      rootQueryKey,
       id: status.id,
       reblog,
       payload: {
@@ -139,6 +142,7 @@ const TimelineActions: React.FC<Props> = ({
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
+      rootQueryKey,
       id: status.id,
       reblog,
       payload: {
@@ -157,6 +161,7 @@ const TimelineActions: React.FC<Props> = ({
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
+      rootQueryKey,
       id: status.id,
       reblog,
       payload: {

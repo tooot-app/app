@@ -1,5 +1,5 @@
 import ComponentSeparator from '@components/Separator'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -27,6 +27,7 @@ export interface Props {
   hashtag?: Mastodon.Tag['name']
   list?: Mastodon.List['id']
   toot?: Mastodon.Status['id']
+  rootQueryKey?: QueryKeyTimeline
   account?: Mastodon.Account['id']
   disableRefresh?: boolean
   disableInfinity?: boolean
@@ -38,6 +39,7 @@ const Timeline: React.FC<Props> = ({
   hashtag,
   list,
   toot,
+  rootQueryKey,
   account,
   disableRefresh = false,
   disableInfinity = false,
@@ -108,6 +110,13 @@ const Timeline: React.FC<Props> = ({
       350
     )
   }, [])
+  // Auto go back when toot page is empty
+  const navigation = useNavigation()
+  useEffect(() => {
+    if (toot && isSuccess && flattenData.length === 0) {
+      navigation.goBack()
+    }
+  }, [isSuccess, flattenData.length])
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(
@@ -127,6 +136,7 @@ const Timeline: React.FC<Props> = ({
               item={item}
               queryKey={queryKey}
               {...(toot === item.id && { highlighted: true })}
+              {...(toot && { rootQueryKey })}
               // @ts-ignore
               {...(data?.pages[0].pinned && { pinned: data?.pages[0].pinned })}
             />
