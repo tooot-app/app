@@ -10,6 +10,7 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import updateStatusProperty from '@utils/queryHooks/timeline/updateStatusProperty'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
@@ -20,6 +21,7 @@ import { useQueryClient } from 'react-query'
 
 export interface Props {
   queryKey: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   statusId: Mastodon.Status['id']
   poll: NonNullable<Mastodon.Status['poll']>
   reblog: boolean
@@ -28,6 +30,7 @@ export interface Props {
 
 const TimelinePoll: React.FC<Props> = ({
   queryKey,
+  rootQueryKey,
   statusId,
   poll,
   reblog,
@@ -43,7 +46,19 @@ const TimelinePoll: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     queryClient,
-    onSuccess: true,
+    onSuccess: ({ body }, params) => {
+      const theParams = params as MutationVarsTimelineUpdateStatusProperty
+      queryClient.cancelQueries(queryKey)
+      rootQueryKey && queryClient.cancelQueries(rootQueryKey)
+
+      haptics('Success')
+      switch (theParams.payload.property) {
+        case 'poll':
+          theParams.payload.data = (body as unknown) as Mastodon.Poll
+          updateStatusProperty({ queryClient, ...theParams })
+          break
+      }
+    },
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       haptics('Error')
@@ -76,6 +91,7 @@ const TimelinePoll: React.FC<Props> = ({
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
+                  rootQueryKey,
                   id: statusId,
                   reblog,
                   payload: {
@@ -102,6 +118,7 @@ const TimelinePoll: React.FC<Props> = ({
                 mutation.mutate({
                   type: 'updateStatusProperty',
                   queryKey,
+                  rootQueryKey,
                   id: statusId,
                   reblog,
                   payload: {

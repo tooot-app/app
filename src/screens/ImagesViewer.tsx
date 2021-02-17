@@ -1,6 +1,6 @@
 import analytics from '@components/analytics'
+import haptics from '@components/haptics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
-import { toast } from '@components/toast'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import CameraRoll from '@react-native-community/cameraroll'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -12,10 +12,120 @@ import {
   PermissionsAndroid,
   Platform,
   Share,
-  StyleSheet,
+  StatusBar,
   View
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets
+} from 'react-native-safe-area-context'
+
+const HeaderComponent = React.memo(
+  ({
+    navigation,
+    currentIndex,
+    imageUrls
+  }: {
+    navigation: ScreenImagesViewerProp['navigation']
+    currentIndex: number
+    imageUrls: {
+      url: string
+      width?: number | undefined
+      height?: number | undefined
+      preview_url: string
+      remote_url?: string | undefined
+      imageIndex: number
+    }[]
+  }) => {
+    const insets = useSafeAreaInsets()
+    const { t } = useTranslation('screenImageViewer')
+    const { showActionSheetWithOptions } = useActionSheet()
+
+    const hasAndroidPermission = async () => {
+      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+
+      const hasPermission = await PermissionsAndroid.check(permission)
+      if (hasPermission) {
+        return true
+      }
+
+      const status = await PermissionsAndroid.request(permission)
+      return status === 'granted'
+    }
+
+    const saveImage = async () => {
+      if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+        return
+      }
+      CameraRoll.save(
+        imageUrls[currentIndex].url ||
+          imageUrls[currentIndex].remote_url ||
+          imageUrls[currentIndex].preview_url
+      )
+        .then(() => haptics('Success'))
+        .catch(() => haptics('Error'))
+    }
+
+    const onPress = useCallback(() => {
+      analytics('imageviewer_more_press')
+      showActionSheetWithOptions(
+        {
+          options: [
+            t('content.options.save'),
+            t('content.options.share'),
+            t('content.options.cancel')
+          ],
+          cancelButtonIndex: 2
+        },
+        async buttonIndex => {
+          switch (buttonIndex) {
+            case 0:
+              analytics('imageviewer_more_save_press')
+              saveImage()
+              break
+            case 1:
+              analytics('imageviewer_more_share_press')
+              switch (Platform.OS) {
+                case 'ios':
+                  return Share.share({ url: imageUrls[currentIndex].url })
+                case 'android':
+                  return Share.share({ message: imageUrls[currentIndex].url })
+              }
+              break
+          }
+        }
+      )
+    }, [currentIndex])
+
+    return (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: insets.top
+        }}
+      >
+        <HeaderLeft
+          content='X'
+          native={false}
+          onPress={() => navigation.goBack()}
+        />
+        <HeaderCenter
+          inverted
+          content={`${currentIndex + 1} / ${imageUrls.length}`}
+        />
+        <HeaderRight
+          content='MoreHorizontal'
+          native={false}
+          onPress={onPress}
+        />
+      </View>
+    )
+  },
+  (prev, next) => prev.currentIndex === next.currentIndex
+)
 
 export type ScreenImagesViewerProp = StackScreenProps<
   Nav.RootStackParamList,
@@ -36,119 +146,24 @@ const ScreenImagesViewer = ({
     findIndex(imageUrls, ['imageIndex', imageIndex])
   )
 
-  const hasAndroidPermission = async () => {
-    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-
-    const hasPermission = await PermissionsAndroid.check(permission)
-    if (hasPermission) {
-      return true
-    }
-
-    const status = await PermissionsAndroid.request(permission)
-    return status === 'granted'
-  }
-  const saveImage = async () => {
-    if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-      return
-    }
-    CameraRoll.save(
-      imageUrls[imageIndex].originUrl ||
-        imageUrls[imageIndex].remote_url ||
-        imageUrls[imageIndex].preview_url
-    )
-      .then(() =>
-        toast({ type: 'success', message: t('content.save.success') })
-      )
-      .catch(() =>
-        toast({
-          type: 'error',
-          message: t('common:toastMessage.error.message', {
-            function: t('content.save.function')
-          })
-        })
-      )
-  }
-
-  const { t } = useTranslation('screenImageViewer')
-  const { showActionSheetWithOptions } = useActionSheet()
-  const onPress = useCallback(() => {
-    analytics('imageviewer_more_press')
-    showActionSheetWithOptions(
-      {
-        options: [
-          t('content.options.save'),
-          t('content.options.share'),
-          t('content.options.cancel')
-        ],
-        cancelButtonIndex: 2
-      },
-      async buttonIndex => {
-        switch (buttonIndex) {
-          case 0:
-            analytics('imageviewer_more_save_press')
-            saveImage()
-            break
-          case 1:
-            analytics('imageviewer_more_share_press')
-            switch (Platform.OS) {
-              case 'ios':
-                return Share.share({ url: imageUrls[currentIndex].url })
-              case 'android':
-                return Share.share({ message: imageUrls[currentIndex].url })
-            }
-            break
-        }
-      }
-    )
-  }, [currentIndex])
-
-  const HeaderComponent = useCallback(
-    () => (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}
-      >
-        <HeaderLeft
-          content='X'
-          native={false}
-          onPress={() => navigation.goBack()}
-        />
-        <HeaderCenter
-          inverted
-          content={`${currentIndex + 1} / ${imageUrls.length}`}
-        />
-        <HeaderRight
-          content='MoreHorizontal'
-          native={false}
-          onPress={onPress}
-        />
-      </View>
-    ),
-    [currentIndex]
-  )
-
   return (
-    <SafeAreaView style={styles.base} edges={['top']}>
+    <SafeAreaProvider>
+      <StatusBar backgroundColor='rgb(0,0,0)' />
       <ImageView
-        images={imageUrls.map(urls => ({ uri: urls.url }))}
+        images={imageUrls}
         imageIndex={imageIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
-        HeaderComponent={HeaderComponent}
+        HeaderComponent={() => (
+          <HeaderComponent
+            navigation={navigation}
+            currentIndex={currentIndex}
+            imageUrls={imageUrls}
+          />
+        )}
       />
-    </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    backgroundColor: 'black'
-  }
-})
 
 export default ScreenImagesViewer

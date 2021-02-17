@@ -37,7 +37,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
   const localActiveIndex = useSelector(getLocalActiveIndex)
-  const { mode } = useTheme()
+  const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
@@ -137,7 +137,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar barStyle={barStyle[mode]} />
+      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.background} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
@@ -156,7 +156,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             component={ScreenActions}
             options={{
               stackPresentation: 'transparentModal',
-              stackAnimation: 'fade'
+              stackAnimation: 'fade',
+              headerShown: false // Android
             }}
           />
           <Stack.Screen
@@ -164,14 +165,16 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             component={ScreenAnnouncements}
             options={{
               stackPresentation: 'transparentModal',
-              stackAnimation: 'fade'
+              stackAnimation: 'fade',
+              headerShown: false // Android
             }}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
             options={{
-              stackPresentation: 'fullScreenModal'
+              stackPresentation: 'fullScreenModal',
+              headerShown: false // Android
             }}
           />
           <Stack.Screen
@@ -179,7 +182,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             component={ScreenImagesViewer}
             options={{
               stackPresentation: 'fullScreenModal',
-              stackAnimation: 'fade'
+              stackAnimation: 'fade',
+              headerShown: false // Android
             }}
           />
         </Stack.Navigator>

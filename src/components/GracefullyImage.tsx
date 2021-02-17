@@ -1,12 +1,17 @@
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useCallback, useMemo, useState } from 'react'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import FastImage, { ImageStyle } from 'react-native-fast-image'
-import { useTheme } from '@utils/styles/ThemeManager'
+
+// blurhas -> if blurhash, show before any loading succeed
+// original -> load original
+// original, remote -> if original failed, then remote
+// preview, original -> first show preview, then original
+// preview, original, remote -> first show preview, then original, if original failed, then remote
 
 export interface Props {
-  sharedElement?: string
   hidden?: boolean
   uri: { preview?: string; original: string; remote?: string }
   blurhash?: string
@@ -14,115 +19,113 @@ export interface Props {
   onPress?: () => void
   style?: StyleProp<ViewStyle>
   imageStyle?: StyleProp<ImageStyle>
+  // For image viewer when there is no image size available
+  setImageDimensions?: React.Dispatch<
+    React.SetStateAction<{
+      width: number
+      height: number
+    }>
+  >
 }
 
 const GracefullyImage = React.memo(
   ({
-    sharedElement,
     hidden = false,
     uri,
     blurhash,
     dimension,
     onPress,
     style,
-    imageStyle
+    imageStyle,
+    setImageDimensions
   }: Props) => {
-    const { mode, theme } = useTheme()
-    const [previewLoaded, setPreviewLoaded] = useState(
-      uri.preview ? false : true
+    const { theme } = useTheme()
+    const originalFailed = useRef(false)
+    const [imageLoaded, setImageLoaded] = useState(false)
+
+    const source = useMemo(() => {
+      if (originalFailed.current) {
+        return { uri: uri.remote || undefined }
+      } else {
+        return { uri: uri.original }
+      }
+    }, [originalFailed.current])
+    const onLoad = useCallback(
+      ({ nativeEvent }) => {
+        setImageLoaded(true)
+        setImageDimensions &&
+          setImageDimensions({
+            width: nativeEvent.width,
+            height: nativeEvent.height
+          })
+      },
+      [source.uri]
     )
-    const [originalLoaded, setOriginalLoaded] = useState(false)
-    const [originalFailed, setOriginalFailed] = useState(false)
-    const [remoteLoaded, setRemoteLoaded] = useState(uri.remote ? false : true)
-
-    const sourceUri = useMemo(() => {
-      if (previewLoaded) {
-        if (originalFailed) {
-          return uri.remote
-        } else {
-          return uri.original
-        }
-      } else {
-        return uri.preview
-      }
-    }, [previewLoaded, originalLoaded, originalFailed, remoteLoaded])
-    const onLoad = useCallback(() => {
-      if (previewLoaded) {
-        if (originalFailed) {
-          return setRemoteLoaded(true)
-        } else {
-          return setOriginalLoaded(true)
-        }
-      } else {
-        return setPreviewLoaded(true)
-      }
-    }, [previewLoaded, originalLoaded, originalFailed, remoteLoaded])
     const onError = useCallback(() => {
-      if (previewLoaded) {
-        if (originalFailed) {
-          return
-        } else {
-          return setOriginalFailed(true)
-        }
-      } else {
-        return
+      if (!originalFailed.current) {
+        originalFailed.current = true
       }
-    }, [previewLoaded, originalLoaded, originalFailed, remoteLoaded])
+    }, [originalFailed.current])
 
-    const children = useCallback(() => {
-      return (
-        <>
+    const previewView = useMemo(
+      () =>
+        uri.preview && !imageLoaded ? (
           <FastImage
-            source={{ uri: sourceUri }}
-            style={[styles.image, imageStyle]}
-            onLoad={onLoad}
-            onError={onError}
+            source={{ uri: uri.preview }}
+            style={[{ flex: 1 }, imageStyle]}
           />
-          {blurhash &&
-          (hidden || !(previewLoaded || originalLoaded || remoteLoaded)) ? (
-            <Blurhash
-              decodeAsync
-              blurhash={blurhash}
-              style={{
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                top: StyleConstants.Spacing.XS / 2,
-                left: StyleConstants.Spacing.XS / 2
-              }}
-            />
-          ) : null}
-        </>
-      )
-    }, [hidden, previewLoaded, originalLoaded, remoteLoaded, mode, uri])
+        ) : null,
+      [imageLoaded]
+    )
+    const originalView = useMemo(
+      () => (
+        <FastImage
+          source={source}
+          style={[{ flex: imageLoaded ? 1 : undefined }, imageStyle]}
+          onLoad={onLoad}
+          onError={onError}
+        />
+      ),
+      [source, imageLoaded]
+    )
+    const blurhashView = useMemo(() => {
+      return blurhash && (hidden || !imageLoaded) ? (
+        <Blurhash decodeAsync blurhash={blurhash} style={styles.blurhash} />
+      ) : null
+    }, [hidden, imageLoaded])
 
     return (
       <Pressable
-        children={children}
-        style={[
-          style,
-          { backgroundColor: theme.shimmerDefault },
-          dimension && { ...dimension }
-        ]}
+        style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
         {...(onPress
           ? hidden
             ? { disabled: true }
             : { onPress }
           : { disabled: true })}
-      />
+      >
+        {previewView}
+        {originalView}
+        {blurhashView}
+      </Pressable>
     )
   },
   (prev, next) => {
     let skipUpdate = true
     skipUpdate = prev.hidden === next.hidden
+    skipUpdate = prev.uri.preview === next.uri.preview
     skipUpdate = prev.uri.original === next.uri.original
+    skipUpdate = prev.uri.remote === next.uri.remote
     return false
   }
 )
 
 const styles = StyleSheet.create({
-  image: {
-    flex: 1
+  blurhash: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: StyleConstants.Spacing.XS / 2,
+    left: StyleConstants.Spacing.XS / 2
   }
 })
 

@@ -162,12 +162,12 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={t('server.button.local')}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri || !agreed}
+            disabled={!instanceQuery.data?.uri}
             loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
 
-        <EULA agreed={agreed} setAgreed={setAgreed} />
+        {/* <EULA agreed={agreed} setAgreed={setAgreed} /> */}
 
         <View>
           <Placeholder

@@ -1,11 +1,17 @@
 import ComponentSeparator from '@components/Separator'
-import { useScrollToTop } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { FlatListProps, StyleSheet } from 'react-native'
+import {
+  FlatListProps,
+  Platform,
+  RefreshControl,
+  StyleSheet
+} from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Animated, {
   useAnimatedStyle,
@@ -27,6 +33,7 @@ export interface Props {
   hashtag?: Mastodon.Tag['name']
   list?: Mastodon.List['id']
   toot?: Mastodon.Status['id']
+  rootQueryKey?: QueryKeyTimeline
   account?: Mastodon.Account['id']
   disableRefresh?: boolean
   disableInfinity?: boolean
@@ -38,13 +45,17 @@ const Timeline: React.FC<Props> = ({
   hashtag,
   list,
   toot,
+  rootQueryKey,
   account,
   disableRefresh = false,
   disableInfinity = false,
   customProps
 }) => {
+  const { theme } = useTheme()
+
   // Update timeline when account switched
   useSelector(getLocalActiveIndex)
+
   const queryKeyParams = {
     page,
     ...(hashtag && { hashtag }),
@@ -52,6 +63,7 @@ const Timeline: React.FC<Props> = ({
     ...(toot && { toot }),
     ...(account && { account })
   }
+
   const queryKey: QueryKeyTimeline = ['Timeline', queryKeyParams]
   const {
     status,
@@ -70,18 +82,27 @@ const Timeline: React.FC<Props> = ({
     ...queryKeyParams,
     options: {
       getPreviousPageParam: firstPage =>
-        firstPage.links?.prev && {
+        firstPage?.links?.prev && {
           min_id: firstPage.links.prev,
           // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-          limit: '3'
+          limit: '5'
         },
+
       getNextPageParam: lastPage =>
-        lastPage.links?.next && { max_id: lastPage.links.next }
+        lastPage?.links?.next && { max_id: lastPage.links.next }
     }
   })
 
   const flattenData = data?.pages ? data.pages.flatMap(d => [...d.body]) : []
 
+  // Auto go back when toot page is empty
+  const navigation = useNavigation()
+  useEffect(() => {
+    if (toot && isSuccess && flattenData.length === 0) {
+      navigation.goBack()
+    }
+  }, [isSuccess, flattenData.length])
+  // Toot page auto scroll to selected toot
   const flRef = useRef<FlatList<any>>(null)
   const scrolled = useRef(false)
   useEffect(() => {
@@ -96,6 +117,15 @@ const Timeline: React.FC<Props> = ({
       }, 500)
     }
   }, [isSuccess, flattenData.length, scrolled])
+  const onScrollToIndexFailed = useCallback(error => {
+    const offset = error.averageItemLength * error.index
+    flRef.current?.scrollToOffset({ offset })
+    setTimeout(
+      () =>
+        flRef.current?.scrollToIndex({ index: error.index, viewOffset: 100 }),
+      350
+    )
+  }, [])
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(
@@ -115,6 +145,8 @@ const Timeline: React.FC<Props> = ({
               item={item}
               queryKey={queryKey}
               {...(toot === item.id && { highlighted: true })}
+              {...(toot && { rootQueryKey })}
+              // @ts-ignore
               {...(data?.pages[0].pinned && { pinned: data?.pages[0].pinned })}
             />
           )
@@ -148,41 +180,51 @@ const Timeline: React.FC<Props> = ({
     [hasNextPage]
   )
 
-  const onScrollToIndexFailed = useCallback(error => {
-    const offset = error.averageItemLength * error.index
-    flRef.current?.scrollToOffset({ offset })
-    setTimeout(
-      () =>
-        flRef.current?.scrollToIndex({ index: error.index, viewOffset: 100 }),
-      350
-    )
-  }, [])
-
   useScrollToTop(flRef)
   const queryClient = useQueryClient()
   const scrollY = useSharedValue(0)
-  const [isFetchingLatest, setIsFetchingLatest] = useState(false)
+  const [isFetchingLatest, setIsFetchingLatest] = useState(0)
   useEffect(() => {
     // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-    if (isFetchingLatest) {
+    if (isFetchingLatest !== 0) {
       if (!isFetchingPreviousPage) {
         fetchPreviousPage()
+        setIsFetchingLatest(isFetchingLatest + 1)
       } else {
-        if (data?.pages[0].body.length === 0) {
-          setIsFetchingLatest(false)
-          queryClient.setQueryData<InfiniteData<any> | undefined>(
-            queryKey,
-            data => {
-              if (data?.pages[0].body.length === 0) {
-                return {
-                  pages: data.pages.slice(1),
-                  pageParams: data.pageParams.slice(1)
+        if (isFetchingLatest === 8) {
+          setIsFetchingLatest(0)
+          if (data?.pages[0].body.length === 0) {
+            queryClient.setQueryData<InfiniteData<any> | undefined>(
+              queryKey,
+              data => {
+                if (data?.pages[0].body.length === 0) {
+                  return {
+                    pages: data.pages.slice(1),
+                    pageParams: data.pageParams.slice(1)
+                  }
+                } else {
+                  return data
                 }
-              } else {
-                return data
               }
-            }
-          )
+            )
+          }
+        } else {
+          if (data?.pages[0].body.length === 0) {
+            setIsFetchingLatest(0)
+            queryClient.setQueryData<InfiniteData<any> | undefined>(
+              queryKey,
+              data => {
+                if (data?.pages[0].body.length === 0) {
+                  return {
+                    pages: data.pages.slice(1),
+                    pageParams: data.pageParams.slice(1)
+                  }
+                } else {
+                  return data
+                }
+              }
+            )
+          }
         }
       }
     }
@@ -191,35 +233,88 @@ const Timeline: React.FC<Props> = ({
     scrollY.value = nativeEvent.contentOffset.y
   }, [])
   const onResponderRelease = useCallback(() => {
-    if (
-      scrollY.value <= -StyleConstants.Spacing.XL &&
-      !isFetchingLatest &&
-      !disableRefresh
-    ) {
-      haptics('Light')
-      setIsFetchingLatest(true)
-      flRef.current?.scrollToOffset({
-        animated: true,
-        offset: 1
-      })
+    if (!disableRefresh) {
+      const separation01 = -(
+        (StyleConstants.Spacing.M * 2.5) / 2 +
+        StyleConstants.Font.Size.S / 2
+      )
+      const separation02 = -(
+        StyleConstants.Spacing.M * 2.5 * 1.5 +
+        StyleConstants.Font.Size.S / 2
+      )
+      if (
+        scrollY.value <= separation02 &&
+        !isFetching &&
+        isFetchingLatest === 0
+      ) {
+        haptics('Light')
+        queryClient.setQueryData<InfiniteData<any> | undefined>(
+          queryKey,
+          data => {
+            if (data?.pages[0].body.length === 0) {
+              return {
+                pages: data.pages.slice(1),
+                pageParams: data.pageParams.slice(1)
+              }
+            } else {
+              return data
+            }
+          }
+        )
+        refetch()
+      } else if (
+        scrollY.value <= separation01 &&
+        !isFetching &&
+        isFetchingLatest === 0
+      ) {
+        haptics('Light')
+        setIsFetchingLatest(1)
+        flRef.current?.scrollToOffset({
+          animated: true,
+          offset: 1
+        })
+      }
     }
-  }, [scrollY.value, isFetchingLatest, disableRefresh])
+  }, [scrollY.value, isFetching, isFetchingLatest, disableRefresh])
   const headerPadding = useAnimatedStyle(() => {
-    if (isFetchingLatest) {
-      return { paddingTop: withTiming(StyleConstants.Spacing.XL) }
-    } else {
-      return { paddingTop: withTiming(0) }
+    return {
+      paddingTop:
+        isFetchingLatest !== 0 || (isFetching && !isLoading)
+          ? withTiming(StyleConstants.Spacing.M * 2.5)
+          : withTiming(0)
     }
-  }, [isFetchingLatest])
+  }, [isFetchingLatest, isFetching, isLoading])
   const ListHeaderComponent = useMemo(
     () => <Animated.View style={headerPadding} />,
     []
   )
 
+  const androidRefreshControl = useMemo(
+    () =>
+      Platform.OS === 'android' && {
+        refreshControl: (
+          <RefreshControl
+            enabled
+            colors={[theme.primary]}
+            progressBackgroundColor={theme.background}
+            refreshing={isFetching || isLoading}
+            onRefresh={() => refetch()}
+          />
+        )
+      },
+    [isFetching, isLoading]
+  )
+
   return (
     <>
-      <TimelineRefresh isLoading={isLoading} disable={disableRefresh} />
+      <TimelineRefresh
+        scrollY={scrollY}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        disable={disableRefresh}
+      />
       <FlatList
+        scrollEventThrottle={16}
         onScroll={onScroll}
         onResponderRelease={onResponderRelease}
         ref={flRef}
@@ -240,6 +335,7 @@ const Timeline: React.FC<Props> = ({
         maintainVisibleContentPosition={{
           minIndexForVisible: 0
         }}
+        {...androidRefreshControl}
         {...customProps}
       />
     </>

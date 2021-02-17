@@ -11,10 +11,9 @@ export default {
   end: {
     message: 'The end, what about a cup of <0 />'
   },
-  header: {
-    explanation:
-      'External instance might not be known to logged in instance, thus actions are not allowed but only for reading. You can switch to any instance in the settings.',
-    button: 'Go to settings'
+  refresh: {
+    fetchPreviousPage: 'Refresh upwards',
+    refetch: 'Refresh all'
   },
   shared: {
     actioned: {

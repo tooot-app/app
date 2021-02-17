@@ -226,6 +226,7 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   // This is status in general, including "status" inside conversation and notification
   type: 'updateStatusProperty'
   queryKey: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Status['id'] | Mastodon.Poll['id']
   reblog?: boolean
   payload:
@@ -264,7 +265,8 @@ export type MutationVarsTimelineDeleteItem = {
   // This is for deleting status and conversation
   type: 'deleteItem'
   source: 'statuses' | 'conversations'
-  queryKey: QueryKeyTimeline
+  queryKey?: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Conversation['id']
 }
 
@@ -366,7 +368,7 @@ const useTimelineMutation = ({
   onError?: MutationOptionsTimeline['onError']
   onMutate?: boolean
   onSettled?: MutationOptionsTimeline['onSettled']
-  onSuccess?: MutationOptionsTimeline['onSuccess'] | boolean
+  onSuccess?: MutationOptionsTimeline['onSuccess']
 }) => {
   return useMutation<
     { body: Mastodon.Conversation | Mastodon.Notification | Mastodon.Status },
@@ -375,27 +377,7 @@ const useTimelineMutation = ({
   >(mutationFunction, {
     onError,
     onSettled,
-    ...(typeof onSuccess === 'function'
-      ? { onSuccess }
-      : onSuccess
-      ? {
-          onSuccess: (data, params) => {
-            queryClient.cancelQueries(params.queryKey)
-
-            haptics('Success')
-            switch (params.type) {
-              case 'updateStatusProperty':
-                switch (params.payload.property) {
-                  case 'poll':
-                    params.payload.data = (data as unknown) as Mastodon.Poll
-                    updateStatusProperty({ queryClient, ...params })
-                    break
-                }
-                break
-            }
-          }
-        }
-      : undefined),
+    onSuccess,
     ...(onMutate && {
       onMutate: params => {
         queryClient.cancelQueries(params.queryKey)

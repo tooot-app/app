@@ -28,12 +28,7 @@ const AttachmentImage: React.FC<Props> = ({
   return (
     <GracefullyImage
       hidden={sensitiveShown}
-      uri={{
-        preview: image.preview_url,
-        original: image.url,
-        remote: image.remote_url
-      }}
-      sharedElement={image.url}
+      uri={{ original: image.preview_url, remote: image.remote_url }}
       blurhash={image.blurhash}
       onPress={onPress}
       style={[

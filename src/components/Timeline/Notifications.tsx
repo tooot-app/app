@@ -13,6 +13,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -44,7 +45,8 @@ const TimelineNotifications: React.FC<Props> = ({
     analytics('timeline_notification_press')
     notification.status &&
       navigation.push('Tab-Shared-Toot', {
-        toot: notification.status
+        toot: notification.status,
+        rootQueryKey: queryKey
       })
   }, [])
 
@@ -125,11 +127,13 @@ const TimelineNotifications: React.FC<Props> = ({
           <TimelineActions
             queryKey={queryKey}
             status={notification.status}
-            accts={([notification.status.account] as Mastodon.Account[] &
-              Mastodon.Mention[])
-              .concat(notification.status.mentions)
-              .filter(d => d.id !== localAccount?.id)
-              .map(d => d.acct)}
+            accts={uniqBy(
+              ([notification.status.account] as Mastodon.Account[] &
+                Mastodon.Mention[])
+                .concat(notification.status.mentions)
+                .filter(d => d.id !== localAccount?.id),
+              d => d.id
+            ).map(d => d.acct)}
             reblog={false}
           />
         </View>

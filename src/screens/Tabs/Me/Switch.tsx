@@ -26,7 +26,10 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
             headerCenter: () => <HeaderCenter content={t('meSwitch:heading')} />
           }),
           headerLeft: () => (
-            <HeaderLeft content='X' onPress={() => navigation.goBack()} />
+            <HeaderLeft
+              content='ChevronDown'
+              onPress={() => navigation.goBack()}
+            />
           )
         }}
       />

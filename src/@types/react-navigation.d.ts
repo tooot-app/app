@@ -5,6 +5,7 @@ declare namespace Nav {
       | {
           type: 'status'
           queryKey: QueryKeyTimeline
+          rootQueryKey?: QueryKeyTimeline
           status: Mastodon.Status
         }
       | {
@@ -48,11 +49,14 @@ declare namespace Nav {
         }
       | undefined
     'Screen-ImagesViewer': {
-      imageUrls: (App.IImageInfo & {
+      imageUrls: {
+        url: Mastodon.AttachmentImage['url']
+        width?: number
+        height?: number
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
         imageIndex: number
-      })[]
+      }[]
       imageIndex: number
     }
   }
@@ -86,6 +90,7 @@ declare namespace Nav {
     'Tab-Shared-Search': undefined
     'Tab-Shared-Toot': {
       toot: Mastodon.Status
+      rootQueryKey: any
     }
   }
 

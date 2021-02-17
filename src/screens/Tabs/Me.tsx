@@ -117,11 +117,10 @@ const TabMe = React.memo(
         <Stack.Screen
           name='Tab-Me-Switch'
           component={ScreenMeSwitch}
-          options={({ navigation }: any) => ({
+          options={{
             stackPresentation: 'modal',
-            headerShown: false,
-            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-          })}
+            headerShown: false
+          }}
         />
 
         {sharedScreens(Stack as any)}

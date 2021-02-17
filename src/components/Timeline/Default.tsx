@@ -13,6 +13,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -20,17 +21,19 @@ import { useSelector } from 'react-redux'
 export interface Props {
   item: Mastodon.Status & { isPinned?: boolean }
   queryKey?: QueryKeyTimeline
+  rootQueryKey?: QueryKeyTimeline
   origin?: string
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
-  pinned: Mastodon.Status['id'][]
+  pinned?: Mastodon.Status['id'][]
 }
 
 // When the poll is long
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
+  rootQueryKey,
   origin,
   highlighted = false,
   disableDetails = false,
@@ -55,7 +58,8 @@ const TimelineDefault: React.FC<Props> = ({
     !disableOnPress &&
       !highlighted &&
       navigation.push('Tab-Shared-Toot', {
-        toot: actualStatus
+        toot: actualStatus,
+        rootQueryKey: queryKey
       })
   }, [])
 
@@ -86,6 +90,7 @@ const TimelineDefault: React.FC<Props> = ({
         />
         <TimelineHeaderDefault
           queryKey={disableOnPress ? undefined : queryKey}
+          rootQueryKey={disableOnPress ? undefined : rootQueryKey}
           status={actualStatus}
         />
       </View>
@@ -109,6 +114,7 @@ const TimelineDefault: React.FC<Props> = ({
         {queryKey && actualStatus.poll ? (
           <TimelinePoll
             queryKey={queryKey}
+            rootQueryKey={rootQueryKey}
             statusId={actualStatus.id}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
@@ -135,12 +141,15 @@ const TimelineDefault: React.FC<Props> = ({
         >
           <TimelineActions
             queryKey={queryKey}
+            rootQueryKey={rootQueryKey}
             status={actualStatus}
-            accts={([actualStatus.account] as Mastodon.Account[] &
-              Mastodon.Mention[])
-              .concat(actualStatus.mentions)
-              .filter(d => d.id !== localAccount?.id)
-              .map(d => d.acct)}
+            accts={uniqBy(
+              ([actualStatus.account] as Mastodon.Account[] &
+                Mastodon.Mention[])
+                .concat(actualStatus.mentions)
+                .filter(d => d.id !== localAccount?.id),
+              d => d.id
+            ).map(d => d.acct)}
             reblog={item.reblog ? true : false}
           />
         </View>

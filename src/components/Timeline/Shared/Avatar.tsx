@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react'
-import { StyleConstants } from '@utils/styles/constants'
-import { useNavigation } from '@react-navigation/native'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import GracefullyImage from '@components/GracefullyImage'
-import { StackNavigationProp } from '@react-navigation/stack'
 import analytics from '@components/analytics'
+import GracefullyImage from '@components/GracefullyImage'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { StyleConstants } from '@utils/styles/constants'
+import React, { useCallback } from 'react'
 
 export interface Props {
   queryKey?: QueryKeyTimeline

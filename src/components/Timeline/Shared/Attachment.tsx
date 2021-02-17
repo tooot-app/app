@@ -32,11 +32,7 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
     haptics('Light')
   }, [])
 
-  let imageUrls: (App.IImageInfo & {
-    preview_url: Mastodon.AttachmentImage['preview_url']
-    remote_url?: Mastodon.AttachmentImage['remote_url']
-    imageIndex: number
-  })[] = []
+  let imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'] = []
   const navigation = useNavigation()
   const navigateToImagesViewer = (imageIndex: number) =>
     navigation.navigate('Screen-ImagesViewer', {
@@ -50,10 +46,10 @@ const TimelineAttachment: React.FC<Props> = ({ status }) => {
           case 'image':
             imageUrls.push({
               url: attachment.url,
-              width: attachment.meta?.original?.width,
-              height: attachment.meta?.original?.height,
               preview_url: attachment.preview_url,
               remote_url: attachment.remote_url,
+              width: attachment.meta?.original?.width,
+              height: attachment.meta?.original?.height,
               imageIndex: index
             })
             return (

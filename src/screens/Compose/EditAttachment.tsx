@@ -35,8 +35,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
     theAttachment.description
   )
   const focus = useSharedValue({
-    x: theAttachment.meta.focus.x,
-    y: theAttachment.meta.focus.y
+    x: theAttachment.meta?.focus?.x,
+    y: theAttachment.meta?.focus?.y
   })
 
   useEffect(() => {
