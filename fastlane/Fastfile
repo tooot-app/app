@@ -93,7 +93,7 @@ private_lane :build_ios do
       groups: "内测用户",
       changelog: "Ready for testing"
     )
-    upload_symbols_ios
+    # upload_symbols_ios
   when "production"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
