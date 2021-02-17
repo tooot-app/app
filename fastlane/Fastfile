@@ -2,7 +2,7 @@ fastlane_version "2.173.0"
 skip_docs
 
 ensure_env_vars(
-  env_vars: ["TOOOT_ENVIRONMENT"]
+  env_vars: ["TOOOT_ENVIRONMENT", "SENTRY_ORGANIZATION", "SENTRY_PROJECT", "SENTRY_AUTH_TOKEN"]
 )
 
 VERSIONS = read_json( json_path: "./package.json" )[:versions]
@@ -15,7 +15,7 @@ case ENVIRONMENT
 when "development"
   GITHUB_RELEASE= ""
 when "staging"
-  GITHUB_RELEASE = "v#{VERSION}-rc#{VERSIONS[:patch]}"
+  GITHUB_RELEASE = "v#{VERSION}-#{VERSIONS[:patch]}"
 when "production"
   GITHUB_RELEASE = "v#{VERSION}"
 end
@@ -35,6 +35,15 @@ desc 'IOS: Update expo information'
 private_lane :update_expo_ios do
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
   set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
+end
+
+desc 'IOS: Upload dSYM'
+lane :upload_symbols_ios do
+  download_dsyms
+  sentry_upload_dsym(
+    org_slug: ENV["SENTRY_ORGANIZATION"],
+    project_slug: ENV["SENTRY_PROJECT"]
+  )
 end
 
 desc "ANDROID: Prepare play store"
@@ -77,13 +86,14 @@ private_lane :build_ios do
   when "staging"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store" )
+    build_ios_app( export_method: "app-store", include_symbols: true, include_bitcode: true )
     upload_to_testflight(
       demo_account_required: true,
       distribute_external: true,
       groups: "内测用户",
       changelog: "Ready for testing"
     )
+    upload_symbols_ios
   when "production"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )

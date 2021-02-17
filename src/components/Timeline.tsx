@@ -82,19 +82,26 @@ const Timeline: React.FC<Props> = ({
     ...queryKeyParams,
     options: {
       getPreviousPageParam: firstPage =>
-        firstPage.links?.prev && {
+        firstPage?.links?.prev && {
           min_id: firstPage.links.prev,
           // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-          limit: '6'
+          limit: '5'
         },
 
       getNextPageParam: lastPage =>
-        lastPage.links?.next && { max_id: lastPage.links.next }
+        lastPage?.links?.next && { max_id: lastPage.links.next }
     }
   })
 
   const flattenData = data?.pages ? data.pages.flatMap(d => [...d.body]) : []
 
+  // Auto go back when toot page is empty
+  const navigation = useNavigation()
+  useEffect(() => {
+    if (toot && isSuccess && flattenData.length === 0) {
+      navigation.goBack()
+    }
+  }, [isSuccess, flattenData.length])
   // Toot page auto scroll to selected toot
   const flRef = useRef<FlatList<any>>(null)
   const scrolled = useRef(false)
@@ -119,13 +126,6 @@ const Timeline: React.FC<Props> = ({
       350
     )
   }, [])
-  // Auto go back when toot page is empty
-  const navigation = useNavigation()
-  useEffect(() => {
-    if (toot && isSuccess && flattenData.length === 0) {
-      navigation.goBack()
-    }
-  }, [isSuccess, flattenData.length])
 
   const keyExtractor = useCallback(({ id }) => id, [])
   const renderItem = useCallback(
@@ -233,26 +233,57 @@ const Timeline: React.FC<Props> = ({
     scrollY.value = nativeEvent.contentOffset.y
   }, [])
   const onResponderRelease = useCallback(() => {
-    if (
-      scrollY.value <= -StyleConstants.Spacing.XL &&
-      isFetchingLatest === 0 &&
-      !disableRefresh
-    ) {
-      haptics('Light')
-      setIsFetchingLatest(1)
-      flRef.current?.scrollToOffset({
-        animated: true,
-        offset: 1
-      })
+    if (!disableRefresh) {
+      const separation01 = -(
+        (StyleConstants.Spacing.M * 2.5) / 2 +
+        StyleConstants.Font.Size.S / 2
+      )
+      const separation02 = -(
+        StyleConstants.Spacing.M * 2.5 * 1.5 +
+        StyleConstants.Font.Size.S / 2
+      )
+      if (
+        scrollY.value <= separation02 &&
+        !isFetching &&
+        isFetchingLatest === 0
+      ) {
+        haptics('Light')
+        queryClient.setQueryData<InfiniteData<any> | undefined>(
+          queryKey,
+          data => {
+            if (data?.pages[0].body.length === 0) {
+              return {
+                pages: data.pages.slice(1),
+                pageParams: data.pageParams.slice(1)
+              }
+            } else {
+              return data
+            }
+          }
+        )
+        refetch()
+      } else if (
+        scrollY.value <= separation01 &&
+        !isFetching &&
+        isFetchingLatest === 0
+      ) {
+        haptics('Light')
+        setIsFetchingLatest(1)
+        flRef.current?.scrollToOffset({
+          animated: true,
+          offset: 1
+        })
+      }
     }
-  }, [scrollY.value, isFetchingLatest, disableRefresh])
+  }, [scrollY.value, isFetching, isFetchingLatest, disableRefresh])
   const headerPadding = useAnimatedStyle(() => {
-    if (isFetchingLatest !== 0) {
-      return { paddingTop: withTiming(StyleConstants.Spacing.XL) }
-    } else {
-      return { paddingTop: withTiming(0) }
+    return {
+      paddingTop:
+        isFetchingLatest !== 0 || (isFetching && !isLoading)
+          ? withTiming(StyleConstants.Spacing.M * 2.5)
+          : withTiming(0)
     }
-  }, [isFetchingLatest])
+  }, [isFetchingLatest, isFetching, isLoading])
   const ListHeaderComponent = useMemo(
     () => <Animated.View style={headerPadding} />,
     []
@@ -267,7 +298,7 @@ const Timeline: React.FC<Props> = ({
             colors={[theme.primary]}
             progressBackgroundColor={theme.background}
             refreshing={isFetching || isLoading}
-            // onRefresh={() => refetch()}
+            onRefresh={() => refetch()}
           />
         )
       },
@@ -276,8 +307,14 @@ const Timeline: React.FC<Props> = ({
 
   return (
     <>
-      <TimelineRefresh isLoading={isLoading} disable={disableRefresh} />
+      <TimelineRefresh
+        scrollY={scrollY}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        disable={disableRefresh}
+      />
       <FlatList
+        scrollEventThrottle={16}
         onScroll={onScroll}
         onResponderRelease={onResponderRelease}
         ref={flRef}

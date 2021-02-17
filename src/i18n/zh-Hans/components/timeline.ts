@@ -11,10 +11,9 @@ export default {
   end: {
     message: '居然刷到底了，喝杯 <0 /> 吧'
   },
-  header: {
-    explanation:
-      '围观的社区可能不属于已经登录的社区的已知连结，因此只可围观嘟文，不能进行操作。设置里可以切换想要围观的社区。',
-    button: '前往设置'
+  refresh: {
+    fetchPreviousPage: '向上刷新',
+    refetch: '完全刷新'
   },
   shared: {
     actioned: {

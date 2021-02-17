@@ -13,6 +13,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getLocalAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -75,7 +76,6 @@ const TimelineDefault: React.FC<Props> = ({
         }
       ]}
       onPress={onPress}
-      disabled={queryKey && queryKey[1].toot !== undefined}
     >
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
@@ -143,11 +143,13 @@ const TimelineDefault: React.FC<Props> = ({
             queryKey={queryKey}
             rootQueryKey={rootQueryKey}
             status={actualStatus}
-            accts={([actualStatus.account] as Mastodon.Account[] &
-              Mastodon.Mention[])
-              .concat(actualStatus.mentions)
-              .filter(d => d.id !== localAccount?.id)
-              .map(d => d.acct)}
+            accts={uniqBy(
+              ([actualStatus.account] as Mastodon.Account[] &
+                Mastodon.Mention[])
+                .concat(actualStatus.mentions)
+                .filter(d => d.id !== localAccount?.id),
+              d => d.id
+            ).map(d => d.acct)}
             reblog={item.reblog ? true : false}
           />
         </View>
