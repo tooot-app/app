@@ -12,8 +12,8 @@ export default {
     message: '居然刷到底了，喝杯 <0 /> 吧'
   },
   refresh: {
-    fetchPreviousPage: '向上刷新',
-    refetch: '完全刷新'
+    fetchPreviousPage: '较新于此嘟嘟',
+    refetch: '最新的嘟嘟'
   },
   shared: {
     actioned: {
