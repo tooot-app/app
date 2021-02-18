@@ -12,8 +12,8 @@ export default {
     message: 'The end, what about a cup of <0 />'
   },
   refresh: {
-    fetchPreviousPage: 'Refresh upwards',
-    refetch: 'Refresh all'
+    fetchPreviousPage: 'Newer from here',
+    refetch: 'To latest'
   },
   shared: {
     actioned: {
