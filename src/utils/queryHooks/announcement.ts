@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
   useMutation,
@@ -12,9 +12,8 @@ type QueryKeyAnnouncement = ['Announcements', { showAll?: boolean }]
 const queryFunction = ({ queryKey }: { queryKey: QueryKeyAnnouncement }) => {
   const { showAll } = queryKey[1]
 
-  return client<Mastodon.Announcement[]>({
+  return apiInstance<Mastodon.Announcement[]>({
     method: 'get',
-    instance: 'local',
     url: `announcements`,
     ...(showAll && {
       params: {
@@ -52,15 +51,13 @@ const mutationFunction = async ({
 }: MutationVarsAnnouncement) => {
   switch (type) {
     case 'reaction':
-      return client<{}>({
+      return apiInstance<{}>({
         method: me ? 'delete' : 'put',
-        instance: 'local',
         url: `announcements/${id}/reactions/${name}`
       })
     case 'dismiss':
-      return client<{}>({
+      return apiInstance<{}>({
         method: 'post',
-        instance: 'local',
         url: `announcements/${id}/dismiss`
       })
   }

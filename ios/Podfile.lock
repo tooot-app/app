@@ -49,6 +49,9 @@ PODS:
     - UMCore
     - UMPermissionsInterface
     - UMTaskManagerInterface
+  - EXNotifications (0.8.2):
+    - UMCore
+    - UMPermissionsInterface
   - EXPermissions (10.0.0):
     - UMCore
     - UMPermissionsInterface
@@ -499,6 +502,7 @@ DEPENDENCIES:
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocalization (from `../node_modules/expo-localization/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
+  - EXNotifications (from `../node_modules/expo-notifications/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXRandom (from `../node_modules/expo-random/ios`)
   - EXScreenCapture (from `../node_modules/expo-screen-capture/ios`)
@@ -622,6 +626,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-localization/ios"
   EXLocation:
     :path: "../node_modules/expo-location/ios"
+  EXNotifications:
+    :path: "../node_modules/expo-notifications/ios"
   EXPermissions:
     :path: "../node_modules/expo-permissions/ios"
   EXRandom:
@@ -769,6 +775,7 @@ SPEC CHECKSUMS:
   EXLinearGradient: c803fbd1aa974be038177b1e45524bc35759fe9c
   EXLocalization: 8b9463c81843da214476b541a27811dd885c9a76
   EXLocation: d55e2a37f61bcfb4eba9c813b3f4621d896c4c00
+  EXNotifications: fba3319b1555961b99ddd185021b4c7ff978d5dd
   EXPermissions: 17d4846ad1880f6891c74ae58ca1acb43e47ed47
   EXRandom: d7e0f3dd64810aabd27d59f8ecffee359177e2c3
   EXScreenCapture: 5b8447139e56e2b922e93ccdc7c773c103fb44fd

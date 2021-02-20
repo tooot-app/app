@@ -1,13 +1,15 @@
-import client from '@api/client'
 import analytics from '@components/analytics'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
-import * as AuthSession from 'expo-auth-session'
-import * as Localization from 'expo-localization'
 import { findIndex } from 'lodash'
+import addInstance from './instances/add'
+import removeInstance from './instances/remove'
+import { updateAccountPreferences } from './instances/updateAccountPreferences'
+import { updatePush } from './instances/updatePush'
 
-export type InstanceLocal = {
+export type Instance = {
+  active: boolean
   appData: {
     clientId: string
     clientSecret: string
@@ -27,245 +29,105 @@ export type InstanceLocal = {
     readTime?: Mastodon.Notification['created_at']
     latestTime?: Mastodon.Notification['created_at']
   }
+  push: {
+    loading: boolean
+    enabled: boolean
+    subscription?: Mastodon.PushSubscription
+  }
   drafts: ComposeStateDraft[]
 }
 
 export type InstancesState = {
-  local: {
-    activeIndex: number | null
-    instances: InstanceLocal[]
-  }
-
-  remote: {
-    url: string
-  }
+  instances: Instance[]
 }
-
-export const updateLocalAccountPreferences = createAsyncThunk(
-  'instances/updateLocalAccountPreferences',
-  async (): Promise<Mastodon.Preferences> => {
-    const res = await client<Mastodon.Preferences>({
-      method: 'get',
-      instance: 'local',
-      url: `preferences`
-    })
-
-    return Promise.resolve(res.body)
-  }
-)
-
-export const localAddInstance = createAsyncThunk(
-  'instances/localAddInstance',
-  async ({
-    url,
-    token,
-    instance,
-    max_toot_chars = 500,
-    appData
-  }: {
-    url: InstanceLocal['url']
-    token: InstanceLocal['token']
-    instance: Mastodon.Instance
-    max_toot_chars?: number
-    appData: InstanceLocal['appData']
-  }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLocal }> => {
-    const { store } = require('@root/store')
-    const instanceLocal: InstancesState['local'] = store.getState().instances
-      .local
-
-    const {
-      body: { id, acct, avatar_static }
-    } = await client<Mastodon.Account>({
-      method: 'get',
-      instance: 'remote',
-      instanceDomain: url,
-      url: `accounts/verify_credentials`,
-      headers: { Authorization: `Bearer ${token}` }
-    })
-
-    let type: 'add' | 'overwrite'
-    if (
-      instanceLocal.instances.filter(instance => {
-        if (instance) {
-          if (instance.url === url && instance.account.id === id) {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
-      }).length
-    ) {
-      type = 'overwrite'
-    } else {
-      type = 'add'
-    }
-
-    const { body: preferences } = await client<Mastodon.Preferences>({
-      method: 'get',
-      instance: 'remote',
-      instanceDomain: url,
-      url: `preferences`,
-      headers: { Authorization: `Bearer ${token}` }
-    })
-
-    return Promise.resolve({
-      type,
-      data: {
-        appData,
-        url,
-        token,
-        uri: instance.uri,
-        urls: instance.urls,
-        max_toot_chars,
-        account: {
-          id,
-          acct,
-          avatarStatic: avatar_static,
-          preferences
-        },
-        notification: {
-          readTime: undefined,
-          latestTime: undefined
-        },
-        drafts: []
-      }
-    })
-  }
-)
-export const localRemoveInstance = createAsyncThunk(
-  'instances/localRemoveInstance',
-  async (index?: InstancesState['local']['activeIndex']): Promise<number> => {
-    const { store } = require('@root/store')
-    const instanceLocal: InstancesState['local'] = store.getState().instances
-      .local
-
-    if (index) {
-      return Promise.resolve(index)
-    } else {
-      if (instanceLocal.activeIndex !== null) {
-        const currentInstance =
-          instanceLocal.instances[instanceLocal.activeIndex]
-
-        let revoked = undefined
-        try {
-          revoked = await AuthSession.revokeAsync(
-            {
-              clientId: currentInstance.appData.clientId,
-              clientSecret: currentInstance.appData.clientSecret,
-              token: currentInstance.token,
-              scopes: ['read', 'write', 'follow', 'push']
-            },
-            {
-              revocationEndpoint: `https://${currentInstance.url}/oauth/revoke`
-            }
-          )
-        } catch {}
-
-        if (!revoked) {
-          console.warn('Revoking error')
-        }
-
-        return Promise.resolve(instanceLocal.activeIndex)
-      } else {
-        throw new Error('Active index invalid, cannot remove instance')
-      }
-    }
-  }
-)
 
 export const instancesInitialState: InstancesState = {
-  local: {
-    activeIndex: null,
-    instances: []
-  },
-  remote: {
-    url: Localization.locale.includes('zh') ? 'm.cmx.im' : 'mastodon.social'
-  }
+  instances: []
 }
+
+const findInstanceActive = (state: Instance[]) =>
+  state.findIndex(instance => instance.active)
 
 const instancesSlice = createSlice({
   name: 'instances',
   initialState: instancesInitialState,
   reducers: {
-    updateLocalActiveIndex: (state, action: PayloadAction<InstanceLocal>) => {
-      state.local.activeIndex = state.local.instances.findIndex(
-        instance =>
+    updateInstanceActive: ({ instances }, action: PayloadAction<Instance>) => {
+      instances = instances.map(instance => {
+        instance.active =
           instance.url === action.payload.url &&
           instance.token === action.payload.token &&
           instance.account.id === action.payload.account.id
-      )
+        return instance
+      })
     },
-    updateLocalAccount: (
-      state,
-      action: PayloadAction<
-        Pick<InstanceLocal['account'], 'acct' & 'avatarStatic'>
-      >
+    updateInstanceAccount: (
+      { instances },
+      action: PayloadAction<Pick<Instance['account'], 'acct' & 'avatarStatic'>>
     ) => {
-      if (state.local.activeIndex !== null) {
-        state.local.instances[state.local.activeIndex].account = {
-          ...state.local.instances[state.local.activeIndex].account,
-          ...action.payload
-        }
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].account = {
+        ...instances[activeIndex].account,
+        ...action.payload
       }
     },
-    updateLocalNotification: (
-      state,
-      action: PayloadAction<Partial<InstanceLocal['notification']>>
+    updateInstanceNotification: (
+      { instances },
+      action: PayloadAction<Partial<Instance['notification']>>
     ) => {
-      if (state.local.activeIndex !== null) {
-        state.local.instances[state.local.activeIndex].notification = {
-          ...state.local.instances[state.local.activeIndex].notification,
-          ...action.payload
-        }
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].notification = {
+        ...instances[activeIndex].notification,
+        ...action.payload
       }
     },
-    updateLocalDraft: (state, action: PayloadAction<ComposeStateDraft>) => {
-      if (state.local.activeIndex !== null) {
-        const draftIndex = findIndex(
-          state.local.instances[state.local.activeIndex].drafts,
-          ['timestamp', action.payload.timestamp]
-        )
-        if (draftIndex === -1) {
-          state.local.instances[state.local.activeIndex].drafts.unshift(
-            action.payload
-          )
-        } else {
-          state.local.instances[state.local.activeIndex].drafts[draftIndex] =
-            action.payload
-        }
+    updateInstanceDraft: (
+      { instances },
+      action: PayloadAction<ComposeStateDraft>
+    ) => {
+      const activeIndex = findInstanceActive(instances)
+      const draftIndex = findIndex(instances[activeIndex].drafts, [
+        'timestamp',
+        action.payload.timestamp
+      ])
+      if (draftIndex === -1) {
+        instances[activeIndex].drafts.unshift(action.payload)
+      } else {
+        instances[activeIndex].drafts[draftIndex] = action.payload
       }
     },
-    removeLocalDraft: (
-      state,
+    removeInstanceDraft: (
+      { instances },
       action: PayloadAction<ComposeStateDraft['timestamp']>
     ) => {
-      if (state.local.activeIndex !== null) {
-        state.local.instances[
-          state.local.activeIndex
-        ].drafts = state.local.instances[
-          state.local.activeIndex
-        ].drafts?.filter(draft => draft.timestamp !== action.payload)
-      }
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].drafts = instances[activeIndex].drafts?.filter(
+        draft => draft.timestamp !== action.payload
+      )
     }
   },
   extraReducers: builder => {
     builder
-      .addCase(localAddInstance.fulfilled, (state, action) => {
+      .addCase(addInstance.fulfilled, (state, action) => {
         switch (action.payload.type) {
           case 'add':
-            state.local.instances.push(action.payload.data)
-            state.local.activeIndex = state.local.instances.length - 1
+            state.instances.length &&
+              (state.instances = state.instances.map(instance => {
+                instance.active = false
+                return instance
+              }))
+            state.instances.push(action.payload.data)
             break
           case 'overwrite':
-            state.local.instances = state.local.instances.map(instance => {
+            console.log('overwriting')
+            state.instances = state.instances.map(instance => {
               if (
                 instance.url === action.payload.data.url &&
                 instance.account.id === action.payload.data.account.id
               ) {
                 return action.payload.data
               } else {
+                instance.active = false
                 return instance
               }
             })
@@ -273,76 +135,99 @@ const instancesSlice = createSlice({
 
         analytics('login')
       })
-      .addCase(localAddInstance.rejected, (state, action) => {
-        console.error(state.local)
+      .addCase(addInstance.rejected, (state, action) => {
+        console.error(state.instances)
         console.error(action.error)
       })
 
-      .addCase(localRemoveInstance.fulfilled, (state, action) => {
-        state.local.instances.splice(action.payload, 1)
-        state.local.activeIndex = state.local.instances.length
-          ? state.local.instances.length - 1
-          : null
+      .addCase(removeInstance.fulfilled, (state, action) => {
+        state.instances.splice(action.payload, 1)
+        state.instances.length &&
+          (state.instances[state.instances.length - 1].active = true)
 
         analytics('logout')
       })
-      .addCase(localRemoveInstance.rejected, (state, action) => {
-        console.error(state.local)
+      .addCase(removeInstance.rejected, (state, action) => {
+        console.error(state)
         console.error(action.error)
       })
 
-      .addCase(updateLocalAccountPreferences.fulfilled, (state, action) => {
-        state.local.instances[state.local.activeIndex!].account.preferences =
-          action.payload
+      .addCase(updateAccountPreferences.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].account.preferences = action.payload
       })
-      .addCase(updateLocalAccountPreferences.rejected, (_, action) => {
+      .addCase(updateAccountPreferences.rejected, (_, action) => {
         console.error(action.error)
+      })
+
+      .addCase(updatePush.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        if (typeof action.payload === 'boolean') {
+          state.instances[activeIndex].push.enabled = action.payload
+        } else {
+          state.instances[activeIndex].push.enabled = true
+          state.instances[activeIndex].push.subscription = action.payload
+        }
       })
   }
 })
 
-export const getLocalActiveIndex = ({ instances: { local } }: RootState) =>
-  local.activeIndex
-export const getLocalInstances = ({ instances: { local } }: RootState) =>
-  local.instances
-export const getLocalInstance = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null ? local.instances[local.activeIndex] : undefined
-export const getLocalUrl = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].url
-    : undefined
-export const getLocalUri = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].uri
-    : undefined
-export const getLocalUrls = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].urls
-    : undefined
-export const getLocalMaxTootChar = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].max_toot_chars
-    : 500
-export const getLocalAccount = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].account
-    : undefined
-export const getLocalNotification = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].notification
-    : undefined
-export const getLocalDrafts = ({ instances: { local } }: RootState) =>
-  local.activeIndex !== null
-    ? local.instances[local.activeIndex].drafts
-    : undefined
-export const getRemoteUrl = ({ instances: { remote } }: RootState) => remote.url
+export const getInstanceActive = ({ instances: { instances } }: RootState) =>
+  findInstanceActive(instances)
+
+export const getInstances = ({ instances: { instances } }: RootState) =>
+  instances
+
+export const getInstance = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive] : null
+}
+
+export const getInstanceUrl = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].url : null
+}
+
+export const getInstanceUri = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].uri : null
+}
+
+export const getInstanceUrls = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].urls : null
+}
+
+export const getInstanceMaxTootChar = ({
+  instances: { instances }
+}: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].max_toot_chars : null
+}
+
+export const getInstanceAccount = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].account : null
+}
+
+export const getInstanceNotification = ({
+  instances: { instances }
+}: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].notification : null
+}
+
+export const getInstanceDrafts = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].drafts : null
+}
 
 export const {
-  updateLocalActiveIndex,
-  updateLocalAccount,
-  updateLocalNotification,
-  updateLocalDraft,
-  removeLocalDraft
+  updateInstanceActive,
+  updateInstanceAccount,
+  updateInstanceNotification,
+  updateInstanceDraft,
+  removeInstanceDraft
 } = instancesSlice.actions
 
 export default instancesSlice.reducer

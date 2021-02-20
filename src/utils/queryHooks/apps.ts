@@ -1,9 +1,9 @@
-import client from '@api/client'
+import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
 import * as AuthSession from 'expo-auth-session'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Apps', { instanceDomain?: string }]
+export type QueryKey = ['Apps', { domain?: string }]
 
 const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   const redirectUri = AuthSession.makeRedirectUri({
@@ -11,7 +11,7 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     useProxy: false
   })
 
-  const { instanceDomain } = queryKey[1]
+  const { domain } = queryKey[1]
 
   const formData = new FormData()
   formData.append('client_name', 'tooot')
@@ -19,11 +19,10 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   formData.append('redirect_uris', redirectUri)
   formData.append('scopes', 'read write follow push')
 
-  return client<Mastodon.Apps>({
+  return apiGeneral<Mastodon.Apps>({
     method: 'post',
-    instance: 'remote',
-    instanceDomain,
-    url: `apps`,
+    domain: domain || '',
+    url: `api/v1/apps`,
     body: formData
   }).then(res => res.body)
 }

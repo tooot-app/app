@@ -9,6 +9,14 @@ enum availableLanguages {
   'en'
 }
 
+export const changeAnalytics = createAsyncThunk(
+  'settings/changeAnalytics',
+  async (newValue: SettingsState['analytics']) => {
+    await Analytics.setAnalyticsCollectionEnabled(newValue)
+    return newValue
+  }
+)
+
 export type SettingsState = {
   language: keyof availableLanguages
   theme: 'light' | 'dark' | 'auto'
@@ -17,6 +25,9 @@ export type SettingsState = {
 }
 
 export const settingsInitialState = {
+  notification: {
+    enabled: false
+  },
   language: Object.keys(
     pickBy(availableLanguages, (_, key) => Localization.locale.includes(key))
   )
@@ -30,14 +41,6 @@ export const settingsInitialState = {
   browser: 'internal',
   analytics: true
 }
-
-export const changeAnalytics = createAsyncThunk(
-  'settings/changeAnalytics',
-  async (newValue: SettingsState['analytics']) => {
-    await Analytics.setAnalyticsCollectionEnabled(newValue)
-    return newValue
-  }
-)
 
 const settingsSlice = createSlice({
   name: 'settings',

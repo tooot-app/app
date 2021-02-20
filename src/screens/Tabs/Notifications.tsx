@@ -1,7 +1,7 @@
 import { HeaderCenter } from '@components/Header'
 import Timeline from '@components/Timeline'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
-import { updateLocalNotification } from '@utils/slices/instancesSlice'
+import { updateInstanceNotification } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, ViewToken } from 'react-native'
@@ -46,7 +46,7 @@ const TabNotifications = React.memo(
                     viewableItems[0].index === 0
                   ) {
                     dispatch(
-                      updateLocalNotification({
+                      updateInstanceNotification({
                         readTime: viewableItems[0].item.created_at
                       })
                     )

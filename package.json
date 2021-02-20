@@ -34,6 +34,7 @@
     "expo-linear-gradient": "~8.4.0",
     "expo-linking": "~2.0.1",
     "expo-localization": "~9.1.0",
+    "expo-notifications": "~0.8.2",
     "expo-random": "~10.0.0",
     "expo-screen-capture": "^3.0.0",
     "expo-secure-store": "~9.3.0",

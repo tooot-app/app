@@ -10,10 +10,10 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import {
-  getLocalAccount,
-  getLocalActiveIndex,
-  getLocalNotification,
-  updateLocalNotification
+  getInstanceAccount,
+  getInstanceActive,
+  getInstanceNotification,
+  updateInstanceNotification
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
@@ -44,14 +44,15 @@ const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
     const { mode, theme } = useTheme()
     const dispatch = useDispatch()
-    const localActiveIndex = useSelector(getLocalActiveIndex)
+    const instanceActive = useSelector(getInstanceActive)
     const localAccount = useSelector(
-      getLocalAccount,
+      getInstanceAccount,
       (prev, next) => prev?.avatarStatic === next?.avatarStatic
     )
 
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
+        tabBarVisible: instanceActive !== -1,
         tabBarIcon: ({
           focused,
           color,
@@ -71,7 +72,7 @@ const ScreenTabs = React.memo(
             case 'Tab-Notifications':
               return <Icon name='Bell' size={size} color={color} />
             case 'Tab-Me':
-              return localActiveIndex !== null ? (
+              return instanceActive !== -1 ? (
                 <FastImage
                   source={{ uri: localAccount?.avatarStatic }}
                   style={{
@@ -94,61 +95,39 @@ const ScreenTabs = React.memo(
           }
         }
       }),
-      [localActiveIndex, localAccount?.avatarStatic]
+      [instanceActive, localAccount?.avatarStatic]
     )
     const tabBarOptions = useMemo(
       () => ({
         activeTintColor: theme.primary,
-        inactiveTintColor:
-          localActiveIndex !== null ? theme.secondary : theme.disabled,
+        inactiveTintColor: theme.secondary,
         showLabel: false,
         ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })
       }),
-      [mode, localActiveIndex]
-    )
-    const localListeners = useCallback(
-      () => ({
-        tabPress: (e: any) => {
-          if (!(localActiveIndex !== null)) {
-            e.preventDefault()
-          }
-        }
-      }),
-      [localActiveIndex]
+      [mode]
     )
     const composeListeners = useMemo(
       () => ({
         tabPress: (e: any) => {
           e.preventDefault()
-          if (localActiveIndex !== null) {
-            haptics('Light')
-            navigation.navigate('Screen-Compose')
-          }
+          haptics('Light')
+          navigation.navigate('Screen-Compose')
         }
       }),
-      [localActiveIndex]
+      []
     )
     const composeComponent = useCallback(() => null, [])
-    const notificationsListeners = useCallback(
-      () => ({
-        tabPress: (e: any) => {
-          if (!(localActiveIndex !== null)) {
-            e.preventDefault()
-          }
-        }
-      }),
-      [localActiveIndex]
-    )
 
     // On launch check if there is any unread noficiations
     useTimelineQuery({
       page: 'Notifications',
       options: {
+        enabled: instanceActive !== -1,
         notifyOnChangeProps: [],
         select: data => {
           if (data.pages[0].body.length) {
             dispatch(
-              updateLocalNotification({
+              updateInstanceNotification({
                 // @ts-ignore
                 latestTime: data.pages[0].body[0].created_at
               })
@@ -160,27 +139,21 @@ const ScreenTabs = React.memo(
     })
     useWebsocket({ stream: 'user', event: 'notification' })
     const localNotification = useSelector(
-      getLocalNotification,
+      getInstanceNotification,
       (prev, next) =>
         prev?.readTime === next?.readTime &&
         prev?.latestTime === next?.latestTime
     )
 
+    const previousTab = useSelector(getPreviousTab, () => true)
+
     return (
       <Tab.Navigator
-        initialRouteName={
-          localActiveIndex !== null
-            ? useSelector(getPreviousTab, () => true)
-            : 'Tab-Me'
-        }
+        initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
         screenOptions={screenOptions}
         tabBarOptions={tabBarOptions}
       >
-        <Tab.Screen
-          name='Tab-Local'
-          component={TabLocal}
-          listeners={localListeners}
-        />
+        <Tab.Screen name='Tab-Local' component={TabLocal} />
         <Tab.Screen name='Tab-Public' component={TabPublic} />
         <Tab.Screen
           name='Tab-Compose'
@@ -190,7 +163,6 @@ const ScreenTabs = React.memo(
         <Tab.Screen
           name='Tab-Notifications'
           component={TabNotifications}
-          listeners={notificationsListeners}
           options={{
             tabBarBadge: localNotification?.latestTime
               ? !localNotification.readTime ||

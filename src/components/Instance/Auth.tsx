@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import { InstanceLocal, localAddInstance } from '@utils/slices/instancesSlice'
+import addInstance from '@utils/slices/instances/add'
+import { Instance } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
 import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -9,7 +10,7 @@ export interface Props {
   instanceDomain: string
   // Domain can be different than uri
   instance: Mastodon.Instance
-  appData: InstanceLocal['appData']
+  appData: Instance['appData']
   goBack?: boolean
 }
 
@@ -62,8 +63,8 @@ const InstanceAuth = React.memo(
           )
           queryClient.clear()
           dispatch(
-            localAddInstance({
-              url: instanceDomain,
+            addInstance({
+              domain: instanceDomain,
               token: accessToken,
               instance,
               max_toot_chars: instance.max_toot_chars,

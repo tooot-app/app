@@ -32,11 +32,11 @@ export const contextsInitialState = {
     current: 0,
     hidden: false
   },
-  previousTab: 'Tab-Local'
+  previousTab: 'Tab-Me'
 }
 
 const contextsSlice = createSlice({
-  name: 'settings',
+  name: 'contexts',
   initialState: contextsInitialState as ContextsState,
   reducers: {
     updateStoreReview: (state, action: PayloadAction<1>) => {

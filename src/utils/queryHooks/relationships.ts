@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
 
@@ -17,9 +17,8 @@ const queryFunction = ({
   const { type, id } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
-  return client<Mastodon.Account[]>({
+  return apiInstance<Mastodon.Account[]>({
     method: 'get',
-    instance: 'local',
     url: `accounts/${id}/${type}`,
     params
   })

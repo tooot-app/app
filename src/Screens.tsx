@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { toast, toastConfig } from '@components/toast'
 import {
   NavigationContainer,
@@ -10,10 +10,8 @@ import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
-import {
-  getLocalActiveIndex,
-  updateLocalAccountPreferences
-} from '@utils/slices/instancesSlice'
+import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
@@ -36,7 +34,7 @@ export const navigationRef = createRef<NavigationContainerRef>()
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instanceActive = useSelector(getInstanceActive)
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
@@ -89,10 +87,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // On launch check if there is any unread announcements
   useEffect(() => {
-    localActiveIndex !== null &&
-      client<Mastodon.Announcement[]>({
+    instanceActive !== -1 &&
+      apiInstance<Mastodon.Announcement[]>({
         method: 'get',
-        instance: 'local',
         url: `announcements`
       })
         .then(res => {
@@ -107,8 +104,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
-    if (localActiveIndex !== null) {
-      dispatch(updateLocalAccountPreferences())
+    if (instanceActive !== -1) {
+      dispatch(updateAccountPreferences())
     }
   }, [])
 

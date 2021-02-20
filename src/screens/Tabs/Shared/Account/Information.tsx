@@ -1,4 +1,4 @@
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
@@ -23,7 +23,7 @@ export interface Props {
 const AccountInformation: React.FC<Props> = ({ account, myInfo = false }) => {
   const ownAccount =
     account?.id ===
-    useSelector(getLocalAccount, (prev, next) => prev?.id === next?.id)?.id
+    useSelector(getInstanceAccount, (prev, next) => prev?.id === next?.id)?.id
   const { mode, theme } = useTheme()
 
   const animation = useCallback(

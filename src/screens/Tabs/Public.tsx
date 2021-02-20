@@ -4,7 +4,7 @@ import Timeline from '@components/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +21,7 @@ const TabPublic = React.memo(
     const { t, i18n } = useTranslation()
     const { mode } = useTheme()
     const navigation = useNavigation()
-    const localActiveIndex = useSelector(getLocalActiveIndex)
+    const instanceActive = useSelector(getInstanceActive)
 
     const [segment, setSegment] = useState(0)
     const pages: { title: string; page: App.Pages }[] = [
@@ -74,9 +74,9 @@ const TabPublic = React.memo(
           key: App.Pages
         }
       }) => {
-        return localActiveIndex !== null && <Timeline page={route.key} />
+        return instanceActive !== -1 && <Timeline page={route.key} />
       },
-      [localActiveIndex]
+      [instanceActive]
     )
     const children = useCallback(
       () => (

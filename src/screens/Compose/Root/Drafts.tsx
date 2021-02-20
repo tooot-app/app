@@ -1,6 +1,6 @@
 import Button from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
-import { getLocalDrafts } from '@utils/slices/instancesSlice'
+import { getInstanceDrafts } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useContext, useEffect } from 'react'
@@ -13,7 +13,7 @@ const ComposeDrafts: React.FC = () => {
   const { t } = useTranslation('sharedCompose')
   const navigation = useNavigation()
   const { composeState } = useContext(ComposeContext)
-  const localDrafts = useSelector(getLocalDrafts)?.filter(
+  const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== composeState.timestamp
   )
 
@@ -21,7 +21,7 @@ const ComposeDrafts: React.FC = () => {
     layoutAnimation()
   }, [composeState.dirty])
 
-  if (!composeState.dirty && localDrafts?.length) {
+  if (!composeState.dirty && instanceDrafts?.length) {
     return (
       <View
         style={styles.base}
@@ -29,7 +29,7 @@ const ComposeDrafts: React.FC = () => {
           <Button
             type='text'
             content={t('content.root.drafts', {
-              count: localDrafts.length
+              count: instanceDrafts.length
             })}
             onPress={() =>
               navigation.navigate('Screen-Compose-DraftsList', {

@@ -1,7 +1,7 @@
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import {
-  getLocalInstance,
-  updateLocalNotification
+  getInstance,
+  updateInstanceNotification
 } from '@utils/slices/instancesSlice'
 import { useEffect, useRef } from 'react'
 import { useQueryClient } from 'react-query'
@@ -18,7 +18,7 @@ const useWebsocket = ({
   const queryClient = useQueryClient()
   const dispatch = useDispatch()
   const localInstance = useSelector(
-    getLocalInstance,
+    getInstance,
     (prev, next) =>
       prev?.urls.streaming_api === next?.urls.streaming_api &&
       prev?.token === next?.token
@@ -39,7 +39,7 @@ const useWebsocket = ({
           case 'notification':
             const payload: Mastodon.Notification = JSON.parse(message.payload)
             dispatch(
-              updateLocalNotification({ latestTime: payload.created_at })
+              updateInstanceNotification({ latestTime: payload.created_at })
             )
             const queryKey: QueryKeyTimeline = [
               'Timeline',

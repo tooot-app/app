@@ -1,5 +1,8 @@
 import Icon from '@components/Icon'
-import { getLocalAccount, getLocalUri } from '@utils/slices/instancesSlice'
+import {
+  getInstanceAccount,
+  getInstanceUri
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
@@ -14,11 +17,11 @@ export interface Props {
 
 const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(
-    getLocalAccount,
+  const instanceAccount = useSelector(
+    getInstanceAccount,
     (prev, next) => prev?.acct === next?.acct
   )
-  const localUri = useSelector(getLocalUri)
+  const instanceUri = useSelector(getInstanceUri)
 
   const movedStyle = useMemo(
     () =>
@@ -45,7 +48,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
     }
   }, [account?.moved])
 
-  if (account || (myInfo && localAccount !== undefined)) {
+  if (account || (myInfo && instanceAccount)) {
     return (
       <View
         style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
@@ -60,8 +63,8 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
           ]}
           selectable
         >
-          @{myInfo ? localAccount?.acct : account?.acct}
-          {myInfo ? `@${localUri}` : null}
+          @{myInfo ? instanceAccount.acct : account?.acct}
+          {myInfo ? `@${instanceUri}` : null}
         </Text>
         {movedContent}
         {account?.locked ? (

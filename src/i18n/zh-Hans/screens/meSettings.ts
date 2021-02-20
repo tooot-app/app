@@ -1,6 +1,9 @@
 export default {
   heading: '设置',
   content: {
+    notification: {
+      heading: '$t(meSettingsNotification:heading)'
+    },
     language: {
       heading: '切换语言',
       options: {
@@ -25,10 +28,6 @@ export default {
         external: '浏览器打开',
         cancel: '$t(common:buttons.cancel)'
       }
-    },
-    remote: {
-      heading: '$t(meSettingsUpdateRemote:heading)',
-      description: '外站只能浏览不能玩'
     },
     cache: {
       heading: '清空缓存',

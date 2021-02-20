@@ -1,17 +1,19 @@
 import Button from '@components/Button'
 import haptics from '@root/components/haptics'
-import { localRemoveInstance } from '@utils/slices/instancesSlice'
+import removeInstance from '@utils/slices/instances/remove'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
+  const instanceActive = useSelector(getInstanceActive)
 
   return (
     <Button
@@ -33,7 +35,7 @@ const Logout: React.FC = () => {
               onPress: () => {
                 haptics('Success')
                 queryClient.clear()
-                dispatch(localRemoveInstance())
+                dispatch(removeInstance(instanceActive))
               }
             },
             {

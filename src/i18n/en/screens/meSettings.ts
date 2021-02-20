@@ -26,10 +26,6 @@ export default {
         cancel: '$t(common:buttons.cancel)'
       }
     },
-    remote: {
-      heading: '$t(meSettingsUpdateRemote:heading)',
-      description: 'External instance can only be read'
-    },
     cache: {
       heading: 'Clear cache',
       empty: 'Cache empty'

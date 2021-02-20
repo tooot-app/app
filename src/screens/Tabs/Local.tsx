@@ -3,7 +3,7 @@ import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { ScreenTabsParamList } from '@screens/Tabs'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator<Nav.TabLocalStackParamList>()
 const TabLocal = React.memo(
   ({ navigation }: TabLocalProp) => {
     const { t } = useTranslation('local')
-    const localActiveIndex = useSelector(getLocalActiveIndex)
+    const instanceActive = useSelector(getInstanceActive)
 
     const screenOptions = useMemo(
       () => ({
@@ -49,7 +49,7 @@ const TabLocal = React.memo(
       []
     )
     const children = useCallback(
-      () => (localActiveIndex !== null ? <Timeline page='Following' /> : null),
+      () => (instanceActive !== -1 ? <Timeline page='Following' /> : null),
       []
     )
 

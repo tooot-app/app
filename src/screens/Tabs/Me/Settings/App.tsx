@@ -2,7 +2,9 @@ import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useNavigation } from '@react-navigation/native'
 import i18n from '@root/i18n/i18n'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import {
   changeBrowser,
   changeLanguage,
@@ -17,17 +19,28 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SettingsApp: React.FC = () => {
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { setTheme } = useTheme()
   const { t } = useTranslation('meSettings')
 
+  const instanceActive = useSelector(getInstanceActive)
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
 
   return (
     <MenuContainer>
+      {instanceActive !== -1 ? (
+        <MenuRow
+          title={t('content.notification.heading')}
+          iconBack='ChevronRight'
+          onPress={() => {
+            navigation.navigate('Tab-Me-Settings-Notification')
+          }}
+        />
+      ) : null}
       <MenuRow
         title={t('content.language.heading')}
         content={t(`content.language.options.${settingsLanguage}`)}

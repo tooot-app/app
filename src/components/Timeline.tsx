@@ -1,7 +1,7 @@
 import ComponentSeparator from '@components/Separator'
 import { useNavigation, useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
@@ -54,7 +54,7 @@ const Timeline: React.FC<Props> = ({
   const { theme } = useTheme()
 
   // Update timeline when account switched
-  useSelector(getLocalActiveIndex)
+  useSelector(getInstanceActive)
 
   const queryKeyParams = {
     page,

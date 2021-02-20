@@ -117,7 +117,7 @@ declare namespace Nav {
       title: Mastodon.List['title']
     }
     'Tab-Me-Settings': undefined
-    'Tab-Me-Settings-UpdateRemote': undefined
+    'Tab-Me-Settings-Notification': undefined
     'Tab-Me-Switch': undefined
   } & TabSharedStackParamList
 }

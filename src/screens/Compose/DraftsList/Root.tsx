@@ -1,9 +1,12 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { useNavigation } from '@react-navigation/native'
-import { getLocalDrafts, removeLocalDraft } from '@utils/slices/instancesSlice'
+import {
+  getInstanceDrafts,
+  removeInstanceDraft
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useState } from 'react'
@@ -34,7 +37,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const { mode, theme } = useTheme()
-  const localDrafts = useSelector(getLocalDrafts)?.filter(
+  const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp
   )
 
@@ -44,7 +47,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const [checkingAttachments, setCheckingAttachments] = useState(false)
 
   const removeDraft = useCallback(ts => {
-    dispatch(removeLocalDraft(ts))
+    dispatch(removeInstanceDraft(ts))
   }, [])
 
   const renderItem = useCallback(
@@ -58,9 +61,8 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
             let tempUploads: ExtendedAttachment[] = []
             if (item.attachments && item.attachments.uploads.length) {
               for (const attachment of item.attachments.uploads) {
-                await client<Mastodon.Attachment>({
+                await apiInstance<Mastodon.Attachment>({
                   method: 'get',
-                  instance: 'local',
                   url: `media/${attachment.remote?.id}`
                 })
                   .then(res => {
@@ -92,7 +94,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
               type: 'loadDraft',
               payload: tempDraft
             })
-            dispatch(removeLocalDraft(item.timestamp))
+            dispatch(removeInstanceDraft(item.timestamp))
             navigation.goBack()
           }}
         >
@@ -156,14 +158,14 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
     <>
       <PanGestureHandler enabled={true}>
         <SwipeListView
-          data={localDrafts}
+          data={instanceDrafts}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
           disableRightSwipe={true}
           rightOpenValue={-actionWidth}
           previewRowKey={
-            localDrafts?.length
-              ? localDrafts[0].timestamp.toString()
+            instanceDrafts?.length
+              ? instanceDrafts[0].timestamp.toString()
               : undefined
           }
           // previewDuration={350}

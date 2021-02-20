@@ -1,18 +1,21 @@
-import client from '@api/client'
+import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Instance', { instanceDomain?: string }]
+export type QueryKey = ['Instance', { domain?: string }]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
-  const { instanceDomain } = queryKey[1]
+const queryFunction = async ({ queryKey }: { queryKey: QueryKey }) => {
+  const { domain } = queryKey[1]
+  if (!domain) {
+    return Promise.reject()
+  }
 
-  return client<Mastodon.Instance>({
+  const res = await apiGeneral<Mastodon.Instance>({
     method: 'get',
-    instance: 'remote',
-    instanceDomain,
-    url: `instance`
-  }).then(res => res.body)
+    domain: domain,
+    url: `api/v1/instance`
+  })
+  return res.body
 }
 
 const useInstanceQuery = <

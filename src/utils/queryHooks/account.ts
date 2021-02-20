@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
@@ -7,9 +7,8 @@ export type QueryKey = ['Account', { id: Mastodon.Account['id'] }]
 const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   const { id } = queryKey[1]
 
-  return client<Mastodon.Account>({
+  return apiInstance<Mastodon.Account>({
     method: 'get',
-    instance: 'local',
     url: `accounts/${id}`
   }).then(res => res.body)
 }

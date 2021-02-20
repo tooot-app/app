@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
@@ -91,9 +91,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
             formData.append('focus', `${focus.value.x},${focus.value.y}`)
           }
 
-          client<Mastodon.Attachment>({
+          apiInstance<Mastodon.Attachment>({
             method: 'put',
-            instance: 'local',
             url: `media/${theAttachment.id}`,
             body: formData
           })
