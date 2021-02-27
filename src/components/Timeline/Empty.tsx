@@ -1,72 +1,79 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
-import { QueryStatus } from 'react-query'
 
 export interface Props {
-  status: QueryStatus
-  refetch: () => void
+  queryKey: QueryKeyTimeline
 }
 
-const TimelineEmpty: React.FC<Props> = ({ status, refetch }) => {
-  const { mode, theme } = useTheme()
-  const { t, i18n } = useTranslation('componentTimeline')
+const TimelineEmpty = React.memo(
+  ({ queryKey }: Props) => {
+    const { status, refetch } = useTimelineQuery({
+      ...queryKey[1],
+      options: { notifyOnChangeProps: ['status'] }
+    })
 
-  const children = useMemo(() => {
-    switch (status) {
-      case 'loading':
-        return (
-          <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
-        )
-      case 'error':
-        return (
-          <>
-            <Icon
-              name='Frown'
-              size={StyleConstants.Font.Size.L}
-              color={theme.primary}
-            />
-            <Text style={[styles.error, { color: theme.primary }]}>
-              {t('empty.error.message')}
-            </Text>
-            <Button
-              type='text'
-              content={t('empty.error.button')}
-              onPress={() => {
-                analytics('timeline_error_press_refetch')
-                refetch()
-              }}
-            />
-          </>
-        )
-      case 'success':
-        return (
-          <>
-            <Icon
-              name='Smartphone'
-              size={StyleConstants.Font.Size.L}
-              color={theme.primary}
-            />
-            <Text style={[styles.error, { color: theme.primary }]}>
-              {t('empty.success.message')}
-            </Text>
-          </>
-        )
-    }
-  }, [mode, i18n.language, status])
-  return (
-    <View
-      style={[styles.base, { backgroundColor: theme.background }]}
-      children={children}
-    />
-  )
-}
+    const { mode, theme } = useTheme()
+    const { t, i18n } = useTranslation('componentTimeline')
+
+    const children = useMemo(() => {
+      switch (status) {
+        case 'loading':
+          return (
+            <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
+          )
+        case 'error':
+          return (
+            <>
+              <Icon
+                name='Frown'
+                size={StyleConstants.Font.Size.L}
+                color={theme.primary}
+              />
+              <Text style={[styles.error, { color: theme.primary }]}>
+                {t('empty.error.message')}
+              </Text>
+              <Button
+                type='text'
+                content={t('empty.error.button')}
+                onPress={() => {
+                  analytics('timeline_error_press_refetch')
+                  refetch()
+                }}
+              />
+            </>
+          )
+        case 'success':
+          return (
+            <>
+              <Icon
+                name='Smartphone'
+                size={StyleConstants.Font.Size.L}
+                color={theme.primary}
+              />
+              <Text style={[styles.error, { color: theme.primary }]}>
+                {t('empty.success.message')}
+              </Text>
+            </>
+          )
+      }
+    }, [mode, i18n.language, status])
+    return (
+      <View
+        style={[styles.base, { backgroundColor: theme.background }]}
+        children={children}
+      />
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {

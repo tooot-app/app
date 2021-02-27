@@ -1,17 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { RootState } from '@root/store'
+import * as Notifications from 'expo-notifications'
 import { Instance } from '../instancesSlice'
-import pushDisable from './push/disable'
-import pushEnable from './push/enable'
+import pushRegister from './push/register'
+import pushUnregister from './push/unregister'
 
-export const updatePush = createAsyncThunk(
+export const updateInstancePush = createAsyncThunk(
   'instances/updatePush',
   async (
-    enable: boolean
-  ): Promise<Instance['push']['subscription'] | boolean> => {
-    if (enable) {
-      return pushEnable()
+    disable: boolean,
+    { getState }
+  ): Promise<Instance['push']['keys'] | undefined> => {
+    const state = getState() as RootState
+    const expoToken = (
+      await Notifications.getExpoPushTokenAsync({
+        experienceId: '@xmflsct/tooot'
+      })
+    ).data
+
+    if (disable) {
+      return await pushRegister(state, expoToken)
     } else {
-      return pushDisable()
+      return await pushUnregister(state, expoToken)
     }
   }
 )

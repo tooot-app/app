@@ -1,9 +1,12 @@
 import Timeline from '@components/Timeline'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React from 'react'
 
 const ScreenMeFavourites = React.memo(
   () => {
-    return <Timeline page='Favourites' />
+    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Favourites' }]
+
+    return <Timeline queryKey={queryKey} />
   },
   () => true
 )

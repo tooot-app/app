@@ -17,14 +17,16 @@ import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import push from './startup/push'
 
-if (Platform.OS === 'android') {
-  LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-}
+Platform.select({
+  android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+})
 
 dev()
 sentry()
 audio()
+push()
 onlineStatus()
 
 log('log', 'react-query', 'initializing')

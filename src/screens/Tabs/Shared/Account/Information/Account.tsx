@@ -63,7 +63,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
           ]}
           selectable
         >
-          @{myInfo ? instanceAccount.acct : account?.acct}
+          @{myInfo ? instanceAccount?.acct : account?.acct}
           {myInfo ? `@${instanceUri}` : null}
         </Text>
         {movedContent}

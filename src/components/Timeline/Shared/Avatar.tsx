@@ -11,33 +11,36 @@ export interface Props {
   account: Mastodon.Account
 }
 
-const TimelineAvatar: React.FC<Props> = ({ queryKey, account }) => {
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
-  // Need to fix go back root
-  const onPress = useCallback(() => {
-    analytics('timeline_shared_avatar_press', {
-      page: queryKey && queryKey[1].page
-    })
-    queryKey && navigation.push('Tab-Shared-Account', { account })
-  }, [])
+const TimelineAvatar = React.memo(
+  ({ queryKey, account }: Props) => {
+    const navigation = useNavigation<
+      StackNavigationProp<Nav.TabLocalStackParamList>
+    >()
+    // Need to fix go back root
+    const onPress = useCallback(() => {
+      analytics('timeline_shared_avatar_press', {
+        page: queryKey && queryKey[1].page
+      })
+      queryKey && navigation.push('Tab-Shared-Account', { account })
+    }, [])
 
-  return (
-    <GracefullyImage
-      onPress={onPress}
-      uri={{ original: account.avatar_static }}
-      dimension={{
-        width: StyleConstants.Avatar.M,
-        height: StyleConstants.Avatar.M
-      }}
-      style={{
-        borderRadius: 4,
-        overflow: 'hidden',
-        marginRight: StyleConstants.Spacing.S
-      }}
-    />
-  )
-}
+    return (
+      <GracefullyImage
+        onPress={onPress}
+        uri={{ original: account.avatar_static }}
+        dimension={{
+          width: StyleConstants.Avatar.M,
+          height: StyleConstants.Avatar.M
+        }}
+        style={{
+          borderRadius: 4,
+          overflow: 'hidden',
+          marginRight: StyleConstants.Spacing.S
+        }}
+      />
+    )
+  },
+  () => true
+)
 
-export default React.memo(TimelineAvatar, () => true)
+export default TimelineAvatar

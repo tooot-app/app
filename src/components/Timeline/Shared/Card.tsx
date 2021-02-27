@@ -10,53 +10,56 @@ export interface Props {
   card: Mastodon.Card
 }
 
-const TimelineCard: React.FC<Props> = ({ card }) => {
-  const { theme } = useTheme()
+const TimelineCard = React.memo(
+  ({ card }: Props) => {
+    const { theme } = useTheme()
 
-  return (
-    <Pressable
-      style={[styles.card, { borderColor: theme.border }]}
-      onPress={async () => {
-        analytics('timeline_shared_card_press')
-        await openLink(card.url)
-      }}
-      testID='base'
-    >
-      {card.image && (
-        <GracefullyImage
-          uri={{ original: card.image }}
-          blurhash={card.blurhash}
-          style={styles.left}
-          imageStyle={styles.image}
-        />
-      )}
-      <View style={styles.right}>
-        <Text
-          numberOfLines={2}
-          style={[styles.rightTitle, { color: theme.primary }]}
-          testID='title'
-        >
-          {card.title}
-        </Text>
-        {card.description ? (
+    return (
+      <Pressable
+        style={[styles.card, { borderColor: theme.border }]}
+        onPress={async () => {
+          analytics('timeline_shared_card_press')
+          await openLink(card.url)
+        }}
+        testID='base'
+      >
+        {card.image && (
+          <GracefullyImage
+            uri={{ original: card.image }}
+            blurhash={card.blurhash}
+            style={styles.left}
+            imageStyle={styles.image}
+          />
+        )}
+        <View style={styles.right}>
+          <Text
+            numberOfLines={2}
+            style={[styles.rightTitle, { color: theme.primary }]}
+            testID='title'
+          >
+            {card.title}
+          </Text>
+          {card.description ? (
+            <Text
+              numberOfLines={1}
+              style={[styles.rightDescription, { color: theme.primary }]}
+              testID='description'
+            >
+              {card.description}
+            </Text>
+          ) : null}
           <Text
             numberOfLines={1}
-            style={[styles.rightDescription, { color: theme.primary }]}
-            testID='description'
+            style={[styles.rightLink, { color: theme.secondary }]}
           >
-            {card.description}
+            {card.url}
           </Text>
-        ) : null}
-        <Text
-          numberOfLines={1}
-          style={[styles.rightLink, { color: theme.secondary }]}
-        >
-          {card.url}
-        </Text>
-      </View>
-    </Pressable>
-  )
-}
+        </View>
+      </Pressable>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   card: {
@@ -93,4 +96,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(TimelineCard, () => true)
+export default TimelineCard

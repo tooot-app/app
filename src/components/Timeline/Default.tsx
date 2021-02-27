@@ -41,10 +41,7 @@ const TimelineDefault: React.FC<Props> = ({
   pinned
 }) => {
   const { theme } = useTheme()
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.id === next?.id
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => true)
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()

@@ -1,7 +1,9 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
+import TimelineDefault from '@components/Timeline/Default'
 import { useAccountQuery } from '@utils/queryHooks/account'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -67,15 +69,24 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
     )
   }, [data])
 
+  const queryKey: QueryKeyTimeline = [
+    'Timeline',
+    { page: 'Account_Default', account: account.id }
+  ]
+  const renderItem = useCallback(
+    ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
+    []
+  )
+
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
       <AccountNav scrollY={scrollY} account={data} />
 
       <Timeline
-        page='Account_Default'
-        account={account.id}
+        queryKey={queryKey}
         disableRefresh
         customProps={{
+          renderItem,
           onScroll,
           scrollEventThrottle: 16,
           ListHeaderComponent

@@ -1,6 +1,8 @@
 import { HeaderCenter } from '@components/Header'
 import Timeline from '@components/Timeline'
+import TimelineNotifications from '@components/Timeline/Notifications'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateInstanceNotification } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,11 +30,20 @@ const TabNotifications = React.memo(
       }),
       []
     )
+
+    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
+    const renderItem = useCallback(
+      ({ item }) => (
+        <TimelineNotifications notification={item} queryKey={queryKey} />
+      ),
+      []
+    )
     const children = useCallback(
       ({ navigation }) => (
         <Timeline
-          page='Notifications'
+          queryKey={queryKey}
           customProps={{
+            renderItem,
             viewabilityConfigCallbackPairs: [
               {
                 onViewableItemsChanged: ({

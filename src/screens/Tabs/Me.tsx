@@ -12,7 +12,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import ScreenMeSettingsNotification from './Me/Notification'
+import ScreenMeSettingsPush from './Me/Push'
 
 const Stack = createNativeStackNavigator<Nav.TabMeStackParamList>()
 
@@ -116,13 +116,13 @@ const TabMe = React.memo(
           })}
         />
         <Stack.Screen
-          name='Tab-Me-Settings-Notification'
-          component={ScreenMeSettingsNotification}
+          name='Tab-Me-Settings-Push'
+          component={ScreenMeSettingsPush}
           options={({ navigation }: any) => ({
-            headerTitle: t('meSettingsNotification:heading'),
+            headerTitle: t('meSettingsPush:heading'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meSettingsNotification:heading')} />
+                <HeaderCenter content={t('meSettingsPush:heading')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />

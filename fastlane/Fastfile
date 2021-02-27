@@ -152,7 +152,7 @@ lane :build do
   else
     puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
     build_ios
-    build_android
+    # build_android
     case ENVIRONMENT
     when "staging"
       github_release(prerelease: true)

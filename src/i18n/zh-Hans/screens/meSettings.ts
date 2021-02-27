@@ -1,8 +1,12 @@
 export default {
   heading: '设置',
   content: {
-    notification: {
-      heading: '$t(meSettingsNotification:heading)'
+    push: {
+      heading: '$t(meSettingsPush:heading)',
+      content: {
+        enabled: '已开启',
+        disabled: '已关闭'
+      }
     },
     language: {
       heading: '切换语言',

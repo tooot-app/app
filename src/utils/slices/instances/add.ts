@@ -75,8 +75,16 @@ const addInstance = createAsyncThunk(
           latestTime: undefined
         },
         push: {
-          loading: false,
-          enabled: false
+          global: { loading: false, value: false },
+          decode: { loading: false, value: false },
+          alerts: {
+            follow: { loading: false, value: true },
+            favourite: { loading: false, value: true },
+            reblog: { loading: false, value: true },
+            mention: { loading: false, value: true },
+            poll: { loading: false, value: true }
+          },
+          keys: undefined
         },
         drafts: []
       }

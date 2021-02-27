@@ -71,7 +71,7 @@ declare namespace Nav {
     'Tab-Local': undefined
     'Tab-Public': undefined
     'Tab-Compose': undefined
-    'Tab-Notifications': undefined
+    'Tab-Notifications': { id?: Mastodon.Notification['id'] }
     'Tab-Me': undefined
   }
 
@@ -117,7 +117,7 @@ declare namespace Nav {
       title: Mastodon.List['title']
     }
     'Tab-Me-Settings': undefined
-    'Tab-Me-Settings-Notification': undefined
+    'Tab-Me-Settings-Push': undefined
     'Tab-Me-Switch': undefined
   } & TabSharedStackParamList
 }

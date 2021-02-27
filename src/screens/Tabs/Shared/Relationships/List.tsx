@@ -1,9 +1,10 @@
 import ComponentAccount from '@components/Account'
 import ComponentSeparator from '@components/Separator'
-import TimelineEmpty from '@components/Timeline/Empty'
-import TimelineEnd from '@components/Timeline/End'
 import { useScrollToTop } from '@react-navigation/native'
-import { useRelationshipsQuery } from '@utils/queryHooks/relationships'
+import {
+  QueryKeyRelationships,
+  useRelationshipsQuery
+} from '@utils/queryHooks/relationships'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RefreshControl, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -14,17 +15,15 @@ export interface Props {
 }
 
 const RelationshipsList: React.FC<Props> = ({ id, type }) => {
+  const queryKey: QueryKeyRelationships = ['Relationships', { type, id }]
   const {
-    status,
     data,
     isFetching,
     refetch,
-    hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useRelationshipsQuery({
-    type,
-    id,
+    ...queryKey[1],
     options: {
       getPreviousPageParam: firstPage =>
         firstPage.links?.prev && { since_id: firstPage.links.next },
@@ -41,17 +40,9 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
     ({ item }) => <ComponentAccount account={item} origin='relationship' />,
     []
   )
-  const flItemEmptyComponent = useMemo(
-    () => <TimelineEmpty status={status} refetch={refetch} />,
-    [status]
-  )
   const onEndReached = useCallback(
     () => !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
-  )
-  const ListFooterComponent = useCallback(
-    () => <TimelineEnd hasNextPage={hasNextPage} />,
-    [hasNextPage]
   )
   const refreshControl = useMemo(
     () => (
@@ -74,8 +65,6 @@ const RelationshipsList: React.FC<Props> = ({ id, type }) => {
       onEndReached={onEndReached}
       keyExtractor={keyExtractor}
       onEndReachedThreshold={0.75}
-      ListFooterComponent={ListFooterComponent}
-      ListEmptyComponent={flItemEmptyComponent}
       refreshControl={refreshControl}
       ItemSeparatorComponent={ComponentSeparator}
       maintainVisibleContentPosition={{

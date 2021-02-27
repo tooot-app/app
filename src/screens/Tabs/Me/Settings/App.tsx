@@ -4,7 +4,10 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import i18n from '@root/i18n/i18n'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import {
+  getInstanceActive,
+  getInstancePush
+} from '@utils/slices/instancesSlice'
 import {
   changeBrowser,
   changeLanguage,
@@ -29,15 +32,24 @@ const SettingsApp: React.FC = () => {
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const instancePush = useSelector(
+    getInstancePush,
+    (prev, next) => prev?.global.value === next?.global.value
+  )
 
   return (
     <MenuContainer>
       {instanceActive !== -1 ? (
         <MenuRow
-          title={t('content.notification.heading')}
+          title={t('content.push.heading')}
+          content={
+            instancePush?.global.value
+              ? t('content.push.content.enabled')
+              : t('content.push.content.disabled')
+          }
           iconBack='ChevronRight'
           onPress={() => {
-            navigation.navigate('Tab-Me-Settings-Notification')
+            navigation.navigate('Tab-Me-Settings-Push')
           }}
         />
       ) : null}

@@ -1,6 +1,13 @@
 export default {
   heading: 'Settings',
   content: {
+    push: {
+      heading: '$t(meSettingsPush:heading)',
+      content: {
+        enabled: 'Enabled',
+        disabled: 'Disabled'
+      }
+    },
     language: {
       heading: 'Language',
       options: {

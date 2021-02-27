@@ -2,9 +2,15 @@ import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useMemo } from 'react'
-import { Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import {
+  Image,
+  Pressable,
+  SectionList,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import ComposeContext from '../../utils/createContext'
 import updateText from '../../updateText'
 
@@ -25,7 +31,12 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
     haptics('Light')
   }, [composeState])
   const children = useMemo(
-    () => <FastImage source={{ uri: emoji.url }} style={styles.emoji} />,
+    () => (
+      <Image
+        source={{ uri: emoji.url, cache: 'force-cache' }}
+        style={styles.emoji}
+      />
+    ),
     []
   )
   return (

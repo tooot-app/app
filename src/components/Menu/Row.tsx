@@ -57,13 +57,9 @@ const MenuRow: React.FC<Props> = ({
   return (
     <View style={styles.base}>
       <TapGestureHandler
-        onHandlerStateChange={({ nativeEvent }) => {
-          if (nativeEvent.state === State.ACTIVE) {
-            if (!loading) {
-              onPress && onPress()
-            }
-          }
-        }}
+        onHandlerStateChange={({ nativeEvent }) =>
+          nativeEvent.state === State.ACTIVE && !loading && onPress && onPress()
+        }
       >
         <View style={styles.core}>
           <View style={styles.front}>
@@ -82,11 +78,6 @@ const MenuRow: React.FC<Props> = ({
               >
                 {title}
               </Text>
-              {description ? (
-                <Text style={[styles.description, { color: theme.secondary }]}>
-                  {description}
-                </Text>
-              ) : null}
             </View>
           </View>
 
@@ -94,21 +85,18 @@ const MenuRow: React.FC<Props> = ({
             <View style={styles.back}>
               {content ? (
                 typeof content === 'string' ? (
-                  <>
-                    <Text
-                      style={[
-                        styles.content,
-                        {
-                          color: theme.secondary,
-                          opacity: !iconBack && loading ? 0 : 1
-                        }
-                      ]}
-                      numberOfLines={1}
-                    >
-                      {content}
-                    </Text>
-                    {loading && !iconBack && loadingSpinkit}
-                  </>
+                  <Text
+                    style={[
+                      styles.content,
+                      {
+                        color: theme.secondary,
+                        opacity: !iconBack && loading ? 0 : 1
+                      }
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {content}
+                  </Text>
                 ) : (
                   content
                 )
@@ -119,23 +107,27 @@ const MenuRow: React.FC<Props> = ({
                   onValueChange={switchOnValueChange}
                   disabled={switchDisabled}
                   trackColor={{ true: theme.blue, false: theme.disabled }}
+                  style={{ opacity: loading ? 0 : 1 }}
                 />
               ) : null}
               {iconBack ? (
-                <>
-                  <Icon
-                    name={iconBack}
-                    size={StyleConstants.Font.Size.L}
-                    color={theme[iconBackColor]}
-                    style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
-                  />
-                  {loading && loadingSpinkit}
-                </>
+                <Icon
+                  name={iconBack}
+                  size={StyleConstants.Font.Size.L}
+                  color={theme[iconBackColor]}
+                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                />
               ) : null}
+              {loading && loadingSpinkit}
             </View>
           ) : null}
         </View>
       </TapGestureHandler>
+      {description ? (
+        <Text style={[styles.description, { color: theme.secondary }]}>
+          {description}
+        </Text>
+      ) : null}
     </View>
   )
 }
@@ -147,9 +139,7 @@ const styles = StyleSheet.create({
   core: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   },
   front: {
     flex: 2,
@@ -174,7 +164,8 @@ const styles = StyleSheet.create({
   },
   description: {
     ...StyleConstants.FontStyle.S,
-    marginTop: StyleConstants.Spacing.XS
+    marginTop: StyleConstants.Spacing.XS,
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   },
   content: {
     ...StyleConstants.FontStyle.M

@@ -1,4 +1,19 @@
 {
+  "name": "tooot",
+  "versions": {
+    "native": "210201",
+    "major": 0,
+    "minor": 5,
+    "patch": 0,
+    "expo": "40.0.0"
+  },
+  "description": "tooot app for Mastodon",
+  "author": "xmflsct <me@xmflsct.com>",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tooot-app/app.git"
+  },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -65,7 +80,7 @@
     "react-native-tab-view-viewpager-adapter": "^1.1.0",
     "react-native-toast-message": "^1.4.3",
     "react-native-unimodules": "~0.12.0",
-    "react-query": "^3.9.7",
+    "react-query": "^3.12.0",
     "react-redux": "^7.2.2",
     "react-timeago": "^5.2.0",
     "reconnecting-websocket": "^4.4.0",
@@ -104,14 +119,5 @@
     "react-navigation-stack": "^2.10.2",
     "react-test-renderer": "^16.13.1",
     "typescript": "~4.1.3"
-  },
-  "private": true,
-  "name": "tooot",
-  "versions": {
-    "native": "210201",
-    "major": 0,
-    "minor": 5,
-    "patch": 0,
-    "expo": "40.0.0"
   }
 }

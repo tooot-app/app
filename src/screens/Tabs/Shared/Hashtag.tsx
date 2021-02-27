@@ -1,5 +1,7 @@
 import Timeline from '@components/Timeline'
-import React from 'react'
+import TimelineDefault from '@components/Timeline/Default'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import React, { useCallback } from 'react'
 import { SharedHashtagProp } from './sharedScreens'
 
 const TabSharedHashtag: React.FC<SharedHashtagProp> = ({
@@ -7,7 +9,12 @@ const TabSharedHashtag: React.FC<SharedHashtagProp> = ({
     params: { hashtag }
   }
 }) => {
-  return <Timeline page='Hashtag' hashtag={hashtag} />
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
+  const renderItem = useCallback(
+    ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
+    []
+  )
+  return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
 }
 
 export default TabSharedHashtag

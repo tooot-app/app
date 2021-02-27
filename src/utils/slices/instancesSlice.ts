@@ -6,7 +6,11 @@ import { findIndex } from 'lodash'
 import addInstance from './instances/add'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
-import { updatePush } from './instances/updatePush'
+import { updateInstancePush } from './instances/updatePush'
+import { updateInstancePushAlert } from './instances/updatePushAlert'
+import { updateInstancePushDecode } from './instances/updatePushDecode'
+
+export const PUSH_SERVER = __DEV__ ? 'testpush.tooot.app' : 'push.tooot.app'
 
 export type Instance = {
   active: boolean
@@ -29,11 +33,65 @@ export type Instance = {
     readTime?: Mastodon.Notification['created_at']
     latestTime?: Mastodon.Notification['created_at']
   }
-  push: {
-    loading: boolean
-    enabled: boolean
-    subscription?: Mastodon.PushSubscription
-  }
+  push:
+    | {
+        global: { loading: boolean; value: true }
+        decode: { loading: boolean; value: boolean }
+        alerts: {
+          follow: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['follow']
+          }
+          favourite: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['favourite']
+          }
+          reblog: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['reblog']
+          }
+          mention: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['mention']
+          }
+          poll: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['poll']
+          }
+        }
+        keys: {
+          auth: string
+          public: string
+          private: string
+        }
+      }
+    | {
+        global: { loading: boolean; value: false }
+        decode: { loading: boolean; value: boolean }
+        alerts: {
+          follow: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['follow']
+          }
+          favourite: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['favourite']
+          }
+          reblog: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['reblog']
+          }
+          mention: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['mention']
+          }
+          poll: {
+            loading: boolean
+            value: Mastodon.PushSubscription['alerts']['poll']
+          }
+        }
+        keys: undefined
+      }
   drafts: ComposeStateDraft[]
 }
 
@@ -119,7 +177,6 @@ const instancesSlice = createSlice({
             state.instances.push(action.payload.data)
             break
           case 'overwrite':
-            console.log('overwriting')
             state.instances = state.instances.map(instance => {
               if (
                 instance.url === action.payload.data.url &&
@@ -152,6 +209,7 @@ const instancesSlice = createSlice({
         console.error(action.error)
       })
 
+      // Update Instance Account Preferences
       .addCase(updateAccountPreferences.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].account.preferences = action.payload
@@ -160,14 +218,56 @@ const instancesSlice = createSlice({
         console.error(action.error)
       })
 
-      .addCase(updatePush.fulfilled, (state, action) => {
+      // Update Instance Push Global
+      .addCase(updateInstancePush.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        if (typeof action.payload === 'boolean') {
-          state.instances[activeIndex].push.enabled = action.payload
-        } else {
-          state.instances[activeIndex].push.enabled = true
-          state.instances[activeIndex].push.subscription = action.payload
-        }
+        state.instances[activeIndex].push.global.loading = false
+        state.instances[activeIndex].push.global.value = action.meta.arg
+        state.instances[activeIndex].push.keys = action.payload
+      })
+      .addCase(updateInstancePush.rejected, state => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.global.loading = false
+      })
+      .addCase(updateInstancePush.pending, state => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.global.loading = true
+      })
+
+      // Update Instance Push Decode
+      .addCase(updateInstancePushDecode.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.decode.loading = false
+        state.instances[activeIndex].push.decode.value = action.payload
+      })
+      .addCase(updateInstancePushDecode.rejected, state => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.decode.loading = false
+      })
+      .addCase(updateInstancePushDecode.pending, state => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.decode.loading = true
+      })
+
+      // Update Instance Push Individual Alert
+      .addCase(updateInstancePushAlert.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.alerts[
+          action.meta.arg.changed
+        ].loading = false
+        state.instances[activeIndex].push.alerts = action.payload
+      })
+      .addCase(updateInstancePushAlert.rejected, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.alerts[
+          action.meta.arg.changed
+        ].loading = false
+      })
+      .addCase(updateInstancePushAlert.pending, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].push.alerts[
+          action.meta.arg.changed
+        ].loading = true
       })
   }
 })
@@ -215,6 +315,11 @@ export const getInstanceNotification = ({
 }: RootState) => {
   const instanceActive = findInstanceActive(instances)
   return instanceActive !== -1 ? instances[instanceActive].notification : null
+}
+
+export const getInstancePush = ({ instances: { instances } }: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1 ? instances[instanceActive].push : null
 }
 
 export const getInstanceDrafts = ({ instances: { instances } }: RootState) => {

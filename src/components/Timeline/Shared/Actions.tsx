@@ -56,7 +56,10 @@ const TimelineActions: React.FC<Props> = ({
           theParams.payload.currentValue === true)
       ) {
         queryClient.invalidateQueries(queryKey)
-      } else if (theParams.payload.property === 'reblogged') {
+      } else if (
+        theParams.payload.property === 'reblogged' &&
+        queryKey[1].page !== 'Following'
+      ) {
         // When reblogged, update cache of following page
         const tempQueryKey: QueryKeyTimeline = [
           'Timeline',

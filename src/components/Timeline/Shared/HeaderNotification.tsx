@@ -20,98 +20,98 @@ export interface Props {
   notification: Mastodon.Notification
 }
 
-const TimelineHeaderNotification: React.FC<Props> = ({
-  queryKey,
-  notification
-}) => {
-  const navigation = useNavigation()
-  const { theme } = useTheme()
+const TimelineHeaderNotification = React.memo(
+  ({ queryKey, notification }: Props) => {
+    const navigation = useNavigation()
+    const { theme } = useTheme()
 
-  const actions = useMemo(() => {
-    switch (notification.type) {
-      case 'follow':
-        return <RelationshipOutgoing id={notification.account.id} />
-      case 'follow_request':
-        return <RelationshipIncoming id={notification.account.id} />
-      default:
-        if (notification.status) {
-          return (
-            <Pressable
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                paddingBottom: StyleConstants.Spacing.S
-              }}
-              onPress={() =>
-                navigation.navigate('Screen-Actions', {
-                  queryKey,
-                  status: notification.status,
-                  url: notification.status?.url || notification.status?.uri,
-                  type: 'status'
-                })
-              }
-              children={
-                <Icon
-                  name='MoreHorizontal'
-                  color={theme.secondary}
-                  size={StyleConstants.Font.Size.L}
-                />
-              }
+    const actions = useMemo(() => {
+      switch (notification.type) {
+        case 'follow':
+          return <RelationshipOutgoing id={notification.account.id} />
+        case 'follow_request':
+          return <RelationshipIncoming id={notification.account.id} />
+        default:
+          if (notification.status) {
+            return (
+              <Pressable
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  paddingBottom: StyleConstants.Spacing.S
+                }}
+                onPress={() =>
+                  navigation.navigate('Screen-Actions', {
+                    queryKey,
+                    status: notification.status,
+                    url: notification.status?.url || notification.status?.uri,
+                    type: 'status'
+                  })
+                }
+                children={
+                  <Icon
+                    name='MoreHorizontal'
+                    color={theme.secondary}
+                    size={StyleConstants.Font.Size.L}
+                  />
+                }
+              />
+            )
+          }
+      }
+    }, [notification.type])
+
+    return (
+      <View style={styles.base}>
+        <View
+          style={{
+            flex:
+              notification.type === 'follow' ||
+              notification.type === 'follow_request'
+                ? 1
+                : 4
+          }}
+        >
+          <HeaderSharedAccount
+            account={
+              notification.status
+                ? notification.status.account
+                : notification.account
+            }
+            {...((notification.type === 'follow' ||
+              notification.type === 'follow_request') && { withoutName: true })}
+          />
+          <View style={styles.meta}>
+            <HeaderSharedCreated created_at={notification.created_at} />
+            {notification.status?.visibility ? (
+              <HeaderSharedVisibility
+                visibility={notification.status.visibility}
+              />
+            ) : null}
+            <HeaderSharedMuted muted={notification.status?.muted} />
+            <HeaderSharedApplication
+              application={notification.status?.application}
             />
-          )
-        }
-    }
-  }, [notification.type])
+          </View>
+        </View>
 
-  return (
-    <View style={styles.base}>
-      <View
-        style={{
-          flex:
+        <View
+          style={[
+            styles.relationship,
             notification.type === 'follow' ||
             notification.type === 'follow_request'
-              ? 1
-              : 4
-        }}
-      >
-        <HeaderSharedAccount
-          account={
-            notification.status
-              ? notification.status.account
-              : notification.account
-          }
-          {...((notification.type === 'follow' ||
-            notification.type === 'follow_request') && { withoutName: true })}
-        />
-        <View style={styles.meta}>
-          <HeaderSharedCreated created_at={notification.created_at} />
-          {notification.status?.visibility ? (
-            <HeaderSharedVisibility
-              visibility={notification.status.visibility}
-            />
-          ) : null}
-          <HeaderSharedMuted muted={notification.status?.muted} />
-          <HeaderSharedApplication
-            application={notification.status?.application}
-          />
+              ? { flexShrink: 1 }
+              : { flex: 1 }
+          ]}
+        >
+          {actions}
         </View>
       </View>
-
-      <View
-        style={[
-          styles.relationship,
-          notification.type === 'follow' ||
-          notification.type === 'follow_request'
-            ? { flexShrink: 1 }
-            : { flex: 1 }
-        ]}
-      >
-        {actions}
-      </View>
-    </View>
-  )
-}
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(TimelineHeaderNotification, () => true)
+export default TimelineHeaderNotification

@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, Image, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -14,6 +14,21 @@ import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
+
+const prefetchEmojis = (
+  sortedEmojis: { title: string; data: Mastodon.Emoji[] }[]
+) => {
+  let requestedIndex = 0
+  sortedEmojis.map(sorted => {
+    sorted.data.map(emoji => {
+      if (requestedIndex > 40) {
+        return
+      }
+      Image.prefetch(emoji.url)
+      requestedIndex++
+    })
+  })
+}
 
 const ComposeRoot: React.FC = () => {
   const { theme } = useTheme()
@@ -52,6 +67,7 @@ const ComposeRoot: React.FC = () => {
         type: 'emoji',
         payload: { ...composeState.emoji, emojis: sortedEmojis }
       })
+      prefetchEmojis(sortedEmojis)
     }
   }, [emojisData])
 

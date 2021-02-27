@@ -362,7 +362,7 @@ const useTimelineMutation = ({
         let oldData
         params.queryKey && (oldData = queryClient.getQueryData(params.queryKey))
 
-        haptics('Success')
+        haptics('Light')
         switch (params.type) {
           case 'updateStatusProperty':
             updateStatusProperty({ queryClient, ...params })

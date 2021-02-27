@@ -11,53 +11,56 @@ export interface Props {
   disableDetails?: boolean
 }
 
-const TimelineContent: React.FC<Props> = ({
-  status,
-  numberOfLines,
-  highlighted = false,
-  disableDetails = false
-}) => {
-  const { t } = useTranslation('componentTimeline')
+const TimelineContent = React.memo(
+  ({
+    status,
+    numberOfLines,
+    highlighted = false,
+    disableDetails = false
+  }: Props) => {
+    const { t } = useTranslation('componentTimeline')
 
-  return (
-    <>
-      {status.spoiler_text ? (
-        <>
-          <View style={{ marginBottom: StyleConstants.Font.Size.M }}>
+    return (
+      <>
+        {status.spoiler_text ? (
+          <>
+            <View style={{ marginBottom: StyleConstants.Font.Size.M }}>
+              <ParseHTML
+                content={status.spoiler_text}
+                size={highlighted ? 'L' : 'M'}
+                emojis={status.emojis}
+                mentions={status.mentions}
+                tags={status.tags}
+                numberOfLines={999}
+                disableDetails={disableDetails}
+              />
+            </View>
             <ParseHTML
-              content={status.spoiler_text}
+              content={status.content}
               size={highlighted ? 'L' : 'M'}
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
-              numberOfLines={999}
+              numberOfLines={0}
+              expandHint={t('shared.content.expandHint')}
               disableDetails={disableDetails}
             />
-          </View>
+          </>
+        ) : (
           <ParseHTML
             content={status.content}
             size={highlighted ? 'L' : 'M'}
             emojis={status.emojis}
             mentions={status.mentions}
             tags={status.tags}
-            numberOfLines={0}
-            expandHint={t('shared.content.expandHint')}
+            numberOfLines={highlighted ? 999 : numberOfLines}
             disableDetails={disableDetails}
           />
-        </>
-      ) : (
-        <ParseHTML
-          content={status.content}
-          size={highlighted ? 'L' : 'M'}
-          emojis={status.emojis}
-          mentions={status.mentions}
-          tags={status.tags}
-          numberOfLines={highlighted ? 999 : numberOfLines}
-          disableDetails={disableDetails}
-        />
-      )}
-    </>
-  )
-}
+        )}
+      </>
+    )
+  },
+  () => true
+)
 
-export default React.memo(TimelineContent, () => true)
+export default TimelineContent

@@ -4,16 +4,29 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { persistor } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { Text } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
+  const { theme } = useTheme()
   const { showActionSheetWithOptions } = useActionSheet()
   const instanceActive = useSelector(getInstanceActive)
-  const instances = useSelector(getInstances)
+  const instances = useSelector(getInstances, () => true)
 
   return (
     <MenuContainer>
+      <Text
+        selectable
+        style={{
+          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+          ...StyleConstants.FontStyle.S,
+          color: theme.primary
+        }}
+      >
+        {instances[instanceActive].token}
+      </Text>
       <MenuRow
         title={'Local active index'}
         content={typeof instanceActive + ' - ' + instanceActive}

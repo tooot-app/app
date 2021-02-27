@@ -24,7 +24,10 @@ const updateStatus = ({
             ? !payload.currentValue
             : true
         if (payload.propertyCount) {
-          if (typeof payload.currentValue === 'boolean' && payload.currentValue) {
+          if (
+            typeof payload.currentValue === 'boolean' &&
+            payload.currentValue
+          ) {
             item.reblog![payload.propertyCount] = payload.countValue - 1
           } else {
             item.reblog![payload.propertyCount] = payload.countValue + 1
@@ -36,7 +39,10 @@ const updateStatus = ({
             ? !payload.currentValue
             : true
         if (payload.propertyCount) {
-          if (typeof payload.currentValue === 'boolean' && payload.currentValue) {
+          if (
+            typeof payload.currentValue === 'boolean' &&
+            payload.currentValue
+          ) {
             item[payload.propertyCount] = payload.countValue - 1
           } else {
             item[payload.propertyCount] = payload.countValue + 1

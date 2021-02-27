@@ -13,31 +13,28 @@ export interface Props {
   navigateToImagesViewer: (imageIndex: number) => void
 }
 
-const AttachmentImage: React.FC<Props> = ({
-  total,
-  index,
-  sensitiveShown,
-  image,
-  navigateToImagesViewer
-}) => {
-  const onPress = useCallback(() => {
-    analytics('timeline_shared_attachment_image_press', { id: image.id })
-    navigateToImagesViewer(index)
-  }, [])
+const AttachmentImage = React.memo(
+  ({ total, index, sensitiveShown, image, navigateToImagesViewer }: Props) => {
+    const onPress = useCallback(() => {
+      analytics('timeline_shared_attachment_image_press', { id: image.id })
+      navigateToImagesViewer(index)
+    }, [])
 
-  return (
-    <GracefullyImage
-      hidden={sensitiveShown}
-      uri={{ original: image.preview_url, remote: image.remote_url }}
-      blurhash={image.blurhash}
-      onPress={onPress}
-      style={[
-        styles.base,
-        { aspectRatio: attachmentAspectRatio({ total, index }) }
-      ]}
-    />
-  )
-}
+    return (
+      <GracefullyImage
+        hidden={sensitiveShown}
+        uri={{ original: image.preview_url, remote: image.remote_url }}
+        blurhash={image.blurhash}
+        onPress={onPress}
+        style={[
+          styles.base,
+          { aspectRatio: attachmentAspectRatio({ total, index }) }
+        ]}
+      />
+    )
+  },
+  (prev, next) => prev.sensitiveShown === next.sensitiveShown
+)
 
 const styles = StyleSheet.create({
   base: {
@@ -47,7 +44,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(
-  AttachmentImage,
-  (prev, next) => prev.sensitiveShown === next.sensitiveShown
-)
+export default AttachmentImage
