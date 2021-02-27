@@ -39,7 +39,7 @@ const composeParseState = (
         }),
         visibility:
           params.incomingStatus.visibility ||
-          getInstanceAccount(store.getState()).preferences[
+          getInstanceAccount(store.getState())?.preferences[
             'posting:default:visibility'
           ] ||
           'public',
@@ -53,6 +53,9 @@ const composeParseState = (
         ...composeInitialState,
         dirty: true,
         timestamp: Date.now(),
+        ...(actualStatus.spoiler_text && {
+          spoiler: { ...composeInitialState.spoiler, active: true }
+        }),
         visibility: actualStatus.visibility,
         visibilityLock: actualStatus.visibility === 'direct',
         replyToStatus: actualStatus

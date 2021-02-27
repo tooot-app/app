@@ -28,7 +28,8 @@ const HeaderCenter = React.memo(
 
 const styles = StyleSheet.create({
   text: {
-    ...StyleConstants.FontStyle.M
+    fontSize: 18,
+    fontWeight: StyleConstants.Font.Weight.Bold
   }
 })
 

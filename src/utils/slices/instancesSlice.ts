@@ -302,7 +302,7 @@ export const getInstanceMaxTootChar = ({
   instances: { instances }
 }: RootState) => {
   const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].max_toot_chars : null
+  return instanceActive !== -1 ? instances[instanceActive].max_toot_chars : 500
 }
 
 export const getInstanceAccount = ({ instances: { instances } }: RootState) => {

@@ -145,6 +145,23 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         })
         break
       case 'reply':
+        const actualStatus =
+          params.incomingStatus.reblog || params.incomingStatus
+        if (actualStatus.spoiler_text) {
+          formatText({
+            textInput: 'spoiler',
+            composeDispatch,
+            content: actualStatus.spoiler_text,
+            disableDebounce: true
+          })
+        }
+        formatText({
+          textInput: 'text',
+          composeDispatch,
+          content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
+          disableDebounce: true
+        })
+        break
       case 'conversation':
         formatText({
           textInput: 'text',

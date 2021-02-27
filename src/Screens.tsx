@@ -1,4 +1,3 @@
-import apiInstance from '@api/instance'
 import { toast, toastConfig } from '@components/toast'
 import {
   NavigationContainer,
@@ -9,6 +8,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
@@ -117,28 +117,28 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [localCorrupt])
 
   // On launch check if there is any unread announcements
-  useEffect(() => {
-    instanceActive !== -1 &&
-      apiInstance<Mastodon.Announcement[]>({
-        method: 'get',
-        url: `announcements`
-      })
-        .then(res => {
-          if (res.body.filter(announcement => !announcement.read).length) {
-            navigationRef.current?.navigate('Screen-Announcements', {
-              showAll: false
-            })
-          }
-        })
-        .catch(() => {})
-  }, [])
+  useAnnouncementQuery({
+    showAll: false,
+    options: {
+      notifyOnChangeProps: [],
+      select: announcements =>
+        announcements.filter(announcement => !announcement.read),
+      onSuccess: data => {
+        if (data.length) {
+          navigationRef.current?.navigate('Screen-Announcements', {
+            showAll: false
+          })
+        }
+      }
+    }
+  })
 
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (instanceActive !== -1) {
       dispatch(updateAccountPreferences())
     }
-  }, [])
+  }, [instanceActive])
 
   // Callbacks
   const navigationContainerOnReady = useCallback(
