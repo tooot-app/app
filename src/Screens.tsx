@@ -1,4 +1,4 @@
-import { toast, toastConfig } from '@components/toast'
+import { displayMessage, Message } from '@components/Message'
 import {
   NavigationContainer,
   NavigationContainerRef
@@ -20,7 +20,6 @@ import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -77,11 +76,12 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   useEffect(() => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
-        toast({
-          type: 'error',
+        displayMessage({
+          autoHide: false,
           message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
-          autoHide: false
+          type: 'error',
+          mode
         })
         navigationRef.current?.navigate('Screen-Tabs', {
           screen: 'Tab-Me'
@@ -178,9 +178,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           />
         </Stack.Navigator>
 
-        {Platform.select({
-          ios: <Toast ref={Toast.setRef} config={toastConfig} />
-        })}
+        <Message />
       </NavigationContainer>
     </>
   )

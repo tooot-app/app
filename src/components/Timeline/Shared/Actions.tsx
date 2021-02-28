@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import {
   MutationVarsTimelineUpdateStatusProperty,
@@ -32,7 +31,7 @@ const TimelineActions: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation('componentTimeline')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
@@ -84,8 +83,8 @@ const TimelineActions: React.FC<Props> = ({
     },
     onError: (err: any, params, oldData) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
-      haptics('Error')
-      toast({
+      displayMessage({
+        mode,
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(

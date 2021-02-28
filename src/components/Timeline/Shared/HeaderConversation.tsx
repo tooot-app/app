@@ -1,8 +1,7 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
-import { toast } from '@components/toast'
 import {
   QueryKeyTimeline,
   useTimelineMutation
@@ -46,6 +45,7 @@ export interface Props {
 
 const HeaderConversation = React.memo(
   ({ queryKey, conversation }: Props) => {
+    const { mode } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
     const queryClient = useQueryClient()
@@ -53,8 +53,8 @@ const HeaderConversation = React.memo(
       queryClient,
       onMutate: true,
       onError: (err: any, _, oldData) => {
-        haptics('Error')
-        toast({
+        displayMessage({
+          mode,
           type: 'error',
           message: t('common:toastMessage.error.message', {
             function: t(`shared.header.conversation.delete.function`)
@@ -65,8 +65,7 @@ const HeaderConversation = React.memo(
             err.data.error &&
             typeof err.data.error === 'string' && {
               description: err.data.error
-            }),
-          autoHide: false
+            })
         })
         queryClient.setQueryData(queryKey, oldData)
       }

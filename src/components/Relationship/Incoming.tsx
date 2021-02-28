@@ -1,13 +1,14 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import {
   QueryKeyRelationship,
   useRelationshipMutation
 } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -18,6 +19,7 @@ export interface Props {
 }
 
 const RelationshipIncoming: React.FC<Props> = ({ id }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation()
 
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
@@ -36,8 +38,9 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
     },
     onError: (err: any, { type }) => {
       haptics('Error')
-      toast({
+      displayMessage({
         type: 'error',
+        mode,
         message: t('common:toastMessage.error.message', {
           function: t(`relationship:${type}.function`)
         }),

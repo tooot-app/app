@@ -1,12 +1,12 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import {
   MutationVarsTimelineUpdateAccountProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
@@ -24,6 +24,7 @@ const ActionsAccount: React.FC<Props> = ({
   account,
   dismiss
 }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
@@ -31,8 +32,8 @@ const ActionsAccount: React.FC<Props> = ({
     queryClient,
     onSuccess: (_, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
-      haptics('Success')
-      toast({
+      displayMessage({
+        mode,
         type: 'success',
         message: t('common:toastMessage.success.message', {
           function: t(
@@ -46,8 +47,8 @@ const ActionsAccount: React.FC<Props> = ({
     },
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
-      haptics('Error')
-      toast({
+      displayMessage({
+        mode,
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(

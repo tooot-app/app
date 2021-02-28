@@ -2,11 +2,12 @@ import analytics from '@components/analytics'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
@@ -25,12 +26,14 @@ const ActionsDomain: React.FC<Props> = ({
   domain,
   dismiss
 }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     queryClient,
     onSettled: () => {
-      toast({
+      displayMessage({
+        mode,
         type: 'success',
         message: t('common:toastMessage.success.message', {
           function: t(`shared.header.actions.domain.block.function`)
