@@ -71,7 +71,7 @@ declare namespace Nav {
     'Tab-Local': undefined
     'Tab-Public': undefined
     'Tab-Compose': undefined
-    'Tab-Notifications': { id?: Mastodon.Notification['id'] }
+    'Tab-Notifications': undefined
     'Tab-Me': undefined
   }
 

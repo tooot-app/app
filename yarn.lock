@@ -10286,6 +10286,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+uri-scheme@^1.0.67:
+  version "1.0.67"
+  resolved "https://registry.yarnpkg.com/uri-scheme/-/uri-scheme-1.0.67.tgz#a18c8752489967783eb94784b9d08adaf124d9eb"
+  integrity sha512-q0xH1d4w3fMaEJfpmA+mXN+L9fzV8bBZz96llWLG4TXO98vbMeXptDhvasQP30y/okwsQnO5gbVYJmeZW2OWIw==
+
 urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"

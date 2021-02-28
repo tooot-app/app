@@ -8,53 +8,23 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
-import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
+import { connectInstancesPush } from '@utils/slices/instances/connectPush'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
-import * as Notifications from 'expo-notifications'
 import { addScreenshotListener } from 'expo-screen-capture'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Linking, Platform, StatusBar } from 'react-native'
+import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
 const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
-
-const linking = {
-  prefixes: ['tooot://', 'https://tooot.app'],
-  config: {
-    screens: {
-      'Screen-Tabs': {
-        screens: {
-          'Tab-Notifications': 'push/:id'
-        }
-      }
-    }
-  },
-  subscribe (listener: (arg0: string) => any) {
-    const onReceiveURL = ({ url }: { url: string }) => listener(url)
-    Linking.addEventListener('url', onReceiveURL)
-    const subscription = Notifications.addNotificationResponseReceivedListener(
-      response => {
-        const url = response.notification.request.content.data.url
-        console.log(url)
-        url && typeof url === 'string' && listener(url)
-      }
-    )
-
-    return () => {
-      Linking.removeEventListener('url', onReceiveURL)
-      subscription.remove()
-    }
-  }
-}
 
 export interface Props {
   localCorrupt?: string
@@ -87,6 +57,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   //   }
   // }, [isConnected, firstRender])
 
+  // Update Expo Token to server
+  useEffect(() => {
+    dispatch(connectInstancesPush())
+  }, [])
+
   // Prevent screenshot alert
   useEffect(() => {
     const screenshotListener = addScreenshotListener(() =>
@@ -115,23 +90,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
     return showLocalCorrect()
   }, [localCorrupt])
-
-  // On launch check if there is any unread announcements
-  useAnnouncementQuery({
-    showAll: false,
-    options: {
-      notifyOnChangeProps: [],
-      select: announcements =>
-        announcements.filter(announcement => !announcement.read),
-      onSuccess: data => {
-        if (data.length) {
-          navigationRef.current?.navigate('Screen-Announcements', {
-            showAll: false
-          })
-        }
-      }
-    }
-  })
 
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
@@ -175,7 +133,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         theme={themes[mode]}
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
-        linking={linking}
       >
         <Stack.Navigator initialRouteName='Screen-Tabs'>
           <Stack.Screen

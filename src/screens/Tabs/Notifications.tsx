@@ -43,32 +43,32 @@ const TabNotifications = React.memo(
         <Timeline
           queryKey={queryKey}
           customProps={{
-            renderItem,
-            viewabilityConfigCallbackPairs: [
-              {
-                onViewableItemsChanged: ({
-                  viewableItems
-                }: {
-                  viewableItems: ViewToken[]
-                }) => {
-                  if (
-                    navigation.isFocused() &&
-                    viewableItems.length &&
-                    viewableItems[0].index === 0
-                  ) {
-                    dispatch(
-                      updateInstanceNotification({
-                        readTime: viewableItems[0].item.created_at
-                      })
-                    )
-                  }
-                },
-                viewabilityConfig: {
-                  minimumViewTime: 100,
-                  itemVisiblePercentThreshold: 60
-                }
-              }
-            ]
+            renderItem
+            // viewabilityConfigCallbackPairs: [
+            //   {
+            //     onViewableItemsChanged: ({
+            //       viewableItems
+            //     }: {
+            //       viewableItems: ViewToken[]
+            //     }) => {
+            //       if (
+            //         navigation.isFocused() &&
+            //         viewableItems.length &&
+            //         viewableItems[0].index === 0
+            //       ) {
+            //         dispatch(
+            //           updateInstanceNotification({
+            //             readTime: viewableItems[0].item.created_at
+            //           })
+            //         )
+            //       }
+            //     },
+            //     viewabilityConfig: {
+            //       minimumViewTime: 100,
+            //       itemVisiblePercentThreshold: 60
+            //     }
+            //   }
+            // ]
           }}
         />
       ),

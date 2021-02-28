@@ -1,3 +1,4 @@
+import apiInstance from '@api/instance'
 import useWebsocket from '@api/websocket'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
@@ -13,10 +14,14 @@ import {
   getInstanceAccount,
   getInstanceActive,
   getInstanceNotification,
+  getInstances,
+  updateInstanceActive,
   updateInstanceNotification
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import * as Notifications from 'expo-notifications'
+import { findIndex } from 'lodash'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,10 +43,97 @@ export type ScreenTabsProp = StackScreenProps<
   'Screen-Tabs'
 >
 
+const convertNotificationToToot = (
+  navigation: any,
+  id: Mastodon.Notification['id']
+) => {
+  apiInstance<Mastodon.Notification>({
+    method: 'get',
+    url: `notifications/${id}`
+  }).then(({ body }) => {
+    // @ts-ignore
+    navigation.navigate('Tab-Notifications', {
+      screen: 'Tab-Notifications-Root'
+    })
+    if (body.status) {
+      // @ts-ignore
+      navigation.navigate('Tab-Notifications', {
+        screen: 'Tab-Shared-Toot',
+        params: { toot: body.status }
+      })
+    }
+  })
+}
+
 const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
+    // Push notifications
+    const instances = useSelector(
+      getInstances,
+      (prev, next) => prev.length === next.length
+    )
+    const lastNotificationResponse = Notifications.useLastNotificationResponse()
+    useEffect(() => {
+      const subscription = Notifications.addNotificationResponseReceivedListener(
+        ({ notification }) => {
+          const payloadData = notification.request.content.data as {
+            notification_id?: string
+            instanceUrl: string
+            accountId: string
+          }
+
+          const notificationIndex = findIndex(
+            instances,
+            instance =>
+              instance.url === payloadData.instanceUrl &&
+              instance.account.id === payloadData.accountId
+          )
+          if (notificationIndex !== -1) {
+            dispatch(updateInstanceActive(instances[notificationIndex]))
+          }
+          if (payloadData?.notification_id) {
+            convertNotificationToToot(
+              navigation,
+              notification.request.content.data.notification_id as string
+            )
+          }
+        }
+      )
+      return () => subscription.remove()
+
+      // if (
+      //   lastNotificationResponse &&
+      //   lastNotificationResponse.actionIdentifier ===
+      //     Notifications.DEFAULT_ACTION_IDENTIFIER
+      // ) {
+      //   const payloadData = lastNotificationResponse.notification.request
+      //     .content.data as {
+      //     notification_id?: string
+      //     instanceUrl: string
+      //     accountId: string
+      //   }
+
+      //   const notificationIndex = findIndex(
+      //     instances,
+      //     instance =>
+      //       instance.url === payloadData.instanceUrl &&
+      //       instance.account.id === payloadData.accountId
+      //   )
+      //   if (notificationIndex !== -1) {
+      //     dispatch(updateInstanceActive(instances[notificationIndex]))
+      //   }
+      //   if (payloadData?.notification_id) {
+      //     convertNotificationToToot(
+      //       navigation,
+      //       lastNotificationResponse.notification.request.content.data
+      //         .notification_id as string
+      //     )
+      //   }
+      // }
+    }, [instances, lastNotificationResponse])
+
     const { mode, theme } = useTheme()
     const dispatch = useDispatch()
     const instanceActive = useSelector(getInstanceActive)
