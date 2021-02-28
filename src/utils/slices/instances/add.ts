@@ -70,10 +70,6 @@ const addInstance = createAsyncThunk(
           avatarStatic: avatar_static,
           preferences
         },
-        notification: {
-          readTime: undefined,
-          latestTime: undefined
-        },
         push: {
           global: { loading: false, value: false },
           decode: { loading: false, value: false },

@@ -7,6 +7,7 @@ import FlashMessage, { showMessage } from 'react-native-flash-message'
 import haptics from './haptics'
 
 const displayMessage = ({
+  duration = 'short',
   autoHide = true,
   message,
   description,
@@ -15,6 +16,7 @@ const displayMessage = ({
   type
 }:
   | {
+      duration?: 'short' | 'long'
       autoHide?: boolean
       message: string
       description?: string
@@ -23,6 +25,7 @@ const displayMessage = ({
       type?: undefined
     }
   | {
+      duration?: 'short' | 'long'
       autoHide?: boolean
       message: string
       description?: string
@@ -46,6 +49,7 @@ const displayMessage = ({
   }
 
   showMessage({
+    duration: duration === 'short' ? 1500 : 3000,
     autoHide,
     message,
     description,
@@ -80,7 +84,7 @@ const Message = React.memo(
           backgroundColor: theme.background,
           shadowColor: theme.primary,
           shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: mode === 'light' ? 0.16 : 0.32,
+          shadowOpacity: mode === 'light' ? 0.16 : 0.24,
           shadowRadius: 4
         }}
         titleStyle={{

@@ -1,22 +1,20 @@
 import apiInstance from '@api/instance'
-import useWebsocket from '@api/websocket'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { displayMessage } from '@components/Message'
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
-import { useTimelineQuery } from '@utils/queryHooks/timeline'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
   getInstanceActive,
-  getInstanceNotification,
   getInstances,
-  updateInstanceActive,
-  updateInstanceNotification
+  updateInstanceActive
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -24,6 +22,7 @@ import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
@@ -44,7 +43,7 @@ export type ScreenTabsProp = StackScreenProps<
 >
 
 const convertNotificationToToot = (
-  navigation: any,
+  navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Tabs'>,
   id: Mastodon.Notification['id']
 ) => {
   apiInstance<Mastodon.Notification>({
@@ -70,11 +69,48 @@ const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
     // Push notifications
+    const queryClient = useQueryClient()
     const instances = useSelector(
       getInstances,
       (prev, next) => prev.length === next.length
     )
-    const lastNotificationResponse = Notifications.useLastNotificationResponse()
+    useEffect(() => {
+      const subscription = Notifications.addNotificationReceivedListener(
+        notification => {
+          const queryKey: QueryKeyTimeline = [
+            'Timeline',
+            { page: 'Notifications' }
+          ]
+          queryClient.invalidateQueries(queryKey)
+          const payloadData = notification.request.content.data as {
+            notification_id?: string
+            instanceUrl: string
+            accountId: string
+          }
+
+          const notificationIndex = findIndex(
+            instances,
+            instance =>
+              instance.url === payloadData.instanceUrl &&
+              instance.account.id === payloadData.accountId
+          )
+          if (notificationIndex !== -1 && payloadData.notification_id) {
+            displayMessage({
+              duration: 'long',
+              message: notification.request.content.title!,
+              description: notification.request.content.body!,
+              onPress: () =>
+                convertNotificationToToot(
+                  navigation,
+                  // @ts-ignore Typescript is wrong
+                  payloadData.notification_id
+                )
+            })
+          }
+        }
+      )
+      return () => subscription.remove()
+    }, [instances])
     useEffect(() => {
       const subscription = Notifications.addNotificationResponseReceivedListener(
         ({ notification }) => {
@@ -93,46 +129,13 @@ const ScreenTabs = React.memo(
           if (notificationIndex !== -1) {
             dispatch(updateInstanceActive(instances[notificationIndex]))
           }
-          if (payloadData?.notification_id) {
-            convertNotificationToToot(
-              navigation,
-              notification.request.content.data.notification_id as string
-            )
+          if (payloadData.notification_id) {
+            convertNotificationToToot(navigation, payloadData.notification_id)
           }
         }
       )
       return () => subscription.remove()
-
-      // if (
-      //   lastNotificationResponse &&
-      //   lastNotificationResponse.actionIdentifier ===
-      //     Notifications.DEFAULT_ACTION_IDENTIFIER
-      // ) {
-      //   const payloadData = lastNotificationResponse.notification.request
-      //     .content.data as {
-      //     notification_id?: string
-      //     instanceUrl: string
-      //     accountId: string
-      //   }
-
-      //   const notificationIndex = findIndex(
-      //     instances,
-      //     instance =>
-      //       instance.url === payloadData.instanceUrl &&
-      //       instance.account.id === payloadData.accountId
-      //   )
-      //   if (notificationIndex !== -1) {
-      //     dispatch(updateInstanceActive(instances[notificationIndex]))
-      //   }
-      //   if (payloadData?.notification_id) {
-      //     convertNotificationToToot(
-      //       navigation,
-      //       lastNotificationResponse.notification.request.content.data
-      //         .notification_id as string
-      //     )
-      //   }
-      // }
-    }, [instances, lastNotificationResponse])
+    }, [instances])
 
     const { mode, theme } = useTheme()
     const dispatch = useDispatch()
@@ -210,33 +213,6 @@ const ScreenTabs = React.memo(
     )
     const composeComponent = useCallback(() => null, [])
 
-    // On launch check if there is any unread noficiations
-    useTimelineQuery({
-      page: 'Notifications',
-      options: {
-        enabled: instanceActive !== -1,
-        notifyOnChangeProps: [],
-        select: data => {
-          if (data.pages[0].body.length) {
-            dispatch(
-              updateInstanceNotification({
-                // @ts-ignore
-                latestTime: data.pages[0].body[0].created_at
-              })
-            )
-          }
-          return data
-        }
-      }
-    })
-    useWebsocket({ stream: 'user', event: 'notification' })
-    const localNotification = useSelector(
-      getInstanceNotification,
-      (prev, next) =>
-        prev?.readTime === next?.readTime &&
-        prev?.latestTime === next?.latestTime
-    )
-
     const previousTab = useSelector(getPreviousTab, () => true)
 
     return (
@@ -252,23 +228,7 @@ const ScreenTabs = React.memo(
           component={composeComponent}
           listeners={composeListeners}
         />
-        <Tab.Screen
-          name='Tab-Notifications'
-          component={TabNotifications}
-          options={{
-            tabBarBadge: localNotification?.latestTime
-              ? !localNotification.readTime ||
-                new Date(localNotification.readTime) <
-                  new Date(localNotification.latestTime)
-                ? ''
-                : undefined
-              : undefined,
-            tabBarBadgeStyle: {
-              transform: [{ scale: 0.5 }],
-              backgroundColor: theme.red
-            }
-          }}
-        />
+        <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
         <Tab.Screen name='Tab-Me' component={TabMe} />
       </Tab.Navigator>
     )

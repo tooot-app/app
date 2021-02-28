@@ -29,10 +29,6 @@ export type Instance = {
     avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
-  notification: {
-    readTime?: Mastodon.Notification['created_at']
-    latestTime?: Mastodon.Notification['created_at']
-  }
   push:
     | {
         global: { loading: boolean; value: true }
@@ -129,16 +125,6 @@ const instancesSlice = createSlice({
         ...action.payload
       }
     },
-    updateInstanceNotification: (
-      { instances },
-      action: PayloadAction<Partial<Instance['notification']>>
-    ) => {
-      const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].notification = {
-        ...instances[activeIndex].notification,
-        ...action.payload
-      }
-    },
     updateInstanceDraft: (
       { instances },
       action: PayloadAction<ComposeStateDraft>
@@ -198,7 +184,16 @@ const instancesSlice = createSlice({
       })
 
       .addCase(removeInstance.fulfilled, (state, action) => {
-        state.instances.splice(action.payload, 1)
+        state.instances = state.instances.filter(instance => {
+          if (
+            instance.url === action.payload.url &&
+            instance.account.id === action.payload.account.id
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
         state.instances.length &&
           (state.instances[state.instances.length - 1].active = true)
 
@@ -310,13 +305,6 @@ export const getInstanceAccount = ({ instances: { instances } }: RootState) => {
   return instanceActive !== -1 ? instances[instanceActive].account : null
 }
 
-export const getInstanceNotification = ({
-  instances: { instances }
-}: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].notification : null
-}
-
 export const getInstancePush = ({ instances: { instances } }: RootState) => {
   const instanceActive = findInstanceActive(instances)
   return instanceActive !== -1 ? instances[instanceActive].push : null
@@ -330,7 +318,6 @@ export const getInstanceDrafts = ({ instances: { instances } }: RootState) => {
 export const {
   updateInstanceActive,
   updateInstanceAccount,
-  updateInstanceNotification,
   updateInstanceDraft,
   removeInstanceDraft
 } = instancesSlice.actions

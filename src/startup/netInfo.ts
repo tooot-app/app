@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
 import removeInstance from '@utils/slices/instances/remove'
 import {
-  getInstanceActive,
+  getInstance,
   updateInstanceAccount
 } from '@utils/slices/instancesSlice'
 import log from './log'
@@ -14,11 +14,11 @@ const netInfo = async (): Promise<{
 }> => {
   log('log', 'netInfo', 'initializing')
   const netInfo = await NetInfo.fetch()
-  const activeIndex = getInstanceActive(store.getState())
+  const instance = getInstance(store.getState())
 
   if (netInfo.isConnected) {
     log('log', 'netInfo', 'network connected')
-    if (activeIndex !== -1) {
+    if (instance) {
       log('log', 'netInfo', 'checking locally stored credentials')
       return apiInstance<Mastodon.Account>({
         method: 'get',
@@ -26,12 +26,9 @@ const netInfo = async (): Promise<{
       })
         .then(res => {
           log('log', 'netInfo', 'local credential check passed')
-          if (
-            res.body.id !==
-            store.getState().instances.instances[activeIndex].account.id
-          ) {
+          if (res.body.id !== instance.account.id) {
             log('error', 'netInfo', 'local id does not match remote id')
-            store.dispatch(removeInstance(activeIndex))
+            store.dispatch(removeInstance(instance))
             return Promise.resolve({ connected: true, corruputed: '' })
           } else {
             store.dispatch(
@@ -50,7 +47,7 @@ const netInfo = async (): Promise<{
             typeof error.status === 'number' &&
             error.status === 401
           ) {
-            store.dispatch(removeInstance(activeIndex))
+            store.dispatch(removeInstance(instance))
           }
           return Promise.resolve({
             connected: true,

@@ -1,6 +1,7 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
@@ -15,6 +16,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
+import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
 import TimelineRefresh, {
@@ -40,6 +42,9 @@ const Timeline: React.FC<Props> = ({
   disableInfinity = false,
   customProps
 }) => {
+  // Switching account update timeline
+  useSelector(getInstanceActive)
+
   const { theme } = useTheme()
 
   const {

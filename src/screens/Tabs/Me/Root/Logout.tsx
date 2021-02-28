@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@root/components/haptics'
 import removeInstance from '@utils/slices/instances/remove'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { getInstance, getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,7 @@ const Logout: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
-  const instanceActive = useSelector(getInstanceActive)
+  const instance = useSelector(getInstance)
 
   return (
     <Button
@@ -33,9 +33,11 @@ const Logout: React.FC = () => {
               text: t('content.logout.alert.buttons.logout'),
               style: 'destructive' as const,
               onPress: () => {
-                haptics('Success')
-                queryClient.clear()
-                dispatch(removeInstance(instanceActive))
+                if (instance) {
+                  haptics('Success')
+                  queryClient.clear()
+                  dispatch(removeInstance(instance))
+                }
               }
             },
             {

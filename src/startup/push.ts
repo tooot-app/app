@@ -5,11 +5,13 @@ const push = () => {
   log('log', 'Push', 'initializing')
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowAlert: false,
       shouldPlaySound: false,
       shouldSetBadge: false
     })
   })
+  Notifications.setBadgeCountAsync(0)
+  Notifications.dismissAllNotificationsAsync()
 }
 
 export default push

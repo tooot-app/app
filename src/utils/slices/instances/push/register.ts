@@ -85,8 +85,6 @@ const pushRegister = async (
     accountId,
     accountFull
   })
-  console.log('endpoint', serverRes.body.endpoint)
-  console.log('token', instance?.token)
 
   const alerts = instancePush.alerts
   const formData = new FormData()
