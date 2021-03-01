@@ -110,16 +110,30 @@ const pushRegister = async (
     removeKeys: instancePush.decode.value === false
   })
 
-  return Promise.resolve(serverRes.body.keys)
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('follow', {
+      name: 'Follow',
+      importance: Notifications.AndroidImportance.DEFAULT
+    })
+    Notifications.setNotificationChannelAsync('favourite', {
+      name: 'Favourite',
+      importance: Notifications.AndroidImportance.DEFAULT
+    })
+    Notifications.setNotificationChannelAsync('reblog', {
+      name: 'Reblog',
+      importance: Notifications.AndroidImportance.DEFAULT
+    })
+    Notifications.setNotificationChannelAsync('mention', {
+      name: 'Mention',
+      importance: Notifications.AndroidImportance.DEFAULT
+    })
+    Notifications.setNotificationChannelAsync('poll', {
+      name: 'Poll',
+      importance: Notifications.AndroidImportance.DEFAULT
+    })
+  }
 
-  // if (Platform.OS === 'android') {
-  //   Notifications.setNotificationChannelAsync('default', {
-  //     name: 'default',
-  //     importance: Notifications.AndroidImportance.MAX,
-  //     vibrationPattern: [0, 250, 250, 250],
-  //     lightColor: '#FF231F7C'
-  //   })
-  // }
+  return Promise.resolve(serverRes.body.keys)
 }
 
 export default pushRegister

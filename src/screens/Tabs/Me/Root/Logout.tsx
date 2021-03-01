@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@root/components/haptics'
 import removeInstance from '@utils/slices/instances/remove'
-import { getInstance, getInstanceActive } from '@utils/slices/instancesSlice'
+import { getInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'

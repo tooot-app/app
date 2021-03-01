@@ -58,7 +58,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Update Expo Token to server
   useEffect(() => {
-    dispatch(connectInstancesPush())
+    dispatch(connectInstancesPush({ mode, t }))
   }, [])
 
   // Prevent screenshot alert

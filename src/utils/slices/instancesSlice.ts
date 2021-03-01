@@ -1,9 +1,12 @@
 import analytics from '@components/analytics'
+import { displayMessage } from '@components/Message'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
 import { findIndex } from 'lodash'
+import { Appearance } from 'react-native'
 import addInstance from './instances/add'
+import { connectInstancesPush } from './instances/connectPush'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
 import { updateInstancePush } from './instances/updatePush'
@@ -263,6 +266,22 @@ const instancesSlice = createSlice({
         state.instances[activeIndex].push.alerts[
           action.meta.arg.changed
         ].loading = true
+      })
+
+      // If Expo token does not exist on the server, disable all existing ones
+      .addCase(connectInstancesPush.rejected, (state, action) => {
+        state.instances = state.instances.map(instance => {
+          let newInstance = instance
+          newInstance.push.global.value = false
+          displayMessage({
+            mode: action.meta.arg.mode,
+            type: 'error',
+            autoHide: false,
+            message: action.meta.arg.t('meSettingsPush:error.message'),
+            description: action.meta.arg.t('meSettingsPush:error.description')
+          })
+          return newInstance
+        })
       })
   }
 })

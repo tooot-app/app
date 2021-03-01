@@ -4,13 +4,39 @@ import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useMemo } from 'react'
+import * as Notifications from 'expo-notifications'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
+import layoutAnimation from '@utils/styles/layoutAnimation'
+import Button from '@components/Button'
+import { StyleConstants } from '@utils/styles/constants'
+import { AppState, Linking } from 'react-native'
 
 const ScreenMeSettingsPush: React.FC = () => {
   const { t } = useTranslation('meSettingsPush')
+
+  const [appStateVisible, setAppStateVisible] = useState(AppState.currentState)
+  useEffect(() => {
+    AppState.addEventListener('change', state => setAppStateVisible(state))
+
+    return () => {
+      AppState.removeEventListener('change', state => setAppStateVisible(state))
+    }
+  }, [])
+  const [pushEnabled, setPushEnabled] = useState<boolean>()
+  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
+  useEffect(() => {
+    const checkPush = async () => {
+      const settings = await Notifications.getPermissionsAsync()
+      layoutAnimation()
+      setPushEnabled(settings.granted)
+      setPushCanAskAgain(settings.canAskAgain)
+    }
+    checkPush()
+  }, [appStateVisible])
+
   const dispatch = useDispatch()
   const instancePush = useSelector(getInstancePush)
 
@@ -28,7 +54,9 @@ const ScreenMeSettingsPush: React.FC = () => {
           <MenuRow
             key={alert}
             title={t(`content.${alert}.heading`)}
-            switchDisabled={!instancePush.global.value || isLoading}
+            switchDisabled={
+              !pushEnabled || !instancePush.global.value || isLoading
+            }
             switchValue={instancePush?.alerts[alert].value}
             switchOnValueChange={() =>
               dispatch(
@@ -51,13 +79,40 @@ const ScreenMeSettingsPush: React.FC = () => {
 
   return (
     <ScrollView>
+      {pushEnabled === false ? (
+        <MenuContainer>
+          <Button
+            type='text'
+            content={
+              pushCanAskAgain
+                ? t('content.enable.direct')
+                : t('content.enable.settings')
+            }
+            style={{
+              marginTop: StyleConstants.Spacing.Global.PagePadding,
+              marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
+            }}
+            onPress={async () => {
+              if (pushCanAskAgain) {
+                const result = await Notifications.requestPermissionsAsync()
+                setPushEnabled(result.granted)
+                setPushCanAskAgain(result.canAskAgain)
+              } else {
+                Linking.openURL('app-settings:')
+              }
+            }}
+          />
+        </MenuContainer>
+      ) : null}
       <MenuContainer>
         <MenuRow
           title={t('content.global.heading')}
           description={t('content.global.description')}
           loading={instancePush?.global.loading}
-          switchDisabled={isLoading}
-          switchValue={instancePush?.global.value}
+          switchDisabled={!pushEnabled || isLoading}
+          switchValue={
+            pushEnabled === false ? false : instancePush?.global.value
+          }
           switchOnValueChange={() =>
             dispatch(updateInstancePush(!instancePush?.global.value))
           }
@@ -68,7 +123,9 @@ const ScreenMeSettingsPush: React.FC = () => {
           title={t('content.decode.heading')}
           description={t('content.decode.description')}
           loading={instancePush?.decode.loading}
-          switchDisabled={!instancePush?.global.value || isLoading}
+          switchDisabled={
+            !pushEnabled || !instancePush?.global.value || isLoading
+          }
           switchValue={instancePush?.decode.value}
           switchOnValueChange={() =>
             dispatch(updateInstancePushDecode(!instancePush?.decode.value))
