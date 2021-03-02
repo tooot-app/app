@@ -2,7 +2,7 @@ import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet } from 'react-native'
+import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ScreenMeSwitchRoot from './Switch/Root'
 
@@ -36,7 +36,5 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
     </Stack.Navigator>
   )
 }
-
-const styles = StyleSheet.create({})
 
 export default ScreenMeSwitch

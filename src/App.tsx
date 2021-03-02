@@ -10,9 +10,10 @@ import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
+import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { LogBox, Platform } from 'react-native'
+import { AppState, LogBox, Platform } from 'react-native'
 import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
@@ -38,6 +39,17 @@ enableScreens()
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
   const [localCorrupt, setLocalCorrupt] = useState<string>()
+
+  useEffect(() => {
+    AppState.addEventListener('change', () => {
+      Notifications.setBadgeCountAsync(0)
+      Notifications.dismissAllNotificationsAsync()
+    })
+
+    return () => {
+      AppState.removeEventListener('change', () => {})
+    }
+  }, [])
 
   useEffect(() => {
     const delaySplash = async () => {

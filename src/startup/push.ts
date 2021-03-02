@@ -10,8 +10,6 @@ const push = () => {
       shouldSetBadge: false
     })
   })
-  Notifications.setBadgeCountAsync(0)
-  Notifications.dismissAllNotificationsAsync()
 }
 
 export default push

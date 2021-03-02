@@ -92,7 +92,11 @@ const styles = StyleSheet.create({
 
 export default React.memo(AccountInformation, (prev, next) => {
   let skipUpdate = true
-  skipUpdate = prev.account?.id === next.account?.id
-  skipUpdate = prev.account?.acct === next.account?.acct
+  if (prev.account?.id !== next.account?.id) {
+    skipUpdate = false
+  }
+  if (prev.account?.acct === next.account?.acct) {
+    skipUpdate = false
+  }
   return skipUpdate
 })

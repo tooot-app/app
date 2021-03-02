@@ -14,6 +14,9 @@ export default {
       description:
         '经由tooot服务器中转的通知消息已被加密，但可以允许tooot服务器解密并转发消息。tooot消息服务器源码开源，且不留存任何日志。'
     },
+    default: {
+      heading: '默认通知' // Android notification channel name only
+    },
     follow: {
       heading: '新关注者'
     },
@@ -24,10 +27,10 @@ export default {
       heading: '嘟文被转嘟'
     },
     mention: {
-      heading: '提及你'
+      heading: '嘟文提及你'
     },
     poll: {
-      heading: '投票'
+      heading: '投票更新'
     },
     howitworks: '了解通知消息转发如何工作'
   },

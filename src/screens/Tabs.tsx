@@ -1,25 +1,15 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { displayMessage } from '@components/Message'
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { StackScreenProps } from '@react-navigation/stack'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
-import {
-  getInstanceAccount,
-  getInstanceActive,
-  getInstances,
-  updateInstanceActive
-} from '@utils/slices/instancesSlice'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Notifications from 'expo-notifications'
-import { findIndex } from 'lodash'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useQueryClient } from 'react-query'
@@ -28,6 +18,8 @@ import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
 import TabPublic from './Tabs/Public'
+import pushReceive from './Tabs/utils/pushReceive'
+import pushRespond from './Tabs/utils/pushRespond'
 
 export type ScreenTabsParamList = {
   'Tab-Local': NavigatorScreenParams<Nav.TabLocalStackParamList>
@@ -42,108 +34,23 @@ export type ScreenTabsProp = StackScreenProps<
   'Screen-Tabs'
 >
 
-const convertNotificationToToot = (
-  navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Tabs'>,
-  id: Mastodon.Notification['id']
-) => {
-  apiInstance<Mastodon.Notification>({
-    method: 'get',
-    url: `notifications/${id}`
-  }).then(({ body }) => {
-    // @ts-ignore
-    navigation.navigate('Tab-Notifications', {
-      screen: 'Tab-Notifications-Root'
-    })
-    if (body.status) {
-      // @ts-ignore
-      navigation.navigate('Tab-Notifications', {
-        screen: 'Tab-Shared-Toot',
-        params: { toot: body.status }
-      })
-    }
-  })
-}
-
 const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
-    // Push notifications
+    const { mode, theme } = useTheme()
+
     const queryClient = useQueryClient()
+
+    const dispatch = useDispatch()
+    const instanceActive = useSelector(getInstanceActive)
     const instances = useSelector(
       getInstances,
       (prev, next) => prev.length === next.length
     )
-    useEffect(() => {
-      const subscription = Notifications.addNotificationReceivedListener(
-        notification => {
-          const queryKey: QueryKeyTimeline = [
-            'Timeline',
-            { page: 'Notifications' }
-          ]
-          queryClient.invalidateQueries(queryKey)
-          const payloadData = notification.request.content.data as {
-            notification_id?: string
-            instanceUrl: string
-            accountId: string
-          }
 
-          const notificationIndex = findIndex(
-            instances,
-            instance =>
-              instance.url === payloadData.instanceUrl &&
-              instance.account.id === payloadData.accountId
-          )
-          if (notificationIndex !== -1 && payloadData.notification_id) {
-            displayMessage({
-              duration: 'long',
-              message: notification.request.content.title!,
-              description: notification.request.content.body!,
-              onPress: () =>
-                convertNotificationToToot(
-                  navigation,
-                  // @ts-ignore Typescript is wrong
-                  payloadData.notification_id
-                )
-            })
-          }
-        }
-      )
-      return () => subscription.remove()
-    }, [instances])
-    useEffect(() => {
-      const subscription = Notifications.addNotificationResponseReceivedListener(
-        ({ notification }) => {
-          const payloadData = notification.request.content.data as {
-            notification_id?: string
-            instanceUrl: string
-            accountId: string
-          }
-
-          const notificationIndex = findIndex(
-            instances,
-            instance =>
-              instance.url === payloadData.instanceUrl &&
-              instance.account.id === payloadData.accountId
-          )
-          if (notificationIndex !== -1) {
-            dispatch(updateInstanceActive(instances[notificationIndex]))
-          }
-          if (payloadData.notification_id) {
-            convertNotificationToToot(navigation, payloadData.notification_id)
-          }
-        }
-      )
-      return () => subscription.remove()
-    }, [instances])
-
-    const { mode, theme } = useTheme()
-    const dispatch = useDispatch()
-    const instanceActive = useSelector(getInstanceActive)
-    const localAccount = useSelector(
-      getInstanceAccount,
-      (prev, next) => prev?.avatarStatic === next?.avatarStatic
-    )
+    pushReceive({ navigation, queryClient, instances })
+    pushRespond({ navigation, queryClient, instances, dispatch })
 
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
@@ -169,7 +76,9 @@ const ScreenTabs = React.memo(
             case 'Tab-Me':
               return instanceActive !== -1 ? (
                 <FastImage
-                  source={{ uri: localAccount?.avatarStatic }}
+                  source={{
+                    uri: instances[instanceActive].account.avatarStatic
+                  }}
                   style={{
                     width: size,
                     height: size,
@@ -190,7 +99,7 @@ const ScreenTabs = React.memo(
           }
         }
       }),
-      [instanceActive, localAccount?.avatarStatic]
+      [instances, instanceActive]
     )
     const tabBarOptions = useMemo(
       () => ({

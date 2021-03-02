@@ -109,14 +109,11 @@ const GracefullyImage = React.memo(
       </Pressable>
     )
   },
-  (prev, next) => {
-    let skipUpdate = true
-    skipUpdate = prev.hidden === next.hidden
-    skipUpdate = prev.uri.preview === next.uri.preview
-    skipUpdate = prev.uri.original === next.uri.original
-    skipUpdate = prev.uri.remote === next.uri.remote
-    return false
-  }
+  (prev, next) =>
+    prev.hidden === next.hidden &&
+    prev.uri.preview === next.uri.preview &&
+    prev.uri.original === next.uri.original &&
+    prev.uri.remote === next.uri.remote
 )
 
 const styles = StyleSheet.create({

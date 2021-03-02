@@ -25,7 +25,7 @@ const SettingsDev: React.FC = () => {
           color: theme.primary
         }}
       >
-        {instances[instanceActive].token}
+        {instances[instanceActive]?.token}
       </Text>
       <MenuRow
         title={'Local active index'}

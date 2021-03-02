@@ -95,7 +95,7 @@ const ComposeAttachments: React.FC = () => {
   useEffect(() => {
     if (
       snapToOffsets.length >
-      (prevOffsets.current ? prevOffsets.current?.length : 0)
+      (prevOffsets.current ? prevOffsets.current.length : 0)
     ) {
       flatListRef.current?.scrollToOffset({
         offset:

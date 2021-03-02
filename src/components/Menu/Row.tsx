@@ -3,9 +3,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { StyleSheet, Switch, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
-import { State, TapGestureHandler } from 'react-native-gesture-handler'
+import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 
 export interface Props {
   iconFront?: any

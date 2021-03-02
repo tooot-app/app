@@ -17,28 +17,24 @@ import { AppState, Linking } from 'react-native'
 const ScreenMeSettingsPush: React.FC = () => {
   const { t } = useTranslation('meSettingsPush')
 
-  const [appStateVisible, setAppStateVisible] = useState(AppState.currentState)
-  useEffect(() => {
-    AppState.addEventListener('change', state => setAppStateVisible(state))
-
-    return () => {
-      AppState.removeEventListener('change', state => setAppStateVisible(state))
-    }
-  }, [])
-  const [pushEnabled, setPushEnabled] = useState<boolean>()
-  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
-  useEffect(() => {
-    const checkPush = async () => {
-      const settings = await Notifications.getPermissionsAsync()
-      layoutAnimation()
-      setPushEnabled(settings.granted)
-      setPushCanAskAgain(settings.canAskAgain)
-    }
-    checkPush()
-  }, [appStateVisible])
-
   const dispatch = useDispatch()
   const instancePush = useSelector(getInstancePush)
+
+  const [pushEnabled, setPushEnabled] = useState<boolean>()
+  const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
+  const checkPush = async () => {
+    const settings = await Notifications.getPermissionsAsync()
+    layoutAnimation()
+    setPushEnabled(settings.granted)
+    setPushCanAskAgain(settings.canAskAgain)
+  }
+  useEffect(() => {
+    checkPush()
+    AppState.addEventListener('change', () => checkPush())
+    return () => {
+      AppState.removeEventListener('change', () => {})
+    }
+  }, [])
 
   const isLoading = instancePush?.global.loading || instancePush?.decode.loading
 

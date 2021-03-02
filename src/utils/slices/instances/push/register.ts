@@ -1,5 +1,6 @@
 import apiGeneral from '@api/general'
 import apiInstance from '@api/instance'
+import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import {
   getInstance,
@@ -8,6 +9,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
+import androidDefaults from './androidDefaults'
 
 const register1 = async ({
   expoToken,
@@ -66,17 +68,6 @@ const pushRegister = async (
     return Promise.reject()
   }
 
-  const { status: existingStatus } = await Notifications.getPermissionsAsync()
-  let finalStatus = existingStatus
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync()
-    finalStatus = status
-  }
-  if (finalStatus !== 'granted') {
-    alert('Failed to get push token for push notification!')
-    return Promise.reject()
-  }
-
   const accountId = instanceAccount.id
   const accountFull = `@${instanceAccount.acct}@${instanceUri}`
   const serverRes = await register1({
@@ -111,25 +102,45 @@ const pushRegister = async (
   })
 
   if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('follow', {
-      name: 'Follow',
-      importance: Notifications.AndroidImportance.DEFAULT
-    })
-    Notifications.setNotificationChannelAsync('favourite', {
-      name: 'Favourite',
-      importance: Notifications.AndroidImportance.DEFAULT
-    })
-    Notifications.setNotificationChannelAsync('reblog', {
-      name: 'Reblog',
-      importance: Notifications.AndroidImportance.DEFAULT
-    })
-    Notifications.setNotificationChannelAsync('mention', {
-      name: 'Mention',
-      importance: Notifications.AndroidImportance.DEFAULT
-    })
-    Notifications.setNotificationChannelAsync('poll', {
-      name: 'Poll',
-      importance: Notifications.AndroidImportance.DEFAULT
+    Notifications.setNotificationChannelGroupAsync(accountFull, {
+      name: accountFull,
+      ...androidDefaults
+    }).then(group => {
+      if (group) {
+        if (instancePush.decode.value === false) {
+          Notifications.setNotificationChannelAsync(`${group.id}_default`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.default.heading'),
+            ...androidDefaults
+          })
+        } else {
+          Notifications.setNotificationChannelAsync(`${group.id}_follow`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.follow.heading'),
+            ...androidDefaults
+          })
+          Notifications.setNotificationChannelAsync(`${group.id}_favourite`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.favourite.heading'),
+            ...androidDefaults
+          })
+          Notifications.setNotificationChannelAsync(`${group.id}_reblog`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.reblog.heading'),
+            ...androidDefaults
+          })
+          Notifications.setNotificationChannelAsync(`${group.id}_mention`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.mention.heading'),
+            ...androidDefaults
+          })
+          Notifications.setNotificationChannelAsync(`${group.id}_poll`, {
+            groupId: group.id,
+            name: i18n.t('meSettingsPush:content.poll.heading'),
+            ...androidDefaults
+          })
+        }
+      }
     })
   }
 

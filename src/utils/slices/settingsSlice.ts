@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '@root/store'
+import i18n from '@root/i18n/i18n'
+import { RootState, store } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
 import * as Localization from 'expo-localization'
+import * as Notifications from 'expo-notifications'
 import { pickBy } from 'lodash'
+import androidDefaults from './instances/push/androidDefaults'
+import { getInstances } from './instancesSlice'
 
 enum availableLanguages {
   'zh-Hans',

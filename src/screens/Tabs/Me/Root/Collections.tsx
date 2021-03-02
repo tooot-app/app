@@ -24,6 +24,8 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-Lists')}
         />
       )
+    } else {
+      return null
     }
   }, [listsQuery.isSuccess, listsQuery.data, i18n.language])
 
@@ -55,6 +57,8 @@ const Collections: React.FC = () => {
           }
         />
       )
+    } else {
+      return null
     }
   }, [announcementsQuery.isSuccess, announcementsQuery.data, i18n.language])
 

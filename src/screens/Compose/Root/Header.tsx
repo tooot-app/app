@@ -18,13 +18,11 @@ const ComposeRootHeader: React.FC = () => {
 
   return (
     <>
-      {instanceActive !== -1 &&
-        localInstances.length &&
-        localInstances.length > 1 && (
-          <View style={styles.postingAs}>
-            <ComposePostingAs />
-          </View>
-        )}
+      {instanceActive !== -1 && localInstances.length > 1 && (
+        <View style={styles.postingAs}>
+          <ComposePostingAs />
+        </View>
+      )}
       {composeState.spoiler.active ? <ComposeSpoilerInput /> : null}
       <ComposeTextInput />
     </>

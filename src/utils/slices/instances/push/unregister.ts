@@ -2,9 +2,13 @@ import apiGeneral from '@api/general'
 import apiInstance from '@api/instance'
 import { RootState } from '@root/store'
 import { getInstance, PUSH_SERVER } from '@utils/slices/instancesSlice'
+import * as Notifications from 'expo-notifications'
+import { Platform } from 'react-native'
 
 const pushUnregister = async (state: RootState, expoToken: string) => {
   const instance = getInstance(state)
+  const instanceUri = instance?.uri
+  const instanceAccount = instance?.account
 
   if (!instance?.url || !instance.account.id) {
     return Promise.reject()
@@ -25,6 +29,11 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
       accountId: instance.account.id
     }
   })
+
+  if (Platform.OS === 'android') {
+    const accountFull = `@${instanceAccount?.acct}@${instanceUri}`
+    Notifications.deleteNotificationChannelGroupAsync(accountFull)
+  }
 
   return
 }
