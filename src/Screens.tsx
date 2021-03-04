@@ -85,7 +85,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
         displayMessage({
-          autoHide: false,
           message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
           type: 'error',

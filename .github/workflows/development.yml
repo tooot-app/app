@@ -46,5 +46,6 @@ jobs:
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+          GH_PAT_GET_RELEASE: ${{ secrets.GH_PAT_GET_RELEASE }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build

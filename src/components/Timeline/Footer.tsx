@@ -18,7 +18,9 @@ const TimelineFooter = React.memo(
       ...queryKey[1],
       options: {
         enabled: !disableInfinity,
-        notifyOnChangeProps: ['hasNextPage']
+        notifyOnChangeProps: ['hasNextPage'],
+        getNextPageParam: lastPage =>
+          lastPage?.links?.next && { max_id: lastPage.links.next }
       }
     })
 

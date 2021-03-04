@@ -58,8 +58,8 @@ const Timeline: React.FC<Props> = ({
     ...queryKey[1],
     options: {
       notifyOnChangeProps: Platform.select({
-        ios: ['data', 'isFetching'],
-        android: ['data', 'isFetching', 'isLoading']
+        ios: ['dataUpdatedAt', 'isFetching'],
+        android: ['dataUpdatedAt', 'isFetching', 'isLoading']
       }),
       getNextPageParam: lastPage =>
         lastPage?.links?.next && { max_id: lastPage.links.next }

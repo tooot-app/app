@@ -49,7 +49,7 @@ const displayMessage = ({
   }
 
   showMessage({
-    duration: duration === 'short' ? 1500 : 3000,
+    duration: type === 'error' ? 5000 : duration === 'short' ? 1500 : 3000,
     autoHide,
     message,
     description,
