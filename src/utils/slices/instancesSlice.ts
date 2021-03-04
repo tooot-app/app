@@ -1,11 +1,9 @@
 import analytics from '@components/analytics'
-import { displayMessage } from '@components/Message'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
 import { findIndex } from 'lodash'
 import addInstance from './instances/add'
-import { connectInstancesPush } from './instances/connectPush'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
 import { updateInstancePush } from './instances/updatePush'
@@ -150,6 +148,13 @@ const instancesSlice = createSlice({
       instances[activeIndex].drafts = instances[activeIndex].drafts?.filter(
         draft => draft.timestamp !== action.payload
       )
+    },
+    disableAllPushes: ({ instances }) => {
+      instances = instances.map(instance => {
+        let newInstance = instance
+        newInstance.push.global.value = false
+        return newInstance
+      })
     }
   },
   extraReducers: builder => {
@@ -266,22 +271,6 @@ const instancesSlice = createSlice({
           action.meta.arg.changed
         ].loading = true
       })
-
-      // If Expo token does not exist on the server, disable all existing ones
-      .addCase(connectInstancesPush.rejected, (state, action) => {
-        state.instances = state.instances.map(instance => {
-          let newInstance = instance
-          newInstance.push.global.value = false
-          displayMessage({
-            mode: action.meta.arg.mode,
-            type: 'error',
-            autoHide: false,
-            message: action.meta.arg.t('meSettingsPush:error.message'),
-            description: action.meta.arg.t('meSettingsPush:error.description')
-          })
-          return newInstance
-        })
-      })
   }
 })
 
@@ -337,7 +326,8 @@ export const {
   updateInstanceActive,
   updateInstanceAccount,
   updateInstanceDraft,
-  removeInstanceDraft
+  removeInstanceDraft,
+  disableAllPushes
 } = instancesSlice.actions
 
 export default instancesSlice.reducer

@@ -1,5 +1,5 @@
 import { displayMessage } from '@components/Message'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { NavigationContainerRef } from '@react-navigation/native'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { Instance, updateInstanceActive } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
@@ -7,15 +7,15 @@ import { findIndex } from 'lodash'
 import { useEffect } from 'react'
 import { QueryClient } from 'react-query'
 import { useDispatch } from 'react-redux'
-import pushNavigate from './pushNavigate'
+import pushUseNavigate from './useNavigate'
 
 export interface Params {
-  navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Tabs'>
+  navigationRef: React.RefObject<NavigationContainerRef>
   queryClient: QueryClient
   instances: Instance[]
 }
 
-const pushReceive = ({ navigation, queryClient, instances }: Params) => {
+const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
   const dispatch = useDispatch()
 
   return useEffect(() => {
@@ -46,7 +46,7 @@ const pushReceive = ({ navigation, queryClient, instances }: Params) => {
             if (notificationIndex !== -1) {
               dispatch(updateInstanceActive(instances[notificationIndex]))
             }
-            pushNavigate(navigation, payloadData.notification_id)
+            pushUseNavigate(navigationRef, payloadData.notification_id)
           }
         })
       }
@@ -55,4 +55,4 @@ const pushReceive = ({ navigation, queryClient, instances }: Params) => {
   }, [instances])
 }
 
-export default pushReceive
+export default pushUseReceive

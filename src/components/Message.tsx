@@ -56,8 +56,7 @@ const displayMessage = ({
     onPress,
     ...(mode &&
       type && {
-        renderFlashMessageIcon: props => {
-          console.log(props)
+        renderFlashMessageIcon: () => {
           return (
             <Icon
               name={iconMapping[type]}
@@ -92,7 +91,7 @@ const Message = React.memo(
           ...StyleConstants.FontStyle.M,
           fontWeight: StyleConstants.Font.Weight.Bold
         }}
-        textStyle={{ color: theme.primary, ...StyleConstants.FontStyle.M }}
+        textStyle={{ color: theme.primary, ...StyleConstants.FontStyle.S }}
         // @ts-ignore
         textProps={{ numberOfLines: 2 }}
       />

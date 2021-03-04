@@ -1,9 +1,9 @@
 {
   "name": "tooot",
   "versions": {
-    "native": "210201",
+    "native": "210304",
     "major": 0,
-    "minor": 5,
+    "minor": 6,
     "patch": 0,
     "expo": "40.0.0"
   },

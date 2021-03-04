@@ -35,7 +35,7 @@ export default {
     howitworks: '了解通知消息转发如何工作'
   },
   error: {
-    message: '推送服务器错误',
+    message: '推送服务错误',
     description: '请在设置中重新尝试启用推送通知'
   }
 }

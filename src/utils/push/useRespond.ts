@@ -1,4 +1,4 @@
-import { StackNavigationProp } from '@react-navigation/stack'
+import { NavigationContainerRef } from '@react-navigation/native'
 import { Dispatch } from '@reduxjs/toolkit'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { Instance, updateInstanceActive } from '@utils/slices/instancesSlice'
@@ -6,17 +6,17 @@ import * as Notifications from 'expo-notifications'
 import { findIndex } from 'lodash'
 import { useEffect } from 'react'
 import { QueryClient } from 'react-query'
-import pushNavigate from './pushNavigate'
+import pushUseNavigate from './useNavigate'
 
 export interface Params {
-  navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Tabs'>
+  navigationRef: React.RefObject<NavigationContainerRef>
   queryClient: QueryClient
   instances: Instance[]
   dispatch: Dispatch<any>
 }
 
-const pushRespond = ({
-  navigation,
+const pushUseRespond = ({
+  navigationRef,
   queryClient,
   instances,
   dispatch
@@ -44,11 +44,11 @@ const pushRespond = ({
         if (notificationIndex !== -1) {
           dispatch(updateInstanceActive(instances[notificationIndex]))
         }
-        pushNavigate(navigation, payloadData.notification_id)
+        pushUseNavigate(navigationRef, payloadData.notification_id)
       }
     )
     return () => subscription.remove()
   }, [instances])
 }
 
-export default pushRespond
+export default pushUseRespond

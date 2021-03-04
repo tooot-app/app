@@ -8,10 +8,12 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import pushUseConnect from '@utils/push/useConnect'
+import pushUseReceive from '@utils/push/useReceive'
+import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
-import { connectInstancesPush } from '@utils/slices/instances/connectPush'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
@@ -20,6 +22,7 @@ import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -56,10 +59,15 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   //   }
   // }, [isConnected, firstRender])
 
-  // Update Expo Token to server
-  useEffect(() => {
-    dispatch(connectInstancesPush({ mode, t }))
-  }, [])
+  // Push hooks
+  const instances = useSelector(
+    getInstances,
+    (prev, next) => prev.length === next.length
+  )
+  const queryClient = useQueryClient()
+  pushUseConnect({ navigationRef, mode, t, instances, dispatch })
+  pushUseReceive({ navigationRef, queryClient, instances })
+  pushUseRespond({ navigationRef, queryClient, instances, dispatch })
 
   // Prevent screenshot alert
   useEffect(() => {

@@ -7,19 +7,19 @@ import {
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
-import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import {
+  getInstanceAccount,
+  getInstanceActive
+} from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
 import TabPublic from './Tabs/Public'
-import pushReceive from './Tabs/utils/pushReceive'
-import pushRespond from './Tabs/utils/pushRespond'
 
 export type ScreenTabsParamList = {
   'Tab-Local': NavigatorScreenParams<Nav.TabLocalStackParamList>
@@ -40,17 +40,11 @@ const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
     const { mode, theme } = useTheme()
 
-    const queryClient = useQueryClient()
-
-    const dispatch = useDispatch()
     const instanceActive = useSelector(getInstanceActive)
-    const instances = useSelector(
-      getInstances,
-      (prev, next) => prev.length === next.length
+    const instanceAccount = useSelector(
+      getInstanceAccount,
+      (prev, next) => prev?.avatarStatic === next?.avatarStatic
     )
-
-    pushReceive({ navigation, queryClient, instances })
-    pushRespond({ navigation, queryClient, instances, dispatch })
 
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
@@ -77,7 +71,7 @@ const ScreenTabs = React.memo(
               return instanceActive !== -1 ? (
                 <FastImage
                   source={{
-                    uri: instances[instanceActive].account.avatarStatic
+                    uri: instanceAccount?.avatarStatic
                   }}
                   style={{
                     width: size,
@@ -99,7 +93,7 @@ const ScreenTabs = React.memo(
           }
         }
       }),
-      [instances, instanceActive]
+      [instanceAccount, instanceActive]
     )
     const tabBarOptions = useMemo(
       () => ({
