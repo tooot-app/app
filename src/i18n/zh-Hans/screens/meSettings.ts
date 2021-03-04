@@ -1,6 +1,13 @@
 export default {
   heading: '设置',
   content: {
+    push: {
+      heading: '$t(meSettingsPush:heading)',
+      content: {
+        enabled: '已开启',
+        disabled: '已关闭'
+      }
+    },
     language: {
       heading: '切换语言',
       options: {
@@ -25,10 +32,6 @@ export default {
         external: '浏览器打开',
         cancel: '$t(common:buttons.cancel)'
       }
-    },
-    remote: {
-      heading: '$t(meSettingsUpdateRemote:heading)',
-      description: '外站只能浏览不能玩'
     },
     cache: {
       heading: '清空缓存',

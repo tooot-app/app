@@ -73,7 +73,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <Text
           style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
           children={t('content.summary.followers_count', {
-            count: account?.followers_count || 0
+            count: account.followers_count || 0
           })}
           onPress={() => {
             analytics('account_stats_followers_press', {

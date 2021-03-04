@@ -16,129 +16,132 @@ export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
 }
 
-const TimelineAttachment: React.FC<Props> = ({ status }) => {
-  const { t } = useTranslation('componentTimeline')
+const TimelineAttachment = React.memo(
+  ({ status }: Props) => {
+    const { t } = useTranslation('componentTimeline')
 
-  const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
-  const onPressBlurView = useCallback(() => {
-    analytics('timeline_shared_attachment_blurview_press_show')
-    layoutAnimation()
-    setSensitiveShown(false)
-    haptics('Light')
-  }, [])
-  const onPressShow = useCallback(() => {
-    analytics('timeline_shared_attachment_blurview_press_hide')
-    setSensitiveShown(true)
-    haptics('Light')
-  }, [])
+    const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
+    const onPressBlurView = useCallback(() => {
+      analytics('timeline_shared_attachment_blurview_press_show')
+      layoutAnimation()
+      setSensitiveShown(false)
+      haptics('Light')
+    }, [])
+    const onPressShow = useCallback(() => {
+      analytics('timeline_shared_attachment_blurview_press_hide')
+      setSensitiveShown(true)
+      haptics('Light')
+    }, [])
 
-  let imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'] = []
-  const navigation = useNavigation()
-  const navigateToImagesViewer = (imageIndex: number) =>
-    navigation.navigate('Screen-ImagesViewer', {
-      imageUrls,
-      imageIndex
-    })
-  const attachments = useMemo(
-    () =>
-      status.media_attachments.map((attachment, index) => {
-        switch (attachment.type) {
-          case 'image':
-            imageUrls.push({
-              url: attachment.url,
-              preview_url: attachment.preview_url,
-              remote_url: attachment.remote_url,
-              width: attachment.meta?.original?.width,
-              height: attachment.meta?.original?.height,
-              imageIndex: index
-            })
-            return (
-              <AttachmentImage
-                key={index}
-                total={status.media_attachments.length}
-                index={index}
-                sensitiveShown={sensitiveShown}
-                image={attachment}
-                navigateToImagesViewer={navigateToImagesViewer}
-              />
-            )
-          case 'video':
-            return (
-              <AttachmentVideo
-                key={index}
-                total={status.media_attachments.length}
-                index={index}
-                sensitiveShown={sensitiveShown}
-                video={attachment}
-              />
-            )
-          case 'gifv':
-            return (
-              <AttachmentVideo
-                key={index}
-                total={status.media_attachments.length}
-                index={index}
-                sensitiveShown={sensitiveShown}
-                video={attachment}
-                gifv
-              />
-            )
-          case 'audio':
-            return (
-              <AttachmentAudio
-                key={index}
-                total={status.media_attachments.length}
-                index={index}
-                sensitiveShown={sensitiveShown}
-                audio={attachment}
-              />
-            )
-          default:
-            return (
-              <AttachmentUnsupported
-                key={index}
-                total={status.media_attachments.length}
-                index={index}
-                sensitiveShown={sensitiveShown}
-                attachment={attachment}
-              />
-            )
-        }
-      }),
-    [sensitiveShown]
-  )
+    let imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'] = []
+    const navigation = useNavigation()
+    const navigateToImagesViewer = (imageIndex: number) =>
+      navigation.navigate('Screen-ImagesViewer', {
+        imageUrls,
+        imageIndex
+      })
+    const attachments = useMemo(
+      () =>
+        status.media_attachments.map((attachment, index) => {
+          switch (attachment.type) {
+            case 'image':
+              imageUrls.push({
+                url: attachment.url,
+                preview_url: attachment.preview_url,
+                remote_url: attachment.remote_url,
+                width: attachment.meta?.original?.width,
+                height: attachment.meta?.original?.height,
+                imageIndex: index
+              })
+              return (
+                <AttachmentImage
+                  key={index}
+                  total={status.media_attachments.length}
+                  index={index}
+                  sensitiveShown={sensitiveShown}
+                  image={attachment}
+                  navigateToImagesViewer={navigateToImagesViewer}
+                />
+              )
+            case 'video':
+              return (
+                <AttachmentVideo
+                  key={index}
+                  total={status.media_attachments.length}
+                  index={index}
+                  sensitiveShown={sensitiveShown}
+                  video={attachment}
+                />
+              )
+            case 'gifv':
+              return (
+                <AttachmentVideo
+                  key={index}
+                  total={status.media_attachments.length}
+                  index={index}
+                  sensitiveShown={sensitiveShown}
+                  video={attachment}
+                  gifv
+                />
+              )
+            case 'audio':
+              return (
+                <AttachmentAudio
+                  key={index}
+                  total={status.media_attachments.length}
+                  index={index}
+                  sensitiveShown={sensitiveShown}
+                  audio={attachment}
+                />
+              )
+            default:
+              return (
+                <AttachmentUnsupported
+                  key={index}
+                  total={status.media_attachments.length}
+                  index={index}
+                  sensitiveShown={sensitiveShown}
+                  attachment={attachment}
+                />
+              )
+          }
+        }),
+      [sensitiveShown]
+    )
 
-  return (
-    <View>
-      <View style={styles.container} children={attachments} />
+    return (
+      <View>
+        <View style={styles.container} children={attachments} />
 
-      {status.sensitive &&
-        (sensitiveShown ? (
-          <Pressable style={styles.sensitiveBlur}>
+        {status.sensitive &&
+          (sensitiveShown ? (
+            <Pressable style={styles.sensitiveBlur}>
+              <Button
+                type='text'
+                content={t('shared.attachment.sensitive.button')}
+                overlay
+                onPress={onPressBlurView}
+              />
+            </Pressable>
+          ) : (
             <Button
-              type='text'
-              content={t('shared.attachment.sensitive.button')}
+              type='icon'
+              content='EyeOff'
+              round
               overlay
-              onPress={onPressBlurView}
+              onPress={onPressShow}
+              style={{
+                position: 'absolute',
+                top: StyleConstants.Spacing.S * 2,
+                left: StyleConstants.Spacing.S
+              }}
             />
-          </Pressable>
-        ) : (
-          <Button
-            type='icon'
-            content='EyeOff'
-            round
-            overlay
-            onPress={onPressShow}
-            style={{
-              position: 'absolute',
-              top: StyleConstants.Spacing.S * 2,
-              left: StyleConstants.Spacing.S
-            }}
-          />
-        ))}
-    </View>
-  )
-}
+          ))}
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -166,4 +169,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(TimelineAttachment, () => true)
+export default TimelineAttachment

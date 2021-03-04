@@ -1,18 +1,17 @@
 import { MenuRow } from '@components/Menu'
-import TimelineEmpty from '@components/Timeline/Empty'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 const ScreenMeLists: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
-  'Tab-Me-Switch'
+  'Tab-Me-Lists'
 >> = ({ navigation }) => {
-  const { status, data, refetch } = useListsQuery({})
+  const { data } = useListsQuery({})
 
-  const children = useMemo(() => {
-    if (status === 'success') {
-      return data?.map((d: Mastodon.List, i: number) => (
+  return (
+    <>
+      {data?.map((d: Mastodon.List, i: number) => (
         <MenuRow
           key={i}
           iconFront='List'
@@ -24,13 +23,9 @@ const ScreenMeLists: React.FC<StackScreenProps<
             })
           }
         />
-      ))
-    } else {
-      return <TimelineEmpty status={status} refetch={refetch} />
-    }
-  }, [status])
-
-  return <>{children}</>
+      ))}
+    </>
+  )
 }
 
 export default ScreenMeLists

@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
   useMutation,
@@ -15,9 +15,8 @@ export type QueryKeyRelationship = [
 const queryFunction = ({ queryKey }: { queryKey: QueryKeyRelationship }) => {
   const { id } = queryKey[1]
 
-  return client<Mastodon.Relationship[]>({
+  return apiInstance<Mastodon.Relationship[]>({
     method: 'get',
-    instance: 'local',
     url: `accounts/relationships`,
     params: {
       'id[]': id
@@ -57,15 +56,13 @@ type MutationVarsRelationship =
 const mutationFunction = async (params: MutationVarsRelationship) => {
   switch (params.type) {
     case 'incoming':
-      return client<Mastodon.Relationship>({
+      return apiInstance<Mastodon.Relationship>({
         method: 'post',
-        instance: 'local',
         url: `follow_requests/${params.id}/${params.payload.action}`
       }).then(res => res.body)
     case 'outgoing':
-      return client<Mastodon.Relationship>({
+      return apiInstance<Mastodon.Relationship>({
         method: 'post',
-        instance: 'local',
         url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${
           params.payload.action
         }`

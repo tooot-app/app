@@ -1,17 +1,19 @@
 import Button from '@components/Button'
 import haptics from '@root/components/haptics'
-import { localRemoveInstance } from '@utils/slices/instancesSlice'
+import removeInstance from '@utils/slices/instances/remove'
+import { getInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation('meRoot')
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
+  const instance = useSelector(getInstance)
 
   return (
     <Button
@@ -31,9 +33,11 @@ const Logout: React.FC = () => {
               text: t('content.logout.alert.buttons.logout'),
               style: 'destructive' as const,
               onPress: () => {
-                haptics('Success')
-                queryClient.clear()
-                dispatch(localRemoveInstance())
+                if (instance) {
+                  haptics('Success')
+                  queryClient.clear()
+                  dispatch(removeInstance(instance))
+                }
               }
             },
             {

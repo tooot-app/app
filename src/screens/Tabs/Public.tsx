@@ -1,10 +1,12 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
+import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,12 +23,21 @@ const TabPublic = React.memo(
     const { t, i18n } = useTranslation()
     const { mode } = useTheme()
     const navigation = useNavigation()
-    const localActiveIndex = useSelector(getLocalActiveIndex)
+    const instanceActive = useSelector(getInstanceActive)
 
     const [segment, setSegment] = useState(0)
-    const pages: { title: string; page: App.Pages }[] = [
-      { title: t('public:heading.segments.left'), page: 'LocalPublic' },
-      { title: t('public:heading.segments.right'), page: 'Local' }
+    const pages: {
+      title: string
+      key: App.Pages
+    }[] = [
+      {
+        title: t('public:heading.segments.left'),
+        key: 'LocalPublic'
+      },
+      {
+        title: t('public:heading.segments.right'),
+        key: 'Local'
+      }
     ]
     const screenOptions = useMemo(
       () => ({
@@ -52,7 +63,7 @@ const TabPublic = React.memo(
           <HeaderRight
             content='Search'
             onPress={() => {
-              analytics('search_tap', { page: pages[segment].page })
+              analytics('search_tap', { page: pages[segment].key })
               navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })
             }}
           />
@@ -61,37 +72,42 @@ const TabPublic = React.memo(
       [mode, segment, i18n.language]
     )
 
-    const routes = pages.map(p => ({ key: p.page }))
+    const routes = pages.map(p => ({ key: p.key }))
     const renderPager = useCallback(
       props => <ViewPagerAdapter {...props} />,
       []
     )
     const renderScene = useCallback(
       ({
-        route
+        route: { key: page }
       }: {
         route: {
           key: App.Pages
         }
       }) => {
-        return localActiveIndex !== null && <Timeline page={route.key} />
+        const queryKey: QueryKeyTimeline = ['Timeline', { page }]
+        const renderItem = ({ item }) => (
+          <TimelineDefault item={item} queryKey={queryKey} />
+        )
+        return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
       },
-      [localActiveIndex]
+      []
     )
     const children = useCallback(
-      () => (
-        <TabView
-          lazy
-          swipeEnabled
-          renderPager={renderPager}
-          renderScene={renderScene}
-          renderTabBar={() => null}
-          onIndexChange={index => setSegment(index)}
-          navigationState={{ index: segment, routes }}
-          initialLayout={{ width: Dimensions.get('screen').width }}
-        />
-      ),
-      [segment]
+      () =>
+        instanceActive !== -1 ? (
+          <TabView
+            lazy
+            swipeEnabled
+            renderPager={renderPager}
+            renderScene={renderScene}
+            renderTabBar={() => null}
+            onIndexChange={index => setSegment(index)}
+            navigationState={{ index: segment, routes }}
+            initialLayout={{ width: Dimensions.get('screen').width }}
+          />
+        ) : null,
+      [segment, instanceActive]
     )
 
     return (

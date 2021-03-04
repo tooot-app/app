@@ -30,6 +30,9 @@ export default (): ExpoConfig => ({
       }
     ]
   },
+  ios: {
+    bundleIdentifier: 'com.xmflsct.app.tooot'
+  },
   android: {
     versionCode: 4,
     package: 'com.xmflsct.app.tooot',

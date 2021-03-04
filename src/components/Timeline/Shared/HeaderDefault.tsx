@@ -17,50 +17,49 @@ export interface Props {
   status: Mastodon.Status
 }
 
-const TimelineHeaderDefault: React.FC<Props> = ({
-  queryKey,
-  rootQueryKey,
-  status
-}) => {
-  const navigation = useNavigation()
-  const { theme } = useTheme()
+const TimelineHeaderDefault = React.memo(
+  ({ queryKey, rootQueryKey, status }: Props) => {
+    const navigation = useNavigation()
+    const { theme } = useTheme()
 
-  return (
-    <View style={styles.base}>
-      <View style={styles.accountAndMeta}>
-        <HeaderSharedAccount account={status.account} />
-        <View style={styles.meta}>
-          <HeaderSharedCreated created_at={status.created_at} />
-          <HeaderSharedVisibility visibility={status.visibility} />
-          <HeaderSharedMuted muted={status.muted} />
-          <HeaderSharedApplication application={status.application} />
+    return (
+      <View style={styles.base}>
+        <View style={styles.accountAndMeta}>
+          <HeaderSharedAccount account={status.account} />
+          <View style={styles.meta}>
+            <HeaderSharedCreated created_at={status.created_at} />
+            <HeaderSharedVisibility visibility={status.visibility} />
+            <HeaderSharedMuted muted={status.muted} />
+            <HeaderSharedApplication application={status.application} />
+          </View>
         </View>
-      </View>
 
-      {queryKey ? (
-        <Pressable
-          style={styles.action}
-          onPress={() =>
-            navigation.navigate('Screen-Actions', {
-              queryKey,
-              rootQueryKey,
-              status,
-              url: status.url || status.uri,
-              type: 'status'
-            })
-          }
-          children={
-            <Icon
-              name='MoreHorizontal'
-              color={theme.secondary}
-              size={StyleConstants.Font.Size.L}
-            />
-          }
-        />
-      ) : null}
-    </View>
-  )
-}
+        {queryKey ? (
+          <Pressable
+            style={styles.action}
+            onPress={() =>
+              navigation.navigate('Screen-Actions', {
+                queryKey,
+                rootQueryKey,
+                status,
+                url: status.url || status.uri,
+                type: 'status'
+              })
+            }
+            children={
+              <Icon
+                name='MoreHorizontal'
+                color={theme.secondary}
+                size={StyleConstants.Font.Size.L}
+              />
+            }
+          />
+        ) : null}
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {
@@ -87,7 +86,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(
-  TimelineHeaderDefault,
-  (prev, next) => prev.status.muted !== next.status.muted
-)
+export default TimelineHeaderDefault

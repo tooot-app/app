@@ -1,4 +1,7 @@
-import { getLocalAccount, getLocalUri } from '@utils/slices/instancesSlice'
+import {
+  getInstanceAccount,
+  getInstanceUri
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -11,17 +14,17 @@ const ComposePostingAs = React.memo(
     const { t } = useTranslation('sharedCompose')
     const { theme } = useTheme()
 
-    const localAccount = useSelector(
-      getLocalAccount,
+    const instanceAccount = useSelector(
+      getInstanceAccount,
       (prev, next) => prev?.acct === next?.acct
     )
-    const localUri = useSelector(getLocalUri)
+    const instanceUri = useSelector(getInstanceUri)
 
     return (
       <Text style={[styles.text, { color: theme.secondary }]}>
         {t('content.root.header.postingAs', {
-          acct: localAccount?.acct,
-          domain: localUri
+          acct: instanceAccount?.acct,
+          domain: instanceUri
         })}
       </Text>
     )

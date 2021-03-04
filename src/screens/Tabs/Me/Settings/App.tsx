@@ -2,7 +2,14 @@ import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useNavigation } from '@react-navigation/native'
 import i18n from '@root/i18n/i18n'
+import androidDefaults from '@utils/slices/instances/push/androidDefaults'
+import {
+  getInstanceActive,
+  getInstancePush,
+  getInstances
+} from '@utils/slices/instancesSlice'
 import {
   changeBrowser,
   changeLanguage,
@@ -12,22 +19,45 @@ import {
   getSettingsBrowser
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Notifications from 'expo-notifications'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SettingsApp: React.FC = () => {
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { setTheme } = useTheme()
   const { t } = useTranslation('meSettings')
 
+  const instances = useSelector(getInstances, () => true)
+  const instanceActive = useSelector(getInstanceActive)
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const instancePush = useSelector(
+    getInstancePush,
+    (prev, next) => prev?.global.value === next?.global.value
+  )
 
   return (
     <MenuContainer>
+      {instanceActive !== -1 ? (
+        <MenuRow
+          title={t('content.push.heading')}
+          content={
+            instancePush?.global.value
+              ? t('content.push.content.enabled')
+              : t('content.push.content.disabled')
+          }
+          iconBack='ChevronRight'
+          onPress={() => {
+            navigation.navigate('Tab-Me-Settings-Push')
+          }}
+        />
+      ) : null}
       <MenuRow
         title={t('content.language.heading')}
         content={t(`content.language.options.${settingsLanguage}`)}
@@ -55,9 +85,68 @@ const SettingsApp: React.FC = () => {
                   new: availableLanguages[buttonIndex]
                 })
                 haptics('Success')
+
                 // @ts-ignore
                 dispatch(changeLanguage(availableLanguages[buttonIndex]))
                 i18n.changeLanguage(availableLanguages[buttonIndex])
+
+                // Update Android notification channel language
+                if (Platform.OS === 'android') {
+                  instances.forEach(instance => {
+                    const accountFull = `@${instance.account.acct}@${instance.uri}`
+                    if (instance.push.decode.value === false) {
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_default`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.default.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                    } else {
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_follow`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.follow.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_favourite`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.favourite.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_reblog`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.reblog.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_mention`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.mention.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                      Notifications.setNotificationChannelAsync(
+                        `${accountFull}_poll`,
+                        {
+                          groupId: accountFull,
+                          name: t('meSettingsPush:content.poll.heading'),
+                          ...androidDefaults
+                        }
+                      )
+                    }
+                  })
+                }
               }
             }
           )

@@ -1,10 +1,10 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
@@ -58,17 +58,16 @@ const TimelineConversation: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
-  const localAccount = useSelector(
-    getLocalAccount,
+  const instanceAccount = useSelector(
+    getInstanceAccount,
     (prev, next) => prev?.id === next?.id
   )
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(() => {
-    return client<Mastodon.Conversation>({
+    return apiInstance<Mastodon.Conversation>({
       method: 'post',
-      instance: 'local',
       url: `conversations/${conversation.id}/read`
     })
   }, [])
@@ -135,7 +134,9 @@ const TimelineConversation: React.FC<Props> = ({
                 statusId={conversation.last_status.id}
                 poll={conversation.last_status.poll}
                 reblog={false}
-                sameAccount={conversation.last_status.id === localAccount?.id}
+                sameAccount={
+                  conversation.last_status.id === instanceAccount?.id
+                }
               />
             )}
           </View>

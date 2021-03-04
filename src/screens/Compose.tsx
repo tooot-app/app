@@ -7,10 +7,10 @@ import ComposeRoot from '@screens/Compose/Root'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
-  getLocalAccount,
-  getLocalMaxTootChar,
-  removeLocalDraft,
-  updateLocalDraft
+  getInstanceAccount,
+  getInstanceMaxTootChar,
+  removeInstanceDraft,
+  updateInstanceDraft
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -75,7 +75,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     setHasKeyboard(false)
   }
 
-  const localAccount = useSelector(getLocalAccount, (prev, next) =>
+  const localAccount = useSelector(getInstanceAccount, (prev, next) =>
     prev?.preferences && next?.preferences
       ? prev?.preferences['posting:default:visibility'] ===
         next?.preferences['posting:default:visibility']
@@ -102,7 +102,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     initialReducerState
   )
 
-  const maxTootChars = useSelector(getLocalMaxTootChar)
+  const maxTootChars = useSelector(getInstanceMaxTootChar, () => true)
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
@@ -145,6 +145,23 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         })
         break
       case 'reply':
+        const actualStatus =
+          params.incomingStatus.reblog || params.incomingStatus
+        if (actualStatus.spoiler_text) {
+          formatText({
+            textInput: 'spoiler',
+            composeDispatch,
+            content: actualStatus.spoiler_text,
+            disableDebounce: true
+          })
+        }
+        formatText({
+          textInput: 'text',
+          composeDispatch,
+          content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
+          disableDebounce: true
+        })
+        break
       case 'conversation':
         formatText({
           textInput: 'text',
@@ -158,7 +175,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
 
   const saveDraft = () => {
     dispatch(
-      updateLocalDraft({
+      updateInstanceDraft({
         timestamp: composeState.timestamp,
         spoiler: composeState.spoiler.raw,
         text: composeState.text.raw,
@@ -171,7 +188,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     )
   }
   const removeDraft = useCallback(() => {
-    dispatch(removeLocalDraft(composeState.timestamp))
+    dispatch(removeInstanceDraft(composeState.timestamp))
   }, [composeState.timestamp])
   useEffect(() => {
     const autoSave = composeState.dirty
@@ -302,7 +319,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     <KeyboardAvoidingView
       style={styles.base}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'android' ? 63 : 0}
+      keyboardVerticalOffset={Platform.OS === 'android' ? 30 : 0}
     >
       <SafeAreaView
         style={styles.base}

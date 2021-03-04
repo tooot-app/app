@@ -1,4 +1,4 @@
-import client from '@root/api/client'
+import apiInstance from '@api/instance'
 import { ComposeState } from '@screens/Compose/utils/types'
 import * as Crypto from 'expo-crypto'
 
@@ -39,9 +39,8 @@ const composePost = async (
 
   formData.append('visibility', composeState.visibility)
 
-  return client<Mastodon.Status>({
+  return apiInstance<Mastodon.Status>({
     method: 'post',
-    instance: 'local',
     url: 'statuses',
     headers: {
       'Idempotency-Key': await Crypto.digestStringAsync(

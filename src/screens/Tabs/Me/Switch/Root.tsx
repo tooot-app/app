@@ -4,10 +4,10 @@ import haptics from '@components/haptics'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
 import {
-  getLocalActiveIndex,
-  getLocalInstances,
-  InstanceLocal,
-  updateLocalActiveIndex
+  getInstanceActive,
+  getInstances,
+  Instance,
+  updateInstanceActive
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -25,7 +25,7 @@ import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface Props {
-  instance: InstanceLocal
+  instance: Instance
   disabled?: boolean
 }
 
@@ -45,7 +45,7 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
       onPress={() => {
         haptics('Light')
         analytics('switch_existing_press')
-        dispatch(updateLocalActiveIndex(instance))
+        dispatch(updateInstanceActive(instance))
         queryClient.clear()
         navigation.goBack()
       }}
@@ -56,8 +56,8 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
 const ScreenMeSwitchRoot: React.FC = () => {
   const { t } = useTranslation('meSwitch')
   const { theme } = useTheme()
-  const localInstances = useSelector(getLocalInstances)
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instances = useSelector(getInstances)
+  const instanceActive = useSelector(getInstanceActive)
 
   return (
     <KeyboardAvoidingView
@@ -72,8 +72,8 @@ const ScreenMeSwitchRoot: React.FC = () => {
             {t('content.existing')}
           </Text>
           <View style={styles.accountButtons}>
-            {localInstances.length
-              ? localInstances
+            {instances.length
+              ? instances
                   .slice()
                   .sort((a, b) =>
                     `${a.uri}${a.account.acct}`.localeCompare(
@@ -81,7 +81,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
                     )
                   )
                   .map((instance, index) => {
-                    const localAccount = localInstances[localActiveIndex!]
+                    const localAccount = instances[instanceActive!]
                     return (
                       <AccountButton
                         key={index}

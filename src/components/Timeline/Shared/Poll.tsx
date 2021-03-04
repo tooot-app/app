@@ -2,9 +2,9 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
-import { toast } from '@components/toast'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -61,8 +61,8 @@ const TimelinePoll: React.FC<Props> = ({
     },
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
-      haptics('Error')
-      toast({
+      displayMessage({
+        mode,
         type: 'error',
         message: t('common:toastMessage.error.message', {
           // @ts-ignore

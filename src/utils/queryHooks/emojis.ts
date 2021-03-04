@@ -1,13 +1,12 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
 type QueryKey = ['Emojis']
 
 const queryFunction = () => {
-  return client<Mastodon.Emoji[]>({
+  return apiInstance<Mastodon.Emoji[]>({
     method: 'get',
-    instance: 'local',
     url: 'custom_emojis'
   }).then(res => res.body)
 }

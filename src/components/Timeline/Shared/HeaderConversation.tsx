@@ -1,8 +1,7 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
-import { toast } from '@components/toast'
 import {
   QueryKeyTimeline,
   useTimelineMutation
@@ -44,78 +43,81 @@ export interface Props {
   conversation: Mastodon.Conversation
 }
 
-const HeaderConversation: React.FC<Props> = ({ queryKey, conversation }) => {
-  const { t } = useTranslation('componentTimeline')
+const HeaderConversation = React.memo(
+  ({ queryKey, conversation }: Props) => {
+    const { mode } = useTheme()
+    const { t } = useTranslation('componentTimeline')
 
-  const queryClient = useQueryClient()
-  const mutation = useTimelineMutation({
-    queryClient,
-    onMutate: true,
-    onError: (err: any, _, oldData) => {
-      haptics('Error')
-      toast({
-        type: 'error',
-        message: t('common:toastMessage.error.message', {
-          function: t(`shared.header.conversation.delete.function`)
-        }),
-        ...(err.status &&
-          typeof err.status === 'number' &&
-          err.data &&
-          err.data.error &&
-          typeof err.data.error === 'string' && {
-            description: err.data.error
+    const queryClient = useQueryClient()
+    const mutation = useTimelineMutation({
+      queryClient,
+      onMutate: true,
+      onError: (err: any, _, oldData) => {
+        displayMessage({
+          mode,
+          type: 'error',
+          message: t('common:toastMessage.error.message', {
+            function: t(`shared.header.conversation.delete.function`)
           }),
-        autoHide: false
-      })
-      queryClient.setQueryData(queryKey, oldData)
-    }
-  })
-
-  const { theme } = useTheme()
-
-  const actionOnPress = useCallback(() => {
-    analytics('timeline_conversation_delete_press')
-    mutation.mutate({
-      type: 'deleteItem',
-      source: 'conversations',
-      queryKey,
-      id: conversation.id
+          ...(err.status &&
+            typeof err.status === 'number' &&
+            err.data &&
+            err.data.error &&
+            typeof err.data.error === 'string' && {
+              description: err.data.error
+            })
+        })
+        queryClient.setQueryData(queryKey, oldData)
+      }
     })
-  }, [])
 
-  const actionChildren = useMemo(
-    () => (
-      <Icon
-        name='Trash'
-        color={theme.secondary}
-        size={StyleConstants.Font.Size.L}
-      />
-    ),
-    []
-  )
+    const { theme } = useTheme()
 
-  return (
-    <View style={styles.base}>
-      <View style={styles.nameAndMeta}>
-        <Names accounts={conversation.accounts} />
-        <View style={styles.meta}>
-          {conversation.last_status?.created_at ? (
-            <HeaderSharedCreated
-              created_at={conversation.last_status?.created_at}
-            />
-          ) : null}
-          <HeaderSharedMuted muted={conversation.last_status?.muted} />
+    const actionOnPress = useCallback(() => {
+      analytics('timeline_conversation_delete_press')
+      mutation.mutate({
+        type: 'deleteItem',
+        source: 'conversations',
+        queryKey,
+        id: conversation.id
+      })
+    }, [])
+
+    const actionChildren = useMemo(
+      () => (
+        <Icon
+          name='Trash'
+          color={theme.secondary}
+          size={StyleConstants.Font.Size.L}
+        />
+      ),
+      []
+    )
+
+    return (
+      <View style={styles.base}>
+        <View style={styles.nameAndMeta}>
+          <Names accounts={conversation.accounts} />
+          <View style={styles.meta}>
+            {conversation.last_status?.created_at ? (
+              <HeaderSharedCreated
+                created_at={conversation.last_status?.created_at}
+              />
+            ) : null}
+            <HeaderSharedMuted muted={conversation.last_status?.muted} />
+          </View>
         </View>
-      </View>
 
-      <Pressable
-        style={styles.action}
-        onPress={actionOnPress}
-        children={actionChildren}
-      />
-    </View>
-  )
-}
+        <Pressable
+          style={styles.action}
+          onPress={actionOnPress}
+          children={actionChildren}
+        />
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {

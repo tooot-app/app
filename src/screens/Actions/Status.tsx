@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
-import { toast } from '@components/toast'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -12,6 +11,8 @@ import {
 import analytics from '@components/analytics'
 import { StackNavigationProp } from '@react-navigation/stack'
 import deleteItem from '@utils/queryHooks/timeline/deleteItem'
+import { displayMessage } from '@components/Message'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 export interface Props {
   navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Actions'>
@@ -28,6 +29,7 @@ const ActionsStatus: React.FC<Props> = ({
   status,
   dismiss
 }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
@@ -39,7 +41,8 @@ const ActionsStatus: React.FC<Props> = ({
         .payload
         ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
         : 'delete'
-      toast({
+      displayMessage({
+        mode,
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(`shared.header.actions.status.${theFunction}.function`)

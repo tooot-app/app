@@ -5,8 +5,9 @@ import {
   configureStore,
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
+import { InstancesV3 } from '@utils/migrations/instances/v3'
 import contextsSlice from '@utils/slices/contextsSlice'
-import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
+import instancesSlice from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
 import { createMigrate, persistReducer, persistStore } from 'redux-persist'
 
@@ -21,42 +22,39 @@ const contextsPersistConfig = {
 }
 
 const instancesMigration = {
-  2: (state: InstancesState) => {
+  4: (state: InstancesV3) => {
     return {
-      ...state,
-      local: {
-        ...state.local,
-        instances: state.local.instances.map(instance => {
-          instance.max_toot_chars = 500
-          instance.drafts = []
-          return instance
-        })
-      }
-    }
-  },
-  3: (state: InstancesState) => {
-    return {
-      ...state,
-      local: {
-        ...state.local,
-        instances: state.local.instances.map(instance => {
-          if (!instance.urls) {
-            instance.urls = {
-              streaming_api: `wss://${instance.url}`
-            }
+      instances: state.local.instances.map((instance, index) => {
+        // @ts-ignore
+        delete instance.notification
+        return {
+          ...instance,
+          active: state.local.activeIndex === index,
+          push: {
+            global: { loading: false, value: false },
+            decode: { loading: false, value: false },
+            alerts: {
+              follow: { loading: false, value: true },
+              favourite: { loading: false, value: true },
+              reblog: { loading: false, value: true },
+              mention: { loading: false, value: true },
+              poll: { loading: false, value: true }
+            },
+            keys: undefined
           }
-          return instance
-        })
-      }
+        }
+      })
     }
   }
 }
+
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
-  version: 3,
   storage: secureStorage,
-  migrate: createMigrate(instancesMigration, { debug: true })
+  version: 4,
+  // @ts-ignore
+  migrate: createMigrate(instancesMigration)
 }
 
 const settingsPersistConfig = {

@@ -6,7 +6,10 @@ import * as WebBrowser from 'expo-web-browser'
 const openLink = async (url: string) => {
   switch (getSettingsBrowser(store.getState())) {
     case 'internal':
-      await WebBrowser.openBrowserAsync(url)
+      await WebBrowser.openBrowserAsync(url, {
+        dismissButtonStyle: 'close',
+        enableBarCollapsing: true
+      })
       break
     case 'external':
       await Linking.openURL(url)

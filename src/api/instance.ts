@@ -5,22 +5,8 @@ import li from 'li'
 
 const ctx = new chalk.Instance({ level: 3 })
 
-const client = async <T = unknown>({
-  method,
-  instance,
-  localIndex,
-  instanceDomain,
-  version = 'v1',
-  url,
-  params,
-  headers,
-  body,
-  onUploadProgress
-}: {
+export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
-  instance: 'local' | 'remote'
-  localIndex?: number
-  instanceDomain?: string
   version?: 'v1' | 'v2'
   url: string
   params?: {
@@ -29,30 +15,37 @@ const client = async <T = unknown>({
   headers?: { [key: string]: string }
   body?: FormData
   onUploadProgress?: (progressEvent: any) => void
-}): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
-  const { store } = require('@root/store')
-  const state = (store.getState() as RootState).instances
-  const theLocalIndex =
-    localIndex !== undefined ? localIndex : state.local.activeIndex
+}
 
-  let domain = null
-  let token = null
-  if (instance === 'remote') {
-    domain = instanceDomain || state.remote.url
+const apiInstance = async <T = unknown>({
+  method,
+  version = 'v1',
+  url,
+  params,
+  headers,
+  body,
+  onUploadProgress
+}: Params): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
+  const { store } = require('@root/store')
+  const state = store.getState() as RootState
+  const instanceActive = state.instances.instances.findIndex(
+    instance => instance.active
+  )
+
+  let domain
+  let token
+  if (instanceActive !== -1 && state.instances.instances[instanceActive]) {
+    domain = state.instances.instances[instanceActive].url
+    token = state.instances.instances[instanceActive].token
   } else {
-    if (theLocalIndex !== null && state.local.instances[theLocalIndex]) {
-      domain = state.local.instances[theLocalIndex].url
-      token = state.local.instances[theLocalIndex].token
-    } else {
-      console.error(
-        ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
-      )
-      return Promise.reject()
-    }
+    console.error(
+      ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
+    )
+    return Promise.reject()
   }
 
   console.log(
-    ctx.bgGreen.bold(' API ') +
+    ctx.bgGreen.bold(' API instance ') +
       ' ' +
       domain +
       ' ' +
@@ -97,7 +90,7 @@ const client = async <T = unknown>({
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         console.error(
-          ctx.bold(' API '),
+          ctx.bold(' API instance '),
           ctx.bold('response'),
           error.response.status,
           error.response.data.error
@@ -107,11 +100,11 @@ const client = async <T = unknown>({
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.error(ctx.bold(' API '), ctx.bold('request'), error)
+        console.error(ctx.bold(' API instance '), ctx.bold('request'), error)
         return Promise.reject()
       } else {
         console.error(
-          ctx.bold(' API '),
+          ctx.bold(' API instance '),
           ctx.bold('internal'),
           error.message,
           url
@@ -121,4 +114,4 @@ const client = async <T = unknown>({
     })
 }
 
-export default client
+export default apiInstance

@@ -1,4 +1,3 @@
-import client from '@api/client'
 import * as ImagePicker from 'expo-image-picker'
 import * as Crypto from 'expo-crypto'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
@@ -9,6 +8,7 @@ import { ComposeAction } from '../../utils/types'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import i18next from 'i18next'
 import analytics from '@components/analytics'
+import apiInstance from '@api/instance'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
@@ -106,9 +106,8 @@ const addAttachment = async ({
       type: attachmentType
     })
 
-    return client<Mastodon.Attachment>({
+    return apiInstance<Mastodon.Attachment>({
       method: 'post',
-      instance: 'local',
       url: 'media',
       body: formData
     })

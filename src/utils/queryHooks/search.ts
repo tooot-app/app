@@ -1,4 +1,4 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
@@ -19,10 +19,9 @@ type SearchResult = {
 
 const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   const { type, term, limit = 20 } = queryKey[1]
-  return client<SearchResult>({
+  return apiInstance<SearchResult>({
     version: 'v2',
     method: 'get',
-    instance: 'local',
     url: 'search',
     params: { ...(type && { type }), ...(term && { q: term }), limit }
   }).then(res => res.body)

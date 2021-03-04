@@ -10,21 +10,24 @@ import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
+import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { LogBox, Platform } from 'react-native'
+import { AppState, LogBox, Platform } from 'react-native'
 import { enableScreens } from 'react-native-screens'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import push from './startup/push'
 
-if (Platform.OS === 'android') {
-  LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-}
+Platform.select({
+  android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+})
 
 dev()
 sentry()
 audio()
+push()
 onlineStatus()
 
 log('log', 'react-query', 'initializing')
@@ -36,6 +39,17 @@ enableScreens()
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
   const [localCorrupt, setLocalCorrupt] = useState<string>()
+
+  useEffect(() => {
+    AppState.addEventListener('change', () => {
+      Notifications.setBadgeCountAsync(0)
+      Notifications.dismissAllNotificationsAsync()
+    })
+
+    return () => {
+      AppState.removeEventListener('change', () => {})
+    }
+  }, [])
 
   useEffect(() => {
     const delaySplash = async () => {

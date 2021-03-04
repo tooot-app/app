@@ -1,7 +1,10 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import { StackScreenProps } from '@react-navigation/stack'
-import { getLocalAccount, getLocalUrl } from '@utils/slices/instancesSlice'
+import {
+  getInstanceAccount,
+  getInstanceUrl
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
@@ -38,7 +41,7 @@ const ScreenActionsRoot = React.memo(
     const { t } = useTranslation()
 
     const localAccount = useSelector(
-      getLocalAccount,
+      getInstanceAccount,
       (prev, next) => prev?.id === next?.id
     )
     let sameAccount = false
@@ -51,7 +54,7 @@ const ScreenActionsRoot = React.memo(
         break
     }
 
-    const localDomain = useSelector(getLocalUrl)
+    const localDomain = useSelector(getInstanceUrl)
     let sameDomain = true
     let statusDomain: string
     switch (params.type) {

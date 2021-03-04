@@ -3,7 +3,6 @@ import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useSearchQuery } from '@utils/queryHooks/search'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Updates from 'expo-updates'
@@ -13,16 +12,17 @@ import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 
 const SettingsTooot: React.FC = () => {
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instanceActive = useSelector(getInstanceActive)
   const navigation = useNavigation()
   const { theme } = useTheme()
   const { t } = useTranslation('meSettings')
 
   const { isLoading, data } = useSearchQuery({
     term: '@tooot@xmflsct.com',
-    options: { enabled: localActiveIndex !== null }
+    options: { enabled: instanceActive !== -1 }
   })
 
   return (

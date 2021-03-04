@@ -1,5 +1,4 @@
-import client from '@api/client'
-import { toast, toastConfig } from '@components/toast'
+import { displayMessage, Message } from '@components/Message'
 import {
   NavigationContainer,
   NavigationContainerRef
@@ -9,21 +8,23 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import pushUseConnect from '@utils/push/useConnect'
+import pushUseReceive from '@utils/push/useReceive'
+import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
-import {
-  getLocalActiveIndex,
-  updateLocalAccountPreferences
-} from '@utils/slices/instancesSlice'
+import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
-// import { addScreenshotListener } from 'expo-screen-capture'
+import { addScreenshotListener } from 'expo-screen-capture'
 import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StatusBar } from 'react-native'
+import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import Toast from 'react-native-toast-message'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import * as Sentry from 'sentry-expo'
 
 const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
 
@@ -36,7 +37,7 @@ export const navigationRef = createRef<NavigationContainerRef>()
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
   const dispatch = useDispatch()
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instanceActive = useSelector(getInstanceActive)
   const { mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
@@ -58,26 +59,37 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   //   }
   // }, [isConnected, firstRender])
 
+  // Push hooks
+  const instances = useSelector(
+    getInstances,
+    (prev, next) => prev.length === next.length
+  )
+  const queryClient = useQueryClient()
+  pushUseConnect({ navigationRef, mode, t, instances, dispatch })
+  pushUseReceive({ navigationRef, queryClient, instances })
+  pushUseRespond({ navigationRef, queryClient, instances, dispatch })
+
   // Prevent screenshot alert
-  // useEffect(() => {
-  //   const screenshotListener = addScreenshotListener(() =>
-  //     Alert.alert(t('screenshot.title'), t('screenshot.message'), [
-  //       { text: t('screenshot.button'), style: 'destructive' }
-  //     ])
-  //   )
-  //   Platform.OS === 'ios' && screenshotListener
-  //   return () => screenshotListener.remove()
-  // }, [])
+  useEffect(() => {
+    const screenshotListener = addScreenshotListener(() =>
+      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+        { text: t('screenshot.button'), style: 'destructive' }
+      ])
+    )
+    Platform.select({ ios: screenshotListener })
+    return () => screenshotListener.remove()
+  }, [])
 
   // On launch display login credentials corrupt information
   useEffect(() => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
-        toast({
-          type: 'error',
+        displayMessage({
+          autoHide: false,
           message: t('index.localCorrupt'),
           description: localCorrupt.length ? localCorrupt : undefined,
-          autoHide: false
+          type: 'error',
+          mode
         })
         navigationRef.current?.navigate('Screen-Tabs', {
           screen: 'Tab-Me'
@@ -87,30 +99,12 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     return showLocalCorrect()
   }, [localCorrupt])
 
-  // On launch check if there is any unread announcements
-  useEffect(() => {
-    localActiveIndex !== null &&
-      client<Mastodon.Announcement[]>({
-        method: 'get',
-        instance: 'local',
-        url: `announcements`
-      })
-        .then(res => {
-          if (res.body.filter(announcement => !announcement.read).length) {
-            navigationRef.current?.navigate('Screen-Announcements', {
-              showAll: false
-            })
-          }
-        })
-        .catch(() => {})
-  }, [])
-
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
-    if (localActiveIndex !== null) {
-      dispatch(updateLocalAccountPreferences())
+    if (instanceActive !== -1) {
+      dispatch(updateAccountPreferences())
     }
-  }, [])
+  }, [instanceActive])
 
   // Callbacks
   const navigationContainerOnReady = useCallback(
@@ -130,6 +124,10 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
     if (previousRouteName !== currentRouteName) {
       Analytics.setCurrentScreen(currentRouteName)
+      Sentry.Native.setContext('page', {
+        previous: previousRouteName,
+        current: currentRouteName
+      })
     }
 
     routeNameRef.current = currentRouteName
@@ -188,9 +186,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           />
         </Stack.Navigator>
 
-        {Platform.OS === 'ios' ? (
-          <Toast ref={Toast.setRef} config={toastConfig} />
-        ) : null}
+        <Message />
       </NavigationContainer>
     </>
   )

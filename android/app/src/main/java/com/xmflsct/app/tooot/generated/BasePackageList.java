@@ -24,6 +24,7 @@ public class BasePackageList {
         new expo.modules.lineargradient.LinearGradientPackage(),
         new expo.modules.localization.LocalizationPackage(),
         new expo.modules.location.LocationPackage(),
+        new expo.modules.notifications.NotificationsPackage(),
         new expo.modules.permissions.PermissionsPackage(),
         new expo.modules.screencapture.ScreenCapturePackage(),
         new expo.modules.securestore.SecureStorePackage(),

@@ -1,6 +1,13 @@
 export default {
   heading: 'Settings',
   content: {
+    push: {
+      heading: '$t(meSettingsPush:heading)',
+      content: {
+        enabled: 'Enabled',
+        disabled: 'Disabled'
+      }
+    },
     language: {
       heading: 'Language',
       options: {
@@ -25,10 +32,6 @@ export default {
         external: 'Use system browser',
         cancel: '$t(common:buttons.cancel)'
       }
-    },
-    remote: {
-      heading: '$t(meSettingsUpdateRemote:heading)',
-      description: 'External instance can only be read'
     },
     cache: {
       heading: 'Clear cache',

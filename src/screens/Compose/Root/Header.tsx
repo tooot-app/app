@@ -1,7 +1,4 @@
-import {
-  getLocalActiveIndex,
-  getLocalInstances
-} from '@utils/slices/instancesSlice'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -13,21 +10,19 @@ import ComposeTextInput from './Header/TextInput'
 
 const ComposeRootHeader: React.FC = () => {
   const { composeState } = useContext(ComposeContext)
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instanceActive = useSelector(getInstanceActive)
   const localInstances = useSelector(
-    getLocalInstances,
+    getInstances,
     (prev, next) => prev.length === next.length
   )
 
   return (
     <>
-      {localActiveIndex !== null &&
-        localInstances.length &&
-        localInstances.length > 1 && (
-          <View style={styles.postingAs}>
-            <ComposePostingAs />
-          </View>
-        )}
+      {instanceActive !== -1 && localInstances.length > 1 && (
+        <View style={styles.postingAs}>
+          <ComposePostingAs />
+        </View>
+      )}
       {composeState.spoiler.active ? <ComposeSpoilerInput /> : null}
       <ComposeTextInput />
     </>

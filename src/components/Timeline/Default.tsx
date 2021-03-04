@@ -10,7 +10,7 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
@@ -41,10 +41,7 @@ const TimelineDefault: React.FC<Props> = ({
   pinned
 }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(
-    getLocalAccount,
-    (prev, next) => prev?.id === next?.id
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => true)
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -118,7 +115,7 @@ const TimelineDefault: React.FC<Props> = ({
             statusId={actualStatus.id}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
-            sameAccount={actualStatus.account.id === localAccount?.id}
+            sameAccount={actualStatus.account.id === instanceAccount?.id}
           />
         ) : null}
         {!disableDetails &&
@@ -147,7 +144,7 @@ const TimelineDefault: React.FC<Props> = ({
               ([actualStatus.account] as Mastodon.Account[] &
                 Mastodon.Mention[])
                 .concat(actualStatus.mentions)
-                .filter(d => d.id !== localAccount?.id),
+                .filter(d => d.id !== instanceAccount?.id),
               d => d.id
             ).map(d => d.acct)}
             reblog={item.reblog ? true : false}

@@ -204,13 +204,13 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
       style={styles.base}
       reducedTransparencyFallbackColor={theme.background}
     >
-      <SafeAreaView style={styles.base} edges={['bottom']}>
+      <SafeAreaView style={styles.base}>
         <View
           style={{
-            flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexBasis: 44
           }}
         >
           <HeaderLeft
@@ -236,7 +236,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
           onMomentumScrollEnd={onMomentumScrollEnd}
           ListEmptyComponent={ListEmptyComponent}
         />
-        <View style={[styles.indicators]}>
+        <View style={styles.indicators}>
           {query.data && query.data.length > 1 ? (
             <>
               {query.data.map((d, i) => (

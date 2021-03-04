@@ -10,7 +10,7 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getLocalAccount } from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
@@ -30,8 +30,8 @@ const TimelineNotifications: React.FC<Props> = ({
   highlighted = false
 }) => {
   const { theme } = useTheme()
-  const localAccount = useSelector(
-    getLocalAccount,
+  const instanceAccount = useSelector(
+    getInstanceAccount,
     (prev, next) => prev?.id === next?.id
   )
   const navigation = useNavigation<
@@ -103,7 +103,7 @@ const TimelineNotifications: React.FC<Props> = ({
                 statusId={notification.status.id}
                 poll={notification.status.poll}
                 reblog={false}
-                sameAccount={notification.account.id === localAccount?.id}
+                sameAccount={notification.account.id === instanceAccount?.id}
               />
             )}
             {notification.status.media_attachments.length > 0 && (
@@ -131,7 +131,7 @@ const TimelineNotifications: React.FC<Props> = ({
               ([notification.status.account] as Mastodon.Account[] &
                 Mastodon.Mention[])
                 .concat(notification.status.mentions)
-                .filter(d => d.id !== localAccount?.id),
+                .filter(d => d.id !== instanceAccount?.id),
               d => d.id
             ).map(d => d.acct)}
             reblog={false}

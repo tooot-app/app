@@ -1,10 +1,11 @@
 import { HeaderCenter } from '@components/Header'
 import Timeline from '@components/Timeline'
+import TimelineNotifications from '@components/Timeline/Notifications'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
-import { updateLocalNotification } from '@utils/slices/instancesSlice'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, ViewToken } from 'react-native'
+import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useDispatch } from 'react-redux'
 
@@ -28,39 +29,16 @@ const TabNotifications = React.memo(
       }),
       []
     )
-    const children = useCallback(
-      ({ navigation }) => (
-        <Timeline
-          page='Notifications'
-          customProps={{
-            viewabilityConfigCallbackPairs: [
-              {
-                onViewableItemsChanged: ({
-                  viewableItems
-                }: {
-                  viewableItems: ViewToken[]
-                }) => {
-                  if (
-                    navigation.isFocused() &&
-                    viewableItems.length &&
-                    viewableItems[0].index === 0
-                  ) {
-                    dispatch(
-                      updateLocalNotification({
-                        readTime: viewableItems[0].item.created_at
-                      })
-                    )
-                  }
-                },
-                viewabilityConfig: {
-                  minimumViewTime: 100,
-                  itemVisiblePercentThreshold: 60
-                }
-              }
-            ]
-          }}
-        />
+
+    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
+    const renderItem = useCallback(
+      ({ item }) => (
+        <TimelineNotifications notification={item} queryKey={queryKey} />
       ),
+      []
+    )
+    const children = useCallback(
+      () => <Timeline queryKey={queryKey} customProps={{ renderItem }} />,
       []
     )
 

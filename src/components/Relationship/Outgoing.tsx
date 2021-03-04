@@ -1,13 +1,14 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import {
   QueryKeyRelationship,
   useRelationshipMutation,
   useRelationshipQuery
 } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
@@ -18,6 +19,7 @@ export interface Props {
 
 const RelationshipOutgoing = React.memo(
   ({ id }: Props) => {
+    const { mode } = useTheme()
     const { t } = useTranslation('componentRelationship')
 
     const query = useRelationshipQuery({ id })
@@ -37,8 +39,8 @@ const RelationshipOutgoing = React.memo(
         }
       },
       onError: (err: any, { payload: { action } }) => {
-        haptics('Error')
-        toast({
+        displayMessage({
+          mode,
           type: 'error',
           message: t('common:toastMessage.error.message', {
             function: t(`${action}.function`)

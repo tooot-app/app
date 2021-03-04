@@ -343,6 +343,19 @@ declare namespace Mastodon {
     'reading:expand:spoilers'?: boolean
   }
 
+  type PushSubscription = {
+    id: string
+    endpoint: string
+    alerts: {
+      follow: boolean
+      favourite: boolean
+      reblog: boolean
+      mention: boolean
+      poll: boolean
+    }
+    server_key: string
+  }
+
   type Relationship = {
     id: string
     following: boolean

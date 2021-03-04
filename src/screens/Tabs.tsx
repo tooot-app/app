@@ -1,4 +1,3 @@
-import useWebsocket from '@api/websocket'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import {
@@ -7,19 +6,16 @@ import {
 } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import {
-  getLocalAccount,
-  getLocalActiveIndex,
-  getLocalNotification,
-  updateLocalNotification
+  getInstanceAccount,
+  getInstanceActive
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
@@ -43,15 +39,16 @@ const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
 const ScreenTabs = React.memo(
   ({ navigation }: ScreenTabsProp) => {
     const { mode, theme } = useTheme()
-    const dispatch = useDispatch()
-    const localActiveIndex = useSelector(getLocalActiveIndex)
-    const localAccount = useSelector(
-      getLocalAccount,
+
+    const instanceActive = useSelector(getInstanceActive)
+    const instanceAccount = useSelector(
+      getInstanceAccount,
       (prev, next) => prev?.avatarStatic === next?.avatarStatic
     )
 
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
+        tabBarVisible: instanceActive !== -1,
         tabBarIcon: ({
           focused,
           color,
@@ -71,9 +68,11 @@ const ScreenTabs = React.memo(
             case 'Tab-Notifications':
               return <Icon name='Bell' size={size} color={color} />
             case 'Tab-Me':
-              return localActiveIndex !== null ? (
+              return instanceActive !== -1 ? (
                 <FastImage
-                  source={{ uri: localAccount?.avatarStatic }}
+                  source={{
+                    uri: instanceAccount?.avatarStatic
+                  }}
                   style={{
                     width: size,
                     height: size,
@@ -94,117 +93,45 @@ const ScreenTabs = React.memo(
           }
         }
       }),
-      [localActiveIndex, localAccount?.avatarStatic]
+      [instanceAccount, instanceActive]
     )
     const tabBarOptions = useMemo(
       () => ({
         activeTintColor: theme.primary,
-        inactiveTintColor:
-          localActiveIndex !== null ? theme.secondary : theme.disabled,
+        inactiveTintColor: theme.secondary,
         showLabel: false,
         ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })
       }),
-      [mode, localActiveIndex]
-    )
-    const localListeners = useCallback(
-      () => ({
-        tabPress: (e: any) => {
-          if (!(localActiveIndex !== null)) {
-            e.preventDefault()
-          }
-        }
-      }),
-      [localActiveIndex]
+      [mode]
     )
     const composeListeners = useMemo(
       () => ({
         tabPress: (e: any) => {
           e.preventDefault()
-          if (localActiveIndex !== null) {
-            haptics('Light')
-            navigation.navigate('Screen-Compose')
-          }
+          haptics('Light')
+          navigation.navigate('Screen-Compose')
         }
       }),
-      [localActiveIndex]
+      []
     )
     const composeComponent = useCallback(() => null, [])
-    const notificationsListeners = useCallback(
-      () => ({
-        tabPress: (e: any) => {
-          if (!(localActiveIndex !== null)) {
-            e.preventDefault()
-          }
-        }
-      }),
-      [localActiveIndex]
-    )
 
-    // On launch check if there is any unread noficiations
-    useTimelineQuery({
-      page: 'Notifications',
-      options: {
-        notifyOnChangeProps: [],
-        select: data => {
-          if (data.pages[0].body.length) {
-            dispatch(
-              updateLocalNotification({
-                // @ts-ignore
-                latestTime: data.pages[0].body[0].created_at
-              })
-            )
-          }
-          return data
-        }
-      }
-    })
-    useWebsocket({ stream: 'user', event: 'notification' })
-    const localNotification = useSelector(
-      getLocalNotification,
-      (prev, next) =>
-        prev?.readTime === next?.readTime &&
-        prev?.latestTime === next?.latestTime
-    )
+    const previousTab = useSelector(getPreviousTab, () => true)
 
     return (
       <Tab.Navigator
-        initialRouteName={
-          localActiveIndex !== null
-            ? useSelector(getPreviousTab, () => true)
-            : 'Tab-Me'
-        }
+        initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
         screenOptions={screenOptions}
         tabBarOptions={tabBarOptions}
       >
-        <Tab.Screen
-          name='Tab-Local'
-          component={TabLocal}
-          listeners={localListeners}
-        />
+        <Tab.Screen name='Tab-Local' component={TabLocal} />
         <Tab.Screen name='Tab-Public' component={TabPublic} />
         <Tab.Screen
           name='Tab-Compose'
           component={composeComponent}
           listeners={composeListeners}
         />
-        <Tab.Screen
-          name='Tab-Notifications'
-          component={TabNotifications}
-          listeners={notificationsListeners}
-          options={{
-            tabBarBadge: localNotification?.latestTime
-              ? !localNotification.readTime ||
-                new Date(localNotification.readTime) <
-                  new Date(localNotification.latestTime)
-                ? ''
-                : undefined
-              : undefined,
-            tabBarBadgeStyle: {
-              transform: [{ scale: 0.5 }],
-              backgroundColor: theme.red
-            }
-          }}
-        />
+        <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
         <Tab.Screen name='Tab-Me' component={TabMe} />
       </Tab.Navigator>
     )

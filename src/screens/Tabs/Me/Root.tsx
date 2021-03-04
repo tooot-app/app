@@ -8,7 +8,7 @@ import AccountNav from '@screens/Tabs/Shared/Account/Nav'
 import AccountContext from '@screens/Tabs/Shared/Account/utils/createContext'
 import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState'
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
-import { getLocalActiveIndex } from '@utils/slices/instancesSlice'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import React, { useReducer, useRef, useState } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
@@ -17,7 +17,7 @@ import Animated, {
 import { useSelector } from 'react-redux'
 
 const ScreenMeRoot: React.FC = () => {
-  const localActiveIndex = useSelector(getLocalActiveIndex)
+  const instanceActive = useSelector(getInstanceActive)
 
   const scrollRef = useRef<Animated.ScrollView>(null)
   useScrollToTop(scrollRef)
@@ -36,7 +36,7 @@ const ScreenMeRoot: React.FC = () => {
 
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
-      {localActiveIndex !== null && data ? (
+      {instanceActive !== -1 && data ? (
         <AccountNav scrollY={scrollY} account={data} />
       ) : null}
       <Animated.ScrollView
@@ -45,14 +45,14 @@ const ScreenMeRoot: React.FC = () => {
         onScroll={onScroll}
         scrollEventThrottle={16}
       >
-        {localActiveIndex !== null ? (
+        {instanceActive !== -1 ? (
           <MyInfo setData={setData} />
         ) : (
           <ComponentInstance />
         )}
-        {localActiveIndex !== null ? <Collections /> : null}
+        {instanceActive !== -1 ? <Collections /> : null}
         <Settings />
-        {localActiveIndex !== null ? <Logout /> : null}
+        {instanceActive !== -1 ? <Logout /> : null}
       </Animated.ScrollView>
     </AccountContext.Provider>
   )

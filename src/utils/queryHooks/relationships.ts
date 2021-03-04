@@ -1,8 +1,8 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
 
-export type QueryKey = [
+export type QueryKeyRelationships = [
   'Relationships',
   { type: 'following' | 'followers'; id: Mastodon.Account['id'] }
 ]
@@ -11,15 +11,14 @@ const queryFunction = ({
   queryKey,
   pageParam
 }: {
-  queryKey: QueryKey
+  queryKey: QueryKeyRelationships
   pageParam?: { [key: string]: string }
 }) => {
   const { type, id } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
-  return client<Mastodon.Account[]>({
+  return apiInstance<Mastodon.Account[]>({
     method: 'get',
-    instance: 'local',
     url: `accounts/${id}/${type}`,
     params
   })
@@ -28,7 +27,7 @@ const queryFunction = ({
 const useRelationshipsQuery = <TData = Mastodon.Account[]>({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
+}: QueryKeyRelationships[1] & {
   options?: UseInfiniteQueryOptions<
     {
       body: Mastodon.Account[]
@@ -38,7 +37,10 @@ const useRelationshipsQuery = <TData = Mastodon.Account[]>({
     TData
   >
 }) => {
-  const queryKey: QueryKey = ['Relationships', { ...queryKeyParams }]
+  const queryKey: QueryKeyRelationships = [
+    'Relationships',
+    { ...queryKeyParams }
+  ]
   return useInfiniteQuery(queryKey, queryFunction, options)
 }
 

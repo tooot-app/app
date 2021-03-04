@@ -2,7 +2,7 @@ import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { getLocalInstances } from '@utils/slices/instancesSlice'
+import { getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux'
 import { Placeholder, Fade } from 'rn-placeholder'
 import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
-import EULA from './Instance/EULA'
 import InstanceInfo from './Instance/Info'
 
 export interface Props {
@@ -29,26 +28,23 @@ const ComponentInstance: React.FC<Props> = ({
   const { t } = useTranslation('componentInstance')
   const { theme } = useTheme()
 
-  const localInstances = useSelector(getLocalInstances, () => true)
-  const [instanceDomain, setInstanceDomain] = useState<string>()
+  const instances = useSelector(getInstances, () => true)
+  const [domain, setDomain] = useState<string>()
 
   const instanceQuery = useInstanceQuery({
-    instanceDomain,
-    options: { enabled: false, retry: false }
+    domain,
+    options: { enabled: !!domain, retry: false }
   })
   const appsQuery = useAppsQuery({
-    instanceDomain,
+    domain,
     options: { enabled: false, retry: false }
   })
 
   const onChangeText = useCallback(
     debounce(
       text => {
-        setInstanceDomain(text.replace(/^http(s)?\:\/\//i, ''))
+        setDomain(text.replace(/^http(s)?\:\/\//i, ''))
         appsQuery.remove()
-        if (text) {
-          instanceQuery.refetch()
-        }
       },
       1000,
       { trailing: true }
@@ -57,40 +53,35 @@ const ComponentInstance: React.FC<Props> = ({
   )
 
   const processUpdate = useCallback(() => {
-    if (instanceDomain) {
-      analytics('instance_local_login')
+    if (domain) {
+      analytics('instance_login')
       if (
-        localInstances &&
-        localInstances.filter(instance => instance.url === instanceDomain)
-          .length
+        instances &&
+        instances.filter(instance => instance.url === domain).length
       ) {
-        Alert.alert(
-          t('update.local.alert.title'),
-          t('update.local.alert.message'),
-          [
-            {
-              text: t('update.local.alert.buttons.cancel'),
-              style: 'cancel'
-            },
-            {
-              text: t('update.local.alert.buttons.continue'),
-              onPress: () => {
-                appsQuery.refetch()
-              }
+        Alert.alert(t('update.alert.title'), t('update.alert.message'), [
+          {
+            text: t('update.alert.buttons.cancel'),
+            style: 'cancel'
+          },
+          {
+            text: t('update.alert.buttons.continue'),
+            onPress: () => {
+              appsQuery.refetch()
             }
-          ]
-        )
+          }
+        ])
       } else {
         appsQuery.refetch()
       }
     }
-  }, [instanceDomain])
+  }, [domain])
 
   const onSubmitEditing = useCallback(
     ({ nativeEvent: { text } }) => {
-      analytics('instance_textinput_submit', { match: text === instanceDomain })
+      analytics('instance_textinput_submit', { match: text === domain })
       if (
-        text === instanceDomain &&
+        text === domain &&
         instanceQuery.isSuccess &&
         instanceQuery.data &&
         instanceQuery.data.uri
@@ -98,12 +89,12 @@ const ComponentInstance: React.FC<Props> = ({
         processUpdate()
       }
     },
-    [instanceDomain, instanceQuery.isSuccess, instanceQuery.data]
+    [domain, instanceQuery.isSuccess, instanceQuery.data]
   )
 
   const requestAuth = useMemo(() => {
     if (
-      instanceDomain &&
+      domain &&
       instanceQuery.data?.uri &&
       appsQuery.data?.client_id &&
       appsQuery.data.client_secret
@@ -111,7 +102,7 @@ const ComponentInstance: React.FC<Props> = ({
       return (
         <InstanceAuth
           key={Math.random()}
-          instanceDomain={instanceDomain}
+          instanceDomain={domain}
           instance={instanceQuery.data}
           appData={{
             clientId: appsQuery.data.client_id,
@@ -121,9 +112,7 @@ const ComponentInstance: React.FC<Props> = ({
         />
       )
     }
-  }, [instanceDomain, instanceQuery.data, appsQuery.data])
-
-  const [agreed, setAgreed] = useState(false)
+  }, [domain, instanceQuery.data, appsQuery.data])
 
   return (
     <>
@@ -160,14 +149,12 @@ const ComponentInstance: React.FC<Props> = ({
           />
           <Button
             type='text'
-            content={t('server.button.local')}
+            content={t('server.button')}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri}
             loading={instanceQuery.isFetching || appsQuery.isFetching}
           />
         </View>
-
-        {/* <EULA agreed={agreed} setAgreed={setAgreed} /> */}
 
         <View>
           <Placeholder

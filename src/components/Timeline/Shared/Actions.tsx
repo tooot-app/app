@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { toast } from '@components/toast'
+import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import {
   MutationVarsTimelineUpdateStatusProperty,
@@ -32,7 +31,7 @@ const TimelineActions: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation('componentTimeline')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const iconColor = theme.secondary
   const iconColorAction = (state: boolean) =>
     state ? theme.primary : theme.secondary
@@ -56,7 +55,10 @@ const TimelineActions: React.FC<Props> = ({
           theParams.payload.currentValue === true)
       ) {
         queryClient.invalidateQueries(queryKey)
-      } else if (theParams.payload.property === 'reblogged') {
+      } else if (
+        theParams.payload.property === 'reblogged' &&
+        queryKey[1].page !== 'Following'
+      ) {
         // When reblogged, update cache of following page
         const tempQueryKey: QueryKeyTimeline = [
           'Timeline',
@@ -81,8 +83,8 @@ const TimelineActions: React.FC<Props> = ({
     },
     onError: (err: any, params, oldData) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
-      haptics('Error')
-      toast({
+      displayMessage({
+        mode,
         type: 'error',
         message: t('common:toastMessage.error.message', {
           function: t(
@@ -207,7 +209,6 @@ const TimelineActions: React.FC<Props> = ({
               : iconColorAction(status.reblogged)
           }
           size={StyleConstants.Font.Size.L}
-          strokeWidth={status.reblogged ? 3 : undefined}
         />
         {status.reblogs_count > 0 && (
           <Text
@@ -231,7 +232,6 @@ const TimelineActions: React.FC<Props> = ({
           name='Heart'
           color={iconColorAction(status.favourited)}
           size={StyleConstants.Font.Size.L}
-          strokeWidth={status.favourited ? 3 : undefined}
         />
         {status.favourites_count > 0 && (
           <Text
@@ -255,7 +255,6 @@ const TimelineActions: React.FC<Props> = ({
         name='Bookmark'
         color={iconColorAction(status.bookmarked)}
         size={StyleConstants.Font.Size.L}
-        strokeWidth={status.bookmarked ? 3 : undefined}
       />
     ),
     [status.bookmarked]

@@ -1,13 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '@root/store'
+import i18n from '@root/i18n/i18n'
+import { RootState, store } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
 import * as Localization from 'expo-localization'
+import * as Notifications from 'expo-notifications'
 import { pickBy } from 'lodash'
+import androidDefaults from './instances/push/androidDefaults'
+import { getInstances } from './instancesSlice'
 
 enum availableLanguages {
   'zh-Hans',
   'en'
 }
+
+export const changeAnalytics = createAsyncThunk(
+  'settings/changeAnalytics',
+  async (newValue: SettingsState['analytics']) => {
+    await Analytics.setAnalyticsCollectionEnabled(newValue)
+    return newValue
+  }
+)
 
 export type SettingsState = {
   language: keyof availableLanguages
@@ -17,6 +29,9 @@ export type SettingsState = {
 }
 
 export const settingsInitialState = {
+  notification: {
+    enabled: false
+  },
   language: Object.keys(
     pickBy(availableLanguages, (_, key) => Localization.locale.includes(key))
   )
@@ -30,14 +45,6 @@ export const settingsInitialState = {
   browser: 'internal',
   analytics: true
 }
-
-export const changeAnalytics = createAsyncThunk(
-  'settings/changeAnalytics',
-  async (newValue: SettingsState['analytics']) => {
-    await Analytics.setAnalyticsCollectionEnabled(newValue)
-    return newValue
-  }
-)
 
 const settingsSlice = createSlice({
   name: 'settings',

@@ -1,13 +1,12 @@
-import client from '@api/client'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
 export type QueryKey = ['Lists']
 
 const queryFunction = () => {
-  return client<Mastodon.List[]>({
+  return apiInstance<Mastodon.List[]>({
     method: 'get',
-    instance: 'local',
     url: 'lists'
   }).then(res => res.body)
 }

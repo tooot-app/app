@@ -1,9 +1,16 @@
 import Timeline from '@components/Timeline'
-import React from 'react'
+import TimelineDefault from '@components/Timeline/Default'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import React, { useCallback } from 'react'
 
 const ScreenMeBookmarks = React.memo(
   () => {
-    return <Timeline page='Bookmarks' />
+    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Bookmarks' }]
+    const renderItem = useCallback(
+      ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
+      []
+    )
+    return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
   },
   () => true
 )
