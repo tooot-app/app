@@ -5,4 +5,3 @@
 gem 'fastlane-plugin-yarn'
 gem 'fastlane-plugin-json'
 gem 'fastlane-plugin-versioning_android'
-gem 'fastlane-plugin-sentry'
