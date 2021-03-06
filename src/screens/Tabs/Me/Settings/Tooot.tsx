@@ -39,7 +39,7 @@ const SettingsTooot: React.FC = () => {
         iconBack='ChevronRight'
         onPress={() => {
           analytics('settings_support_press')
-          Linking.openURL('https://www.patreon.com/xmflsct')
+          Linking.openURL('https://www.buymeacoffee.com/xmflsct')
         }}
       />
       {__DEV__ ||

@@ -62,11 +62,15 @@ const Timeline: React.FC<Props> = ({
         android: ['dataUpdatedAt', 'isFetching', 'isLoading']
       }),
       getNextPageParam: lastPage =>
-        lastPage?.links?.next && { max_id: lastPage.links.next }
+        lastPage?.links?.next && {
+          max_id: lastPage.links.next
+        }
     }
   })
 
-  const flattenData = data?.pages ? data.pages.flatMap(d => [...d.body]) : []
+  const flattenData = data?.pages
+    ? data.pages.flatMap(page => [...page.body])
+    : []
 
   const ItemSeparatorComponent = useCallback(
     ({ leadingItem }) =>
@@ -134,7 +138,7 @@ const Timeline: React.FC<Props> = ({
         ref={customFLRef || flRef}
         scrollEventThrottle={16}
         onScroll={onScroll}
-        windowSize={8}
+        windowSize={10}
         data={flattenData}
         initialNumToRender={6}
         maxToRenderPerBatch={3}

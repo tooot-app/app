@@ -50,9 +50,9 @@ const TimelineRefresh: React.FC<Props> = ({
   }
 
   const fetchingLatestIndex = useRef(0)
+  const refetchActive = useRef(false)
 
   const {
-    data,
     refetch,
     isFetching,
     isLoading,
@@ -68,9 +68,17 @@ const TimelineRefresh: React.FC<Props> = ({
           // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
           limit: '5'
         },
+      select: data => {
+        if (refetchActive.current) {
+          data.pageParams = [data.pageParams[0]]
+          data.pages = [data.pages[0]]
+          refetchActive.current = false
+        }
+        return data
+      },
       onSuccess: () => {
         if (fetchingLatestIndex.current > 0) {
-          if (fetchingLatestIndex.current > 8) {
+          if (fetchingLatestIndex.current > 5) {
             clearFirstPage()
             fetchingLatestIndex.current = 0
           } else {
@@ -91,23 +99,41 @@ const TimelineRefresh: React.FC<Props> = ({
   const { theme } = useTheme()
 
   const queryClient = useQueryClient()
-  const clearFirstPage = useCallback(() => {
-    if (data?.pages[0].body.length === 0) {
-      queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
-        queryKey,
-        data => {
-          if (data?.pages[0].body.length === 0) {
-            return {
-              pages: data.pages.slice(1),
-              pageParams: data.pageParams.slice(1)
-            }
-          } else {
-            return data
+  const clearFirstPage = () => {
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
+      queryKey,
+      data => {
+        if (data?.pages[0].body.length === 0) {
+          return {
+            pages: data.pages.slice(1),
+            pageParams: data.pageParams.slice(1)
           }
+        } else {
+          return data
         }
-      )
-    }
-  }, [data?.pages.length && data?.pages[0].body.length])
+      }
+    )
+  }
+  const prepareRefetch = () => {
+    refetchActive.current = true
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
+      queryKey,
+      data => {
+        if (data) {
+          data.pageParams = [undefined]
+          const newFirstPage: TimelineData = { body: [] }
+          for (let page of data.pages) {
+            // @ts-ignore
+            newFirstPage.body.push(...page.body)
+            if (newFirstPage.body.length > 10) break
+          }
+          data.pages = [newFirstPage]
+        }
+
+        return data
+      }
+    )
+  }
 
   const [textRight, setTextRight] = useState(0)
   const arrowY = useAnimatedStyle(() => ({
@@ -178,9 +204,10 @@ const TimelineRefresh: React.FC<Props> = ({
     },
     [isFetching]
   )
-  const wrapper = () => {
+  const wrapperStartLatest = () => {
     fetchingLatestIndex.current = 1
   }
+
   useAnimatedReaction(
     () => {
       return fetchingType.value
@@ -189,12 +216,12 @@ const TimelineRefresh: React.FC<Props> = ({
       fetchingType.value = 0
       switch (data) {
         case 1:
-          runOnJS(wrapper)()
+          runOnJS(wrapperStartLatest)()
           runOnJS(clearFirstPage)()
           runOnJS(fetchPreviousPage)()
           break
         case 2:
-          runOnJS(clearFirstPage)()
+          runOnJS(prepareRefetch)()
           runOnJS(refetch)()
           break
       }
