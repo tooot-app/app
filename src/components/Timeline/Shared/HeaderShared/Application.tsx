@@ -10,24 +10,29 @@ export interface Props {
   application?: Mastodon.Application
 }
 
-const HeaderSharedApplication: React.FC<Props> = ({ application }) => {
-  const { theme } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+const HeaderSharedApplication = React.memo(
+  ({ application }: Props) => {
+    const { theme } = useTheme()
+    const { t } = useTranslation('componentTimeline')
 
-  return application && application.name !== 'Web' ? (
-    <Text
-      onPress={async () => {
-        analytics('timeline_shared_header_application_press', {
-          application
-        })
-        application.website && (await openLink(application.website))
-      }}
-      style={[styles.application, { color: theme.secondary }]}
-    >
-      {t('shared.header.shared.application', { application: application.name })}
-    </Text>
-  ) : null
-}
+    return application && application.name !== 'Web' ? (
+      <Text
+        onPress={async () => {
+          analytics('timeline_shared_header_application_press', {
+            application
+          })
+          application.website && (await openLink(application.website))
+        }}
+        style={[styles.application, { color: theme.secondary }]}
+      >
+        {t('shared.header.shared.application', {
+          application: application.name
+        })}
+      </Text>
+    ) : null
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   application: {

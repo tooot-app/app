@@ -60,56 +60,52 @@ const ScreenMeSwitchRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
-    >
-      <ScrollView keyboardShouldPersistTaps='handled'>
-        <View
-          style={[styles.firstSection, { borderBottomColor: theme.border }]}
-        >
-          <Text style={[styles.header, { color: theme.primary }]}>
-            {t('content.existing')}
-          </Text>
-          <View style={styles.accountButtons}>
-            {instances.length
-              ? instances
-                  .slice()
-                  .sort((a, b) =>
-                    `${a.uri}${a.account.acct}`.localeCompare(
-                      `${b.uri}${b.account.acct}`
-                    )
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
+      <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
+        <Text style={[styles.header, { color: theme.primary }]}>
+          {t('content.existing')}
+        </Text>
+        <View style={styles.accountButtons}>
+          {instances.length
+            ? instances
+                .slice()
+                .sort((a, b) =>
+                  `${a.uri}${a.account.acct}`.localeCompare(
+                    `${b.uri}${b.account.acct}`
                   )
-                  .map((instance, index) => {
-                    const localAccount = instances[instanceActive!]
-                    return (
-                      <AccountButton
-                        key={index}
-                        instance={instance}
-                        disabled={
-                          instance.url === localAccount.url &&
-                          instance.token === localAccount.token &&
-                          instance.account.id === localAccount.account.id
-                        }
-                      />
-                    )
-                  })
-              : null}
-          </View>
+                )
+                .map((instance, index) => {
+                  const localAccount = instances[instanceActive!]
+                  return (
+                    <AccountButton
+                      key={index}
+                      instance={instance}
+                      disabled={
+                        instance.url === localAccount.url &&
+                        instance.token === localAccount.token &&
+                        instance.account.id === localAccount.account.id
+                      }
+                    />
+                  )
+                })
+            : null}
         </View>
+      </View>
 
-        <View style={styles.secondSection}>
-          <Text style={[styles.header, { color: theme.primary }]}>
-            {t('content.new')}
-          </Text>
-          <ComponentInstance disableHeaderImage goBack />
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <View style={styles.secondSection}>
+        <Text style={[styles.header, { color: theme.primary }]}>
+          {t('content.new')}
+        </Text>
+        <ComponentInstance disableHeaderImage goBack />
+      </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  base: {
+    marginBottom: StyleConstants.Spacing.L
+  },
   header: {
     ...StyleConstants.FontStyle.M,
     textAlign: 'center',

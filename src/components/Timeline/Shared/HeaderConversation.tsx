@@ -15,28 +15,32 @@ import { useQueryClient } from 'react-query'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
 
-const Names: React.FC<{ accounts: Mastodon.Account[] }> = ({ accounts }) => {
-  const { t } = useTranslation('componentTimeline')
-  const { theme } = useTheme()
+const Names = React.memo(
+  ({ accounts }: { accounts: Mastodon.Account[] }) => {
+    const { t } = useTranslation('componentTimeline')
+    const { theme } = useTheme()
 
-  return (
-    <Text numberOfLines={1}>
-      <Text style={[styles.namesLeading, { color: theme.secondary }]}>
-        {t('shared.header.conversation.withAccounts')}
+    return (
+      <Text
+        numberOfLines={1}
+        style={[styles.namesLeading, { color: theme.secondary }]}
+      >
+        <Text>{t('shared.header.conversation.withAccounts')}</Text>
+        {accounts.map((account, index) => (
+          <Text key={account.id} numberOfLines={1}>
+            {index !== 0 ? t('common:separator') : undefined}
+            <ParseEmojis
+              content={account.display_name || account.username}
+              emojis={account.emojis}
+              fontBold
+            />
+          </Text>
+        ))}
       </Text>
-      {accounts.map((account, index) => (
-        <Text key={account.id} numberOfLines={1}>
-          {index !== 0 ? t('common:separator') : undefined}
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            fontBold
-          />
-        </Text>
-      ))}
-    </Text>
-  )
-}
+    )
+  },
+  () => true
+)
 
 export interface Props {
   queryKey: QueryKeyTimeline

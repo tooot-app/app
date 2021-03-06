@@ -8,18 +8,21 @@ export interface Props {
   muted?: Mastodon.Status['muted']
 }
 
-const HeaderSharedMuted: React.FC<Props> = ({ muted }) => {
-  const { theme } = useTheme()
+const HeaderSharedMuted = React.memo(
+  ({ muted }: Props) => {
+    const { theme } = useTheme()
 
-  return muted ? (
-    <Icon
-      name='VolumeX'
-      size={StyleConstants.Font.Size.S}
-      color={theme.secondary}
-      style={styles.visibility}
-    />
-  ) : null
-}
+    return muted ? (
+      <Icon
+        name='VolumeX'
+        size={StyleConstants.Font.Size.S}
+        color={theme.secondary}
+        style={styles.visibility}
+      />
+    ) : null
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   visibility: {

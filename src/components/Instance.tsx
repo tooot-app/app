@@ -9,9 +9,18 @@ import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native'
 import { useSelector } from 'react-redux'
-import { Placeholder, Fade } from 'rn-placeholder'
+import { Placeholder } from 'rn-placeholder'
 import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
@@ -115,7 +124,10 @@ const ComponentInstance: React.FC<Props> = ({
   }, [domain, instanceQuery.data, appsQuery.data])
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       {!disableHeaderImage ? (
         <View style={styles.imageContainer}>
           <Image
@@ -157,18 +169,8 @@ const ComponentInstance: React.FC<Props> = ({
         </View>
 
         <View>
-          <Placeholder
-            {...(instanceQuery.isFetching && {
-              Animation: props => (
-                <Fade
-                  {...props}
-                  style={{ backgroundColor: theme.shimmerHighlight }}
-                />
-              )
-            })}
-          >
+          <Placeholder>
             <InstanceInfo
-              visible={instanceQuery.data?.title !== undefined}
               header={t('server.information.name')}
               content={instanceQuery.data?.title || undefined}
               potentialWidth={2}
@@ -176,7 +178,6 @@ const ComponentInstance: React.FC<Props> = ({
             <View style={styles.instanceStats}>
               <InstanceInfo
                 style={styles.stat1}
-                visible={instanceQuery.data?.stats?.user_count !== undefined}
                 header={t('server.information.accounts')}
                 content={
                   instanceQuery.data?.stats?.user_count?.toString() || undefined
@@ -185,7 +186,6 @@ const ComponentInstance: React.FC<Props> = ({
               />
               <InstanceInfo
                 style={styles.stat2}
-                visible={instanceQuery.data?.stats?.status_count !== undefined}
                 header={t('server.information.statuses')}
                 content={
                   instanceQuery.data?.stats?.status_count?.toString() ||
@@ -195,7 +195,6 @@ const ComponentInstance: React.FC<Props> = ({
               />
               <InstanceInfo
                 style={styles.stat3}
-                visible={instanceQuery.data?.stats?.domain_count !== undefined}
                 header={t('server.information.domains')}
                 content={
                   instanceQuery.data?.stats?.domain_count?.toString() ||
@@ -231,7 +230,7 @@ const ComponentInstance: React.FC<Props> = ({
       </View>
 
       {requestAuth}
-    </>
+    </KeyboardAvoidingView>
   )
 }
 

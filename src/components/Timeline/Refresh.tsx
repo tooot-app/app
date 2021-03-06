@@ -103,7 +103,7 @@ const TimelineRefresh: React.FC<Props> = ({
     queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
       queryKey,
       data => {
-        if (data?.pages[0].body.length === 0) {
+        if (data?.pages[0] && data.pages[0].body.length === 0) {
           return {
             pages: data.pages.slice(1),
             pageParams: data.pageParams.slice(1)

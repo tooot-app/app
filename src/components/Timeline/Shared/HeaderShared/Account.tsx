@@ -9,29 +9,32 @@ export interface Props {
   withoutName?: boolean // For notification follow request etc.
 }
 
-const HeaderSharedAccount: React.FC<Props> = ({
-  account,
-  withoutName = false
-}) => {
-  const { theme } = useTheme()
+const HeaderSharedAccount = React.memo(
+  ({ account, withoutName = false }: Props) => {
+    const { theme } = useTheme()
 
-  return (
-    <View style={styles.base}>
-      {withoutName ? null : (
-        <Text style={styles.name} numberOfLines={1}>
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            fontBold
-          />
+    return (
+      <View style={styles.base}>
+        {withoutName ? null : (
+          <Text style={styles.name} numberOfLines={1}>
+            <ParseEmojis
+              content={account.display_name || account.username}
+              emojis={account.emojis}
+              fontBold
+            />
+          </Text>
+        )}
+        <Text
+          style={[styles.acct, { color: theme.secondary }]}
+          numberOfLines={1}
+        >
+          @{account.acct}
         </Text>
-      )}
-      <Text style={[styles.acct, { color: theme.secondary }]} numberOfLines={1}>
-        @{account.acct}
-      </Text>
-    </View>
-  )
-}
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {

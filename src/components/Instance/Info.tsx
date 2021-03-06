@@ -8,15 +8,13 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   style?: ViewStyle
-  visible: boolean
   header: string
   content?: string
   potentialWidth?: number
-  potentialLines?: number
 }
 
 const InstanceInfo = React.memo(
-  ({ style, header, content, potentialWidth, potentialLines = 1 }: Props) => {
+  ({ style, header, content, potentialWidth }: Props) => {
     const { t } = useTranslation('componentInstance')
     const { theme } = useTheme()
 
@@ -31,24 +29,22 @@ const InstanceInfo = React.memo(
             expandHint={t('server.information.description.expandHint')}
           />
         ) : (
-          Array.from(Array(potentialLines)).map((_, i) => (
-            <PlaceholderLine
-              key={i}
-              width={
-                potentialWidth
-                  ? potentialWidth * StyleConstants.Font.Size.M
-                  : undefined
-              }
-              height={StyleConstants.Font.LineHeight.M}
-              color={theme.shimmerDefault}
-              noMargin
-              style={{ borderRadius: 0 }}
-            />
-          ))
+          <PlaceholderLine
+            width={
+              potentialWidth
+                ? potentialWidth * StyleConstants.Font.Size.M
+                : undefined
+            }
+            height={StyleConstants.Font.LineHeight.M}
+            color={theme.shimmerDefault}
+            noMargin
+            style={{ borderRadius: 0 }}
+          />
         )}
       </View>
     )
-  }
+  },
+  (prev, next) => prev.content === next.content
 )
 
 const styles = StyleSheet.create({

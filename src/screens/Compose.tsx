@@ -353,7 +353,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             <Stack.Screen
               name='Screen-Compose-DraftsList'
               component={ComposeDraftsList}
-              options={{ stackPresentation: 'modal' }}
+              options={{ stackPresentation: 'modal', headerShown: false }}
             />
             <Stack.Screen
               name='Screen-Compose-EditAttachment'
