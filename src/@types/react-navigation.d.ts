@@ -50,14 +50,14 @@ declare namespace Nav {
       | undefined
     'Screen-ImagesViewer': {
       imageUrls: {
+        id: Mastodon.Attachment['id']
         url: Mastodon.AttachmentImage['url']
         width?: number
         height?: number
         preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
-        imageIndex: number
       }[]
-      imageIndex: number
+      id: Mastodon.Attachment['id']
     }
   }
 

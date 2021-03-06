@@ -10,14 +10,14 @@ export interface Props {
   index: number
   sensitiveShown: boolean
   image: Mastodon.AttachmentImage
-  navigateToImagesViewer: (imageIndex: number) => void
+  navigateToImagesViewer: (imageIndex: string) => void
 }
 
 const AttachmentImage = React.memo(
   ({ total, index, sensitiveShown, image, navigateToImagesViewer }: Props) => {
     const onPress = useCallback(() => {
       analytics('timeline_shared_attachment_image_press', { id: image.id })
-      navigateToImagesViewer(index)
+      navigateToImagesViewer(image.id)
     }, [])
 
     return (

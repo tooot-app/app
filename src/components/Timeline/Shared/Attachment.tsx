@@ -35,10 +35,10 @@ const TimelineAttachment = React.memo(
 
     let imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'] = []
     const navigation = useNavigation()
-    const navigateToImagesViewer = (imageIndex: number) =>
+    const navigateToImagesViewer = (id: string) =>
       navigation.navigate('Screen-ImagesViewer', {
         imageUrls,
-        imageIndex
+        id
       })
     const attachments = useMemo(
       () =>
@@ -46,12 +46,12 @@ const TimelineAttachment = React.memo(
           switch (attachment.type) {
             case 'image':
               imageUrls.push({
+                id: attachment.id,
                 url: attachment.url,
                 preview_url: attachment.preview_url,
                 remote_url: attachment.remote_url,
                 width: attachment.meta?.original?.width,
-                height: attachment.meta?.original?.height,
-                imageIndex: index
+                height: attachment.meta?.original?.height
               })
               return (
                 <AttachmentImage

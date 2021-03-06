@@ -34,7 +34,6 @@ const HeaderComponent = React.memo(
       height?: number | undefined
       preview_url: string
       remote_url?: string | undefined
-      imageIndex: number
     }[]
   }) => {
     const insets = useSafeAreaInsets()
@@ -134,7 +133,7 @@ export type ScreenImagesViewerProp = StackScreenProps<
 
 const ScreenImagesViewer = ({
   route: {
-    params: { imageUrls, imageIndex }
+    params: { imageUrls, id }
   },
   navigation
 }: ScreenImagesViewerProp) => {
@@ -142,16 +141,15 @@ const ScreenImagesViewer = ({
     return null
   }
 
-  const [currentIndex, setCurrentIndex] = useState(
-    findIndex(imageUrls, ['imageIndex', imageIndex])
-  )
+  const initialIndex = findIndex(imageUrls, ['id', id])
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   return (
     <SafeAreaProvider>
       <StatusBar backgroundColor='rgb(0,0,0)' />
       <ImageView
         images={imageUrls}
-        imageIndex={imageIndex}
+        imageIndex={initialIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
         HeaderComponent={() => (
