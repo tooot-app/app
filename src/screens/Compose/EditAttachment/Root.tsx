@@ -25,7 +25,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
   setAltText
 }) => {
   const { t } = useTranslation('sharedCompose')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const { composeState } = useContext(ComposeContext)
   const theAttachment = composeState.attachments.uploads[index].remote
 
@@ -79,6 +79,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
           placeholderTextColor={theme.secondary}
           scrollEnabled
           value={altText}
+          keyboardAppearance={mode}
         />
         <Text style={[styles.altTextLength, { color: theme.secondary }]}>
           {altText?.length || 0} / 1500

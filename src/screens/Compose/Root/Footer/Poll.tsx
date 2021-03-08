@@ -19,7 +19,7 @@ const ComposePoll: React.FC = () => {
     composeDispatch
   } = useContext(ComposeContext)
   const { t } = useTranslation('sharedCompose')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
 
   const [firstRender, setFirstRender] = useState(true)
   useEffect(() => {
@@ -48,6 +48,7 @@ const ComposePoll: React.FC = () => {
                 color={theme.secondary}
               />
               <TextInput
+                keyboardAppearance={mode}
                 {...(i === 0 && firstRender && { autoFocus: true })}
                 style={[
                   styles.textInput,

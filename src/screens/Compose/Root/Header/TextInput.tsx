@@ -9,10 +9,11 @@ import ComposeContext from '../../utils/createContext'
 const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('sharedCompose')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
 
   return (
     <TextInput
+      keyboardAppearance={mode}
       style={[
         styles.textInput,
         {

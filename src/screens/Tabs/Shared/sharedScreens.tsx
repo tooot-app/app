@@ -68,7 +68,7 @@ const sharedScreens = (
     }: NativeStackNavigatorProps) => JSX.Element
   >
 ) => {
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
   const { t } = useTranslation()
 
   const [searchTerm, setSearchTerm] = useState<string>()
@@ -178,6 +178,7 @@ const sharedScreens = (
               }
             />
             <TextInput
+              keyboardAppearance={mode}
               style={[
                 styles.textInput,
                 {

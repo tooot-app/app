@@ -35,7 +35,7 @@ const ComponentInstance: React.FC<Props> = ({
   goBack = false
 }) => {
   const { t } = useTranslation('componentInstance')
-  const { theme } = useTheme()
+  const { mode, theme } = useTheme()
 
   const instances = useSelector(getInstances, () => true)
   const [domain, setDomain] = useState<string>()
@@ -158,6 +158,7 @@ const ComponentInstance: React.FC<Props> = ({
             placeholder={t('server.textInput.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
+            keyboardAppearance={mode}
           />
           <Button
             type='text'
