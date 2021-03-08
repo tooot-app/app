@@ -17,6 +17,7 @@ declare namespace Nav {
       | {
           type: 'edit'
           incomingStatus: Mastodon.Status
+          replyToStatus?: Mastodon.Status
           queryKey?: [
             'Timeline',
             {

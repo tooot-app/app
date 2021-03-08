@@ -10,9 +10,9 @@ import {
 } from '@utils/queryHooks/timeline'
 import analytics from '@components/analytics'
 import { StackNavigationProp } from '@react-navigation/stack'
-import deleteItem from '@utils/queryHooks/timeline/deleteItem'
 import { displayMessage } from '@components/Message'
 import { useTheme } from '@utils/styles/ThemeManager'
+import apiInstance from '@api/instance'
 
 export interface Props {
   navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Actions'>
@@ -106,26 +106,30 @@ const ActionsStatus: React.FC<Props> = ({
                       page: queryKey && queryKey[1].page
                     }
                   )
-                  dismiss()
-                  const res = await mutation.mutateAsync({
-                    type: 'deleteItem',
-                    source: 'statuses',
-                    queryKey,
-                    id: status.id
-                  })
-                  deleteItem({
-                    queryClient,
-                    rootQueryKey,
-                    id: status.id
-                  })
-                  if (res.body.id) {
-                    // @ts-ignore
-                    navigation.navigate('Screen-Compose', {
-                      type: 'edit',
-                      incomingStatus: res.body,
-                      queryKey
-                    })
+                  let replyToStatus: Mastodon.Status
+                  if (status.in_reply_to_id) {
+                    replyToStatus = await apiInstance<Mastodon.Status>({
+                      method: 'get',
+                      url: `statuses/${status.in_reply_to_id}`
+                    }).then(res => res.body)
                   }
+                  mutation
+                    .mutateAsync({
+                      type: 'deleteItem',
+                      source: 'statuses',
+                      queryKey,
+                      id: status.id
+                    })
+                    .then(res => {
+                      dismiss()
+                      // @ts-ignore
+                      navigation.navigate('Screen-Compose', {
+                        type: 'edit',
+                        incomingStatus: res.body,
+                        ...(replyToStatus && { replyToStatus }),
+                        queryKey
+                      })
+                    })
                 }
               }
             ]

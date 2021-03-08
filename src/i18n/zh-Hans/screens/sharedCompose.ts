@@ -19,8 +19,16 @@ export default {
         edit: '发嘟嘟'
       },
       alert: {
-        title: '发布失败',
-        button: '返回重试'
+        default: {
+          title: '发布失败',
+          button: '返回重试'
+        },
+        removeReply: {
+          title: '回复的嘟文不存在',
+          description: '回复的嘟文可能已被删除。确认移除回复嘟文的关联？',
+          cancel: '$t(common:buttons.cancel)',
+          confirm: '移除关联'
+        }
       }
     }
   },

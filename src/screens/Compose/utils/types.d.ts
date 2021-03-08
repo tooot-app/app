@@ -132,3 +132,6 @@ export type ComposeAction =
       type: 'textInputFocus'
       payload: Partial<ComposeState['textInputFocus']>
     }
+  | {
+      type: 'removeReply'
+    }

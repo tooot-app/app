@@ -45,7 +45,8 @@ const composeParseState = (
           'public',
         ...(params.incomingStatus.visibility === 'direct' && {
           visibilityLock: true
-        })
+        }),
+        ...(params.replyToStatus && { replyToStatus: params.replyToStatus })
       }
     case 'reply':
       const actualStatus = params.incomingStatus.reblog || params.incomingStatus

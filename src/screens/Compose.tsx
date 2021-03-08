@@ -298,14 +298,38 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
               navigation.goBack()
             })
             .catch(error => {
-              Sentry.Native.captureException(error)
-              haptics('Error')
-              composeDispatch({ type: 'posting', payload: false })
-              Alert.alert(t('heading.right.alert.title'), undefined, [
-                {
-                  text: t('heading.right.alert.button')
-                }
-              ])
+              if (error.removeReply) {
+                Alert.alert(
+                  t('heading.right.alert.removeReply.title'),
+                  t('heading.right.alert.removeReply.description'),
+                  [
+                    {
+                      text: t('heading.right.alert.removeReply.cancel'),
+                      onPress: () => {
+                        composeDispatch({ type: 'posting', payload: false })
+                      },
+                      style: 'destructive'
+                    },
+                    {
+                      text: t('heading.right.alert.removeReply.confirm'),
+                      onPress: () => {
+                        composeDispatch({ type: 'removeReply' })
+                        composeDispatch({ type: 'posting', payload: false })
+                      },
+                      style: 'default'
+                    }
+                  ]
+                )
+              } else {
+                Sentry.Native.captureException(error)
+                haptics('Error')
+                composeDispatch({ type: 'posting', payload: false })
+                Alert.alert(t('heading.right.alert.default.title'), undefined, [
+                  {
+                    text: t('heading.right.alert.default.button')
+                  }
+                ])
+              }
             })
         }}
         loading={composeState.posting}

@@ -19,8 +19,17 @@ export default {
         edit: 'Toot'
       },
       alert: {
-        title: 'Tooting failed',
-        button: 'Try again'
+        default: {
+          title: 'Tooting failed',
+          button: 'Try again'
+        },
+        removeReply: {
+          title: 'Replied toot could not be found',
+          description:
+            'Replied toot could have been deleted. Do you want to remove it from your reference?',
+          cancel: '$t(common:buttons.cancel)',
+          confirm: 'Remove reference'
+        }
       }
     }
   },

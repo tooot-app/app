@@ -9,7 +9,17 @@ const composePost = async (
   const formData = new FormData()
 
   if (composeState.replyToStatus) {
-    formData.append('in_reply_to_id', composeState.replyToStatus!.id)
+    try {
+      await apiInstance<Mastodon.Status>({
+        method: 'get',
+        url: `statuses/${composeState.replyToStatus.id}`
+      })
+    } catch (err) {
+      if (err.status == 404) {
+        return Promise.reject({ removeReply: true })
+      }
+    }
+    formData.append('in_reply_to_id', composeState.replyToStatus.id)
   }
 
   if (composeState.spoiler.active) {

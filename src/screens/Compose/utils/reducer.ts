@@ -103,6 +103,8 @@ const composeReducer = (
         ...state,
         textInputFocus: { ...state.textInputFocus, ...action.payload }
       }
+    case 'removeReply':
+      return { ...state, replyToStatus: undefined }
     default:
       throw new Error('Unexpected action')
   }
