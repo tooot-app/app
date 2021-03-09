@@ -40,17 +40,15 @@ const App: React.FC = () => {
   log('log', 'App', 'rendering App')
   const [localCorrupt, setLocalCorrupt] = useState<string>()
 
+  const appStateEffect = useCallback(() => {
+    Notifications.setBadgeCountAsync(0)
+    Notifications.dismissAllNotificationsAsync()
+  }, [])
   useEffect(() => {
-    AppState.addEventListener('change', () => {
-      Notifications.setBadgeCountAsync(0)
-      Notifications.dismissAllNotificationsAsync()
-    })
+    AppState.addEventListener('change', appStateEffect)
 
     return () => {
-      AppState.removeEventListener('change', () => {
-        Notifications.setBadgeCountAsync(0)
-        Notifications.dismissAllNotificationsAsync()
-      })
+      AppState.removeEventListener('change', appStateEffect)
     }
   }, [])
 

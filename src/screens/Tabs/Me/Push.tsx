@@ -30,9 +30,9 @@ const ScreenMeSettingsPush: React.FC = () => {
   }
   useEffect(() => {
     checkPush()
-    AppState.addEventListener('change', () => checkPush())
+    AppState.addEventListener('change', checkPush)
     return () => {
-      AppState.removeEventListener('change', () => checkPush())
+      AppState.removeEventListener('change', checkPush)
     }
   }, [])
 
