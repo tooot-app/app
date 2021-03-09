@@ -1,39 +1,27 @@
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Dispatch, SetStateAction, useContext, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import Animated from 'react-native-reanimated'
 import ComposeContext from '../utils/createContext'
 import ComposeEditAttachmentImage from './Image'
 
 export interface Props {
   index: number
-  focus: Animated.SharedValue<{
-    x: number
-    y: number
-  }>
-  altText: string | undefined
-  setAltText: Dispatch<SetStateAction<string | undefined>>
 }
 
-const ComposeEditAttachmentRoot: React.FC<Props> = ({
-  index,
-  focus,
-  altText,
-  setAltText
-}) => {
+const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
   const { t } = useTranslation('sharedCompose')
   const { mode, theme } = useTheme()
-  const { composeState } = useContext(ComposeContext)
-  const theAttachment = composeState.attachments.uploads[index].remote
+  const { composeState, composeDispatch } = useContext(ComposeContext)
+  const theAttachment = composeState.attachments.uploads[index].remote!
 
   const mediaDisplay = useMemo(() => {
     if (theAttachment) {
       switch (theAttachment.type) {
         case 'image':
-          return <ComposeEditAttachmentImage index={index} focus={focus} />
+          return <ComposeEditAttachmentImage index={index} />
         case 'video':
         case 'gifv':
           const video = composeState.attachments.uploads[index]
@@ -58,6 +46,15 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
     return null
   }, [])
 
+  const onChangeText = (e: any) =>
+    composeDispatch({
+      type: 'attachment/edit',
+      payload: {
+        ...theAttachment,
+        description: e
+      }
+    })
+
   return (
     <ScrollView>
       {mediaDisplay}
@@ -74,15 +71,15 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({
           autoCorrect={false}
           maxLength={1500}
           multiline
-          onChangeText={e => setAltText(e)}
+          onChangeText={onChangeText}
           placeholder={t('content.editAttachment.content.altText.placeholder')}
           placeholderTextColor={theme.secondary}
           scrollEnabled
-          value={altText}
+          value={theAttachment.description}
           keyboardAppearance={mode}
         />
         <Text style={[styles.altTextLength, { color: theme.secondary }]}>
-          {altText?.length || 0} / 1500
+          {theAttachment.description?.length || 0} / 1500
         </Text>
       </View>
     </ScrollView>

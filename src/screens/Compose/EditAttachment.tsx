@@ -1,16 +1,12 @@
-import apiInstance from '@api/instance'
-import analytics from '@components/analytics'
-import haptics from '@components/haptics'
-import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, KeyboardAvoidingView, Platform } from 'react-native'
-import { useSharedValue } from 'react-native-reanimated'
+import { KeyboardAvoidingView, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ComposeEditAttachmentRoot from './EditAttachment/Root'
-import ComposeContext from './utils/createContext'
+import ComposeEditAttachmentSubmit from './EditAttachment/Submit'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,40 +21,8 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   },
   navigation
 }) => {
-  const { composeState, composeDispatch } = useContext(ComposeContext)
+  console.log('rendering')
   const { t } = useTranslation('sharedCompose')
-  const theAttachment = composeState.attachments.uploads[index].remote!
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const [altText, setAltText] = useState<string | undefined>(
-    theAttachment.description
-  )
-  const focus = useSharedValue({
-    x: theAttachment.meta?.focus?.x,
-    y: theAttachment.meta?.focus?.y
-  })
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', () => {
-      composeDispatch({
-        type: 'attachment/edit',
-        payload: {
-          ...theAttachment,
-          description: altText,
-          meta: {
-            ...theAttachment.meta,
-            focus: {
-              x: focus.value.x > 1 ? 1 : focus.value.x,
-              y: focus.value.y > 1 ? 1 : focus.value.y
-            }
-          }
-        }
-      })
-    })
-
-    return unsubscribe
-  }, [focus.value.x, focus.value.y, altText])
 
   const headerLeft = useCallback(
     () => (
@@ -70,68 +34,9 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
     ),
     []
   )
-  const headerRight = useCallback(
-    () => (
-      <HeaderRight
-        type='icon'
-        content='Save'
-        loading={isSubmitting}
-        onPress={() => {
-          analytics('editattachment_confirm_press')
-          if (!altText && focus.value.x === 0 && focus.value.y === 0) {
-            navigation.goBack()
-            return
-          }
-          setIsSubmitting(true)
-          const formData = new FormData()
-          if (altText) {
-            formData.append('description', altText)
-          }
-          if (focus.value.x !== 0 || focus.value.y !== 0) {
-            formData.append('focus', `${focus.value.x},${focus.value.y}`)
-          }
-
-          apiInstance<Mastodon.Attachment>({
-            method: 'put',
-            url: `media/${theAttachment.id}`,
-            body: formData
-          })
-            .then(() => {
-              haptics('Success')
-              navigation.goBack()
-            })
-            .catch(() => {
-              setIsSubmitting(false)
-              haptics('Error')
-              Alert.alert(
-                t('content.editAttachment.header.right.failed.title'),
-                undefined,
-                [
-                  {
-                    text: t(
-                      'content.editAttachment.header.right.failed.button'
-                    ),
-                    style: 'cancel'
-                  }
-                ]
-              )
-            })
-        }}
-      />
-    ),
-
-    [isSubmitting, altText, focus.value.x, focus.value.y]
-  )
 
   const children = useCallback(
-    () => (
-      <ComposeEditAttachmentRoot
-        index={index}
-        focus={focus}
-        altText={altText}
-        setAltText={setAltText}
-      />
-    ),
+    () => <ComposeEditAttachmentRoot index={index} />,
     []
   )
 
@@ -147,7 +52,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
             children={children}
             options={{
               headerLeft,
-              headerRight,
+              headerRight: () => <ComposeEditAttachmentSubmit index={index} />,
               headerTitle: t('content.editAttachment.header.title'),
               ...(Platform.OS === 'android' && {
                 headerCenter: () => (

@@ -18,18 +18,14 @@ import ComposeContext from '../utils/createContext'
 
 export interface Props {
   index: number
-  focus: Animated.SharedValue<{
-    x: number
-    y: number
-  }>
 }
 
-const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
+const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
   const { t } = useTranslation('sharedCompose')
   const { theme } = useTheme()
 
-  const { composeState } = useContext(ComposeContext)
-  const theAttachmentRemote = composeState.attachments.uploads[index].remote
+  const { composeState, composeDispatch } = useContext(ComposeContext)
+  const theAttachmentRemote = composeState.attachments.uploads[index].remote!
   const theAttachmentLocal = composeState.attachments.uploads[index].local
 
   const imageWidthBase =
@@ -57,8 +53,21 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
       2
   )
   const updateFocus = ({ x, y }: { x: number; y: number }) => {
-    focus.value = { x, y }
+    composeDispatch({
+      type: 'attachment/edit',
+      payload: {
+        ...theAttachmentRemote,
+        meta: {
+          ...theAttachmentRemote.meta,
+          focus: {
+            x: x > 1 ? 1 : x,
+            y: y > 1 ? 1 : y
+          }
+        }
+      }
+    })
   }
+
   type PanContext = {
     startX: number
     startY: number
