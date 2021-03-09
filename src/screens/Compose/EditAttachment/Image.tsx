@@ -42,17 +42,17 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index, focus }) => {
     width: imageWidthBase,
     height:
       imageWidthBase /
-      ((theAttachmentRemote as Mastodon.AttachmentImage).meta?.original
+      ((theAttachmentRemote as Mastodon.AttachmentImage)?.meta?.original
         ?.aspect || 1)
   }
 
   const panX = useSharedValue(
-    (((theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.x || 0) *
+    (((theAttachmentRemote as Mastodon.AttachmentImage)?.meta?.focus?.x || 0) *
       imageDimensionis.width) /
       2
   )
   const panY = useSharedValue(
-    (((theAttachmentRemote as Mastodon.AttachmentImage).meta?.focus?.y || 0) *
+    (((theAttachmentRemote as Mastodon.AttachmentImage)?.meta?.focus?.y || 0) *
       imageDimensionis.height) /
       2
   )

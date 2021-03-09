@@ -2,7 +2,7 @@ import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import {
   Image,
   Pressable,

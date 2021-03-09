@@ -19,8 +19,8 @@ const prefetchEmojis = (
   sortedEmojis: { title: string; data: Mastodon.Emoji[] }[]
 ) => {
   let requestedIndex = 0
-  sortedEmojis.map(sorted => {
-    sorted.data.map(emoji => {
+  sortedEmojis.forEach(sorted => {
+    sorted.data.forEach(emoji => {
       if (requestedIndex > 40) {
         return
       }

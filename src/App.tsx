@@ -47,7 +47,10 @@ const App: React.FC = () => {
     })
 
     return () => {
-      AppState.removeEventListener('change', () => {})
+      AppState.removeEventListener('change', () => {
+        Notifications.setBadgeCountAsync(0)
+        Notifications.dismissAllNotificationsAsync()
+      })
     }
   }, [])
 

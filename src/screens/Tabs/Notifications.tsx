@@ -7,14 +7,12 @@ import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useDispatch } from 'react-redux'
 
 const Stack = createNativeStackNavigator<Nav.TabNotificationsStackParamList>()
 
 const TabNotifications = React.memo(
   () => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
 
     const screenOptions = useMemo(
       () => ({

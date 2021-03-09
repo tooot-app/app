@@ -32,7 +32,7 @@ const ScreenMeSettingsPush: React.FC = () => {
     checkPush()
     AppState.addEventListener('change', () => checkPush())
     return () => {
-      AppState.removeEventListener('change', () => {})
+      AppState.removeEventListener('change', () => checkPush())
     }
   }, [])
 
@@ -59,7 +59,7 @@ const ScreenMeSettingsPush: React.FC = () => {
                 updateInstancePushAlert({
                   changed: alert,
                   alerts: {
-                    ...instancePush.alerts,
+                    ...instancePush?.alerts,
                     [alert]: {
                       ...instancePush?.alerts[alert],
                       value: !instancePush?.alerts[alert].value
