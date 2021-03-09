@@ -19,14 +19,13 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  item: Mastodon.Status & { isPinned?: boolean }
+  item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
   origin?: string
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
-  pinned?: Mastodon.Status['id'][]
 }
 
 // When the poll is long
@@ -37,8 +36,7 @@ const TimelineDefault: React.FC<Props> = ({
   origin,
   highlighted = false,
   disableDetails = false,
-  disableOnPress = false,
-  pinned
+  disableOnPress = false
 }) => {
   const { theme } = useTheme()
   const instanceAccount = useSelector(getInstanceAccount, () => true)
@@ -76,7 +74,7 @@ const TimelineDefault: React.FC<Props> = ({
     >
       {item.reblog ? (
         <TimelineActioned action='reblog' account={item.account} />
-      ) : pinned && pinned.includes(item.id) ? (
+      ) : item._pinned ? (
         <TimelineActioned action='pinned' account={item.account} />
       ) : null}
 

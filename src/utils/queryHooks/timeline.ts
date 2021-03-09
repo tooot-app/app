@@ -76,15 +76,17 @@ const queryFunction = ({
           }
         })
       } else {
-        return apiInstance<(Mastodon.Status & { isPinned: boolean })[]>({
+        return apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
           method: 'get',
           url: `accounts/${account}/statuses`,
           params: {
             pinned: 'true'
           }
         }).then(async res1 => {
-          let pinned: Mastodon.Status['id'][] = []
-          res1.body.forEach(status => pinned.push(status.id))
+          res1.body = res1.body.map(status => {
+            status._pinned = true
+            return status
+          })
           const res2 = await apiInstance<Mastodon.Status[]>({
             method: 'get',
             url: `accounts/${account}/statuses`,
@@ -94,8 +96,7 @@ const queryFunction = ({
           })
           return {
             body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links.next && { links: { next: res2.links.next } }),
-            pinned
+            ...(res2.links.next && { links: { next: res2.links.next } })
           }
         })
       }

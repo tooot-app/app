@@ -88,7 +88,6 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
         customProps={{
           renderItem,
           onScroll,
-          scrollEventThrottle: 16,
           ListHeaderComponent
         }}
       />
