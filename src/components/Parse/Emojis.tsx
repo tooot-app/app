@@ -1,5 +1,6 @@
 import { getSettingsFontsize } from '@utils/slices/settingsSlice'
-import { adaptiveScale, StyleConstants } from '@utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
+import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { StyleSheet, Text } from 'react-native'

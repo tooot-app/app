@@ -8,7 +8,8 @@ import {
   getSettingsFontsize,
   SettingsState
 } from '@utils/slices/settingsSlice'
-import { adaptiveScale, StyleConstants } from '@utils/styles/constants'
+import { StyleConstants } from '@utils/styles/constants'
+import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -53,8 +54,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
     reblogged: false,
     muted: false,
     bookmarked: false,
-    content:
-      '<p>- tooot supports multiple accounts<br />- tooot supports browsing external instance<br />- tooot aims to support multiple languages</p>',
+    content: t('content.demo'),
     reblog: null,
     application: {
       name: 'tooot',
@@ -77,6 +77,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
       <>
         {([-1, 0, 1, 2, 3] as [-1, 0, 1, 2, 3]).map(size => (
           <Text
+            key={size}
             style={[
               styles.size,
               {
