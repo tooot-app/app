@@ -71,7 +71,7 @@ const ScreenMeSettingsPush: React.FC = () => {
           />
         ))
       : null
-  }, [instancePush?.global, instancePush?.alerts, isLoading])
+  }, [pushEnabled, instancePush?.global, instancePush?.alerts, isLoading])
 
   return (
     <ScrollView>

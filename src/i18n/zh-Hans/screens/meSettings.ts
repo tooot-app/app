@@ -8,6 +8,16 @@ export default {
         disabled: '已关闭'
       }
     },
+    fontsize: {
+      heading: '$t(meSettingsFontsize:heading)',
+      content: {
+        S: '$t(meSettingsFontsize:content.sizes.S)',
+        M: '$t(meSettingsFontsize:content.sizes.M)',
+        L: '$t(meSettingsFontsize:content.sizes.L)',
+        XL: '$t(meSettingsFontsize:content.sizes.XL)',
+        XXL: '$t(meSettingsFontsize:content.sizes.XXL)'
+      }
+    },
     language: {
       heading: '切换语言',
       options: {
@@ -50,6 +60,6 @@ export default {
       heading: '帮助我们改进',
       description: '收集不与用户相关联的使用信息'
     },
-    version: '版本 v{{version}} ({{releaseChannel}})'
+    version: '版本 v{{version}}'
   }
 }

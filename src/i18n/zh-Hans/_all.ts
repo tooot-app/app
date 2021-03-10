@@ -14,6 +14,7 @@ export default {
   meLists: require('./screens/meLists').default,
   meListsList: require('./screens/meListsList').default,
   meSettings: require('./screens/meSettings').default,
+  meSettingsFontsize: require('./screens/meSettingsFontsize').default,
   meSettingsPush: require('./screens/meSettingsPush').default,
   meSwitch: require('./screens/meSwitch').default,
 

@@ -16,7 +16,8 @@ import {
   changeTheme,
   getSettingsLanguage,
   getSettingsTheme,
-  getSettingsBrowser
+  getSettingsBrowser,
+  getSettingsFontsize
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -24,6 +25,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import { mapFontsizeToName } from '../Fontsize'
 
 const SettingsApp: React.FC = () => {
   const navigation = useNavigation()
@@ -34,6 +36,7 @@ const SettingsApp: React.FC = () => {
 
   const instances = useSelector(getInstances, () => true)
   const instanceActive = useSelector(getInstanceActive)
+  const settingsFontsize = useSelector(getSettingsFontsize)
   const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
@@ -45,18 +48,30 @@ const SettingsApp: React.FC = () => {
   return (
     <MenuContainer>
       {instanceActive !== -1 ? (
-        <MenuRow
-          title={t('content.push.heading')}
-          content={
-            instancePush?.global.value
-              ? t('content.push.content.enabled')
-              : t('content.push.content.disabled')
-          }
-          iconBack='ChevronRight'
-          onPress={() => {
-            navigation.navigate('Tab-Me-Settings-Push')
-          }}
-        />
+        <>
+          <MenuRow
+            title={t('content.push.heading')}
+            content={
+              instancePush?.global.value
+                ? t('content.push.content.enabled')
+                : t('content.push.content.disabled')
+            }
+            iconBack='ChevronRight'
+            onPress={() => {
+              navigation.navigate('Tab-Me-Settings-Push')
+            }}
+          />
+          <MenuRow
+            title={t('content.fontsize.heading')}
+            content={t(
+              `content.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
+            )}
+            iconBack='ChevronRight'
+            onPress={() => {
+              navigation.navigate('Tab-Me-Settings-Fontsize')
+            }}
+          />
+        </>
       ) : null}
       <MenuRow
         title={t('content.language.heading')}

@@ -4,7 +4,8 @@ import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { StyleConstants } from '@utils/styles/constants'
+import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { adaptiveScale, StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -12,6 +13,7 @@ import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import { useSelector } from 'react-redux'
 
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
@@ -19,7 +21,8 @@ const renderNode = ({
   theme,
   node,
   index,
-  size,
+  adaptedFontsize,
+  adaptedLineheight,
   navigation,
   mentions,
   tags,
@@ -30,7 +33,8 @@ const renderNode = ({
   theme: any
   node: any
   index: number
-  size: 'S' | 'M' | 'L'
+  adaptedFontsize: number
+  adaptedLineheight: number
   navigation: StackNavigationProp<Nav.TabLocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
@@ -52,7 +56,8 @@ const renderNode = ({
               key={index}
               style={{
                 color: theme.blue,
-                ...StyleConstants.FontStyle[size]
+                fontSize: adaptedFontsize,
+                lineHeight: adaptedLineheight
               }}
               onPress={() => {
                 analytics('status_hashtag_press')
@@ -79,7 +84,8 @@ const renderNode = ({
               key={index}
               style={{
                 color: accountIndex !== -1 ? theme.blue : undefined,
-                ...StyleConstants.FontStyle[size]
+                fontSize: adaptedFontsize,
+                lineHeight: adaptedLineheight
               }}
               onPress={() => {
                 analytics('status_mention_press')
@@ -108,8 +114,9 @@ const renderNode = ({
             key={index}
             style={{
               color: theme.blue,
-              ...StyleConstants.FontStyle[size],
-              alignItems: 'center'
+              alignItems: 'center',
+              fontSize: adaptedFontsize,
+              lineHeight: adaptedLineheight
             }}
             onPress={async () => {
               analytics('status_link_press')
@@ -125,9 +132,9 @@ const renderNode = ({
               <Icon
                 color={theme.blue}
                 name='ExternalLink'
-                size={StyleConstants.Font.Size[size]}
+                size={adaptedFontsize}
                 style={{
-                  transform: [{ translateY: size === 'L' ? -3 : -1 }]
+                  transform: [{ translateY: -2 }]
                 }}
               />
             ) : null}
@@ -146,6 +153,7 @@ const renderNode = ({
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
+  adaptiveSize?: boolean
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
@@ -158,6 +166,7 @@ export interface Props {
 const ParseHTML: React.FC<Props> = ({
   content,
   size = 'M',
+  adaptiveSize = false,
   emojis,
   mentions,
   tags,
@@ -166,6 +175,16 @@ const ParseHTML: React.FC<Props> = ({
   expandHint,
   disableDetails = false
 }) => {
+  const adaptiveFontsize = useSelector(getSettingsFontsize)
+  const adaptedFontsize = adaptiveScale(
+    StyleConstants.Font.Size[size],
+    adaptiveSize ? adaptiveFontsize : 0
+  )
+  const adaptedLineheight = adaptiveScale(
+    StyleConstants.Font.LineHeight[size],
+    adaptiveSize ? adaptiveFontsize : 0
+  )
+
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -183,7 +202,8 @@ const ParseHTML: React.FC<Props> = ({
         theme,
         node,
         index,
-        size,
+        adaptedFontsize,
+        adaptedLineheight,
         navigation,
         mentions,
         tags,
@@ -199,6 +219,7 @@ const ParseHTML: React.FC<Props> = ({
           content={children.toString()}
           emojis={emojis}
           size={size}
+          adaptiveSize={adaptiveSize}
         />
       )
     } else {
@@ -208,7 +229,6 @@ const ParseHTML: React.FC<Props> = ({
   const rootComponent = useCallback(
     ({ children }) => {
       const { t } = useTranslation('componentParse')
-      const lineHeight = StyleConstants.Font.LineHeight[size]
 
       const [expandAllow, setExpandAllow] = useState(false)
       const [expanded, setExpanded] = useState(false)
@@ -234,10 +254,6 @@ const ParseHTML: React.FC<Props> = ({
             children={children}
             onTextLayout={onTextLayout}
             numberOfLines={expanded ? 999 : numberOfLines + 1}
-            style={{
-              ...StyleConstants.FontStyle[size],
-              color: theme.primary
-            }}
           />
           {expandAllow ? (
             <Pressable
@@ -249,7 +265,7 @@ const ParseHTML: React.FC<Props> = ({
               style={{
                 marginTop: expanded
                   ? 0
-                  : -lineHeight * (numberOfLines === 0 ? 1 : 2)
+                  : -adaptedLineheight * (numberOfLines === 0 ? 1 : 2)
               }}
             >
               <LinearGradient
@@ -257,10 +273,7 @@ const ParseHTML: React.FC<Props> = ({
                   theme.backgroundGradientStart,
                   theme.backgroundGradientEnd
                 ]}
-                locations={[
-                  0,
-                  lineHeight / (StyleConstants.Font.Size[size] * 5)
-                ]}
+                locations={[0, adaptedLineheight / (adaptedFontsize * 5)]}
                 style={{
                   paddingTop: StyleConstants.Font.Size.S * 2,
                   paddingBottom: StyleConstants.Font.Size.S

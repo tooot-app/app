@@ -8,6 +8,16 @@ export default {
         disabled: 'Disabled'
       }
     },
+    fontsize: {
+      heading: '$t(meSettingsFontsize:heading)',
+      content: {
+        S: '$t(meSettingsFontsize:content.sizes.S)',
+        M: '$t(meSettingsFontsize:content.sizes.M)',
+        L: '$t(meSettingsFontsize:content.sizes.L)',
+        XL: '$t(meSettingsFontsize:content.sizes.XL)',
+        XXL: '$t(meSettingsFontsize:content.sizes.XXL)'
+      }
+    },
     language: {
       heading: 'Language',
       options: {
@@ -50,6 +60,6 @@ export default {
       heading: 'Help us improve',
       description: 'Collecting only non-user relative usage'
     },
-    version: 'Version v{{version}}  ({{releaseChannel}})'
+    version: 'Version v{{version}}'
   }
 }

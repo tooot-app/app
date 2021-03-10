@@ -3,7 +3,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useNavigation } from '@react-navigation/native'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
 import { SharedTootProp } from './sharedScreens'
@@ -20,7 +20,6 @@ const TabSharedToot: React.FC<SharedTootProp> = ({
 
   const flRef = useRef<FlatList>(null)
 
-  const [testState, setTestState] = useState(false)
   const scrolled = useRef(false)
   const navigation = useNavigation()
   const queryClient = useQueryClient()
@@ -28,7 +27,6 @@ const TabSharedToot: React.FC<SharedTootProp> = ({
   useEffect(() => {
     const unsubscribe = observer.subscribe(result => {
       if (result.isSuccess) {
-        setTestState(true)
         const flattenData = result.data?.pages
           ? // @ts-ignore
             result.data.pages.flatMap(d => [...d.body])
@@ -42,7 +40,7 @@ const TabSharedToot: React.FC<SharedTootProp> = ({
           const pointer = findIndex(flattenData, ['id', toot.id])
           setTimeout(() => {
             flRef.current?.scrollToIndex({
-              index: pointer,
+              index: pointer === -1 ? 0 : pointer,
               viewOffset: 100
             })
           }, 500)
@@ -79,7 +77,7 @@ const TabSharedToot: React.FC<SharedTootProp> = ({
     <Timeline
       flRef={flRef}
       queryKey={queryKey}
-      customProps={{ renderItem, ...(testState && onScrollToIndexFailed) }}
+      customProps={{ renderItem, onScrollToIndexFailed }}
       disableRefresh
       disableInfinity
     />

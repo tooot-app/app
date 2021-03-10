@@ -18,6 +18,7 @@ export const changeAnalytics = createAsyncThunk(
 )
 
 export type SettingsState = {
+  fontsize: -1 | 0 | 1 | 2 | 3
   language: keyof availableLanguages
   theme: 'light' | 'dark' | 'auto'
   browser: 'internal' | 'external'
@@ -25,6 +26,7 @@ export type SettingsState = {
 }
 
 export const settingsInitialState = {
+  fontsize: 0,
   notification: {
     enabled: false
   },
@@ -46,6 +48,12 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState: settingsInitialState as SettingsState,
   reducers: {
+    changeFontsize: (
+      state,
+      action: PayloadAction<SettingsState['fontsize']>
+    ) => {
+      state.fontsize = action.payload
+    },
     changeLanguage: (
       state,
       action: PayloadAction<NonNullable<SettingsState['language']>>
@@ -72,6 +80,8 @@ const settingsSlice = createSlice({
   }
 })
 
+export const getSettingsFontsize = (state: RootState) =>
+  state.settings.fontsize || 0
 export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
 export const getSettingsBrowser = (state: RootState) => state.settings.browser
@@ -79,6 +89,7 @@ export const getSettingsAnalytics = (state: RootState) =>
   state.settings.analytics
 
 export const {
+  changeFontsize,
   changeLanguage,
   changeTheme,
   changeBrowser

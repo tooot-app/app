@@ -1,8 +1,10 @@
-import { StyleConstants } from '@utils/styles/constants'
+import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { adaptiveScale, StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { StyleSheet, Text } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
@@ -10,26 +12,44 @@ export interface Props {
   content: string
   emojis?: Mastodon.Emoji[]
   size?: 'S' | 'M' | 'L'
+  adaptiveSize?: boolean
   fontBold?: boolean
 }
 
 const ParseEmojis = React.memo(
-  ({ content, emojis, size = 'M', fontBold = false }: Props) => {
+  ({
+    content,
+    emojis,
+    size = 'M',
+    adaptiveSize = false,
+    fontBold = false
+  }: Props) => {
+    const adaptiveFontsize = useSelector(getSettingsFontsize)
+    const adaptedFontsize = adaptiveScale(
+      StyleConstants.Font.Size[size],
+      adaptiveSize ? adaptiveFontsize : 0
+    )
+    const adaptedLineheight = adaptiveScale(
+      StyleConstants.Font.LineHeight[size],
+      adaptiveSize ? adaptiveFontsize : 0
+    )
+
     const { mode, theme } = useTheme()
     const styles = useMemo(() => {
       return StyleSheet.create({
         text: {
           color: theme.primary,
-          ...StyleConstants.FontStyle[size],
+          fontSize: adaptedFontsize,
+          lineHeight: adaptedLineheight,
           ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
         },
         image: {
-          width: StyleConstants.Font.Size[size],
-          height: StyleConstants.Font.Size[size],
-          transform: [{ translateY: size === 'L' ? -3 : -1 }]
+          width: adaptedFontsize,
+          height: adaptedFontsize,
+          transform: [{ translateY: -2 }]
         }
       })
-    }, [mode])
+    }, [mode, adaptiveFontsize])
 
     return (
       <Text style={styles.text}>
@@ -50,6 +70,7 @@ const ParseEmojis = React.memo(
                     {/* When emoji starts a paragraph, lineHeight will break */}
                     {i === 0 ? <Text> </Text> : null}
                     <FastImage
+                      key={adaptiveFontsize}
                       source={{ uri: emojis[emojiIndex].url }}
                       style={styles.image}
                     />

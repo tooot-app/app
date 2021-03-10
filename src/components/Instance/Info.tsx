@@ -1,8 +1,6 @@
-import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
@@ -15,19 +13,15 @@ export interface Props {
 
 const InstanceInfo = React.memo(
   ({ style, header, content, potentialWidth }: Props) => {
-    const { t } = useTranslation('componentInstance')
     const { theme } = useTheme()
 
     return (
       <View style={[styles.base, style]}>
         <Text style={[styles.header, { color: theme.primary }]}>{header}</Text>
         {content ? (
-          <ParseHTML
-            content={content}
-            size={'M'}
-            numberOfLines={5}
-            expandHint={t('server.information.description.expandHint')}
-          />
+          <Text style={[styles.content, { color: theme.primary }]}>
+            {content}
+          </Text>
         ) : (
           <PlaceholderLine
             width={
@@ -58,6 +52,9 @@ const styles = StyleSheet.create({
     ...StyleConstants.FontStyle.S,
     fontWeight: StyleConstants.Font.Weight.Bold,
     marginBottom: StyleConstants.Spacing.XS
+  },
+  content: {
+    ...StyleConstants.FontStyle.M
   }
 })
 

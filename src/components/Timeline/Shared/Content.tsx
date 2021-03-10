@@ -28,6 +28,7 @@ const TimelineContent = React.memo(
               <ParseHTML
                 content={status.spoiler_text}
                 size={highlighted ? 'L' : 'M'}
+                adaptiveSize
                 emojis={status.emojis}
                 mentions={status.mentions}
                 tags={status.tags}
@@ -38,6 +39,7 @@ const TimelineContent = React.memo(
             <ParseHTML
               content={status.content}
               size={highlighted ? 'L' : 'M'}
+              adaptiveSize
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
@@ -50,6 +52,7 @@ const TimelineContent = React.memo(
           <ParseHTML
             content={status.content}
             size={highlighted ? 'L' : 'M'}
+            adaptiveSize
             emojis={status.emojis}
             mentions={status.mentions}
             tags={status.tags}

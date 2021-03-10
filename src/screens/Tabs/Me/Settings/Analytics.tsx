@@ -6,7 +6,6 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import Constants from 'expo-constants'
-import * as Updates from 'expo-updates'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
@@ -30,10 +29,7 @@ const SettingsAnalytics: React.FC = () => {
         }
       />
       <Text style={[styles.version, { color: theme.secondary }]}>
-        {t('content.version', {
-          version: Constants.manifest.version,
-          releaseChannel: Updates.releaseChannel
-        })}
+        {t('content.version', { version: Constants.manifest.version })}
       </Text>
     </MenuContainer>
   )
