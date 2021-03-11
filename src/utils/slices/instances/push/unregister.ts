@@ -27,7 +27,8 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
       expoToken,
       instanceUrl: instance.url,
       accountId: instance.account.id
-    }
+    },
+    sentry: true
   })
 
   if (Platform.OS === 'android') {

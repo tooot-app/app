@@ -40,7 +40,8 @@ const pushUseConnect = ({
         url: 'v1/connect',
         body: {
           expoToken
-        }
+        },
+        sentry: true
       }).catch(() => {
         displayMessage({
           mode,

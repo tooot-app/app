@@ -1,5 +1,6 @@
 import axios from 'axios'
 import chalk from 'chalk'
+import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -12,6 +13,7 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData | Object
+  sentry?: boolean
 }
 
 const apiGeneral = async <T = unknown>({
@@ -20,7 +22,8 @@ const apiGeneral = async <T = unknown>({
   url,
   params,
   headers,
-  body
+  body,
+  sentry = false
 }: Params): Promise<{ body: T }> => {
   if (!domain) {
     return Promise.reject()
@@ -56,6 +59,10 @@ const apiGeneral = async <T = unknown>({
       })
     })
     .catch(error => {
+      if (sentry) {
+        Sentry.Native.captureException(error, error)
+      }
+
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx

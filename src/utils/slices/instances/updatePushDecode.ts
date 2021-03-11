@@ -34,7 +34,8 @@ export const updateInstancePushDecode = createAsyncThunk(
         instanceUrl: instance.url,
         accountId: instance.account.id,
         ...(disable && { keys: instance.push.keys })
-      }
+      },
+      sentry: true
     })
 
     if (Platform.OS === 'android') {

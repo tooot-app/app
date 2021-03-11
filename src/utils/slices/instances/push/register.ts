@@ -29,7 +29,8 @@ const register1 = async ({
     method: 'post',
     domain: PUSH_SERVER,
     url: 'v1/register1',
-    body: { expoToken, instanceUrl, accountId, accountFull }
+    body: { expoToken, instanceUrl, accountId, accountFull },
+    sentry: true
   })
 }
 
@@ -50,7 +51,8 @@ const register2 = async ({
     method: 'post',
     domain: PUSH_SERVER,
     url: 'v1/register2',
-    body: { expoToken, instanceUrl, accountId, serverKey, removeKeys }
+    body: { expoToken, instanceUrl, accountId, serverKey, removeKeys },
+    sentry: true
   })
 }
 
