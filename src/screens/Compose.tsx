@@ -155,12 +155,13 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             disableDebounce: true
           })
         }
-        formatText({
-          textInput: 'text',
-          composeDispatch,
-          content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
-          disableDebounce: true
-        })
+        params.accts.length && // When replying to myself only, do not add space or even format text
+          formatText({
+            textInput: 'text',
+            composeDispatch,
+            content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
+            disableDebounce: true
+          })
         break
       case 'conversation':
         formatText({
