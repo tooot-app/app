@@ -3,6 +3,36 @@ import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
+const assignVisibility = (
+  target: ComposeState['visibility']
+): Pick<ComposeState, 'visibility' | 'visibilityLock'> => {
+  const accountPreference = getInstanceAccount(store.getState())?.preferences[
+    'posting:default:visibility'
+  ]
+
+  switch (target) {
+    case 'direct':
+      return { visibility: 'direct', visibilityLock: true }
+    case 'private':
+      return { visibility: 'private', visibilityLock: false }
+    case 'unlisted':
+      if (accountPreference === 'private') {
+        return { visibility: 'private', visibilityLock: false }
+      } else {
+        return { visibility: 'unlisted', visibilityLock: false }
+      }
+    case 'public':
+      switch (accountPreference) {
+        case 'private':
+          return { visibility: 'private', visibilityLock: false }
+        case 'unlisted':
+          return { visibility: 'unlisted', visibilityLock: false }
+        default:
+          return { visibility: 'public', visibilityLock: false }
+      }
+  }
+}
+
 const composeParseState = (
   params: NonNullable<Nav.RootStackParamList['Screen-Compose']>
 ): ComposeState => {
@@ -37,15 +67,7 @@ const composeParseState = (
             }))
           }
         }),
-        visibility:
-          params.incomingStatus.visibility ||
-          getInstanceAccount(store.getState())?.preferences[
-            'posting:default:visibility'
-          ] ||
-          'public',
-        ...(params.incomingStatus.visibility === 'direct' && {
-          visibilityLock: true
-        }),
+        ...assignVisibility(params.incomingStatus.visibility),
         ...(params.replyToStatus && { replyToStatus: params.replyToStatus })
       }
     case 'reply':
@@ -57,8 +79,7 @@ const composeParseState = (
         ...(actualStatus.spoiler_text && {
           spoiler: { ...composeInitialState.spoiler, active: true }
         }),
-        visibility: actualStatus.visibility,
-        visibilityLock: actualStatus.visibility === 'direct',
+        ...assignVisibility(actualStatus.visibility),
         replyToStatus: actualStatus
       }
     case 'conversation':
@@ -66,8 +87,7 @@ const composeParseState = (
         ...composeInitialState,
         dirty: true,
         timestamp: Date.now(),
-        visibility: 'direct',
-        visibilityLock: true
+        ...assignVisibility('direct')
       }
   }
 }
