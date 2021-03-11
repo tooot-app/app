@@ -343,8 +343,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
   return (
     <KeyboardAvoidingView
       style={styles.base}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'android' ? 30 : 0}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <SafeAreaView
         style={styles.base}

@@ -9,11 +9,12 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -40,6 +41,12 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp
   )
+
+  useEffect(() => {
+    if (instanceDrafts?.length === 0) {
+      navigation.goBack()
+    }
+  }, [instanceDrafts?.length])
 
   const actionWidth =
     StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4
@@ -156,18 +163,18 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   return (
     <>
-      <PanGestureHandler enabled={true}>
+      <PanGestureHandler enabled={Platform.OS === 'ios'}>
         <SwipeListView
           data={instanceDrafts}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
           disableRightSwipe={true}
           rightOpenValue={-actionWidth}
-          previewRowKey={
-            instanceDrafts?.length
-              ? instanceDrafts[0].timestamp.toString()
-              : undefined
-          }
+          // previewRowKey={
+          //   instanceDrafts?.length
+          //     ? instanceDrafts[0].timestamp.toString()
+          //     : undefined
+          // }
           // previewDuration={350}
           previewOpenValue={-actionWidth / 2}
           ItemSeparatorComponent={ComponentSeparator}
