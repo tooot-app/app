@@ -5,7 +5,9 @@ const haptics = (
   type: 'Success' | 'Warning' | 'Error' | 'Light' | 'Medium' | 'Heavy'
 ) => {
   if (Platform.OS === 'android') {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle['Light']).catch(error => {})
+    if (type === 'Error') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle['Light']).catch(() => {})
+    }
     return
   }
 
@@ -14,13 +16,13 @@ const haptics = (
     case 'Warning':
     case 'Error':
       Haptics.notificationAsync(Haptics.NotificationFeedbackType[type]).catch(
-        error => {}
+        () => {}
       )
       break
     case 'Light':
     case 'Medium':
     case 'Heavy':
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle[type]).catch(error => {})
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle[type]).catch(() => {})
   }
 }
 
