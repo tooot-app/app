@@ -5,7 +5,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import {
   KeyboardAvoidingView,
@@ -16,31 +16,26 @@ import {
   View
 } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
+import { SharedSearchProp } from './sharedScreens'
 
-export interface Props {
-  searchTerm: string | undefined
-}
-
-const TabSharedSearch: React.FC<Props> = ({ searchTerm }) => {
+const TabSharedSearch: React.FC<SharedSearchProp> = ({
+  route: {
+    params: { text }
+  }
+}) => {
   const { t } = useTranslation('sharedSearch')
   const { theme } = useTheme()
-  const { status, data, refetch } = useSearchQuery({
-    term: searchTerm,
-    options: { enabled: false }
-  })
 
-  const [setctionData, setSectionData] = useState<
-    { title: string; data: any }[]
-  >([])
   const mapKeyToTranslations = {
     accounts: t('content.sections.accounts'),
     hashtags: t('content.sections.hashtags'),
     statuses: t('content.sections.statuses')
   }
-  useEffect(
-    () =>
-      data &&
-      setSectionData(
+  const { status, data } = useSearchQuery({
+    term: text,
+    options: {
+      enabled: text !== undefined,
+      select: data =>
         Object.keys(data as Mastodon.Results)
           .map(key => ({
             title: key,
@@ -58,17 +53,8 @@ const TabSharedSearch: React.FC<Props> = ({ searchTerm }) => {
               return 0
             }
           })
-      ),
-    [data]
-  )
-
-  useEffect(() => {
-    if (searchTerm) {
-      refetch()
-    } else {
-      setSectionData([])
     }
-  }, [searchTerm])
+  })
 
   const listEmpty = useMemo(() => {
     return (
@@ -145,13 +131,13 @@ const TabSharedSearch: React.FC<Props> = ({ searchTerm }) => {
           <Text style={[styles.sectionFooterText, { color: theme.secondary }]}>
             <Trans
               i18nKey='sharedSearch:content.notFound'
-              values={{ searchTerm, type: translation }}
+              values={{ searchTerm: text, type: translation }}
               components={{ bold: <Text style={styles.emptyFontBold} /> }}
             />
           </Text>
         </View>
       ) : null,
-    [searchTerm]
+    [text]
   )
   const listItem = useCallback(({ item, section }) => {
     switch (section.title) {
@@ -175,7 +161,7 @@ const TabSharedSearch: React.FC<Props> = ({ searchTerm }) => {
         style={styles.base}
         renderItem={listItem}
         stickySectionHeadersEnabled
-        sections={setctionData}
+        sections={data || []}
         ListEmptyComponent={listEmpty}
         keyboardShouldPersistTaps='always'
         renderSectionHeader={sectionHeader}

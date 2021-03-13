@@ -88,7 +88,7 @@ declare namespace Nav {
       account: Mastodon.Account
       initialType: 'following' | 'followers'
     }
-    'Tab-Shared-Search': undefined
+    'Tab-Shared-Search': { text: string | undefined }
     'Tab-Shared-Toot': {
       toot: Mastodon.Status
       rootQueryKey: any

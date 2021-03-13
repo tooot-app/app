@@ -11,15 +11,14 @@ import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, Text, View } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack'
 import {
   NativeStackNavigationEventMap,
-  NativeStackNavigationOptions,
   NativeStackNavigatorProps
-} from 'react-native-screens/lib/typescript/types'
+} from 'react-native-screens/lib/typescript/native-stack/types'
 
 export type BaseScreens =
   | Nav.TabLocalStackParamList
@@ -60,24 +59,11 @@ const sharedScreens = (
     StackNavigationState<Record<string, object | undefined>>,
     NativeStackNavigationOptions,
     NativeStackNavigationEventMap,
-    ({
-      initialRouteName,
-      children,
-      screenOptions,
-      ...rest
-    }: NativeStackNavigatorProps) => JSX.Element
+    ({ ...rest }: NativeStackNavigatorProps) => JSX.Element
   >
 ) => {
   const { mode, theme } = useTheme()
   const { t } = useTranslation()
-
-  const [searchTerm, setSearchTerm] = useState<string>()
-  const onChangeText = useCallback(
-    debounce(text => setSearchTerm(text), 1000, {
-      trailing: true
-    }),
-    []
-  )
 
   return [
     <Stack.Screen
@@ -158,54 +144,61 @@ const sharedScreens = (
     <Stack.Screen
       key='Tab-Shared-Search'
       name='Tab-Shared-Search'
+      component={TabSharedSearch}
       options={({ navigation }: SharedSearchProp) => ({
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
-        // https://github.com/react-navigation/react-navigation/issues/6746#issuecomment-583897436
-        headerCenter: () => (
-          <View style={styles.searchBar}>
-            <TextInput
-              editable={false}
-              children={
-                <Text
-                  style={[
-                    styles.textInput,
-                    {
-                      color: theme.primary
-                    }
-                  ]}
-                  children={t('sharedSearch:content.header.prefix')}
-                />
-              }
-            />
-            <TextInput
-              keyboardAppearance={mode}
-              style={[
-                styles.textInput,
-                {
-                  flex: 1,
-                  color: theme.primary,
-                  paddingLeft: StyleConstants.Spacing.XS
+        headerCenter: () => {
+          const onChangeText = debounce(
+            (text: string) => navigation.setParams({ text }),
+            1000,
+            {
+              trailing: true
+            }
+          )
+          return (
+            <View style={styles.searchBar}>
+              <TextInput
+                editable={false}
+                children={
+                  <Text
+                    style={[
+                      styles.textInput,
+                      {
+                        color: theme.primary
+                      }
+                    ]}
+                    children={t('sharedSearch:content.header.prefix')}
+                  />
                 }
-              ]}
-              autoFocus
-              onChangeText={onChangeText}
-              autoCapitalize='none'
-              autoCorrect={false}
-              clearButtonMode='never'
-              keyboardType='web-search'
-              onSubmitEditing={({ nativeEvent: { text } }) =>
-                setSearchTerm(text)
-              }
-              placeholder={t('sharedSearch:content.header.placeholder')}
-              placeholderTextColor={theme.secondary}
-              returnKeyType='go'
-            />
-          </View>
-        )
+              />
+              <TextInput
+                keyboardAppearance={mode}
+                style={[
+                  styles.textInput,
+                  {
+                    flex: 1,
+                    color: theme.primary,
+                    paddingLeft: StyleConstants.Spacing.XS
+                  }
+                ]}
+                autoFocus
+                onChangeText={onChangeText}
+                autoCapitalize='none'
+                autoCorrect={false}
+                clearButtonMode='never'
+                keyboardType='web-search'
+                onSubmitEditing={({ nativeEvent: { text } }) =>
+                  navigation.setParams({ text })
+                }
+                placeholder={t('sharedSearch:content.header.placeholder')}
+                placeholderTextColor={theme.secondary}
+                returnKeyType='go'
+              />
+            </View>
+          )
+        }
       })}
-    >
-      {() => <TabSharedSearch searchTerm={searchTerm} />}
-    </Stack.Screen>,
+    />,
     <Stack.Screen
       key='Tab-Shared-Toot'
       name='Tab-Shared-Toot'

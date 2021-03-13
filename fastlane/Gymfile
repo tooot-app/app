@@ -1,3 +1,2 @@
 scheme "tooot"
 workspace "./ios/tooot.xcworkspace"
-clean true

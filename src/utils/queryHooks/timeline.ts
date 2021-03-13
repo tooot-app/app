@@ -194,7 +194,12 @@ const useTimelineQuery = <TData = TimelineData>({
   >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
-  return useInfiniteQuery(queryKey, queryFunction, options)
+  return useInfiniteQuery(queryKey, queryFunction, {
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    ...options
+  })
 }
 
 // --- Separator ---

@@ -42,43 +42,45 @@ const pushUseConnect = ({
           expoToken
         },
         sentry: true
-      }).catch(() => {
-        displayMessage({
-          mode,
-          type: 'error',
-          duration: 'long',
-          message: t('meSettingsPush:error.message'),
-          description: t('meSettingsPush:error.description'),
-          onPress: () => {
-            navigationRef.current?.navigate('Screen-Tabs', {
-              screen: 'Tab-Me',
-              params: {
-                screen: 'Tab-Me-Root'
-              }
-            })
-            navigationRef.current?.navigate('Screen-Tabs', {
-              screen: 'Tab-Me',
-              params: {
-                screen: 'Tab-Me-Settings'
-              }
-            })
-          }
-        })
+      }).catch(error => {
+        if (error.status == 410) {
+          displayMessage({
+            mode,
+            type: 'error',
+            duration: 'long',
+            message: t('meSettingsPush:error.message'),
+            description: t('meSettingsPush:error.description'),
+            onPress: () => {
+              navigationRef.current?.navigate('Screen-Tabs', {
+                screen: 'Tab-Me',
+                params: {
+                  screen: 'Tab-Me-Root'
+                }
+              })
+              navigationRef.current?.navigate('Screen-Tabs', {
+                screen: 'Tab-Me',
+                params: {
+                  screen: 'Tab-Me-Settings'
+                }
+              })
+            }
+          })
 
-        dispatch(disableAllPushes())
+          dispatch(disableAllPushes())
 
-        instances.forEach(instance => {
-          if (instance.push.global.value) {
-            apiGeneral<{}>({
-              method: 'delete',
-              domain: instance.url,
-              url: 'api/v1/push/subscription',
-              headers: {
-                Authorization: `Bearer ${instance.token}`
-              }
-            }).catch(() => console.log('error!!!'))
-          }
-        })
+          instances.forEach(instance => {
+            if (instance.push.global.value) {
+              apiGeneral<{}>({
+                method: 'delete',
+                domain: instance.url,
+                url: 'api/v1/push/subscription',
+                headers: {
+                  Authorization: `Bearer ${instance.token}`
+                }
+              }).catch(() => console.log('error!!!'))
+            }
+          })
+        }
       })
     }
 

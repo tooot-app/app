@@ -93,7 +93,7 @@ private_lane :build_ios do
     )
   when "production"
     prepare_appstore_ios
-    match( type: "appstore", readonly: true )
+    match( type: "appstore", readonly: true, include_bitcode: true )
     build_ios_app( export_method: "app-store" )
   end
 end

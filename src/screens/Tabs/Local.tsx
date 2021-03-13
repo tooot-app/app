@@ -43,7 +43,10 @@ const TabLocal = React.memo(
             content='Search'
             onPress={() => {
               analytics('search_tap', { page: 'Local' })
-              navigation.navigate('Tab-Local', { screen: 'Tab-Shared-Search' })
+              navigation.navigate('Tab-Local', {
+                screen: 'Tab-Shared-Search',
+                params: { text: undefined }
+              })
             }}
           />
         )

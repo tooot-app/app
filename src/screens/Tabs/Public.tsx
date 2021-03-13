@@ -3,7 +3,9 @@ import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { useNavigation } from '@react-navigation/native'
+import { ScreenTabsParamList } from '@screens/Tabs'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
@@ -16,13 +18,17 @@ import { TabView } from 'react-native-tab-view'
 import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
 import { useSelector } from 'react-redux'
 
+export type TabPublicProps = BottomTabScreenProps<
+  ScreenTabsParamList,
+  'Tab-Public'
+>
+
 const Stack = createNativeStackNavigator<Nav.TabPublicStackParamList>()
 
 const TabPublic = React.memo(
-  () => {
+  ({ navigation }: TabPublicProps) => {
     const { t, i18n } = useTranslation()
     const { mode } = useTheme()
-    const navigation = useNavigation()
     const instanceActive = useSelector(getInstanceActive)
 
     const [segment, setSegment] = useState(0)
@@ -64,7 +70,10 @@ const TabPublic = React.memo(
             content='Search'
             onPress={() => {
               analytics('search_tap', { page: pages[segment].key })
-              navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })
+              navigation.navigate('Tab-Public', {
+                screen: 'Tab-Shared-Search',
+                params: { text: undefined }
+              })
             }}
           />
         )
@@ -86,7 +95,7 @@ const TabPublic = React.memo(
         }
       }) => {
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-        const renderItem = ({ item }) => (
+        const renderItem = ({ item }: any) => (
           <TimelineDefault item={item} queryKey={queryKey} />
         )
         return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
