@@ -24,6 +24,7 @@ const HeaderSharedApplication = React.memo(
           application.website && (await openLink(application.website))
         }}
         style={[styles.application, { color: theme.secondary }]}
+        numberOfLines={1}
       >
         {t('shared.header.shared.application', {
           application: application.name
@@ -36,6 +37,7 @@ const HeaderSharedApplication = React.memo(
 
 const styles = StyleSheet.create({
   application: {
+    flex: 1,
     ...StyleConstants.FontStyle.S,
     marginLeft: StyleConstants.Spacing.S
   }
