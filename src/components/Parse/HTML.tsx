@@ -9,10 +9,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -164,120 +163,102 @@ export interface Props {
   disableDetails?: boolean
 }
 
-const ParseHTML: React.FC<Props> = ({
-  content,
-  size = 'M',
-  adaptiveSize = false,
-  emojis,
-  mentions,
-  tags,
-  showFullLink = false,
-  numberOfLines = 10,
-  expandHint,
-  disableDetails = false
-}) => {
-  const adaptiveFontsize = useSelector(getSettingsFontsize)
-  const adaptedFontsize = adaptiveScale(
-    StyleConstants.Font.Size[size],
-    adaptiveSize ? adaptiveFontsize : 0
-  )
-  const adaptedLineheight = adaptiveScale(
-    StyleConstants.Font.LineHeight[size],
-    adaptiveSize ? adaptiveFontsize : 0
-  )
+const ParseHTML = React.memo(
+  ({
+    content,
+    size = 'M',
+    adaptiveSize = false,
+    emojis,
+    mentions,
+    tags,
+    showFullLink = false,
+    numberOfLines = 10,
+    expandHint,
+    disableDetails = false
+  }: Props) => {
+    const adaptiveFontsize = useSelector(getSettingsFontsize)
+    const adaptedFontsize = adaptiveScale(
+      StyleConstants.Font.Size[size],
+      adaptiveSize ? adaptiveFontsize : 0
+    )
+    const adaptedLineheight = adaptiveScale(
+      StyleConstants.Font.LineHeight[size],
+      adaptiveSize ? adaptiveFontsize : 0
+    )
 
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
-  const route = useRoute()
-  const { theme } = useTheme()
-  const { t, i18n } = useTranslation('componentParse')
-  if (!expandHint) {
-    expandHint = t('HTML.defaultHint')
-  }
-
-  const renderNodeCallback = useCallback(
-    (node, index) =>
-      renderNode({
-        routeParams: route.params,
-        theme,
-        node,
-        index,
-        adaptedFontsize,
-        adaptedLineheight,
-        navigation,
-        mentions,
-        tags,
-        showFullLink,
-        disableDetails
-      }),
-    []
-  )
-  const textComponent = useCallback(({ children }) => {
-    if (children) {
-      return (
-        <ParseEmojis
-          content={children.toString()}
-          emojis={emojis}
-          size={size}
-          adaptiveSize={adaptiveSize}
-        />
-      )
-    } else {
-      return null
+    const navigation = useNavigation<
+      StackNavigationProp<Nav.TabLocalStackParamList>
+    >()
+    const route = useRoute()
+    const { mode, theme } = useTheme()
+    const { t, i18n } = useTranslation('componentParse')
+    if (!expandHint) {
+      expandHint = t('HTML.defaultHint')
     }
-  }, [])
-  const rootComponent = useCallback(
-    ({ children }) => {
-      const { t } = useTranslation('componentParse')
 
-      const [expandAllow, setExpandAllow] = useState(false)
-      const [expanded, setExpanded] = useState(false)
-
-      const onTextLayout = useCallback(({ nativeEvent }) => {
-        switch (Platform.OS) {
-          case 'ios':
-            if (nativeEvent.lines.length === numberOfLines + 1) {
-              setExpandAllow(true)
-            }
-            break
-          case 'android':
-            if (nativeEvent.lines.length > numberOfLines + 1) {
-              setExpandAllow(true)
-            }
-            break
-        }
-      }, [])
-
-      return (
-        <View style={{ overflow: 'hidden' }}>
-          <Text
-            children={children}
-            onTextLayout={onTextLayout}
-            numberOfLines={expanded ? 999 : numberOfLines + 1}
+    const renderNodeCallback = useCallback(
+      (node, index) =>
+        renderNode({
+          routeParams: route.params,
+          theme,
+          node,
+          index,
+          adaptedFontsize,
+          adaptedLineheight,
+          navigation,
+          mentions,
+          tags,
+          showFullLink,
+          disableDetails
+        }),
+      []
+    )
+    const textComponent = useCallback(({ children }) => {
+      if (children) {
+        return (
+          <ParseEmojis
+            content={children.toString()}
+            emojis={emojis}
+            size={size}
+            adaptiveSize={adaptiveSize}
           />
-          {expandAllow ? (
-            <Pressable
-              onPress={() => {
-                analytics('status_readmore', { allow: expandAllow, expanded })
-                layoutAnimation()
-                setExpanded(!expanded)
-              }}
-              style={{
-                marginTop: expanded
-                  ? 0
-                  : -adaptedLineheight * (numberOfLines === 0 ? 1 : 2)
-              }}
-            >
-              <LinearGradient
-                colors={[
-                  theme.backgroundGradientStart,
-                  theme.backgroundGradientEnd
-                ]}
-                locations={[0, adaptedLineheight / (adaptedFontsize * 5)]}
+        )
+      } else {
+        return null
+      }
+    }, [])
+    const rootComponent = useCallback(
+      ({ children }) => {
+        const { t } = useTranslation('componentParse')
+
+        const [expandAllow, setExpandAllow] = useState(false)
+        const [expanded, setExpanded] = useState(false)
+
+        const onTextLayout = useCallback(({ nativeEvent }) => {
+          if (nativeEvent.lines.length >= numberOfLines) {
+            setExpandAllow(true)
+          }
+        }, [])
+
+        return (
+          <View style={{ overflow: 'hidden' }}>
+            <Text
+              children={children}
+              onTextLayout={onTextLayout}
+              numberOfLines={expanded ? 999 : numberOfLines}
+            />
+            {expandAllow ? (
+              <Pressable
+                onPress={() => {
+                  analytics('status_readmore', { allow: expandAllow, expanded })
+                  layoutAnimation()
+                  setExpanded(!expanded)
+                }}
                 style={{
-                  paddingTop: StyleConstants.Font.Size.S * 2,
-                  paddingBottom: StyleConstants.Font.Size.S
+                  justifyContent: 'center',
+                  marginTop: expanded ? 0 : -adaptedLineheight,
+                  minHeight: 44,
+                  backgroundColor: theme.background
                 }}
               >
                 <Text
@@ -286,29 +267,28 @@ const ParseHTML: React.FC<Props> = ({
                     ...StyleConstants.FontStyle.S,
                     color: theme.primary
                   }}
-                >
-                  {expanded
-                    ? t('HTML.expanded.true', { hint: expandHint })
-                    : t('HTML.expanded.false', { hint: expandHint })}
-                </Text>
-              </LinearGradient>
-            </Pressable>
-          ) : null}
-        </View>
-      )
-    },
-    [theme, i18n.language]
-  )
+                  children={t(`HTML.expanded.${expanded.toString()}`, {
+                    hint: expandHint
+                  })}
+                />
+              </Pressable>
+            ) : null}
+          </View>
+        )
+      },
+      [mode, i18n.language]
+    )
 
-  return (
-    <HTMLView
-      value={content}
-      TextComponent={textComponent}
-      RootComponent={rootComponent}
-      renderNode={renderNodeCallback}
-    />
-  )
-}
+    return (
+      <HTMLView
+        value={content}
+        TextComponent={textComponent}
+        RootComponent={rootComponent}
+        renderNode={renderNodeCallback}
+      />
+    )
+  },
+  () => true
+)
 
-// export default ParseHTML
-export default React.memo(ParseHTML, () => true)
+export default ParseHTML
