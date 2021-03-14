@@ -1,9 +1,19 @@
-on: push
+name: build
+on:
+  push:
+    branches:
+      - main
+      - candidate
+      - release
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
+      - name: -- Step 0 -- Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch
       - name: -- Step 1 -- Checkout code
         uses: actions/checkout@v2
         with:
@@ -24,7 +34,7 @@ jobs:
         run: bundle install
       - name: -- Step 6 -- Run fastlane
         env:
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}

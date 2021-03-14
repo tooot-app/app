@@ -12,7 +12,7 @@ RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{VERSIONS[:minor]}-#{ENVIRONMENT}"
 BUILD_NUMBER = ENV["GITHUB_RUN_NUMBER"]
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT
-when "development"
+when "main"
   GITHUB_RELEASE= ""
 when "candidate"
   GITHUB_RELEASE = "v#{VERSION}-#{VERSIONS[:patch]}"
@@ -80,12 +80,6 @@ private_lane :build_ios do
   setup_ci
 
   case ENVIRONMENT
-  when "development"
-    match( type: "development", readonly: true )
-    if !is_ci
-      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY )
-      install_on_device( skip_wifi: true )
-    end
   when "candidate"
     install_pods_ios
     prepare_appstore_ios
@@ -102,6 +96,12 @@ private_lane :build_ios do
     prepare_appstore_ios
     match( type: "appstore", readonly: true, include_bitcode: true )
     build_ios_app( export_method: "app-store" )
+  else
+    if !is_ci
+      match( type: "development", readonly: true )
+      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY )
+      install_on_device( skip_wifi: true )
+    end
   end
 end
 
@@ -110,17 +110,6 @@ private_lane :build_android do
   sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
 
   case ENVIRONMENT
-  when "development"
-    if !is_ci
-      build_android_app(
-        task: 'assemble',
-        build_type: 'release',
-        project_dir: "./android"
-      )
-      adb(
-        command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-      )
-    end
   when "candidate"
     prepare_playstore_android
     build_android_app(
@@ -146,6 +135,17 @@ private_lane :build_android do
       skip_upload_screenshots: true
     )
   when "release"
+  else
+    if !is_ci
+      build_android_app(
+        task: 'assemble',
+        build_type: 'release',
+        project_dir: "./android"
+      )
+      adb(
+        command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+      )
+    end
   end
 end
 
