@@ -13,7 +13,6 @@ export default (): ExpoConfig => ({
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],
   extra: {
-    toootEnvironment: process.env.TOOOT_ENVIRONMENT,
     sentryDSN: process.env.SENTRY_DSN
   },
   hooks: {
@@ -25,7 +24,7 @@ export default (): ExpoConfig => ({
           project: process.env.SENTRY_PROJECT,
           authToken: process.env.SENTRY_AUTH_TOKEN,
           setCommits: process.env.GITHUB_SHA || undefined,
-          deployEnv: process.env.TOOOT_ENVIRONMENT
+          deployEnv: process.env.ENVIRONMENT
         }
       }
     ]

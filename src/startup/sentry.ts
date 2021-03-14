@@ -7,7 +7,6 @@ const sentry = () => {
   log('log', 'Sentry', 'initializing')
   Sentry.init({
     dsn: Constants.manifest.extra.sentryDSN,
-    environment: Constants.manifest.extra.toootEnvironment,
     enableInExpoDevelopment: false,
     debug:
       __DEV__ ||

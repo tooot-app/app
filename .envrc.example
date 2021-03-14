@@ -1,4 +1,4 @@
-export TOOOT_ENVIRONMENT=""
+export ENVIRONMENT="development"
 
 export SENTRY_ORGANIZATION=""
 export SENTRY_PROJECT=""

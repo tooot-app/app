@@ -121,7 +121,10 @@ const TimelineNotifications: React.FC<Props> = ({
             {notification.status.card && (
               <TimelineCard card={notification.status.card} />
             )}
-            <TimelineFullConversation status={notification.status} />
+            <TimelineFullConversation
+              queryKey={queryKey}
+              status={notification.status}
+            />
           </View>
         ) : null}
       </View>

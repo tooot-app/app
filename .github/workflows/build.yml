@@ -1,8 +1,5 @@
-name: Build development
-on:
-  push:
-    branches:
-      - development
+on: push
+
 jobs:
   build:
     runs-on: macos-latest
@@ -27,13 +24,13 @@ jobs:
         run: bundle install
       - name: -- Step 6 -- Run fastlane
         env:
-          TOOOT_ENVIRONMENT: development
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          LC_ALL: en_US.UTF-8
-          LANG: en_US.UTF-8
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}

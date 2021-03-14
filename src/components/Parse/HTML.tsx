@@ -83,7 +83,7 @@ const renderNode = ({
             <Text
               key={index}
               style={{
-                color: accountIndex !== -1 ? theme.blue : undefined,
+                color: accountIndex !== -1 ? theme.blue : theme.primary,
                 fontSize: adaptedFontsize,
                 lineHeight: adaptedLineheight
               }}
