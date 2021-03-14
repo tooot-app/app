@@ -51,6 +51,7 @@ export default {
     content: {
       expandHint: '隐藏内容'
     },
+    fullConversation: '阅读全部对话',
     header: {
       shared: {
         application: '发自于 {{application}}'

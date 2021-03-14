@@ -17,6 +17,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import TimelineFullConversation from './Shared/FullConversation'
 
 export interface Props {
   notification: Mastodon.Notification
@@ -52,7 +53,15 @@ const TimelineNotifications: React.FC<Props> = ({
 
   return (
     <Pressable
-      style={[styles.notificationView, { backgroundColor: theme.background }]}
+      style={[
+        styles.notificationView,
+        {
+          backgroundColor: theme.background,
+          paddingBottom: notification.status
+            ? 0
+            : StyleConstants.Spacing.Global.PagePadding
+        }
+      ]}
       onPress={onPress}
     >
       {notification.type !== 'mention' ? (
@@ -112,6 +121,7 @@ const TimelineNotifications: React.FC<Props> = ({
             {notification.status.card && (
               <TimelineCard card={notification.status.card} />
             )}
+            <TimelineFullConversation status={notification.status} />
           </View>
         ) : null}
       </View>
@@ -144,8 +154,7 @@ const TimelineNotifications: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   notificationView: {
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: 0
+    padding: StyleConstants.Spacing.Global.PagePadding
   },
   header: {
     flex: 1,

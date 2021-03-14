@@ -51,6 +51,7 @@ export default {
     content: {
       expandHint: 'hidden content'
     },
+    fullConversation: 'Read conversations',
     header: {
       shared: {
         application: 'Tooted with {{application}}'

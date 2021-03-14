@@ -17,6 +17,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import TimelineFullConversation from './Shared/FullConversation'
 
 export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
@@ -124,6 +125,7 @@ const TimelineDefault: React.FC<Props> = ({
         {!disableDetails && actualStatus.card && (
           <TimelineCard card={actualStatus.card} />
         )}
+        <TimelineFullConversation status={actualStatus} />
       </View>
 
       {queryKey && !disableDetails && (
