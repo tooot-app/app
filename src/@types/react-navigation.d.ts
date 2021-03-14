@@ -84,15 +84,24 @@ declare namespace Nav {
     'Tab-Shared-Hashtag': {
       hashtag: Mastodon.Tag['name']
     }
-    'Tab-Shared-Relationships': {
-      account: Mastodon.Account
-      initialType: 'following' | 'followers'
-    }
     'Tab-Shared-Search': { text: string | undefined }
     'Tab-Shared-Toot': {
       toot: Mastodon.Status
       rootQueryKey: any
     }
+    'Tab-Shared-Users':
+      | {
+          reference: 'accounts'
+          id: Mastodon.Account['id']
+          type: 'following' | 'followers'
+          count: number
+        }
+      | {
+          reference: 'statuses'
+          id: Mastodon.Status['id']
+          type: 'reblogged_by' | 'favourited_by'
+          count: number
+        }
   }
 
   type TabLocalStackParamList = {

@@ -48,15 +48,17 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <Text
           style={[styles.stat, { color: theme.primary, textAlign: 'right' }]}
           children={t('content.summary.following_count', {
-            count: account.following_count || 0
+            count: account.following_count
           })}
           onPress={() => {
             analytics('account_stats_following_press', {
               count: account.following_count
             })
-            navigation.push('Tab-Shared-Relationships', {
-              account,
-              initialType: 'following'
+            navigation.push('Tab-Shared-Users', {
+              reference: 'accounts',
+              id: account.id,
+              type: 'following',
+              count: account.following_count
             })
           }}
         />
@@ -73,15 +75,17 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <Text
           style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
           children={t('content.summary.followers_count', {
-            count: account.followers_count || 0
+            count: account.followers_count
           })}
           onPress={() => {
             analytics('account_stats_followers_press', {
               count: account.followers_count
             })
-            navigation.push('Tab-Shared-Relationships', {
-              account,
-              initialType: 'followers'
+            navigation.push('Tab-Shared-Users', {
+              reference: 'accounts',
+              id: account.id,
+              type: 'followers',
+              count: account.followers_count
             })
           }}
         />

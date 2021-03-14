@@ -2,46 +2,46 @@ import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
 
-export type QueryKeyRelationships = [
-  'Relationships',
-  { type: 'following' | 'followers'; id: Mastodon.Account['id'] }
+export type QueryKeyUsers = [
+  'Users',
+  Nav.TabSharedStackParamList['Tab-Shared-Users']
 ]
 
 const queryFunction = ({
   queryKey,
   pageParam
 }: {
-  queryKey: QueryKeyRelationships
+  queryKey: QueryKeyUsers
   pageParam?: { [key: string]: string }
 }) => {
-  const { type, id } = queryKey[1]
+  const { reference, id, type } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
   return apiInstance<Mastodon.Account[]>({
     method: 'get',
-    url: `accounts/${id}/${type}`,
+    url: `${reference}/${id}/${type}`,
     params
   })
 }
 
-const useRelationshipsQuery = <TData = Mastodon.Account[]>({
+const useUsersQuery = ({
   options,
   ...queryKeyParams
-}: QueryKeyRelationships[1] & {
+}: QueryKeyUsers[1] & {
   options?: UseInfiniteQueryOptions<
     {
       body: Mastodon.Account[]
       links?: { prev?: string; next?: string }
     },
     AxiosError,
-    TData
+    {
+      body: Mastodon.Account[]
+      links?: { prev?: string; next?: string }
+    }
   >
 }) => {
-  const queryKey: QueryKeyRelationships = [
-    'Relationships',
-    { ...queryKeyParams }
-  ]
+  const queryKey: QueryKeyUsers = ['Users', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, options)
 }
 
-export { useRelationshipsQuery }
+export { useUsersQuery }

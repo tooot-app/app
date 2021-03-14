@@ -39,6 +39,10 @@ export default {
         function: '收藏嘟文'
       }
     },
+    actionsUsers: {
+      reblogged_by: '$t(sharedUsers:heading.statuses.reblogged_by)',
+      favourited_by: '$t(sharedUsers:heading.statuses.favourited_by)'
+    },
     attachment: {
       sensitive: {
         button: '显示敏感内容'
