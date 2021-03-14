@@ -4,8 +4,8 @@ export default {
     created_at: 'Registered: {{date}}',
     summary: {
       statuses_count: '{{count}} toots',
-      following_count: 'Following {{count}}',
-      followers_count: '{{count}} followers'
+      following_count: '$t(sharedUsers:heading.accounts.following)',
+      followers_count: '$t(sharedUsers:heading.accounts.followers)'
     }
   }
 }

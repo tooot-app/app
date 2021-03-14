@@ -5,9 +5,9 @@ import { StackScreenProps } from '@react-navigation/stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
 import TabSharedHashtag from '@screens/Tabs/Shared/Hashtag'
-import TabSharedRelationships from '@screens/Tabs/Shared/Relationships'
 import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
+import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
@@ -41,17 +41,14 @@ export type SharedHashtagProp = StackScreenProps<
   'Tab-Shared-Hashtag'
 >
 
-export type SharedRelationshipsProp = StackScreenProps<
-  BaseScreens,
-  'Tab-Shared-Relationships'
->
-
 export type SharedSearchProp = StackScreenProps<
   BaseScreens,
   'Tab-Shared-Search'
 >
 
 export type SharedTootProp = StackScreenProps<BaseScreens, 'Tab-Shared-Toot'>
+
+export type SharedUsersProp = StackScreenProps<BaseScreens, 'Tab-Shared-Users'>
 
 const sharedScreens = (
   Stack: TypedNavigator<
@@ -134,14 +131,6 @@ const sharedScreens = (
       })}
     />,
     <Stack.Screen
-      key='Tab-Shared-Relationships'
-      name='Tab-Shared-Relationships'
-      component={TabSharedRelationships}
-      options={({ navigation }: SharedRelationshipsProp) => ({
-        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
-      })}
-    />,
-    <Stack.Screen
       key='Tab-Shared-Search'
       name='Tab-Shared-Search'
       component={TabSharedSearch}
@@ -209,6 +198,20 @@ const sharedScreens = (
           headerCenter: () => <HeaderCenter content={t('sharedToot:heading')} />
         }),
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      })}
+    />,
+    <Stack.Screen
+      key='Tab-Shared-Users'
+      name='Tab-Shared-Users'
+      component={TabSharedUsers}
+      options={({
+        navigation,
+        route: {
+          params: { reference, type, count }
+        }
+      }: SharedUsersProp) => ({
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+        headerTitle: t(`sharedUsers:heading.${reference}.${type}`, { count })
       })}
     />
   ]

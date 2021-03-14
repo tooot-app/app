@@ -22,9 +22,9 @@ export default {
   sharedAnnouncements: require('./screens/sharedAnnouncements').default,
   sharedAttachments: require('./screens/sharedAttachments').default,
   sharedCompose: require('./screens/sharedCompose').default,
-  sharedRelationships: require('./screens/sharedRelationships').default,
   sharedSearch: require('./screens/sharedSearch').default,
   sharedToot: require('./screens/sharedToot').default,
+  sharedUsers: require('./screens/sharedUsers').default,
 
   componentInstance: require('./components/instance').default,
   componentParse: require('./components/parse').default,

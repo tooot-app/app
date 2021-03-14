@@ -17,6 +17,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import TimelineActionsUsers from './Shared/ActionsUsers'
 import TimelineFullConversation from './Shared/FullConversation'
 
 export interface Props {
@@ -127,6 +128,8 @@ const TimelineDefault: React.FC<Props> = ({
         )}
         <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
       </View>
+
+      <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
 
       {queryKey && !disableDetails && (
         <View

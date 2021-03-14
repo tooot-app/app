@@ -39,6 +39,10 @@ export default {
         function: 'Bookmark toot'
       }
     },
+    actionsUsers: {
+      reblogged_by: '$t(sharedUsers:heading.statuses.reblogged_by)',
+      favourited_by: '$t(sharedUsers:heading.statuses.favourited_by)'
+    },
     attachment: {
       sensitive: {
         button: 'Show sensitive media'
