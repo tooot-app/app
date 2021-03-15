@@ -30,9 +30,7 @@ private_lane :prepare_appstore_ios do
   set_info_plist_value(
     path: INFO_PLIST,
     key: "NSAppTransportSecurity",
-    value: {
-      "NSAllowsArbitraryLoads" => false
-    }
+    value: {}
   )
   increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER, skip_info_plist: true )
   app_store_connect_api_key

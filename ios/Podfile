@@ -8,28 +8,19 @@ target 'tooot' do
   use_unimodules!
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => true
+  )
 
-  # Uncomment the code below to enable Flipper.
+  # Enables Flipper.
   #
-  # You should not install Flipper in CI environments when creating release
-  # builds, this will lead to significantly slower build times.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work.
-  #
-  #  use_flipper!
-  #  post_install do |installer|
-  #    flipper_post_install(installer)
-  #  end
-end
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  # use_flipper!()
 
-# https://github.com/CocoaPods/CocoaPods/issues/9884
-post_install do |pi|
-  pi.pods_project.targets.each do |t|
-      t.build_configurations.each do |bc|
-          if bc.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] == '8.0'
-            bc.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
-          end
-      end
+  post_install do |installer|
+    react_native_post_install(installer)
   end
 end
