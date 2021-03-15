@@ -38,7 +38,7 @@ const apiInstance = async <T = unknown>({
     domain = state.instances.instances[instanceActive].url
     token = state.instances.instances[instanceActive].token
   } else {
-    console.error(
+    console.warn(
       ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
     )
     return Promise.reject()

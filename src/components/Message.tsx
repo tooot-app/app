@@ -3,7 +3,10 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { getTheme } from '@utils/styles/themes'
 import React from 'react'
-import FlashMessage, { showMessage } from 'react-native-flash-message'
+import FlashMessage, {
+  hideMessage,
+  showMessage
+} from 'react-native-flash-message'
 import haptics from './haptics'
 
 const displayMessage = ({
@@ -70,6 +73,10 @@ const displayMessage = ({
   })
 }
 
+const removeMessage = () => {
+  hideMessage()
+}
+
 const Message = React.memo(
   () => {
     const { mode, theme } = useTheme()
@@ -100,4 +107,4 @@ const Message = React.memo(
   () => true
 )
 
-export { Message, displayMessage }
+export { Message, displayMessage, removeMessage }

@@ -1,7 +1,14 @@
 export default {
+  network: {
+    disconnected: {
+      message: 'Lost network connection',
+      description: "Please check your phone's network setting"
+    }
+  },
   screenshot: {
     title: 'Privacy Protection',
-    message: 'Please do not disclose other user\'s identity, such as username, avatar, etc. Thank you!',
+    message:
+      "Please do not disclose other user's identity, such as username, avatar, etc. Thank you!",
     button: 'Confirm'
   },
   index: {

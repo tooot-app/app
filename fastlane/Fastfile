@@ -8,7 +8,7 @@ ensure_env_vars(
 VERSIONS = read_json( json_path: "./package.json" )[:versions]
 ENVIRONMENT = ENV["ENVIRONMENT"]
 VERSION = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}"
-RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{VERSIONS[:minor]}-#{ENVIRONMENT}"
+RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
 BUILD_NUMBER = ENV["GITHUB_RUN_NUMBER"]
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT

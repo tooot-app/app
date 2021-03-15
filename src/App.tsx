@@ -5,7 +5,6 @@ import audio from '@root/startup/audio'
 import dev from '@root/startup/dev'
 import log from '@root/startup/log'
 import netInfo from '@root/startup/netInfo'
-import onlineStatus from '@root/startup/onlineStatus'
 import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
@@ -28,7 +27,6 @@ dev()
 sentry()
 audio()
 push()
-onlineStatus()
 
 log('log', 'react-query', 'initializing')
 const queryClient = new QueryClient()

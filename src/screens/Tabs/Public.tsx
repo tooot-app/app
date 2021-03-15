@@ -4,19 +4,15 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
-import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter'
-import { useSelector } from 'react-redux'
 
 export type TabPublicProps = BottomTabScreenProps<
   ScreenTabsParamList,
@@ -29,7 +25,6 @@ const TabPublic = React.memo(
   ({ navigation }: TabPublicProps) => {
     const { t, i18n } = useTranslation()
     const { mode } = useTheme()
-    const instanceActive = useSelector(getInstanceActive)
 
     const [segment, setSegment] = useState(0)
     const pages: {
@@ -82,10 +77,7 @@ const TabPublic = React.memo(
     )
 
     const routes = pages.map(p => ({ key: p.key }))
-    const renderPager = useCallback(
-      props => <ViewPagerAdapter {...props} />,
-      []
-    )
+
     const renderScene = useCallback(
       ({
         route: { key: page }
@@ -103,20 +95,19 @@ const TabPublic = React.memo(
       []
     )
     const children = useCallback(
-      () =>
-        instanceActive !== -1 ? (
-          <TabView
-            lazy
-            swipeEnabled
-            renderPager={renderPager}
-            renderScene={renderScene}
-            renderTabBar={() => null}
-            onIndexChange={index => setSegment(index)}
-            navigationState={{ index: segment, routes }}
-            initialLayout={{ width: Dimensions.get('screen').width }}
-          />
-        ) : null,
-      [segment, instanceActive]
+      () => (
+        // @ts-ignore
+        <TabView
+          lazy
+          swipeEnabled
+          renderScene={renderScene}
+          renderTabBar={() => null}
+          onIndexChange={index => setSegment(index)}
+          navigationState={{ index: segment, routes }}
+          initialLayout={{ width: Dimensions.get('screen').width }}
+        />
+      ),
+      [segment]
     )
 
     return (
