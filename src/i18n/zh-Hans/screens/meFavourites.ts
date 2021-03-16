@@ -1,4 +1,4 @@
 export default {
-  heading: '收藏',
+  heading: '喜欢',
   content: {}
 }

@@ -1,5 +1,5 @@
 import analytics from '@components/analytics'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { StackScreenProps } from '@react-navigation/stack'
 import haptics from '@root/components/haptics'
 import formatText from '@screens/Compose/formatText'
@@ -371,6 +371,13 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
                 },
                 headerTintColor:
                   totalTextCount > maxTootChars ? theme.red : theme.secondary,
+                headerCenter: () => (
+                  <HeaderCenter
+                    content={`${totalTextCount} / ${maxTootChars}${
+                      __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
+                    }`}
+                  />
+                ),
                 headerRight
               }}
             />

@@ -24,9 +24,9 @@ const TimelineFullConversation = React.memo(
         ).length) ? (
       <Text
         style={{
-          ...StyleConstants.FontStyle.M,
+          ...StyleConstants.FontStyle.S,
           color: theme.blue,
-          marginTop: StyleConstants.Font.Size.M / 2
+          marginTop: StyleConstants.Font.Size.S
         }}
       >
         {t('shared.fullConversation')}

@@ -36,7 +36,7 @@ export default {
         function: '转嘟'
       },
       bookmarked: {
-        function: '收藏嘟文'
+        function: '喜欢嘟文'
       }
     },
     actionsUsers: {

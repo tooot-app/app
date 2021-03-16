@@ -6,14 +6,14 @@ export const StyleConstants = {
     LineHeight: {
       S: 20,
       M: 22,
-      L: 30
+      L: 28
     },
     Weight: { Normal: '400' as '400', Bold: '600' as '600' }
   },
   FontStyle: {
     S: { fontSize: 14, lineHeight: 20 },
     M: { fontSize: 16, lineHeight: 22 },
-    L: { fontSize: 20, lineHeight: 30 }
+    L: { fontSize: 20, lineHeight: 28 }
   },
 
   Spacing: {

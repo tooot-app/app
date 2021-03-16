@@ -12,12 +12,12 @@ RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
 BUILD_NUMBER = ENV["GITHUB_RUN_NUMBER"]
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT
-when "main"
-  GITHUB_RELEASE= ""
 when "candidate"
   GITHUB_RELEASE = "v#{VERSION}-#{VERSIONS[:patch]}"
 when "release"
   GITHUB_RELEASE = "v#{VERSION}"
+else
+  GITHUB_RELEASE= ""
 end
 
 XCODEPROJ = "./ios/tooot.xcodeproj"
@@ -82,7 +82,7 @@ private_lane :build_ios do
     install_pods_ios
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store", include_symbols: true, include_bitcode: true )
+    build_ios_app( export_method: "app-store", include_symbols: true, include_bitcode: true, silent: true )
     upload_to_testflight(
       demo_account_required: true,
       distribute_external: true,
@@ -92,12 +92,12 @@ private_lane :build_ios do
   when "release"
     install_pods_ios
     prepare_appstore_ios
-    match( type: "appstore", readonly: true, include_bitcode: true )
-    build_ios_app( export_method: "app-store" )
+    match( type: "appstore", readonly: true )
+    build_ios_app( export_method: "app-store", include_bitcode: true, silent: true )
   else
     if !is_ci
       match( type: "development", readonly: true )
-      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY )
+      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY, silent: true )
       install_on_device( skip_wifi: true )
     end
   end

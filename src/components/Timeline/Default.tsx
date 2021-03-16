@@ -132,27 +132,19 @@ const TimelineDefault: React.FC<Props> = ({
       <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
 
       {queryKey && !disableDetails && (
-        <View
-          style={{
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-          }}
-        >
-          <TimelineActions
-            queryKey={queryKey}
-            rootQueryKey={rootQueryKey}
-            status={actualStatus}
-            accts={uniqBy(
-              ([actualStatus.account] as Mastodon.Account[] &
-                Mastodon.Mention[])
-                .concat(actualStatus.mentions)
-                .filter(d => d.id !== instanceAccount?.id),
-              d => d.id
-            ).map(d => d.acct)}
-            reblog={item.reblog ? true : false}
-          />
-        </View>
+        <TimelineActions
+          queryKey={queryKey}
+          rootQueryKey={rootQueryKey}
+          highlighted={highlighted}
+          status={actualStatus}
+          accts={uniqBy(
+            ([actualStatus.account] as Mastodon.Account[] & Mastodon.Mention[])
+              .concat(actualStatus.mentions)
+              .filter(d => d?.id !== instanceAccount?.id),
+            d => d.id
+          ).map(d => d.acct)}
+          reblog={item.reblog ? true : false}
+        />
       )}
     </Pressable>
   )

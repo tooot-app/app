@@ -6,7 +6,7 @@ export default {
     },
     statuses: {
       reblogged_by: '{{count}} 人转嘟',
-      favourited_by: '{{count}} 人收藏'
+      favourited_by: '{{count}} 人喜欢'
     }
   }
 }
