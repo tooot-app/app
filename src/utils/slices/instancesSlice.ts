@@ -31,8 +31,8 @@ export type Instance = {
   }
   push:
     | {
-        global: { loading: boolean; value: true }
-        decode: { loading: boolean; value: boolean }
+        global: { loading: boolean; value: boolean }
+        decode: { loading: boolean; value: true }
         alerts: {
           follow: {
             loading: boolean
@@ -55,15 +55,17 @@ export type Instance = {
             value: Mastodon.PushSubscription['alerts']['poll']
           }
         }
-        keys: {
-          auth: string
-          public: string
-          private: string
-        }
+        keys:
+          | {
+              auth: string
+              public: string
+              private: string
+            }
+          | undefined
       }
     | {
-        global: { loading: boolean; value: false }
-        decode: { loading: boolean; value: boolean }
+        global: { loading: boolean; value: boolean }
+        decode: { loading: boolean; value: false }
         alerts: {
           follow: {
             loading: boolean
