@@ -35,7 +35,7 @@ jobs:
       - name: -- Step 6 -- Set up cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
-          podfile-path: ios/Podfile.lock
+          version: 1.10.1
       - name: -- Step 7 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
