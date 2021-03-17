@@ -30,12 +30,10 @@ jobs:
           expo-token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
+      - name: -- Step 5 -- Install native dependencies
+        run: npx pod-install
+      - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Set up cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.10.1
       - name: -- Step 7 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
