@@ -5,7 +5,7 @@ import {
   configureStore,
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
-import { InstancesV3 } from '@utils/migrations/instances/v3'
+import instancesMigration from '@utils/migrations/instances/migration'
 import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
@@ -21,40 +21,13 @@ const contextsPersistConfig = {
   storage: AsyncStorage
 }
 
-const instancesMigration = {
-  4: (state: InstancesV3) => {
-    return {
-      instances: state.local.instances.map((instance, index) => {
-        // @ts-ignore
-        delete instance.notification
-        return {
-          ...instance,
-          active: state.local.activeIndex === index,
-          push: {
-            global: { loading: false, value: false },
-            decode: { loading: false, value: false },
-            alerts: {
-              follow: { loading: false, value: true },
-              favourite: { loading: false, value: true },
-              reblog: { loading: false, value: true },
-              mention: { loading: false, value: true },
-              poll: { loading: false, value: true }
-            },
-            keys: undefined
-          }
-        }
-      })
-    }
-  }
-}
-
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
   storage: secureStorage,
-  version: 4,
+  version: 5,
   // @ts-ignore
-  migrate: createMigrate(instancesMigration)
+  migrate: createMigrate(instancesMigration, { debug: true })
 }
 
 const settingsPersistConfig = {

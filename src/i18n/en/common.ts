@@ -15,6 +15,7 @@ export default {
     localCorrupt: 'Login expired, please login again'
   },
   buttons: {
+    apply: 'Apply',
     cancel: 'Cancel'
   },
   toastMessage: {

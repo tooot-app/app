@@ -1,5 +1,10 @@
 import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
+import { store } from '@root/store'
+import {
+  getInstanceActive,
+  getInstanceNotificationsFilter
+} from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
@@ -59,10 +64,19 @@ const queryFunction = ({
       })
 
     case 'Notifications':
+      const rootStore = store.getState()
+      const notificationsFilter = getInstanceNotificationsFilter(rootStore)
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',
-        params
+        params: {
+          ...params,
+          ...(notificationsFilter && {
+            exclude_types: Object.keys(notificationsFilter)
+              // @ts-ignore
+              .filter(filter => notificationsFilter[filter] === false)
+          })
+        }
       })
 
     case 'Account_Default':

@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator<Nav.TabLocalStackParamList>()
 
 const TabLocal = React.memo(
   ({ navigation }: TabLocalProp) => {
-    const { t } = useTranslation('local')
+    const { t, i18n } = useTranslation('local')
 
     const screenOptions = useMemo(
       () => ({
@@ -48,7 +48,7 @@ const TabLocal = React.memo(
           />
         )
       }),
-      []
+      [i18n.language]
     )
 
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]

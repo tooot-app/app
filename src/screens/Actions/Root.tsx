@@ -28,6 +28,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 import ActionsAccount from './Account'
 import ActionsDomain from './Domain'
+import ActionsNotificationsFilter from './NotificationsFilter'
 import ActionsShare from './Share'
 import ActionsStatus from './Status'
 
@@ -40,21 +41,21 @@ const ScreenActionsRoot = React.memo(
   ({ route: { params }, navigation }: ScreenAccountProp) => {
     const { t } = useTranslation()
 
-    const localAccount = useSelector(
+    const instanceAccount = useSelector(
       getInstanceAccount,
       (prev, next) => prev?.id === next?.id
     )
     let sameAccount = false
     switch (params.type) {
       case 'status':
-        sameAccount = localAccount?.id === params.status.account.id
+        sameAccount = instanceAccount?.id === params.status.account.id
         break
       case 'account':
-        sameAccount = localAccount?.id === params.account.id
+        sameAccount = instanceAccount?.id === params.account.id
         break
     }
 
-    const localDomain = useSelector(getInstanceUrl)
+    const instanceDomain = useSelector(getInstanceUrl)
     let sameDomain = true
     let statusDomain: string
     switch (params.type) {
@@ -62,7 +63,7 @@ const ScreenActionsRoot = React.memo(
         statusDomain = params.status.uri
           ? params.status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
           : ''
-        sameDomain = localDomain === statusDomain
+        sameDomain = instanceDomain === statusDomain
         break
     }
 
@@ -86,7 +87,6 @@ const ScreenActionsRoot = React.memo(
       }
     })
     const dismiss = useCallback(() => {
-      panY.value = withTiming(DEFAULT_VALUE)
       navigation.goBack()
     }, [])
     const onGestureEvent = useAnimatedGestureHandler({
@@ -137,6 +137,14 @@ const ScreenActionsRoot = React.memo(
                 type={params.type}
                 dismiss={dismiss}
               />
+              <Button
+                type='text'
+                content={t('common:buttons.cancel')}
+                onPress={() => {
+                  analytics('bottomsheet_acknowledge')
+                }}
+                style={styles.button}
+              />
             </>
           )
         case 'account':
@@ -150,8 +158,18 @@ const ScreenActionsRoot = React.memo(
                 type={params.type}
                 dismiss={dismiss}
               />
+              <Button
+                type='text'
+                content={t('common:buttons.cancel')}
+                onPress={() => {
+                  analytics('bottomsheet_acknowledge')
+                }}
+                style={styles.button}
+              />
             </>
           )
+        case 'notifications_filter':
+          return <ActionsNotificationsFilter />
       }
     }, [])
 
@@ -188,15 +206,6 @@ const ScreenActionsRoot = React.memo(
                   ]}
                 />
                 {actions}
-                <Button
-                  type='text'
-                  content={t('common:buttons.cancel')}
-                  onPress={() => {
-                    analytics('bottomsheet_cancel')
-                    // dismiss()
-                  }}
-                  style={styles.button}
-                />
               </Animated.View>
             </PanGestureHandler>
           </Animated.View>

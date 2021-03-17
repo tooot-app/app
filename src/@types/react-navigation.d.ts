@@ -12,6 +12,9 @@ declare namespace Nav {
           type: 'account'
           account: Mastodon.Account
         }
+      | {
+          type: 'notifications_filter'
+        }
     'Screen-Announcements': { showAll: boolean }
     'Screen-Compose':
       | {

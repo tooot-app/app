@@ -29,6 +29,14 @@ export type Instance = {
     avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
+  notifications_filter: {
+    follow: boolean
+    favourite: boolean
+    reblog: boolean
+    mention: boolean
+    poll: boolean
+    follow_request: boolean
+  }
   push:
     | {
         global: { loading: boolean; value: boolean }
@@ -55,13 +63,11 @@ export type Instance = {
             value: Mastodon.PushSubscription['alerts']['poll']
           }
         }
-        keys:
-          | {
-              auth: string
-              public: string
-              private: string
-            }
-          | undefined
+        keys: {
+          auth: string
+          public: string
+          private: string
+        }
       }
     | {
         global: { loading: boolean; value: boolean }
@@ -126,6 +132,13 @@ const instancesSlice = createSlice({
         ...instances[activeIndex].account,
         ...action.payload
       }
+    },
+    updateInstanceNotificationsFilter: (
+      { instances },
+      action: PayloadAction<Instance['notifications_filter']>
+    ) => {
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].notifications_filter = action.payload
     },
     updateInstanceDraft: (
       { instances },
@@ -314,6 +327,15 @@ export const getInstanceAccount = ({ instances: { instances } }: RootState) => {
   return instanceActive !== -1 ? instances[instanceActive].account : null
 }
 
+export const getInstanceNotificationsFilter = ({
+  instances: { instances }
+}: RootState) => {
+  const instanceActive = findInstanceActive(instances)
+  return instanceActive !== -1
+    ? instances[instanceActive].notifications_filter
+    : null
+}
+
 export const getInstancePush = ({ instances: { instances } }: RootState) => {
   const instanceActive = findInstanceActive(instances)
   return instanceActive !== -1 ? instances[instanceActive].push : null
@@ -327,6 +349,7 @@ export const getInstanceDrafts = ({ instances: { instances } }: RootState) => {
 export const {
   updateInstanceActive,
   updateInstanceAccount,
+  updateInstanceNotificationsFilter,
   updateInstanceDraft,
   removeInstanceDraft,
   disableAllPushes
