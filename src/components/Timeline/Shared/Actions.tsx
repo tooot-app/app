@@ -17,13 +17,14 @@ import { useQueryClient } from 'react-query'
 export interface Props {
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
+  highlighted: boolean
   status: Mastodon.Status
   accts: Mastodon.Account['acct'][] // When replying to conversations
   reblog: boolean
 }
 
 const TimelineActions = React.memo(
-  ({ queryKey, rootQueryKey, status, accts, reblog }: Props) => {
+  ({ queryKey, rootQueryKey, highlighted, status, accts, reblog }: Props) => {
     const navigation = useNavigation()
     const { t } = useTranslation('componentTimeline')
     const { mode, theme } = useTheme()
@@ -256,7 +257,13 @@ const TimelineActions = React.memo(
     )
 
     return (
-      <>
+      <View
+        style={{
+          paddingLeft: highlighted
+            ? 0
+            : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+        }}
+      >
         <View style={styles.actions}>
           <Pressable
             style={styles.action}
@@ -285,7 +292,7 @@ const TimelineActions = React.memo(
             children={childrenBookmark}
           />
         </View>
-      </>
+      </View>
     )
   },
   () => true

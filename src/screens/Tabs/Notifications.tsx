@@ -1,6 +1,8 @@
-import { HeaderCenter } from '@components/Header'
+import analytics from '@components/analytics'
+import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineNotifications from '@components/Timeline/Notifications'
+import { useNavigation } from '@react-navigation/native'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
@@ -12,9 +14,17 @@ const Stack = createNativeStackNavigator<Nav.TabNotificationsStackParamList>()
 
 const TabNotifications = React.memo(
   () => {
-    const { t } = useTranslation()
+    const navigation = useNavigation()
+    const { t, i18n } = useTranslation()
 
     const screenOptions = useMemo(
+      () => ({
+        headerHideShadow: true,
+        headerTopInsetEnabled: false
+      }),
+      []
+    )
+    const screenOptionsRoot = useMemo(
       () => ({
         headerTitle: t('notifications:heading'),
         ...(Platform.OS === 'android' && {
@@ -22,10 +32,19 @@ const TabNotifications = React.memo(
             <HeaderCenter content={t('notifications:heading')} />
           )
         }),
-        headerHideShadow: true,
-        headerTopInsetEnabled: false
+        headerRight: () => (
+          <HeaderRight
+            content='Filter'
+            onPress={() => {
+              analytics('notificationsfilter_tap')
+              navigation.navigate('Screen-Actions', {
+                type: 'notifications_filter'
+              })
+            }}
+          />
+        )
       }),
-      []
+      [i18n.language]
     )
 
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
@@ -42,7 +61,11 @@ const TabNotifications = React.memo(
 
     return (
       <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name='Tab-Notifications-Root' children={children} />
+        <Stack.Screen
+          name='Tab-Notifications-Root'
+          children={children}
+          options={screenOptionsRoot}
+        />
         {sharedScreens(Stack as any)}
       </Stack.Navigator>
     )

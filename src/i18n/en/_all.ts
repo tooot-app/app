@@ -32,5 +32,6 @@ export default {
   componentRelativeTime: require('./components/relativeTime').default,
   componentTimeline: require('./components/timeline').default,
 
+  screenActions: require('./screens/screenActions').default,
   screenImageViewer: require('./screens/screenImageViewer').default
 }

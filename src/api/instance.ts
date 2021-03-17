@@ -10,7 +10,7 @@ export type Params = {
   version?: 'v1' | 'v2'
   url: string
   params?: {
-    [key: string]: string | number | boolean
+    [key: string]: string | number | boolean | string[] | number[] | boolean[]
   }
   headers?: { [key: string]: string }
   body?: FormData
@@ -38,7 +38,7 @@ const apiInstance = async <T = unknown>({
     domain = state.instances.instances[instanceActive].url
     token = state.instances.instances[instanceActive].token
   } else {
-    console.error(
+    console.warn(
       ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
     )
     return Promise.reject()

@@ -13,6 +13,7 @@ const netInfo = async (): Promise<{
   corrupted?: string
 }> => {
   log('log', 'netInfo', 'initializing')
+
   const netInfo = await NetInfo.fetch()
   const instance = getInstance(store.getState())
 

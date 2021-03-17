@@ -140,20 +140,13 @@ const TimelineConversation: React.FC<Props> = ({
               />
             )}
           </View>
-          <View
-            style={{
-              paddingLeft: highlighted
-                ? 0
-                : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-            }}
-          >
-            <TimelineActions
-              queryKey={queryKey}
-              status={conversation.last_status}
-              accts={conversation.accounts.map(account => account.acct)}
-              reblog={false}
-            />
-          </View>
+          <TimelineActions
+            queryKey={queryKey}
+            status={conversation.last_status}
+            highlighted={highlighted}
+            accts={conversation.accounts.map(account => account.acct)}
+            reblog={false}
+          />
         </>
       ) : null}
     </Pressable>

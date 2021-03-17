@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -45,6 +45,9 @@ const TimelineRefresh: React.FC<Props> = ({
   fetchingType,
   disableRefresh = false
 }) => {
+  if (Platform.OS !== 'ios') {
+    return null
+  }
   if (disableRefresh) {
     return null
   }

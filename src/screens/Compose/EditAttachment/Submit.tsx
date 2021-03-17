@@ -39,7 +39,8 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
         ) {
           formData.append(
             'focus',
-            `${theAttachment.meta.focus.x},${-theAttachment.meta.focus.y}`
+            `${theAttachment.meta.focus.x || 0},${-theAttachment.meta.focus.y ||
+              0}`
           )
         }
 

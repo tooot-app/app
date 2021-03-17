@@ -5,12 +5,10 @@ import TimelineDefault from '@components/Timeline/Default'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useSelector } from 'react-redux'
 import sharedScreens from './Shared/sharedScreens'
 
 export type TabLocalProp = BottomTabScreenProps<
@@ -22,8 +20,7 @@ const Stack = createNativeStackNavigator<Nav.TabLocalStackParamList>()
 
 const TabLocal = React.memo(
   ({ navigation }: TabLocalProp) => {
-    const { t } = useTranslation('local')
-    const instanceActive = useSelector(getInstanceActive)
+    const { t, i18n } = useTranslation('local')
 
     const screenOptions = useMemo(
       () => ({
@@ -51,7 +48,7 @@ const TabLocal = React.memo(
           />
         )
       }),
-      []
+      [i18n.language]
     )
 
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
@@ -60,10 +57,7 @@ const TabLocal = React.memo(
       []
     )
     const children = useCallback(
-      () =>
-        instanceActive !== -1 ? (
-          <Timeline queryKey={queryKey} customProps={{ renderItem }} />
-        ) : null,
+      () => <Timeline queryKey={queryKey} customProps={{ renderItem }} />,
       []
     )
 

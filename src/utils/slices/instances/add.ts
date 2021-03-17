@@ -70,6 +70,14 @@ const addInstance = createAsyncThunk(
           avatarStatic: avatar_static,
           preferences
         },
+        notifications_filter: {
+          follow: true,
+          favourite: true,
+          reblog: true,
+          mention: true,
+          poll: true,
+          follow_request: true
+        },
         push: {
           global: { loading: false, value: false },
           decode: { loading: false, value: false },

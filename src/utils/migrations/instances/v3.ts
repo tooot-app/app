@@ -21,7 +21,7 @@ type InstanceLocal = {
   drafts: any[]
 }
 
-export type InstancesV3 = {
+export type InstanceV3 = {
   local: {
     activeIndex: number | null
     instances: InstanceLocal[]

@@ -129,28 +129,21 @@ const TimelineNotifications: React.FC<Props> = ({
         ) : null}
       </View>
 
-      {notification.status && (
-        <View
-          style={{
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-          }}
-        >
-          <TimelineActions
-            queryKey={queryKey}
-            status={notification.status}
-            accts={uniqBy(
-              ([notification.status.account] as Mastodon.Account[] &
-                Mastodon.Mention[])
-                .concat(notification.status.mentions)
-                .filter(d => d.id !== instanceAccount?.id),
-              d => d.id
-            ).map(d => d.acct)}
-            reblog={false}
-          />
-        </View>
-      )}
+      {notification.status ? (
+        <TimelineActions
+          queryKey={queryKey}
+          status={notification.status}
+          highlighted={highlighted}
+          accts={uniqBy(
+            ([notification.status.account] as Mastodon.Account[] &
+              Mastodon.Mention[])
+              .concat(notification.status.mentions)
+              .filter(d => d.id !== instanceAccount?.id),
+            d => d.id
+          ).map(d => d.acct)}
+          reblog={false}
+        />
+      ) : null}
     </Pressable>
   )
 }

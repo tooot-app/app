@@ -9,7 +9,7 @@ export type Params = {
   domain?: string
   url: string
   params?: {
-    [key: string]: string | number | boolean
+    [key: string]: string | number | boolean | string[] | number[] | boolean[]
   }
   headers?: { [key: string]: string }
   body?: FormData | Object

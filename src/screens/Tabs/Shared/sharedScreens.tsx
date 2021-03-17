@@ -211,7 +211,14 @@ const sharedScreens = (
         }
       }: SharedUsersProp) => ({
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
-        headerTitle: t(`sharedUsers:heading.${reference}.${type}`, { count })
+        headerTitle: t(`sharedUsers:heading.${reference}.${type}`, { count }),
+        ...(Platform.OS === 'android' && {
+          headerCenter: () => (
+            <HeaderCenter
+              content={t(`sharedUsers:heading.${reference}.${type}`, { count })}
+            />
+          )
+        })
       })}
     />
   ]

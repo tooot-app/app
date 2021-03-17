@@ -1,4 +1,5 @@
-import { displayMessage, Message } from '@components/Message'
+import { displayMessage, Message, removeMessage } from '@components/Message'
+import { useNetInfo } from '@react-native-community/netinfo'
 import {
   NavigationContainer,
   NavigationContainerRef
@@ -22,7 +23,7 @@ import React, { createRef, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { useQueryClient } from 'react-query'
+import { onlineManager, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -46,18 +47,25 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   const routeNameRef = useRef<string | undefined>()
 
-  // const isConnected = useNetInfo().isConnected
-  // const [firstRender, setFirstRender] = useState(false)
-  // useEffect(() => {
-  //   if (firstRender) {
-  //     // bug in netInfo on first render as false
-  //     if (isConnected !== false) {
-  //       toast({ type: 'error', content: '手机🈚️网络', autoHide: false })
-  //     }
-  //   } else {
-  //     setFirstRender(true)
-  //   }
-  // }, [isConnected, firstRender])
+  const isConnected = useNetInfo().isConnected
+  useEffect(() => {
+    switch (isConnected) {
+      case true:
+        onlineManager.setOnline(isConnected)
+        removeMessage()
+        break
+      case false:
+        onlineManager.setOnline(isConnected)
+        displayMessage({
+          mode,
+          type: 'error',
+          message: t('network.disconnected.message'),
+          description: t('network.disconnected.description'),
+          autoHide: false
+        })
+        break
+    }
+  }, [isConnected])
 
   // Push hooks
   const instances = useSelector(
@@ -192,3 +200,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 }
 
 export default React.memo(Screens, () => true)
+function toast (arg0: { type: string; content: string; autoHide: boolean }) {
+  throw new Error('Function not implemented.')
+}
