@@ -340,6 +340,12 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     [totalTextCount, composeState]
   )
 
+  const headerContent = useMemo(() => {
+    return `${totalTextCount} / ${maxTootChars}${
+      __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
+    }`
+  }, [totalTextCount, maxTootChars, composeState.dirty])
+
   return (
     <KeyboardAvoidingView
       style={styles.base}
@@ -358,26 +364,26 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
               name='Screen-Compose-Root'
               component={ComposeRoot}
               options={{
+                ...Platform.select({
+                  ios: {
+                    headerTitle: headerContent,
+                    headerTitleStyle: {
+                      fontWeight:
+                        totalTextCount > maxTootChars
+                          ? StyleConstants.Font.Weight.Bold
+                          : StyleConstants.Font.Weight.Normal,
+                      fontSize: StyleConstants.Font.Size.M
+                    },
+                    headerTintColor:
+                      totalTextCount > maxTootChars
+                        ? theme.red
+                        : theme.secondary
+                  },
+                  android: {
+                    headerCenter: () => <HeaderCenter content={headerContent} />
+                  }
+                }),
                 headerLeft,
-                headerTitle: `${totalTextCount} / ${maxTootChars}${
-                  __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
-                }`,
-                headerTitleStyle: {
-                  fontWeight:
-                    totalTextCount > maxTootChars
-                      ? StyleConstants.Font.Weight.Bold
-                      : StyleConstants.Font.Weight.Normal,
-                  fontSize: StyleConstants.Font.Size.M
-                },
-                headerTintColor:
-                  totalTextCount > maxTootChars ? theme.red : theme.secondary,
-                headerCenter: () => (
-                  <HeaderCenter
-                    content={`${totalTextCount} / ${maxTootChars}${
-                      __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
-                    }`}
-                  />
-                ),
                 headerRight
               }}
             />

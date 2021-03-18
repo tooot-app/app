@@ -1,7 +1,7 @@
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import ComposeContext from '../utils/createContext'
@@ -55,8 +55,10 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
       }
     })
 
+  const scrollViewRef = useRef<ScrollView>(null)
+
   return (
-    <ScrollView>
+    <ScrollView ref={scrollViewRef}>
       {mediaDisplay}
       <View style={styles.altTextContainer}>
         <Text style={[styles.altTextInputHeading, { color: theme.primary }]}>
@@ -67,6 +69,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
             styles.altTextInput,
             { borderColor: theme.border, color: theme.primary }
           ]}
+          onFocus={() => scrollViewRef.current?.scrollToEnd()}
           autoCapitalize='none'
           autoCorrect={false}
           maxLength={1500}
