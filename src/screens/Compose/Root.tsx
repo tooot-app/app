@@ -4,7 +4,13 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
-import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
 import { FlatList, Image, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
@@ -30,90 +36,93 @@ const prefetchEmojis = (
   })
 }
 
-const ComposeRoot: React.FC = () => {
-  const { theme } = useTheme()
+const ComposeRoot = React.memo(
+  () => {
+    const { theme } = useTheme()
 
-  const { composeState, composeDispatch } = useContext(ComposeContext)
+    const { composeState, composeDispatch } = useContext(ComposeContext)
 
-  const { isFetching, data, refetch } = useSearchQuery({
-    type:
-      composeState.tag?.type === 'accounts' ||
-      composeState.tag?.type === 'hashtags'
-        ? composeState.tag.type
-        : undefined,
-    term: composeState.tag?.text.substring(1),
-    options: { enabled: false }
-  })
+    const { isFetching, data, refetch } = useSearchQuery({
+      type:
+        composeState.tag?.type === 'accounts' ||
+        composeState.tag?.type === 'hashtags'
+          ? composeState.tag.type
+          : undefined,
+      term: composeState.tag?.text.substring(1),
+      options: { enabled: false }
+    })
 
-  useEffect(() => {
-    if (
-      (composeState.tag?.type === 'accounts' ||
-        composeState.tag?.type === 'hashtags') &&
-      composeState.tag?.text
-    ) {
-      refetch()
-    }
-  }, [composeState.tag])
+    useEffect(() => {
+      if (
+        (composeState.tag?.type === 'accounts' ||
+          composeState.tag?.type === 'hashtags') &&
+        composeState.tag?.text
+      ) {
+        refetch()
+      }
+    }, [composeState.tag])
 
-  const { data: emojisData } = useEmojisQuery({})
-  useEffect(() => {
-    if (emojisData && emojisData.length) {
-      let sortedEmojis: { title: string; data: Mastodon.Emoji[] }[] = []
-      forEach(
-        groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
-        (value, key) => sortedEmojis.push({ title: key, data: value })
-      )
-      composeDispatch({
-        type: 'emoji',
-        payload: { ...composeState.emoji, emojis: sortedEmojis }
-      })
-      prefetchEmojis(sortedEmojis)
-    }
-  }, [emojisData])
+    const { data: emojisData } = useEmojisQuery({})
+    useEffect(() => {
+      if (emojisData && emojisData.length) {
+        let sortedEmojis: { title: string; data: Mastodon.Emoji[] }[] = []
+        forEach(
+          groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
+          (value, key) => sortedEmojis.push({ title: key, data: value })
+        )
+        composeDispatch({
+          type: 'emoji',
+          payload: { ...composeState.emoji, emojis: sortedEmojis }
+        })
+        prefetchEmojis(sortedEmojis)
+      }
+    }, [emojisData])
 
-  const listEmpty = useMemo(() => {
-    if (isFetching) {
-      return (
-        <View key='listEmpty' style={styles.loading}>
-          <Circle
-            size={StyleConstants.Font.Size.M * 1.25}
-            color={theme.secondary}
-          />
-        </View>
-      )
-    }
-  }, [isFetching])
+    const listEmpty = useMemo(() => {
+      if (isFetching) {
+        return (
+          <View key='listEmpty' style={styles.loading}>
+            <Circle
+              size={StyleConstants.Font.Size.M * 1.25}
+              color={theme.secondary}
+            />
+          </View>
+        )
+      }
+    }, [isFetching])
 
-  const listItem = useCallback(
-    ({ item }) => (
-      <ComposeRootSuggestion
-        item={item}
-        composeState={composeState}
-        composeDispatch={composeDispatch}
-      />
-    ),
-    [composeState]
-  )
+    const listItem = useCallback(
+      ({ item }) => (
+        <ComposeRootSuggestion
+          item={item}
+          composeState={composeState}
+          composeDispatch={composeDispatch}
+        />
+      ),
+      [composeState]
+    )
 
-  return (
-    <View style={styles.base}>
-      <FlatList
-        renderItem={listItem}
-        ListEmptyComponent={listEmpty}
-        keyboardShouldPersistTaps='handled'
-        ListHeaderComponent={ComposeRootHeader}
-        ListFooterComponent={ComposeRootFooter}
-        ItemSeparatorComponent={ComponentSeparator}
-        // @ts-ignore
-        data={data ? data[composeState.tag?.type] : undefined}
-        keyExtractor={() => Math.random().toString()}
-      />
-      <ComposeActions />
-      <ComposeDrafts />
-      <ComposePosting />
-    </View>
-  )
-}
+    return (
+      <View style={styles.base}>
+        <FlatList
+          renderItem={listItem}
+          ListEmptyComponent={listEmpty}
+          keyboardShouldPersistTaps='always'
+          ListHeaderComponent={ComposeRootHeader}
+          ListFooterComponent={ComposeRootFooter}
+          ItemSeparatorComponent={ComponentSeparator}
+          // @ts-ignore
+          data={data ? data[composeState.tag?.type] : undefined}
+          keyExtractor={() => Math.random().toString()}
+        />
+        <ComposeActions />
+        <ComposeDrafts />
+        <ComposePosting />
+      </View>
+    )
+  },
+  () => true
+)
 
 const styles = StyleSheet.create({
   base: {

@@ -23,7 +23,7 @@ const HeaderCenter = React.memo(
       />
     )
   },
-  () => true
+  (prev, next) => prev.content === next.content
 )
 
 const styles = StyleSheet.create({

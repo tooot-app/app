@@ -46,7 +46,7 @@ const ComposeSpoilerInput: React.FC = () => {
         })
       }}
       ref={composeState.textInputFocus.refs.spoiler}
-      scrollEnabled
+      scrollEnabled={false}
       onFocus={() =>
         composeDispatch({
           type: 'textInputFocus',
