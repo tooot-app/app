@@ -54,7 +54,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
         <Text style={[styles.header, { color: theme.primary }]}>
           {t('content.existing')}

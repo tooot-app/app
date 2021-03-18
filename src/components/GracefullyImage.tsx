@@ -1,9 +1,15 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
-import FastImage, { ImageStyle } from 'react-native-fast-image'
 
 // blurhas -> if blurhash, show before any loading succeed
 // original -> load original
@@ -70,7 +76,7 @@ const GracefullyImage = React.memo(
     const previewView = useMemo(
       () =>
         uri.preview && !imageLoaded ? (
-          <FastImage
+          <Image
             source={{ uri: uri.preview }}
             style={[{ flex: 1 }, imageStyle]}
           />
@@ -79,14 +85,14 @@ const GracefullyImage = React.memo(
     )
     const originalView = useMemo(
       () => (
-        <FastImage
+        <Image
           source={source}
-          style={[{ flex: imageLoaded ? 1 : undefined }, imageStyle]}
+          style={[{ flex: 1 }, imageStyle]}
           onLoad={onLoad}
           onError={onError}
         />
       ),
-      [source, imageLoaded]
+      [source]
     )
     const blurhashView = useMemo(() => {
       return blurhash && (hidden || !imageLoaded) ? (

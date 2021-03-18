@@ -52,7 +52,7 @@ const ComposeTextInput: React.FC = () => {
         })
       }}
       ref={composeState.textInputFocus.refs.text}
-      scrollEnabled
+      scrollEnabled={false}
     >
       <Text>{composeState.text.formatted}</Text>
     </TextInput>

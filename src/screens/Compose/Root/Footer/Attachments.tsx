@@ -246,7 +246,7 @@ const ComposeAttachments: React.FC = () => {
         snapToAlignment='center'
         renderItem={renderAttachment}
         snapToOffsets={snapToOffsets}
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
         keyExtractor={item =>

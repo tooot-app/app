@@ -30,9 +30,11 @@ jobs:
           expo-token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
+      - name: -- Step 5 -- Install native dependencies
+        run: npx pod-install
+      - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - name: -- Step 7 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
