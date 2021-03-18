@@ -9,7 +9,7 @@ VERSIONS = read_json( json_path: "./package.json" )[:versions]
 ENVIRONMENT = ENV["ENVIRONMENT"]
 VERSION = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}"
 RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
-BUILD_NUMBER = ENV["GITHUB_RUN_NUMBER"]
+BUILD_NUMBER = "#{Time.now.strftime("%y%m%d")}#{ENV["GITHUB_RUN_NUMBER"]}"
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT
 when "candidate"
@@ -32,7 +32,7 @@ private_lane :prepare_appstore_ios do
     key: "NSAppTransportSecurity",
     value: {}
   )
-  increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER, skip_info_plist: true )
+  increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
   app_store_connect_api_key
 end
 
