@@ -9,7 +9,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
@@ -41,12 +41,6 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp
   )
-
-  useEffect(() => {
-    if (instanceDrafts?.length === 0) {
-      navigation.goBack()
-    }
-  }, [instanceDrafts?.length])
 
   const actionWidth =
     StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4
