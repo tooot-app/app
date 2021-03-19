@@ -60,7 +60,8 @@ const apiGeneral = async <T = unknown>({
     })
     .catch(error => {
       if (sentry) {
-        Sentry.Native.captureException(error, { extra: error })
+        Sentry.Native.setExtras(error.response)
+        Sentry.Native.captureException(error)
       }
 
       if (error.response) {

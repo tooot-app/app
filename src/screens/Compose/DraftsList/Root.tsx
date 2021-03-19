@@ -13,6 +13,7 @@ import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
+  Image,
   Modal,
   Platform,
   Pressable,
@@ -20,7 +21,6 @@ import {
   Text,
   View
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { useDispatch, useSelector } from 'react-redux'
@@ -112,7 +112,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
             {item.attachments?.uploads.length ? (
               <View style={styles.attachments}>
                 {item.attachments.uploads.map((attachment, index) => (
-                  <FastImage
+                  <Image
                     key={index}
                     style={[
                       styles.attachment,
