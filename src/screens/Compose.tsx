@@ -280,7 +280,14 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
           composePost(params, composeState)
             .then(() => {
               haptics('Success')
-              dispatch(updateStoreReview(1))
+              if (
+                Platform.OS === 'ios' &&
+                Platform.constants.osVersion === '13.3'
+              ) {
+                // https://github.com/tooot-app/app/issues/59
+              } else {
+                dispatch(updateStoreReview(1))
+              }
               const queryKey: QueryKeyTimeline = [
                 'Timeline',
                 { page: 'Following' }
