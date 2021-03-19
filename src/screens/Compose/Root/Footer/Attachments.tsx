@@ -15,9 +15,15 @@ import React, {
   useRef
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
-import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import addAttachment from './addAttachment'
@@ -113,7 +119,7 @@ const ComposeAttachments: React.FC = () => {
           key={index}
           style={[styles.container, { width: calculateWidth(item) }]}
         >
-          <FastImage
+          <Image
             style={styles.image}
             source={{
               uri: item.local?.local_thumbnail || item.remote?.preview_url

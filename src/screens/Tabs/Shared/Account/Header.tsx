@@ -1,7 +1,6 @@
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
-import { Dimensions } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Dimensions, Image } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import AccountContext from './utils/createContext'
 
@@ -16,7 +15,7 @@ const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
   const topInset = useSafeAreaInsets().top
 
   return (
-    <FastImage
+    <Image
       source={{ uri: account?.header }}
       style={{
         height:

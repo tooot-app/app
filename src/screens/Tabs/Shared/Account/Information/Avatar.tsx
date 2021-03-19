@@ -28,7 +28,7 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
       <GracefullyImage
         key={account?.avatar}
         style={styles.image}
-        uri={{ original: account?.avatar || '' }}
+        uri={{ original: account?.avatar }}
       />
     </Pressable>
   )

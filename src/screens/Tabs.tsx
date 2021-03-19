@@ -13,8 +13,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
-import { Platform } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Image, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
@@ -69,7 +68,7 @@ const ScreenTabs = React.memo(
               return <Icon name='Bell' size={size} color={color} />
             case 'Tab-Me':
               return instanceActive !== -1 ? (
-                <FastImage
+                <Image
                   source={{
                     uri: instanceAccount?.avatarStatic
                   }}
