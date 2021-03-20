@@ -19,7 +19,7 @@ import { Blurhash } from 'react-native-blurhash'
 
 export interface Props {
   hidden?: boolean
-  uri: { preview?: string; original: string; remote?: string }
+  uri: { preview?: string; original?: string; remote?: string }
   blurhash?: string
   dimension?: { width: number; height: number }
   onPress?: () => void

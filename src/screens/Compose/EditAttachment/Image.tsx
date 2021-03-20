@@ -2,8 +2,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
@@ -120,7 +119,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
   return (
     <>
       <View style={styles.base}>
-        <FastImage
+        <Image
           style={{
             width: imageDimensionis.width,
             height: imageDimensionis.height

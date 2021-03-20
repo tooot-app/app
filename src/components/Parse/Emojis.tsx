@@ -3,8 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Image, StyleSheet, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
@@ -70,7 +69,7 @@ const ParseEmojis = React.memo(
                   <Text key={i}>
                     {/* When emoji starts a paragraph, lineHeight will break */}
                     {i === 0 ? <Text> </Text> : null}
-                    <FastImage
+                    <Image
                       key={adaptiveFontsize}
                       source={{ uri: emojis[emojiIndex].url }}
                       style={styles.image}
