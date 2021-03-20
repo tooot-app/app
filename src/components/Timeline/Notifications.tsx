@@ -138,9 +138,9 @@ const TimelineNotifications: React.FC<Props> = ({
             ([notification.status.account] as Mastodon.Account[] &
               Mastodon.Mention[])
               .concat(notification.status.mentions)
-              .filter(d => d.id !== instanceAccount?.id),
-            d => d.id
-          ).map(d => d.acct)}
+              .filter(d => d?.id !== instanceAccount?.id),
+            d => d?.id
+          ).map(d => d?.acct)}
           reblog={false}
         />
       ) : null}
