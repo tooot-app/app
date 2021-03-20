@@ -15,7 +15,7 @@ const composePost = async (
         url: `statuses/${composeState.replyToStatus.id}`
       })
     } catch (err) {
-      if (err.status == 404) {
+      if (err.status && err.status == 404) {
         return Promise.reject({ removeReply: true })
       }
     }
