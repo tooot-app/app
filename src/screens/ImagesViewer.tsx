@@ -4,7 +4,6 @@ import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import CameraRoll from '@react-native-community/cameraroll'
 import { StackScreenProps } from '@react-navigation/stack'
-import ImageView from '@root/modules/react-native-image-viewing/src/index'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +18,36 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
+import ImageViewer from './ImageViewer/Root'
+
+type ImageUrl = {
+  url: string
+  width?: number | undefined
+  height?: number | undefined
+  preview_url: string
+  remote_url?: string | undefined
+}
+
+const saveImage = async (image: ImageUrl) => {
+  const hasAndroidPermission = async () => {
+    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+
+    const hasPermission = await PermissionsAndroid.check(permission)
+    if (hasPermission) {
+      return true
+    }
+
+    const status = await PermissionsAndroid.request(permission)
+    return status === 'granted'
+  }
+
+  if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+    return
+  }
+  CameraRoll.save(image.url || image.remote_url || image.preview_url)
+    .then(() => haptics('Success'))
+    .catch(() => haptics('Error'))
+}
 
 const HeaderComponent = React.memo(
   ({
@@ -28,42 +57,11 @@ const HeaderComponent = React.memo(
   }: {
     navigation: ScreenImagesViewerProp['navigation']
     currentIndex: number
-    imageUrls: {
-      url: string
-      width?: number | undefined
-      height?: number | undefined
-      preview_url: string
-      remote_url?: string | undefined
-    }[]
+    imageUrls: ImageUrl[]
   }) => {
     const insets = useSafeAreaInsets()
     const { t } = useTranslation('screenImageViewer')
     const { showActionSheetWithOptions } = useActionSheet()
-
-    const hasAndroidPermission = async () => {
-      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-
-      const hasPermission = await PermissionsAndroid.check(permission)
-      if (hasPermission) {
-        return true
-      }
-
-      const status = await PermissionsAndroid.request(permission)
-      return status === 'granted'
-    }
-
-    const saveImage = async () => {
-      if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-        return
-      }
-      CameraRoll.save(
-        imageUrls[currentIndex].url ||
-          imageUrls[currentIndex].remote_url ||
-          imageUrls[currentIndex].preview_url
-      )
-        .then(() => haptics('Success'))
-        .catch(() => haptics('Error'))
-    }
 
     const onPress = useCallback(() => {
       analytics('imageviewer_more_press')
@@ -80,7 +78,7 @@ const HeaderComponent = React.memo(
           switch (buttonIndex) {
             case 0:
               analytics('imageviewer_more_save_press')
-              saveImage()
+              saveImage(imageUrls[currentIndex])
               break
             case 1:
               analytics('imageviewer_more_share_press')
@@ -147,11 +145,12 @@ const ScreenImagesViewer = ({
   return (
     <SafeAreaProvider>
       <StatusBar backgroundColor='rgb(0,0,0)' />
-      <ImageView
+      <ImageViewer
         images={imageUrls}
         imageIndex={initialIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
+        onLongPress={saveImage}
         HeaderComponent={() => (
           <HeaderComponent
             navigation={navigation}

@@ -16,8 +16,6 @@ jobs:
         id: branch
       - name: -- Step 1 -- Checkout code
         uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v2
         with:
