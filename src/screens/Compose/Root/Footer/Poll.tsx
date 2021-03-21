@@ -62,7 +62,7 @@ const ComposePoll: React.FC = () => {
                     ? t('content.root.footer.poll.option.placeholder.multiple')
                     : t('content.root.footer.poll.option.placeholder.single')
                 }
-                placeholderTextColor={theme.secondary}
+                placeholderTextColor={theme.disabled}
                 maxLength={50}
                 // @ts-ignore
                 value={options[i]}

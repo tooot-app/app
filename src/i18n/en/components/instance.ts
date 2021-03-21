@@ -13,7 +13,7 @@ export default {
     },
     disclaimer: {
       base:
-        "Logging in process uses system broswer that, your account informationo won't be visible to tooot app. Read more ",
+        "Logging in process uses system broswer that, your account information won't be visible to tooot app. Read more ",
       privacy: 'privacy policy'
     }
   },

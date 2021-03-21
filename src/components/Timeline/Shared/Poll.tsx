@@ -37,7 +37,7 @@ const TimelinePoll: React.FC<Props> = ({
   sameAccount
 }) => {
   const { mode, theme } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+  const { t, i18n } = useTranslation('componentTimeline')
 
   const [allOptions, setAllOptions] = useState(
     new Array(poll.options.length).fill(false)
@@ -136,7 +136,14 @@ const TimelinePoll: React.FC<Props> = ({
         )
       }
     }
-  }, [mode, poll.expired, poll.voted, allOptions, mutation.isLoading])
+  }, [
+    mode,
+    i18n.language,
+    poll.expired,
+    poll.voted,
+    allOptions,
+    mutation.isLoading
+  ])
 
   const pollExpiration = useMemo(() => {
     if (poll.expired) {
@@ -155,7 +162,7 @@ const TimelinePoll: React.FC<Props> = ({
         </Text>
       )
     }
-  }, [mode, poll.expired, poll.expires_at])
+  }, [mode, i18n.language, poll.expired, poll.expires_at])
 
   const isSelected = useCallback(
     (index: number): string =>
@@ -186,7 +193,9 @@ const TimelinePoll: React.FC<Props> = ({
           <Text style={styles.optionText}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
           </Text>
-          <Text style={[styles.optionPercentage, { color: theme.primaryDefault }]}>
+          <Text
+            style={[styles.optionPercentage, { color: theme.primaryDefault }]}
+          >
             {poll.votes_count
               ? Math.round(
                   (option.votes_count /

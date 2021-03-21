@@ -1,5 +1,5 @@
 export default {
-  heading: 'Toot font size',
+  heading: 'Toot Font Size',
   content: {
     showcase: 'Example toot',
     demo:
