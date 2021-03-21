@@ -48,7 +48,6 @@ const TimelineAttachment = React.memo(
               imageUrls.push({
                 id: attachment.id,
                 url: attachment.url,
-                preview_url: attachment.preview_url,
                 remote_url: attachment.remote_url,
                 width: attachment.meta?.original?.width,
                 height: attachment.meta?.original?.height

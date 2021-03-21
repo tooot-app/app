@@ -73,7 +73,7 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
                 style={[
                   styles.emptyDefault,
                   styles.emptyFontSize,
-                  { color: theme.primary }
+                  { color: theme.primaryDefault }
                 ]}
               >
                 <Trans
@@ -81,25 +81,25 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
                   components={{ bold: <Text style={styles.emptyFontBold} /> }}
                 />
               </Text>
-              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 {t('content.empty.advanced.header')}
               </Text>
-              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>@username@domain</Text>
                 {'   '}
                 {t('content.empty.advanced.example.account')}
               </Text>
-              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>#example</Text>
                 {'   '}
                 {t('content.empty.advanced.example.hashtag')}
               </Text>
-              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>URL</Text>
                 {'   '}
                 {t('content.empty.advanced.example.statusLink')}
               </Text>
-              <Text style={[styles.emptyAdvanced, { color: theme.primary }]}>
+              <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>URL</Text>
                 {'   '}
                 {t('content.empty.advanced.example.accountLink')}
@@ -113,9 +113,9 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
   const sectionHeader = useCallback(
     ({ section: { translation } }) => (
       <View
-        style={[styles.sectionHeader, { backgroundColor: theme.background }]}
+        style={[styles.sectionHeader, { backgroundColor: theme.backgroundDefault }]}
       >
-        <Text style={[styles.sectionHeaderText, { color: theme.primary }]}>
+        <Text style={[styles.sectionHeaderText, { color: theme.primaryDefault }]}>
           {translation}
         </Text>
       </View>
@@ -126,7 +126,7 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
     ({ section: { data, translation } }) =>
       !data.length ? (
         <View
-          style={[styles.sectionFooter, { backgroundColor: theme.background }]}
+          style={[styles.sectionFooter, { backgroundColor: theme.backgroundDefault }]}
         >
           <Text style={[styles.sectionFooterText, { color: theme.secondary }]}>
             <Trans

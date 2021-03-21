@@ -96,7 +96,7 @@ const ScreenTabs = React.memo(
     )
     const tabBarOptions = useMemo(
       () => ({
-        activeTintColor: theme.primary,
+        activeTintColor: theme.primaryDefault,
         inactiveTintColor: theme.secondary,
         showLabel: false,
         ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })

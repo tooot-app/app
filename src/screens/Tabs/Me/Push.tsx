@@ -94,7 +94,7 @@ const ScreenMeSettingsPush: React.FC = () => {
                 setPushEnabled(result.granted)
                 setPushCanAskAgain(result.canAskAgain)
               } else {
-                Linking.openURL('app-settings:')
+                Linking.openSettings()
               }
             }}
           />

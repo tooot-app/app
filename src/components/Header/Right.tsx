@@ -47,7 +47,7 @@ const HeaderRight: React.FC<Props> = ({
               name={content}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Spacing.M * 1.25}
-              color={disabled ? theme.secondary : theme.primary}
+              color={disabled ? theme.secondary : theme.primaryDefault}
             />
             {loading && loadingSpinkit}
           </>
@@ -59,7 +59,7 @@ const HeaderRight: React.FC<Props> = ({
               style={[
                 styles.text,
                 {
-                  color: disabled ? theme.secondary : theme.primary,
+                  color: disabled ? theme.secondary : theme.primaryDefault,
                   opacity: loading ? 0 : 1
                 }
               ]}
@@ -79,7 +79,7 @@ const HeaderRight: React.FC<Props> = ({
       style={[
         styles.base,
         {
-          backgroundColor: theme.backgroundGradientStart,
+          backgroundColor: theme.backgroundOverlayDefault,
           ...(type === 'icon' && {
             height: 44,
             width: 44,

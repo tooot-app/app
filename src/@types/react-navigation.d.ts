@@ -1,4 +1,6 @@
 declare namespace Nav {
+  import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+
   type RootStackParamList = {
     'Screen-Tabs': undefined
     'Screen-Actions':
@@ -58,7 +60,6 @@ declare namespace Nav {
         url: Mastodon.AttachmentImage['url']
         width?: number
         height?: number
-        preview_url: Mastodon.AttachmentImage['preview_url']
         remote_url?: Mastodon.AttachmentImage['remote_url']
       }[]
       id: Mastodon.Attachment['id']
@@ -90,7 +91,7 @@ declare namespace Nav {
     'Tab-Shared-Search': { text: string | undefined }
     'Tab-Shared-Toot': {
       toot: Mastodon.Status
-      rootQueryKey: any
+      rootQueryKey?: QueryKeyTimeline
     }
     'Tab-Shared-Users':
       | {

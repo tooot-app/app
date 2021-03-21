@@ -24,7 +24,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
     <View style={[styles.stats, { flexDirection: 'row' }]}>
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primary }]}
+          style={[styles.stat, { color: theme.primaryDefault }]}
           children={t('content.summary.statuses_count', {
             count: account.statuses_count || 0
           })}
@@ -46,7 +46,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primary, textAlign: 'right' }]}
+          style={[styles.stat, { color: theme.primaryDefault, textAlign: 'right' }]}
           children={t('content.summary.following_count', {
             count: account.following_count
           })}
@@ -73,7 +73,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primary, textAlign: 'center' }]}
+          style={[styles.stat, { color: theme.primaryDefault, textAlign: 'center' }]}
           children={t('content.summary.followers_count', {
             count: account.followers_count
           })}

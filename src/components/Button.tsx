@@ -81,7 +81,7 @@ const Button: React.FC<Props> = ({
           if (destructive) {
             return theme.red
           } else {
-            return theme.primary
+            return theme.primaryDefault
           }
         }
       }
@@ -97,16 +97,16 @@ const Button: React.FC<Props> = ({
         if (destructive) {
           return theme.red
         } else {
-          return theme.primary
+          return theme.primaryDefault
         }
       }
     }
   }, [mode, loading, disabled])
   const colorBackground = useMemo(() => {
     if (overlay) {
-      return theme.backgroundOverlay
+      return theme.backgroundOverlayInvert
     } else {
-      return theme.background
+      return theme.backgroundDefault
     }
   }, [mode])
 

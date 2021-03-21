@@ -34,7 +34,7 @@ const AccountInformationFields = React.memo(
                 <Icon
                   name='CheckCircle'
                   size={StyleConstants.Font.Size.M}
-                  color={theme.primary}
+                  color={theme.primaryDefault}
                   style={styles.fieldCheck}
                 />
               ) : null}

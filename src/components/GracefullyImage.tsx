@@ -102,7 +102,11 @@ const GracefullyImage = React.memo(
 
     return (
       <Pressable
-        style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
+        style={[
+          style,
+          dimension,
+          { backgroundColor: theme.backgroundOverlayDefault }
+        ]}
         {...(onPress
           ? hidden
             ? { disabled: true }

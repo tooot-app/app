@@ -65,7 +65,7 @@ const TimelineDefault: React.FC<Props> = ({
       style={[
         styles.statusView,
         {
-          backgroundColor: theme.background,
+          backgroundColor: theme.backgroundDefault,
           paddingBottom:
             disableDetails && disableOnPress
               ? StyleConstants.Spacing.Global.PagePadding
@@ -141,8 +141,8 @@ const TimelineDefault: React.FC<Props> = ({
             ([actualStatus.account] as Mastodon.Account[] & Mastodon.Mention[])
               .concat(actualStatus.mentions)
               .filter(d => d?.id !== instanceAccount?.id),
-            d => d.id
-          ).map(d => d.acct)}
+            d => d?.id
+          ).map(d => d?.acct)}
           reblog={item.reblog ? true : false}
         />
       )}

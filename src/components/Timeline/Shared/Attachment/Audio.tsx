@@ -100,7 +100,7 @@ const AttachmentAudio: React.FC<Props> = ({
           alignSelf: 'flex-end',
           width: '100%',
           height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
-          backgroundColor: theme.backgroundOverlay,
+          backgroundColor: theme.backgroundOverlayInvert,
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
           borderRadius: 100,
           opacity: sensitiveShown ? 0.35 : undefined

@@ -17,9 +17,9 @@ const InstanceInfo = React.memo(
 
     return (
       <View style={[styles.base, style]}>
-        <Text style={[styles.header, { color: theme.primary }]}>{header}</Text>
+        <Text style={[styles.header, { color: theme.primaryDefault }]}>{header}</Text>
         {content ? (
-          <Text style={[styles.content, { color: theme.primary }]}>
+          <Text style={[styles.content, { color: theme.primaryDefault }]}>
             {content}
           </Text>
         ) : (
