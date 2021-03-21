@@ -115,8 +115,8 @@ const Timeline: React.FC<Props> = ({
       refreshControl: (
         <RefreshControl
           enabled
-          colors={[theme.primary]}
-          progressBackgroundColor={theme.background}
+          colors={[theme.primaryDefault]}
+          progressBackgroundColor={theme.backgroundDefault}
           refreshing={isFetching || isLoading}
           onRefresh={() => refetch()}
         />

@@ -130,8 +130,8 @@ const ComposeAttachments: React.FC = () => {
               style={[
                 styles.duration,
                 {
-                  color: theme.background,
-                  backgroundColor: theme.backgroundOverlay
+                  color: theme.backgroundDefault,
+                  backgroundColor: theme.backgroundOverlayInvert
                 }
               ]}
             >
@@ -142,7 +142,7 @@ const ComposeAttachments: React.FC = () => {
             <View
               style={[
                 styles.uploading,
-                { backgroundColor: theme.backgroundOverlay }
+                { backgroundColor: theme.backgroundOverlayInvert }
               ]}
             >
               <Circle
@@ -196,7 +196,7 @@ const ComposeAttachments: React.FC = () => {
           styles.container,
           {
             width: DEFAULT_HEIGHT,
-            backgroundColor: theme.backgroundOverlay
+            backgroundColor: theme.backgroundOverlayInvert
           }
         ]}
         onPress={async () => {
@@ -238,9 +238,9 @@ const ComposeAttachments: React.FC = () => {
         <Icon
           name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
           size={StyleConstants.Font.Size.L}
-          color={theme.primary}
+          color={theme.primaryDefault}
         />
-        <Text style={[styles.sensitiveText, { color: theme.primary }]}>
+        <Text style={[styles.sensitiveText, { color: theme.primaryDefault }]}>
           {t('content.root.footer.attachments.sensitive')}
         </Text>
       </Pressable>

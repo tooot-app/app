@@ -65,7 +65,7 @@ const TimelineDefault: React.FC<Props> = ({
       style={[
         styles.statusView,
         {
-          backgroundColor: theme.background,
+          backgroundColor: theme.backgroundDefault,
           paddingBottom:
             disableDetails && disableOnPress
               ? StyleConstants.Spacing.Global.PagePadding

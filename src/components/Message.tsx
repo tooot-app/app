@@ -87,18 +87,18 @@ const Message = React.memo(
         position='top'
         floating
         style={{
-          backgroundColor: theme.background,
-          shadowColor: theme.primary,
+          backgroundColor: theme.backgroundDefault,
+          shadowColor: theme.primaryDefault,
           shadowOffset: { width: 0, height: 0 },
           shadowOpacity: mode === 'light' ? 0.16 : 0.24,
           shadowRadius: 4
         }}
         titleStyle={{
-          color: theme.primary,
+          color: theme.primaryDefault,
           ...StyleConstants.FontStyle.M,
           fontWeight: StyleConstants.Font.Weight.Bold
         }}
-        textStyle={{ color: theme.primary, ...StyleConstants.FontStyle.S }}
+        textStyle={{ color: theme.primaryDefault, ...StyleConstants.FontStyle.S }}
         // @ts-ignore
         textProps={{ numberOfLines: 2 }}
       />

@@ -144,7 +144,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
                 <G>
                   <Path
                     d='M1000,0 L1000,1000 L0,1000 L0,0 L1000,0 Z M500,475 C486.192881,475 475,486.192881 475,500 C475,513.807119 486.192881,525 500,525 C513.807119,525 525,513.807119 525,500 C525,486.192881 513.807119,475 500,475 Z'
-                    fill={theme.backgroundOverlay}
+                    fill={theme.backgroundOverlayInvert}
                   />
                   <Circle
                     stroke={theme.primaryOverlay}
@@ -160,7 +160,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
           </Animated.View>
         </PanGestureHandler>
       </View>
-      <Text style={[styles.imageFocusText, { color: theme.primary }]}>
+      <Text style={[styles.imageFocusText, { color: theme.primaryDefault }]}>
         {t('content.editAttachment.content.imageFocus')}
       </Text>
     </>

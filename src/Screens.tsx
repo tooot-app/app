@@ -144,7 +144,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.background} />
+      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.backgroundDefault} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}

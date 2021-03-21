@@ -186,7 +186,7 @@ const TimelinePoll: React.FC<Props> = ({
           <Text style={styles.optionText}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
           </Text>
-          <Text style={[styles.optionPercentage, { color: theme.primary }]}>
+          <Text style={[styles.optionPercentage, { color: theme.primaryDefault }]}>
             {poll.votes_count
               ? Math.round(
                   (option.votes_count /
@@ -246,7 +246,7 @@ const TimelinePoll: React.FC<Props> = ({
             style={styles.optionSelection}
             name={isSelected(index)}
             size={StyleConstants.Font.Size.M}
-            color={theme.primary}
+            color={theme.primaryDefault}
           />
           <Text style={styles.optionText}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />

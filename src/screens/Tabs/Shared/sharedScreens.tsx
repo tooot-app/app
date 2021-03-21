@@ -14,11 +14,11 @@ import { debounce } from 'lodash'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
-import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack'
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript'
 import {
   NativeStackNavigationEventMap,
   NativeStackNavigatorProps
-} from 'react-native-screens/lib/typescript/native-stack/types'
+} from 'react-native-screens/lib/typescript/types'
 
 export type BaseScreens =
   | Nav.TabLocalStackParamList
@@ -103,7 +103,7 @@ const sharedScreens = (
                   <Text
                     style={{
                       ...StyleConstants.FontStyle.M,
-                      color: theme.primary,
+                      color: theme.primaryDefault,
                       fontWeight: StyleConstants.Font.Weight.Bold
                     }}
                   />
@@ -153,7 +153,7 @@ const sharedScreens = (
                     style={[
                       styles.textInput,
                       {
-                        color: theme.primary
+                        color: theme.primaryDefault
                       }
                     ]}
                     children={t('sharedSearch:content.header.prefix')}
@@ -166,7 +166,7 @@ const sharedScreens = (
                   styles.textInput,
                   {
                     flex: 1,
-                    color: theme.primary,
+                    color: theme.primaryDefault,
                     paddingLeft: StyleConstants.Spacing.XS
                   }
                 ]}

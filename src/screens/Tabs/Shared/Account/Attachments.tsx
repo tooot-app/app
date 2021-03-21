@@ -70,7 +70,7 @@ const AccountAttachments = React.memo(
                 <View
                   style={{
                     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-                    backgroundColor: theme.backgroundOverlay,
+                    backgroundColor: theme.backgroundOverlayInvert,
                     width: width,
                     height: width,
                     justifyContent: 'center',

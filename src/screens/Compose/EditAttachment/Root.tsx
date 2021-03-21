@@ -61,13 +61,13 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
     <ScrollView ref={scrollViewRef}>
       {mediaDisplay}
       <View style={styles.altTextContainer}>
-        <Text style={[styles.altTextInputHeading, { color: theme.primary }]}>
+        <Text style={[styles.altTextInputHeading, { color: theme.primaryDefault }]}>
           {t('content.editAttachment.content.altText.heading')}
         </Text>
         <TextInput
           style={[
             styles.altTextInput,
-            { borderColor: theme.border, color: theme.primary }
+            { borderColor: theme.border, color: theme.primaryDefault }
           ]}
           onFocus={() => scrollViewRef.current?.scrollToEnd()}
           autoCapitalize='none'

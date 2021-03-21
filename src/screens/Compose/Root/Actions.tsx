@@ -20,7 +20,7 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) return theme.disabled
 
     if (composeState.attachments.uploads.length) {
-      return theme.primary
+      return theme.primaryDefault
     } else {
       return theme.secondary
     }
@@ -43,7 +43,7 @@ const ComposeActions: React.FC = () => {
     if (composeState.attachments.uploads.length) return theme.disabled
 
     if (composeState.poll.active) {
-      return theme.primary
+      return theme.primaryDefault
     } else {
       return theme.secondary
     }
@@ -144,7 +144,7 @@ const ComposeActions: React.FC = () => {
     if (!composeState.emoji.emojis) return theme.disabled
 
     if (composeState.emoji.active) {
-      return theme.primary
+      return theme.primaryDefault
     } else {
       return theme.secondary
     }
@@ -166,7 +166,7 @@ const ComposeActions: React.FC = () => {
     <View
       style={[
         styles.additions,
-        { backgroundColor: theme.background, borderTopColor: theme.border }
+        { backgroundColor: theme.backgroundDefault, borderTopColor: theme.border }
       ]}
     >
       <Pressable
@@ -196,7 +196,7 @@ const ComposeActions: React.FC = () => {
             name='AlertTriangle'
             size={24}
             color={
-              composeState.spoiler.active ? theme.primary : theme.secondary
+              composeState.spoiler.active ? theme.primaryDefault : theme.secondary
             }
           />
         }

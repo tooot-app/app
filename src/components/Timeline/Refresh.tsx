@@ -254,7 +254,7 @@ const TimelineRefresh: React.FC<Props> = ({
           <>
             <View style={styles.container1}>
               <Text
-                style={[styles.explanation, { color: theme.primary }]}
+                style={[styles.explanation, { color: theme.primaryDefault }]}
                 onLayout={onLayout}
                 children={t('refresh.fetchPreviousPage')}
               />
@@ -271,14 +271,14 @@ const TimelineRefresh: React.FC<Props> = ({
                   <Icon
                     name='ArrowLeft'
                     size={StyleConstants.Font.Size.M}
-                    color={theme.primary}
+                    color={theme.primaryDefault}
                   />
                 }
               />
             </View>
             <View style={styles.container2}>
               <Text
-                style={[styles.explanation, { color: theme.primary }]}
+                style={[styles.explanation, { color: theme.primaryDefault }]}
                 onLayout={onLayout}
                 children={t('refresh.refetch')}
               />

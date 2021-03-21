@@ -22,7 +22,7 @@ const SettingsDev: React.FC = () => {
         style={{
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
           ...StyleConstants.FontStyle.S,
-          color: theme.primary
+          color: theme.primaryDefault
         }}
       >
         {instances[instanceActive]?.token}

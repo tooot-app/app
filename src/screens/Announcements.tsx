@@ -74,8 +74,8 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
           style={[
             styles.announcement,
             {
-              borderColor: theme.primary,
-              backgroundColor: theme.background
+              borderColor: theme.primaryDefault,
+              backgroundColor: theme.backgroundDefault
             }
           ]}
         >
@@ -102,10 +102,10 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   style={[
                     styles.reaction,
                     {
-                      borderColor: reaction.me ? theme.disabled : theme.primary,
+                      borderColor: reaction.me ? theme.disabled : theme.primaryDefault,
                       backgroundColor: reaction.me
                         ? theme.disabled
-                        : theme.background
+                        : theme.backgroundDefault
                     }
                   ]}
                   onPress={() => {
@@ -130,7 +130,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   )}
                   {reaction.count ? (
                     <Text
-                      style={[styles.reactionCount, { color: theme.primary }]}
+                      style={[styles.reactionCount, { color: theme.primaryDefault }]}
                     >
                       {reaction.count}
                     </Text>
@@ -138,13 +138,13 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                 </Pressable>
               ))}
               {/* <Pressable
-                style={[styles.reaction, { borderColor: theme.primary }]}
+                style={[styles.reaction, { borderColor: theme.primaryDefault }]}
                 onPress={() => invisibleTextInputRef.current?.focus()}
               >
                 <Icon
                   name='Plus'
                   size={StyleConstants.Font.Size.M}
-                  color={theme.primary}
+                  color={theme.primaryDefault}
                 />
               </Pressable> */}
             </View>
@@ -202,7 +202,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
       blurType={mode}
       blurAmount={20}
       style={styles.base}
-      reducedTransparencyFallbackColor={theme.background}
+      reducedTransparencyFallbackColor={theme.backgroundDefault}
     >
       <SafeAreaView style={styles.base}>
         <View
@@ -245,8 +245,8 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   style={[
                     styles.indicator,
                     {
-                      borderColor: theme.primary,
-                      backgroundColor: i === index ? theme.primary : undefined,
+                      borderColor: theme.primaryDefault,
+                      backgroundColor: i === index ? theme.primaryDefault : undefined,
                       marginLeft:
                         i === query.data.length ? 0 : StyleConstants.Spacing.S
                     }

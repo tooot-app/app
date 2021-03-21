@@ -56,7 +56,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
-        <Text style={[styles.header, { color: theme.primary }]}>
+        <Text style={[styles.header, { color: theme.primaryDefault }]}>
           {t('content.existing')}
         </Text>
         <View style={styles.accountButtons}>
@@ -87,7 +87,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
       </View>
 
       <View style={styles.secondSection}>
-        <Text style={[styles.header, { color: theme.primary }]}>
+        <Text style={[styles.header, { color: theme.primaryDefault }]}>
           {t('content.new')}
         </Text>
         <ComponentInstance disableHeaderImage goBack />

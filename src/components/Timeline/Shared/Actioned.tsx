@@ -23,7 +23,7 @@ const TimelineActioned = React.memo(
       StackNavigationProp<Nav.TabLocalStackParamList>
     >()
     const name = account.display_name || account.username
-    const iconColor = theme.primary
+    const iconColor = theme.primaryDefault
 
     const content = (content: string) => (
       <ParseEmojis content={content} emojis={account.emojis} size='S' />

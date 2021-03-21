@@ -49,7 +49,7 @@ const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
       style={[
         styles.base,
         styleOpacity,
-        { backgroundColor: theme.background, height: headerHeight }
+        { backgroundColor: theme.backgroundDefault, height: headerHeight }
       ]}
     >
       <View

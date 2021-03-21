@@ -35,9 +35,9 @@ const TimelineEmpty = React.memo(
               <Icon
                 name='Frown'
                 size={StyleConstants.Font.Size.L}
-                color={theme.primary}
+                color={theme.primaryDefault}
               />
-              <Text style={[styles.error, { color: theme.primary }]}>
+              <Text style={[styles.error, { color: theme.primaryDefault }]}>
                 {t('empty.error.message')}
               </Text>
               <Button
@@ -56,9 +56,9 @@ const TimelineEmpty = React.memo(
               <Icon
                 name='Smartphone'
                 size={StyleConstants.Font.Size.L}
-                color={theme.primary}
+                color={theme.primaryDefault}
               />
-              <Text style={[styles.error, { color: theme.primary }]}>
+              <Text style={[styles.error, { color: theme.primaryDefault }]}>
                 {t('empty.success.message')}
               </Text>
             </>
@@ -67,7 +67,7 @@ const TimelineEmpty = React.memo(
     }, [mode, i18n.language, status])
     return (
       <View
-        style={[styles.base, { backgroundColor: theme.background }]}
+        style={[styles.base, { backgroundColor: theme.backgroundDefault }]}
         children={children}
       />
     )

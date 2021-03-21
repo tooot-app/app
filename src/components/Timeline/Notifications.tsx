@@ -56,7 +56,7 @@ const TimelineNotifications: React.FC<Props> = ({
       style={[
         styles.notificationView,
         {
-          backgroundColor: theme.background,
+          backgroundColor: theme.backgroundDefault,
           paddingBottom: notification.status
             ? 0
             : StyleConstants.Spacing.Global.PagePadding

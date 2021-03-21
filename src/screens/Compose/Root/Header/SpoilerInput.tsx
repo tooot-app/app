@@ -17,7 +17,7 @@ const ComposeSpoilerInput: React.FC = () => {
       style={[
         styles.spoilerInput,
         {
-          color: theme.primary,
+          color: theme.primaryDefault,
           borderBottomColor: theme.border
         }
       ]}
