@@ -49,6 +49,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
                 account
               })
             }}
+            background
           />
         )
       })
