@@ -45,7 +45,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     dark = 'light-content'
   }
 
-  const routeNameRef = useRef<string | undefined>()
+  const routeRef = useRef<{ name?: string; params?: {} }>()
 
   const isConnected = useNetInfo().isConnected
   useEffect(() => {
@@ -114,30 +114,32 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [instanceActive])
 
   // Callbacks
-  const navigationContainerOnReady = useCallback(
-    () =>
-      (routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name),
-    []
-  )
+  const navigationContainerOnReady = useCallback(() => {
+    const currentRoute = navigationRef.current?.getCurrentRoute()
+    routeRef.current = {
+      name: currentRoute?.name,
+      params: currentRoute?.params
+    }
+  }, [])
   const navigationContainerOnStateChange = useCallback(() => {
-    const previousRouteName = routeNameRef.current
-    const currentRouteName = navigationRef.current?.getCurrentRoute()?.name
+    const previousRoute = routeRef.current
+    const currentRoute = navigationRef.current?.getCurrentRoute()
 
-    const matchTabName = currentRouteName?.match(/(Tab-.*)-Root/)
+    const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
     if (matchTabName) {
       //@ts-ignore
       dispatch(updatePreviousTab(matchTabName[1]))
     }
 
-    if (previousRouteName !== currentRouteName) {
-      Analytics.setCurrentScreen(currentRouteName)
+    if (previousRoute?.name !== currentRoute?.name) {
+      Analytics.setCurrentScreen(currentRoute?.name)
       Sentry.Native.setContext('page', {
-        previous: previousRouteName,
-        current: currentRouteName
+        previous: previousRoute,
+        current: currentRoute
       })
     }
 
-    routeNameRef.current = currentRouteName
+    routeRef.current = currentRoute
   }, [])
 
   return (
