@@ -14,17 +14,18 @@ import {
   View,
   VirtualizedList
 } from 'react-native'
-import { ImageSource } from './@types'
 import ImageItem from './components/ImageItem'
 import useAnimatedComponents from './hooks/useAnimatedComponents'
 import useImageIndexChange from './hooks/useImageIndexChange'
 import useRequestClose from './hooks/useRequestClose'
 
 type Props = {
-  images: ImageSource[]
+  images: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
   imageIndex: number
   onRequestClose: () => void
-  onLongPress?: (image: ImageSource) => void
+  onLongPress?: (
+    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  ) => void
   onImageIndexChange?: (imageIndex: number) => void
   backgroundColor?: string
   swipeToCloseEnabled?: boolean
@@ -48,7 +49,11 @@ function ImageViewer ({
   delayLongPress = DEFAULT_DELAY_LONG_PRESS,
   HeaderComponent
 }: Props) {
-  const imageList = React.createRef<VirtualizedList<ImageSource>>()
+  const imageList = React.createRef<
+    VirtualizedList<
+      Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+    >
+  >()
   const [opacity, onRequestCloseEnhanced] = useRequestClose(onRequestClose)
   const [currentImageIndex, onScroll] = useImageIndexChange(imageIndex, SCREEN)
   const [headerTransform, toggleBarsVisible] = useAnimatedComponents()

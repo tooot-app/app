@@ -6,7 +6,7 @@
  *
  */
 
-import { useMemo, useEffect, useCallback } from 'react'
+import { useMemo, useEffect } from 'react'
 import {
   Animated,
   Dimensions,

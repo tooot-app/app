@@ -11,7 +11,7 @@ export type QueryKey = [
   }
 ]
 
-type SearchResult = {
+export type SearchResult = {
   accounts: Mastodon.Account[]
   hashtags: Mastodon.Tag[]
   statuses: Mastodon.Status[]
@@ -23,7 +23,12 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
     version: 'v2',
     method: 'get',
     url: 'search',
-    params: { ...(type && { type }), ...(term && { q: term }), limit }
+    params: {
+      ...(type && { type }),
+      ...(term && { q: term }),
+      limit,
+      resolve: true
+    }
   }).then(res => res.body)
 }
 

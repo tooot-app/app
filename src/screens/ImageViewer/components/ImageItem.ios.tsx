@@ -21,7 +21,6 @@ import {
   State,
   TapGestureHandler
 } from 'react-native-gesture-handler'
-import { ImageSource } from '../@types'
 import useDoubleTapToZoom from '../hooks/useDoubleTapToZoom'
 import { getImageStyles, getImageTransform } from '../utils'
 
@@ -32,10 +31,12 @@ const SCREEN_WIDTH = SCREEN.width
 const SCREEN_HEIGHT = SCREEN.height
 
 type Props = {
-  imageSrc: ImageSource
+  imageSrc: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   onRequestClose: () => void
   onZoom: (scaled: boolean) => void
-  onLongPress: (image: ImageSource) => void
+  onLongPress: (
+    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  ) => void
   swipeToCloseEnabled?: boolean
 }
 
@@ -144,7 +145,6 @@ const ImageItem = ({
               children={
                 <GracefullyImage
                   uri={{
-                    preview: imageSrc.preview_url,
                     original: imageSrc.url,
                     remote: imageSrc.remote_url
                   }}

@@ -9,7 +9,6 @@
 import GracefullyImage from '@components/GracefullyImage'
 import React, { useState, useCallback } from 'react'
 import { Animated, Dimensions, StyleSheet } from 'react-native'
-import { ImageSource } from '../@types'
 import usePanResponder from '../hooks/usePanResponder'
 import { getImageStyles, getImageTransform } from '../utils'
 
@@ -18,10 +17,12 @@ const SCREEN_WIDTH = SCREEN.width
 const SCREEN_HEIGHT = SCREEN.height
 
 type Props = {
-  imageSrc: ImageSource
+  imageSrc: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   onRequestClose: () => void
   onZoom: (isZoomed: boolean) => void
-  onLongPress: (image: ImageSource) => void
+  onLongPress: (
+    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  ) => void
   delayLongPress: number
   swipeToCloseEnabled?: boolean
   doubleTapToZoomEnabled?: boolean
@@ -89,7 +90,6 @@ const ImageItem = ({
         children={
           <GracefullyImage
             uri={{
-              preview: imageSrc.preview_url,
               original: imageSrc.url,
               remote: imageSrc.remote_url
             }}

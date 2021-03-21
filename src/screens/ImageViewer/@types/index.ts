@@ -15,12 +15,3 @@ export type Position = {
   x: number
   y: number
 }
-
-export type ImageSource = {
-  id: string
-  preview_url: string
-  remote_url?: string
-  url: string
-  width?: number
-  height?: number
-}

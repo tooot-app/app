@@ -121,7 +121,7 @@ const renderNode = ({
             onPress={async () => {
               analytics('status_link_press')
               !disableDetails && !shouldBeTag
-                ? await openLink(href)
+                ? await openLink(href, navigation)
                 : navigation.push('Tab-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })

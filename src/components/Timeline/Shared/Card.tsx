@@ -1,6 +1,7 @@
 import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
+import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -13,13 +14,14 @@ export interface Props {
 const TimelineCard = React.memo(
   ({ card }: Props) => {
     const { theme } = useTheme()
+    const navigation = useNavigation()
 
     return (
       <Pressable
         style={[styles.card, { borderColor: theme.border }]}
         onPress={async () => {
           analytics('timeline_shared_card_press')
-          await openLink(card.url)
+          await openLink(card.url, navigation)
         }}
         testID='base'
       >

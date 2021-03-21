@@ -20,15 +20,9 @@ import {
 } from 'react-native-safe-area-context'
 import ImageViewer from './ImageViewer/Root'
 
-type ImageUrl = {
-  url: string
-  width?: number | undefined
-  height?: number | undefined
-  preview_url: string
-  remote_url?: string | undefined
-}
-
-const saveImage = async (image: ImageUrl) => {
+const saveImage = async (
+  image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+) => {
   const hasAndroidPermission = async () => {
     const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
 
@@ -44,9 +38,17 @@ const saveImage = async (image: ImageUrl) => {
   if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
     return
   }
-  CameraRoll.save(image.url || image.remote_url || image.preview_url)
+  CameraRoll.save(image.url)
     .then(() => haptics('Success'))
-    .catch(() => haptics('Error'))
+    .catch(() => {
+      if (image.remote_url) {
+        CameraRoll.save(image.remote_url)
+          .then(() => haptics('Success'))
+          .catch(() => haptics('Error'))
+      } else {
+        haptics('Error')
+      }
+    })
 }
 
 const HeaderComponent = React.memo(
@@ -57,7 +59,7 @@ const HeaderComponent = React.memo(
   }: {
     navigation: ScreenImagesViewerProp['navigation']
     currentIndex: number
-    imageUrls: ImageUrl[]
+    imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
   }) => {
     const insets = useSafeAreaInsets()
     const { t } = useTranslation('screenImageViewer')
