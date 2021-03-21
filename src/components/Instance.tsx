@@ -142,7 +142,7 @@ const ComponentInstance: React.FC<Props> = ({
             style={[
               styles.textInput,
               {
-                color: theme.primary,
+                color: theme.primaryDefault,
                 borderBottomColor: instanceQuery.isError
                   ? theme.red
                   : theme.border

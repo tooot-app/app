@@ -17,7 +17,7 @@ const HeaderCenter = React.memo(
       <Text
         style={[
           styles.text,
-          { color: inverted ? theme.primaryOverlay : theme.primary }
+          { color: inverted ? theme.primaryOverlay : theme.primaryDefault }
         ]}
         children={content}
       />

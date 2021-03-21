@@ -47,7 +47,7 @@ const AttachmentUnsupported: React.FC<Props> = ({
           <Text
             style={[
               styles.text,
-              { color: attachment.blurhash ? theme.background : theme.primary }
+              { color: attachment.blurhash ? theme.backgroundDefault : theme.primaryDefault }
             ]}
           >
             {t('shared.attachment.unsupported.text')}

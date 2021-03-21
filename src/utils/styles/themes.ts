@@ -1,16 +1,17 @@
 import { DefaultTheme, DarkTheme } from '@react-navigation/native'
 
 export type ColorDefinitions =
-  | 'primary'
+  | 'primaryDefault'
   | 'primaryOverlay'
   | 'secondary'
   | 'disabled'
   | 'blue'
   | 'red'
-  | 'background'
-  | 'backgroundGradientStart'
-  | 'backgroundGradientEnd'
-  | 'backgroundOverlay'
+  | 'green'
+  | 'yellow'
+  | 'backgroundDefault'
+  | 'backgroundOverlayDefault'
+  | 'backgroundOverlayInvert'
   | 'border'
   | 'shimmerDefault'
   | 'shimmerHighlight'
@@ -21,7 +22,7 @@ const themeColors: {
     dark: string
   }
 } = {
-  primary: {
+  primaryDefault: {
     light: 'rgb(18, 18, 18)',
     dark: 'rgb(180, 180, 180)'
   },
@@ -45,27 +46,33 @@ const themeColors: {
     light: 'rgb(225, 45, 35)',
     dark: 'rgb(225, 78, 79)'
   },
+  green: {
+    light: 'rgb(18, 158, 80)',
+    dark: 'rgb(18, 158, 80)'
+  },
+  yellow: {
+    light: 'rgb(230, 166, 30)',
+    dark: 'rgb(200, 145, 25)'
+  },
 
-  background: {
+  backgroundDefault: {
     light: 'rgb(250, 250, 250)',
     dark: 'rgb(18, 18, 18)'
   },
-  backgroundGradientStart: {
+  backgroundOverlayDefault: {
     light: 'rgba(250, 250, 250, 0.5)',
-    dark: 'rgba(18, 18, 18, 0.5)'
+    dark: 'rgba(0, 0, 0, 0.5)'
   },
-  backgroundGradientEnd: {
-    light: 'rgba(250, 250, 250, 1)',
-    dark: 'rgba(18, 18, 18, 1)'
-  },
-  backgroundOverlay: {
+  backgroundOverlayInvert: {
     light: 'rgba(25, 25, 25, 0.5)',
     dark: 'rgba(0, 0, 0, 0.5)'
   },
+
   border: {
     light: 'rgba(25, 25, 25, 0.3)',
     dark: 'rgba(255, 255, 255, 0.3)'
   },
+
   shimmerDefault: {
     light: 'rgba(25, 25, 25, 0.05)',
     dark: 'rgba(250, 250, 250, 0.05)'
@@ -91,10 +98,10 @@ const themes = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: themeColors.primary.light,
-      background: themeColors.background.light,
-      card: themeColors.background.light,
-      text: themeColors.primary.light,
+      primary: themeColors.primaryDefault.light,
+      background: themeColors.backgroundDefault.light,
+      card: themeColors.backgroundDefault.light,
+      text: themeColors.primaryDefault.light,
       border: themeColors.border.light,
       notification: themeColors.red.light
     }
@@ -103,10 +110,10 @@ const themes = {
     ...DarkTheme,
     colors: {
       ...DarkTheme.colors,
-      primary: themeColors.primary.dark,
-      background: themeColors.background.dark,
-      card: themeColors.background.dark,
-      text: themeColors.primary.dark,
+      primary: themeColors.primaryDefault.dark,
+      background: themeColors.backgroundDefault.dark,
+      card: themeColors.backgroundDefault.dark,
+      text: themeColors.primaryDefault.dark,
       border: themeColors.border.dark,
       notification: themeColors.red.dark
     }

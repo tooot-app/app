@@ -25,7 +25,7 @@ const HeaderLeft: React.FC<Props> = ({
       case 'icon':
         return (
           <Icon
-            color={theme.primary}
+            color={theme.primaryDefault}
             name={content || 'ChevronLeft'}
             size={StyleConstants.Spacing.M * 1.25}
           />
@@ -33,7 +33,7 @@ const HeaderLeft: React.FC<Props> = ({
       case 'text':
         return (
           <Text
-            style={[styles.text, { color: theme.primary }]}
+            style={[styles.text, { color: theme.primaryDefault }]}
             children={content}
           />
         )
@@ -47,7 +47,7 @@ const HeaderLeft: React.FC<Props> = ({
       style={[
         styles.base,
         {
-          backgroundColor: theme.backgroundGradientStart,
+          backgroundColor: theme.backgroundOverlayDefault,
           ...(type === 'icon' && {
             height: 44,
             width: 44,

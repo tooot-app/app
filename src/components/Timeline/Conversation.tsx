@@ -95,7 +95,7 @@ const TimelineConversation: React.FC<Props> = ({
     <Pressable
       style={[
         styles.base,
-        { backgroundColor: theme.background },
+        { backgroundColor: theme.backgroundDefault },
         conversation.unread && {
           borderLeftWidth: StyleConstants.Spacing.XS,
           borderLeftColor: theme.blue,

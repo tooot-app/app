@@ -90,7 +90,8 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
                   initialSize === size
                     ? StyleConstants.Font.Weight.Bold
                     : undefined,
-                color: initialSize === size ? theme.primary : theme.secondary,
+                color:
+                  initialSize === size ? theme.primaryDefault : theme.secondary,
                 borderWidth: StyleSheet.hairlineWidth,
                 borderColor: theme.border
               }
@@ -105,7 +106,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
 
   return (
     <ScrollView scrollEnabled={false}>
-      <Text style={[styles.header, { color: theme.primary }]}>
+      <Text style={[styles.header, { color: theme.primaryDefault }]}>
         {t('content.showcase')}
       </Text>
       <View>
@@ -119,7 +120,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
         />
       </View>
-      <Text style={[styles.header, { color: theme.primary }]}>
+      <Text style={[styles.header, { color: theme.primaryDefault }]}>
         {t('content.availableSizes')}
       </Text>
       <View style={styles.sizesDemo}>{sizesDemo}</View>

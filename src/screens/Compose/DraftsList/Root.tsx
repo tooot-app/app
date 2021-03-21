@@ -55,7 +55,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
     ({ item }: { item: ComposeStateDraft }) => {
       return (
         <Pressable
-          style={[styles.draft, { backgroundColor: theme.background }]}
+          style={[styles.draft, { backgroundColor: theme.backgroundDefault }]}
           onPress={async () => {
             setCheckingAttachments(true)
             let tempDraft = item
@@ -103,7 +103,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
             <HeaderSharedCreated created_at={item.timestamp} />
             <Text
               numberOfLines={2}
-              style={[styles.text, { color: theme.primary }]}
+              style={[styles.text, { color: theme.primaryDefault }]}
             >
               {item.text ||
                 item.spoiler ||
@@ -181,7 +181,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         visible={checkingAttachments}
         children={
           <View
-            style={[styles.modal, { backgroundColor: theme.backgroundOverlay }]}
+            style={[styles.modal, { backgroundColor: theme.backgroundOverlayInvert }]}
             children={
               <Text
                 children='检查附件在服务器的状态…'

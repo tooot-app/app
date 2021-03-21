@@ -1,5 +1,5 @@
 import { RootState } from '@root/store'
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
 import li from 'li'
 
@@ -14,7 +14,10 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData
-  onUploadProgress?: (progressEvent: any) => void
+  extras?: Omit<
+    AxiosRequestConfig,
+    'method' | 'url' | 'params' | 'headers' | 'data'
+  >
 }
 
 const apiInstance = async <T = unknown>({
@@ -24,7 +27,7 @@ const apiInstance = async <T = unknown>({
   params,
   headers,
   body,
-  onUploadProgress
+  extras
 }: Params): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
   const { store } = require('@root/store')
   const state = store.getState() as RootState
@@ -70,7 +73,7 @@ const apiInstance = async <T = unknown>({
       })
     },
     ...(body && { data: body }),
-    ...(onUploadProgress && { onUploadProgress: onUploadProgress })
+    ...extras
   })
     .then(response => {
       let prev

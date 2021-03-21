@@ -30,7 +30,7 @@ const TimelineActions = React.memo(
     const { mode, theme } = useTheme()
     const iconColor = theme.secondary
     const iconColorAction = (state: boolean) =>
-      state ? theme.primary : theme.secondary
+      state ? theme.primaryDefault : theme.secondary
 
     const queryClient = useQueryClient()
     const mutation = useTimelineMutation({
@@ -194,22 +194,23 @@ const TimelineActions = React.memo(
       ),
       [status.replies_count]
     )
-    const childrenReblog = useMemo(
-      () => (
+    const childrenReblog = useMemo(() => {
+      const color = (state: boolean) => (state ? theme.green : theme.secondary)
+      return (
         <>
           <Icon
             name='Repeat'
             color={
               status.visibility === 'private' || status.visibility === 'direct'
                 ? theme.disabled
-                : iconColorAction(status.reblogged)
+                : color(status.reblogged)
             }
             size={StyleConstants.Font.Size.L}
           />
           {status.reblogs_count > 0 && (
             <Text
               style={{
-                color: iconColorAction(status.reblogged),
+                color: color(status.reblogged),
                 fontSize: StyleConstants.Font.Size.M,
                 marginLeft: StyleConstants.Spacing.XS
               }}
@@ -218,21 +219,21 @@ const TimelineActions = React.memo(
             </Text>
           )}
         </>
-      ),
-      [status.reblogged, status.reblogs_count]
-    )
-    const childrenFavourite = useMemo(
-      () => (
+      )
+    }, [status.reblogged, status.reblogs_count])
+    const childrenFavourite = useMemo(() => {
+      const color = (state: boolean) => (state ? theme.red : theme.secondary)
+      return (
         <>
           <Icon
             name='Heart'
-            color={iconColorAction(status.favourited)}
+            color={color(status.favourited)}
             size={StyleConstants.Font.Size.L}
           />
           {status.favourites_count > 0 && (
             <Text
               style={{
-                color: iconColorAction(status.favourited),
+                color: color(status.favourited),
                 fontSize: StyleConstants.Font.Size.M,
                 marginLeft: StyleConstants.Spacing.XS,
                 marginTop: 0
@@ -242,19 +243,18 @@ const TimelineActions = React.memo(
             </Text>
           )}
         </>
-      ),
-      [status.favourited, status.favourites_count]
-    )
-    const childrenBookmark = useMemo(
-      () => (
+      )
+    }, [status.favourited, status.favourites_count])
+    const childrenBookmark = useMemo(() => {
+      const color = (state: boolean) => (state ? theme.yellow : theme.secondary)
+      return (
         <Icon
           name='Bookmark'
-          color={iconColorAction(status.bookmarked)}
+          color={color(status.bookmarked)}
           size={StyleConstants.Font.Size.L}
         />
-      ),
-      [status.bookmarked]
-    )
+      )
+    }, [status.bookmarked])
 
     return (
       <View

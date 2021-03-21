@@ -83,7 +83,7 @@ const renderNode = ({
             <Text
               key={index}
               style={{
-                color: accountIndex !== -1 ? theme.blue : theme.primary,
+                color: accountIndex !== -1 ? theme.blue : theme.primaryDefault,
                 fontSize: adaptedFontsize,
                 lineHeight: adaptedLineheight
               }}
@@ -121,7 +121,7 @@ const renderNode = ({
             onPress={async () => {
               analytics('status_link_press')
               !disableDetails && !shouldBeTag
-                ? await openLink(href)
+                ? await openLink(href, navigation)
                 : navigation.push('Tab-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })
@@ -258,14 +258,14 @@ const ParseHTML = React.memo(
                   justifyContent: 'center',
                   marginTop: expanded ? 0 : -adaptedLineheight,
                   minHeight: 44,
-                  backgroundColor: theme.background
+                  backgroundColor: theme.backgroundDefault
                 }}
               >
                 <Text
                   style={{
                     textAlign: 'center',
                     ...StyleConstants.FontStyle.S,
-                    color: theme.primary
+                    color: theme.primaryDefault
                   }}
                   children={t(`HTML.expanded.${expanded.toString()}`, {
                     hint: expandHint

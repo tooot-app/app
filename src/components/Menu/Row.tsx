@@ -28,7 +28,7 @@ export interface Props {
 
 const MenuRow: React.FC<Props> = ({
   iconFront,
-  iconFrontColor = 'primary',
+  iconFrontColor = 'primaryDefault',
   title,
   description,
   content,
@@ -73,7 +73,7 @@ const MenuRow: React.FC<Props> = ({
             )}
             <View style={styles.main}>
               <Text
-                style={[styles.title, { color: theme.primary }]}
+                style={[styles.title, { color: theme.primaryDefault }]}
                 numberOfLines={1}
               >
                 {title}

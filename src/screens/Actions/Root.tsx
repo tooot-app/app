@@ -185,7 +185,7 @@ const ScreenActionsRoot = React.memo(
           <Animated.View
             style={[
               styles.overlay,
-              { backgroundColor: theme.backgroundOverlay }
+              { backgroundColor: theme.backgroundOverlayInvert }
             ]}
           >
             <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -194,7 +194,7 @@ const ScreenActionsRoot = React.memo(
                   styles.container,
                   styleTop,
                   {
-                    backgroundColor: theme.background,
+                    backgroundColor: theme.backgroundDefault,
                     paddingBottom: insets.bottom || StyleConstants.Spacing.L
                   }
                 ]}

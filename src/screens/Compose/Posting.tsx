@@ -14,7 +14,7 @@ const ComposePosting = React.memo(
         animationType='fade'
         visible={composeState.posting}
         children={
-          <View style={{ flex: 1, backgroundColor: theme.backgroundOverlay }} />
+          <View style={{ flex: 1, backgroundColor: theme.backgroundOverlayInvert }} />
         }
       />
     )

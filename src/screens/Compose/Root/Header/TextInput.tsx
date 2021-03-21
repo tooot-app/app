@@ -17,7 +17,7 @@ const ComposeTextInput: React.FC = () => {
       style={[
         styles.textInput,
         {
-          color: theme.primary,
+          color: theme.primaryDefault,
           borderBottomColor: theme.border
         }
       ]}
