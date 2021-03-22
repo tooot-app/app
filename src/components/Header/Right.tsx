@@ -9,6 +9,7 @@ export interface Props {
   type?: 'icon' | 'text'
   content: string
   native?: boolean
+  background?: boolean
 
   loading?: boolean
   disabled?: boolean
@@ -20,6 +21,7 @@ const HeaderRight: React.FC<Props> = ({
   type = 'icon',
   content,
   native = true,
+  background = false,
   loading,
   disabled,
   onPress
@@ -79,11 +81,19 @@ const HeaderRight: React.FC<Props> = ({
       style={[
         styles.base,
         {
-          backgroundColor: theme.backgroundOverlayDefault,
+          backgroundColor: background
+            ? theme.backgroundOverlayDefault
+            : undefined,
+          minHeight: 44,
+          minWidth: 44,
+          marginLeft: native
+            ? -StyleConstants.Spacing.S
+            : StyleConstants.Spacing.S,
           ...(type === 'icon' && {
-            height: 44,
-            width: 44,
-            marginRight: native ? -9 : 9
+            borderRadius: 100
+          }),
+          ...(type === 'text' && {
+            paddingHorizontal: StyleConstants.Spacing.S
           })
         }
       ]}
@@ -95,8 +105,7 @@ const styles = StyleSheet.create({
   base: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 100
+    alignItems: 'center'
   },
   text: {
     ...StyleConstants.FontStyle.M

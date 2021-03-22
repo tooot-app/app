@@ -152,7 +152,7 @@ export default {
         },
         expiration: {
           expired: 'Vote expired',
-          until: 'Open until <0 />'
+          until: 'Expires in <0 />'
         }
       }
     }

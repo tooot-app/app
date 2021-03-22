@@ -74,7 +74,9 @@ const sharedScreens = (
             backgroundColor: `rgba(255, 255, 255, 0)`
           },
           headerCenter: () => null,
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          headerLeft: () => (
+            <HeaderLeft onPress={() => navigation.goBack()} background />
+          )
         }
       }}
     />,
