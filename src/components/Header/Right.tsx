@@ -86,7 +86,7 @@ const HeaderRight: React.FC<Props> = ({
             : undefined,
           minHeight: 44,
           minWidth: 44,
-          marginLeft: native
+          marginRight: native
             ? -StyleConstants.Spacing.S
             : StyleConstants.Spacing.S,
           ...(type === 'icon' && {

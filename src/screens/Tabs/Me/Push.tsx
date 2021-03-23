@@ -2,7 +2,7 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
-import { getInstancePush } from '@utils/slices/instancesSlice'
+import { clearPushLoading, getInstancePush } from '@utils/slices/instancesSlice'
 import * as WebBrowser from 'expo-web-browser'
 import * as Notifications from 'expo-notifications'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -34,6 +34,10 @@ const ScreenMeSettingsPush: React.FC = () => {
     return () => {
       AppState.removeEventListener('change', checkPush)
     }
+  }, [])
+
+  useEffect(() => {
+    dispatch(clearPushLoading())
   }, [])
 
   const isLoading = instancePush?.global.loading || instancePush?.decode.loading

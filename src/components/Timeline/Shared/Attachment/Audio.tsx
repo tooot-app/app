@@ -95,35 +95,37 @@ const AttachmentAudio: React.FC<Props> = ({
           </>
         )}
       </View>
-      <View
-        style={{
-          alignSelf: 'flex-end',
-          width: '100%',
-          height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
-          backgroundColor: theme.backgroundOverlayInvert,
-          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          borderRadius: 100,
-          opacity: sensitiveShown ? 0.35 : undefined
-        }}
-      >
-        <Slider
-          minimumValue={0}
-          maximumValue={audio.meta.original.duration * 1000}
-          value={audioPosition}
-          minimumTrackTintColor={theme.secondary}
-          maximumTrackTintColor={theme.disabled}
-          // onSlidingStart={() => {
-          //   audioPlayer?.pauseAsync()
-          //   setAudioPlaying(false)
-          // }}
-          // onSlidingComplete={value => {
-          //   setAudioPosition(value)
-          // }}
-          enabled={false} // Bug in above sliding actions
-          thumbSize={StyleConstants.Spacing.M}
-          thumbTintColor={theme.primaryOverlay}
-        />
-      </View>
+      {audio.meta.original.duration ? (
+        <View
+          style={{
+            alignSelf: 'flex-end',
+            width: '100%',
+            height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
+            backgroundColor: theme.backgroundOverlayInvert,
+            paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+            borderRadius: 100,
+            opacity: sensitiveShown ? 0.35 : undefined
+          }}
+        >
+          <Slider
+            minimumValue={0}
+            maximumValue={audio.meta.original.duration * 1000}
+            value={audioPosition}
+            minimumTrackTintColor={theme.secondary}
+            maximumTrackTintColor={theme.disabled}
+            // onSlidingStart={() => {
+            //   audioPlayer?.pauseAsync()
+            //   setAudioPlaying(false)
+            // }}
+            // onSlidingComplete={value => {
+            //   setAudioPosition(value)
+            // }}
+            enabled={false} // Bug in above sliding actions
+            thumbSize={StyleConstants.Spacing.M}
+            thumbTintColor={theme.primaryOverlay}
+          />
+        </View>
+      ) : null}
     </View>
   )
 }
