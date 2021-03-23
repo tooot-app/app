@@ -164,6 +164,16 @@ const instancesSlice = createSlice({
         draft => draft.timestamp !== action.payload
       )
     },
+    clearPushLoading: ({ instances }) => {
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].push.global.loading = false
+      instances[activeIndex].push.decode.loading = false
+      instances[activeIndex].push.alerts.favourite.loading = false
+      instances[activeIndex].push.alerts.follow.loading = false
+      instances[activeIndex].push.alerts.mention.loading = false
+      instances[activeIndex].push.alerts.poll.loading = false
+      instances[activeIndex].push.alerts.reblog.loading = false
+    },
     disableAllPushes: ({ instances }) => {
       instances = instances.map(instance => {
         let newInstance = instance
@@ -352,6 +362,7 @@ export const {
   updateInstanceNotificationsFilter,
   updateInstanceDraft,
   removeInstanceDraft,
+  clearPushLoading,
   disableAllPushes
 } = instancesSlice.actions
 

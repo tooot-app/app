@@ -23,32 +23,35 @@ import ImageViewer from './ImageViewer/Root'
 const saveImage = async (
   image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 ) => {
-  const hasAndroidPermission = async () => {
-    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+  if (Platform.OS === 'ios') {
+    CameraRoll.save(image.url)
+      .then(() => haptics('Success'))
+      .catch(() => {
+        if (image.remote_url) {
+          CameraRoll.save(image.remote_url)
+            .then(() => haptics('Success'))
+            .catch(() => haptics('Error'))
+        } else {
+          haptics('Error')
+        }
+      })
+  } else if (Platform.OS === 'android') {
+    const hasAndroidPermission = async () => {
+      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
 
-    const hasPermission = await PermissionsAndroid.check(permission)
-    if (hasPermission) {
-      return true
+      const hasPermission = await PermissionsAndroid.check(permission)
+      if (hasPermission) {
+        return true
+      }
+
+      const status = await PermissionsAndroid.request(permission)
+      return status === 'granted'
     }
 
-    const status = await PermissionsAndroid.request(permission)
-    return status === 'granted'
+    if (!(await hasAndroidPermission())) {
+      return
+    }
   }
-
-  if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-    return
-  }
-  CameraRoll.save(image.url)
-    .then(() => haptics('Success'))
-    .catch(() => {
-      if (image.remote_url) {
-        CameraRoll.save(image.remote_url)
-          .then(() => haptics('Success'))
-          .catch(() => haptics('Error'))
-      } else {
-        haptics('Error')
-      }
-    })
 }
 
 const HeaderComponent = React.memo(
@@ -109,6 +112,7 @@ const HeaderComponent = React.memo(
         <HeaderLeft
           content='X'
           native={false}
+          background
           onPress={() => navigation.goBack()}
         />
         <HeaderCenter
@@ -118,6 +122,7 @@ const HeaderComponent = React.memo(
         <HeaderRight
           content='MoreHorizontal'
           native={false}
+          background
           onPress={onPress}
         />
       </View>

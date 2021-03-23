@@ -119,6 +119,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     routeRef.current = {
       name: currentRoute?.name,
       params: currentRoute?.params
+        ? JSON.stringify(currentRoute.params)
+        : undefined
     }
   }, [])
   const navigationContainerOnStateChange = useCallback(() => {
@@ -144,7 +146,10 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar barStyle={barStyle[mode]} backgroundColor={theme.backgroundDefault} />
+      <StatusBar
+        barStyle={barStyle[mode]}
+        backgroundColor={theme.backgroundDefault}
+      />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[mode]}
