@@ -30,7 +30,6 @@ const ActionsDomain: React.FC<Props> = ({
   const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
-    queryClient,
     onSettled: () => {
       displayMessage({
         mode,

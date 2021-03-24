@@ -1,5 +1,6 @@
+import { queryClient } from '@root/App'
 import { findIndex } from 'lodash'
-import { InfiniteData, QueryClient } from 'react-query'
+import { InfiniteData } from 'react-query'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   TimelineData
@@ -9,14 +10,12 @@ import updateNotification from './update/notification'
 import updateStatus from './update/status'
 
 const updateStatusProperty = ({
-  queryClient,
   queryKey,
   rootQueryKey,
   id,
   reblog,
   payload
 }: {
-  queryClient: QueryClient
   queryKey: MutationVarsTimelineUpdateStatusProperty['queryKey']
   rootQueryKey?: MutationVarsTimelineUpdateStatusProperty['rootQueryKey']
   id: MutationVarsTimelineUpdateStatusProperty['id']

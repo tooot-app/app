@@ -45,7 +45,6 @@ const TimelinePoll: React.FC<Props> = ({
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
-    queryClient,
     onSuccess: ({ body }, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       queryClient.cancelQueries(queryKey)
@@ -55,7 +54,7 @@ const TimelinePoll: React.FC<Props> = ({
       switch (theParams.payload.property) {
         case 'poll':
           theParams.payload.data = (body as unknown) as Mastodon.Poll
-          updateStatusProperty({ queryClient, ...theParams })
+          updateStatusProperty(theParams)
           break
       }
     },
