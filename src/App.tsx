@@ -29,7 +29,7 @@ audio()
 push()
 
 log('log', 'react-query', 'initializing')
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 log('log', 'react-native-screens', 'initializing')
 enableScreens()

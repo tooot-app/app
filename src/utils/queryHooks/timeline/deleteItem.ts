@@ -1,13 +1,12 @@
-import { InfiniteData, QueryClient } from 'react-query'
+import { queryClient } from '@root/App'
+import { InfiniteData } from 'react-query'
 import { MutationVarsTimelineDeleteItem } from '../timeline'
 
 const deleteItem = ({
-  queryClient,
   queryKey,
   rootQueryKey,
   id
 }: {
-  queryClient: QueryClient
   queryKey?: MutationVarsTimelineDeleteItem['queryKey']
   rootQueryKey?: MutationVarsTimelineDeleteItem['rootQueryKey']
   id: MutationVarsTimelineDeleteItem['id']

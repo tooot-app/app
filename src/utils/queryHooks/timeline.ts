@@ -1,15 +1,12 @@
 import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
+import { queryClient } from '@root/App'
 import { store } from '@root/store'
-import {
-  getInstanceActive,
-  getInstanceNotificationsFilter
-} from '@utils/slices/instancesSlice'
+import { getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
   MutationOptions,
-  QueryClient,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation
@@ -356,13 +353,11 @@ type MutationOptionsTimeline = MutationOptions<
 >
 
 const useTimelineMutation = ({
-  queryClient,
   onError,
   onMutate,
   onSettled,
   onSuccess
 }: {
-  queryClient: QueryClient
   onError?: MutationOptionsTimeline['onError']
   onMutate?: boolean
   onSettled?: MutationOptionsTimeline['onSettled']
@@ -385,10 +380,10 @@ const useTimelineMutation = ({
         haptics('Light')
         switch (params.type) {
           case 'updateStatusProperty':
-            updateStatusProperty({ queryClient, ...params })
+            updateStatusProperty(params)
             break
           case 'deleteItem':
-            deleteItem({ queryClient, ...params })
+            deleteItem(params)
             break
         }
         return oldData

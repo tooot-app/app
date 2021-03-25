@@ -128,6 +128,7 @@ const Timeline: React.FC<Props> = ({
   return (
     <>
       <TimelineRefresh
+        flRef={flRef}
         queryKey={queryKey}
         scrollY={scrollY}
         fetchingType={fetchingType}

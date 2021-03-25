@@ -29,7 +29,6 @@ const ActionsAccount: React.FC<Props> = ({
 
   const queryClient = useQueryClient()
   const mutateion = useTimelineMutation({
-    queryClient,
     onSuccess: (_, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({

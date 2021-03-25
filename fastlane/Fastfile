@@ -56,7 +56,8 @@ private_lane :github_release do |options|
     tag_name: GITHUB_RELEASE,
     description: "No changelog provided",
     commitish: git_branch,
-    is_prerelease: options[:prerelease]
+    is_prerelease: options[:prerelease],
+    upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
   )
 end
 
@@ -125,6 +126,22 @@ private_lane :build_android do
       skip_upload_images: true,
       skip_upload_screenshots: true
     )
+    build_android_app(
+      task: 'assemble',
+      build_type: 'release',
+      project_dir: "./android",
+      print_command: false,
+      print_command_output: false,
+      properties: {
+        "expoSDK" => VERSIONS[:expo],
+        "releaseChannel" => RELEASE_CHANNEL,
+        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
+        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
+      }
+    )
+    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
   when "release"
   else
     if !is_ci

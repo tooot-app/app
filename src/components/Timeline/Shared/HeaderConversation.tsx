@@ -54,7 +54,6 @@ const HeaderConversation = React.memo(
 
     const queryClient = useQueryClient()
     const mutation = useTimelineMutation({
-      queryClient,
       onMutate: true,
       onError: (err: any, _, oldData) => {
         displayMessage({

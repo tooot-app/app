@@ -7,9 +7,9 @@ import {
 } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -23,6 +23,7 @@ import Animated, {
 import { InfiniteData, useQueryClient } from 'react-query'
 
 export interface Props {
+  flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
@@ -40,6 +41,7 @@ export const SEPARATION_Y_2 = -(
 )
 
 const TimelineRefresh: React.FC<Props> = ({
+  flRef,
   queryKey,
   scrollY,
   fetchingType,
@@ -137,6 +139,10 @@ const TimelineRefresh: React.FC<Props> = ({
       }
     )
   }
+  const callRefetch = async () => {
+    await refetch()
+    setTimeout(() => flRef.current?.scrollToOffset({ offset: 1 }), 50)
+  }
 
   const [textRight, setTextRight] = useState(0)
   const arrowY = useAnimatedStyle(() => ({
@@ -225,7 +231,7 @@ const TimelineRefresh: React.FC<Props> = ({
           break
         case 2:
           runOnJS(prepareRefetch)()
-          runOnJS(refetch)()
+          runOnJS(callRefetch)()
           break
       }
     },

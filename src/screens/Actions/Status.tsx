@@ -34,7 +34,6 @@ const ActionsStatus: React.FC<Props> = ({
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
-    queryClient,
     onMutate: true,
     onError: (err: any, params, oldData) => {
       const theFunction = (params as MutationVarsTimelineUpdateStatusProperty)
