@@ -56,7 +56,7 @@ private_lane :github_release do |options|
     tag_name: GITHUB_RELEASE,
     description: "No changelog provided",
     commitish: git_branch,
-    is_prerelease: options[:prerelease]
+    is_prerelease: options[:prerelease],
     upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
   )
 end
