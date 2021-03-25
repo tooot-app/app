@@ -57,7 +57,7 @@ private_lane :github_release do |options|
     description: "No changelog provided",
     commitish: git_branch,
     is_prerelease: options[:prerelease]
-    upload_assets: [lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]]
+    upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
   )
 end
 
@@ -141,6 +141,7 @@ private_lane :build_android do
         "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
       }
     )
+    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
   when "release"
   else
     if !is_ci

@@ -29,6 +29,7 @@ jobs:
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
       - name: -- Step 5 -- Install native dependencies
+        if: github.ref != 'refs/heads/main'
         run: npx pod-install
       - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
