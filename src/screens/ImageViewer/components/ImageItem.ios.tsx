@@ -148,6 +148,7 @@ const ImageItem = ({
                     original: imageSrc.url,
                     remote: imageSrc.remote_url
                   }}
+                  blurhash={imageSrc.blurhash}
                   {...((!imageSrc.width || !imageSrc.height) && {
                     setImageDimensions
                   })}

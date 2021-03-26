@@ -102,11 +102,7 @@ const GracefullyImage = React.memo(
 
     return (
       <Pressable
-        style={[
-          style,
-          dimension,
-          { backgroundColor: theme.backgroundOverlayDefault }
-        ]}
+        style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
         {...(onPress
           ? hidden
             ? { disabled: true }
@@ -130,9 +126,7 @@ const styles = StyleSheet.create({
   blurhash: {
     width: '100%',
     height: '100%',
-    position: 'absolute',
-    top: StyleConstants.Spacing.XS / 2,
-    left: StyleConstants.Spacing.XS / 2
+    position: 'absolute'
   }
 })
 
