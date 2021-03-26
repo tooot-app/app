@@ -4,14 +4,8 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react'
-import { FlatList, Image, StyleSheet, View } from 'react-native'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -20,24 +14,32 @@ import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
+import FastImage from 'react-native-fast-image'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 
 const prefetchEmojis = (
-  sortedEmojis: { title: string; data: Mastodon.Emoji[] }[]
+  sortedEmojis: { title: string; data: Mastodon.Emoji[] }[],
+  reduceMotionEnabled: boolean
 ) => {
+  const prefetches: { uri: string }[] = []
   let requestedIndex = 0
   sortedEmojis.forEach(sorted => {
     sorted.data.forEach(emoji => {
       if (requestedIndex > 40) {
         return
       }
-      Image.prefetch(emoji.url)
+      prefetches.push({
+        uri: reduceMotionEnabled ? emoji.static_url : emoji.url
+      })
       requestedIndex++
     })
   })
+  FastImage.preload(prefetches)
 }
 
 const ComposeRoot = React.memo(
   () => {
+    const { reduceMotionEnabled } = useAccessibility()
     const { theme } = useTheme()
 
     const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -74,9 +76,9 @@ const ComposeRoot = React.memo(
           type: 'emoji',
           payload: { ...composeState.emoji, emojis: sortedEmojis }
         })
-        prefetchEmojis(sortedEmojis)
+        prefetchEmojis(sortedEmojis, reduceMotionEnabled)
       }
-    }, [emojisData])
+    }, [emojisData, reduceMotionEnabled])
 
     const listEmpty = useMemo(() => {
       if (isFetching) {

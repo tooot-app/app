@@ -1,9 +1,11 @@
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { Image, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
@@ -24,6 +26,8 @@ const ParseEmojis = React.memo(
     adaptiveSize = false,
     fontBold = false
   }: Props) => {
+    const { reduceMotionEnabled } = useAccessibility()
+
     const adaptiveFontsize = useSelector(getSettingsFontsize)
     const adaptedFontsize = adaptiveScale(
       StyleConstants.Font.Size[size],
@@ -69,9 +73,13 @@ const ParseEmojis = React.memo(
                   <Text key={i}>
                     {/* When emoji starts a paragraph, lineHeight will break */}
                     {i === 0 ? <Text> </Text> : null}
-                    <Image
+                    <FastImage
                       key={adaptiveFontsize}
-                      source={{ uri: emojis[emojiIndex].url }}
+                      source={{
+                        uri: reduceMotionEnabled
+                          ? emojis[emojiIndex].static_url
+                          : emojis[emojiIndex].url
+                      }}
                       style={styles.image}
                     />
                   </Text>
