@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { Video } from 'expo-av'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
@@ -54,6 +54,12 @@ const AttachmentVideo: React.FC<Props> = ({
     })
   }, [videoLoaded, videoPosition])
 
+  useEffect(() => {
+    if (gifv) {
+      videoPlayer.current?.setIsLoopingAsync(true)
+    }
+  }, [])
+
   return (
     <View
       style={[
@@ -68,10 +74,14 @@ const AttachmentVideo: React.FC<Props> = ({
           height: '100%',
           opacity: sensitiveShown ? 0 : 1
         }}
-        resizeMode='cover'
         usePoster
-        posterSource={{ uri: video.preview_url }}
-        posterStyle={{ resizeMode: 'cover' }}
+        {...(gifv
+          ? { shouldPlay: true, source: { uri: video.url } }
+          : {
+              resizeMode: 'cover',
+              posterSource: { uri: video.preview_url },
+              posterStyle: { resizeMode: 'cover' }
+            })}
         useNativeControls={false}
         onFullscreenUpdate={event => {
           if (event.fullscreenUpdate === 3) {
@@ -94,7 +104,7 @@ const AttachmentVideo: React.FC<Props> = ({
               }}
             />
           ) : null
-        ) : (
+        ) : !gifv ? (
           <Button
             round
             overlay
@@ -104,7 +114,7 @@ const AttachmentVideo: React.FC<Props> = ({
             onPress={playOnPress}
             loading={videoLoading}
           />
-        )}
+        ) : null}
       </Pressable>
     </View>
   )
