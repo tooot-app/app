@@ -235,7 +235,7 @@ const ParseHTML = React.memo(
         const [expanded, setExpanded] = useState(false)
 
         const onTextLayout = useCallback(({ nativeEvent }) => {
-          if (nativeEvent.lines.length >= numberOfLines) {
+          if (nativeEvent.lines.length >= numberOfLines + 5) {
             setExpandAllow(true)
           }
         }, [])
@@ -245,7 +245,9 @@ const ParseHTML = React.memo(
             <Text
               children={children}
               onTextLayout={onTextLayout}
-              numberOfLines={expanded ? 999 : numberOfLines}
+              numberOfLines={
+                expandAllow ? (expanded ? 999 : numberOfLines) : undefined
+              }
             />
             {expandAllow ? (
               <Pressable

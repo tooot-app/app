@@ -3,18 +3,15 @@ import haptics from '@components/haptics'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
-import {
-  Image,
-  Pressable,
-  SectionList,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
 import ComposeContext from '../../utils/createContext'
 import updateText from '../../updateText'
+import FastImage from 'react-native-fast-image'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
+  const { reduceMotionEnabled } = useAccessibility()
+
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const onPress = useCallback(() => {
     analytics('compose_emoji_add')
@@ -32,8 +29,8 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   }, [composeState])
   const children = useMemo(
     () => (
-      <Image
-        source={{ uri: emoji.url, cache: 'force-cache' }}
+      <FastImage
+        source={{ uri: reduceMotionEnabled ? emoji.static_url : emoji.url }}
         style={styles.emoji}
       />
     ),
@@ -81,6 +78,7 @@ const ComposeEmojis: React.FC = () => {
         keyExtractor={item => item.shortcode}
         renderSectionHeader={listHeader}
         renderItem={listItem}
+        windowSize={3}
       />
     </View>
   )

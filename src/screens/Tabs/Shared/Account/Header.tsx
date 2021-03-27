@@ -1,3 +1,4 @@
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Dimensions, Image } from 'react-native'
@@ -9,14 +10,17 @@ export interface Props {
   limitHeight?: boolean
 }
 
-const AccountHeader: React.FC<Props> = ({ account, limitHeight = false }) => {
+const AccountHeader: React.FC<Props> = ({ account }) => {
   const { accountState } = useContext(AccountContext)
+  const { reduceMotionEnabled } = useAccessibility()
   const { theme } = useTheme()
   const topInset = useSafeAreaInsets().top
 
   return (
     <Image
-      source={{ uri: account?.header }}
+      source={{
+        uri: reduceMotionEnabled ? account?.header_static : account?.header
+      }}
       style={{
         height:
           Dimensions.get('screen').width * accountState.headerRatio + topInset,

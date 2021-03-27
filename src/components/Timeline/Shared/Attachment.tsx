@@ -49,6 +49,7 @@ const TimelineAttachment = React.memo(
                 id: attachment.id,
                 url: attachment.url,
                 remote_url: attachment.remote_url,
+                blurhash: attachment.blurhash,
                 width: attachment.meta?.original?.width,
                 height: attachment.meta?.original?.height
               })

@@ -7,6 +7,7 @@ import log from '@root/startup/log'
 import netInfo from '@root/startup/netInfo'
 import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
+import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -90,9 +91,11 @@ const App: React.FC = () => {
         i18n.changeLanguage(getSettingsLanguage(store.getState()))
         return (
           <ActionSheetProvider>
-            <ThemeManager>
-              <Screens localCorrupt={localCorrupt} />
-            </ThemeManager>
+            <AccessibilityManager>
+              <ThemeManager>
+                <Screens localCorrupt={localCorrupt} />
+              </ThemeManager>
+            </AccessibilityManager>
           </ActionSheetProvider>
         )
       } else {

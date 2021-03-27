@@ -229,7 +229,7 @@ const TimelinePoll: React.FC<Props> = ({
         style={styles.optionContainer}
         onPress={() => {
           analytics('timeline_shared_vote_option_press')
-          haptics('Light')
+          !allOptions[index] && haptics('Light')
           if (poll.multiple) {
             setAllOptions(allOptions.map((o, i) => (i === index ? !o : o)))
           } else {

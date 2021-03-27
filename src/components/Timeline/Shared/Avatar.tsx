@@ -33,9 +33,10 @@ const TimelineAvatar = React.memo(
           height: StyleConstants.Avatar.M
         }}
         style={{
-          borderRadius: 4,
+          borderRadius: StyleConstants.Avatar.M,
           overflow: 'hidden',
-          marginRight: StyleConstants.Spacing.S
+          marginRight: StyleConstants.Spacing.S,
+          backgroundColor: 'red'
         }}
       />
     )

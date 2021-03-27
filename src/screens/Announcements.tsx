@@ -6,6 +6,7 @@ import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import { BlurView } from '@react-native-community/blur'
 import { StackScreenProps } from '@react-navigation/stack'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import {
   useAnnouncementMutation,
   useAnnouncementQuery
@@ -14,15 +15,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
+import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -37,6 +32,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
   },
   navigation
 }) => {
+  const { reduceMotionEnabled } = useAccessibility()
   const { mode, theme } = useTheme()
   const [index, setIndex] = useState(0)
   const { t } = useTranslation('sharedAnnouncements')
@@ -102,7 +98,9 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   style={[
                     styles.reaction,
                     {
-                      borderColor: reaction.me ? theme.disabled : theme.primaryDefault,
+                      borderColor: reaction.me
+                        ? theme.disabled
+                        : theme.primaryDefault,
                       backgroundColor: reaction.me
                         ? theme.disabled
                         : theme.backgroundDefault
@@ -121,8 +119,12 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   }}
                 >
                   {reaction.url ? (
-                    <Image
-                      source={{ uri: reaction.url }}
+                    <FastImage
+                      source={{
+                        uri: reduceMotionEnabled
+                          ? reaction.static_url
+                          : reaction.url
+                      }}
                       style={[styles.reactionImage]}
                     />
                   ) : (
@@ -130,7 +132,10 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                   )}
                   {reaction.count ? (
                     <Text
-                      style={[styles.reactionCount, { color: theme.primaryDefault }]}
+                      style={[
+                        styles.reactionCount,
+                        { color: theme.primaryDefault }
+                      ]}
                     >
                       {reaction.count}
                     </Text>
@@ -246,7 +251,8 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
                     styles.indicator,
                     {
                       borderColor: theme.primaryDefault,
-                      backgroundColor: i === index ? theme.primaryDefault : undefined,
+                      backgroundColor:
+                        i === index ? theme.primaryDefault : undefined,
                       marginLeft:
                         i === query.data.length ? 0 : StyleConstants.Spacing.S
                     }

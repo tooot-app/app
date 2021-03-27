@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { Pressable, StyleSheet } from 'react-native'
@@ -15,6 +16,7 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
+  const { reduceMotionEnabled } = useAccessibility()
 
   return (
     <Pressable
@@ -28,7 +30,11 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
       <GracefullyImage
         key={account?.avatar}
         style={styles.image}
-        uri={{ original: account?.avatar }}
+        uri={{
+          original: reduceMotionEnabled
+            ? account?.avatar_static
+            : account?.avatar
+        }}
       />
     </Pressable>
   )

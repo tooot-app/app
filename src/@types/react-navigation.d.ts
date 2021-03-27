@@ -58,9 +58,10 @@ declare namespace Nav {
       imageUrls: {
         id: Mastodon.Attachment['id']
         url: Mastodon.AttachmentImage['url']
+        remote_url?: Mastodon.AttachmentImage['remote_url']
+        blurhash: Mastodon.AttachmentImage['blurhash']
         width?: number
         height?: number
-        remote_url?: Mastodon.AttachmentImage['remote_url']
       }[]
       id: Mastodon.Attachment['id']
     }

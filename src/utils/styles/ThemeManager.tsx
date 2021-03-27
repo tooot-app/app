@@ -11,7 +11,7 @@ type ContextType = {
   setTheme: (theme: 'light' | 'dark') => void
 }
 
-export const ManageThemeContext = createContext<ContextType>({
+const ManageThemeContext = createContext<ContextType>({
   mode: 'light',
   theme: getTheme('light'),
   setTheme: () => {}
