@@ -2,7 +2,7 @@ import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
@@ -21,16 +21,15 @@ const AttachmentImage = React.memo(
     }, [])
 
     return (
-      <GracefullyImage
-        hidden={sensitiveShown}
-        uri={{ original: image.preview_url, remote: image.remote_url }}
-        blurhash={image.blurhash}
-        onPress={onPress}
-        style={[
-          styles.base,
-          { aspectRatio: attachmentAspectRatio({ total, index }) }
-        ]}
-      />
+      <View style={styles.base}>
+        <GracefullyImage
+          hidden={sensitiveShown}
+          uri={{ original: image.preview_url, remote: image.remote_url }}
+          blurhash={image.blurhash}
+          onPress={onPress}
+          style={[{ aspectRatio: attachmentAspectRatio({ total, index }) }]}
+        />
+      </View>
     )
   },
   (prev, next) => prev.sensitiveShown === next.sensitiveShown
