@@ -40,8 +40,8 @@
       }
     },
     "actionsUsers": {
-      "reblogged_by": "$t(sharedUsers:heading.statuses.reblogged_by)",
-      "favourited_by": "$t(sharedUsers:heading.statuses.favourited_by)"
+      "reblogged_by": "$t(screenTabs:shared.users.statuses.reblogged_by)",
+      "favourited_by": "$t(screenTabs:shared.users.statuses.favourited_by)"
     },
     "attachment": {
       "sensitive": {
@@ -149,8 +149,10 @@
           "refresh": "刷新"
         },
         "count": {
-          "voters": "已投{{count}}人 • ",
-          "votes": "已投{{count}}票 • "
+          "voters": "已投{{count}}人",
+          "voters_plural": "已投{{count}}人",
+          "votes": "{{count}}票",
+          "votes_plural": "{{count}}票"
         },
         "expiration": {
           "expired": "投票已结束",
