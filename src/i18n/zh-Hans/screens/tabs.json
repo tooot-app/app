@@ -1,0 +1,227 @@
+{
+  "tabs": {
+    "local": {
+      "name": "我的关注"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "跨站嘟嘟",
+        "right": "本站嘟嘟"
+      }
+    },
+    "notifications": {
+      "name": "通知"
+    },
+    "me": {
+      "name": "关于我"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "书签"
+      },
+      "conversations": {
+        "name": "私信"
+      },
+      "favourites": {
+        "name": "喜欢"
+      },
+      "fontSize": {
+        "name": "嘟文字号"
+      },
+      "lists": {
+        "name": "列表"
+      },
+      "list": {
+        "name": "列表：{{list}}"
+      },
+      "push": {
+        "name": "推送通知"
+      },
+      "settings": {
+        "name": "设置"
+      },
+      "switch": {
+        "name": "切换账号"
+      }
+    },
+    "fontSize": {
+      "showcase": "嘟文示例",
+      "demo": "<p>这是一条测试用的嘟文😊。以下是可供选择的字号，从小号至超大号。<br /><br />这个设置仅会调整嘟文的正文字号，不影响其它字号。</p>",
+      "availableSizes": "可选字号",
+      "sizes": {
+        "S": "小号",
+        "M": "默认",
+        "L": "大号",
+        "XL": "特大号",
+        "XXL": "超大号"
+      }
+    },
+    "push": {
+      "enable": {
+        "direct": "启用推送通知",
+        "settings": "在系统设置中启用"
+      },
+      "global": {
+        "heading": "启用tooot推送通知",
+        "description": "通知消息将经由tooot服务器转发"
+      },
+      "decode": {
+        "heading": "显示通知内容",
+        "description": "经由tooot服务器中转的通知消息已被加密，但可以允许tooot服务器解密并转发消息。tooot消息服务器源码开源，且不留存任何日志。"
+      },
+      "default": {
+        "heading": "默认通知"
+      },
+      "follow": {
+        "heading": "新关注者"
+      },
+      "favourite": {
+        "heading": "嘟文被喜欢"
+      },
+      "reblog": {
+        "heading": "嘟文被转嘟"
+      },
+      "mention": {
+        "heading": "嘟文提及你"
+      },
+      "poll": {
+        "heading": "投票更新"
+      },
+      "howitworks": "了解通知消息转发如何工作"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}}条未读公告",
+          "read": "无未读公告",
+          "empty": "无公告"
+        }
+      },
+      "logout": {
+        "button": "退出当前账号",
+        "alert": {
+          "title": "确认退出登录？",
+          "message": "退出登录后，需要重新认证账号",
+          "buttons": {
+            "logout": "退出登录",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "push": {
+        "heading": "$t(me.stacks.push.name)",
+        "content": {
+          "enabled": "已启用",
+          "disabled": "已禁用"
+        }
+      },
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "切换语言",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "应用外观",
+        "options": {
+          "auto": "跟随系统",
+          "light": "浅色模式",
+          "dark": "深色模式",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "外部链接",
+        "options": {
+          "internal": "应用内打开",
+          "external": "浏览器打开",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "support": {
+        "heading": "赞助 tooot 开发"
+      },
+      "review": {
+        "heading": "给 tooot 打分"
+      },
+      "contact": {
+        "heading": "联系 tooot"
+      },
+      "analytics": {
+        "heading": "帮助我们改进",
+        "description": "收集不与用户相关联的使用信息"
+      },
+      "version": "版本 v{{version}}"
+    },
+    "switch": {
+      "existing": "选择已登录的账号",
+      "new": "登录新社区"
+    }
+  },
+  "shared": {
+    "account": {
+      "moved": "账户已迁移",
+      "created_at": "注册时间：{{date}}",
+      "summary": {
+        "statuses_count": "{{count}} 条嘟文",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      }
+    },
+    "attachments": {
+      "name": "<0 /><1>的媒体</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "搜索",
+        "placeholder": "什么呢"
+      },
+      "empty": {
+        "general": "输入关键词搜索<bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold>或者<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "高级搜索格式",
+          "example": {
+            "account": "$t(shared.search.header.prefix)指定$t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix)指定$t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix)指定$t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix)指定$t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "用户",
+        "hashtags": "话题标签",
+        "statuses": "嘟文"
+      },
+      "notFound": "找不到 <bold>{{searchTerm}}</bold> 相关的 {{type}}"
+    },
+    "toot": {
+      "name": "对话"
+    },
+    "users": {
+      "accounts": {
+        "following": "关注 {{count}} 人",
+        "followers": "被 {{count}} 人关注"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} 人转嘟",
+        "favourited_by": "{{count}} 人喜欢"
+      }
+    }
+  }
+}
