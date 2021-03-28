@@ -28,12 +28,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
 const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
+export const navigationRef = createRef<NavigationContainerRef>()
 
 export interface Props {
   localCorrupt?: string
 }
-
-export const navigationRef = createRef<NavigationContainerRef>()
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('common')
