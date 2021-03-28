@@ -1,0 +1,20 @@
+{
+  "network": {
+    "disconnected": {
+      "message": "无法连接到网络",
+      "description": "请检查手机设置里的网络连接"
+    }
+  },
+  "screenshot": {
+    "title": "隐私保护",
+    "message": "请确保不要泄露其它用户的敏感信息，例如用户名、头像等，谢谢！",
+    "button": "确认"
+  },
+  "localCorrupt": {
+    "message": "登录已过期，请重新登录"
+  },
+  "pushError": {
+    "message": "推送服务错误",
+    "description": "请在设置中重新尝试启用推送通知"
+  }
+}
