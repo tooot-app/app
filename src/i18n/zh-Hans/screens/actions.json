@@ -7,11 +7,11 @@
     "notificationsFilter": {
       "heading": "显示通知",
       "content": {
-        "follow": "$t(me.push.follow.heading)",
-        "favourite": "$t(me.push.favourite.heading)",
-        "reblog": "$t(me.push.reblog.heading)",
-        "mention": "$t(me.push.mention.heading)",
-        "poll": "$t(me.push.poll.heading)",
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
         "follow_request": "关注请求"
       }
     }
