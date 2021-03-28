@@ -4,24 +4,15 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 const Settings: React.FC = () => {
-  const { t } = useTranslation('meRoot')
+  const { t } = useTranslation('screenTabs')
   const navigation = useNavigation()
 
   return (
     <MenuContainer>
-      {/* <MenuRow
-        iconFront='User'
-        iconBack='ExternalLink'
-        title={t('content.accountSettings')}
-        onPress={() =>
-          localUrl &&
-          WebBrowser.openBrowserAsync(`https://${localUrl}/settings/profile`)
-        }
-      /> */}
       <MenuRow
         iconFront='Settings'
         iconBack='ChevronRight'
-        title={t('content.appSettings')}
+        title={t('me.stacks.settings.name')}
         onPress={() => navigation.navigate('Tab-Me-Settings')}
       />
     </MenuContainer>

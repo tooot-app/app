@@ -63,7 +63,7 @@ const TimelinePoll: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'error',
-        message: t('common:toastMessage.error.message', {
+        message: t('common:message.error.message', {
           // @ts-ignore
           function: t(`shared.poll.meta.button.${theParams.payload.type}`)
         }),
@@ -269,12 +269,14 @@ const TimelinePoll: React.FC<Props> = ({
       return (
         <Text style={[styles.votes, { color: theme.secondary }]}>
           {t('shared.poll.meta.count.voters', { count: poll.voters_count })}
+          {' • '}
         </Text>
       )
     } else if (poll.votes_count !== null) {
       return (
         <Text style={[styles.votes, { color: theme.secondary }]}>
           {t('shared.poll.meta.count.votes', { count: poll.votes_count })}
+          {' • '}
         </Text>
       )
     }

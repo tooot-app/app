@@ -14,22 +14,22 @@ import { useDispatch, useSelector } from 'react-redux'
 const SettingsAnalytics: React.FC = () => {
   const dispatch = useDispatch()
   const { theme } = useTheme()
-  const { t } = useTranslation('meSettings')
+  const { t } = useTranslation('screenTabs')
 
   const settingsAnalytics = useSelector(getSettingsAnalytics)
 
   return (
     <MenuContainer>
       <MenuRow
-        title={t('content.analytics.heading')}
-        description={t('content.analytics.description')}
+        title={t('me.settings.analytics.heading')}
+        description={t('me.settings.analytics.description')}
         switchValue={settingsAnalytics}
         switchOnValueChange={() =>
           dispatch(changeAnalytics(!settingsAnalytics))
         }
       />
       <Text style={[styles.version, { color: theme.secondary }]}>
-        {t('content.version', { version: Constants.manifest.version })}
+        {t('me.settings.version', { version: Constants.manifest.version })}
       </Text>
     </MenuContainer>
   )

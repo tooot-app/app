@@ -1,9 +1,9 @@
 {
   "strings": {
-    "prefixAgo": null,
-    "prefixFromNow": null,
+    "prefixAgo": "",
+    "prefixFromNow": "",
     "suffixAgo": "ago",
-    "suffixFromNow": null,
+    "suffixFromNow": "",
     "seconds": "%d seconds",
     "minute": "about a minute",
     "minutes": "%d minutes",

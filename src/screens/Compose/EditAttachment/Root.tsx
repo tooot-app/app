@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { mode, theme } = useTheme()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const theAttachment = composeState.attachments.uploads[index].remote!

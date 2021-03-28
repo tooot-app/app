@@ -34,7 +34,7 @@ export interface Props {
 
 const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const { composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const { mode, theme } = useTheme()

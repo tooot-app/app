@@ -6,7 +6,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const Collections: React.FC = () => {
-  const { t, i18n } = useTranslation('meRoot')
+  const { t, i18n } = useTranslation('screenTabs')
   const navigation = useNavigation()
 
   const listsQuery = useListsQuery({
@@ -20,7 +20,7 @@ const Collections: React.FC = () => {
         <MenuRow
           iconFront='List'
           iconBack='ChevronRight'
-          title={t('content.collections.lists')}
+          title={t('me.stacks.lists.name')}
           onPress={() => navigation.navigate('Tab-Me-Lists')}
         />
       )
@@ -44,13 +44,13 @@ const Collections: React.FC = () => {
         <MenuRow
           iconFront='Clipboard'
           iconBack='ChevronRight'
-          title={t('content.collections.announcements.heading')}
+          title={t('screenAnnouncements:heading')}
           content={
             amount
-              ? t('content.collections.announcements.content.unread', {
+              ? t('me.root.announcements.content.unread', {
                   amount
                 })
-              : t('content.collections.announcements.content.read')
+              : t('me.root.announcements.content.read')
           }
           onPress={() =>
             navigation.navigate('Screen-Announcements', { showAll: true })
@@ -67,19 +67,19 @@ const Collections: React.FC = () => {
       <MenuRow
         iconFront='Mail'
         iconBack='ChevronRight'
-        title={t('content.collections.conversations')}
+        title={t('me.stacks.conversations.name')}
         onPress={() => navigation.navigate('Tab-Me-Conversations')}
       />
       <MenuRow
         iconFront='Bookmark'
         iconBack='ChevronRight'
-        title={t('content.collections.bookmarks')}
+        title={t('me.stacks.bookmarks.name')}
         onPress={() => navigation.navigate('Tab-Me-Bookmarks')}
       />
       <MenuRow
         iconFront='Heart'
         iconBack='ChevronRight'
-        title={t('content.collections.favourites')}
+        title={t('me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
       {rowLists}

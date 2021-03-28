@@ -42,7 +42,7 @@ const RelationshipOutgoing = React.memo(
         displayMessage({
           mode,
           type: 'error',
-          message: t('common:toastMessage.error.message', {
+          message: t('common:message.error.message', {
             function: t(`${action}.function`)
           }),
           ...(err.status &&

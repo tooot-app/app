@@ -59,7 +59,7 @@ const HeaderConversation = React.memo(
         displayMessage({
           mode,
           type: 'error',
-          message: t('common:toastMessage.error.message', {
+          message: t('common:message.error.message', {
             function: t(`shared.header.conversation.delete.function`)
           }),
           ...(err.status &&

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 
 const ComposeDrafts: React.FC = () => {
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
   const { composeState } = useContext(ComposeContext)
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(

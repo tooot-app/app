@@ -35,7 +35,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
   const { reduceMotionEnabled } = useAccessibility()
   const { mode, theme } = useTheme()
   const [index, setIndex] = useState(0)
-  const { t } = useTranslation('sharedAnnouncements')
+  const { t } = useTranslation('screenAnnouncements')
 
   const query = useAnnouncementQuery({
     showAll,
@@ -77,7 +77,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
         >
           <Text style={[styles.published, { color: theme.secondary }]}>
             <Trans
-              i18nKey='sharedAnnouncements:content.published'
+              i18nKey='screenAnnouncements:content.published'
               components={[<RelativeTime date={item.published_at} />]}
             />
           </Text>
@@ -223,7 +223,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
             native={false}
             onPress={() => navigation.goBack()}
           />
-          <HeaderCenter content={t('sharedAnnouncements:heading')} />
+          <HeaderCenter content={t('screenAnnouncements:heading')} />
           <View style={{ opacity: 0 }}>
             <HeaderRight
               content='MoreHorizontal'

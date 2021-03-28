@@ -48,7 +48,7 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
 }
 
 const ScreenMeSwitchRoot: React.FC = () => {
-  const { t } = useTranslation('meSwitch')
+  const { t } = useTranslation('screenTabs')
   const { theme } = useTheme()
   const instances = useSelector(getInstances)
   const instanceActive = useSelector(getInstanceActive)
@@ -57,7 +57,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
     <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
         <Text style={[styles.header, { color: theme.primaryDefault }]}>
-          {t('content.existing')}
+          {t('me.switch.existing')}
         </Text>
         <View style={styles.accountButtons}>
           {instances.length
@@ -88,7 +88,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
 
       <View style={styles.secondSection}>
         <Text style={[styles.header, { color: theme.primaryDefault }]}>
-          {t('content.new')}
+          {t('me.switch.new')}
         </Text>
         <ComponentInstance disableHeaderImage goBack />
       </View>

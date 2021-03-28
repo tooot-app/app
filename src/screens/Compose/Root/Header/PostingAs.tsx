@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 
 const ComposePostingAs = React.memo(
   () => {
-    const { t } = useTranslation('sharedCompose')
+    const { t } = useTranslation('screenCompose')
     const { theme } = useTheme()
 
     const instanceAccount = useSelector(

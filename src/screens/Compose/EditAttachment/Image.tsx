@@ -20,7 +20,7 @@ export interface Props {
 }
 
 const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
 
   const { composeState, composeDispatch } = useContext(ComposeContext)

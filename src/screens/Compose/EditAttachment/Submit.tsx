@@ -16,7 +16,7 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
   const { composeState } = useContext(ComposeContext)
   const navigation = useNavigation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
 
   const theAttachment = composeState.attachments.uploads[index].remote!
 

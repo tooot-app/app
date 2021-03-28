@@ -35,7 +35,7 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('screens')
   const dispatch = useDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { mode, theme } = useTheme()
@@ -92,7 +92,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
         displayMessage({
-          message: t('index.localCorrupt'),
+          message: t('localCorrupt.message'),
           description: localCorrupt.length ? localCorrupt : undefined,
           type: 'error',
           mode
