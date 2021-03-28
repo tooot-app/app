@@ -34,7 +34,7 @@ const ActionsDomain: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'success',
-        message: t('common:toastMessage.success.message', {
+        message: t('common:message.success.message', {
           function: t(`shared.header.actions.domain.block.function`)
         })
       })

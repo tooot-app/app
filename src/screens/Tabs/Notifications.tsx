@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator<Nav.TabNotificationsStackParamList>()
 const TabNotifications = React.memo(
   () => {
     const navigation = useNavigation()
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useTranslation('screenTabs')
 
     const screenOptions = useMemo(
       () => ({
@@ -26,10 +26,10 @@ const TabNotifications = React.memo(
     )
     const screenOptionsRoot = useMemo(
       () => ({
-        headerTitle: t('notifications:heading'),
+        headerTitle: t('tabs.notifications.name'),
         ...(Platform.OS === 'android' && {
           headerCenter: () => (
-            <HeaderCenter content={t('notifications:heading')} />
+            <HeaderCenter content={t('tabs.notifications.name')} />
           )
         }),
         headerRight: () => (

@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator<Nav.TabPublicStackParamList>()
 
 const TabPublic = React.memo(
   ({ navigation }: TabPublicProps) => {
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useTranslation('screenTabs')
     const { mode } = useTheme()
 
     const [segment, setSegment] = useState(0)
@@ -32,11 +32,11 @@ const TabPublic = React.memo(
       key: App.Pages
     }[] = [
       {
-        title: t('public:heading.segments.left'),
+        title: t('tabs.public.segments.left'),
         key: 'LocalPublic'
       },
       {
-        title: t('public:heading.segments.right'),
+        title: t('tabs.public.segments.right'),
         key: 'Local'
       }
     ]

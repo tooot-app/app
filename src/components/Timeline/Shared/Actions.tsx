@@ -85,7 +85,7 @@ const TimelineActions: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'error',
-        message: t('common:toastMessage.error.message', {
+        message: t('common:message.error.message', {
           function: t(
             `shared.actions.${correctParam.payload.property}.function`
           )

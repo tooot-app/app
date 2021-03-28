@@ -37,7 +37,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
   'Tab-Me-Settings-Fontsize'
 >> = () => {
   const { mode, theme } = useTheme()
-  const { t } = useTranslation('meSettingsFontsize')
+  const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
   const dispatch = useDispatch()
 
@@ -54,7 +54,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
     reblogged: false,
     muted: false,
     bookmarked: false,
-    content: t('content.demo'),
+    content: t('me.fontSize.demo'),
     reblog: null,
     application: {
       name: 'tooot',
@@ -97,7 +97,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
               }
             ]}
           >
-            {t(`content.sizes.${mapFontsizeToName(size)}`)}
+            {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
           </Text>
         ))}
       </>
@@ -107,7 +107,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
   return (
     <ScrollView scrollEnabled={false}>
       <Text style={[styles.header, { color: theme.primaryDefault }]}>
-        {t('content.showcase')}
+        {t('me.fontSize.showcase')}
       </Text>
       <View>
         <ComponentSeparator
@@ -121,7 +121,7 @@ const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
         />
       </View>
       <Text style={[styles.header, { color: theme.primaryDefault }]}>
-        {t('content.availableSizes')}
+        {t('me.fontSize.availableSizes')}
       </Text>
       <View style={styles.sizesDemo}>{sizesDemo}</View>
       <View style={styles.controls}>

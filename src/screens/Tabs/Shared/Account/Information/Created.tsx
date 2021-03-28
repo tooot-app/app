@@ -13,7 +13,7 @@ export interface Props {
 const AccountInformationCreated: React.FC<Props> = ({ account }) => {
   const { i18n } = useTranslation()
   const { theme } = useTheme()
-  const { t } = useTranslation('sharedAccount')
+  const { t } = useTranslation('screenTabs')
 
   if (account) {
     return (
@@ -32,7 +32,7 @@ const AccountInformationCreated: React.FC<Props> = ({ account }) => {
             ...StyleConstants.FontStyle.S
           }}
         >
-          {t('content.created_at', {
+          {t('shared.account.created_at', {
             date: new Date(account.created_at || '').toLocaleDateString(
               i18n.language,
               {

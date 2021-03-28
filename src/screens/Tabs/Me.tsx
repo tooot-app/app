@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator<Nav.TabMeStackParamList>()
 
 const TabMe = React.memo(
   () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('screenTabs')
 
     return (
       <Stack.Navigator
@@ -38,10 +38,10 @@ const TabMe = React.memo(
           name='Tab-Me-Bookmarks'
           component={ScreenMeBookmarks}
           options={({ navigation }: any) => ({
-            headerTitle: t('meBookmarks:heading'),
+            headerTitle: t('me.stacks.bookmarks.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meBookmarks:heading')} />
+                <HeaderCenter content={t('me.stacks.bookmarks.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -51,10 +51,10 @@ const TabMe = React.memo(
           name='Tab-Me-Conversations'
           component={ScreenMeConversations}
           options={({ navigation }: any) => ({
-            headerTitle: t('meConversations:heading'),
+            headerTitle: t('me.stacks.conversations.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meConversations:heading')} />
+                <HeaderCenter content={t('me.stacks.conversations.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -64,10 +64,10 @@ const TabMe = React.memo(
           name='Tab-Me-Favourites'
           component={ScreenMeFavourites}
           options={({ navigation }: any) => ({
-            headerTitle: t('meFavourites:heading'),
+            headerTitle: t('me.stacks.favourites.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meFavourites:heading')} />
+                <HeaderCenter content={t('me.stacks.favourites.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -77,10 +77,10 @@ const TabMe = React.memo(
           name='Tab-Me-Lists'
           component={ScreenMeLists}
           options={({ navigation }: any) => ({
-            headerTitle: t('meLists:heading'),
+            headerTitle: t('me.stacks.lists.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meLists:heading')} />
+                <HeaderCenter content={t('me.stacks.lists.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -90,11 +90,11 @@ const TabMe = React.memo(
           name='Tab-Me-Lists-List'
           component={ScreenMeListsList}
           options={({ route, navigation }: any) => ({
-            headerTitle: t('meListsList:heading', { list: route.params.title }),
+            headerTitle: t('me.stacks.list.name', { list: route.params.title }),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter
-                  content={t('meListsList:heading', {
+                  content={t('me.stacks.list.name', {
                     list: route.params.title
                   })}
                 />
@@ -107,10 +107,10 @@ const TabMe = React.memo(
           name='Tab-Me-Settings'
           component={ScreenMeSettings}
           options={({ navigation }: any) => ({
-            headerTitle: t('meSettings:heading'),
+            headerTitle: t('me.stacks.settings.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meSettings:heading')} />
+                <HeaderCenter content={t('me.stacks.settings.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -120,10 +120,10 @@ const TabMe = React.memo(
           name='Tab-Me-Settings-Fontsize'
           component={ScreenMeSettingsFontsize}
           options={({ navigation }: any) => ({
-            headerTitle: t('meSettingsFontsize:heading'),
+            headerTitle: t('me.stacks.fontSize.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meSettingsFontsize:heading')} />
+                <HeaderCenter content={t('me.stacks.fontSize.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
@@ -133,10 +133,10 @@ const TabMe = React.memo(
           name='Tab-Me-Settings-Push'
           component={ScreenMeSettingsPush}
           options={({ navigation }: any) => ({
-            headerTitle: t('meSettingsPush:heading'),
+            headerTitle: t('me.stacks.push.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meSettingsPush:heading')} />
+                <HeaderCenter content={t('me.stacks.push.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />

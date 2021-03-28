@@ -131,7 +131,7 @@ const ComponentInstance: React.FC<Props> = ({
       {!disableHeaderImage ? (
         <View style={styles.imageContainer}>
           <Image
-            source={require('assets/screens/meRoot/welcome.png')}
+            source={require('assets/images/welcome.png')}
             style={styles.image}
           />
         </View>

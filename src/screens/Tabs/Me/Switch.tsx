@@ -12,7 +12,7 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Switch'
 >> = ({ navigation }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('screenTabs')
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -25,10 +25,10 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
           name='Screen-Me-Switch-Root'
           component={ScreenMeSwitchRoot}
           options={{
-            headerTitle: t('meSwitch:heading'),
+            headerTitle: t('me.stacks.switch.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
-                <HeaderCenter content={t('meSwitch:heading')} />
+                <HeaderCenter content={t('me.stacks.switch.name')} />
               )
             }),
             headerLeft: () => (

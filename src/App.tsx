@@ -88,7 +88,8 @@ const App: React.FC = () => {
       log('log', 'App', 'bootstrapped')
       if (bootstrapped) {
         log('log', 'App', 'loading actual app :)')
-        i18n.changeLanguage(getSettingsLanguage(store.getState()))
+        const language = getSettingsLanguage(store.getState())
+        i18n.changeLanguage(language)
         return (
           <ActionSheetProvider>
             <AccessibilityManager>

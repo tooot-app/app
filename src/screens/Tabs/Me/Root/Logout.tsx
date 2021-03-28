@@ -10,7 +10,7 @@ import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Logout: React.FC = () => {
-  const { t } = useTranslation('meRoot')
+  const { t } = useTranslation('screenTabs')
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
   const instance = useSelector(getInstance)
@@ -18,7 +18,7 @@ const Logout: React.FC = () => {
   return (
     <Button
       type='text'
-      content={t('content.logout.button')}
+      content={t('me.root.logout.button')}
       style={{
         marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
         marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
@@ -26,11 +26,11 @@ const Logout: React.FC = () => {
       destructive
       onPress={() =>
         Alert.alert(
-          t('content.logout.alert.title'),
-          t('content.logout.alert.message'),
+          t('me.root.logout.alert.title'),
+          t('me.root.logout.alert.message'),
           [
             {
-              text: t('content.logout.alert.buttons.logout'),
+              text: t('me.root.logout.alert.buttons.logout'),
               style: 'destructive' as const,
               onPress: () => {
                 if (instance) {
@@ -41,7 +41,7 @@ const Logout: React.FC = () => {
               }
             },
             {
-              text: t('content.logout.alert.buttons.cancel'),
+              text: t('me.root.logout.alert.buttons.cancel'),
               style: 'cancel' as const
             }
           ]

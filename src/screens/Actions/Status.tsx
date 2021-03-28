@@ -43,7 +43,7 @@ const ActionsStatus: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'error',
-        message: t('common:toastMessage.error.message', {
+        message: t('common:message.error.message', {
           function: t(`shared.header.actions.status.${theFunction}.function`)
         }),
         ...(err.status &&

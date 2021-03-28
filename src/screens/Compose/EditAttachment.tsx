@@ -22,7 +22,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
   navigation
 }) => {
   console.log('rendering')
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
 
   const headerLeft = useCallback(
     () => (

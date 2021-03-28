@@ -18,7 +18,7 @@ const ComposePoll: React.FC = () => {
     },
     composeDispatch
   } = useContext(ComposeContext)
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { mode, theme } = useTheme()
 
   const [firstRender, setFirstRender] = useState(true)

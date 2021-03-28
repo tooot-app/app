@@ -41,7 +41,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
       displayMessage({
         type: 'error',
         mode,
-        message: t('common:toastMessage.error.message', {
+        message: t('common:message.error.message', {
           function: t(`relationship:${type}.function`)
         }),
         ...(err.status &&

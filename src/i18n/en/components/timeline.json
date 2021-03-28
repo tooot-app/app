@@ -149,10 +149,10 @@
           "refresh": "Refresh"
         },
         "count": {
-          "voters": "{{count}} user voted • ",
-          "voters_plural": "{{count}} users voted • ",
-          "votes": "{{count}} vote • ",
-          "votes_plural": "{{count}} votes • "
+          "voters": "{{count}} user voted",
+          "voters_plural": "{{count}} users voted",
+          "votes": "{{count}} vote",
+          "votes_plural": "{{count}} votes"
         },
         "expiration": {
           "expired": "Vote expired",

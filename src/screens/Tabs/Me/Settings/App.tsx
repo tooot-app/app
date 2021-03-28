@@ -3,7 +3,7 @@ import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
-import i18n from '@root/i18n/i18n'
+import { LOCALES } from '@root/i18n/locales'
 import androidDefaults from '@utils/slices/instances/push/androidDefaults'
 import {
   getInstanceActive,
@@ -14,7 +14,6 @@ import {
   changeBrowser,
   changeLanguage,
   changeTheme,
-  getSettingsLanguage,
   getSettingsTheme,
   getSettingsBrowser,
   getSettingsFontsize
@@ -32,12 +31,11 @@ const SettingsApp: React.FC = () => {
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { setTheme } = useTheme()
-  const { t } = useTranslation('meSettings')
+  const { t, i18n } = useTranslation('screenTabs')
 
   const instances = useSelector(getInstances, () => true)
   const instanceActive = useSelector(getInstanceActive)
   const settingsFontsize = useSelector(getSettingsFontsize)
-  const settingsLanguage = useSelector(getSettingsLanguage)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
   const instancePush = useSelector(
@@ -50,11 +48,11 @@ const SettingsApp: React.FC = () => {
       {instanceActive !== -1 ? (
         <>
           <MenuRow
-            title={t('content.push.heading')}
+            title={t('me.settings.push.heading')}
             content={
               instancePush?.global.value
-                ? t('content.push.content.enabled')
-                : t('content.push.content.disabled')
+                ? t('me.settings.push.content.enabled')
+                : t('me.settings.push.content.disabled')
             }
             iconBack='ChevronRight'
             onPress={() => {
@@ -62,9 +60,9 @@ const SettingsApp: React.FC = () => {
             }}
           />
           <MenuRow
-            title={t('content.fontsize.heading')}
+            title={t('me.settings.fontsize.heading')}
             content={t(
-              `content.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
+              `me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
             )}
             iconBack='ChevronRight'
             onPress={() => {
@@ -74,22 +72,19 @@ const SettingsApp: React.FC = () => {
         </>
       ) : null}
       <MenuRow
-        title={t('content.language.heading')}
-        content={t(`content.language.options.${settingsLanguage}`)}
+        title={t('me.settings.language.heading')}
+        // @ts-ignore
+        content={LOCALES[i18n.language]}
         iconBack='ChevronRight'
         onPress={() => {
-          const availableLanguages = Object.keys(
-            i18n.services.resourceStore.data
-          )
-          const options = availableLanguages
-            .map(language => {
-              return t(`content.language.options.${language}`)
-            })
-            .concat(t('content.language.options.cancel'))
+          const options = Object.keys(LOCALES)
+            // @ts-ignore
+            .map(locale => LOCALES[locale])
+            .concat(t('me.settings.language.options.cancel'))
 
           showActionSheetWithOptions(
             {
-              title: t('content.language.heading'),
+              title: t('me.settings.language.heading'),
               options,
               cancelButtonIndex: options.length - 1
             },
@@ -97,13 +92,13 @@ const SettingsApp: React.FC = () => {
               if (buttonIndex < options.length - 1) {
                 analytics('settings_language_press', {
                   current: i18n.language,
-                  new: availableLanguages[buttonIndex]
+                  new: options[buttonIndex]
                 })
                 haptics('Success')
 
                 // @ts-ignore
-                dispatch(changeLanguage(availableLanguages[buttonIndex]))
-                i18n.changeLanguage(availableLanguages[buttonIndex])
+                dispatch(changeLanguage(Object.keys(LOCALES)[buttonIndex]))
+                i18n.changeLanguage(Object.keys(LOCALES)[buttonIndex])
 
                 // Update Android notification channel language
                 if (Platform.OS === 'android') {
@@ -114,7 +109,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_default`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.default.heading'),
+                          name: t('me.push.default.heading'),
                           ...androidDefaults
                         }
                       )
@@ -123,7 +118,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_follow`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.follow.heading'),
+                          name: t('me.push.follow.heading'),
                           ...androidDefaults
                         }
                       )
@@ -131,7 +126,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_favourite`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.favourite.heading'),
+                          name: t('me.push.favourite.heading'),
                           ...androidDefaults
                         }
                       )
@@ -139,7 +134,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_reblog`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.reblog.heading'),
+                          name: t('me.push.reblog.heading'),
                           ...androidDefaults
                         }
                       )
@@ -147,7 +142,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_mention`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.mention.heading'),
+                          name: t('me.push.mention.heading'),
                           ...androidDefaults
                         }
                       )
@@ -155,7 +150,7 @@ const SettingsApp: React.FC = () => {
                         `${accountFull}_poll`,
                         {
                           groupId: accountFull,
-                          name: t('meSettingsPush:content.poll.heading'),
+                          name: t('me.push.poll.heading'),
                           ...androidDefaults
                         }
                       )
@@ -168,18 +163,18 @@ const SettingsApp: React.FC = () => {
         }}
       />
       <MenuRow
-        title={t('content.theme.heading')}
-        content={t(`content.theme.options.${settingsTheme}`)}
+        title={t('me.settings.theme.heading')}
+        content={t(`me.settings.theme.options.${settingsTheme}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              title: t('content.theme.heading'),
+              title: t('me.settings.theme.heading'),
               options: [
-                t('content.theme.options.auto'),
-                t('content.theme.options.light'),
-                t('content.theme.options.dark'),
-                t('content.theme.options.cancel')
+                t('me.settings.theme.options.auto'),
+                t('me.settings.theme.options.light'),
+                t('me.settings.theme.options.dark'),
+                t('me.settings.theme.options.cancel')
               ],
               cancelButtonIndex: 3
             },
@@ -217,17 +212,17 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('content.browser.heading')}
-        content={t(`content.browser.options.${settingsBrowser}`)}
+        title={t('me.settings.browser.heading')}
+        content={t(`me.settings.browser.options.${settingsBrowser}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              title: t('content.browser.heading'),
+              title: t('me.settings.browser.heading'),
               options: [
-                t('content.browser.options.internal'),
-                t('content.browser.options.external'),
-                t('content.browser.options.cancel')
+                t('me.settings.browser.options.internal'),
+                t('me.settings.browser.options.external'),
+                t('me.settings.browser.options.cancel')
               ],
               cancelButtonIndex: 2
             },

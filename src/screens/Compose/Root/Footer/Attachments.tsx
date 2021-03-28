@@ -33,7 +33,7 @@ const DEFAULT_HEIGHT = 200
 const ComposeAttachments: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
   const navigation = useNavigation()
 

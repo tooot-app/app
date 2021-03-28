@@ -18,7 +18,7 @@ const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
   const navigation = useNavigation()
   const { theme } = useTheme()
-  const { t } = useTranslation('meSettings')
+  const { t } = useTranslation('screenTabs')
 
   const { isLoading, data } = useSearchQuery({
     term: '@tooot@xmflsct.com',
@@ -28,7 +28,7 @@ const SettingsTooot: React.FC = () => {
   return (
     <MenuContainer>
       <MenuRow
-        title={t('content.support.heading')}
+        title={t('me.settings.support.heading')}
         content={
           <Icon
             name='Heart'
@@ -47,7 +47,7 @@ const SettingsTooot: React.FC = () => {
         Updates.releaseChannel?.includes(channel)
       ) ? (
         <MenuRow
-          title={t('content.review.heading')}
+          title={t('me.settings.review.heading')}
           content={
             <Icon
               name='Star'
@@ -65,7 +65,7 @@ const SettingsTooot: React.FC = () => {
         />
       ) : null}
       <MenuRow
-        title={t('content.contact.heading')}
+        title={t('me.settings.contact.heading')}
         loading={isLoading}
         content={
           <Icon

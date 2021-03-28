@@ -15,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { AppState, Linking } from 'react-native'
 
 const ScreenMeSettingsPush: React.FC = () => {
-  const { t } = useTranslation('meSettingsPush')
+  const { t } = useTranslation('screenTabs')
 
   const dispatch = useDispatch()
   const instancePush = useSelector(getInstancePush)
@@ -53,7 +53,7 @@ const ScreenMeSettingsPush: React.FC = () => {
         ]).map(alert => (
           <MenuRow
             key={alert}
-            title={t(`content.${alert}.heading`)}
+            title={t(`me.push.${alert}.heading`)}
             switchDisabled={
               !pushEnabled || !instancePush.global.value || isLoading
             }
@@ -85,8 +85,8 @@ const ScreenMeSettingsPush: React.FC = () => {
             type='text'
             content={
               pushCanAskAgain
-                ? t('content.enable.direct')
-                : t('content.enable.settings')
+                ? t('me.push.enable.direct')
+                : t('me.push.enable.settings')
             }
             style={{
               marginTop: StyleConstants.Spacing.Global.PagePadding,
@@ -106,8 +106,8 @@ const ScreenMeSettingsPush: React.FC = () => {
       ) : null}
       <MenuContainer>
         <MenuRow
-          title={t('content.global.heading')}
-          description={t('content.global.description')}
+          title={t('me.push.global.heading')}
+          description={t('me.push.global.description')}
           loading={instancePush?.global.loading}
           switchDisabled={!pushEnabled || isLoading}
           switchValue={
@@ -120,8 +120,8 @@ const ScreenMeSettingsPush: React.FC = () => {
       </MenuContainer>
       <MenuContainer>
         <MenuRow
-          title={t('content.decode.heading')}
-          description={t('content.decode.description')}
+          title={t('me.push.decode.heading')}
+          description={t('me.push.decode.description')}
           loading={instancePush?.decode.loading}
           switchDisabled={
             !pushEnabled || !instancePush?.global.value || isLoading
@@ -132,7 +132,7 @@ const ScreenMeSettingsPush: React.FC = () => {
           }
         />
         <MenuRow
-          title={t('content.howitworks')}
+          title={t('me.push.howitworks')}
           iconBack='ExternalLink'
           onPress={() =>
             WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')

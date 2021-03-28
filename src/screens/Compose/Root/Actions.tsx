@@ -13,7 +13,7 @@ import addAttachment from './Footer/addAttachment'
 const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
 
   const attachmentColor = useMemo(() => {
