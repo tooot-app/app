@@ -7,11 +7,11 @@
     "notificationsFilter": {
       "heading": "Show notification types",
       "content": {
-        "follow": "$t(meSettingsPush:content.follow.heading)",
-        "favourite": "$t(meSettingsPush:content.favourite.heading)",
-        "reblog": "$t(meSettingsPush:content.reblog.heading)",
-        "mention": "$t(meSettingsPush:content.mention.heading)",
-        "poll": "$t(meSettingsPush:content.poll.heading)",
+        "follow": "$t(me.push.follow.heading)",
+        "favourite": "$t(me.push.favourite.heading)",
+        "reblog": "$t(me.push.reblog.heading)",
+        "mention": "$t(me.push.mention.heading)",
+        "poll": "$t(me.push.poll.heading)",
         "follow_request": "Follow request"
       }
     }
