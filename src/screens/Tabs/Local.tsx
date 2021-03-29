@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator<Nav.TabLocalStackParamList>()
 
 const TabLocal = React.memo(
   ({ navigation }: TabLocalProp) => {
-    const { t, i18n } = useTranslation('local')
+    const { t, i18n } = useTranslation('screenTabs')
 
     const screenOptions = useMemo(
       () => ({
@@ -31,9 +31,9 @@ const TabLocal = React.memo(
     )
     const screenOptionsRoot = useMemo(
       () => ({
-        headerTitle: t('heading'),
+        headerTitle: t('tabs.local.name'),
         ...(Platform.OS === 'android' && {
-          headerCenter: () => <HeaderCenter content={t('heading')} />
+          headerCenter: () => <HeaderCenter content={t('tabs.local.name')} />
         }),
         headerRight: () => (
           <HeaderRight

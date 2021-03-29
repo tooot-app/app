@@ -15,7 +15,7 @@ export interface Props {
 }
 
 const GoToMoved = ({ accountMoved }: { accountMoved: Mastodon.Account }) => {
-  const { t } = useTranslation('sharedAccount')
+  const { t } = useTranslation('screenTabs')
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -23,7 +23,7 @@ const GoToMoved = ({ accountMoved }: { accountMoved: Mastodon.Account }) => {
   return (
     <Button
       type='text'
-      content={t('content.moved')}
+      content={t('shared.account.moved')}
       onPress={() => {
         analytics('account_gotomoved_press')
         navigation.push('Tab-Shared-Account', { account: accountMoved })

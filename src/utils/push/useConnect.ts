@@ -14,7 +14,7 @@ import { TFunction } from 'react-i18next'
 export interface Params {
   navigationRef: React.RefObject<NavigationContainerRef>
   mode: 'light' | 'dark'
-  t: TFunction<'common'>
+  t: TFunction<'screens'>
   instances: Instance[]
   dispatch: Dispatch<any>
 }
@@ -48,8 +48,8 @@ const pushUseConnect = ({
             mode,
             type: 'error',
             duration: 'long',
-            message: t('meSettingsPush:error.message'),
-            description: t('meSettingsPush:error.description'),
+            message: t('pushError.message'),
+            description: t('pushError.description'),
             onPress: () => {
               navigationRef.current?.navigate('Screen-Tabs', {
                 screen: 'Tab-Me',

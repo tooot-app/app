@@ -78,7 +78,7 @@ const ComposeEmojis: React.FC = () => {
         keyExtractor={item => item.shortcode}
         renderSectionHeader={listHeader}
         renderItem={listItem}
-        windowSize={3}
+        windowSize={2}
       />
     </View>
   )

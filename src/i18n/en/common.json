@@ -1,0 +1,18 @@
+{
+  "buttons": {
+    "apply": "Apply",
+    "cancel": "Cancel"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} succeed"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} failed, please retry"
+    }
+  },
+  "separator": ", "
+}

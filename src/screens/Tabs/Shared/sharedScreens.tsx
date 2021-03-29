@@ -60,7 +60,7 @@ const sharedScreens = (
   >
 ) => {
   const { mode, theme } = useTheme()
-  const { t } = useTranslation()
+  const { t } = useTranslation('screenTabs')
 
   return [
     <Stack.Screen
@@ -95,7 +95,7 @@ const sharedScreens = (
           headerCenter: () => (
             <Text numberOfLines={1}>
               <Trans
-                i18nKey='sharedAttachments:heading'
+                i18nKey='screenTabs:shared.attachments.name'
                 components={[
                   <ParseEmojis
                     content={account.display_name || account.username}
@@ -158,7 +158,7 @@ const sharedScreens = (
                         color: theme.primaryDefault
                       }
                     ]}
-                    children={t('sharedSearch:content.header.prefix')}
+                    children={t('shared.search.header.prefix')}
                   />
                 }
               />
@@ -181,7 +181,7 @@ const sharedScreens = (
                 onSubmitEditing={({ nativeEvent: { text } }) =>
                   navigation.setParams({ text })
                 }
-                placeholder={t('sharedSearch:content.header.placeholder')}
+                placeholder={t('shared.search.header.placeholder')}
                 placeholderTextColor={theme.secondary}
                 returnKeyType='go'
               />
@@ -195,9 +195,9 @@ const sharedScreens = (
       name='Tab-Shared-Toot'
       component={TabSharedToot}
       options={({ navigation }: SharedTootProp) => ({
-        headerTitle: t('sharedToot:heading'),
+        headerTitle: t('shared.toot.name'),
         ...(Platform.OS === 'android' && {
-          headerCenter: () => <HeaderCenter content={t('sharedToot:heading')} />
+          headerCenter: () => <HeaderCenter content={t('shared.toot.name')} />
         }),
         headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
       })}

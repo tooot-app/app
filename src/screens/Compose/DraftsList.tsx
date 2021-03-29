@@ -19,7 +19,7 @@ const ComposeDraftsList: React.FC<ScreenComposeEditAttachmentProp> = ({
   },
   navigation
 }) => {
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
 
   const children = useCallback(
     () => <ComposeDraftsListRoot timestamp={timestamp} />,

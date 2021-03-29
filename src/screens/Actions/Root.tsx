@@ -132,11 +132,13 @@ const ScreenActionsRoot = React.memo(
                   dismiss={dismiss}
                 />
               )}
-              <ActionsShare
-                url={params.status.url || params.status.uri}
-                type={params.type}
-                dismiss={dismiss}
-              />
+              {params.status.visibility !== 'direct' && (
+                <ActionsShare
+                  url={params.status.url || params.status.uri}
+                  type={params.type}
+                  dismiss={dismiss}
+                />
+              )}
               <Button
                 type='text'
                 content={t('common:buttons.cancel')}

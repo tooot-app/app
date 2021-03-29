@@ -84,13 +84,13 @@ const addAttachment = async ({
       })
       Alert.alert(
         i18next.t(
-          'sharedCompose:content.root.actions.attachment.failed.alert.title'
+          'screenCompose:content.root.actions.attachment.failed.alert.title'
         ),
         undefined,
         [
           {
             text: i18next.t(
-              'sharedCompose:content.root.actions.attachment.failed.alert.button'
+              'screenCompose:content.root.actions.attachment.failed.alert.button'
             ),
             onPress: () => {}
           }
@@ -130,13 +130,13 @@ const addAttachment = async ({
     {
       options: [
         i18next.t(
-          'sharedCompose:content.root.actions.attachment.actions.options.library'
+          'screenCompose:content.root.actions.attachment.actions.options.library'
         ),
         i18next.t(
-          'sharedCompose:content.root.actions.attachment.actions.options.photo'
+          'screenCompose:content.root.actions.attachment.actions.options.photo'
         ),
         i18next.t(
-          'sharedCompose:content.root.actions.attachment.actions.options.cancel'
+          'screenCompose:content.root.actions.attachment.actions.options.cancel'
         )
       ],
       cancelButtonIndex: 2
@@ -149,15 +149,15 @@ const addAttachment = async ({
         if (status !== 'granted') {
           Alert.alert(
             i18next.t(
-              'sharedCompose:content.root.actions.attachment.actions.library.alert.title'
+              'screenCompose:content.root.actions.attachment.actions.library.alert.title'
             ),
             i18next.t(
-              'sharedCompose:content.root.actions.attachment.actions.library.alert.message'
+              'screenCompose:content.root.actions.attachment.actions.library.alert.message'
             ),
             [
               {
                 text: i18next.t(
-                  'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.cancel'
+                  'screenCompose:content.root.actions.attachment.actions.library.alert.buttons.cancel'
                 ),
                 style: 'cancel',
                 onPress: () => {
@@ -168,7 +168,7 @@ const addAttachment = async ({
               },
               {
                 text: i18next.t(
-                  'sharedCompose:content.root.actions.attachment.actions.library.alert.buttons.settings'
+                  'screenCompose:content.root.actions.attachment.actions.library.alert.buttons.settings'
                 ),
                 style: 'default',
                 onPress: () => {
@@ -195,15 +195,15 @@ const addAttachment = async ({
         if (status !== 'granted') {
           Alert.alert(
             i18next.t(
-              'sharedCompose:content.root.actions.attachment.actions.photo.alert.title'
+              'screenCompose:content.root.actions.attachment.actions.photo.alert.title'
             ),
             i18next.t(
-              'sharedCompose:content.root.actions.attachment.actions.photo.alert.message'
+              'screenCompose:content.root.actions.attachment.actions.photo.alert.message'
             ),
             [
               {
                 text: i18next.t(
-                  'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.cancel'
+                  'screenCompose:content.root.actions.attachment.actions.photo.alert.buttons.cancel'
                 ),
                 style: 'cancel',
                 onPress: () => {
@@ -214,7 +214,7 @@ const addAttachment = async ({
               },
               {
                 text: i18next.t(
-                  'sharedCompose:content.root.actions.attachment.actions.photo.alert.buttons.settings'
+                  'screenCompose:content.root.actions.attachment.actions.photo.alert.buttons.settings'
                 ),
                 style: 'default',
                 onPress: () => {

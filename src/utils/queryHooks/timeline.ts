@@ -25,7 +25,7 @@ export type QueryKeyTimeline = [
   }
 ]
 
-const queryFunction = ({
+const queryFunction = async ({
   queryKey,
   pageParam
 }: {
@@ -87,29 +87,28 @@ const queryFunction = ({
           }
         })
       } else {
-        return apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
+        const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean} )[]>({
           method: 'get',
           url: `accounts/${account}/statuses`,
           params: {
             pinned: 'true'
           }
-        }).then(async res1 => {
-          res1.body = res1.body.map(status => {
-            status._pinned = true
-            return status
-          })
-          const res2 = await apiInstance<Mastodon.Status[]>({
-            method: 'get',
-            url: `accounts/${account}/statuses`,
-            params: {
-              exclude_replies: 'true'
-            }
-          })
-          return {
-            body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links.next && { links: { next: res2.links.next } })
+        })
+        res1.body = res1.body.map(status => {
+          status._pinned = true
+          return status
+        })
+        const res2 = await apiInstance<Mastodon.Status[]>({
+          method: 'get',
+          url: `accounts/${account}/statuses`,
+          params: {
+            exclude_replies: 'true'
           }
         })
+        return await {
+          body: uniqBy([...res1.body, ...res2.body], 'id'),
+          ...(res2.links.next && { links: { next: res2.links.next } })
+        }
       }
 
     case 'Account_All':
@@ -165,21 +164,20 @@ const queryFunction = ({
       })
 
     case 'Toot':
-      return apiInstance<Mastodon.Status>({
+      const res1_1 = await apiInstance<Mastodon.Status>({
         method: 'get',
         url: `statuses/${toot}`
-      }).then(async res1 => {
-        const res2 = await apiInstance<{
-          ancestors: Mastodon.Status[]
-          descendants: Mastodon.Status[]
-        }>({
-          method: 'get',
-          url: `statuses/${toot}/context`
-        })
-        return {
-          body: [...res2.body.ancestors, res1.body, ...res2.body.descendants]
-        }
       })
+      const res2_1 = await apiInstance<{
+        ancestors: Mastodon.Status[]
+        descendants: Mastodon.Status[]
+      }>({
+        method: 'get',
+        url: `statuses/${toot}/context`
+      })
+      return await {
+        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
+      }
     default:
       return Promise.reject()
   }

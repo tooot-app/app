@@ -131,13 +131,30 @@ const ComponentInstance: React.FC<Props> = ({
       {!disableHeaderImage ? (
         <View style={styles.imageContainer}>
           <Image
-            source={require('assets/screens/meRoot/welcome.png')}
+            source={require('assets/images/welcome.png')}
             style={styles.image}
           />
         </View>
       ) : null}
       <View style={styles.base}>
         <View style={styles.inputRow}>
+          <TextInput
+            style={[
+              styles.prefix,
+              {
+                borderBottomColor: instanceQuery.isError
+                  ? theme.red
+                  : theme.border
+              }
+            ]}
+            editable={false}
+            children={
+              <Text
+                style={{ color: theme.primaryDefault }}
+                children='https://'
+              />
+            }
+          />
           <TextInput
             style={[
               styles.textInput,
@@ -245,6 +262,11 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+  },
+  prefix: {
+    borderBottomWidth: 1,
+    ...StyleConstants.FontStyle.M,
+    paddingRight: StyleConstants.Spacing.XS
   },
   textInput: {
     flex: 1,

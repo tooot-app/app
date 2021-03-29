@@ -54,7 +54,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
   route: { params },
   navigation
 }) => {
-  const { t } = useTranslation('sharedCompose')
+  const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
   const queryClient = useQueryClient()
 

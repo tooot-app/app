@@ -34,7 +34,7 @@ const ActionsAccount: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'success',
-        message: t('common:toastMessage.success.message', {
+        message: t('common:message.success.message', {
           function: t(
             `shared.header.actions.account.${theParams.payload.property}.function`,
             {
@@ -49,7 +49,7 @@ const ActionsAccount: React.FC<Props> = ({
       displayMessage({
         mode,
         type: 'error',
-        message: t('common:toastMessage.error.message', {
+        message: t('common:message.error.message', {
           function: t(
             `shared.header.actions.account.${theParams.payload.property}.function`
           )

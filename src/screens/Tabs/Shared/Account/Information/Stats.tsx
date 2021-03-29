@@ -18,14 +18,14 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
   const { theme } = useTheme()
-  const { t } = useTranslation('sharedAccount')
+  const { t } = useTranslation('screenTabs')
 
   return (
     <View style={[styles.stats, { flexDirection: 'row' }]}>
       {account ? (
         <Text
           style={[styles.stat, { color: theme.primaryDefault }]}
-          children={t('content.summary.statuses_count', {
+          children={t('shared.account.summary.statuses_count', {
             count: account.statuses_count || 0
           })}
           onPress={() => {
@@ -47,7 +47,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <Text
           style={[styles.stat, { color: theme.primaryDefault, textAlign: 'right' }]}
-          children={t('content.summary.following_count', {
+          children={t('shared.account.summary.following_count', {
             count: account.following_count
           })}
           onPress={() => {
@@ -74,7 +74,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <Text
           style={[styles.stat, { color: theme.primaryDefault, textAlign: 'center' }]}
-          children={t('content.summary.followers_count', {
+          children={t('shared.account.summary.followers_count', {
             count: account.followers_count
           })}
           onPress={() => {

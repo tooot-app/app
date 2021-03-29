@@ -34,7 +34,9 @@ const prefetchEmojis = (
       requestedIndex++
     })
   })
-  FastImage.preload(prefetches)
+  try {
+    FastImage.preload(prefetches)
+  } catch {}
 }
 
 const ComposeRoot = React.memo(

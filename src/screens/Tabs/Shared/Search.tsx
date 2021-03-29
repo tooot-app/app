@@ -23,13 +23,13 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
     params: { text }
   }
 }) => {
-  const { t } = useTranslation('sharedSearch')
+  const { t } = useTranslation('screenTabs')
   const { theme } = useTheme()
 
   const mapKeyToTranslations = {
-    accounts: t('content.sections.accounts'),
-    hashtags: t('content.sections.hashtags'),
-    statuses: t('content.sections.statuses')
+    accounts: t('shared.search.sections.accounts'),
+    hashtags: t('shared.search.sections.hashtags'),
+    statuses: t('shared.search.sections.statuses')
   }
   const { status, data } = useSearchQuery({
     term: text,
@@ -77,32 +77,32 @@ const TabSharedSearch: React.FC<SharedSearchProp> = ({
                 ]}
               >
                 <Trans
-                  i18nKey='sharedSearch:content.empty.general'
+                  i18nKey='screenTabs:shared.search.empty.general'
                   components={{ bold: <Text style={styles.emptyFontBold} /> }}
                 />
               </Text>
               <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
-                {t('content.empty.advanced.header')}
+                {t('shared.search.empty.advanced.header')}
               </Text>
               <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>@username@domain</Text>
                 {'   '}
-                {t('content.empty.advanced.example.account')}
+                {t('shared.search.empty.advanced.example.account')}
               </Text>
               <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>#example</Text>
                 {'   '}
-                {t('content.empty.advanced.example.hashtag')}
+                {t('shared.search.empty.advanced.example.hashtag')}
               </Text>
               <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>URL</Text>
                 {'   '}
-                {t('content.empty.advanced.example.statusLink')}
+                {t('shared.search.empty.advanced.example.statusLink')}
               </Text>
               <Text style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}>
                 <Text style={{ color: theme.secondary }}>URL</Text>
                 {'   '}
-                {t('content.empty.advanced.example.accountLink')}
+                {t('shared.search.empty.advanced.example.accountLink')}
               </Text>
             </>
           )}
