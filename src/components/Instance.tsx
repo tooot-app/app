@@ -140,6 +140,23 @@ const ComponentInstance: React.FC<Props> = ({
         <View style={styles.inputRow}>
           <TextInput
             style={[
+              styles.prefix,
+              {
+                borderBottomColor: instanceQuery.isError
+                  ? theme.red
+                  : theme.border
+              }
+            ]}
+            editable={false}
+            children={
+              <Text
+                style={{ color: theme.primaryDefault }}
+                children='https://'
+              />
+            }
+          />
+          <TextInput
+            style={[
               styles.textInput,
               {
                 color: theme.primaryDefault,
@@ -245,6 +262,11 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+  },
+  prefix: {
+    borderBottomWidth: 1,
+    ...StyleConstants.FontStyle.M,
+    paddingRight: StyleConstants.Spacing.XS
   },
   textInput: {
     flex: 1,

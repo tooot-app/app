@@ -38,10 +38,8 @@ const TabSharedUsers = React.memo(
 
     return (
       <FlatList
-        windowSize={11}
+        windowSize={7}
         data={flattenData}
-        initialNumToRender={5}
-        maxToRenderPerBatch={5}
         style={styles.flatList}
         renderItem={renderItem}
         onEndReached={onEndReached}

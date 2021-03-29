@@ -1,7 +1,7 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { Video } from 'expo-av'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
@@ -54,12 +54,6 @@ const AttachmentVideo: React.FC<Props> = ({
     })
   }, [videoLoaded, videoPosition])
 
-  useEffect(() => {
-    if (gifv) {
-      videoPlayer.current?.setIsLoopingAsync(true)
-    }
-  }, [])
-
   return (
     <View
       style={[
@@ -76,7 +70,12 @@ const AttachmentVideo: React.FC<Props> = ({
         }}
         usePoster
         {...(gifv
-          ? { shouldPlay: true, source: { uri: video.url } }
+          ? {
+              shouldPlay: true,
+              isMuted: true,
+              isLooping: true,
+              source: { uri: video.url }
+            }
           : {
               resizeMode: 'cover',
               posterSource: { uri: video.preview_url },
