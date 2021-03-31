@@ -95,15 +95,46 @@ const TimelineAttachment = React.memo(
                 />
               )
             default:
-              return (
-                <AttachmentUnsupported
-                  key={index}
-                  total={status.media_attachments.length}
-                  index={index}
-                  sensitiveShown={sensitiveShown}
-                  attachment={attachment}
-                />
-              )
+              if (
+                attachment.preview_url.endsWith('.jpg') ||
+                attachment.preview_url.endsWith('.jpeg') ||
+                attachment.preview_url.endsWith('.png') ||
+                attachment.preview_url.endsWith('.gif') ||
+                attachment.remote_url?.endsWith('.jpg') ||
+                attachment.remote_url?.endsWith('.jpeg') ||
+                attachment.remote_url?.endsWith('.png') ||
+                attachment.remote_url?.endsWith('.gif')
+              ) {
+                imageUrls.push({
+                  id: attachment.id,
+                  url: attachment.url,
+                  remote_url: attachment.remote_url,
+                  blurhash: attachment.blurhash,
+                  width: attachment.meta?.original?.width,
+                  height: attachment.meta?.original?.height
+                })
+                return (
+                  <AttachmentImage
+                    key={index}
+                    total={status.media_attachments.length}
+                    index={index}
+                    sensitiveShown={sensitiveShown}
+                    // @ts-ignore
+                    image={attachment}
+                    navigateToImagesViewer={navigateToImagesViewer}
+                  />
+                )
+              } else {
+                return (
+                  <AttachmentUnsupported
+                    key={index}
+                    total={status.media_attachments.length}
+                    index={index}
+                    sensitiveShown={sensitiveShown}
+                    attachment={attachment}
+                  />
+                )
+              }
           }
         }),
       [sensitiveShown]
