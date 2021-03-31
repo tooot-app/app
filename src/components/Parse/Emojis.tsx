@@ -7,6 +7,7 @@ import React, { useMemo } from 'react'
 import { StyleSheet, Text } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
+import validUrl from 'valid-url'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
@@ -67,25 +68,30 @@ const ParseEmojis = React.memo(
                 const emojiIndex = emojis.findIndex(emoji => {
                   return emojiShortcode === `:${emoji.shortcode}:`
                 })
-                return emojiIndex === -1 ? (
-                  <Text key={i}>{emojiShortcode}</Text>
-                ) : (
-                  <Text key={i}>
-                    {/* When emoji starts a paragraph, lineHeight will break */}
-                    {i === 0 ? <Text> </Text> : null}
-                    <FastImage
-                      key={adaptiveFontsize}
-                      source={{
-                        uri: reduceMotionEnabled
-                          ? emojis[emojiIndex].static_url
-                          : emojis[emojiIndex].url
-                      }}
-                      style={styles.image}
-                    />
-                  </Text>
-                )
+                if (emojiIndex === -1) {
+                  return <Text>{emojiShortcode}</Text>
+                } else {
+                  if (i === 0) {
+                    return <Text key={emojiShortcode}> </Text>
+                  } else {
+                    const uri = reduceMotionEnabled
+                      ? emojis[emojiIndex].static_url
+                      : emojis[emojiIndex].url
+                    if (validUrl.isHttpsUri(uri)) {
+                      return (
+                        <FastImage
+                          key={emojiShortcode}
+                          source={{ uri }}
+                          style={styles.image}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
+                  }
+                }
               } else {
-                return <Text key={i}>{str}</Text>
+                return <Text key={str}>{str}</Text>
               }
             })
         ) : (
