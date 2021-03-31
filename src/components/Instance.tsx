@@ -274,12 +274,6 @@ const styles = StyleSheet.create({
     ...StyleConstants.FontStyle.M,
     marginRight: StyleConstants.Spacing.M
   },
-  privateInstance: {
-    ...StyleConstants.FontStyle.S,
-    fontWeight: StyleConstants.Font.Weight.Bold,
-    marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginTop: StyleConstants.Spacing.XS
-  },
   instanceStats: {
     flex: 1,
     flexDirection: 'row'

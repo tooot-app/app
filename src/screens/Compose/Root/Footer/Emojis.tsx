@@ -1,13 +1,14 @@
 import analytics from '@components/analytics'
 import haptics from '@components/haptics'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
-import ComposeContext from '../../utils/createContext'
-import updateText from '../../updateText'
 import FastImage from 'react-native-fast-image'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import validUrl from 'valid-url'
+import updateText from '../../updateText'
+import ComposeContext from '../../utils/createContext'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   const { reduceMotionEnabled } = useAccessibility()
@@ -21,21 +22,21 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
       newText: `:${emoji.shortcode}:`,
       type: 'emoji'
     })
-    // composeDispatch({
-    //   type: 'emoji',
-    //   payload: { ...composeState.emoji, active: false }
-    // })
     haptics('Light')
   }, [composeState])
-  const children = useMemo(
-    () => (
-      <FastImage
-        source={{ uri: reduceMotionEnabled ? emoji.static_url : emoji.url }}
-        style={styles.emoji}
-      />
-    ),
-    []
-  )
+  const children = useMemo(() => {
+    const uri = reduceMotionEnabled ? emoji.static_url : emoji.url
+    if (validUrl.isHttpsUri(uri)) {
+      return (
+        <FastImage
+          source={{ uri: reduceMotionEnabled ? emoji.static_url : emoji.url }}
+          style={styles.emoji}
+        />
+      )
+    } else {
+      return null
+    }
+  }, [])
   return (
     <Pressable key={emoji.shortcode} onPress={onPress} children={children} />
   )

@@ -1,4 +1,3 @@
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import {
