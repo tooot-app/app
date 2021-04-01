@@ -195,7 +195,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     const autoSave = composeState.dirty
       ? setInterval(() => {
           saveDraft()
-        }, 2000)
+        }, 1000)
       : removeDraft()
     return () => autoSave && clearInterval(autoSave)
   }, [composeState])

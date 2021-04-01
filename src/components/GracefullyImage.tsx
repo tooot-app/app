@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleProp,
   StyleSheet,
+  View,
   ViewStyle
 } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
@@ -94,9 +95,24 @@ const GracefullyImage = React.memo(
       [source]
     )
     const blurhashView = useMemo(() => {
-      return blurhash && (hidden || !imageLoaded) ? (
-        <Blurhash decodeAsync blurhash={blurhash} style={styles.blurhash} />
-      ) : null
+      if (hidden || !imageLoaded) {
+        if (blurhash) {
+          return (
+            <Blurhash decodeAsync blurhash={blurhash} style={styles.blurhash} />
+          )
+        } else {
+          return (
+            <View
+              style={[
+                styles.blurhash,
+                { backgroundColor: theme.disabled }
+              ]}
+            />
+          )
+        }
+      } else {
+        return null
+      }
     }, [hidden, imageLoaded])
 
     return (

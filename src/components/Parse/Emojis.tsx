@@ -69,7 +69,7 @@ const ParseEmojis = React.memo(
                   return emojiShortcode === `:${emoji.shortcode}:`
                 })
                 if (emojiIndex === -1) {
-                  return <Text>{emojiShortcode}</Text>
+                  return <Text key={emojiShortcode}>{emojiShortcode}</Text>
                 } else {
                   if (i === 0) {
                     return <Text key={emojiShortcode}> </Text>
