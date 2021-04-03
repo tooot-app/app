@@ -1,0 +1,10 @@
+tooot是一个专门为中文用户社区所打造的开源、简洁长毛象客户端。使用此客户端需要已经拥有一个长毛象（https://joinmastodon.org/）账号。
+
+tooot支持：
+- 多账号登录
+- 黑暗或自适应模式
+- 可调整正文字体大小
+- 消息推送
+等功能。
+
+如有使用建议或意见，请联系@tooot@xmflsct.com或者support@tooot.app。
