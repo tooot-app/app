@@ -47,7 +47,11 @@ const AttachmentUnsupported: React.FC<Props> = ({
           <Text
             style={[
               styles.text,
-              { color: attachment.blurhash ? theme.backgroundDefault : theme.primaryDefault }
+              {
+                color: attachment.blurhash
+                  ? theme.backgroundDefault
+                  : theme.primaryDefault
+              }
             ]}
           >
             {t('shared.attachment.unsupported.text')}
@@ -58,9 +62,9 @@ const AttachmentUnsupported: React.FC<Props> = ({
               content={t('shared.attachment.unsupported.button')}
               size='S'
               overlay
-              onPress={async () => {
+              onPress={() => {
                 analytics('timeline_shared_attachment_unsupported_press')
-                attachment.remote_url && (await openLink(attachment.remote_url))
+                attachment.remote_url && openLink(attachment.remote_url)
               }}
             />
           ) : null}

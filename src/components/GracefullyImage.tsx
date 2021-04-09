@@ -1,6 +1,7 @@
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import {
+  AccessibilityProps,
   Image,
   ImageStyle,
   Pressable,
@@ -18,6 +19,9 @@ import { Blurhash } from 'react-native-blurhash'
 // preview, original, remote -> first show preview, then original, if original failed, then remote
 
 export interface Props {
+  accessibilityLabel?: AccessibilityProps['accessibilityLabel']
+  accessibilityHint?: AccessibilityProps['accessibilityHint']
+
   hidden?: boolean
   uri: { preview?: string; original?: string; remote?: string }
   blurhash?: string
@@ -36,6 +40,8 @@ export interface Props {
 
 const GracefullyImage = React.memo(
   ({
+    accessibilityLabel,
+    accessibilityHint,
     hidden = false,
     uri,
     blurhash,
@@ -103,10 +109,7 @@ const GracefullyImage = React.memo(
         } else {
           return (
             <View
-              style={[
-                styles.blurhash,
-                { backgroundColor: theme.disabled }
-              ]}
+              style={[styles.blurhash, { backgroundColor: theme.disabled }]}
             />
           )
         }
@@ -117,6 +120,11 @@ const GracefullyImage = React.memo(
 
     return (
       <Pressable
+        {...(onPress
+          ? { accessibilityRole: 'imagebutton' }
+          : { accessibilityRole: 'image' })}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
         style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
         {...(onPress
           ? hidden

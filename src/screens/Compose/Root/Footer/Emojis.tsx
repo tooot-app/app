@@ -3,14 +3,30 @@ import haptics from '@components/haptics'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useMemo } from 'react'
-import { Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
+import React, {
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo
+} from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  Pressable,
+  SectionList,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import validUrl from 'valid-url'
 import updateText from '../../updateText'
 import ComposeContext from '../../utils/createContext'
 
 const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
+  const { t } = useTranslation()
   const { reduceMotionEnabled } = useAccessibility()
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -29,6 +45,12 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
     if (validUrl.isHttpsUri(uri)) {
       return (
         <FastImage
+          accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
+            emoji: emoji.shortcode
+          })}
+          accessibilityHint={t(
+            'screenCompose:content.root.footer.emojis.accessibilityHint'
+          )}
           source={{ uri: reduceMotionEnabled ? emoji.static_url : emoji.url }}
           style={styles.emoji}
         />
@@ -42,9 +64,20 @@ const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
   )
 }
 
-const ComposeEmojis: React.FC = () => {
+export interface Props {
+  accessibleRefEmojis: RefObject<SectionList>
+}
+
+const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const { composeState } = useContext(ComposeContext)
   const { theme } = useTheme()
+
+  useEffect(() => {
+    const tagEmojis = findNodeHandle(accessibleRefEmojis.current)
+    if (composeState.emoji.active) {
+      tagEmojis && AccessibilityInfo.setAccessibilityFocus(tagEmojis)
+    }
+  }, [composeState.emoji.active])
 
   const listHeader = useCallback(
     ({ section: { title } }) => (
@@ -73,6 +106,8 @@ const ComposeEmojis: React.FC = () => {
   return (
     <View style={styles.base}>
       <SectionList
+        accessible
+        ref={accessibleRefEmojis}
         horizontal
         keyboardShouldPersistTaps='always'
         sections={composeState.emoji.emojis || []}

@@ -6,6 +6,7 @@ import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import AccountAttachments from './Account/Attachments'
@@ -23,6 +24,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
   },
   navigation
 }) => {
+  const { t, i18n } = useTranslation('screenTabs')
   const { theme } = useTheme()
 
   const { data } = useAccountQuery({ id: account.id })
@@ -38,6 +40,10 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
       navigation.setOptions({
         headerRight: () => (
           <HeaderRight
+            accessibilityLabel={t('shared.account.actions.accessibilityLabel', {
+              user: data?.acct
+            })}
+            accessibilityHint={t('shared.account.actions.accessibilityHint')}
             content='MoreHorizontal'
             onPress={() => {
               analytics('bottomsheet_open_press', {
@@ -54,7 +60,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
         )
       })
     return updateHeaderRight()
-  }, [])
+  }, [i18n.language])
 
   const onScroll = useCallback(({ nativeEvent }) => {
     scrollY.value = nativeEvent.contentOffset.y

@@ -3,6 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { getTheme } from '@utils/styles/themes'
 import React from 'react'
+import { AccessibilityInfo } from 'react-native'
 import FlashMessage, {
   hideMessage,
   showMessage
@@ -36,6 +37,8 @@ const displayMessage = ({
       mode: 'light' | 'dark'
       type: 'success' | 'error' | 'warning'
     }) => {
+  AccessibilityInfo.announceForAccessibility(message + '.' + description)
+
   enum iconMapping {
     success = 'CheckCircle',
     error = 'XCircle',
@@ -98,7 +101,10 @@ const Message = React.memo(
           ...StyleConstants.FontStyle.M,
           fontWeight: StyleConstants.Font.Weight.Bold
         }}
-        textStyle={{ color: theme.primaryDefault, ...StyleConstants.FontStyle.S }}
+        textStyle={{
+          color: theme.primaryDefault,
+          ...StyleConstants.FontStyle.S
+        }}
         // @ts-ignore
         textProps={{ numberOfLines: 2 }}
       />

@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
@@ -41,6 +42,7 @@ const MenuRow: React.FC<Props> = ({
   onPress
 }) => {
   const { theme } = useTheme()
+  const { screenReaderEnabled } = useAccessibility()
 
   const loadingSpinkit = useMemo(
     () => (
@@ -55,11 +57,22 @@ const MenuRow: React.FC<Props> = ({
   )
 
   return (
-    <View style={styles.base}>
+    <View
+      style={styles.base}
+      accessible
+      accessibilityRole={switchValue ? 'switch' : 'button'}
+      accessibilityState={switchValue ? { checked: switchValue } : undefined}
+    >
       <TapGestureHandler
-        onHandlerStateChange={({ nativeEvent }) =>
-          nativeEvent.state === State.ACTIVE && !loading && onPress && onPress()
-        }
+        onHandlerStateChange={async ({ nativeEvent }) => {
+          if (nativeEvent.state === State.ACTIVE && !loading) {
+            if (screenReaderEnabled && switchOnValueChange) {
+              switchOnValueChange()
+            } else {
+              if (onPress) onPress()
+            }
+          }
+        }}
       >
         <View style={styles.core}>
           <View style={styles.front}>

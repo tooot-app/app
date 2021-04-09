@@ -18,6 +18,8 @@ const TimelineCard = React.memo(
 
     return (
       <Pressable
+        accessible
+        accessibilityRole='link'
         style={[styles.card, { borderColor: theme.border }]}
         onPress={async () => {
           analytics('timeline_shared_card_press')

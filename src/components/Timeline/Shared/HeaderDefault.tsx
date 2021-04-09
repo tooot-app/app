@@ -4,6 +4,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
@@ -19,6 +20,7 @@ export interface Props {
 
 const TimelineHeaderDefault = React.memo(
   ({ queryKey, rootQueryKey, status }: Props) => {
+    const { t } = useTranslation('componentTimeline')
     const navigation = useNavigation()
     const { theme } = useTheme()
 
@@ -36,6 +38,7 @@ const TimelineHeaderDefault = React.memo(
 
         {queryKey ? (
           <Pressable
+            accessibilityHint={t('shared.header.actions.accessibilityHint')}
             style={styles.action}
             onPress={() =>
               navigation.navigate('Screen-Actions', {

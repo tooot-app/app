@@ -164,20 +164,50 @@ const ComposeActions: React.FC = () => {
 
   return (
     <View
+      accessibilityRole='toolbar'
       style={[
         styles.additions,
-        { backgroundColor: theme.backgroundDefault, borderTopColor: theme.border }
+        {
+          backgroundColor: theme.backgroundDefault,
+          borderTopColor: theme.border
+        }
       ]}
     >
       <Pressable
+        accessibilityRole='button'
+        accessibilityLabel={t(
+          'content.root.actions.attachment.accessibilityLabel'
+        )}
+        accessibilityHint={t(
+          'content.root.actions.attachment.accessibilityHint'
+        )}
+        accessibilityState={{
+          disabled: composeState.poll.active
+        }}
+        style={styles.button}
         onPress={attachmentOnPress}
         children={<Icon name='Aperture' size={24} color={attachmentColor} />}
       />
       <Pressable
+        accessibilityRole='button'
+        accessibilityLabel={t('content.root.actions.poll.accessibilityLabel')}
+        accessibilityHint={t('content.root.actions.poll.accessibilityHint')}
+        accessibilityState={{
+          disabled: composeState.attachments.uploads.length ? true : false,
+          expanded: composeState.poll.active
+        }}
+        style={styles.button}
         onPress={pollOnPress}
         children={<Icon name='BarChart2' size={24} color={pollColor} />}
       />
       <Pressable
+        accessibilityRole='button'
+        accessibilityLabel={t(
+          'content.root.actions.visibility.accessibilityLabel',
+          { visibility: composeState.visibility }
+        )}
+        accessibilityState={{ disabled: composeState.visibilityLock }}
+        style={styles.button}
         onPress={visibilityOnPress}
         children={
           <Icon
@@ -190,18 +220,34 @@ const ComposeActions: React.FC = () => {
         }
       />
       <Pressable
+        accessibilityRole='button'
+        accessibilityLabel={t(
+          'content.root.actions.spoiler.accessibilityLabel'
+        )}
+        accessibilityState={{ expanded: composeState.spoiler.active }}
+        style={styles.button}
         onPress={spoilerOnPress}
         children={
           <Icon
             name='AlertTriangle'
             size={24}
             color={
-              composeState.spoiler.active ? theme.primaryDefault : theme.secondary
+              composeState.spoiler.active
+                ? theme.primaryDefault
+                : theme.secondary
             }
           />
         }
       />
       <Pressable
+        accessibilityRole='button'
+        accessibilityLabel={t('content.root.actions.emoji.accessibilityLabel')}
+        accessibilityHint={t('content.root.actions.emoji.accessibilityHint')}
+        accessibilityState={{
+          disabled: composeState.emoji.emojis ? false : true,
+          expanded: composeState.emoji.active
+        }}
+        style={styles.button}
         onPress={emojiOnPress}
         children={<Icon name='Smile' size={24} color={emojiColor} />}
       />
@@ -210,6 +256,12 @@ const ComposeActions: React.FC = () => {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%'
+  },
   additions: {
     height: 45,
     borderTopWidth: StyleSheet.hairlineWidth,

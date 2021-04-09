@@ -163,6 +163,7 @@ const sharedScreens = (
                 }
               />
               <TextInput
+                accessibilityRole='search'
                 keyboardAppearance={mode}
                 style={[
                   styles.textInput,

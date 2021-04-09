@@ -120,6 +120,8 @@ const HeaderComponent = React.memo(
           content={`${currentIndex + 1} / ${imageUrls.length}`}
         />
         <HeaderRight
+          accessibilityLabel={t('content.actions.accessibilityLabel')}
+          accessibilityHint={t('content.actions.accessibilityHint')}
           content='MoreHorizontal'
           native={false}
           background

@@ -7,7 +7,11 @@ export interface Props {
 }
 
 const MenuContainer: React.FC<Props> = ({ children }) => {
-  return <View style={styles.base}>{children}</View>
+  return (
+    <View style={styles.base}>
+      {children}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

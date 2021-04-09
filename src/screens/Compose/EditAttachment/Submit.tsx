@@ -22,6 +22,9 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
 
   return (
     <HeaderRight
+      accessibilityLabel={t(
+        'content.editAttachment.header.right.accessibilityLabel'
+      )}
       type='icon'
       content='Save'
       loading={isSubmitting}
@@ -39,8 +42,8 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
         ) {
           formData.append(
             'focus',
-            `${theAttachment.meta.focus.x || 0},${-theAttachment.meta.focus.y ||
-              0}`
+            `${theAttachment.meta?.focus?.x || 0},${-theAttachment.meta?.focus
+              ?.y || 0}`
           )
         }
 

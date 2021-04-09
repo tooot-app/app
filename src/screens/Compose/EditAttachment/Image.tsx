@@ -1,3 +1,4 @@
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
@@ -22,6 +23,7 @@ export interface Props {
 const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
   const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
+  const { screenReaderEnabled } = useAccessibility()
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const theAttachmentRemote = composeState.attachments.uploads[index].remote!
@@ -160,9 +162,11 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
           </Animated.View>
         </PanGestureHandler>
       </View>
-      <Text style={[styles.imageFocusText, { color: theme.primaryDefault }]}>
-        {t('content.editAttachment.content.imageFocus')}
-      </Text>
+      {screenReaderEnabled ? null : (
+        <Text style={[styles.imageFocusText, { color: theme.primaryDefault }]}>
+          {t('content.editAttachment.content.imageFocus')}
+        </Text>
+      )}
     </>
   )
 }

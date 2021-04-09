@@ -1,6 +1,6 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TextInput } from 'react-native'
 import formatText from '../../formatText'
@@ -45,7 +45,6 @@ const ComposeSpoilerInput: React.FC = () => {
           payload: { selection: { start, end } }
         })
       }}
-      ref={composeState.textInputFocus.refs.spoiler}
       scrollEnabled={false}
       onFocus={() =>
         composeDispatch({

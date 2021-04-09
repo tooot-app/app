@@ -3,13 +3,17 @@ import { useNavigation } from '@react-navigation/native'
 import { getInstanceDrafts } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
-import React, { useContext, useEffect } from 'react'
+import React, { RefObject, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 
-const ComposeDrafts: React.FC = () => {
+export interface Props {
+  accessibleRefDrafts: RefObject<View>
+}
+
+const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
   const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
   const { composeState } = useContext(ComposeContext)
@@ -24,6 +28,7 @@ const ComposeDrafts: React.FC = () => {
   if (!composeState.dirty && instanceDrafts?.length) {
     return (
       <View
+        ref={accessibleRefDrafts}
         style={styles.base}
         children={
           <Button

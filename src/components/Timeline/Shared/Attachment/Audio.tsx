@@ -52,6 +52,7 @@ const AttachmentAudio: React.FC<Props> = ({
 
   return (
     <View
+      accessibilityLabel={audio.description}
       style={[
         styles.base,
         {

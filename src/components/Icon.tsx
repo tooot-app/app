@@ -1,8 +1,10 @@
 import React, { createElement } from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { AccessibilityProps, StyleProp, View, ViewStyle } from 'react-native'
 import * as FeatherIcon from 'react-native-feather'
 
 export interface Props {
+  accessibilityLabel?: AccessibilityProps['accessibilityLabel']
+
   name: string
   size: number
   color: string
@@ -12,6 +14,7 @@ export interface Props {
 }
 
 const Icon: React.FC<Props> = ({
+  accessibilityLabel,
   name,
   size,
   color,
@@ -21,6 +24,7 @@ const Icon: React.FC<Props> = ({
 }) => {
   return (
     <View
+      accessibilityLabel={accessibilityLabel}
       style={[
         style,
         {

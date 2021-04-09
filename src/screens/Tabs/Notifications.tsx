@@ -34,6 +34,8 @@ const TabNotifications = React.memo(
         }),
         headerRight: () => (
           <HeaderRight
+            accessibilityLabel={t('notifications.filter.accessibilityLabel')}
+            accessibilityHint={t('notifications.filter.accessibilityHint')}
             content='Filter'
             onPress={() => {
               analytics('notificationsfilter_tap')

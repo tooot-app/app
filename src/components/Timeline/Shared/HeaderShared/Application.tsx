@@ -17,6 +17,7 @@ const HeaderSharedApplication = React.memo(
 
     return application && application.name !== 'Web' ? (
       <Text
+        accessibilityRole='link'
         onPress={async () => {
           analytics('timeline_shared_header_application_press', {
             application

@@ -28,7 +28,11 @@ const ComponentHashtag: React.FC<Props> = ({
   }, [])
 
   return (
-    <Pressable style={styles.itemDefault} onPress={customOnPress || onPress}>
+    <Pressable
+      accessibilityRole='button'
+      style={styles.itemDefault}
+      onPress={customOnPress || onPress}
+    >
       <Text style={[styles.itemHashtag, { color: theme.primaryDefault }]}>
         #{hashtag.name}
       </Text>

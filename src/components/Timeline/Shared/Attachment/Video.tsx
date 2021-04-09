@@ -62,6 +62,7 @@ const AttachmentVideo: React.FC<Props> = ({
       ]}
     >
       <Video
+        accessibilityLabel={video.description}
         ref={videoPlayer}
         style={{
           width: '100%',

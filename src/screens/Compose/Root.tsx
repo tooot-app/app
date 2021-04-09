@@ -4,8 +4,20 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { forEach, groupBy, sortBy } from 'lodash'
-import React, { useCallback, useContext, useEffect, useMemo } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  FlatList,
+  StyleSheet,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -43,6 +55,15 @@ const ComposeRoot = React.memo(
   () => {
     const { reduceMotionEnabled } = useAccessibility()
     const { theme } = useTheme()
+
+    const accessibleRefDrafts = useRef(null)
+    const accessibleRefAttachments = useRef(null)
+    const accessibleRefEmojis = useRef(null)
+
+    useEffect(() => {
+      const tagDrafts = findNodeHandle(accessibleRefDrafts.current)
+      tagDrafts && AccessibilityInfo.setAccessibilityFocus(tagDrafts)
+    }, [accessibleRefDrafts.current])
 
     const { composeState, composeDispatch } = useContext(ComposeContext)
 
@@ -106,6 +127,16 @@ const ComposeRoot = React.memo(
       [composeState]
     )
 
+    const ListFooter = useCallback(
+      () => (
+        <ComposeRootFooter
+          accessibleRefAttachments={accessibleRefAttachments}
+          accessibleRefEmojis={accessibleRefEmojis}
+        />
+      ),
+      []
+    )
+
     return (
       <View style={styles.base}>
         <FlatList
@@ -113,14 +144,14 @@ const ComposeRoot = React.memo(
           ListEmptyComponent={listEmpty}
           keyboardShouldPersistTaps='always'
           ListHeaderComponent={ComposeRootHeader}
-          ListFooterComponent={ComposeRootFooter}
+          ListFooterComponent={ListFooter}
           ItemSeparatorComponent={ComponentSeparator}
           // @ts-ignore
           data={data ? data[composeState.tag?.type] : undefined}
           keyExtractor={() => Math.random().toString()}
         />
         <ComposeActions />
-        <ComposeDrafts />
+        <ComposeDrafts accessibleRefDrafts={accessibleRefDrafts} />
         <ComposePosting />
       </View>
     )

@@ -3,6 +3,9 @@
     "apply": "Apply",
     "cancel": "Cancel"
   },
+  "customEmoji": {
+    "accessibilityLabel": "Custom emoji {{emoji}}"
+  },
   "message": {
     "success": {
       "message": "{{function}} succeed"

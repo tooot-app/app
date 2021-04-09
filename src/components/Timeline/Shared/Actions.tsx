@@ -269,12 +269,28 @@ const TimelineActions: React.FC<Props> = ({
     >
       <View style={styles.actions}>
         <Pressable
+          {...(highlighted
+            ? {
+                accessibilityLabel: t(
+                  'shared.actions.reply.accessibilityLabel'
+                ),
+                accessibilityRole: 'button'
+              }
+            : { accessibilityLabel: '' })}
           style={styles.action}
           onPress={onPressReply}
           children={childrenReply}
         />
 
         <Pressable
+          {...(highlighted
+            ? {
+                accessibilityLabel: t(
+                  'shared.actions.reblogged.accessibilityLabel'
+                ),
+                accessibilityRole: 'button'
+              }
+            : { accessibilityLabel: '' })}
           style={styles.action}
           onPress={onPressReblog}
           children={childrenReblog}
@@ -284,12 +300,28 @@ const TimelineActions: React.FC<Props> = ({
         />
 
         <Pressable
+          {...(highlighted
+            ? {
+                accessibilityLabel: t(
+                  'shared.actions.favourited.accessibilityLabel'
+                ),
+                accessibilityRole: 'button'
+              }
+            : { accessibilityLabel: '' })}
           style={styles.action}
           onPress={onPressFavourite}
           children={childrenFavourite}
         />
 
         <Pressable
+          {...(highlighted
+            ? {
+                accessibilityLabel: t(
+                  'shared.actions.bookmarked.accessibilityLabel'
+                ),
+                accessibilityRole: 'button'
+              }
+            : { accessibilityLabel: '' })}
           style={styles.action}
           onPress={onPressBookmark}
           children={childrenBookmark}

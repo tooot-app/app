@@ -224,7 +224,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
             onPress={() => navigation.goBack()}
           />
           <HeaderCenter content={t('screenAnnouncements:heading')} />
-          <View style={{ opacity: 0 }}>
+          <View style={{ opacity: 0 }} accessible={false}>
             <HeaderRight
               content='MoreHorizontal'
               native={false}

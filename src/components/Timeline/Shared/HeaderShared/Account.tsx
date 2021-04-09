@@ -2,6 +2,7 @@ import { ParseEmojis } from '@root/components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
@@ -11,12 +12,19 @@ export interface Props {
 
 const HeaderSharedAccount = React.memo(
   ({ account, withoutName = false }: Props) => {
+    const { t } = useTranslation('componentTimeline')
     const { theme } = useTheme()
 
     return (
       <View style={styles.base}>
         {withoutName ? null : (
-          <Text style={styles.name} numberOfLines={1}>
+          <Text
+            accessibilityHint={t(
+              'shared.header.shared.account.name.accessibilityHint'
+            )}
+            style={styles.name}
+            numberOfLines={1}
+          >
             <ParseEmojis
               content={account.display_name || account.username}
               emojis={account.emojis}
@@ -25,6 +33,9 @@ const HeaderSharedAccount = React.memo(
           </Text>
         )}
         <Text
+          accessibilityHint={t(
+            'shared.header.shared.account.account.accessibilityHint'
+          )}
           style={[styles.acct, { color: theme.secondary }]}
           numberOfLines={1}
         >

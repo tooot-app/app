@@ -62,6 +62,7 @@ const TimelineDefault: React.FC<Props> = ({
 
   return (
     <Pressable
+      accessible={highlighted ? false : true}
       style={[
         styles.statusView,
         {
@@ -84,6 +85,7 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineAvatar
           queryKey={disableOnPress ? undefined : queryKey}
           account={actualStatus.account}
+          highlighted={highlighted}
         />
         <TimelineHeaderDefault
           queryKey={disableOnPress ? undefined : queryKey}
