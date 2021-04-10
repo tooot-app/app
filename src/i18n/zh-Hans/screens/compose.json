@@ -45,13 +45,36 @@
       },
       "footer": {
         "attachments": {
-          "sensitive": "标记附件为敏感内容"
+          "sensitive": "标记附件为敏感内容",
+          "remove": {
+            "accessibilityLabel": "删除已上传的附件，序号{{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "编辑已上传的附件，序号{{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "上传更多附件"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "点击添加表情符号至嘟文"
         },
         "poll": {
           "option": {
             "placeholder": {
+              "accessibilityLabel": "选项{{index}}",
               "single": "单选项",
               "multiple": "多选项"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "减少至{{amount}}选项",
+              "accessibilityHint": "已达到最低选项数，目前有{{amount}}选项"
+            },
+            "increase": {
+              "accessibilityLabel": "增加至{{amount}}选项",
+              "accessibilityHint": "已达到最高选项数，目前有{{amount}}选项"
             }
           },
           "multiple": {
@@ -79,6 +102,8 @@
       },
       "actions": {
         "attachment": {
+          "accessibilityLabel": "上传附件",
+          "accessibilityHint": "当有任何附件时，投票功能将被禁用",
           "actions": {
             "options": {
               "library": "从相册上传",
@@ -113,7 +138,12 @@
             }
           }
         },
+        "poll": {
+          "accessibilityLabel": "发起投票",
+          "accessibilityHint": "当启用投票功能时，附件功能将被禁用"
+        },
         "visibility": {
+          "accessibilityLabel": "此嘟文可见性为{{visibility}}",
           "title": "嘟文可见范围",
           "options": {
             "public": "公开",
@@ -122,6 +152,13 @@
             "direct": "私信",
             "cancel": "$t(common:buttons.cancel)"
           }
+        },
+        "spoiler": {
+          "accessibilityLabel": "剧透"
+        },
+        "emoji": {
+          "accessibilityLabel": "添加表情符号",
+          "accessibilityHint": "打开表情选择面板，水平滑动切换页面"
         }
       },
       "drafts": "草稿 ({{count}})",
@@ -131,6 +168,7 @@
       "header": {
         "title": "编辑附件",
         "right": {
+          "accessibilityLabel": "保存编辑附件",
           "failed": {
             "title": "编辑失败",
             "button": "返回重试"
@@ -150,6 +188,7 @@
         "title": "草稿"
       },
       "content": {
+        "accessibilityHint": "已保存的草稿，点击编辑此草稿",
         "textEmpty": "无正文内容"
       }
     }

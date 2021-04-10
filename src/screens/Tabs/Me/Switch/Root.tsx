@@ -11,7 +11,8 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import { groupBy } from 'lodash'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -20,10 +21,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 interface Props {
   instance: Instance
-  disabled?: boolean
+  selected?: boolean
 }
 
-const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
+const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
   const queryClient = useQueryClient()
   const navigation = useNavigation()
   const dispatch = useDispatch()
@@ -31,10 +32,10 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
   return (
     <Button
       type='text'
-      disabled={disabled}
+      selected={selected}
       style={styles.button}
       content={`@${instance.account.acct}@${instance.uri}${
-        disabled ? ' ✓' : ''
+        selected ? ' ✓' : ''
       }`}
       onPress={() => {
         haptics('Light')
@@ -50,11 +51,17 @@ const AccountButton: React.FC<Props> = ({ instance, disabled = false }) => {
 const ScreenMeSwitchRoot: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const { theme } = useTheme()
-  const instances = useSelector(getInstances)
-  const instanceActive = useSelector(getInstanceActive)
+  const instances = useSelector(getInstances, () => true)
+  const instanceActive = useSelector(getInstanceActive, () => true)
+
+  const scrollViewRef = useRef<ScrollView>(null)
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
+    <ScrollView
+      ref={scrollViewRef}
+      style={styles.base}
+      keyboardShouldPersistTaps='always'
+    >
       <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
         <Text style={[styles.header, { color: theme.primaryDefault }]}>
           {t('me.switch.existing')}
@@ -74,7 +81,7 @@ const ScreenMeSwitchRoot: React.FC = () => {
                     <AccountButton
                       key={index}
                       instance={instance}
-                      disabled={
+                      selected={
                         instance.url === localAccount.url &&
                         instance.token === localAccount.token &&
                         instance.account.id === localAccount.account.id
@@ -90,7 +97,11 @@ const ScreenMeSwitchRoot: React.FC = () => {
         <Text style={[styles.header, { color: theme.primaryDefault }]}>
           {t('me.switch.new')}
         </Text>
-        <ComponentInstance disableHeaderImage goBack />
+        <ComponentInstance
+          scrollViewRef={scrollViewRef}
+          disableHeaderImage
+          goBack
+        />
       </View>
     </ScrollView>
   )

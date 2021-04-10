@@ -23,6 +23,7 @@ const AttachmentImage = React.memo(
     return (
       <View style={styles.base}>
         <GracefullyImage
+          accessibilityLabel={image.description}
           hidden={sensitiveShown}
           uri={{ original: image.preview_url, remote: image.remote_url }}
           blurhash={image.blurhash}

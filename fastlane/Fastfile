@@ -57,7 +57,7 @@ private_lane :github_release do |options|
     description: "No changelog provided",
     commitish: git_branch,
     is_prerelease: options[:prerelease],
-    upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
+    upload_assets: options[:prerelease] ? nil : ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
   )
 end
 
@@ -69,6 +69,8 @@ end
 desc "Build and deploy iOS app"
 private_lane :build_ios do
   BUILD_DIRECTORY = "./ios/build"
+  IPA_FILE = "#{BUILD_DIRECTORY}/tooot.ipa"
+  DSYM_FILE = "#{BUILD_DIRECTORY}/tooot.app.dSYM.zip"
 
   update_expo_ios
   setup_ci
@@ -77,17 +79,39 @@ private_lane :build_ios do
   when "candidate"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store", include_symbols: true, include_bitcode: true, silent: true )
+    build_ios_app(
+      export_method: "app-store",
+      include_symbols: true,
+      output_directory: BUILD_DIRECTORY,
+      silent: true
+    )
+    sentry_upload_dsym(
+      org_slug: ENV["SENTRY_ORGANIZATION"],
+      project_slug: ENV["SENTRY_PROJECT"],
+      dsym_path: DSYM_FILE
+    )
     upload_to_testflight(
+      ipa: IPA_FILE,
       demo_account_required: true,
       distribute_external: true,
       groups: "测试用户",
-      changelog: "Ready for testing"
+      changelog: "感谢帮忙测试 tooot 🙏"
     )
   when "release"
     prepare_appstore_ios
     match( type: "appstore", readonly: true )
-    build_ios_app( export_method: "app-store", include_bitcode: true, silent: true )
+    build_ios_app(
+      export_method: "app-store",
+      include_bitcode: true,
+      output_directory: BUILD_DIRECTORY,
+      silent: true
+    )
+    upload_to_app_store(
+      force: true,
+      ipa: IPA_FILE,
+      submit_for_review: true,
+      automatic_release: false
+    )
   else
     if !is_ci
       match( type: "development", readonly: true )
@@ -126,6 +150,27 @@ private_lane :build_android do
       skip_upload_images: true,
       skip_upload_screenshots: true
     )
+  when "release"
+    prepare_playstore_android
+    build_android_app(
+      task: 'clean bundle',
+      build_type: 'release',
+      project_dir: "./android",
+      print_command: false,
+      print_command_output: false,
+      properties: {
+        "expoSDK" => VERSIONS[:expo],
+        "releaseChannel" => RELEASE_CHANNEL,
+        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
+        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
+      }
+    )
+    upload_to_play_store(
+      track: "production",
+      skip_upload_changelogs: true
+    )
     build_android_app(
       task: 'assemble',
       build_type: 'release',
@@ -142,7 +187,6 @@ private_lane :build_android do
       }
     )
     sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
-  when "release"
   else
     if !is_ci
       build_android_app(

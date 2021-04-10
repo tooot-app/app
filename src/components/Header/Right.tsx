@@ -2,10 +2,20 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  AccessibilityProps,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
+  accessibilityLabel?: string
+  accessibilityHint?: string
+  accessibilityState?: AccessibilityProps['accessibilityState']
+
   type?: 'icon' | 'text'
   content: string
   native?: boolean
@@ -18,6 +28,11 @@ export interface Props {
 }
 
 const HeaderRight: React.FC<Props> = ({
+  // Accessibility - Start
+  accessibilityLabel,
+  accessibilityHint,
+  accessibilityState,
+  // Accessibility - End
   type = 'icon',
   content,
   native = true,
@@ -75,6 +90,10 @@ const HeaderRight: React.FC<Props> = ({
 
   return (
     <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole='button'
+      accessibilityState={accessibilityState}
       onPress={onPress}
       children={children}
       disabled={disabled || loading}

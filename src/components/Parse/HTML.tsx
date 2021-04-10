@@ -53,6 +53,7 @@ const renderNode = ({
             : true
           return (
             <Text
+              accessible
               key={index}
               style={{
                 color: theme.blue,
@@ -235,7 +236,10 @@ const ParseHTML = React.memo(
         const [expanded, setExpanded] = useState(false)
 
         const onTextLayout = useCallback(({ nativeEvent }) => {
-          if (nativeEvent.lines.length >= numberOfLines + 5) {
+          if (
+            numberOfLines === 0 ||
+            nativeEvent.lines.length >= numberOfLines + 5
+          ) {
             setExpandAllow(true)
           }
         }, [])
@@ -251,6 +255,7 @@ const ParseHTML = React.memo(
             />
             {expandAllow ? (
               <Pressable
+                accessibilityLabel=''
                 onPress={() => {
                   analytics('status_readmore', { allow: expandAllow, expanded })
                   layoutAnimation()

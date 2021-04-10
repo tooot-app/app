@@ -16,8 +16,10 @@ const InstanceInfo = React.memo(
     const { theme } = useTheme()
 
     return (
-      <View style={[styles.base, style]}>
-        <Text style={[styles.header, { color: theme.primaryDefault }]}>{header}</Text>
+      <View style={[styles.base, style]} accessible>
+        <Text style={[styles.header, { color: theme.primaryDefault }]}>
+          {header}
+        </Text>
         {content ? (
           <Text style={[styles.content, { color: theme.primaryDefault }]}>
             {content}

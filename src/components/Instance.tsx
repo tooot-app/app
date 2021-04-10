@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { getInstances } from '@utils/slices/instancesSlice'
@@ -7,7 +8,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { RefObject, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Alert,
@@ -19,6 +20,7 @@ import {
   TextInput,
   View
 } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { Placeholder } from 'rn-placeholder'
 import analytics from './analytics'
@@ -26,16 +28,19 @@ import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
 
 export interface Props {
+  scrollViewRef?: RefObject<ScrollView>
   disableHeaderImage?: boolean
   goBack?: boolean
 }
 
 const ComponentInstance: React.FC<Props> = ({
+  scrollViewRef,
   disableHeaderImage,
   goBack = false
 }) => {
   const { t } = useTranslation('componentInstance')
   const { mode, theme } = useTheme()
+  const { screenReaderEnabled } = useAccessibility()
 
   const instances = useSelector(getInstances, () => true)
   const [domain, setDomain] = useState<string>()
@@ -139,6 +144,8 @@ const ComponentInstance: React.FC<Props> = ({
       <View style={styles.base}>
         <View style={styles.inputRow}>
           <TextInput
+            accessible={false}
+            accessibilityRole='none'
             style={[
               styles.prefix,
               {
@@ -148,12 +155,8 @@ const ComponentInstance: React.FC<Props> = ({
               }
             ]}
             editable={false}
-            children={
-              <Text
-                style={{ color: theme.primaryDefault }}
-                children='https://'
-              />
-            }
+            placeholder='https://'
+            placeholderTextColor={theme.primaryDefault}
           />
           <TextInput
             style={[
@@ -172,10 +175,14 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardType='url'
             textContentType='URL'
             onSubmitEditing={onSubmitEditing}
-            placeholder={t('server.textInput.placeholder')}
+            placeholder={' ' + t('server.textInput.placeholder')}
             placeholderTextColor={theme.secondary}
             returnKeyType='go'
             keyboardAppearance={mode}
+            {...(scrollViewRef && {
+              onFocus: () =>
+                setTimeout(() => scrollViewRef.current?.scrollToEnd(), 150)
+            })}
           />
           <Button
             type='text'
@@ -229,9 +236,21 @@ const ComponentInstance: React.FC<Props> = ({
               color={theme.secondary}
               style={styles.disclaimerIcon}
             />
-            <Text style={[styles.disclaimerText, { color: theme.secondary }]}>
+            <Text
+              style={[styles.disclaimerText, { color: theme.secondary }]}
+              accessibilityRole='link'
+              onPress={() => {
+                if (screenReaderEnabled) {
+                  analytics('view_privacy')
+                  WebBrowser.openBrowserAsync(
+                    'https://tooot.app/privacy-policy'
+                  )
+                }
+              }}
+            >
               {t('server.disclaimer.base')}
               <Text
+                accessible
                 style={{ color: theme.blue }}
                 onPress={() => {
                   analytics('view_privacy')
@@ -265,8 +284,7 @@ const styles = StyleSheet.create({
   },
   prefix: {
     borderBottomWidth: 1,
-    ...StyleConstants.FontStyle.M,
-    paddingRight: StyleConstants.Spacing.XS
+    ...StyleConstants.FontStyle.M
   },
   textInput: {
     flex: 1,

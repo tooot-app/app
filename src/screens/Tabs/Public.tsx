@@ -62,6 +62,8 @@ const TabPublic = React.memo(
         ),
         headerRight: () => (
           <HeaderRight
+            accessibilityLabel={t('common.search.accessibilityLabel')}
+            accessibilityHint={t('common.search.accessibilityHint')}
             content='Search'
             onPress={() => {
               analytics('search_tap', { page: pages[segment].key })

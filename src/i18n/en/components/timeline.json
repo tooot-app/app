@@ -29,19 +29,33 @@
       }
     },
     "actions": {
-      "favourited": {
-        "function": "Favourite toot"
+      "reply": {
+        "accessibilityLabel": "Reply to this toot"
       },
       "reblogged": {
+        "accessibilityLabel": "Boost this toot",
         "function": "Boost toot"
       },
+      "favourited": {
+        "accessibilityLabel": "Add this toot to favourites",
+        "function": "Favourite toot"
+      },
       "bookmarked": {
+        "accessibilityLabel": "Add this toot to bookmarks",
         "function": "Bookmark toot"
       }
     },
     "actionsUsers": {
-      "reblogged_by": "$t(screenTabs:shared.users.statuses.reblogged_by)",
-      "favourited_by": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} users have boosted this toot",
+        "accessibilityHint": "Tap to know the users",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} users have favourited this toot",
+        "accessibilityHint": "Tap to know the users",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      }
     },
     "attachment": {
       "sensitive": {
@@ -52,13 +66,36 @@
         "button": "Try remote link"
       }
     },
+    "avatar": {
+      "accessibilityLabel": "Avatar of {{name}}",
+      "accessibilityHint": "Tap to go to {{name}}'s page"
+    },
     "content": {
       "expandHint": "hidden content"
     },
     "fullConversation": "Read conversations",
     "header": {
       "shared": {
-        "application": "Tooted with {{application}}"
+        "account": {
+          "name": {
+            "accessibilityHint": "User's display name"
+          },
+          "account": {
+            "accessibilityHint": "User's account"
+          }
+        },
+        "application": "Tooted with {{application}}",
+        "muted": {
+          "accessibilityLabel": "Toot muted"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Toot is a direct message"
+          },
+          "private": {
+            "accessibilityLabel": "Toot is visible to followers only"
+          }
+        }
       },
       "conversation": {
         "withAccounts": "With",
@@ -67,6 +104,7 @@
         }
       },
       "actions": {
+        "accessibilityHint": "Actions for this toot, such as its posted user, toot itself",
         "account": {
           "heading": "About user",
           "mute": {

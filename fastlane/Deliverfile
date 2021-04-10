@@ -1,0 +1,17 @@
+languages(['zh-Hans'])
+
+name({
+  'default' => "tooot"
+})
+keywords({
+  'default' => "Mastodon,tooot,social,decentralized,长毛象,社交,去中心"
+})
+privacy_url({
+  'default' => "https://tooot.app/privacy-policy"
+})
+support_url({
+  'default' => "https://tooot.app"
+})
+
+copyright("#{Time.now.year} ©️ xmflsct")
+primary_category("SOCIAL_NETWORKING")

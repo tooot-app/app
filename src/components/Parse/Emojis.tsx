@@ -4,6 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
@@ -27,6 +28,7 @@ const ParseEmojis = React.memo(
     adaptiveSize = false,
     fontBold = false
   }: Props) => {
+    const { t } = useTranslation('componentParse')
     const { reduceMotionEnabled } = useAccessibility()
 
     const adaptiveFontsize = useSelector(getSettingsFontsize)
@@ -69,10 +71,10 @@ const ParseEmojis = React.memo(
                   return emojiShortcode === `:${emoji.shortcode}:`
                 })
                 if (emojiIndex === -1) {
-                  return <Text>{emojiShortcode}</Text>
+                  return <Text key={emojiShortcode + i}>{emojiShortcode}</Text>
                 } else {
                   if (i === 0) {
-                    return <Text key={emojiShortcode}> </Text>
+                    return <Text key={emojiShortcode + i}> </Text>
                   } else {
                     const uri = reduceMotionEnabled
                       ? emojis[emojiIndex].static_url
@@ -80,7 +82,7 @@ const ParseEmojis = React.memo(
                     if (validUrl.isHttpsUri(uri)) {
                       return (
                         <FastImage
-                          key={emojiShortcode}
+                          key={emojiShortcode + i}
                           source={{ uri }}
                           style={styles.image}
                         />
@@ -91,7 +93,7 @@ const ParseEmojis = React.memo(
                   }
                 }
               } else {
-                return <Text key={str}>{str}</Text>
+                return <Text key={i}>{str}</Text>
               }
             })
         ) : (

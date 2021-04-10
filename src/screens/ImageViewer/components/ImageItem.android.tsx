@@ -98,6 +98,10 @@ const ImageItem = ({
               setImageDimensions
             })}
             style={{ flex: 1 }}
+            imageStyle={{
+              flex: 1,
+              resizeMode: 'stretch'
+            }}
           />
         }
       />

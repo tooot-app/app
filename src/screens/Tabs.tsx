@@ -1,3 +1,4 @@
+import GracefullyImage from '@components/GracefullyImage'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import {
@@ -67,24 +68,20 @@ const ScreenTabs = React.memo(
             case 'Tab-Notifications':
               return <Icon name='Bell' size={size} color={color} />
             case 'Tab-Me':
-              return instanceActive !== -1 ? (
-                <Image
-                  source={{
-                    uri: instanceAccount?.avatarStatic
+              return (
+                <GracefullyImage
+                  key={instanceAccount?.avatarStatic}
+                  uri={{ original: instanceAccount?.avatarStatic }}
+                  dimension={{
+                    width: size,
+                    height: size
                   }}
                   style={{
-                    width: size,
-                    height: size,
                     borderRadius: size,
+                    overflow: 'hidden',
                     borderWidth: focused ? 2 : 0,
                     borderColor: focused ? theme.secondary : color
                   }}
-                />
-              ) : (
-                <Icon
-                  name={focused ? 'Meh' : 'Smile'}
-                  size={size}
-                  color={!focused ? theme.secondary : color}
                 />
               )
             default:
@@ -92,7 +89,7 @@ const ScreenTabs = React.memo(
           }
         }
       }),
-      [instanceAccount, instanceActive]
+      [instanceAccount?.avatarStatic, instanceActive]
     )
     const tabBarOptions = useMemo(
       () => ({

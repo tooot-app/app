@@ -48,6 +48,10 @@ const ComposePoll: React.FC = () => {
                 color={theme.secondary}
               />
               <TextInput
+                accessibilityLabel={t(
+                  'content.root.footer.poll.option.placeholder.accessibilityLabel',
+                  { index: i + 1 }
+                )}
                 keyboardAppearance={mode}
                 {...(i === 0 && firstRender && { autoFocus: true })}
                 style={[
@@ -80,6 +84,19 @@ const ComposePoll: React.FC = () => {
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>
           <Button
+            {...((total > 2)
+              ? {
+                  accessibilityLabel: t(
+                    'content.root.footer.poll.quantity.reduce.accessibilityLabel',
+                    { amount: total - 1 }
+                  )
+                }
+              : {
+                  accessibilityHint: t(
+                    'content.root.footer.poll.quantity.reduce.accessibilityHint',
+                    { amount: total }
+                  )
+                })}
             onPress={() => {
               analytics('compose_poll_reduce_press')
               total > 2 &&
@@ -95,6 +112,19 @@ const ComposePoll: React.FC = () => {
           />
         </View>
         <Button
+          {...(total < 4
+            ? {
+                accessibilityLabel: t(
+                  'content.root.footer.poll.quantity.increase.accessibilityLabel',
+                  { amount: total + 1 }
+                )
+              }
+            : {
+                accessibilityHint: t(
+                  'content.root.footer.poll.quantity.increase.accessibilityHint',
+                  { amount: total }
+                )
+              })}
           onPress={() => {
             analytics('compose_poll_increase_press')
             total < 4 &&

@@ -45,13 +45,36 @@
       },
       "footer": {
         "attachments": {
-          "sensitive": "Mark attachments as sensitive"
+          "sensitive": "Mark attachments as sensitive",
+          "remove": {
+            "accessibilityLabel": "Remove uploaded attachment, number {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Edit uploaded attachment, number {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Upload more attachments"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Tap to add emoji to toot"
         },
         "poll": {
           "option": {
             "placeholder": {
+              "accessibilityLabel": "Poll option {{index}}",
               "single": "Single choice",
               "multiple": "Multiple choice"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Reduce poll options to {{amount}}",
+              "accessibilityHint": "Minimum poll options quantity reached, currently has {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Increase poll options to {{amount}}",
+              "accessibilityHint": "Maximum poll options quantity reached, currently has {{amount}}"
             }
           },
           "multiple": {
@@ -79,6 +102,8 @@
       },
       "actions": {
         "attachment": {
+          "accessibilityLabel": "Upload attachment",
+          "accessibilityHint": "Poll function will be disabled when there is any attachment",
           "actions": {
             "options": {
               "library": "Upload from photo library",
@@ -113,7 +138,12 @@
             }
           }
         },
+        "poll": {
+          "accessibilityLabel": "Add poll",
+          "accessibilityHint": "Attachment function will be disabled when poll is active"
+        },
         "visibility": {
+          "accessibilityLabel": "Toot visibility is {{visibility}}",
           "title": "Toot visibility",
           "options": {
             "public": "Public",
@@ -122,6 +152,13 @@
             "direct": "Direct message",
             "cancel": "$t(common:buttons.cancel)"
           }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Spoiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Add emoji",
+          "accessibilityHint": "Open emoji selection panel, swipe horizontally to change page"
         }
       },
       "drafts": "Draft ({{count}})",
@@ -131,6 +168,7 @@
       "header": {
         "title": "Edit attachment",
         "right": {
+          "accessibilityLabel": "Save editing attachment",
           "failed": {
             "title": "Editing failed",
             "button": "Try again"
@@ -150,6 +188,7 @@
         "title": "Draft"
       },
       "content": {
+        "accessibilityHint": "Saved draft, tap to edit this draft",
         "textEmpty": "Content empty"
       }
     }

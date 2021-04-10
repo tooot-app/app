@@ -5,14 +5,17 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
   account: Mastodon.Account
+  highlighted: boolean
 }
 
 const TimelineAvatar = React.memo(
-  ({ queryKey, account }: Props) => {
+  ({ queryKey, account, highlighted }: Props) => {
+    const { t } = useTranslation('componentTimeline')
     const navigation = useNavigation<
       StackNavigationProp<Nav.TabLocalStackParamList>
     >()
@@ -26,6 +29,14 @@ const TimelineAvatar = React.memo(
 
     return (
       <GracefullyImage
+        {...(highlighted && {
+          accessibilityLabel: t('shared.avatar.accessibilityLabel', {
+            name: account.display_name
+          }),
+          accessibilityHint: t('shared.avatar.accessibilityHint', {
+            name: account.display_name
+          })
+        })}
         onPress={onPress}
         uri={{ original: account.avatar_static }}
         dimension={{
@@ -35,8 +46,7 @@ const TimelineAvatar = React.memo(
         style={{
           borderRadius: StyleConstants.Avatar.M,
           overflow: 'hidden',
-          marginRight: StyleConstants.Spacing.S,
-          backgroundColor: 'red'
+          marginRight: StyleConstants.Spacing.S
         }}
       />
     )

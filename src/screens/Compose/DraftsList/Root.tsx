@@ -55,6 +55,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
     ({ item }: { item: ComposeStateDraft }) => {
       return (
         <Pressable
+          accessibilityHint={t('content.draftsList.content.accessibilityHint')}
           style={[styles.draft, { backgroundColor: theme.backgroundDefault }]}
           onPress={async () => {
             setCheckingAttachments(true)
@@ -181,7 +182,10 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         visible={checkingAttachments}
         children={
           <View
-            style={[styles.modal, { backgroundColor: theme.backgroundOverlayInvert }]}
+            style={[
+              styles.modal,
+              { backgroundColor: theme.backgroundOverlayInvert }
+            ]}
             children={
               <Text
                 children='检查附件在服务器的状态…'

@@ -31,6 +31,7 @@ const ComponentAccount: React.FC<Props> = ({
 
   return (
     <Pressable
+      accessibilityRole='button'
       style={[styles.itemDefault, styles.itemAccount]}
       onPress={customOnPress || onPress}
     >

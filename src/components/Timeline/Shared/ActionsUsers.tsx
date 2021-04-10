@@ -28,6 +28,16 @@ const TimelineActionsUsers = React.memo(
       <View style={styles.base}>
         {status.reblogs_count > 0 ? (
           <Text
+            accessibilityLabel={t(
+              'shared.actionsUsers.reblogged_by.accessibilityLabel',
+              {
+                count: status.reblogs_count
+              }
+            )}
+            accessibilityHint={t(
+              'shared.actionsUsers.reblogged_by.accessibilityHint'
+            )}
+            accessibilityRole='button'
             style={[styles.text, { color: theme.secondary }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
@@ -41,13 +51,23 @@ const TimelineActionsUsers = React.memo(
               })
             }}
           >
-            {t('shared.actionsUsers.reblogged_by', {
+            {t('shared.actionsUsers.reblogged_by.text', {
               count: status.reblogs_count
             })}
           </Text>
         ) : null}
         {status.favourites_count > 0 ? (
           <Text
+            accessibilityLabel={t(
+              'shared.actionsUsers.favourited_by.accessibilityLabel',
+              {
+                count: status.reblogs_count
+              }
+            )}
+            accessibilityHint={t(
+              'shared.actionsUsers.favourited_by.accessibilityHint'
+            )}
+            accessibilityRole='button'
             style={[styles.text, { color: theme.secondary }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
@@ -61,7 +81,7 @@ const TimelineActionsUsers = React.memo(
               })
             }}
           >
-            {t('shared.actionsUsers.favourited_by', {
+            {t('shared.actionsUsers.favourited_by.text', {
               count: status.favourites_count
             })}
           </Text>

@@ -8,6 +8,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, {
+  RefObject,
   useCallback,
   useContext,
   useEffect,
@@ -28,9 +29,13 @@ import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import addAttachment from './addAttachment'
 
+export interface Props {
+  accessibleRefAttachments: RefObject<View>
+}
+
 const DEFAULT_HEIGHT = 200
 
-const ComposeAttachments: React.FC = () => {
+const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
@@ -153,6 +158,10 @@ const ComposeAttachments: React.FC = () => {
           ) : (
             <View style={styles.actions}>
               <Button
+                accessibilityLabel={t(
+                  'content.root.footer.attachments.remove.accessibilityLabel',
+                  { attachment: index + 1 }
+                )}
                 type='icon'
                 content='X'
                 spacing='M'
@@ -169,6 +178,10 @@ const ComposeAttachments: React.FC = () => {
                 }}
               />
               <Button
+                accessibilityLabel={t(
+                  'content.root.footer.attachments.edit.accessibilityLabel',
+                  { attachment: index + 1 }
+                )}
                 type='icon'
                 content='Edit'
                 spacing='M'
@@ -192,6 +205,10 @@ const ComposeAttachments: React.FC = () => {
   const listFooter = useMemo(
     () => (
       <Pressable
+        accessible
+        accessibilityLabel={t(
+          'content.root.footer.attachments.upload.accessibilityLabel'
+        )}
         style={[
           styles.container,
           {
@@ -233,7 +250,7 @@ const ComposeAttachments: React.FC = () => {
     []
   )
   return (
-    <View style={styles.base}>
+    <View style={styles.base} ref={accessibleRefAttachments} accessible>
       <Pressable style={styles.sensitive} onPress={sensitiveOnPress}>
         <Icon
           name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}

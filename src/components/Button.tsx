@@ -4,6 +4,7 @@ import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useMemo, useRef } from 'react'
 import {
+  AccessibilityProps,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -14,15 +15,18 @@ import {
 import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
+  accessibilityLabel?: AccessibilityProps['accessibilityLabel']
+  accessibilityHint?: AccessibilityProps['accessibilityHint']
+
   style?: StyleProp<ViewStyle>
 
   type: 'icon' | 'text'
   content: string
 
+  selected?: boolean
   loading?: boolean
   destructive?: boolean
   disabled?: boolean
-  active?: boolean
 
   strokeWidth?: number
   size?: 'S' | 'M' | 'L'
@@ -34,13 +38,15 @@ export interface Props {
 }
 
 const Button: React.FC<Props> = ({
+  accessibilityLabel,
+  accessibilityHint,
   style: customStyle,
   type,
   content,
+  selected,
   loading = false,
   destructive = false,
   disabled = false,
-  active = false,
   strokeWidth,
   size = 'M',
   spacing = 'S',
@@ -57,7 +63,7 @@ const Button: React.FC<Props> = ({
     } else {
       mounted.current = true
     }
-  }, [content, loading, disabled, active])
+  }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (
@@ -68,40 +74,22 @@ const Button: React.FC<Props> = ({
     [mode]
   )
 
-  const colorContent = useMemo(() => {
-    if (active) {
+  const mainColor = useMemo(() => {
+    if (selected) {
       return theme.blue
+    } else if (overlay) {
+      return theme.primaryOverlay
+    } else if (disabled || loading) {
+      return theme.disabled
     } else {
-      if (overlay) {
-        return theme.primaryOverlay
+      if (destructive) {
+        return theme.red
       } else {
-        if (disabled) {
-          return theme.secondary
-        } else {
-          if (destructive) {
-            return theme.red
-          } else {
-            return theme.primaryDefault
-          }
-        }
+        return theme.primaryDefault
       }
     }
-  }, [mode, disabled])
-  const colorBorder = useMemo(() => {
-    if (active) {
-      return theme.blue
-    } else {
-      if (disabled || loading) {
-        return theme.secondary
-      } else {
-        if (destructive) {
-          return theme.red
-        } else {
-          return theme.primaryDefault
-        }
-      }
-    }
-  }, [mode, loading, disabled])
+  }, [mode, disabled, loading, selected])
+
   const colorBackground = useMemo(() => {
     if (overlay) {
       return theme.backgroundOverlayInvert
@@ -117,7 +105,7 @@ const Button: React.FC<Props> = ({
           <>
             <Icon
               name={content}
-              color={colorContent}
+              color={mainColor}
               strokeWidth={strokeWidth}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
@@ -130,7 +118,7 @@ const Button: React.FC<Props> = ({
           <>
             <Text
               style={{
-                color: colorContent,
+                color: mainColor,
                 fontSize:
                   StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 fontWeight: destructive
@@ -145,7 +133,7 @@ const Button: React.FC<Props> = ({
           </>
         )
     }
-  }, [mode, content, loading, disabled, active])
+  }, [mode, content, loading, disabled])
 
   enum spacingMapping {
     XS = 'S',
@@ -156,11 +144,20 @@ const Button: React.FC<Props> = ({
 
   return (
     <Pressable
+      accessible
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole='button'
+      accessibilityState={{
+        selected,
+        disabled: disabled || selected,
+        busy: loading
+      }}
       style={[
         styles.button,
         {
           borderWidth: overlay ? 0 : 1,
-          borderColor: colorBorder,
+          borderColor: mainColor,
           backgroundColor: colorBackground,
           paddingVertical: StyleConstants.Spacing[spacing],
           paddingHorizontal:
@@ -171,7 +168,7 @@ const Button: React.FC<Props> = ({
       testID='base'
       onPress={onPress}
       children={children}
-      disabled={disabled || active || loading}
+      disabled={selected || disabled || loading}
     />
   )
 }

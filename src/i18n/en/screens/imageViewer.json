@@ -1,8 +1,12 @@
 {
   "content": {
+    "actions": {
+      "accessibilityLabel": "More actions of this image",
+      "accessibilityHint": "You can save or share this image"
+    },
     "options": {
       "save": "Save image",
-      "share": "Share iamge",
+      "share": "Share image",
       "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
