@@ -1,19 +1,11 @@
 import analytics from '@components/analytics'
-import haptics from '@components/haptics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import CameraRoll from '@react-native-community/cameraroll'
 import { StackScreenProps } from '@react-navigation/stack'
 import { findIndex } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  PermissionsAndroid,
-  Platform,
-  Share,
-  StatusBar,
-  View
-} from 'react-native'
+import { Platform, Share, StatusBar, View } from 'react-native'
 import {
   SafeAreaProvider,
   useSafeAreaInsets
@@ -23,35 +15,11 @@ import ImageViewer from './ImageViewer/Root'
 const saveImage = async (
   image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 ) => {
-  if (Platform.OS === 'ios') {
-    CameraRoll.save(image.url)
-      .then(() => haptics('Success'))
-      .catch(() => {
-        if (image.remote_url) {
-          CameraRoll.save(image.remote_url)
-            .then(() => haptics('Success'))
-            .catch(() => haptics('Error'))
-        } else {
-          haptics('Error')
-        }
-      })
-  } else if (Platform.OS === 'android') {
-    const hasAndroidPermission = async () => {
-      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-
-      const hasPermission = await PermissionsAndroid.check(permission)
-      if (hasPermission) {
-        return true
-      }
-
-      const status = await PermissionsAndroid.request(permission)
-      return status === 'granted'
-    }
-
-    if (!(await hasAndroidPermission())) {
-      return
-    }
-  }
+  const save = require('./ImageViewer/save')
+  Platform.select({
+    ios: save.saveIos(image),
+    android: save.saveAndroid(image)
+  })
 }
 
 const HeaderComponent = React.memo(
