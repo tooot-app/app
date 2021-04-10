@@ -29,19 +29,33 @@
       }
     },
     "actions": {
-      "favourited": {
-        "function": "喜欢嘟文"
+      "reply": {
+        "accessibilityLabel": "回复此嘟文"
       },
       "reblogged": {
+        "accessibilityLabel": "转发此嘟文",
         "function": "转嘟"
       },
+      "favourited": {
+        "accessibilityLabel": "添加此嘟文至喜欢列表",
+        "function": "喜欢嘟文"
+      },
       "bookmarked": {
+        "accessibilityLabel": "添加此嘟文至书签列表",
         "function": "喜欢嘟文"
       }
     },
     "actionsUsers": {
-      "reblogged_by": "$t(screenTabs:shared.users.statuses.reblogged_by)",
-      "favourited_by": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}}用户转嘟了此嘟文",
+        "accessibilityHint": "点击以了解用户",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}}用户喜欢了此嘟文",
+        "accessibilityHint": "点击以了解用户",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      }
     },
     "attachment": {
       "sensitive": {
@@ -52,13 +66,36 @@
         "button": "尝试远程链接"
       }
     },
+    "avatar": {
+      "accessibilityLabel": "{{name}}的头像",
+      "accessibilityHint": "点击进入{{name}}的页面"
+    },
     "content": {
       "expandHint": "隐藏内容"
     },
     "fullConversation": "阅读全部对话",
     "header": {
       "shared": {
-        "application": "发自于 {{application}}"
+        "account": {
+          "name": {
+            "accessibilityHint": "用户显示名"
+          },
+          "account": {
+            "accessibilityHint": "用户帐户名"
+          }
+        },
+        "application": "发自于 {{application}}",
+        "muted": {
+          "accessibilityLabel": "已静音此嘟文"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "此嘟文是私信"
+          },
+          "private": {
+            "accessibilityLabel": "此嘟文仅关注着可见"
+          }
+        }
       },
       "conversation": {
         "withAccounts": "与",
@@ -67,6 +104,7 @@
         }
       },
       "actions": {
+        "accessibilityHint": "更多关于此条嘟文，例如发布者等",
         "account": {
           "heading": "关于用户",
           "mute": {

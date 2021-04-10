@@ -17,6 +17,18 @@
       "name": "关于我"
     }
   },
+  "common": {
+    "search": {
+      "accessibilityLabel": "搜索",
+      "accessibilityHint": "搜索标签、用户或嘟文"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "筛选",
+      "accessibilityHint": "筛选显示的通知类型"
+    }
+  },
   "me": {
     "stacks": {
       "bookmarks": {
@@ -175,6 +187,10 @@
   },
   "shared": {
     "account": {
+      "actions": {
+        "accessibilityLabel": "对用户{{user}} 的操作",
+        "accessibilityHint": "您可以静音、屏蔽、举报或分享此用户"
+      },
       "moved": "账户已迁移",
       "created_at": "注册时间：{{date}}",
       "summary": {

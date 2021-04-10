@@ -1,5 +1,9 @@
 {
   "content": {
+    "actions": {
+      "accessibilityLabel": "更多此图像的操作",
+      "accessibilityHint": "您可以保存或分享此图片"
+    },
     "options": {
       "save": "保存图片",
       "share": "分享图片",
