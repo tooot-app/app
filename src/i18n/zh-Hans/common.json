@@ -3,6 +3,9 @@
     "apply": "应用",
     "cancel": "取消"
   },
+  "customEmoji": {
+    "accessibilityLabel": "自定义表情{{emoji}}"
+  },
   "message": {
     "success": {
       "message": "{{function}}成功"
