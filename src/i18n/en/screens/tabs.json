@@ -189,7 +189,7 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Actions for user {{user}}",
-        "accessibilityHint": "You can mute, blokc, report or share this user"
+        "accessibilityHint": "You can mute, block, report or share this user"
       },
       "moved": "User moved",
       "created_at": "Registered on: {{date}}",

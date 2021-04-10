@@ -62,7 +62,7 @@
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "Field number {{index}}",
+              "accessibilityLabel": "Poll option {{index}}",
               "single": "Single choice",
               "multiple": "Multiple choice"
             }
