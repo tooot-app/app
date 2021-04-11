@@ -73,23 +73,19 @@ const ParseEmojis = React.memo(
                 if (emojiIndex === -1) {
                   return <Text key={emojiShortcode + i}>{emojiShortcode}</Text>
                 } else {
-                  if (i === 0) {
-                    return <Text key={emojiShortcode + i}> </Text>
+                  const uri = reduceMotionEnabled
+                    ? emojis[emojiIndex].static_url
+                    : emojis[emojiIndex].url
+                  if (validUrl.isHttpsUri(uri)) {
+                    return (
+                      <FastImage
+                        key={emojiShortcode + i}
+                        source={{ uri }}
+                        style={styles.image}
+                      />
+                    )
                   } else {
-                    const uri = reduceMotionEnabled
-                      ? emojis[emojiIndex].static_url
-                      : emojis[emojiIndex].url
-                    if (validUrl.isHttpsUri(uri)) {
-                      return (
-                        <FastImage
-                          key={emojiShortcode + i}
-                          source={{ uri }}
-                          style={styles.image}
-                        />
-                      )
-                    } else {
-                      return null
-                    }
+                    return null
                   }
                 }
               } else {
