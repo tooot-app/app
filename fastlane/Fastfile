@@ -94,7 +94,7 @@ private_lane :build_ios do
       ipa: IPA_FILE,
       demo_account_required: true,
       distribute_external: true,
-      groups: "测试用户",
+      groups: "尝鲜",
       changelog: "感谢帮忙测试 tooot 🙏"
     )
   when "release"
@@ -144,7 +144,7 @@ private_lane :build_android do
       }
     )
     upload_to_play_store(
-      track: "beta",
+      track: "alpha",
       skip_upload_metadata: true,
       skip_upload_changelogs: true,
       skip_upload_images: true,
