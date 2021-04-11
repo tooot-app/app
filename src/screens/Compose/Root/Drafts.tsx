@@ -28,6 +28,7 @@ const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
   if (!composeState.dirty && instanceDrafts?.length) {
     return (
       <View
+        accessible
         ref={accessibleRefDrafts}
         style={styles.base}
         children={

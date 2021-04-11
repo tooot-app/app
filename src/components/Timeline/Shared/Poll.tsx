@@ -152,14 +152,16 @@ const TimelinePoll: React.FC<Props> = ({
         </Text>
       )
     } else {
-      return (
-        <Text style={[styles.expiration, { color: theme.secondary }]}>
-          <Trans
-            i18nKey='componentTimeline:shared.poll.meta.expiration.until'
-            components={[<RelativeTime date={poll.expires_at} />]}
-          />
-        </Text>
-      )
+      if (poll.expires_at) {
+        return (
+          <Text style={[styles.expiration, { color: theme.secondary }]}>
+            <Trans
+              i18nKey='componentTimeline:shared.poll.meta.expiration.until'
+              components={[<RelativeTime date={poll.expires_at} />]}
+            />
+          </Text>
+        )
+      }
     }
   }, [mode, i18n.language, poll.expired, poll.expires_at])
 
