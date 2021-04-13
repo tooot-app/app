@@ -39,7 +39,7 @@ const TimelineContent = React.memo(
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
-              numberOfLines={0}
+              numberOfLines={1}
               expandHint={t('shared.content.expandHint')}
               disableDetails={disableDetails}
             />
