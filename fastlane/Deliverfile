@@ -15,3 +15,8 @@ support_url({
 
 copyright("#{Time.now.year} ©️ xmflsct")
 primary_category("SOCIAL_NETWORKING")
+
+automatic_release(false)
+force(true)
+precheck_include_in_app_purchases(false)
+submit_for_review(true)

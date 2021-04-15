@@ -106,12 +106,7 @@ private_lane :build_ios do
       output_directory: BUILD_DIRECTORY,
       silent: true
     )
-    upload_to_app_store(
-      force: true,
-      ipa: IPA_FILE,
-      submit_for_review: true,
-      automatic_release: false
-    )
+    upload_to_app_store( ipa: IPA_FILE )
   else
     if !is_ci
       match( type: "development", readonly: true )
