@@ -1,1 +1,1 @@
-../../default/subtitle.txt
+../../en-US/subtitle.txt

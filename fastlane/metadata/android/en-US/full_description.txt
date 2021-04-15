@@ -1,1 +1,1 @@
-../../default/description.txt
+../../en-US/description.txt
