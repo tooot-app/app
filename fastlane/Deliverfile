@@ -12,7 +12,6 @@ privacy_url({
 support_url({
   'default' => "https://tooot.app"
 })
-
 copyright("#{Time.now.year} ©️ xmflsct")
 primary_category("SOCIAL_NETWORKING")
 
