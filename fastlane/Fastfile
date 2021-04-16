@@ -1,4 +1,4 @@
-fastlane_version "2.179.0"
+fastlane_version "2.180.1"
 skip_docs
 
 ensure_env_vars(
