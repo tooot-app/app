@@ -20,6 +20,7 @@ import {
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
+import * as Linking from 'expo-linking'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -47,6 +48,13 @@ const SettingsApp: React.FC = () => {
     <MenuContainer>
       {instanceActive !== -1 ? (
         <>
+          <MenuRow
+            title={t('me.settings.profile.heading')}
+            onPress={() => {
+              analytics('settings_profile_press')
+              Linking.openURL('https://${domain}/settings/profile')
+            }}
+          />
           <MenuRow
             title={t('me.settings.push.heading')}
             content={

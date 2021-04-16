@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Instance' domain"
     },
-    "button": "Login",
+    "button": "Login/Reg",
     "information": {
       "name": "Name",
       "accounts": "Users",

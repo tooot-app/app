@@ -3,12 +3,12 @@
     "textInput": {
       "placeholder": "输入社区服务器地址"
     },
-    "button": "登录",
+    "button": "登录/注册",
     "information": {
       "name": "社区名称",
-      "accounts": "用户总数",
-      "statuses": "嘟文总数",
-      "domains": "连结总数"
+      "accounts": "用户数",
+      "statuses": "嘟文数",
+      "domains": "连接社区数"
     },
     "disclaimer": {
       "base": "登录过程将使用系统浏览器，你的账号登录信息tooot应用无法读取。详见 ",
