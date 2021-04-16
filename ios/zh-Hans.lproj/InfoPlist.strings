@@ -6,6 +6,6 @@
   
 */
 
-"NSCameraUsageDescription" = "允许tooot拍摄图片或视频，以添加嘟文附件"
-"NSPhotoLibraryAddUsageDescription" = "允许tooot保存图片至相册"
-"NSPhotoLibraryUsageDescription" = "允许tooot读取相册图片或视频，以添加嘟文附件"
+"NSCameraUsageDescription" = "允许tooot拍摄图片或视频，以添加嘟文附件";
+"NSPhotoLibraryAddUsageDescription" = "允许tooot保存图片至相册";
+"NSPhotoLibraryUsageDescription" = "允许tooot读取相册图片或视频，以添加嘟文附件";
