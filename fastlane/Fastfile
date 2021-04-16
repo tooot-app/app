@@ -106,7 +106,7 @@ private_lane :build_ios do
       output_directory: BUILD_DIRECTORY,
       silent: true
     )
-    upload_to_app_store( ipa: IPA_FILE )
+    upload_to_app_store( ipa: IPA_FILE, app_version: VERSION )
   else
     if !is_ci
       match( type: "development", readonly: true )
