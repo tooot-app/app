@@ -2,7 +2,6 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
-import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Updates from 'expo-updates'
@@ -19,11 +18,6 @@ const SettingsTooot: React.FC = () => {
   const navigation = useNavigation()
   const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')
-
-  const { isLoading, data } = useSearchQuery({
-    term: '@tooot@xmflsct.com',
-    options: { enabled: instanceActive !== -1 }
-  })
 
   return (
     <MenuContainer>
@@ -66,7 +60,6 @@ const SettingsTooot: React.FC = () => {
       ) : null}
       <MenuRow
         title={t('me.settings.contact.heading')}
-        loading={isLoading}
         content={
           <Icon
             name='Mail'
@@ -76,15 +69,10 @@ const SettingsTooot: React.FC = () => {
         }
         iconBack='ChevronRight'
         onPress={() => {
-          const foundAccounts = data?.accounts.filter(
-            account =>
-              account.acct === 'tooot@xmflsct.com' ||
-              account.url === 'https://social.xmflsct.com/@tooot'
-          )
-          if (foundAccounts?.length === 1) {
+          if (instanceActive !== -1) {
             navigation.navigate('Screen-Compose', {
               type: 'conversation',
-              accts: [foundAccounts[0].acct]
+              accts: ['tooot@xmflsct.com']
             })
           } else {
             WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot')
