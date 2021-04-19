@@ -11,15 +11,19 @@ import {
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
 import ImageViewer from './ImageViewer/Root'
+import { saveAndroid, saveIos } from './ImageViewer/save'
 
 const saveImage = async (
   image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 ) => {
-  const save = require('./ImageViewer/save')
-  Platform.select({
-    ios: save.saveIos(image),
-    android: save.saveAndroid(image)
-  })
+  switch (Platform.OS) {
+    case 'ios':
+      saveIos(image)
+      break
+    case 'android':
+      saveAndroid(image)
+      break
+  }
 }
 
 const HeaderComponent = React.memo(

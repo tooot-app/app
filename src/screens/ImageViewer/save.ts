@@ -6,7 +6,9 @@ const saveIos = async (
   image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 ) => {
   CameraRoll.save(image.url)
-    .then(() => haptics('Success'))
+    .then(() => {
+      haptics('Success')
+    })
     .catch(() => {
       if (image.remote_url) {
         CameraRoll.save(image.remote_url)
