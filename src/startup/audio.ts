@@ -7,8 +7,7 @@ const audio = () => {
     playsInSilentModeIOS: true,
     interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
     interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-    shouldDuckAndroid: true,
-    playThroughEarpieceAndroid: true
+    shouldDuckAndroid: true
   })
 }
 

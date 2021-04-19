@@ -117,6 +117,7 @@ const ScreenImagesViewer = ({
   navigation
 }: ScreenImagesViewerProp) => {
   if (imageUrls.length === 0) {
+    navigation.goBack()
     return null
   }
 

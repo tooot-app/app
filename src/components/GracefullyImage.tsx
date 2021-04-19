@@ -67,8 +67,8 @@ const GracefullyImage = React.memo(
         setImageLoaded(true)
         setImageDimensions &&
           setImageDimensions({
-            width: nativeEvent.width,
-            height: nativeEvent.height
+            width: nativeEvent.source.width,
+            height: nativeEvent.source.height
           })
       },
       [source.uri]
@@ -81,9 +81,9 @@ const GracefullyImage = React.memo(
 
     const previewView = useMemo(
       () =>
-        // Android flickrs between transition, thus keep showing the preview image
-        uri.preview ? (
+        uri.preview && !imageLoaded ? (
           <Image
+            fadeDuration={0}
             source={{ uri: uri.preview }}
             style={[
               styles.placeholder,
@@ -96,6 +96,7 @@ const GracefullyImage = React.memo(
     const originalView = useMemo(
       () => (
         <Image
+          fadeDuration={0}
           source={source}
           style={[{ flex: 1 }, imageStyle]}
           onLoad={onLoad}
