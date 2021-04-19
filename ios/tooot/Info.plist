@@ -50,16 +50,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) DOES NOT need microphone permission. Please reject this request.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Give $(PRODUCT_NAME) permission to access your camera</string>
+	<string>Allow $(PRODUCT_NAME) to capture photo or video and attach it to your toot</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Give $(PRODUCT_NAME) permission to use your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Give $(PRODUCT_NAME) permission to save photos</string>
+	<string>Allow $(PRODUCT_NAME) to save an image to your camera roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Give $(PRODUCT_NAME) permission to save photos</string>
+	<string>Allow $(PRODUCT_NAME) to access your camera roll to attach photos or videos to your toot</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

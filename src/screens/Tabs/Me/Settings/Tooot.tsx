@@ -43,7 +43,7 @@ const SettingsTooot: React.FC = () => {
         }}
       />
       {__DEV__ ||
-      ['production', 'development'].some(channel =>
+      ['release', 'development'].some(channel =>
         Updates.releaseChannel?.includes(channel)
       ) ? (
         <MenuRow
