@@ -67,8 +67,8 @@ const GracefullyImage = React.memo(
         setImageLoaded(true)
         setImageDimensions &&
           setImageDimensions({
-            width: nativeEvent.width,
-            height: nativeEvent.height
+            width: nativeEvent.source.width,
+            height: nativeEvent.source.height
           })
       },
       [source.uri]
@@ -83,15 +83,20 @@ const GracefullyImage = React.memo(
       () =>
         uri.preview && !imageLoaded ? (
           <Image
+            fadeDuration={0}
             source={{ uri: uri.preview }}
-            style={[{ flex: 1 }, imageStyle]}
+            style={[
+              styles.placeholder,
+              { backgroundColor: theme.shimmerDefault }
+            ]}
           />
         ) : null,
-      [imageLoaded]
+      []
     )
     const originalView = useMemo(
       () => (
         <Image
+          fadeDuration={0}
           source={source}
           style={[{ flex: 1 }, imageStyle]}
           onLoad={onLoad}
@@ -104,12 +109,19 @@ const GracefullyImage = React.memo(
       if (hidden || !imageLoaded) {
         if (blurhash) {
           return (
-            <Blurhash decodeAsync blurhash={blurhash} style={styles.blurhash} />
+            <Blurhash
+              decodeAsync
+              blurhash={blurhash}
+              style={styles.placeholder}
+            />
           )
         } else {
           return (
             <View
-              style={[styles.blurhash, { backgroundColor: theme.disabled }]}
+              style={[
+                styles.placeholder,
+                { backgroundColor: theme.shimmerDefault }
+              ]}
             />
           )
         }
@@ -146,7 +158,7 @@ const GracefullyImage = React.memo(
 )
 
 const styles = StyleSheet.create({
-  blurhash: {
+  placeholder: {
     width: '100%',
     height: '100%',
     position: 'absolute'

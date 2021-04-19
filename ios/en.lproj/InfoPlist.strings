@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  tooot
+
+  Created by Zheng Zhiyuan (SEBD) on 2021-04-16.
+  
+*/
+
+"NSCameraUsageDescription" = "Allow tooot to capture photo or video and attach it to your toot";
+"NSPhotoLibraryAddUsageDescription" = "Allow tooot to save an image to your camera roll";
+"NSPhotoLibraryUsageDescription" = "Allow tooot to access your camera roll to attach photos or videos to your toot";

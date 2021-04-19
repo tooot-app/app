@@ -1,4 +1,4 @@
-languages(['zh-Hans'])
+languages(['zh-Hans', 'en-US'])
 
 name({
   'default' => "tooot"
@@ -12,6 +12,11 @@ privacy_url({
 support_url({
   'default' => "https://tooot.app"
 })
-
 copyright("#{Time.now.year} ©️ xmflsct")
 primary_category("SOCIAL_NETWORKING")
+
+automatic_release(false)
+force(true)
+precheck_include_in_app_purchases(false)
+submit_for_review(true)
+overwrite_screenshots(true)
