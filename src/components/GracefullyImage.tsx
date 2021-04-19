@@ -81,13 +81,17 @@ const GracefullyImage = React.memo(
 
     const previewView = useMemo(
       () =>
-        uri.preview && !imageLoaded ? (
+        // Android flickrs between transition, thus keep showing the preview image
+        uri.preview ? (
           <Image
             source={{ uri: uri.preview }}
-            style={[{ flex: 1 }, imageStyle]}
+            style={[
+              styles.placeholder,
+              { backgroundColor: theme.shimmerDefault }
+            ]}
           />
         ) : null,
-      [imageLoaded]
+      []
     )
     const originalView = useMemo(
       () => (
@@ -104,12 +108,19 @@ const GracefullyImage = React.memo(
       if (hidden || !imageLoaded) {
         if (blurhash) {
           return (
-            <Blurhash decodeAsync blurhash={blurhash} style={styles.blurhash} />
+            <Blurhash
+              decodeAsync
+              blurhash={blurhash}
+              style={styles.placeholder}
+            />
           )
         } else {
           return (
             <View
-              style={[styles.blurhash, { backgroundColor: theme.disabled }]}
+              style={[
+                styles.placeholder,
+                { backgroundColor: theme.shimmerDefault }
+              ]}
             />
           )
         }
@@ -146,7 +157,7 @@ const GracefullyImage = React.memo(
 )
 
 const styles = StyleSheet.create({
-  blurhash: {
+  placeholder: {
     width: '100%',
     height: '100%',
     position: 'absolute'
