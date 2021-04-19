@@ -47,6 +47,7 @@ const TimelineAttachment = React.memo(
             case 'image':
               imageUrls.push({
                 id: attachment.id,
+                preview_url: attachment.preview_url,
                 url: attachment.url,
                 remote_url: attachment.remote_url,
                 blurhash: attachment.blurhash,
@@ -107,6 +108,7 @@ const TimelineAttachment = React.memo(
               ) {
                 imageUrls.push({
                   id: attachment.id,
+                  preview_url: attachment.preview_url,
                   url: attachment.url,
                   remote_url: attachment.remote_url,
                   blurhash: attachment.blurhash,
