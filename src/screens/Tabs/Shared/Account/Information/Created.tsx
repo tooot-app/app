@@ -48,7 +48,7 @@ const AccountInformationCreated: React.FC<Props> = ({ account }) => {
   } else {
     return (
       <PlaceholderLine
-        width={StyleConstants.Font.Size.S * 3}
+        width={StyleConstants.Font.Size.S * 4}
         height={StyleConstants.Font.LineHeight.S}
         color={theme.shimmerDefault}
         noMargin

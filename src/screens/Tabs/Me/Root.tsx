@@ -8,8 +8,12 @@ import AccountNav from '@screens/Tabs/Shared/Account/Nav'
 import AccountContext from '@screens/Tabs/Shared/Account/utils/createContext'
 import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState'
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
-import React, { useReducer, useRef, useState } from 'react'
+import { useAccountQuery } from '@utils/queryHooks/account'
+import {
+  getInstanceAccount,
+  getInstanceActive
+} from '@utils/slices/instancesSlice'
+import React, { useReducer, useRef } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -18,11 +22,18 @@ import { useSelector } from 'react-redux'
 
 const ScreenMeRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
+  const instanceAccount = useSelector(
+    getInstanceAccount,
+    (prev, next) => prev?.id === next?.id
+  )
+  const { data } = useAccountQuery({
+    // @ts-ignore
+    id: instanceAccount?.id,
+    options: { enabled: instanceActive !== -1, keepPreviousData: false }
+  })
 
   const scrollRef = useRef<Animated.ScrollView>(null)
   useScrollToTop(scrollRef)
-
-  const [data, setData] = useState<Mastodon.Account>()
 
   const [accountState, accountDispatch] = useReducer(
     accountReducer,
@@ -46,7 +57,7 @@ const ScreenMeRoot: React.FC = () => {
         scrollEventThrottle={16}
       >
         {instanceActive !== -1 ? (
-          <MyInfo setData={setData} />
+          <MyInfo account={data} />
         ) : (
           <ComponentInstance />
         )}

@@ -36,31 +36,31 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
     }
   }, [account?.moved])
 
-  if (account) {
-    return (
-      <View style={[styles.base, { flexDirection: 'row' }]}>
-        <Text style={movedStyle.base}>
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            size='L'
-            fontBold
-          />
-        </Text>
-        {movedContent}
-      </View>
-    )
-  } else {
-    return (
-      <PlaceholderLine
-        width={StyleConstants.Font.Size.L * 2}
-        height={StyleConstants.Font.LineHeight.L}
-        color={theme.shimmerDefault}
-        noMargin
-        style={styles.base}
-      />
-    )
-  }
+  return (
+    <View style={[styles.base, { flexDirection: 'row' }]}>
+      {account ? (
+        <>
+          <Text style={movedStyle.base}>
+            <ParseEmojis
+              content={account.display_name || account.username}
+              emojis={account.emojis}
+              size='L'
+              fontBold
+            />
+          </Text>
+          {movedContent}
+        </>
+      ) : (
+        <PlaceholderLine
+          width={StyleConstants.Font.Size.L * 2}
+          height={StyleConstants.Font.LineHeight.L}
+          color={theme.shimmerDefault}
+          noMargin
+          style={{ borderRadius: 0 }}
+        />
+      )}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
