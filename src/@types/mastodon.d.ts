@@ -28,7 +28,7 @@ declare namespace Mastodon {
     moved?: Account
     fields: Field[]
     bot: boolean
-    source: Source
+    source?: Source
   }
 
   type Announcement = {
@@ -258,7 +258,7 @@ declare namespace Mastodon {
   type Field = {
     name: string
     value: string
-    verified_at?: string
+    verified_at: string | null
   }
 
   type List = {

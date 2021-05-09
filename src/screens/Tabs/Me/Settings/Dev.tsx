@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { persistor } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
@@ -52,10 +53,19 @@ const SettingsDev: React.FC = () => {
       />
       <Button
         type='text'
+        content={'Test flash message'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={() => displayMessage({ message: 'This is a testing message' })}
+      />
+      <Button
+        type='text'
         content={'Purge secure storage'}
         style={{
           marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
-          marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
         destructive
         onPress={() => persistor.purge()}

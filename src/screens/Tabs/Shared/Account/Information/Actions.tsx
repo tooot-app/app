@@ -2,34 +2,21 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
+import {
+  getInstanceAccount,
+  getInstancePush,
+  getInstanceUri
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  ownAccount: boolean
-}
-
-const GoToMoved = ({ accountMoved }: { accountMoved: Mastodon.Account }) => {
-  const { t } = useTranslation('screenTabs')
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
-
-  return (
-    <Button
-      type='text'
-      content={t('shared.account.moved')}
-      onPress={() => {
-        analytics('account_gotomoved_press')
-        navigation.push('Tab-Shared-Account', { account: accountMoved })
-      }}
-    />
-  )
+  myInfo?: boolean
 }
 
 const Conversation = ({ account }: { account: Mastodon.Account }) => {
@@ -41,7 +28,7 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
       round
       type='icon'
       content='Mail'
-      style={styles.actionConversation}
+      style={styles.actionLeft}
       onPress={() => {
         analytics('account_DM_press')
         navigation.navigate('Screen-Compose', {
@@ -53,24 +40,76 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
   ) : null
 }
 
-const AccountInformationActions: React.FC<Props> = ({
-  account,
-  ownAccount
-}) => {
-  return account && account.id ? (
-    account.moved ? (
-      <GoToMoved accountMoved={account.moved} />
-    ) : !ownAccount ? (
-      <>
+const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
+  const { t } = useTranslation('screenTabs')
+  const navigation = useNavigation()
+
+  if (account?.moved) {
+    const accountMoved = account.moved
+    return (
+      <View style={styles.base}>
+        <Button
+          type='text'
+          content={t('shared.account.moved')}
+          onPress={() => {
+            analytics('account_gotomoved_press')
+            // @ts-ignore
+            navigation.push('Tab-Shared-Account', { account: accountMoved })
+          }}
+        />
+      </View>
+    )
+  }
+
+  const instancePush = useSelector(
+    getInstancePush,
+    (prev, next) => prev?.global.value === next?.global.value
+  )
+  const instanceUri = useSelector(getInstanceUri)
+
+  if (myInfo) {
+    return (
+      <View style={styles.base}>
+        <Button
+          round
+          type='icon'
+          content={instancePush?.global.value ? 'Bell' : 'BellOff'}
+          style={styles.actionLeft}
+          onPress={() => navigation.navigate('Tab-Me-Push')}
+        />
+        <Button
+          type='text'
+          disabled={account === undefined}
+          content={t('me.stacks.profile.name')}
+          onPress={() => navigation.navigate('Tab-Me-Profile')}
+        />
+      </View>
+    )
+  }
+
+  const instanceAccount = useSelector(getInstanceAccount, () => true)
+  const ownAccount =
+    account?.id === instanceAccount?.id &&
+    account?.acct === instanceAccount?.acct
+
+  if (!ownAccount && account) {
+    return (
+      <View style={styles.base}>
         <Conversation account={account} />
         <RelationshipOutgoing id={account.id} />
-      </>
-    ) : null
-  ) : null
+      </View>
+    )
+  } else {
+    return null
+  }
 }
 
 const styles = StyleSheet.create({
-  actionConversation: { marginRight: StyleConstants.Spacing.S }
+  base: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row'
+  },
+  actionLeft: { marginRight: StyleConstants.Spacing.S }
 })
 
 export default AccountInformationActions

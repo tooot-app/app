@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { getTheme } from '@utils/styles/themes'
-import React from 'react'
+import React, { RefObject } from 'react'
 import { AccessibilityInfo } from 'react-native'
 import FlashMessage, {
   hideMessage,
@@ -11,6 +11,7 @@ import FlashMessage, {
 import haptics from './haptics'
 
 const displayMessage = ({
+  ref,
   duration = 'short',
   autoHide = true,
   message,
@@ -20,6 +21,7 @@ const displayMessage = ({
   type
 }:
   | {
+      ref?: RefObject<FlashMessage>
       duration?: 'short' | 'long'
       autoHide?: boolean
       message: string
@@ -29,6 +31,7 @@ const displayMessage = ({
       type?: undefined
     }
   | {
+      ref?: RefObject<FlashMessage>
       duration?: 'short' | 'long'
       autoHide?: boolean
       message: string
@@ -54,63 +57,88 @@ const displayMessage = ({
     haptics('Error')
   }
 
-  showMessage({
-    duration: type === 'error' ? 5000 : duration === 'short' ? 1500 : 3000,
-    autoHide,
-    message,
-    description,
-    onPress,
-    ...(mode &&
-      type && {
-        renderFlashMessageIcon: () => {
-          return (
-            <Icon
-              name={iconMapping[type]}
-              size={StyleConstants.Font.LineHeight.M}
-              color={getTheme(mode)[colorMapping[type]]}
-              style={{ marginRight: StyleConstants.Spacing.S }}
-            />
-          )
-        }
-      })
-  })
+  if (ref) {
+    ref.current?.showMessage({
+      duration: type === 'error' ? 5000 : duration === 'short' ? 1500 : 3000,
+      autoHide,
+      message,
+      description,
+      onPress,
+      ...(mode &&
+        type && {
+          renderFlashMessageIcon: () => {
+            return (
+              <Icon
+                name={iconMapping[type]}
+                size={StyleConstants.Font.LineHeight.M}
+                color={getTheme(mode)[colorMapping[type]]}
+                style={{ marginRight: StyleConstants.Spacing.S }}
+              />
+            )
+          }
+        })
+    })
+  } else {
+    showMessage({
+      duration: type === 'error' ? 5000 : duration === 'short' ? 1500 : 3000,
+      autoHide,
+      message,
+      description,
+      onPress,
+      ...(mode &&
+        type && {
+          renderFlashMessageIcon: () => {
+            return (
+              <Icon
+                name={iconMapping[type]}
+                size={StyleConstants.Font.LineHeight.M}
+                color={getTheme(mode)[colorMapping[type]]}
+                style={{ marginRight: StyleConstants.Spacing.S }}
+              />
+            )
+          }
+        })
+    })
+  }
 }
 
 const removeMessage = () => {
+  // if (ref) {
+  //   ref.current?.hideMessage()
+  // } else {
   hideMessage()
+  // }
 }
 
-const Message = React.memo(
-  () => {
-    const { mode, theme } = useTheme()
+const Message = React.forwardRef<FlashMessage>((_, ref) => {
+  const { mode, theme } = useTheme()
 
-    return (
-      <FlashMessage
-        icon='auto'
-        position='top'
-        floating
-        style={{
-          backgroundColor: theme.backgroundDefault,
-          shadowColor: theme.primaryDefault,
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: mode === 'light' ? 0.16 : 0.24,
-          shadowRadius: 4
-        }}
-        titleStyle={{
-          color: theme.primaryDefault,
-          ...StyleConstants.FontStyle.M,
-          fontWeight: StyleConstants.Font.Weight.Bold
-        }}
-        textStyle={{
-          color: theme.primaryDefault,
-          ...StyleConstants.FontStyle.S
-        }}
-        // @ts-ignore
-        textProps={{ numberOfLines: 2 }}
-      />
-    )
-  },
-  () => true
-)
+  return (
+    <FlashMessage
+      ref={ref}
+      icon='auto'
+      position='top'
+      floating
+      style={{
+        backgroundColor: theme.backgroundDefault,
+        shadowColor: theme.primaryDefault,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: mode === 'light' ? 0.16 : 0.24,
+        shadowRadius: 4
+      }}
+      titleStyle={{
+        color: theme.primaryDefault,
+        ...StyleConstants.FontStyle.M,
+        fontWeight: StyleConstants.Font.Weight.Bold
+      }}
+      textStyle={{
+        color: theme.primaryDefault,
+        ...StyleConstants.FontStyle.S
+      }}
+      // @ts-ignore
+      textProps={{ numberOfLines: 2 }}
+    />
+  )
+})
 
 export { Message, displayMessage, removeMessage }

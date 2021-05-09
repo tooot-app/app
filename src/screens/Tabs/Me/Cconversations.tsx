@@ -3,7 +3,7 @@ import TimelineConversation from '@components/Timeline/Conversation'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 
-const ScreenMeConversations = React.memo(
+const TabMeConversations = React.memo(
   () => {
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Conversations' }]
     const renderItem = useCallback(
@@ -18,4 +18,4 @@ const ScreenMeConversations = React.memo(
   () => true
 )
 
-export default ScreenMeConversations
+export default TabMeConversations

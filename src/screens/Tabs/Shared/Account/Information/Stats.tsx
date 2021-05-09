@@ -10,10 +10,9 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  myInfo: boolean
 }
 
-const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
+const AccountInformationStats: React.FC<Props> = ({ account }) => {
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -28,12 +27,6 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           children={t('shared.account.summary.statuses_count', {
             count: account.statuses_count || 0
           })}
-          onPress={() => {
-            analytics('account_stats_toots_press', {
-              count: account.statuses_count
-            })
-            myInfo && navigation.push('Tab-Shared-Account', { account })
-          }}
         />
       ) : (
         <PlaceholderLine
@@ -46,7 +39,10 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primaryDefault, textAlign: 'right' }]}
+          style={[
+            styles.stat,
+            { color: theme.primaryDefault, textAlign: 'right' }
+          ]}
           children={t('shared.account.summary.following_count', {
             count: account.following_count
           })}
@@ -73,7 +69,10 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primaryDefault, textAlign: 'center' }]}
+          style={[
+            styles.stat,
+            { color: theme.primaryDefault, textAlign: 'center' }
+          ]}
           children={t('shared.account.summary.followers_count', {
             count: account.followers_count
           })}

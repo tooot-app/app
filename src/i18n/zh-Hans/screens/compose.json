@@ -62,7 +62,7 @@
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "选项{{index}}",
+              "accessibilityLabel": "投票选项 {{index}}",
               "single": "单选项",
               "multiple": "多选项"
             }
@@ -104,33 +104,6 @@
         "attachment": {
           "accessibilityLabel": "上传附件",
           "accessibilityHint": "当有任何附件时，投票功能将被禁用",
-          "actions": {
-            "options": {
-              "library": "从相册上传",
-              "photo": "拍摄上传",
-              "cancel": "$t(common:buttons.cancel)"
-            },
-            "library": {
-              "alert": {
-                "title": "无读取权限",
-                "message": "需要读取相册权限才能上传附件",
-                "buttons": {
-                  "settings": "去更新设置",
-                  "cancel": "取消上传"
-                }
-              }
-            },
-            "photo": {
-              "alert": {
-                "title": "无拍照权限",
-                "message": "需要使用相机权限才能上传附件",
-                "buttons": {
-                  "settings": "去更新设置",
-                  "cancel": "取消上传"
-                }
-              }
-            }
-          },
           "failed": {
             "alert": {
               "title": "上传失败",

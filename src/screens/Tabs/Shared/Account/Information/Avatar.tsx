@@ -1,18 +1,24 @@
 import analytics from '@components/analytics'
+import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account | undefined
   myInfo: boolean
+  edit?: boolean
 }
 
-const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
+const AccountInformationAvatar: React.FC<Props> = ({
+  account,
+  myInfo,
+  edit
+}) => {
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -36,6 +42,20 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
             : account?.avatar
         }}
       />
+      {edit ? (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            alignContent: 'center',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Button type='icon' content='Edit' round onPress={() => {}} />
+        </View>
+      ) : null}
     </Pressable>
   )
 }

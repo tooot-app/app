@@ -104,33 +104,6 @@
         "attachment": {
           "accessibilityLabel": "Upload attachment",
           "accessibilityHint": "Poll function will be disabled when there is any attachment",
-          "actions": {
-            "options": {
-              "library": "Upload from photo library",
-              "photo": "Upload with camera",
-              "cancel": "$t(common:buttons.cancel)"
-            },
-            "library": {
-              "alert": {
-                "title": "No permission",
-                "message": "Require photo library read permission to upload",
-                "buttons": {
-                  "settings": "Update setting",
-                  "cancel": "Cancel"
-                }
-              }
-            },
-            "photo": {
-              "alert": {
-                "title": "No permission",
-                "message": "Require camera usage permission to upload",
-                "buttons": {
-                  "settings": "Update setting",
-                  "cancel": "Cancel"
-                }
-              }
-            }
-          },
           "failed": {
             "alert": {
               "title": "Upload failed",

@@ -6,7 +6,7 @@ import li from 'li'
 const ctx = new chalk.Instance({ level: 3 })
 
 export type Params = {
-  method: 'get' | 'post' | 'put' | 'delete'
+  method: 'get' | 'post' | 'put' | 'delete' | 'patch'
   version?: 'v1' | 'v2'
   url: string
   params?: {

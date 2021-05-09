@@ -1,0 +1,28 @@
+{
+  "title": "Select media source",
+  "options": {
+    "library": "Upload from library",
+    "photo": "Take a photo",
+    "cancel": "$t(common:buttons.cancel)"
+  },
+  "library": {
+    "alert": {
+      "title": "No permission",
+      "message": "Require photo library read permission to upload",
+      "buttons": {
+        "settings": "Update setting",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "No permission",
+      "message": "Require camera usage permission to upload",
+      "buttons": {
+        "settings": "Update setting",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  }
+}

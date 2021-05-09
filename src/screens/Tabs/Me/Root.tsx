@@ -4,25 +4,30 @@ import Collections from '@screens/Tabs/Me/Root/Collections'
 import Logout from '@screens/Tabs/Me/Root/Logout'
 import MyInfo from '@screens/Tabs/Me/Root/MyInfo'
 import Settings from '@screens/Tabs/Me/Root/Settings'
+import AccountInformationSwitch from '@screens/Tabs/Me/Root/Switch'
 import AccountNav from '@screens/Tabs/Shared/Account/Nav'
 import AccountContext from '@screens/Tabs/Shared/Account/utils/createContext'
 import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState'
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
+import { useProfileQuery } from '@utils/queryHooks/profile'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
-import React, { useReducer, useRef, useState } from 'react'
+import React, { useReducer, useRef } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
+import Update from './Root/Update'
 
-const ScreenMeRoot: React.FC = () => {
+const TabMeRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
+
+  const { data } = useProfileQuery({
+    options: { enabled: instanceActive !== -1, keepPreviousData: false }
+  })
 
   const scrollRef = useRef<Animated.ScrollView>(null)
   useScrollToTop(scrollRef)
-
-  const [data, setData] = useState<Mastodon.Account>()
 
   const [accountState, accountDispatch] = useReducer(
     accountReducer,
@@ -46,16 +51,18 @@ const ScreenMeRoot: React.FC = () => {
         scrollEventThrottle={16}
       >
         {instanceActive !== -1 ? (
-          <MyInfo setData={setData} />
+          <MyInfo account={data} />
         ) : (
           <ComponentInstance />
         )}
         {instanceActive !== -1 ? <Collections /> : null}
+        <Update />
         <Settings />
+        {instanceActive !== -1 ? <AccountInformationSwitch /> : null}
         {instanceActive !== -1 ? <Logout /> : null}
       </Animated.ScrollView>
     </AccountContext.Provider>
   )
 }
 
-export default ScreenMeRoot
+export default TabMeRoot
