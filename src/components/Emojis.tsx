@@ -116,7 +116,6 @@ const ComponentEmojis: React.FC<Props> = ({
 
   const addEmoji = useCallback(
     (emojiShortcode: string) => {
-      console.log(selectionRange.current)
       if (value?.length) {
         const contentFront = value.slice(0, selectionRange.current?.start)
         const contentRear = value.slice(selectionRange.current?.end)
