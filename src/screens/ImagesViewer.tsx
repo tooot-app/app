@@ -1,42 +1,35 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
+import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
-import React, { useCallback, useState } from 'react'
+import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share, StatusBar, View } from 'react-native'
+import FlashMessage from 'react-native-flash-message'
 import {
   SafeAreaProvider,
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
 import ImageViewer from './ImageViewer/Root'
-import { saveAndroid, saveIos } from './ImageViewer/save'
-
-const saveImage = async (
-  image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
-) => {
-  switch (Platform.OS) {
-    case 'ios':
-      saveIos(image)
-      break
-    case 'android':
-      saveAndroid(image)
-      break
-  }
-}
+import saveImage from './ImageViewer/save'
 
 const HeaderComponent = React.memo(
   ({
+    messageRef,
     navigation,
     currentIndex,
     imageUrls
   }: {
+    messageRef: RefObject<FlashMessage>
     navigation: ScreenImagesViewerProp['navigation']
     currentIndex: number
     imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
   }) => {
     const insets = useSafeAreaInsets()
+    const { mode } = useTheme()
     const { t } = useTranslation('screenImageViewer')
     const { showActionSheetWithOptions } = useActionSheet()
 
@@ -55,7 +48,7 @@ const HeaderComponent = React.memo(
           switch (buttonIndex) {
             case 0:
               analytics('imageviewer_more_save_press')
-              saveImage(imageUrls[currentIndex])
+              saveImage({ messageRef, mode, image: imageUrls[currentIndex] })
               break
             case 1:
               analytics('imageviewer_more_share_press')
@@ -121,8 +114,12 @@ const ScreenImagesViewer = ({
     return null
   }
 
+  const { mode } = useTheme()
+
   const initialIndex = findIndex(imageUrls, ['id', id])
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
+
+  const messageRef = useRef<FlashMessage>(null)
 
   return (
     <SafeAreaProvider>
@@ -132,15 +129,17 @@ const ScreenImagesViewer = ({
         imageIndex={initialIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
-        onLongPress={saveImage}
+        onLongPress={image => saveImage({ messageRef, mode, image })}
         HeaderComponent={() => (
           <HeaderComponent
+            messageRef={messageRef}
             navigation={navigation}
             currentIndex={currentIndex}
             imageUrls={imageUrls}
           />
         )}
       />
+      <Message ref={messageRef} />
     </SafeAreaProvider>
   )
 }
