@@ -52,6 +52,18 @@
       "push": {
         "name": "推送通知"
       },
+      "profile": {
+        "name": "修改个人资料"
+      },
+      "profileName": {
+        "name": "修改昵称"
+      },
+      "profileNote": {
+        "name": "修改简介"
+      },
+      "profileFields": {
+        "name": "修改附加信息"
+      },
       "settings": {
         "name": "应用设置"
       },
@@ -71,13 +83,73 @@
         "XXL": "超大号"
       }
     },
+    "profile": {
+      "cancellation": {
+        "title": "更改尚未保存",
+        "message": "您的更改尚未保存。是否放弃保存更改？",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "不保存"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}}已更新",
+        "failed": "{{type}}更新失败，请重试"
+      },
+      "root": {
+        "name": {
+          "title": "昵称"
+        },
+        "avatar": {
+          "title": "头像",
+          "description": "将在下一版中启用"
+        },
+        "banner": {
+          "title": "横幅",
+          "description": "将在下一版中启用"
+        },
+        "note": {
+          "title": "简介"
+        },
+        "fields": {
+          "title": "附加信息",
+          "total": "{{count}} 项",
+          "total_plural": "{{count}} 项"
+        },
+        "visibility": {
+          "title": "嘟文默认可见范围",
+          "options": {
+            "public": "公开",
+            "unlisted": "不公开",
+            "private": "仅关注者",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "媒体默认设为敏感"
+        },
+        "lock": {
+          "title": "锁嘟",
+          "description": "你需要手动审核所有关注请求"
+        },
+        "bot": {
+          "title": "机器人帐户",
+          "description": "来自这个帐户的绝大多数操作都是自动进行的，并且可能无人监控"
+        }
+      },
+      "fields": {
+        "group": "第 {{index}} 组",
+        "label": "标签",
+        "content": "内容"
+      }
+    },
     "push": {
       "enable": {
         "direct": "启用推送通知",
         "settings": "在系统设置中启用"
       },
       "global": {
-        "heading": "启用tooot推送通知",
+        "heading": "启用 {{acct}}",
         "description": "通知消息将经由tooot服务器转发"
       },
       "decode": {
@@ -112,6 +184,9 @@
           "empty": "无公告"
         }
       },
+      "update": {
+        "title": "更新至最新版本"
+      },
       "logout": {
         "button": "退出当前账号",
         "alert": {
@@ -125,13 +200,6 @@
       }
     },
     "settings": {
-      "push": {
-        "heading": "$t(me.stacks.push.name)",
-        "content": {
-          "enabled": "已启用",
-          "disabled": "已禁用"
-        }
-      },
       "fontsize": {
         "heading": "$t(me.stacks.fontSize.name)",
         "content": {
