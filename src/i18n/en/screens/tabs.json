@@ -122,7 +122,6 @@
             "public": "Public",
             "unlisted": "Unlisted",
             "private": "Followers only",
-            "direct": "Direct message",
             "cancel": "$t(common:buttons.cancel)"
           }
         },

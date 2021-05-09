@@ -25,10 +25,9 @@ const ScreenMeProfileRoot: React.FC<StackScreenProps<
           t('me.profile.root.visibility.options.public'),
           t('me.profile.root.visibility.options.unlisted'),
           t('me.profile.root.visibility.options.private'),
-          t('me.profile.root.visibility.options.direct'),
           t('me.profile.root.visibility.options.cancel')
         ],
-        cancelButtonIndex: 4
+        cancelButtonIndex: 3
       },
       async buttonIndex => {
         switch (buttonIndex) {
@@ -40,9 +39,6 @@ const ScreenMeProfileRoot: React.FC<StackScreenProps<
             break
           case 2:
             mutate({ type: 'source[privacy]', data: 'private' })
-            break
-          case 3:
-            mutate({ type: 'source[privacy]', data: 'direct' })
             break
         }
       }
