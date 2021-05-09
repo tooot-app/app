@@ -3,7 +3,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 
-const ScreenMeFavourites = React.memo(
+const TabMeFavourites = React.memo(
   () => {
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Favourites' }]
     const renderItem = useCallback(
@@ -16,4 +16,4 @@ const ScreenMeFavourites = React.memo(
   () => true
 )
 
-export default ScreenMeFavourites
+export default TabMeFavourites

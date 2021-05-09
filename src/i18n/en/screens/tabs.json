@@ -52,8 +52,20 @@
       "push": {
         "name": "Push Notification"
       },
+      "profile": {
+        "name": "Edit Profile"
+      },
+      "profileName": {
+        "name": "Edit Display Name"
+      },
+      "profileNote": {
+        "name": "Edit Description"
+      },
+      "profileFields": {
+        "name": "Edit Metadata"
+      },
       "settings": {
-        "name": "Settings"
+        "name": "App Settings"
       },
       "switch": {
         "name": "Switch Account"
@@ -71,13 +83,74 @@
         "XXL": "XXL"
       }
     },
+    "profile": {
+      "cancellation": {
+        "title": "Change Not Saved",
+        "message": "Your change has not been saved. Would you discard saving the changes?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Discard"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}} updated",
+        "failed": "{{type}} update failed, please try again"
+      },
+      "root": {
+        "name": {
+          "title": "Display Name"
+        },
+        "avatar": {
+          "title": "Avatar",
+          "description": "Available in next version"
+        },
+        "banner": {
+          "title": "Banner",
+          "description": "Available in next version"
+        },
+        "note": {
+          "title": "Description"
+        },
+        "fields": {
+          "title": "Metadata",
+          "total": "{{count}} field",
+          "total_plural": "{{count}} fields"
+        },
+        "visibility": {
+          "title": "Posting Visibility",
+          "options": {
+            "public": "Public",
+            "unlisted": "Unlisted",
+            "private": "Followers only",
+            "direct": "Direct message",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "Posting Media Sensitive"
+        },
+        "lock": {
+          "title": "Lock Account",
+          "description": "Requires you to manually approve followers"
+        },
+        "bot": {
+          "title": "Bot account",
+          "description": "This account mainly performs automated actions and might not be monitored"
+        }
+      },
+      "fields": {
+        "group": "Group {{index}}",
+        "label": "Label",
+        "content": "Content"
+      }
+    },
     "push": {
       "enable": {
         "direct": "Enable push notification",
         "settings": "Enable in settings"
       },
       "global": {
-        "heading": "Enable push notification",
+        "heading": "Enable for {{acct}}",
         "description": "Messages are routed through tooot's server"
       },
       "decode": {
@@ -112,6 +185,9 @@
           "empty": "None"
         }
       },
+      "update": {
+        "title": "Update to latest version"
+      },
       "logout": {
         "button": "Log out",
         "alert": {
@@ -125,13 +201,6 @@
       }
     },
     "settings": {
-      "push": {
-        "heading": "$t(me.stacks.push.name)",
-        "content": {
-          "enabled": "Enabled",
-          "disabled": "Disabled"
-        }
-      },
       "fontsize": {
         "heading": "$t(me.stacks.fontSize.name)",
         "content": {
@@ -158,7 +227,7 @@
         }
       },
       "browser": {
-        "heading": "Opening link",
+        "heading": "Opening Link",
         "options": {
           "internal": "Inside app",
           "external": "Use system browser",

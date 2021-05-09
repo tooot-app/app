@@ -32,7 +32,7 @@ export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   }
 }
 
-const ScreenMeSettingsFontsize: React.FC<StackScreenProps<
+const TabMeSettingsFontsize: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Settings-Fontsize'
 >> = () => {
@@ -183,4 +183,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScreenMeSettingsFontsize
+export default TabMeSettingsFontsize

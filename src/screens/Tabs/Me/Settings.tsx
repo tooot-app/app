@@ -6,7 +6,7 @@ import SettingsApp from './Settings/App'
 import SettingsDev from './Settings/Dev'
 import SettingsTooot from './Settings/Tooot'
 
-const ScreenMeSettings: React.FC = () => {
+const TabMeSettings: React.FC = () => {
   return (
     <ScrollView>
       <SettingsApp />
@@ -23,4 +23,4 @@ const ScreenMeSettings: React.FC = () => {
   )
 }
 
-export default ScreenMeSettings
+export default TabMeSettings

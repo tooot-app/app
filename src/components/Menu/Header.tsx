@@ -19,8 +19,6 @@ const MenuHeader: React.FC<Props> = ({ heading }) => {
 
 const styles = StyleSheet.create({
   base: {
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding,
     paddingBottom: StyleConstants.Spacing.S
   },
   text: {

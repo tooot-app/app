@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   AccessibilityProps,
   Pressable,
@@ -121,9 +121,6 @@ const Button: React.FC<Props> = ({
                 color: mainColor,
                 fontSize:
                   StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
-                fontWeight: destructive
-                  ? StyleConstants.Font.Weight.Bold
-                  : undefined,
                 opacity: loading ? 0 : 1
               }}
               children={content}
@@ -135,12 +132,7 @@ const Button: React.FC<Props> = ({
     }
   }, [mode, content, loading, disabled])
 
-  enum spacingMapping {
-    XS = 'S',
-    S = 'M',
-    M = 'L',
-    L = 'XL'
-  }
+  const [layoutHeight, setLayoutHeight] = useState<number | undefined>()
 
   return (
     <Pressable
@@ -161,10 +153,15 @@ const Button: React.FC<Props> = ({
           backgroundColor: colorBackground,
           paddingVertical: StyleConstants.Spacing[spacing],
           paddingHorizontal:
-            StyleConstants.Spacing[round ? spacing : spacingMapping[spacing]]
+            StyleConstants.Spacing[spacing] + StyleConstants.Spacing.XS,
+          width: round && layoutHeight ? layoutHeight : undefined
         },
         customStyle
       ]}
+      {...(round && {
+        onLayout: ({ nativeEvent }) =>
+          setLayoutHeight(nativeEvent.layout.height)
+      })}
       testID='base'
       onPress={onPress}
       children={children}
@@ -176,7 +173,6 @@ const Button: React.FC<Props> = ({
 const styles = StyleSheet.create({
   button: {
     borderRadius: 100,
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   }

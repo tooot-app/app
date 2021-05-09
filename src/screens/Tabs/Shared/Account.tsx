@@ -5,7 +5,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
@@ -13,9 +13,6 @@ import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
-import AccountContext from './Account/utils/createContext'
-import accountInitialState from './Account/utils/initialState'
-import accountReducer from './Account/utils/reducer'
 import { SharedAccountProp } from './sharedScreens'
 
 const TabSharedAccount: React.FC<SharedAccountProp> = ({
@@ -30,10 +27,6 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
   const { data } = useAccountQuery({ id: account.id })
 
   const scrollY = useSharedValue(0)
-  const [accountState, accountDispatch] = useReducer(
-    accountReducer,
-    accountInitialState
-  )
 
   useEffect(() => {
     const updateHeaderRight = () =>
@@ -86,7 +79,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
   )
 
   return (
-    <AccountContext.Provider value={{ accountState, accountDispatch }}>
+    <>
       <AccountNav scrollY={scrollY} account={data} />
 
       <Timeline
@@ -98,7 +91,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
           ListHeaderComponent
         }}
       />
-    </AccountContext.Provider>
+    </>
   )
 }
 

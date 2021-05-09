@@ -4,31 +4,25 @@ import Collections from '@screens/Tabs/Me/Root/Collections'
 import Logout from '@screens/Tabs/Me/Root/Logout'
 import MyInfo from '@screens/Tabs/Me/Root/MyInfo'
 import Settings from '@screens/Tabs/Me/Root/Settings'
+import AccountInformationSwitch from '@screens/Tabs/Me/Root/Switch'
 import AccountNav from '@screens/Tabs/Shared/Account/Nav'
 import AccountContext from '@screens/Tabs/Shared/Account/utils/createContext'
 import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState'
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
-import { useAccountQuery } from '@utils/queryHooks/account'
-import {
-  getInstanceAccount,
-  getInstanceActive
-} from '@utils/slices/instancesSlice'
+import { useProfileQuery } from '@utils/queryHooks/profile'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import React, { useReducer, useRef } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
+import Update from './Root/Update'
 
-const ScreenMeRoot: React.FC = () => {
+const TabMeRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.id === next?.id
-  )
-  const { data } = useAccountQuery({
-    // @ts-ignore
-    id: instanceAccount?.id,
+
+  const { data } = useProfileQuery({
     options: { enabled: instanceActive !== -1, keepPreviousData: false }
   })
 
@@ -62,11 +56,13 @@ const ScreenMeRoot: React.FC = () => {
           <ComponentInstance />
         )}
         {instanceActive !== -1 ? <Collections /> : null}
+        <Update />
         <Settings />
+        {instanceActive !== -1 ? <AccountInformationSwitch /> : null}
         {instanceActive !== -1 ? <Logout /> : null}
       </Animated.ScrollView>
     </AccountContext.Provider>
   )
 }
 
-export default ScreenMeRoot
+export default TabMeRoot

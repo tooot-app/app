@@ -3,7 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import React from 'react'
 
-const ScreenMeLists: React.FC<StackScreenProps<
+const TabMeLists: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Lists'
 >> = ({ navigation }) => {
@@ -28,4 +28,4 @@ const ScreenMeLists: React.FC<StackScreenProps<
   )
 }
 
-export default ScreenMeLists
+export default TabMeLists

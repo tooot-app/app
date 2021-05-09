@@ -9,7 +9,7 @@ export interface Props {
 const MyInfo: React.FC<Props> = ({ account }) => {
   return (
     <>
-      <AccountHeader account={account} limitHeight />
+      <AccountHeader account={account} />
       <AccountInformation account={account} myInfo />
     </>
   )

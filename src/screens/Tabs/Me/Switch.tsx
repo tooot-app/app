@@ -8,7 +8,7 @@ import ScreenMeSwitchRoot from './Switch/Root'
 
 const Stack = createNativeStackNavigator()
 
-const ScreenMeSwitch: React.FC<StackScreenProps<
+const TabMeSwitch: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Switch'
 >> = ({ navigation }) => {
@@ -44,4 +44,4 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
   )
 }
 
-export default ScreenMeSwitch
+export default TabMeSwitch

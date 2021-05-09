@@ -4,7 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 
-const ScreenMeListsList: React.FC<StackScreenProps<
+const TabMeListsList: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Lists-List'
 >> = ({
@@ -21,4 +21,4 @@ const ScreenMeListsList: React.FC<StackScreenProps<
   return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
 }
 
-export default ScreenMeListsList
+export default TabMeListsList

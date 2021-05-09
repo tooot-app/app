@@ -5,11 +5,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { LOCALES } from '@root/i18n/locales'
 import androidDefaults from '@utils/slices/instances/push/androidDefaults'
-import {
-  getInstanceActive,
-  getInstancePush,
-  getInstances
-} from '@utils/slices/instancesSlice'
+import { getInstances } from '@utils/slices/instancesSlice'
 import {
   changeBrowser,
   changeLanguage,
@@ -24,7 +20,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { mapFontsizeToName } from '../Fontsize'
+import { mapFontsizeToName } from '../SettingsFontsize'
 
 const SettingsApp: React.FC = () => {
   const navigation = useNavigation()
@@ -34,43 +30,22 @@ const SettingsApp: React.FC = () => {
   const { t, i18n } = useTranslation('screenTabs')
 
   const instances = useSelector(getInstances, () => true)
-  const instanceActive = useSelector(getInstanceActive)
   const settingsFontsize = useSelector(getSettingsFontsize)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-  const instancePush = useSelector(
-    getInstancePush,
-    (prev, next) => prev?.global.value === next?.global.value
-  )
 
   return (
     <MenuContainer>
-      {instanceActive !== -1 ? (
-        <>
-          <MenuRow
-            title={t('me.settings.push.heading')}
-            content={
-              instancePush?.global.value
-                ? t('me.settings.push.content.enabled')
-                : t('me.settings.push.content.disabled')
-            }
-            iconBack='ChevronRight'
-            onPress={() => {
-              navigation.navigate('Tab-Me-Settings-Push')
-            }}
-          />
-          <MenuRow
-            title={t('me.settings.fontsize.heading')}
-            content={t(
-              `me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
-            )}
-            iconBack='ChevronRight'
-            onPress={() => {
-              navigation.navigate('Tab-Me-Settings-Fontsize')
-            }}
-          />
-        </>
-      ) : null}
+      <MenuRow
+        title={t('me.settings.fontsize.heading')}
+        content={t(
+          `me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
+        )}
+        iconBack='ChevronRight'
+        onPress={() => {
+          navigation.navigate('Tab-Me-Settings-Fontsize')
+        }}
+      />
       <MenuRow
         title={t('me.settings.language.heading')}
         // @ts-ignore

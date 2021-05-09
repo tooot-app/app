@@ -7,16 +7,13 @@ export interface Props {
 }
 
 const MenuContainer: React.FC<Props> = ({ children }) => {
-  return (
-    <View style={styles.base}>
-      {children}
-    </View>
-  )
+  return <View style={styles.base}>{children}</View>
 }
 
 const styles = StyleSheet.create({
   base: {
-    marginBottom: StyleConstants.Spacing.L
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+    marginBottom: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

@@ -6,11 +6,16 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 export interface Props {
-  account: Mastodon.Account
+  account: Mastodon.Account | undefined
+  myInfo?: boolean
 }
 
 const AccountInformationFields = React.memo(
-  ({ account }: Props) => {
+  ({ account, myInfo }: Props) => {
+    if (myInfo || !account?.fields || account.fields.length === 0) {
+      return null
+    }
+
     const { theme } = useTheme()
 
     return (
@@ -88,3 +93,6 @@ const styles = StyleSheet.create({
 })
 
 export default AccountInformationFields
+function htmlToText (note: string): any {
+  throw new Error('Function not implemented.')
+}
