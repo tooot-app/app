@@ -26,7 +26,7 @@ const ScreenMeProfileName: React.FC<StackScreenProps<
   const { mutateAsync, status } = useProfileMutation()
 
   const [displayName, setDisplayName] = useState(display_name)
-  
+
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
     setDirty(display_name !== displayName)
@@ -94,7 +94,7 @@ const ScreenMeProfileName: React.FC<StackScreenProps<
   }, [mode, i18n.language, dirty, status, displayName])
 
   return (
-    <ScrollView style={styles.base}>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
       <Input value={displayName} setValue={setDisplayName} emoji />
     </ScrollView>
   )

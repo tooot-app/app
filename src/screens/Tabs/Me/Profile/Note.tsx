@@ -26,7 +26,7 @@ const ScreenMeProfileNote: React.FC<StackScreenProps<
   const { mutateAsync, status } = useProfileMutation()
 
   const [newNote, setNewNote] = useState(note)
-  
+
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
     setDirty(note !== newNote)
@@ -94,7 +94,7 @@ const ScreenMeProfileNote: React.FC<StackScreenProps<
   }, [mode, i18n.language, dirty, status, newNote])
 
   return (
-    <ScrollView style={styles.base}>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
       <Input value={newNote} setValue={setNewNote} multiline emoji />
     </ScrollView>
   )
