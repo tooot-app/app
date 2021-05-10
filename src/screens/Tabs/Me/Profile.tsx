@@ -26,10 +26,7 @@ const TabMeProfile: React.FC<StackScreenProps<
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <Stack.Navigator
-        screenOptions={{
-          headerHideShadow: true,
-          headerTopInsetEnabled: false
-        }}
+        screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
       >
         <Stack.Screen
           name='Tab-Me-Profile-Root'

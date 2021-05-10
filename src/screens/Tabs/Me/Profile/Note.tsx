@@ -7,7 +7,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -95,14 +95,22 @@ const ScreenMeProfileNote: React.FC<StackScreenProps<
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
-      <Input value={newNote} setValue={setNewNote} multiline emoji />
+      <View style={{ marginBottom: StyleConstants.Spacing.XL * 2 }}>
+        <Input
+          value={newNote}
+          setValue={setNewNote}
+          multiline
+          emoji
+          options={{ maxLength: 500 }}
+        />
+      </View>
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    padding: StyleConstants.Spacing.Global.PagePadding
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   }
 })
 

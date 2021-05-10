@@ -113,48 +113,51 @@ const ScreenMeProfileFields: React.FC<StackScreenProps<
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
-      {Array.from(Array(4).keys()).map(index => (
-        <View key={index} style={styles.group}>
-          <Text style={[styles.headline, { color: theme.primaryDefault }]}>
-            {t('me.profile.fields.group', { index: index + 1 })}
-          </Text>
-          <Input
-            title={t('me.profile.fields.label')}
-            autoFocus={false}
-            maxLength={255}
-            value={newFields[index].name}
-            setValue={(v: any) =>
-              setNewFields(
-                newFields.map((field, i) =>
-                  i === index ? { ...field, name: v } : field
+      <View style={{ marginBottom: StyleConstants.Spacing.L * 2 }}>
+        {Array.from(Array(4).keys()).map(index => (
+          <View key={index} style={styles.group}>
+            <Text style={[styles.headline, { color: theme.primaryDefault }]}>
+              {t('me.profile.fields.group', { index: index + 1 })}
+            </Text>
+            <Input
+              title={t('me.profile.fields.label')}
+              autoFocus={false}
+              options={{ maxLength: 255 }}
+              value={newFields[index].name}
+              setValue={(v: any) =>
+                setNewFields(
+                  newFields.map((field, i) =>
+                    i === index ? { ...field, name: v } : field
+                  )
                 )
-              )
-            }
-            emoji
-          />
-          <Input
-            title={t('me.profile.fields.content')}
-            autoFocus={false}
-            maxLength={255}
-            value={newFields[index].value}
-            setValue={(v: any) =>
-              setNewFields(
-                newFields.map((field, i) =>
-                  i === index ? { ...field, value: v } : field
+              }
+              emoji
+            />
+            <Input
+              title={t('me.profile.fields.content')}
+              autoFocus={false}
+              options={{ maxLength: 255 }}
+              value={newFields[index].value}
+              setValue={(v: any) =>
+                setNewFields(
+                  newFields.map((field, i) =>
+                    i === index ? { ...field, value: v } : field
+                  )
                 )
-              )
-            }
-            emoji
-          />
-        </View>
-      ))}
+              }
+              emoji
+            />
+          </View>
+        ))}
+      </View>
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    padding: StyleConstants.Spacing.Global.PagePadding
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+    marginBottom: StyleConstants.Spacing.L
   },
   group: {
     marginBottom: StyleConstants.Spacing.M

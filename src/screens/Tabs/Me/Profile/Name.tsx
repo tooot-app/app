@@ -95,14 +95,24 @@ const ScreenMeProfileName: React.FC<StackScreenProps<
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
-      <Input value={displayName} setValue={setDisplayName} emoji />
+      <Input
+        value={displayName}
+        setValue={setDisplayName}
+        emoji
+        options={{
+          maxLength: 30,
+          autoCapitalize: 'none',
+          autoCompleteType: 'username',
+          autoCorrect: false
+        }}
+      />
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    padding: StyleConstants.Spacing.Global.PagePadding
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   }
 })
 
