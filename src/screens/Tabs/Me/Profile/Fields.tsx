@@ -112,7 +112,7 @@ const ScreenMeProfileFields: React.FC<StackScreenProps<
   }, [mode, i18n.language, dirty, status, newFields])
 
   return (
-    <ScrollView style={styles.base}>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
       {Array.from(Array(4).keys()).map(index => (
         <View key={index} style={styles.group}>
           <Text style={[styles.headline, { color: theme.primaryDefault }]}>
