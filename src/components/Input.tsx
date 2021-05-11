@@ -107,6 +107,7 @@ const Input: React.FC<Props> = ({
       value={value}
       setValue={setValue}
       selectionRange={selectionRange}
+      maxLength={options?.maxLength}
     >
       <View
         style={[

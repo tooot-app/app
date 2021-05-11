@@ -6,7 +6,7 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const ScreenMeProfileRoot: React.FC<StackScreenProps<
+const TabMeProfileRoot: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Root'
 >> = ({ navigation }) => {
@@ -180,4 +180,4 @@ const ScreenMeProfileRoot: React.FC<StackScreenProps<
   )
 }
 
-export default ScreenMeProfileRoot
+export default TabMeProfileRoot

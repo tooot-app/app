@@ -86,6 +86,7 @@ export interface Props {
     start: number
     end: number
   }>
+  maxLength?: number
 }
 
 const ComponentEmojis: React.FC<Props> = ({
@@ -93,6 +94,7 @@ const ComponentEmojis: React.FC<Props> = ({
   value,
   setValue,
   selectionRange,
+  maxLength,
   children
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
@@ -125,9 +127,13 @@ const ComponentEmojis: React.FC<Props> = ({
         const newTextWithSpace = ` ${emojiShortcode}${
           whiteSpaceRear ? '' : ' '
         }`
-        setValue([contentFront, newTextWithSpace, contentRear].join(''))
+        setValue(
+          [contentFront, newTextWithSpace, contentRear]
+            .join('')
+            .slice(0, maxLength)
+        )
       } else {
-        setValue(`${emojiShortcode} `)
+        setValue(`${emojiShortcode} `.slice(0, maxLength))
       }
     },
     [value, selectionRange.current?.start, selectionRange.current?.end]

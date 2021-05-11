@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import ScreenMeProfileFields from './Profile/Fields'
-import ScreenMeProfileName from './Profile/Name'
-import ScreenMeProfileNote from './Profile/Note'
-import ScreenMeProfileRoot from './Profile/Root'
+import TabMeProfileFields from './Profile/Fields'
+import TabMeProfileName from './Profile/Name'
+import TabMeProfileNote from './Profile/Note'
+import TabMeProfileRoot from './Profile/Root'
 
 const Stack = createNativeStackNavigator<Nav.TabMeProfileStackParamList>()
 
@@ -30,7 +30,7 @@ const TabMeProfile: React.FC<StackScreenProps<
       >
         <Stack.Screen
           name='Tab-Me-Profile-Root'
-          component={ScreenMeProfileRoot}
+          component={TabMeProfileRoot}
           options={{
             headerTitle: t('me.stacks.profile.name'),
             ...(Platform.OS === 'android' && {
@@ -58,7 +58,7 @@ const TabMeProfile: React.FC<StackScreenProps<
           }}
         >
           {({ route, navigation }) => (
-            <ScreenMeProfileName
+            <TabMeProfileName
               messageRef={messageRef}
               route={route}
               navigation={navigation}
@@ -77,7 +77,7 @@ const TabMeProfile: React.FC<StackScreenProps<
           }}
         >
           {({ route, navigation }) => (
-            <ScreenMeProfileNote
+            <TabMeProfileNote
               messageRef={messageRef}
               route={route}
               navigation={navigation}
@@ -96,7 +96,7 @@ const TabMeProfile: React.FC<StackScreenProps<
           }}
         >
           {({ route, navigation }) => (
-            <ScreenMeProfileFields
+            <TabMeProfileFields
               messageRef={messageRef}
               route={route}
               navigation={navigation}
