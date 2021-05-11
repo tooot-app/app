@@ -115,15 +115,10 @@ const TabMe = React.memo(
         <Stack.Screen
           name='Tab-Me-Push'
           component={TabMePush}
-          options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.push.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.push.name')} />
-              )
-            }),
-            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-          })}
+          options={{
+            stackPresentation: 'modal',
+            headerShown: false
+          }}
         />
         <Stack.Screen
           name='Tab-Me-Settings'

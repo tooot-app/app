@@ -24,7 +24,7 @@ const prepareFields = (
   })
 }
 
-const ScreenMeProfileFields: React.FC<StackScreenProps<
+const TabMeProfileFields: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Fields'
 > & { messageRef: RefObject<FlashMessage> }> = ({
@@ -112,7 +112,7 @@ const ScreenMeProfileFields: React.FC<StackScreenProps<
   }, [mode, i18n.language, dirty, status, newFields])
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <View style={{ marginBottom: StyleConstants.Spacing.L * 2 }}>
         {Array.from(Array(4).keys()).map(index => (
           <View key={index} style={styles.group}>
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScreenMeProfileFields
+export default TabMeProfileFields

@@ -11,7 +11,7 @@ import { Alert, StyleSheet } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const ScreenMeProfileName: React.FC<StackScreenProps<
+const TabMeProfileName: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Name'
 > & { messageRef: RefObject<FlashMessage> }> = ({
@@ -94,7 +94,7 @@ const ScreenMeProfileName: React.FC<StackScreenProps<
   }, [mode, i18n.language, dirty, status, displayName])
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <Input
         value={displayName}
         setValue={setDisplayName}
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScreenMeProfileName
+export default TabMeProfileName

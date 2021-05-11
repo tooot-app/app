@@ -151,4 +151,8 @@ declare namespace Nav {
       fields?: Mastodon.Source['fields']
     }
   }
+
+  type TabMePushStackParamList = {
+    'Tab-Me-Push-Root': undefined
+  }
 }

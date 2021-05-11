@@ -11,7 +11,6 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { groupBy } from 'lodash'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -48,7 +47,7 @@ const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
   )
 }
 
-const ScreenMeSwitchRoot: React.FC = () => {
+const TabMeSwitchRoot: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const { theme } = useTheme()
   const instances = useSelector(getInstances, () => true)
@@ -137,4 +136,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScreenMeSwitchRoot
+export default TabMeSwitchRoot
