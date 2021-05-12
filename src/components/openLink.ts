@@ -1,6 +1,6 @@
 import apiInstance from '@api/instance'
+import navigationRef from '@helpers/navigationRef'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
-import { navigationRef } from '@root/Screens'
 import { store } from '@root/store'
 import { SearchResult } from '@utils/queryHooks/search'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'

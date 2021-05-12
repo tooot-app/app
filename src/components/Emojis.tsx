@@ -4,7 +4,6 @@ import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, {
-  createContext,
   Dispatch,
   MutableRefObject,
   SetStateAction,
@@ -13,27 +12,10 @@ import React, {
   useReducer
 } from 'react'
 import FastImage from 'react-native-fast-image'
-
-type EmojisState = {
-  enabled: boolean
-  active: boolean
-  emojis: { title: string; data: Mastodon.Emoji[][] }[]
-  shortcode: Mastodon.Emoji['shortcode'] | null
-}
-
-type EmojisAction =
-  | {
-      type: 'load'
-      payload: NonNullable<EmojisState['emojis']>
-    }
-  | {
-      type: 'activate'
-      payload: EmojisState['active']
-    }
-  | {
-      type: 'shortcode'
-      payload: EmojisState['shortcode']
-    }
+import EmojisContext, {
+  EmojisAction,
+  EmojisState
+} from './Emojis/helpers/EmojisContext'
 
 const emojisReducer = (state: EmojisState, action: EmojisAction) => {
   switch (action.type) {
@@ -45,12 +27,6 @@ const emojisReducer = (state: EmojisState, action: EmojisAction) => {
       return { ...state, shortcode: action.payload }
   }
 }
-
-type ContextType = {
-  emojisState: EmojisState
-  emojisDispatch: Dispatch<EmojisAction>
-}
-const EmojisContext = createContext<ContextType>({} as ContextType)
 
 const prefetchEmojis = (
   sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[],
@@ -163,4 +139,4 @@ const ComponentEmojis: React.FC<Props> = ({
   )
 }
 
-export { ComponentEmojis, EmojisContext, EmojisButton, EmojisList }
+export { ComponentEmojis, EmojisButton, EmojisList }

@@ -18,12 +18,8 @@ import {
   View
 } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import {
-  ComponentEmojis,
-  EmojisButton,
-  EmojisContext,
-  EmojisList
-} from './Emojis'
+import { ComponentEmojis, EmojisButton, EmojisList } from './Emojis'
+import EmojisContext from './Emojis/helpers/EmojisContext'
 
 export interface Props {
   autoFocus?: boolean

@@ -1,9 +1,9 @@
-import { EmojisContext } from '@components/Emojis'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
+import EmojisContext from './helpers/EmojisContext'
 
 const EmojisButton = React.memo(
   () => {

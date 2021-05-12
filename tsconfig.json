@@ -13,6 +13,7 @@
     "paths": {
       "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
+      "@helpers/*": ["./src/helpers/*"],
       "@screens/*": ["./src/screens/*"],
       "@utils/*": ["./src/utils/*"],
       "@root/*": ["./src/*"]
