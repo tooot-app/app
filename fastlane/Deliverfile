@@ -20,3 +20,11 @@ force(true)
 precheck_include_in_app_purchases(false)
 submit_for_review(true)
 overwrite_screenshots(true)
+
+submission_information({
+  add_id_info_limits_tracking: true,
+  add_id_info_serves_ads: false,
+  add_id_info_tracks_action: false,
+  add_id_info_tracks_install: false,
+  add_id_info_uses_idfa: true
+})
