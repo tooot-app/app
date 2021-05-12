@@ -2,9 +2,9 @@ import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Account', { id: Mastodon.Account['id'] }]
+export type QueryKeyAccount = ['Account', { id: Mastodon.Account['id'] }]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = ({ queryKey }: { queryKey: QueryKeyAccount }) => {
   const { id } = queryKey[1]
 
   return apiInstance<Mastodon.Account>({
@@ -16,10 +16,10 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
 const useAccountQuery = <TData = Mastodon.Account>({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
+}: QueryKeyAccount[1] & {
   options?: UseQueryOptions<Mastodon.Account, AxiosError, TData>
 }) => {
-  const queryKey: QueryKey = ['Account', { ...queryKeyParams }]
+  const queryKey: QueryKeyAccount = ['Account', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, options)
 }
 

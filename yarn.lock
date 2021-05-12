@@ -8731,6 +8731,11 @@ react-native-blurhash@^1.1.4:
   resolved "https://registry.yarnpkg.com/react-native-blurhash/-/react-native-blurhash-1.1.4.tgz#820afd0ef1cea3b1d322d0448f92964286b85843"
   integrity sha512-lQFDVzrRGU0r3kC7I66MEiGKlzMeRVUm5Jt50rGZnXkm+kLK+LQDOwqEGxxn2Y2OMoDylzrccdX7mP9bf5BnLA==
 
+react-native-clean-project@^3.6.3:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-clean-project/-/react-native-clean-project-3.6.3.tgz#ad43b8e1491512f285b7f455ac56db3328b5a65f"
+  integrity sha512-sBbv+Zl05O9LfQqamLu2Crb//W/d8+l59TICF8nKxQ0nJsvear06a1CB2+FaO3rCrPNHiSjDDNXZ/D6muHTUkw==
+
 react-native-codegen@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.6.tgz#b3173faa879cf71bfade8d030f9c4698388f6909"

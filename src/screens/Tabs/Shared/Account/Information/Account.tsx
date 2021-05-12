@@ -12,10 +12,10 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  myInfo: boolean
+  localInstance: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
+const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) => {
   const { theme } = useTheme()
   const instanceAccount = useSelector(
     getInstanceAccount,
@@ -48,7 +48,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
     }
   }, [account?.moved])
 
-  if (account || (myInfo && instanceAccount)) {
+  if (account || (localInstance && instanceAccount)) {
     return (
       <View
         style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
@@ -63,8 +63,8 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
           ]}
           selectable
         >
-          @{myInfo ? instanceAccount?.acct : account?.acct}
-          {myInfo ? `@${instanceUri}` : null}
+          @{localInstance ? instanceAccount?.acct : account?.acct}
+          {localInstance ? `@${instanceUri}` : null}
         </Text>
         {movedContent}
         {account?.locked ? (
@@ -88,7 +88,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   } else {
     return (
       <PlaceholderLine
-        width={StyleConstants.Font.Size.M * 2}
+        width={StyleConstants.Font.Size.M * 3}
         height={StyleConstants.Font.LineHeight.M}
         color={theme.shimmerDefault}
         noMargin

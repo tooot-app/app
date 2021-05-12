@@ -10,6 +10,7 @@ export type ColorDefinitions =
   | 'green'
   | 'yellow'
   | 'backgroundDefault'
+  | 'backgroundDefaultTransparent'
   | 'backgroundOverlayDefault'
   | 'backgroundOverlayInvert'
   | 'border'
@@ -58,6 +59,10 @@ const themeColors: {
   backgroundDefault: {
     light: 'rgb(250, 250, 250)',
     dark: 'rgb(18, 18, 18)'
+  },
+  backgroundDefaultTransparent: {
+    light: 'rgba(250, 250, 250, 0)',
+    dark: 'rgba(18, 18, 18, 0)'
   },
   backgroundOverlayDefault: {
     light: 'rgba(250, 250, 250, 0.5)',

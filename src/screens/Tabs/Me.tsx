@@ -1,19 +1,20 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
-import ScreenMeBookmarks from '@screens/Tabs/Me/Bookmarks'
-import ScreenMeConversations from '@screens/Tabs/Me/Cconversations'
-import ScreenMeFavourites from '@screens/Tabs/Me/Favourites'
-import ScreenMeLists from '@screens/Tabs/Me/Lists'
-import ScreenMeRoot from '@screens/Tabs/Me/Root'
-import ScreenMeListsList from '@screens/Tabs/Me/Root/Lists/List'
-import ScreenMeSettings from '@screens/Tabs/Me/Settings'
-import ScreenMeSwitch from '@screens/Tabs/Me/Switch'
-import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import ScreenMeSettingsFontsize from './Me/Fontsize'
-import ScreenMeSettingsPush from './Me/Push'
+import TabMeBookmarks from './Me/Bookmarks'
+import TabMeConversations from './Me/Cconversations'
+import TabMeFavourites from './Me/Favourites'
+import TabMeLists from './Me/Lists'
+import TabMeListsList from './Me/ListsList'
+import TabMeProfile from './Me/Profile'
+import TabMePush from './Me/Push'
+import TabMeRoot from './Me/Root'
+import TabMeSettings from './Me/Settings'
+import TabMeSettingsFontsize from './Me/SettingsFontsize'
+import TabMeSwitch from './Me/Switch'
+import sharedScreens from './Shared/sharedScreens'
 
 const Stack = createNativeStackNavigator<Nav.TabMeStackParamList>()
 
@@ -27,7 +28,7 @@ const TabMe = React.memo(
       >
         <Stack.Screen
           name='Tab-Me-Root'
-          component={ScreenMeRoot}
+          component={TabMeRoot}
           options={{
             headerTranslucent: true,
             headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
@@ -36,7 +37,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Bookmarks'
-          component={ScreenMeBookmarks}
+          component={TabMeBookmarks}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.bookmarks.name'),
             ...(Platform.OS === 'android' && {
@@ -49,7 +50,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Conversations'
-          component={ScreenMeConversations}
+          component={TabMeConversations}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.conversations.name'),
             ...(Platform.OS === 'android' && {
@@ -62,7 +63,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Favourites'
-          component={ScreenMeFavourites}
+          component={TabMeFavourites}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.favourites.name'),
             ...(Platform.OS === 'android' && {
@@ -75,7 +76,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Lists'
-          component={ScreenMeLists}
+          component={TabMeLists}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.lists.name'),
             ...(Platform.OS === 'android' && {
@@ -88,7 +89,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Lists-List'
-          component={ScreenMeListsList}
+          component={TabMeListsList}
           options={({ route, navigation }: any) => ({
             headerTitle: t('me.stacks.list.name', { list: route.params.title }),
             ...(Platform.OS === 'android' && {
@@ -104,8 +105,24 @@ const TabMe = React.memo(
           })}
         />
         <Stack.Screen
+          name='Tab-Me-Profile'
+          component={TabMeProfile}
+          options={{
+            stackPresentation: 'modal',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name='Tab-Me-Push'
+          component={TabMePush}
+          options={{
+            stackPresentation: 'modal',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
           name='Tab-Me-Settings'
-          component={ScreenMeSettings}
+          component={TabMeSettings}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.settings.name'),
             ...(Platform.OS === 'android' && {
@@ -118,7 +135,7 @@ const TabMe = React.memo(
         />
         <Stack.Screen
           name='Tab-Me-Settings-Fontsize'
-          component={ScreenMeSettingsFontsize}
+          component={TabMeSettingsFontsize}
           options={({ navigation }: any) => ({
             headerTitle: t('me.stacks.fontSize.name'),
             ...(Platform.OS === 'android' && {
@@ -130,21 +147,8 @@ const TabMe = React.memo(
           })}
         />
         <Stack.Screen
-          name='Tab-Me-Settings-Push'
-          component={ScreenMeSettingsPush}
-          options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.push.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.push.name')} />
-              )
-            }),
-            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-          })}
-        />
-        <Stack.Screen
           name='Tab-Me-Switch'
-          component={ScreenMeSwitch}
+          component={TabMeSwitch}
           options={{
             stackPresentation: 'modal',
             headerShown: false

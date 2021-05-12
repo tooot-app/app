@@ -15,6 +15,7 @@ export interface Props {
   title: string
   description?: string
   content?: string | React.ReactNode
+  badge?: boolean
 
   switchValue?: boolean
   switchDisabled?: boolean
@@ -33,6 +34,7 @@ const MenuRow: React.FC<Props> = ({
   title,
   description,
   content,
+  badge = false,
   switchValue,
   switchDisabled,
   switchOnValueChange,
@@ -84,6 +86,17 @@ const MenuRow: React.FC<Props> = ({
                 style={styles.iconFront}
               />
             )}
+            {badge ? (
+              <View
+                style={{
+                  width: 8,
+                  height: 8,
+                  backgroundColor: theme.red,
+                  borderRadius: 8,
+                  marginRight: StyleConstants.Spacing.S
+                }}
+              />
+            ) : null}
             <View style={styles.main}>
               <Text
                 style={[styles.title, { color: theme.primaryDefault }]}
@@ -147,12 +160,12 @@ const MenuRow: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 50
+    minHeight: 46,
+    paddingVertical: StyleConstants.Spacing.S
   },
   core: {
     flex: 1,
-    flexDirection: 'row',
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+    flexDirection: 'row'
   },
   front: {
     flex: 2,
@@ -167,7 +180,7 @@ const styles = StyleSheet.create({
     marginLeft: StyleConstants.Spacing.M
   },
   iconFront: {
-    marginRight: 8
+    marginRight: StyleConstants.Spacing.S
   },
   main: {
     flex: 1
@@ -176,9 +189,7 @@ const styles = StyleSheet.create({
     ...StyleConstants.FontStyle.M
   },
   description: {
-    ...StyleConstants.FontStyle.S,
-    marginTop: StyleConstants.Spacing.XS,
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+    ...StyleConstants.FontStyle.S
   },
   content: {
     ...StyleConstants.FontStyle.M

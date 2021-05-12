@@ -12,10 +12,14 @@ import {
   getInstanceAccount,
   getInstanceActive
 } from '@utils/slices/instancesSlice'
+import {
+  getVersionUpdate,
+  retriveVersionLatest
+} from '@utils/slices/versionSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
-import { Image, Platform } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { Platform } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
@@ -114,6 +118,17 @@ const ScreenTabs = React.memo(
 
     const previousTab = useSelector(getPreviousTab, () => true)
 
+    const versionUpdate = useSelector(getVersionUpdate)
+    const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(retriveVersionLatest())
+    }, [])
+    const tabMeOptions = useMemo(() => {
+      if (versionUpdate) {
+        return { tabBarBadge: 1 }
+      }
+    }, [versionUpdate])
+
     return (
       <Tab.Navigator
         initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
@@ -128,7 +143,7 @@ const ScreenTabs = React.memo(
           listeners={composeListeners}
         />
         <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
-        <Tab.Screen name='Tab-Me' component={TabMe} />
+        <Tab.Screen name='Tab-Me' component={TabMe} options={tabMeOptions} />
       </Tab.Navigator>
     )
   },

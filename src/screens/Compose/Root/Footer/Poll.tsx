@@ -84,7 +84,7 @@ const ComposePoll: React.FC = () => {
       <View style={styles.controlAmount}>
         <View style={styles.firstButton}>
           <Button
-            {...((total > 2)
+            {...(total > 2
               ? {
                   accessibilityLabel: t(
                     'content.root.footer.poll.quantity.reduce.accessibilityLabel',
@@ -139,78 +139,80 @@ const ComposePoll: React.FC = () => {
           disabled={!(total < 4)}
         />
       </View>
-      <MenuRow
-        title={t('content.root.footer.poll.multiple.heading')}
-        content={
-          multiple
-            ? t('content.root.footer.poll.multiple.options.multiple')
-            : t('content.root.footer.poll.multiple.options.single')
-        }
-        onPress={() =>
-          showActionSheetWithOptions(
-            {
-              options: [
-                t('content.root.footer.poll.multiple.options.single'),
-                t('content.root.footer.poll.multiple.options.multiple'),
-                t('content.root.footer.poll.multiple.options.cancel')
-              ],
-              cancelButtonIndex: 2
-            },
-            index => {
-              if (index < 2) {
-                analytics('compose_poll_expiration_press', {
-                  current: multiple,
-                  new: index === 1
-                })
-                composeDispatch({
-                  type: 'poll',
-                  payload: { multiple: index === 1 }
-                })
+      <View style={styles.controlOptions}>
+        <MenuRow
+          title={t('content.root.footer.poll.multiple.heading')}
+          content={
+            multiple
+              ? t('content.root.footer.poll.multiple.options.multiple')
+              : t('content.root.footer.poll.multiple.options.single')
+          }
+          onPress={() =>
+            showActionSheetWithOptions(
+              {
+                options: [
+                  t('content.root.footer.poll.multiple.options.single'),
+                  t('content.root.footer.poll.multiple.options.multiple'),
+                  t('content.root.footer.poll.multiple.options.cancel')
+                ],
+                cancelButtonIndex: 2
+              },
+              index => {
+                if (index < 2) {
+                  analytics('compose_poll_expiration_press', {
+                    current: multiple,
+                    new: index === 1
+                  })
+                  composeDispatch({
+                    type: 'poll',
+                    payload: { multiple: index === 1 }
+                  })
+                }
               }
-            }
-          )
-        }
-        iconBack='ChevronRight'
-      />
-      <MenuRow
-        title={t('content.root.footer.poll.expiration.heading')}
-        content={t(`content.root.footer.poll.expiration.options.${expire}`)}
-        onPress={() => {
-          const expirations: [
-            '300',
-            '1800',
-            '3600',
-            '21600',
-            '86400',
-            '259200',
-            '604800'
-          ] = ['300', '1800', '3600', '21600', '86400', '259200', '604800']
-          showActionSheetWithOptions(
-            {
-              options: [
-                ...expirations.map(e =>
-                  t(`content.root.footer.poll.expiration.options.${e}`)
-                ),
-                t('content.root.footer.poll.expiration.options.cancel')
-              ],
-              cancelButtonIndex: 7
-            },
-            index => {
-              if (index < 7) {
-                analytics('compose_poll_expiration_press', {
-                  current: expire,
-                  new: expirations[index]
-                })
-                composeDispatch({
-                  type: 'poll',
-                  payload: { expire: expirations[index] }
-                })
+            )
+          }
+          iconBack='ChevronRight'
+        />
+        <MenuRow
+          title={t('content.root.footer.poll.expiration.heading')}
+          content={t(`content.root.footer.poll.expiration.options.${expire}`)}
+          onPress={() => {
+            const expirations: [
+              '300',
+              '1800',
+              '3600',
+              '21600',
+              '86400',
+              '259200',
+              '604800'
+            ] = ['300', '1800', '3600', '21600', '86400', '259200', '604800']
+            showActionSheetWithOptions(
+              {
+                options: [
+                  ...expirations.map(e =>
+                    t(`content.root.footer.poll.expiration.options.${e}`)
+                  ),
+                  t('content.root.footer.poll.expiration.options.cancel')
+                ],
+                cancelButtonIndex: 7
+              },
+              index => {
+                if (index < 7) {
+                  analytics('compose_poll_expiration_press', {
+                    current: expire,
+                    new: expirations[index]
+                  })
+                  composeDispatch({
+                    type: 'poll',
+                    payload: { expire: expirations[index] }
+                  })
+                }
               }
-            }
-          )
-        }}
-        iconBack='ChevronRight'
-      />
+            )
+          }}
+          iconBack='ChevronRight'
+        />
+      </View>
     </View>
   )
 }
@@ -246,6 +248,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginRight: StyleConstants.Spacing.M
+  },
+  controlOptions: {
+    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   },
   firstButton: {
     marginRight: StyleConstants.Spacing.S

@@ -4,11 +4,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import ScreenMeSwitchRoot from './Switch/Root'
+import TabMeSwitchRoot from './Switch/Root'
 
 const Stack = createNativeStackNavigator()
 
-const ScreenMeSwitch: React.FC<StackScreenProps<
+const TabMeSwitch: React.FC<StackScreenProps<
   Nav.TabMeStackParamList,
   'Tab-Me-Switch'
 >> = ({ navigation }) => {
@@ -23,7 +23,7 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
       >
         <Stack.Screen
           name='Screen-Me-Switch-Root'
-          component={ScreenMeSwitchRoot}
+          component={TabMeSwitchRoot}
           options={{
             headerTitle: t('me.stacks.switch.name'),
             ...(Platform.OS === 'android' && {
@@ -44,4 +44,4 @@ const ScreenMeSwitch: React.FC<StackScreenProps<
   )
 }
 
-export default ScreenMeSwitch
+export default TabMeSwitch

@@ -132,9 +132,27 @@ declare namespace Nav {
       list: Mastodon.List['id']
       title: Mastodon.List['title']
     }
+    'Tab-Me-Profile': undefined
+    'Tab-Me-Push': undefined
     'Tab-Me-Settings': undefined
     'Tab-Me-Settings-Fontsize': undefined
-    'Tab-Me-Settings-Push': undefined
     'Tab-Me-Switch': undefined
   } & TabSharedStackParamList
+
+  type TabMeProfileStackParamList = {
+    'Tab-Me-Profile-Root': undefined
+    'Tab-Me-Profile-Name': {
+      display_name: Mastodon.Account['display_name']
+    }
+    'Tab-Me-Profile-Note': {
+      note: Mastodon.Source['note']
+    }
+    'Tab-Me-Profile-Fields': {
+      fields?: Mastodon.Source['fields']
+    }
+  }
+
+  type TabMePushStackParamList = {
+    'Tab-Me-Push-Root': undefined
+  }
 }

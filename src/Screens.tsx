@@ -168,7 +168,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               stackPresentation: 'transparentModal',
               stackAnimation: 'fade',
-              headerShown: false // Android
+              headerShown: false
             }}
           />
           <Stack.Screen
@@ -177,7 +177,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               stackPresentation: 'transparentModal',
               stackAnimation: 'fade',
-              headerShown: false // Android
+              headerShown: false
             }}
           />
           <Stack.Screen
@@ -185,7 +185,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             component={ScreenCompose}
             options={{
               stackPresentation: 'fullScreenModal',
-              headerShown: false // Android
+              headerShown: false
             }}
           />
           <Stack.Screen
@@ -194,7 +194,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               stackPresentation: 'fullScreenModal',
               stackAnimation: 'fade',
-              headerShown: false // Android
+              headerShown: false
             }}
           />
         </Stack.Navigator>
@@ -206,6 +206,3 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 }
 
 export default React.memo(Screens, () => true)
-function toast (arg0: { type: string; content: string; autoHide: boolean }) {
-  throw new Error('Function not implemented.')
-}

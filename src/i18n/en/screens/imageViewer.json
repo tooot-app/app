@@ -10,8 +10,8 @@
       "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "function": "Saving image",
-      "success": "Image saved"
+      "succeed": "Image saved",
+      "failed": "Saving image failed"
     }
   }
 }

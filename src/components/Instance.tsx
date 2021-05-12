@@ -149,14 +149,14 @@ const ComponentInstance: React.FC<Props> = ({
             style={[
               styles.prefix,
               {
+                color: theme.primaryDefault,
                 borderBottomColor: instanceQuery.isError
                   ? theme.red
                   : theme.border
               }
             ]}
             editable={false}
-            placeholder='https://'
-            placeholderTextColor={theme.primaryDefault}
+            defaultValue='https://'
           />
           <TextInput
             style={[

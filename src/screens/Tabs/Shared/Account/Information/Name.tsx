@@ -1,26 +1,19 @@
+import Input from '@components/Input'
 import { ParseEmojis } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  edit?: boolean // Editing mode
 }
 
-const AccountInformationName: React.FC<Props> = ({ account }) => {
+const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
   const { theme } = useTheme()
 
-  const movedStyle = useMemo(
-    () =>
-      StyleSheet.create({
-        base: {
-          textDecorationLine: account?.moved ? 'line-through' : undefined
-        }
-      }),
-    [account?.moved]
-  )
   const movedContent = useMemo(() => {
     if (account?.moved) {
       return (
@@ -36,31 +29,41 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
     }
   }, [account?.moved])
 
-  if (account) {
-    return (
-      <View style={[styles.base, { flexDirection: 'row' }]}>
-        <Text style={movedStyle.base}>
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            size='L'
-            fontBold
-          />
-        </Text>
-        {movedContent}
-      </View>
-    )
-  } else {
-    return (
-      <PlaceholderLine
-        width={StyleConstants.Font.Size.L * 2}
-        height={StyleConstants.Font.LineHeight.L}
-        color={theme.shimmerDefault}
-        noMargin
-        style={styles.base}
-      />
-    )
-  }
+  const [displatName, setDisplayName] = useState(account?.display_name)
+
+  return (
+    <View style={[styles.base, { flexDirection: 'row' }]}>
+      {account ? (
+        edit ? (
+          <Input title='昵称' value={displatName} setValue={setDisplayName} />
+        ) : (
+          <>
+            <Text
+              style={{
+                textDecorationLine: account?.moved ? 'line-through' : undefined
+              }}
+            >
+              <ParseEmojis
+                content={account.display_name || account.username}
+                emojis={account.emojis}
+                size='L'
+                fontBold
+              />
+            </Text>
+            {movedContent}
+          </>
+        )
+      ) : (
+        <PlaceholderLine
+          width={StyleConstants.Font.Size.L * 2}
+          height={StyleConstants.Font.LineHeight.L}
+          color={theme.shimmerDefault}
+          noMargin
+          style={{ borderRadius: 0 }}
+        />
+      )}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

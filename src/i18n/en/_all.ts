@@ -9,6 +9,7 @@ export default {
   screenTabs: require('./screens/tabs'),
 
   componentInstance: require('./components/instance'),
+  componentMediaSelector: require('./components/mediaSelector'),
   componentParse: require('./components/parse'),
   componentRelationship: require('./components/relationship'),
   componentRelativeTime: require('./components/relativeTime'),

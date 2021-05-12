@@ -6,7 +6,7 @@ const ctx = new chalk.Instance({ level: 3 })
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
-  domain?: string
+  domain: string
   url: string
   params?: {
     [key: string]: string | number | boolean | string[] | number[] | boolean[]
@@ -25,10 +25,6 @@ const apiGeneral = async <T = unknown>({
   body,
   sentry = false
 }: Params): Promise<{ body: T }> => {
-  if (!domain) {
-    return Promise.reject()
-  }
-
   console.log(
     ctx.bgGreen.bold(' API general ') +
       ' ' +
