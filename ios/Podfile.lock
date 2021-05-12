@@ -136,15 +136,15 @@ PODS:
     - GoogleUtilities/Logger
   - hermes-engine (0.7.2)
   - libevent (2.1.12)
-  - libwebp (1.1.0):
-    - libwebp/demux (= 1.1.0)
-    - libwebp/mux (= 1.1.0)
-    - libwebp/webp (= 1.1.0)
-  - libwebp/demux (1.1.0):
+  - libwebp (1.2.0):
+    - libwebp/demux (= 1.2.0)
+    - libwebp/mux (= 1.2.0)
+    - libwebp/webp (= 1.2.0)
+  - libwebp/demux (1.2.0):
     - libwebp/webp
-  - libwebp/mux (1.1.0):
+  - libwebp/mux (1.2.0):
     - libwebp/demux
-  - libwebp/webp (1.1.0)
+  - libwebp/webp (1.2.0)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -483,9 +483,9 @@ PODS:
     - Sentry (= 6.1.4)
   - RNSVG (12.1.1):
     - React
-  - SDWebImage (5.10.3):
-    - SDWebImage/Core (= 5.10.3)
-  - SDWebImage/Core (5.10.3)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -829,7 +829,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
+  libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -870,7 +870,7 @@ SPEC CHECKSUMS:
   RNScreens: c277bfc4b5bb7c2fe977d19635df6f974f95dfd6
   RNSentry: e86fb2e2fec0365644f4b582938bf66be515acce
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  SDWebImage: e378178472b735e84b007bfb55514c97948a0598
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Sentry: 9d055e2de30a77685e86b219acf02e59b82091fc
   UMAppLoader: fe2708bb0ac5cd70052bc207d06aa3b7e72b9e97
