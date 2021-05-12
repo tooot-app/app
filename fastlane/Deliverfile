@@ -30,6 +30,6 @@ submission_information({
 })
 
 release_notes({
-  'default' => "添加支持修改账户信息",
+  'zh-Hans' => "添加支持修改账户信息",
   'en-US' => "Added the possibility to update account information"
 })
