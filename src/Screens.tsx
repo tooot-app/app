@@ -1,3 +1,4 @@
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { displayMessage, Message, removeMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useNetInfo } from '@react-native-community/netinfo'
@@ -171,18 +172,30 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           <Stack.Screen
             name='Screen-Announcements'
             component={ScreenAnnouncements}
-            options={{
+            options={({ navigation }) => ({
               stackPresentation: 'transparentModal',
               stackAnimation: 'fade',
-              headerShown: false
-            }}
+              headerShown: true,
+              headerHideShadow: true,
+              headerTopInsetEnabled: false,
+              headerStyle: { backgroundColor: 'transparent' },
+              headerLeft: () => (
+                <HeaderLeft content='X' onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: t('screenAnnouncements:heading'),
+              ...(Platform.OS === 'android' && {
+                headerCenter: () => (
+                  <HeaderCenter content={t('screenAnnouncements:heading')} />
+                )
+              })
+            })}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
             options={{
               stackPresentation: 'fullScreenModal',
-              headerShown: false
+              ...(Platform.OS === 'android' && { headerShown: false })
             }}
           />
           <Stack.Screen
@@ -191,7 +204,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               stackPresentation: 'fullScreenModal',
               stackAnimation: 'fade',
-              headerShown: false
+              ...(Platform.OS === 'android' && { headerShown: false })
             }}
           />
         </Stack.Navigator>

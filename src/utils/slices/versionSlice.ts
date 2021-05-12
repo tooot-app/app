@@ -1,7 +1,7 @@
+import apiGeneral from '@api/general'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
-import apiGeneral from '@api/general'
-import { Constants } from 'react-native-unimodules'
+import * as Updates from 'expo-updates'
 
 export const retriveVersionLatest = createAsyncThunk(
   'version/latest',
@@ -29,8 +29,10 @@ const versionSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(retriveVersionLatest.fulfilled, (state, action) => {
-      if (action.payload && Constants.manifest.version) {
-        if (parseInt(action.payload) > parseInt(Constants.manifest.version)) {
+      // @ts-ignore
+      if (action.payload && Updates.manifest?.version) {
+        // @ts-ignore
+        if (parseInt(action.payload) > parseInt(Updates.manifest.version)) {
           state.update = true
         }
       }
