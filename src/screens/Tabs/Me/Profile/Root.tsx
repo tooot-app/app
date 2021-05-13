@@ -1,7 +1,10 @@
+import GracefullyImage from '@components/GracefullyImage'
+import mediaSelector from '@components/mediaSelector'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
+import * as ImagePicker from 'expo-image-picker'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -87,30 +90,48 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
         <MenuRow
           title={t('me.profile.root.avatar.title')}
           description={t('me.profile.root.avatar.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.avatar_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
+          content={
+            <GracefullyImage
+              key={data?.avatar_static}
+              style={{ flex: 1 }}
+              uri={{
+                original: data?.avatar_static
+              }}
+            />
+          }
+          loading={isLoading}
+          iconBack='ChevronRight'
+          onPress={async () => {
+            const image = await mediaSelector({
+              showActionSheetWithOptions,
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              resize: { width: 400, height: 400 }
+            })
+            mutate({ type: 'avatar', data: image.uri })
+          }}
         />
         <MenuRow
           title={t('me.profile.root.banner.title')}
           description={t('me.profile.root.banner.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.header_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
+          content={
+            <GracefullyImage
+              key={data?.header_static}
+              style={{ flex: 1 }}
+              uri={{
+                original: data?.header_static
+              }}
+            />
+          }
+          loading={isLoading}
+          iconBack='ChevronRight'
+          onPress={async () => {
+            const image = await mediaSelector({
+              showActionSheetWithOptions,
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              resize: { width: 1500, height: 500 }
+            })
+            mutate({ type: 'header', data: image.uri })
+          }}
         />
         <MenuRow
           title={t('me.profile.root.note.title')}
@@ -118,9 +139,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
           loading={isLoading}
           iconBack='ChevronRight'
           onPress={() => {
-            navigation.navigate('Tab-Me-Profile-Note', {
-              note: data?.source?.note || ''
-            })
+            data &&
+              navigation.navigate('Tab-Me-Profile-Note', {
+                note: data.source?.note
+              })
           }}
         />
         <MenuRow

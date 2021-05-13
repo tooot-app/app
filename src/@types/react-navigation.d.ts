@@ -1,6 +1,4 @@
 declare namespace Nav {
-  import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-
   type RootStackParamList = {
     'Screen-Tabs': undefined
     'Screen-Actions':

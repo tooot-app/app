@@ -35,6 +35,10 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
+  - EXImageManipulator (9.1.0):
+    - UMCore
+    - UMFileSystemInterface
+    - UMImageLoaderInterface
   - EXImagePicker (10.1.4):
     - UMCore
     - UMFileSystemInterface
@@ -530,6 +534,7 @@ DEPENDENCIES:
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXHaptics (from `../node_modules/expo-haptics/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+  - EXImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - EXImagePicker (from `../node_modules/expo-image-picker/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLocalization (from `../node_modules/expo-localization/ios`)
@@ -651,6 +656,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-haptics/ios"
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
+  EXImageManipulator:
+    :path: "../node_modules/expo-image-manipulator/ios"
   EXImagePicker:
     :path: "../node_modules/expo-image-picker/ios"
   EXKeepAwake:
@@ -803,6 +810,7 @@ SPEC CHECKSUMS:
   EXFont: d6fb79f9863120f0d0b26b0c2d1453bc9511e9df
   EXHaptics: 2de40c5f50a9e78da92c209db06db5134d8cac0b
   EXImageLoader: da941c9399e01ec28f2d5b270bdd21f2c8ca596c
+  EXImageManipulator: a099e4694070c7cb86aa0b0b1afa3ea184153a7d
   EXImagePicker: dd05b8a5cb782c79d07d1d72e5850c6acc2b9a37
   EXKeepAwake: d4e4a3ed8c1c4fd940dd62fc5a8be2a190371fd4
   EXLocalization: f139efe4a06be1041815879959346e3d437a6e93

@@ -45,6 +45,7 @@
     "expo-crypto": "~9.1.0",
     "expo-firebase-analytics": "~4.0.2",
     "expo-haptics": "~10.0.0",
+    "expo-image-manipulator": "~9.1.0",
     "expo-image-picker": "~10.1.4",
     "expo-linking": "~2.2.3",
     "expo-localization": "~10.1.0",
@@ -89,8 +90,8 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@babel/core": "~7.14.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
+    "@babel/core": "~7.14.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
     "@babel/preset-typescript": "^7.13.0",
     "@expo/config": "^3.3.40",
     "@jest/types": "^26.6.2",
