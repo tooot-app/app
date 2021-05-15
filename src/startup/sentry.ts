@@ -1,12 +1,12 @@
 import * as Updates from 'expo-updates'
+import { Constants } from 'react-native-unimodules'
 import * as Sentry from 'sentry-expo'
 import log from './log'
 
 const sentry = () => {
   log('log', 'Sentry', 'initializing')
   Sentry.init({
-    // @ts-ignore
-    dsn: Updates.manifest?.extra?.sentryDSN,
+    dsn: Constants.manifest?.extra?.sentryDSN,
     enableInExpoDevelopment: false,
     debug:
       __DEV__ ||
