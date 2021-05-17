@@ -32,7 +32,7 @@ const AccountInformationNote = React.memo(
       </View>
     )
   },
-  () => true
+  (_, next) => next.account === undefined
 )
 
 const styles = StyleSheet.create({
