@@ -1,24 +1,26 @@
-import GracefullyImage from '@components/GracefullyImage'
-import mediaSelector from '@components/mediaSelector'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
-import * as ImagePicker from 'expo-image-picker'
-import React, { useCallback } from 'react'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
+import ProfileAvatarHeader from './Root/AvatarHeader'
 
 const TabMeProfileRoot: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Root'
->> = ({ navigation }) => {
+> & { messageRef: RefObject<FlashMessage> }> = ({ messageRef, navigation }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
 
   const { data, isLoading } = useProfileQuery({})
-  const { mutate } = useProfileMutation()
+  const { mutateAsync } = useProfileMutation()
 
   const onPressVisibility = useCallback(() => {
     showActionSheetWithOptions(
@@ -35,13 +37,46 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            mutate({ type: 'source[privacy]', data: 'public' })
+            mutateAsync({ type: 'source[privacy]', data: 'public' }).catch(
+              err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+            )
             break
           case 1:
-            mutate({ type: 'source[privacy]', data: 'unlisted' })
+            mutateAsync({ type: 'source[privacy]', data: 'unlisted' }).catch(
+              err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+            )
             break
           case 2:
-            mutate({ type: 'source[privacy]', data: 'private' })
+            mutateAsync({ type: 'source[privacy]', data: 'private' }).catch(
+              err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+            )
             break
         }
       }
@@ -50,25 +85,88 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
 
   const onPressSensitive = useCallback(() => {
     if (data?.source.sensitive === undefined) {
-      mutate({ type: 'source[sensitive]', data: true })
+      mutateAsync({ type: 'source[sensitive]', data: true }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.sensitive.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     } else {
-      mutate({ type: 'source[sensitive]', data: !data.source.sensitive })
+      mutateAsync({
+        type: 'source[sensitive]',
+        data: !data.source.sensitive
+      }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.sensitive.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     }
   }, [data?.source.sensitive])
 
   const onPressLock = useCallback(() => {
     if (data?.locked === undefined) {
-      mutate({ type: 'locked', data: true })
+      mutateAsync({ type: 'locked', data: true }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.lock.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     } else {
-      mutate({ type: 'locked', data: !data.locked })
+      mutateAsync({ type: 'locked', data: !data.locked }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.lock.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     }
   }, [data?.locked])
 
   const onPressBot = useCallback(() => {
     if (data?.bot === undefined) {
-      mutate({ type: 'bot', data: true })
+      mutateAsync({ type: 'bot', data: true }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.bot.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     } else {
-      mutate({ type: 'bot', data: !data?.bot })
+      mutateAsync({ type: 'bot', data: !data?.bot }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.bot.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     }
   }, [data?.bot])
 
@@ -87,52 +185,8 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
               })
           }}
         />
-        <MenuRow
-          title={t('me.profile.root.avatar.title')}
-          description={t('me.profile.root.avatar.description')}
-          content={
-            <GracefullyImage
-              key={data?.avatar_static}
-              style={{ flex: 1 }}
-              uri={{
-                original: data?.avatar_static
-              }}
-            />
-          }
-          loading={isLoading}
-          iconBack='ChevronRight'
-          onPress={async () => {
-            const image = await mediaSelector({
-              showActionSheetWithOptions,
-              mediaTypes: ImagePicker.MediaTypeOptions.Images,
-              resize: { width: 400, height: 400 }
-            })
-            mutate({ type: 'avatar', data: image.uri })
-          }}
-        />
-        <MenuRow
-          title={t('me.profile.root.banner.title')}
-          description={t('me.profile.root.banner.description')}
-          content={
-            <GracefullyImage
-              key={data?.header_static}
-              style={{ flex: 1 }}
-              uri={{
-                original: data?.header_static
-              }}
-            />
-          }
-          loading={isLoading}
-          iconBack='ChevronRight'
-          onPress={async () => {
-            const image = await mediaSelector({
-              showActionSheetWithOptions,
-              mediaTypes: ImagePicker.MediaTypeOptions.Images,
-              resize: { width: 1500, height: 500 }
-            })
-            mutate({ type: 'header', data: image.uri })
-          }}
-        />
+        <ProfileAvatarHeader type='avatar' messageRef={messageRef} />
+        <ProfileAvatarHeader type='header' messageRef={messageRef} />
         <MenuRow
           title={t('me.profile.root.note.title')}
           content={data?.source.note}
