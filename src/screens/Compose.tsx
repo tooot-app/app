@@ -88,6 +88,14 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
       return {
         ...composeInitialState,
         timestamp: Date.now(),
+        attachments: {
+          ...composeInitialState.attachments,
+          sensitive:
+            localAccount?.preferences &&
+            localAccount?.preferences['posting:default:sensitive']
+              ? localAccount?.preferences['posting:default:sensitive']
+              : false
+        },
         visibility:
           localAccount?.preferences &&
           localAccount.preferences['posting:default:visibility']

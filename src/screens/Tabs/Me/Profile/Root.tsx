@@ -3,11 +3,13 @@ import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
+import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch } from 'react-redux'
 import ProfileAvatarHeader from './Root/AvatarHeader'
 
 const TabMeProfileRoot: React.FC<StackScreenProps<
@@ -21,6 +23,7 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
 
   const { data, isLoading } = useProfileQuery({})
   const { mutateAsync } = useProfileMutation()
+  const dispatch = useDispatch()
 
   const onPressVisibility = useCallback(() => {
     showActionSheetWithOptions(
@@ -37,8 +40,9 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            mutateAsync({ type: 'source[privacy]', data: 'public' }).catch(
-              err =>
+            mutateAsync({ type: 'source[privacy]', data: 'public' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
                 displayMessage({
                   ref: messageRef,
                   message: t('me.profile.feedback.failed', {
@@ -48,11 +52,12 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
                   mode,
                   type: 'error'
                 })
-            )
+              )
             break
           case 1:
-            mutateAsync({ type: 'source[privacy]', data: 'unlisted' }).catch(
-              err =>
+            mutateAsync({ type: 'source[privacy]', data: 'unlisted' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
                 displayMessage({
                   ref: messageRef,
                   message: t('me.profile.feedback.failed', {
@@ -62,11 +67,12 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
                   mode,
                   type: 'error'
                 })
-            )
+              )
             break
           case 2:
-            mutateAsync({ type: 'source[privacy]', data: 'private' }).catch(
-              err =>
+            mutateAsync({ type: 'source[privacy]', data: 'private' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
                 displayMessage({
                   ref: messageRef,
                   message: t('me.profile.feedback.failed', {
@@ -76,7 +82,7 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
                   mode,
                   type: 'error'
                 })
-            )
+              )
             break
         }
       }
@@ -85,32 +91,36 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
 
   const onPressSensitive = useCallback(() => {
     if (data?.source.sensitive === undefined) {
-      mutateAsync({ type: 'source[sensitive]', data: true }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.sensitive.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
+      mutateAsync({ type: 'source[sensitive]', data: true })
+        .then(() => dispatch(updateAccountPreferences()))
+        .catch(err =>
+          displayMessage({
+            ref: messageRef,
+            message: t('me.profile.feedback.failed', {
+              type: t('me.profile.root.sensitive.title')
+            }),
+            ...(err && { description: err }),
+            mode,
+            type: 'error'
+          })
+        )
     } else {
       mutateAsync({
         type: 'source[sensitive]',
         data: !data.source.sensitive
-      }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.sensitive.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
+      })
+        .then(() => dispatch(updateAccountPreferences()))
+        .catch(err =>
+          displayMessage({
+            ref: messageRef,
+            message: t('me.profile.feedback.failed', {
+              type: t('me.profile.root.sensitive.title')
+            }),
+            ...(err && { description: err }),
+            mode,
+            type: 'error'
+          })
+        )
     }
   }, [data?.source.sensitive])
 
