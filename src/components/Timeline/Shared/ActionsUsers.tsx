@@ -38,7 +38,7 @@ const TimelineActionsUsers = React.memo(
               'shared.actionsUsers.reblogged_by.accessibilityHint'
             )}
             accessibilityRole='button'
-            style={[styles.text, { color: theme.secondary }]}
+            style={[styles.text, { color: theme.blue }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
                 count: status.reblogs_count
@@ -68,7 +68,7 @@ const TimelineActionsUsers = React.memo(
               'shared.actionsUsers.favourited_by.accessibilityHint'
             )}
             accessibilityRole='button'
-            style={[styles.text, { color: theme.secondary }]}
+            style={[styles.text, { color: theme.blue }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
                 count: status.favourites_count
@@ -98,10 +98,9 @@ const styles = StyleSheet.create({
   base: {
     flexDirection: 'row'
   },
-  pressable: { margin: StyleConstants.Spacing.M },
   text: {
-    ...StyleConstants.FontStyle.S,
-    padding: StyleConstants.Spacing.S * 1.5,
+    ...StyleConstants.FontStyle.M,
+    padding: StyleConstants.Spacing.S,
     paddingLeft: 0,
     marginRight: StyleConstants.Spacing.S
   }

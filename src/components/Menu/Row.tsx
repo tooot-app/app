@@ -162,12 +162,12 @@ const MenuRow: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 46,
-    paddingVertical: StyleConstants.Spacing.S
+    minHeight: 50
   },
   core: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingVertical: StyleConstants.Spacing.S
   },
   front: {
     flex: 2,

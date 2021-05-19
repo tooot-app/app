@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
+    "strictFunctionTypes": false,
     "baseUrl": "./",
     "paths": {
       "@api/*": ["./src/api/*"],

@@ -129,11 +129,12 @@ const TimelineDefault: React.FC<Props> = ({
         {!disableDetails && actualStatus.card && (
           <TimelineCard card={actualStatus.card} />
         )}
-        <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
+        {!disableDetails ? (
+          <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
+        ) : null}
         <TimelineTranslate status={actualStatus} highlighted={highlighted} />
+        <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
       </View>
-
-      <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
 
       {queryKey && !disableDetails && (
         <TimelineActions

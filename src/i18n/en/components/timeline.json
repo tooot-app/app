@@ -74,7 +74,11 @@
       "expandHint": "hidden content"
     },
     "fullConversation": "Read conversations",
-    "translate": "Translate",
+    "translate": {
+      "default": "Translate",
+      "error": "Try to translate again",
+      "unavailable": "Language not supported"
+    },
     "header": {
       "shared": {
         "account": {
