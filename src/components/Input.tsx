@@ -110,7 +110,8 @@ const Input: React.FC<Props> = ({
           styles.base,
           {
             borderColor: theme.border,
-            flexDirection: multiline ? 'column' : 'row'
+            flexDirection: multiline ? 'column' : 'row',
+            alignItems: 'stretch'
           }
         ]}
       >
@@ -153,7 +154,7 @@ const Input: React.FC<Props> = ({
             {title}
           </Animated.Text>
         ) : null}
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
           {options?.maxLength && value?.length ? (
             <Text style={[styles.maxLength, { color: theme.secondary }]}>
               {value?.length} / {options.maxLength}
