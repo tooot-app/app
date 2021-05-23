@@ -76,8 +76,8 @@
     "fullConversation": "Read conversations",
     "translate": {
       "default": "Translate",
-      "error": "Try to translate again",
-      "unavailable": "Language not supported"
+      "succeed": "Translated by {{provider}} from {{source}}",
+      "failed": "Translation failed"
     },
     "header": {
       "shared": {

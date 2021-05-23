@@ -1,31 +1,15 @@
+import analytics from '@components/analytics'
+import { ParseHTML } from '@components/Parse'
 import { useTranslateQuery } from '@utils/queryHooks/translate'
+import { getInstanceUri } from '@utils/slices/instancesSlice'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import htmlparser2 from 'htmlparser2-without-node-native'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, Text } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { useSelector } from 'react-redux'
-
-const availableLanguages = [
-  'en',
-  'ar',
-  'zh',
-  'fr',
-  'de',
-  'hi',
-  'ga',
-  'it',
-  'ja',
-  'ko',
-  'pl',
-  'pt',
-  'ru',
-  'es',
-  'tr'
-]
 
 export interface Props {
   highlighted: boolean
@@ -45,48 +29,31 @@ const TimelineTranslate = React.memo(
     const { theme } = useTheme()
 
     const tootLanguage = status.language.slice(0, 2)
-    if (!availableLanguages.includes(tootLanguage)) {
-      return (
-        <Text
-          style={{
-            ...StyleConstants.FontStyle.M,
-            color: theme.disabled
-          }}
-        >
-          {t('shared.translate.unavailable')}
-        </Text>
-      )
-    }
 
-    const settingsLanguage = useSelector(getSettingsLanguage, () => true)
+    const settingsLanguage = useSelector(getSettingsLanguage)
 
     if (settingsLanguage.includes(tootLanguage)) {
       return null
     }
 
-    let emojisRemoved = status.spoiler_text
-      ? status.spoiler_text.concat(status.content)
-      : status.content
-    if (status.emojis) {
+    let text = status.spoiler_text
+      ? [status.spoiler_text, status.content]
+      : [status.content]
+
+    for (const i in text) {
       for (const emoji of status.emojis) {
-        emojisRemoved = emojisRemoved.replaceAll(`:${emoji.shortcode}:`, '')
+        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, '')
       }
     }
 
-    let cleaned = ''
-    const parser = new htmlparser2.Parser({
-      ontext (text: string) {
-        cleaned = cleaned.concat(text)
-      }
-    })
-    parser.write(emojisRemoved)
-    parser.end()
-
+    const instanceUri = useSelector(getInstanceUri)
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      toot: cleaned,
+      instance: instanceUri!,
+      id: status.id,
       source: status.language,
-      target: settingsLanguage.slice(0, 2),
+      target: settingsLanguage,
+      text,
       options: { enabled }
     })
 
@@ -97,9 +64,15 @@ const TimelineTranslate = React.memo(
           onPress={() => {
             if (enabled) {
               if (!isSuccess) {
+                analytics('timeline_shared_translate_retry', {
+                  language: status.language
+                })
                 refetch()
               }
             } else {
+              analytics('timeline_shared_translate', {
+                language: status.language
+              })
               setEnabled(true)
             }
           }}
@@ -109,15 +82,21 @@ const TimelineTranslate = React.memo(
               ...StyleConstants.FontStyle.M,
               color:
                 isLoading || isSuccess
-                  ? theme.disabled
+                  ? theme.secondary
                   : isError
                   ? theme.red
                   : theme.blue
             }}
           >
             {isError
-              ? t('shared.translate.error')
+              ? t('shared.translate.failed')
+              : isSuccess
+              ? t('shared.translate.succeed', {
+                  provider: data?.provider,
+                  source: data?.sourceLanguage
+                })
               : t('shared.translate.default')}
+            {__DEV__ ? ` Source: ${status.language}` : undefined}
           </Text>
           {isLoading ? (
             <Circle
@@ -127,15 +106,17 @@ const TimelineTranslate = React.memo(
             />
           ) : null}
         </Pressable>
-        {data ? (
-          <Text
-            style={{
-              ...StyleConstants.FontStyle.M,
-              color: theme.primaryDefault
-            }}
-            children={data}
-          />
-        ) : null}
+        {data
+          ? data.text.map((d, i) => (
+              <ParseHTML
+                key={i}
+                content={d}
+                size={'M'}
+                numberOfLines={999}
+                selectable
+              />
+            ))
+          : null}
       </>
     )
   },

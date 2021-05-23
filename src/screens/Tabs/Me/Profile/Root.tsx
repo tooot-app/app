@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
@@ -40,6 +41,12 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'public'
+            })
             mutateAsync({ type: 'source[privacy]', data: 'public' })
               .then(() => dispatch(updateAccountPreferences()))
               .catch(err =>
@@ -55,6 +62,12 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
               )
             break
           case 1:
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'unlisted'
+            })
             mutateAsync({ type: 'source[privacy]', data: 'unlisted' })
               .then(() => dispatch(updateAccountPreferences()))
               .catch(err =>
@@ -70,6 +83,12 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
               )
             break
           case 2:
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'unlisted'
+            })
             mutateAsync({ type: 'source[privacy]', data: 'private' })
               .then(() => dispatch(updateAccountPreferences()))
               .catch(err =>
@@ -87,10 +106,14 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
         }
       }
     )
-  }, [])
+  }, [data?.source.privacy])
 
   const onPressSensitive = useCallback(() => {
     if (data?.source.sensitive === undefined) {
+      analytics('me_profile_sensitive', {
+        current: undefined,
+        new: true
+      })
       mutateAsync({ type: 'source[sensitive]', data: true })
         .then(() => dispatch(updateAccountPreferences()))
         .catch(err =>
@@ -105,6 +128,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
           })
         )
     } else {
+      analytics('me_profile_sensitive', {
+        current: data.source.sensitive,
+        new: !data.source.sensitive
+      })
       mutateAsync({
         type: 'source[sensitive]',
         data: !data.source.sensitive
@@ -126,6 +153,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
 
   const onPressLock = useCallback(() => {
     if (data?.locked === undefined) {
+      analytics('me_profile_lock', {
+        current: undefined,
+        new: true
+      })
       mutateAsync({ type: 'locked', data: true }).catch(err =>
         displayMessage({
           ref: messageRef,
@@ -138,6 +169,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
         })
       )
     } else {
+      analytics('me_profile_lock', {
+        current: data.locked,
+        new: !data.locked
+      })
       mutateAsync({ type: 'locked', data: !data.locked }).catch(err =>
         displayMessage({
           ref: messageRef,
@@ -154,6 +189,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
 
   const onPressBot = useCallback(() => {
     if (data?.bot === undefined) {
+      analytics('me_profile_bot', {
+        current: undefined,
+        new: true
+      })
       mutateAsync({ type: 'bot', data: true }).catch(err =>
         displayMessage({
           ref: messageRef,
@@ -166,6 +205,10 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
         })
       )
     } else {
+      analytics('me_profile_bot', {
+        current: data.bot,
+        new: !data.bot
+      })
       mutateAsync({ type: 'bot', data: !data?.bot }).catch(err =>
         displayMessage({
           ref: messageRef,

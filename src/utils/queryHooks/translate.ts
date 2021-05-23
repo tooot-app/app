@@ -1,39 +1,55 @@
 import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
-import { Constants } from 'react-native-unimodules'
+import { Buffer } from 'buffer'
+import Constants from 'expo-constants'
 import { useQuery, UseQueryOptions } from 'react-query'
+
+type Translations = {
+  provider: string
+  sourceLanguage: string
+  text: string[]
+}
 
 export type QueryKeyTranslate = [
   'Translate',
-  { toot: string; source: string; target: string }
+  {
+    instance: string
+    id: string
+    source: string
+    target: string
+    text: string[]
+  }
 ]
 
-const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
-  const { toot, source, target } = queryKey[1]
+export const TRANSLATE_SERVER = __DEV__
+  ? 'testtranslate.tooot.app'
+  : 'translate.tooot.app'
 
-  const res = await apiGeneral<Translate.Translate>({
-    domain: 'translate.tooot.app',
-    method: 'post',
-    url: 'translate',
-    params: {
-      api_key: Constants.manifest?.extra?.translateKey,
-      q: toot,
-      source,
-      target
+const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
+  const key = Constants.manifest.extra?.translateKey
+  if (!key) {
+    return Promise.reject()
+  }
+
+  const { instance, id, source, target, text } = queryKey[1]
+
+  const res = await apiGeneral<Translations>({
+    domain: TRANSLATE_SERVER,
+    method: 'get',
+    url: `v1/translate/${instance}/${id}/${target}`,
+    headers: {
+      key,
+      original: Buffer.from(JSON.stringify({ source, text })).toString('base64')
     }
   })
-  return res.body.translatedText
+  return res.body
 }
 
 const useTranslateQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTranslate[1] & {
-  options?: UseQueryOptions<
-    Translate.Translate['translatedText'],
-    AxiosError,
-    Translate.Translate['translatedText']
-  >
+  options?: UseQueryOptions<Translations, AxiosError, Translations>
 }) => {
   const queryKey: QueryKeyTranslate = ['Translate', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, options)

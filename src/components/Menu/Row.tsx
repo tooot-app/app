@@ -76,7 +76,7 @@ const MenuRow: React.FC<Props> = ({
           }
         }}
       >
-        <View>
+        <View style={{ flex: 1 }}>
           <View style={styles.core}>
             <View style={styles.front}>
               {iconFront && (

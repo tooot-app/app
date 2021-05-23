@@ -74,7 +74,11 @@ const apiGeneral = async <T = unknown>({
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.error(ctx.bold(' API general '), ctx.bold('request'), error)
+        console.error(
+          ctx.bold(' API general '),
+          ctx.bold('request'),
+          error.request
+        )
         return Promise.reject()
       } else {
         console.error(

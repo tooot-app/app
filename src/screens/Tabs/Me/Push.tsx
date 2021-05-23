@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
@@ -67,7 +68,11 @@ const TabMePush: React.FC = () => {
               !pushEnabled || !instancePush.global.value || isLoading
             }
             switchValue={instancePush?.alerts[alert].value}
-            switchOnValueChange={() =>
+            switchOnValueChange={() => {
+              analytics(`me_push_${alert}`, {
+                current: instancePush?.alerts[alert].value,
+                new: !instancePush?.alerts[alert].value
+              })
               dispatch(
                 updateInstancePushAlert({
                   changed: alert,
@@ -80,7 +85,7 @@ const TabMePush: React.FC = () => {
                   }
                 })
               )
-            }
+            }}
           />
         ))
       : null
@@ -103,10 +108,12 @@ const TabMePush: React.FC = () => {
             }}
             onPress={async () => {
               if (pushCanAskAgain) {
+                analytics('me_push_enabled_dialogue')
                 const result = await Notifications.requestPermissionsAsync()
                 setPushEnabled(result.granted)
                 setPushCanAskAgain(result.canAskAgain)
               } else {
+                analytics('me_push_enabled_setting')
                 Linking.openSettings()
               }
             }}
@@ -124,9 +131,13 @@ const TabMePush: React.FC = () => {
           switchValue={
             pushEnabled === false ? false : instancePush?.global.value
           }
-          switchOnValueChange={() =>
+          switchOnValueChange={() => {
+            analytics('me_push_global', {
+              current: instancePush?.global.value,
+              new: !instancePush?.global.value
+            })
             dispatch(updateInstancePush(!instancePush?.global.value))
-          }
+          }}
         />
       </MenuContainer>
       <MenuContainer>
@@ -138,16 +149,21 @@ const TabMePush: React.FC = () => {
             !pushEnabled || !instancePush?.global.value || isLoading
           }
           switchValue={instancePush?.decode.value}
-          switchOnValueChange={() =>
+          switchOnValueChange={() => {
+            analytics('me_push_decode', {
+              current: instancePush?.decode.value,
+              new: !instancePush?.decode.value
+            })
             dispatch(updateInstancePushDecode(!instancePush?.decode.value))
-          }
+          }}
         />
         <MenuRow
           title={t('me.push.howitworks')}
           iconBack='ExternalLink'
-          onPress={() =>
+          onPress={() => {
+            analytics('me_push_howitworks')
             WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')
-          }
+          }}
         />
       </MenuContainer>
       <MenuContainer>{alerts}</MenuContainer>

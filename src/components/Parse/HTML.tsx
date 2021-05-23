@@ -164,6 +164,7 @@ export interface Props {
   expandHint?: string
   highlighted?: boolean
   disableDetails?: boolean
+  selectable?: boolean
 }
 
 const ParseHTML = React.memo(
@@ -178,7 +179,8 @@ const ParseHTML = React.memo(
     numberOfLines = 10,
     expandHint,
     highlighted = false,
-    disableDetails = false
+    disableDetails = false,
+    selectable = false
   }: Props) => {
     const adaptiveFontsize = useSelector(getSettingsFontsize)
     const adaptedFontsize = adaptiveScale(
@@ -255,6 +257,7 @@ const ParseHTML = React.memo(
               numberOfLines={
                 expandAllow ? (expanded ? 999 : numberOfLines) : undefined
               }
+              selectable={selectable}
             />
             {expandAllow ? (
               <Pressable

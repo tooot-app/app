@@ -87,6 +87,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
               emojis={item.emojis}
               mentions={item.mentions}
               numberOfLines={999}
+              selectable
             />
           </ScrollView>
           {item.reactions?.length ? (

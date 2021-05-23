@@ -34,6 +34,7 @@ const AccountInformationFields = React.memo(
                 emojis={account.emojis}
                 showFullLink
                 numberOfLines={5}
+                selectable
               />
               {field.verified_at ? (
                 <Icon
@@ -51,6 +52,7 @@ const AccountInformationFields = React.memo(
                 emojis={account.emojis}
                 showFullLink
                 numberOfLines={5}
+                selectable
               />
             </View>
           </View>
