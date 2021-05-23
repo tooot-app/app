@@ -12,21 +12,7 @@ import React, {
   useReducer
 } from 'react'
 import FastImage from 'react-native-fast-image'
-import EmojisContext, {
-  EmojisAction,
-  EmojisState
-} from './Emojis/helpers/EmojisContext'
-
-const emojisReducer = (state: EmojisState, action: EmojisAction) => {
-  switch (action.type) {
-    case 'activate':
-      return { ...state, active: action.payload }
-    case 'load':
-      return { ...state, emojis: action.payload }
-    case 'shortcode':
-      return { ...state, shortcode: action.payload }
-  }
-}
+import EmojisContext, { emojisReducer } from './Emojis/helpers/EmojisContext'
 
 const prefetchEmojis = (
   sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[],

@@ -1,15 +1,8 @@
-import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo
-} from 'react'
+import React, { RefObject, useCallback, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -25,52 +18,15 @@ import validUrl from 'valid-url'
 import updateText from '../../updateText'
 import ComposeContext from '../../utils/createContext'
 
-const SingleEmoji = ({ emoji }: { emoji: Mastodon.Emoji }) => {
-  const { t } = useTranslation()
-  const { reduceMotionEnabled } = useAccessibility()
-
-  const { composeState, composeDispatch } = useContext(ComposeContext)
-  const onPress = useCallback(() => {
-    analytics('compose_emoji_add')
-    updateText({
-      composeState,
-      composeDispatch,
-      newText: `:${emoji.shortcode}:`,
-      type: 'emoji'
-    })
-    haptics('Light')
-  }, [composeState])
-  const children = useMemo(() => {
-    const uri = reduceMotionEnabled ? emoji.static_url : emoji.url
-    if (validUrl.isHttpsUri(uri)) {
-      return (
-        <FastImage
-          accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
-            emoji: emoji.shortcode
-          })}
-          accessibilityHint={t(
-            'screenCompose:content.root.footer.emojis.accessibilityHint'
-          )}
-          source={{ uri: reduceMotionEnabled ? emoji.static_url : emoji.url }}
-          style={styles.emoji}
-        />
-      )
-    } else {
-      return null
-    }
-  }, [])
-  return (
-    <Pressable key={emoji.shortcode} onPress={onPress} children={children} />
-  )
-}
-
 export interface Props {
   accessibleRefEmojis: RefObject<SectionList>
 }
 
 const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
-  const { composeState } = useContext(ComposeContext)
+  const { composeState, composeDispatch } = useContext(ComposeContext)
+  const { reduceMotionEnabled } = useAccessibility()
   const { theme } = useTheme()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const tagEmojis = findNodeHandle(accessibleRefEmojis.current)
@@ -86,21 +42,49 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
     []
   )
 
-  const emojiList = useCallback(
-    section =>
-      section.data.map((emoji: Mastodon.Emoji) => (
-        <SingleEmoji key={emoji.shortcode} emoji={emoji} />
-      )),
-    []
-  )
   const listItem = useCallback(
-    ({ section, index }) =>
-      index === 0 ? (
-        <View key={section.title} style={styles.emojis}>
-          {emojiList(section)}
+    ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
+      return (
+        <View key={index} style={styles.emojis}>
+          {item.map(emoji => {
+            const uri = reduceMotionEnabled ? emoji.static_url : emoji.url
+            if (validUrl.isHttpsUri(uri)) {
+              return (
+                <Pressable
+                  key={emoji.shortcode}
+                  onPress={() => {
+                    updateText({
+                      composeState,
+                      composeDispatch,
+                      newText: `:${emoji.shortcode}:`,
+                      type: 'emoji'
+                    })
+                    haptics('Light')
+                  }}
+                >
+                  <FastImage
+                    accessibilityLabel={t(
+                      'common:customEmoji.accessibilityLabel',
+                      {
+                        emoji: emoji.shortcode
+                      }
+                    )}
+                    accessibilityHint={t(
+                      'screenCompose:content.root.footer.emojis.accessibilityHint'
+                    )}
+                    source={{ uri }}
+                    style={styles.emoji}
+                  />
+                </Pressable>
+              )
+            } else {
+              return null
+            }
+          })}
         </View>
-      ) : null,
-    []
+      )
+    },
+    [composeState]
   )
 
   return (
@@ -111,7 +95,7 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
         horizontal
         keyboardShouldPersistTaps='always'
         sections={composeState.emoji.emojis || []}
-        keyExtractor={item => item.shortcode}
+        keyExtractor={item => item[0].shortcode}
         renderSectionHeader={listHeader}
         renderItem={listItem}
         windowSize={2}

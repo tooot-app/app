@@ -3,7 +3,7 @@ import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { forEach, groupBy, sortBy } from 'lodash'
+import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, {
   useCallback,
   useContext,
@@ -28,23 +28,26 @@ import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
 import FastImage from 'react-native-fast-image'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { ComposeState } from './utils/types'
 
 const prefetchEmojis = (
-  sortedEmojis: { title: string; data: Mastodon.Emoji[] }[],
+  sortedEmojis: NonNullable<ComposeState['emoji']['emojis']>,
   reduceMotionEnabled: boolean
 ) => {
   const prefetches: { uri: string }[] = []
   let requestedIndex = 0
   sortedEmojis.forEach(sorted => {
-    sorted.data.forEach(emoji => {
-      if (requestedIndex > 40) {
-        return
-      }
-      prefetches.push({
-        uri: reduceMotionEnabled ? emoji.static_url : emoji.url
+    sorted.data.forEach(emojis =>
+      emojis.forEach(emoji => {
+        if (requestedIndex > 40) {
+          return
+        }
+        prefetches.push({
+          uri: reduceMotionEnabled ? emoji.static_url : emoji.url
+        })
+        requestedIndex++
       })
-      requestedIndex++
-    })
+    )
   })
   try {
     FastImage.preload(prefetches)
@@ -90,10 +93,11 @@ const ComposeRoot = React.memo(
     const { data: emojisData } = useEmojisQuery({})
     useEffect(() => {
       if (emojisData && emojisData.length) {
-        let sortedEmojis: { title: string; data: Mastodon.Emoji[] }[] = []
+        let sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[] = []
         forEach(
           groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
-          (value, key) => sortedEmojis.push({ title: key, data: value })
+          (value, key) =>
+            sortedEmojis.push({ title: key, data: chunk(value, 5) })
         )
         composeDispatch({
           type: 'emoji',

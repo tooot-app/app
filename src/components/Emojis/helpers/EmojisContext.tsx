@@ -27,4 +27,15 @@ type ContextType = {
 }
 const EmojisContext = createContext<ContextType>({} as ContextType)
 
+export const emojisReducer = (state: EmojisState, action: EmojisAction) => {
+  switch (action.type) {
+    case 'activate':
+      return { ...state, active: action.payload }
+    case 'load':
+      return { ...state, emojis: action.payload }
+    case 'shortcode':
+      return { ...state, shortcode: action.payload }
+  }
+}
+
 export default EmojisContext
