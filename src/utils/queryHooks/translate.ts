@@ -13,8 +13,7 @@ type Translations = {
 export type QueryKeyTranslate = [
   'Translate',
   {
-    instance: string
-    id: string
+    uri: string
     source: string
     target: string
     text: string[]
@@ -31,16 +30,22 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
     return Promise.reject()
   }
 
-  const { instance, id, source, target, text } = queryKey[1]
+  const { uri, source, target, text } = queryKey[1]
+
+  const uriEncoded = Buffer.from(uri.replace(/https?:\/\//, ''))
+    .toString('base64')
+    .replace('+', '-')
+    .replace('/', '_')
+    .replace(/=+$/, '')
+  const original = Buffer.from(JSON.stringify({ source, text })).toString(
+    'base64'
+  )
 
   const res = await apiGeneral<Translations>({
     domain: TRANSLATE_SERVER,
     method: 'get',
-    url: `v1/translate/${instance}/${id}/${target}`,
-    headers: {
-      key,
-      original: Buffer.from(JSON.stringify({ source, text })).toString('base64')
-    }
+    url: `v1/translate/${uriEncoded}/${target}`,
+    headers: { key, original }
   })
   return res.body
 }

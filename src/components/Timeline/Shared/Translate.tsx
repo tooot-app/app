@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
 import { ParseHTML } from '@components/Parse'
 import { useTranslateQuery } from '@utils/queryHooks/translate'
-import { getInstanceUri } from '@utils/slices/instancesSlice'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -46,11 +45,9 @@ const TimelineTranslate = React.memo(
       }
     }
 
-    const instanceUri = useSelector(getInstanceUri)
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      instance: instanceUri!,
-      id: status.id,
+      uri: status.uri,
       source: status.language,
       target: settingsLanguage,
       text,
