@@ -1,6 +1,11 @@
 import apiInstance from '@api/instance'
+import haptics from '@components/haptics'
+import { displayMessage } from '@components/Message'
 import queryClient from '@helpers/queryClient'
 import { AxiosError } from 'axios'
+import i18next from 'i18next'
+import { RefObject } from 'react'
+import FlashMessage from 'react-native-flash-message'
 import { useMutation, useQuery, UseQueryOptions } from 'react-query'
 
 type AccountWithSource = Mastodon.Account &
@@ -24,7 +29,7 @@ const useProfileQuery = <TData = AccountWithSource>({
   return useQuery(queryKey, queryFunction, options)
 }
 
-type MutationVarsProfile =
+type MutationVarsProfileBase =
   | { type: 'display_name'; data: string }
   | { type: 'note'; data: string }
   | { type: 'avatar'; data: string }
@@ -43,6 +48,16 @@ type MutationVarsProfile =
       type: 'fields_attributes'
       data: { name: string; value: string }[]
     }
+
+type MutationVarsProfile = MutationVarsProfileBase & {
+  mode: 'light' | 'dark'
+  messageRef: RefObject<FlashMessage>
+  message: {
+    text: string
+    succeed: boolean
+    failed: boolean
+  }
+}
 
 const mutationFunction = async ({ type, data }: MutationVarsProfile) => {
   const formData = new FormData()
@@ -107,8 +122,35 @@ const useProfileMutation = () => {
 
       return oldData
     },
-    onError: (_, variables, context) => {
+    onError: (err, variables, context) => {
       queryClient.setQueryData(queryKey, context)
+      haptics('Error')
+      if (variables.message.failed) {
+        displayMessage({
+          ref: variables.messageRef,
+          message: i18next.t('screenTabs:me.profile.feedback.failed', {
+            type: i18next.t(`screenTabs:${variables.message.text}`)
+          }),
+          ...(err && { description: err.message }),
+          mode: variables.mode,
+          type: 'error'
+        })
+      }
+    },
+    onSuccess: (_, variables) => {
+      if (variables.message.succeed) {
+        haptics('Success')
+        displayMessage({
+          ref: variables.messageRef,
+          message: i18next.t('screenTabs:me.profile.feedback.succeed', {
+            type: i18next.t(`screenTabs:${variables.message.text}`)
+          }),
+          mode: variables.mode,
+          type: 'success'
+        })
+      } else {
+        haptics('Light')
+      }
     },
     onSettled: () => {
       queryClient.invalidateQueries(queryKey)
