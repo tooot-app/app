@@ -123,7 +123,8 @@ const addAttachment = async ({
       })
   }
 
-  mediaSelector({ uploader, showActionSheetWithOptions })
+  const result = await mediaSelector({ showActionSheetWithOptions })
+  await uploader(result)
 }
 
 export default addAttachment

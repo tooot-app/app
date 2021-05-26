@@ -28,11 +28,11 @@ const AccountInformationNote = React.memo(
 
     return (
       <View style={styles.note}>
-        <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} />
+        <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} selectable />
       </View>
     )
   },
-  () => true
+  (_, next) => next.account === undefined
 )
 
 const styles = StyleSheet.create({

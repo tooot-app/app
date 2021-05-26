@@ -13,7 +13,8 @@ export default (): ExpoConfig => ({
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],
   extra: {
-    sentryDSN: process.env.SENTRY_DSN
+    sentryDSN: process.env.SENTRY_DSN,
+    translateKey: process.env.TRANSLATE_KEY
   },
   hooks: {
     postPublish: [

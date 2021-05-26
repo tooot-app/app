@@ -1,9 +1,7 @@
 import apiInstance from '@api/instance'
-import { displayMessage } from '@components/Message'
-import { queryClient } from '@root/App'
+import queryClient from '@helpers/queryClient'
 import { AxiosError } from 'axios'
 import { useMutation, useQuery, UseQueryOptions } from 'react-query'
-import { QueryKeyAccount } from './account'
 
 type AccountWithSource = Mastodon.Account &
   Required<Pick<Mastodon.Account, 'source'>>

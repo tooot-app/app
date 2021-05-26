@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
-import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import { BlurView } from '@react-native-community/blur'
@@ -88,6 +87,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
               emojis={item.emojis}
               mentions={item.mentions}
               numberOfLines={999}
+              selectable
             />
           </ScrollView>
           {item.reactions?.length ? (
@@ -210,28 +210,6 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
       reducedTransparencyFallbackColor={theme.backgroundDefault}
     >
       <SafeAreaView style={styles.base}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexBasis: 44
-          }}
-        >
-          <HeaderLeft
-            content='X'
-            native={false}
-            onPress={() => navigation.goBack()}
-          />
-          <HeaderCenter content={t('screenAnnouncements:heading')} />
-          <View style={{ opacity: 0 }} accessible={false}>
-            <HeaderRight
-              content='MoreHorizontal'
-              native={false}
-              onPress={() => {}}
-            />
-          </View>
-        </View>
         <FlatList
           horizontal
           data={query.data}

@@ -1,4 +1,3 @@
-import { EmojisContext } from '@components/Emojis'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -16,6 +15,7 @@ import {
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import validUrl from 'valid-url'
+import EmojisContext from './helpers/EmojisContext'
 
 const EmojisList = React.memo(
   () => {
