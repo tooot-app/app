@@ -77,12 +77,13 @@ const TabMeProfileName: React.FC<StackScreenProps<
                   type: 'success'
                 })
               })
-              .catch(() => {
+              .catch(err => {
                 displayMessage({
                   ref: messageRef,
                   message: t('me.profile.feedback.failed', {
                     type: t('me.profile.root.name.title')
                   }),
+                  ...(err && { description: err }),
                   mode,
                   type: 'error'
                 })

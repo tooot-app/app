@@ -31,7 +31,10 @@ const composeInitialState: Omit<ComposeState, 'timestamp'> = {
     multiple: false,
     expire: '86400'
   },
-  attachments: { sensitive: false, uploads: [] },
+  attachments: {
+    sensitive: false,
+    uploads: []
+  },
   visibility: 'public',
   visibilityLock: false,
   replyToStatus: undefined,

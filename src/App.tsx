@@ -1,4 +1,5 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
 import Screens from '@root/Screens'
 import audio from '@root/startup/audio'
@@ -14,8 +15,7 @@ import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { AppState, LogBox, Platform } from 'react-native'
-import { enableScreens } from 'react-native-screens'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import push from './startup/push'
@@ -28,12 +28,6 @@ dev()
 sentry()
 audio()
 push()
-
-log('log', 'react-query', 'initializing')
-export const queryClient = new QueryClient()
-
-log('log', 'react-native-screens', 'initializing')
-enableScreens()
 
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')

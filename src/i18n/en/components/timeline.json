@@ -74,6 +74,11 @@
       "expandHint": "hidden content"
     },
     "fullConversation": "Read conversations",
+    "translate": {
+      "default": "Translate",
+      "succeed": "Translated by {{provider}} from {{source}}",
+      "failed": "Translation failed"
+    },
     "header": {
       "shared": {
         "account": {

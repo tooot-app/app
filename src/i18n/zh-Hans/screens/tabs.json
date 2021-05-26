@@ -102,11 +102,11 @@
         },
         "avatar": {
           "title": "头像",
-          "description": "将在下一版中启用"
+          "description": "将缩小到400x400px"
         },
-        "banner": {
+        "header": {
           "title": "横幅",
-          "description": "将在下一版中启用"
+          "description": "将缩小到1500x500px"
         },
         "note": {
           "title": "简介"

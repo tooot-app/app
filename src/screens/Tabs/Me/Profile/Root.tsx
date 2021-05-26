@@ -1,21 +1,30 @@
+import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
-import React, { useCallback } from 'react'
+import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch } from 'react-redux'
+import ProfileAvatarHeader from './Root/AvatarHeader'
 
 const TabMeProfileRoot: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Root'
->> = ({ navigation }) => {
+> & { messageRef: RefObject<FlashMessage> }> = ({ messageRef, navigation }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
 
   const { data, isLoading } = useProfileQuery({})
-  const { mutate } = useProfileMutation()
+  const { mutateAsync } = useProfileMutation()
+  const dispatch = useDispatch()
 
   const onPressVisibility = useCallback(() => {
     showActionSheetWithOptions(
@@ -32,40 +41,185 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            mutate({ type: 'source[privacy]', data: 'public' })
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'public'
+            })
+            mutateAsync({ type: 'source[privacy]', data: 'public' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+              )
             break
           case 1:
-            mutate({ type: 'source[privacy]', data: 'unlisted' })
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'unlisted'
+            })
+            mutateAsync({ type: 'source[privacy]', data: 'unlisted' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+              )
             break
           case 2:
-            mutate({ type: 'source[privacy]', data: 'private' })
+            analytics('me_profile_visibility', {
+              current: t(
+                `me.profile.root.visibility.options.${data?.source.privacy}`
+              ),
+              new: 'unlisted'
+            })
+            mutateAsync({ type: 'source[privacy]', data: 'private' })
+              .then(() => dispatch(updateAccountPreferences()))
+              .catch(err =>
+                displayMessage({
+                  ref: messageRef,
+                  message: t('me.profile.feedback.failed', {
+                    type: t('me.profile.root.visibility.title')
+                  }),
+                  ...(err && { description: err }),
+                  mode,
+                  type: 'error'
+                })
+              )
             break
         }
       }
     )
-  }, [])
+  }, [data?.source.privacy])
 
   const onPressSensitive = useCallback(() => {
     if (data?.source.sensitive === undefined) {
-      mutate({ type: 'source[sensitive]', data: true })
+      analytics('me_profile_sensitive', {
+        current: undefined,
+        new: true
+      })
+      mutateAsync({ type: 'source[sensitive]', data: true })
+        .then(() => dispatch(updateAccountPreferences()))
+        .catch(err =>
+          displayMessage({
+            ref: messageRef,
+            message: t('me.profile.feedback.failed', {
+              type: t('me.profile.root.sensitive.title')
+            }),
+            ...(err && { description: err }),
+            mode,
+            type: 'error'
+          })
+        )
     } else {
-      mutate({ type: 'source[sensitive]', data: !data.source.sensitive })
+      analytics('me_profile_sensitive', {
+        current: data.source.sensitive,
+        new: !data.source.sensitive
+      })
+      mutateAsync({
+        type: 'source[sensitive]',
+        data: !data.source.sensitive
+      })
+        .then(() => dispatch(updateAccountPreferences()))
+        .catch(err =>
+          displayMessage({
+            ref: messageRef,
+            message: t('me.profile.feedback.failed', {
+              type: t('me.profile.root.sensitive.title')
+            }),
+            ...(err && { description: err }),
+            mode,
+            type: 'error'
+          })
+        )
     }
   }, [data?.source.sensitive])
 
   const onPressLock = useCallback(() => {
     if (data?.locked === undefined) {
-      mutate({ type: 'locked', data: true })
+      analytics('me_profile_lock', {
+        current: undefined,
+        new: true
+      })
+      mutateAsync({ type: 'locked', data: true }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.lock.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     } else {
-      mutate({ type: 'locked', data: !data.locked })
+      analytics('me_profile_lock', {
+        current: data.locked,
+        new: !data.locked
+      })
+      mutateAsync({ type: 'locked', data: !data.locked }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.lock.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     }
   }, [data?.locked])
 
   const onPressBot = useCallback(() => {
     if (data?.bot === undefined) {
-      mutate({ type: 'bot', data: true })
+      analytics('me_profile_bot', {
+        current: undefined,
+        new: true
+      })
+      mutateAsync({ type: 'bot', data: true }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.bot.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     } else {
-      mutate({ type: 'bot', data: !data?.bot })
+      analytics('me_profile_bot', {
+        current: data.bot,
+        new: !data.bot
+      })
+      mutateAsync({ type: 'bot', data: !data?.bot }).catch(err =>
+        displayMessage({
+          ref: messageRef,
+          message: t('me.profile.feedback.failed', {
+            type: t('me.profile.root.bot.title')
+          }),
+          ...(err && { description: err }),
+          mode,
+          type: 'error'
+        })
+      )
     }
   }, [data?.bot])
 
@@ -84,43 +238,18 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
               })
           }}
         />
-        <MenuRow
-          title={t('me.profile.root.avatar.title')}
-          description={t('me.profile.root.avatar.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.avatar_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
-        />
-        <MenuRow
-          title={t('me.profile.root.banner.title')}
-          description={t('me.profile.root.banner.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.header_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
-        />
+        <ProfileAvatarHeader type='avatar' messageRef={messageRef} />
+        <ProfileAvatarHeader type='header' messageRef={messageRef} />
         <MenuRow
           title={t('me.profile.root.note.title')}
           content={data?.source.note}
           loading={isLoading}
           iconBack='ChevronRight'
           onPress={() => {
-            navigation.navigate('Tab-Me-Profile-Note', {
-              note: data?.source?.note || ''
-            })
+            data &&
+              navigation.navigate('Tab-Me-Profile-Note', {
+                note: data.source?.note
+              })
           }}
         />
         <MenuRow

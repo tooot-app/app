@@ -1,6 +1,4 @@
 declare namespace Nav {
-  import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-
   type RootStackParamList = {
     'Screen-Tabs': undefined
     'Screen-Actions':
@@ -150,9 +148,5 @@ declare namespace Nav {
     'Tab-Me-Profile-Fields': {
       fields?: Mastodon.Source['fields']
     }
-  }
-
-  type TabMePushStackParamList = {
-    'Tab-Me-Push-Root': undefined
   }
 }

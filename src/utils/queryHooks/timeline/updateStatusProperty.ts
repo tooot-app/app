@@ -1,4 +1,4 @@
-import { queryClient } from '@root/App'
+import queryClient from '@helpers/queryClient'
 import { findIndex } from 'lodash'
 import { InfiniteData } from 'react-query'
 import {

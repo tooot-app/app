@@ -1,6 +1,6 @@
+import apiGeneral from '@api/general'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
-import apiGeneral from '@api/general'
 import { Constants } from 'react-native-unimodules'
 
 export const retriveVersionLatest = createAsyncThunk(

@@ -88,6 +88,14 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
       return {
         ...composeInitialState,
         timestamp: Date.now(),
+        attachments: {
+          ...composeInitialState.attachments,
+          sensitive:
+            localAccount?.preferences &&
+            localAccount?.preferences['posting:default:sensitive']
+              ? localAccount?.preferences['posting:default:sensitive']
+              : false
+        },
         visibility:
           localAccount?.preferences &&
           localAccount.preferences['posting:default:visibility']
@@ -397,12 +405,18 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             <Stack.Screen
               name='Screen-Compose-DraftsList'
               component={ComposeDraftsList}
-              options={{ stackPresentation: 'modal', headerShown: false }}
+              options={{
+                stackPresentation: 'modal',
+                ...(Platform.OS === 'android' && { headerShown: false })
+              }}
             />
             <Stack.Screen
               name='Screen-Compose-EditAttachment'
               component={ComposeEditAttachment}
-              options={{ stackPresentation: 'modal', headerShown: false }}
+              options={{
+                stackPresentation: 'modal',
+                ...(Platform.OS === 'android' && { headerShown: false })
+              }}
             />
           </Stack.Navigator>
         </ComposeContext.Provider>

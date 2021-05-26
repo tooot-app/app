@@ -102,11 +102,11 @@
         },
         "avatar": {
           "title": "Avatar",
-          "description": "Available in next version"
+          "description": "Will be downscaled to 400x400px"
         },
-        "banner": {
+        "header": {
           "title": "Banner",
-          "description": "Available in next version"
+          "description": "Will be downscaled to 1500x500px"
         },
         "note": {
           "title": "Description"

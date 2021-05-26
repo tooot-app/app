@@ -109,16 +109,28 @@ const TabMe = React.memo(
           component={TabMeProfile}
           options={{
             stackPresentation: 'modal',
-            headerShown: false
+            ...(Platform.OS === 'android' && { headerShown: false })
           }}
         />
         <Stack.Screen
           name='Tab-Me-Push'
           component={TabMePush}
-          options={{
+          options={({ navigation }) => ({
             stackPresentation: 'modal',
-            headerShown: false
-          }}
+            headerShown: true,
+            headerTitle: t('me.stacks.push.name'),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => (
+                <HeaderCenter content={t('me.stacks.push.name')} />
+              )
+            }),
+            headerLeft: () => (
+              <HeaderLeft
+                content='ChevronDown'
+                onPress={() => navigation.goBack()}
+              />
+            )
+          })}
         />
         <Stack.Screen
           name='Tab-Me-Settings'
@@ -149,10 +161,22 @@ const TabMe = React.memo(
         <Stack.Screen
           name='Tab-Me-Switch'
           component={TabMeSwitch}
-          options={{
+          options={({ navigation }) => ({
             stackPresentation: 'modal',
-            headerShown: false
-          }}
+            headerShown: true,
+            headerTitle: t('me.stacks.switch.name'),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => (
+                <HeaderCenter content={t('me.stacks.switch.name')} />
+              )
+            }),
+            headerLeft: () => (
+              <HeaderLeft
+                content='ChevronDown'
+                onPress={() => navigation.goBack()}
+              />
+            )
+          })}
         />
 
         {sharedScreens(Stack as any)}

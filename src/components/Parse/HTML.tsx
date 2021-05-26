@@ -162,7 +162,9 @@ export interface Props {
   showFullLink?: boolean
   numberOfLines?: number
   expandHint?: string
+  highlighted?: boolean
   disableDetails?: boolean
+  selectable?: boolean
 }
 
 const ParseHTML = React.memo(
@@ -176,7 +178,9 @@ const ParseHTML = React.memo(
     showFullLink = false,
     numberOfLines = 10,
     expandHint,
-    disableDetails = false
+    highlighted = false,
+    disableDetails = false,
+    selectable = false
   }: Props) => {
     const adaptiveFontsize = useSelector(getSettingsFontsize)
     const adaptedFontsize = adaptiveScale(
@@ -234,7 +238,7 @@ const ParseHTML = React.memo(
         const { t } = useTranslation('componentParse')
 
         const [expandAllow, setExpandAllow] = useState(false)
-        const [expanded, setExpanded] = useState(false)
+        const [expanded, setExpanded] = useState(highlighted)
 
         const onTextLayout = useCallback(({ nativeEvent }) => {
           if (
@@ -253,6 +257,7 @@ const ParseHTML = React.memo(
               numberOfLines={
                 expandAllow ? (expanded ? 999 : numberOfLines) : undefined
               }
+              selectable={selectable}
             />
             {expandAllow ? (
               <Pressable

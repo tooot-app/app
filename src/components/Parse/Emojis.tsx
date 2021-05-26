@@ -4,7 +4,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
@@ -28,7 +27,6 @@ const ParseEmojis = React.memo(
     adaptiveSize = false,
     fontBold = false
   }: Props) => {
-    const { t } = useTranslation('componentParse')
     const { reduceMotionEnabled } = useAccessibility()
 
     const adaptiveFontsize = useSelector(getSettingsFontsize)

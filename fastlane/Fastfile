@@ -109,8 +109,8 @@ private_lane :build_ios do
     upload_to_app_store( ipa: IPA_FILE, app_version: VERSION )
   else
     if !is_ci
-      match( type: "development", readonly: true )
-      build_ios_app( export_method: "development", output_directory: BUILD_DIRECTORY, silent: true )
+      match( type: "adhoc", readonly: true )
+      build_ios_app( export_method: "ad-hoc", output_directory: BUILD_DIRECTORY, silent: true )
       install_on_device( skip_wifi: true )
     end
   end

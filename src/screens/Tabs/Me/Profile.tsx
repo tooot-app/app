@@ -30,7 +30,6 @@ const TabMeProfile: React.FC<StackScreenProps<
       >
         <Stack.Screen
           name='Tab-Me-Profile-Root'
-          component={TabMeProfileRoot}
           options={{
             headerTitle: t('me.stacks.profile.name'),
             ...(Platform.OS === 'android' && {
@@ -45,7 +44,15 @@ const TabMeProfile: React.FC<StackScreenProps<
               />
             )
           }}
-        />
+        >
+          {({ route, navigation }) => (
+            <TabMeProfileRoot
+              messageRef={messageRef}
+              route={route}
+              navigation={navigation}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Name'
           options={{
