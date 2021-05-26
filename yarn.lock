@@ -1291,10 +1291,10 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@1.0.32":
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-1.0.32.tgz#abf4ab24a1cfd53e824fefdf15f727687491a856"
-  integrity sha512-goQoBvWYq1fk/jdDYYioN5gYlEhmPVRP6Y9jxmCLTHoHhZHSI+Pl5BXidUqVNdE2XFhoiz9yLbjQrGgYFPXuwQ==
+"@expo/config-plugins@1.0.33":
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-1.0.33.tgz#8ee78ea6f939f7e04606e9afa22b32139ea974a0"
+  integrity sha512-YQJop0c69LKD/6ZJJto7klS7TDmzgs44TI0Z5RBqesOjYlDwNFcQk2Rl2BaA1wlAYkH+rRrhN2+WjjSyD9HiPg==
   dependencies:
     "@expo/config-types" "^40.0.0-beta.2"
     "@expo/configure-splash-screen" "0.4.0"
@@ -1307,7 +1307,6 @@
     glob "7.1.6"
     resolve-from "^5.0.0"
     slash "^3.0.0"
-    slugify "^1.3.4"
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
@@ -1336,16 +1335,16 @@
     semver "7.3.2"
     slugify "^1.3.4"
 
-"@expo/config@^3.3.42":
-  version "3.3.42"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-3.3.42.tgz#668d3d47112e562ad9265ebafa3db0063369cff8"
-  integrity sha512-BLFp9JvMHkBFutwKM+o9RhvmdllSyQpswvY9974Y8gjYsO5/BXfvT5J0GyUt1bdtqGyA8dlfo5jew/mtkeStRA==
+"@expo/config@^3.3.43":
+  version "3.3.43"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-3.3.43.tgz#7a07129b37cc5e5df14f48a5c253614f2f408edc"
+  integrity sha512-5a78fQqTKk7RhgrW5XzHS8ylCo9YRjZrheLyVDNNfvwAD8YjeBz6bFWsItZPpAIoaDgkLh0a8uhc11DCmqoKpw==
   dependencies:
     "@babel/core" "7.9.0"
     "@babel/plugin-proposal-class-properties" "~7.12.13"
     "@babel/preset-env" "~7.12.13"
     "@babel/preset-typescript" "~7.12.13"
-    "@expo/config-plugins" "1.0.32"
+    "@expo/config-plugins" "1.0.33"
     "@expo/config-types" "^40.0.0-beta.2"
     "@expo/json-file" "8.2.30"
     fs-extra "9.0.0"
@@ -2827,10 +2826,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@~0.64.5":
-  version "0.64.5"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.5.tgz#219738b52b2e372ec057d3c8f20fbd6c37b245cd"
-  integrity sha512-k0r8MnQX7UFboZDvMKLov26gFLXKrNgLhCfSVhjaZ6wMUofKijxvee7/wgfAqtT2zS5FR4an4+qn0r72SCbw3g==
+"@types/react-native@~0.64.6":
+  version "0.64.6"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.6.tgz#a3227badd99a1ba883be4b0a62af8ccf0fc08543"
+  integrity sha512-xVDpYIcgtopJ7bj2FsVO+Ch6/BVs9L591cXMNqoYTed+eNRF9JDWAGxyqcQDZmsC5Ty3Uaw066+cM5T8avBpcA==
   dependencies:
     "@types/react" "*"
 
@@ -2874,10 +2873,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@~17.0.6":
-  version "17.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.6.tgz#0ec564566302c562bf497d73219797a5e0297013"
-  integrity sha512-u/TtPoF/hrvb63LdukET6ncaplYsvCvmkceasx8oG84/ZCsoLxz9Z/raPBP4lTAiWW1Jb889Y9svHmv8R26dWw==
+"@types/react@~17.0.8":
+  version "17.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.8.tgz#fe76e3ba0fbb5602704110fd1e3035cf394778e3"
+  integrity sha512-3sx4c0PbXujrYAKwXxNONXUtRp9C+hE2di0IuxFyf5BELD+B+AXL8G7QrmSKhVwKZDbv0igiAjQAMhXj8Yg3aw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -8737,10 +8736,10 @@ react-error-boundary@^3.1.0:
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-react-i18next@^11.8.15:
-  version "11.8.15"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.15.tgz#89450d585298f18d4a8eb1628b0868863f3a4767"
-  integrity sha512-ZbKcbYYKukgDL0MiUWKJTEsEftjSTNVZv67/V+SjPqTRwuF/aL4NbUtuEcb4WjHk0HyZ1M+2wGd07Fp0RUNHKA==
+react-i18next@^11.9.0:
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.9.0.tgz#b24271582b0b1075e921c238490b758517ab4944"
+  integrity sha512-Yrvldj3gB0z5AMaJw5O1HojTUTjSZFkvQg4ycW4voNSmf/Is/jvHoNoUD0r1qc5lNtiKuMoJPOiiim5vovgbng==
   dependencies:
     "@babel/runtime" "^7.13.6"
     html-parse-stringify "^3.0.1"
@@ -8848,10 +8847,10 @@ react-native-safe-area-view@^0.14.9:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-screens@~3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.2.0.tgz#e2c8a4879c72f49af5b49e8859c84978a95d112b"
-  integrity sha512-pV4a32neQA69xhVsL9k1J/rM/SiP5zgGHjJsnNVEcuhBu+dlsutT2YFszQN4MgpP2dhHHu1O7DyRSHti+wh7Wg==
+react-native-screens@~3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.3.0.tgz#d4464a96620b85d09e46bd6865b5f48456c244f0"
+  integrity sha512-ni11jC6I9cFVXdLIDwkgafDHw/STXUNzkR5Fx3w8Wikdzi8gfTEan2kiOm7aS42d2F/LXddZ6i74Z2em0L6LPQ==
 
 react-native-svg@12.1.1:
   version "12.1.1"
@@ -10399,11 +10398,6 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
-
-uri-scheme@^1.0.79:
-  version "1.0.79"
-  resolved "https://registry.yarnpkg.com/uri-scheme/-/uri-scheme-1.0.79.tgz#2057daa461267f84a9d49d80a0f6db0471393a38"
-  integrity sha512-x4mfjXdgWrTIy3FBZI3MDHRcLk3RODEywpKubT9oXmn4ruMhL852PQJOthi3mjgalz0nKF6aTB7udZhyJccf2w==
 
 urix@^0.1.0:
   version "0.1.0"
