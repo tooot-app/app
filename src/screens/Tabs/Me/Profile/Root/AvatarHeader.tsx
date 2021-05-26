@@ -1,6 +1,5 @@
 import mediaSelector from '@components/mediaSelector'
 import { MenuRow } from '@components/Menu'
-import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -35,29 +34,17 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           resize: { width: 400, height: 400 }
         })
-        mutation
-          .mutateAsync({ type, data: image.uri })
-          .then(() =>
-            displayMessage({
-              ref: messageRef,
-              message: t('me.profile.feedback.succeed', {
-                type: t(`me.profile.root.${type}.title`)
-              }),
-              mode,
-              type: 'success'
-            })
-          )
-          .catch(err =>
-            displayMessage({
-              ref: messageRef,
-              message: t('me.profile.feedback.failed', {
-                type: t(`me.profile.root.${type}.title`)
-              }),
-              ...(err && { description: err }),
-              mode,
-              type: 'error'
-            })
-          )
+        mutation.mutate({
+          mode,
+          messageRef,
+          message: {
+            text: `me.profile.root.${type}.title`,
+            succeed: true,
+            failed: true
+          },
+          type,
+          data: image.uri
+        })
       }}
     />
   )

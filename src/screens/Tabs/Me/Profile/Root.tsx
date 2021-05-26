@@ -1,6 +1,5 @@
 import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
@@ -41,67 +40,32 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            analytics('me_profile_visibility', {
-              current: t(
-                `me.profile.root.visibility.options.${data?.source.privacy}`
-              ),
-              new: 'public'
-            })
-            mutateAsync({ type: 'source[privacy]', data: 'public' })
-              .then(() => dispatch(updateAccountPreferences()))
-              .catch(err =>
-                displayMessage({
-                  ref: messageRef,
-                  message: t('me.profile.feedback.failed', {
-                    type: t('me.profile.root.visibility.title')
-                  }),
-                  ...(err && { description: err }),
-                  mode,
-                  type: 'error'
-                })
-              )
-            break
           case 1:
-            analytics('me_profile_visibility', {
-              current: t(
-                `me.profile.root.visibility.options.${data?.source.privacy}`
-              ),
-              new: 'unlisted'
-            })
-            mutateAsync({ type: 'source[privacy]', data: 'unlisted' })
-              .then(() => dispatch(updateAccountPreferences()))
-              .catch(err =>
-                displayMessage({
-                  ref: messageRef,
-                  message: t('me.profile.feedback.failed', {
-                    type: t('me.profile.root.visibility.title')
-                  }),
-                  ...(err && { description: err }),
-                  mode,
-                  type: 'error'
-                })
-              )
-            break
           case 2:
-            analytics('me_profile_visibility', {
-              current: t(
-                `me.profile.root.visibility.options.${data?.source.privacy}`
-              ),
-              new: 'unlisted'
-            })
-            mutateAsync({ type: 'source[privacy]', data: 'private' })
-              .then(() => dispatch(updateAccountPreferences()))
-              .catch(err =>
-                displayMessage({
-                  ref: messageRef,
-                  message: t('me.profile.feedback.failed', {
-                    type: t('me.profile.root.visibility.title')
-                  }),
-                  ...(err && { description: err }),
-                  mode,
-                  type: 'error'
-                })
-              )
+            const indexVisibilityMapping = [
+              'public',
+              'unlisted',
+              'private'
+            ] as ['public', 'unlisted', 'private']
+            if (data?.source.privacy !== indexVisibilityMapping[buttonIndex]) {
+              analytics('me_profile_visibility', {
+                current: t(
+                  `me.profile.root.visibility.options.${data?.source.privacy}`
+                ),
+                new: indexVisibilityMapping[buttonIndex]
+              })
+              mutateAsync({
+                mode,
+                messageRef,
+                message: {
+                  text: 'me.profile.root.visibility.title',
+                  succeed: false,
+                  failed: true
+                },
+                type: 'source[privacy]',
+                data: indexVisibilityMapping[buttonIndex]
+              }).then(() => dispatch(updateAccountPreferences()))
+            }
             break
         }
       }
@@ -109,118 +73,57 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
   }, [data?.source.privacy])
 
   const onPressSensitive = useCallback(() => {
-    if (data?.source.sensitive === undefined) {
-      analytics('me_profile_sensitive', {
-        current: undefined,
-        new: true
-      })
-      mutateAsync({ type: 'source[sensitive]', data: true })
-        .then(() => dispatch(updateAccountPreferences()))
-        .catch(err =>
-          displayMessage({
-            ref: messageRef,
-            message: t('me.profile.feedback.failed', {
-              type: t('me.profile.root.sensitive.title')
-            }),
-            ...(err && { description: err }),
-            mode,
-            type: 'error'
-          })
-        )
-    } else {
-      analytics('me_profile_sensitive', {
-        current: data.source.sensitive,
-        new: !data.source.sensitive
-      })
-      mutateAsync({
-        type: 'source[sensitive]',
-        data: !data.source.sensitive
-      })
-        .then(() => dispatch(updateAccountPreferences()))
-        .catch(err =>
-          displayMessage({
-            ref: messageRef,
-            message: t('me.profile.feedback.failed', {
-              type: t('me.profile.root.sensitive.title')
-            }),
-            ...(err && { description: err }),
-            mode,
-            type: 'error'
-          })
-        )
-    }
+    analytics('me_profile_sensitive', {
+      current: data?.source.sensitive,
+      new: data?.source.sensitive === undefined ? true : !data.source.sensitive
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.sensitive.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'source[sensitive]',
+      data: data?.source.sensitive === undefined ? true : !data.source.sensitive
+    }).then(() => dispatch(updateAccountPreferences()))
   }, [data?.source.sensitive])
 
   const onPressLock = useCallback(() => {
-    if (data?.locked === undefined) {
-      analytics('me_profile_lock', {
-        current: undefined,
-        new: true
-      })
-      mutateAsync({ type: 'locked', data: true }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.lock.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
-    } else {
-      analytics('me_profile_lock', {
-        current: data.locked,
-        new: !data.locked
-      })
-      mutateAsync({ type: 'locked', data: !data.locked }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.lock.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
-    }
+    analytics('me_profile_lock', {
+      current: data?.locked,
+      new: data?.locked === undefined ? true : !data.locked
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.lock.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'locked',
+      data: data?.locked === undefined ? true : !data.locked
+    })
   }, [data?.locked])
 
   const onPressBot = useCallback(() => {
-    if (data?.bot === undefined) {
-      analytics('me_profile_bot', {
-        current: undefined,
-        new: true
-      })
-      mutateAsync({ type: 'bot', data: true }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.bot.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
-    } else {
-      analytics('me_profile_bot', {
-        current: data.bot,
-        new: !data.bot
-      })
-      mutateAsync({ type: 'bot', data: !data?.bot }).catch(err =>
-        displayMessage({
-          ref: messageRef,
-          message: t('me.profile.feedback.failed', {
-            type: t('me.profile.root.bot.title')
-          }),
-          ...(err && { description: err }),
-          mode,
-          type: 'error'
-        })
-      )
-    }
+    analytics('me_profile_bot', {
+      current: data?.bot,
+      new: data?.bot === undefined ? true : !data.bot
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.bot.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'bot',
+      data: data?.bot === undefined ? true : !data.bot
+    })
   }, [data?.bot])
 
   return (

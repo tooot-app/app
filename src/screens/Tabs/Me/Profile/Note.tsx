@@ -1,6 +1,5 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Input from '@components/Input'
-import { displayMessage } from '@components/Message'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
@@ -65,29 +64,19 @@ const TabMeProfileNote: React.FC<StackScreenProps<
           loading={status === 'loading'}
           content='Save'
           onPress={async () => {
-            mutateAsync({ type: 'note', data: newNote })
-              .then(() => {
-                navigation.navigate('Tab-Me-Profile-Root')
-                displayMessage({
-                  ref: messageRef,
-                  message: t('me.profile.feedback.succeed', {
-                    type: t('me.profile.root.note.title')
-                  }),
-                  mode,
-                  type: 'success'
-                })
-              })
-              .catch(err => {
-                displayMessage({
-                  ref: messageRef,
-                  message: t('me.profile.feedback.failed', {
-                    type: t('me.profile.root.note.title')
-                  }),
-                  ...(err && { description: err }),
-                  mode,
-                  type: 'error'
-                })
-              })
+            mutateAsync({
+              mode,
+              messageRef,
+              message: {
+                text: 'me.profile.root.note.title',
+                succeed: true,
+                failed: true
+              },
+              type: 'note',
+              data: newNote
+            }).then(() => {
+              navigation.navigate('Tab-Me-Profile-Root')
+            })
           }}
         />
       )

@@ -1,4 +1,5 @@
 import apiGeneral from '@api/general'
+import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
 import { Buffer } from 'buffer'
 import Constants from 'expo-constants'
@@ -47,6 +48,7 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
     url: `v1/translate/${uriEncoded}/${target}`,
     headers: { key, original }
   })
+  haptics('Light')
   return res.body
 }
 
