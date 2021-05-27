@@ -13,7 +13,13 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
@@ -56,59 +62,66 @@ const TabMeSwitch: React.FC = () => {
   const scrollViewRef = useRef<ScrollView>(null)
 
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      style={styles.base}
-      keyboardShouldPersistTaps='always'
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={[styles.firstSection, { borderBottomColor: theme.border }]}>
-        <Text style={[styles.header, { color: theme.primaryDefault }]}>
-          {t('me.switch.existing')}
-        </Text>
-        <View style={styles.accountButtons}>
-          {instances.length
-            ? instances
-                .slice()
-                .sort((a, b) =>
-                  `${a.uri}${a.account.acct}`.localeCompare(
-                    `${b.uri}${b.account.acct}`
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.base}
+        keyboardShouldPersistTaps='always'
+      >
+        <View
+          style={[styles.firstSection, { borderBottomColor: theme.border }]}
+        >
+          <Text style={[styles.header, { color: theme.primaryDefault }]}>
+            {t('me.switch.existing')}
+          </Text>
+          <View style={styles.accountButtons}>
+            {instances.length
+              ? instances
+                  .slice()
+                  .sort((a, b) =>
+                    `${a.uri}${a.account.acct}`.localeCompare(
+                      `${b.uri}${b.account.acct}`
+                    )
                   )
-                )
-                .map((instance, index) => {
-                  const localAccount = instances[instanceActive!]
-                  return (
-                    <AccountButton
-                      key={index}
-                      instance={instance}
-                      selected={
-                        instance.url === localAccount.url &&
-                        instance.token === localAccount.token &&
-                        instance.account.id === localAccount.account.id
-                      }
-                    />
-                  )
-                })
-            : null}
+                  .map((instance, index) => {
+                    const localAccount = instances[instanceActive!]
+                    return (
+                      <AccountButton
+                        key={index}
+                        instance={instance}
+                        selected={
+                          instance.url === localAccount.url &&
+                          instance.token === localAccount.token &&
+                          instance.account.id === localAccount.account.id
+                        }
+                      />
+                    )
+                  })
+              : null}
+          </View>
         </View>
-      </View>
 
-      <View style={styles.secondSection}>
-        <Text style={[styles.header, { color: theme.primaryDefault }]}>
-          {t('me.switch.new')}
-        </Text>
-        <ComponentInstance
-          scrollViewRef={scrollViewRef}
-          disableHeaderImage
-          goBack
-        />
-      </View>
-    </ScrollView>
+        <View style={styles.secondSection}>
+          <Text style={[styles.header, { color: theme.primaryDefault }]}>
+            {t('me.switch.new')}
+          </Text>
+          <ComponentInstance
+            scrollViewRef={scrollViewRef}
+            disableHeaderImage
+            goBack
+          />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    marginBottom: StyleConstants.Spacing.L
+    marginBottom: StyleConstants.Spacing.L * 2
   },
   header: {
     ...StyleConstants.FontStyle.M,
