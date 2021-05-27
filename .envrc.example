@@ -5,6 +5,8 @@ export SENTRY_PROJECT=""
 export SENTRY_AUTH_TOKEN=""
 export SENTRY_DSN=""
 
+export TRANSLATE_KEY=""
+
 # Fastlane start
 export LC_ALL=""
 export LANG=""

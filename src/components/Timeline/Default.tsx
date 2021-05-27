@@ -19,6 +19,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineActionsUsers from './Shared/ActionsUsers'
 import TimelineFullConversation from './Shared/FullConversation'
+import TimelineTranslate from './Shared/Translate'
 
 export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
@@ -128,10 +129,12 @@ const TimelineDefault: React.FC<Props> = ({
         {!disableDetails && actualStatus.card && (
           <TimelineCard card={actualStatus.card} />
         )}
-        <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
+        {!disableDetails ? (
+          <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
+        ) : null}
+        <TimelineTranslate status={actualStatus} highlighted={highlighted} />
+        <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
       </View>
-
-      <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
 
       {queryKey && !disableDetails && (
         <TimelineActions

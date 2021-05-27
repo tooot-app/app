@@ -1,21 +1,29 @@
+import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { StackScreenProps } from '@react-navigation/stack'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
-import React, { useCallback } from 'react'
+import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch } from 'react-redux'
+import ProfileAvatarHeader from './Root/AvatarHeader'
 
 const TabMeProfileRoot: React.FC<StackScreenProps<
   Nav.TabMeProfileStackParamList,
   'Tab-Me-Profile-Root'
->> = ({ navigation }) => {
+> & { messageRef: RefObject<FlashMessage> }> = ({ messageRef, navigation }) => {
+  const { mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
 
   const { data, isLoading } = useProfileQuery({})
-  const { mutate } = useProfileMutation()
+  const { mutateAsync } = useProfileMutation()
+  const dispatch = useDispatch()
 
   const onPressVisibility = useCallback(() => {
     showActionSheetWithOptions(
@@ -32,41 +40,90 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            mutate({ type: 'source[privacy]', data: 'public' })
-            break
           case 1:
-            mutate({ type: 'source[privacy]', data: 'unlisted' })
-            break
           case 2:
-            mutate({ type: 'source[privacy]', data: 'private' })
+            const indexVisibilityMapping = [
+              'public',
+              'unlisted',
+              'private'
+            ] as ['public', 'unlisted', 'private']
+            if (data?.source.privacy !== indexVisibilityMapping[buttonIndex]) {
+              analytics('me_profile_visibility', {
+                current: t(
+                  `me.profile.root.visibility.options.${data?.source.privacy}`
+                ),
+                new: indexVisibilityMapping[buttonIndex]
+              })
+              mutateAsync({
+                mode,
+                messageRef,
+                message: {
+                  text: 'me.profile.root.visibility.title',
+                  succeed: false,
+                  failed: true
+                },
+                type: 'source[privacy]',
+                data: indexVisibilityMapping[buttonIndex]
+              }).then(() => dispatch(updateAccountPreferences()))
+            }
             break
         }
       }
     )
-  }, [])
+  }, [data?.source.privacy])
 
   const onPressSensitive = useCallback(() => {
-    if (data?.source.sensitive === undefined) {
-      mutate({ type: 'source[sensitive]', data: true })
-    } else {
-      mutate({ type: 'source[sensitive]', data: !data.source.sensitive })
-    }
+    analytics('me_profile_sensitive', {
+      current: data?.source.sensitive,
+      new: data?.source.sensitive === undefined ? true : !data.source.sensitive
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.sensitive.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'source[sensitive]',
+      data: data?.source.sensitive === undefined ? true : !data.source.sensitive
+    }).then(() => dispatch(updateAccountPreferences()))
   }, [data?.source.sensitive])
 
   const onPressLock = useCallback(() => {
-    if (data?.locked === undefined) {
-      mutate({ type: 'locked', data: true })
-    } else {
-      mutate({ type: 'locked', data: !data.locked })
-    }
+    analytics('me_profile_lock', {
+      current: data?.locked,
+      new: data?.locked === undefined ? true : !data.locked
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.lock.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'locked',
+      data: data?.locked === undefined ? true : !data.locked
+    })
   }, [data?.locked])
 
   const onPressBot = useCallback(() => {
-    if (data?.bot === undefined) {
-      mutate({ type: 'bot', data: true })
-    } else {
-      mutate({ type: 'bot', data: !data?.bot })
-    }
+    analytics('me_profile_bot', {
+      current: data?.bot,
+      new: data?.bot === undefined ? true : !data.bot
+    })
+    mutateAsync({
+      mode,
+      messageRef,
+      message: {
+        text: 'me.profile.root.bot.title',
+        succeed: false,
+        failed: true
+      },
+      type: 'bot',
+      data: data?.bot === undefined ? true : !data.bot
+    })
   }, [data?.bot])
 
   return (
@@ -84,43 +141,18 @@ const TabMeProfileRoot: React.FC<StackScreenProps<
               })
           }}
         />
-        <MenuRow
-          title={t('me.profile.root.avatar.title')}
-          description={t('me.profile.root.avatar.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.avatar_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
-        />
-        <MenuRow
-          title={t('me.profile.root.banner.title')}
-          description={t('me.profile.root.banner.description')}
-          // content={
-          //   <GracefullyImage
-          //     style={{ flex: 1 }}
-          //     uri={{
-          //       original: data?.header_static
-          //     }}
-          //   />
-          // }
-          // loading={isLoading}
-          // iconBack='ChevronRight'
-        />
+        <ProfileAvatarHeader type='avatar' messageRef={messageRef} />
+        <ProfileAvatarHeader type='header' messageRef={messageRef} />
         <MenuRow
           title={t('me.profile.root.note.title')}
           content={data?.source.note}
           loading={isLoading}
           iconBack='ChevronRight'
           onPress={() => {
-            navigation.navigate('Tab-Me-Profile-Note', {
-              note: data?.source?.note || ''
-            })
+            data &&
+              navigation.navigate('Tab-Me-Profile-Note', {
+                note: data.source?.note
+              })
           }}
         />
         <MenuRow

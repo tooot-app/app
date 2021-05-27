@@ -76,96 +76,98 @@ const MenuRow: React.FC<Props> = ({
           }
         }}
       >
-        <View style={styles.core}>
-          <View style={styles.front}>
-            {iconFront && (
-              <Icon
-                name={iconFront}
-                size={StyleConstants.Font.Size.L}
-                color={theme[iconFrontColor]}
-                style={styles.iconFront}
-              />
-            )}
-            {badge ? (
-              <View
-                style={{
-                  width: 8,
-                  height: 8,
-                  backgroundColor: theme.red,
-                  borderRadius: 8,
-                  marginRight: StyleConstants.Spacing.S
-                }}
-              />
-            ) : null}
-            <View style={styles.main}>
-              <Text
-                style={[styles.title, { color: theme.primaryDefault }]}
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
-            </View>
-          </View>
-
-          {content || switchValue !== undefined || iconBack ? (
-            <View style={styles.back}>
-              {content ? (
-                typeof content === 'string' ? (
-                  <Text
-                    style={[
-                      styles.content,
-                      {
-                        color: theme.secondary,
-                        opacity: !iconBack && loading ? 0 : 1
-                      }
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {content}
-                  </Text>
-                ) : (
-                  content
-                )
-              ) : null}
-              {switchValue !== undefined ? (
-                <Switch
-                  value={switchValue}
-                  onValueChange={switchOnValueChange}
-                  disabled={switchDisabled}
-                  trackColor={{ true: theme.blue, false: theme.disabled }}
-                  style={{ opacity: loading ? 0 : 1 }}
-                />
-              ) : null}
-              {iconBack ? (
+        <View style={{ flex: 1 }}>
+          <View style={styles.core}>
+            <View style={styles.front}>
+              {iconFront && (
                 <Icon
-                  name={iconBack}
+                  name={iconFront}
                   size={StyleConstants.Font.Size.L}
-                  color={theme[iconBackColor]}
-                  style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                  color={theme[iconFrontColor]}
+                  style={styles.iconFront}
+                />
+              )}
+              {badge ? (
+                <View
+                  style={{
+                    width: 8,
+                    height: 8,
+                    backgroundColor: theme.red,
+                    borderRadius: 8,
+                    marginRight: StyleConstants.Spacing.S
+                  }}
                 />
               ) : null}
-              {loading && loadingSpinkit}
+              <View style={styles.main}>
+                <Text
+                  style={[styles.title, { color: theme.primaryDefault }]}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              </View>
             </View>
+
+            {content || switchValue !== undefined || iconBack ? (
+              <View style={styles.back}>
+                {content ? (
+                  typeof content === 'string' ? (
+                    <Text
+                      style={[
+                        styles.content,
+                        {
+                          color: theme.secondary,
+                          opacity: !iconBack && loading ? 0 : 1
+                        }
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {content}
+                    </Text>
+                  ) : (
+                    content
+                  )
+                ) : null}
+                {switchValue !== undefined ? (
+                  <Switch
+                    value={switchValue}
+                    onValueChange={switchOnValueChange}
+                    disabled={switchDisabled}
+                    trackColor={{ true: theme.blue, false: theme.disabled }}
+                    style={{ opacity: loading ? 0 : 1 }}
+                  />
+                ) : null}
+                {iconBack ? (
+                  <Icon
+                    name={iconBack}
+                    size={StyleConstants.Font.Size.L}
+                    color={theme[iconBackColor]}
+                    style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                  />
+                ) : null}
+                {loading && loadingSpinkit}
+              </View>
+            ) : null}
+          </View>
+          {description ? (
+            <Text style={[styles.description, { color: theme.secondary }]}>
+              {description}
+            </Text>
           ) : null}
         </View>
       </TapGestureHandler>
-      {description ? (
-        <Text style={[styles.description, { color: theme.secondary }]}>
-          {description}
-        </Text>
-      ) : null}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 46,
-    paddingVertical: StyleConstants.Spacing.S
+    minHeight: 50
   },
   core: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingVertical: StyleConstants.Spacing.S
   },
   front: {
     flex: 2,

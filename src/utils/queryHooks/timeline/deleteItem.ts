@@ -1,4 +1,4 @@
-import { queryClient } from '@root/App'
+import queryClient from '@helpers/queryClient'
 import { InfiniteData } from 'react-query'
 import { MutationVarsTimelineDeleteItem } from '../timeline'
 

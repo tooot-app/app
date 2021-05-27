@@ -1,6 +1,6 @@
 import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
-import { queryClient } from '@root/App'
+import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
 import { getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'

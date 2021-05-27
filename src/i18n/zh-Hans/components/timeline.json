@@ -74,6 +74,11 @@
       "expandHint": "隐藏内容"
     },
     "fullConversation": "阅读全部对话",
+    "translate": {
+      "default": "翻译",
+      "succeed": "由{{provider}}翻译自{{source}}",
+      "failed": "翻译失败"
+    },
     "header": {
       "shared": {
         "account": {

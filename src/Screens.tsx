@@ -1,9 +1,8 @@
+import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { displayMessage, Message, removeMessage } from '@components/Message'
+import navigationRef from '@helpers/navigationRef'
 import { useNetInfo } from '@react-native-community/netinfo'
-import {
-  NavigationContainer,
-  NavigationContainerRef
-} from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
@@ -19,7 +18,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { createRef, useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
@@ -28,7 +27,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
 const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
-export const navigationRef = createRef<NavigationContainerRef>()
 
 export interface Props {
   localCorrupt?: string
@@ -174,18 +172,30 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           <Stack.Screen
             name='Screen-Announcements'
             component={ScreenAnnouncements}
-            options={{
+            options={({ navigation }) => ({
               stackPresentation: 'transparentModal',
               stackAnimation: 'fade',
-              headerShown: false
-            }}
+              headerShown: true,
+              headerHideShadow: true,
+              headerTopInsetEnabled: false,
+              headerStyle: { backgroundColor: 'transparent' },
+              headerLeft: () => (
+                <HeaderLeft content='X' onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: t('screenAnnouncements:heading'),
+              ...(Platform.OS === 'android' && {
+                headerCenter: () => (
+                  <HeaderCenter content={t('screenAnnouncements:heading')} />
+                )
+              })
+            })}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
             options={{
               stackPresentation: 'fullScreenModal',
-              headerShown: false
+              ...(Platform.OS === 'android' && { headerShown: false })
             }}
           />
           <Stack.Screen
@@ -194,7 +204,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{
               stackPresentation: 'fullScreenModal',
               stackAnimation: 'fade',
-              headerShown: false
+              ...(Platform.OS === 'android' && { headerShown: false })
             }}
           />
         </Stack.Navigator>
