@@ -28,8 +28,3 @@ submission_information({
   add_id_info_tracks_install: false,
   add_id_info_uses_idfa: true
 })
-
-release_notes({
-  'zh-Hans' => "添加支持修改账户信息",
-  'en-US' => "Added the possibility to update account information"
-})
