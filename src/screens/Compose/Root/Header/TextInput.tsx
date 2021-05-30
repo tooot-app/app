@@ -21,8 +21,6 @@ const ComposeTextInput: React.FC = () => {
           borderBottomColor: theme.border
         }
       ]}
-      autoCapitalize='none'
-      autoCorrect={false}
       autoFocus
       enablesReturnKeyAutomatically
       multiline
