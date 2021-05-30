@@ -197,7 +197,7 @@ private_lane :build_android do
 end
 
 lane :build do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: GITHUB_RELEASE, api_token: ENV['GH_PAT_GET_RELEASE'])
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
   if releaseExists
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
