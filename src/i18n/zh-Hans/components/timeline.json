@@ -73,6 +73,7 @@
     "content": {
       "expandHint": "隐藏内容"
     },
+    "filtered": "已过滤",
     "fullConversation": "阅读全部对话",
     "translate": {
       "default": "翻译",
