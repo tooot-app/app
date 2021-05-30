@@ -69,7 +69,10 @@ const apiGeneral = async <T = unknown>({
           error.response.status,
           error.response.data.error
         )
-        return Promise.reject(error.response.data.error)
+        return Promise.reject({
+          status: error.response.status,
+          message: error.response.data.error
+        })
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
