@@ -52,8 +52,8 @@ const ImageItem = ({
   const scrollViewRef = useRef<ScrollView>(null)
   const [scaled, setScaled] = useState(false)
   const [imageDimensions, setImageDimensions] = useState({
-    width: imageSrc.width || 0,
-    height: imageSrc.height || 0
+    width: imageSrc.width || 1,
+    height: imageSrc.height || 1
   })
   const handleDoubleTap = useDoubleTapToZoom(scrollViewRef, scaled, SCREEN)
 

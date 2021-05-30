@@ -58,7 +58,7 @@ const saveIos = async ({ messageRef, mode, image }: CommonProps) => {
 }
 
 const saveAndroid = async ({ messageRef, mode, image }: CommonProps) => {
-  const fileUri: string = `${FileSystem.documentDirectory}test.jpg`
+  const fileUri: string = `${FileSystem.documentDirectory}${image.id}.jpg`
   const downloadedFile: FileSystem.FileSystemDownloadResult = await FileSystem.downloadAsync(
     image.url,
     fileUri
@@ -80,7 +80,7 @@ const saveAndroid = async ({ messageRef, mode, image }: CommonProps) => {
         ref: messageRef,
         mode,
         type: 'success',
-        message: 'test'
+        message: i18next.t('screenImageViewer:content.save.succeed')
       })
     })
     .catch(() => {

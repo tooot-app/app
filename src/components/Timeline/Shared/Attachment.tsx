@@ -8,7 +8,7 @@ import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -33,11 +33,13 @@ const TimelineAttachment = React.memo(
       haptics('Light')
     }, [])
 
-    let imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'] = []
+    const imageUrls = useRef<
+      Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+    >([])
     const navigation = useNavigation()
     const navigateToImagesViewer = (id: string) =>
       navigation.navigate('Screen-ImagesViewer', {
-        imageUrls,
+        imageUrls: imageUrls.current,
         id
       })
     const attachments = useMemo(
@@ -45,7 +47,7 @@ const TimelineAttachment = React.memo(
         status.media_attachments.map((attachment, index) => {
           switch (attachment.type) {
             case 'image':
-              imageUrls.push({
+              imageUrls.current.push({
                 id: attachment.id,
                 preview_url: attachment.preview_url,
                 url: attachment.url,
@@ -106,7 +108,7 @@ const TimelineAttachment = React.memo(
                 attachment.remote_url?.endsWith('.png') ||
                 attachment.remote_url?.endsWith('.gif')
               ) {
-                imageUrls.push({
+                imageUrls.current.push({
                   id: attachment.id,
                   preview_url: attachment.preview_url,
                   url: attachment.url,
