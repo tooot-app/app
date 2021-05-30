@@ -1,1 +1,2 @@
-
+Added translation option, translation service is provided by various providers
+When updating profile, now avatar and banner can be uploaded

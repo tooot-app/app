@@ -148,8 +148,6 @@ const useProfileMutation = () => {
           mode: variables.mode,
           type: 'success'
         })
-      } else {
-        haptics('Light')
       }
     },
     onSettled: () => {
