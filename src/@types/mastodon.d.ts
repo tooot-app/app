@@ -261,6 +261,15 @@ declare namespace Mastodon {
     verified_at: string | null
   }
 
+  type Filter = {
+    id: string
+    phrase: string
+    context: ('home' | 'notifications' | 'public' | 'thread' | 'account')[]
+    expires_at?: string
+    irreversible: boolean
+    whole_word: boolean
+  }
+
   type List = {
     id: string
     title: string
