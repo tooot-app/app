@@ -31,7 +31,7 @@ const TimelineTranslate = React.memo(
 
     const settingsLanguage = useSelector(getSettingsLanguage)
 
-    if (settingsLanguage.includes(tootLanguage)) {
+    if (settingsLanguage?.includes(tootLanguage)) {
       return null
     }
 

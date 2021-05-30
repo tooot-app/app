@@ -10,14 +10,16 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { getInstance, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import htmlparser2 from 'htmlparser2-without-node-native'
 import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineActionsUsers from './Shared/ActionsUsers'
+import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 import TimelineTranslate from './Shared/Translate'
 
@@ -48,6 +50,16 @@ const TimelineDefault: React.FC<Props> = ({
   >()
 
   let actualStatus = item.reblog ? item.reblog : item
+
+  const ownAccount = actualStatus.account.id === instanceAccount?.id
+
+  if (
+    !highlighted &&
+    queryKey &&
+    shouldFilter({ status: actualStatus, queryKey })
+  ) {
+    return <TimelineFiltered />
+  }
 
   const onPress = useCallback(() => {
     analytics('timeline_default_press', {
@@ -118,7 +130,7 @@ const TimelineDefault: React.FC<Props> = ({
             statusId={actualStatus.id}
             poll={actualStatus.poll}
             reblog={item.reblog ? true : false}
-            sameAccount={actualStatus.account.id === instanceAccount?.id}
+            sameAccount={ownAccount}
           />
         ) : null}
         {!disableDetails &&

@@ -17,6 +17,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 
 export interface Props {
@@ -30,6 +31,13 @@ const TimelineNotifications: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  if (
+    notification.status &&
+    shouldFilter({ status: notification.status, queryKey })
+  ) {
+    return <TimelineFiltered />
+  }
+
   const { theme } = useTheme()
   const instanceAccount = useSelector(
     getInstanceAccount,
@@ -38,6 +46,7 @@ const TimelineNotifications: React.FC<Props> = ({
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
+
   const actualAccount = notification.status
     ? notification.status.account
     : notification.account

@@ -1,5 +1,5 @@
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -52,32 +52,30 @@ const GracefullyImage = React.memo(
     setImageDimensions
   }: Props) => {
     const { theme } = useTheme()
-    const originalFailed = useRef(false)
+    const [originalFailed, setOriginalFailed] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(false)
 
     const source = useMemo(() => {
-      if (originalFailed.current) {
+      if (originalFailed) {
         return { uri: uri.remote || undefined }
       } else {
         return { uri: uri.original }
       }
-    }, [originalFailed.current])
-    const onLoad = useCallback(
-      ({ nativeEvent }) => {
-        setImageLoaded(true)
-        setImageDimensions &&
-          setImageDimensions({
-            width: nativeEvent.source.width,
-            height: nativeEvent.source.height
-          })
-      },
-      [source.uri]
-    )
-    const onError = useCallback(() => {
-      if (!originalFailed.current) {
-        originalFailed.current = true
+    }, [originalFailed])
+
+    const onLoad = useCallback(() => {
+      setImageLoaded(true)
+      if (setImageDimensions && source.uri) {
+        Image.getSize(source.uri, (width, height) =>
+          setImageDimensions({ width, height })
+        )
       }
-    }, [originalFailed.current])
+    }, [source.uri])
+    const onError = useCallback(() => {
+      if (!originalFailed) {
+        setOriginalFailed(true)
+      }
+    }, [originalFailed])
 
     const previewView = useMemo(
       () =>

@@ -6,6 +6,7 @@ import { findIndex } from 'lodash'
 import addInstance from './instances/add'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
+import { updateFilters } from './instances/updateFilters'
 import { updateInstancePush } from './instances/updatePush'
 import { updateInstancePushAlert } from './instances/updatePushAlert'
 import { updateInstancePushDecode } from './instances/updatePushDecode'
@@ -29,6 +30,7 @@ export type Instance = {
     avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
+  filters: Mastodon.Filter[]
   notifications_filter: {
     follow: boolean
     favourite: boolean
@@ -233,6 +235,15 @@ const instancesSlice = createSlice({
       })
       .addCase(removeInstance.rejected, (state, action) => {
         console.error(state)
+        console.error(action.error)
+      })
+
+      // Update Instance Account Filters
+      .addCase(updateFilters.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].filters = action.payload
+      })
+      .addCase(updateFilters.rejected, (_, action) => {
         console.error(action.error)
       })
 

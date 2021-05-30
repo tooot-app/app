@@ -4,7 +4,7 @@ import * as Analytics from 'expo-firebase-analytics'
 import * as Localization from 'expo-localization'
 import { pickBy } from 'lodash'
 
-enum availableLanguages {
+enum AvailableLanguages {
   'zh-Hans',
   'en'
 }
@@ -19,7 +19,7 @@ export const changeAnalytics = createAsyncThunk(
 
 export type SettingsState = {
   fontsize: -1 | 0 | 1 | 2 | 3
-  language: keyof availableLanguages
+  language: string
   theme: 'light' | 'dark' | 'auto'
   browser: 'internal' | 'external'
   analytics: boolean
@@ -31,10 +31,10 @@ export const settingsInitialState = {
     enabled: false
   },
   language: Object.keys(
-    pickBy(availableLanguages, (_, key) => Localization.locale.includes(key))
+    pickBy(AvailableLanguages, (_, key) => Localization.locale.includes(key))
   )
     ? Object.keys(
-        pickBy(availableLanguages, (_, key) =>
+        pickBy(AvailableLanguages, (_, key) =>
           Localization.locale.includes(key)
         )
       )[0]
