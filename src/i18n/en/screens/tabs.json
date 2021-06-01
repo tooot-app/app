@@ -265,6 +265,10 @@
         "statuses_count": "{{count}} toots",
         "following_count": "$t(shared.users.accounts.following)",
         "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Toots",
+        "all": "Toots and replies"
       }
     },
     "attachments": {
