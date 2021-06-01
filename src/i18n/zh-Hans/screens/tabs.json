@@ -265,6 +265,10 @@
         "statuses_count": "{{count}} 条嘟文",
         "following_count": "$t(shared.users.accounts.following)",
         "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "嘟文",
+        "all": "嘟文和回复"
       }
     },
     "attachments": {
