@@ -10,9 +10,10 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  myInfo: boolean
 }
 
-const AccountInformationStats: React.FC<Props> = ({ account }) => {
+const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
@@ -27,6 +28,12 @@ const AccountInformationStats: React.FC<Props> = ({ account }) => {
           children={t('shared.account.summary.statuses_count', {
             count: account.statuses_count || 0
           })}
+          onPress={() => {
+            analytics('account_stats_toots_press')
+            myInfo &&
+              account &&
+              navigation.push('Tab-Shared-Account', { account })
+          }}
         />
       ) : (
         <PlaceholderLine

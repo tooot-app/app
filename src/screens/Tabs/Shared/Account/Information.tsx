@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
@@ -14,12 +15,14 @@ import AccountInformationStats from './Information/Stats'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  myInfo?: boolean // Showing from my info page
 }
 
 const AccountInformation = React.memo(
-  ({ account, myInfo = false }: Props) => {
+  ({ account }: Props) => {
     const { mode, theme } = useTheme()
+
+    const { name } = useRoute()
+    const myInfo = name !== 'Tab-Shared-Account'
 
     const animation = useCallback(
       props => (
@@ -46,7 +49,7 @@ const AccountInformation = React.memo(
 
           <AccountInformationCreated account={account} hidden={myInfo} />
 
-          <AccountInformationStats account={account} />
+          <AccountInformationStats account={account} myInfo={myInfo} />
         </Placeholder>
       </View>
     )

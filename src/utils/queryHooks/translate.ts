@@ -59,7 +59,7 @@ const useTranslateQuery = ({
   options?: UseQueryOptions<Translations, AxiosError, Translations>
 }) => {
   const queryKey: QueryKeyTranslate = ['Translate', { ...queryKeyParams }]
-  return useQuery(queryKey, queryFunction, options)
+  return useQuery(queryKey, queryFunction, { ...options, retry: false })
 }
 
 export { useTranslateQuery }
