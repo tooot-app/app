@@ -10,7 +10,7 @@ const MyInfo: React.FC<Props> = ({ account }) => {
   return (
     <>
       <AccountHeader account={account} />
-      <AccountInformation account={account} myInfo />
+      <AccountInformation account={account} />
     </>
   )
 }
