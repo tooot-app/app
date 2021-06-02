@@ -115,7 +115,7 @@ const TabSharedAccount: React.FC<SharedAccountProp> = ({
         />
       </>
     )
-  }, [data, fetchedTimeline.current, i18n.language, mode])
+  }, [data, fetchedTimeline.current, queryKey[1].page, i18n.language, mode])
 
   return (
     <>
