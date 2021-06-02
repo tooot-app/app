@@ -44,24 +44,28 @@ export const shouldFilter = ({
     getInstanceAccount(store.getState())?.id === status.account.id
 
   let shouldFilter = false
-  if (queryKey && !ownAccount) {
+  if (!ownAccount) {
     const parser = new htmlparser2.Parser({
       ontext (text: string) {
         const checkFilter = (filter: Mastodon.Filter) => {
+          const escapedPhrase = filter.phrase.replace(
+            /[.*+?^${}()|[\]\\]/g,
+            '\\$&'
+          ) // $& means the whole matched string
           switch (filter.whole_word) {
             case true:
-              if (new RegExp('\\b' + filter.phrase + '\\b').test(text)) {
+              if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
                 shouldFilter = true
               }
               break
             case false:
-              if (new RegExp(filter.phrase).test(text)) {
+              if (new RegExp(escapedPhrase).test(text)) {
                 shouldFilter = true
               }
               break
           }
         }
-        instance?.filters.forEach(filter => {
+        instance?.filters?.forEach(filter => {
           if (filter.expires_at) {
             if (new Date().getTime() > new Date(filter.expires_at).getTime()) {
               return

@@ -2,6 +2,7 @@ import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
 import li from 'li'
+import { Constants } from 'react-native-unimodules'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -67,6 +68,8 @@ const apiInstance = async <T = unknown>({
     params,
     headers: {
       'Content-Type': 'application/json',
+      'User-Agent': `tooot/${Constants.manifest.version}`,
+      Accept: '*/*',
       ...headers,
       ...(token && {
         Authorization: `Bearer ${token}`
