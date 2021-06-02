@@ -1,5 +1,6 @@
 import axios from 'axios'
 import chalk from 'chalk'
+import { Constants } from 'react-native-unimodules'
 import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
@@ -45,6 +46,8 @@ const apiGeneral = async <T = unknown>({
     params,
     headers: {
       'Content-Type': 'application/json',
+      'User-Agent': `tooot/${Constants.manifest.version}`,
+      Accept: '*/*',
       ...headers
     },
     ...(body && { data: body })
