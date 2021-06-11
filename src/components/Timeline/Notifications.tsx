@@ -113,13 +113,13 @@ const TimelineNotifications: React.FC<Props> = ({
                 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
             }}
           >
-            {notification.status.content.length > 0 && (
+            {notification.status.content.length > 0 ? (
               <TimelineContent
                 status={notification.status}
                 highlighted={highlighted}
               />
-            )}
-            {notification.status.poll && (
+            ) : null}
+            {notification.status.poll ? (
               <TimelinePoll
                 queryKey={queryKey}
                 statusId={notification.status.id}
@@ -127,13 +127,13 @@ const TimelineNotifications: React.FC<Props> = ({
                 reblog={false}
                 sameAccount={notification.account.id === instanceAccount?.id}
               />
-            )}
-            {notification.status.media_attachments.length > 0 && (
+            ) : null}
+            {notification.status.media_attachments.length > 0 ? (
               <TimelineAttachment status={notification.status} />
-            )}
-            {notification.status.card && (
+            ) : null}
+            {notification.status.card ? (
               <TimelineCard card={notification.status.card} />
-            )}
+            ) : null}
             <TimelineFullConversation
               queryKey={queryKey}
               status={notification.status}

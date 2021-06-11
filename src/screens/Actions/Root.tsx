@@ -107,15 +107,15 @@ const ScreenActionsRoot = React.memo(
         case 'status':
           return (
             <>
-              {!sameAccount && (
+              {!sameAccount ? (
                 <ActionsAccount
                   queryKey={params.queryKey}
                   rootQueryKey={params.rootQueryKey}
                   account={params.status.account}
                   dismiss={dismiss}
                 />
-              )}
-              {sameAccount && params.status && (
+              ) : null}
+              {sameAccount && params.status ? (
                 <ActionsStatus
                   navigation={navigation}
                   queryKey={params.queryKey}
@@ -123,22 +123,22 @@ const ScreenActionsRoot = React.memo(
                   status={params.status}
                   dismiss={dismiss}
                 />
-              )}
-              {!sameDomain && statusDomain && (
+              ) : null}
+              {!sameDomain && statusDomain ? (
                 <ActionsDomain
                   queryKey={params.queryKey}
                   rootQueryKey={params.rootQueryKey}
                   domain={statusDomain}
                   dismiss={dismiss}
                 />
-              )}
-              {params.status.visibility !== 'direct' && (
+              ) : null}
+              {params.status.visibility !== 'direct' ? (
                 <ActionsShare
                   url={params.status.url || params.status.uri}
                   type={params.type}
                   dismiss={dismiss}
                 />
-              )}
+              ) : null}
               <Button
                 type='text'
                 content={t('common:buttons.cancel')}
@@ -152,9 +152,9 @@ const ScreenActionsRoot = React.memo(
         case 'account':
           return (
             <>
-              {!sameAccount && (
+              {!sameAccount ? (
                 <ActionsAccount account={params.account} dismiss={dismiss} />
-              )}
+              ) : null}
               <ActionsShare
                 url={params.account.url}
                 type={params.type}
