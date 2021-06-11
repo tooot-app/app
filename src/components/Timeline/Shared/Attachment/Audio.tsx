@@ -74,7 +74,7 @@ const AttachmentAudio: React.FC<Props> = ({
           ) : null
         ) : (
           <>
-            {audio.preview_url && (
+            {audio.preview_url ? (
               <GracefullyImage
                 uri={{
                   original: audio.preview_url,
@@ -82,7 +82,7 @@ const AttachmentAudio: React.FC<Props> = ({
                 }}
                 style={styles.background}
               />
-            )}
+            ) : null}
             <Button
               type='icon'
               content={audioPlaying ? 'PauseCircle' : 'PlayCircle'}

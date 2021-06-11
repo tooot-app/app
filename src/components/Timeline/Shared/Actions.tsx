@@ -182,7 +182,7 @@ const TimelineActions: React.FC<Props> = ({
           color={iconColor}
           size={StyleConstants.Font.Size.L}
         />
-        {status.replies_count > 0 && (
+        {status.replies_count > 0 ? (
           <Text
             style={{
               color: theme.secondary,
@@ -192,7 +192,7 @@ const TimelineActions: React.FC<Props> = ({
           >
             {status.replies_count}
           </Text>
-        )}
+        ) : null}
       </>
     ),
     [status.replies_count]
@@ -210,7 +210,7 @@ const TimelineActions: React.FC<Props> = ({
           }
           size={StyleConstants.Font.Size.L}
         />
-        {status.reblogs_count > 0 && (
+        {status.reblogs_count > 0 ? (
           <Text
             style={{
               color: color(status.reblogged),
@@ -220,7 +220,7 @@ const TimelineActions: React.FC<Props> = ({
           >
             {status.reblogs_count}
           </Text>
-        )}
+        ) : null}
       </>
     )
   }, [status.reblogged, status.reblogs_count])
@@ -233,7 +233,7 @@ const TimelineActions: React.FC<Props> = ({
           color={color(status.favourited)}
           size={StyleConstants.Font.Size.L}
         />
-        {status.favourites_count > 0 && (
+        {status.favourites_count > 0 ? (
           <Text
             style={{
               color: color(status.favourited),
@@ -244,7 +244,7 @@ const TimelineActions: React.FC<Props> = ({
           >
             {status.favourites_count}
           </Text>
-        )}
+        ) : null}
       </>
     )
   }, [status.favourited, status.favourites_count])

@@ -128,7 +128,7 @@ const TimelineConversation: React.FC<Props> = ({
               status={conversation.last_status}
               highlighted={highlighted}
             />
-            {conversation.last_status.poll && (
+            {conversation.last_status.poll ? (
               <TimelinePoll
                 queryKey={queryKey}
                 statusId={conversation.last_status.id}
@@ -138,7 +138,7 @@ const TimelineConversation: React.FC<Props> = ({
                   conversation.last_status.id === instanceAccount?.id
                 }
               />
-            )}
+            ) : null}
           </View>
           <TimelineActions
             queryKey={queryKey}

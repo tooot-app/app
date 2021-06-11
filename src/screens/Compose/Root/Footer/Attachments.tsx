@@ -130,7 +130,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               uri: item.local?.local_thumbnail || item.remote?.preview_url
             }}
           />
-          {item.remote?.meta?.original?.duration && (
+          {item.remote?.meta?.original?.duration ? (
             <Text
               style={[
                 styles.duration,
@@ -142,7 +142,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             >
               {item.remote.meta.original.duration}
             </Text>
-          )}
+          ) : null}
           {item.uploading ? (
             <View
               style={[
