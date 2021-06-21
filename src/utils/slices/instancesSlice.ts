@@ -11,8 +11,6 @@ import { updateInstancePush } from './instances/updatePush'
 import { updateInstancePushAlert } from './instances/updatePushAlert'
 import { updateInstancePushDecode } from './instances/updatePushDecode'
 
-export const PUSH_SERVER = __DEV__ ? 'testpush.tooot.app' : 'push.tooot.app'
-
 export type Instance = {
   active: boolean
   appData: {

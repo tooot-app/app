@@ -14,7 +14,7 @@ export default (): ExpoConfig => ({
   assetBundlePatterns: ['assets/*'],
   extra: {
     sentryDSN: process.env.SENTRY_DSN,
-    translateKey: process.env.TRANSLATE_KEY
+    toootApiKey: process.env.TOOOT_API_KEY
   },
   hooks: {
     postPublish: [

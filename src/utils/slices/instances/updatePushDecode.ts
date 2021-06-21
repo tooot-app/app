@@ -1,10 +1,10 @@
-import apiGeneral from '@api/general'
+import apiTooot from '@api/tooot'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
-import { getInstance, Instance, PUSH_SERVER } from '../instancesSlice'
+import { getInstance, Instance } from '../instancesSlice'
 import androidDefaults from './push/androidDefaults'
 
 export const updateInstancePushDecode = createAsyncThunk(
@@ -25,10 +25,10 @@ export const updateInstancePushDecode = createAsyncThunk(
       })
     ).data
 
-    await apiGeneral({
+    await apiTooot({
       method: 'post',
-      domain: PUSH_SERVER,
-      url: 'v1/update-decode',
+      service: 'push',
+      url: 'update-decode',
       body: {
         expoToken,
         instanceUrl: instance.url,
