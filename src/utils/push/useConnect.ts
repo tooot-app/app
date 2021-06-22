@@ -1,12 +1,9 @@
 import apiGeneral from '@api/general'
+import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import { NavigationContainerRef } from '@react-navigation/native'
 import { Dispatch } from '@reduxjs/toolkit'
-import {
-  disableAllPushes,
-  Instance,
-  PUSH_SERVER
-} from '@utils/slices/instancesSlice'
+import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { TFunction } from 'react-i18next'
@@ -34,10 +31,10 @@ const pushUseConnect = ({
         })
       ).data
 
-      apiGeneral({
+      apiTooot({
         method: 'post',
-        domain: PUSH_SERVER,
-        url: 'v1/connect',
+        service: 'push',
+        url: 'connect',
         body: {
           expoToken
         },
