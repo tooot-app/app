@@ -116,13 +116,13 @@ const TimelineDefault: React.FC<Props> = ({
         }}
       >
         {typeof actualStatus.content === 'string' &&
-          actualStatus.content.length > 0 && (
-            <TimelineContent
-              status={actualStatus}
-              highlighted={highlighted}
-              disableDetails={disableDetails}
-            />
-          )}
+        actualStatus.content.length > 0 ? (
+          <TimelineContent
+            status={actualStatus}
+            highlighted={highlighted}
+            disableDetails={disableDetails}
+          />
+        ) : null}
         {queryKey && actualStatus.poll ? (
           <TimelinePoll
             queryKey={queryKey}
@@ -138,9 +138,9 @@ const TimelineDefault: React.FC<Props> = ({
         actualStatus.media_attachments.length ? (
           <TimelineAttachment status={actualStatus} />
         ) : null}
-        {!disableDetails && actualStatus.card && (
+        {!disableDetails && actualStatus.card ? (
           <TimelineCard card={actualStatus.card} />
-        )}
+        ) : null}
         {!disableDetails ? (
           <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
         ) : null}
@@ -148,7 +148,7 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
       </View>
 
-      {queryKey && !disableDetails && (
+      {queryKey && !disableDetails ? (
         <TimelineActions
           queryKey={queryKey}
           rootQueryKey={rootQueryKey}
@@ -162,7 +162,7 @@ const TimelineDefault: React.FC<Props> = ({
           ).map(d => d?.acct)}
           reblog={item.reblog ? true : false}
         />
-      )}
+      ) : null}
     </Pressable>
   )
 }

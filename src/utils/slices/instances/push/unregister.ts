@@ -1,7 +1,7 @@
-import apiGeneral from '@api/general'
 import apiInstance from '@api/instance'
+import apiTooot from '@api/tooot'
 import { RootState } from '@root/store'
-import { getInstance, PUSH_SERVER } from '@utils/slices/instancesSlice'
+import { getInstance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 
@@ -19,10 +19,10 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
     url: 'push/subscription'
   })
 
-  await apiGeneral<{ endpoint: string; publicKey: string; auth: string }>({
+  await apiTooot<{ endpoint: string; publicKey: string; auth: string }>({
     method: 'post',
-    domain: PUSH_SERVER,
-    url: 'v1/unregister',
+    service: 'push',
+    url: 'unregister',
     body: {
       expoToken,
       instanceUrl: instance.url,

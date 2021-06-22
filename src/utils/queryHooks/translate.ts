@@ -1,4 +1,4 @@
-import apiGeneral from '@api/general'
+import apiTooot from '@api/tooot'
 import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
 import { Buffer } from 'buffer'
@@ -21,16 +21,7 @@ export type QueryKeyTranslate = [
   }
 ]
 
-export const TRANSLATE_SERVER = __DEV__
-  ? 'testtranslate.tooot.app'
-  : 'translate.tooot.app'
-
 const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
-  const key = Constants.manifest.extra?.translateKey
-  if (!key) {
-    return Promise.reject()
-  }
-
   const { uri, source, target, text } = queryKey[1]
 
   const uriEncoded = Buffer.from(uri.replace(/https?:\/\//, ''))
@@ -42,11 +33,11 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
     'base64'
   )
 
-  const res = await apiGeneral<Translations>({
-    domain: TRANSLATE_SERVER,
+  const res = await apiTooot<Translations>({
     method: 'get',
-    url: `v1/translate/${uriEncoded}/${target}`,
-    headers: { key, original }
+    service: 'translate',
+    url: `source/${uriEncoded}/target/${target}`,
+    headers: { original }
   })
   haptics('Light')
   return res.body

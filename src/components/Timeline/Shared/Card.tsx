@@ -27,14 +27,14 @@ const TimelineCard = React.memo(
         }}
         testID='base'
       >
-        {card.image && (
+        {card.image ? (
           <GracefullyImage
             uri={{ original: card.image }}
             blurhash={card.blurhash}
             style={styles.left}
             imageStyle={styles.image}
           />
-        )}
+        ) : null}
         <View style={styles.right}>
           <Text
             numberOfLines={2}

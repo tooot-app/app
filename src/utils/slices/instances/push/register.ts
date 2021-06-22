@@ -1,12 +1,8 @@
-import apiGeneral from '@api/general'
 import apiInstance from '@api/instance'
+import apiTooot from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
-import {
-  getInstance,
-  Instance,
-  PUSH_SERVER
-} from '@utils/slices/instancesSlice'
+import { getInstance, Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 import androidDefaults from './androidDefaults'
@@ -22,13 +18,13 @@ const register1 = async ({
   accountId: Mastodon.Account['id']
   accountFull: string
 }) => {
-  return apiGeneral<{
+  return apiTooot<{
     endpoint: string
     keys: { public: string; private: string; auth: string }
   }>({
     method: 'post',
-    domain: PUSH_SERVER,
-    url: 'v1/register1',
+    service: 'push',
+    url: 'register1',
     body: { expoToken, instanceUrl, accountId, accountFull },
     sentry: true
   })
@@ -47,10 +43,10 @@ const register2 = async ({
   accountId: Mastodon.Account['id']
   removeKeys: boolean
 }) => {
-  return apiGeneral({
+  return apiTooot({
     method: 'post',
-    domain: PUSH_SERVER,
-    url: 'v1/register2',
+    service: 'push',
+    url: 'register2',
     body: { expoToken, instanceUrl, accountId, serverKey, removeKeys },
     sentry: true
   })
