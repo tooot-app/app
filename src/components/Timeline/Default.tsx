@@ -49,7 +49,7 @@ const TimelineDefault: React.FC<Props> = ({
     StackNavigationProp<Nav.TabLocalStackParamList>
   >()
 
-  let actualStatus = item.reblog ? item.reblog : item
+  const actualStatus = item.reblog ? item.reblog : item
 
   const ownAccount = actualStatus.account.id === instanceAccount?.id
 
