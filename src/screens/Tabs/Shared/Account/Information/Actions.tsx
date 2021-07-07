@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import {
   getInstanceAccount,
-  getInstancePush,
-  getInstanceUri
+  getInstancePush
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -41,6 +40,10 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
 }
 
 const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
+  if (!account) {
+    return null
+  }
+
   const { t } = useTranslation('screenTabs')
   const navigation = useNavigation()
 
@@ -65,7 +68,6 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
     getInstancePush,
     (prev, next) => prev?.global.value === next?.global.value
   )
-  const instanceUri = useSelector(getInstanceUri)
 
   if (myInfo) {
     return (
