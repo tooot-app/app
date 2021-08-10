@@ -123,14 +123,15 @@ const openLink = async (
 
   loadingLink = false
   switch (getSettingsBrowser(store.getState())) {
+    // Some links might end with an empty space at the end that triggers an error
     case 'internal':
-      await WebBrowser.openBrowserAsync(url, {
+      await WebBrowser.openBrowserAsync(encodeURI(url), {
         dismissButtonStyle: 'close',
         enableBarCollapsing: true
       })
       break
     case 'external':
-      await Linking.openURL(url)
+      await Linking.openURL(encodeURI(url))
       break
   }
 }
