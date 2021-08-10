@@ -84,16 +84,20 @@ const AttachmentVideo: React.FC<Props> = ({
             })}
         useNativeControls={false}
         onFullscreenUpdate={event => {
-          if (event.fullscreenUpdate === 3) {
-            analytics('timeline_shared_attachment_video_pause_press', {
-              id: video.id,
-              timestamp: Date.now()
-            })
-            videoPlayer.current?.pauseAsync()
+          if (
+            event.fullscreenUpdate ===
+            Video.FULLSCREEN_UPDATE_PLAYER_DID_DISMISS
+          ) {
+            if (gifv) {
+              videoPlayer.current?.setIsLoopingAsync(true)
+              videoPlayer.current?.playAsync()
+            } else {
+              videoPlayer.current?.pauseAsync()
+            }
           }
         }}
       />
-      <Pressable style={styles.overlay}>
+      <Pressable style={styles.overlay} onPress={gifv ? playOnPress : null}>
         {sensitiveShown ? (
           video.blurhash ? (
             <Blurhash
