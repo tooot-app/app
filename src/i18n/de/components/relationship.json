@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "Folgen"
+  },
+  "block": {
+    "function": "Blockieren"
+  },
+  "button": {
+    "error": "Fehler beim Laden",
+    "blocked_by": "Zugriff durch Nutzer:in verweigert",
+    "blocking": "Entblocken",
+    "following": "Entfolgen",
+    "requested": "Anfrage zurückziehen",
+    "default": "Folgen"
+  }
+}
