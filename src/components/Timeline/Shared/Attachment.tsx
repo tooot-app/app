@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -37,6 +38,22 @@ const TimelineAttachment = React.memo(
       Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
     >([])
     const navigation = useNavigation()
+    useEffect(() => {
+      status.media_attachments.forEach((attachment, index) => {
+        switch (attachment.type) {
+          case 'image':
+            imageUrls.current.push({
+              id: attachment.id,
+              preview_url: attachment.preview_url,
+              url: attachment.url,
+              remote_url: attachment.remote_url,
+              blurhash: attachment.blurhash,
+              width: attachment.meta?.original?.width,
+              height: attachment.meta?.original?.height
+            })
+        }
+      })
+    }, [])
     const navigateToImagesViewer = (id: string) =>
       navigation.navigate('Screen-ImagesViewer', {
         imageUrls: imageUrls.current,
@@ -47,15 +64,6 @@ const TimelineAttachment = React.memo(
         status.media_attachments.map((attachment, index) => {
           switch (attachment.type) {
             case 'image':
-              imageUrls.current.push({
-                id: attachment.id,
-                preview_url: attachment.preview_url,
-                url: attachment.url,
-                remote_url: attachment.remote_url,
-                blurhash: attachment.blurhash,
-                width: attachment.meta?.original?.width,
-                height: attachment.meta?.original?.height
-              })
               return (
                 <AttachmentImage
                   key={index}
