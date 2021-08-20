@@ -1,11 +1,11 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { Message } from '@components/Message'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import TabMeProfileFields from './Profile/Fields'
 import TabMeProfileName from './Profile/Name'
 import TabMeProfileNote from './Profile/Note'
@@ -25,9 +25,7 @@ const TabMeProfile: React.FC<StackScreenProps<
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <Stack.Navigator
-        screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
-      >
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Me-Profile-Root'
           options={{

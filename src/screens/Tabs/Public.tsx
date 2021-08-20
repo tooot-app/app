@@ -4,6 +4,7 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
@@ -11,7 +12,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
 
 export type TabPublicProps = BottomTabScreenProps<
@@ -40,16 +40,9 @@ const TabPublic = React.memo(
         key: 'Local'
       }
     ]
-    const screenOptions = useMemo(
-      () => ({
-        headerHideShadow: true,
-        headerTopInsetEnabled: false
-      }),
-      []
-    )
     const screenOptionsRoot = useMemo(
       () => ({
-        headerCenter: () => (
+        headerTitle: () => (
           <SegmentedControl
             appearance={mode}
             values={pages.map(p => p.title)}
@@ -113,7 +106,7 @@ const TabPublic = React.memo(
     )
 
     return (
-      <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Public-Root'
           options={screenOptionsRoot}

@@ -52,7 +52,12 @@ const ScreenTabs = React.memo(
 
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
-        tabBarVisible: instanceActive !== -1,
+        headerShown: false,
+        tabBarActiveTintColor: theme.primaryDefault,
+        tabBarInactiveTintColor: theme.secondary,
+        tabBarShowLabel: false,
+        ...(Platform.OS === 'android' && { tabBarHideOnKeyboard: true }),
+        tabBarStyle: { display: instanceActive !== -1 ? 'flex' : 'none' },
         tabBarIcon: ({
           focused,
           color,
@@ -95,15 +100,7 @@ const ScreenTabs = React.memo(
       }),
       [instanceAccount?.avatarStatic, instanceActive]
     )
-    const tabBarOptions = useMemo(
-      () => ({
-        activeTintColor: theme.primaryDefault,
-        inactiveTintColor: theme.secondary,
-        showLabel: false,
-        ...(Platform.OS === 'android' && { keyboardHidesTabBar: true })
-      }),
-      [mode]
-    )
+
     const composeListeners = useMemo(
       () => ({
         tabPress: (e: any) => {
@@ -133,7 +130,6 @@ const ScreenTabs = React.memo(
       <Tab.Navigator
         initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
         screenOptions={screenOptions}
-        tabBarOptions={tabBarOptions}
       >
         <Tab.Screen name='Tab-Local' component={TabLocal} />
         <Tab.Screen name='Tab-Public' component={TabPublic} />

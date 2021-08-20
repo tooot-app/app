@@ -1,8 +1,8 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import TabMeBookmarks from './Me/Bookmarks'
 import TabMeConversations from './Me/Cconversations'
 import TabMeFavourites from './Me/Favourites'
@@ -23,16 +23,14 @@ const TabMe = React.memo(
     const { t } = useTranslation('screenTabs')
 
     return (
-      <Stack.Navigator
-        screenOptions={{ headerHideShadow: true, headerTopInsetEnabled: false }}
-      >
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Me-Root'
           component={TabMeRoot}
           options={{
-            headerTranslucent: true,
+            headerShadowVisible: false,
             headerStyle: { backgroundColor: 'rgba(255, 255, 255, 0)' },
-            headerCenter: () => null
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -108,15 +106,15 @@ const TabMe = React.memo(
           name='Tab-Me-Profile'
           component={TabMeProfile}
           options={{
-            stackPresentation: 'modal',
-            ...(Platform.OS === 'android' && { headerShown: false })
+            headerShown: false,
+            presentation: 'modal'
           }}
         />
         <Stack.Screen
           name='Tab-Me-Push'
           component={TabMePush}
           options={({ navigation }) => ({
-            stackPresentation: 'modal',
+            presentation: 'modal',
             headerShown: true,
             headerTitle: t('me.stacks.push.name'),
             ...(Platform.OS === 'android' && {
@@ -162,7 +160,7 @@ const TabMe = React.memo(
           name='Tab-Me-Switch'
           component={TabMeSwitch}
           options={({ navigation }) => ({
-            stackPresentation: 'modal',
+            presentation: 'modal',
             headerShown: true,
             headerTitle: t('me.stacks.switch.name'),
             ...(Platform.OS === 'android' && {

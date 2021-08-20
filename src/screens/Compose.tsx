@@ -1,5 +1,6 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StackScreenProps } from '@react-navigation/stack'
 import haptics from '@root/components/haptics'
 import formatText from '@screens/Compose/formatText'
@@ -31,7 +32,6 @@ import {
   StyleSheet
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
@@ -371,10 +371,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         edges={hasKeyboard ? ['top'] : ['top', 'bottom']}
       >
         <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-          <Stack.Navigator
-            screenOptions={{ headerTopInsetEnabled: false }}
-            initialRouteName='Screen-Compose-Root'
-          >
+          <Stack.Navigator initialRouteName='Screen-Compose-Root'>
             <Stack.Screen
               name='Screen-Compose-Root'
               component={ComposeRoot}
@@ -405,18 +402,12 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             <Stack.Screen
               name='Screen-Compose-DraftsList'
               component={ComposeDraftsList}
-              options={{
-                stackPresentation: 'modal',
-                ...(Platform.OS === 'android' && { headerShown: false })
-              }}
+              options={{ headerShown: false, presentation: 'modal' }}
             />
             <Stack.Screen
               name='Screen-Compose-EditAttachment'
               component={ComposeEditAttachment}
-              options={{
-                stackPresentation: 'modal',
-                ...(Platform.OS === 'android' && { headerShown: false })
-              }}
+              options={{ headerShown: false, presentation: 'modal' }}
             />
           </Stack.Navigator>
         </ComposeContext.Provider>

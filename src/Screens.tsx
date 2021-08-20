@@ -1,8 +1,9 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
+import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message, removeMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
@@ -22,7 +23,6 @@ import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { onlineManager, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
@@ -166,8 +166,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Actions'
             component={ScreenActions}
             options={{
-              stackPresentation: 'transparentModal',
-              stackAnimation: 'fade',
+              presentation: 'transparentModal',
+              animation: 'fade',
               headerShown: false
             }}
           />
@@ -175,38 +175,33 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Announcements'
             component={ScreenAnnouncements}
             options={({ navigation }) => ({
-              stackPresentation: 'transparentModal',
-              stackAnimation: 'fade',
+              presentation: 'transparentModal',
+              animation: 'fade',
               headerShown: true,
-              headerHideShadow: true,
-              headerTopInsetEnabled: false,
+              headerShadowVisible: false,
+              headerTransparent: true,
               headerStyle: { backgroundColor: 'transparent' },
               headerLeft: () => (
                 <HeaderLeft content='X' onPress={() => navigation.goBack()} />
               ),
-              headerTitle: t('screenAnnouncements:heading'),
-              ...(Platform.OS === 'android' && {
-                headerCenter: () => (
-                  <HeaderCenter content={t('screenAnnouncements:heading')} />
-                )
-              })
+              headerTitle: t('screenAnnouncements:heading')
             })}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
             options={{
-              stackPresentation: 'fullScreenModal',
-              ...(Platform.OS === 'android' && { headerShown: false })
+              headerShown: false,
+              presentation: 'fullScreenModal'
             }}
           />
           <Stack.Screen
             name='Screen-ImagesViewer'
             component={ScreenImagesViewer}
             options={{
-              stackPresentation: 'fullScreenModal',
-              stackAnimation: 'fade',
-              ...(Platform.OS === 'android' && { headerShown: false })
+              headerShown: false,
+              presentation: 'fullScreenModal',
+              animation: 'fade'
             }}
           />
         </Stack.Navigator>

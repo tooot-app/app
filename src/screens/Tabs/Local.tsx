@@ -3,12 +3,12 @@ import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ScreenTabsParamList } from '@screens/Tabs'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import sharedScreens from './Shared/sharedScreens'
 
 export type TabLocalProp = BottomTabScreenProps<
@@ -22,13 +22,6 @@ const TabLocal = React.memo(
   ({ navigation }: TabLocalProp) => {
     const { t, i18n } = useTranslation('screenTabs')
 
-    const screenOptions = useMemo(
-      () => ({
-        headerHideShadow: true,
-        headerTopInsetEnabled: false
-      }),
-      []
-    )
     const screenOptionsRoot = useMemo(
       () => ({
         headerTitle: t('tabs.local.name'),
@@ -64,7 +57,7 @@ const TabLocal = React.memo(
     )
 
     return (
-      <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Local-Root'
           options={screenOptionsRoot}
