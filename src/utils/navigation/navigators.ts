@@ -1,6 +1,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type RootStackParamList = {
@@ -155,6 +156,9 @@ export type TabMeStackParamList = {
 export type TabMeStackScreenProps<
   T extends keyof TabMeStackParamList
 > = NativeStackScreenProps<TabMeStackParamList, T>
+export type TabMeStackNavigationProp<
+  RouteName extends keyof TabMeStackParamList
+> = StackNavigationProp<TabMeStackParamList, RouteName>
 
 export type TabMeProfileStackParamList = {
   'Tab-Me-Profile-Root': undefined

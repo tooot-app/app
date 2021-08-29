@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import addInstance from '@utils/slices/instances/add'
 import { Instance } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
@@ -21,7 +22,9 @@ const InstanceAuth = React.memo(
       useProxy: false
     })
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<
+      TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>
+    >()
     const queryClient = useQueryClient()
     const dispatch = useDispatch()
 
