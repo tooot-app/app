@@ -54,6 +54,13 @@ const addInstance = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
+    const { body: filters } = await apiGeneral<Mastodon.Filter[]>({
+      method: 'get',
+      domain,
+      url: `api/v1/filters`,
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
     return Promise.resolve({
       type,
       data: {
@@ -70,6 +77,7 @@ const addInstance = createAsyncThunk(
           avatarStatic: avatar_static,
           preferences
         },
+        filters,
         notifications_filter: {
           follow: true,
           favourite: true,

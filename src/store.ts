@@ -1,10 +1,10 @@
 import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
 import instancesMigration from '@utils/migrations/instances/migration'
-import contextsSlice from '@utils/slices/contextsSlice'
-import instancesSlice from '@utils/slices/instancesSlice'
-import settingsSlice from '@utils/slices/settingsSlice'
+import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
+import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
+import settingsSlice, { SettingsState } from '@utils/slices/settingsSlice'
 import versionSlice from '@utils/slices/versionSlice'
 import { createMigrate, persistReducer, persistStore } from 'redux-persist'
 
@@ -35,16 +35,26 @@ const settingsPersistConfig = {
 
 const store = configureStore({
   reducer: {
-    contexts: persistReducer(contextsPersistConfig, contextsSlice),
-    instances: persistReducer(instancesPersistConfig, instancesSlice),
-    settings: persistReducer(settingsPersistConfig, settingsSlice),
+    contexts: persistReducer(contextsPersistConfig, contextsSlice) as Reducer<
+      ContextsState,
+      AnyAction
+    >,
+    instances: persistReducer(
+      instancesPersistConfig,
+      instancesSlice
+    ) as Reducer<InstancesState, AnyAction>,
+    settings: persistReducer(settingsPersistConfig, settingsSlice) as Reducer<
+      SettingsState,
+      AnyAction
+    >,
     version: versionSlice
   },
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: ['persist/PERSIST']
-    }
-  })
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST']
+      }
+    })
 })
 
 let persistor = persistStore(store)

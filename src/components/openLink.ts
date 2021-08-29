@@ -52,7 +52,7 @@ const openLink = async (
       // @ts-ignore
       navigation.push(page, options)
     } else {
-      navigationRef.current?.navigate(page, options)
+      navigationRef.navigate(page, options)
     }
   }
 

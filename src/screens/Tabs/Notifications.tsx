@@ -2,19 +2,19 @@ import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineNotifications from '@components/Timeline/Notifications'
-import { useNavigation } from '@react-navigation/native'
+import navigationRef from '@helpers/navigationRef'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
+import { TabNotificationsStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
+import TabSharedRoot from './Shared/Root'
 
-const Stack = createNativeStackNavigator<Nav.TabNotificationsStackParamList>()
+const Stack = createNativeStackNavigator<TabNotificationsStackParamList>()
 
 const TabNotifications = React.memo(
   () => {
-    const navigation = useNavigation()
     const { t, i18n } = useTranslation('screenTabs')
 
     const screenOptionsRoot = useMemo(
@@ -32,7 +32,7 @@ const TabNotifications = React.memo(
             content='Filter'
             onPress={() => {
               analytics('notificationsfilter_tap')
-              navigation.navigate('Screen-Actions', {
+              navigationRef.navigate('Screen-Actions', {
                 type: 'notifications_filter'
               })
             }}
@@ -61,7 +61,7 @@ const TabNotifications = React.memo(
           children={children}
           options={screenOptionsRoot}
         />
-        {sharedScreens(Stack as any)}
+        {TabSharedRoot({ Stack })}
       </Stack.Navigator>
     )
   },

@@ -1,13 +1,13 @@
 import ComponentAccount from '@components/Account'
 import ComponentSeparator from '@components/Separator'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyUsers, useUsersQuery } from '@utils/queryHooks/users'
 import React, { useCallback } from 'react'
 import { StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { SharedUsersProp } from './sharedScreens'
 
 const TabSharedUsers = React.memo(
-  ({ route: { params } }: SharedUsersProp) => {
+  ({ route: { params } }: TabSharedStackScreenProps<'Tab-Shared-Users'>) => {
     const queryKey: QueryKeyUsers = ['Users', params]
     const {
       data,

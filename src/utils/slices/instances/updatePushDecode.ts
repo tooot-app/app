@@ -12,7 +12,7 @@ export const updateInstancePushDecode = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<Instance['push']['decode']['value']> => {
+  ): Promise<{ disable: Instance['push']['decode']['value'] }> => {
     const state = getState() as RootState
     const instance = getInstance(state)
     if (!instance?.url || !instance.account.id || !instance.push.keys) {
@@ -89,6 +89,6 @@ export const updateInstancePushDecode = createAsyncThunk(
       }
     }
 
-    return Promise.resolve(disable)
+    return Promise.resolve({ disable })
   }
 )

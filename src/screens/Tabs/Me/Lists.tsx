@@ -1,12 +1,11 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import React from 'react'
 
-const TabMeLists: React.FC<StackScreenProps<
-  Nav.TabMeStackParamList,
-  'Tab-Me-Lists'
->> = ({ navigation }) => {
+const TabMeLists: React.FC<TabMeStackScreenProps<'Tab-Me-Lists'>> = ({
+  navigation
+}) => {
   const { data } = useListsQuery({})
 
   return (

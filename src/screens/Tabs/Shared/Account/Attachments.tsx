@@ -3,6 +3,7 @@ import GracefullyImage from '@components/GracefullyImage'
 import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -24,7 +25,7 @@ export interface Props {
 const AccountAttachments = React.memo(
   ({ account }: Props) => {
     const navigation = useNavigation<
-      StackNavigationProp<Nav.TabLocalStackParamList>
+      StackNavigationProp<TabLocalStackParamList>
     >()
     const { theme } = useTheme()
 

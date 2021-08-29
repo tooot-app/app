@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
 const SettingsApp: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { setTheme } = useTheme()

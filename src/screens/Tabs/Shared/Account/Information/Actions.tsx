@@ -19,7 +19,7 @@ export interface Props {
 }
 
 const Conversation = ({ account }: { account: Mastodon.Account }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const query = useRelationshipQuery({ id: account.id })
 
   return query.data && !query.data.blocked_by ? (
@@ -45,7 +45,7 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
   }
 
   const { t } = useTranslation('screenTabs')
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   if (account?.moved) {
     const accountMoved = account.moved

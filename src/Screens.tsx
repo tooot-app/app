@@ -9,6 +9,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
@@ -27,7 +28,7 @@ import { onlineManager, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
-const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export interface Props {
   localCorrupt?: string
@@ -71,9 +72,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     (prev, next) => prev.length === next.length
   )
   const queryClient = useQueryClient()
-  pushUseConnect({ navigationRef, mode, t, instances, dispatch })
-  pushUseReceive({ navigationRef, queryClient, instances })
-  pushUseRespond({ navigationRef, queryClient, instances, dispatch })
+  pushUseConnect({ mode, t, instances, dispatch })
+  pushUseReceive({ queryClient, instances })
+  pushUseRespond({ queryClient, instances, dispatch })
 
   // Prevent screenshot alert
   useEffect(() => {
@@ -96,7 +97,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           type: 'error',
           mode
         })
-        navigationRef.current?.navigate('Screen-Tabs', {
+        navigationRef.navigate('Screen-Tabs', {
           screen: 'Tab-Me'
         })
       }
@@ -114,7 +115,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Callbacks
   const navigationContainerOnReady = useCallback(() => {
-    const currentRoute = navigationRef.current?.getCurrentRoute()
+    const currentRoute = navigationRef.getCurrentRoute()
     routeRef.current = {
       name: currentRoute?.name,
       params: currentRoute?.params
@@ -124,7 +125,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
   const navigationContainerOnStateChange = useCallback(() => {
     const previousRoute = routeRef.current
-    const currentRoute = navigationRef.current?.getCurrentRoute()
+    const currentRoute = navigationRef.getCurrentRoute()
 
     const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
     if (matchTabName) {

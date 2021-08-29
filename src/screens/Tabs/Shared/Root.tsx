@@ -1,22 +1,13 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { ParseEmojis } from '@components/Parse'
-import {
-  ParamListBase,
-  StackNavigationState,
-  TypedNavigator
-} from '@react-navigation/native'
-import {
-  NativeStackNavigationEventMap,
-  NativeStackNavigationOptions,
-  NativeStackNavigatorProps
-} from '@react-navigation/native-stack/lib/typescript/src/types'
-import { StackScreenProps } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
 import TabSharedHashtag from '@screens/Tabs/Shared/Hashtag'
 import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
@@ -24,55 +15,27 @@ import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
 
-export type BaseScreens =
-  | Nav.TabLocalStackParamList
-  | Nav.TabPublicStackParamList
-  | Nav.TabNotificationsStackParamList
-  | Nav.TabMeStackParamList
-
-export type SharedAccountProp = StackScreenProps<
-  BaseScreens,
-  'Tab-Shared-Account'
->
-
-export type SharedAttachmentsProp = StackScreenProps<
-  BaseScreens,
-  'Tab-Shared-Attachments'
->
-
-export type SharedHashtagProp = StackScreenProps<
-  BaseScreens,
-  'Tab-Shared-Hashtag'
->
-
-export type SharedSearchProp = StackScreenProps<
-  BaseScreens,
-  'Tab-Shared-Search'
->
-
-export type SharedTootProp = StackScreenProps<BaseScreens, 'Tab-Shared-Toot'>
-
-export type SharedUsersProp = StackScreenProps<BaseScreens, 'Tab-Shared-Users'>
-
-const sharedScreens = (
-  Stack: TypedNavigator<
-    Nav.TabLocalStackParamList,
-    StackNavigationState<ParamListBase>,
-    NativeStackNavigationOptions,
-    NativeStackNavigationEventMap,
-    ({}: NativeStackNavigatorProps) => JSX.Element
-  >
-) => {
+const TabSharedRoot = ({
+  Stack
+}: {
+  Stack: ReturnType<typeof createNativeStackNavigator>
+}) => {
   const { mode, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   return (
-    <Stack.Group>
+    <Stack.Group
+      screenOptions={({ navigation }) => ({
+        headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      })}
+    >
       <Stack.Screen
         key='Tab-Shared-Account'
         name='Tab-Shared-Account'
         component={TabSharedAccount}
-        options={({ navigation }: SharedAccountProp) => {
+        options={({
+          navigation
+        }: TabSharedStackScreenProps<'Tab-Shared-Account'>) => {
           return {
             headerTransparent: true,
             headerStyle: {
@@ -93,13 +56,9 @@ const sharedScreens = (
         options={({
           route: {
             params: { account }
-          },
-          navigation
-        }: SharedAttachmentsProp) => {
+          }
+        }: TabSharedStackScreenProps<'Tab-Shared-Attachments'>) => {
           return {
-            headerLeft: () => (
-              <HeaderLeft onPress={() => navigation.goBack()} />
-            ),
             headerTitle: () => (
               <Text numberOfLines={1}>
                 <Trans
@@ -129,7 +88,9 @@ const sharedScreens = (
         key='Tab-Shared-Hashtag'
         name='Tab-Shared-Hashtag'
         component={TabSharedHashtag}
-        options={({ route, navigation }: SharedHashtagProp) => ({
+        options={({
+          route
+        }: TabSharedStackScreenProps<'Tab-Shared-Hashtag'>) => ({
           headerTitle: `#${decodeURIComponent(route.params.hashtag)}`,
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
@@ -137,8 +98,7 @@ const sharedScreens = (
                 content={`#${decodeURIComponent(route.params.hashtag)}`}
               />
             )
-          }),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          })
         })}
       />
 
@@ -146,8 +106,9 @@ const sharedScreens = (
         key='Tab-Shared-Search'
         name='Tab-Shared-Search'
         component={TabSharedSearch}
-        options={({ navigation }: SharedSearchProp) => ({
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+        options={({
+          navigation
+        }: TabSharedStackScreenProps<'Tab-Shared-Search'>) => ({
           headerTitle: () => {
             const onChangeText = debounce(
               (text: string) => navigation.setParams({ text }),
@@ -202,13 +163,12 @@ const sharedScreens = (
         key='Tab-Shared-Toot'
         name='Tab-Shared-Toot'
         component={TabSharedToot}
-        options={({ navigation }: SharedTootProp) => ({
+        options={{
           headerTitle: t('shared.toot.name'),
           ...(Platform.OS === 'android' && {
             headerCenter: () => <HeaderCenter content={t('shared.toot.name')} />
-          }),
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
-        })}
+          })
+        }}
       />
 
       <Stack.Screen
@@ -216,12 +176,10 @@ const sharedScreens = (
         name='Tab-Shared-Users'
         component={TabSharedUsers}
         options={({
-          navigation,
           route: {
             params: { reference, type, count }
           }
-        }: SharedUsersProp) => ({
-          headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+        }: TabSharedStackScreenProps<'Tab-Shared-Users'>) => ({
           headerTitle: t(`shared.users.${reference}.${type}`, { count }),
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
@@ -247,4 +205,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default sharedScreens
+export default TabSharedRoot

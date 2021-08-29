@@ -1,6 +1,6 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackScreenProps } from '@react-navigation/stack'
+import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -8,12 +8,9 @@ import ComposeDraftsListRoot from './DraftsList/Root'
 
 const Stack = createNativeStackNavigator()
 
-export type ScreenComposeEditAttachmentProp = StackScreenProps<
-  Nav.ScreenComposeStackParamList,
+const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<
   'Screen-Compose-DraftsList'
->
-
-const ComposeDraftsList: React.FC<ScreenComposeEditAttachmentProp> = ({
+>> = ({
   route: {
     params: { timestamp }
   },

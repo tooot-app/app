@@ -1,5 +1,6 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { TabMeStackParamList } from '@utils/navigation/navigators'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -14,9 +15,9 @@ import TabMeRoot from './Me/Root'
 import TabMeSettings from './Me/Settings'
 import TabMeSettingsFontsize from './Me/SettingsFontsize'
 import TabMeSwitch from './Me/Switch'
-import sharedScreens from './Shared/sharedScreens'
+import TabSharedRoot from './Shared/Root'
 
-const Stack = createNativeStackNavigator<Nav.TabMeStackParamList>()
+const Stack = createNativeStackNavigator<TabMeStackParamList>()
 
 const TabMe = React.memo(
   () => {
@@ -177,7 +178,7 @@ const TabMe = React.memo(
           })}
         />
 
-        {sharedScreens(Stack as any)}
+        {TabSharedRoot({ Stack })}
       </Stack.Navigator>
     )
   },

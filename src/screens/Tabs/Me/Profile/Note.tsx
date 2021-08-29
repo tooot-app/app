@@ -1,6 +1,6 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Input from '@components/Input'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -10,8 +10,7 @@ import { Alert, StyleSheet, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const TabMeProfileNote: React.FC<StackScreenProps<
-  Nav.TabMeProfileStackParamList,
+const TabMeProfileNote: React.FC<TabMeProfileStackScreenProps<
   'Tab-Me-Profile-Note'
 > & { messageRef: RefObject<FlashMessage> }> = ({
   messageRef,

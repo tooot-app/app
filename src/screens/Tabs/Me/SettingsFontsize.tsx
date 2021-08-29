@@ -2,7 +2,7 @@ import Button from '@components/Button'
 import haptics from '@components/haptics'
 import ComponentSeparator from '@components/Separator'
 import TimelineDefault from '@components/Timeline/Default'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import {
   changeFontsize,
   getSettingsFontsize,
@@ -32,8 +32,7 @@ export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   }
 }
 
-const TabMeSettingsFontsize: React.FC<StackScreenProps<
-  Nav.TabMeStackParamList,
+const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<
   'Tab-Me-Settings-Fontsize'
 >> = () => {
   const { mode, theme } = useTheme()
@@ -129,6 +128,7 @@ const TabMeSettingsFontsize: React.FC<StackScreenProps<
           onPress={() => {
             if (initialSize > -1) {
               haptics('Light')
+              // @ts-ignore
               dispatch(changeFontsize(initialSize - 1))
             }
           }}
@@ -142,6 +142,7 @@ const TabMeSettingsFontsize: React.FC<StackScreenProps<
           onPress={() => {
             if (initialSize < 3) {
               haptics('Light')
+              // @ts-ignore
               dispatch(changeFontsize(initialSize + 1))
             }
           }}

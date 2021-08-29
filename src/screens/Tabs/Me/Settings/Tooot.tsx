@@ -15,7 +15,7 @@ import { getInstanceActive } from '@utils/slices/instancesSlice'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')
 

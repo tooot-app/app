@@ -1,6 +1,6 @@
 import { HeaderLeft } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackScreenProps } from '@react-navigation/stack'
+import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
@@ -10,12 +10,9 @@ import ComposeEditAttachmentSubmit from './EditAttachment/Submit'
 
 const Stack = createNativeStackNavigator()
 
-export type ScreenComposeEditAttachmentProp = StackScreenProps<
-  Nav.ScreenComposeStackParamList,
+const ComposeEditAttachment: React.FC<ScreenComposeStackScreenProps<
   'Screen-Compose-EditAttachment'
->
-
-const ComposeEditAttachment: React.FC<ScreenComposeEditAttachmentProp> = ({
+>> = ({
   route: {
     params: { index }
   },

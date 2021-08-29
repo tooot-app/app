@@ -13,7 +13,7 @@ export const changeAnalytics = createAsyncThunk(
   'settings/changeAnalytics',
   async (newValue: SettingsState['analytics']) => {
     await Analytics.setAnalyticsCollectionEnabled(newValue)
-    return newValue
+    return { newValue }
   }
 )
 
@@ -75,7 +75,7 @@ const settingsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(changeAnalytics.fulfilled, (state, action) => {
-      state.analytics = action.payload
+      state.analytics = action.payload.newValue
     })
   }
 })

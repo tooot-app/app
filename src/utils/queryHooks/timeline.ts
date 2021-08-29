@@ -87,7 +87,9 @@ const queryFunction = async ({
           }
         })
       } else {
-        const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean} )[]>({
+        const res1 = await apiInstance<
+          (Mastodon.Status & { _pinned: boolean })[]
+        >({
           method: 'get',
           url: `accounts/${account}/statuses`,
           params: {
@@ -105,7 +107,7 @@ const queryFunction = async ({
             exclude_replies: 'true'
           }
         })
-        return await {
+        return {
           body: uniqBy([...res1.body, ...res2.body], 'id'),
           ...(res2.links.next && { links: { next: res2.links.next } })
         }
@@ -175,8 +177,12 @@ const queryFunction = async ({
         method: 'get',
         url: `statuses/${toot}/context`
       })
-      return await {
-        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
+      return {
+        body: [
+          ...res2_1.body.ancestors,
+          res1_1.body,
+          ...res2_1.body.descendants
+        ]
       }
     default:
       return Promise.reject()

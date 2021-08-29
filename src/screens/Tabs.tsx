@@ -5,8 +5,10 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
-import { NavigatorScreenParams } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
+import {
+  RootStackScreenProps,
+  ScreenTabsStackParamList
+} from '@utils/navigation/navigators'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
@@ -25,23 +27,10 @@ import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
 import TabPublic from './Tabs/Public'
 
-export type ScreenTabsParamList = {
-  'Tab-Local': NavigatorScreenParams<Nav.TabLocalStackParamList>
-  'Tab-Public': NavigatorScreenParams<Nav.TabPublicStackParamList>
-  'Tab-Compose': NavigatorScreenParams<Nav.ScreenComposeStackParamList>
-  'Tab-Notifications': NavigatorScreenParams<Nav.TabNotificationsStackParamList>
-  'Tab-Me': NavigatorScreenParams<Nav.TabMeStackParamList>
-}
-
-export type ScreenTabsProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-Tabs'
->
-
-const Tab = createBottomTabNavigator<Nav.ScreenTabsStackParamList>()
+const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
-  ({ navigation }: ScreenTabsProp) => {
+  ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
     const { mode, theme } = useTheme()
 
     const instanceActive = useSelector(getInstanceActive)

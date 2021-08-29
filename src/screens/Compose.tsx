@@ -1,10 +1,10 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackScreenProps } from '@react-navigation/stack'
 import haptics from '@root/components/haptics'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
+import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
@@ -43,14 +43,9 @@ import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
 
-export type ScreenComposeProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-Compose'
->
-
 const Stack = createNativeStackNavigator()
 
-const ScreenCompose: React.FC<ScreenComposeProp> = ({
+const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   route: { params },
   navigation
 }) => {

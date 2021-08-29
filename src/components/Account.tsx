@@ -1,6 +1,7 @@
 import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
@@ -21,7 +22,7 @@ const ComponentAccount: React.FC<Props> = ({
 }) => {
   const { theme } = useTheme()
   const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
+    StackNavigationProp<TabLocalStackParamList>
   >()
 
   const onPress = useCallback(() => {

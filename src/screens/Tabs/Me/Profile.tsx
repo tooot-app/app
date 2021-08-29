@@ -1,7 +1,10 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { Message } from '@components/Message'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StackScreenProps } from '@react-navigation/stack'
+import {
+  TabMeProfileStackParamList,
+  TabMeStackScreenProps
+} from '@utils/navigation/navigators'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
@@ -11,12 +14,11 @@ import TabMeProfileName from './Profile/Name'
 import TabMeProfileNote from './Profile/Note'
 import TabMeProfileRoot from './Profile/Root'
 
-const Stack = createNativeStackNavigator<Nav.TabMeProfileStackParamList>()
+const Stack = createNativeStackNavigator<TabMeProfileStackParamList>()
 
-const TabMeProfile: React.FC<StackScreenProps<
-  Nav.TabMeStackParamList,
-  'Tab-Me-Switch'
->> = ({ navigation }) => {
+const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
+  navigation
+}) => {
   const { t } = useTranslation('screenTabs')
   const messageRef = useRef<FlashMessage>(null)
 
