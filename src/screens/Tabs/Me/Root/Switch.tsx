@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 const AccountInformationSwitch: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { t } = useTranslation('screenTabs')
 
   return (

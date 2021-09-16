@@ -28,7 +28,7 @@ const apiTooot = async <T = unknown>({
   body,
   sentry = false
 }: Params): Promise<{ body: T }> => {
-  const key = Constants.manifest.extra?.toootApiKey
+  const key = Constants.manifest?.extra?.toootApiKey
 
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
@@ -49,7 +49,7 @@ const apiTooot = async <T = unknown>({
     headers: {
       ...(key && { 'x-tooot-key': key }),
       'Content-Type': 'application/json',
-      'User-Agent': `tooot/${Constants.manifest.version}`,
+      'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers
     },

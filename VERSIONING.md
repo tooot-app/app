@@ -5,7 +5,7 @@
   * A new app store version has to be submitted.
   * Outdated versions in principle do not receive further OTA updates.
 
-## Minor releases - App Store and OTA
+## Minor releases - App Store
 
 "Minor releases" are artifacts published as `?.y.?`:
   * An artifact can be released as `?.y.?` when there is no change nor update made to the native modules.
@@ -21,11 +21,12 @@
 
 ## OTA release channels
 
-  * `MAJOR-environment`. Environments include `release`, `candidate` and `development`.
+  * `MAJOR.MINOR-environment`. Environments include `release`, `candidate` and `development`.
 
 ## Major versions mapping to native module versions
 
-| Major version | Native module version | Expo version |
-| :-----------: | :-------------------: | :----------: |
-| `0`           | `210201`              | `40.0.0`     |
-| `1`           | `210317`              | `40.0.0`     |
+| Version | Native module version | Expo version |
+| :------:| :-------------------: | :----------: |
+| `0-`    | `210201`              | `40.0.0`     |
+| `1-`    | `210317`              | `40.0.0`     |
+| `2.2`   | `210916`              | `41.0.0`     |

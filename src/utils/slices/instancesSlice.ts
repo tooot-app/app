@@ -274,7 +274,7 @@ const instancesSlice = createSlice({
       .addCase(updateInstancePushDecode.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].push.decode.loading = false
-        state.instances[activeIndex].push.decode.value = action.payload
+        state.instances[activeIndex].push.decode.value = action.payload.disable
       })
       .addCase(updateInstancePushDecode.rejected, state => {
         const activeIndex = findInstanceActive(state.instances)

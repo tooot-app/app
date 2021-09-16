@@ -4,6 +4,7 @@ import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -20,7 +21,7 @@ const AccountInformationAvatar: React.FC<Props> = ({
   edit
 }) => {
   const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
+    StackNavigationProp<TabLocalStackParamList>
   >()
   const { reduceMotionEnabled } = useAccessibility()
 

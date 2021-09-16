@@ -46,7 +46,7 @@ const apiGeneral = async <T = unknown>({
     params,
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': `tooot/${Constants.manifest.version}`,
+      'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers
     },

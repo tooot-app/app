@@ -4,8 +4,8 @@ import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import { BlurView } from '@react-native-community/blur'
-import { StackScreenProps } from '@react-navigation/stack'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { RootStackScreenProps } from '@utils/navigation/navigators'
 import {
   useAnnouncementMutation,
   useAnnouncementQuery
@@ -20,12 +20,9 @@ import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export type ScreenAnnouncementsProp = StackScreenProps<
-  Nav.RootStackParamList,
+const ScreenAnnouncements: React.FC<RootStackScreenProps<
   'Screen-Announcements'
->
-
-const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
+>> = ({
   route: {
     params: { showAll = false }
   },

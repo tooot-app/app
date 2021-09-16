@@ -1,6 +1,5 @@
 import apiInstance from '@api/instance'
 import navigationRef from '@helpers/navigationRef'
-import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import { store } from '@root/store'
 import { SearchResult } from '@utils/queryHooks/search'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
@@ -22,24 +21,7 @@ const matcherAccount = new RegExp(
 
 export let loadingLink = false
 
-const openLink = async (
-  url: string,
-  navigation?: NavigationProp<
-    ParamListBase,
-    string,
-    Readonly<{
-      key: string
-      index: number
-      routeNames: string[]
-      history?: unknown[] | undefined
-      routes: any[]
-      type: string
-      stale: false
-    }>,
-    {},
-    {}
-  >
-) => {
+const openLink = async (url: string, navigation?: any) => {
   if (loadingLink) {
     return
   }
@@ -52,7 +34,7 @@ const openLink = async (
       // @ts-ignore
       navigation.push(page, options)
     } else {
-      navigationRef.current?.navigate(page, options)
+      navigationRef.navigate(page, options)
     }
   }
 

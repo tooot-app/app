@@ -1,9 +1,10 @@
 import apiInstance from '@api/instance'
 import { ComposeState } from '@screens/Compose/utils/types'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import * as Crypto from 'expo-crypto'
 
 const composePost = async (
-  params: Nav.RootStackParamList['Screen-Compose'],
+  params: RootStackParamList['Screen-Compose'],
   composeState: ComposeState
 ) => {
   const formData = new FormData()

@@ -1,6 +1,7 @@
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import CameraRoll from '@react-native-community/cameraroll'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import i18next from 'i18next'
 import { RefObject } from 'react'
 import { Platform } from 'react-native'
@@ -10,7 +11,7 @@ import { FileSystem, Permissions } from 'react-native-unimodules'
 type CommonProps = {
   messageRef: RefObject<FlashMessage>
   mode: 'light' | 'dark'
-  image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 }
 
 const saveIos = async ({ messageRef, mode, image }: CommonProps) => {

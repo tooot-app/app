@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 const Collections: React.FC = () => {
   const { t } = useTranslation('screenTabs')
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const listsQuery = useListsQuery({
     options: {

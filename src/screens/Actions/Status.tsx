@@ -9,13 +9,14 @@ import {
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
 import analytics from '@components/analytics'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { displayMessage } from '@components/Message'
 import { useTheme } from '@utils/styles/ThemeManager'
 import apiInstance from '@api/instance'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '@utils/navigation/navigators'
 
 export interface Props {
-  navigation: StackNavigationProp<Nav.RootStackParamList, 'Screen-Actions'>
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Screen-Actions'>
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status

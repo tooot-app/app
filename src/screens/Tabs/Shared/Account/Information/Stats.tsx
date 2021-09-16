@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@root/utils/styles/constants'
 import { useTheme } from '@root/utils/styles/ThemeManager'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -15,7 +16,7 @@ export interface Props {
 
 const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
+    StackNavigationProp<TabLocalStackParamList>
   >()
   const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')

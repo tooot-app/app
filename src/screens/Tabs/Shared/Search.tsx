@@ -2,6 +2,7 @@ import ComponentAccount from '@components/Account'
 import ComponentHashtag from '@components/Hashtag'
 import ComponentSeparator from '@components/Separator'
 import TimelineDefault from '@components/Timeline/Default'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -16,9 +17,10 @@ import {
   View
 } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
-import { SharedSearchProp } from './sharedScreens'
 
-const TabSharedSearch: React.FC<SharedSearchProp> = ({
+const TabSharedSearch: React.FC<TabSharedStackScreenProps<
+  'Tab-Shared-Search'
+>> = ({
   route: {
     params: { text }
   }

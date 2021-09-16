@@ -1,6 +1,6 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Input from '@components/Input'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -23,8 +23,7 @@ const prepareFields = (
   })
 }
 
-const TabMeProfileFields: React.FC<StackScreenProps<
-  Nav.TabMeProfileStackParamList,
+const TabMeProfileFields: React.FC<TabMeProfileStackScreenProps<
   'Tab-Me-Profile-Fields'
 > & { messageRef: RefObject<FlashMessage> }> = ({
   messageRef,
