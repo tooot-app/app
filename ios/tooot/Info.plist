@@ -50,6 +50,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) DOES NOT need microphone permission. Please reject this request.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow $(PRODUCT_NAME) to capture photo or video and attach it to your toot</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
