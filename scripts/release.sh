@@ -5,4 +5,4 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-expo publish --target bare --release-channel=$1
+expo publish --quiet --target bare --release-channel=$1

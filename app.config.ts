@@ -34,7 +34,7 @@ export default (): ExpoConfig => ({
     bundleIdentifier: 'com.xmflsct.app.tooot'
   },
   android: {
-    versionCode: 4,
+    jsEngine: 'hermes',
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']

@@ -3,6 +3,7 @@ import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
@@ -16,9 +17,10 @@ import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
-import { SharedAccountProp } from './sharedScreens'
 
-const TabSharedAccount: React.FC<SharedAccountProp> = ({
+const TabSharedAccount: React.FC<TabSharedStackScreenProps<
+  'Tab-Shared-Account'
+>> = ({
   route: {
     params: { account }
   },

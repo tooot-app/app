@@ -6,6 +6,7 @@ import AttachmentImage from '@components/Timeline/Shared/Attachment/Image'
 import AttachmentUnsupported from '@components/Timeline/Shared/Attachment/Unsupported'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
@@ -35,7 +36,7 @@ const TimelineAttachment = React.memo(
     }, [])
 
     const imageUrls = useRef<
-      Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+      RootStackParamList['Screen-ImagesViewer']['imageUrls']
     >([])
     const navigation = useNavigation()
     useEffect(() => {

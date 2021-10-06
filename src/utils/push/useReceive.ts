@@ -1,5 +1,4 @@
 import { displayMessage } from '@components/Message'
-import { NavigationContainerRef } from '@react-navigation/native'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { Instance, updateInstanceActive } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
@@ -10,12 +9,11 @@ import { useDispatch } from 'react-redux'
 import pushUseNavigate from './useNavigate'
 
 export interface Params {
-  navigationRef: React.RefObject<NavigationContainerRef>
   queryClient: QueryClient
   instances: Instance[]
 }
 
-const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
+const pushUseReceive = ({ queryClient, instances }: Params) => {
   const dispatch = useDispatch()
 
   return useEffect(() => {
@@ -46,7 +44,7 @@ const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
             if (notificationIndex !== -1) {
               dispatch(updateInstanceActive(instances[notificationIndex]))
             }
-            pushUseNavigate(navigationRef, payloadData.notification_id)
+            pushUseNavigate(payloadData.notification_id)
           }
         })
       }

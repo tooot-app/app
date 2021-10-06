@@ -1,8 +1,7 @@
 import apiTooot from '@api/tooot'
 import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
-import { Buffer } from 'buffer'
-import Constants from 'expo-constants'
+import * as Crypto from 'expo-crypto'
 import { useQuery, UseQueryOptions } from 'react-query'
 
 type Translations = {
@@ -24,13 +23,15 @@ export type QueryKeyTranslate = [
 const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
   const { uri, source, target, text } = queryKey[1]
 
-  const uriEncoded = Buffer.from(uri.replace(/https?:\/\//, ''))
-    .toString('base64')
-    .replace('+', '-')
-    .replace('/', '_')
-    .replace(/=+$/, '')
-  const original = Buffer.from(JSON.stringify({ source, text })).toString(
-    'base64'
+  const uriEncoded = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    uri.replace(/https?:\/\//, ''),
+    { encoding: Crypto.CryptoEncoding.HEX }
+  )
+  const original = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    JSON.stringify({ source, text }),
+    { encoding: Crypto.CryptoEncoding.HEX }
   )
 
   const res = await apiTooot<Translations>({

@@ -1,14 +1,14 @@
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { useNavigation } from '@react-navigation/native'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
-import { SharedTootProp } from './sharedScreens'
 
-const TabSharedToot: React.FC<SharedTootProp> = ({
+const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   route: {
     params: { toot, rootQueryKey }
   }

@@ -1,10 +1,11 @@
 import apiInstance from '@api/instance'
+import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
 
 export type QueryKeyUsers = [
   'Users',
-  Nav.TabSharedStackParamList['Tab-Shared-Users']
+  TabSharedStackParamList['Tab-Shared-Users']
 ]
 
 const queryFunction = ({

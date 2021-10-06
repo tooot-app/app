@@ -1,10 +1,12 @@
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
+import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
-import { SharedHashtagProp } from './sharedScreens'
 
-const TabSharedHashtag: React.FC<SharedHashtagProp> = ({
+const TabSharedHashtag: React.FC<TabSharedStackScreenProps<
+  'Tab-Shared-Hashtag'
+>> = ({
   route: {
     params: { hashtag }
   }

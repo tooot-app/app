@@ -2,7 +2,11 @@ import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { StackScreenProps } from '@react-navigation/stack'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import {
+  RootStackParamList,
+  RootStackScreenProps
+} from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { findIndex } from 'lodash'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
@@ -24,9 +28,12 @@ const HeaderComponent = React.memo(
     imageUrls
   }: {
     messageRef: RefObject<FlashMessage>
-    navigation: ScreenImagesViewerProp['navigation']
+    navigation: NativeStackNavigationProp<
+      RootStackParamList,
+      'Screen-ImagesViewer'
+    >
     currentIndex: number
-    imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+    imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls']
   }) => {
     const insets = useSafeAreaInsets()
     const { mode } = useTheme()
@@ -98,17 +105,12 @@ const HeaderComponent = React.memo(
   (prev, next) => prev.currentIndex === next.currentIndex
 )
 
-export type ScreenImagesViewerProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-ImagesViewer'
->
-
 const ScreenImagesViewer = ({
   route: {
     params: { imageUrls, id }
   },
   navigation
-}: ScreenImagesViewerProp) => {
+}: RootStackScreenProps<'Screen-ImagesViewer'>) => {
   if (imageUrls.length === 0) {
     navigation.goBack()
     return null

@@ -1,13 +1,10 @@
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback } from 'react'
 
-const TabMeListsList: React.FC<StackScreenProps<
-  Nav.TabMeStackParamList,
-  'Tab-Me-Lists-List'
->> = ({
+const TabMeListsList: React.FC<TabMeStackScreenProps<'Tab-Me-Lists-List'>> = ({
   route: {
     params: { list }
   }

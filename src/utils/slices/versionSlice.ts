@@ -29,7 +29,7 @@ const versionSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(retriveVersionLatest.fulfilled, (state, action) => {
-      if (action.payload && Constants.manifest.version) {
+      if (action.payload && Constants.manifest?.version) {
         if (parseInt(action.payload) > parseInt(Constants.manifest.version)) {
           state.update = true
         }
