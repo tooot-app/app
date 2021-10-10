@@ -55,20 +55,18 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', _keyboardDidShow)
-    Keyboard.addListener('keyboardWillHide', _keyboardDidHide)
+    const keyboardShown = Keyboard.addListener('keyboardWillShow', () =>
+      setHasKeyboard(true)
+    )
+    const keyboardHidden = Keyboard.addListener('keyboardWillHide', () =>
+      setHasKeyboard(false)
+    )
 
     return () => {
-      Keyboard.removeListener('keyboardWillShow', _keyboardDidShow)
-      Keyboard.removeListener('keyboardWillHide', _keyboardDidHide)
+      keyboardShown.remove()
+      keyboardHidden.remove()
     }
   }, [])
-  const _keyboardDidShow = () => {
-    setHasKeyboard(true)
-  }
-  const _keyboardDidHide = () => {
-    setHasKeyboard(false)
-  }
 
   const localAccount = useSelector(getInstanceAccount, (prev, next) =>
     prev?.preferences && next?.preferences
