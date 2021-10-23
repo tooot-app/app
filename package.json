@@ -4,7 +4,8 @@
     "native": "211024",
     "major": 3,
     "minor": 0,
-    "patch": 0
+    "patch": 0,
+    "expo": "43.0.0"
   },
   "description": "tooot app for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
