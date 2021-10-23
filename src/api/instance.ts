@@ -1,8 +1,8 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
+import Constants from 'expo-constants'
 import li from 'li'
-import { Constants } from 'react-native-unimodules'
 
 const ctx = new chalk.Instance({ level: 3 })
 

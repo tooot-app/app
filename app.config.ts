@@ -9,7 +9,6 @@ export default (): ExpoConfig => ({
   description: 'tooot for Mastodon',
   slug: 'tooot',
   version: toootVersion,
-  sdkVersion: versions.expo,
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],
   extra: {
@@ -30,11 +29,11 @@ export default (): ExpoConfig => ({
       }
     ]
   },
+  jsEngine: 'hermes',
   ios: {
     bundleIdentifier: 'com.xmflsct.app.tooot'
   },
   android: {
-    jsEngine: 'hermes',
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']
