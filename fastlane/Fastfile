@@ -95,7 +95,8 @@ private_lane :build_ios do
       demo_account_required: true,
       distribute_external: true,
       groups: "尝鲜",
-      changelog: "感谢帮忙测试 tooot 🙏"
+      changelog: "感谢帮忙测试 tooot 🙏",
+      reject_build_waiting_for_review: true
     )
   when "release"
     prepare_appstore_ios
