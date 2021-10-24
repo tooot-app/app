@@ -79,7 +79,7 @@
     "react-native-gesture-handler": "1.10.3",
     "react-native-htmlview": "0.16.0",
     "react-native-pager-view": "5.4.7",
-    "react-native-reanimated": "2.3.0-beta.3",
+    "react-native-reanimated": "npm:react-native-reanimated-savv@2.2.6",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "3.8.0",
     "react-native-svg": "12.1.1",
