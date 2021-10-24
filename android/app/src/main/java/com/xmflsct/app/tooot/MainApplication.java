@@ -12,7 +12,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.xmflsct.app.tooot.generated.BasePackageList;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
@@ -27,10 +26,6 @@ import com.facebook.react.bridge.JSIModulePackage; // <- react-native-reanimated
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- react-native-reanimated-v2
 
 public class MainApplication extends Application implements ReactApplication {
-  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
-    new BasePackageList().getPackageList()
-  );
-
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,
     new ReactNativeHost(this) {
@@ -57,7 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected JSIModulePackage getJSIModulePackage() {
       return new ReanimatedJSIModulePackage();
     }
-  };
+  });
 
   @Override
   public ReactNativeHost getReactNativeHost() {
