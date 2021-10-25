@@ -91,12 +91,12 @@ private_lane :build_ios do
       dsym_path: DSYM_FILE
     )
     upload_to_testflight(
+      skip_submission: true,
       ipa: IPA_FILE,
       demo_account_required: true,
       distribute_external: true,
       groups: "尝鲜",
-      changelog: "感谢帮忙测试 tooot 🙏",
-      reject_build_waiting_for_review: true
+      changelog: "感谢帮忙测试 tooot 🙏"
     )
   when "release"
     prepare_appstore_ios
