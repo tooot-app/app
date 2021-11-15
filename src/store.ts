@@ -1,6 +1,7 @@
 import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
+import contextsMigration from '@utils/migrations/contexts/migration'
 import instancesMigration from '@utils/migrations/instances/migration'
 import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
@@ -15,7 +16,10 @@ const prefix = 'tooot'
 const contextsPersistConfig = {
   key: 'contexts',
   prefix,
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  version: 1,
+  // @ts-ignore
+  migrate: createMigrate(contextsMigration)
 }
 
 const instancesPersistConfig = {
