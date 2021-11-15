@@ -9,7 +9,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
-  getInstanceMaxTootChar,
+  getInstanceConfigurationStatusMaxChars,
   removeInstanceDraft,
   updateInstanceDraft
 } from '@utils/slices/instancesSlice'
@@ -103,7 +103,10 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     initialReducerState
   )
 
-  const maxTootChars = useSelector(getInstanceMaxTootChar, () => true)
+  const maxTootChars = useSelector(
+    getInstanceConfigurationStatusMaxChars,
+    () => true
+  )
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count

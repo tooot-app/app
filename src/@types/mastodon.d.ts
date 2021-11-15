@@ -299,8 +299,28 @@ declare namespace Mastodon {
     // Others
     thumbnail?: string
     contact_account?: Account
-
-    // Custom
+    configuration?: {
+      statuses: {
+        max_characters: number
+        max_media_attachments: number
+        characters_reserved_per_url: number
+      }
+      media_attachments: {
+        supported_mime_types: string[]
+        image_size_limit: number
+        image_matrix_limit: number
+        video_size_limit: number
+        video_frame_rate_limit: number
+        video_matrix_limit: number
+      }
+      polls: {
+        max_options: number
+        max_characters_per_option: number
+        min_expiration: number
+        max_expiration: number
+      }
+    }
+    // Custom - to be deprecated in v4
     max_toot_chars?: number
   }
 

@@ -11,7 +11,7 @@ export interface Props {
   resize?: { width?: number; height?: number } // Resize mode contain
   showActionSheetWithOptions: (
     options: ActionSheetOptions,
-    callback: (i: number) => void
+    callback: (i?: number | undefined) => void | Promise<void>
   ) => void
 }
 
@@ -57,9 +57,8 @@ const mediaSelector = async ({
       },
       async buttonIndex => {
         if (buttonIndex === 0) {
-          const {
-            status
-          } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+          const { status } =
+            await ImagePicker.requestMediaLibraryPermissionsAsync()
           if (status !== 'granted') {
             Alert.alert(
               i18next.t('componentMediaSelector:library.alert.title'),
