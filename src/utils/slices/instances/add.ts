@@ -9,13 +9,11 @@ const addInstance = createAsyncThunk(
     domain,
     token,
     instance,
-    max_toot_chars = 500,
     appData
   }: {
     domain: Instance['url']
     token: Instance['token']
     instance: Mastodon.Instance
-    max_toot_chars?: number
     appData: Instance['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: Instance }> => {
     const { store } = require('@root/store')
@@ -70,13 +68,18 @@ const addInstance = createAsyncThunk(
         token,
         uri: instance.uri,
         urls: instance.urls,
-        max_toot_chars,
         account: {
           id,
           acct,
           avatarStatic: avatar_static,
           preferences
         },
+        ...(instance.max_toot_chars && {
+          max_toot_chars: instance.max_toot_chars
+        }),
+        ...(instance.configuration && {
+          configuration: instance.configuration
+        }),
         filters,
         notifications_filter: {
           follow: true,

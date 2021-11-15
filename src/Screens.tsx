@@ -15,6 +15,7 @@ import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -108,6 +109,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (instanceActive !== -1) {
+      dispatch(updateConfiguration())
       dispatch(updateFilters())
       dispatch(updateAccountPreferences())
     }

@@ -29,6 +29,8 @@ import ComposeDrafts from './Root/Drafts'
 import FastImage from 'react-native-fast-image'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { ComposeState } from './utils/types'
+import { useSelector } from 'react-redux'
+import { getInstanceConfigurationStatusCharsURL } from '@utils/slices/instancesSlice'
 
 const prefetchEmojis = (
   sortedEmojis: NonNullable<ComposeState['emoji']['emojis']>,
@@ -54,10 +56,17 @@ const prefetchEmojis = (
   } catch {}
 }
 
+export let instanceConfigurationStatusCharsURL = 23
+
 const ComposeRoot = React.memo(
   () => {
     const { reduceMotionEnabled } = useAccessibility()
     const { theme } = useTheme()
+
+    instanceConfigurationStatusCharsURL = useSelector(
+      getInstanceConfigurationStatusCharsURL,
+      () => true
+    )
 
     const accessibleRefDrafts = useRef(null)
     const accessibleRefAttachments = useRef(null)

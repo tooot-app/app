@@ -3,11 +3,13 @@ import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { getInstanceConfigurationPoll } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 
 const ComposePoll: React.FC = () => {
@@ -20,6 +22,16 @@ const ComposePoll: React.FC = () => {
   } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const { mode, theme } = useTheme()
+
+  const instanceConfigurationPoll = useSelector(
+    getInstanceConfigurationPoll,
+    () => true
+  )
+  const MAX_OPTIONS = instanceConfigurationPoll.max_options
+  const MAX_CHARS_PER_OPTION =
+    instanceConfigurationPoll.max_characters_per_option
+  const MIN_EXPIRATION = instanceConfigurationPoll.min_expiration
+  const MAX_EXPIRATION = instanceConfigurationPoll.max_expiration
 
   const [firstRender, setFirstRender] = useState(true)
   useEffect(() => {
@@ -67,7 +79,7 @@ const ComposePoll: React.FC = () => {
                     : t('content.root.footer.poll.option.placeholder.single')
                 }
                 placeholderTextColor={theme.disabled}
-                maxLength={50}
+                maxLength={MAX_CHARS_PER_OPTION}
                 // @ts-ignore
                 value={options[i]}
                 onChangeText={e =>
@@ -82,37 +94,38 @@ const ComposePoll: React.FC = () => {
         })}
       </View>
       <View style={styles.controlAmount}>
-        <View style={styles.firstButton}>
-          <Button
-            {...(total > 2
-              ? {
-                  accessibilityLabel: t(
-                    'content.root.footer.poll.quantity.reduce.accessibilityLabel',
-                    { amount: total - 1 }
-                  )
-                }
-              : {
-                  accessibilityHint: t(
-                    'content.root.footer.poll.quantity.reduce.accessibilityHint',
-                    { amount: total }
-                  )
-                })}
-            onPress={() => {
-              analytics('compose_poll_reduce_press')
-              total > 2 &&
-                composeDispatch({
-                  type: 'poll',
-                  payload: { total: total - 1 }
-                })
-            }}
-            type='icon'
-            content='Minus'
-            round
-            disabled={!(total > 2)}
-          />
-        </View>
         <Button
-          {...(total < 4
+          {...(total > 2
+            ? {
+                accessibilityLabel: t(
+                  'content.root.footer.poll.quantity.reduce.accessibilityLabel',
+                  { amount: total - 1 }
+                )
+              }
+            : {
+                accessibilityHint: t(
+                  'content.root.footer.poll.quantity.reduce.accessibilityHint',
+                  { amount: total }
+                )
+              })}
+          onPress={() => {
+            analytics('compose_poll_reduce_press')
+            total > 2 &&
+              composeDispatch({
+                type: 'poll',
+                payload: { total: total - 1 }
+              })
+          }}
+          type='icon'
+          content='Minus'
+          round
+          disabled={!(total > 2)}
+        />
+        <Text style={styles.controlCount}>
+          {total} / {MAX_OPTIONS}
+        </Text>
+        <Button
+          {...(total < MAX_OPTIONS
             ? {
                 accessibilityLabel: t(
                   'content.root.footer.poll.quantity.increase.accessibilityLabel',
@@ -127,7 +140,7 @@ const ComposePoll: React.FC = () => {
               })}
           onPress={() => {
             analytics('compose_poll_increase_press')
-            total < 4 &&
+            total < MAX_OPTIONS &&
               composeDispatch({
                 type: 'poll',
                 payload: { total: total + 1 }
@@ -136,7 +149,7 @@ const ComposePoll: React.FC = () => {
           type='icon'
           content='Plus'
           round
-          disabled={!(total < 4)}
+          disabled={!(total < MAX_OPTIONS)}
         />
       </View>
       <View style={styles.controlOptions}>
@@ -158,7 +171,7 @@ const ComposePoll: React.FC = () => {
                 cancelButtonIndex: 2
               },
               index => {
-                if (index < 2) {
+                if (index && index < 2) {
                   analytics('compose_poll_expiration_press', {
                     current: multiple,
                     new: index === 1
@@ -177,6 +190,7 @@ const ComposePoll: React.FC = () => {
           title={t('content.root.footer.poll.expiration.heading')}
           content={t(`content.root.footer.poll.expiration.options.${expire}`)}
           onPress={() => {
+            // @ts-ignore
             const expirations: [
               '300',
               '1800',
@@ -185,7 +199,19 @@ const ComposePoll: React.FC = () => {
               '86400',
               '259200',
               '604800'
-            ] = ['300', '1800', '3600', '21600', '86400', '259200', '604800']
+            ] = [
+              '300',
+              '1800',
+              '3600',
+              '21600',
+              '86400',
+              '259200',
+              '604800'
+            ].filter(
+              expiration =>
+                parseInt(expiration) >= MIN_EXPIRATION &&
+                parseInt(expiration) <= MAX_EXPIRATION
+            )
             showActionSheetWithOptions(
               {
                 options: [
@@ -197,7 +223,7 @@ const ComposePoll: React.FC = () => {
                 cancelButtonIndex: 7
               },
               index => {
-                if (index < 7) {
+                if (index && expirations.length < 7) {
                   analytics('compose_poll_expiration_press', {
                     current: expire,
                     new: expirations[index]
@@ -246,14 +272,15 @@ const styles = StyleSheet.create({
   controlAmount: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'flex-end',
     marginRight: StyleConstants.Spacing.M
   },
   controlOptions: {
     paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
   },
-  firstButton: {
-    marginRight: StyleConstants.Spacing.S
+  controlCount: {
+    marginHorizontal: StyleConstants.Spacing.S
   }
 })
 
