@@ -1,6 +1,8 @@
 import { ParseHTML } from '@components/Parse'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   status: Mastodon.Status
@@ -17,6 +19,7 @@ const TimelineContent = React.memo(
     disableDetails = false
   }: Props) => {
     const { t } = useTranslation('componentTimeline')
+    const instanceAccount = useSelector(getInstanceAccount, () => true)
 
     return (
       <>
@@ -41,7 +44,9 @@ const TimelineContent = React.memo(
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
-              numberOfLines={1}
+              numberOfLines={
+                instanceAccount.preferences['reading:expand:spoilers'] ? 999 : 1
+              }
               expandHint={t('shared.content.expandHint')}
               highlighted={highlighted}
               disableDetails={disableDetails}

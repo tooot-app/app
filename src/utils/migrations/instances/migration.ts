@@ -49,9 +49,11 @@ const instancesMigration = {
     }
   },
   6: (state: InstanceV5) => {
-    return state.instances.map(instance => {
-      return { ...instance, configuration: undefined }
-    })
+    return {
+      instances: state.instances.map(instance => {
+        return { ...instance, configuration: undefined }
+      })
+    }
   }
 }
 
