@@ -6,8 +6,7 @@ import * as Sentry from 'sentry-expo'
 const ctx = new chalk.Instance({ level: 3 })
 
 export type Params = {
-  service: 'push' | 'translate'
-  method: 'get' | 'post'
+  method: 'get' | 'post' | 'put' | 'delete'
   url: string
   params?: {
     [key: string]: string | number | boolean | string[] | number[] | boolean[]
@@ -17,10 +16,9 @@ export type Params = {
   sentry?: boolean
 }
 
-const DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'api.tooot.app'
+export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'testapi.tooot.app'
 
 const apiTooot = async <T = unknown>({
-  service,
   method,
   url,
   params,
@@ -28,8 +26,6 @@ const apiTooot = async <T = unknown>({
   body,
   sentry = false
 }: Params): Promise<{ body: T }> => {
-  const key = Constants.manifest?.extra?.toootApiKey
-
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
       ' ' +
@@ -43,11 +39,10 @@ const apiTooot = async <T = unknown>({
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${DOMAIN}/`,
-    url: `${service}/${url}`,
+    baseURL: `https://${TOOOT_API_DOMAIN}/`,
+    url: `${url}`,
     params,
     headers: {
-      ...(key && { 'x-tooot-key': key }),
       'Content-Type': 'application/json',
       'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',

@@ -39,65 +39,37 @@ export type Instance = {
     poll: boolean
     follow_request: boolean
   }
-  push:
-    | {
-        global: { loading: boolean; value: boolean }
-        decode: { loading: boolean; value: true }
-        alerts: {
-          follow: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['follow']
-          }
-          favourite: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['favourite']
-          }
-          reblog: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['reblog']
-          }
-          mention: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['mention']
-          }
-          poll: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['poll']
-          }
-        }
-        keys: {
-          auth: string
-          public: string
-          private: string
-        }
+  push: {
+    global: { loading: boolean; value: boolean }
+    decode: { loading: boolean; value: boolean }
+    alerts: {
+      follow: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['follow']
       }
-    | {
-        global: { loading: boolean; value: boolean }
-        decode: { loading: boolean; value: false }
-        alerts: {
-          follow: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['follow']
-          }
-          favourite: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['favourite']
-          }
-          reblog: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['reblog']
-          }
-          mention: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['mention']
-          }
-          poll: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['poll']
-          }
-        }
-        keys: undefined
+      favourite: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['favourite']
       }
+      reblog: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['reblog']
+      }
+      mention: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['mention']
+      }
+      poll: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['poll']
+      }
+    }
+    keys: {
+      auth?: string
+      public?: string // legacy
+      private?: string // legacy
+    }
+  }
   drafts: ComposeStateDraft[]
 }
 
@@ -273,7 +245,7 @@ const instancesSlice = createSlice({
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].push.global.loading = false
         state.instances[activeIndex].push.global.value = action.meta.arg
-        state.instances[activeIndex].push.keys = action.payload
+        state.instances[activeIndex].push.keys = { auth: action.payload }
       })
       .addCase(updateInstancePush.rejected, state => {
         const activeIndex = findInstanceActive(state.instances)

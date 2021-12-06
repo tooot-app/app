@@ -76,7 +76,7 @@ const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
 
     const pushEnabled = instances.filter(instance => instance.push.global.value)
     if (pushEnabled.length) {
-      connect()
+      // connect()
     }
   }, [instances])
 }
