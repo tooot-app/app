@@ -36,9 +36,9 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
 
   const res = await apiTooot<Translations>({
     method: 'get',
-    service: 'translate',
-    url: `source/${uriEncoded}/target/${target}`,
-    headers: { original }
+    url: '/translate',
+    headers: { original },
+    body: { source, target, text }
   })
   haptics('Light')
   return res.body

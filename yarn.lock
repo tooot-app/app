@@ -2190,6 +2190,11 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-base64@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-base64/-/react-native-base64-0.2.0.tgz#c934e7c3cd549d4613bbfa7929a6845ab07a20af"
+  integrity sha512-5kUtS7Kf8Xl4zEwbqLITEuQReQTby4UOGfnsEeBFJEVmUfT+ygOv/Qmv0v6El0iV1eDhXS+/0i7CGR9d3/nRSA==
+
 "@types/react-native@0.66.6":
   version "0.66.6"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.6.tgz#08f5b93cca9a50b7d19f353ff2a1ebe1a7c24a79"
@@ -6309,6 +6314,11 @@ react-native-animated-spinkit@1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
   integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
+
+react-native-base64@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-base64/-/react-native-base64-0.2.1.tgz#3d0e73a649c4c0129f7b7695d3912456aebae847"
+  integrity sha512-eHgt/MA8y5ZF0aHfZ1aTPcIkDWxza9AaEk4GcpIX+ZYfZ04RcaNahO+527KR7J44/mD3efYfM23O2C1N44ByWA==
 
 react-native-blurhash@1.1.5:
   version "1.1.5"

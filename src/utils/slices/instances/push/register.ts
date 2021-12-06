@@ -1,53 +1,33 @@
 import apiInstance from '@api/instance'
-import apiTooot from '@api/tooot'
+import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import { getInstance, Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
+import * as Random from 'expo-random'
 import { Platform } from 'react-native'
+import base64 from 'react-native-base64'
 import androidDefaults from './androidDefaults'
 
-const register1 = async ({
+const subscribe = async ({
   expoToken,
   instanceUrl,
   accountId,
-  accountFull
+  accountFull,
+  serverKey,
+  auth
 }: {
   expoToken: string
   instanceUrl: string
   accountId: Mastodon.Account['id']
   accountFull: string
-}) => {
-  return apiTooot<{
-    endpoint: string
-    keys: { public: string; private: string; auth: string }
-  }>({
-    method: 'post',
-    service: 'push',
-    url: 'register1',
-    body: { expoToken, instanceUrl, accountId, accountFull },
-    sentry: true
-  })
-}
-
-const register2 = async ({
-  expoToken,
-  serverKey,
-  instanceUrl,
-  accountId,
-  removeKeys
-}: {
-  expoToken: string
-  serverKey: Mastodon.PushSubscription['server_key']
-  instanceUrl: string
-  accountId: Mastodon.Account['id']
-  removeKeys: boolean
+  serverKey: string
+  auth: string | null
 }) => {
   return apiTooot({
     method: 'post',
-    service: 'push',
-    url: 'register2',
-    body: { expoToken, instanceUrl, accountId, serverKey, removeKeys },
+    url: `/push/subscribe/${expoToken}/${instanceUrl}/${accountId}`,
+    body: { accountFull, serverKey, auth },
     sentry: true
   })
 }
@@ -55,7 +35,7 @@ const register2 = async ({
 const pushRegister = async (
   state: RootState,
   expoToken: string
-): Promise<Instance['push']['keys']> => {
+): Promise<Instance['push']['keys']['auth']> => {
   const instance = getInstance(state)
   const instanceUrl = instance?.url
   const instanceUri = instance?.uri
@@ -68,18 +48,18 @@ const pushRegister = async (
 
   const accountId = instanceAccount.id
   const accountFull = `@${instanceAccount.acct}@${instanceUri}`
-  const serverRes = await register1({
-    expoToken,
-    instanceUrl,
-    accountId,
-    accountFull
-  })
+
+  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}`
+  const auth = base64.encodeFromByteArray(Random.getRandomBytes(16))
 
   const alerts = instancePush.alerts
   const formData = new FormData()
-  formData.append('subscription[endpoint]', serverRes.body.endpoint)
-  formData.append('subscription[keys][p256dh]', serverRes.body.keys.public)
-  formData.append('subscription[keys][auth]', serverRes.body.keys.auth)
+  formData.append('subscription[endpoint]', endpoint)
+  formData.append(
+    'subscription[keys][p256dh]',
+    'BO3P7Fe/FxPNijeXayVYViCoLicnnACc+a55wzcS0qIjYU++dtAl2XltgEfU5qPuXrFg5rnxBzbwQG4cAmdNLK4='
+  )
+  formData.append('subscription[keys][auth]', auth)
   Object.keys(alerts).map(key =>
     // @ts-ignore
     formData.append(`data[alerts][${key}]`, alerts[key].value.toString())
@@ -91,12 +71,13 @@ const pushRegister = async (
     body: formData
   })
 
-  await register2({
+  await subscribe({
     expoToken,
-    serverKey: res.body.server_key,
     instanceUrl,
     accountId,
-    removeKeys: instancePush.decode.value === false
+    accountFull,
+    serverKey: res.body.server_key,
+    auth
   })
 
   if (Platform.OS === 'android') {
@@ -142,7 +123,7 @@ const pushRegister = async (
     })
   }
 
-  return Promise.resolve(serverRes.body.keys)
+  return Promise.resolve(auth)
 }
 
 export default pushRegister

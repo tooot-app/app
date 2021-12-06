@@ -10,7 +10,7 @@ export const updateInstancePush = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<Instance['push']['keys'] | undefined> => {
+  ): Promise<Instance['push']['keys']['auth'] | undefined> => {
     const state = getState() as RootState
     const expoToken = (
       await Notifications.getExpoPushTokenAsync({
