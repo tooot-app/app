@@ -1,7 +1,6 @@
 import apiTooot from '@api/tooot'
 import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
-import * as Crypto from 'expo-crypto'
 import { useQuery, UseQueryOptions } from 'react-query'
 
 type Translations = {
@@ -13,7 +12,6 @@ type Translations = {
 export type QueryKeyTranslate = [
   'Translate',
   {
-    uri: string
     source: string
     target: string
     text: string[]
@@ -21,23 +19,11 @@ export type QueryKeyTranslate = [
 ]
 
 const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
-  const { uri, source, target, text } = queryKey[1]
-
-  const uriEncoded = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    uri.replace(/https?:\/\//, ''),
-    { encoding: Crypto.CryptoEncoding.HEX }
-  )
-  const original = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    JSON.stringify({ source, text }),
-    { encoding: Crypto.CryptoEncoding.HEX }
-  )
+  const { source, target, text } = queryKey[1]
 
   const res = await apiTooot<Translations>({
-    method: 'get',
-    url: '/translate',
-    headers: { original },
+    method: 'post',
+    url: 'translate',
     body: { source, target, text }
   })
   haptics('Light')

@@ -16,7 +16,7 @@ export type Params = {
   sentry?: boolean
 }
 
-export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'testapi.tooot.app'
+export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'api.tooot.app'
 
 const apiTooot = async <T = unknown>({
   method,
@@ -57,7 +57,7 @@ const apiTooot = async <T = unknown>({
     })
     .catch(error => {
       if (sentry) {
-        Sentry.Native.setExtras(error.response)
+        Sentry.Native.setExtras(error.response || error.request)
         Sentry.Native.captureException(error)
       }
 
