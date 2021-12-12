@@ -29,7 +29,7 @@ export const updateInstancePushDecode = createAsyncThunk(
       method: 'put',
       url: `/push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
       body: {
-        auth: disable ? null : instance.push.keys.auth
+        auth: !disable ? null : instance.push.keys.auth
       },
       sentry: true
     })

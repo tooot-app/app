@@ -77,7 +77,7 @@ const pushRegister = async (
     accountId,
     accountFull,
     serverKey: res.body.server_key,
-    auth
+    auth: instancePush.decode.value === false ? null : auth
   })
 
   if (Platform.OS === 'android') {
