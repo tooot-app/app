@@ -25,12 +25,8 @@ const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
       ).data
 
       apiTooot({
-        method: 'post',
-        service: 'push',
-        url: 'connect',
-        body: {
-          expoToken
-        },
+        method: 'get',
+        url: `push/connect/${expoToken}`,
         sentry: true
       }).catch(error => {
         if (error.status == 410) {
@@ -76,7 +72,7 @@ const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
 
     const pushEnabled = instances.filter(instance => instance.push.global.value)
     if (pushEnabled.length) {
-      // connect()
+      connect()
     }
   }, [instances])
 }
