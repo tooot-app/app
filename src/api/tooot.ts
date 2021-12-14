@@ -16,7 +16,7 @@ export type Params = {
   sentry?: boolean
 }
 
-export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'testapi.tooot.app'
+export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'api.tooot.app'
 
 const apiTooot = async <T = unknown>({
   method,
