@@ -185,6 +185,12 @@
           "empty": "无公告"
         }
       },
+      "push": {
+        "content": {
+          "enabled": "已启用",
+          "disabled": "未启用"
+        }
+      },
       "update": {
         "title": "更新至最新版本"
       },

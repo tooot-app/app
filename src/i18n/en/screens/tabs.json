@@ -185,6 +185,12 @@
           "empty": "None"
         }
       },
+      "push": {
+        "content": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        }
+      },
       "update": {
         "title": "Update to latest version"
       },
