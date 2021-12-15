@@ -13,7 +13,7 @@ export default (): ExpoConfig => ({
   assetBundlePatterns: ['assets/*'],
   extra: {
     sentryDSN: process.env.SENTRY_DSN,
-    toootApiKey: process.env.TOOOT_API_KEY
+    toootPushKeyPublic: process.env.TOOOT_PUSH_KEY_PUBLIC
   },
   hooks: {
     postPublish: [

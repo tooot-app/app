@@ -5,7 +5,7 @@ export SENTRY_PROJECT=""
 export SENTRY_AUTH_TOKEN=""
 export SENTRY_DSN=""
 
-export TOOOT_API_KEY=""
+export TOOOT_PUSH_KEY_PUBLIC=""
 
 # Fastlane start
 export LC_ALL=""
