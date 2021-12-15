@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { getMePage, updateContextMePage } from '@utils/slices/contextsSlice'
+import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,6 +54,11 @@ const Collections: React.FC = () => {
     }
   }, [announcementsQuery.isSuccess, announcementsQuery.data?.length])
 
+  const instancePush = useSelector(
+    getInstancePush,
+    (prev, next) => prev?.global.value === next?.global.value
+  )
+
   return (
     <MenuContainer>
       <MenuRow
@@ -98,6 +104,17 @@ const Collections: React.FC = () => {
           }
         />
       ) : null}
+      <MenuRow
+        iconFront={instancePush ? 'Bell' : 'BellOff'}
+        iconBack='ChevronRight'
+        title={t('me.stacks.push.name')}
+        content={
+          instancePush
+            ? t('me.root.push.content.enabled')
+            : t('me.root.push.content.disabled')
+        }
+        onPress={() => navigation.navigate('Tab-Me-Push')}
+      />
     </MenuContainer>
   )
 }

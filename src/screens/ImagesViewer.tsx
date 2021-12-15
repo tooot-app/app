@@ -61,9 +61,11 @@ const HeaderComponent = React.memo(
               analytics('imageviewer_more_share_press')
               switch (Platform.OS) {
                 case 'ios':
-                  Share.share({ url: imageUrls[currentIndex].url })
+                  await Share.share({ url: imageUrls[currentIndex].url })
+                  break
                 case 'android':
-                  Share.share({ message: imageUrls[currentIndex].url })
+                  await Share.share({ message: imageUrls[currentIndex].url })
+                  break
               }
               break
           }
