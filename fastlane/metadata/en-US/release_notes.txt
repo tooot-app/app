@@ -1,4 +1,3 @@
-🍎
-Support version from iOS 12
-🤖️
-Support APNG animation
+Support iOS version starting from 12
+Optimize performance (hopefully)
+Using new push and translation service
