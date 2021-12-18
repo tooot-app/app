@@ -1,6 +1,7 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
+  QueryFunctionContext,
   useMutation,
   UseMutationOptions,
   useQuery,
@@ -9,7 +10,9 @@ import {
 
 type QueryKeyAnnouncement = ['Announcements', { showAll?: boolean }]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKeyAnnouncement }) => {
+const queryFunction = ({
+  queryKey
+}: QueryFunctionContext<QueryKeyAnnouncement>) => {
   const { showAll } = queryKey[1]
 
   return apiInstance<Mastodon.Announcement[]>({
@@ -23,11 +26,11 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKeyAnnouncement }) => {
   }).then(res => res.body)
 }
 
-const useAnnouncementQuery = <TData = Mastodon.Announcement[]>({
+const useAnnouncementQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyAnnouncement[1] & {
-  options?: UseQueryOptions<Mastodon.Announcement[], AxiosError, TData>
+  options?: UseQueryOptions<Mastodon.Announcement[], AxiosError>
 }) => {
   const queryKey: QueryKeyAnnouncement = [
     'Announcements',

@@ -14,17 +14,18 @@ type AccountWithSource = Mastodon.Account &
 type QueryKeyProfile = ['Profile']
 const queryKey: QueryKeyProfile = ['Profile']
 
-const queryFunction = () => {
-  return apiInstance<AccountWithSource>({
+const queryFunction = async () => {
+  const res = await apiInstance<AccountWithSource>({
     method: 'get',
     url: `accounts/verify_credentials`
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
-const useProfileQuery = <TData = AccountWithSource>({
+const useProfileQuery = ({
   options
 }: {
-  options?: UseQueryOptions<AccountWithSource, AxiosError, TData>
+  options?: UseQueryOptions<AccountWithSource, AxiosError>
 }) => {
   return useQuery(queryKey, queryFunction, options)
 }

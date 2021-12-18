@@ -18,9 +18,9 @@ import {
 } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 
-const TabSharedSearch: React.FC<TabSharedStackScreenProps<
-  'Tab-Shared-Search'
->> = ({
+const TabSharedSearch: React.FC<
+  TabSharedStackScreenProps<'Tab-Shared-Search'>
+> = ({
   route: {
     params: { text }
   }
@@ -33,7 +33,13 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<
     hashtags: t('shared.search.sections.hashtags'),
     statuses: t('shared.search.sections.statuses')
   }
-  const { status, data } = useSearchQuery({
+  const { status, data } = useSearchQuery<
+    {
+      title: string
+      translation: string
+      data: any[]
+    }[]
+  >({
     term: text,
     options: {
       enabled: text !== undefined,

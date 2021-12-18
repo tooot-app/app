@@ -99,7 +99,7 @@ const addInstance = createAsyncThunk(
             mention: { loading: false, value: true },
             poll: { loading: false, value: true }
           },
-          keys: undefined
+          keys: { auth: undefined, public: undefined, private: undefined }
         },
         drafts: []
       }

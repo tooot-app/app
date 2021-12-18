@@ -1,7 +1,7 @@
 import apiTooot from '@api/tooot'
 import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
 
 type Translations = {
   provider: string
@@ -18,7 +18,9 @@ export type QueryKeyTranslate = [
   }
 ]
 
-const queryFunction = async ({ queryKey }: { queryKey: QueryKeyTranslate }) => {
+const queryFunction = async ({
+  queryKey
+}: QueryFunctionContext<QueryKeyTranslate>) => {
   const { source, target, text } = queryKey[1]
 
   const res = await apiTooot<Translations>({
@@ -34,7 +36,7 @@ const useTranslateQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTranslate[1] & {
-  options?: UseQueryOptions<Translations, AxiosError, Translations>
+  options?: UseQueryOptions<Translations, AxiosError>
 }) => {
   const queryKey: QueryKeyTranslate = ['Translate', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, { ...options, retry: false })

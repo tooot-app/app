@@ -33,24 +33,18 @@ const AccessibilityManager: React.FC = ({ children }) => {
   useEffect(() => {
     loadAccessibilityInfo()
 
-    AccessibilityInfo.addEventListener(
+    const reduceMotionSubscription = AccessibilityInfo.addEventListener(
       'reduceMotionChanged',
       handleReduceMotionChanged
     )
-    AccessibilityInfo.addEventListener(
+    const screenReaderSubscription = AccessibilityInfo.addEventListener(
       'screenReaderChanged',
       handleScreenReaderEnabled
     )
 
     return () => {
-      AccessibilityInfo.removeEventListener(
-        'reduceMotionChanged',
-        handleReduceMotionChanged
-      )
-      AccessibilityInfo.removeEventListener(
-        'screenReaderChanged',
-        handleScreenReaderEnabled
-      )
+      reduceMotionSubscription.remove()
+      screenReaderSubscription.remove()
     }
   }, [])
 

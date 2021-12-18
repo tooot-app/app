@@ -31,7 +31,7 @@ const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
-    const { mode, theme } = useTheme()
+    const { theme } = useTheme()
 
     const instanceActive = useSelector(getInstanceActive)
     const instanceAccount = useSelector(

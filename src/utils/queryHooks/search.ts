@@ -1,8 +1,8 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = [
+export type QueryKeySearch = [
   'Search',
   {
     type?: 'accounts' | 'hashtags' | 'statuses'
@@ -17,9 +17,11 @@ export type SearchResult = {
   statuses: Mastodon.Status[]
 }
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = async ({
+  queryKey
+}: QueryFunctionContext<QueryKeySearch>) => {
   const { type, term, limit = 20 } = queryKey[1]
-  return apiInstance<SearchResult>({
+  const res = await apiInstance<SearchResult>({
     version: 'v2',
     method: 'get',
     url: 'search',
@@ -29,16 +31,17 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
       limit,
       resolve: true
     }
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
-const useSearchQuery = <TData = SearchResult>({
+const useSearchQuery = <T = unknown>({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
-  options?: UseQueryOptions<SearchResult, AxiosError, TData>
+}: QueryKeySearch[1] & {
+  options?: UseQueryOptions<SearchResult, AxiosError, T>
 }) => {
-  const queryKey: QueryKey = ['Search', { ...queryKeyParams }]
+  const queryKey: QueryKeySearch = ['Search', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, options)
 }
 

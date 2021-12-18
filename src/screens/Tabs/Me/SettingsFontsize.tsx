@@ -32,9 +32,9 @@ export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   }
 }
 
-const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<
-  'Tab-Me-Settings-Fontsize'
->> = () => {
+const TabMeSettingsFontsize: React.FC<
+  TabMeStackScreenProps<'Tab-Me-Settings-Fontsize'>
+> = () => {
   const { mode, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
@@ -113,7 +113,12 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<
           extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
         />
-        <TimelineDefault item={item} disableDetails disableOnPress />
+        <TimelineDefault
+          // @ts-ignore
+          item={item}
+          disableDetails
+          disableOnPress
+        />
         <ComponentSeparator
           extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
