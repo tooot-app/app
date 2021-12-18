@@ -15,6 +15,8 @@ import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { AppState, LogBox, Platform } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -28,6 +30,7 @@ dev()
 sentry()
 audio()
 push()
+enableFreeze()
 
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
@@ -101,15 +104,17 @@ const App: React.FC = () => {
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <PersistGate
-          persistor={persistor}
-          onBeforeLift={onBeforeLift}
-          children={children}
-        />
-      </Provider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <PersistGate
+            persistor={persistor}
+            onBeforeLift={onBeforeLift}
+            children={children}
+          />
+        </Provider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   )
 }
 

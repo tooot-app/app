@@ -47,7 +47,6 @@ const TimelineTranslate = React.memo(
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      uri: status.uri,
       source: status.language,
       target: settingsLanguage,
       text,

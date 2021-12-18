@@ -10,9 +10,11 @@ import { Alert, StyleSheet } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const TabMeProfileName: React.FC<TabMeProfileStackScreenProps<
-  'Tab-Me-Profile-Name'
-> & { messageRef: RefObject<FlashMessage> }> = ({
+const TabMeProfileName: React.FC<
+  TabMeProfileStackScreenProps<'Tab-Me-Profile-Name'> & {
+    messageRef: RefObject<FlashMessage>
+  }
+> = ({
   messageRef,
   route: {
     params: { display_name }
@@ -91,7 +93,8 @@ const TabMeProfileName: React.FC<TabMeProfileStackScreenProps<
         options={{
           maxLength: 30,
           autoCapitalize: 'none',
-          autoCompleteType: 'username',
+          autoComplete: 'username',
+          textContentType: 'username',
           autoCorrect: false
         }}
       />

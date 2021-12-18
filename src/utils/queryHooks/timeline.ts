@@ -1,4 +1,4 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
   MutationOptions,
+  QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation
@@ -28,10 +29,7 @@ export type QueryKeyTimeline = [
 const queryFunction = async ({
   queryKey,
   pageParam
-}: {
-  queryKey: QueryKeyTimeline
-  pageParam?: { [key: string]: string }
-}) => {
+}: QueryFunctionContext<QueryKeyTimeline>) => {
   const { page, account, hashtag, list, toot } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -191,21 +189,15 @@ const queryFunction = async ({
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never
 export type TimelineData = Unpromise<ReturnType<typeof queryFunction>>
-const useTimelineQuery = <TData = TimelineData>({
+const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
   options?: UseInfiniteQueryOptions<
-    {
-      body:
-        | Mastodon.Status[]
-        | Mastodon.Notification[]
-        | Mastodon.Conversation[]
-      links?: { prev?: string; next?: string }
-      pinned?: Mastodon.Status['id'][]
-    },
-    AxiosError,
-    TData
+    InstanceResponse<
+      Mastodon.Status[] | Mastodon.Notification[] | Mastodon.Conversation[]
+    >,
+    AxiosError
   >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]

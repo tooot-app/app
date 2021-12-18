@@ -136,7 +136,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
 
     if (previousRoute?.name !== currentRoute?.name) {
-      Analytics.setCurrentScreen(currentRoute?.name)
+      Analytics.logEvent('screen_view', { screen_name: currentRoute?.name })
       Sentry.Native.setContext('page', {
         previous: previousRoute,
         current: currentRoute

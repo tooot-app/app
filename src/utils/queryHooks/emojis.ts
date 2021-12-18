@@ -2,21 +2,22 @@ import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from 'react-query'
 
-type QueryKey = ['Emojis']
+type QueryKeyEmojis = ['Emojis']
 
-const queryFunction = () => {
-  return apiInstance<Mastodon.Emoji[]>({
+const queryFunction = async () => {
+  const res = await apiInstance<Mastodon.Emoji[]>({
     method: 'get',
     url: 'custom_emojis'
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
-const useEmojisQuery = <TData = Mastodon.Emoji[]>({
+const useEmojisQuery = ({
   options
 }: {
-  options?: UseQueryOptions<Mastodon.Emoji[], AxiosError, TData>
+  options?: UseQueryOptions<Mastodon.Emoji[], AxiosError>
 }) => {
-  const queryKey: QueryKey = ['Emojis']
+  const queryKey: QueryKeyEmojis = ['Emojis']
   return useQuery(queryKey, queryFunction, options)
 }
 
