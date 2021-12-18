@@ -49,7 +49,7 @@ const ComposeEditAttachment: React.FC<ScreenComposeStackScreenProps<
             options={{
               headerLeft,
               headerRight: () => <ComposeEditAttachmentSubmit index={index} />,
-              headerTitle: t('content.editAttachment.header.title')
+              title: t('content.editAttachment.header.title')
             }}
           />
         </Stack.Navigator>

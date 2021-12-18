@@ -109,7 +109,7 @@ const Collections: React.FC = () => {
         iconBack='ChevronRight'
         title={t('me.stacks.push.name')}
         content={
-          instancePush
+          instancePush.global.value
             ? t('me.root.push.content.enabled')
             : t('me.root.push.content.disabled')
         }

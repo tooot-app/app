@@ -21,7 +21,7 @@ const TabLocal = React.memo(
 
     const screenOptionsRoot = useMemo(
       () => ({
-        headerTitle: t('tabs.local.name'),
+        title: t('tabs.local.name'),
         ...(Platform.OS === 'android' && {
           headerCenter: () => <HeaderCenter content={t('tabs.local.name')} />
         }),
