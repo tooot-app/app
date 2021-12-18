@@ -1,2 +1,4 @@
-Added translation option, translation service is provided by various providers
-When updating profile, now avatar and banner can be uploaded
+🍎
+Support version from iOS 12
+🤖️
+Support APNG animation

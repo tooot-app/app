@@ -170,7 +170,6 @@ const ComponentInstance: React.FC<Props> = ({
             ]}
             onChangeText={onChangeText}
             autoCapitalize='none'
-            autoCorrect={false}
             clearButtonMode='never'
             keyboardType='url'
             textContentType='URL'
@@ -183,6 +182,8 @@ const ComponentInstance: React.FC<Props> = ({
               onFocus: () =>
                 setTimeout(() => scrollViewRef.current?.scrollToEnd(), 150)
             })}
+            autoCorrect={false}
+            spellCheck={false}
           />
           <Button
             type='text'

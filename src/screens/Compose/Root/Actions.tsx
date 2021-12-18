@@ -1,12 +1,14 @@
 import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 import addAttachment from './Footer/addAttachment'
 
@@ -15,6 +17,10 @@ const ComposeActions: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
+  const instanceConfigurationStatusMaxAttachments = useSelector(
+    getInstanceConfigurationStatusMaxAttachments,
+    () => true
+  )
 
   const attachmentColor = useMemo(() => {
     if (composeState.poll.active) return theme.disabled
@@ -28,7 +34,10 @@ const ComposeActions: React.FC = () => {
   const attachmentOnPress = useCallback(async () => {
     if (composeState.poll.active) return
 
-    if (composeState.attachments.uploads.length < 4) {
+    if (
+      composeState.attachments.uploads.length <
+      instanceConfigurationStatusMaxAttachments
+    ) {
       analytics('compose_actions_attachment_press', {
         count: composeState.attachments.uploads.length
       })

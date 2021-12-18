@@ -9,7 +9,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
-  getInstanceMaxTootChar,
+  getInstanceConfigurationStatusMaxChars,
   removeInstanceDraft,
   updateInstanceDraft
 } from '@utils/slices/instancesSlice'
@@ -55,20 +55,18 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', _keyboardDidShow)
-    Keyboard.addListener('keyboardWillHide', _keyboardDidHide)
+    const keyboardShown = Keyboard.addListener('keyboardWillShow', () =>
+      setHasKeyboard(true)
+    )
+    const keyboardHidden = Keyboard.addListener('keyboardWillHide', () =>
+      setHasKeyboard(false)
+    )
 
     return () => {
-      Keyboard.removeListener('keyboardWillShow', _keyboardDidShow)
-      Keyboard.removeListener('keyboardWillHide', _keyboardDidHide)
+      keyboardShown.remove()
+      keyboardHidden.remove()
     }
   }, [])
-  const _keyboardDidShow = () => {
-    setHasKeyboard(true)
-  }
-  const _keyboardDidHide = () => {
-    setHasKeyboard(false)
-  }
 
   const localAccount = useSelector(getInstanceAccount, (prev, next) =>
     prev?.preferences && next?.preferences
@@ -105,7 +103,10 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     initialReducerState
   )
 
-  const maxTootChars = useSelector(getInstanceMaxTootChar, () => true)
+  const maxTootChars = useSelector(
+    getInstanceConfigurationStatusMaxChars,
+    () => true
+  )
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
@@ -371,25 +372,16 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               name='Screen-Compose-Root'
               component={ComposeRoot}
               options={{
-                ...Platform.select({
-                  ios: {
-                    headerTitle: headerContent,
-                    headerTitleStyle: {
-                      fontWeight:
-                        totalTextCount > maxTootChars
-                          ? StyleConstants.Font.Weight.Bold
-                          : StyleConstants.Font.Weight.Normal,
-                      fontSize: StyleConstants.Font.Size.M
-                    },
-                    headerTintColor:
-                      totalTextCount > maxTootChars
-                        ? theme.red
-                        : theme.secondary
-                  },
-                  android: {
-                    headerCenter: () => <HeaderCenter content={headerContent} />
-                  }
-                }),
+                title: headerContent,
+                titleStyle: {
+                  fontWeight:
+                    totalTextCount > maxTootChars
+                      ? StyleConstants.Font.Weight.Bold
+                      : StyleConstants.Font.Weight.Normal,
+                  fontSize: StyleConstants.Font.Size.M
+                },
+                headerTintColor:
+                  totalTextCount > maxTootChars ? theme.red : theme.secondary,
                 headerLeft,
                 headerRight
               }}

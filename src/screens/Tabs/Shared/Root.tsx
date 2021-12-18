@@ -41,7 +41,7 @@ const TabSharedRoot = ({
             headerStyle: {
               backgroundColor: `rgba(255, 255, 255, 0)`
             },
-            headerTitle: '',
+            title: '',
             headerLeft: () => (
               <HeaderLeft onPress={() => navigation.goBack()} background />
             )
@@ -91,14 +91,7 @@ const TabSharedRoot = ({
         options={({
           route
         }: TabSharedStackScreenProps<'Tab-Shared-Hashtag'>) => ({
-          headerTitle: `#${decodeURIComponent(route.params.hashtag)}`,
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => (
-              <HeaderCenter
-                content={`#${decodeURIComponent(route.params.hashtag)}`}
-              />
-            )
-          })
+          title: `#${decodeURIComponent(route.params.hashtag)}`
         })}
       />
 
@@ -109,6 +102,13 @@ const TabSharedRoot = ({
         options={({
           navigation
         }: TabSharedStackScreenProps<'Tab-Shared-Search'>) => ({
+          ...(Platform.OS === 'ios'
+            ? {
+                headerLeft: () => (
+                  <HeaderLeft onPress={() => navigation.goBack()} />
+                )
+              }
+            : { headerLeft: () => null }),
           headerTitle: () => {
             const onChangeText = debounce(
               (text: string) => navigation.setParams({ text }),
@@ -164,10 +164,7 @@ const TabSharedRoot = ({
         name='Tab-Shared-Toot'
         component={TabSharedToot}
         options={{
-          headerTitle: t('shared.toot.name'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => <HeaderCenter content={t('shared.toot.name')} />
-          })
+          title: t('shared.toot.name')
         }}
       />
 
@@ -180,7 +177,7 @@ const TabSharedRoot = ({
             params: { reference, type, count }
           }
         }: TabSharedStackScreenProps<'Tab-Shared-Users'>) => ({
-          headerTitle: t(`shared.users.${reference}.${type}`, { count }),
+          title: t(`shared.users.${reference}.${type}`, { count }),
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
               <HeaderCenter

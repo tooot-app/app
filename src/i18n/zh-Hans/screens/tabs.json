@@ -144,6 +144,7 @@
       }
     },
     "push": {
+      "notAvailable": "您的机型暂不支持 tooot 推送通知",
       "enable": {
         "direct": "启用推送通知",
         "settings": "在系统设置中启用"
@@ -182,6 +183,12 @@
           "unread": "{{amount}}条未读公告",
           "read": "无未读公告",
           "empty": "无公告"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "已启用",
+          "disabled": "未启用"
         }
       },
       "update": {

@@ -91,6 +91,7 @@ private_lane :build_ios do
       dsym_path: DSYM_FILE
     )
     upload_to_testflight(
+      skip_submission: true,
       ipa: IPA_FILE,
       demo_account_required: true,
       distribute_external: true,

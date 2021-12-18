@@ -3,10 +3,7 @@ import Button from '@components/Button'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import {
-  getInstanceAccount,
-  getInstancePush
-} from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -56,7 +53,6 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
           content={t('shared.account.moved')}
           onPress={() => {
             analytics('account_gotomoved_press')
-            // @ts-ignore
             navigation.push('Tab-Shared-Account', { account: accountMoved })
           }}
         />
@@ -64,21 +60,9 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
     )
   }
 
-  const instancePush = useSelector(
-    getInstancePush,
-    (prev, next) => prev?.global.value === next?.global.value
-  )
-
   if (myInfo) {
     return (
       <View style={styles.base}>
-        <Button
-          round
-          type='icon'
-          content={instancePush?.global.value ? 'Bell' : 'BellOff'}
-          style={styles.actionLeft}
-          onPress={() => navigation.navigate('Tab-Me-Push')}
-        />
         <Button
           type='text'
           disabled={account === undefined}

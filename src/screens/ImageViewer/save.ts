@@ -2,11 +2,12 @@ import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import CameraRoll from '@react-native-community/cameraroll'
 import { RootStackParamList } from '@utils/navigation/navigators'
+import * as FileSystem from 'expo-file-system'
+import * as MediaLibrary from 'expo-media-library'
 import i18next from 'i18next'
 import { RefObject } from 'react'
 import { Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { FileSystem, Permissions } from 'react-native-unimodules'
 
 type CommonProps = {
   messageRef: RefObject<FlashMessage>
@@ -60,17 +61,15 @@ const saveIos = async ({ messageRef, mode, image }: CommonProps) => {
 
 const saveAndroid = async ({ messageRef, mode, image }: CommonProps) => {
   const fileUri: string = `${FileSystem.documentDirectory}${image.id}.jpg`
-  const downloadedFile: FileSystem.FileSystemDownloadResult = await FileSystem.downloadAsync(
-    image.url,
-    fileUri
-  )
+  const downloadedFile: FileSystem.FileSystemDownloadResult =
+    await FileSystem.downloadAsync(image.url, fileUri)
 
   if (downloadedFile.status != 200) {
     console.warn('error!')
   }
 
-  const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
-  if (perm.status != 'granted') {
+  const perm = await MediaLibrary.requestPermissionsAsync()
+  if (!perm.granted) {
     return
   }
 

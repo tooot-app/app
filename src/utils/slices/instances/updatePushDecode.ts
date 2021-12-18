@@ -26,14 +26,10 @@ export const updateInstancePushDecode = createAsyncThunk(
     ).data
 
     await apiTooot({
-      method: 'post',
-      service: 'push',
-      url: 'update-decode',
+      method: 'put',
+      url: `/push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
       body: {
-        expoToken,
-        instanceUrl: instance.url,
-        accountId: instance.account.id,
-        ...(disable && { keys: instance.push.keys })
+        auth: !disable ? null : instance.push.keys.auth
       },
       sentry: true
     })

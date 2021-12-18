@@ -1,6 +1,6 @@
 import axios from 'axios'
 import chalk from 'chalk'
-import { Constants } from 'react-native-unimodules'
+import Constants from 'expo-constants'
 import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
@@ -59,7 +59,7 @@ const apiGeneral = async <T = unknown>({
     })
     .catch(error => {
       if (sentry) {
-        Sentry.Native.setExtras(error.response)
+        Sentry.Native.setExtras(error.response || error.request)
         Sentry.Native.captureException(error)
       }
 

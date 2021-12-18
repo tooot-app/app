@@ -20,14 +20,8 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
   })
 
   await apiTooot<{ endpoint: string; publicKey: string; auth: string }>({
-    method: 'post',
-    service: 'push',
-    url: 'unregister',
-    body: {
-      expoToken,
-      instanceUrl: instance.url,
-      accountId: instance.account.id
-    },
+    method: 'delete',
+    url: `/push/unsubscribe/${expoToken}/${instance.url}/${instance.account.id}`,
     sentry: true
   })
 

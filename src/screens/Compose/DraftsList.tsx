@@ -1,16 +1,15 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
+import { HeaderLeft } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
 import ComposeDraftsListRoot from './DraftsList/Root'
 
 const Stack = createNativeStackNavigator()
 
-const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<
-  'Screen-Compose-DraftsList'
->> = ({
+const ComposeDraftsList: React.FC<
+  ScreenComposeStackScreenProps<'Screen-Compose-DraftsList'>
+> = ({
   route: {
     params: { timestamp }
   },
@@ -40,12 +39,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<
         children={children}
         options={{
           headerLeft,
-          headerTitle: t('content.draftsList.header.title'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => (
-              <HeaderCenter content={t('content.draftsList.header.title')} />
-            )
-          }),
+          title: t('content.draftsList.header.title'),
           headerShadowVisible: false
         }}
       />

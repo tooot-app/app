@@ -19,7 +19,7 @@ const TabNotifications = React.memo(
 
     const screenOptionsRoot = useMemo(
       () => ({
-        headerTitle: t('tabs.notifications.name'),
+        title: t('tabs.notifications.name'),
         ...(Platform.OS === 'android' && {
           headerCenter: () => (
             <HeaderCenter content={t('tabs.notifications.name')} />

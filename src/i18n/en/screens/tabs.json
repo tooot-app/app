@@ -144,6 +144,7 @@
       }
     },
     "push": {
+      "notAvailable": "Your phone does not support tooot's push notification",
       "enable": {
         "direct": "Enable push notification",
         "settings": "Enable in settings"
@@ -182,6 +183,12 @@
           "unread": "{{amount}} unread",
           "read": "All read",
           "empty": "None"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
         }
       },
       "update": {

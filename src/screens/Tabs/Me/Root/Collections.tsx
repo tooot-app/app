@@ -2,18 +2,36 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import React from 'react'
+import { getMePage, updateContextMePage } from '@utils/slices/contextsSlice'
+import { getInstancePush } from '@utils/slices/instancesSlice'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Collections: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const navigation = useNavigation<any>()
+
+  const dispatch = useDispatch()
+  const mePage = useSelector(
+    getMePage,
+    (a, b) => a.announcements.unread === b.announcements.unread
+  )
 
   const listsQuery = useListsQuery({
     options: {
       notifyOnChangeProps: ['data']
     }
   })
+  useEffect(() => {
+    if (listsQuery.isSuccess) {
+      dispatch(
+        updateContextMePage({
+          lists: { shown: listsQuery.data?.length ? true : false }
+        })
+      )
+    }
+  }, [listsQuery.isSuccess, listsQuery.data?.length])
 
   const announcementsQuery = useAnnouncementQuery({
     showAll: true,
@@ -21,6 +39,25 @@ const Collections: React.FC = () => {
       notifyOnChangeProps: ['data']
     }
   })
+  useEffect(() => {
+    if (announcementsQuery.isSuccess) {
+      dispatch(
+        updateContextMePage({
+          announcements: {
+            shown: announcementsQuery.data?.length ? true : false,
+            unread: announcementsQuery.data.filter(
+              announcement => !announcement.read
+            ).length
+          }
+        })
+      )
+    }
+  }, [announcementsQuery.isSuccess, announcementsQuery.data?.length])
+
+  const instancePush = useSelector(
+    getInstancePush,
+    (prev, next) => prev?.global.value === next?.global.value
+  )
 
   return (
     <MenuContainer>
@@ -42,7 +79,7 @@ const Collections: React.FC = () => {
         title={t('me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
-      {listsQuery.data?.length ? (
+      {mePage.lists.shown ? (
         <MenuRow
           iconFront='List'
           iconBack='ChevronRight'
@@ -50,18 +87,15 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-Lists')}
         />
       ) : null}
-      {announcementsQuery.data?.length ? (
+      {mePage.announcements.shown ? (
         <MenuRow
           iconFront='Clipboard'
           iconBack='ChevronRight'
           title={t('screenAnnouncements:heading')}
           content={
-            announcementsQuery.data.filter(announcement => !announcement.read)
-              .length
+            mePage.announcements.unread
               ? t('me.root.announcements.content.unread', {
-                  amount: announcementsQuery.data.filter(
-                    announcement => !announcement.read
-                  ).length
+                  amount: mePage.announcements.unread
                 })
               : t('me.root.announcements.content.read')
           }
@@ -70,6 +104,17 @@ const Collections: React.FC = () => {
           }
         />
       ) : null}
+      <MenuRow
+        iconFront={instancePush ? 'Bell' : 'BellOff'}
+        iconBack='ChevronRight'
+        title={t('me.stacks.push.name')}
+        content={
+          instancePush.global.value
+            ? t('me.root.push.content.enabled')
+            : t('me.root.push.content.disabled')
+        }
+        onPress={() => navigation.navigate('Tab-Me-Push')}
+      />
     </MenuContainer>
   )
 }

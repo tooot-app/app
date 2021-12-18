@@ -1,8 +1,8 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
+import Constants from 'expo-constants'
 import li from 'li'
-import { Constants } from 'react-native-unimodules'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -21,6 +21,11 @@ export type Params = {
   >
 }
 
+export type InstanceResponse<T = unknown> = {
+  body: T
+  links: { prev?: string; next?: string }
+}
+
 const apiInstance = async <T = unknown>({
   method,
   version = 'v1',
@@ -29,7 +34,7 @@ const apiInstance = async <T = unknown>({
   headers,
   body,
   extras
-}: Params): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
+}: Params): Promise<InstanceResponse<T>> => {
   const { store } = require('@root/store')
   const state = store.getState() as RootState
   const instanceActive = state.instances.instances.findIndex(

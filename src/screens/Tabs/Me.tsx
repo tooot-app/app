@@ -38,7 +38,7 @@ const TabMe = React.memo(
           name='Tab-Me-Bookmarks'
           component={TabMeBookmarks}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.bookmarks.name'),
+            title: t('me.stacks.bookmarks.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.bookmarks.name')} />
@@ -51,7 +51,7 @@ const TabMe = React.memo(
           name='Tab-Me-Conversations'
           component={TabMeConversations}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.conversations.name'),
+            title: t('me.stacks.conversations.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.conversations.name')} />
@@ -64,7 +64,7 @@ const TabMe = React.memo(
           name='Tab-Me-Favourites'
           component={TabMeFavourites}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.favourites.name'),
+            title: t('me.stacks.favourites.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.favourites.name')} />
@@ -77,7 +77,7 @@ const TabMe = React.memo(
           name='Tab-Me-Lists'
           component={TabMeLists}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.lists.name'),
+            title: t('me.stacks.lists.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.lists.name')} />
@@ -90,7 +90,7 @@ const TabMe = React.memo(
           name='Tab-Me-Lists-List'
           component={TabMeListsList}
           options={({ route, navigation }: any) => ({
-            headerTitle: t('me.stacks.list.name', { list: route.params.title }),
+            title: t('me.stacks.list.name', { list: route.params.title }),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter
@@ -117,7 +117,7 @@ const TabMe = React.memo(
           options={({ navigation }) => ({
             presentation: 'modal',
             headerShown: true,
-            headerTitle: t('me.stacks.push.name'),
+            title: t('me.stacks.push.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.push.name')} />
@@ -135,12 +135,7 @@ const TabMe = React.memo(
           name='Tab-Me-Settings'
           component={TabMeSettings}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.settings.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.settings.name')} />
-              )
-            }),
+            title: t('me.stacks.settings.name'),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
         />
@@ -148,7 +143,7 @@ const TabMe = React.memo(
           name='Tab-Me-Settings-Fontsize'
           component={TabMeSettingsFontsize}
           options={({ navigation }: any) => ({
-            headerTitle: t('me.stacks.fontSize.name'),
+            title: t('me.stacks.fontSize.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.fontSize.name')} />
@@ -163,7 +158,7 @@ const TabMe = React.memo(
           options={({ navigation }) => ({
             presentation: 'modal',
             headerShown: true,
-            headerTitle: t('me.stacks.switch.name'),
+            title: t('me.stacks.switch.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.switch.name')} />

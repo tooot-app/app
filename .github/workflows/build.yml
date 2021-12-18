@@ -33,7 +33,7 @@ jobs:
         run: bundle install
       - name: -- Step 7 -- Run fastlane
         env:
-          DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
@@ -41,7 +41,7 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          TOOOT_API_KEY: ${{ secrets.TOOOT_API_KEY }}
+          TOOOT_PUSH_KEY_PUBLIC: ${{ secrets.TOOOT_PUSH_KEY_PUBLIC }}
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}

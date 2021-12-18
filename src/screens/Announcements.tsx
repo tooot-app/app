@@ -20,9 +20,9 @@ import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const ScreenAnnouncements: React.FC<RootStackScreenProps<
-  'Screen-Announcements'
->> = ({
+const ScreenAnnouncements: React.FC<
+  RootStackScreenProps<'Screen-Announcements'>
+> = ({
   route: {
     params: { showAll = false }
   },
@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   announcementContainer: {
     width: Dimensions.get('screen').width,
     padding: StyleConstants.Spacing.Global.PagePadding,
+    marginVertical: StyleConstants.Spacing.Global.PagePadding,
     justifyContent: 'center'
   },
   published: {

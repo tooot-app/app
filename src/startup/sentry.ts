@@ -1,5 +1,5 @@
+import Constants from 'expo-constants'
 import * as Updates from 'expo-updates'
-import { Constants } from 'react-native-unimodules'
 import * as Sentry from 'sentry-expo'
 import log from './log'
 

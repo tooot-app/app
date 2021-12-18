@@ -6,6 +6,7 @@ import { findIndex } from 'lodash'
 import addInstance from './instances/add'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
+import { updateConfiguration } from './instances/updateConfiguration'
 import { updateFilters } from './instances/updateFilters'
 import { updateInstancePush } from './instances/updatePush'
 import { updateInstancePushAlert } from './instances/updatePushAlert'
@@ -21,13 +22,14 @@ export type Instance = {
   token: string
   uri: Mastodon.Instance['uri']
   urls: Mastodon.Instance['urls']
-  max_toot_chars: number
   account: {
     id: Mastodon.Account['id']
     acct: Mastodon.Account['acct']
     avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
+  max_toot_chars?: number // To be deprecated in v4
+  configuration?: Mastodon.Instance['configuration']
   filters: Mastodon.Filter[]
   notifications_filter: {
     follow: boolean
@@ -37,65 +39,37 @@ export type Instance = {
     poll: boolean
     follow_request: boolean
   }
-  push:
-    | {
-        global: { loading: boolean; value: boolean }
-        decode: { loading: boolean; value: true }
-        alerts: {
-          follow: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['follow']
-          }
-          favourite: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['favourite']
-          }
-          reblog: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['reblog']
-          }
-          mention: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['mention']
-          }
-          poll: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['poll']
-          }
-        }
-        keys: {
-          auth: string
-          public: string
-          private: string
-        }
+  push: {
+    global: { loading: boolean; value: boolean }
+    decode: { loading: boolean; value: boolean }
+    alerts: {
+      follow: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['follow']
       }
-    | {
-        global: { loading: boolean; value: boolean }
-        decode: { loading: boolean; value: false }
-        alerts: {
-          follow: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['follow']
-          }
-          favourite: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['favourite']
-          }
-          reblog: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['reblog']
-          }
-          mention: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['mention']
-          }
-          poll: {
-            loading: boolean
-            value: Mastodon.PushSubscription['alerts']['poll']
-          }
-        }
-        keys: undefined
+      favourite: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['favourite']
       }
+      reblog: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['reblog']
+      }
+      mention: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['mention']
+      }
+      poll: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['poll']
+      }
+    }
+    keys: {
+      auth?: string
+      public?: string // legacy
+      private?: string // legacy
+    }
+  }
   drafts: ComposeStateDraft[]
 }
 
@@ -107,8 +81,8 @@ export const instancesInitialState: InstancesState = {
   instances: []
 }
 
-const findInstanceActive = (state: Instance[]) =>
-  state.findIndex(instance => instance.active)
+const findInstanceActive = (instances: Instance[]) =>
+  instances.findIndex(instance => instance.active)
 
 const instancesSlice = createSlice({
   name: 'instances',
@@ -254,12 +228,24 @@ const instancesSlice = createSlice({
         console.error(action.error)
       })
 
+      // Update Instance Configuration
+      .addCase(updateConfiguration.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].max_toot_chars =
+          action.payload.max_toot_chars
+        state.instances[activeIndex].configuration =
+          action.payload.configuration
+      })
+      .addCase(updateConfiguration.rejected, (_, action) => {
+        console.error(action.error)
+      })
+
       // Update Instance Push Global
       .addCase(updateInstancePush.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].push.global.loading = false
         state.instances[activeIndex].push.global.value = action.meta.arg
-        state.instances[activeIndex].push.keys = action.payload
+        state.instances[activeIndex].push.keys = { auth: action.payload }
       })
       .addCase(updateInstancePush.rejected, state => {
         const activeIndex = findInstanceActive(state.instances)
@@ -314,56 +300,62 @@ export const getInstanceActive = ({ instances: { instances } }: RootState) =>
 export const getInstances = ({ instances: { instances } }: RootState) =>
   instances
 
-export const getInstance = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive] : null
-}
+export const getInstance = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]
 
-export const getInstanceUrl = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].url : null
-}
+export const getInstanceUrl = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.url
 
-export const getInstanceUri = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].uri : null
-}
+export const getInstanceUri = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.uri
 
-export const getInstanceUrls = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].urls : null
-}
+export const getInstanceUrls = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.urls
 
-export const getInstanceMaxTootChar = ({
+/* Get Instance Configuration */
+export const getInstanceConfigurationStatusMaxChars = ({
   instances: { instances }
-}: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].max_toot_chars : 500
-}
+}: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.statuses
+    .max_characters ||
+  instances[findInstanceActive(instances)]?.max_toot_chars ||
+  500
 
-export const getInstanceAccount = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].account : null
-}
+export const getInstanceConfigurationStatusMaxAttachments = ({
+  instances: { instances }
+}: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.statuses
+    .max_media_attachments || 4
+
+export const getInstanceConfigurationStatusCharsURL = ({
+  instances: { instances }
+}: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.statuses
+    .characters_reserved_per_url || 23
+
+export const getInstanceConfigurationPoll = ({
+  instances: { instances }
+}: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.polls || {
+    max_options: 4,
+    max_characters_per_option: 50,
+    min_expiration: 300,
+    max_expiration: 2629746
+  }
+/* END */
+
+export const getInstanceAccount = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.account
 
 export const getInstanceNotificationsFilter = ({
   instances: { instances }
-}: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1
-    ? instances[instanceActive].notifications_filter
-    : null
-}
+}: RootState) => instances[findInstanceActive(instances)].notifications_filter
 
-export const getInstancePush = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].push : null
-}
+export const getInstancePush = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.push
 
-export const getInstanceDrafts = ({ instances: { instances } }: RootState) => {
-  const instanceActive = findInstanceActive(instances)
-  return instanceActive !== -1 ? instances[instanceActive].drafts : null
-}
+export const getInstanceDrafts = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.drafts
 
 export const {
   updateInstanceActive,
