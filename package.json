@@ -45,7 +45,7 @@
     "expo-constants": "^13.0.0",
     "expo-crypto": "10.1.1",
     "expo-device": "4.1.0",
-    "expo-file-system": "^13.1.0",
+    "expo-file-system": "13.1.0",
     "expo-firebase-analytics": "6.0.0",
     "expo-haptics": "11.1.0",
     "expo-image-manipulator": "10.2.0",
