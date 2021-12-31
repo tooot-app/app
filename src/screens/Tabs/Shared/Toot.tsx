@@ -38,12 +38,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = findIndex(flattenData, ['id', toot.id])
-          setTimeout(() => {
-            flRef.current?.scrollToIndex({
-              index: pointer === -1 ? 0 : pointer,
-              viewOffset: 100
-            })
-          }, 500)
+          pointer > 0 &&
+            setTimeout(() => {
+              flRef.current?.scrollToIndex({
+                index: pointer,
+                viewOffset: 100
+              })
+            }, 1000)
         }
       }
     })
