@@ -187,7 +187,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               headerLeft: () => (
                 <HeaderLeft content='X' onPress={() => navigation.goBack()} />
               ),
-              headerTitle: t('screenAnnouncements:heading')
+              title: t('screenAnnouncements:heading')
             })}
           />
           <Stack.Screen

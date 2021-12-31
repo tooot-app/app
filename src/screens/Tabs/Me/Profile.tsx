@@ -31,7 +31,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
         <Stack.Screen
           name='Tab-Me-Profile-Root'
           options={{
-            headerTitle: t('me.stacks.profile.name'),
+            title: t('me.stacks.profile.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.profile.name')} />
@@ -56,7 +56,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
         <Stack.Screen
           name='Tab-Me-Profile-Name'
           options={{
-            headerTitle: t('me.stacks.profileName.name'),
+            title: t('me.stacks.profileName.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.profileName.name')} />
@@ -75,7 +75,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
         <Stack.Screen
           name='Tab-Me-Profile-Note'
           options={{
-            headerTitle: t('me.stacks.profileNote.name'),
+            title: t('me.stacks.profileNote.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.profileNote.name')} />
@@ -94,7 +94,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
         <Stack.Screen
           name='Tab-Me-Profile-Fields'
           options={{
-            headerTitle: t('me.stacks.profileFields.name'),
+            title: t('me.stacks.profileFields.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.profileFields.name')} />

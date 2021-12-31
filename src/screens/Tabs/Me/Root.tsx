@@ -11,6 +11,7 @@ import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useReducer, useRef } from 'react'
 import Animated, {
   useAnimatedScrollHandler,
@@ -49,6 +50,7 @@ const TabMeRoot: React.FC = () => {
         keyboardShouldPersistTaps='handled'
         onScroll={onScroll}
         scrollEventThrottle={16}
+        style={{ marginBottom: StyleConstants.Spacing.L }}
       >
         {instanceActive !== -1 ? (
           <MyInfo account={data} />
