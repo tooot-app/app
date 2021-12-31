@@ -29,7 +29,7 @@ const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
         url: `push/connect/${expoToken}`,
         sentry: true
       }).catch(error => {
-        if (error.status == 410) {
+        if (error.status == 404) {
           displayMessage({
             mode,
             type: 'error',
