@@ -1,3 +1,4 @@
+import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
@@ -16,7 +17,11 @@ export type Params = {
   sentry?: boolean
 }
 
-export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'api.tooot.app'
+export const TOOOT_API_DOMAIN = mapEnvironment({
+  release: 'api.tooot.app',
+  candidate: 'api-candidate.tooot.app',
+  development: 'api-development.tooot.app'
+})
 
 const apiTooot = async <T = unknown>({
   method,
