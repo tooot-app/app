@@ -14,7 +14,14 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Dimensions,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -199,7 +206,7 @@ const ScreenAnnouncements: React.FC<
     )
   }, [])
 
-  return (
+  return Platform.OS === 'ios' ? (
     <BlurView
       blurType={mode}
       blurAmount={20}
@@ -239,6 +246,41 @@ const ScreenAnnouncements: React.FC<
         </View>
       </SafeAreaView>
     </BlurView>
+  ) : (
+    <SafeAreaView
+      style={[styles.base, { backgroundColor: theme.backgroundDefault }]}
+    >
+      <FlatList
+        horizontal
+        data={query.data}
+        pagingEnabled
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        ListEmptyComponent={ListEmptyComponent}
+      />
+      <View style={styles.indicators}>
+        {query.data && query.data.length > 1 ? (
+          <>
+            {query.data.map((d, i) => (
+              <View
+                key={i}
+                style={[
+                  styles.indicator,
+                  {
+                    borderColor: theme.primaryDefault,
+                    backgroundColor:
+                      i === index ? theme.primaryDefault : undefined,
+                    marginLeft:
+                      i === query.data.length ? 0 : StyleConstants.Spacing.S
+                  }
+                ]}
+              />
+            ))}
+          </>
+        ) : null}
+      </View>
+    </SafeAreaView>
   )
 }
 

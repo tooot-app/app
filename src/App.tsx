@@ -41,10 +41,10 @@ const App: React.FC = () => {
     Notifications.dismissAllNotificationsAsync()
   }, [])
   useEffect(() => {
-    AppState.addEventListener('change', appStateEffect)
+    const appStateListener = AppState.addEventListener('change', appStateEffect)
 
     return () => {
-      AppState.removeEventListener('change', appStateEffect)
+      appStateListener.remove()
     }
   }, [])
 

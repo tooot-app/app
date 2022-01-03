@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
 
@@ -20,6 +20,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
   const flRef = useRef<FlatList>(null)
 
+  const [itemsLength, setItemsLength] = useState(0)
   const scrolled = useRef(false)
   const navigation = useNavigation()
   const queryClient = useQueryClient()
@@ -31,6 +32,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           ? // @ts-ignore
             result.data.pages.flatMap(d => [...d.body])
           : []
+        setItemsLength(flattenData.length)
         // Auto go back when toot page is empty
         if (flattenData.length === 0) {
           navigation.goBack()
@@ -38,13 +40,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = findIndex(flattenData, ['id', toot.id])
-          pointer > 0 &&
+          pointer < flattenData.length &&
             setTimeout(() => {
               flRef.current?.scrollToIndex({
                 index: pointer,
                 viewOffset: 100
               })
-            }, 1000)
+            }, 500)
         }
       }
     })
@@ -52,15 +54,19 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   }, [])
 
   // Toot page auto scroll to selected toot
-  const onScrollToIndexFailed = useCallback(error => {
-    const offset = error.averageItemLength * error.index
-    flRef.current?.scrollToOffset({ offset })
-    setTimeout(
-      () =>
-        flRef.current?.scrollToIndex({ index: error.index, viewOffset: 100 }),
-      350
-    )
-  }, [])
+  const onScrollToIndexFailed = useCallback(
+    error => {
+      const offset = error.averageItemLength * error.index
+      flRef.current?.scrollToOffset({ offset })
+      setTimeout(
+        () =>
+          error.index < itemsLength &&
+          flRef.current?.scrollToIndex({ index: error.index, viewOffset: 100 }),
+        500
+      )
+    },
+    [itemsLength]
+  )
 
   const renderItem = useCallback(
     ({ item }) => (

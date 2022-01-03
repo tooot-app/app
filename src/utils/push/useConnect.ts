@@ -3,6 +3,7 @@ import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { Dispatch } from '@reduxjs/toolkit'
+import { isDevelopment } from '@utils/checkEnvironment'
 import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
@@ -18,11 +19,13 @@ export interface Params {
 const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
   return useEffect(() => {
     const connect = async () => {
-      const expoToken = (
-        await Notifications.getExpoPushTokenAsync({
-          experienceId: '@xmflsct/tooot'
-        })
-      ).data
+      const expoToken = isDevelopment
+      ? 'DEVELOPMENT_TOKEN_1'
+      : (
+          await Notifications.getExpoPushTokenAsync({
+            experienceId: '@xmflsct/tooot'
+          })
+        ).data
 
       apiTooot({
         method: 'get',

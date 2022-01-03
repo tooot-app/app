@@ -53,7 +53,7 @@ static void InitializeFlipper(UIApplication *application) {
   
   RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [self.reactDelegate createRootViewWithBridge:bridge moduleName:@"main" initialProperties:nil];
-  rootView.backgroundColor = [UIColor whiteColor];
+  rootView.backgroundColor = [UIColor colorNamed:@"SplashScreenBackgroundColor"];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [self.reactDelegate createRootViewController];
   rootViewController.view = rootView;
