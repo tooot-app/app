@@ -1,3 +1,1 @@
-Support iOS version starting from 12
-Optimize performance (hopefully)
-Using new push and translation service
+Optimize performance and fix bugs
