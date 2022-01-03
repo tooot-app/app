@@ -1,4 +1,4 @@
-fastlane_version "2.180.1"
+fastlane_version "2.199.0"
 skip_docs
 
 ensure_env_vars(
@@ -108,6 +108,11 @@ private_lane :build_ios do
       silent: true
     )
     upload_to_app_store( ipa: IPA_FILE, app_version: VERSION )
+    download_dsyms
+    sentry_upload_dsym(
+      org_slug: ENV["SENTRY_ORGANIZATION"],
+      project_slug: ENV["SENTRY_PROJECT"],
+    )
   else
     if !is_ci
       match( type: "adhoc", readonly: true )
