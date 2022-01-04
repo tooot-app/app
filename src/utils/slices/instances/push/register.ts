@@ -28,8 +28,7 @@ const subscribe = async ({
   return apiTooot({
     method: 'post',
     url: `/push/subscribe/${expoToken}/${instanceUrl}/${accountId}`,
-    body: { accountFull, serverKey, auth },
-    sentry: true
+    body: { accountFull, serverKey, auth }
   })
 }
 
