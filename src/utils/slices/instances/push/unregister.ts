@@ -21,8 +21,7 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
 
   await apiTooot<{ endpoint: string; publicKey: string; auth: string }>({
     method: 'delete',
-    url: `/push/unsubscribe/${expoToken}/${instance.url}/${instance.account.id}`,
-    sentry: true
+    url: `/push/unsubscribe/${expoToken}/${instance.url}/${instance.account.id}`
   })
 
   if (Platform.OS === 'android') {

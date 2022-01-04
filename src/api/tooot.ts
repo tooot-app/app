@@ -29,7 +29,7 @@ const apiTooot = async <T = unknown>({
   params,
   headers,
   body,
-  sentry = false
+  sentry = true
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
@@ -61,8 +61,12 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry) {
-        Sentry.Native.setExtras(error.response || error.request)
+      if (sentry && Math.random() < 0.005) {
+        Sentry.Native.setExtras({
+          API: 'tooot',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
         Sentry.Native.captureException(error)
       }
 

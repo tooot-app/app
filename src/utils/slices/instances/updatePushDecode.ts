@@ -21,20 +21,19 @@ export const updateInstancePushDecode = createAsyncThunk(
     }
 
     const expoToken = isDevelopment
-    ? 'DEVELOPMENT_TOKEN_1'
-    : (
-        await Notifications.getExpoPushTokenAsync({
-          experienceId: '@xmflsct/tooot'
-        })
-      ).data
+      ? 'DEVELOPMENT_TOKEN_1'
+      : (
+          await Notifications.getExpoPushTokenAsync({
+            experienceId: '@xmflsct/tooot'
+          })
+        ).data
 
     await apiTooot({
       method: 'put',
       url: `/push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
       body: {
         auth: !disable ? null : instance.push.keys.auth
-      },
-      sentry: true
+      }
     })
 
     if (Platform.OS === 'android') {
