@@ -14,7 +14,7 @@ PODS:
     - ExpoModulesCore
   - EXErrorRecovery (3.0.4):
     - ExpoModulesCore
-  - EXFileSystem (13.1.0):
+  - EXFileSystem (13.2.0):
     - ExpoModulesCore
   - EXFirebaseAnalytics (6.0.0):
     - EXFirebaseCore
@@ -38,20 +38,15 @@ PODS:
     - ExpoModulesCore
   - EXManifests (0.2.2):
     - EXJSONUtils
-  - EXMediaLibrary (14.0.0):
-    - ExpoModulesCore
-    - React-Core
   - EXNotifications (0.14.0):
     - ExpoModulesCore
-  - EXPermissions (13.1.0):
-    - ExpoModulesCore
-  - Expo (44.0.3):
+  - Expo (44.0.4):
     - ExpoModulesCore
   - ExpoHaptics (11.1.0):
     - ExpoModulesCore
   - ExpoLocalization (12.0.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.6.3):
+  - ExpoModulesCore (0.6.4):
     - React-Core
     - ReactCommon/turbomodule/core
   - EXRandom (12.1.1):
@@ -73,7 +68,7 @@ PODS:
     - EXUpdatesInterface
     - React-Core
   - EXUpdatesInterface (0.5.0)
-  - EXVideoThumbnails (6.1.0):
+  - EXVideoThumbnails (6.2.0):
     - ExpoModulesCore
   - EXWebBrowser (10.1.0):
     - ExpoModulesCore
@@ -531,9 +526,7 @@ DEPENDENCIES:
   - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXManifests (from `../node_modules/expo-manifests/ios`)
-  - EXMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - EXNotifications (from `../node_modules/expo-notifications/ios`)
-  - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
@@ -654,12 +647,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-keep-awake/ios"
   EXManifests:
     :path: "../node_modules/expo-manifests/ios"
-  EXMediaLibrary:
-    :path: "../node_modules/expo-media-library/ios"
   EXNotifications:
     :path: "../node_modules/expo-notifications/ios"
-  EXPermissions:
-    :path: "../node_modules/expo-permissions/ios"
   Expo:
     :path: "../node_modules/expo/ios"
   ExpoHaptics:
@@ -786,7 +775,7 @@ SPEC CHECKSUMS:
   EXCrypto: e3c0853c2a9ef885928f6227b967b9598132f727
   EXDevice: 7de98d8f97088fad9c01e9a68abad07e501208b2
   EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
-  EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
+  EXFileSystem: 7bcd3c1428698150d5c8ca140c8183f2ee204048
   EXFirebaseAnalytics: 27dbc5cb83c244d8404b2927676299f3e172470e
   EXFirebaseCore: 16f39b0ea94ce985a8f2e16cc796bf79bdcfa297
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
@@ -796,13 +785,11 @@ SPEC CHECKSUMS:
   EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
   EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
-  EXMediaLibrary: 6acf919299bccc64a59e6e89a3b792276e309302
   EXNotifications: d5b454a2363c8743aa9b2888cc0df70a1d9ee816
-  EXPermissions: f4c65fa770489cbf16ea17c3013a670671525014
-  Expo: 5f9812539b12998a813315ea8036971c9b56a9e7
+  Expo: d9b8b5e49c200471fc473a652a84fe30dee73027
   ExpoHaptics: c62a5fc7bba0184d0165d559fc2b0fc46168ef40
   ExpoLocalization: 83582a967db52987a8479490b056d5eb9fd70552
-  ExpoModulesCore: d04e519b3e8e21523b195bb21a40144e30f1e163
+  ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
   EXRandom: 06978dcf45075f3c9e17ae5e726b887316ee9877
   EXScreenCapture: 0146fdf6ca4c3402a1cf62b2ddb739a840e08c94
   EXSecureStore: fa0fdde1c81ceee2a3cb0519e649feae42767969
@@ -811,7 +798,7 @@ SPEC CHECKSUMS:
   EXStructuredHeaders: 2ce79a3770bd3795bade1aab215ada70deae8bbc
   EXUpdates: 98b9e647ce7a0e9d5ab67135bf42188c750a99eb
   EXUpdatesInterface: f459b515151bd73fff7a35366eace34a6c6a0d3f
-  EXVideoThumbnails: 6c08e978ed7a5542c5dca04a1757363fd29cb2a1
+  EXVideoThumbnails: 847d648d6f4bc0c1afad05caa56a487dc543445e
   EXWebBrowser: 37388663fa51cbfc883de2244931a5182d948e5f
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58

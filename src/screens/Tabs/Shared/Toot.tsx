@@ -7,6 +7,7 @@ import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
+import * as Sentry from 'sentry-expo'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   route: {
@@ -40,30 +41,56 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = findIndex(flattenData, ['id', toot.id])
-          pointer < flattenData.length &&
-            setTimeout(() => {
-              flRef.current?.scrollToIndex({
+          try {
+            pointer < flattenData.length &&
+              setTimeout(() => {
+                flRef.current?.scrollToIndex({
+                  index: pointer,
+                  viewOffset: 100
+                })
+              }, 500)
+          } catch (err) {
+            if (Math.random() < 0.1) {
+              Sentry.Native.setExtras({
+                type: 'original',
                 index: pointer,
-                viewOffset: 100
+                itemsLength: flattenData.length,
+                flattenData
               })
-            }, 500)
+              Sentry.Native.captureException(err)
+            }
+          }
         }
       }
     })
     return () => unsubscribe()
-  }, [])
+  }, [scrolled.current])
 
   // Toot page auto scroll to selected toot
   const onScrollToIndexFailed = useCallback(
     error => {
       const offset = error.averageItemLength * error.index
       flRef.current?.scrollToOffset({ offset })
-      setTimeout(
-        () =>
-          error.index < itemsLength &&
-          flRef.current?.scrollToIndex({ index: error.index, viewOffset: 100 }),
-        500
-      )
+      try {
+        error.index < itemsLength &&
+          setTimeout(
+            () =>
+              flRef.current?.scrollToIndex({
+                index: error.index,
+                viewOffset: 100
+              }),
+            500
+          )
+      } catch (err) {
+        if (Math.random() < 0.1) {
+          Sentry.Native.setExtras({
+            type: 'onScrollToIndexFailed',
+            index: error.index,
+            itemsLength
+          })
+          Sentry.Native.captureException(err)
+        }
+      }
     },
     [itemsLength]
   )
