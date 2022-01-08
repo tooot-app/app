@@ -1342,7 +1342,7 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
-"@expo/config-plugins@4.0.15":
+"@expo/config-plugins@4.0.15", "@expo/config-plugins@^4.0.14":
   version "4.0.15"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.15.tgz#cc170a0cf890973b6491cf357540e9955296019c"
   integrity sha512-QqxVEt2bFu3ZuI1soULRJv7i0Zrg/FMZ0IxNV7Y3AjH7fhtUJH3pPo9f6MURvqNr+PLxhBlkofkWfunrVejSkw==
@@ -3545,7 +3545,15 @@ expo-error-recovery@~3.0.4:
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-3.0.4.tgz#de85c8c6b387d9b1e532256600882f2c2704383a"
   integrity sha512-7z2V7n9Yvm9/ogm4I1KgcsQZfgyDMSOBVHk8pA3IY0jL8+tXTyTrStxHsPXRjE8HHeYikfTRBIeFsh/1wWY7oA==
 
-expo-file-system@13.1.0, expo-file-system@~13.1.0:
+expo-file-system@13.2.0:
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-13.2.0.tgz#155fecd095d0aa01b9b78423077033e6ab852f0c"
+  integrity sha512-YboLdTuPVhYYcAIwYkJXsh0Ud6d3hwxU2DQ167lVktQ+SUIAyGN/VQQm1pkQBcpj/FFd2IM3NTD0ofx9qxyVGg==
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+    uuid "^3.4.0"
+
+expo-file-system@~13.1.0:
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-13.1.0.tgz#7758617ad5bd60dac82c642bf8c85d0cdb00c117"
   integrity sha512-Hd+aBfcZfiD9p2qOEMvcUJuEnQk5NEostZjT5gVkQmRoITUxf9wGgrX1tSAzF8JQAtOJVjfWYOwTMHq2H9M8AA==
@@ -3633,14 +3641,18 @@ expo-manifests@~0.2.2:
   dependencies:
     expo-json-utils "~0.2.0"
 
-expo-media-library@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-14.0.0.tgz#aed008f7b750c02ec4a298c7aaa2fc4454171eea"
-  integrity sha512-rbrFSLxpmhKqvWivjpMXhAOu0D0sRhu2UNc+SJntXJwsLYx7Mzh9N8pk2kU7iLTPR2YYfxOGW7HyFj18+OB6QQ==
+expo-modules-autolinking@0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.5.5.tgz#6bcc42072dcbdfca79d207b7f549f1fdb54a2b74"
+  integrity sha512-bILEG0Fg+ZhIhdEaShHzsEN1WC0hUmXJ5Kcd4cd+8rVk1Ead9vRZxA/yLx1cNBDCOwMe0GAMrhF7TKT+A1P+YA==
   dependencies:
-    "@expo/config-plugins" "^4.0.2"
+    chalk "^4.1.0"
+    commander "^7.2.0"
+    fast-glob "^3.2.5"
+    find-up "^5.0.0"
+    fs-extra "^9.1.0"
 
-expo-modules-autolinking@0.5.4, expo-modules-autolinking@~0.5.1:
+expo-modules-autolinking@~0.5.1:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.5.4.tgz#d105d46cb6faab71c72c3181b9c2ab8cc8b09dba"
   integrity sha512-Q2wQp7tE7nlkmIQslQxa02uswOAJZXuJHWmb5oCG8BkzL6QBmDURJ/1j5hlIKuyN+j1M0rZbzyVI+ufyziGsSQ==
@@ -3651,10 +3663,10 @@ expo-modules-autolinking@0.5.4, expo-modules-autolinking@~0.5.1:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.6.3.tgz#e5326169a888144f2691ffd49b7686dfac235227"
-  integrity sha512-VLVQ6mK9rQHdcV+dn2keXsnDGR8OehUHkSAeZ88e5N8j1zjBo/9SI2/R7v3jBj+1Adg/wmVc5vyJzqnj2hlM2w==
+expo-modules-core@0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.6.4.tgz#dd0265da98a92bd8004c83d9953136e4820f1bef"
+  integrity sha512-I5MvSZHjww4Jfvob/woCbI0ZLZIUBmhoiLeZsMJoWJuWa8QmtxXjI+4eRjaDB7+RxNVhrnVcmRjQPYG/5HepVg==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
@@ -3675,11 +3687,6 @@ expo-notifications@0.14.0:
     fs-extra "^9.1.0"
     unimodules-task-manager-interface "~7.1.0"
     uuid "^3.4.0"
-
-expo-permissions@13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-13.1.0.tgz#1be8fe01476950d642ea83d383fd8912492434b9"
-  integrity sha512-f3ngERaoeAw8236xyvw4gS89Fxd4fU2soKXQn0JPXwiDGmIXO+lIJNH3psNvAebj4DfmyQtGW4AS1itG83GHaQ==
 
 expo-random@12.1.1:
   version "12.1.1"
@@ -3705,11 +3712,6 @@ expo-splash-screen@0.14.1:
   dependencies:
     "@expo/configure-splash-screen" "^0.6.0"
     "@expo/prebuild-config" "^3.0.15"
-
-expo-status-bar@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.2.0.tgz#16e73205da563f9536f562e439081e30e318a82e"
-  integrity sha512-pVZZ/kDCXFK79E4dCtRecs3XLC8aiwlciutSd/fFmUPJSQZ1Txia6hlKajPt0GAYft8/YnT0V3URXzWZOBniYQ==
 
 expo-store-review@5.1.0:
   version "5.1.0"
@@ -3741,10 +3743,10 @@ expo-updates@0.11.3:
     resolve-from "^5.0.0"
     uuid "^3.4.0"
 
-expo-video-thumbnails@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/expo-video-thumbnails/-/expo-video-thumbnails-6.1.0.tgz#377c3569a5a584d95c88b7d6c475a260d063ef41"
-  integrity sha512-qRMsgL6JY6um3UKq//0VO6J4NurqMOLuAv+Mu01Z4pweuoR83j7HOKNr0PKszIyBv/9tNeLzzrUYQuQPzXmKHA==
+expo-video-thumbnails@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/expo-video-thumbnails/-/expo-video-thumbnails-6.2.0.tgz#ebf33500b6b32a9efdaf498a08dd0d9ac2add049"
+  integrity sha512-iW49Atk3fijqxFY7PLfmOL2QhWsD/A7Sh+4X8YtNGG0T2Bd16fMEvl5BdvBZdAz+A67VidGkI4hxNWTDWw/bVw==
 
 expo-web-browser@10.1.0, expo-web-browser@~10.1.0:
   version "10.1.0"
@@ -3753,10 +3755,10 @@ expo-web-browser@10.1.0, expo-web-browser@~10.1.0:
   dependencies:
     compare-urls "^2.0.0"
 
-expo@44.0.3:
-  version "44.0.3"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-44.0.3.tgz#6f30ff51fbb2608a408c7ac10aeb703fc04d304e"
-  integrity sha512-uk6t89gV5Gs5MdHXZkjKlBdXSo4j+oKj/BrK/FTFlKvEqEL34SbEXy9IcS0o7IDPFuqVIzclXcnAI+sOU4J5Lg==
+expo@44.0.4:
+  version "44.0.4"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-44.0.4.tgz#328e3ca41f6d195d3525b30c8a74d8c241efcf7d"
+  integrity sha512-XYEG0ldlKmRGTFBGSCcW6GI6SNMBrp1uM+s8yIfUmRzHmxj2D0HP+r1aUH8iU1alsIjh00IAGQ71BMPu0hRlNQ==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/metro-config" "~0.2.6"
@@ -3769,8 +3771,8 @@ expo@44.0.3:
     expo-file-system "~13.1.0"
     expo-font "~10.0.4"
     expo-keep-awake "~10.0.1"
-    expo-modules-autolinking "0.5.4"
-    expo-modules-core "0.6.3"
+    expo-modules-autolinking "0.5.5"
+    expo-modules-core "0.6.4"
     fbemitter "^2.1.1"
     invariant "^2.2.4"
     md5-file "^3.2.3"
