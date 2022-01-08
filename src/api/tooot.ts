@@ -61,7 +61,7 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry && Math.random() < 0.005) {
+      if (sentry && Math.random() < 0.01) {
         Sentry.Native.setExtras({
           API: 'tooot',
           ...(error.response && { response: error.response }),
