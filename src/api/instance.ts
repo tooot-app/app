@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
 import li from 'li'
+import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -97,6 +98,15 @@ const apiInstance = async <T = unknown>({
       })
     })
     .catch(error => {
+      if (Math.random() < 0.001) {
+        Sentry.Native.setExtras({
+          API: 'instance',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
+        Sentry.Native.captureException(error)
+      }
+
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx

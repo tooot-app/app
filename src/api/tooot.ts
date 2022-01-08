@@ -1,3 +1,4 @@
+import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
@@ -16,7 +17,11 @@ export type Params = {
   sentry?: boolean
 }
 
-export const TOOOT_API_DOMAIN = __DEV__ ? 'testapi.tooot.app' : 'api.tooot.app'
+export const TOOOT_API_DOMAIN = mapEnvironment({
+  release: 'api.tooot.app',
+  candidate: 'api-candidate.tooot.app',
+  development: 'api-development.tooot.app'
+})
 
 const apiTooot = async <T = unknown>({
   method,
@@ -24,7 +29,7 @@ const apiTooot = async <T = unknown>({
   params,
   headers,
   body,
-  sentry = false
+  sentry = true
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
@@ -56,8 +61,12 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry) {
-        Sentry.Native.setExtras(error.response || error.request)
+      if (sentry && Math.random() < 0.01) {
+        Sentry.Native.setExtras({
+          API: 'tooot',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
         Sentry.Native.captureException(error)
       }
 

@@ -24,7 +24,7 @@ const apiGeneral = async <T = unknown>({
   params,
   headers,
   body,
-  sentry = false
+  sentry = true
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
@@ -58,8 +58,12 @@ const apiGeneral = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry) {
-        Sentry.Native.setExtras(error.response || error.request)
+      if (sentry && Math.random() < 0.01) {
+        Sentry.Native.setExtras({
+          API: 'general',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
         Sentry.Native.captureException(error)
       }
 

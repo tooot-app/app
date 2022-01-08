@@ -96,7 +96,7 @@ const AttachmentAudio: React.FC<Props> = ({
           </>
         )}
       </View>
-      {audio.meta.original.duration ? (
+      {audio.meta?.original?.duration ? (
         <View
           style={{
             alignSelf: 'flex-end',

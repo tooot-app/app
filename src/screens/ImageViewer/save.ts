@@ -3,10 +3,9 @@ import { displayMessage } from '@components/Message'
 import CameraRoll from '@react-native-community/cameraroll'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import * as FileSystem from 'expo-file-system'
-import * as MediaLibrary from 'expo-media-library'
 import i18next from 'i18next'
 import { RefObject } from 'react'
-import { Platform } from 'react-native'
+import { PermissionsAndroid, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 type CommonProps = {
@@ -65,12 +64,31 @@ const saveAndroid = async ({ messageRef, mode, image }: CommonProps) => {
     await FileSystem.downloadAsync(image.url, fileUri)
 
   if (downloadedFile.status != 200) {
-    console.warn('error!')
+    haptics('Error')
+    displayMessage({
+      ref: messageRef,
+      mode,
+      type: 'error',
+      message: i18next.t('screenImageViewer:content.save.failed')
+    })
+    return
   }
 
-  const perm = await MediaLibrary.requestPermissionsAsync()
-  if (!perm.granted) {
-    return
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+
+  const hasPermission = await PermissionsAndroid.check(permission)
+  if (!hasPermission) {
+    const status = await PermissionsAndroid.request(permission)
+    if (status !== 'granted') {
+      haptics('Error')
+      displayMessage({
+        ref: messageRef,
+        mode,
+        type: 'error',
+        message: i18next.t('screenImageViewer:content.save.failed')
+      })
+      return
+    }
   }
 
   CameraRoll.save(downloadedFile.uri)

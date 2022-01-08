@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { isDevelopment } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -45,11 +46,16 @@ const TabMePush: React.FC = () => {
     setPushCanAskAgain(settings.canAskAgain)
   }
   useEffect(() => {
-    Notifications.getExpoPushTokenAsync({
-      experienceId: '@xmflsct/tooot'
-    })
-      .then(data => setPushAvailable(!!data))
-      .catch(() => setPushAvailable(false))
+    if (isDevelopment) {
+      setPushAvailable(true)
+    } else {
+      Notifications.getExpoPushTokenAsync({
+        experienceId: '@xmflsct/tooot'
+      })
+        .then(data => setPushAvailable(!!data))
+        .catch(() => setPushAvailable(false))
+    }
+
     checkPush()
     const subscription = AppState.addEventListener('change', checkPush)
     return () => {
@@ -106,7 +112,7 @@ const TabMePush: React.FC = () => {
 
   return (
     <ScrollView>
-      {pushAvailable !== false ? (
+      {pushAvailable === true ? (
         <>
           {pushEnabled === false ? (
             <MenuContainer>
