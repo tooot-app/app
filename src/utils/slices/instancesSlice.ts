@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { findIndex } from 'lodash'
 import addInstance from './instances/add'
 import removeInstance from './instances/remove'
@@ -69,6 +70,16 @@ export type Instance = {
       public?: string // legacy
       private?: string // legacy
     }
+  }
+  timelinesLookback?: {
+    [key: string]: {
+      queryKey: QueryKeyTimeline
+      ids: Mastodon.Status['id'][]
+    }
+  }
+  mePage: {
+    lists: { shown: boolean }
+    announcements: { shown: boolean; unread: number }
   }
   drafts: ComposeStateDraft[]
 }
@@ -154,6 +165,26 @@ const instancesSlice = createSlice({
         newInstance.push.global.value = false
         return newInstance
       })
+    },
+    updateInstanceTimelineLookback: (
+      { instances },
+      action: PayloadAction<Instance['timelinesLookback']>
+    ) => {
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].timelinesLookback = {
+        ...instances[activeIndex].timelinesLookback,
+        ...action.payload
+      }
+    },
+    updateInstanceMePage: (
+      { instances },
+      action: PayloadAction<Partial<Instance['mePage']>>
+    ) => {
+      const activeIndex = findInstanceActive(instances)
+      instances[activeIndex].mePage = {
+        ...instances[activeIndex].mePage,
+        ...action.payload
+      }
     }
   },
   extraReducers: builder => {
@@ -354,6 +385,13 @@ export const getInstanceNotificationsFilter = ({
 export const getInstancePush = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.push
 
+export const getInstanceTimelinesLookback = ({
+  instances: { instances }
+}: RootState) => instances[findInstanceActive(instances)]?.timelinesLookback
+
+export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.mePage
+
 export const getInstanceDrafts = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.drafts
 
@@ -364,7 +402,9 @@ export const {
   updateInstanceDraft,
   removeInstanceDraft,
   clearPushLoading,
-  disableAllPushes
+  disableAllPushes,
+  updateInstanceTimelineLookback,
+  updateInstanceMePage
 } = instancesSlice.actions
 
 export default instancesSlice.reducer

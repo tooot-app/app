@@ -2,7 +2,10 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import { getMePage, updateContextMePage } from '@utils/slices/contextsSlice'
+import {
+  getInstanceMePage,
+  updateInstanceMePage
+} from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,10 +16,7 @@ const Collections: React.FC = () => {
   const navigation = useNavigation<any>()
 
   const dispatch = useDispatch()
-  const mePage = useSelector(
-    getMePage,
-    (a, b) => a.announcements.unread === b.announcements.unread
-  )
+  const mePage = useSelector(getInstanceMePage)
 
   const listsQuery = useListsQuery({
     options: {
@@ -26,7 +26,7 @@ const Collections: React.FC = () => {
   useEffect(() => {
     if (listsQuery.isSuccess) {
       dispatch(
-        updateContextMePage({
+        updateInstanceMePage({
           lists: { shown: listsQuery.data?.length ? true : false }
         })
       )
@@ -42,7 +42,7 @@ const Collections: React.FC = () => {
   useEffect(() => {
     if (announcementsQuery.isSuccess) {
       dispatch(
-        updateContextMePage({
+        updateInstanceMePage({
           announcements: {
             shown: announcementsQuery.data?.length ? true : false,
             unread: announcementsQuery.data.filter(

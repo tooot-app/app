@@ -1,7 +1,9 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
+import ComponentSeparator from '@components/Separator'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
+import TimelineLookback from '@components/Timeline/Lookback'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
@@ -9,11 +11,14 @@ import {
   TabPublicStackParamList
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 import { TabView } from 'react-native-tab-view'
+import { useSelector } from 'react-redux'
 import TabSharedRoot from './Shared/Root'
 
 const Stack = createNativeStackNavigator<TabPublicStackParamList>()
@@ -26,7 +31,7 @@ const TabPublic = React.memo(
     const [segment, setSegment] = useState(0)
     const pages: {
       title: string
-      key: App.Pages
+      key: Extract<App.Pages, 'Local' | 'LocalPublic'>
     }[] = [
       {
         title: t('tabs.public.segments.left'),
@@ -70,19 +75,42 @@ const TabPublic = React.memo(
 
     const routes = pages.map(p => ({ key: p.key }))
 
+    const timelinesLookback = useSelector(
+      getInstanceTimelinesLookback,
+      () => true
+    )
     const renderScene = useCallback(
       ({
         route: { key: page }
       }: {
         route: {
-          key: App.Pages
+          key: Extract<App.Pages, 'Local' | 'LocalPublic'>
         }
       }) => {
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-        const renderItem = ({ item }: any) => (
-          <TimelineDefault item={item} queryKey={queryKey} />
+        const renderItem = ({ item }: any) => {
+          if (timelinesLookback?.[page]?.ids?.[0] === item.id) {
+            return (
+              <>
+                <TimelineLookback />
+                <ComponentSeparator
+                  extraMarginLeft={
+                    StyleConstants.Avatar.M + StyleConstants.Spacing.S
+                  }
+                />
+                <TimelineDefault item={item} queryKey={queryKey} />
+              </>
+            )
+          }
+          return <TimelineDefault item={item} queryKey={queryKey} />
+        }
+        return (
+          <Timeline
+            queryKey={queryKey}
+            lookback={page}
+            customProps={{ renderItem }}
+          />
         )
-        return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
       },
       []
     )

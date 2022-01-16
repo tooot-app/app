@@ -1,7 +1,10 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import {
+  getInstanceActive,
+  updateInstanceTimelineLookback
+} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
@@ -10,13 +13,14 @@ import {
   FlatListProps,
   Platform,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  ViewabilityConfigCallbackPairs
 } from 'react-native'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
 import TimelineRefresh, {
@@ -31,6 +35,7 @@ export interface Props {
   queryKey: QueryKeyTimeline
   disableRefresh?: boolean
   disableInfinity?: boolean
+  lookback?: Extract<App.Pages, 'Following' | 'Local' | 'LocalPublic'>
   customProps: Partial<FlatListProps<any>> &
     Pick<FlatListProps<any>, 'renderItem'>
 }
@@ -40,6 +45,7 @@ const Timeline: React.FC<Props> = ({
   queryKey,
   disableRefresh = false,
   disableInfinity = false,
+  lookback,
   customProps
 }) => {
   // Switching account update timeline
@@ -124,6 +130,27 @@ const Timeline: React.FC<Props> = ({
     }
   })
 
+  const dispatch = useDispatch()
+  const viewabilityPairs = useRef<ViewabilityConfigCallbackPairs>([
+    {
+      viewabilityConfig: {
+        minimumViewTime: 10,
+        viewAreaCoveragePercentThreshold: 10
+      },
+      onViewableItemsChanged: ({ viewableItems }) => {
+        lookback &&
+          dispatch(
+            updateInstanceTimelineLookback({
+              [lookback]: {
+                queryKey,
+                ids: viewableItems.map(item => item.key).slice(0, 3)
+              }
+            })
+          )
+      }
+    }
+  ])
+
   useScrollToTop(flRef)
   return (
     <>
@@ -157,6 +184,9 @@ const Timeline: React.FC<Props> = ({
         maintainVisibleContentPosition={{
           minIndexForVisible: 0
         }}
+        {...(lookback && {
+          viewabilityConfigCallbackPairs: viewabilityPairs.current
+        })}
         {...androidRefreshControl}
         {...customProps}
       />

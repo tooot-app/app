@@ -25,7 +25,7 @@ import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { onlineManager, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -51,11 +51,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   useEffect(() => {
     switch (isConnected) {
       case true:
-        onlineManager.setOnline(isConnected)
         removeMessage()
         break
       case false:
-        onlineManager.setOnline(isConnected)
         displayMessage({
           mode,
           type: 'error',

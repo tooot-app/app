@@ -26,7 +26,7 @@ const instancesPersistConfig = {
   key: 'instances',
   prefix,
   storage: secureStorage,
-  version: 6,
+  version: 7,
   // @ts-ignore
   migrate: createMigrate(instancesMigration)
 }
