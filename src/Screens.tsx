@@ -17,12 +17,17 @@ import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
-import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import {
+  getInstanceActive,
+  getInstances,
+  updateInstanceActive
+} from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
+import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -143,6 +148,37 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
     routeRef.current = currentRoute
   }, [])
+
+  // Deep linking for compose
+  const [deeplinked, setDeeplinked] = useState(false)
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      setDeeplinked(true)
+
+      const initialUrl = await Linking.parseInitialURLAsync()
+
+      if (initialUrl.path) {
+        const paths = initialUrl.path.split('/')
+
+        if (paths && paths.length) {
+          const instanceIndex = instances.findIndex(
+            instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
+          )
+          if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
+            dispatch(updateInstanceActive(instances[instanceIndex]))
+            queryClient.clear()
+          }
+        }
+      }
+
+      if (initialUrl.hostname === 'compose') {
+        navigationRef.navigate('Screen-Compose')
+      }
+    }
+    if (!deeplinked) {
+      getUrlAsync()
+    }
+  }, [instanceActive, instances, deeplinked])
 
   return (
     <>

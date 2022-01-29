@@ -43,6 +43,7 @@ const pushUseReceive = ({ queryClient, instances }: Params) => {
           onPress: () => {
             if (notificationIndex !== -1) {
               dispatch(updateInstanceActive(instances[notificationIndex]))
+              queryClient.clear()
             }
             pushUseNavigate(payloadData.notification_id)
           }
