@@ -3,7 +3,6 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useNavigation } from '@react-navigation/native'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { findIndex } from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
@@ -40,7 +39,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         }
         if (!scrolled.current) {
           scrolled.current = true
-          const pointer = findIndex(flattenData, ['id', toot.id])
+          const pointer = flattenData.findIndex(({ id }) => id === toot.id)
           try {
             pointer < flattenData.length &&
               setTimeout(() => {

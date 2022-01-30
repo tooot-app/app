@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { findIndex } from 'lodash'
 import addInstance from './instances/add'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
@@ -130,10 +129,9 @@ const instancesSlice = createSlice({
       action: PayloadAction<ComposeStateDraft>
     ) => {
       const activeIndex = findInstanceActive(instances)
-      const draftIndex = findIndex(instances[activeIndex].drafts, [
-        'timestamp',
-        action.payload.timestamp
-      ])
+      const draftIndex = instances[activeIndex].drafts.findIndex(
+        ({ timestamp }) => timestamp === action.payload.timestamp
+      )
       if (draftIndex === -1) {
         instances[activeIndex].drafts.unshift(action.payload)
       } else {

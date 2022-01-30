@@ -2,30 +2,32 @@ import apiGeneral from '@api/general'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
-import { Dispatch } from '@reduxjs/toolkit'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
+import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { TFunction } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 
 export interface Params {
-  mode: 'light' | 'dark'
   t: TFunction<'screens'>
   instances: Instance[]
-  dispatch: Dispatch<any>
 }
 
-const pushUseConnect = ({ mode, t, instances, dispatch }: Params) => {
+const pushUseConnect = ({ t, instances }: Params) => {
+  const dispatch = useDispatch()
+  const { mode } = useTheme()
+
   return useEffect(() => {
     const connect = async () => {
       const expoToken = isDevelopment
-      ? 'DEVELOPMENT_TOKEN_1'
-      : (
-          await Notifications.getExpoPushTokenAsync({
-            experienceId: '@xmflsct/tooot'
-          })
-        ).data
+        ? 'DEVELOPMENT_TOKEN_1'
+        : (
+            await Notifications.getExpoPushTokenAsync({
+              experienceId: '@xmflsct/tooot'
+            })
+          ).data
 
       apiTooot({
         method: 'get',

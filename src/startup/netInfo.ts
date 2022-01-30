@@ -1,7 +1,7 @@
 import apiInstance from '@api/instance'
 import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
-import { prefetchTimelineQuery } from '@utils/queryHooks/timeline'
+import initQuery from '@utils/initQuery'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import removeInstance from '@utils/slices/instances/remove'
 import {
@@ -62,43 +62,19 @@ const netInfo = async (): Promise<{
 
         if (instance.timelinesLookback) {
           const previousTab = getPreviousTab(store.getState())
-          let loadPage: Extract<
-            App.Pages,
-            'Following' | 'Local' | 'LocalPublic'
-          > | void = undefined
+          let loadPage:
+            | Extract<App.Pages, 'Following' | 'Local' | 'LocalPublic'>
+            | undefined = undefined
           if (previousTab === 'Tab-Local') {
             loadPage = 'Following'
           } else if (previousTab === 'Tab-Public') {
             loadPage = 'LocalPublic'
           }
 
-          if (loadPage) {
-            if (instance.timelinesLookback?.[loadPage]?.ids.length > 0) {
-              log(
-                'log',
-                'netInfo',
-                `prefetching landing page ${instance.timelinesLookback[loadPage].queryKey[1].page} ids: ${instance.timelinesLookback[loadPage].ids}`
-              )
-              const prefetch = await prefetchTimelineQuery(
-                instance.timelinesLookback[loadPage]
-              )
-              if (prefetch) {
-                log('log', 'netInfo', `prefetched from status id ${prefetch}`)
-              } else {
-                log('error', 'netInfo', 'failed to prefetch')
-              }
-            }
-          }
-          for (const page of Object.keys(instance.timelinesLookback)) {
-            if (page !== loadPage) {
-              log(
-                'log',
-                'netInfo',
-                `prefetching other page ${instance.timelinesLookback[page].queryKey[1].page} ids: ${instance.timelinesLookback[page].ids}`
-              )
-              prefetchTimelineQuery(instance.timelinesLookback[page])
-            }
-          }
+          await initQuery({
+            instance,
+            prefetch: { enabled: true, page: loadPage }
+          })
         }
 
         return Promise.resolve({ connected: true })

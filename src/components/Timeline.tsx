@@ -48,9 +48,6 @@ const Timeline: React.FC<Props> = ({
   lookback,
   customProps
 }) => {
-  // Switching account update timeline
-  useSelector(getInstanceActive)
-
   const { theme } = useTheme()
 
   const {
@@ -152,6 +149,13 @@ const Timeline: React.FC<Props> = ({
   ])
 
   useScrollToTop(flRef)
+  useSelector(getInstanceActive, (prev, next) => {
+    if (prev !== next) {
+      flRef.current?.scrollToOffset({ offset: 0, animated: false })
+    }
+    return prev === next
+  })
+
   return (
     <>
       <TimelineRefresh
@@ -162,7 +166,6 @@ const Timeline: React.FC<Props> = ({
         disableRefresh={disableRefresh}
       />
       <AnimatedFlatList
-        // @ts-ignore
         ref={customFLRef || flRef}
         scrollEventThrottle={16}
         onScroll={onScroll}

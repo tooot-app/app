@@ -8,7 +8,6 @@ import {
   RootStackScreenProps
 } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share, StatusBar, View } from 'react-native'
@@ -120,7 +119,7 @@ const ScreenImagesViewer = ({
 
   const { mode } = useTheme()
 
-  const initialIndex = findIndex(imageUrls, ['id', id])
+  const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   const messageRef = useRef<FlashMessage>(null)

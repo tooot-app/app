@@ -9,6 +9,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import initQuery from '@utils/initQuery'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
@@ -17,11 +18,7 @@ import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
-import {
-  getInstanceActive,
-  getInstances,
-  updateInstanceActive
-} from '@utils/slices/instancesSlice'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
@@ -76,9 +73,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     (prev, next) => prev.length === next.length
   )
   const queryClient = useQueryClient()
-  pushUseConnect({ mode, t, instances, dispatch })
-  pushUseReceive({ queryClient, instances })
-  pushUseRespond({ queryClient, instances, dispatch })
+  pushUseConnect({ t, instances })
+  pushUseReceive({ instances })
+  pushUseRespond({ instances })
 
   // Prevent screenshot alert
   useEffect(() => {
@@ -165,8 +162,10 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
           )
           if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
-            dispatch(updateInstanceActive(instances[instanceIndex]))
-            queryClient.clear()
+            initQuery({
+              instance: instances[instanceIndex],
+              prefetch: { enabled: true }
+            })
           }
         }
       }
