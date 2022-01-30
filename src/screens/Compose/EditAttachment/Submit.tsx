@@ -42,34 +42,38 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
         ) {
           formData.append(
             'focus',
-            `${theAttachment.meta?.focus?.x || 0},${-theAttachment.meta?.focus
-              ?.y || 0}`
+            `${theAttachment.meta?.focus?.x || 0},${
+              -theAttachment.meta?.focus?.y || 0
+            }`
           )
         }
 
-        apiInstance<Mastodon.Attachment>({
-          method: 'put',
-          url: `media/${theAttachment.id}`,
-          body: formData
-        })
-          .then(() => {
-            haptics('Success')
-            navigation.goBack()
+        theAttachment?.id &&
+          apiInstance<Mastodon.Attachment>({
+            method: 'put',
+            url: `media/${theAttachment.id}`,
+            body: formData
           })
-          .catch(() => {
-            setIsSubmitting(false)
-            haptics('Error')
-            Alert.alert(
-              t('content.editAttachment.header.right.failed.title'),
-              undefined,
-              [
-                {
-                  text: t('content.editAttachment.header.right.failed.button'),
-                  style: 'cancel'
-                }
-              ]
-            )
-          })
+            .then(() => {
+              haptics('Success')
+              navigation.goBack()
+            })
+            .catch(() => {
+              setIsSubmitting(false)
+              haptics('Error')
+              Alert.alert(
+                t('content.editAttachment.header.right.failed.title'),
+                undefined,
+                [
+                  {
+                    text: t(
+                      'content.editAttachment.header.right.failed.button'
+                    ),
+                    style: 'cancel'
+                  }
+                ]
+              )
+            })
       }}
     />
   )

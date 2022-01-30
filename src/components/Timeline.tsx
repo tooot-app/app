@@ -72,7 +72,7 @@ const Timeline: React.FC<Props> = ({
   })
 
   const flattenData = data?.pages
-    ? data.pages.flatMap(page => [...page.body])
+    ? data.pages?.flatMap(page => [...page.body])
     : []
 
   const ItemSeparatorComponent = useCallback(
