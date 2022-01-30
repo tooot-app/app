@@ -108,10 +108,10 @@ const TimelineAttachment = React.memo(
               )
             default:
               if (
-                attachment.preview_url.endsWith('.jpg') ||
-                attachment.preview_url.endsWith('.jpeg') ||
-                attachment.preview_url.endsWith('.png') ||
-                attachment.preview_url.endsWith('.gif') ||
+                attachment.preview_url?.endsWith('.jpg') ||
+                attachment.preview_url?.endsWith('.jpeg') ||
+                attachment.preview_url?.endsWith('.png') ||
+                attachment.preview_url?.endsWith('.gif') ||
                 attachment.remote_url?.endsWith('.jpg') ||
                 attachment.remote_url?.endsWith('.jpeg') ||
                 attachment.remote_url?.endsWith('.png') ||

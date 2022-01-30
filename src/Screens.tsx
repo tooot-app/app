@@ -9,6 +9,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import initQuery from '@utils/initQuery'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
@@ -21,11 +22,12 @@ import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
+import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { onlineManager, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -51,11 +53,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   useEffect(() => {
     switch (isConnected) {
       case true:
-        onlineManager.setOnline(isConnected)
         removeMessage()
         break
       case false:
-        onlineManager.setOnline(isConnected)
         displayMessage({
           mode,
           type: 'error',
@@ -73,9 +73,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     (prev, next) => prev.length === next.length
   )
   const queryClient = useQueryClient()
-  pushUseConnect({ mode, t, instances, dispatch })
-  pushUseReceive({ queryClient, instances })
-  pushUseRespond({ queryClient, instances, dispatch })
+  pushUseConnect({ t, instances })
+  pushUseReceive({ instances })
+  pushUseRespond({ instances })
 
   // Prevent screenshot alert
   useEffect(() => {
@@ -145,6 +145,39 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
     routeRef.current = currentRoute
   }, [])
+
+  // Deep linking for compose
+  const [deeplinked, setDeeplinked] = useState(false)
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      setDeeplinked(true)
+
+      const initialUrl = await Linking.parseInitialURLAsync()
+
+      if (initialUrl.path) {
+        const paths = initialUrl.path.split('/')
+
+        if (paths && paths.length) {
+          const instanceIndex = instances.findIndex(
+            instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
+          )
+          if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
+            initQuery({
+              instance: instances[instanceIndex],
+              prefetch: { enabled: true }
+            })
+          }
+        }
+      }
+
+      if (initialUrl.hostname === 'compose') {
+        navigationRef.navigate('Screen-Compose')
+      }
+    }
+    if (!deeplinked) {
+      getUrlAsync()
+    }
+  }, [instanceActive, instances, deeplinked])
 
   return (
     <>
