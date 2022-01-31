@@ -1,9 +1,7 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
-import ComponentSeparator from '@components/Separator'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import TimelineLookback from '@components/Timeline/Lookback'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   ScreenTabsScreenProps,
@@ -11,7 +9,6 @@ import {
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
-import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -55,17 +52,7 @@ const TabLocal = React.memo(
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
     const renderItem = useCallback(({ item }) => {
       if (timelinesLookback?.['Following']?.ids?.[0] === item.id) {
-        return (
-          <>
-            <TimelineLookback />
-            <ComponentSeparator
-              extraMarginLeft={
-                StyleConstants.Avatar.M + StyleConstants.Spacing.S
-              }
-            />
-            <TimelineDefault item={item} queryKey={queryKey} />
-          </>
-        )
+        return <TimelineDefault item={item} queryKey={queryKey} />
       }
       return <TimelineDefault item={item} queryKey={queryKey} />
     }, [])
