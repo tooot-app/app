@@ -8,6 +8,7 @@ export default (): ExpoConfig => ({
   name: 'tooot',
   description: 'tooot for Mastodon',
   slug: 'tooot',
+  scheme: 'tooot',
   version: toootVersion,
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],

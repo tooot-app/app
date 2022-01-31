@@ -8,9 +8,11 @@ import {
   TabLocalStackParamList
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
+import { useSelector } from 'react-redux'
 import TabSharedRoot from './Shared/Root'
 
 const Stack = createNativeStackNavigator<TabLocalStackParamList>()
@@ -43,13 +45,25 @@ const TabLocal = React.memo(
       [i18n.language]
     )
 
-    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
-    const renderItem = useCallback(
-      ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
-      []
+    const timelinesLookback = useSelector(
+      getInstanceTimelinesLookback,
+      () => true
     )
+    const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
+    const renderItem = useCallback(({ item }) => {
+      if (timelinesLookback?.['Following']?.ids?.[0] === item.id) {
+        return <TimelineDefault item={item} queryKey={queryKey} />
+      }
+      return <TimelineDefault item={item} queryKey={queryKey} />
+    }, [])
     const children = useCallback(
-      () => <Timeline queryKey={queryKey} customProps={{ renderItem }} />,
+      () => (
+        <Timeline
+          queryKey={queryKey}
+          lookback='Following'
+          customProps={{ renderItem }}
+        />
+      ),
       []
     )
 

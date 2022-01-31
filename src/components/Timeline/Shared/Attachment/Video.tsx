@@ -60,11 +60,9 @@ const AttachmentVideo: React.FC<Props> = ({
 
   const appState = useRef(AppState.currentState)
   useEffect(() => {
-    AppState.addEventListener('change', _handleAppStateChange)
+    const appState = AppState.addEventListener('change', _handleAppStateChange)
 
-    return () => {
-      AppState.removeEventListener('change', _handleAppStateChange)
-    }
+    return () => appState.remove()
   }, [])
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {

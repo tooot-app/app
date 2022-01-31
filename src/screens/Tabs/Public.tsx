@@ -9,11 +9,13 @@ import {
   TabPublicStackParamList
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 import { TabView } from 'react-native-tab-view'
+import { useSelector } from 'react-redux'
 import TabSharedRoot from './Shared/Root'
 
 const Stack = createNativeStackNavigator<TabPublicStackParamList>()
@@ -26,7 +28,7 @@ const TabPublic = React.memo(
     const [segment, setSegment] = useState(0)
     const pages: {
       title: string
-      key: App.Pages
+      key: Extract<App.Pages, 'Local' | 'LocalPublic'>
     }[] = [
       {
         title: t('tabs.public.segments.left'),
@@ -70,19 +72,32 @@ const TabPublic = React.memo(
 
     const routes = pages.map(p => ({ key: p.key }))
 
+    const timelinesLookback = useSelector(
+      getInstanceTimelinesLookback,
+      () => true
+    )
     const renderScene = useCallback(
       ({
         route: { key: page }
       }: {
         route: {
-          key: App.Pages
+          key: Extract<App.Pages, 'Local' | 'LocalPublic'>
         }
       }) => {
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-        const renderItem = ({ item }: any) => (
-          <TimelineDefault item={item} queryKey={queryKey} />
+        const renderItem = ({ item }: any) => {
+          if (timelinesLookback?.[page]?.ids?.[0] === item.id) {
+            return <TimelineDefault item={item} queryKey={queryKey} />
+          }
+          return <TimelineDefault item={item} queryKey={queryKey} />
+        }
+        return (
+          <Timeline
+            queryKey={queryKey}
+            lookback={page}
+            customProps={{ renderItem }}
+          />
         )
-        return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
       },
       []
     )

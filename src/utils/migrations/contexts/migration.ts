@@ -1,4 +1,5 @@
 import { ContextsV0 } from './v0'
+import { ContextsV1 } from './v1'
 
 const contextsMigration = {
   1: (state: ContextsV0) => {
@@ -10,6 +11,11 @@ const contextsMigration = {
         announcements: { shown: false, unread: 0 }
       }
     })
+  },
+  2: (state: ContextsV1) => {
+    // @ts-ignore
+    delete state.mePage
+    return state
   }
 }
 

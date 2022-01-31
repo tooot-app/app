@@ -1,5 +1,4 @@
 import queryClient from '@helpers/queryClient'
-import { findIndex } from 'lodash'
 import { InfiniteData } from 'react-query'
 import {
   MutationVarsTimelineUpdateStatusProperty,
@@ -37,7 +36,9 @@ const updateStatusProperty = ({
               'boolean'
             ) {
               const items = page.body as Mastodon.Conversation[]
-              const tootIndex = findIndex(items, ['last_status.id', id])
+              const tootIndex = items.findIndex(
+                ({ last_status }) => last_status?.id === id
+              )
               if (tootIndex >= 0) {
                 foundToot = true
                 updateConversation({ item: items[tootIndex], payload })
@@ -47,17 +48,18 @@ const updateStatusProperty = ({
               typeof (page.body as Mastodon.Notification[])[0].type === 'string'
             ) {
               const items = page.body as Mastodon.Notification[]
-              const tootIndex = findIndex(items, ['status.id', id])
+              const tootIndex = items.findIndex(
+                ({ status }) => status?.id === id
+              )
               if (tootIndex >= 0) {
                 foundToot = true
                 updateNotification({ item: items[tootIndex], payload })
               }
             } else {
               const items = page.body as Mastodon.Status[]
-              const tootIndex = findIndex(items, [
-                reblog ? 'reblog.id' : 'id',
-                id
-              ])
+              const tootIndex = reblog
+                ? items.findIndex(({ reblog }) => reblog?.id === id)
+                : items.findIndex(toot => toot.id === id)
               // if favouriets page and notifications page, remove the item instead
               if (tootIndex >= 0) {
                 foundToot = true
@@ -90,7 +92,9 @@ const updateStatusProperty = ({
                 'boolean'
               ) {
                 const items = page.body as Mastodon.Conversation[]
-                const tootIndex = findIndex(items, ['last_status.id', id])
+                const tootIndex = items.findIndex(
+                  ({ last_status }) => last_status?.id === id
+                )
                 if (tootIndex >= 0) {
                   foundToot = true
                   updateConversation({ item: items[tootIndex], payload })
@@ -101,17 +105,18 @@ const updateStatusProperty = ({
                 'string'
               ) {
                 const items = page.body as Mastodon.Notification[]
-                const tootIndex = findIndex(items, ['status.id', id])
+                const tootIndex = items.findIndex(
+                  ({ status }) => status?.id === id
+                )
                 if (tootIndex >= 0) {
                   foundToot = true
                   updateNotification({ item: items[tootIndex], payload })
                 }
               } else {
                 const items = page.body as Mastodon.Status[]
-                const tootIndex = findIndex(items, [
-                  reblog ? 'reblog.id' : 'id',
-                  id
-                ])
+                const tootIndex = reblog
+                  ? items.findIndex(({ reblog }) => reblog?.id === id)
+                  : items.findIndex(toot => toot.id === id)
                 // if favouriets page and notifications page, remove the item instead
                 if (tootIndex >= 0) {
                   foundToot = true

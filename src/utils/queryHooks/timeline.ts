@@ -2,7 +2,10 @@ import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
-import { getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
+import {
+  getInstanceNotificationsFilter,
+  updateInstanceTimelineLookback
+} from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
@@ -194,9 +197,7 @@ const useTimelineQuery = ({
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
   options?: UseInfiniteQueryOptions<
-    InstanceResponse<
-      Mastodon.Status[] | Mastodon.Notification[] | Mastodon.Conversation[]
-    >,
+    InstanceResponse<Mastodon.Status[]>,
     AxiosError
   >
 }) => {
@@ -207,6 +208,53 @@ const useTimelineQuery = ({
     refetchOnWindowFocus: false,
     ...options
   })
+}
+
+const prefetchTimelineQuery = async ({
+  ids,
+  queryKey
+}: {
+  ids: Mastodon.Status['id'][]
+  queryKey: QueryKeyTimeline
+}): Promise<Mastodon.Status['id'] | undefined> => {
+  let page: string = ''
+  let local: boolean = false
+  switch (queryKey[1].page) {
+    case 'Following':
+      page = 'home'
+      break
+    case 'Local':
+      page = 'public'
+      local = true
+      break
+    case 'LocalPublic':
+      page = 'public'
+      break
+  }
+
+  for (const id of ids) {
+    const statuses = await apiInstance<Mastodon.Status[]>({
+      method: 'get',
+      url: `timelines/${page}`,
+      params: {
+        min_id: id,
+        limit: 1,
+        ...(local && { local: 'true' })
+      }
+    })
+    if (statuses.body.length) {
+      await queryClient.prefetchInfiniteQuery(queryKey, props =>
+        queryFunction({
+          ...props,
+          queryKey,
+          pageParam: {
+            max_id: statuses.body[0].id
+          }
+        })
+      )
+      return id
+    }
+  }
 }
 
 // --- Separator ---
@@ -388,4 +436,4 @@ const useTimelineMutation = ({
   })
 }
 
-export { useTimelineQuery, useTimelineMutation }
+export { prefetchTimelineQuery, useTimelineQuery, useTimelineMutation }

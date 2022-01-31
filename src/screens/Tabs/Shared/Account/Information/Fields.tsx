@@ -95,6 +95,3 @@ const styles = StyleSheet.create({
 })
 
 export default AccountInformationFields
-function htmlToText (note: string): any {
-  throw new Error('Function not implemented.')
-}

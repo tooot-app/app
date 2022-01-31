@@ -17,10 +17,6 @@ export type ContextsState = {
     hidden: boolean
   }
   previousTab: 'Tab-Local' | 'Tab-Public' | 'Tab-Notifications' | 'Tab-Me'
-  mePage: {
-    lists: { shown: boolean }
-    announcements: { shown: boolean; unread: number }
-  }
 }
 
 export const contextsInitialState = {
@@ -36,11 +32,7 @@ export const contextsInitialState = {
     current: 0,
     hidden: false
   },
-  previousTab: 'Tab-Me',
-  mePage: {
-    lists: { shown: false },
-    announcements: { shown: false, unread: 0 }
-  }
+  previousTab: 'Tab-Me'
 }
 
 const contextsSlice = createSlice({
@@ -69,12 +61,6 @@ const contextsSlice = createSlice({
       action: PayloadAction<ContextsState['previousTab']>
     ) => {
       state.previousTab = action.payload
-    },
-    updateContextMePage: (
-      state,
-      action: PayloadAction<Partial<ContextsState['mePage']>>
-    ) => {
-      state.mePage = { ...state.mePage, ...action.payload }
     }
   }
 })
@@ -82,13 +68,11 @@ const contextsSlice = createSlice({
 export const getPublicRemoteNotice = (state: RootState) =>
   state.contexts.publicRemoteNotice
 export const getPreviousTab = (state: RootState) => state.contexts.previousTab
-export const getMePage = (state: RootState) => state.contexts.mePage
 export const getContexts = (state: RootState) => state.contexts
 
 export const {
   updateStoreReview,
   updatePublicRemoteNotice,
-  updatePreviousTab,
-  updateContextMePage
+  updatePreviousTab
 } = contextsSlice.actions
 export default contextsSlice.reducer

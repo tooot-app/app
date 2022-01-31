@@ -1,6 +1,7 @@
 import { InstanceV3 } from './v3'
 import { InstanceV4 } from './v4'
 import { InstanceV5 } from './v5'
+import { InstanceV6 } from './v6'
 
 const instancesMigration = {
   4: (state: InstanceV3) => {
@@ -52,6 +53,20 @@ const instancesMigration = {
     return {
       instances: state.instances.map(instance => {
         return { ...instance, configuration: undefined }
+      })
+    }
+  },
+  7: (state: InstanceV6) => {
+    return {
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          timelinesLookback: {},
+          mePage: {
+            lists: { shown: false },
+            announcements: { shown: false, unread: 0 }
+          }
+        }
       })
     }
   }

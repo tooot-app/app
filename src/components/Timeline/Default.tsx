@@ -50,7 +50,7 @@ const TimelineDefault: React.FC<Props> = ({
 
   const actualStatus = item.reblog ? item.reblog : item
 
-  const ownAccount = actualStatus.account.id === instanceAccount?.id
+  const ownAccount = actualStatus.account?.id === instanceAccount?.id
 
   if (
     !highlighted &&

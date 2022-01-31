@@ -11,6 +11,9 @@
   "end": {
     "message": "The end, what about a cup of <0 />"
   },
+  "lookback": {
+    "message": "Last read at"
+  },
   "refresh": {
     "fetchPreviousPage": "Newer from here",
     "refetch": "To latest"
