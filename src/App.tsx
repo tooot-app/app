@@ -9,7 +9,10 @@ import netInfo from '@root/startup/netInfo'
 import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { getSettingsLanguage } from '@utils/slices/settingsSlice'
+import {
+  changeLanguage,
+  getSettingsLanguage
+} from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
@@ -86,6 +89,9 @@ const App: React.FC = () => {
       if (bootstrapped) {
         log('log', 'App', 'loading actual app :)')
         const language = getSettingsLanguage(store.getState())
+        if (!language) {
+          store.dispatch(changeLanguage('en'))
+        }
         i18n.changeLanguage(language)
         return (
           <ActionSheetProvider>
