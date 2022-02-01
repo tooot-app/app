@@ -1,7 +1,6 @@
 import { HeaderLeft } from '@components/Header'
-import { displayMessage, Message, removeMessage } from '@components/Message'
+import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
-import { useNetInfo } from '@react-native-community/netinfo'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenActions from '@screens/Actions'
@@ -48,24 +47,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }
 
   const routeRef = useRef<{ name?: string; params?: {} }>()
-
-  const isConnected = useNetInfo().isConnected
-  useEffect(() => {
-    switch (isConnected) {
-      case true:
-        removeMessage()
-        break
-      case false:
-        displayMessage({
-          mode,
-          type: 'error',
-          message: t('network.disconnected.message'),
-          description: t('network.disconnected.description'),
-          autoHide: false
-        })
-        break
-    }
-  }, [isConnected])
 
   // Push hooks
   const instances = useSelector(
