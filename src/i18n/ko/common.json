@@ -1,0 +1,21 @@
+{
+  "buttons": {
+    "apply": "적용",
+    "cancel": "취소"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "커스텀 이모지 {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} 성공"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} 실패, 다시 시도해주세요"
+    }
+  },
+  "separator": ", "
+}
