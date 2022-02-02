@@ -190,16 +190,7 @@ const ComposePoll: React.FC = () => {
           title={t('content.root.footer.poll.expiration.heading')}
           content={t(`content.root.footer.poll.expiration.options.${expire}`)}
           onPress={() => {
-            // @ts-ignore
-            const expirations: [
-              '300',
-              '1800',
-              '3600',
-              '21600',
-              '86400',
-              '259200',
-              '604800'
-            ] = [
+            const expirations = [
               '300',
               '1800',
               '3600',
@@ -220,16 +211,17 @@ const ComposePoll: React.FC = () => {
                   ),
                   t('content.root.footer.poll.expiration.options.cancel')
                 ],
-                cancelButtonIndex: 7
+                cancelButtonIndex: expirations.length
               },
               index => {
-                if (index && expirations.length < 7) {
+                if (index && index < expirations.length) {
                   analytics('compose_poll_expiration_press', {
                     current: expire,
                     new: expirations[index]
                   })
                   composeDispatch({
                     type: 'poll',
+                    // @ts-ignore
                     payload: { expire: expirations[index] }
                   })
                 }
