@@ -33,7 +33,7 @@ dev()
 sentry()
 audio()
 push()
-enableFreeze()
+enableFreeze(true)
 
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
