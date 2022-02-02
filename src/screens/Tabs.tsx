@@ -102,6 +102,19 @@ const ScreenTabs = React.memo(
     )
     const composeComponent = useCallback(() => null, [])
 
+    const meListeners = useMemo(
+      () => ({
+        tabLongPress: () => {
+          haptics('Light')
+          //@ts-ignore
+          navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })
+          //@ts-ignore
+          navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
+        }
+      }),
+      []
+    )
+
     const previousTab = useSelector(getPreviousTab, () => true)
 
     const versionUpdate = useSelector(getVersionUpdate)
@@ -128,7 +141,12 @@ const ScreenTabs = React.memo(
           listeners={composeListeners}
         />
         <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
-        <Tab.Screen name='Tab-Me' component={TabMe} options={tabMeOptions} />
+        <Tab.Screen
+          name='Tab-Me'
+          component={TabMe}
+          options={tabMeOptions}
+          listeners={meListeners}
+        />
       </Tab.Navigator>
     )
   },
