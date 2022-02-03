@@ -1,9 +1,7 @@
 import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
-import ComponentSeparator from '@components/Separator'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import TimelineLookback from '@components/Timeline/Lookback'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
@@ -12,7 +10,6 @@ import {
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -90,17 +87,7 @@ const TabPublic = React.memo(
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
         const renderItem = ({ item }: any) => {
           if (timelinesLookback?.[page]?.ids?.[0] === item.id) {
-            return (
-              <>
-                <TimelineLookback />
-                <ComponentSeparator
-                  extraMarginLeft={
-                    StyleConstants.Avatar.M + StyleConstants.Spacing.S
-                  }
-                />
-                <TimelineDefault item={item} queryKey={queryKey} />
-              </>
-            )
+            return <TimelineDefault item={item} queryKey={queryKey} />
           }
           return <TimelineDefault item={item} queryKey={queryKey} />
         }
