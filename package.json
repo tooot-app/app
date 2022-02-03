@@ -3,8 +3,8 @@
   "versions": {
     "native": "220102",
     "major": 3,
-    "minor": 2,
-    "patch": 2,
+    "minor": 3,
+    "patch": 0,
     "expo": "44.0.0"
   },
   "description": "tooot app for Mastodon",
@@ -17,7 +17,8 @@
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "iphone": "react-native run-ios",
+    "ipad": "react-native run-ios --simulator 'iPad mini (6th generation)'",
     "app:build": "bundle exec fastlane build",
     "release": "scripts/release.sh",
     "clean": "react-native-clean-project",
