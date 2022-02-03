@@ -1,0 +1,21 @@
+{
+  "buttons": {
+    "apply": "Áp dụng",
+    "cancel": "Hủy bỏ"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "Đã {{function}} xong!"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} thất bại, xin thử lại sau"
+    }
+  },
+  "separator": ", "
+}
