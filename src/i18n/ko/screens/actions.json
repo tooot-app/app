@@ -1,0 +1,19 @@
+{
+  "content": {
+    "button": {
+      "apply": "$t(common:buttons.apply)",
+      "cancel": "$t(common:buttons.cancel)"
+    },
+    "notificationsFilter": {
+      "heading": "알림 종류 표시",
+      "content": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "follow_request": "팔로우 요청"
+      }
+    }
+  }
+}
