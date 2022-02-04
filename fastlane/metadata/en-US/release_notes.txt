@@ -1,1 +1,1 @@
-Optimize performance and fix bugs
+Support iPad

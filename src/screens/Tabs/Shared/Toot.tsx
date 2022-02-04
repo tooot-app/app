@@ -24,9 +24,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const scrolled = useRef(false)
   const navigation = useNavigation()
   const queryClient = useQueryClient()
-  const observer = new InfiniteQueryObserver(queryClient, { queryKey })
+  const observer = new InfiniteQueryObserver(queryClient, {
+    queryKey,
+    enabled: false
+  })
   useEffect(() => {
-    const unsubscribe = observer.subscribe(result => {
+    return observer.subscribe(result => {
       if (result.isSuccess) {
         const flattenData = result.data?.pages
           ? // @ts-ignore
@@ -62,7 +65,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         }
       }
     })
-    return () => unsubscribe()
   }, [scrolled.current])
 
   // Toot page auto scroll to selected toot
