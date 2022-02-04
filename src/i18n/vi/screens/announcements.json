@@ -1,0 +1,10 @@
+{
+  "heading": "Có gì mới?",
+  "content": {
+    "published": "Đã đăng <0 />",
+    "button": {
+      "read": "Đọc",
+      "unread": "Đánh dấu là đã đọc"
+    }
+  }
+}
