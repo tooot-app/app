@@ -2,10 +2,7 @@ import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
-import {
-  getInstanceNotificationsFilter,
-  updateInstanceTimelineLookback
-} from '@utils/slices/instancesSlice'
+import { getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
