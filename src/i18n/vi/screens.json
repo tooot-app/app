@@ -1,0 +1,14 @@
+{
+  "screenshot": {
+    "title": "Bảo vệ quyền riêng tư",
+    "message": "Hãy tôn trọng thông tin cá nhân của người khác như tên tài khoản, ảnh đại diện, nhắn riêng etc. Cám ơn!",
+    "button": "Xác nhận"
+  },
+  "localCorrupt": {
+    "message": "Phiên đăng nhập hết hạn, hãy đăng nhập lại!"
+  },
+  "pushError": {
+    "message": "Lỗi thông báo đẩy",
+    "description": "Hãy cho phép thông báo đẩy trong mục cài đặt!"
+  }
+}
