@@ -85,17 +85,15 @@ const TabPublic = React.memo(
         }
       }) => {
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-        const renderItem = ({ item }: any) => {
-          if (timelinesLookback?.[page]?.ids?.[0] === item.id) {
-            return <TimelineDefault item={item} queryKey={queryKey} />
-          }
-          return <TimelineDefault item={item} queryKey={queryKey} />
-        }
         return (
           <Timeline
             queryKey={queryKey}
             lookback={page}
-            customProps={{ renderItem }}
+            customProps={{
+              renderItem: ({ item }: any) => (
+                <TimelineDefault item={item} queryKey={queryKey} />
+              )
+            }}
           />
         )
       },
