@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "사용자 팔로우"
+  },
+  "block": {
+    "function": "사용자 차단"
+  },
+  "button": {
+    "error": "불러오기 오류",
+    "blocked_by": "차단된 사용자",
+    "blocking": "차단 해제",
+    "following": "팔로우 해제",
+    "requested": "요청 취소",
+    "default": "팔로우"
+  }
+}
