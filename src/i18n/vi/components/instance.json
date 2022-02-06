@@ -1,0 +1,28 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Máy chủ"
+    },
+    "button": "Đăng nhập",
+    "information": {
+      "name": "Tên",
+      "accounts": "Người dùng",
+      "statuses": "Tút",
+      "domains": "Liên hợp"
+    },
+    "disclaimer": {
+      "base": "tooot sẽ không thấy được thông tin tài khoản của bạn. Tìm hiểu thêm ",
+      "privacy": "Bảo mật"
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Đang đăng nhập vào máy chủ",
+      "message": "Bạn có thể đăng nhập nhiều tài khoản cùng lúc",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Tiếp tục"
+      }
+    }
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "empty": {
+    "error": {
+      "message": "Lỗi khi tải dữ liệu",
+      "button": "Thử lại"
+    },
+    "success": {
+      "message": "Bảng tin trống trơn"
+    }
+  },
+  "end": {
+    "message": "Đã xem hết, uống <0 /> nha"
+  },
+  "lookback": {
+    "message": "Đọc lần cuối lúc"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Trước đó",
+    "refetch": "Trang cuối"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Đã ghim",
+      "favourite": "{{name}} thích tút của bạn",
+      "status": "{{name}} đăng tút mới",
+      "follow": "{{name}} theo dõi bạn",
+      "follow_request": "{{name}} yêu cầu theo dõi bạn",
+      "poll": "Cuộc bình chọn đã kết thúc",
+      "reblog": {
+        "default": "{{name}} đã chia sẻ",
+        "notification": "{{name}} chia sẻ tút của bạn"
+      }
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Trả lời tút này"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Chia sẻ tút này",
+        "function": "Chia sẻ tút"
+      },
+      "favourited": {
+        "accessibilityLabel": "Thích tút này",
+        "function": "Thích tút"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Lưu tút này",
+        "function": "Lưu tút"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} người đã chia sẻ tút này",
+        "accessibilityHint": "Xem những ai chia sẻ",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} người đã thích tút này",
+        "accessibilityHint": "Xem những ai thích",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Hiện nội dung nhạy cảm"
+      },
+      "unsupported": {
+        "text": "Không hỗ trợ định dạng",
+        "button": "Thử liên kết từ xa"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Ảnh đại diện của {{name}}",
+      "accessibilityHint": "Đến trang cá nhân {{name}}"
+    },
+    "content": {
+      "expandHint": "nội dung bị ẩn"
+    },
+    "filtered": "Đã lọc",
+    "fullConversation": "Xem thêm",
+    "translate": {
+      "default": "Dịch",
+      "succeed": "Dịch bằng {{provider}} từ {{source}}",
+      "failed": "Không thể dịch!"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Tên hiển thị"
+          },
+          "account": {
+            "accessibilityHint": "Tài khoản"
+          }
+        },
+        "application": "Đăng bằng {{application}}",
+        "muted": {
+          "accessibilityLabel": "Đã ẩn tút"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Tút này là dạng nhắn riêng"
+          },
+          "private": {
+            "accessibilityLabel": "Tuta này chỉ hiển thị với người theo dõi"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Với",
+        "delete": {
+          "function": "Xóa nhắn riêng"
+        }
+      },
+      "actions": {
+        "accessibilityHint": "Hành động cho tút này, bao gồm đăng thủ công hay đăng tự động",
+        "account": {
+          "heading": "Đối với người dùng",
+          "mute": {
+            "function": "Ẩn người dùng",
+            "button": "Ẩn @{{acct}}"
+          },
+          "block": {
+            "function": "Chặn người dùng",
+            "button": "Chặn @{{acct}}"
+          },
+          "reports": {
+            "function": "Báo cáo người dùng",
+            "button": "Báo cáo @{{acct}}"
+          }
+        },
+        "domain": {
+          "heading": "Đối với máy chủ",
+          "block": {
+            "function": "Chặn máy chủ",
+            "button": "Chặn {{domain}}"
+          },
+          "alert": {
+            "title": "Bạn có chắc muốn chặn {{domain}}?",
+            "message": "Bạn có thể ẩn hoặc chặn bất kỳ người nào.\n\nĐối với máy chủ, toàn bộ nội dung bao gồm người theo dõi bạn từ máy chủ đó cũng sẽ bị chặn!",
+            "buttons": {
+              "confirm": "Tiếp tục chặn",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        },
+        "share": {
+          "status": {
+            "heading": "Tút",
+            "button": "Chia sẻ URL tút"
+          },
+          "account": {
+            "heading": "Chia sẻ người dùng",
+            "button": "Chia sẻ URL người dùng này"
+          }
+        },
+        "status": {
+          "heading": "Về tút",
+          "delete": {
+            "function": "Xóa tút",
+            "button": "Xóa tút này"
+          },
+          "edit": {
+            "function": "Xóa tút",
+            "button": "Xóa và viết lại",
+            "alert": {
+              "title": "Tiếp tục xóa tút?",
+              "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, chia sẻ và trả lời tút cũng sẽ bị xóa theo.",
+              "buttons": {
+                "confirm": "Tiếp tục xóa",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "mute": {
+            "function": "Ẩn tút",
+            "button": {
+              "positive": "Ẩn tút này",
+              "negative": "Bỏ ẩn tút này"
+            }
+          },
+          "pin": {
+            "function": "Ghim",
+            "button": {
+              "positive": "Ghim tút này",
+              "negative": "Bỏ ghim tút này"
+            }
+          }
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Bình chọn",
+          "refresh": "Làm mới"
+        },
+        "count": {
+          "voters": "{{count}} người bình chọn",
+          "voters_plural": "{{count}} người bình chọn",
+          "votes": "{{count}} bình chọn",
+          "votes_plural": "{{count}} bình chọn"
+        },
+        "expiration": {
+          "expired": "Đã kết thúc",
+          "until": "Kết thúc sau <0 />"
+        }
+      }
+    }
+  }
+}

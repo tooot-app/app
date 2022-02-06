@@ -1,0 +1,9 @@
+{
+  "HTML": {
+    "expanded": {
+      "true": "Thu gọn {{hint}}",
+      "false": "Mở rộng {{hint}}"
+    },
+    "defaultHint": "Tút"
+  }
+}

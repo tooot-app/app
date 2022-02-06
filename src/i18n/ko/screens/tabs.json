@@ -1,0 +1,322 @@
+{
+  "tabs": {
+    "local": {
+      "name": "팔로우 중"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "연합",
+        "right": "로컬"
+      }
+    },
+    "notifications": {
+      "name": "알림"
+    },
+    "me": {
+      "name": "내 소개"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "검색",
+      "accessibilityHint": "해시태그, 유저나 툿을 검색할 수 있어요"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "필터",
+      "accessibilityHint": "받는 알림 종류 선택"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "북마크"
+      },
+      "conversations": {
+        "name": "개인 메시지"
+      },
+      "favourites": {
+        "name": "즐겨찾기"
+      },
+      "fontSize": {
+        "name": "툿 폰트 크기"
+      },
+      "lists": {
+        "name": "목록"
+      },
+      "list": {
+        "name": "목록: {{list}}"
+      },
+      "push": {
+        "name": "푸시 알림"
+      },
+      "profile": {
+        "name": "프로필 편집"
+      },
+      "profileName": {
+        "name": "표시 이름 편집"
+      },
+      "profileNote": {
+        "name": "설명 편집"
+      },
+      "profileFields": {
+        "name": "메타데이터 편집"
+      },
+      "settings": {
+        "name": "앱 설정"
+      },
+      "switch": {
+        "name": "계정 전환"
+      }
+    },
+    "fontSize": {
+      "showcase": "예시 툿",
+      "demo": "<p>데모 툿이에요😊. 아래의 여러 옵션 중에서 선택할 수 있어요.<br /><br />이 설정은 툿의 메인 내용에만 적용되고, 다른 폰트 크기에 영향을 미치지 않아요.</p>",
+      "availableSizes": "사용할 수 있는 크기",
+      "sizes": {
+        "S": "작게",
+        "M": "중간 - 기본값",
+        "L": "크게",
+        "XL": "더 크게",
+        "XXL": "아주 크게"
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "변경사항이 저장되지 않음",
+        "message": "변경 사항이 저장되지 않았어요. 변경 사항 적용을 취소할까요?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "취소"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}} 업데이트됨",
+        "failed": "{{type}} 업데이트 실패, 다시 시도해주세요"
+      },
+      "root": {
+        "name": {
+          "title": "표시 이름"
+        },
+        "avatar": {
+          "title": "아바타",
+          "description": "400x400px으로 다운스케일되어요"
+        },
+        "header": {
+          "title": "배너",
+          "description": "1500x500px으로 다운스케일되어요"
+        },
+        "note": {
+          "title": "설명"
+        },
+        "fields": {
+          "title": "메타데이터",
+          "total": "{{count}}개 필드",
+          "total_plural": "{{count}}개 필드"
+        },
+        "visibility": {
+          "title": "공개 범위",
+          "options": {
+            "public": "공개",
+            "unlisted": "공개 타임라인에 비표시",
+            "private": "팔로워만",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "미디어 민감함으로 포스트"
+        },
+        "lock": {
+          "title": "계정 잠그기",
+          "description": "내가 직접 팔로워를 수락해야해요"
+        },
+        "bot": {
+          "title": "봇 계정",
+          "description": "이 계정이 대부분 자동으로 작업을 수행하고 잘 확인하지 않는다는 것을 알려요."
+        }
+      },
+      "fields": {
+        "group": "그룹 {{index}}",
+        "label": "라벨",
+        "content": "내용"
+      }
+    },
+    "push": {
+      "notAvailable": "이 기기는 tooot의 푸시 알림을 지원하지 않아요",
+      "enable": {
+        "direct": "푸시 알림 활성화",
+        "settings": "설정에서 활성화"
+      },
+      "global": {
+        "heading": "{{acct}} 활성화",
+        "description": "메시지는 tooot의 서버를 거쳐 라우트되어요"
+      },
+      "decode": {
+        "heading": "메시지 세부 정보",
+        "description": "tooot의 서버를 거치는 메시지는 암호화되지만, 메시지를 서버에서 복호화하도록 설정할 수 있습니다. 서버의 소스는 오픈 소스이고, 로그하지 않습니다."
+      },
+      "default": {
+        "heading": "기본값"
+      },
+      "follow": {
+        "heading": "새 팔로워"
+      },
+      "favourite": {
+        "heading": "즐겨찾기됨"
+      },
+      "reblog": {
+        "heading": "부스트됨"
+      },
+      "mention": {
+        "heading": "멘션했어요"
+      },
+      "poll": {
+        "heading": "투표 업데이트"
+      },
+      "howitworks": "라우팅 방법 알아보기"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}}개 안 읽음",
+          "read": "모두 읽음",
+          "empty": "없음"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "활성화됨",
+          "disabled": "비활성화됨"
+        }
+      },
+      "update": {
+        "title": "최신 버전으로 업데이트"
+      },
+      "logout": {
+        "button": "로그아웃",
+        "alert": {
+          "title": "로그아웃할까요?",
+          "message": "로그아웃한 이후, 다시 로그인해야해요",
+          "buttons": {
+            "logout": "로그아웃",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "언어",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "모양",
+        "options": {
+          "auto": "시스템과 동일",
+          "light": "밝은 모드",
+          "dark": "어두운 모드",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "링크 열기",
+        "options": {
+          "internal": "앱 안에서",
+          "external": "시스템 브라우저 사용",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "support": {
+        "heading": "tooot 기부"
+      },
+      "review": {
+        "heading": "tooot 리뷰"
+      },
+      "contact": {
+        "heading": "tooot 연락"
+      },
+      "analytics": {
+        "heading": "개선할 수 있도록 도와주세요",
+        "description": "유저와 관련이 없는 사용량만 수집해요"
+      },
+      "version": "버전 v{{version}}"
+    },
+    "switch": {
+      "existing": "로그인된 것 중 선택",
+      "new": "인스턴스에 로그인"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "사용자 {{user}}에 대한 동작",
+        "accessibilityHint": "이 사용자를 뮤트, 차단, 신고 또는 공유할 수 있어요"
+      },
+      "moved": "유저가 이동함",
+      "created_at": "등록된 날: {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} 툿",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "툿",
+        "all": "툿과 답장"
+      }
+    },
+    "attachments": {
+      "name": "<0 /><1>\"의 미디어</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "무엇을",
+        "placeholder": "검색할까요..."
+      },
+      "empty": {
+        "general": "키워드를 입력해 <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold>이나 <bold>$t(screenTabs:shared.search.sections.statuses)</bold>를 검색할 수 있어요",
+        "advanced": {
+          "header": "고급 검색",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "사용자",
+        "hashtags": "해시태그",
+        "statuses": "툿"
+      },
+      "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요"
+    },
+    "toot": {
+      "name": "대화"
+    },
+    "users": {
+      "accounts": {
+        "following": "팔로잉 {{count}}",
+        "followers": "{{count}} 팔로워"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} 부스트함",
+        "favourited_by": "{{count}} 즐겨찾기함"
+      }
+    }
+  }
+}

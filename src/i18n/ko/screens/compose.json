@@ -1,0 +1,169 @@
+{
+  "heading": {
+    "left": {
+      "button": "취소",
+      "alert": {
+        "title": "편집을 취소할까요?",
+        "buttons": {
+          "save": "초안 저장",
+          "delete": "초안 삭제",
+          "cancel": "취소"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "툿",
+        "conversation": "툿 DM",
+        "reply": "툿 답장",
+        "edit": "툿"
+      },
+      "alert": {
+        "default": {
+          "title": "툿 실패",
+          "button": "다시 시도해주세요"
+        },
+        "removeReply": {
+          "title": "답장한 툿을 찾을 수 없어요",
+          "description": "답장한 툿이 삭제되었을 수 있어요. 참조에서 제거할까요?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "참조 제거"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "@{{acct}}@{{domain}}으로 툿",
+        "spoilerInput": {
+          "placeholder": "스포일러 경고 메시지"
+        },
+        "textInput": {
+          "placeholder": "무엇을 생각하고 있나요?"
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "첨부 파일 민감함으로 표시",
+          "remove": {
+            "accessibilityLabel": "업로드한 첨부 파일 삭제, 번호 {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "업로드한 첨부 파일 수정, 번호 {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "더 많은 첨부 파일 업로드"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "툿에 이모지를 추가하려면 탭하세요"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "투표 옵션 {{index}}",
+              "single": "단일 선택",
+              "multiple": "다중 선택"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "투표 옵션 {{amount}}으로 줄이기",
+              "accessibilityHint": "최소 투표 옵션 개수를 달성했어요, 현재 {{amount}}개에요"
+            },
+            "increase": {
+              "accessibilityLabel": "투표 옵션 {{amount}}으로 늘리기",
+              "accessibilityHint": "최대 투표 옵션 개수를 달성했어요, 현재 {{amount}}개에요"
+            }
+          },
+          "multiple": {
+            "heading": "선택 유형",
+            "options": {
+              "single": "단일 선택",
+              "multiple": "다중 선택",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          },
+          "expiration": {
+            "heading": "유효기간",
+            "options": {
+              "300": "5분",
+              "1800": "30분",
+              "3600": "1시간",
+              "21600": "6시간",
+              "86400": "1일",
+              "259200": "3일",
+              "604800": "7일",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "첨부 파일 업로드",
+          "accessibilityHint": "첨부 파일이 있으면 투표 기능은 비활성화되어요",
+          "failed": {
+            "alert": {
+              "title": "업로드 실패",
+              "button": "다시 시도해주세요"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "투표 추가",
+          "accessibilityHint": "투표가 추가되면 첨부 파일 기능은 비활성화되어요"
+        },
+        "visibility": {
+          "accessibilityLabel": "툿 공개 범위 {{visibility}}",
+          "title": "툿 공개 범위",
+          "options": {
+            "public": "공개",
+            "unlisted": "공개 타임라인에 비표시",
+            "private": "팔로워만",
+            "direct": "개인 메시지",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "스포일러"
+        },
+        "emoji": {
+          "accessibilityLabel": "이모지 추가",
+          "accessibilityHint": "이모지 선택 패널 열기, 가로로 스와이프해서 페이지를 바꿀 수 있어요"
+        }
+      },
+      "drafts": "초안 ({{count}})",
+      "drafts_plural": "초안 ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "첨부파일 편집",
+        "right": {
+          "accessibilityLabel": "첨부 파일 편집 저장",
+          "failed": {
+            "title": "편집 실패",
+            "button": "다시 시도해주세요"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "시각장애인을 위한 미디어 설명",
+          "placeholder": "미디어에 alt-text라고도 하는 설명을 추가하여 시각 장애가 있는 사람들을 포함하여 더 많은 사람들이 액세스할 수 있도록 할 수 있어요. \n\n좋은 설명은 간결하지만 미디어에 있는 내용을 정확하게 제시하여 컨텍스트를 파악할 수 있는 것이에요."
+        },
+        "imageFocus": "포커스 원을 드래그하여 포커스 포인트를 업데이트할 수 있어요"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "초안"
+      },
+      "content": {
+        "accessibilityHint": "저장된 초안, 수정하려면 탭하세요",
+        "textEmpty": "콘텐츠 빔"
+      }
+    }
+  }
+}
