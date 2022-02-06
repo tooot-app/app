@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-10.15
+    runs-on: macos-11
     steps:
       - name: -- Step 0 -- Extract branch name
         shell: bash
@@ -18,13 +18,13 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: -- Step 3 -- Use Expo action
-        uses: expo/expo-github-action@v5
+        uses: expo/expo-github-action@v6
         with:
-          expo-version: 4.x
-          expo-username: ${{ secrets.EXPO_USERNAME }}
-          expo-token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: 5.x
+          username: ${{ secrets.EXPO_USERNAME }}
+          token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
       - name: -- Step 5 -- Install native dependencies
@@ -33,6 +33,7 @@ jobs:
         run: bundle install
       - name: -- Step 7 -- Run fastlane
         env:
+          DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
@@ -40,7 +41,7 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          TOOOT_API_KEY: ${{ secrets.TOOOT_API_KEY }}
+          TOOOT_PUSH_KEY_PUBLIC: ${{ secrets.TOOOT_PUSH_KEY_PUBLIC }}
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}

@@ -1,4 +1,5 @@
 import { store } from '@root/store'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
@@ -34,7 +35,7 @@ const assignVisibility = (
 }
 
 const composeParseState = (
-  params: NonNullable<Nav.RootStackParamList['Screen-Compose']>
+  params: NonNullable<RootStackParamList['Screen-Compose']>
 ): ComposeState => {
   switch (params.type) {
     case 'edit':

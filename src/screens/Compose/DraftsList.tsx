@@ -1,19 +1,15 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
-import { StackScreenProps } from '@react-navigation/stack'
+import { HeaderLeft } from '@components/Header'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import ComposeDraftsListRoot from './DraftsList/Root'
 
 const Stack = createNativeStackNavigator()
 
-export type ScreenComposeEditAttachmentProp = StackScreenProps<
-  Nav.ScreenComposeStackParamList,
-  'Screen-Compose-DraftsList'
->
-
-const ComposeDraftsList: React.FC<ScreenComposeEditAttachmentProp> = ({
+const ComposeDraftsList: React.FC<
+  ScreenComposeStackScreenProps<'Screen-Compose-DraftsList'>
+> = ({
   route: {
     params: { timestamp }
   },
@@ -37,19 +33,14 @@ const ComposeDraftsList: React.FC<ScreenComposeEditAttachmentProp> = ({
   )
 
   return (
-    <Stack.Navigator screenOptions={{ headerTopInsetEnabled: false }}>
+    <Stack.Navigator>
       <Stack.Screen
         name='Screen-Compose-EditAttachment-Root'
         children={children}
         options={{
           headerLeft,
-          headerTitle: t('content.draftsList.header.title'),
-          ...(Platform.OS === 'android' && {
-            headerCenter: () => (
-              <HeaderCenter content={t('content.draftsList.header.title')} />
-            )
-          }),
-          headerHideShadow: true
+          title: t('content.draftsList.header.title'),
+          headerShadowVisible: false
         }}
       />
     </Stack.Navigator>

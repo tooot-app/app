@@ -1,7 +1,7 @@
 import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { StackScreenProps } from '@react-navigation/stack'
+import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -12,8 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import ProfileAvatarHeader from './Root/AvatarHeader'
 
-const TabMeProfileRoot: React.FC<StackScreenProps<
-  Nav.TabMeProfileStackParamList,
+const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
   'Tab-Me-Profile-Root'
 > & { messageRef: RefObject<FlashMessage> }> = ({ messageRef, navigation }) => {
   const { mode } = useTheme()

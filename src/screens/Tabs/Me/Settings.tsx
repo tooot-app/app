@@ -1,4 +1,4 @@
-import * as Updates from 'expo-updates'
+import { isDevelopment } from '@utils/checkEnvironment'
 import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import SettingsAnalytics from './Settings/Analytics'
@@ -13,12 +13,7 @@ const TabMeSettings: React.FC = () => {
       <SettingsTooot />
       <SettingsAnalytics />
 
-      {__DEV__ ||
-      ['development'].some(channel =>
-        Updates.releaseChannel.includes(channel)
-      ) ? (
-        <SettingsDev />
-      ) : null}
+      {isDevelopment ? <SettingsDev /> : null}
     </ScrollView>
   )
 }

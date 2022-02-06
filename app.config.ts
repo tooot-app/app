@@ -8,13 +8,13 @@ export default (): ExpoConfig => ({
   name: 'tooot',
   description: 'tooot for Mastodon',
   slug: 'tooot',
+  scheme: 'tooot',
   version: toootVersion,
-  sdkVersion: versions.expo,
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],
   extra: {
     sentryDSN: process.env.SENTRY_DSN,
-    toootApiKey: process.env.TOOOT_API_KEY
+    toootPushKeyPublic: process.env.TOOOT_PUSH_KEY_PUBLIC
   },
   hooks: {
     postPublish: [
@@ -30,11 +30,11 @@ export default (): ExpoConfig => ({
       }
     ]
   },
+  jsEngine: 'hermes',
   ios: {
     bundleIdentifier: 'com.xmflsct.app.tooot'
   },
   android: {
-    versionCode: 4,
     package: 'com.xmflsct.app.tooot',
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE']

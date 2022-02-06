@@ -7,7 +7,7 @@ import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Text } from 'react-native'
+import { DevSettings, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
@@ -68,7 +68,9 @@ const SettingsDev: React.FC = () => {
           marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
         destructive
-        onPress={() => persistor.purge()}
+        onPress={() => {
+          persistor.purge().then(() => DevSettings.reload())
+        }}
       />
       <Button
         type='text'

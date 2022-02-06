@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
 const SettingsApp: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { setTheme } = useTheme()
@@ -64,6 +64,7 @@ const SettingsApp: React.FC = () => {
               cancelButtonIndex: options.length - 1
             },
             buttonIndex => {
+              if (!buttonIndex) return
               if (buttonIndex < options.length - 1) {
                 analytics('settings_language_press', {
                   current: i18n.language,

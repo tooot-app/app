@@ -1,21 +1,18 @@
 import { displayMessage } from '@components/Message'
-import { NavigationContainerRef } from '@react-navigation/native'
+import queryClient from '@helpers/queryClient'
+import initQuery from '@utils/initQuery'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { Instance, updateInstanceActive } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
-import { findIndex } from 'lodash'
 import { useEffect } from 'react'
-import { QueryClient } from 'react-query'
 import { useDispatch } from 'react-redux'
 import pushUseNavigate from './useNavigate'
 
 export interface Params {
-  navigationRef: React.RefObject<NavigationContainerRef>
-  queryClient: QueryClient
   instances: Instance[]
 }
 
-const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
+const pushUseReceive = ({ instances }: Params) => {
   const dispatch = useDispatch()
 
   return useEffect(() => {
@@ -32,8 +29,7 @@ const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
           accountId: string
         }
 
-        const notificationIndex = findIndex(
-          instances,
+        const notificationIndex = instances.findIndex(
           instance =>
             instance.url === payloadData.instanceUrl &&
             instance.account.id === payloadData.accountId
@@ -44,9 +40,12 @@ const pushUseReceive = ({ navigationRef, queryClient, instances }: Params) => {
           description: notification.request.content.body!,
           onPress: () => {
             if (notificationIndex !== -1) {
-              dispatch(updateInstanceActive(instances[notificationIndex]))
+              initQuery({
+                instance: instances[notificationIndex],
+                prefetch: { enabled: true }
+              })
             }
-            pushUseNavigate(navigationRef, payloadData.notification_id)
+            pushUseNavigate(payloadData.notification_id)
           }
         })
       }

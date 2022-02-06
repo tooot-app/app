@@ -1,6 +1,8 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
+import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { isDevelopment } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -12,14 +14,16 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
+import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, Linking, ScrollView } from 'react-native'
+import { AppState, Linking, ScrollView, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 const TabMePush: React.FC = () => {
+  const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const instanceAccount = useSelector(
     getInstanceAccount,
@@ -30,6 +34,9 @@ const TabMePush: React.FC = () => {
   const dispatch = useDispatch()
   const instancePush = useSelector(getInstancePush)
 
+  const [pushAvailable, setPushAvailable] = useState<boolean | undefined>(
+    undefined
+  )
   const [pushEnabled, setPushEnabled] = useState<boolean>()
   const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
   const checkPush = async () => {
@@ -39,10 +46,20 @@ const TabMePush: React.FC = () => {
     setPushCanAskAgain(settings.canAskAgain)
   }
   useEffect(() => {
+    if (isDevelopment) {
+      setPushAvailable(true)
+    } else {
+      Notifications.getExpoPushTokenAsync({
+        experienceId: '@xmflsct/tooot'
+      })
+        .then(data => setPushAvailable(!!data))
+        .catch(() => setPushAvailable(false))
+    }
+
     checkPush()
-    AppState.addEventListener('change', checkPush)
+    const subscription = AppState.addEventListener('change', checkPush)
     return () => {
-      AppState.removeEventListener('change', checkPush)
+      subscription.remove()
     }
   }, [])
 
@@ -54,13 +71,15 @@ const TabMePush: React.FC = () => {
 
   const alerts = useMemo(() => {
     return instancePush?.alerts
-      ? (['follow', 'favourite', 'reblog', 'mention', 'poll'] as [
-          'follow',
-          'favourite',
-          'reblog',
-          'mention',
-          'poll'
-        ]).map(alert => (
+      ? (
+          ['follow', 'favourite', 'reblog', 'mention', 'poll'] as [
+            'follow',
+            'favourite',
+            'reblog',
+            'mention',
+            'poll'
+          ]
+        ).map(alert => (
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
@@ -93,80 +112,108 @@ const TabMePush: React.FC = () => {
 
   return (
     <ScrollView>
-      {pushEnabled === false ? (
-        <MenuContainer>
-          <Button
-            type='text'
-            content={
-              pushCanAskAgain
-                ? t('me.push.enable.direct')
-                : t('me.push.enable.settings')
-            }
-            style={{
-              marginTop: StyleConstants.Spacing.Global.PagePadding,
-              marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
-            }}
-            onPress={async () => {
-              if (pushCanAskAgain) {
-                analytics('me_push_enabled_dialogue')
-                const result = await Notifications.requestPermissionsAsync()
-                setPushEnabled(result.granted)
-                setPushCanAskAgain(result.canAskAgain)
-              } else {
-                analytics('me_push_enabled_setting')
-                Linking.openSettings()
+      {pushAvailable === true ? (
+        <>
+          {pushEnabled === false ? (
+            <MenuContainer>
+              <Button
+                type='text'
+                content={
+                  pushCanAskAgain
+                    ? t('me.push.enable.direct')
+                    : t('me.push.enable.settings')
+                }
+                style={{
+                  marginTop: StyleConstants.Spacing.Global.PagePadding,
+                  marginHorizontal:
+                    StyleConstants.Spacing.Global.PagePadding * 2
+                }}
+                onPress={async () => {
+                  if (pushCanAskAgain) {
+                    analytics('me_push_enabled_dialogue')
+                    const result = await Notifications.requestPermissionsAsync()
+                    setPushEnabled(result.granted)
+                    setPushCanAskAgain(result.canAskAgain)
+                  } else {
+                    analytics('me_push_enabled_setting')
+                    Linking.openSettings()
+                  }
+                }}
+              />
+            </MenuContainer>
+          ) : null}
+          <MenuContainer>
+            <MenuRow
+              title={t('me.push.global.heading', {
+                acct: `@${instanceAccount?.acct}@${instanceUri}`
+              })}
+              description={t('me.push.global.description')}
+              loading={instancePush?.global.loading}
+              switchDisabled={!pushEnabled || isLoading}
+              switchValue={
+                pushEnabled === false ? false : instancePush?.global.value
               }
-            }}
+              switchOnValueChange={() => {
+                analytics('me_push_global', {
+                  current: instancePush?.global.value,
+                  new: !instancePush?.global.value
+                })
+                dispatch(updateInstancePush(!instancePush?.global.value))
+              }}
+            />
+          </MenuContainer>
+          <MenuContainer>
+            <MenuRow
+              title={t('me.push.decode.heading')}
+              description={t('me.push.decode.description')}
+              loading={instancePush?.decode.loading}
+              switchDisabled={
+                !pushEnabled || !instancePush?.global.value || isLoading
+              }
+              switchValue={instancePush?.decode.value}
+              switchOnValueChange={() => {
+                analytics('me_push_decode', {
+                  current: instancePush?.decode.value,
+                  new: !instancePush?.decode.value
+                })
+                dispatch(updateInstancePushDecode(!instancePush?.decode.value))
+              }}
+            />
+            <MenuRow
+              title={t('me.push.howitworks')}
+              iconBack='ExternalLink'
+              onPress={() => {
+                analytics('me_push_howitworks')
+                WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')
+              }}
+            />
+          </MenuContainer>
+          <MenuContainer>{alerts}</MenuContainer>
+        </>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            minHeight: '100%',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Icon
+            name='Frown'
+            size={StyleConstants.Font.Size.L}
+            color={theme.primaryDefault}
           />
-        </MenuContainer>
-      ) : null}
-      <MenuContainer>
-        <MenuRow
-          title={t('me.push.global.heading', {
-            acct: `@${instanceAccount?.acct}@${instanceUri}`
-          })}
-          description={t('me.push.global.description')}
-          loading={instancePush?.global.loading}
-          switchDisabled={!pushEnabled || isLoading}
-          switchValue={
-            pushEnabled === false ? false : instancePush?.global.value
-          }
-          switchOnValueChange={() => {
-            analytics('me_push_global', {
-              current: instancePush?.global.value,
-              new: !instancePush?.global.value
-            })
-            dispatch(updateInstancePush(!instancePush?.global.value))
-          }}
-        />
-      </MenuContainer>
-      <MenuContainer>
-        <MenuRow
-          title={t('me.push.decode.heading')}
-          description={t('me.push.decode.description')}
-          loading={instancePush?.decode.loading}
-          switchDisabled={
-            !pushEnabled || !instancePush?.global.value || isLoading
-          }
-          switchValue={instancePush?.decode.value}
-          switchOnValueChange={() => {
-            analytics('me_push_decode', {
-              current: instancePush?.decode.value,
-              new: !instancePush?.decode.value
-            })
-            dispatch(updateInstancePushDecode(!instancePush?.decode.value))
-          }}
-        />
-        <MenuRow
-          title={t('me.push.howitworks')}
-          iconBack='ExternalLink'
-          onPress={() => {
-            analytics('me_push_howitworks')
-            WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')
-          }}
-        />
-      </MenuContainer>
-      <MenuContainer>{alerts}</MenuContainer>
+          <Text
+            style={{
+              ...StyleConstants.FontStyle.M,
+              color: theme.primaryDefault
+            }}
+          >
+            {t('me.push.notAvailable')}
+          </Text>
+        </View>
+      )}
     </ScrollView>
   )
 }

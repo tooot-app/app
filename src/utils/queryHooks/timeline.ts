@@ -1,4 +1,4 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
   MutationOptions,
+  QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation
@@ -28,10 +29,7 @@ export type QueryKeyTimeline = [
 const queryFunction = async ({
   queryKey,
   pageParam
-}: {
-  queryKey: QueryKeyTimeline
-  pageParam?: { [key: string]: string }
-}) => {
+}: QueryFunctionContext<QueryKeyTimeline>) => {
   const { page, account, hashtag, list, toot } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -87,7 +85,9 @@ const queryFunction = async ({
           }
         })
       } else {
-        const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean} )[]>({
+        const res1 = await apiInstance<
+          (Mastodon.Status & { _pinned: boolean })[]
+        >({
           method: 'get',
           url: `accounts/${account}/statuses`,
           params: {
@@ -105,7 +105,7 @@ const queryFunction = async ({
             exclude_replies: 'true'
           }
         })
-        return await {
+        return {
           body: uniqBy([...res1.body, ...res2.body], 'id'),
           ...(res2.links.next && { links: { next: res2.links.next } })
         }
@@ -175,8 +175,12 @@ const queryFunction = async ({
         method: 'get',
         url: `statuses/${toot}/context`
       })
-      return await {
-        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
+      return {
+        body: [
+          ...res2_1.body.ancestors,
+          res1_1.body,
+          ...res2_1.body.descendants
+        ]
       }
     default:
       return Promise.reject()
@@ -185,21 +189,13 @@ const queryFunction = async ({
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never
 export type TimelineData = Unpromise<ReturnType<typeof queryFunction>>
-const useTimelineQuery = <TData = TimelineData>({
+const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
   options?: UseInfiniteQueryOptions<
-    {
-      body:
-        | Mastodon.Status[]
-        | Mastodon.Notification[]
-        | Mastodon.Conversation[]
-      links?: { prev?: string; next?: string }
-      pinned?: Mastodon.Status['id'][]
-    },
-    AxiosError,
-    TData
+    InstanceResponse<Mastodon.Status[]>,
+    AxiosError
   >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
@@ -209,6 +205,53 @@ const useTimelineQuery = <TData = TimelineData>({
     refetchOnWindowFocus: false,
     ...options
   })
+}
+
+const prefetchTimelineQuery = async ({
+  ids,
+  queryKey
+}: {
+  ids: Mastodon.Status['id'][]
+  queryKey: QueryKeyTimeline
+}): Promise<Mastodon.Status['id'] | undefined> => {
+  let page: string = ''
+  let local: boolean = false
+  switch (queryKey[1].page) {
+    case 'Following':
+      page = 'home'
+      break
+    case 'Local':
+      page = 'public'
+      local = true
+      break
+    case 'LocalPublic':
+      page = 'public'
+      break
+  }
+
+  for (const id of ids) {
+    const statuses = await apiInstance<Mastodon.Status[]>({
+      method: 'get',
+      url: `timelines/${page}`,
+      params: {
+        min_id: id,
+        limit: 1,
+        ...(local && { local: 'true' })
+      }
+    })
+    if (statuses.body.length) {
+      await queryClient.prefetchInfiniteQuery(queryKey, props =>
+        queryFunction({
+          ...props,
+          queryKey,
+          pageParam: {
+            max_id: statuses.body[0].id
+          }
+        })
+      )
+      return id
+    }
+  }
 }
 
 // --- Separator ---
@@ -390,4 +433,4 @@ const useTimelineMutation = ({
   })
 }
 
-export { useTimelineQuery, useTimelineMutation }
+export { prefetchTimelineQuery, useTimelineQuery, useTimelineMutation }

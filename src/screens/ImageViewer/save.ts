@@ -1,16 +1,17 @@
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import CameraRoll from '@react-native-community/cameraroll'
+import { RootStackParamList } from '@utils/navigation/navigators'
+import * as FileSystem from 'expo-file-system'
 import i18next from 'i18next'
 import { RefObject } from 'react'
-import { Platform } from 'react-native'
+import { PermissionsAndroid, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { FileSystem, Permissions } from 'react-native-unimodules'
 
 type CommonProps = {
   messageRef: RefObject<FlashMessage>
   mode: 'light' | 'dark'
-  image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 }
 
 const saveIos = async ({ messageRef, mode, image }: CommonProps) => {
@@ -59,18 +60,35 @@ const saveIos = async ({ messageRef, mode, image }: CommonProps) => {
 
 const saveAndroid = async ({ messageRef, mode, image }: CommonProps) => {
   const fileUri: string = `${FileSystem.documentDirectory}${image.id}.jpg`
-  const downloadedFile: FileSystem.FileSystemDownloadResult = await FileSystem.downloadAsync(
-    image.url,
-    fileUri
-  )
+  const downloadedFile: FileSystem.FileSystemDownloadResult =
+    await FileSystem.downloadAsync(image.url, fileUri)
 
   if (downloadedFile.status != 200) {
-    console.warn('error!')
+    haptics('Error')
+    displayMessage({
+      ref: messageRef,
+      mode,
+      type: 'error',
+      message: i18next.t('screenImageViewer:content.save.failed')
+    })
+    return
   }
 
-  const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
-  if (perm.status != 'granted') {
-    return
+  const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+
+  const hasPermission = await PermissionsAndroid.check(permission)
+  if (!hasPermission) {
+    const status = await PermissionsAndroid.request(permission)
+    if (status !== 'granted') {
+      haptics('Error')
+      displayMessage({
+        ref: messageRef,
+        mode,
+        type: 'error',
+        message: i18next.t('screenImageViewer:content.save.failed')
+      })
+      return
+    }
   }
 
   CameraRoll.save(downloadedFile.uri)

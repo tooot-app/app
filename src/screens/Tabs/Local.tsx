@@ -2,36 +2,26 @@ import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { ScreenTabsParamList } from '@screens/Tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import {
+  ScreenTabsScreenProps,
+  TabLocalStackParamList
+} from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import sharedScreens from './Shared/sharedScreens'
+import TabSharedRoot from './Shared/Root'
 
-export type TabLocalProp = BottomTabScreenProps<
-  ScreenTabsParamList,
-  'Tab-Local'
->
-
-const Stack = createNativeStackNavigator<Nav.TabLocalStackParamList>()
+const Stack = createNativeStackNavigator<TabLocalStackParamList>()
 
 const TabLocal = React.memo(
-  ({ navigation }: TabLocalProp) => {
+  ({ navigation }: ScreenTabsScreenProps<'Tab-Local'>) => {
     const { t, i18n } = useTranslation('screenTabs')
 
-    const screenOptions = useMemo(
-      () => ({
-        headerHideShadow: true,
-        headerTopInsetEnabled: false
-      }),
-      []
-    )
     const screenOptionsRoot = useMemo(
       () => ({
-        headerTitle: t('tabs.local.name'),
+        title: t('tabs.local.name'),
         ...(Platform.OS === 'android' && {
           headerCenter: () => <HeaderCenter content={t('tabs.local.name')} />
         }),
@@ -59,18 +49,24 @@ const TabLocal = React.memo(
       []
     )
     const children = useCallback(
-      () => <Timeline queryKey={queryKey} customProps={{ renderItem }} />,
+      () => (
+        <Timeline
+          queryKey={queryKey}
+          lookback='Following'
+          customProps={{ renderItem }}
+        />
+      ),
       []
     )
 
     return (
-      <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Local-Root'
           options={screenOptionsRoot}
           children={children}
         />
-        {sharedScreens(Stack as any)}
+        {TabSharedRoot({ Stack })}
       </Stack.Navigator>
     )
   },

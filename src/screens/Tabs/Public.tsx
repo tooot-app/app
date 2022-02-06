@@ -3,33 +3,32 @@ import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { ScreenTabsParamList } from '@screens/Tabs'
-import sharedScreens from '@screens/Tabs/Shared/sharedScreens'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import {
+  ScreenTabsScreenProps,
+  TabPublicStackParamList
+} from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { TabView } from 'react-native-tab-view'
+import { useSelector } from 'react-redux'
+import TabSharedRoot from './Shared/Root'
 
-export type TabPublicProps = BottomTabScreenProps<
-  ScreenTabsParamList,
-  'Tab-Public'
->
-
-const Stack = createNativeStackNavigator<Nav.TabPublicStackParamList>()
+const Stack = createNativeStackNavigator<TabPublicStackParamList>()
 
 const TabPublic = React.memo(
-  ({ navigation }: TabPublicProps) => {
+  ({ navigation }: ScreenTabsScreenProps<'Tab-Public'>) => {
     const { t, i18n } = useTranslation('screenTabs')
     const { mode } = useTheme()
 
     const [segment, setSegment] = useState(0)
     const pages: {
       title: string
-      key: App.Pages
+      key: Extract<App.Pages, 'Local' | 'LocalPublic'>
     }[] = [
       {
         title: t('tabs.public.segments.left'),
@@ -40,16 +39,9 @@ const TabPublic = React.memo(
         key: 'Local'
       }
     ]
-    const screenOptions = useMemo(
-      () => ({
-        headerHideShadow: true,
-        headerTopInsetEnabled: false
-      }),
-      []
-    )
     const screenOptionsRoot = useMemo(
       () => ({
-        headerCenter: () => (
+        headerTitle: () => (
           <SegmentedControl
             appearance={mode}
             values={pages.map(p => p.title)}
@@ -80,19 +72,30 @@ const TabPublic = React.memo(
 
     const routes = pages.map(p => ({ key: p.key }))
 
+    const timelinesLookback = useSelector(
+      getInstanceTimelinesLookback,
+      () => true
+    )
     const renderScene = useCallback(
       ({
         route: { key: page }
       }: {
         route: {
-          key: App.Pages
+          key: Extract<App.Pages, 'Local' | 'LocalPublic'>
         }
       }) => {
         const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-        const renderItem = ({ item }: any) => (
-          <TimelineDefault item={item} queryKey={queryKey} />
+        return (
+          <Timeline
+            queryKey={queryKey}
+            lookback={page}
+            customProps={{
+              renderItem: ({ item }: any) => (
+                <TimelineDefault item={item} queryKey={queryKey} />
+              )
+            }}
+          />
         )
-        return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
       },
       []
     )
@@ -113,13 +116,13 @@ const TabPublic = React.memo(
     )
 
     return (
-      <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Public-Root'
           options={screenOptionsRoot}
           children={children}
         />
-        {sharedScreens(Stack as any)}
+        {TabSharedRoot({ Stack })}
       </Stack.Navigator>
     )
   },

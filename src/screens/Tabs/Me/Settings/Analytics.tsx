@@ -5,10 +5,10 @@ import {
 } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import Constants from 'expo-constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
-import { Constants } from 'react-native-unimodules'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SettingsAnalytics: React.FC = () => {
@@ -29,7 +29,7 @@ const SettingsAnalytics: React.FC = () => {
         }
       />
       <Text style={[styles.version, { color: theme.secondary }]}>
-        {t('me.settings.version', { version: Constants.manifest.version })}
+        {t('me.settings.version', { version: Constants.manifest?.version })}
       </Text>
     </MenuContainer>
   )

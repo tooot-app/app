@@ -1,4 +1,4 @@
-fastlane_version "2.180.1"
+fastlane_version "2.203.0"
 skip_docs
 
 ensure_env_vars(
@@ -8,7 +8,7 @@ ensure_env_vars(
 VERSIONS = read_json( json_path: "./package.json" )[:versions]
 ENVIRONMENT = ENV["ENVIRONMENT"]
 VERSION = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}"
-RELEASE_CHANNEL = "#{VERSIONS[:major]}-#{ENVIRONMENT}"
+RELEASE_CHANNEL = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}-#{ENVIRONMENT}"
 BUILD_NUMBER = "#{Time.now.strftime("%y%m%d")}#{ENV["GITHUB_RUN_NUMBER"]}"
 GITHUB_REPO = "tooot-app/app"
 case ENVIRONMENT
@@ -91,6 +91,7 @@ private_lane :build_ios do
       dsym_path: DSYM_FILE
     )
     upload_to_testflight(
+      skip_submission: true,
       ipa: IPA_FILE,
       demo_account_required: true,
       distribute_external: true,
@@ -107,6 +108,11 @@ private_lane :build_ios do
       silent: true
     )
     upload_to_app_store( ipa: IPA_FILE, app_version: VERSION )
+    download_dsyms( version: VERSION, build_number: BUILD_NUMBER, wait_for_dsym_processing: true )
+    sentry_upload_dsym(
+      org_slug: ENV["SENTRY_ORGANIZATION"],
+      project_slug: ENV["SENTRY_PROJECT"],
+    )
   else
     if !is_ci
       match( type: "adhoc", readonly: true )

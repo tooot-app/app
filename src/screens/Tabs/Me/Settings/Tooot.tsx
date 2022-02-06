@@ -4,7 +4,6 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Updates from 'expo-updates'
 import * as Linking from 'expo-linking'
 import * as StoreReview from 'expo-store-review'
 import * as WebBrowser from 'expo-web-browser'
@@ -12,10 +11,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { isCandidate, isDevelopment } from '@utils/checkEnvironment'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')
 
@@ -36,10 +36,7 @@ const SettingsTooot: React.FC = () => {
           Linking.openURL('https://www.buymeacoffee.com/xmflsct')
         }}
       />
-      {__DEV__ ||
-      ['release', 'development'].some(channel =>
-        Updates.releaseChannel?.includes(channel)
-      ) ? (
+      {isDevelopment || isCandidate ? (
         <MenuRow
           title={t('me.settings.review.heading')}
           content={

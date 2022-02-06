@@ -1,8 +1,14 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { Video } from 'expo-av'
-import React, { useCallback, useRef, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  AppState,
+  AppStateStatus,
+  Pressable,
+  StyleSheet,
+  View
+} from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import analytics from '@components/analytics'
@@ -45,14 +51,40 @@ const AttachmentVideo: React.FC<Props> = ({
     videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
       if (props.isLoaded) {
         setVideoLoaded(true)
-      }
-      // @ts-ignore
-      if (props.positionMillis) {
-        // @ts-ignore
-        setVideoPosition(props.positionMillis)
+        if (props.positionMillis) {
+          setVideoPosition(props.positionMillis)
+        }
       }
     })
   }, [videoLoaded, videoPosition])
+
+  const appState = useRef(AppState.currentState)
+  useEffect(() => {
+    const appState = AppState.addEventListener('change', _handleAppStateChange)
+
+    return () => appState.remove()
+  }, [])
+  const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
+    if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {
+      await videoPlayer.current?.pauseAsync()
+    } else if (
+      gifv &&
+      appState.current.match(/background/) &&
+      nextAppState.match(/active/)
+    ) {
+      await videoPlayer.current?.setIsMutedAsync(true)
+      await videoPlayer.current?.playAsync()
+    }
+
+    appState.current = nextAppState
+  }
+
+  const playerStatus = useRef<any>(null)
+  useEffect(() => {
+    videoPlayer.current?.setOnPlaybackStatusUpdate(playbackStatus => {
+      playerStatus.current = playbackStatus
+    })
+  }, [])
 
   return (
     <View
@@ -83,16 +115,15 @@ const AttachmentVideo: React.FC<Props> = ({
               posterStyle: { resizeMode: 'cover' }
             })}
         useNativeControls={false}
-        onFullscreenUpdate={event => {
+        onFullscreenUpdate={async event => {
           if (
             event.fullscreenUpdate ===
             Video.FULLSCREEN_UPDATE_PLAYER_DID_DISMISS
           ) {
             if (gifv) {
-              videoPlayer.current?.setIsLoopingAsync(true)
-              videoPlayer.current?.playAsync()
+              await videoPlayer.current?.pauseAsync()
             } else {
-              videoPlayer.current?.pauseAsync()
+              await videoPlayer.current?.pauseAsync()
             }
           }
         }}
@@ -108,7 +139,7 @@ const AttachmentVideo: React.FC<Props> = ({
               }}
             />
           ) : null
-        ) : !gifv ? (
+        ) : !gifv || (gifv && playerStatus.current === false) ? (
           <Button
             round
             overlay

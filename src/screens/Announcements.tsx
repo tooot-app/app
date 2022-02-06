@@ -4,8 +4,8 @@ import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import { BlurView } from '@react-native-community/blur'
-import { StackScreenProps } from '@react-navigation/stack'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { RootStackScreenProps } from '@utils/navigation/navigators'
 import {
   useAnnouncementMutation,
   useAnnouncementQuery
@@ -14,18 +14,22 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Dimensions,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export type ScreenAnnouncementsProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-Announcements'
->
-
-const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
+const ScreenAnnouncements: React.FC<
+  RootStackScreenProps<'Screen-Announcements'>
+> = ({
   route: {
     params: { showAll = false }
   },
@@ -202,7 +206,7 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
     )
   }, [])
 
-  return (
+  return Platform.OS === 'ios' ? (
     <BlurView
       blurType={mode}
       blurAmount={20}
@@ -242,6 +246,41 @@ const ScreenAnnouncements: React.FC<ScreenAnnouncementsProp> = ({
         </View>
       </SafeAreaView>
     </BlurView>
+  ) : (
+    <SafeAreaView
+      style={[styles.base, { backgroundColor: theme.backgroundDefault }]}
+    >
+      <FlatList
+        horizontal
+        data={query.data}
+        pagingEnabled
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        ListEmptyComponent={ListEmptyComponent}
+      />
+      <View style={styles.indicators}>
+        {query.data && query.data.length > 1 ? (
+          <>
+            {query.data.map((d, i) => (
+              <View
+                key={i}
+                style={[
+                  styles.indicator,
+                  {
+                    borderColor: theme.primaryDefault,
+                    backgroundColor:
+                      i === index ? theme.primaryDefault : undefined,
+                    marginLeft:
+                      i === query.data.length ? 0 : StyleConstants.Spacing.S
+                  }
+                ]}
+              />
+            ))}
+          </>
+        ) : null}
+      </View>
+    </SafeAreaView>
   )
 }
 
@@ -253,6 +292,7 @@ const styles = StyleSheet.create({
   announcementContainer: {
     width: Dimensions.get('screen').width,
     padding: StyleConstants.Spacing.Global.PagePadding,
+    marginVertical: StyleConstants.Spacing.Global.PagePadding,
     justifyContent: 'center'
   },
   published: {

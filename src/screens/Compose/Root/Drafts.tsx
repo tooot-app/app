@@ -15,7 +15,7 @@ export interface Props {
 
 const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
   const { t } = useTranslation('screenCompose')
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { composeState } = useContext(ComposeContext)
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== composeState.timestamp

@@ -1,11 +1,8 @@
 import apiInstance from '@api/instance'
-import { NavigationContainerRef } from '@react-navigation/native'
+import navigationRef from '@helpers/navigationRef'
 
-const pushUseNavigate = (
-  navigationRef: React.RefObject<NavigationContainerRef>,
-  id?: Mastodon.Notification['id']
-) => {
-  navigationRef.current?.navigate('Screen-Tabs', {
+const pushUseNavigate = (id?: Mastodon.Notification['id']) => {
+  navigationRef.navigate('Screen-Tabs', {
     screen: 'Tab-Notifications',
     params: {
       screen: 'Tab-Notifications-Root'
@@ -21,7 +18,7 @@ const pushUseNavigate = (
     url: `notifications/${id}`
   }).then(({ body }) => {
     if (body.status) {
-      navigationRef.current?.navigate('Screen-Tabs', {
+      navigationRef.navigate('Screen-Tabs', {
         screen: 'Tab-Notifications',
         params: {
           screen: 'Tab-Shared-Toot',

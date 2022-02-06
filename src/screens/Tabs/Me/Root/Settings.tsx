@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 const Settings: React.FC = () => {
   const { t } = useTranslation('screenTabs')
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   return (
     <MenuContainer>

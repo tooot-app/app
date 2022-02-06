@@ -1,8 +1,9 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
+import Constants from 'expo-constants'
 import li from 'li'
-import { Constants } from 'react-native-unimodules'
+import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -21,6 +22,11 @@ export type Params = {
   >
 }
 
+export type InstanceResponse<T = unknown> = {
+  body: T
+  links: { prev?: string; next?: string }
+}
+
 const apiInstance = async <T = unknown>({
   method,
   version = 'v1',
@@ -29,7 +35,7 @@ const apiInstance = async <T = unknown>({
   headers,
   body,
   extras
-}: Params): Promise<{ body: T; links: { prev?: string; next?: string } }> => {
+}: Params): Promise<InstanceResponse<T>> => {
   const { store } = require('@root/store')
   const state = store.getState() as RootState
   const instanceActive = state.instances.instances.findIndex(
@@ -68,7 +74,7 @@ const apiInstance = async <T = unknown>({
     params,
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': `tooot/${Constants.manifest.version}`,
+      'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers,
       ...(token && {
@@ -92,6 +98,15 @@ const apiInstance = async <T = unknown>({
       })
     })
     .catch(error => {
+      if (Math.random() < 0.001) {
+        Sentry.Native.setExtras({
+          API: 'instance',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
+        Sentry.Native.captureException(error)
+      }
+
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx

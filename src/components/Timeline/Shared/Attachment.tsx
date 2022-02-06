@@ -6,9 +6,11 @@ import AttachmentImage from '@components/Timeline/Shared/Attachment/Image'
 import AttachmentUnsupported from '@components/Timeline/Shared/Attachment/Unsupported'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -34,9 +36,25 @@ const TimelineAttachment = React.memo(
     }, [])
 
     const imageUrls = useRef<
-      Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+      RootStackParamList['Screen-ImagesViewer']['imageUrls']
     >([])
     const navigation = useNavigation()
+    useEffect(() => {
+      status.media_attachments.forEach((attachment, index) => {
+        switch (attachment.type) {
+          case 'image':
+            imageUrls.current.push({
+              id: attachment.id,
+              preview_url: attachment.preview_url,
+              url: attachment.url,
+              remote_url: attachment.remote_url,
+              blurhash: attachment.blurhash,
+              width: attachment.meta?.original?.width,
+              height: attachment.meta?.original?.height
+            })
+        }
+      })
+    }, [])
     const navigateToImagesViewer = (id: string) =>
       navigation.navigate('Screen-ImagesViewer', {
         imageUrls: imageUrls.current,
@@ -47,15 +65,6 @@ const TimelineAttachment = React.memo(
         status.media_attachments.map((attachment, index) => {
           switch (attachment.type) {
             case 'image':
-              imageUrls.current.push({
-                id: attachment.id,
-                preview_url: attachment.preview_url,
-                url: attachment.url,
-                remote_url: attachment.remote_url,
-                blurhash: attachment.blurhash,
-                width: attachment.meta?.original?.width,
-                height: attachment.meta?.original?.height
-              })
               return (
                 <AttachmentImage
                   key={index}
@@ -99,10 +108,10 @@ const TimelineAttachment = React.memo(
               )
             default:
               if (
-                attachment.preview_url.endsWith('.jpg') ||
-                attachment.preview_url.endsWith('.jpeg') ||
-                attachment.preview_url.endsWith('.png') ||
-                attachment.preview_url.endsWith('.gif') ||
+                attachment.preview_url?.endsWith('.jpg') ||
+                attachment.preview_url?.endsWith('.jpeg') ||
+                attachment.preview_url?.endsWith('.png') ||
+                attachment.preview_url?.endsWith('.gif') ||
                 attachment.remote_url?.endsWith('.jpg') ||
                 attachment.remote_url?.endsWith('.jpeg') ||
                 attachment.remote_url?.endsWith('.png') ||

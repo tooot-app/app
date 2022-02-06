@@ -13,7 +13,7 @@ export interface Props {
   composeDispatch: Dispatch<ComposeAction>
   showActionSheetWithOptions: (
     options: ActionSheetOptions,
-    callback: (i: number) => void
+    callback: (i?: number | undefined) => void | Promise<void>
   ) => void
 }
 

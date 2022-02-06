@@ -36,10 +36,10 @@ const useColorSchemeDelay = (delay = 500) => {
     []
   )
   React.useEffect(() => {
-    Appearance.addChangeListener(onColorSchemeChange)
+    const listener = Appearance.addChangeListener(onColorSchemeChange)
     return () => {
       onColorSchemeChange.cancel()
-      Appearance.removeChangeListener(onColorSchemeChange)
+      listener.remove()
     }
   }, [])
   return colorScheme

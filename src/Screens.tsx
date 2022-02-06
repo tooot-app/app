@@ -1,33 +1,36 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
-import { displayMessage, Message, removeMessage } from '@components/Message'
+import { HeaderLeft } from '@components/Header'
+import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
-import { useNetInfo } from '@react-native-community/netinfo'
 import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import initQuery from '@utils/initQuery'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
+import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Analytics from 'expo-firebase-analytics'
+import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
-import { onlineManager, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
-const Stack = createNativeStackNavigator<Nav.RootStackParamList>()
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export interface Props {
   localCorrupt?: string
@@ -45,35 +48,15 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   const routeRef = useRef<{ name?: string; params?: {} }>()
 
-  const isConnected = useNetInfo().isConnected
-  useEffect(() => {
-    switch (isConnected) {
-      case true:
-        onlineManager.setOnline(isConnected)
-        removeMessage()
-        break
-      case false:
-        onlineManager.setOnline(isConnected)
-        displayMessage({
-          mode,
-          type: 'error',
-          message: t('network.disconnected.message'),
-          description: t('network.disconnected.description'),
-          autoHide: false
-        })
-        break
-    }
-  }, [isConnected])
-
   // Push hooks
   const instances = useSelector(
     getInstances,
     (prev, next) => prev.length === next.length
   )
   const queryClient = useQueryClient()
-  pushUseConnect({ navigationRef, mode, t, instances, dispatch })
-  pushUseReceive({ navigationRef, queryClient, instances })
-  pushUseRespond({ navigationRef, queryClient, instances, dispatch })
+  pushUseConnect({ t, instances })
+  pushUseReceive({ instances })
+  pushUseRespond({ instances })
 
   // Prevent screenshot alert
   useEffect(() => {
@@ -96,7 +79,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           type: 'error',
           mode
         })
-        navigationRef.current?.navigate('Screen-Tabs', {
+        navigationRef.navigate('Screen-Tabs', {
           screen: 'Tab-Me'
         })
       }
@@ -107,6 +90,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   // Lazily update users's preferences, for e.g. composing default visibility
   useEffect(() => {
     if (instanceActive !== -1) {
+      dispatch(updateConfiguration())
       dispatch(updateFilters())
       dispatch(updateAccountPreferences())
     }
@@ -114,7 +98,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Callbacks
   const navigationContainerOnReady = useCallback(() => {
-    const currentRoute = navigationRef.current?.getCurrentRoute()
+    const currentRoute = navigationRef.getCurrentRoute()
     routeRef.current = {
       name: currentRoute?.name,
       params: currentRoute?.params
@@ -124,7 +108,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
   const navigationContainerOnStateChange = useCallback(() => {
     const previousRoute = routeRef.current
-    const currentRoute = navigationRef.current?.getCurrentRoute()
+    const currentRoute = navigationRef.getCurrentRoute()
 
     const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
     if (matchTabName) {
@@ -133,7 +117,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
 
     if (previousRoute?.name !== currentRoute?.name) {
-      Analytics.setCurrentScreen(currentRoute?.name)
+      Analytics.logEvent('screen_view', { screen_name: currentRoute?.name })
       Sentry.Native.setContext('page', {
         previous: previousRoute,
         current: currentRoute
@@ -142,6 +126,39 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
     routeRef.current = currentRoute
   }, [])
+
+  // Deep linking for compose
+  const [deeplinked, setDeeplinked] = useState(false)
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      setDeeplinked(true)
+
+      const initialUrl = await Linking.parseInitialURLAsync()
+
+      if (initialUrl.path) {
+        const paths = initialUrl.path.split('/')
+
+        if (paths && paths.length) {
+          const instanceIndex = instances.findIndex(
+            instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
+          )
+          if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
+            initQuery({
+              instance: instances[instanceIndex],
+              prefetch: { enabled: true }
+            })
+          }
+        }
+      }
+
+      if (initialUrl.hostname === 'compose') {
+        navigationRef.navigate('Screen-Compose')
+      }
+    }
+    if (!deeplinked) {
+      getUrlAsync()
+    }
+  }, [instanceActive, instances, deeplinked])
 
   return (
     <>
@@ -166,8 +183,8 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Actions'
             component={ScreenActions}
             options={{
-              stackPresentation: 'transparentModal',
-              stackAnimation: 'fade',
+              presentation: 'transparentModal',
+              animation: 'fade',
               headerShown: false
             }}
           />
@@ -175,38 +192,33 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             name='Screen-Announcements'
             component={ScreenAnnouncements}
             options={({ navigation }) => ({
-              stackPresentation: 'transparentModal',
-              stackAnimation: 'fade',
+              presentation: 'transparentModal',
+              animation: 'fade',
               headerShown: true,
-              headerHideShadow: true,
-              headerTopInsetEnabled: false,
+              headerShadowVisible: false,
+              headerTransparent: true,
               headerStyle: { backgroundColor: 'transparent' },
               headerLeft: () => (
                 <HeaderLeft content='X' onPress={() => navigation.goBack()} />
               ),
-              headerTitle: t('screenAnnouncements:heading'),
-              ...(Platform.OS === 'android' && {
-                headerCenter: () => (
-                  <HeaderCenter content={t('screenAnnouncements:heading')} />
-                )
-              })
+              title: t('screenAnnouncements:heading')
             })}
           />
           <Stack.Screen
             name='Screen-Compose'
             component={ScreenCompose}
             options={{
-              stackPresentation: 'fullScreenModal',
-              ...(Platform.OS === 'android' && { headerShown: false })
+              headerShown: false,
+              presentation: 'fullScreenModal'
             }}
           />
           <Stack.Screen
             name='Screen-ImagesViewer'
             component={ScreenImagesViewer}
             options={{
-              stackPresentation: 'fullScreenModal',
-              stackAnimation: 'fade',
-              ...(Platform.OS === 'android' && { headerShown: false })
+              headerShown: false,
+              presentation: 'fullScreenModal',
+              animation: 'fade'
             }}
           />
         </Stack.Navigator>

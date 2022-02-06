@@ -1,10 +1,12 @@
 import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Instance', { domain?: string }]
+export type QueryKeyInstance = ['Instance', { domain?: string }]
 
-const queryFunction = async ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = async ({
+  queryKey
+}: QueryFunctionContext<QueryKeyInstance>) => {
   const { domain } = queryKey[1]
   if (!domain) {
     return Promise.reject()
@@ -18,19 +20,16 @@ const queryFunction = async ({ queryKey }: { queryKey: QueryKey }) => {
   return res.body
 }
 
-const useInstanceQuery = <
-  TData = Mastodon.Instance & { publicAllow?: boolean }
->({
+const useInstanceQuery = ({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
+}: QueryKeyInstance[1] & {
   options?: UseQueryOptions<
     Mastodon.Instance & { publicAllow?: boolean },
-    AxiosError,
-    TData
+    AxiosError
   >
 }) => {
-  const queryKey: QueryKey = ['Instance', { ...queryKeyParams }]
+  const queryKey: QueryKeyInstance = ['Instance', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, options)
 }
 

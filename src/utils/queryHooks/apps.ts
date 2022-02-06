@@ -1,11 +1,11 @@
 import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
 import * as AuthSession from 'expo-auth-session'
-import { useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
 
-export type QueryKey = ['Apps', { domain?: string }]
+export type QueryKeyApps = ['Apps', { domain?: string }]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
+const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyApps>) => {
   const redirectUri = AuthSession.makeRedirectUri({
     native: 'tooot://instance-auth',
     useProxy: false
@@ -27,13 +27,13 @@ const queryFunction = ({ queryKey }: { queryKey: QueryKey }) => {
   }).then(res => res.body)
 }
 
-const useAppsQuery = <TData = Mastodon.Apps>({
+const useAppsQuery = ({
   options,
   ...queryKeyParams
-}: QueryKey[1] & {
-  options?: UseQueryOptions<Mastodon.Apps, AxiosError, TData>
+}: QueryKeyApps[1] & {
+  options?: UseQueryOptions<Mastodon.Apps, AxiosError>
 }) => {
-  const queryKey: QueryKey = ['Apps', { ...queryKeyParams }]
+  const queryKey: QueryKeyApps = ['Apps', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, options)
 }
 

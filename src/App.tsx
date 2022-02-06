@@ -9,12 +9,17 @@ import netInfo from '@root/startup/netInfo'
 import sentry from '@root/startup/sentry'
 import { persistor, store } from '@root/store'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { getSettingsLanguage } from '@utils/slices/settingsSlice'
+import {
+  changeLanguage,
+  getSettingsLanguage
+} from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { AppState, LogBox, Platform } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -28,6 +33,7 @@ dev()
 sentry()
 audio()
 push()
+enableFreeze(true)
 
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
@@ -38,10 +44,10 @@ const App: React.FC = () => {
     Notifications.dismissAllNotificationsAsync()
   }, [])
   useEffect(() => {
-    AppState.addEventListener('change', appStateEffect)
+    const appStateListener = AppState.addEventListener('change', appStateEffect)
 
     return () => {
-      AppState.removeEventListener('change', appStateEffect)
+      appStateListener.remove()
     }
   }, [])
 
@@ -83,6 +89,9 @@ const App: React.FC = () => {
       if (bootstrapped) {
         log('log', 'App', 'loading actual app :)')
         const language = getSettingsLanguage(store.getState())
+        if (!language) {
+          store.dispatch(changeLanguage('en'))
+        }
         i18n.changeLanguage(language)
         return (
           <ActionSheetProvider>
@@ -101,15 +110,17 @@ const App: React.FC = () => {
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <PersistGate
-          persistor={persistor}
-          onBeforeLift={onBeforeLift}
-          children={children}
-        />
-      </Provider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <PersistGate
+            persistor={persistor}
+            onBeforeLift={onBeforeLift}
+            children={children}
+          />
+        </Provider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   )
 }
 

@@ -5,6 +5,7 @@ import { FetchOptions } from 'react-query/types/core/query'
 import Autolinker from '@root/modules/autolinker'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './utils/types'
+import { instanceConfigurationStatusCharsURL } from './Root'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']
@@ -92,7 +93,7 @@ const formatText = ({
       children.push(<TagText key={index} text={main} />)
       switch (tag.type) {
         case 'url':
-          contentLength = contentLength + 23
+          contentLength = contentLength + instanceConfigurationStatusCharsURL
           break
         case 'accounts':
           const theMatch = main.match(/@/g)

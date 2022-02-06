@@ -4,17 +4,18 @@ import { useQuery, UseQueryOptions } from 'react-query'
 
 export type QueryKey = ['Lists']
 
-const queryFunction = () => {
-  return apiInstance<Mastodon.List[]>({
+const queryFunction = async () => {
+  const res = await apiInstance<Mastodon.List[]>({
     method: 'get',
     url: 'lists'
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
-const useListsQuery = <TData = Mastodon.List[]>({
+const useListsQuery = ({
   options
 }: {
-  options?: UseQueryOptions<Mastodon.List[], AxiosError, TData>
+  options?: UseQueryOptions<Mastodon.List[], AxiosError>
 }) => {
   const queryKey: QueryKey = ['Lists']
   return useQuery(queryKey, queryFunction, options)

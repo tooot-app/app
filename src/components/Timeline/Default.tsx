@@ -10,10 +10,9 @@ import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstance, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import htmlparser2 from 'htmlparser2-without-node-native'
 import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -51,7 +50,7 @@ const TimelineDefault: React.FC<Props> = ({
 
   const actualStatus = item.reblog ? item.reblog : item
 
-  const ownAccount = actualStatus.account.id === instanceAccount?.id
+  const ownAccount = actualStatus.account?.id === instanceAccount?.id
 
   if (
     !highlighted &&

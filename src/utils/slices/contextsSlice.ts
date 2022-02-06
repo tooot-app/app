@@ -68,6 +68,7 @@ const contextsSlice = createSlice({
 export const getPublicRemoteNotice = (state: RootState) =>
   state.contexts.publicRemoteNotice
 export const getPreviousTab = (state: RootState) => state.contexts.previousTab
+export const getContexts = (state: RootState) => state.contexts
 
 export const {
   updateStoreReview,

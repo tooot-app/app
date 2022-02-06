@@ -2,6 +2,7 @@ import apiTooot from '@api/tooot'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
+import { isDevelopment } from '@utils/checkEnvironment'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 import { getInstance, Instance } from '../instancesSlice'
@@ -12,30 +13,27 @@ export const updateInstancePushDecode = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<Instance['push']['decode']['value']> => {
+  ): Promise<{ disable: Instance['push']['decode']['value'] }> => {
     const state = getState() as RootState
     const instance = getInstance(state)
     if (!instance?.url || !instance.account.id || !instance.push.keys) {
       return Promise.reject()
     }
 
-    const expoToken = (
-      await Notifications.getExpoPushTokenAsync({
-        experienceId: '@xmflsct/tooot'
-      })
-    ).data
+    const expoToken = isDevelopment
+      ? 'DEVELOPMENT_TOKEN_1'
+      : (
+          await Notifications.getExpoPushTokenAsync({
+            experienceId: '@xmflsct/tooot'
+          })
+        ).data
 
     await apiTooot({
-      method: 'post',
-      service: 'push',
-      url: 'update-decode',
+      method: 'put',
+      url: `/push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
       body: {
-        expoToken,
-        instanceUrl: instance.url,
-        accountId: instance.account.id,
-        ...(disable && { keys: instance.push.keys })
-      },
-      sentry: true
+        auth: !disable ? null : instance.push.keys.auth
+      }
     })
 
     if (Platform.OS === 'android') {
@@ -89,6 +87,6 @@ export const updateInstancePushDecode = createAsyncThunk(
       }
     }
 
-    return Promise.resolve(disable)
+    return Promise.resolve({ disable })
   }
 )

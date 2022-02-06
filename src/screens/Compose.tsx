@@ -1,14 +1,15 @@
 import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
-import { StackScreenProps } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
+import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
-  getInstanceMaxTootChar,
+  getInstanceConfigurationStatusMaxChars,
   removeInstanceDraft,
   updateInstanceDraft
 } from '@utils/slices/instancesSlice'
@@ -31,7 +32,6 @@ import {
   StyleSheet
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
@@ -43,14 +43,9 @@ import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
 
-export type ScreenComposeProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-Compose'
->
-
 const Stack = createNativeStackNavigator()
 
-const ScreenCompose: React.FC<ScreenComposeProp> = ({
+const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   route: { params },
   navigation
 }) => {
@@ -60,20 +55,18 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', _keyboardDidShow)
-    Keyboard.addListener('keyboardWillHide', _keyboardDidHide)
+    const keyboardShown = Keyboard.addListener('keyboardWillShow', () =>
+      setHasKeyboard(true)
+    )
+    const keyboardHidden = Keyboard.addListener('keyboardWillHide', () =>
+      setHasKeyboard(false)
+    )
 
     return () => {
-      Keyboard.removeListener('keyboardWillShow', _keyboardDidShow)
-      Keyboard.removeListener('keyboardWillHide', _keyboardDidHide)
+      keyboardShown.remove()
+      keyboardHidden.remove()
     }
   }, [])
-  const _keyboardDidShow = () => {
-    setHasKeyboard(true)
-  }
-  const _keyboardDidHide = () => {
-    setHasKeyboard(false)
-  }
 
   const localAccount = useSelector(getInstanceAccount, (prev, next) =>
     prev?.preferences && next?.preferences
@@ -110,7 +103,10 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
     initialReducerState
   )
 
-  const maxTootChars = useSelector(getInstanceMaxTootChar, () => true)
+  const maxTootChars = useSelector(
+    getInstanceConfigurationStatusMaxChars,
+    () => true
+  )
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) +
     composeState.text.count
@@ -337,7 +333,7 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
                   ]
                 )
               } else {
-                Sentry.Native.captureException(error)
+                Sentry.Native.captureMessage('Compose posting', error)
                 haptics('Error')
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [
@@ -371,33 +367,21 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
         edges={hasKeyboard ? ['top'] : ['top', 'bottom']}
       >
         <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-          <Stack.Navigator
-            screenOptions={{ headerTopInsetEnabled: false }}
-            initialRouteName='Screen-Compose-Root'
-          >
+          <Stack.Navigator initialRouteName='Screen-Compose-Root'>
             <Stack.Screen
               name='Screen-Compose-Root'
               component={ComposeRoot}
               options={{
-                ...Platform.select({
-                  ios: {
-                    headerTitle: headerContent,
-                    headerTitleStyle: {
-                      fontWeight:
-                        totalTextCount > maxTootChars
-                          ? StyleConstants.Font.Weight.Bold
-                          : StyleConstants.Font.Weight.Normal,
-                      fontSize: StyleConstants.Font.Size.M
-                    },
-                    headerTintColor:
-                      totalTextCount > maxTootChars
-                        ? theme.red
-                        : theme.secondary
-                  },
-                  android: {
-                    headerCenter: () => <HeaderCenter content={headerContent} />
-                  }
-                }),
+                title: headerContent,
+                titleStyle: {
+                  fontWeight:
+                    totalTextCount > maxTootChars
+                      ? StyleConstants.Font.Weight.Bold
+                      : StyleConstants.Font.Weight.Normal,
+                  fontSize: StyleConstants.Font.Size.M
+                },
+                headerTintColor:
+                  totalTextCount > maxTootChars ? theme.red : theme.secondary,
                 headerLeft,
                 headerRight
               }}
@@ -405,18 +389,12 @@ const ScreenCompose: React.FC<ScreenComposeProp> = ({
             <Stack.Screen
               name='Screen-Compose-DraftsList'
               component={ComposeDraftsList}
-              options={{
-                stackPresentation: 'modal',
-                ...(Platform.OS === 'android' && { headerShown: false })
-              }}
+              options={{ headerShown: false, presentation: 'modal' }}
             />
             <Stack.Screen
               name='Screen-Compose-EditAttachment'
               component={ComposeEditAttachment}
-              options={{
-                stackPresentation: 'modal',
-                ...(Platform.OS === 'android' && { headerShown: false })
-              }}
+              options={{ headerShown: false, presentation: 'modal' }}
             />
           </Stack.Navigator>
         </ComposeContext.Provider>

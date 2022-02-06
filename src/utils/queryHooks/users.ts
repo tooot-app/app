@@ -1,19 +1,21 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
+import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
-import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query'
+import {
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions
+} from 'react-query'
 
 export type QueryKeyUsers = [
   'Users',
-  Nav.TabSharedStackParamList['Tab-Shared-Users']
+  TabSharedStackParamList['Tab-Shared-Users']
 ]
 
 const queryFunction = ({
   queryKey,
   pageParam
-}: {
-  queryKey: QueryKeyUsers
-  pageParam?: { [key: string]: string }
-}) => {
+}: QueryFunctionContext<QueryKeyUsers>) => {
   const { reference, id, type } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -29,15 +31,8 @@ const useUsersQuery = ({
   ...queryKeyParams
 }: QueryKeyUsers[1] & {
   options?: UseInfiniteQueryOptions<
-    {
-      body: Mastodon.Account[]
-      links?: { prev?: string; next?: string }
-    },
-    AxiosError,
-    {
-      body: Mastodon.Account[]
-      links?: { prev?: string; next?: string }
-    }
+    InstanceResponse<Mastodon.Account[]>,
+    AxiosError
   >
 }) => {
   const queryKey: QueryKeyUsers = ['Users', { ...queryKeyParams }]

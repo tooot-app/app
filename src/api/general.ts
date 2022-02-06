@@ -1,6 +1,6 @@
 import axios from 'axios'
 import chalk from 'chalk'
-import { Constants } from 'react-native-unimodules'
+import Constants from 'expo-constants'
 import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
@@ -24,7 +24,7 @@ const apiGeneral = async <T = unknown>({
   params,
   headers,
   body,
-  sentry = false
+  sentry = true
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
@@ -46,7 +46,7 @@ const apiGeneral = async <T = unknown>({
     params,
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': `tooot/${Constants.manifest.version}`,
+      'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers
     },
@@ -58,8 +58,12 @@ const apiGeneral = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry) {
-        Sentry.Native.setExtras(error.response)
+      if (sentry && Math.random() < 0.01) {
+        Sentry.Native.setExtras({
+          API: 'general',
+          ...(error.response && { response: error.response }),
+          ...(error.request && { request: error.request })
+        })
         Sentry.Native.captureException(error)
       }
 

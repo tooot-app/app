@@ -1,46 +1,40 @@
 import apiGeneral from '@api/general'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
-import { NavigationContainerRef } from '@react-navigation/native'
-import { Dispatch } from '@reduxjs/toolkit'
+import navigationRef from '@helpers/navigationRef'
+import { isDevelopment } from '@utils/checkEnvironment'
 import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
+import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { TFunction } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 
 export interface Params {
-  navigationRef: React.RefObject<NavigationContainerRef>
-  mode: 'light' | 'dark'
   t: TFunction<'screens'>
   instances: Instance[]
-  dispatch: Dispatch<any>
 }
 
-const pushUseConnect = ({
-  navigationRef,
-  mode,
-  t,
-  instances,
-  dispatch
-}: Params) => {
+const pushUseConnect = ({ t, instances }: Params) => {
+  const dispatch = useDispatch()
+  const { mode } = useTheme()
+
   return useEffect(() => {
     const connect = async () => {
-      const expoToken = (
-        await Notifications.getExpoPushTokenAsync({
-          experienceId: '@xmflsct/tooot'
-        })
-      ).data
+      const expoToken = isDevelopment
+        ? 'DEVELOPMENT_TOKEN_1'
+        : (
+            await Notifications.getExpoPushTokenAsync({
+              experienceId: '@xmflsct/tooot'
+            })
+          ).data
 
       apiTooot({
-        method: 'post',
-        service: 'push',
-        url: 'connect',
-        body: {
-          expoToken
-        },
+        method: 'get',
+        url: `push/connect/${expoToken}`,
         sentry: true
       }).catch(error => {
-        if (error.status == 410) {
+        if (error.status == 404) {
           displayMessage({
             mode,
             type: 'error',
@@ -48,13 +42,13 @@ const pushUseConnect = ({
             message: t('pushError.message'),
             description: t('pushError.description'),
             onPress: () => {
-              navigationRef.current?.navigate('Screen-Tabs', {
+              navigationRef.navigate('Screen-Tabs', {
                 screen: 'Tab-Me',
                 params: {
                   screen: 'Tab-Me-Root'
                 }
               })
-              navigationRef.current?.navigate('Screen-Tabs', {
+              navigationRef.navigate('Screen-Tabs', {
                 screen: 'Tab-Me',
                 params: {
                   screen: 'Tab-Me-Settings'

@@ -1,6 +1,7 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
+  QueryFunctionContext,
   useMutation,
   UseMutationOptions,
   useQuery,
@@ -12,7 +13,9 @@ export type QueryKeyRelationship = [
   { id: Mastodon.Account['id'] }
 ]
 
-const queryFunction = ({ queryKey }: { queryKey: QueryKeyRelationship }) => {
+const queryFunction = ({
+  queryKey
+}: QueryFunctionContext<QueryKeyRelationship>) => {
   const { id } = queryKey[1]
 
   return apiInstance<Mastodon.Relationship[]>({

@@ -4,6 +4,7 @@ import { useTranslateQuery } from '@utils/queryHooks/translate'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Localization from 'expo-localization'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, Text } from 'react-native'
@@ -47,9 +48,8 @@ const TimelineTranslate = React.memo(
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      uri: status.uri,
       source: status.language,
-      target: settingsLanguage,
+      target: Localization.locale || settingsLanguage || 'en',
       text,
       options: { enabled }
     })
@@ -93,7 +93,9 @@ const TimelineTranslate = React.memo(
                   source: data?.sourceLanguage
                 })
               : t('shared.translate.default')}
-            {__DEV__ ? ` Source: ${status.language}` : undefined}
+            {__DEV__
+              ? ` Source: ${status.language}; Target: ${settingsLanguage}`
+              : undefined}
           </Text>
           {isLoading ? (
             <Circle

@@ -40,7 +40,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const { theme } = useTheme()
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const flatListRef = useRef<FlatList>(null)
 

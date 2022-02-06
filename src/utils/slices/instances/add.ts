@@ -9,13 +9,11 @@ const addInstance = createAsyncThunk(
     domain,
     token,
     instance,
-    max_toot_chars = 500,
     appData
   }: {
     domain: Instance['url']
     token: Instance['token']
     instance: Mastodon.Instance
-    max_toot_chars?: number
     appData: Instance['appData']
   }): Promise<{ type: 'add' | 'overwrite'; data: Instance }> => {
     const { store } = require('@root/store')
@@ -54,6 +52,13 @@ const addInstance = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
+    const { body: filters } = await apiGeneral<Mastodon.Filter[]>({
+      method: 'get',
+      domain,
+      url: `api/v1/filters`,
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
     return Promise.resolve({
       type,
       data: {
@@ -63,13 +68,19 @@ const addInstance = createAsyncThunk(
         token,
         uri: instance.uri,
         urls: instance.urls,
-        max_toot_chars,
         account: {
           id,
           acct,
           avatarStatic: avatar_static,
           preferences
         },
+        ...(instance.max_toot_chars && {
+          max_toot_chars: instance.max_toot_chars
+        }),
+        ...(instance.configuration && {
+          configuration: instance.configuration
+        }),
+        filters,
         notifications_filter: {
           follow: true,
           favourite: true,
@@ -88,7 +99,12 @@ const addInstance = createAsyncThunk(
             mention: { loading: false, value: true },
             poll: { loading: false, value: true }
           },
-          keys: undefined
+          keys: { auth: undefined, public: undefined, private: undefined }
+        },
+        timelinesLookback: {},
+        mePage: {
+          lists: { shown: false },
+          announcements: { shown: false, unread: 0 }
         },
         drafts: []
       }

@@ -3,11 +3,11 @@ import Button from '@components/Button'
 import haptics from '@components/haptics'
 import ComponentInstance from '@components/Instance'
 import { useNavigation } from '@react-navigation/native'
+import initQuery from '@utils/initQuery'
 import {
   getInstanceActive,
   getInstances,
-  Instance,
-  updateInstanceActive
+  Instance
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -21,8 +21,7 @@ import {
   View
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 interface Props {
   instance: Instance
@@ -30,9 +29,7 @@ interface Props {
 }
 
 const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
-  const queryClient = useQueryClient()
   const navigation = useNavigation()
-  const dispatch = useDispatch()
 
   return (
     <Button
@@ -45,8 +42,7 @@ const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
       onPress={() => {
         haptics('Light')
         analytics('switch_existing_press')
-        dispatch(updateInstanceActive(instance))
-        queryClient.clear()
+        initQuery({ instance, prefetch: { enabled: true } })
         navigation.goBack()
       }}
     />

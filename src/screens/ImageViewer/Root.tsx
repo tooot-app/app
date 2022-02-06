@@ -6,6 +6,7 @@
  *
  */
 
+import { RootStackParamList } from '@utils/navigation/navigators'
 import React, { ComponentType, useCallback, useEffect } from 'react'
 import {
   Animated,
@@ -20,11 +21,11 @@ import useImageIndexChange from './hooks/useImageIndexChange'
 import useRequestClose from './hooks/useRequestClose'
 
 type Props = {
-  images: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+  images: RootStackParamList['Screen-ImagesViewer']['imageUrls']
   imageIndex: number
   onRequestClose: () => void
   onLongPress?: (
-    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+    image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   ) => void
   onImageIndexChange?: (imageIndex: number) => void
   backgroundColor?: string
@@ -50,9 +51,7 @@ function ImageViewer ({
   HeaderComponent
 }: Props) {
   const imageList = React.createRef<
-    VirtualizedList<
-      Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
-    >
+    VirtualizedList<RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]>
   >()
   const [opacity, onRequestCloseEnhanced] = useRequestClose(onRequestClose)
   const [currentImageIndex, onScroll] = useImageIndexChange(imageIndex, SCREEN)

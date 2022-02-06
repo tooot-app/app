@@ -2,9 +2,12 @@ import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { StackScreenProps } from '@react-navigation/stack'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import {
+  RootStackParamList,
+  RootStackScreenProps
+} from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { findIndex } from 'lodash'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share, StatusBar, View } from 'react-native'
@@ -24,9 +27,12 @@ const HeaderComponent = React.memo(
     imageUrls
   }: {
     messageRef: RefObject<FlashMessage>
-    navigation: ScreenImagesViewerProp['navigation']
+    navigation: NativeStackNavigationProp<
+      RootStackParamList,
+      'Screen-ImagesViewer'
+    >
     currentIndex: number
-    imageUrls: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls']
+    imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls']
   }) => {
     const insets = useSafeAreaInsets()
     const { mode } = useTheme()
@@ -54,9 +60,11 @@ const HeaderComponent = React.memo(
               analytics('imageviewer_more_share_press')
               switch (Platform.OS) {
                 case 'ios':
-                  Share.share({ url: imageUrls[currentIndex].url })
+                  await Share.share({ url: imageUrls[currentIndex].url })
+                  break
                 case 'android':
-                  Share.share({ message: imageUrls[currentIndex].url })
+                  await Share.share({ message: imageUrls[currentIndex].url })
+                  break
               }
               break
           }
@@ -98,17 +106,12 @@ const HeaderComponent = React.memo(
   (prev, next) => prev.currentIndex === next.currentIndex
 )
 
-export type ScreenImagesViewerProp = StackScreenProps<
-  Nav.RootStackParamList,
-  'Screen-ImagesViewer'
->
-
 const ScreenImagesViewer = ({
   route: {
     params: { imageUrls, id }
   },
   navigation
-}: ScreenImagesViewerProp) => {
+}: RootStackScreenProps<'Screen-ImagesViewer'>) => {
   if (imageUrls.length === 0) {
     navigation.goBack()
     return null
@@ -116,7 +119,7 @@ const ScreenImagesViewer = ({
 
   const { mode } = useTheme()
 
-  const initialIndex = findIndex(imageUrls, ['id', id])
+  const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   const messageRef = useRef<FlashMessage>(null)
