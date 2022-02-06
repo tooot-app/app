@@ -12,7 +12,7 @@
     "message": "居然刷到底了，喝杯 <0 /> 吧"
   },
   "lookback": {
-    "message": "上次阅读至"
+    "message": "最后阅读于"
   },
   "refresh": {
     "fetchPreviousPage": "较新于此的嘟嘟",
