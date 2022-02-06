@@ -53,7 +53,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               }, 500)
           } catch (err) {
             if (Math.random() < 0.1) {
-              Sentry.Native.setExtras({
+              Sentry.Native.setContext('Scroll to Index', {
                 type: 'original',
                 index: pointer,
                 itemsLength: flattenData.length,
@@ -84,7 +84,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           )
       } catch (err) {
         if (Math.random() < 0.1) {
-          Sentry.Native.setExtras({
+          Sentry.Native.setContext('Scroll to Index', {
             type: 'onScrollToIndexFailed',
             index: error.index,
             itemsLength

@@ -3,8 +3,8 @@
   "versions": {
     "native": "220204",
     "major": 3,
-    "minor": 3,
-    "patch": 0,
+    "minor": 1,
+    "patch": 1,
     "expo": "44.0.0"
   },
   "description": "tooot app for Mastodon",
