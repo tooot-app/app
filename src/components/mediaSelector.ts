@@ -4,7 +4,7 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import i18next from 'i18next'
-import { Alert, Linking } from 'react-native'
+import { Alert, Linking, Platform } from 'react-native'
 
 export interface Props {
   mediaTypes?: ImagePicker.MediaTypeOptions
@@ -91,7 +91,11 @@ const mediaSelector = async ({
           } else {
             const result = await ImagePicker.launchImageLibraryAsync({
               mediaTypes,
-              exif: false
+              exif: false,
+              presentationStyle:
+                Platform.OS === 'ios' && parseInt(Platform.Version) < 13
+                  ? 0
+                  : -2
             })
 
             if (!result.cancelled) {
