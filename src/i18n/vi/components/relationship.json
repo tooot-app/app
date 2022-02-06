@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "Theo dõi người này"
+  },
+  "block": {
+    "function": "Chặn người này"
+  },
+  "button": {
+    "error": "Xảy ra lỗi khi tải",
+    "blocked_by": "Đã chặn",
+    "blocking": "Bỏ chặn",
+    "following": "Ngưng theo dõi",
+    "requested": "Yêu cầu theo dõi",
+    "default": "Theo dõi"
+  }
+}

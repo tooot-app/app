@@ -1,0 +1,28 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "인스턴스의 도메인"
+    },
+    "button": "로그인",
+    "information": {
+      "name": "이름",
+      "accounts": "사용자",
+      "statuses": "툿",
+      "domains": "연합"
+    },
+    "disclaimer": {
+      "base": "로그인 과정에서는 시스템 브라우저를 사용해, tooot 앱이 당신의 계정 정보를 볼 수 없어요.\n더 알아보기 ",
+      "privacy": "개인정보 정책"
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "이 인스턴스에 로그인했어요",
+      "message": "기존에 로그인한 계정을 유지한 채로, 새 계정에 로그인할 수 있어요",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "계속"
+      }
+    }
+  }
+}

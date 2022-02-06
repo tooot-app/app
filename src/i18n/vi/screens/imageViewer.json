@@ -1,0 +1,17 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "Thêm hành động cho ảnh này",
+      "accessibilityHint": "Bạn có thể lưu hoặc chia sẻ ảnh này"
+    },
+    "options": {
+      "save": "Lưu ảnh",
+      "share": "Chia sẻ ảnh",
+      "cancel": "$t(common:buttons.cancel)"
+    },
+    "save": {
+      "succeed": "Đã lưu ảnh",
+      "failed": "Lưu ảnh thất bại"
+    }
+  }
+}

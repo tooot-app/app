@@ -1,13 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { LOCALES } from '@root/i18n/locales'
 import { RootState } from '@root/store'
 import * as Analytics from 'expo-firebase-analytics'
 import * as Localization from 'expo-localization'
 import { pickBy } from 'lodash'
-
-enum AvailableLanguages {
-  'zh-Hans',
-  'en'
-}
 
 export const changeAnalytics = createAsyncThunk(
   'settings/changeAnalytics',
@@ -31,12 +27,10 @@ export const settingsInitialState = {
     enabled: false
   },
   language: Object.keys(
-    pickBy(AvailableLanguages, (_, key) => Localization.locale.includes(key))
+    pickBy(LOCALES, (_, key) => Localization.locale.startsWith(key))
   )
     ? Object.keys(
-        pickBy(AvailableLanguages, (_, key) =>
-          Localization.locale.includes(key)
-        )
+        pickBy(LOCALES, (_, key) => Localization.locale.startsWith(key))
       )[0]
     : 'en',
   theme: 'auto',
@@ -88,10 +82,6 @@ export const getSettingsBrowser = (state: RootState) => state.settings.browser
 export const getSettingsAnalytics = (state: RootState) =>
   state.settings.analytics
 
-export const {
-  changeFontsize,
-  changeLanguage,
-  changeTheme,
-  changeBrowser
-} = settingsSlice.actions
+export const { changeFontsize, changeLanguage, changeTheme, changeBrowser } =
+  settingsSlice.actions
 export default settingsSlice.reducer
