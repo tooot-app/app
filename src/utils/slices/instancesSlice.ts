@@ -169,10 +169,11 @@ const instancesSlice = createSlice({
       action: PayloadAction<Instance['timelinesLookback']>
     ) => {
       const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].timelinesLookback = {
-        ...instances[activeIndex].timelinesLookback,
-        ...action.payload
-      }
+      instances[activeIndex] &&
+        (instances[activeIndex].timelinesLookback = {
+          ...instances[activeIndex].timelinesLookback,
+          ...action.payload
+        })
     },
     updateInstanceMePage: (
       { instances },
