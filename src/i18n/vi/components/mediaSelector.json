@@ -1,0 +1,28 @@
+{
+  "title": "Chọn nguồn",
+  "options": {
+    "library": "Từ thiết bị",
+    "photo": "Chụp ảnh",
+    "cancel": "$t(common:buttons.cancel)"
+  },
+  "library": {
+    "alert": {
+      "title": "Chưa được cấp quyền",
+      "message": "Bạn cần cấp quyền đọc thư viện ảnh trước",
+      "buttons": {
+        "settings": "Cài đặt cập nhật",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "Chưa cấp quyền",
+      "message": "Cần cấp quyền sử dụng camera trước",
+      "buttons": {
+        "settings": "Cài đặt cập nhật",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "이 이미지의 더 많은 동작",
+      "accessibilityHint": "이 이미지를 저장하거나 공유할 수 있어요"
+    },
+    "options": {
+      "save": "이미지 저장",
+      "share": "이미지 공유",
+      "cancel": "$t(common:buttons.cancel)"
+    },
+    "save": {
+      "succeed": "이미지 저장됨",
+      "failed": "이미지 저장 실패"
+    }
+  }
+}

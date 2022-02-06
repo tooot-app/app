@@ -144,7 +144,7 @@
       }
     },
     "push": {
-      "notAvailable": "您的机型暂不支持 tooot 推送通知",
+      "notAvailable": "您的手机不支持tooot推送通知",
       "enable": {
         "direct": "启用推送通知",
         "settings": "在系统设置中启用"

@@ -1,0 +1,211 @@
+{
+  "empty": {
+    "error": {
+      "message": "불러오기 오류",
+      "button": "다시 시도"
+    },
+    "success": {
+      "message": "타임라인 빔"
+    }
+  },
+  "end": {
+    "message": "끝, <0 /> 한 잔 어때요"
+  },
+  "lookback": {
+    "message": "마지막 읽음"
+  },
+  "refresh": {
+    "fetchPreviousPage": "여기부터 더 새로운",
+    "refetch": "가장 최신으로"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "고정됨",
+      "favourite": "{{name}}이 내 툿을 즐겨찾기했어요",
+      "status": "{{name}}이 방금 포스트했어요",
+      "follow": "{{name}}님이 나를 팔로우했어요",
+      "follow_request": "{{name}}이 나에게 팔로우 요청을 보냈어요",
+      "poll": "내가 참여한 투표가 끝났어요",
+      "reblog": {
+        "default": "{{name}}님이 부스트했어요",
+        "notification": "{{name}}이 내 툿을 부스트했어요"
+      }
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "이 툿에 답장"
+      },
+      "reblogged": {
+        "accessibilityLabel": "이 툿 부스트",
+        "function": "툿 부스트"
+      },
+      "favourited": {
+        "accessibilityLabel": "이 툿 즐겨찾기에 추가",
+        "function": "툿 즐겨찾기"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "툿 북마크에 추가",
+        "function": "툿 북마크"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}}명의 사용자가 이 툿을 부스트했어요",
+        "accessibilityHint": "유저를 보려면 탭하세요",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}}명의 사용자가 이 툿을 즐겨찾기했어요",
+        "accessibilityHint": "유저를 보려면 탭하세요",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "민감한 미디어 표시"
+      },
+      "unsupported": {
+        "text": "불러오기 오류",
+        "button": "원격 링크 시도"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "{{name}}의 아바타",
+      "accessibilityHint": "{{name}}의 페이지로 가려면 탭하세요"
+    },
+    "content": {
+      "expandHint": "숨겨진 콘텐츠"
+    },
+    "filtered": "필터됨",
+    "fullConversation": "대화 보기",
+    "translate": {
+      "default": "번역",
+      "succeed": "{{source}}에서 {{provider}}으로 번역됨",
+      "failed": "번역 실패"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "사용자 표시 이름"
+          },
+          "account": {
+            "accessibilityHint": "사용자 계정"
+          }
+        },
+        "application": "{{application}}으로 툿",
+        "muted": {
+          "accessibilityLabel": "툿 음소거됨"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "툿이 개인 메시지에요"
+          },
+          "private": {
+            "accessibilityLabel": "툿이 팔로워에게만 보여요"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "와",
+        "delete": {
+          "function": "개인 메시지 삭제"
+        }
+      },
+      "actions": {
+        "accessibilityHint": "이 툿에 할 동작, 툿 자체나 포스트한 사용자",
+        "account": {
+          "heading": "사용자 정보",
+          "mute": {
+            "function": "사용자 음소거",
+            "button": "@{{acct}} 음소거"
+          },
+          "block": {
+            "function": "사용자 차단",
+            "button": "@{{acct}} 차단"
+          },
+          "reports": {
+            "function": "사용자 신고",
+            "button": "@{{acct}} 신고"
+          }
+        },
+        "domain": {
+          "heading": "인스턴스 정보",
+          "block": {
+            "function": "인스턴스 차단",
+            "button": "인스턴스 {{domain}} 차단"
+          },
+          "alert": {
+            "title": "{{domain}}을 정말 차단할까요?",
+            "message": "보통은 유저 음소거나 차단으로 충분해요.\n\n인스턴스를 차단하면, 팔로워를 포함하는 인스턴스의 모든 콘텐츠가 삭제됩니다!",
+            "buttons": {
+              "confirm": "차단 확인",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        },
+        "share": {
+          "status": {
+            "heading": "툿 공유",
+            "button": "이 툿의 링크 공유"
+          },
+          "account": {
+            "heading": "사용자 공유",
+            "button": "이 사용자에게 링크 공유"
+          }
+        },
+        "status": {
+          "heading": "툿 정보",
+          "delete": {
+            "function": "툿 삭제",
+            "button": "이 툿 삭제"
+          },
+          "edit": {
+            "function": "툿 삭제",
+            "button": "삭제하고 다시 쓰기",
+            "alert": {
+              "title": "툿을 정말 삭제할까요?",
+              "message": "이 툿을 삭제하고 다시 초안을 작성하시겠어요? 모든 답장, 부스트와 즐겨찾기가 지워져요.",
+              "buttons": {
+                "confirm": "삭제 확인",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "mute": {
+            "function": "툿 음소거",
+            "button": {
+              "positive": "이 툿과 답장 음소거",
+              "negative": "이 툿과 답장 음소거 해제"
+            }
+          },
+          "pin": {
+            "function": "고정",
+            "button": {
+              "positive": "이 툿 고정",
+              "negative": "이 툿 고정 해제"
+            }
+          }
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "투표",
+          "refresh": "새로고침"
+        },
+        "count": {
+          "voters": "{{count}}명의 사용자가 투표",
+          "voters_plural": "{{count}}명의 사용자가 투표",
+          "votes": "{{count}} 투표",
+          "votes_plural": "{{count}} 투표"
+        },
+        "expiration": {
+          "expired": "투표 종료됨",
+          "until": "<0 />후 만료"
+        }
+      }
+    }
+  }
+}

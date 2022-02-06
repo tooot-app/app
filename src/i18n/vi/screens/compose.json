@@ -1,0 +1,169 @@
+{
+  "heading": {
+    "left": {
+      "button": "Hủy bỏ",
+      "alert": {
+        "title": "Không đăng nữa?",
+        "buttons": {
+          "save": "Lưu bản nháp",
+          "delete": "Xóa bản nháp",
+          "cancel": "Hủy bỏ"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Tút",
+        "conversation": "Tin nhắn",
+        "reply": "Lượt trả lời",
+        "edit": "Tút"
+      },
+      "alert": {
+        "default": {
+          "title": "Đăng tút thất bại",
+          "button": "Thử lại"
+        },
+        "removeReply": {
+          "title": "Tút trả lời sẽ không tìm thấy",
+          "description": "Đã xóa tút trả lời. Bạn có muốn xóa nguồn luôn không?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Xóa nguồn"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Đăng với tư cách @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Viết nội dung ẩn của bạn ở đây"
+        },
+        "textInput": {
+          "placeholder": "Bạn đang nghĩ về điều gì?"
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Đánh dấu tập tin đính kèm là nhạy cảm",
+          "remove": {
+            "accessibilityLabel": "Xóa tập tin đính kèm, số {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Sửa tập tin đính kèm, số {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Tải lên thêm"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Chèn emoji"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Tùy chọn bình chọn {{index}}",
+              "single": "Chỉ được chọn một",
+              "multiple": "Nhiều lựa chọn"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Giảm lựa chọn bình chọn tới {{amount}}",
+              "accessibilityHint": "Đã đạt số lựa chọn tối thiểu, gần đây là {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Tăng số lựa chọn lên {{amount}}",
+              "accessibilityHint": "Đã đạt số lựa chọn tối đa, hiện tại là {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Kiểu bình chọn",
+            "options": {
+              "single": "Một lựa chọn",
+              "multiple": "Nhiều lựa chọn",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          },
+          "expiration": {
+            "heading": "Thời hạn",
+            "options": {
+              "300": "5 phút",
+              "1800": "30 phút",
+              "3600": "1 giờ",
+              "21600": "6 giờ",
+              "86400": "1 ngày",
+              "259200": "3 ngày",
+              "604800": "7 ngày",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Tải lên đính kèm",
+          "accessibilityHint": "Không thể đính kèm tập tin trong cuộc bình chọn",
+          "failed": {
+            "alert": {
+              "title": "Tải lên thất bại",
+              "button": "Thử lại"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Tạo bình chọn",
+          "accessibilityHint": "Không thể đính kèm tập tin trong cuộc bình chọn"
+        },
+        "visibility": {
+          "accessibilityLabel": "Tút thuộc dạng {{visibility}}",
+          "title": "Dạng tút",
+          "options": {
+            "public": "Công khai",
+            "unlisted": "Hạn chế",
+            "private": "Riêng tư",
+            "direct": "Nhắn riêng",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Nội dung ẩn"
+        },
+        "emoji": {
+          "accessibilityLabel": "Chèn emoji",
+          "accessibilityHint": "Mở bảng chọn emoji, vuốt qua lại để xem toàn bộ"
+        }
+      },
+      "drafts": "Nháp ({{count}})",
+      "drafts_plural": "Nháp ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Sửa tập tin đính kèm",
+        "right": {
+          "accessibilityLabel": "Lưu chỉnh sửa",
+          "failed": {
+            "title": "Không thể lưu những thay đổi",
+            "button": "Thử lại"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Mô tả cho người khiếm thị",
+          "placeholder": "Bạn có thể thêm mô tả hay còn gọi là văn bản thay thế cho media, để những người mù hoặc khiếm thị có thể tiếp cận dễ dàng hơn.\n\nBạn có thể giới thiệu tóm tắt hoặc mô tả bối cảnh của nội dung media mà bạn sắp tải lên."
+        },
+        "imageFocus": "Kéo thả vòng tròn để chọn phần hiển thị trên hình thu nhỏ"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Nháp"
+      },
+      "content": {
+        "accessibilityHint": "Đã lưu nháp, nhấn để tiếp tục viết",
+        "textEmpty": "Chưa có nội dung"
+      }
+    }
+  }
+}

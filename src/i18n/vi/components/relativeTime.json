@@ -1,0 +1,20 @@
+{
+  "strings": {
+    "prefixAgo": "",
+    "prefixFromNow": "",
+    "suffixAgo": "trước",
+    "suffixFromNow": "",
+    "seconds": "%d giây",
+    "minute": "một phút",
+    "minutes": "%d phút",
+    "hour": "một giờ",
+    "hours": "khoảng %d giờ",
+    "day": "một ngày",
+    "days": "%d ngày",
+    "month": "khoảng một tháng",
+    "months": "%d tháng",
+    "year": "khoảng một năm",
+    "years": "%d năm",
+    "wordSeparator": ""
+  }
+}
