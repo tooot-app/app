@@ -1,4 +1,4 @@
-languages(['zh-Hans', 'en-US'])
+languages(['zh-Hans', 'vi', 'ko', 'en-US'])
 
 name({
   'default' => "tooot"
