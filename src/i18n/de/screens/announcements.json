@@ -1,0 +1,10 @@
+{
+  "heading": "Ankündigungen",
+  "content": {
+    "published": "<0 /> veröffentlicht",
+    "button": {
+      "read": "Lesen",
+      "unread": "Als gelesen markieren"
+    }
+  }
+}

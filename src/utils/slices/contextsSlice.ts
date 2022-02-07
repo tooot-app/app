@@ -3,8 +3,6 @@ import { RootState } from '@root/store'
 import * as Updates from 'expo-updates'
 import * as StoreReview from 'expo-store-review'
 
-export const supportedLngs = ['zh-Hans', 'en']
-
 export type ContextsState = {
   storeReview: {
     context: Readonly<number>

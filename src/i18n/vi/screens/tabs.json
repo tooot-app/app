@@ -1,0 +1,322 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Đang theo dõi"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "Liên hợp",
+        "right": "Máy chủ"
+      }
+    },
+    "notifications": {
+      "name": "Thông báo"
+    },
+    "me": {
+      "name": "Tôi"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Tìm kiếm",
+      "accessibilityHint": "Thử tìm hashtag, người dùng hoặc tút"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "Lọc",
+      "accessibilityHint": "Lọc các dạng thông báo"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Đã lưu"
+      },
+      "conversations": {
+        "name": "Nhắn riêng"
+      },
+      "favourites": {
+        "name": "Lượt thích"
+      },
+      "fontSize": {
+        "name": "Kích cỡ phông chữ"
+      },
+      "lists": {
+        "name": "Danh sách"
+      },
+      "list": {
+        "name": "Danh sách: {{list}}"
+      },
+      "push": {
+        "name": "Thông báo đẩy"
+      },
+      "profile": {
+        "name": "Trang cá nhân"
+      },
+      "profileName": {
+        "name": "Tên hiển thị mới"
+      },
+      "profileNote": {
+        "name": "Mô tả"
+      },
+      "profileFields": {
+        "name": "Metadata"
+      },
+      "settings": {
+        "name": "Cài đặt App"
+      },
+      "switch": {
+        "name": "Chuyển đổi tài khoản"
+      }
+    },
+    "fontSize": {
+      "showcase": "Kết quả",
+      "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không thay đổi những phần khác của app.</p>",
+      "availableSizes": "Kích cỡ",
+      "sizes": {
+        "S": "S",
+        "M": "M - Mặc định",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "Những thay đổi chưa được lưu",
+        "message": "Những thay đổi của bạn chưa được lưu. Bạn có muốn hủy bỏ?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Hủy bỏ"
+        }
+      },
+      "feedback": {
+        "succeed": "Đã cập nhật {{type}}",
+        "failed": "Cập nhật {{type}} thất bại, xin thử lại"
+      },
+      "root": {
+        "name": {
+          "title": "Tên hiển thị"
+        },
+        "avatar": {
+          "title": "Ảnh đại diện",
+          "description": "Sẽ tự động chuyển còn 400x400px"
+        },
+        "header": {
+          "title": "Ảnh bìa",
+          "description": "Sẽ tự động chuyển còn 1500x1500px"
+        },
+        "note": {
+          "title": "Mô tả"
+        },
+        "fields": {
+          "title": "Metadata",
+          "total": "{{count}} trường",
+          "total_plural": "{{count}} trường"
+        },
+        "visibility": {
+          "title": "Dạng tút",
+          "options": {
+            "public": "Công khai",
+            "unlisted": "Hạn chế",
+            "private": "Riêng tư",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "Đăng nội dung nhạy cảm"
+        },
+        "lock": {
+          "title": "Đây là tài khoản riêng tư",
+          "description": "Tự bạn sẽ phê duyệt người theo dõi"
+        },
+        "bot": {
+          "title": "Tài khoản bot",
+          "description": "Tài khoản này tự động thực hiện các hành động và không được quản lý bởi người thật"
+        }
+      },
+      "fields": {
+        "group": "Nhóm {{index}}",
+        "label": "Nhãn",
+        "content": "Nội dung"
+      }
+    },
+    "push": {
+      "notAvailable": "Điện thoại của bạn chưa bật thông báo đẩy",
+      "enable": {
+        "direct": "Bật thông báo đẩy",
+        "settings": "Bật trong cài đặt"
+      },
+      "global": {
+        "heading": "Bật khi {{acct}}",
+        "description": "Thông báo được truyền qua máy chủ tooot"
+      },
+      "decode": {
+        "heading": "Chi tiết thông báo",
+        "description": "Theo mặc định, thông báo truyền qua máy chủ tooot sẽ được mã hóa, nhưng bạn cũng có thể chọn không mã hóa. Máy chủ của chúng tôi luôn công khai mã nguồn và không lưu lại bất cứ gì."
+      },
+      "default": {
+        "heading": "Mặc định"
+      },
+      "follow": {
+        "heading": "Người theo dõi mới"
+      },
+      "favourite": {
+        "heading": "Lượt thích"
+      },
+      "reblog": {
+        "heading": "Lượt chia sẻ"
+      },
+      "mention": {
+        "heading": "Lượt nhắc đến"
+      },
+      "poll": {
+        "heading": "Kết quả bình chọn"
+      },
+      "howitworks": "Tìm hiểu cách truyền"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} chưa đọc",
+          "read": "Tất cả đã đọc",
+          "empty": "Trống"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "Đã bật",
+          "disabled": "Đã tắt"
+        }
+      },
+      "update": {
+        "title": "Cập nhật phiên bản mới"
+      },
+      "logout": {
+        "button": "Đăng xuất",
+        "alert": {
+          "title": "Vẫn đăng xuất?",
+          "message": "Sau khi đăng xuất, bạn sẽ phải nhập lại mật khẩu",
+          "buttons": {
+            "logout": "Đăng xuất",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "Ngôn ngữ",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "Giao diện",
+        "options": {
+          "auto": "Theo thiết bị",
+          "light": "Sáng",
+          "dark": "Tối",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "Mở liên kết",
+        "options": {
+          "internal": "Bằng app",
+          "external": "Bằng trình duyệt",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "support": {
+        "heading": "Ủng hộ tooot"
+      },
+      "review": {
+        "heading": "Đánh giá tooot"
+      },
+      "contact": {
+        "heading": "Liên hệ tooot"
+      },
+      "analytics": {
+        "heading": "Đóng góp ý kiến",
+        "description": "Chỉ thu thập thông tin không liên quan người dùng"
+      },
+      "version": "Phiên bản {{version}}"
+    },
+    "switch": {
+      "existing": "Chọn từ màn hình đăng nhập",
+      "new": "Đăng nhập máy chủ"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Hành động đối với {{user}}",
+        "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
+      },
+      "moved": "Đã chuyển đi",
+      "created_at": "Đã tham gia {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} tút",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Tút",
+        "all": "Lượt trả lời"
+      }
+    },
+    "attachments": {
+      "name": "<0 /><1>'s media</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "Đang tìm...",
+        "placeholder": "về..."
+      },
+      "empty": {
+        "general": "Nhập từ khóa <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Tìm kiếm nâng cao",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "Người dùng",
+        "hashtags": "Hashtag",
+        "statuses": "Tút"
+      },
+      "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
+    },
+    "toot": {
+      "name": "Thảo luận"
+    },
+    "users": {
+      "accounts": {
+        "following": "Đang theo dõi {{count}}",
+        "followers": "{{count}} người theo dõi"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} người chia sẻ",
+        "favourited_by": "{{count}} người thích"
+      }
+    }
+  }
+}

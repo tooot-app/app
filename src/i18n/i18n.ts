@@ -2,6 +2,8 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import en from '@root/i18n/en/_all'
+import ko from '@root/i18n/ko/_all'
+import vi from '@root/i18n/vi/_all'
 import zh_Hans from '@root/i18n/zh-Hans/_all'
 
 i18n.use(initReactI18next).init({
@@ -11,7 +13,7 @@ i18n.use(initReactI18next).init({
   ns: ['common'],
   defaultNS: 'common',
 
-  resources: { 'zh-Hans': zh_Hans, en },
+  resources: { 'zh-Hans': zh_Hans, vi, ko, en },
 
   saveMissing: true,
   missingKeyHandler: (ns, key) => {
