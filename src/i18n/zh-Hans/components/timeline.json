@@ -81,7 +81,9 @@
     "translate": {
       "default": "翻译",
       "succeed": "由{{provider}}翻译自{{source}}",
-      "failed": "翻译失败"
+      "failed": "翻译失败",
+      "source_not_supported": "不支持嘟文的语言",
+      "target_not_supported": "不支持目标翻译语言"
     },
     "header": {
       "shared": {
