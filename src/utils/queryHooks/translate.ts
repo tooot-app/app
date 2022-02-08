@@ -3,11 +3,19 @@ import haptics from '@components/haptics'
 import { AxiosError } from 'axios'
 import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
 
-type Translations = {
-  provider: string
-  sourceLanguage: string
-  text: string[]
-}
+type Translations =
+  | {
+      error: undefined
+      provider: string
+      sourceLanguage: string
+      text: string[]
+    }
+  | {
+      error: string
+      provider: undefined
+      sourceLanguage: undefined
+      text: undefined
+    }
 
 export type QueryKeyTranslate = [
   'Translate',
