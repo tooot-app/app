@@ -53,7 +53,9 @@ const apiTooot = async <T = unknown>({
       Accept: '*/*',
       ...headers
     },
-    ...(body && { data: body })
+    ...(body && { data: body }),
+    validateStatus: status =>
+      url.includes('translate') ? status < 500 : status === 200
   })
     .then(response => {
       return Promise.resolve({

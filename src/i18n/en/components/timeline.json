@@ -81,7 +81,9 @@
     "translate": {
       "default": "Translate",
       "succeed": "Translated by {{provider}} from {{source}}",
-      "failed": "Translation failed"
+      "failed": "Translation failed",
+      "source_not_supported": "toot's language is not supported",
+      "target_not_supported": "The target language is not supported"
     },
     "header": {
       "shared": {
