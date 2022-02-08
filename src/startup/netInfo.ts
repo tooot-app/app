@@ -71,10 +71,10 @@ const netInfo = async (): Promise<{
             loadPage = 'LocalPublic'
           }
 
-          await initQuery({
-            instance,
-            prefetch: { enabled: true, page: loadPage }
-          })
+          // await initQuery({
+          //   instance,
+          //   prefetch: { enabled: true, page: loadPage }
+          // })
         }
 
         return Promise.resolve({ connected: true })
