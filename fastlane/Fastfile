@@ -151,6 +151,7 @@ private_lane :build_android do
       skip_upload_images: true,
       skip_upload_screenshots: true
     )
+    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
   when "release"
     prepare_playstore_android
     build_android_app(
