@@ -1,9 +1,9 @@
 {
   "name": "tooot",
   "versions": {
-    "native": "220206",
+    "native": "220209",
     "major": 3,
-    "minor": 4,
+    "minor": 5,
     "patch": 0,
     "expo": "44.0.0"
   },
@@ -115,5 +115,26 @@
     "postinstall-postinstall": "2.1.0",
     "react-native-clean-project": "4.0.0",
     "typescript": "4.5.5"
+  },
+  "expo": {
+    "autolinking": {
+      "ios": {
+        "exclude": [
+          "expo-application",
+          "expo-font",
+          "expo-keep-awake"
+        ]
+      },
+      "android": {
+        "exclude": [
+          "expo-application",
+          "expo-firebase-analytics",
+          "expo-firebase-core",
+          "expo-font",
+          "expo-keep-awake",
+          "expo-store-review"
+        ]
+      }
+    }
   }
 }

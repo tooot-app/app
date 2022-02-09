@@ -64,7 +64,7 @@ const SettingsApp: React.FC = () => {
               cancelButtonIndex: options.length - 1
             },
             buttonIndex => {
-              if (!buttonIndex) return
+              if (buttonIndex === undefined) return
               if (buttonIndex < options.length - 1) {
                 analytics('settings_language_press', {
                   current: i18n.language,

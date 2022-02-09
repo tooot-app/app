@@ -12,7 +12,7 @@
     "message": "居然刷到底了，喝杯 <0 /> 吧"
   },
   "lookback": {
-    "message": "上次阅读至"
+    "message": "最后阅读于"
   },
   "refresh": {
     "fetchPreviousPage": "较新于此的嘟嘟",
@@ -81,7 +81,9 @@
     "translate": {
       "default": "翻译",
       "succeed": "由{{provider}}翻译自{{source}}",
-      "failed": "翻译失败"
+      "failed": "翻译失败",
+      "source_not_supported": "不支持嘟文的语言",
+      "target_not_supported": "不支持目标翻译语言"
     },
     "header": {
       "shared": {

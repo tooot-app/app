@@ -32,6 +32,9 @@ const TimelineTranslate = React.memo(
 
     const settingsLanguage = useSelector(getSettingsLanguage)
 
+    if (Localization.locale.includes(tootLanguage)) {
+      return null
+    }
     if (settingsLanguage?.includes(tootLanguage)) {
       return null
     }
@@ -88,13 +91,19 @@ const TimelineTranslate = React.memo(
             {isError
               ? t('shared.translate.failed')
               : isSuccess
-              ? t('shared.translate.succeed', {
-                  provider: data?.provider,
-                  source: data?.sourceLanguage
-                })
+              ? typeof data?.error === 'string'
+                ? t(`shared.translate.${data.error}`)
+                : t('shared.translate.succeed', {
+                    provider: data?.provider,
+                    source: data?.sourceLanguage
+                  })
               : t('shared.translate.default')}
+          </Text>
+          <Text>
             {__DEV__
-              ? ` Source: ${status.language}; Target: ${settingsLanguage}`
+              ? ` Source: ${status.language}; Target: ${
+                  Localization.locale || settingsLanguage || 'en'
+                }`
               : undefined}
           </Text>
           {isLoading ? (
@@ -105,7 +114,7 @@ const TimelineTranslate = React.memo(
             />
           ) : null}
         </Pressable>
-        {data
+        {data && data.error === undefined
           ? data.text.map((d, i) => (
               <ParseHTML
                 key={i}
