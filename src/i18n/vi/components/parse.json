@@ -1,8 +1,8 @@
 {
   "HTML": {
     "expanded": {
-      "true": "Thu gọn",
-      "false": "Mở rộng"
+      "true": "Cuộn {{hint}}",
+      "false": "Mở {{hint}}"
     },
     "defaultHint": "Tút"
   }
