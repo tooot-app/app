@@ -33,7 +33,7 @@ const SettingsTooot: React.FC = () => {
         iconBack='ChevronRight'
         onPress={() => {
           analytics('settings_feedback_press')
-          Linking.openURL('https://feedback.tooot.app/')
+          Linking.openURL('https://feedback.tooot.app/feature-requests')
         }}
       />
       <MenuRow
