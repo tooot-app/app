@@ -11,7 +11,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
-import { isCandidate, isDevelopment } from '@utils/checkEnvironment'
+import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
@@ -21,6 +21,21 @@ const SettingsTooot: React.FC = () => {
 
   return (
     <MenuContainer>
+      <MenuRow
+        title={t('me.settings.feedback.heading')}
+        content={
+          <Icon
+            name='MessageSquare'
+            size={StyleConstants.Font.Size.M}
+            color={theme.secondary}
+          />
+        }
+        iconBack='ChevronRight'
+        onPress={() => {
+          analytics('settings_feedback_press')
+          Linking.openURL('https://feedback.tooot.app/')
+        }}
+      />
       <MenuRow
         title={t('me.settings.support.heading')}
         content={
@@ -36,7 +51,7 @@ const SettingsTooot: React.FC = () => {
           Linking.openURL('https://www.buymeacoffee.com/xmflsct')
         }}
       />
-      {isDevelopment || isCandidate ? (
+      {isDevelopment || isRelease ? (
         <MenuRow
           title={t('me.settings.review.heading')}
           content={

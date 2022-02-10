@@ -240,6 +240,9 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "feedback": {
+        "heading": "功能建议"
+      },
       "support": {
         "heading": "赞助 tooot 开发"
       },

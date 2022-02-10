@@ -15,7 +15,7 @@
       "button": {
         "default": "Tút",
         "conversation": "Tin nhắn",
-        "reply": "Lượt trả lời",
+        "reply": "Trả lời",
         "edit": "Tút"
       },
       "alert": {
@@ -63,7 +63,7 @@
           "option": {
             "placeholder": {
               "accessibilityLabel": "Tùy chọn bình chọn {{index}}",
-              "single": "Chỉ được chọn một",
+              "single": "Lựa chọn",
               "multiple": "Nhiều lựa chọn"
             }
           },
@@ -117,7 +117,7 @@
         },
         "visibility": {
           "accessibilityLabel": "Tút thuộc dạng {{visibility}}",
-          "title": "Dạng tút",
+          "title": "Kiểu tút",
           "options": {
             "public": "Công khai",
             "unlisted": "Hạn chế",
