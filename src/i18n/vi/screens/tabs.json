@@ -53,7 +53,7 @@
         "name": "Thông báo đẩy"
       },
       "profile": {
-        "name": "Trang cá nhân"
+        "name": "Cài đặt cá nhân"
       },
       "profileName": {
         "name": "Tên hiển thị mới"
@@ -65,7 +65,7 @@
         "name": "Metadata"
       },
       "settings": {
-        "name": "Cài đặt App"
+        "name": "Thiết lập"
       },
       "switch": {
         "name": "Chuyển đổi tài khoản"
@@ -102,22 +102,22 @@
         },
         "avatar": {
           "title": "Ảnh đại diện",
-          "description": "Sẽ tự động chuyển còn 400x400px"
+          "description": "Tự động nén xuống 400x400px"
         },
         "header": {
           "title": "Ảnh bìa",
-          "description": "Sẽ tự động chuyển còn 1500x1500px"
+          "description": "Tự động nén xuống 1500x500px"
         },
         "note": {
           "title": "Mô tả"
         },
         "fields": {
           "title": "Metadata",
-          "total": "{{count}} trường",
-          "total_plural": "{{count}} trường"
+          "total": "{{count}} mục",
+          "total_plural": "{{count}} mục"
         },
         "visibility": {
-          "title": "Dạng tút",
+          "title": "Kiểu tút mặc định",
           "options": {
             "public": "Công khai",
             "unlisted": "Hạn chế",
@@ -126,19 +126,19 @@
           }
         },
         "sensitive": {
-          "title": "Đăng nội dung nhạy cảm"
+          "title": "Đây là tài khoản NSFW"
         },
         "lock": {
           "title": "Đây là tài khoản riêng tư",
           "description": "Tự bạn sẽ phê duyệt người theo dõi"
         },
         "bot": {
-          "title": "Tài khoản bot",
+          "title": "Đây là tài khoản Bot",
           "description": "Tài khoản này tự động thực hiện các hành động và không được quản lý bởi người thật"
         }
       },
       "fields": {
-        "group": "Nhóm {{index}}",
+        "group": "Mục {{index}}",
         "label": "Nhãn",
         "content": "Nội dung"
       }
@@ -250,13 +250,13 @@
         "heading": "Liên hệ tooot"
       },
       "analytics": {
-        "heading": "Đóng góp ý kiến",
-        "description": "Chỉ thu thập thông tin không liên quan người dùng"
+        "heading": "Thu thập dữ liệu",
+        "description": "Giúp cải thiện chất lượng app"
       },
       "version": "Phiên bản {{version}}"
     },
     "switch": {
-      "existing": "Chọn từ màn hình đăng nhập",
+      "existing": "Đã đăng nhập trước đó",
       "new": "Đăng nhập máy chủ"
     }
   },
@@ -283,11 +283,11 @@
     },
     "search": {
       "header": {
-        "prefix": "Đang tìm...",
+        "prefix": "Tìm kiếm",
         "placeholder": "về..."
       },
       "empty": {
-        "general": "Nhập từ khóa <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "general": "Tìm <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc <bold>$t(screenTabs:shared.search.sections.statuses)</bold><bold>",
         "advanced": {
           "header": "Tìm kiếm nâng cao",
           "example": {
@@ -310,12 +310,12 @@
     },
     "users": {
       "accounts": {
-        "following": "Đang theo dõi {{count}}",
+        "following": "{{count}} Theo dõi",
         "followers": "{{count}} người theo dõi"
       },
       "statuses": {
-        "reblogged_by": "{{count}} người chia sẻ",
-        "favourited_by": "{{count}} người thích"
+        "reblogged_by": "{{count}} chia sẻ",
+        "favourited_by": "{{count}} thích"
       }
     }
   }

@@ -5,7 +5,7 @@
       "cancel": "$t(common:buttons.cancel)"
     },
     "notificationsFilter": {
-      "heading": "Hiện những dạng thông báo",
+      "heading": "Chỉ hiện thông báo",
       "content": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
