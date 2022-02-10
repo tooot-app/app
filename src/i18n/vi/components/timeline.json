@@ -27,7 +27,7 @@
       "follow_request": "{{name}} yêu cầu theo dõi bạn",
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
-        "default": "{{name}} đã chia sẻ",
+        "default": "{{name}} chia sẻ",
         "notification": "{{name}} chia sẻ tút của bạn"
       }
     },
@@ -95,7 +95,7 @@
             "accessibilityHint": "Tài khoản"
           }
         },
-        "application": "Đăng bằng {{application}}",
+        "application": "via {{application}}",
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
@@ -109,7 +109,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "Với",
+        "withAccounts": "Với ",
         "delete": {
           "function": "Xóa nhắn riêng"
         }
@@ -152,7 +152,7 @@
             "button": "Chia sẻ URL tút"
           },
           "account": {
-            "heading": "Chia sẻ người dùng",
+            "heading": "Chia sẻ",
             "button": "Chia sẻ URL người dùng này"
           }
         },
