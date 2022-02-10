@@ -2,7 +2,7 @@
   "strings": {
     "prefixAgo": "",
     "prefixFromNow": "",
-    "suffixAgo": "trước",
+    "suffixAgo": " trước",
     "suffixFromNow": "",
     "seconds": "%d giây",
     "minute": "một phút",
