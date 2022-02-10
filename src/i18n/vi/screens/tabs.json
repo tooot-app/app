@@ -283,11 +283,11 @@
     },
     "search": {
       "header": {
-        "prefix": "Đang tìm...",
+        "prefix": "Tìm kiếm",
         "placeholder": "về..."
       },
       "empty": {
-        "general": "Nhập từ khóa <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "general": "Tìm <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
           "header": "Tìm kiếm nâng cao",
           "example": {
@@ -310,7 +310,7 @@
     },
     "users": {
       "accounts": {
-        "following": "Đang theo dõi {{count}}",
+        "following": "{{count}} Theo dõi",
         "followers": "{{count}} người theo dõi"
       },
       "statuses": {
