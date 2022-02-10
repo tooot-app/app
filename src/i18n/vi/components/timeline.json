@@ -62,7 +62,7 @@
     },
     "attachment": {
       "sensitive": {
-        "button": "Hiện nội dung nhạy cảm"
+        "button": "NSFW"
       },
       "unsupported": {
         "text": "Không hỗ trợ định dạng",
@@ -74,14 +74,16 @@
       "accessibilityHint": "Đến trang cá nhân {{name}}"
     },
     "content": {
-      "expandHint": "nội dung bị ẩn"
+      "expandHint": "nội dung ẩn"
     },
     "filtered": "Đã lọc",
     "fullConversation": "Xem thêm",
     "translate": {
       "default": "Dịch",
       "succeed": "Dịch bằng {{provider}} từ {{source}}",
-      "failed": "Không thể dịch!"
+      "failed": "Không thể dịch!",
+      "source_not_supported": "không hỗ trợ ngôn ngữ tút",
+      "target_not_supported": "Ngôn ngữ đích không hỗ trợ"
     },
     "header": {
       "shared": {
