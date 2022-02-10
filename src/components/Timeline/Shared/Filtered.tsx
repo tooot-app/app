@@ -46,7 +46,7 @@ export const shouldFilter = ({
   let shouldFilter = false
   if (!ownAccount) {
     const parser = new htmlparser2.Parser({
-      ontext (text: string) {
+      ontext: (text: string) => {
         const checkFilter = (filter: Mastodon.Filter) => {
           const escapedPhrase = filter.phrase.replace(
             /[.*+?^${}()|[\]\\]/g,
@@ -54,7 +54,7 @@ export const shouldFilter = ({
           ) // $& means the whole matched string
           switch (filter.whole_word) {
             case true:
-              if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
+              if (new RegExp('\\B' + escapedPhrase + '\\B').test(text)) {
                 shouldFilter = true
               }
               break
