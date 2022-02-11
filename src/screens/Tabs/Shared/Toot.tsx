@@ -35,29 +35,30 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           ? // @ts-ignore
             result.data.pages.flatMap(d => [...d.body])
           : []
-        setItemsLength(flattenData.length)
         // Auto go back when toot page is empty
         if (flattenData.length === 0) {
           navigation.goBack()
         }
+        setItemsLength(flattenData.length)
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = flattenData.findIndex(({ id }) => id === toot.id)
+          if (pointer === -1) return
           try {
-            pointer < flattenData.length &&
-              setTimeout(() => {
-                flRef.current?.scrollToIndex({
-                  index: pointer,
-                  viewOffset: 100
-                })
-              }, 500)
+            setTimeout(() => {
+              flRef.current?.scrollToIndex({
+                index: pointer,
+                viewOffset: 100
+              })
+            }, 500)
           } catch (err) {
             if (Math.random() < 0.1) {
               Sentry.Native.setContext('Scroll to Index', {
                 type: 'original',
                 index: pointer,
                 itemsLength: flattenData.length,
-                flattenData
+                id: toot.id,
+                flattenData: flattenData.map(({ id }) => id)
               })
               Sentry.Native.captureException(err)
             }
@@ -87,7 +88,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           Sentry.Native.setContext('Scroll to Index', {
             type: 'onScrollToIndexFailed',
             index: error.index,
-            itemsLength
+            itemsLength,
+            id: toot.id
           })
           Sentry.Native.captureException(err)
         }
