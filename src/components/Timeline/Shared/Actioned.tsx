@@ -18,12 +18,11 @@ export interface Props {
 const TimelineActioned = React.memo(
   ({ account, action, notification = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
-    const navigation = useNavigation<
-      StackNavigationProp<Nav.TabLocalStackParamList>
-    >()
+    const { colors } = useTheme()
+    const navigation =
+      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
     const name = account.display_name || account.username
-    const iconColor = theme.primaryDefault
+    const iconColor = colors.primaryDefault
 
     const content = (content: string) => (
       <ParseEmojis content={content} emojis={account.emojis} size='S' />

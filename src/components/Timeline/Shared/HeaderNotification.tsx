@@ -23,7 +23,7 @@ export interface Props {
 const TimelineHeaderNotification = React.memo(
   ({ queryKey, notification }: Props) => {
     const navigation = useNavigation()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const actions = useMemo(() => {
       switch (notification.type) {
@@ -52,7 +52,7 @@ const TimelineHeaderNotification = React.memo(
                 children={
                   <Icon
                     name='MoreHorizontal'
-                    color={theme.secondary}
+                    color={colors.secondary}
                     size={StyleConstants.Font.Size.L}
                   />
                 }

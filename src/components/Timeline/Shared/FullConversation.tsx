@@ -13,7 +13,7 @@ export interface Props {
 const TimelineFullConversation = React.memo(
   ({ queryKey, status }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return queryKey &&
       queryKey[1].page !== 'Toot' &&
@@ -25,7 +25,7 @@ const TimelineFullConversation = React.memo(
       <Text
         style={{
           ...StyleConstants.FontStyle.S,
-          color: theme.blue,
+          color: colors.blue,
           marginTop: StyleConstants.Spacing.S
         }}
       >

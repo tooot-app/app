@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
@@ -35,7 +35,7 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
           resize: { width: 400, height: 400 }
         })
         mutation.mutate({
-          mode,
+          theme,
           messageRef,
           message: {
             text: `me.profile.root.${type}.title`,

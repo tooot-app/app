@@ -12,7 +12,7 @@ export interface Props {
 const HeaderSharedVisibility = React.memo(
   ({ visibility }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     switch (visibility) {
       case 'private':
@@ -23,7 +23,7 @@ const HeaderSharedVisibility = React.memo(
             )}
             name='Lock'
             size={StyleConstants.Font.Size.S}
-            color={theme.secondary}
+            color={colors.secondary}
             style={styles.visibility}
           />
         )
@@ -35,7 +35,7 @@ const HeaderSharedVisibility = React.memo(
             )}
             name='Mail'
             size={StyleConstants.Font.Size.S}
-            color={theme.secondary}
+            color={colors.secondary}
             style={styles.visibility}
           />
         )

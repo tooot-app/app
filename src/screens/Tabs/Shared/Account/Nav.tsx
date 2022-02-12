@@ -17,7 +17,7 @@ export interface Props {
 
 const AccountNav = React.memo(
   ({ scrollY, account }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const headerHeight = useSafeAreaInsets().top + 44
 
     const nameY =
@@ -48,7 +48,7 @@ const AccountNav = React.memo(
         style={[
           styles.base,
           styleOpacity,
-          { backgroundColor: theme.backgroundDefault, height: headerHeight }
+          { backgroundColor: colors.backgroundDefault, height: headerHeight }
         ]}
       >
         <View

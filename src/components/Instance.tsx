@@ -39,7 +39,7 @@ const ComponentInstance: React.FC<Props> = ({
   goBack = false
 }) => {
   const { t } = useTranslation('componentInstance')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
 
   const instances = useSelector(getInstances, () => true)
@@ -149,10 +149,10 @@ const ComponentInstance: React.FC<Props> = ({
             style={[
               styles.prefix,
               {
-                color: theme.primaryDefault,
+                color: colors.primaryDefault,
                 borderBottomColor: instanceQuery.isError
-                  ? theme.red
-                  : theme.border
+                  ? colors.red
+                  : colors.border
               }
             ]}
             editable={false}
@@ -162,10 +162,10 @@ const ComponentInstance: React.FC<Props> = ({
             style={[
               styles.textInput,
               {
-                color: theme.primaryDefault,
+                color: colors.primaryDefault,
                 borderBottomColor: instanceQuery.isError
-                  ? theme.red
-                  : theme.border
+                  ? colors.red
+                  : colors.border
               }
             ]}
             onChangeText={onChangeText}
@@ -175,7 +175,7 @@ const ComponentInstance: React.FC<Props> = ({
             textContentType='URL'
             onSubmitEditing={onSubmitEditing}
             placeholder={' ' + t('server.textInput.placeholder')}
-            placeholderTextColor={theme.secondary}
+            placeholderTextColor={colors.secondary}
             returnKeyType='go'
             keyboardAppearance={mode}
             {...(scrollViewRef && {
@@ -234,11 +234,11 @@ const ComponentInstance: React.FC<Props> = ({
             <Icon
               name='Lock'
               size={StyleConstants.Font.Size.S}
-              color={theme.secondary}
+              color={colors.secondary}
               style={styles.disclaimerIcon}
             />
             <Text
-              style={[styles.disclaimerText, { color: theme.secondary }]}
+              style={[styles.disclaimerText, { color: colors.secondary }]}
               accessibilityRole='link'
               onPress={() => {
                 if (screenReaderEnabled) {
@@ -252,7 +252,7 @@ const ComponentInstance: React.FC<Props> = ({
               {t('server.disclaimer.base')}
               <Text
                 accessible
-                style={{ color: theme.blue }}
+                style={{ color: colors.blue }}
                 onPress={() => {
                   analytics('view_privacy')
                   WebBrowser.openBrowserAsync(

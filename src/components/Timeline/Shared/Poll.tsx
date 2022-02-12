@@ -36,7 +36,7 @@ const TimelinePoll: React.FC<Props> = ({
   reblog,
   sameAccount
 }) => {
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
   const { t, i18n } = useTranslation('componentTimeline')
 
   const [allOptions, setAllOptions] = useState(
@@ -53,7 +53,7 @@ const TimelinePoll: React.FC<Props> = ({
       haptics('Success')
       switch (theParams.payload.property) {
         case 'poll':
-          theParams.payload.data = (body as unknown) as Mastodon.Poll
+          theParams.payload.data = body as unknown as Mastodon.Poll
           updateStatusProperty(theParams)
           break
       }
@@ -61,7 +61,7 @@ const TimelinePoll: React.FC<Props> = ({
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       displayMessage({
-        mode,
+        theme,
         type: 'error',
         message: t('common:message.error.message', {
           // @ts-ignore
@@ -136,7 +136,7 @@ const TimelinePoll: React.FC<Props> = ({
       }
     }
   }, [
-    mode,
+    theme,
     i18n.language,
     poll.expired,
     poll.voted,
@@ -147,14 +147,14 @@ const TimelinePoll: React.FC<Props> = ({
   const pollExpiration = useMemo(() => {
     if (poll.expired) {
       return (
-        <Text style={[styles.expiration, { color: theme.secondary }]}>
+        <Text style={[styles.expiration, { color: colors.secondary }]}>
           {t('shared.poll.meta.expiration.expired')}
         </Text>
       )
     } else {
       if (poll.expires_at) {
         return (
-          <Text style={[styles.expiration, { color: theme.secondary }]}>
+          <Text style={[styles.expiration, { color: colors.secondary }]}>
             <Trans
               i18nKey='componentTimeline:shared.poll.meta.expiration.until'
               components={[<RelativeTime date={poll.expires_at} />]}
@@ -163,7 +163,7 @@ const TimelinePoll: React.FC<Props> = ({
         )
       }
     }
-  }, [mode, i18n.language, poll.expired, poll.expires_at])
+  }, [theme, i18n.language, poll.expired, poll.expires_at])
 
   const isSelected = useCallback(
     (index: number): string =>
@@ -174,8 +174,10 @@ const TimelinePoll: React.FC<Props> = ({
   )
 
   const pollBodyDisallow = useMemo(() => {
-    const maxValue = maxBy(poll.options, option => option.votes_count)
-      ?.votes_count
+    const maxValue = maxBy(
+      poll.options,
+      option => option.votes_count
+    )?.votes_count
     return poll.options.map((option, index) => (
       <View key={index} style={styles.optionContainer}>
         <View style={styles.optionContent}>
@@ -188,14 +190,14 @@ const TimelinePoll: React.FC<Props> = ({
             }
             size={StyleConstants.Font.Size.M}
             color={
-              poll.own_votes?.includes(index) ? theme.blue : theme.disabled
+              poll.own_votes?.includes(index) ? colors.blue : colors.disabled
             }
           />
           <Text style={styles.optionText}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
           </Text>
           <Text
-            style={[styles.optionPercentage, { color: theme.primaryDefault }]}
+            style={[styles.optionPercentage, { color: colors.primaryDefault }]}
           >
             {poll.votes_count
               ? Math.round(
@@ -217,13 +219,13 @@ const TimelinePoll: React.FC<Props> = ({
                   100
               )}%`,
               backgroundColor:
-                option.votes_count === maxValue ? theme.blue : theme.disabled
+                option.votes_count === maxValue ? colors.blue : colors.disabled
             }
           ]}
         />
       </View>
     ))
-  }, [mode, poll.options])
+  }, [theme, poll.options])
   const pollBodyAllow = useMemo(() => {
     return poll.options.map((option, index) => (
       <Pressable
@@ -256,7 +258,7 @@ const TimelinePoll: React.FC<Props> = ({
             style={styles.optionSelection}
             name={isSelected(index)}
             size={StyleConstants.Font.Size.M}
-            color={theme.primaryDefault}
+            color={colors.primaryDefault}
           />
           <Text style={styles.optionText}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
@@ -264,19 +266,19 @@ const TimelinePoll: React.FC<Props> = ({
         </View>
       </Pressable>
     ))
-  }, [mode, allOptions])
+  }, [theme, allOptions])
 
   const pollVoteCounts = useMemo(() => {
     if (poll.voters_count !== null) {
       return (
-        <Text style={[styles.votes, { color: theme.secondary }]}>
+        <Text style={[styles.votes, { color: colors.secondary }]}>
           {t('shared.poll.meta.count.voters', { count: poll.voters_count })}
           {' • '}
         </Text>
       )
     } else if (poll.votes_count !== null) {
       return (
-        <Text style={[styles.votes, { color: theme.secondary }]}>
+        <Text style={[styles.votes, { color: colors.secondary }]}>
           {t('shared.poll.meta.count.votes', { count: poll.votes_count })}
           {' • '}
         </Text>

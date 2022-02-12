@@ -33,8 +33,8 @@ const TimelineActions: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation('componentTimeline')
-  const { mode, theme } = useTheme()
-  const iconColor = theme.secondary
+  const { colors, theme } = useTheme()
+  const iconColor = colors.secondary
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -83,7 +83,7 @@ const TimelineActions: React.FC<Props> = ({
     onError: (err: any, params, oldData) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       displayMessage({
-        mode,
+        theme,
         type: 'error',
         message: t('common:message.error.message', {
           function: t(
@@ -185,7 +185,7 @@ const TimelineActions: React.FC<Props> = ({
         {status.replies_count > 0 ? (
           <Text
             style={{
-              color: theme.secondary,
+              color: colors.secondary,
               fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
@@ -198,14 +198,14 @@ const TimelineActions: React.FC<Props> = ({
     [status.replies_count]
   )
   const childrenReblog = useMemo(() => {
-    const color = (state: boolean) => (state ? theme.green : theme.secondary)
+    const color = (state: boolean) => (state ? colors.green : colors.secondary)
     return (
       <>
         <Icon
           name='Repeat'
           color={
             status.visibility === 'private' || status.visibility === 'direct'
-              ? theme.disabled
+              ? colors.disabled
               : color(status.reblogged)
           }
           size={StyleConstants.Font.Size.L}
@@ -225,7 +225,7 @@ const TimelineActions: React.FC<Props> = ({
     )
   }, [status.reblogged, status.reblogs_count])
   const childrenFavourite = useMemo(() => {
-    const color = (state: boolean) => (state ? theme.red : theme.secondary)
+    const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
         <Icon
@@ -249,7 +249,7 @@ const TimelineActions: React.FC<Props> = ({
     )
   }, [status.favourited, status.favourites_count])
   const childrenBookmark = useMemo(() => {
-    const color = (state: boolean) => (state ? theme.yellow : theme.secondary)
+    const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
       <Icon
         name='Bookmark'

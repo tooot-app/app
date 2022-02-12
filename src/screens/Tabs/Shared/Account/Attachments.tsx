@@ -24,10 +24,9 @@ export interface Props {
 
 const AccountAttachments = React.memo(
   ({ account }: Props) => {
-    const navigation = useNavigation<
-      StackNavigationProp<TabLocalStackParamList>
-    >()
-    const { theme } = useTheme()
+    const navigation =
+      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+    const { colors } = useTheme()
 
     const DISPLAY_AMOUNT = 6
 
@@ -71,7 +70,7 @@ const AccountAttachments = React.memo(
                 <View
                   style={{
                     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-                    backgroundColor: theme.backgroundOverlayInvert,
+                    backgroundColor: colors.backgroundOverlayInvert,
                     width: width,
                     height: width,
                     justifyContent: 'center',
@@ -80,7 +79,7 @@ const AccountAttachments = React.memo(
                   children={
                     <Icon
                       name='MoreHorizontal'
-                      color={theme.primaryOverlay}
+                      color={colors.primaryOverlay}
                       size={StyleConstants.Font.Size.L * 1.5}
                     />
                   }
@@ -117,7 +116,7 @@ const AccountAttachments = React.memo(
           ),
           paddingVertical: StyleConstants.Spacing.Global.PagePadding,
           borderTopWidth: 1,
-          borderTopColor: theme.border
+          borderTopColor: colors.border
         }
       } else {
         return {}

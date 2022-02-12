@@ -13,7 +13,7 @@ export interface Props {
 const AccountHeader = React.memo(
   ({ account, edit }: Props) => {
     const { reduceMotionEnabled } = useAccessibility()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const topInset = useSafeAreaInsets().top
 
     return (
@@ -24,7 +24,7 @@ const AccountHeader = React.memo(
           }}
           style={{
             height: Dimensions.get('screen').width / 3 + topInset,
-            backgroundColor: theme.disabled
+            backgroundColor: colors.disabled
           }}
         />
         {edit ? (

@@ -25,7 +25,7 @@ export interface Props {
 const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { reduceMotionEnabled } = useAccessibility()
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
 
   const listHeader = useCallback(
     ({ section: { title } }) => (
-      <Text style={[styles.group, { color: theme.secondary }]}>{title}</Text>
+      <Text style={[styles.group, { color: colors.secondary }]}>{title}</Text>
     ),
     []
   )

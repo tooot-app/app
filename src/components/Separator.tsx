@@ -10,13 +10,13 @@ export interface Props {
 
 const ComponentSeparator = React.memo(
   ({ extraMarginLeft = 0, extraMarginRight = 0 }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <View
         style={{
-          backgroundColor: theme.backgroundDefault,
-          borderTopColor: theme.border,
+          backgroundColor: colors.backgroundDefault,
+          borderTopColor: colors.border,
           borderTopWidth: StyleSheet.hairlineWidth,
           marginLeft:
             StyleConstants.Spacing.Global.PagePadding + extraMarginLeft,

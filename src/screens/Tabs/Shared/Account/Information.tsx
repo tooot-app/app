@@ -19,16 +19,16 @@ export interface Props {
 
 const AccountInformation = React.memo(
   ({ account }: Props) => {
-    const { mode, theme } = useTheme()
+    const { colors, theme } = useTheme()
 
     const { name } = useRoute()
     const myInfo = name !== 'Tab-Shared-Account'
 
     const animation = useCallback(
       props => (
-        <Fade {...props} style={{ backgroundColor: theme.shimmerHighlight }} />
+        <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
       ),
-      [mode]
+      [theme]
     )
 
     return (

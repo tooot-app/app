@@ -20,7 +20,7 @@ const TabSharedRoot = ({
 }: {
   Stack: ReturnType<typeof createNativeStackNavigator>
 }) => {
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   return (
@@ -72,7 +72,7 @@ const TabSharedRoot = ({
                     <Text
                       style={{
                         ...StyleConstants.FontStyle.M,
-                        color: theme.primaryDefault,
+                        color: colors.primaryDefault,
                         fontWeight: StyleConstants.Font.Weight.Bold
                       }}
                     />
@@ -124,7 +124,7 @@ const TabSharedRoot = ({
                   style={[
                     styles.textInput,
                     {
-                      color: theme.primaryDefault
+                      color: colors.primaryDefault
                     }
                   ]}
                   defaultValue={t('shared.search.header.prefix')}
@@ -136,7 +136,7 @@ const TabSharedRoot = ({
                     styles.textInput,
                     {
                       flex: 1,
-                      color: theme.primaryDefault,
+                      color: colors.primaryDefault,
                       paddingLeft: StyleConstants.Spacing.XS
                     }
                   ]}
@@ -150,7 +150,7 @@ const TabSharedRoot = ({
                     navigation.setParams({ text })
                   }
                   placeholder={t('shared.search.header.placeholder')}
-                  placeholderTextColor={theme.secondary}
+                  placeholderTextColor={colors.secondary}
                   returnKeyType='go'
                 />
               </View>

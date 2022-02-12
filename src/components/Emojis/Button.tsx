@@ -7,7 +7,7 @@ import EmojisContext from './helpers/EmojisContext'
 
 const EmojisButton = React.memo(
   () => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const { emojisState, emojisDispatch } = useContext(EmojisContext)
 
     return emojisState.enabled ? (
@@ -30,8 +30,8 @@ const EmojisButton = React.memo(
             size={StyleConstants.Font.Size.L}
             color={
               emojisState.emojis && emojisState.emojis.length
-                ? theme.primaryDefault
-                : theme.disabled
+                ? colors.primaryDefault
+                : colors.disabled
             }
           />
         }

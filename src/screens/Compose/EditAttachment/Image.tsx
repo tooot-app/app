@@ -22,7 +22,7 @@ export interface Props {
 
 const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
   const { t } = useTranslation('screenCompose')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
 
   const { composeState, composeDispatch } = useContext(ComposeContext)
@@ -146,16 +146,21 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
                 <G>
                   <Path
                     d='M1000,0 L1000,1000 L0,1000 L0,0 L1000,0 Z M500,475 C486.192881,475 475,486.192881 475,500 C475,513.807119 486.192881,525 500,525 C513.807119,525 525,513.807119 525,500 C525,486.192881 513.807119,475 500,475 Z'
-                    fill={theme.backgroundOverlayInvert}
+                    fill={colors.backgroundOverlayInvert}
                   />
                   <Circle
-                    stroke={theme.primaryOverlay}
+                    stroke={colors.primaryOverlay}
                     stroke-width='2'
                     cx='500'
                     cy='500'
                     r='24'
                   />
-                  <Circle fill={theme.primaryOverlay} cx='500' cy='500' r='2' />
+                  <Circle
+                    fill={colors.primaryOverlay}
+                    cx='500'
+                    cy='500'
+                    r='2'
+                  />
                 </G>
               </G>
             </Svg>
@@ -163,7 +168,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
         </PanGestureHandler>
       </View>
       {screenReaderEnabled ? null : (
-        <Text style={[styles.imageFocusText, { color: theme.primaryDefault }]}>
+        <Text style={[styles.imageFocusText, { color: colors.primaryDefault }]}>
           {t('content.editAttachment.content.imageFocus')}
         </Text>
       )}

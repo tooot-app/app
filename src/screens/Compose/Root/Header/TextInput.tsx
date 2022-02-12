@@ -9,7 +9,7 @@ import ComposeContext from '../../utils/createContext'
 const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
 
   return (
     <TextInput
@@ -17,15 +17,15 @@ const ComposeTextInput: React.FC = () => {
       style={[
         styles.textInput,
         {
-          color: theme.primaryDefault,
-          borderBottomColor: theme.border
+          color: colors.primaryDefault,
+          borderBottomColor: colors.border
         }
       ]}
       autoFocus
       enablesReturnKeyAutomatically
       multiline
       placeholder={t('content.root.header.textInput.placeholder')}
-      placeholderTextColor={theme.secondary}
+      placeholderTextColor={colors.secondary}
       onChangeText={content =>
         formatText({
           textInput: 'text',

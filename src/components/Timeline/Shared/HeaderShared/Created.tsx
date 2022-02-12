@@ -10,10 +10,10 @@ export interface Props {
 
 const HeaderSharedCreated = React.memo(
   ({ created_at }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
-      <Text style={[styles.created_at, { color: theme.secondary }]}>
+      <Text style={[styles.created_at, { color: colors.secondary }]}>
         <RelativeTime date={created_at} />
       </Text>
     )

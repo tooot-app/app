@@ -23,11 +23,11 @@ const EmojisList = React.memo(
     const { t } = useTranslation()
 
     const { emojisState, emojisDispatch } = useContext(EmojisContext)
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const listHeader = useCallback(
       ({ section: { title } }) => (
-        <Text style={[styles.group, { color: theme.secondary }]}>{title}</Text>
+        <Text style={[styles.group, { color: colors.secondary }]}>{title}</Text>
       ),
       []
     )

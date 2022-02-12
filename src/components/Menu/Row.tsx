@@ -43,7 +43,7 @@ const MenuRow: React.FC<Props> = ({
   loading = false,
   onPress
 }) => {
-  const { theme } = useTheme()
+  const { colors, theme } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
 
   const loadingSpinkit = useMemo(
@@ -51,7 +51,7 @@ const MenuRow: React.FC<Props> = ({
       <View style={{ position: 'absolute' }}>
         <Flow
           size={StyleConstants.Font.Size.M * 1.25}
-          color={theme.secondary}
+          color={colors.secondary}
         />
       </View>
     ),
@@ -83,7 +83,7 @@ const MenuRow: React.FC<Props> = ({
                 <Icon
                   name={iconFront}
                   size={StyleConstants.Font.Size.L}
-                  color={theme[iconFrontColor]}
+                  color={colors[iconFrontColor]}
                   style={styles.iconFront}
                 />
               )}
@@ -92,7 +92,7 @@ const MenuRow: React.FC<Props> = ({
                   style={{
                     width: 8,
                     height: 8,
-                    backgroundColor: theme.red,
+                    backgroundColor: colors.red,
                     borderRadius: 8,
                     marginRight: StyleConstants.Spacing.S
                   }}
@@ -100,7 +100,7 @@ const MenuRow: React.FC<Props> = ({
               ) : null}
               <View style={styles.main}>
                 <Text
-                  style={[styles.title, { color: theme.primaryDefault }]}
+                  style={[styles.title, { color: colors.primaryDefault }]}
                   numberOfLines={1}
                 >
                   {title}
@@ -116,7 +116,7 @@ const MenuRow: React.FC<Props> = ({
                       style={[
                         styles.content,
                         {
-                          color: theme.secondary,
+                          color: colors.secondary,
                           opacity: !iconBack && loading ? 0 : 1
                         }
                       ]}
@@ -133,7 +133,7 @@ const MenuRow: React.FC<Props> = ({
                     value={switchValue}
                     onValueChange={switchOnValueChange}
                     disabled={switchDisabled}
-                    trackColor={{ true: theme.blue, false: theme.disabled }}
+                    trackColor={{ true: colors.blue, false: colors.disabled }}
                     style={{ opacity: loading ? 0 : 1 }}
                   />
                 ) : null}
@@ -141,7 +141,7 @@ const MenuRow: React.FC<Props> = ({
                   <Icon
                     name={iconBack}
                     size={StyleConstants.Font.Size.L}
-                    color={theme[iconBackColor]}
+                    color={colors[iconBackColor]}
                     style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
                   />
                 ) : null}
@@ -150,7 +150,7 @@ const MenuRow: React.FC<Props> = ({
             ) : null}
           </View>
           {description ? (
-            <Text style={[styles.description, { color: theme.secondary }]}>
+            <Text style={[styles.description, { color: colors.secondary }]}>
               {description}
             </Text>
           ) : null}

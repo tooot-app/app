@@ -50,7 +50,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   navigation
 }) => {
   const { t } = useTranslation('screenCompose')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const queryClient = useQueryClient()
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
@@ -373,7 +373,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               component={ComposeRoot}
               options={{
                 title: headerContent,
-                titleStyle: {
+                headerTitleStyle: {
                   fontWeight:
                     totalTextCount > maxTootChars
                       ? StyleConstants.Font.Weight.Bold
@@ -381,7 +381,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   fontSize: StyleConstants.Font.Size.M
                 },
                 headerTintColor:
-                  totalTextCount > maxTootChars ? theme.red : theme.secondary,
+                  totalTextCount > maxTootChars ? colors.red : colors.secondary,
                 headerLeft,
                 headerRight
               }}

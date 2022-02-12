@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const movedContent = useMemo(() => {
     if (account?.moved) {
@@ -57,7 +57,7 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
         <PlaceholderLine
           width={StyleConstants.Font.Size.L * 2}
           height={StyleConstants.Font.LineHeight.L}
-          color={theme.shimmerDefault}
+          color={colors.shimmerDefault}
           noMargin
           style={{ borderRadius: 0 }}
         />

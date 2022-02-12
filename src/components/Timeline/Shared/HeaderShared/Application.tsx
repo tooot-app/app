@@ -12,7 +12,7 @@ export interface Props {
 
 const HeaderSharedApplication = React.memo(
   ({ application }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
     return application && application.name !== 'Web' ? (
@@ -24,7 +24,7 @@ const HeaderSharedApplication = React.memo(
           })
           application.website && (await openLink(application.website))
         }}
-        style={[styles.application, { color: theme.secondary }]}
+        style={[styles.application, { color: colors.secondary }]}
         numberOfLines={1}
       >
         {t('shared.header.shared.application', {

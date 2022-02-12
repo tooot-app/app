@@ -22,7 +22,7 @@ const TimelineHeaderDefault = React.memo(
   ({ queryKey, rootQueryKey, status }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const navigation = useNavigation()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <View style={styles.base}>
@@ -52,7 +52,7 @@ const TimelineHeaderDefault = React.memo(
             children={
               <Icon
                 name='MoreHorizontal'
-                color={theme.secondary}
+                color={colors.secondary}
                 size={StyleConstants.Font.Size.L}
               />
             }

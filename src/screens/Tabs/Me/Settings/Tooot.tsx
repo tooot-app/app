@@ -16,7 +16,7 @@ import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
   const navigation = useNavigation<any>()
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   return (
@@ -27,7 +27,7 @@ const SettingsTooot: React.FC = () => {
           <Icon
             name='MessageSquare'
             size={StyleConstants.Font.Size.M}
-            color={theme.secondary}
+            color={colors.secondary}
           />
         }
         iconBack='ChevronRight'
@@ -42,7 +42,7 @@ const SettingsTooot: React.FC = () => {
           <Icon
             name='Heart'
             size={StyleConstants.Font.Size.M}
-            color={theme.red}
+            color={colors.red}
           />
         }
         iconBack='ChevronRight'
@@ -76,7 +76,7 @@ const SettingsTooot: React.FC = () => {
           <Icon
             name='Mail'
             size={StyleConstants.Font.Size.M}
-            color={theme.secondary}
+            color={colors.secondary}
           />
         }
         iconBack='ChevronRight'

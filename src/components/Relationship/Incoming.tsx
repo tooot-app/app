@@ -19,7 +19,7 @@ export interface Props {
 }
 
 const RelationshipIncoming: React.FC<Props> = ({ id }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation()
 
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
@@ -40,7 +40,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
       haptics('Error')
       displayMessage({
         type: 'error',
-        mode,
+        theme,
         message: t('common:message.error.message', {
           function: t(`relationship:${type}.function`)
         }),

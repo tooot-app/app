@@ -10,15 +10,15 @@ import { Text, View } from 'react-native'
 
 const TimelineFiltered = React.memo(
   () => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
     return (
-      <View style={{ backgroundColor: theme.backgroundDefault }}>
+      <View style={{ backgroundColor: colors.backgroundDefault }}>
         <Text
           style={{
             ...StyleConstants.FontStyle.S,
-            color: theme.secondary,
+            color: colors.secondary,
             textAlign: 'center',
             paddingVertical: StyleConstants.Spacing.S,
             paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S

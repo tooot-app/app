@@ -51,7 +51,7 @@ const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
 
 const TabMeSwitch: React.FC = () => {
   const { t } = useTranslation('screenTabs')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const instances = useSelector(getInstances, () => true)
   const instanceActive = useSelector(getInstanceActive, () => true)
 
@@ -68,9 +68,9 @@ const TabMeSwitch: React.FC = () => {
         keyboardShouldPersistTaps='always'
       >
         <View
-          style={[styles.firstSection, { borderBottomColor: theme.border }]}
+          style={[styles.firstSection, { borderBottomColor: colors.border }]}
         >
-          <Text style={[styles.header, { color: theme.primaryDefault }]}>
+          <Text style={[styles.header, { color: colors.primaryDefault }]}>
             {t('me.switch.existing')}
           </Text>
           <View style={styles.accountButtons}>
@@ -101,7 +101,7 @@ const TabMeSwitch: React.FC = () => {
         </View>
 
         <View style={styles.secondSection}>
-          <Text style={[styles.header, { color: theme.primaryDefault }]}>
+          <Text style={[styles.header, { color: colors.primaryDefault }]}>
             {t('me.switch.new')}
           </Text>
           <ComponentInstance

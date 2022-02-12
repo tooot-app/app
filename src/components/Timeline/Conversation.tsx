@@ -62,7 +62,7 @@ const TimelineConversation: React.FC<Props> = ({
     getInstanceAccount,
     (prev, next) => prev?.id === next?.id
   )
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const queryClient = useQueryClient()
   const fireMutation = useCallback(() => {
@@ -77,9 +77,8 @@ const TimelineConversation: React.FC<Props> = ({
     }
   })
 
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
+  const navigation =
+    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
   const onPress = useCallback(() => {
     analytics('timeline_conversation_press')
     if (conversation.last_status) {
@@ -95,10 +94,10 @@ const TimelineConversation: React.FC<Props> = ({
     <Pressable
       style={[
         styles.base,
-        { backgroundColor: theme.backgroundDefault },
+        { backgroundColor: colors.backgroundDefault },
         conversation.unread && {
           borderLeftWidth: StyleConstants.Spacing.XS,
-          borderLeftColor: theme.blue,
+          borderLeftColor: colors.blue,
           paddingLeft:
             StyleConstants.Spacing.Global.PagePadding -
             StyleConstants.Spacing.XS

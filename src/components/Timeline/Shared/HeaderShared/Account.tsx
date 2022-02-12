@@ -13,7 +13,7 @@ export interface Props {
 const HeaderSharedAccount = React.memo(
   ({ account, withoutName = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <View style={styles.base}>
@@ -36,7 +36,7 @@ const HeaderSharedAccount = React.memo(
           accessibilityHint={t(
             'shared.header.shared.account.account.accessibilityHint'
           )}
-          style={[styles.acct, { color: theme.secondary }]}
+          style={[styles.acct, { color: colors.secondary }]}
           numberOfLines={1}
         >
           @{account.acct}

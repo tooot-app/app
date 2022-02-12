@@ -23,16 +23,18 @@ const prepareFields = (
   })
 }
 
-const TabMeProfileFields: React.FC<TabMeProfileStackScreenProps<
-  'Tab-Me-Profile-Fields'
-> & { messageRef: RefObject<FlashMessage> }> = ({
+const TabMeProfileFields: React.FC<
+  TabMeProfileStackScreenProps<'Tab-Me-Profile-Fields'> & {
+    messageRef: RefObject<FlashMessage>
+  }
+> = ({
   messageRef,
   route: {
     params: { fields }
   },
   navigation
 }) => {
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
@@ -77,7 +79,7 @@ const TabMeProfileFields: React.FC<TabMeProfileStackScreenProps<
           content='Save'
           onPress={async () => {
             mutateAsync({
-              mode,
+              theme,
               messageRef,
               message: {
                 text: 'me.profile.root.note.title',
@@ -95,14 +97,14 @@ const TabMeProfileFields: React.FC<TabMeProfileStackScreenProps<
         />
       )
     })
-  }, [mode, i18n.language, dirty, status, newFields])
+  }, [theme, i18n.language, dirty, status, newFields])
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
       <View style={{ marginBottom: StyleConstants.Spacing.L * 2 }}>
         {Array.from(Array(4).keys()).map(index => (
           <View key={index} style={styles.group}>
-            <Text style={[styles.headline, { color: theme.primaryDefault }]}>
+            <Text style={[styles.headline, { color: colors.primaryDefault }]}>
               {t('me.profile.fields.group', { index: index + 1 })}
             </Text>
             <Input

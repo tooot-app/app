@@ -38,14 +38,13 @@ const TimelineNotifications: React.FC<Props> = ({
     return <TimelineFiltered />
   }
 
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const instanceAccount = useSelector(
     getInstanceAccount,
     (prev, next) => prev?.id === next?.id
   )
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
+  const navigation =
+    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
 
   const actualAccount = notification.status
     ? notification.status.account
@@ -65,7 +64,7 @@ const TimelineNotifications: React.FC<Props> = ({
       style={[
         styles.notificationView,
         {
-          backgroundColor: theme.backgroundDefault,
+          backgroundColor: colors.backgroundDefault,
           paddingBottom: notification.status
             ? 0
             : StyleConstants.Spacing.Global.PagePadding
@@ -148,8 +147,10 @@ const TimelineNotifications: React.FC<Props> = ({
           status={notification.status}
           highlighted={highlighted}
           accts={uniqBy(
-            ([notification.status.account] as Mastodon.Account[] &
-              Mastodon.Mention[])
+            (
+              [notification.status.account] as Mastodon.Account[] &
+                Mastodon.Mention[]
+            )
               .concat(notification.status.mentions)
               .filter(d => d?.id !== instanceAccount?.id),
             d => d?.id

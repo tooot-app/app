@@ -6,7 +6,7 @@ import ComposeContext from './utils/createContext'
 const ComposePosting = React.memo(
   () => {
     const { composeState } = useContext(ComposeContext)
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <Modal
@@ -14,7 +14,9 @@ const ComposePosting = React.memo(
         animationType='fade'
         visible={composeState.posting}
         children={
-          <View style={{ flex: 1, backgroundColor: theme.backgroundOverlayInvert }} />
+          <View
+            style={{ flex: 1, backgroundColor: colors.backgroundOverlayInvert }}
+          />
         }
       />
     )

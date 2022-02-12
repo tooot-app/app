@@ -37,7 +37,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp
   )
@@ -56,7 +56,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
       return (
         <Pressable
           accessibilityHint={t('content.draftsList.content.accessibilityHint')}
-          style={[styles.draft, { backgroundColor: theme.backgroundDefault }]}
+          style={[styles.draft, { backgroundColor: colors.backgroundDefault }]}
           onPress={async () => {
             setCheckingAttachments(true)
             let tempDraft = item
@@ -104,7 +104,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
             <HeaderSharedCreated created_at={item.timestamp} />
             <Text
               numberOfLines={2}
-              style={[styles.text, { color: theme.primaryDefault }]}
+              style={[styles.text, { color: colors.primaryDefault }]}
             >
               {item.text ||
                 item.spoiler ||
@@ -132,12 +132,12 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         </Pressable>
       )
     },
-    [mode]
+    [theme]
   )
   const renderHiddenItem = useCallback(
     ({ item }) => (
       <View
-        style={[styles.hiddenBase, { backgroundColor: theme.red }]}
+        style={[styles.hiddenBase, { backgroundColor: colors.red }]}
         children={
           <Pressable
             style={styles.action}
@@ -146,14 +146,14 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
               <Icon
                 name='Trash'
                 size={StyleConstants.Font.Size.L}
-                color={theme.primaryOverlay}
+                color={colors.primaryOverlay}
               />
             }
           />
         }
       />
     ),
-    [mode]
+    [theme]
   )
 
   return (
@@ -184,14 +184,14 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
           <View
             style={[
               styles.modal,
-              { backgroundColor: theme.backgroundOverlayInvert }
+              { backgroundColor: colors.backgroundOverlayInvert }
             ]}
             children={
               <Text
                 children='检查附件在服务器的状态…'
                 style={{
                   ...StyleConstants.FontStyle.M,
-                  color: theme.primaryOverlay
+                  color: colors.primaryOverlay
                 }}
               />
             }

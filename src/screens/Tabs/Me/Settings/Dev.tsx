@@ -11,7 +11,7 @@ import { DevSettings, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
-  const { theme } = useTheme()
+  const { colors, mode } = useTheme()
   const { showActionSheetWithOptions } = useActionSheet()
   const instanceActive = useSelector(getInstanceActive)
   const instances = useSelector(getInstances, () => true)
@@ -23,7 +23,7 @@ const SettingsDev: React.FC = () => {
         style={{
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
           ...StyleConstants.FontStyle.S,
-          color: theme.primaryDefault
+          color: colors.primaryDefault
         }}
       >
         {instances[instanceActive]?.token}
@@ -45,7 +45,8 @@ const SettingsDev: React.FC = () => {
                   return instance.url + ': ' + instance.account.id
                 })
                 .concat(['Cancel']),
-              cancelButtonIndex: instances.length
+              cancelButtonIndex: instances.length,
+              userInterfaceStyle: mode
             },
             () => {}
           )

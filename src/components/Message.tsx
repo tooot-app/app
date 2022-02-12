@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { getTheme } from '@utils/styles/themes'
+import { getColors, Theme } from '@utils/styles/themes'
 import React, { RefObject } from 'react'
 import { AccessibilityInfo } from 'react-native'
 import FlashMessage, {
@@ -17,7 +17,7 @@ const displayMessage = ({
   message,
   description,
   onPress,
-  mode,
+  theme,
   type
 }:
   | {
@@ -27,7 +27,7 @@ const displayMessage = ({
       message: string
       description?: string
       onPress?: () => void
-      mode?: undefined
+      theme?: undefined
       type?: undefined
     }
   | {
@@ -37,7 +37,7 @@ const displayMessage = ({
       message: string
       description?: string
       onPress?: () => void
-      mode: 'light' | 'dark'
+      theme: Theme
       type: 'success' | 'error' | 'warning'
     }) => {
   AccessibilityInfo.announceForAccessibility(message + '.' + description)
@@ -64,14 +64,14 @@ const displayMessage = ({
       message,
       description,
       onPress,
-      ...(mode &&
+      ...(theme &&
         type && {
           renderFlashMessageIcon: () => {
             return (
               <Icon
                 name={iconMapping[type]}
                 size={StyleConstants.Font.LineHeight.M}
-                color={getTheme(mode)[colorMapping[type]]}
+                color={getColors(theme)[colorMapping[type]]}
                 style={{ marginRight: StyleConstants.Spacing.S }}
               />
             )
@@ -85,14 +85,14 @@ const displayMessage = ({
       message,
       description,
       onPress,
-      ...(mode &&
+      ...(theme &&
         type && {
           renderFlashMessageIcon: () => {
             return (
               <Icon
                 name={iconMapping[type]}
                 size={StyleConstants.Font.LineHeight.M}
-                color={getTheme(mode)[colorMapping[type]]}
+                color={getColors(theme)[colorMapping[type]]}
                 style={{ marginRight: StyleConstants.Spacing.S }}
               />
             )
@@ -111,7 +111,7 @@ const removeMessage = () => {
 }
 
 const Message = React.forwardRef<FlashMessage>((_, ref) => {
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
 
   return (
     <FlashMessage
@@ -120,19 +120,19 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
       position='top'
       floating
       style={{
-        backgroundColor: theme.backgroundDefault,
-        shadowColor: theme.primaryDefault,
+        backgroundColor: colors.backgroundDefault,
+        shadowColor: colors.primaryDefault,
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: mode === 'light' ? 0.16 : 0.24,
+        shadowOpacity: theme === 'light' ? 0.16 : 0.24,
         shadowRadius: 4
       }}
       titleStyle={{
-        color: theme.primaryDefault,
+        color: colors.primaryDefault,
         ...StyleConstants.FontStyle.M,
         fontWeight: StyleConstants.Font.Weight.Bold
       }}
       textStyle={{
-        color: theme.primaryDefault,
+        color: colors.primaryDefault,
         ...StyleConstants.FontStyle.S
       }}
       // @ts-ignore

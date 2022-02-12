@@ -10,16 +10,18 @@ import { Alert, StyleSheet, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const TabMeProfileNote: React.FC<TabMeProfileStackScreenProps<
-  'Tab-Me-Profile-Note'
-> & { messageRef: RefObject<FlashMessage> }> = ({
+const TabMeProfileNote: React.FC<
+  TabMeProfileStackScreenProps<'Tab-Me-Profile-Note'> & {
+    messageRef: RefObject<FlashMessage>
+  }
+> = ({
   messageRef,
   route: {
     params: { note }
   },
   navigation
 }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
@@ -64,7 +66,7 @@ const TabMeProfileNote: React.FC<TabMeProfileStackScreenProps<
           content='Save'
           onPress={async () => {
             mutateAsync({
-              mode,
+              theme,
               messageRef,
               message: {
                 text: 'me.profile.root.note.title',
@@ -80,7 +82,7 @@ const TabMeProfileNote: React.FC<TabMeProfileStackScreenProps<
         />
       )
     })
-  }, [mode, i18n.language, dirty, status, newNote])
+  }, [theme, i18n.language, dirty, status, newNote])
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>

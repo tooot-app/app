@@ -11,13 +11,13 @@ export interface Props {
 // Used for Android mostly
 const HeaderCenter = React.memo(
   ({ content, inverted = false }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <Text
         style={[
           styles.text,
-          { color: inverted ? theme.primaryOverlay : theme.primaryDefault }
+          { color: inverted ? colors.primaryOverlay : colors.primaryDefault }
         ]}
         children={content}
       />

@@ -9,7 +9,7 @@ import ComposeContext from '../../utils/createContext'
 const ComposeSpoilerInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
 
   return (
     <TextInput
@@ -17,8 +17,8 @@ const ComposeSpoilerInput: React.FC = () => {
       style={[
         styles.spoilerInput,
         {
-          color: theme.primaryDefault,
-          borderBottomColor: theme.border
+          color: colors.primaryDefault,
+          borderBottomColor: colors.border
         }
       ]}
       autoCapitalize='none'
@@ -27,7 +27,7 @@ const ComposeSpoilerInput: React.FC = () => {
       enablesReturnKeyAutomatically
       multiline
       placeholder={t('content.root.header.spoilerInput.placeholder')}
-      placeholderTextColor={theme.secondary}
+      placeholderTextColor={colors.secondary}
       onChangeText={content =>
         formatText({
           textInput: 'spoiler',

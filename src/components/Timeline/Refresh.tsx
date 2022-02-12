@@ -101,7 +101,7 @@ const TimelineRefresh: React.FC<Props> = ({
   })
 
   const { t } = useTranslation('componentTimeline')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const queryClient = useQueryClient()
   const clearFirstPage = () => {
@@ -254,13 +254,16 @@ const TimelineRefresh: React.FC<Props> = ({
       <View style={styles.base}>
         {isFetching ? (
           <View style={styles.container2}>
-            <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
+            <Circle
+              size={StyleConstants.Font.Size.L}
+              color={colors.secondary}
+            />
           </View>
         ) : (
           <>
             <View style={styles.container1}>
               <Text
-                style={[styles.explanation, { color: theme.primaryDefault }]}
+                style={[styles.explanation, { color: colors.primaryDefault }]}
                 onLayout={onLayout}
                 children={t('refresh.fetchPreviousPage')}
               />
@@ -277,14 +280,14 @@ const TimelineRefresh: React.FC<Props> = ({
                   <Icon
                     name='ArrowLeft'
                     size={StyleConstants.Font.Size.M}
-                    color={theme.primaryDefault}
+                    color={colors.primaryDefault}
                   />
                 }
               />
             </View>
             <View style={styles.container2}>
               <Text
-                style={[styles.explanation, { color: theme.primaryDefault }]}
+                style={[styles.explanation, { color: colors.primaryDefault }]}
                 onLayout={onLayout}
                 children={t('refresh.refetch')}
               />

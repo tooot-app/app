@@ -23,7 +23,7 @@ const AttachmentUnsupported: React.FC<Props> = ({
   attachment
 }) => {
   const { t } = useTranslation('componentTimeline')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   return (
     <View
@@ -49,8 +49,8 @@ const AttachmentUnsupported: React.FC<Props> = ({
               styles.text,
               {
                 color: attachment.blurhash
-                  ? theme.backgroundDefault
-                  : theme.primaryDefault
+                  ? colors.backgroundDefault
+                  : colors.primaryDefault
               }
             ]}
           >

@@ -17,7 +17,7 @@ export interface Params {
 
 const pushUseConnect = ({ t, instances }: Params) => {
   const dispatch = useDispatch()
-  const { mode } = useTheme()
+  const { theme } = useTheme()
 
   return useEffect(() => {
     const connect = async () => {
@@ -36,7 +36,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
       }).catch(error => {
         if (error.status == 404) {
           displayMessage({
-            mode,
+            theme,
             type: 'error',
             duration: 'long',
             message: t('pushError.message'),

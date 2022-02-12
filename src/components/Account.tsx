@@ -20,10 +20,9 @@ const ComponentAccount: React.FC<Props> = ({
   onPress: customOnPress,
   origin
 }) => {
-  const { theme } = useTheme()
-  const navigation = useNavigation<
-    StackNavigationProp<TabLocalStackParamList>
-  >()
+  const { colors } = useTheme()
+  const navigation =
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })
@@ -51,7 +50,7 @@ const ComponentAccount: React.FC<Props> = ({
         </Text>
         <Text
           numberOfLines={1}
-          style={[styles.itemAccountAcct, { color: theme.secondary }]}
+          style={[styles.itemAccountAcct, { color: colors.secondary }]}
         >
           @{account.acct}
         </Text>

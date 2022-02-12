@@ -18,12 +18,12 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 const Names = React.memo(
   ({ accounts }: { accounts: Mastodon.Account[] }) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <Text
         numberOfLines={1}
-        style={[styles.namesLeading, { color: theme.secondary }]}
+        style={[styles.namesLeading, { color: colors.secondary }]}
       >
         <Text>{t('shared.header.conversation.withAccounts')}</Text>
         {accounts.map((account, index) => (
@@ -49,7 +49,7 @@ export interface Props {
 
 const HeaderConversation = React.memo(
   ({ queryKey, conversation }: Props) => {
-    const { mode } = useTheme()
+    const { colors, theme } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
     const queryClient = useQueryClient()
@@ -57,7 +57,7 @@ const HeaderConversation = React.memo(
       onMutate: true,
       onError: (err: any, _, oldData) => {
         displayMessage({
-          mode,
+          theme,
           type: 'error',
           message: t('common:message.error.message', {
             function: t(`shared.header.conversation.delete.function`)
@@ -74,8 +74,6 @@ const HeaderConversation = React.memo(
       }
     })
 
-    const { theme } = useTheme()
-
     const actionOnPress = useCallback(() => {
       analytics('timeline_conversation_delete_press')
       mutation.mutate({
@@ -90,7 +88,7 @@ const HeaderConversation = React.memo(
       () => (
         <Icon
           name='Trash'
-          color={theme.secondary}
+          color={colors.secondary}
           size={StyleConstants.Font.Size.L}
         />
       ),

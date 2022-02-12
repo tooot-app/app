@@ -12,10 +12,12 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import ProfileAvatarHeader from './Root/AvatarHeader'
 
-const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
-  'Tab-Me-Profile-Root'
-> & { messageRef: RefObject<FlashMessage> }> = ({ messageRef, navigation }) => {
-  const { mode } = useTheme()
+const TabMeProfileRoot: React.FC<
+  TabMeProfileStackScreenProps<'Tab-Me-Profile-Root'> & {
+    messageRef: RefObject<FlashMessage>
+  }
+> = ({ messageRef, navigation }) => {
+  const { mode, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
@@ -34,7 +36,8 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
           t('me.profile.root.visibility.options.private'),
           t('me.profile.root.visibility.options.cancel')
         ],
-        cancelButtonIndex: 3
+        cancelButtonIndex: 3,
+        userInterfaceStyle: mode
       },
       async buttonIndex => {
         switch (buttonIndex) {
@@ -54,7 +57,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
                 new: indexVisibilityMapping[buttonIndex]
               })
               mutateAsync({
-                mode,
+                theme,
                 messageRef,
                 message: {
                   text: 'me.profile.root.visibility.title',
@@ -69,7 +72,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
         }
       }
     )
-  }, [data?.source.privacy])
+  }, [theme, data?.source.privacy])
 
   const onPressSensitive = useCallback(() => {
     analytics('me_profile_sensitive', {
@@ -77,7 +80,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
       new: data?.source.sensitive === undefined ? true : !data.source.sensitive
     })
     mutateAsync({
-      mode,
+      theme,
       messageRef,
       message: {
         text: 'me.profile.root.sensitive.title',
@@ -95,7 +98,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
       new: data?.locked === undefined ? true : !data.locked
     })
     mutateAsync({
-      mode,
+      theme,
       messageRef,
       message: {
         text: 'me.profile.root.lock.title',
@@ -105,7 +108,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
       type: 'locked',
       data: data?.locked === undefined ? true : !data.locked
     })
-  }, [data?.locked])
+  }, [theme, data?.locked])
 
   const onPressBot = useCallback(() => {
     analytics('me_profile_bot', {
@@ -113,7 +116,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
       new: data?.bot === undefined ? true : !data.bot
     })
     mutateAsync({
-      mode,
+      theme,
       messageRef,
       message: {
         text: 'me.profile.root.bot.title',
@@ -123,7 +126,7 @@ const TabMeProfileRoot: React.FC<TabMeProfileStackScreenProps<
       type: 'bot',
       data: data?.bot === undefined ? true : !data.bot
     })
-  }, [data?.bot])
+  }, [theme, data?.bot])
 
   return (
     <ScrollView>

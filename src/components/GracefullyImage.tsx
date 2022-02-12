@@ -51,7 +51,7 @@ const GracefullyImage = React.memo(
     imageStyle,
     setImageDimensions
   }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const [originalFailed, setOriginalFailed] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -85,7 +85,7 @@ const GracefullyImage = React.memo(
             source={{ uri: uri.preview }}
             style={[
               styles.placeholder,
-              { backgroundColor: theme.shimmerDefault }
+              { backgroundColor: colors.shimmerDefault }
             ]}
           />
         ) : null,
@@ -118,7 +118,7 @@ const GracefullyImage = React.memo(
             <View
               style={[
                 styles.placeholder,
-                { backgroundColor: theme.shimmerDefault }
+                { backgroundColor: colors.shimmerDefault }
               ]}
             />
           )
@@ -135,7 +135,7 @@ const GracefullyImage = React.memo(
           : { accessibilityRole: 'image' })}
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={accessibilityHint}
-        style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
+        style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
         {...(onPress
           ? hidden
             ? { disabled: true }
