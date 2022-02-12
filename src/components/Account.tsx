@@ -36,7 +36,7 @@ const ComponentAccount: React.FC<Props> = ({
       onPress={customOnPress || onPress}
     >
       <GracefullyImage
-        uri={{ original: account.avatar_static }}
+        uri={{ original: account.avatar, static: account.avatar_static }}
         style={styles.itemAccountAvatar}
       />
       <View>

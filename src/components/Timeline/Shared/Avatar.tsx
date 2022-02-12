@@ -16,9 +16,8 @@ export interface Props {
 const TimelineAvatar = React.memo(
   ({ queryKey, account, highlighted }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const navigation = useNavigation<
-      StackNavigationProp<Nav.TabLocalStackParamList>
-    >()
+    const navigation =
+      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
     // Need to fix go back root
     const onPress = useCallback(() => {
       analytics('timeline_shared_avatar_press', {
@@ -38,7 +37,7 @@ const TimelineAvatar = React.memo(
           })
         })}
         onPress={onPress}
-        uri={{ original: account.avatar_static }}
+        uri={{ original: account.avatar, static: account.avatar_static }}
         dimension={{
           width: StyleConstants.Avatar.M,
           height: StyleConstants.Avatar.M
