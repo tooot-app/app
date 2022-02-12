@@ -13,7 +13,7 @@ export interface Props {
 
 const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
   const { t } = useTranslation('screenCompose')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const theAttachment = composeState.attachments.uploads[index].remote!
 
@@ -61,13 +61,15 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
     <ScrollView ref={scrollViewRef}>
       {mediaDisplay}
       <View style={styles.altTextContainer}>
-        <Text style={[styles.altTextInputHeading, { color: theme.primaryDefault }]}>
+        <Text
+          style={[styles.altTextInputHeading, { color: colors.primaryDefault }]}
+        >
           {t('content.editAttachment.content.altText.heading')}
         </Text>
         <TextInput
           style={[
             styles.altTextInput,
-            { borderColor: theme.border, color: theme.primaryDefault }
+            { borderColor: colors.border, color: colors.primaryDefault }
           ]}
           onFocus={() => scrollViewRef.current?.scrollToEnd()}
           autoCapitalize='none'
@@ -76,12 +78,12 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
           multiline
           onChangeText={onChangeText}
           placeholder={t('content.editAttachment.content.altText.placeholder')}
-          placeholderTextColor={theme.secondary}
+          placeholderTextColor={colors.secondary}
           scrollEnabled
           value={theAttachment.description}
           keyboardAppearance={mode}
         />
-        <Text style={[styles.altTextLength, { color: theme.secondary }]}>
+        <Text style={[styles.altTextLength, { color: colors.secondary }]}>
           {theAttachment.description?.length || 0} / 1500
         </Text>
       </View>

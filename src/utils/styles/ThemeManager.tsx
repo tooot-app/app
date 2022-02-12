@@ -1,20 +1,30 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { Appearance } from 'react-native'
 import { useSelector } from 'react-redux'
-import { ColorDefinitions, getTheme } from '@utils/styles/themes'
-import { getSettingsTheme } from '@utils/slices/settingsSlice'
+import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
+import {
+  getSettingsDarkTheme,
+  getSettingsTheme,
+  SettingsState
+} from '@utils/slices/settingsSlice'
 import { throttle } from 'lodash'
 
 type ContextType = {
   mode: 'light' | 'dark'
-  theme: { [key in ColorDefinitions]: string }
-  setTheme: (theme: 'light' | 'dark') => void
+  theme: Theme
+  colors: { [key in ColorDefinitions]: string }
 }
 
 const ManageThemeContext = createContext<ContextType>({
   mode: 'light',
-  theme: getTheme('light'),
-  setTheme: () => {}
+  theme: 'light',
+  colors: getColors('light')
 })
 
 export const useTheme = () => useContext(ManageThemeContext)
@@ -45,26 +55,54 @@ const useColorSchemeDelay = (delay = 500) => {
   return colorScheme
 }
 
+const determineTheme = (
+  osTheme: 'light' | 'dark' | null | undefined,
+  userTheme: SettingsState['theme'],
+  darkTheme: SettingsState['darkTheme']
+): 'light' | 'dark_lighter' | 'dark_darker' => {
+  enum DarkTheme {
+    lighter = 'dark_lighter',
+    darker = 'dark_darker'
+  }
+  const determineDarkTheme = DarkTheme[darkTheme]
+  switch (userTheme) {
+    case 'auto':
+      switch (osTheme) {
+        case 'dark':
+          return determineDarkTheme
+        default:
+          return 'light'
+      }
+    case 'light':
+      return 'light'
+    case 'dark':
+      return determineDarkTheme
+  }
+}
+
 const ThemeManager: React.FC = ({ children }) => {
   const osTheme = useColorSchemeDelay()
   const userTheme = useSelector(getSettingsTheme)
-  const currentMode =
-    userTheme === 'auto' ? (osTheme as 'light' | 'dark') : userTheme
+  const darkTheme = useSelector(getSettingsDarkTheme)
 
-  const [mode, setMode] = useState(currentMode)
-
-  const setTheme = (theme: 'light' | 'dark') => setMode(theme)
+  const mode = useRef(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  const [theme, setTheme] = useState<Theme>(
+    determineTheme(osTheme, userTheme, darkTheme)
+  )
 
   useEffect(() => {
-    setMode(currentMode)
-  }, [currentMode])
+    mode.current = userTheme === 'auto' ? osTheme || 'light' : userTheme
+  }, [userTheme])
+  useEffect(() => {
+    setTheme(determineTheme(osTheme, userTheme, darkTheme))
+  }, [osTheme, userTheme, darkTheme])
 
   return (
     <ManageThemeContext.Provider
       value={{
-        mode: mode,
-        theme: getTheme(mode),
-        setTheme: setTheme
+        mode: mode.current,
+        theme,
+        colors: getColors(theme)
       }}
     >
       {children}

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const SettingsAnalytics: React.FC = () => {
   const dispatch = useDispatch()
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const settingsAnalytics = useSelector(getSettingsAnalytics)
@@ -28,7 +28,7 @@ const SettingsAnalytics: React.FC = () => {
           dispatch(changeAnalytics(!settingsAnalytics))
         }
       />
-      <Text style={[styles.version, { color: theme.secondary }]}>
+      <Text style={[styles.version, { color: colors.secondary }]}>
         {t('me.settings.version', { version: Constants.manifest?.version })}
       </Text>
     </MenuContainer>

@@ -12,7 +12,9 @@ import {
   changeTheme,
   getSettingsTheme,
   getSettingsBrowser,
-  getSettingsFontsize
+  getSettingsFontsize,
+  getSettingsDarkTheme,
+  changeDarkTheme
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -26,12 +28,13 @@ const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()
   const dispatch = useDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
-  const { setTheme } = useTheme()
+  const { mode } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
 
   const instances = useSelector(getInstances, () => true)
   const settingsFontsize = useSelector(getSettingsFontsize)
   const settingsTheme = useSelector(getSettingsTheme)
+  const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
 
   return (
@@ -61,7 +64,8 @@ const SettingsApp: React.FC = () => {
             {
               title: t('me.settings.language.heading'),
               options,
-              cancelButtonIndex: options.length - 1
+              cancelButtonIndex: options.length - 1,
+              userInterfaceStyle: mode
             },
             buttonIndex => {
               if (buttonIndex === undefined) return
@@ -171,7 +175,6 @@ const SettingsApp: React.FC = () => {
                   })
                   haptics('Success')
                   dispatch(changeTheme('light'))
-                  setTheme('light')
                   break
                 case 2:
                   analytics('settings_appearance_press', {
@@ -180,7 +183,44 @@ const SettingsApp: React.FC = () => {
                   })
                   haptics('Success')
                   dispatch(changeTheme('dark'))
-                  setTheme('dark')
+                  break
+              }
+            }
+          )
+        }
+      />
+      <MenuRow
+        title={t('me.settings.darkTheme.heading')}
+        content={t(`me.settings.darkTheme.options.${settingsDarkTheme}`)}
+        iconBack='ChevronRight'
+        onPress={() =>
+          showActionSheetWithOptions(
+            {
+              title: t('me.settings.darkTheme.heading'),
+              options: [
+                t('me.settings.darkTheme.options.lighter'),
+                t('me.settings.darkTheme.options.darker'),
+                t('me.settings.darkTheme.options.cancel')
+              ],
+              cancelButtonIndex: 2
+            },
+            buttonIndex => {
+              switch (buttonIndex) {
+                case 0:
+                  analytics('settings_darktheme_press', {
+                    current: settingsDarkTheme,
+                    new: 'lighter'
+                  })
+                  haptics('Success')
+                  dispatch(changeDarkTheme('lighter'))
+                  break
+                case 1:
+                  analytics('settings_darktheme_press', {
+                    current: settingsDarkTheme,
+                    new: 'darker'
+                  })
+                  haptics('Success')
+                  dispatch(changeDarkTheme('darker'))
                   break
               }
             }

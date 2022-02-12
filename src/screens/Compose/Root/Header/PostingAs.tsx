@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 const ComposePostingAs = React.memo(
   () => {
     const { t } = useTranslation('screenCompose')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const instanceAccount = useSelector(
       getInstanceAccount,
@@ -21,7 +21,7 @@ const ComposePostingAs = React.memo(
     const instanceUri = useSelector(getInstanceUri)
 
     return (
-      <Text style={[styles.text, { color: theme.secondary }]}>
+      <Text style={[styles.text, { color: colors.secondary }]}>
         {t('content.root.header.postingAs', {
           acct: instanceAccount?.acct,
           domain: instanceUri

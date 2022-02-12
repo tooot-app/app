@@ -38,6 +38,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         // Auto go back when toot page is empty
         if (flattenData.length === 0) {
           navigation.goBack()
+          return
         }
         setItemsLength(flattenData.length)
         if (!scrolled.current) {

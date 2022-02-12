@@ -21,7 +21,7 @@ const TabMeProfileName: React.FC<
   },
   navigation
 }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
@@ -66,7 +66,7 @@ const TabMeProfileName: React.FC<
           content='Save'
           onPress={async () => {
             mutateAsync({
-              mode,
+              theme,
               messageRef,
               message: {
                 text: 'me.profile.root.name.title',
@@ -82,7 +82,7 @@ const TabMeProfileName: React.FC<
         />
       )
     })
-  }, [mode, i18n.language, dirty, status, displayName])
+  }, [theme, i18n.language, dirty, status, displayName])
 
   return (
     <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>

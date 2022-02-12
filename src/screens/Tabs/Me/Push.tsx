@@ -23,7 +23,7 @@ import { AppState, Linking, ScrollView, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 const TabMePush: React.FC = () => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
   const instanceAccount = useSelector(
     getInstanceAccount,
@@ -202,12 +202,12 @@ const TabMePush: React.FC = () => {
           <Icon
             name='Frown'
             size={StyleConstants.Font.Size.L}
-            color={theme.primaryDefault}
+            color={colors.primaryDefault}
           />
           <Text
             style={{
               ...StyleConstants.FontStyle.M,
-              color: theme.primaryDefault
+              color: colors.primaryDefault
             }}
           >
             {t('me.push.notAvailable')}

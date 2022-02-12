@@ -20,14 +20,14 @@ const HeaderLeft: React.FC<Props> = ({
   background = false,
   onPress
 }) => {
-  const { theme } = useTheme()
+  const { colors, theme } = useTheme()
 
   const children = useMemo(() => {
     switch (type) {
       case 'icon':
         return (
           <Icon
-            color={theme.primaryDefault}
+            color={colors.primaryDefault}
             name={content || 'ChevronLeft'}
             size={StyleConstants.Spacing.M * 1.25}
           />
@@ -35,7 +35,7 @@ const HeaderLeft: React.FC<Props> = ({
       case 'text':
         return (
           <Text
-            style={[styles.text, { color: theme.primaryDefault }]}
+            style={[styles.text, { color: colors.primaryDefault }]}
             children={content}
           />
         )
@@ -50,7 +50,7 @@ const HeaderLeft: React.FC<Props> = ({
         styles.base,
         {
           backgroundColor: background
-            ? theme.backgroundOverlayDefault
+            ? colors.backgroundOverlayDefault
             : undefined,
           minHeight: 44,
           minWidth: 44,

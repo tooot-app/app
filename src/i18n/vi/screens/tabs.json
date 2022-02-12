@@ -150,11 +150,11 @@
         "settings": "Bật trong cài đặt"
       },
       "global": {
-        "heading": "Bật khi {{acct}}",
+        "heading": "Bật cho {{acct}}",
         "description": "Thông báo được truyền qua máy chủ tooot"
       },
       "decode": {
-        "heading": "Chi tiết thông báo",
+        "heading": "Hiện chi tiết thông báo",
         "description": "Theo mặc định, thông báo truyền qua máy chủ tooot sẽ được mã hóa, nhưng bạn cũng có thể chọn không mã hóa. Máy chủ của chúng tôi luôn công khai mã nguồn và không lưu lại bất cứ gì."
       },
       "default": {
@@ -240,6 +240,9 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "feedback": {
+        "heading": "Yêu cầu tính năng"
+      },
       "support": {
         "heading": "Ủng hộ tooot"
       },
@@ -310,7 +313,7 @@
     },
     "users": {
       "accounts": {
-        "following": "{{count}} Theo dõi",
+        "following": "{{count}} theo dõi",
         "followers": "{{count}} người theo dõi"
       },
       "statuses": {

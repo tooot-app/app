@@ -13,10 +13,10 @@
     },
     "right": {
       "button": {
-        "default": "Tút",
+        "default": "Đăng",
         "conversation": "Tin nhắn",
         "reply": "Trả lời",
-        "edit": "Tút"
+        "edit": "Sửa"
       },
       "alert": {
         "default": {

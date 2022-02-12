@@ -16,9 +16,9 @@ export interface Params {
 }
 
 const TagText = ({ text }: { text: string }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
-  return <Text style={{ color: theme.blue }}>{text}</Text>
+  return <Text style={{ color: colors.blue }}>{text}</Text>
 }
 
 const debouncedSuggestions = debounce(

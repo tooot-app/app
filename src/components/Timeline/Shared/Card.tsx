@@ -13,14 +13,14 @@ export interface Props {
 
 const TimelineCard = React.memo(
   ({ card }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const navigation = useNavigation()
 
     return (
       <Pressable
         accessible
         accessibilityRole='link'
-        style={[styles.card, { borderColor: theme.border }]}
+        style={[styles.card, { borderColor: colors.border }]}
         onPress={async () => {
           analytics('timeline_shared_card_press')
           await openLink(card.url, navigation)
@@ -38,7 +38,7 @@ const TimelineCard = React.memo(
         <View style={styles.right}>
           <Text
             numberOfLines={2}
-            style={[styles.rightTitle, { color: theme.primaryDefault }]}
+            style={[styles.rightTitle, { color: colors.primaryDefault }]}
             testID='title'
           >
             {card.title}
@@ -46,7 +46,10 @@ const TimelineCard = React.memo(
           {card.description ? (
             <Text
               numberOfLines={1}
-              style={[styles.rightDescription, { color: theme.primaryDefault }]}
+              style={[
+                styles.rightDescription,
+                { color: colors.primaryDefault }
+              ]}
               testID='description'
             >
               {card.description}
@@ -54,7 +57,7 @@ const TimelineCard = React.memo(
           ) : null}
           <Text
             numberOfLines={1}
-            style={[styles.rightLink, { color: theme.secondary }]}
+            style={[styles.rightLink, { color: colors.secondary }]}
           >
             {card.url}
           </Text>

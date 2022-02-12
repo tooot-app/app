@@ -54,7 +54,7 @@ const Button: React.FC<Props> = ({
   overlay = false,
   onPress
 }) => {
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
 
   const mounted = useRef(false)
   useEffect(() => {
@@ -68,35 +68,35 @@ const Button: React.FC<Props> = ({
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Flow size={StyleConstants.Font.Size[size]} color={theme.secondary} />
+        <Flow size={StyleConstants.Font.Size[size]} color={colors.secondary} />
       </View>
     ),
-    [mode]
+    [theme]
   )
 
   const mainColor = useMemo(() => {
     if (selected) {
-      return theme.blue
+      return colors.blue
     } else if (overlay) {
-      return theme.primaryOverlay
+      return colors.primaryOverlay
     } else if (disabled || loading) {
-      return theme.disabled
+      return colors.disabled
     } else {
       if (destructive) {
-        return theme.red
+        return colors.red
       } else {
-        return theme.primaryDefault
+        return colors.primaryDefault
       }
     }
-  }, [mode, disabled, loading, selected])
+  }, [theme, disabled, loading, selected])
 
   const colorBackground = useMemo(() => {
     if (overlay) {
-      return theme.backgroundOverlayInvert
+      return colors.backgroundOverlayInvert
     } else {
-      return theme.backgroundDefault
+      return colors.backgroundDefault
     }
-  }, [mode])
+  }, [theme])
 
   const children = useMemo(() => {
     switch (type) {
@@ -130,7 +130,7 @@ const Button: React.FC<Props> = ({
           </>
         )
     }
-  }, [mode, content, loading, disabled])
+  }, [theme, content, loading, disabled])
 
   const [layoutHeight, setLayoutHeight] = useState<number | undefined>()
 

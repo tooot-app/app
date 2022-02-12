@@ -31,7 +31,7 @@ const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const instanceActive = useSelector(getInstanceActive)
     const instanceAccount = useSelector(
@@ -42,8 +42,8 @@ const ScreenTabs = React.memo(
     const screenOptions = useCallback(
       ({ route }): BottomTabNavigationOptions => ({
         headerShown: false,
-        tabBarActiveTintColor: theme.primaryDefault,
-        tabBarInactiveTintColor: theme.secondary,
+        tabBarActiveTintColor: colors.primaryDefault,
+        tabBarInactiveTintColor: colors.secondary,
         tabBarShowLabel: false,
         ...(Platform.OS === 'android' && { tabBarHideOnKeyboard: true }),
         tabBarStyle: { display: instanceActive !== -1 ? 'flex' : 'none' },
@@ -78,7 +78,7 @@ const ScreenTabs = React.memo(
                     borderRadius: size,
                     overflow: 'hidden',
                     borderWidth: focused ? 2 : 0,
-                    borderColor: focused ? theme.secondary : color
+                    borderColor: focused ? colors.secondary : color
                   }}
                 />
               )

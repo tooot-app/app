@@ -8,10 +8,10 @@ const ComposeReply: React.FC = () => {
   const {
     composeState: { replyToStatus }
   } = useContext(ComposeContext)
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   return (
-    <View style={[styles.base, { borderTopColor: theme.border }]}>
+    <View style={[styles.base, { borderTopColor: colors.border }]}>
       <TimelineDefault item={replyToStatus!} disableDetails disableOnPress />
     </View>
   )

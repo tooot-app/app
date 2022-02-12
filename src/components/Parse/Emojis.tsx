@@ -39,11 +39,11 @@ const ParseEmojis = React.memo(
       adaptiveSize ? adaptiveFontsize : 0
     )
 
-    const { mode, theme } = useTheme()
+    const { colors, theme } = useTheme()
     const styles = useMemo(() => {
       return StyleSheet.create({
         text: {
-          color: theme.primaryDefault,
+          color: colors.primaryDefault,
           fontSize: adaptedFontsize,
           lineHeight: adaptedLineheight,
           ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
@@ -54,7 +54,7 @@ const ParseEmojis = React.memo(
           transform: [{ translateY: -2 }]
         }
       })
-    }, [mode, adaptiveFontsize])
+    }, [theme, adaptiveFontsize])
 
     return (
       <Text style={styles.text}>

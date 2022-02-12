@@ -17,10 +17,9 @@ const ComponentHashtag: React.FC<Props> = ({
   onPress: customOnPress,
   origin
 }) => {
-  const { theme } = useTheme()
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
+  const { colors } = useTheme()
+  const navigation =
+    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })
@@ -33,7 +32,7 @@ const ComponentHashtag: React.FC<Props> = ({
       style={styles.itemDefault}
       onPress={customOnPress || onPress}
     >
-      <Text style={[styles.itemHashtag, { color: theme.primaryDefault }]}>
+      <Text style={[styles.itemHashtag, { color: colors.primaryDefault }]}>
         #{hashtag.name}
       </Text>
     </Pressable>

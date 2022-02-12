@@ -24,21 +24,21 @@ const TimelineFooter = React.memo(
       }
     })
 
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <View style={styles.base}>
         {!disableInfinity && hasNextPage ? (
-          <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
+          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
         ) : (
-          <Text style={[styles.text, { color: theme.secondary }]}>
+          <Text style={[styles.text, { color: colors.secondary }]}>
             <Trans
               i18nKey='componentTimeline:end.message'
               components={[
                 <Icon
                   name='Coffee'
                   size={StyleConstants.Font.Size.S}
-                  color={theme.secondary}
+                  color={colors.secondary}
                 />
               ]}
             />

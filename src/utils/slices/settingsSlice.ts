@@ -17,6 +17,7 @@ export type SettingsState = {
   fontsize: -1 | 0 | 1 | 2 | 3
   language: string
   theme: 'light' | 'dark' | 'auto'
+  darkTheme: 'lighter' | 'darker'
   browser: 'internal' | 'external'
   analytics: boolean
 }
@@ -34,6 +35,7 @@ export const settingsInitialState = {
       )[0]
     : 'en',
   theme: 'auto',
+  darkTheme: 'lighter',
   browser: 'internal',
   analytics: true
 }
@@ -60,6 +62,12 @@ const settingsSlice = createSlice({
     ) => {
       state.theme = action.payload
     },
+    changeDarkTheme: (
+      state,
+      action: PayloadAction<NonNullable<SettingsState['darkTheme']>>
+    ) => {
+      state.darkTheme = action.payload
+    },
     changeBrowser: (
       state,
       action: PayloadAction<NonNullable<SettingsState['browser']>>
@@ -78,10 +86,17 @@ export const getSettingsFontsize = (state: RootState) =>
   state.settings.fontsize || 0
 export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
+export const getSettingsDarkTheme = (state: RootState) =>
+  state.settings.darkTheme
 export const getSettingsBrowser = (state: RootState) => state.settings.browser
 export const getSettingsAnalytics = (state: RootState) =>
   state.settings.analytics
 
-export const { changeFontsize, changeLanguage, changeTheme, changeBrowser } =
-  settingsSlice.actions
+export const {
+  changeFontsize,
+  changeLanguage,
+  changeTheme,
+  changeDarkTheme,
+  changeBrowser
+} = settingsSlice.actions
 export default settingsSlice.reducer

@@ -19,7 +19,7 @@ export interface Props {
 
 const RelationshipOutgoing = React.memo(
   ({ id }: Props) => {
-    const { mode } = useTheme()
+    const { theme } = useTheme()
     const { t } = useTranslation('componentRelationship')
 
     const query = useRelationshipQuery({ id })
@@ -40,7 +40,7 @@ const RelationshipOutgoing = React.memo(
       },
       onError: (err: any, { payload: { action } }) => {
         displayMessage({
-          mode,
+          theme,
           type: 'error',
           message: t('common:message.error.message', {
             function: t(`${action}.function`)

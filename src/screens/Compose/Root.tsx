@@ -61,7 +61,7 @@ export let instanceConfigurationStatusCharsURL = 23
 const ComposeRoot = React.memo(
   () => {
     const { reduceMotionEnabled } = useAccessibility()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     instanceConfigurationStatusCharsURL = useSelector(
       getInstanceConfigurationStatusCharsURL,
@@ -122,7 +122,7 @@ const ComposeRoot = React.memo(
           <View key='listEmpty' style={styles.loading}>
             <Circle
               size={StyleConstants.Font.Size.M * 1.25}
-              color={theme.secondary}
+              color={colors.secondary}
             />
           </View>
         )

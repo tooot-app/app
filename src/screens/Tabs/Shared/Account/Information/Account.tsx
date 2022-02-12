@@ -15,8 +15,11 @@ export interface Props {
   localInstance: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) => {
-  const { theme } = useTheme()
+const AccountInformationAccount: React.FC<Props> = ({
+  account,
+  localInstance
+}) => {
+  const { colors } = useTheme()
   const instanceAccount = useSelector(
     getInstanceAccount,
     (prev, next) => prev?.acct === next?.acct
@@ -38,7 +41,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) 
         <Text
           style={[
             styles.moved,
-            { color: theme.secondary, ...StyleConstants.FontStyle.M }
+            { color: colors.secondary, ...StyleConstants.FontStyle.M }
           ]}
           selectable
         >
@@ -57,7 +60,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) 
           style={[
             movedStyle.base,
             {
-              color: theme.secondary,
+              color: colors.secondary,
               ...StyleConstants.FontStyle.M
             }
           ]}
@@ -71,7 +74,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) 
           <Icon
             name='Lock'
             style={styles.type}
-            color={theme.secondary}
+            color={colors.secondary}
             size={StyleConstants.Font.Size.M}
           />
         ) : null}
@@ -79,7 +82,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) 
           <Icon
             name='HardDrive'
             style={styles.type}
-            color={theme.secondary}
+            color={colors.secondary}
             size={StyleConstants.Font.Size.M}
           />
         ) : null}
@@ -90,7 +93,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, localInstance }) 
       <PlaceholderLine
         width={StyleConstants.Font.Size.M * 3}
         height={StyleConstants.Font.LineHeight.M}
-        color={theme.shimmerDefault}
+        color={colors.shimmerDefault}
         noMargin
         style={styles.base}
       />

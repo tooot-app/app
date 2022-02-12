@@ -7,12 +7,14 @@ import { StyleSheet, Text, View } from 'react-native'
 const TimelineLookback = React.memo(
   () => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
-      <View style={[styles.base, { backgroundColor: theme.backgroundDefault }]}>
+      <View
+        style={[styles.base, { backgroundColor: colors.backgroundDefault }]}
+      >
         <Text
-          style={[StyleConstants.FontStyle.S, { color: theme.primaryDefault }]}
+          style={[StyleConstants.FontStyle.S, { color: colors.primaryDefault }]}
         >
           {t('lookback.message')}
         </Text>

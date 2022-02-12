@@ -20,14 +20,17 @@ const TimelineEmpty = React.memo(
       options: { notifyOnChangeProps: ['status'] }
     })
 
-    const { mode, theme } = useTheme()
+    const { colors, theme } = useTheme()
     const { t, i18n } = useTranslation('componentTimeline')
 
     const children = useMemo(() => {
       switch (status) {
         case 'loading':
           return (
-            <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
+            <Circle
+              size={StyleConstants.Font.Size.L}
+              color={colors.secondary}
+            />
           )
         case 'error':
           return (
@@ -35,9 +38,9 @@ const TimelineEmpty = React.memo(
               <Icon
                 name='Frown'
                 size={StyleConstants.Font.Size.L}
-                color={theme.primaryDefault}
+                color={colors.primaryDefault}
               />
-              <Text style={[styles.error, { color: theme.primaryDefault }]}>
+              <Text style={[styles.error, { color: colors.primaryDefault }]}>
                 {t('empty.error.message')}
               </Text>
               <Button
@@ -56,18 +59,18 @@ const TimelineEmpty = React.memo(
               <Icon
                 name='Smartphone'
                 size={StyleConstants.Font.Size.L}
-                color={theme.primaryDefault}
+                color={colors.primaryDefault}
               />
-              <Text style={[styles.error, { color: theme.primaryDefault }]}>
+              <Text style={[styles.error, { color: colors.primaryDefault }]}>
                 {t('empty.success.message')}
               </Text>
             </>
           )
       }
-    }, [mode, i18n.language, status])
+    }, [theme, i18n.language, status])
     return (
       <View
-        style={[styles.base, { backgroundColor: theme.backgroundDefault }]}
+        style={[styles.base, { backgroundColor: colors.backgroundDefault }]}
         children={children}
       />
     )

@@ -26,7 +26,7 @@ const TabSharedSearch: React.FC<
   }
 }) => {
   const { t } = useTranslation('screenTabs')
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),
@@ -72,7 +72,7 @@ const TabSharedSearch: React.FC<
             <View style={styles.loading}>
               <Circle
                 size={StyleConstants.Font.Size.M * 1.25}
-                color={theme.secondary}
+                color={colors.secondary}
               />
             </View>
           ) : (
@@ -81,7 +81,7 @@ const TabSharedSearch: React.FC<
                 style={[
                   styles.emptyDefault,
                   styles.emptyFontSize,
-                  { color: theme.primaryDefault }
+                  { color: colors.primaryDefault }
                 ]}
               >
                 <Trans
@@ -90,35 +90,37 @@ const TabSharedSearch: React.FC<
                 />
               </Text>
               <Text
-                style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
                 {t('shared.search.empty.advanced.header')}
               </Text>
               <Text
-                style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: theme.secondary }}>@username@domain</Text>
+                <Text style={{ color: colors.secondary }}>
+                  @username@domain
+                </Text>
                 {'   '}
                 {t('shared.search.empty.advanced.example.account')}
               </Text>
               <Text
-                style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: theme.secondary }}>#example</Text>
+                <Text style={{ color: colors.secondary }}>#example</Text>
                 {'   '}
                 {t('shared.search.empty.advanced.example.hashtag')}
               </Text>
               <Text
-                style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: theme.secondary }}>URL</Text>
+                <Text style={{ color: colors.secondary }}>URL</Text>
                 {'   '}
                 {t('shared.search.empty.advanced.example.statusLink')}
               </Text>
               <Text
-                style={[styles.emptyAdvanced, { color: theme.primaryDefault }]}
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: theme.secondary }}>URL</Text>
+                <Text style={{ color: colors.secondary }}>URL</Text>
                 {'   '}
                 {t('shared.search.empty.advanced.example.accountLink')}
               </Text>
@@ -133,11 +135,11 @@ const TabSharedSearch: React.FC<
       <View
         style={[
           styles.sectionHeader,
-          { backgroundColor: theme.backgroundDefault }
+          { backgroundColor: colors.backgroundDefault }
         ]}
       >
         <Text
-          style={[styles.sectionHeaderText, { color: theme.primaryDefault }]}
+          style={[styles.sectionHeaderText, { color: colors.primaryDefault }]}
         >
           {translation}
         </Text>
@@ -151,10 +153,10 @@ const TabSharedSearch: React.FC<
         <View
           style={[
             styles.sectionFooter,
-            { backgroundColor: theme.backgroundDefault }
+            { backgroundColor: colors.backgroundDefault }
           ]}
         >
-          <Text style={[styles.sectionFooterText, { color: theme.secondary }]}>
+          <Text style={[styles.sectionFooterText, { color: colors.secondary }]}>
             <Trans
               i18nKey='screenTabs:shared.search.notFound'
               values={{ searchTerm: text, type: translation }}

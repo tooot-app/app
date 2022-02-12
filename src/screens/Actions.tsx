@@ -68,7 +68,7 @@ const ScreenActions = React.memo(
         break
     }
 
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const insets = useSafeAreaInsets()
 
     const DEFAULT_VALUE = 350
@@ -189,7 +189,7 @@ const ScreenActions = React.memo(
             <Animated.View
               style={[
                 styles.overlay,
-                { backgroundColor: theme.backgroundOverlayInvert }
+                { backgroundColor: colors.backgroundOverlayInvert }
               ]}
             >
               <PanGestureHandler onGestureEvent={onGestureEvent}>
@@ -198,7 +198,7 @@ const ScreenActions = React.memo(
                     styles.container,
                     styleTop,
                     {
-                      backgroundColor: theme.backgroundDefault,
+                      backgroundColor: colors.backgroundDefault,
                       paddingBottom: insets.bottom || StyleConstants.Spacing.L
                     }
                   ]}
@@ -206,7 +206,7 @@ const ScreenActions = React.memo(
                   <View
                     style={[
                       styles.handle,
-                      { backgroundColor: theme.primaryOverlay }
+                      { backgroundColor: colors.primaryOverlay }
                     ]}
                   />
                   {actions}

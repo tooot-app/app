@@ -12,14 +12,14 @@ export interface Props {
 const HeaderSharedMuted = React.memo(
   ({ muted }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return muted ? (
       <Icon
         accessibilityLabel={t('shared.header.shared.muted.accessibilityLabel')}
         name='VolumeX'
         size={StyleConstants.Font.Size.S}
-        color={theme.secondary}
+        color={colors.secondary}
         style={styles.visibility}
       />
     ) : null

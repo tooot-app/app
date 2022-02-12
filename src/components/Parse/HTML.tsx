@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 // Prevent going to the same hashtag multiple times
 const renderNode = ({
   routeParams,
-  theme,
+  colors,
   node,
   index,
   adaptedFontsize,
@@ -30,7 +30,7 @@ const renderNode = ({
   disableDetails
 }: {
   routeParams?: any
-  theme: any
+  colors: any
   node: any
   index: number
   adaptedFontsize: number
@@ -56,7 +56,7 @@ const renderNode = ({
               accessible
               key={index}
               style={{
-                color: theme.blue,
+                color: colors.blue,
                 fontSize: adaptedFontsize,
                 lineHeight: adaptedLineheight
               }}
@@ -84,7 +84,8 @@ const renderNode = ({
             <Text
               key={index}
               style={{
-                color: accountIndex !== -1 ? theme.blue : theme.primaryDefault,
+                color:
+                  accountIndex !== -1 ? colors.blue : colors.primaryDefault,
                 fontSize: adaptedFontsize,
                 lineHeight: adaptedLineheight
               }}
@@ -114,7 +115,7 @@ const renderNode = ({
           <Text
             key={index}
             style={{
-              color: theme.blue,
+              color: colors.blue,
               alignItems: 'center',
               fontSize: adaptedFontsize,
               lineHeight: adaptedLineheight
@@ -132,7 +133,7 @@ const renderNode = ({
               (showFullLink ? href : domain[1])}
             {!shouldBeTag ? (
               <Icon
-                color={theme.blue}
+                color={colors.blue}
                 name='ExternalLink'
                 size={adaptedFontsize}
                 style={{
@@ -192,11 +193,10 @@ const ParseHTML = React.memo(
       adaptiveSize ? adaptiveFontsize : 0
     )
 
-    const navigation = useNavigation<
-      StackNavigationProp<Nav.TabLocalStackParamList>
-    >()
+    const navigation =
+      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
     const route = useRoute()
-    const { mode, theme } = useTheme()
+    const { colors, theme } = useTheme()
     const { t, i18n } = useTranslation('componentParse')
     if (!expandHint) {
       expandHint = t('HTML.defaultHint')
@@ -206,7 +206,7 @@ const ParseHTML = React.memo(
       (node, index) =>
         renderNode({
           routeParams: route.params,
-          theme,
+          colors,
           node,
           index,
           adaptedFontsize,
@@ -271,14 +271,14 @@ const ParseHTML = React.memo(
                   justifyContent: 'center',
                   marginTop: expanded ? 0 : -adaptedLineheight,
                   minHeight: 44,
-                  backgroundColor: theme.backgroundDefault
+                  backgroundColor: colors.backgroundDefault
                 }}
               >
                 <Text
                   style={{
                     textAlign: 'center',
                     ...StyleConstants.FontStyle.S,
-                    color: theme.primaryDefault
+                    color: colors.primaryDefault
                   }}
                   children={t(`HTML.expanded.${expanded.toString()}`, {
                     hint: expandHint
@@ -289,7 +289,7 @@ const ParseHTML = React.memo(
           </View>
         )
       },
-      [mode, i18n.language]
+      [theme, i18n.language]
     )
 
     return (

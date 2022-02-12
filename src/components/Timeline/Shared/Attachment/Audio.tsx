@@ -23,7 +23,7 @@ const AttachmentAudio: React.FC<Props> = ({
   sensitiveShown,
   audio
 }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
   const [audioPlaying, setAudioPlaying] = useState(false)
@@ -56,7 +56,7 @@ const AttachmentAudio: React.FC<Props> = ({
       style={[
         styles.base,
         {
-          backgroundColor: theme.disabled,
+          backgroundColor: colors.disabled,
           aspectRatio: attachmentAspectRatio({ total, index })
         }
       ]}
@@ -102,7 +102,7 @@ const AttachmentAudio: React.FC<Props> = ({
             alignSelf: 'flex-end',
             width: '100%',
             height: StyleConstants.Spacing.M + StyleConstants.Spacing.S * 2,
-            backgroundColor: theme.backgroundOverlayInvert,
+            backgroundColor: colors.backgroundOverlayInvert,
             paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
             borderRadius: 100,
             opacity: sensitiveShown ? 0.35 : undefined
@@ -112,8 +112,8 @@ const AttachmentAudio: React.FC<Props> = ({
             minimumValue={0}
             maximumValue={audio.meta.original.duration * 1000}
             value={audioPosition}
-            minimumTrackTintColor={theme.secondary}
-            maximumTrackTintColor={theme.disabled}
+            minimumTrackTintColor={colors.secondary}
+            maximumTrackTintColor={colors.disabled}
             // onSlidingStart={() => {
             //   audioPlayer?.pauseAsync()
             //   setAudioPlaying(false)
@@ -123,7 +123,7 @@ const AttachmentAudio: React.FC<Props> = ({
             // }}
             enabled={false} // Bug in above sliding actions
             thumbSize={StyleConstants.Spacing.M}
-            thumbTintColor={theme.primaryOverlay}
+            thumbTintColor={colors.primaryOverlay}
           />
         </View>
       ) : null}

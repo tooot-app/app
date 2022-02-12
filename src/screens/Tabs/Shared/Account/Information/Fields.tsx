@@ -16,17 +16,17 @@ const AccountInformationFields = React.memo(
       return null
     }
 
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
-      <View style={[styles.fields, { borderTopColor: theme.border }]}>
+      <View style={[styles.fields, { borderTopColor: colors.border }]}>
         {account.fields.map((field, index) => (
           <View
             key={index}
-            style={[styles.field, { borderBottomColor: theme.border }]}
+            style={[styles.field, { borderBottomColor: colors.border }]}
           >
             <View
-              style={[styles.fieldLeft, { borderRightColor: theme.border }]}
+              style={[styles.fieldLeft, { borderRightColor: colors.border }]}
             >
               <ParseHTML
                 content={field.name}
@@ -40,7 +40,7 @@ const AccountInformationFields = React.memo(
                 <Icon
                   name='CheckCircle'
                   size={StyleConstants.Font.Size.M}
-                  color={theme.primaryDefault}
+                  color={colors.primaryDefault}
                   style={styles.fieldCheck}
                 />
               ) : null}
