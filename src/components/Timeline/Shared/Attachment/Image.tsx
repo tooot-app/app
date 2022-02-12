@@ -28,17 +28,16 @@ const AttachmentImage = React.memo(
           uri={{ original: image.preview_url, remote: image.remote_url }}
           blurhash={image.blurhash}
           onPress={onPress}
-          style={[
-            {
-              aspectRatio:
-                total > 1 ||
-                !image.meta?.original?.width ||
-                !image.meta?.original?.height ||
-                image.meta.original.width / image.meta.original.height > 2
-                  ? attachmentAspectRatio({ total, index })
-                  : image.meta.original.width / image.meta.original.height
-            }
-          ]}
+          style={{
+            aspectRatio:
+              total > 1 ||
+              !image.meta?.original?.width ||
+              !image.meta?.original?.height
+                ? attachmentAspectRatio({ total, index })
+                : image.meta.original.height / image.meta.original.width > 2
+                ? 0.5
+                : image.meta.original.width / image.meta.original.height
+          }}
         />
       </View>
     )

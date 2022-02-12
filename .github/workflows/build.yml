@@ -27,11 +27,9 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 5 -- Install native dependencies
-        run: npx pod-install
-      - name: -- Step 6 -- Install ruby dependencies
+      - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 7 -- Run fastlane
+      - name: -- Step 6 -- Run fastlane
         env:
           DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
