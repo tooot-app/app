@@ -57,7 +57,7 @@ const Input: React.FC<Props> = ({
   setValue,
   options
 }) => {
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
 
   const animateTitle = useAnimatedStyle(() => {
     if (value) {
@@ -66,7 +66,7 @@ const Input: React.FC<Props> = ({
         paddingHorizontal: withTiming(StyleConstants.Spacing.XS),
         left: withTiming(StyleConstants.Spacing.S),
         top: withTiming(-(StyleConstants.Font.Size.S / 2) - 2),
-        backgroundColor: withTiming(theme.backgroundDefault)
+        backgroundColor: withTiming(colors.backgroundDefault)
       }
     } else {
       return {
@@ -74,7 +74,7 @@ const Input: React.FC<Props> = ({
         paddingHorizontal: withTiming(0),
         left: withTiming(StyleConstants.Spacing.S),
         top: withTiming(StyleConstants.Spacing.S + 1),
-        backgroundColor: withTiming(theme.backgroundDefaultTransparent)
+        backgroundColor: withTiming(colors.backgroundDefaultTransparent)
       }
     }
   }, [mode, value])
@@ -109,7 +109,7 @@ const Input: React.FC<Props> = ({
         style={[
           styles.base,
           {
-            borderColor: theme.border,
+            borderColor: colors.border,
             flexDirection: multiline ? 'column' : 'row',
             alignItems: 'stretch'
           }
@@ -127,7 +127,7 @@ const Input: React.FC<Props> = ({
               style={[
                 styles.textInput,
                 {
-                  color: theme.primaryDefault,
+                  color: colors.primaryDefault,
                   minHeight:
                     Platform.OS === 'ios' && multiline
                       ? StyleConstants.Font.LineHeight.M * 5
@@ -149,14 +149,14 @@ const Input: React.FC<Props> = ({
         </EmojisContext.Consumer>
         {title ? (
           <Animated.Text
-            style={[styles.title, animateTitle, { color: theme.secondary }]}
+            style={[styles.title, animateTitle, { color: colors.secondary }]}
           >
             {title}
           </Animated.Text>
         ) : null}
         <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
           {options?.maxLength && value?.length ? (
-            <Text style={[styles.maxLength, { color: theme.secondary }]}>
+            <Text style={[styles.maxLength, { color: colors.secondary }]}>
               {value?.length} / {options.maxLength}
             </Text>
           ) : null}

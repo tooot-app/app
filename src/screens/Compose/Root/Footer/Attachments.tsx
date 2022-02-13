@@ -39,7 +39,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { theme } = useTheme()
+  const { colors, mode } = useTheme()
   const navigation = useNavigation<any>()
 
   const flatListRef = useRef<FlatList>(null)
@@ -135,8 +135,8 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               style={[
                 styles.duration,
                 {
-                  color: theme.backgroundDefault,
-                  backgroundColor: theme.backgroundOverlayInvert
+                  color: colors.backgroundDefault,
+                  backgroundColor: colors.backgroundOverlayInvert
                 }
               ]}
             >
@@ -147,12 +147,12 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             <View
               style={[
                 styles.uploading,
-                { backgroundColor: theme.backgroundOverlayInvert }
+                { backgroundColor: colors.backgroundOverlayInvert }
               ]}
             >
               <Circle
                 size={StyleConstants.Font.Size.L}
-                color={theme.primaryOverlay}
+                color={colors.primaryOverlay}
               />
             </View>
           ) : (
@@ -213,7 +213,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           styles.container,
           {
             width: DEFAULT_HEIGHT,
-            backgroundColor: theme.backgroundOverlayInvert
+            backgroundColor: colors.backgroundOverlayInvert
           }
         ]}
         onPress={async () => {
@@ -255,9 +255,9 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         <Icon
           name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
           size={StyleConstants.Font.Size.L}
-          color={theme.primaryDefault}
+          color={colors.primaryDefault}
         />
-        <Text style={[styles.sensitiveText, { color: theme.primaryDefault }]}>
+        <Text style={[styles.sensitiveText, { color: colors.primaryDefault }]}>
           {t('content.root.footer.attachments.sensitive')}
         </Text>
       </Pressable>

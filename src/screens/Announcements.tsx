@@ -36,7 +36,7 @@ const ScreenAnnouncements: React.FC<
   navigation
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
   const [index, setIndex] = useState(0)
   const { t } = useTranslation('screenAnnouncements')
 
@@ -73,12 +73,12 @@ const ScreenAnnouncements: React.FC<
           style={[
             styles.announcement,
             {
-              borderColor: theme.primaryDefault,
-              backgroundColor: theme.backgroundDefault
+              borderColor: colors.primaryDefault,
+              backgroundColor: colors.backgroundDefault
             }
           ]}
         >
-          <Text style={[styles.published, { color: theme.secondary }]}>
+          <Text style={[styles.published, { color: colors.secondary }]}>
             <Trans
               i18nKey='screenAnnouncements:content.published'
               components={[<RelativeTime date={item.published_at} />]}
@@ -103,11 +103,11 @@ const ScreenAnnouncements: React.FC<
                     styles.reaction,
                     {
                       borderColor: reaction.me
-                        ? theme.disabled
-                        : theme.primaryDefault,
+                        ? colors.disabled
+                        : colors.primaryDefault,
                       backgroundColor: reaction.me
-                        ? theme.disabled
-                        : theme.backgroundDefault
+                        ? colors.disabled
+                        : colors.backgroundDefault
                     }
                   ]}
                   onPress={() => {
@@ -138,7 +138,7 @@ const ScreenAnnouncements: React.FC<
                     <Text
                       style={[
                         styles.reactionCount,
-                        { color: theme.primaryDefault }
+                        { color: colors.primaryDefault }
                       ]}
                     >
                       {reaction.count}
@@ -147,13 +147,13 @@ const ScreenAnnouncements: React.FC<
                 </Pressable>
               ))}
               {/* <Pressable
-                style={[styles.reaction, { borderColor: theme.primaryDefault }]}
+                style={[styles.reaction, { borderColor: colors.primaryDefault }]}
                 onPress={() => invisibleTextInputRef.current?.focus()}
               >
                 <Icon
                   name='Plus'
                   size={StyleConstants.Font.Size.M}
-                  color={theme.primaryDefault}
+                  color={colors.primaryDefault}
                 />
               </Pressable> */}
             </View>
@@ -177,7 +177,7 @@ const ScreenAnnouncements: React.FC<
         </View>
       </View>
     ),
-    [theme]
+    [mode]
   )
 
   const onMomentumScrollEnd = useCallback(
@@ -201,7 +201,7 @@ const ScreenAnnouncements: React.FC<
           alignItems: 'center'
         }}
       >
-        <Circle size={StyleConstants.Font.Size.L} color={theme.secondary} />
+        <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
       </View>
     )
   }, [])
@@ -211,7 +211,7 @@ const ScreenAnnouncements: React.FC<
       blurType={mode}
       blurAmount={20}
       style={styles.base}
-      reducedTransparencyFallbackColor={theme.backgroundDefault}
+      reducedTransparencyFallbackColor={colors.backgroundDefault}
     >
       <SafeAreaView style={styles.base}>
         <FlatList
@@ -232,9 +232,9 @@ const ScreenAnnouncements: React.FC<
                   style={[
                     styles.indicator,
                     {
-                      borderColor: theme.primaryDefault,
+                      borderColor: colors.primaryDefault,
                       backgroundColor:
-                        i === index ? theme.primaryDefault : undefined,
+                        i === index ? colors.primaryDefault : undefined,
                       marginLeft:
                         i === query.data.length ? 0 : StyleConstants.Spacing.S
                     }
@@ -248,7 +248,7 @@ const ScreenAnnouncements: React.FC<
     </BlurView>
   ) : (
     <SafeAreaView
-      style={[styles.base, { backgroundColor: theme.backgroundDefault }]}
+      style={[styles.base, { backgroundColor: colors.backgroundDefault }]}
     >
       <FlatList
         horizontal
@@ -268,9 +268,9 @@ const ScreenAnnouncements: React.FC<
                 style={[
                   styles.indicator,
                   {
-                    borderColor: theme.primaryDefault,
+                    borderColor: colors.primaryDefault,
                     backgroundColor:
-                      i === index ? theme.primaryDefault : undefined,
+                      i === index ? colors.primaryDefault : undefined,
                     marginLeft:
                       i === query.data.length ? 0 : StyleConstants.Spacing.S
                   }

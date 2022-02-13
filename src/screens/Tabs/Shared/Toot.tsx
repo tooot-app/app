@@ -35,30 +35,32 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           ? // @ts-ignore
             result.data.pages.flatMap(d => [...d.body])
           : []
-        setItemsLength(flattenData.length)
         // Auto go back when toot page is empty
         if (flattenData.length === 0) {
           navigation.goBack()
+          return
         }
+        setItemsLength(flattenData.length)
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = flattenData.findIndex(({ id }) => id === toot.id)
+          if (pointer === -1) return
+          Sentry.Native.setContext('Scroll to Index', {
+            type: 'original',
+            index: pointer,
+            itemsLength: flattenData.length,
+            id: toot.id,
+            flattenData: flattenData.map(({ id }) => id)
+          })
           try {
-            pointer < flattenData.length &&
-              setTimeout(() => {
-                flRef.current?.scrollToIndex({
-                  index: pointer,
-                  viewOffset: 100
-                })
-              }, 500)
+            setTimeout(() => {
+              flRef.current?.scrollToIndex({
+                index: pointer,
+                viewOffset: 100
+              })
+            }, 500)
           } catch (err) {
             if (Math.random() < 0.1) {
-              Sentry.Native.setContext('Scroll to Index', {
-                type: 'original',
-                index: pointer,
-                itemsLength: flattenData.length,
-                flattenData
-              })
               Sentry.Native.captureException(err)
             }
           }
@@ -72,6 +74,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     error => {
       const offset = error.averageItemLength * error.index
       flRef.current?.scrollToOffset({ offset })
+      Sentry.Native.setContext('Scroll to Index', {
+        type: 'onScrollToIndexFailed',
+        index: error.index,
+        itemsLength,
+        id: toot.id
+      })
       try {
         error.index < itemsLength &&
           setTimeout(
@@ -84,11 +92,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           )
       } catch (err) {
         if (Math.random() < 0.1) {
-          Sentry.Native.setContext('Scroll to Index', {
-            type: 'onScrollToIndexFailed',
-            index: error.index,
-            itemsLength
-          })
           Sentry.Native.captureException(err)
         }
       }

@@ -1,3 +1,4 @@
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
@@ -23,7 +24,7 @@ export interface Props {
   accessibilityHint?: AccessibilityProps['accessibilityHint']
 
   hidden?: boolean
-  uri: { preview?: string; original?: string; remote?: string }
+  uri: { preview?: string; original?: string; remote?: string; static?: string }
   blurhash?: string
   dimension?: { width: number; height: number }
   onPress?: () => void
@@ -51,7 +52,8 @@ const GracefullyImage = React.memo(
     imageStyle,
     setImageDimensions
   }: Props) => {
-    const { theme } = useTheme()
+    const { reduceMotionEnabled } = useAccessibility()
+    const { colors } = useTheme()
     const [originalFailed, setOriginalFailed] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -59,7 +61,9 @@ const GracefullyImage = React.memo(
       if (originalFailed) {
         return { uri: uri.remote || undefined }
       } else {
-        return { uri: uri.original }
+        return {
+          uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
+        }
       }
     }, [originalFailed])
 
@@ -85,7 +89,7 @@ const GracefullyImage = React.memo(
             source={{ uri: uri.preview }}
             style={[
               styles.placeholder,
-              { backgroundColor: theme.shimmerDefault }
+              { backgroundColor: colors.shimmerDefault }
             ]}
           />
         ) : null,
@@ -118,7 +122,7 @@ const GracefullyImage = React.memo(
             <View
               style={[
                 styles.placeholder,
-                { backgroundColor: theme.shimmerDefault }
+                { backgroundColor: colors.shimmerDefault }
               ]}
             />
           )
@@ -135,7 +139,7 @@ const GracefullyImage = React.memo(
           : { accessibilityRole: 'image' })}
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={accessibilityHint}
-        style={[style, dimension, { backgroundColor: theme.shimmerDefault }]}
+        style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
         {...(onPress
           ? hidden
             ? { disabled: true }

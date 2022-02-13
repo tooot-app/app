@@ -18,7 +18,7 @@ const AccountInformationCreated = React.memo(
     }
 
     const { i18n } = useTranslation()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const { t } = useTranslation('screenTabs')
 
     if (account) {
@@ -29,12 +29,12 @@ const AccountInformationCreated = React.memo(
           <Icon
             name='Calendar'
             size={StyleConstants.Font.Size.S}
-            color={theme.secondary}
+            color={colors.secondary}
             style={styles.icon}
           />
           <Text
             style={{
-              color: theme.secondary,
+              color: colors.secondary,
               ...StyleConstants.FontStyle.S
             }}
           >
@@ -56,7 +56,7 @@ const AccountInformationCreated = React.memo(
         <PlaceholderLine
           width={StyleConstants.Font.Size.S * 4}
           height={StyleConstants.Font.LineHeight.S}
-          color={theme.shimmerDefault}
+          color={colors.shimmerDefault}
           noMargin
           style={styles.base}
         />

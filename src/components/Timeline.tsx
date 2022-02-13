@@ -48,7 +48,7 @@ const Timeline: React.FC<Props> = ({
   lookback,
   customProps
 }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   const {
     data,
@@ -118,8 +118,8 @@ const Timeline: React.FC<Props> = ({
       refreshControl: (
         <RefreshControl
           enabled
-          colors={[theme.primaryDefault]}
-          progressBackgroundColor={theme.backgroundDefault}
+          colors={[colors.primaryDefault]}
+          progressBackgroundColor={colors.backgroundDefault}
           refreshing={isFetching || isLoading}
           onRefresh={() => refetch()}
         />

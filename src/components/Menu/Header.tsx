@@ -8,11 +8,11 @@ export interface Props {
 }
 
 const MenuHeader: React.FC<Props> = ({ heading }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
 
   return (
     <View style={styles.base}>
-      <Text style={[styles.text, { color: theme.secondary }]}>{heading}</Text>
+      <Text style={[styles.text, { color: colors.secondary }]}>{heading}</Text>
     </View>
   )
 }

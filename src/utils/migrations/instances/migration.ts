@@ -2,15 +2,16 @@ import { InstanceV3 } from './v3'
 import { InstanceV4 } from './v4'
 import { InstanceV5 } from './v5'
 import { InstanceV6 } from './v6'
+import { InstanceV7 } from './v7'
+import { InstanceV8 } from './v8'
 
 const instancesMigration = {
-  4: (state: InstanceV3) => {
+  4: (state: InstanceV3): InstanceV4 => {
     return {
       instances: state.local.instances.map((instance, index) => {
-        // @ts-ignore
-        delete instance.notification
+        const { notification, ...rest } = instance
         return {
-          ...instance,
+          ...rest,
           active: state.local.activeIndex === index,
           push: {
             global: { loading: false, value: false },
@@ -28,35 +29,42 @@ const instancesMigration = {
       })
     }
   },
-  5: (state: InstanceV4) => {
+  5: (state: InstanceV4): InstanceV5 => {
     // @ts-ignore
     if (state.instances.length && !state.instances[0].notifications_filter) {
       return {
+        // @ts-ignore
         instances: state.instances.map(instance => {
-          // @ts-ignore
-          instance.notifications_filter = {
-            follow: true,
-            favourite: true,
-            reblog: true,
-            mention: true,
-            poll: true,
-            follow_request: true
+          return {
+            ...instance,
+            notifications_filter: {
+              follow: true,
+              favourite: true,
+              reblog: true,
+              mention: true,
+              poll: true,
+              follow_request: true
+            }
           }
-          return instance
         })
       }
     } else {
+      // @ts-ignore
       return state
     }
   },
-  6: (state: InstanceV5) => {
+  6: (state: InstanceV5): InstanceV6 => {
     return {
+      // @ts-ignore
       instances: state.instances.map(instance => {
-        return { ...instance, configuration: undefined }
+        return {
+          ...instance,
+          configuration: undefined
+        }
       })
     }
   },
-  7: (state: InstanceV6) => {
+  7: (state: InstanceV6): InstanceV7 => {
     return {
       instances: state.instances.map(instance => {
         return {
@@ -66,6 +74,16 @@ const instancesMigration = {
             lists: { shown: false },
             announcements: { shown: false, unread: 0 }
           }
+        }
+      })
+    }
+  },
+  8: (state: InstanceV7): InstanceV8 => {
+    return {
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          frequentEmojis: []
         }
       })
     }

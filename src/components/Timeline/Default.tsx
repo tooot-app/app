@@ -42,11 +42,10 @@ const TimelineDefault: React.FC<Props> = ({
   disableDetails = false,
   disableOnPress = false
 }) => {
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const navigation = useNavigation<
-    StackNavigationProp<Nav.TabLocalStackParamList>
-  >()
+  const navigation =
+    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
 
   const actualStatus = item.reblog ? item.reblog : item
 
@@ -78,7 +77,7 @@ const TimelineDefault: React.FC<Props> = ({
       style={[
         styles.statusView,
         {
-          backgroundColor: theme.backgroundDefault,
+          backgroundColor: colors.backgroundDefault,
           paddingBottom:
             disableDetails && disableOnPress
               ? StyleConstants.Spacing.Global.PagePadding

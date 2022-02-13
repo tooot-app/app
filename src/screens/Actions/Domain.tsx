@@ -26,13 +26,13 @@ const ActionsDomain: React.FC<Props> = ({
   domain,
   dismiss
 }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     onSettled: () => {
       displayMessage({
-        mode,
+        theme,
         type: 'success',
         message: t('common:message.success.message', {
           function: t(`shared.header.actions.domain.block.function`)

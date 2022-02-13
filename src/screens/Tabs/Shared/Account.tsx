@@ -18,16 +18,16 @@ import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
 
-const TabSharedAccount: React.FC<TabSharedStackScreenProps<
-  'Tab-Shared-Account'
->> = ({
+const TabSharedAccount: React.FC<
+  TabSharedStackScreenProps<'Tab-Shared-Account'>
+> = ({
   route: {
     params: { account }
   },
   navigation
 }) => {
   const { t, i18n } = useTranslation('screenTabs')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
 
   const { data } = useAccountQuery({ id: account.id })
 
@@ -83,7 +83,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<
   const ListHeaderComponent = useMemo(() => {
     return (
       <>
-        <View style={[styles.header, { borderBottomColor: theme.border }]}>
+        <View style={[styles.header, { borderBottomColor: colors.border }]}>
           <AccountHeader account={data} />
           <AccountInformation account={data} />
           {fetchedTimeline.current ? (

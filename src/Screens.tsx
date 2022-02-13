@@ -14,6 +14,7 @@ import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
+import { checkEmojis } from '@utils/slices/instances/checkEmojis'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
@@ -26,7 +27,6 @@ import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 
@@ -40,7 +40,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('screens')
   const dispatch = useDispatch()
   const instanceActive = useSelector(getInstanceActive)
-  const { mode, theme } = useTheme()
+  const { colors, mode, theme } = useTheme()
   enum barStyle {
     light = 'dark-content',
     dark = 'light-content'
@@ -53,7 +53,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     getInstances,
     (prev, next) => prev.length === next.length
   )
-  const queryClient = useQueryClient()
   pushUseConnect({ t, instances })
   pushUseReceive({ instances })
   pushUseRespond({ instances })
@@ -77,8 +76,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           message: t('localCorrupt.message'),
           description: localCorrupt.length ? localCorrupt : undefined,
           type: 'error',
-          mode
+          theme
         })
+        // @ts-ignore
         navigationRef.navigate('Screen-Tabs', {
           screen: 'Tab-Me'
         })
@@ -93,6 +93,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       dispatch(updateConfiguration())
       dispatch(updateFilters())
       dispatch(updateAccountPreferences())
+      dispatch(checkEmojis())
     }
   }, [instanceActive])
 
@@ -164,11 +165,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     <>
       <StatusBar
         barStyle={barStyle[mode]}
-        backgroundColor={theme.backgroundDefault}
+        backgroundColor={colors.backgroundDefault}
       />
       <NavigationContainer
         ref={navigationRef}
-        theme={themes[mode]}
+        theme={themes[theme]}
         onReady={navigationContainerOnReady}
         onStateChange={navigationContainerOnStateChange}
       >

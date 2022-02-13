@@ -16,19 +16,19 @@ const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { theme } = useTheme()
+  const { colors, mode } = useTheme()
   const instanceConfigurationStatusMaxAttachments = useSelector(
     getInstanceConfigurationStatusMaxAttachments,
     () => true
   )
 
   const attachmentColor = useMemo(() => {
-    if (composeState.poll.active) return theme.disabled
+    if (composeState.poll.active) return colors.disabled
 
     if (composeState.attachments.uploads.length) {
-      return theme.primaryDefault
+      return colors.primaryDefault
     } else {
-      return theme.secondary
+      return colors.secondary
     }
   }, [composeState.poll.active, composeState.attachments.uploads])
   const attachmentOnPress = useCallback(async () => {
@@ -49,12 +49,12 @@ const ComposeActions: React.FC = () => {
   }, [composeState.poll.active, composeState.attachments.uploads])
 
   const pollColor = useMemo(() => {
-    if (composeState.attachments.uploads.length) return theme.disabled
+    if (composeState.attachments.uploads.length) return colors.disabled
 
     if (composeState.poll.active) {
-      return theme.primaryDefault
+      return colors.primaryDefault
     } else {
-      return theme.secondary
+      return colors.secondary
     }
   }, [composeState.poll.active, composeState.attachments.uploads])
   const pollOnPress = useCallback(() => {
@@ -97,7 +97,8 @@ const ComposeActions: React.FC = () => {
             t('content.root.actions.visibility.options.direct'),
             t('content.root.actions.visibility.options.cancel')
           ],
-          cancelButtonIndex: 4
+          cancelButtonIndex: 4,
+          userInterfaceStyle: mode
         },
         buttonIndex => {
           switch (buttonIndex) {
@@ -150,12 +151,12 @@ const ComposeActions: React.FC = () => {
   }, [composeState.spoiler.active, composeState.textInputFocus])
 
   const emojiColor = useMemo(() => {
-    if (!composeState.emoji.emojis) return theme.disabled
+    if (!composeState.emoji.emojis) return colors.disabled
 
     if (composeState.emoji.active) {
-      return theme.primaryDefault
+      return colors.primaryDefault
     } else {
-      return theme.secondary
+      return colors.secondary
     }
   }, [composeState.emoji.active, composeState.emoji.emojis])
   const emojiOnPress = useCallback(() => {
@@ -177,8 +178,8 @@ const ComposeActions: React.FC = () => {
       style={[
         styles.additions,
         {
-          backgroundColor: theme.backgroundDefault,
-          borderTopColor: theme.border
+          backgroundColor: colors.backgroundDefault,
+          borderTopColor: colors.border
         }
       ]}
     >
@@ -223,7 +224,7 @@ const ComposeActions: React.FC = () => {
             name={visibilityIcon}
             size={24}
             color={
-              composeState.visibilityLock ? theme.disabled : theme.secondary
+              composeState.visibilityLock ? colors.disabled : colors.secondary
             }
           />
         }
@@ -242,8 +243,8 @@ const ComposeActions: React.FC = () => {
             size={24}
             color={
               composeState.spoiler.active
-                ? theme.primaryDefault
-                : theme.secondary
+                ? colors.primaryDefault
+                : colors.secondary
             }
           />
         }

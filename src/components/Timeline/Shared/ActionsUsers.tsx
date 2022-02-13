@@ -19,10 +19,9 @@ const TimelineActionsUsers = React.memo(
     }
 
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
-    const navigation = useNavigation<
-      StackNavigationProp<Nav.TabLocalStackParamList>
-    >()
+    const { colors } = useTheme()
+    const navigation =
+      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
 
     return (
       <View style={styles.base}>
@@ -38,7 +37,7 @@ const TimelineActionsUsers = React.memo(
               'shared.actionsUsers.reblogged_by.accessibilityHint'
             )}
             accessibilityRole='button'
-            style={[styles.text, { color: theme.blue }]}
+            style={[styles.text, { color: colors.blue }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
                 count: status.reblogs_count
@@ -68,7 +67,7 @@ const TimelineActionsUsers = React.memo(
               'shared.actionsUsers.favourited_by.accessibilityHint'
             )}
             accessibilityRole='button'
-            style={[styles.text, { color: theme.blue }]}
+            style={[styles.text, { color: colors.blue }]}
             onPress={() => {
               analytics('timeline_shared_actionsusers_press_boosted', {
                 count: status.favourites_count

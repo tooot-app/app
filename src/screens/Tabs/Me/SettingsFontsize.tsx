@@ -35,7 +35,7 @@ export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
 const TabMeSettingsFontsize: React.FC<
   TabMeStackScreenProps<'Tab-Me-Settings-Fontsize'>
 > = () => {
-  const { mode, theme } = useTheme()
+  const { colors, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
   const dispatch = useDispatch()
@@ -90,9 +90,11 @@ const TabMeSettingsFontsize: React.FC<
                     ? StyleConstants.Font.Weight.Bold
                     : undefined,
                 color:
-                  initialSize === size ? theme.primaryDefault : theme.secondary,
+                  initialSize === size
+                    ? colors.primaryDefault
+                    : colors.secondary,
                 borderWidth: StyleSheet.hairlineWidth,
-                borderColor: theme.border
+                borderColor: colors.border
               }
             ]}
           >
@@ -101,11 +103,11 @@ const TabMeSettingsFontsize: React.FC<
         ))}
       </>
     )
-  }, [mode, initialSize])
+  }, [theme, initialSize])
 
   return (
     <ScrollView scrollEnabled={false}>
-      <Text style={[styles.header, { color: theme.primaryDefault }]}>
+      <Text style={[styles.header, { color: colors.primaryDefault }]}>
         {t('me.fontSize.showcase')}
       </Text>
       <View>
@@ -124,7 +126,7 @@ const TabMeSettingsFontsize: React.FC<
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
         />
       </View>
-      <Text style={[styles.header, { color: theme.primaryDefault }]}>
+      <Text style={[styles.header, { color: colors.primaryDefault }]}>
         {t('me.fontSize.availableSizes')}
       </Text>
       <View style={styles.sizesDemo}>{sizesDemo}</View>

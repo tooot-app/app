@@ -27,7 +27,7 @@
       "follow_request": "{{name}} yêu cầu theo dõi bạn",
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
-        "default": "{{name}} đã chia sẻ",
+        "default": "{{name}} chia sẻ",
         "notification": "{{name}} chia sẻ tút của bạn"
       }
     },
@@ -62,7 +62,7 @@
     },
     "attachment": {
       "sensitive": {
-        "button": "Hiện nội dung nhạy cảm"
+        "button": "NSFW"
       },
       "unsupported": {
         "text": "Không hỗ trợ định dạng",
@@ -74,14 +74,16 @@
       "accessibilityHint": "Đến trang cá nhân {{name}}"
     },
     "content": {
-      "expandHint": "nội dung bị ẩn"
+      "expandHint": "nội dung ẩn"
     },
     "filtered": "Đã lọc",
     "fullConversation": "Xem thêm",
     "translate": {
       "default": "Dịch",
       "succeed": "Dịch bằng {{provider}} từ {{source}}",
-      "failed": "Không thể dịch!"
+      "failed": "Không thể dịch!",
+      "source_not_supported": "không hỗ trợ ngôn ngữ tút",
+      "target_not_supported": "Ngôn ngữ đích không hỗ trợ"
     },
     "header": {
       "shared": {
@@ -93,7 +95,7 @@
             "accessibilityHint": "Tài khoản"
           }
         },
-        "application": "Đăng bằng {{application}}",
+        "application": "via {{application}}",
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
@@ -107,7 +109,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "Với",
+        "withAccounts": "Với ",
         "delete": {
           "function": "Xóa nhắn riêng"
         }
@@ -146,16 +148,16 @@
         },
         "share": {
           "status": {
-            "heading": "Tút",
+            "heading": "Chia sẻ",
             "button": "Chia sẻ URL tút"
           },
           "account": {
-            "heading": "Chia sẻ người dùng",
+            "heading": "Chia sẻ",
             "button": "Chia sẻ URL người dùng này"
           }
         },
         "status": {
-          "heading": "Về tút",
+          "heading": "Đối với tút",
           "delete": {
             "function": "Xóa tút",
             "button": "Xóa tút này"

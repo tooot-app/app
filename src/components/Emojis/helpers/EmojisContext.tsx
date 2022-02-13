@@ -3,7 +3,10 @@ import { createContext, Dispatch } from 'react'
 export type EmojisState = {
   enabled: boolean
   active: boolean
-  emojis: { title: string; data: Mastodon.Emoji[][] }[]
+  emojis: {
+    title: string
+    data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+  }[]
   shortcode: Mastodon.Emoji['shortcode'] | null
 }
 

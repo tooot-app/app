@@ -24,7 +24,7 @@ const ActionsAccount: React.FC<Props> = ({
   account,
   dismiss
 }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
@@ -32,7 +32,7 @@ const ActionsAccount: React.FC<Props> = ({
     onSuccess: (_, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
-        mode,
+        theme,
         type: 'success',
         message: t('common:message.success.message', {
           function: t(
@@ -47,7 +47,7 @@ const ActionsAccount: React.FC<Props> = ({
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
-        mode,
+        theme,
         type: 'error',
         message: t('common:message.error.message', {
           function: t(

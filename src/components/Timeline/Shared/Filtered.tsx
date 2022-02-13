@@ -10,15 +10,15 @@ import { Text, View } from 'react-native'
 
 const TimelineFiltered = React.memo(
   () => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
     return (
-      <View style={{ backgroundColor: theme.backgroundDefault }}>
+      <View style={{ backgroundColor: colors.backgroundDefault }}>
         <Text
           style={{
             ...StyleConstants.FontStyle.S,
-            color: theme.secondary,
+            color: colors.secondary,
             textAlign: 'center',
             paddingVertical: StyleConstants.Spacing.S,
             paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S
@@ -46,7 +46,7 @@ export const shouldFilter = ({
   let shouldFilter = false
   if (!ownAccount) {
     const parser = new htmlparser2.Parser({
-      ontext (text: string) {
+      ontext: (text: string) => {
         const checkFilter = (filter: Mastodon.Filter) => {
           const escapedPhrase = filter.phrase.replace(
             /[.*+?^${}()|[\]\\]/g,
@@ -54,7 +54,7 @@ export const shouldFilter = ({
           ) // $& means the whole matched string
           switch (filter.whole_word) {
             case true:
-              if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
+              if (new RegExp('\\B' + escapedPhrase + '\\B').test(text)) {
                 shouldFilter = true
               }
               break

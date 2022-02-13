@@ -21,7 +21,7 @@ const ComposePoll: React.FC = () => {
     composeDispatch
   } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { mode, theme } = useTheme()
+  const { colors, mode } = useTheme()
 
   const instanceConfigurationPoll = useSelector(
     getInstanceConfigurationPoll,
@@ -39,7 +39,7 @@ const ComposePoll: React.FC = () => {
   }, [])
 
   return (
-    <View style={[styles.base, { borderColor: theme.border }]}>
+    <View style={[styles.base, { borderColor: colors.border }]}>
       <View style={styles.options}>
         {[...Array(total)].map((e, i) => {
           const restOptions = Object.keys(options).filter(
@@ -57,7 +57,7 @@ const ComposePoll: React.FC = () => {
               <Icon
                 name={multiple ? 'Square' : 'Circle'}
                 size={StyleConstants.Font.Size.L}
-                color={theme.secondary}
+                color={colors.secondary}
               />
               <TextInput
                 accessibilityLabel={t(
@@ -69,8 +69,8 @@ const ComposePoll: React.FC = () => {
                 style={[
                   styles.textInput,
                   {
-                    borderColor: theme.border,
-                    color: hasConflict ? theme.red : theme.primaryDefault
+                    borderColor: colors.border,
+                    color: hasConflict ? colors.red : colors.primaryDefault
                   }
                 ]}
                 placeholder={
@@ -78,7 +78,7 @@ const ComposePoll: React.FC = () => {
                     ? t('content.root.footer.poll.option.placeholder.multiple')
                     : t('content.root.footer.poll.option.placeholder.single')
                 }
-                placeholderTextColor={theme.disabled}
+                placeholderTextColor={colors.disabled}
                 maxLength={MAX_CHARS_PER_OPTION}
                 // @ts-ignore
                 value={options[i]}
@@ -168,7 +168,8 @@ const ComposePoll: React.FC = () => {
                   t('content.root.footer.poll.multiple.options.multiple'),
                   t('content.root.footer.poll.multiple.options.cancel')
                 ],
-                cancelButtonIndex: 2
+                cancelButtonIndex: 2,
+                userInterfaceStyle: mode
               },
               index => {
                 if (index && index < 2) {
@@ -211,7 +212,8 @@ const ComposePoll: React.FC = () => {
                   ),
                   t('content.root.footer.poll.expiration.options.cancel')
                 ],
-                cancelButtonIndex: expirations.length
+                cancelButtonIndex: expirations.length,
+                userInterfaceStyle: mode
               },
               index => {
                 if (index && index < expirations.length) {

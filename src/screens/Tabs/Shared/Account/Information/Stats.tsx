@@ -15,17 +15,16 @@ export interface Props {
 }
 
 const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
-  const navigation = useNavigation<
-    StackNavigationProp<TabLocalStackParamList>
-  >()
-  const { theme } = useTheme()
+  const navigation =
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   return (
     <View style={[styles.stats, { flexDirection: 'row' }]}>
       {account ? (
         <Text
-          style={[styles.stat, { color: theme.primaryDefault }]}
+          style={[styles.stat, { color: colors.primaryDefault }]}
           children={t('shared.account.summary.statuses_count', {
             count: account.statuses_count || 0
           })}
@@ -40,7 +39,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <PlaceholderLine
           width={StyleConstants.Font.Size.S * 1.25}
           height={StyleConstants.Font.LineHeight.S}
-          color={theme.shimmerDefault}
+          color={colors.shimmerDefault}
           noMargin
           style={{ borderRadius: 0 }}
         />
@@ -49,7 +48,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <Text
           style={[
             styles.stat,
-            { color: theme.primaryDefault, textAlign: 'right' }
+            { color: colors.primaryDefault, textAlign: 'right' }
           ]}
           children={t('shared.account.summary.following_count', {
             count: account.following_count
@@ -70,7 +69,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <PlaceholderLine
           width={StyleConstants.Font.Size.S * 1.25}
           height={StyleConstants.Font.LineHeight.S}
-          color={theme.shimmerDefault}
+          color={colors.shimmerDefault}
           noMargin
           style={{ borderRadius: 0 }}
         />
@@ -79,7 +78,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <Text
           style={[
             styles.stat,
-            { color: theme.primaryDefault, textAlign: 'center' }
+            { color: colors.primaryDefault, textAlign: 'center' }
           ]}
           children={t('shared.account.summary.followers_count', {
             count: account.followers_count
@@ -100,7 +99,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         <PlaceholderLine
           width={StyleConstants.Font.Size.S * 1.25}
           height={StyleConstants.Font.LineHeight.S}
-          color={theme.shimmerDefault}
+          color={colors.shimmerDefault}
           noMargin
           style={{ borderRadius: 0 }}
         />

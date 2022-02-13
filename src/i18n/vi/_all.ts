@@ -8,6 +8,7 @@ export default {
   screenImageViewer: require('./screens/imageViewer'),
   screenTabs: require('./screens/tabs'),
 
+  componentEmojis: require('./components/emojis'),
   componentInstance: require('./components/instance'),
   componentMediaSelector: require('./components/mediaSelector'),
   componentParse: require('./components/parse'),

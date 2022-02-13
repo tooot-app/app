@@ -30,7 +30,11 @@ import FastImage from 'react-native-fast-image'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { ComposeState } from './utils/types'
 import { useSelector } from 'react-redux'
-import { getInstanceConfigurationStatusCharsURL } from '@utils/slices/instancesSlice'
+import {
+  getInstanceConfigurationStatusCharsURL,
+  getInstanceFrequentEmojis
+} from '@utils/slices/instancesSlice'
+import { useTranslation } from 'react-i18next'
 
 const prefetchEmojis = (
   sortedEmojis: NonNullable<ComposeState['emoji']['emojis']>,
@@ -61,7 +65,7 @@ export let instanceConfigurationStatusCharsURL = 23
 const ComposeRoot = React.memo(
   () => {
     const { reduceMotionEnabled } = useAccessibility()
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     instanceConfigurationStatusCharsURL = useSelector(
       getInstanceConfigurationStatusCharsURL,
@@ -99,15 +103,29 @@ const ComposeRoot = React.memo(
       }
     }, [composeState.tag])
 
+    const { t } = useTranslation()
     const { data: emojisData } = useEmojisQuery({})
+    const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
     useEffect(() => {
       if (emojisData && emojisData.length) {
-        let sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[] = []
+        const sortedEmojis: {
+          title: string
+          data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+        }[] = []
         forEach(
           groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
           (value, key) =>
             sortedEmojis.push({ title: key, data: chunk(value, 5) })
         )
+        if (frequentEmojis.length) {
+          sortedEmojis.unshift({
+            title: t('componentEmojis:frequentUsed'),
+            data: chunk(
+              frequentEmojis.map(e => e.emoji),
+              5
+            )
+          })
+        }
         composeDispatch({
           type: 'emoji',
           payload: { ...composeState.emoji, emojis: sortedEmojis }
@@ -122,7 +140,7 @@ const ComposeRoot = React.memo(
           <View key='listEmpty' style={styles.loading}>
             <Circle
               size={StyleConstants.Font.Size.M * 1.25}
-              color={theme.secondary}
+              color={colors.secondary}
             />
           </View>
         )

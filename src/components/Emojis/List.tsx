@@ -1,4 +1,5 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { countInstanceEmoji } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -14,20 +15,22 @@ import {
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useDispatch } from 'react-redux'
 import validUrl from 'valid-url'
 import EmojisContext from './helpers/EmojisContext'
 
 const EmojisList = React.memo(
   () => {
+    const dispatch = useDispatch()
     const { reduceMotionEnabled } = useAccessibility()
     const { t } = useTranslation()
 
     const { emojisState, emojisDispatch } = useContext(EmojisContext)
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const listHeader = useCallback(
       ({ section: { title } }) => (
-        <Text style={[styles.group, { color: theme.secondary }]}>{title}</Text>
+        <Text style={[styles.group, { color: colors.secondary }]}>{title}</Text>
       ),
       []
     )
@@ -42,12 +45,13 @@ const EmojisList = React.memo(
                 return (
                   <Pressable
                     key={emoji.shortcode}
-                    onPress={() =>
+                    onPress={() => {
                       emojisDispatch({
                         type: 'shortcode',
                         payload: `:${emoji.shortcode}:`
                       })
-                    }
+                      dispatch(countInstanceEmoji(emoji))
+                    }}
                   >
                     <FastImage
                       accessibilityLabel={t(

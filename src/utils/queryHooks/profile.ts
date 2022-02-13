@@ -2,6 +2,7 @@ import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import queryClient from '@helpers/queryClient'
+import { Theme } from '@utils/styles/themes'
 import { AxiosError } from 'axios'
 import i18next from 'i18next'
 import { RefObject } from 'react'
@@ -51,7 +52,7 @@ type MutationVarsProfileBase =
     }
 
 type MutationVarsProfile = MutationVarsProfileBase & {
-  mode: 'light' | 'dark'
+  theme: Theme
   messageRef: RefObject<FlashMessage>
   message: {
     text: string
@@ -133,7 +134,7 @@ const useProfileMutation = () => {
             type: i18next.t(`screenTabs:${variables.message.text}`)
           }),
           ...(err && { description: err.message }),
-          mode: variables.mode,
+          theme: variables.theme,
           type: 'error'
         })
       }
@@ -146,7 +147,7 @@ const useProfileMutation = () => {
           message: i18next.t('screenTabs:me.profile.feedback.succeed', {
             type: i18next.t(`screenTabs:${variables.message.text}`)
           }),
-          mode: variables.mode,
+          theme: variables.theme,
           type: 'success'
         })
       }

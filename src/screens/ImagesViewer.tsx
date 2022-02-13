@@ -35,7 +35,7 @@ const HeaderComponent = React.memo(
     imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls']
   }) => {
     const insets = useSafeAreaInsets()
-    const { mode } = useTheme()
+    const { mode, theme } = useTheme()
     const { t } = useTranslation('screenImageViewer')
     const { showActionSheetWithOptions } = useActionSheet()
 
@@ -48,13 +48,14 @@ const HeaderComponent = React.memo(
             t('content.options.share'),
             t('content.options.cancel')
           ],
-          cancelButtonIndex: 2
+          cancelButtonIndex: 2,
+          userInterfaceStyle: mode
         },
         async buttonIndex => {
           switch (buttonIndex) {
             case 0:
               analytics('imageviewer_more_save_press')
-              saveImage({ messageRef, mode, image: imageUrls[currentIndex] })
+              saveImage({ messageRef, theme, image: imageUrls[currentIndex] })
               break
             case 1:
               analytics('imageviewer_more_share_press')
@@ -117,7 +118,7 @@ const ScreenImagesViewer = ({
     return null
   }
 
-  const { mode } = useTheme()
+  const { theme } = useTheme()
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
@@ -132,7 +133,7 @@ const ScreenImagesViewer = ({
         imageIndex={initialIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
-        onLongPress={image => saveImage({ messageRef, mode, image })}
+        onLongPress={image => saveImage({ messageRef, theme, image })}
         HeaderComponent={() => (
           <HeaderComponent
             messageRef={messageRef}

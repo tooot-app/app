@@ -13,15 +13,15 @@ export interface Props {
 
 const InstanceInfo = React.memo(
   ({ style, header, content, potentialWidth }: Props) => {
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     return (
       <View style={[styles.base, style]} accessible>
-        <Text style={[styles.header, { color: theme.primaryDefault }]}>
+        <Text style={[styles.header, { color: colors.primaryDefault }]}>
           {header}
         </Text>
         {content ? (
-          <Text style={[styles.content, { color: theme.primaryDefault }]}>
+          <Text style={[styles.content, { color: colors.primaryDefault }]}>
             {content}
           </Text>
         ) : (
@@ -32,7 +32,7 @@ const InstanceInfo = React.memo(
                 : undefined
             }
             height={StyleConstants.Font.LineHeight.M}
-            color={theme.shimmerDefault}
+            color={colors.shimmerDefault}
             noMargin
             style={{ borderRadius: 0 }}
           />

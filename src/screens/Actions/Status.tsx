@@ -30,7 +30,7 @@ const ActionsStatus: React.FC<Props> = ({
   status,
   dismiss
 }) => {
-  const { mode } = useTheme()
+  const { theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
@@ -42,7 +42,7 @@ const ActionsStatus: React.FC<Props> = ({
         ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
         : 'delete'
       displayMessage({
-        mode,
+        theme,
         type: 'error',
         message: t('common:message.error.message', {
           function: t(`shared.header.actions.status.${theFunction}.function`)

@@ -26,7 +26,7 @@ const TimelineTranslate = React.memo(
     }
 
     const { t } = useTranslation('componentTimeline')
-    const { theme } = useTheme()
+    const { colors } = useTheme()
 
     const tootLanguage = status.language.slice(0, 2)
 
@@ -82,10 +82,10 @@ const TimelineTranslate = React.memo(
               ...StyleConstants.FontStyle.M,
               color:
                 isLoading || isSuccess
-                  ? theme.secondary
+                  ? colors.secondary
                   : isError
-                  ? theme.red
-                  : theme.blue
+                  ? colors.red
+                  : colors.blue
             }}
           >
             {isError
@@ -109,7 +109,7 @@ const TimelineTranslate = React.memo(
           {isLoading ? (
             <Circle
               size={StyleConstants.Font.Size.M}
-              color={theme.disabled}
+              color={colors.disabled}
               style={{ marginLeft: StyleConstants.Spacing.S }}
             />
           ) : null}

@@ -11,23 +11,38 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
-import { isCandidate, isDevelopment } from '@utils/checkEnvironment'
+import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
   const navigation = useNavigation<any>()
-  const { theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   return (
     <MenuContainer>
+      <MenuRow
+        title={t('me.settings.feedback.heading')}
+        content={
+          <Icon
+            name='MessageSquare'
+            size={StyleConstants.Font.Size.M}
+            color={colors.secondary}
+          />
+        }
+        iconBack='ChevronRight'
+        onPress={() => {
+          analytics('settings_feedback_press')
+          Linking.openURL('https://feedback.tooot.app/feature-requests')
+        }}
+      />
       <MenuRow
         title={t('me.settings.support.heading')}
         content={
           <Icon
             name='Heart'
             size={StyleConstants.Font.Size.M}
-            color={theme.red}
+            color={colors.red}
           />
         }
         iconBack='ChevronRight'
@@ -36,7 +51,7 @@ const SettingsTooot: React.FC = () => {
           Linking.openURL('https://www.buymeacoffee.com/xmflsct')
         }}
       />
-      {isDevelopment || isCandidate ? (
+      {isDevelopment || isRelease ? (
         <MenuRow
           title={t('me.settings.review.heading')}
           content={
@@ -61,7 +76,7 @@ const SettingsTooot: React.FC = () => {
           <Icon
             name='Mail'
             size={StyleConstants.Font.Size.M}
-            color={theme.secondary}
+            color={colors.secondary}
           />
         }
         iconBack='ChevronRight'

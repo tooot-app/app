@@ -3,7 +3,6 @@ import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -20,11 +19,8 @@ const AccountInformationAvatar: React.FC<Props> = ({
   myInfo,
   edit
 }) => {
-  const navigation = useNavigation<
-    StackNavigationProp<TabLocalStackParamList>
-  >()
-  const { reduceMotionEnabled } = useAccessibility()
-
+  const navigation =
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   return (
     <Pressable
       disabled={!myInfo}
@@ -37,11 +33,7 @@ const AccountInformationAvatar: React.FC<Props> = ({
       <GracefullyImage
         key={account?.avatar}
         style={styles.image}
-        uri={{
-          original: reduceMotionEnabled
-            ? account?.avatar_static
-            : account?.avatar
-        }}
+        uri={{ original: account?.avatar, static: account?.avatar_static }}
       />
       {edit ? (
         <View

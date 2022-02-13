@@ -41,14 +41,14 @@ const HeaderRight: React.FC<Props> = ({
   disabled,
   onPress
 }) => {
-  const { theme } = useTheme()
+  const { colors, theme } = useTheme()
 
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
         <Flow
           size={StyleConstants.Font.Size.M * 1.25}
-          color={theme.secondary}
+          color={colors.secondary}
         />
       </View>
     ),
@@ -64,7 +64,7 @@ const HeaderRight: React.FC<Props> = ({
               name={content}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Spacing.M * 1.25}
-              color={disabled ? theme.secondary : theme.primaryDefault}
+              color={disabled ? colors.secondary : colors.primaryDefault}
             />
             {loading && loadingSpinkit}
           </>
@@ -76,7 +76,7 @@ const HeaderRight: React.FC<Props> = ({
               style={[
                 styles.text,
                 {
-                  color: disabled ? theme.secondary : theme.primaryDefault,
+                  color: disabled ? colors.secondary : colors.primaryDefault,
                   opacity: loading ? 0 : 1
                 }
               ]}
@@ -101,7 +101,7 @@ const HeaderRight: React.FC<Props> = ({
         styles.base,
         {
           backgroundColor: background
-            ? theme.backgroundOverlayDefault
+            ? colors.backgroundOverlayDefault
             : undefined,
           minHeight: 44,
           minWidth: 44,

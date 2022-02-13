@@ -232,6 +232,14 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "darkTheme": {
+        "heading": "Dark theme",
+        "options": {
+          "lighter": "Lighter",
+          "darker": "Darker",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
       "browser": {
         "heading": "Opening Link",
         "options": {
@@ -239,6 +247,9 @@
           "external": "Use system browser",
           "cancel": "$t(common:buttons.cancel)"
         }
+      },
+      "feedback": {
+        "heading": "Feature Requests"
       },
       "support": {
         "heading": "Support tooot"
