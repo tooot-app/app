@@ -232,6 +232,14 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "darkTheme": {
+        "heading": "Độ tối",
+        "options": {
+          "lighter": "Thấp",
+          "darker": "Vừa",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
       "browser": {
         "heading": "Mở liên kết",
         "options": {
@@ -282,12 +290,12 @@
       }
     },
     "attachments": {
-      "name": "<0 /><1>'s media</1>"
+      "name": "Bộ sưu tập của <1></1>"
     },
     "search": {
       "header": {
         "prefix": "Tìm kiếm",
-        "placeholder": "về..."
+        "placeholder": "tất cả mọi thứ"
       },
       "empty": {
         "general": "Tìm <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> hoặc <bold>$t(screenTabs:shared.search.sections.statuses)</bold><bold>",
