@@ -232,6 +232,14 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "darkTheme": {
+        "heading": "深色主题",
+        "options": {
+          "lighter": "暗淡",
+          "darker": "暗黑",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
       "browser": {
         "heading": "外部链接",
         "options": {
