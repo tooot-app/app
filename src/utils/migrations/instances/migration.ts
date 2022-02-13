@@ -3,6 +3,7 @@ import { InstanceV4 } from './v4'
 import { InstanceV5 } from './v5'
 import { InstanceV6 } from './v6'
 import { InstanceV7 } from './v7'
+import { InstanceV8 } from './v8'
 
 const instancesMigration = {
   4: (state: InstanceV3): InstanceV4 => {
@@ -73,6 +74,16 @@ const instancesMigration = {
             lists: { shown: false },
             announcements: { shown: false, unread: 0 }
           }
+        }
+      })
+    }
+  },
+  8: (state: InstanceV7): InstanceV8 => {
+    return {
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          frequentEmojis: []
         }
       })
     }

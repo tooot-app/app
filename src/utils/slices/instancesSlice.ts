@@ -4,6 +4,7 @@ import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import addInstance from './instances/add'
+import { checkEmojis } from './instances/checkEmojis'
 import removeInstance from './instances/remove'
 import { updateAccountPreferences } from './instances/updateAccountPreferences'
 import { updateConfiguration } from './instances/updateConfiguration'
@@ -81,6 +82,12 @@ export type Instance = {
     announcements: { shown: boolean; unread: number }
   }
   drafts: ComposeStateDraft[]
+  frequentEmojis: {
+    emoji: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>
+    score: number
+    count: number
+    lastUsed: number
+  }[]
 }
 
 export type InstancesState = {
@@ -184,6 +191,56 @@ const instancesSlice = createSlice({
         ...instances[activeIndex].mePage,
         ...action.payload
       }
+    },
+    countInstanceEmoji: (
+      { instances },
+      action: PayloadAction<Instance['frequentEmojis'][0]['emoji']>
+    ) => {
+      const HALF_LIFE = 60 * 60 * 24 * 7 // 1 week
+      const calculateScore = (emoji: Instance['frequentEmojis'][0]): number => {
+        var seconds = (new Date().getTime() - emoji.lastUsed) / 1000
+        var score = emoji.count + 1
+        var order = Math.log(Math.max(score, 1)) / Math.LN10
+        var sign = score > 0 ? 1 : score === 0 ? 0 : -1
+        return (sign * order + seconds / HALF_LIFE) * 10
+      }
+      const activeIndex = findInstanceActive(instances)
+      const foundEmojiIndex = instances[activeIndex].frequentEmojis?.findIndex(
+        e =>
+          e.emoji.shortcode === action.payload.shortcode &&
+          e.emoji.url === action.payload.url
+      )
+      let newEmojisSort: Instance['frequentEmojis']
+      if (foundEmojiIndex > -1) {
+        newEmojisSort = instances[activeIndex].frequentEmojis
+          .map((e, i) =>
+            i === foundEmojiIndex
+              ? {
+                  ...e,
+                  score: calculateScore(e),
+                  count: e.count + 1,
+                  lastUsed: new Date().getTime()
+                }
+              : e
+          )
+          .sort((a, b) => b.score - a.score)
+      } else {
+        newEmojisSort = instances[activeIndex].frequentEmojis || []
+        const temp = {
+          emoji: action.payload,
+          score: 0,
+          count: 0,
+          lastUsed: new Date().getTime()
+        }
+        newEmojisSort.push({
+          ...temp,
+          score: calculateScore(temp),
+          count: temp.count + 1
+        })
+      }
+      instances[activeIndex].frequentEmojis = newEmojisSort
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 20)
     }
   },
   extraReducers: builder => {
@@ -321,6 +378,22 @@ const instancesSlice = createSlice({
           action.meta.arg.changed
         ].loading = true
       })
+
+      // Check if frequently used emojis still exist
+      .addCase(checkEmojis.fulfilled, (state, action) => {
+        const activeIndex = findInstanceActive(state.instances)
+        state.instances[activeIndex].frequentEmojis = state.instances[
+          activeIndex
+        ].frequentEmojis?.filter(emoji => {
+          return action.payload.find(
+            e =>
+              e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
+          )
+        })
+      })
+      .addCase(checkEmojis.rejected, (_, action) => {
+        console.error(action.error)
+      })
   }
 })
 
@@ -394,6 +467,10 @@ export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
 export const getInstanceDrafts = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.drafts
 
+export const getInstanceFrequentEmojis = ({
+  instances: { instances }
+}: RootState) => instances[findInstanceActive(instances)]?.frequentEmojis
+
 export const {
   updateInstanceActive,
   updateInstanceAccount,
@@ -403,7 +480,8 @@ export const {
   clearPushLoading,
   disableAllPushes,
   updateInstanceTimelineLookback,
-  updateInstanceMePage
+  updateInstanceMePage,
+  countInstanceEmoji
 } = instancesSlice.actions
 
 export default instancesSlice.reducer

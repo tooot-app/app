@@ -40,7 +40,12 @@ export type ComposeState = {
   }
   emoji: {
     active: boolean
-    emojis: { title: string; data: Mastodon.Emoji[][] }[] | undefined
+    emojis:
+      | {
+          title: string
+          data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+        }[]
+      | undefined
   }
   poll: {
     active: boolean

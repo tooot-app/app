@@ -14,6 +14,7 @@ import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
 import { updatePreviousTab } from '@utils/slices/contextsSlice'
+import { checkEmojis } from '@utils/slices/instances/checkEmojis'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
@@ -92,6 +93,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       dispatch(updateConfiguration())
       dispatch(updateFilters())
       dispatch(updateAccountPreferences())
+      dispatch(checkEmojis())
     }
   }, [instanceActive])
 

@@ -2,6 +2,7 @@ import EmojisButton from '@components/Emojis/Button'
 import EmojisList from '@components/Emojis/List'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
+import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, {
   Dispatch,
@@ -11,11 +12,16 @@ import React, {
   useEffect,
   useReducer
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
 import EmojisContext, { emojisReducer } from './Emojis/helpers/EmojisContext'
 
 const prefetchEmojis = (
-  sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[],
+  sortedEmojis: {
+    title: string
+    data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+  }[],
   reduceMotionEnabled: boolean
 ) => {
   const prefetches: { uri: string }[] = []
@@ -101,14 +107,28 @@ const ComponentEmojis: React.FC<Props> = ({
     [value, selectionRange.current?.start, selectionRange.current?.end]
   )
 
+  const { t } = useTranslation()
   const { data } = useEmojisQuery({ options: { enabled } })
+  const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {
     if (data && data.length) {
-      let sortedEmojis: { title: string; data: Mastodon.Emoji[][] }[] = []
+      let sortedEmojis: {
+        title: string
+        data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+      }[] = []
       forEach(
         groupBy(sortBy(data, ['category', 'shortcode']), 'category'),
         (value, key) => sortedEmojis.push({ title: key, data: chunk(value, 5) })
       )
+      if (frequentEmojis.length) {
+        sortedEmojis.unshift({
+          title: t('componentEmojis:frequentUsed'),
+          data: chunk(
+            frequentEmojis.map(e => e.emoji),
+            5
+          )
+        })
+      }
       emojisDispatch({
         type: 'load',
         payload: sortedEmojis
