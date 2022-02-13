@@ -45,6 +45,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           scrolled.current = true
           const pointer = flattenData.findIndex(({ id }) => id === toot.id)
           if (pointer === -1) return
+          Sentry.Native.setContext('Scroll to Index', {
+            type: 'original',
+            index: pointer,
+            itemsLength: flattenData.length,
+            id: toot.id,
+            flattenData: flattenData.map(({ id }) => id)
+          })
           try {
             setTimeout(() => {
               flRef.current?.scrollToIndex({
@@ -54,13 +61,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             }, 500)
           } catch (err) {
             if (Math.random() < 0.1) {
-              Sentry.Native.setContext('Scroll to Index', {
-                type: 'original',
-                index: pointer,
-                itemsLength: flattenData.length,
-                id: toot.id,
-                flattenData: flattenData.map(({ id }) => id)
-              })
               Sentry.Native.captureException(err)
             }
           }
@@ -74,6 +74,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     error => {
       const offset = error.averageItemLength * error.index
       flRef.current?.scrollToOffset({ offset })
+      Sentry.Native.setContext('Scroll to Index', {
+        type: 'onScrollToIndexFailed',
+        index: error.index,
+        itemsLength,
+        id: toot.id
+      })
       try {
         error.index < itemsLength &&
           setTimeout(
@@ -86,12 +92,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           )
       } catch (err) {
         if (Math.random() < 0.1) {
-          Sentry.Native.setContext('Scroll to Index', {
-            type: 'onScrollToIndexFailed',
-            index: error.index,
-            itemsLength,
-            id: toot.id
-          })
           Sentry.Native.captureException(err)
         }
       }
