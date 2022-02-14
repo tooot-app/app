@@ -34,8 +34,8 @@ const AttachmentImage = React.memo(
               !image.meta?.original?.width ||
               !image.meta?.original?.height
                 ? attachmentAspectRatio({ total, index })
-                : image.meta.original.height / image.meta.original.width > 2
-                ? 0.5
+                : image.meta.original.height / image.meta.original.width > 1
+                ? 1
                 : image.meta.original.width / image.meta.original.height
           }}
         />

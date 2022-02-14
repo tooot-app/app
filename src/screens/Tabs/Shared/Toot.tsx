@@ -60,7 +60,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               })
             }, 500)
           } catch (err) {
-            if (Math.random() < 0.1) {
+            if (Math.random() < 0.05) {
               Sentry.Native.captureException(err)
             }
           }
@@ -91,7 +91,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             500
           )
       } catch (err) {
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.05) {
           Sentry.Native.captureException(err)
         }
       }
