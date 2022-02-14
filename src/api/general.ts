@@ -58,14 +58,14 @@ const apiGeneral = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry && Math.random() < 0.01) {
-        Sentry.Native.setExtras({
-          API: 'general',
-          ...(error.response && { response: error.response }),
-          ...(error.request && { request: error.request })
-        })
-        Sentry.Native.captureException(error)
-      }
+      // if (sentry && Math.random() < 0.01) {
+      //   Sentry.Native.setExtras({
+      //     API: 'general',
+      //     ...(error.response && { response: error.response }),
+      //     ...(error.request && { request: error.request })
+      //   })
+      //   Sentry.Native.captureException(error)
+      // }
 
       if (error.response) {
         // The request was made and the server responded with a status code

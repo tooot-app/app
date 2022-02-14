@@ -1,5 +1,6 @@
 import haptics from '@components/haptics'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { countInstanceEmoji } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useContext, useEffect } from 'react'
@@ -14,6 +15,7 @@ import {
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useDispatch } from 'react-redux'
 import validUrl from 'valid-url'
 import updateText from '../../updateText'
 import ComposeContext from '../../utils/createContext'
@@ -27,6 +29,7 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const { reduceMotionEnabled } = useAccessibility()
   const { colors } = useTheme()
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const tagEmojis = findNodeHandle(accessibleRefEmojis.current)
@@ -53,13 +56,14 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
                 <Pressable
                   key={emoji.shortcode}
                   onPress={() => {
+                    haptics('Light')
                     updateText({
                       composeState,
                       composeDispatch,
                       newText: `:${emoji.shortcode}:`,
                       type: 'emoji'
                     })
-                    haptics('Light')
+                    dispatch(countInstanceEmoji(emoji))
                   }}
                 >
                   <FastImage

@@ -41,7 +41,7 @@ export const shouldFilter = ({
 }) => {
   const instance = getInstance(store.getState())
   const ownAccount =
-    getInstanceAccount(store.getState())?.id === status.account.id
+    getInstanceAccount(store.getState())?.id === status.account?.id
 
   let shouldFilter = false
   if (!ownAccount) {
