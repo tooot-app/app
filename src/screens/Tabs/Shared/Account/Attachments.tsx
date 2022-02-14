@@ -91,8 +91,10 @@ const AccountAttachments = React.memo(
           return (
             <GracefullyImage
               uri={{
-                original: item.media_attachments[0].preview_url,
-                remote: item.media_attachments[0].remote_url
+                original:
+                  item.media_attachments[0]?.preview_url ||
+                  item.media_attachments[0]?.url,
+                remote: item.media_attachments[0]?.remote_url
               }}
               blurhash={item.media_attachments[0].blurhash}
               dimension={{ width: width, height: width }}
