@@ -127,7 +127,7 @@ const ScreenImagesViewer = ({
 
   return (
     <SafeAreaProvider>
-      <StatusBar backgroundColor='rgb(0,0,0)' />
+      <StatusBar hidden />
       <ImageViewer
         images={imageUrls}
         imageIndex={initialIndex}

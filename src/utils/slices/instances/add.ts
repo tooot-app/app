@@ -106,7 +106,8 @@ const addInstance = createAsyncThunk(
           lists: { shown: false },
           announcements: { shown: false, unread: 0 }
         },
-        drafts: []
+        drafts: [],
+        frequentEmojis: []
       }
     })
   }

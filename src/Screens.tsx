@@ -1,3 +1,4 @@
+import analytics from '@components/analytics'
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
@@ -21,7 +22,6 @@ import { updateFilters } from '@utils/slices/instances/updateFilters'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
-import * as Analytics from 'expo-firebase-analytics'
 import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -40,11 +40,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('screens')
   const dispatch = useDispatch()
   const instanceActive = useSelector(getInstanceActive)
-  const { colors, mode, theme } = useTheme()
-  enum barStyle {
-    light = 'dark-content',
-    dark = 'light-content'
-  }
+  const { colors, theme } = useTheme()
 
   const routeRef = useRef<{ name?: string; params?: {} }>()
 
@@ -118,7 +114,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
 
     if (previousRoute?.name !== currentRoute?.name) {
-      Analytics.logEvent('screen_view', { screen_name: currentRoute?.name })
+      analytics('screen_view', { screen_name: currentRoute?.name })
       Sentry.Native.setContext('page', {
         previous: previousRoute,
         current: currentRoute
@@ -163,10 +159,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar
-        barStyle={barStyle[mode]}
-        backgroundColor={colors.backgroundDefault}
-      />
+      <StatusBar backgroundColor={colors.backgroundDefault} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[theme]}

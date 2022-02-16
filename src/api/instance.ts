@@ -98,14 +98,14 @@ const apiInstance = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (Math.random() < 0.001) {
-        Sentry.Native.setExtras({
-          API: 'instance',
-          ...(error.response && { response: error.response }),
-          ...(error.request && { request: error.request })
-        })
-        Sentry.Native.captureException(error)
-      }
+      // if (Math.random() < 0.001) {
+      //   Sentry.Native.setExtras({
+      //     API: 'instance',
+      //     ...(error.response && { response: error.response }),
+      //     ...(error.request && { request: error.request })
+      //   })
+      //   Sentry.Native.captureException(error)
+      // }
 
       if (error.response) {
         // The request was made and the server responded with a status code

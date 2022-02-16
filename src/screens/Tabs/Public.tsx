@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator<TabPublicStackParamList>()
 const TabPublic = React.memo(
   ({ navigation }: ScreenTabsScreenProps<'Tab-Public'>) => {
     const { t, i18n } = useTranslation('screenTabs')
-    const { mode } = useTheme()
+    const { mode, theme } = useTheme()
 
     const [segment, setSegment] = useState(0)
     const pages: {
@@ -67,7 +67,7 @@ const TabPublic = React.memo(
           />
         )
       }),
-      [mode, segment, i18n.language]
+      [theme, segment, i18n.language]
     )
 
     const routes = pages.map(p => ({ key: p.key }))
