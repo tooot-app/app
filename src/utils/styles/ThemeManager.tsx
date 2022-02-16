@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Appearance } from 'react-native'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
@@ -85,25 +79,23 @@ const ThemeManager: React.FC = ({ children }) => {
   const userTheme = useSelector(getSettingsTheme)
   const darkTheme = useSelector(getSettingsDarkTheme)
 
-  const mode = useRef(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  const [mode, setMode] = useState(
+    userTheme === 'auto' ? osTheme || 'light' : userTheme
+  )
   const [theme, setTheme] = useState<Theme>(
     determineTheme(osTheme, userTheme, darkTheme)
   )
 
   useEffect(() => {
-    mode.current = userTheme === 'auto' ? osTheme || 'light' : userTheme
-  }, [userTheme])
+    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  }, [osTheme, userTheme])
   useEffect(() => {
     setTheme(determineTheme(osTheme, userTheme, darkTheme))
   }, [osTheme, userTheme, darkTheme])
 
   return (
     <ManageThemeContext.Provider
-      value={{
-        mode: mode.current,
-        theme,
-        colors: getColors(theme)
-      }}
+      value={{ mode, theme, colors: getColors(theme) }}
     >
       {children}
     </ManageThemeContext.Provider>

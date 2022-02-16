@@ -40,11 +40,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('screens')
   const dispatch = useDispatch()
   const instanceActive = useSelector(getInstanceActive)
-  const { colors, mode, theme } = useTheme()
-  enum barStyle {
-    light = 'dark-content',
-    dark = 'light-content'
-  }
+  const { colors, theme } = useTheme()
 
   const routeRef = useRef<{ name?: string; params?: {} }>()
 
@@ -163,10 +159,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   return (
     <>
-      <StatusBar
-        barStyle={barStyle[mode]}
-        backgroundColor={colors.backgroundDefault}
-      />
+      <StatusBar backgroundColor={colors.backgroundDefault} />
       <NavigationContainer
         ref={navigationRef}
         theme={themes[theme]}
