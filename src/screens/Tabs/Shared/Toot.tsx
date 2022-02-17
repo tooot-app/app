@@ -44,7 +44,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = flattenData.findIndex(({ id }) => id === toot.id)
-          if (pointer === -1) return
+          if (pointer < 1) return
           Sentry.Native.setContext('Scroll to Index', {
             type: 'original',
             index: pointer,
