@@ -249,7 +249,7 @@
         }
       },
       "feedback": {
-        "heading": "Yêu cầu tính năng"
+        "heading": "Đề xuất tính năng"
       },
       "support": {
         "heading": "Ủng hộ tooot"
@@ -290,7 +290,7 @@
       }
     },
     "attachments": {
-      "name": "Bộ sưu tập của <1></1>"
+      "name": "<0 /><1>'s media</1>"
     },
     "search": {
       "header": {
