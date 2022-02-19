@@ -6,7 +6,6 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
-import * as Sentry from 'sentry-expo'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   route: {
@@ -44,26 +43,16 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (!scrolled.current) {
           scrolled.current = true
           const pointer = flattenData.findIndex(({ id }) => id === toot.id)
-          if (pointer === -1) return
-          Sentry.Native.setContext('Scroll to Index', {
-            type: 'original',
-            index: pointer,
-            itemsLength: flattenData.length,
-            id: toot.id,
-            flattenData: flattenData.map(({ id }) => id)
-          })
+          if (pointer < 1) return
           try {
             setTimeout(() => {
+              console.log('scrolling')
               flRef.current?.scrollToIndex({
                 index: pointer,
                 viewOffset: 100
               })
             }, 500)
-          } catch (err) {
-            if (Math.random() < 0.05) {
-              Sentry.Native.captureException(err)
-            }
-          }
+          } catch {}
         }
       }
     })
@@ -74,12 +63,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     error => {
       const offset = error.averageItemLength * error.index
       flRef.current?.scrollToOffset({ offset })
-      Sentry.Native.setContext('Scroll to Index', {
-        type: 'onScrollToIndexFailed',
-        index: error.index,
-        itemsLength,
-        id: toot.id
-      })
       try {
         error.index < itemsLength &&
           setTimeout(
@@ -90,11 +73,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               }),
             500
           )
-      } catch (err) {
-        if (Math.random() < 0.05) {
-          Sentry.Native.captureException(err)
-        }
-      }
+      } catch {}
     },
     [itemsLength]
   )

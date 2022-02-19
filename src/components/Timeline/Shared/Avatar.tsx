@@ -37,7 +37,7 @@ const TimelineAvatar = React.memo(
           })
         })}
         onPress={onPress}
-        uri={{ original: account.avatar, static: account.avatar_static }}
+        uri={{ original: account?.avatar, static: account?.avatar_static }}
         dimension={{
           width: StyleConstants.Avatar.M,
           height: StyleConstants.Avatar.M

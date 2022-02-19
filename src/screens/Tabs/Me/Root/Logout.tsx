@@ -21,7 +21,8 @@ const Logout: React.FC = () => {
       content={t('me.root.logout.button')}
       style={{
         marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
-        marginTop: StyleConstants.Spacing.Global.PagePadding
+        marginTop: StyleConstants.Spacing.Global.PagePadding,
+        marginBottom: StyleConstants.Spacing.Global.PagePadding * 2
       }}
       destructive
       onPress={() =>
