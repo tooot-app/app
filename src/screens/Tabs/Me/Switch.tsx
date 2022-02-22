@@ -11,7 +11,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   KeyboardAvoidingView,
@@ -56,6 +56,12 @@ const TabMeSwitch: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive, () => true)
 
   const scrollViewRef = useRef<ScrollView>(null)
+  useEffect(() => {
+    setTimeout(
+      () => scrollViewRef.current?.scrollToEnd({ animated: true }),
+      150
+    )
+  }, [scrollViewRef.current])
 
   return (
     <KeyboardAvoidingView
@@ -67,8 +73,19 @@ const TabMeSwitch: React.FC = () => {
         style={styles.base}
         keyboardShouldPersistTaps='always'
       >
+        <View>
+          <Text style={[styles.header, { color: colors.primaryDefault }]}>
+            {t('me.switch.new')}
+          </Text>
+          <ComponentInstance
+            scrollViewRef={scrollViewRef}
+            disableHeaderImage
+            goBack
+          />
+        </View>
+
         <View
-          style={[styles.firstSection, { borderBottomColor: colors.border }]}
+          style={[styles.firstSection, , { borderTopColor: colors.border }]}
         >
           <Text style={[styles.header, { color: colors.primaryDefault }]}>
             {t('me.switch.existing')}
@@ -99,17 +116,6 @@ const TabMeSwitch: React.FC = () => {
               : null}
           </View>
         </View>
-
-        <View style={styles.secondSection}>
-          <Text style={[styles.header, { color: colors.primaryDefault }]}>
-            {t('me.switch.new')}
-          </Text>
-          <ComponentInstance
-            scrollViewRef={scrollViewRef}
-            disableHeaderImage
-            goBack
-          />
-        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   )
@@ -126,12 +132,9 @@ const styles = StyleSheet.create({
   },
   firstSection: {
     marginTop: StyleConstants.Spacing.S,
+    paddingTop: StyleConstants.Spacing.M,
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    paddingBottom: StyleConstants.Spacing.S,
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  secondSection: {
-    paddingTop: StyleConstants.Spacing.M
+    borderTopWidth: StyleSheet.hairlineWidth
   },
   accountButtons: {
     flex: 1,

@@ -180,7 +180,11 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardAppearance={mode}
             {...(scrollViewRef && {
               onFocus: () =>
-                setTimeout(() => scrollViewRef.current?.scrollToEnd(), 150)
+                setTimeout(
+                  () =>
+                    scrollViewRef.current?.scrollTo({ y: 0, animated: true }),
+                  150
+                )
             })}
             autoCorrect={false}
             spellCheck={false}
@@ -276,7 +280,7 @@ const styles = StyleSheet.create({
   imageContainer: { flexDirection: 'row' },
   image: { resizeMode: 'contain', flex: 1, aspectRatio: 16 / 9 },
   base: {
-    marginVertical: StyleConstants.Spacing.L,
+    marginTop: StyleConstants.Spacing.L,
     marginHorizontal: StyleConstants.Spacing.Global.PagePadding
   },
   inputRow: {
