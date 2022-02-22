@@ -67,6 +67,9 @@
       "settings": {
         "name": "App Settings"
       },
+      "webSettings": {
+        "name": "More Account Settings"
+      },
       "switch": {
         "name": "Switch Account"
       }
