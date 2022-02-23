@@ -67,6 +67,9 @@
       "settings": {
         "name": "Thiết lập"
       },
+      "webSettings": {
+        "name": "Nâng cao"
+      },
       "switch": {
         "name": "Chuyển đổi tài khoản"
       }
