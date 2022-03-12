@@ -170,7 +170,7 @@
         "heading": "Lượt thích"
       },
       "reblog": {
-        "heading": "Lượt chia sẻ"
+        "heading": "Lượt đăng lại"
       },
       "mention": {
         "heading": "Lượt nhắc đến"
@@ -328,7 +328,7 @@
         "followers": "{{count}} người theo dõi"
       },
       "statuses": {
-        "reblogged_by": "{{count}} chia sẻ",
+        "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
       }
     }
