@@ -1,10 +1,10 @@
 {
   "name": "tooot",
   "versions": {
-    "native": "220214",
+    "native": "220328",
     "major": 3,
-    "minor": 5,
-    "patch": 4,
+    "minor": 6,
+    "patch": 0,
     "expo": "44.0.0"
   },
   "description": "tooot app for Mastodon",
