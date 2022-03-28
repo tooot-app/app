@@ -95,7 +95,7 @@
             "accessibilityHint": "用户帐户名"
           }
         },
-        "application": "发自于 {{application}}",
+        "application": "发自 {{application}}",
         "muted": {
           "accessibilityLabel": "已静音此嘟文"
         },
@@ -104,7 +104,7 @@
             "accessibilityLabel": "此嘟文是私信"
           },
           "private": {
-            "accessibilityLabel": "此嘟文仅关注着可见"
+            "accessibilityLabel": "此嘟文仅关注者可见"
           }
         }
       },

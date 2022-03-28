@@ -16,9 +16,9 @@ jobs:
       - name: -- Step 1 -- Checkout code
         uses: actions/checkout@v2
       - name: -- Step 2 -- Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 16
       - name: -- Step 3 -- Use Expo action
         uses: expo/expo-github-action@v6
         with:

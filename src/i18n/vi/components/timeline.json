@@ -27,8 +27,8 @@
       "follow_request": "{{name}} yêu cầu theo dõi bạn",
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
-        "default": "{{name}} chia sẻ",
-        "notification": "{{name}} chia sẻ tút của bạn"
+        "default": "{{name}} đăng lại",
+        "notification": "{{name}} đăng lại tút của bạn"
       }
     },
     "actions": {
@@ -36,8 +36,8 @@
         "accessibilityLabel": "Trả lời tút này"
       },
       "reblogged": {
-        "accessibilityLabel": "Chia sẻ tút này",
-        "function": "Chia sẻ tút"
+        "accessibilityLabel": "Đăng lại tút này",
+        "function": "Đăng lại tút"
       },
       "favourited": {
         "accessibilityLabel": "Thích tút này",
@@ -50,8 +50,8 @@
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "{{count}} người đã chia sẻ tút này",
-        "accessibilityHint": "Xem những ai chia sẻ",
+        "accessibilityLabel": "{{count}} người đã đăng lại tút này",
+        "accessibilityHint": "Xem những ai đăng lại",
         "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
@@ -148,8 +148,8 @@
         },
         "share": {
           "status": {
-            "heading": "Chia sẻ",
-            "button": "Chia sẻ URL tút"
+            "heading": "Đăng lại",
+            "button": "Đăng lại URL tút"
           },
           "account": {
             "heading": "Chia sẻ",
@@ -167,7 +167,7 @@
             "button": "Xóa và viết lại",
             "alert": {
               "title": "Tiếp tục xóa tút?",
-              "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, chia sẻ và trả lời tút cũng sẽ bị xóa theo.",
+              "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, đăng lại và trả lời tút cũng sẽ bị xóa theo.",
               "buttons": {
                 "confirm": "Tiếp tục xóa",
                 "cancel": "$t(common:buttons.cancel)"

@@ -57,8 +57,11 @@ const TabMeSwitch: React.FC = () => {
 
   const scrollViewRef = useRef<ScrollView>(null)
   useEffect(() => {
-    scrollViewRef.current?.scrollToEnd({ animated: true })
-  }, [])
+    setTimeout(
+      () => scrollViewRef.current?.scrollToEnd({ animated: true }),
+      150
+    )
+  }, [scrollViewRef.current])
 
   return (
     <KeyboardAvoidingView

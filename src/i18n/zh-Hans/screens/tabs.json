@@ -67,6 +67,9 @@
       "settings": {
         "name": "应用设置"
       },
+      "webSettings": {
+        "name": "更多账户设置"
+      },
       "switch": {
         "name": "切换账号"
       }
