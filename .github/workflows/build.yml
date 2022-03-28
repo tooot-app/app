@@ -29,11 +29,7 @@ jobs:
         run: yarn install
       - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Install cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          podfile-path: ios/Podfile.lock
-      - name: -- Step 7 -- Run fastlane
+      - name: -- Step 6 -- Run fastlane
         env:
           DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
