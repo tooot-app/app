@@ -61,7 +61,7 @@ PODS:
   - EXStoreReview (5.1.1):
     - ExpoModulesCore
   - EXStructuredHeaders (2.1.0)
-  - EXUpdates (0.11.3):
+  - EXUpdates (0.11.6):
     - EXManifests
     - ExpoModulesCore
     - EXStructuredHeaders
@@ -381,8 +381,12 @@ PODS:
     - React-Core
   - react-native-pager-view (5.4.15):
     - React-Core
-  - react-native-safe-area-context (3.3.2):
-    - React-Core
+  - react-native-safe-area-context (4.2.4):
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React
+    - ReactCommon/turbomodule/core
   - react-native-segmented-control (2.2.2):
     - React-Core
   - React-perflogger (0.67.4)
@@ -456,7 +460,7 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.12.3)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNGestureHandler (2.2.0):
+  - RNGestureHandler (2.3.2):
     - React-Core
   - RNReanimated (2.5.0):
     - DoubleConversion
@@ -489,20 +493,20 @@ PODS:
   - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSentry (3.2.13):
+  - RNSentry (3.3.6):
     - React-Core
-    - Sentry (= 7.9.0)
+    - Sentry (= 7.11.0)
   - RNSVG (12.3.0):
     - React-Core
-  - SDWebImage (5.12.3):
-    - SDWebImage/Core (= 5.12.3)
-  - SDWebImage/Core (5.12.3)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.9.0):
-    - Sentry/Core (= 7.9.0)
-  - Sentry/Core (7.9.0)
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - UMTaskManagerInterface (7.1.0):
     - ExpoModulesCore
   - Yoga (1.14.0)
@@ -796,7 +800,7 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXStoreReview: 5a24fd222d193878a7d4f6059dd19f51c808af66
   EXStructuredHeaders: 2ce79a3770bd3795bade1aab215ada70deae8bbc
-  EXUpdates: 98b9e647ce7a0e9d5ab67135bf42188c750a99eb
+  EXUpdates: bd5fa64f02685ed3e96be86b5ca350cdc2cd8d02
   EXUpdatesInterface: f459b515151bd73fff7a35366eace34a6c6a0d3f
   EXVideoThumbnails: 847d648d6f4bc0c1afad05caa56a487dc543445e
   EXWebBrowser: f1573262c5de753987ed526c630076eda130804d
@@ -808,7 +812,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
   FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 85ecdd10ee8d8ec362ef519a6a45ff9aa27b2e85
   GoogleAppMeasurement: 0c3b134b2c0a90c4c24833873894bfe0e42a0384
   GoogleDataTransport: 8b0e733ea77c9218778e5a9e34ba9508b8328939
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
@@ -817,7 +821,7 @@ SPEC CHECKSUMS:
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: 803a9cfd78114b2ec0f140cfa6fa2a6bafb2d685
   RCTRequired: 0aa6c1c27e1d65920df35ceea5341a5fe76bdb79
   RCTTypeSafety: d76a59d00632891e11ed7522dba3fd1a995e573a
   React: ab8c09da2e7704f4b3ebad4baa6cfdfcc852dcb5
@@ -835,7 +839,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
   react-native-netinfo: e922cb2e3eaf9ccdf16b8d4744a89657377aa4a1
   react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-safe-area-context: f98b0b16d1546d208fc293b4661e3f81a895afd9
   react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
   React-perflogger: 0afaf2f01a47fd0fc368a93bfbb5bd3b26db6e7f
   React-RCTActionSheet: 59f35c4029e0b532fc42114241a06e170b7431a2
@@ -851,14 +855,14 @@ SPEC CHECKSUMS:
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   RNCAsyncStorage: 4efdcd2f7378421b29467c9de58f43552b60cf5b
   RNFastImage: cced864a4a2eac27c5c10ac16bd5e8b9d2be4504
-  RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
+  RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
   RNReanimated: 190b6930d5d94832061278e1070bbe313e50c830
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
-  RNSentry: 0aa1567f66c20390f3834637fc4f73380dcd0774
+  RNSentry: 6fbe6a4194cf632e5dc02a640741512faa943dbf
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
-  SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
-  Sentry: 2f7e91f247cfb05b05bd01e0b5d0692557a7687b
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   UMTaskManagerInterface: 6f7150f9ec9bc6f2760eeae532a70de71ff951c1
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
 
