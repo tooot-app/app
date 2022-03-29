@@ -132,7 +132,8 @@
           "expo-firebase-core",
           "expo-font",
           "expo-keep-awake",
-          "expo-store-review"
+          "expo-store-review",
+          "react-native-reanimated"
         ]
       }
     }
