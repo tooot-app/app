@@ -9,13 +9,11 @@ import {
   TabPublicStackParamList
 } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceTimelinesLookback } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import { TabView } from 'react-native-tab-view'
-import { useSelector } from 'react-redux'
 import TabSharedRoot from './Shared/Root'
 
 const Stack = createNativeStackNavigator<TabPublicStackParamList>()
@@ -72,10 +70,6 @@ const TabPublic = React.memo(
 
     const routes = pages.map(p => ({ key: p.key }))
 
-    const timelinesLookback = useSelector(
-      getInstanceTimelinesLookback,
-      () => true
-    )
     const renderScene = useCallback(
       ({
         route: { key: page }
@@ -101,7 +95,6 @@ const TabPublic = React.memo(
     )
     const children = useCallback(
       () => (
-        // @ts-ignore
         <TabView
           lazy
           swipeEnabled
