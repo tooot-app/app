@@ -75,8 +75,8 @@
       }
     },
     "fontSize": {
-      "showcase": "Kết quả",
-      "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không thay đổi những phần khác của app.</p>",
+      "showcase": "Xem trước",
+      "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không ảnh hưởng những phần tử khác của app.</p>",
       "availableSizes": "Kích cỡ",
       "sizes": {
         "S": "S",
