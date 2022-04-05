@@ -2073,10 +2073,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@welldone-software/why-did-you-render@6.2.3":
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-6.2.3.tgz#cdd5e27cf25b7e767c1c0b0e8808f67d3f6be833"
-  integrity sha512-FQgi90jvC9uw2aALlonJfqaWOvU5UUBBVvdAnS2iryXwCc4YJkKsPJY5Y/LzaND3OIyk8XGUn1vTRn6hcem28Q==
+"@welldone-software/why-did-you-render@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-7.0.1.tgz#09f487d84844bd8e66435843c2e0305702e61efb"
+  integrity sha512-Qe/8Xxa2G+LMdI6VoazescPzjjkHYduCDa8aHOJR50e9Bgs8ihkfMBY+ev7B4oc3N59Zm547Sgjf8h5y0FOyoA==
   dependencies:
     lodash "^4"
 
@@ -2478,6 +2478,13 @@ bplist-parser@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/bplist-parser/-/bplist-parser-0.3.0.tgz#ba50666370f61bbf94881636cd9f7d23c5286090"
   integrity sha512-zgmaRvT6AN1JpPPV+S0a1/FAtoxSreYDccZGIqEMSvZl9DMe70mJ7MFzpxa1X+gHVdkToE2haRUHHMiW1OdejA==
+  dependencies:
+    big-integer "1.6.x"
+
+bplist-parser@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/bplist-parser/-/bplist-parser-0.3.1.tgz#e1c90b2ca2a9f9474cc72f6862bbf3fee8341fd1"
+  integrity sha512-PyJxiNtA5T2PlLIeBot4lbp7rj4OadzjnMZD/G5zuBNt8ei/yCU7+wW0h2bag9vr8c+/WuRWmSxbqAl9hL1rBA==
   dependencies:
     big-integer "1.6.x"
 
@@ -5882,7 +5889,7 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-plist@^3.0.2, plist@^3.0.4:
+plist@^3.0.2, plist@^3.0.4, plist@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.5.tgz#2cbeb52d10e3cdccccf0c11a63a85d830970a987"
   integrity sha512-83vX4eYdQp3vP9SxuYgEM/G/pJQqLUz/V/xzPrzruLs7fz7jxGQ1msZ/mg1nwZxUSuOp4sb+/bEIbRrbzZRxDA==
@@ -6151,10 +6158,10 @@ react-native-pager-view@5.4.11:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.11.tgz#677540293c7b4e0e022efb45727ef9b4efa35409"
   integrity sha512-4QlBL5W8yVjeYwrw89oCdABI7sDxIGapFQvIbukfB5mAj1Zn1IQPkBqROLblNFtQ8PbAeexXRgDT1ENWygiJ7A==
 
-react-native-reanimated@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.5.0.tgz#315de3a23269afd150df5359252e62937a1a8068"
-  integrity sha512-P4v6364AKuKkHOAbsXKe0lta2EkhID8OqZoIYGhjbJF67bt7l6fktSTrVyaxkpMHFngzlvVYWFDqFSIQvwu6WA==
+react-native-reanimated@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.6.0.tgz#500497339bec2d18fd4979dc07c831997c9aee82"
+  integrity sha512-TG7u0d1iTx6BRQXhUp9DKEW/9K6169qiX9vweC+qOcVffGSZvjDZ+OyyI0faXIDvcf5LRHAud3mNtO3ANaHRhQ==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.16.7"
     "@types/invariant" "^2.2.35"
@@ -6736,7 +6743,16 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simple-plist@^1.0.0, simple-plist@^1.1.0:
+simple-plist@^1.0.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-1.3.1.tgz#16e1d8f62c6c9b691b8383127663d834112fb017"
+  integrity sha512-iMSw5i0XseMnrhtIzRb7XpQEXepa9xhWxGUojHBL43SIpQuDQkh3Wpy67ZbDzZVr6EKxvwVChnVpdl8hEVLDiw==
+  dependencies:
+    bplist-creator "0.1.0"
+    bplist-parser "0.3.1"
+    plist "^3.0.5"
+
+simple-plist@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-1.3.0.tgz#f451997663eafd8ea6bad353a01caf49ef186d43"
   integrity sha512-uYWpeGFtZtVt2NhG4AHgpwx323zxD85x42heMJBan1qAiqqozIlaGrwrEt6kRjXWRWIXsuV1VLCvVmZan2B5dg==
