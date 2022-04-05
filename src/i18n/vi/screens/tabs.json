@@ -38,10 +38,10 @@
         "name": "Nhắn riêng"
       },
       "favourites": {
-        "name": "Lượt thích"
+        "name": "Đã thích"
       },
       "fontSize": {
-        "name": "Kích cỡ phông chữ"
+        "name": "Cỡ chữ"
       },
       "lists": {
         "name": "Danh sách"
@@ -53,7 +53,7 @@
         "name": "Thông báo đẩy"
       },
       "profile": {
-        "name": "Cài đặt cá nhân"
+        "name": "Sửa hồ sơ"
       },
       "profileName": {
         "name": "Tên hiển thị mới"
@@ -270,7 +270,7 @@
       "version": "Phiên bản {{version}}"
     },
     "switch": {
-      "existing": "Đã đăng nhập trước đó",
+      "existing": "Đã đăng nhập trước đây",
       "new": "Đăng nhập máy chủ"
     }
   },
@@ -320,7 +320,7 @@
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
     },
     "toot": {
-      "name": "Thảo luận"
+      "name": "Nội dung tút"
     },
     "users": {
       "accounts": {
