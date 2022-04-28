@@ -74,9 +74,7 @@ const addInstance = createAsyncThunk(
           avatarStatic: avatar_static,
           preferences
         },
-        ...(instance.max_toot_chars && {
-          max_toot_chars: instance.max_toot_chars
-        }),
+        version: instance.version,
         ...(instance.configuration && {
           configuration: instance.configuration
         }),

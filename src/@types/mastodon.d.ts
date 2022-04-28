@@ -320,8 +320,6 @@ declare namespace Mastodon {
         max_expiration: number
       }
     }
-    // Custom - to be deprecated in v4
-    max_toot_chars?: number
   }
 
   type Mention = {

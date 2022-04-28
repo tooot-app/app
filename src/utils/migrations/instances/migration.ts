@@ -4,6 +4,7 @@ import { InstanceV5 } from './v5'
 import { InstanceV6 } from './v6'
 import { InstanceV7 } from './v7'
 import { InstanceV8 } from './v8'
+import { InstanceV9 } from './v9'
 
 const instancesMigration = {
   4: (state: InstanceV3): InstanceV4 => {
@@ -84,6 +85,17 @@ const instancesMigration = {
         return {
           ...instance,
           frequentEmojis: []
+        }
+      })
+    }
+  },
+  9: (state: InstanceV8): { instances: InstanceV9[] } => {
+    return {
+      // @ts-ignore
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          version: '0'
         }
       })
     }
