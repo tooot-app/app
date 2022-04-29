@@ -103,6 +103,7 @@ const HeaderConversation = React.memo(
             {conversation.last_status?.created_at ? (
               <HeaderSharedCreated
                 created_at={conversation.last_status?.created_at}
+                edited_at={conversation.last_status?.edited_at}
               />
             ) : null}
             <HeaderSharedMuted muted={conversation.last_status?.muted} />

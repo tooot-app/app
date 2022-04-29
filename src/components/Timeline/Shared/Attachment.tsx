@@ -6,6 +6,7 @@ import AttachmentImage from '@components/Timeline/Shared/Attachment/Image'
 import AttachmentUnsupported from '@components/Timeline/Shared/Attachment/Unsupported'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -38,7 +39,7 @@ const TimelineAttachment = React.memo(
     const imageUrls = useRef<
       RootStackParamList['Screen-ImagesViewer']['imageUrls']
     >([])
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     useEffect(() => {
       status.media_attachments.forEach((attachment, index) => {
         switch (attachment.type) {

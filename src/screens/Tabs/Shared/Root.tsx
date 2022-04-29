@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
 import TabSharedHashtag from '@screens/Tabs/Shared/Hashtag'
+import TabSharedHistory from '@screens/Tabs/Shared/History'
 import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
@@ -93,6 +94,13 @@ const TabSharedRoot = ({
         }: TabSharedStackScreenProps<'Tab-Shared-Hashtag'>) => ({
           title: `#${decodeURIComponent(route.params.hashtag)}`
         })}
+      />
+
+      <Stack.Screen
+        key='Tab-Shared-History'
+        name='Tab-Shared-History'
+        component={TabSharedHistory}
+        options={{ title: t('screenTabs:shared.history.name') }}
       />
 
       <Stack.Screen

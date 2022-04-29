@@ -1,5 +1,7 @@
 import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -21,7 +23,7 @@ export interface Props {
 const TimelineHeaderDefault = React.memo(
   ({ queryKey, rootQueryKey, status }: Props) => {
     const { t } = useTranslation('componentTimeline')
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     const { colors } = useTheme()
 
     return (
@@ -29,7 +31,10 @@ const TimelineHeaderDefault = React.memo(
         <View style={styles.accountAndMeta}>
           <HeaderSharedAccount account={status.account} />
           <View style={styles.meta}>
-            <HeaderSharedCreated created_at={status.created_at} />
+            <HeaderSharedCreated
+              created_at={status.created_at}
+              edited_at={status.edited_at}
+            />
             <HeaderSharedVisibility visibility={status.visibility} />
             <HeaderSharedMuted muted={status.muted} />
             <HeaderSharedApplication application={status.application} />
@@ -45,7 +50,6 @@ const TimelineHeaderDefault = React.memo(
                 queryKey,
                 rootQueryKey,
                 status,
-                url: status.url || status.uri,
                 type: 'status'
               })
             }

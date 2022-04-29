@@ -4,6 +4,7 @@ import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -35,7 +36,7 @@ const renderNode = ({
   index: number
   adaptedFontsize: number
   adaptedLineheight: number
-  navigation: StackNavigationProp<Nav.TabLocalStackParamList>
+  navigation: StackNavigationProp<TabLocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
@@ -194,7 +195,7 @@ const ParseHTML = React.memo(
     )
 
     const navigation =
-      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
     const { t, i18n } = useTranslation('componentParse')

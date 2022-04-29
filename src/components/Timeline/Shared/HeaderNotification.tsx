@@ -4,6 +4,8 @@ import {
   RelationshipOutgoing
 } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -22,7 +24,7 @@ export interface Props {
 
 const TimelineHeaderNotification = React.memo(
   ({ queryKey, notification }: Props) => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     const { colors } = useTheme()
 
     const actions = useMemo(() => {
@@ -44,8 +46,7 @@ const TimelineHeaderNotification = React.memo(
                 onPress={() =>
                   navigation.navigate('Screen-Actions', {
                     queryKey,
-                    status: notification.status,
-                    url: notification.status?.url || notification.status?.uri,
+                    status: notification.status!,
                     type: 'status'
                   })
                 }
@@ -83,7 +84,10 @@ const TimelineHeaderNotification = React.memo(
               notification.type === 'follow_request') && { withoutName: true })}
           />
           <View style={styles.meta}>
-            <HeaderSharedCreated created_at={notification.created_at} />
+            <HeaderSharedCreated
+              created_at={notification.created_at}
+              edited_at={notification.status?.edited_at}
+            />
             {notification.status?.visibility ? (
               <HeaderSharedVisibility
                 visibility={notification.status.visibility}

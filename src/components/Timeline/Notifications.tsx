@@ -9,6 +9,7 @@ import TimelineHeaderNotification from '@components/Timeline/Shared/HeaderNotifi
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -44,7 +45,7 @@ const TimelineNotifications: React.FC<Props> = ({
     (prev, next) => prev?.id === next?.id
   )
   const navigation =
-    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const actualAccount = notification.status
     ? notification.status.account

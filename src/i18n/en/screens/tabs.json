@@ -331,6 +331,9 @@
         "reblogged_by": "{{count}} boosted",
         "favourited_by": "{{count}} favourited"
       }
+    },
+    "history": {
+      "name": "Edit History"
     }
   }
 }

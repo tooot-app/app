@@ -1,4 +1,5 @@
 import analytics from '@components/analytics'
+import features from '@helpers/features'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
@@ -341,9 +342,17 @@ export const getInstanceUrls = ({ instances: { instances } }: RootState) =>
 
 export const getInstanceVersion = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.version
-export const getInstanceVersionInFloat = ({
-  instances: { instances }
-}: RootState) => parseFloat(instances[findInstanceActive(instances)]?.version)
+export const checkInstanceFeature =
+  (feature: string) =>
+  ({ instances: { instances } }: RootState) => {
+    return features
+      .filter(f => f.feature === feature)
+      .filter(
+        f =>
+          parseFloat(instances[findInstanceActive(instances)]?.version) >=
+          f.version
+      )
+  }
 
 /* Get Instance Configuration */
 export const getInstanceConfigurationStatusMaxChars = ({

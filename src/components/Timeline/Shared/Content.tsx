@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  status: Mastodon.Status
+  status: Pick<Mastodon.Status, 'content' | 'spoiler_text' | 'emojis'> & {
+    mentions?: Mastodon.Status['mentions']
+    tags?: Mastodon.Status['tags']
+  }
   numberOfLines?: number
   highlighted?: boolean
   disableDetails?: boolean

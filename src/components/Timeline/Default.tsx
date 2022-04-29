@@ -9,6 +9,7 @@ import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -17,7 +18,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import TimelineActionsUsers from './Shared/ActionsUsers'
+import TimelineFeedback from './Shared/Feedback'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 import TimelineTranslate from './Shared/Translate'
@@ -45,7 +46,7 @@ const TimelineDefault: React.FC<Props> = ({
   const { colors } = useTheme()
   const instanceAccount = useSelector(getInstanceAccount, () => true)
   const navigation =
-    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const actualStatus = item.reblog ? item.reblog : item
 
@@ -143,7 +144,7 @@ const TimelineDefault: React.FC<Props> = ({
           <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
         ) : null}
         <TimelineTranslate status={actualStatus} highlighted={highlighted} />
-        <TimelineActionsUsers status={actualStatus} highlighted={highlighted} />
+        <TimelineFeedback status={actualStatus} highlighted={highlighted} />
       </View>
 
       {queryKey && !disableDetails ? (

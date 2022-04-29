@@ -3,6 +3,7 @@ import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -78,7 +79,7 @@ const TimelineConversation: React.FC<Props> = ({
   })
 
   const navigation =
-    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const onPress = useCallback(() => {
     analytics('timeline_conversation_press')
     if (conversation.last_status) {
