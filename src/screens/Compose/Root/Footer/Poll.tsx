@@ -121,7 +121,7 @@ const ComposePoll: React.FC = () => {
           round
           disabled={!(total > 2)}
         />
-        <Text style={styles.controlCount}>
+        <Text style={[styles.controlCount, { color: colors.secondary }]}>
           {total} / {MAX_OPTIONS}
         </Text>
         <Button
