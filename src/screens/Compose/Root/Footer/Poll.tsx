@@ -216,7 +216,7 @@ const ComposePoll: React.FC = () => {
                 userInterfaceStyle: mode
               },
               index => {
-                if (index && index < expirations.length) {
+                if (index !== undefined && index < expirations.length) {
                   analytics('compose_poll_expiration_press', {
                     current: expire,
                     new: expirations[index]
