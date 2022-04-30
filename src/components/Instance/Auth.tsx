@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import addInstance from '@utils/slices/instances/add'
-import { Instance } from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, Instance } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
 import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export interface Props {
   instanceDomain: string
@@ -27,11 +27,16 @@ const InstanceAuth = React.memo(
     const queryClient = useQueryClient()
     const dispatch = useDispatch()
 
+    const deprecateAuthFollow = useSelector(
+      checkInstanceFeature('deprecate_auth_follow')
+    )
     const [request, response, promptAsync] = AuthSession.useAuthRequest(
       {
         clientId: appData.clientId,
         clientSecret: appData.clientSecret,
-        scopes: ['read', 'write', 'follow', 'push'],
+        scopes: deprecateAuthFollow
+          ? ['read', 'write', 'push']
+          : ['read', 'write', 'follow', 'push'],
         redirectUri
       },
       {

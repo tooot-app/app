@@ -35,7 +35,7 @@ const TimelineFeedback = React.memo(
 
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View>
+        <View style={{ flexDirection: 'row' }}>
           {status.reblogs_count > 0 ? (
             <Text
               accessibilityLabel={t(
