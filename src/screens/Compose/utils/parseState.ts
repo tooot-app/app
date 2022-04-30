@@ -39,6 +39,7 @@ const composeParseState = (
 ): ComposeState => {
   switch (params.type) {
     case 'edit':
+    case 'deleteEdit':
       return {
         ...composeInitialState,
         dirty: true,

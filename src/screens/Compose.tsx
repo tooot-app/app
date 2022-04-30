@@ -1,11 +1,14 @@
 import analytics from '@components/analytics'
-import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
@@ -133,6 +136,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   useEffect(() => {
     switch (params?.type) {
       case 'edit':
+      case 'deleteEdit':
         if (params.incomingStatus.spoiler_text) {
           formatText({
             textInput: 'spoiler',
@@ -268,6 +272,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     }
     return false
   }, [totalTextCount, composeState.attachments.uploads, composeState.text.raw])
+  const mutateTimeline = useTimelineMutation({ onMutate: true })
   const headerRight = useCallback(
     () => (
       <HeaderRight
@@ -282,7 +287,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           composeDispatch({ type: 'posting', payload: true })
 
           composePost(params, composeState)
-            .then(() => {
+            .then(res => {
               haptics('Success')
               if (
                 Platform.OS === 'ios' &&
@@ -300,6 +305,15 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
               switch (params?.type) {
                 case 'edit':
+                  console.log('firing mutation')
+                  mutateTimeline.mutate({
+                    type: 'editItem',
+                    queryKey: params.queryKey,
+                    rootQueryKey: params.rootQueryKey,
+                    status: res.body
+                  })
+                  break
+                case 'deleteEdit':
                 case 'reply':
                   if (params?.queryKey && params.queryKey[1].page === 'Toot') {
                     queryClient.invalidateQueries(params.queryKey)

@@ -162,7 +162,7 @@
             "function": "删除",
             "button": "删除此条嘟文"
           },
-          "edit": {
+          "deleteEdit": {
             "function": "删除",
             "button": "删除并重新编辑此条嘟文",
             "alert": {

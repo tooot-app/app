@@ -162,7 +162,7 @@
             "function": "Xóa tút",
             "button": "Xóa tút này"
           },
-          "edit": {
+          "deleteEdit": {
             "function": "Xóa tút",
             "button": "Xóa và viết lại",
             "alert": {

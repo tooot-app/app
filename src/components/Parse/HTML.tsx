@@ -302,7 +302,7 @@ const ParseHTML = React.memo(
       />
     )
   },
-  () => true
+  (prev, next) => prev.content === next.content
 )
 
 export default ParseHTML

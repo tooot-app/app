@@ -51,8 +51,11 @@ const composePost = async (
   formData.append('visibility', composeState.visibility)
 
   return apiInstance<Mastodon.Status>({
-    method: 'post',
-    url: 'statuses',
+    method: params?.type === 'edit' ? 'put' : 'post',
+    url:
+      params?.type === 'edit'
+        ? `statuses/${params.incomingStatus.id}`
+        : 'statuses',
     headers: {
       'Idempotency-Key': await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
@@ -67,7 +70,9 @@ const composePost = async (
           composeState.attachments.sensitive +
           composeState.attachments.uploads.map(upload => upload.remote?.id) +
           composeState.visibility +
-          (params?.type === 'edit' ? Math.random() : '')
+          (params?.type === 'edit' || params?.type === 'deleteEdit'
+            ? Math.random()
+            : '')
       )
     },
     body: formData

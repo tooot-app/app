@@ -344,14 +344,16 @@ export const getInstanceVersion = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.version
 export const checkInstanceFeature =
   (feature: string) =>
-  ({ instances: { instances } }: RootState) => {
-    return features
-      .filter(f => f.feature === feature)
-      .filter(
-        f =>
-          parseFloat(instances[findInstanceActive(instances)]?.version) >=
-          f.version
-      )
+  ({ instances: { instances } }: RootState): Boolean => {
+    return (
+      features
+        .filter(f => f.feature === feature)
+        .filter(
+          f =>
+            parseFloat(instances[findInstanceActive(instances)]?.version) >=
+            f.version
+        ).length > 0
+    )
   }
 
 /* Get Instance Configuration */

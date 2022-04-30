@@ -167,11 +167,23 @@
         },
         "status": {
           "heading": "About toot",
+          "edit": {
+            "function": "Edit toot",
+            "button": "Edit this toot"
+          },
           "delete": {
             "function": "Delete toot",
-            "button": "Delete this toot"
+            "button": "Delete this toot",
+            "alert": {
+              "title": "Confirm deleting toot?",
+              "message": "Are you sure to delete this toot? All boosts and favourites will be cleared, including all replies.",
+              "buttons": {
+                "confirm": "Confirm deleting",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
           },
-          "edit": {
+          "deleteEdit": {
             "function": "Delete toot",
             "button": "Delete and re-draft",
             "alert": {

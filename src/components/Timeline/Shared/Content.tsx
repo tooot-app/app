@@ -72,7 +72,7 @@ const TimelineContent = React.memo(
       </>
     )
   },
-  () => true
+  (prev, next) => prev.status.content === next.status.content
 )
 
 export default TimelineContent

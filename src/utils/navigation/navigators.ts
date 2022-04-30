@@ -26,31 +26,20 @@ export type RootStackParamList = {
         type: 'edit'
         incomingStatus: Mastodon.Status
         replyToStatus?: Mastodon.Status
-        queryKey?: [
-          'Timeline',
-          {
-            page: App.Pages
-            hashtag?: Mastodon.Tag['name']
-            list?: Mastodon.List['id']
-            toot?: Mastodon.Status['id']
-            account?: Mastodon.Account['id']
-          }
-        ]
+        queryKey?: QueryKeyTimeline
+        rootQueryKey?: QueryKeyTimeline
+      }
+    | {
+        type: 'deleteEdit'
+        incomingStatus: Mastodon.Status
+        replyToStatus?: Mastodon.Status
+        queryKey?: QueryKeyTimeline
       }
     | {
         type: 'reply'
         incomingStatus: Mastodon.Status
         accts: Mastodon.Account['acct'][]
-        queryKey?: [
-          'Timeline',
-          {
-            page: App.Pages
-            hashtag?: Mastodon.Tag['name']
-            list?: Mastodon.List['id']
-            toot?: Mastodon.Status['id']
-            account?: Mastodon.Account['id']
-          }
-        ]
+        queryKey?: QueryKeyTimeline
       }
     | {
         type: 'conversation'

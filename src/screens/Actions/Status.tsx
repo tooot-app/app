@@ -14,6 +14,8 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import apiInstance from '@api/instance'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
+import { useSelector } from 'react-redux'
+import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 
 export interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Screen-Actions'>
@@ -59,22 +61,89 @@ const ActionsStatus: React.FC<Props> = ({
     }
   })
 
+  const canEditPost = useSelector(checkInstanceFeature('edit_post'))
+
   return (
     <MenuContainer>
       <MenuHeader heading={t('shared.header.actions.status.heading')} />
+      {canEditPost ? (
+        <MenuRow
+          onPress={async () => {
+            analytics('timeline_shared_headeractions_status_edit_press', {
+              page: queryKey && queryKey[1].page
+            })
+            let replyToStatus: Mastodon.Status | undefined = undefined
+            if (status.in_reply_to_id) {
+              replyToStatus = await apiInstance<Mastodon.Status>({
+                method: 'get',
+                url: `statuses/${status.in_reply_to_id}`
+              }).then(res => res.body)
+            }
+            apiInstance<{
+              id: Mastodon.Status['id']
+              text: NonNullable<Mastodon.Status['text']>
+              spoiler_text: Mastodon.Status['spoiler_text']
+            }>({
+              method: 'get',
+              url: `statuses/${status.id}/source`
+            }).then(res => {
+              dismiss()
+              navigation.navigate('Screen-Compose', {
+                type: 'edit',
+                incomingStatus: {
+                  ...status,
+                  text: res.body.text,
+                  spoiler_text: res.body.spoiler_text
+                },
+                ...(replyToStatus && { replyToStatus }),
+                queryKey,
+                rootQueryKey
+              })
+            })
+          }}
+          iconFront='Edit3'
+          title={t('shared.header.actions.status.edit.button')}
+        />
+      ) : null}
       <MenuRow
         onPress={() => {
           analytics('timeline_shared_headeractions_status_delete_press', {
             page: queryKey && queryKey[1].page
           })
-          dismiss()
-          mutation.mutate({
-            type: 'deleteItem',
-            source: 'statuses',
-            queryKey,
-            rootQueryKey,
-            id: status.id
-          })
+          Alert.alert(
+            t('shared.header.actions.status.delete.alert.title'),
+            t('shared.header.actions.status.delete.alert.message'),
+            [
+              {
+                text: t(
+                  'shared.header.actions.status.delete.alert.buttons.cancel'
+                ),
+                style: 'cancel'
+              },
+              {
+                text: t(
+                  'shared.header.actions.status.delete.alert.buttons.confirm'
+                ),
+                style: 'destructive',
+                onPress: async () => {
+                  analytics(
+                    'timeline_shared_headeractions_status_delete_confirm',
+                    {
+                      page: queryKey && queryKey[1].page
+                    }
+                  )
+                  dismiss()
+                  mutation.mutate({
+                    type: 'deleteItem',
+                    source: 'statuses',
+                    queryKey,
+                    rootQueryKey,
+                    id: status.id
+                  })
+                }
+              }
+            ]
+          )
         }}
         iconFront='Trash'
         title={t('shared.header.actions.status.delete.button')}
@@ -85,18 +154,18 @@ const ActionsStatus: React.FC<Props> = ({
             page: queryKey && queryKey[1].page
           })
           Alert.alert(
-            t('shared.header.actions.status.edit.alert.title'),
-            t('shared.header.actions.status.edit.alert.message'),
+            t('shared.header.actions.status.deleteEdit.alert.title'),
+            t('shared.header.actions.status.deleteEdit.alert.message'),
             [
               {
                 text: t(
-                  'shared.header.actions.status.edit.alert.buttons.cancel'
+                  'shared.header.actions.status.deleteEdit.alert.buttons.cancel'
                 ),
                 style: 'cancel'
               },
               {
                 text: t(
-                  'shared.header.actions.status.edit.alert.buttons.confirm'
+                  'shared.header.actions.status.deleteEdit.alert.buttons.confirm'
                 ),
                 style: 'destructive',
                 onPress: async () => {
@@ -106,7 +175,7 @@ const ActionsStatus: React.FC<Props> = ({
                       page: queryKey && queryKey[1].page
                     }
                   )
-                  let replyToStatus: Mastodon.Status
+                  let replyToStatus: Mastodon.Status | undefined = undefined
                   if (status.in_reply_to_id) {
                     replyToStatus = await apiInstance<Mastodon.Status>({
                       method: 'get',
@@ -122,10 +191,9 @@ const ActionsStatus: React.FC<Props> = ({
                     })
                     .then(res => {
                       dismiss()
-                      // @ts-ignore
                       navigation.navigate('Screen-Compose', {
-                        type: 'edit',
-                        incomingStatus: res.body,
+                        type: 'deleteEdit',
+                        incomingStatus: res.body as Mastodon.Status,
                         ...(replyToStatus && { replyToStatus }),
                         queryKey
                       })
@@ -136,7 +204,7 @@ const ActionsStatus: React.FC<Props> = ({
           )
         }}
         iconFront='Edit'
-        title={t('shared.header.actions.status.edit.button')}
+        title={t('shared.header.actions.status.deleteEdit.button')}
       />
       <MenuRow
         onPress={() => {
