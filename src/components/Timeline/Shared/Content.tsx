@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  status: Pick<Mastodon.Status, 'content' | 'spoiler_text' | 'emojis'> & {
-    mentions?: Mastodon.Status['mentions']
-    tags?: Mastodon.Status['tags']
-  }
+  status: Pick<
+    Mastodon.Status,
+    'content' | 'spoiler_text' | 'emojis' | 'mentions' | 'tags'
+  >
   numberOfLines?: number
   highlighted?: boolean
   disableDetails?: boolean
@@ -72,7 +72,9 @@ const TimelineContent = React.memo(
       </>
     )
   },
-  (prev, next) => prev.status.content === next.status.content
+  (prev, next) =>
+    prev.status.content === next.status.content &&
+    prev.status.spoiler_text === next.status.spoiler_text
 )
 
 export default TimelineContent

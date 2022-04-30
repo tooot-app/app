@@ -37,7 +37,7 @@ const HeaderSharedCreated = React.memo(
       </>
     )
   },
-  () => true
+  (prev, next) => prev.edited_at === next.edited_at
 )
 
 export default HeaderSharedCreated

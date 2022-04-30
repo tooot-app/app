@@ -7,13 +7,16 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, Text } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { useSelector } from 'react-redux'
 
 export interface Props {
   highlighted: boolean
-  status: Mastodon.Status
+  status: Pick<
+    Mastodon.Status,
+    'language' | 'spoiler_text' | 'content' | 'emojis'
+  >
 }
 
 const TimelineTranslate = React.memo(
@@ -60,7 +63,12 @@ const TimelineTranslate = React.memo(
     return (
       <>
         <Pressable
-          style={[styles.button, { paddingBottom: isSuccess ? 0 : undefined }]}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: StyleConstants.Spacing.S,
+            paddingBottom: isSuccess ? 0 : undefined
+          }}
           onPress={() => {
             if (enabled) {
               if (!isSuccess) {
@@ -128,15 +136,10 @@ const TimelineTranslate = React.memo(
       </>
     )
   },
-  () => true
+  (prev, next) =>
+    prev.status.language === next.status.language &&
+    prev.status.content === next.status.content &&
+    prev.status.spoiler_text === next.status.spoiler_text
 )
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: StyleConstants.Spacing.S
-  }
-})
 
 export default TimelineTranslate

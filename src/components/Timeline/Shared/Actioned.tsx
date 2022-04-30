@@ -144,19 +144,23 @@ const TimelineActioned = React.memo(
       }
     }, [])
 
-    return <View style={styles.actioned} children={children} />
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: StyleConstants.Spacing.S,
+          paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
+          paddingRight: StyleConstants.Spacing.Global.PagePadding
+        }}
+        children={children}
+      />
+    )
   },
   () => true
 )
 
 const styles = StyleSheet.create({
-  actioned: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: StyleConstants.Spacing.S,
-    paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding
-  },
   icon: {
     marginRight: StyleConstants.Spacing.S
   }

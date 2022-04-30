@@ -2,6 +2,8 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -31,7 +33,7 @@ const TimelineActions: React.FC<Props> = ({
   accts,
   reblog
 }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { t } = useTranslation('componentTimeline')
   const { colors, theme } = useTheme()
   const iconColor = colors.secondary

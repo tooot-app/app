@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
 export interface Props {
-  status: Mastodon.Status
+  status: Pick<
+    Mastodon.Status,
+    'id' | 'edited_at' | 'reblogs_count' | 'favourites_count'
+  >
   highlighted: boolean
 }
 
@@ -125,6 +128,7 @@ const TimelineFeedback = React.memo(
     )
   },
   (prev, next) =>
+    prev.status.edited_at === next.status.edited_at &&
     prev.status.reblogs_count === next.status.reblogs_count &&
     prev.status.favourites_count === next.status.favourites_count
 )

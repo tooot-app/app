@@ -50,8 +50,7 @@ const TimelineAvatar = React.memo(
         }}
       />
     )
-  },
-  () => true
+  }
 )
 
 export default TimelineAvatar
