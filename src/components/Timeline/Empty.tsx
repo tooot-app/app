@@ -4,7 +4,7 @@ import Icon from '@components/Icon'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
@@ -20,10 +20,10 @@ const TimelineEmpty = React.memo(
       options: { notifyOnChangeProps: ['status'] }
     })
 
-    const { colors, theme } = useTheme()
-    const { t, i18n } = useTranslation('componentTimeline')
+    const { colors } = useTheme()
+    const { t } = useTranslation('componentTimeline')
 
-    const children = useMemo(() => {
+    const children = () => {
       switch (status) {
         case 'loading':
           return (
@@ -67,24 +67,25 @@ const TimelineEmpty = React.memo(
             </>
           )
       }
-    }, [theme, i18n.language, status])
+    }
     return (
       <View
-        style={[styles.base, { backgroundColor: colors.backgroundDefault }]}
-        children={children}
-      />
+        style={{
+          flex: 1,
+          minHeight: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: colors.backgroundDefault
+        }}
+      >
+        {children()}
+      </View>
     )
   },
   () => true
 )
 
 const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    minHeight: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   error: {
     ...StyleConstants.FontStyle.M,
     marginTop: StyleConstants.Spacing.S,
