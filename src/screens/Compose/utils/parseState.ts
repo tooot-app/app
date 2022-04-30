@@ -70,7 +70,8 @@ const composeParseState = (
           }
         }),
         ...assignVisibility(params.incomingStatus.visibility),
-        ...(params.replyToStatus && { replyToStatus: params.replyToStatus })
+        ...(params.replyToStatus && { replyToStatus: params.replyToStatus }),
+        visibilityLock: params.type === 'edit'
       }
     case 'reply':
       const actualStatus = params.incomingStatus.reblog || params.incomingStatus
