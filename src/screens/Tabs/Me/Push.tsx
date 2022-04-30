@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
@@ -20,7 +21,7 @@ import * as WebBrowser from 'expo-web-browser'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, ScrollView, Text, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const TabMePush: React.FC = () => {
   const { colors } = useTheme()
@@ -31,7 +32,7 @@ const TabMePush: React.FC = () => {
   )
   const instanceUri = useSelector(getInstanceUri)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const instancePush = useSelector(getInstancePush)
 
   const [pushAvailable, setPushAvailable] = useState<boolean | undefined>(

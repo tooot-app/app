@@ -4,7 +4,6 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import pushUseNavigate from './useNavigate'
 
 export interface Params {
@@ -12,8 +11,6 @@ export interface Params {
 }
 
 const pushUseRespond = ({ instances }: Params) => {
-  const dispatch = useDispatch()
-
   return useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       ({ notification }) => {

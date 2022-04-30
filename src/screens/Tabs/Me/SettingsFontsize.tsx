@@ -2,6 +2,7 @@ import Button from '@components/Button'
 import haptics from '@components/haptics'
 import ComponentSeparator from '@components/Separator'
 import TimelineDefault from '@components/Timeline/Default'
+import { useAppDispatch } from '@root/store'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import {
   changeFontsize,
@@ -15,7 +16,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   switch (size) {
@@ -38,7 +39,7 @@ const TabMeSettingsFontsize: React.FC<
   const { colors, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const item = {
     id: 'demo',

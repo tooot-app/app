@@ -11,9 +11,10 @@ import { StyleConstants } from '@utils/styles/constants'
 import React, { useMemo } from 'react'
 import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useQueryClient } from 'react-query'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { useAppDispatch } from '@root/store'
 
 const ActionsNotificationsFilter: React.FC = () => {
   const navigation = useNavigation()
@@ -22,7 +23,7 @@ const ActionsNotificationsFilter: React.FC = () => {
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
   const queryClient = useQueryClient()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const instanceNotificationsFilter = useSelector(
     getInstanceNotificationsFilter
   )
@@ -35,21 +36,23 @@ const ActionsNotificationsFilter: React.FC = () => {
   const options = useMemo(() => {
     return (
       instanceNotificationsFilter &&
-      ([
-        'follow',
-        'favourite',
-        'reblog',
-        'mention',
-        'poll',
-        'follow_request'
-      ] as [
-        'follow',
-        'favourite',
-        'reblog',
-        'mention',
-        'poll',
-        'follow_request'
-      ]).map(type => (
+      (
+        [
+          'follow',
+          'favourite',
+          'reblog',
+          'mention',
+          'poll',
+          'follow_request'
+        ] as [
+          'follow',
+          'favourite',
+          'reblog',
+          'mention',
+          'poll',
+          'follow_request'
+        ]
+      ).map(type => (
         <MenuRow
           key={type}
           title={t(`content.notificationsFilter.content.${type}`)}

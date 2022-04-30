@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch } from '@root/store'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import addInstance from '@utils/slices/instances/add'
 import { checkInstanceFeature, Instance } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
 import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   instanceDomain: string
@@ -25,7 +26,7 @@ const InstanceAuth = React.memo(
     const navigation =
       useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
     const queryClient = useQueryClient()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const deprecateAuthFollow = useSelector(
       checkInstanceFeature('deprecate_auth_follow')

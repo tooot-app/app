@@ -1,5 +1,6 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
+import { useAppDispatch } from '@root/store'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import {
   getInstanceActive,
@@ -20,7 +21,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
 import TimelineRefresh, {
@@ -127,7 +128,7 @@ const Timeline: React.FC<Props> = ({
     }
   })
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const viewabilityPairs = useRef<ViewabilityConfigCallbackPairs>([
     {
       viewabilityConfig: {

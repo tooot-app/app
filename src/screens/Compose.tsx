@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
+import { useAppDispatch } from '@root/store'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
@@ -36,7 +37,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
@@ -253,7 +254,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     ),
     [composeState]
   )
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const headerRightDisabled = useMemo(() => {
     if (totalTextCount > maxTootChars) {
       return true

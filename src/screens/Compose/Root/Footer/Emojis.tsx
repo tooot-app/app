@@ -1,4 +1,5 @@
 import haptics from '@components/haptics'
+import { useAppDispatch } from '@root/store'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { countInstanceEmoji } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -15,7 +16,6 @@ import {
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useDispatch } from 'react-redux'
 import validUrl from 'valid-url'
 import updateText from '../../updateText'
 import ComposeContext from '../../utils/createContext'
@@ -29,7 +29,7 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const { reduceMotionEnabled } = useAccessibility()
   const { colors } = useTheme()
   const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const tagEmojis = findNodeHandle(accessibleRefEmojis.current)

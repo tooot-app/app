@@ -3,6 +3,7 @@ import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch } from '@root/store'
 import {
   getInstanceDrafts,
   removeInstanceDraft
@@ -23,7 +24,7 @@ import {
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import formatText from '../formatText'
 import ComposeContext from '../utils/createContext'
 import { ComposeStateDraft, ExtendedAttachment } from '../utils/types'
@@ -36,7 +37,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const { composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { colors, theme } = useTheme()
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp

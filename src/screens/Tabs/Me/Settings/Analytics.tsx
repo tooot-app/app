@@ -1,4 +1,5 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
+import { useAppDispatch } from '@root/store'
 import {
   changeAnalytics,
   getSettingsAnalytics
@@ -9,10 +10,10 @@ import Constants from 'expo-constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const SettingsAnalytics: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 

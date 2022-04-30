@@ -2,13 +2,13 @@ import apiGeneral from '@api/general'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
+import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { TFunction } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 
 export interface Params {
   t: TFunction<'screens'>
@@ -16,7 +16,7 @@ export interface Params {
 }
 
 const pushUseConnect = ({ t, instances }: Params) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { theme } = useTheme()
 
   return useEffect(() => {

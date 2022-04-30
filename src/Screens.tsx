@@ -27,8 +27,9 @@ import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
+import { useAppDispatch } from './store'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -38,7 +39,7 @@ export interface Props {
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const { t } = useTranslation('screens')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { colors, theme } = useTheme()
 
