@@ -267,7 +267,8 @@
         "heading": "Help us improve",
         "description": "Collecting only non-user relative usage"
       },
-      "version": "Version v{{version}}"
+      "version": "Version v{{version}}",
+      "instanceVersion": "Mastodon version v{{version}}"
     },
     "switch": {
       "existing": "Choose from logged in",
