@@ -10,142 +10,116 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
 
-const Names = React.memo(
-  ({ accounts }: { accounts: Mastodon.Account[] }) => {
-    const { t } = useTranslation('componentTimeline')
-    const { colors } = useTheme()
+const Names = ({ accounts }: { accounts: Mastodon.Account[] }) => {
+  const { t } = useTranslation('componentTimeline')
+  const { colors } = useTheme()
 
-    return (
-      <Text
-        numberOfLines={1}
-        style={[styles.namesLeading, { color: colors.secondary }]}
-      >
-        <Text>{t('shared.header.conversation.withAccounts')}</Text>
-        {accounts.map((account, index) => (
-          <Text key={account.id} numberOfLines={1}>
-            {index !== 0 ? t('common:separator') : undefined}
-            <ParseEmojis
-              content={account.display_name || account.username}
-              emojis={account.emojis}
-              fontBold
-            />
-          </Text>
-        ))}
-      </Text>
-    )
-  },
-  () => true
-)
+  return (
+    <Text
+      numberOfLines={1}
+      style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
+    >
+      <Text>{t('shared.header.conversation.withAccounts')}</Text>
+      {accounts.map((account, index) => (
+        <Text key={account.id} numberOfLines={1}>
+          {index !== 0 ? t('common:separator') : undefined}
+          <ParseEmojis
+            content={account.display_name || account.username}
+            emojis={account.emojis}
+            fontBold
+          />
+        </Text>
+      ))}
+    </Text>
+  )
+}
 
 export interface Props {
   queryKey: QueryKeyTimeline
   conversation: Mastodon.Conversation
 }
 
-const HeaderConversation = React.memo(
-  ({ queryKey, conversation }: Props) => {
-    const { colors, theme } = useTheme()
-    const { t } = useTranslation('componentTimeline')
+const HeaderConversation = ({ queryKey, conversation }: Props) => {
+  const { colors, theme } = useTheme()
+  const { t } = useTranslation('componentTimeline')
 
-    const queryClient = useQueryClient()
-    const mutation = useTimelineMutation({
-      onMutate: true,
-      onError: (err: any, _, oldData) => {
-        displayMessage({
-          theme,
-          type: 'error',
-          message: t('common:message.error.message', {
-            function: t(`shared.header.conversation.delete.function`)
-          }),
-          ...(err.status &&
-            typeof err.status === 'number' &&
-            err.data &&
-            err.data.error &&
-            typeof err.data.error === 'string' && {
-              description: err.data.error
-            })
-        })
-        queryClient.setQueryData(queryKey, oldData)
-      }
-    })
-
-    const actionOnPress = useCallback(() => {
-      analytics('timeline_conversation_delete_press')
-      mutation.mutate({
-        type: 'deleteItem',
-        source: 'conversations',
-        queryKey,
-        id: conversation.id
+  const queryClient = useQueryClient()
+  const mutation = useTimelineMutation({
+    onMutate: true,
+    onError: (err: any, _, oldData) => {
+      displayMessage({
+        theme,
+        type: 'error',
+        message: t('common:message.error.message', {
+          function: t(`shared.header.conversation.delete.function`)
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          })
       })
-    }, [])
+      queryClient.setQueryData(queryKey, oldData)
+    }
+  })
 
-    const actionChildren = useMemo(
-      () => (
-        <Icon
-          name='Trash'
-          color={colors.secondary}
-          size={StyleConstants.Font.Size.L}
-        />
-      ),
-      []
-    )
+  const actionOnPress = useCallback(() => {
+    analytics('timeline_conversation_delete_press')
+    mutation.mutate({
+      type: 'deleteItem',
+      source: 'conversations',
+      queryKey,
+      id: conversation.id
+    })
+  }, [])
 
-    return (
-      <View style={styles.base}>
-        <View style={styles.nameAndMeta}>
-          <Names accounts={conversation.accounts} />
-          <View style={styles.meta}>
-            {conversation.last_status?.created_at ? (
-              <HeaderSharedCreated
-                created_at={conversation.last_status?.created_at}
-                edited_at={conversation.last_status?.edited_at}
-              />
-            ) : null}
-            <HeaderSharedMuted muted={conversation.last_status?.muted} />
-          </View>
+  const actionChildren = useMemo(
+    () => (
+      <Icon
+        name='Trash'
+        color={colors.secondary}
+        size={StyleConstants.Font.Size.L}
+      />
+    ),
+    []
+  )
+
+  return (
+    <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ flex: 3 }}>
+        <Names accounts={conversation.accounts} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: StyleConstants.Spacing.XS,
+            marginBottom: StyleConstants.Spacing.S
+          }}
+        >
+          {conversation.last_status?.created_at ? (
+            <HeaderSharedCreated
+              created_at={conversation.last_status?.created_at}
+              edited_at={conversation.last_status?.edited_at}
+            />
+          ) : null}
+          <HeaderSharedMuted muted={conversation.last_status?.muted} />
         </View>
-
-        <Pressable
-          style={styles.action}
-          onPress={actionOnPress}
-          children={actionChildren}
-        />
       </View>
-    )
-  },
-  () => true
-)
 
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  nameAndMeta: {
-    flex: 3
-  },
-  meta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: StyleConstants.Spacing.XS,
-    marginBottom: StyleConstants.Spacing.S
-  },
-  created_at: {
-    ...StyleConstants.FontStyle.S
-  },
-  action: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  namesLeading: {
-    ...StyleConstants.FontStyle.M
-  }
-})
+      <Pressable
+        style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
+        onPress={actionOnPress}
+        children={actionChildren}
+      />
+    </View>
+  )
+}
 
 export default HeaderConversation

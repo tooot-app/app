@@ -305,7 +305,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
               switch (params?.type) {
                 case 'edit':
-                  console.log('firing mutation')
                   mutateTimeline.mutate({
                     type: 'editItem',
                     queryKey: params.queryKey,
