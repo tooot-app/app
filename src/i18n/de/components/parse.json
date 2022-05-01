@@ -1,0 +1,9 @@
+{
+  "HTML": {
+    "expanded": {
+      "true": "Zusammenklappen {{hint}}",
+      "false": "Ausklappen {{hint}}"
+    },
+    "defaultHint": "Artikel"
+  }
+}
