@@ -224,7 +224,7 @@ lane :build do
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
     puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
-    cocoapods(clean_install: true, podfile: "./ios/Podfile", deployment: true)
+    cocoapods(clean_install: true, podfile: "./ios/Podfile")
     build_ios
     build_android
     case ENVIRONMENT
