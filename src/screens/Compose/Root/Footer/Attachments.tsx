@@ -27,7 +27,7 @@ import {
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
-import addAttachment from './addAttachment'
+import chooseAndUploadAttachment from './addAttachment'
 
 export interface Props {
   accessibleRefAttachments: RefObject<View>
@@ -218,7 +218,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         ]}
         onPress={async () => {
           analytics('compose_attachment_add_container_press')
-          await addAttachment({ composeDispatch, showActionSheetWithOptions })
+          await chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
         }}
       >
         <Button
@@ -229,7 +229,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           overlay
           onPress={async () => {
             analytics('compose_attachment_add_button_press')
-            await addAttachment({ composeDispatch, showActionSheetWithOptions })
+            await chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
           }}
           style={{
             position: 'absolute',

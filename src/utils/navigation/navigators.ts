@@ -45,6 +45,12 @@ export type RootStackParamList = {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
       }
+    | {
+        type: 'share'
+        text?: string
+        images?: { type: string; uri: string }[]
+        video?: { type: string; uri: string }
+      }
     | undefined
   'Screen-ImagesViewer': {
     imageUrls: {

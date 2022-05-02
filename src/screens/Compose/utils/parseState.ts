@@ -38,6 +38,8 @@ const composeParseState = (
   params: NonNullable<RootStackParamList['Screen-Compose']>
 ): ComposeState => {
   switch (params.type) {
+    case 'share':
+      return { ...composeInitialState, dirty: true, timestamp: Date.now() }
     case 'edit':
     case 'deleteEdit':
       return {

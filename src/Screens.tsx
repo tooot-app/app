@@ -27,6 +27,7 @@ import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
+import ShareMenu from 'react-native-share-menu'
 import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 import { useAppDispatch } from './store'
@@ -157,6 +158,77 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       getUrlAsync()
     }
   }, [instanceActive, instances, deeplinked])
+
+  // Share Extension
+  const handleShare = useCallback(
+    (item?: {
+      extraData?: { share: { mimeType: string; data: string }[] }
+    }) => {
+      if (instanceActive < 0) {
+        return
+      }
+      if (
+        !item ||
+        !item.extraData ||
+        !Array.isArray(item.extraData.share) ||
+        !item.extraData.share.length
+      ) {
+        return
+      }
+
+      let text: string | undefined = undefined
+      let images: { type: string; uri: string }[] = []
+      let video: { type: string; uri: string } | undefined = undefined
+      item.extraData.share.forEach((d, i) => {
+        const typesImage = ['png', 'jpg', 'jpeg', 'gif']
+        const typesVideo = ['mp4', 'm4v', 'mov', 'webm']
+        const { mimeType, data } = d
+        console.log('mimeType', mimeType)
+        console.log('data', data)
+        if (mimeType.startsWith('image/')) {
+          if (!typesImage.includes(mimeType.split('/')[1])) {
+            console.warn('Image type not supported:', mimeType.split('/')[1])
+            return
+          }
+          images.push({ type: mimeType.split('/')[1], uri: data })
+        } else if (mimeType.startsWith('video/')) {
+          if (!typesVideo.includes(mimeType.split('/')[1])) {
+            console.warn('Video type not supported:', mimeType.split('/')[1])
+            return
+          }
+          video = { type: mimeType.split('/')[1], uri: data }
+        } else {
+          if (typesImage.includes(data.split('.').pop() || '')) {
+            images.push({ type: data.split('.').pop()!, uri: data })
+            return
+          }
+          if (typesVideo.includes(data.split('.').pop() || '')) {
+            video = { type: data.split('.').pop()!, uri: data }
+            return
+          }
+          text = !text ? data : text.concat(text, `\n${data}`)
+        }
+      })
+      navigationRef.navigate('Screen-Compose', {
+        type: 'share',
+        text,
+        images,
+        video
+      })
+    },
+    [instanceActive]
+  )
+  useEffect(() => {
+    console.log('getting intial share')
+    ShareMenu.getInitialShare(handleShare)
+  }, [])
+  useEffect(() => {
+    console.log('getting just share')
+    const listener = ShareMenu.addNewShareListener(handleShare)
+    return () => {
+      listener.remove()
+    }
+  }, [])
 
   return (
     <>

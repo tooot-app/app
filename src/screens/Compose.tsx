@@ -1,3 +1,4 @@
+import apiInstance from '@api/instance'
 import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -41,6 +42,7 @@ import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
+import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
@@ -135,7 +137,36 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   ])
 
   useEffect(() => {
+    const uploadImage = async ({
+      type,
+      uri
+    }: {
+      type: 'image' | 'video'
+      uri: string
+    }) => {
+      await uploadAttachment({
+        composeDispatch,
+        imageInfo: { type, uri, width: 100, height: 100 }
+      })
+    }
     switch (params?.type) {
+      case 'share':
+        if (params.text) {
+          formatText({
+            textInput: 'text',
+            composeDispatch,
+            content: params.text,
+            disableDebounce: true
+          })
+        }
+        if (params.images?.length) {
+          params.images.forEach(image => {
+            uploadImage({ type: 'image', uri: image.uri })
+          })
+        } else if (params.video) {
+          uploadImage({ type: 'video', uri: params.video.uri })
+        }
+        break
       case 'edit':
       case 'deleteEdit':
         if (params.incomingStatus.spoiler_text) {
