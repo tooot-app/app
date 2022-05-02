@@ -1,0 +1,28 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "站點的網域"
+    },
+    "button": "登入",
+    "information": {
+      "name": "名稱",
+      "accounts": "使用者",
+      "statuses": "嘟文",
+      "domains": "串聯宇宙"
+    },
+    "disclaimer": {
+      "base": "將使用系統內建的瀏覽器來登入，tooot app 無法讀取您的帳號資訊；詳見 ",
+      "privacy": "隱私權政策"
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "已登入站點",
+      "message": "您可以多登入其他的帳號，已登入的帳號會被保留",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "繼續"
+      }
+    }
+  }
+}

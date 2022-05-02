@@ -1,0 +1,28 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Instanz"
+    },
+    "button": "Login",
+    "information": {
+      "name": "Name",
+      "accounts": "Konten",
+      "statuses": "Tröts",
+      "domains": "Domains"
+    },
+    "disclaimer": {
+      "base": "Der Login erfolgt über den Browser, so dass Ihre Kontoinformationen für die Toot-App nicht sichtbar sind. Weitere Informationen",
+      "privacy": "Datenschutzbestimmungen"
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Bei der Instanz angemeldet",
+      "message": "Du kannst dich mit einem weiteren Konto anmelden, während du weiterhin mit deinem bestehen Account eingeloggt bleibst",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Weiter"
+      }
+    }
+  }
+}

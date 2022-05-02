@@ -1,0 +1,28 @@
+{
+  "title": "選擇媒體來源",
+  "options": {
+    "library": "上傳",
+    "photo": "拍照",
+    "cancel": "$t(common:buttons.cancel)"
+  },
+  "library": {
+    "alert": {
+      "title": "權限不足",
+      "message": "上傳照片需要讀取的權限",
+      "buttons": {
+        "settings": "更新設定",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "權限不足",
+      "message": "需要使用相機的權限來上傳",
+      "buttons": {
+        "settings": "更新設定",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  }
+}

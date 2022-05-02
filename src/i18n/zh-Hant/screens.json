@@ -1,0 +1,14 @@
+{
+  "screenshot": {
+    "title": "保護隱私",
+    "message": "請不要散佈使用者的身份，像是使用者名稱、大頭照等，謝謝你！",
+    "button": "確認"
+  },
+  "localCorrupt": {
+    "message": "登入狀態已過期，請再登入一次"
+  },
+  "pushError": {
+    "message": "推播服務錯誤",
+    "description": "請在設定裡重新啟用推播"
+  }
+}
