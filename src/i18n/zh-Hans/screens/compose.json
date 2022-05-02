@@ -16,7 +16,9 @@
         "default": "发嘟嘟",
         "conversation": "发私信",
         "reply": "发布回复",
-        "edit": "发嘟嘟"
+        "deleteEdit": "发嘟嘟",
+        "edit": "发嘟嘟",
+        "share": "发嘟嘟"
       },
       "alert": {
         "default": {
