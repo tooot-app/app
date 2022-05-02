@@ -61,7 +61,7 @@
       },
       "history": {
         "accessibilityLabel": "This toot has been edited {{count}} times",
-        "accessibilityHint": "Tap to know view the full history",
+        "accessibilityHint": "Tap to view the full edit history",
         "text": "{{count}} edit",
         "text_plural": "{{count}} edits"
       }
