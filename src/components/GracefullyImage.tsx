@@ -1,6 +1,6 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -39,125 +39,103 @@ export interface Props {
   >
 }
 
-const GracefullyImage = React.memo(
-  ({
-    accessibilityLabel,
-    accessibilityHint,
-    hidden = false,
-    uri,
-    blurhash,
-    dimension,
-    onPress,
-    style,
-    imageStyle,
-    setImageDimensions
-  }: Props) => {
-    const { reduceMotionEnabled } = useAccessibility()
-    const { colors } = useTheme()
-    const [originalFailed, setOriginalFailed] = useState(false)
-    const [imageLoaded, setImageLoaded] = useState(false)
+const GracefullyImage = ({
+  accessibilityLabel,
+  accessibilityHint,
+  hidden = false,
+  uri,
+  blurhash,
+  dimension,
+  onPress,
+  style,
+  imageStyle,
+  setImageDimensions
+}: Props) => {
+  const { reduceMotionEnabled } = useAccessibility()
+  const { colors } = useTheme()
+  const [originalFailed, setOriginalFailed] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
-    const source = useMemo(() => {
-      if (originalFailed) {
-        return { uri: uri.remote || undefined }
-      } else {
-        return {
-          uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
-        }
+  const source = originalFailed
+    ? { uri: uri.remote || undefined }
+    : {
+        uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
       }
-    }, [originalFailed])
 
-    const onLoad = useCallback(() => {
-      setImageLoaded(true)
-      if (setImageDimensions && source.uri) {
-        Image.getSize(source.uri, (width, height) =>
-          setImageDimensions({ width, height })
+  const onLoad = () => {
+    setImageLoaded(true)
+    if (setImageDimensions && source.uri) {
+      Image.getSize(source.uri, (width, height) =>
+        setImageDimensions({ width, height })
+      )
+    }
+  }
+  const onError = () => {
+    if (!originalFailed) {
+      setOriginalFailed(true)
+    }
+  }
+
+  const blurhashView = useMemo(() => {
+    if (hidden || !imageLoaded) {
+      if (blurhash) {
+        return (
+          <Blurhash
+            decodeAsync
+            blurhash={blurhash}
+            style={styles.placeholder}
+          />
         )
-      }
-    }, [source.uri])
-    const onError = useCallback(() => {
-      if (!originalFailed) {
-        setOriginalFailed(true)
-      }
-    }, [originalFailed])
-
-    const previewView = useMemo(
-      () =>
-        uri.preview && !imageLoaded ? (
-          <Image
-            fadeDuration={0}
-            source={{ uri: uri.preview }}
+      } else {
+        return (
+          <View
             style={[
               styles.placeholder,
               { backgroundColor: colors.shimmerDefault }
             ]}
           />
-        ) : null,
-      []
-    )
-    const originalView = useMemo(
-      () => (
+        )
+      }
+    } else {
+      return null
+    }
+  }, [hidden, imageLoaded])
+
+  return (
+    <Pressable
+      {...(onPress
+        ? { accessibilityRole: 'imagebutton' }
+        : { accessibilityRole: 'image' })}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
+      {...(onPress
+        ? hidden
+          ? { disabled: true }
+          : { onPress }
+        : { disabled: true })}
+    >
+      {uri.preview && !imageLoaded ? (
         <Image
           fadeDuration={0}
-          source={source}
-          style={[{ flex: 1 }, imageStyle]}
-          onLoad={onLoad}
-          onError={onError}
+          source={{ uri: uri.preview }}
+          style={[
+            styles.placeholder,
+            { backgroundColor: colors.shimmerDefault }
+          ]}
         />
-      ),
-      [source]
-    )
-    const blurhashView = useMemo(() => {
-      if (hidden || !imageLoaded) {
-        if (blurhash) {
-          return (
-            <Blurhash
-              decodeAsync
-              blurhash={blurhash}
-              style={styles.placeholder}
-            />
-          )
-        } else {
-          return (
-            <View
-              style={[
-                styles.placeholder,
-                { backgroundColor: colors.shimmerDefault }
-              ]}
-            />
-          )
-        }
-      } else {
-        return null
-      }
-    }, [hidden, imageLoaded])
-
-    return (
-      <Pressable
-        {...(onPress
-          ? { accessibilityRole: 'imagebutton' }
-          : { accessibilityRole: 'image' })}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityHint={accessibilityHint}
-        style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
-        {...(onPress
-          ? hidden
-            ? { disabled: true }
-            : { onPress }
-          : { disabled: true })}
-      >
-        {previewView}
-        {originalView}
-        {blurhashView}
-      </Pressable>
-    )
-  },
-  (prev, next) =>
-    prev.hidden === next.hidden &&
-    prev.uri.preview === next.uri.preview &&
-    prev.uri.original === next.uri.original &&
-    prev.uri.remote === next.uri.remote
-)
+      ) : null}
+      <Image
+        fadeDuration={0}
+        source={source}
+        style={[{ flex: 1 }, imageStyle]}
+        onLoad={onLoad}
+        onError={onError}
+      />
+      {blurhashView}
+    </Pressable>
+  )
+}
 
 const styles = StyleSheet.create({
   placeholder: {

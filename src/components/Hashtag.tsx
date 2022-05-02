@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
@@ -19,7 +20,7 @@ const ComponentHashtag: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
   const navigation =
-    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })

@@ -1,8 +1,9 @@
 import analytics from '@components/analytics'
+import features from '@helpers/features'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { InstanceV9 } from '@utils/migrations/instances/v9'
 import addInstance from './instances/add'
 import { checkEmojis } from './instances/checkEmojis'
 import removeInstance from './instances/remove'
@@ -13,82 +14,7 @@ import { updateInstancePush } from './instances/updatePush'
 import { updateInstancePushAlert } from './instances/updatePushAlert'
 import { updateInstancePushDecode } from './instances/updatePushDecode'
 
-export type Instance = {
-  active: boolean
-  appData: {
-    clientId: string
-    clientSecret: string
-  }
-  url: string
-  token: string
-  uri: Mastodon.Instance['uri']
-  urls: Mastodon.Instance['urls']
-  account: {
-    id: Mastodon.Account['id']
-    acct: Mastodon.Account['acct']
-    avatarStatic: Mastodon.Account['avatar_static']
-    preferences: Mastodon.Preferences
-  }
-  max_toot_chars?: number // To be deprecated in v4
-  configuration?: Mastodon.Instance['configuration']
-  filters: Mastodon.Filter[]
-  notifications_filter: {
-    follow: boolean
-    favourite: boolean
-    reblog: boolean
-    mention: boolean
-    poll: boolean
-    follow_request: boolean
-  }
-  push: {
-    global: { loading: boolean; value: boolean }
-    decode: { loading: boolean; value: boolean }
-    alerts: {
-      follow: {
-        loading: boolean
-        value: Mastodon.PushSubscription['alerts']['follow']
-      }
-      favourite: {
-        loading: boolean
-        value: Mastodon.PushSubscription['alerts']['favourite']
-      }
-      reblog: {
-        loading: boolean
-        value: Mastodon.PushSubscription['alerts']['reblog']
-      }
-      mention: {
-        loading: boolean
-        value: Mastodon.PushSubscription['alerts']['mention']
-      }
-      poll: {
-        loading: boolean
-        value: Mastodon.PushSubscription['alerts']['poll']
-      }
-    }
-    keys: {
-      auth?: string
-      public?: string // legacy
-      private?: string // legacy
-    }
-  }
-  timelinesLookback?: {
-    [key: string]: {
-      queryKey: QueryKeyTimeline
-      ids: Mastodon.Status['id'][]
-    }
-  }
-  mePage: {
-    lists: { shown: boolean }
-    announcements: { shown: boolean; unread: number }
-  }
-  drafts: ComposeStateDraft[]
-  frequentEmojis: {
-    emoji: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>
-    score: number
-    count: number
-    lastUsed: number
-  }[]
-}
+export type Instance = InstanceV9
 
 export type InstancesState = {
   instances: Instance[]
@@ -318,8 +244,7 @@ const instancesSlice = createSlice({
       // Update Instance Configuration
       .addCase(updateConfiguration.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].max_toot_chars =
-          action.payload.max_toot_chars
+        state.instances[activeIndex].version = action.payload.version
         state.instances[activeIndex].configuration =
           action.payload.configuration
       })
@@ -415,14 +340,28 @@ export const getInstanceUri = ({ instances: { instances } }: RootState) =>
 export const getInstanceUrls = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.urls
 
+export const getInstanceVersion = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.version
+export const checkInstanceFeature =
+  (feature: string) =>
+  ({ instances: { instances } }: RootState): Boolean => {
+    return (
+      features
+        .filter(f => f.feature === feature)
+        .filter(
+          f =>
+            parseFloat(instances[findInstanceActive(instances)]?.version) >=
+            f.version
+        ).length > 0
+    )
+  }
+
 /* Get Instance Configuration */
 export const getInstanceConfigurationStatusMaxChars = ({
   instances: { instances }
 }: RootState) =>
   instances[findInstanceActive(instances)]?.configuration?.statuses
-    .max_characters ||
-  instances[findInstanceActive(instances)]?.max_toot_chars ||
-  500
+    .max_characters || 500
 
 export const getInstanceConfigurationStatusMaxAttachments = ({
   instances: { instances }

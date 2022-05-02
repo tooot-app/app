@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
-import addAttachment from './Footer/addAttachment'
+import chooseAndUploadAttachment from './Footer/addAttachment'
 
 const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
@@ -41,7 +41,7 @@ const ComposeActions: React.FC = () => {
       analytics('compose_actions_attachment_press', {
         count: composeState.attachments.uploads.length
       })
-      return await addAttachment({
+      return await chooseAndUploadAttachment({
         composeDispatch,
         showActionSheetWithOptions
       })

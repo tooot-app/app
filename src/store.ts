@@ -8,6 +8,7 @@ import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice, { SettingsState } from '@utils/slices/settingsSlice'
 import versionSlice from '@utils/slices/versionSlice'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { createMigrate, persistReducer, persistStore } from 'redux-persist'
 
 const secureStorage = createSecureStore()
@@ -27,7 +28,7 @@ const instancesPersistConfig = {
   key: 'instances',
   prefix,
   storage: secureStorage,
-  version: 8,
+  version: 9,
   // @ts-ignore
   migrate: createMigrate(instancesMigration)
 }
@@ -69,3 +70,7 @@ let persistor = persistStore(store)
 
 export { store, persistor }
 export type RootState = ReturnType<typeof store.getState>
+
+type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

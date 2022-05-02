@@ -320,8 +320,6 @@ declare namespace Mastodon {
         max_expiration: number
       }
     }
-    // Custom - to be deprecated in v4
-    max_toot_chars?: number
   }
 
   type Mention = {
@@ -428,6 +426,7 @@ declare namespace Mastodon {
     reblogs_count: number
     favourites_count: number
     replies_count: number
+    edited_at?: string // FEATURE edit_post
     favourited: boolean
     reblogged: boolean
     muted: boolean
@@ -443,6 +442,17 @@ declare namespace Mastodon {
     card?: Card
     language?: string
     text?: string
+  }
+
+  type StatusHistory = {
+    content: Status['content']
+    spoiler_text: Status['spoiler_text']
+    sensitive: Status['sensitive']
+    created_at: Status['created_at']
+    poll: Status['poll']
+    account: Status['account']
+    media_attachments: Status['media_attachments']
+    emojis: Status['emojis']
   }
 
   type Source = {

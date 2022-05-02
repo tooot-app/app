@@ -3,6 +3,7 @@ import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
@@ -20,7 +21,7 @@ const TimelineActioned = React.memo(
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
     const navigation =
-      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const name = account.display_name || account.username
     const iconColor = colors.primaryDefault
 
@@ -143,19 +144,23 @@ const TimelineActioned = React.memo(
       }
     }, [])
 
-    return <View style={styles.actioned} children={children} />
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: StyleConstants.Spacing.S,
+          paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
+          paddingRight: StyleConstants.Spacing.Global.PagePadding
+        }}
+        children={children}
+      />
+    )
   },
   () => true
 )
 
 const styles = StyleSheet.create({
-  actioned: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: StyleConstants.Spacing.S,
-    paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding
-  },
   icon: {
     marginRight: StyleConstants.Spacing.S
   }

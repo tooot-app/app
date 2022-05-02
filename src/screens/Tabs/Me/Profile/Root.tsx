@@ -1,6 +1,7 @@
 import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useAppDispatch } from '@root/store'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
@@ -9,7 +10,6 @@ import React, { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useDispatch } from 'react-redux'
 import ProfileAvatarHeader from './Root/AvatarHeader'
 
 const TabMeProfileRoot: React.FC<
@@ -24,7 +24,7 @@ const TabMeProfileRoot: React.FC<
 
   const { data, isLoading } = useProfileQuery({})
   const { mutateAsync } = useProfileMutation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onPressVisibility = useCallback(() => {
     showActionSheetWithOptions(

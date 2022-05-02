@@ -5,6 +5,7 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
+import { useAppDispatch } from '@root/store'
 import {
   RootStackScreenProps,
   ScreenTabsStackParamList
@@ -21,7 +22,7 @@ import {
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
@@ -118,7 +119,7 @@ const ScreenTabs = React.memo(
     const previousTab = useSelector(getPreviousTab, () => true)
 
     const versionUpdate = useSelector(getVersionUpdate)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     useEffect(() => {
       dispatch(retriveVersionLatest())
     }, [])

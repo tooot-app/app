@@ -26,35 +26,30 @@ export type RootStackParamList = {
         type: 'edit'
         incomingStatus: Mastodon.Status
         replyToStatus?: Mastodon.Status
-        queryKey?: [
-          'Timeline',
-          {
-            page: App.Pages
-            hashtag?: Mastodon.Tag['name']
-            list?: Mastodon.List['id']
-            toot?: Mastodon.Status['id']
-            account?: Mastodon.Account['id']
-          }
-        ]
+        queryKey?: QueryKeyTimeline
+        rootQueryKey?: QueryKeyTimeline
+      }
+    | {
+        type: 'deleteEdit'
+        incomingStatus: Mastodon.Status
+        replyToStatus?: Mastodon.Status
+        queryKey?: QueryKeyTimeline
       }
     | {
         type: 'reply'
         incomingStatus: Mastodon.Status
         accts: Mastodon.Account['acct'][]
-        queryKey?: [
-          'Timeline',
-          {
-            page: App.Pages
-            hashtag?: Mastodon.Tag['name']
-            list?: Mastodon.List['id']
-            toot?: Mastodon.Status['id']
-            account?: Mastodon.Account['id']
-          }
-        ]
+        queryKey?: QueryKeyTimeline
       }
     | {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
+      }
+    | {
+        type: 'share'
+        text?: string
+        images?: { type: string; uri: string }[]
+        video?: { type: string; uri: string }
       }
     | undefined
   'Screen-ImagesViewer': {
@@ -70,9 +65,8 @@ export type RootStackParamList = {
     id: Mastodon.Attachment['id']
   }
 }
-export type RootStackScreenProps<
-  T extends keyof RootStackParamList
-> = NativeStackScreenProps<RootStackParamList, T>
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>
 
 export type ScreenComposeStackParamList = {
   'Screen-Compose-Root': undefined
@@ -90,9 +84,8 @@ export type ScreenTabsStackParamList = {
   'Tab-Notifications': NavigatorScreenParams<TabNotificationsStackParamList>
   'Tab-Me': NavigatorScreenParams<TabMeStackParamList>
 }
-export type ScreenTabsScreenProps<
-  T extends keyof ScreenTabsStackParamList
-> = BottomTabScreenProps<ScreenTabsStackParamList, T>
+export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> =
+  BottomTabScreenProps<ScreenTabsStackParamList, T>
 
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
@@ -101,6 +94,9 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Attachments': { account: Mastodon.Account }
   'Tab-Shared-Hashtag': {
     hashtag: Mastodon.Tag['name']
+  }
+  'Tab-Shared-History': {
+    id: Mastodon.Status['id']
   }
   'Tab-Shared-Search': { text: string | undefined }
   'Tab-Shared-Toot': {
@@ -121,9 +117,8 @@ export type TabSharedStackParamList = {
         count: number
       }
 }
-export type TabSharedStackScreenProps<
-  T extends keyof TabSharedStackParamList
-> = NativeStackScreenProps<TabSharedStackParamList, T>
+export type TabSharedStackScreenProps<T extends keyof TabSharedStackParamList> =
+  NativeStackScreenProps<TabSharedStackParamList, T>
 
 export type TabLocalStackParamList = {
   'Tab-Local-Root': undefined
@@ -153,9 +148,8 @@ export type TabMeStackParamList = {
   'Tab-Me-Settings-Fontsize': undefined
   'Tab-Me-Switch': undefined
 } & TabSharedStackParamList
-export type TabMeStackScreenProps<
-  T extends keyof TabMeStackParamList
-> = NativeStackScreenProps<TabMeStackParamList, T>
+export type TabMeStackScreenProps<T extends keyof TabMeStackParamList> =
+  NativeStackScreenProps<TabMeStackParamList, T>
 export type TabMeStackNavigationProp<
   RouteName extends keyof TabMeStackParamList
 > = StackNavigationProp<TabMeStackParamList, RouteName>

@@ -267,7 +267,8 @@
         "heading": "Help us improve",
         "description": "Collecting only non-user relative usage"
       },
-      "version": "Version v{{version}}"
+      "version": "Version v{{version}}",
+      "instanceVersion": "Mastodon version v{{version}}"
     },
     "switch": {
       "existing": "Choose from logged in",
@@ -331,6 +332,9 @@
         "reblogged_by": "{{count}} boosted",
         "favourited_by": "{{count}} favourited"
       }
+    },
+    "history": {
+      "name": "Edit History"
     }
   }
 }

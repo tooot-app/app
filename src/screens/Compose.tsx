@@ -1,11 +1,16 @@
+import apiInstance from '@api/instance'
 import analytics from '@components/analytics'
-import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
+import { useAppDispatch } from '@root/store'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import {
+  QueryKeyTimeline,
+  useTimelineMutation
+} from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
@@ -33,10 +38,11 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQueryClient } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
+import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
 import ComposeContext from './Compose/utils/createContext'
 import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
@@ -131,8 +137,38 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   ])
 
   useEffect(() => {
+    const uploadImage = async ({
+      type,
+      uri
+    }: {
+      type: 'image' | 'video'
+      uri: string
+    }) => {
+      await uploadAttachment({
+        composeDispatch,
+        imageInfo: { type, uri, width: 100, height: 100 }
+      })
+    }
     switch (params?.type) {
+      case 'share':
+        if (params.text) {
+          formatText({
+            textInput: 'text',
+            composeDispatch,
+            content: params.text,
+            disableDebounce: true
+          })
+        }
+        if (params.images?.length) {
+          params.images.forEach(image => {
+            uploadImage({ type: 'image', uri: image.uri })
+          })
+        } else if (params.video) {
+          uploadImage({ type: 'video', uri: params.video.uri })
+        }
+        break
       case 'edit':
+      case 'deleteEdit':
         if (params.incomingStatus.spoiler_text) {
           formatText({
             textInput: 'spoiler',
@@ -249,7 +285,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     ),
     [composeState]
   )
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const headerRightDisabled = useMemo(() => {
     if (totalTextCount > maxTootChars) {
       return true
@@ -268,6 +304,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     }
     return false
   }, [totalTextCount, composeState.attachments.uploads, composeState.text.raw])
+  const mutateTimeline = useTimelineMutation({ onMutate: true })
   const headerRight = useCallback(
     () => (
       <HeaderRight
@@ -282,7 +319,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           composeDispatch({ type: 'posting', payload: true })
 
           composePost(params, composeState)
-            .then(() => {
+            .then(res => {
               haptics('Success')
               if (
                 Platform.OS === 'ios' &&
@@ -300,6 +337,14 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
               switch (params?.type) {
                 case 'edit':
+                  mutateTimeline.mutate({
+                    type: 'editItem',
+                    queryKey: params.queryKey,
+                    rootQueryKey: params.rootQueryKey,
+                    status: res.body
+                  })
+                  break
+                case 'deleteEdit':
                 case 'reply':
                   if (params?.queryKey && params.queryKey[1].page === 'Toot') {
                     queryClient.invalidateQueries(params.queryKey)

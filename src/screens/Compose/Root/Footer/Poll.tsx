@@ -121,7 +121,7 @@ const ComposePoll: React.FC = () => {
           round
           disabled={!(total > 2)}
         />
-        <Text style={styles.controlCount}>
+        <Text style={[styles.controlCount, { color: colors.secondary }]}>
           {total} / {MAX_OPTIONS}
         </Text>
         <Button
@@ -216,7 +216,7 @@ const ComposePoll: React.FC = () => {
                 userInterfaceStyle: mode
               },
               index => {
-                if (index && index < expirations.length) {
+                if (index !== undefined && index < expirations.length) {
                   analytics('compose_poll_expiration_press', {
                     current: expire,
                     new: expirations[index]

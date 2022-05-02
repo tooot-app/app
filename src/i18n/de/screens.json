@@ -1,0 +1,14 @@
+{
+  "screenshot": {
+    "title": "Datenschutz",
+    "message": "Bitte geben Sie nicht die Identität anderer Nutzer preis, wie z. B. Benutzername, Avatar, etc. Vielen Dank!",
+    "button": "Bestätigen"
+  },
+  "localCorrupt": {
+    "message": "Login abgelaufen, bitte erneut anmelden"
+  },
+  "pushError": {
+    "message": "Fehler des Benachrichtigungsdienstes",
+    "description": "Bitte Benachrichtigungsdienst in den Einstellungen erneut aktivieren"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "buttons": {
+    "apply": "套用",
+    "cancel": "取消"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "自定的表情符號 {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} 成功完成"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} 失敗，請再試一次"
+    }
+  },
+  "separator": "，"
+}

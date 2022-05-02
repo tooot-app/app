@@ -71,7 +71,7 @@
     },
     "avatar": {
       "accessibilityLabel": "Ảnh đại diện của {{name}}",
-      "accessibilityHint": "Đến trang cá nhân {{name}}"
+      "accessibilityHint": "Đến trang của {{name}}"
     },
     "content": {
       "expandHint": "nội dung ẩn"
@@ -162,7 +162,7 @@
             "function": "Xóa tút",
             "button": "Xóa tút này"
           },
-          "edit": {
+          "deleteEdit": {
             "function": "Xóa tút",
             "button": "Xóa và viết lại",
             "alert": {

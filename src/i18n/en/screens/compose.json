@@ -16,7 +16,9 @@
         "default": "Toot",
         "conversation": "Toot DM",
         "reply": "Toot reply",
-        "edit": "Toot"
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {

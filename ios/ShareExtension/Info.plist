@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>NSExtensionActivationRule</key>
+			<string>TRUEPREDICATE</string>
+		</dict>
+		<key>NSExtensionMainStoryboard</key>
+		<string>MainInterface</string>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.share-services</string>
+	</dict>
+	<key>HostAppBundleIdentifier</key>
+	<string>com.xmflsct.app.tooot</string>
+	<key>HostAppURLScheme</key>
+	<string>tooot://</string>
+	<key>NSExtension</key>
+	<dict>
+			<key>NSExtensionAttributes</key>
+			<dict>
+					<key>NSExtensionActivationRule</key>
+					<dict>
+							<key>NSExtensionActivationSupportsImageWithMaxCount</key>
+							<integer>4</integer>
+							<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
+							<integer>1</integer>
+							<key>NSExtensionActivationSupportsText</key>
+							<true/>
+							<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+							<integer>1</integer>
+					</dict>
+			</dict>
+			<key>NSExtensionMainStoryboard</key>
+			<string>MainInterface</string>
+			<key>NSExtensionPointIdentifier</key>
+			<string>com.apple.share-services</string>
+	</dict>
+
+	<key>ReactShareViewBackgroundColor</key>
+	<dict>
+			<key>Red</key>
+			<integer>0</integer>
+			<key>Green</key>
+			<integer>0</integer>
+			<key>Blue</key>
+			<integer>0</integer>
+			<key>Alpha</key>
+			<integer>0</integer>
+			<key>Transparent</key>
+			<true/>
+	</dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSExceptionDomains</key>
+			<dict>
+					<key>localhost</key>
+					<dict>
+							<key>NSExceptionAllowsInsecureHTTPLoads</key>
+							<true/>
+					</dict>
+			</dict>
+	</dict>
+</dict>
+</plist>

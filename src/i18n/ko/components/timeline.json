@@ -160,7 +160,7 @@
             "function": "툿 삭제",
             "button": "이 툿 삭제"
           },
-          "edit": {
+          "deleteEdit": {
             "function": "툿 삭제",
             "button": "삭제하고 다시 쓰기",
             "alert": {
