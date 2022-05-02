@@ -768,8 +768,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xmflsct.app.tooot.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.xmflsct.app.tooot";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "match AdHoc com.xmflsct.app.tooot";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.xmflsct.app.tooot.ShareExtension";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "match AdHoc com.xmflsct.app.tooot.ShareExtension";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -810,8 +810,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xmflsct.app.tooot.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.xmflsct.app.tooot";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "match AppStore com.xmflsct.app.tooot";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.xmflsct.app.tooot.ShareExtension";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "match AppStore com.xmflsct.app.tooot.ShareExtension";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

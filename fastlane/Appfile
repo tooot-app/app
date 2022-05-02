@@ -1,2 +1,2 @@
-app_identifier "com.xmflsct.app.tooot"
+app_identifier ["com.xmflsct.app.tooot", "com.xmflsct.app.tooot.ShareExtension"]
 package_name "com.xmflsct.app.tooot"
