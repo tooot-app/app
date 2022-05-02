@@ -267,7 +267,8 @@
         "heading": "帮助我们改进",
         "description": "收集不与用户相关联的使用信息"
       },
-      "version": "版本 v{{version}}"
+      "version": "版本 v{{version}}",
+      "instanceVersion": "长毛象版本 v{{version}}"
     },
     "switch": {
       "existing": "选择已登录的账号",
@@ -331,6 +332,9 @@
         "reblogged_by": "{{count}} 人转嘟",
         "favourited_by": "{{count}} 人喜欢"
       }
+    },
+    "history": {
+      "name": "编辑历史"
     }
   }
 }
