@@ -1,1 +1,2 @@
-storage_mode("git")
+storage_mode "git"
+app_identifier ["com.xmflsct.app.tooot", "com.xmflsct.app.tooot.ShareExtension"]
