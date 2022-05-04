@@ -1,20 +1,19 @@
 diff --git a/node_modules/@types/react-native-share-menu/index.d.ts b/node_modules/@types/react-native-share-menu/index.d.ts
-index f52822c..23d9f99 100755
+index f52822c..b1d3bdd 100755
 --- a/node_modules/@types/react-native-share-menu/index.d.ts
 +++ b/node_modules/@types/react-native-share-menu/index.d.ts
-@@ -6,9 +6,8 @@
+@@ -6,9 +6,7 @@
  // Minimum TypeScript Version: 3.7
  
  export interface ShareData {
 -    mimeType: string;
 -    data: string | string[];
 -    extraData?: object | undefined;
-+    data: {data: {mimeType: string; data: string}[]};
-+    extraData?: {share: {mimeType: string; data: string}[]} | undefined;
++    data: {mimeType: string; data: string}[];
  }
  
  export type ShareCallback = (share?: ShareData) => void;
-@@ -28,7 +27,7 @@ interface ShareMenuReactView {
+@@ -28,7 +26,7 @@ interface ShareMenuReactView {
      dismissExtension(error?: string): void;
      openApp(): void;
      continueInApp(extraData?: object): void;

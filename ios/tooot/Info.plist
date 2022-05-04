@@ -31,6 +31,7 @@
 			<string>com.xmflsct.app.tooot</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>tooot-share</string>
 				<string>tooot</string>
 			</array>
 		</dict>

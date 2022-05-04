@@ -17,7 +17,7 @@
 	<key>HostAppBundleIdentifier</key>
 	<string>com.xmflsct.app.tooot</string>
 	<key>HostAppURLScheme</key>
-	<string>tooot://</string>
+	<string>tooot-share://</string>
 	<key>NSExtension</key>
 	<dict>
 			<key>NSExtensionAttributes</key>

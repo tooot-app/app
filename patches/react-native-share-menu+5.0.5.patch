@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-share-menu/ios/Constants.swift b/node_modules/react-native-share-menu/ios/Constants.swift
-index 2811008..63761c3 100644
+index 2811008..08385b7 100644
 --- a/node_modules/react-native-share-menu/ios/Constants.swift
 +++ b/node_modules/react-native-share-menu/ios/Constants.swift
 @@ -23,7 +23,7 @@ public let COULD_NOT_PARSE_IMG_ERROR = "Couldn't parse image"
@@ -12,7 +12,7 @@ index 2811008..63761c3 100644
  // MARK: Keys
  
 diff --git a/node_modules/react-native-share-menu/ios/Modules/ShareMenu.swift b/node_modules/react-native-share-menu/ios/Modules/ShareMenu.swift
-index 6c4922a..1277df2 100644
+index 6c4922a..74badda 100644
 --- a/node_modules/react-native-share-menu/ios/Modules/ShareMenu.swift
 +++ b/node_modules/react-native-share-menu/ios/Modules/ShareMenu.swift
 @@ -9,7 +9,7 @@ class ShareMenu: RCTEventEmitter {
@@ -65,7 +65,7 @@ index 6c4922a..1277df2 100644
              finalData[EXTRA_DATA_KEY] = extraData
          }
 diff --git a/node_modules/react-native-share-menu/ios/Modules/ShareMenuReactView.swift b/node_modules/react-native-share-menu/ios/Modules/ShareMenuReactView.swift
-index 5d21773..d8a0847 100644
+index 5d21773..0c7eaa7 100644
 --- a/node_modules/react-native-share-menu/ios/Modules/ShareMenuReactView.swift
 +++ b/node_modules/react-native-share-menu/ios/Modules/ShareMenuReactView.swift
 @@ -3,8 +3,9 @@
@@ -79,7 +79,16 @@ index 5d21773..d8a0847 100644
  import MobileCoreServices
  
  @objc(ShareMenuReactView)
-@@ -65,12 +66,12 @@ public class ShareMenuReactView: NSObject {
+@@ -17,8 +18,6 @@ public class ShareMenuReactView: NSObject {
+     }
+ 
+     public static func attachViewDelegate(_ delegate: ReactShareViewDelegate!) {
+-        guard (ShareMenuReactView.viewDelegate == nil) else { return }
+-
+         ShareMenuReactView.viewDelegate = delegate
+     }
+ 
+@@ -65,12 +64,12 @@ public class ShareMenuReactView: NSObject {
  
          let extensionContext = viewDelegate.loadExtensionContext()
  
@@ -95,7 +104,7 @@ index 5d21773..d8a0847 100644
      }
  
      @objc(data:reject:)
-@@ -82,91 +83,96 @@ public class ShareMenuReactView: NSObject {
+@@ -82,91 +81,96 @@ public class ShareMenuReactView: NSObject {
              return
          }
  
@@ -257,7 +266,7 @@ index 5d21773..d8a0847 100644
      }
  
 diff --git a/node_modules/react-native-share-menu/ios/ReactShareViewController.swift b/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
-index 0189ef6..e620257 100644
+index 0189ef6..f42bce6 100644
 --- a/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
 +++ b/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
 @@ -62,7 +62,7 @@ class ReactShareViewController: ShareViewController, RCTBridgeDelegate, ReactSha
@@ -270,9 +279,8 @@ index 0189ef6..e620257 100644
 +    handlePost(items, extraData: extraData)
    }
  }
-\ No newline at end of file
 diff --git a/node_modules/react-native-share-menu/ios/ReactShareViewDelegate.swift b/node_modules/react-native-share-menu/ios/ReactShareViewDelegate.swift
-index 0aa4c58..d2bc970 100644
+index 0aa4c58..ad0812c 100644
 --- a/node_modules/react-native-share-menu/ios/ReactShareViewDelegate.swift
 +++ b/node_modules/react-native-share-menu/ios/ReactShareViewDelegate.swift
 @@ -10,5 +10,5 @@ public protocol ReactShareViewDelegate {
@@ -282,9 +290,8 @@ index 0aa4c58..d2bc970 100644
 -    func continueInApp(with item: NSExtensionItem, and extraData: [String:Any]?)
 +    func continueInApp(with items: [NSExtensionItem], and extraData: [String:Any]?)
  }
-\ No newline at end of file
 diff --git a/node_modules/react-native-share-menu/ios/ShareViewController.swift b/node_modules/react-native-share-menu/ios/ShareViewController.swift
-index 7faf6e4..81aef73 100644
+index 7faf6e4..12d8c92 100644
 --- a/node_modules/react-native-share-menu/ios/ShareViewController.swift
 +++ b/node_modules/react-native-share-menu/ios/ShareViewController.swift
 @@ -6,7 +6,9 @@

@@ -161,25 +161,18 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Share Extension
   const handleShare = useCallback(
-    (item?: {
-      extraData?: { share: { mimeType: string; data: string }[] }
-    }) => {
+    (item?: { data?: { mimeType: string; data: string }[] }) => {
       if (instanceActive < 0) {
         return
       }
-      if (
-        !item ||
-        !item.extraData ||
-        !Array.isArray(item.extraData.share) ||
-        !item.extraData.share.length
-      ) {
+      if (!item || !item.data || !Array.isArray(item.data) || !item.data) {
         return
       }
 
       let text: string | undefined = undefined
       let images: { type: string; uri: string }[] = []
       let video: { type: string; uri: string } | undefined = undefined
-      item.extraData.share.forEach((d, i) => {
+      item.data.forEach((d, i) => {
         const typesImage = ['png', 'jpg', 'jpeg', 'gif']
         const typesVideo = ['mp4', 'm4v', 'mov', 'webm']
         const { mimeType, data } = d
@@ -219,12 +212,10 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     [instanceActive]
   )
   useEffect(() => {
-    console.log('getting intial share')
-    ShareMenu.getInitialShare(handleShare)
+    ShareMenu.getInitialShare(item => handleShare(item))
   }, [])
   useEffect(() => {
-    console.log('getting just share')
-    const listener = ShareMenu.addNewShareListener(handleShare)
+    const listener = ShareMenu.addNewShareListener(item => handleShare(item))
     return () => {
       listener.remove()
     }

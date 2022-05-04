@@ -6,6 +6,8 @@
 #import <React/RCTLinkingManager.h>
 #import <React/RCTConvert.h>
 
+#import <RNShareMenu/ShareMenuManager.h>
+
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -81,6 +83,13 @@ static void InitializeFlipper(UIApplication *application) {
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  NSString *urlString = url.absoluteString;
+
+  if ([urlString hasPrefix:@"tooot-share://"]) {
+    NSLog(@"Entered with the following string: %@s", urlString);
+    return [ShareMenuManager application:application openURL:url options:options];
+  }
+  
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 
