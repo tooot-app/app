@@ -39,5 +39,4 @@ target 'ShareExtension' do
   )
 
   pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
 end

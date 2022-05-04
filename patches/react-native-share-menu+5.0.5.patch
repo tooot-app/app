@@ -291,10 +291,10 @@ index 0aa4c58..ad0812c 100644
 +    func continueInApp(with items: [NSExtensionItem], and extraData: [String:Any]?)
  }
 diff --git a/node_modules/react-native-share-menu/ios/ShareViewController.swift b/node_modules/react-native-share-menu/ios/ShareViewController.swift
-index 7faf6e4..12d8c92 100644
+index 7faf6e4..f02bde5 100644
 --- a/node_modules/react-native-share-menu/ios/ShareViewController.swift
 +++ b/node_modules/react-native-share-menu/ios/ShareViewController.swift
-@@ -6,7 +6,9 @@
+@@ -6,15 +6,18 @@
  //
  //  Created by Gustavo Parreira on 26/07/2020.
  //
@@ -304,38 +304,43 @@ index 7faf6e4..12d8c92 100644
  import MobileCoreServices
  import UIKit
  import Social
-@@ -15,6 +17,7 @@ import RNShareMenu
- class ShareViewController: SLComposeServiceViewController {
+ import RNShareMenu
+ 
+-class ShareViewController: SLComposeServiceViewController {
++class ShareViewController: UIViewController {
    var hostAppId: String?
    var hostAppUrlScheme: String?
 +  var sharedItems: [Any] = []
    
    override func viewDidLoad() {
      super.viewDidLoad()
-@@ -39,12 +42,12 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -30,46 +33,64 @@ class ShareViewController: SLComposeServiceViewController {
+     } else {
+       print("Error: \(NO_INFO_PLIST_URL_SCHEME_ERROR)")
+     }
+-  }
  
-     override func didSelectPost() {
-         // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
+-    override func isContentValid() -> Bool {
+-        // Do validation of contentText and/or NSExtensionContext attachments here
+-        return true
++    guard let items = extensionContext?.inputItems as? [NSExtensionItem] else {
++      cancelRequest()
++      return
+     }
+ 
+-    override func didSelectPost() {
+-        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
 -      guard let item = extensionContext?.inputItems.first as? NSExtensionItem else {
-+      guard let items = extensionContext?.inputItems as? [NSExtensionItem] else {
-         cancelRequest()
-         return
-       }
- 
--      handlePost(item)
-+      handlePost(items)
-     }
- 
-     override func configurationItems() -> [Any]! {
-@@ -52,24 +55,50 @@ class ShareViewController: SLComposeServiceViewController {
-         return []
-     }
- 
--  func handlePost(_ item: NSExtensionItem, extraData: [String:Any]? = nil) {
--    guard let provider = item.attachments?.first else {
--      cancelRequest()
--      return
--    }
+-        cancelRequest()
++    handlePost(items)
++  }
++
++  override func viewDidAppear(_ animated: Bool) {
++    super.viewDidAppear(animated)
++
++    completeRequest()
++  }
++
 +  func handlePost(_ items: [NSExtensionItem], extraData: [String:Any]? = nil) {
 +    DispatchQueue.global().async {
 +      guard let hostAppId = self.hostAppId else {
@@ -344,13 +349,10 @@ index 7faf6e4..12d8c92 100644
 +      }
 +      guard let userDefaults = UserDefaults(suiteName: "group.\(hostAppId)") else {
 +        self.exit(withError: NO_APP_GROUP_ERROR)
-+        return
-+      }
+         return
+       }
  
--    if let data = extraData {
--      storeExtraData(data)
--    } else {
--      removeExtraData()
+-      handlePost(item)
 -    }
 +      if let data = extraData {
 +        self.storeExtraData(data)
@@ -358,21 +360,28 @@ index 7faf6e4..12d8c92 100644
 +        self.removeExtraData()
 +      }
  
--    if provider.isText {
--      storeText(withProvider: provider)
--    } else if provider.isURL {
--      storeUrl(withProvider: provider)
--    } else {
--      storeFile(withProvider: provider)
+-    override func configurationItems() -> [Any]! {
+-        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
+-        return []
+-    }
 +      let semaphore = DispatchSemaphore(value: 0)
-+      var results: [Any] = []
-+
+ 
+-  func handlePost(_ item: NSExtensionItem, extraData: [String:Any]? = nil) {
+-    guard let provider = item.attachments?.first else {
+-      cancelRequest()
+-      return
+-    }
 +      for item in items {
 +        guard let attachments = item.attachments else {
 +          self.cancelRequest()
 +          return
 +        }
-+
+ 
+-    if let data = extraData {
+-      storeExtraData(data)
+-    } else {
+-      removeExtraData()
+-    }
 +        for provider in attachments {
 +          if provider.isText {
 +            self.storeText(withProvider: provider, semaphore)
@@ -381,7 +390,13 @@ index 7faf6e4..12d8c92 100644
 +          } else {
 +            self.storeFile(withProvider: provider, semaphore)
 +          }
-+
+ 
+-    if provider.isText {
+-      storeText(withProvider: provider)
+-    } else if provider.isURL {
+-      storeUrl(withProvider: provider)
+-    } else {
+-      storeFile(withProvider: provider)
 +          semaphore.wait()
 +        }
 +      }
@@ -394,7 +409,7 @@ index 7faf6e4..12d8c92 100644
      }
    }
  
-@@ -99,7 +128,7 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -99,7 +120,7 @@ class ShareViewController: SLComposeServiceViewController {
      userDefaults.synchronize()
    }
    
@@ -403,7 +418,7 @@ index 7faf6e4..12d8c92 100644
      provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil) { (data, error) in
        guard (error == nil) else {
          self.exit(withError: error.debugDescription)
-@@ -109,24 +138,13 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -109,24 +130,13 @@ class ShareViewController: SLComposeServiceViewController {
          self.exit(withError: COULD_NOT_FIND_STRING_ERROR)
          return
        }
@@ -415,11 +430,11 @@ index 7faf6e4..12d8c92 100644
 -        self.exit(withError: NO_APP_GROUP_ERROR)
 -        return
 -      }
-       
+-      
 -      userDefaults.set([DATA_KEY: text, MIME_TYPE_KEY: "text/plain"],
 -                       forKey: USER_DEFAULTS_KEY)
 -      userDefaults.synchronize()
--      
+       
 -      self.openHostApp()
 +      self.sharedItems.append([DATA_KEY: text, MIME_TYPE_KEY: "text/plain"])
 +      semaphore.signal()
@@ -431,7 +446,7 @@ index 7faf6e4..12d8c92 100644
      provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil) { (data, error) in
        guard (error == nil) else {
          self.exit(withError: error.debugDescription)
-@@ -136,24 +154,13 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -136,24 +146,13 @@ class ShareViewController: SLComposeServiceViewController {
          self.exit(withError: COULD_NOT_FIND_URL_ERROR)
          return
        }
@@ -459,7 +474,7 @@ index 7faf6e4..12d8c92 100644
      provider.loadItem(forTypeIdentifier: kUTTypeData as String, options: nil) { (data, error) in
        guard (error == nil) else {
          self.exit(withError: error.debugDescription)
-@@ -167,10 +174,6 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -167,10 +166,6 @@ class ShareViewController: SLComposeServiceViewController {
          self.exit(withError: NO_INFO_PLIST_INDENTIFIER_ERROR)
          return
        }
@@ -470,7 +485,7 @@ index 7faf6e4..12d8c92 100644
        guard let groupFileManagerContainer = FileManager.default
                .containerURL(forSecurityApplicationGroupIdentifier: "group.\(hostAppId)")
        else {
-@@ -189,11 +192,8 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -189,11 +184,8 @@ class ShareViewController: SLComposeServiceViewController {
          return
        }
        
