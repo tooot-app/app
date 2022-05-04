@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig } from 'axios'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
 import li from 'li'
-import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -73,7 +72,10 @@ const apiInstance = async <T = unknown>({
     url,
     params,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type':
+        body && body instanceof FormData
+          ? 'multipart/form-data'
+          : 'application/json',
       'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers,

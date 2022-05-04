@@ -48,7 +48,10 @@ const apiTooot = async <T = unknown>({
     url: `${url}`,
     params,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type':
+        body && body instanceof FormData
+          ? 'multipart/form-data'
+          : 'application/json',
       'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers

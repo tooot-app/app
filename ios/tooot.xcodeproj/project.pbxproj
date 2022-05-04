@@ -20,10 +20,8 @@
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		DA8B5B7F0DED488CAC0FF169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */; };
 		E3BC22F5F8ABE515E14CF199 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D878F932AF7A9974E06E461 /* ExpoModulesProvider.swift */; };
-		E633A426281EAEAB000E540F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E633A424281EAEAB000E540F /* MainInterface.storyboard */; };
 		E633A42B281EAEAB000E540F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E633A420281EAEAB000E540F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E633A430281EAF38000E540F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E633A42F281EAF38000E540F /* ShareViewController.swift */; };
-		E633A437281EB5BC000E540F /* ReactShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E633A436281EB5BC000E540F /* ReactShareViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,11 +73,9 @@
 		B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tooot/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		E633A420281EAEAB000E540F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E633A425281EAEAB000E540F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E633A427281EAEAB000E540F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E633A42F281EAF38000E540F /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
 		E633A431281EB55C000E540F /* ShareExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareExtension-Bridging-Header.h"; sourceTree = "<group>"; };
-		E633A436281EB5BC000E540F /* ReactShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ReactShareViewController.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -207,9 +203,7 @@
 		E633A421281EAEAB000E540F /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				E633A436281EB5BC000E540F /* ReactShareViewController.swift */,
 				E633A42F281EAF38000E540F /* ShareViewController.swift */,
-				E633A424281EAEAB000E540F /* MainInterface.storyboard */,
 				E633A427281EAEAB000E540F /* Info.plist */,
 				E633A431281EB55C000E540F /* ShareExtension-Bridging-Header.h */,
 			);
@@ -324,7 +318,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E633A426281EAEAB000E540F /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +495,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E633A437281EB5BC000E540F /* ReactShareViewController.swift in Sources */,
 				E633A430281EAF38000E540F /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,14 +526,6 @@
 				5EE088CD2629786B007E5FEC /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E633A424281EAEAB000E540F /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E633A425281EAEAB000E540F /* Base */,
-			);
-			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
