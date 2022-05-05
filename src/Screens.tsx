@@ -197,6 +197,13 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
                   'Image type not supported:',
                   mimeType.split('/')[1]
                 )
+                displayMessage({
+                  message: t('shareError.imageNotSupported', {
+                    type: mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
                 return
               }
               images.push({ type: mimeType.split('/')[1], uri: data })
@@ -206,6 +213,13 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
                   'Video type not supported:',
                   mimeType.split('/')[1]
                 )
+                displayMessage({
+                  message: t('shareError.videoNotSupported', {
+                    type: mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
                 return
               }
               video = { type: mimeType.split('/')[1], uri: data }
@@ -241,6 +255,13 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
                   'Image type not supported:',
                   item.mimeType.split('/')[1]
                 )
+                displayMessage({
+                  message: t('shareError.imageNotSupported', {
+                    type: item.mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
                 return
               }
               images.push({ type: item.mimeType.split('/')[1], uri: d })
@@ -250,6 +271,13 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
                   'Video type not supported:',
                   item.mimeType.split('/')[1]
                 )
+                displayMessage({
+                  message: t('shareError.videoNotSupported', {
+                    type: item.mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
                 return
               }
               video = { type: item.mimeType.split('/')[1], uri: d }

@@ -59,7 +59,7 @@ const displayMessage = ({
 
   if (ref) {
     ref.current?.showMessage({
-      duration: type === 'error' ? 5000 : duration === 'short' ? 1500 : 3000,
+      duration: type === 'error' ? 8000 : duration === 'short' ? 3000 : 5000,
       autoHide,
       message,
       description,
