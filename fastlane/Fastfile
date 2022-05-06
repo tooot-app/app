@@ -123,7 +123,7 @@ private_lane :build_ios do
 end
 
 desc "Build and deploy Android app"
-private_lane :build_android do
+lane :build_android do
   sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
 
   case ENVIRONMENT

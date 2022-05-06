@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
@@ -16,14 +17,7 @@ import React, {
   useRef
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
@@ -122,33 +116,46 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
       return (
         <View
           key={index}
-          style={[styles.container, { width: calculateWidth(item) }]}
+          style={{
+            height: DEFAULT_HEIGHT,
+            marginLeft: StyleConstants.Spacing.Global.PagePadding,
+            marginTop: StyleConstants.Spacing.Global.PagePadding,
+            marginBottom: StyleConstants.Spacing.Global.PagePadding,
+            width: calculateWidth(item)
+          }}
         >
           <Image
-            style={styles.image}
+            style={{ width: '100%', height: '100%' }}
             source={{
               uri: item.local?.local_thumbnail || item.remote?.preview_url
             }}
           />
           {item.remote?.meta?.original?.duration ? (
-            <Text
-              style={[
-                styles.duration,
-                {
-                  color: colors.backgroundDefault,
-                  backgroundColor: colors.backgroundOverlayInvert
-                }
-              ]}
+            <CustomText
+              fontStyle='S'
+              style={{
+                position: 'absolute',
+                bottom: StyleConstants.Spacing.S,
+                left: StyleConstants.Spacing.S,
+                paddingLeft: StyleConstants.Spacing.S,
+                paddingRight: StyleConstants.Spacing.S,
+                paddingTop: StyleConstants.Spacing.XS,
+                paddingBottom: StyleConstants.Spacing.XS,
+                color: colors.backgroundDefault,
+                backgroundColor: colors.backgroundOverlayInvert
+              }}
             >
               {item.remote.meta.original.duration}
-            </Text>
+            </CustomText>
           ) : null}
           {item.uploading ? (
             <View
-              style={[
-                styles.uploading,
-                { backgroundColor: colors.backgroundOverlayInvert }
-              ]}
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.backgroundOverlayInvert
+              }}
             >
               <Circle
                 size={StyleConstants.Font.Size.L}
@@ -156,7 +163,15 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               />
             </View>
           ) : (
-            <View style={styles.actions}>
+            <View
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                justifyContent: 'space-between',
+                alignContent: 'flex-end',
+                alignItems: 'flex-end',
+                padding: StyleConstants.Spacing.S
+              }}
+            >
               <Button
                 accessibilityLabel={t(
                   'content.root.footer.attachments.remove.accessibilityLabel',
@@ -209,16 +224,20 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         accessibilityLabel={t(
           'content.root.footer.attachments.upload.accessibilityLabel'
         )}
-        style={[
-          styles.container,
-          {
-            width: DEFAULT_HEIGHT,
-            backgroundColor: colors.backgroundOverlayInvert
-          }
-        ]}
+        style={{
+          height: DEFAULT_HEIGHT,
+          marginLeft: StyleConstants.Spacing.Global.PagePadding,
+          marginTop: StyleConstants.Spacing.Global.PagePadding,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding,
+          width: DEFAULT_HEIGHT,
+          backgroundColor: colors.backgroundOverlayInvert
+        }}
         onPress={async () => {
           analytics('compose_attachment_add_container_press')
-          await chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
+          await chooseAndUploadAttachment({
+            composeDispatch,
+            showActionSheetWithOptions
+          })
         }}
       >
         <Button
@@ -229,7 +248,10 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           overlay
           onPress={async () => {
             analytics('compose_attachment_add_button_press')
-            await chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
+            await chooseAndUploadAttachment({
+              composeDispatch,
+              showActionSheetWithOptions
+            })
           }}
           style={{
             position: 'absolute',
@@ -250,16 +272,38 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
     []
   )
   return (
-    <View style={styles.base} ref={accessibleRefAttachments} accessible>
-      <Pressable style={styles.sensitive} onPress={sensitiveOnPress}>
+    <View
+      style={{
+        flex: 1,
+        marginRight: StyleConstants.Spacing.Global.PagePadding,
+        marginTop: StyleConstants.Spacing.M
+      }}
+      ref={accessibleRefAttachments}
+      accessible
+    >
+      <Pressable
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginLeft: StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={sensitiveOnPress}
+      >
         <Icon
           name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
           size={StyleConstants.Font.Size.L}
           color={colors.primaryDefault}
         />
-        <Text style={[styles.sensitiveText, { color: colors.primaryDefault }]}>
+        <CustomText
+          fontStyle='M'
+          style={{
+            marginLeft: StyleConstants.Spacing.S,
+            color: colors.primaryDefault
+          }}
+        >
           {t('content.root.footer.attachments.sensitive')}
-        </Text>
+        </CustomText>
       </Pressable>
       <FlatList
         horizontal
@@ -282,55 +326,5 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    marginRight: StyleConstants.Spacing.Global.PagePadding,
-    marginTop: StyleConstants.Spacing.M
-  },
-  sensitive: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: StyleConstants.Spacing.Global.PagePadding
-  },
-  sensitiveText: {
-    ...StyleConstants.FontStyle.M,
-    marginLeft: StyleConstants.Spacing.S
-  },
-  container: {
-    height: DEFAULT_HEIGHT,
-    marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginTop: StyleConstants.Spacing.Global.PagePadding,
-    marginBottom: StyleConstants.Spacing.Global.PagePadding
-  },
-  image: {
-    width: '100%',
-    height: '100%'
-  },
-  duration: {
-    position: 'absolute',
-    bottom: StyleConstants.Spacing.S,
-    left: StyleConstants.Spacing.S,
-    ...StyleConstants.FontStyle.S,
-    paddingLeft: StyleConstants.Spacing.S,
-    paddingRight: StyleConstants.Spacing.S,
-    paddingTop: StyleConstants.Spacing.XS,
-    paddingBottom: StyleConstants.Spacing.XS
-  },
-  uploading: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  actions: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'space-between',
-    alignContent: 'flex-end',
-    alignItems: 'flex-end',
-    padding: StyleConstants.Spacing.S
-  }
-})
 
 export default React.memo(ComposeAttachments, () => true)

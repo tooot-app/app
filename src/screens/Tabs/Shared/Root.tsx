@@ -1,5 +1,6 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { ParseEmojis } from '@components/Parse'
+import CustomText from '@components/Text'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
@@ -14,7 +15,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Platform, TextInput, View } from 'react-native'
 
 const TabSharedRoot = ({
   Stack
@@ -61,7 +62,7 @@ const TabSharedRoot = ({
         }: TabSharedStackScreenProps<'Tab-Shared-Attachments'>) => {
           return {
             headerTitle: () => (
-              <Text numberOfLines={1}>
+              <CustomText numberOfLines={1}>
                 <Trans
                   i18nKey='screenTabs:shared.attachments.name'
                   components={[
@@ -70,16 +71,16 @@ const TabSharedRoot = ({
                       emojis={account.emojis}
                       fontBold
                     />,
-                    <Text
+                    <CustomText
+                      fontStyle='M'
                       style={{
-                        ...StyleConstants.FontStyle.M,
                         color: colors.primaryDefault,
                         fontWeight: StyleConstants.Font.Weight.Bold
                       }}
                     />
                   ]}
                 />
-              </Text>
+              </CustomText>
             )
           }
         }}
@@ -126,28 +127,30 @@ const TabSharedRoot = ({
               }
             )
             return (
-              <View style={styles.searchBar}>
+              <View
+                style={{
+                  flexBasis: '80%',
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
                 <TextInput
                   editable={false}
-                  style={[
-                    styles.textInput,
-                    {
-                      color: colors.primaryDefault
-                    }
-                  ]}
+                  style={{
+                    fontSize: StyleConstants.Font.Size.M,
+                    color: colors.primaryDefault
+                  }}
                   defaultValue={t('shared.search.header.prefix')}
                 />
                 <TextInput
                   accessibilityRole='search'
                   keyboardAppearance={mode}
-                  style={[
-                    styles.textInput,
-                    {
-                      flex: 1,
-                      color: colors.primaryDefault,
-                      paddingLeft: StyleConstants.Spacing.XS
-                    }
-                  ]}
+                  style={{
+                    fontSize: StyleConstants.Font.Size.M,
+                    flex: 1,
+                    color: colors.primaryDefault,
+                    paddingLeft: StyleConstants.Spacing.XS
+                  }}
                   autoFocus
                   onChangeText={onChangeText}
                   autoCapitalize='none'
@@ -198,16 +201,5 @@ const TabSharedRoot = ({
     </Stack.Group>
   )
 }
-
-const styles = StyleSheet.create({
-  searchBar: {
-    flexBasis: '80%',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  textInput: {
-    fontSize: StyleConstants.Font.Size.M
-  }
-})
 
 export default TabSharedRoot

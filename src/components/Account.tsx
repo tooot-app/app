@@ -5,9 +5,10 @@ import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import analytics from './analytics'
 import GracefullyImage from './GracefullyImage'
+import CustomText from './Text'
 
 export interface Props {
   account: Mastodon.Account
@@ -32,50 +33,45 @@ const ComponentAccount: React.FC<Props> = ({
   return (
     <Pressable
       accessibilityRole='button'
-      style={[styles.itemDefault, styles.itemAccount]}
+      style={{
+        paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+        paddingVertical: StyleConstants.Spacing.M,
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}
       onPress={customOnPress || onPress}
     >
       <GracefullyImage
         uri={{ original: account.avatar, static: account.avatar_static }}
-        style={styles.itemAccountAvatar}
+        style={{
+          alignSelf: 'flex-start',
+          width: StyleConstants.Avatar.S,
+          height: StyleConstants.Avatar.S,
+          borderRadius: 6,
+          marginRight: StyleConstants.Spacing.S
+        }}
       />
       <View>
-        <Text numberOfLines={1}>
+        <CustomText numberOfLines={1}>
           <ParseEmojis
             content={account.display_name || account.username}
             emojis={account.emojis}
             size='S'
             fontBold
           />
-        </Text>
-        <Text
+        </CustomText>
+        <CustomText
           numberOfLines={1}
-          style={[styles.itemAccountAcct, { color: colors.secondary }]}
+          style={{
+            marginTop: StyleConstants.Spacing.XS,
+            color: colors.secondary
+          }}
         >
           @{account.acct}
-        </Text>
+        </CustomText>
       </View>
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-  itemDefault: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    paddingVertical: StyleConstants.Spacing.M
-  },
-  itemAccount: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  itemAccountAvatar: {
-    alignSelf: 'flex-start',
-    width: StyleConstants.Avatar.S,
-    height: StyleConstants.Avatar.S,
-    borderRadius: 6,
-    marginRight: StyleConstants.Spacing.S
-  },
-  itemAccountAcct: { marginTop: StyleConstants.Spacing.XS }
-})
 
 export default ComponentAccount

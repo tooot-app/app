@@ -1,4 +1,5 @@
 import analytics from '@components/analytics'
+import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { StyleConstants } from '@root/utils/styles/constants'
@@ -6,7 +7,7 @@ import { useTheme } from '@root/utils/styles/ThemeManager'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
@@ -23,7 +24,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
   return (
     <View style={[styles.stats, { flexDirection: 'row' }]}>
       {account ? (
-        <Text
+        <CustomText
           style={[styles.stat, { color: colors.primaryDefault }]}
           children={t('shared.account.summary.statuses_count', {
             count: account.statuses_count || 0
@@ -45,7 +46,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         />
       )}
       {account ? (
-        <Text
+        <CustomText
           style={[
             styles.stat,
             { color: colors.primaryDefault, textAlign: 'right' }
@@ -75,7 +76,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
         />
       )}
       {account ? (
-        <Text
+        <CustomText
           style={[
             styles.stat,
             { color: colors.primaryDefault, textAlign: 'center' }

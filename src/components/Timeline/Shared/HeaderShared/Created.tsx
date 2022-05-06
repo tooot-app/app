@@ -1,13 +1,13 @@
 import Icon from '@components/Icon'
 import RelativeTime from '@components/RelativeTime'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
 
 export interface Props {
-  created_at: Mastodon.Status['created_at']
+  created_at: Mastodon.Status['created_at'] | number
   edited_at?: Mastodon.Status['edited_at']
 }
 
@@ -18,11 +18,9 @@ const HeaderSharedCreated = React.memo(
 
     return (
       <>
-        <Text
-          style={{ ...StyleConstants.FontStyle.S, color: colors.secondary }}
-        >
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
           <RelativeTime date={edited_at || created_at} />
-        </Text>
+        </CustomText>
         {edited_at ? (
           <Icon
             accessibilityLabel={t(

@@ -9,17 +9,11 @@ import React, {
   useRef,
   useState
 } from 'react'
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View
-} from 'react-native'
+import { Platform, TextInput, TextInputProps, View } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { ComponentEmojis, EmojisButton, EmojisList } from './Emojis'
 import EmojisContext from './Emojis/helpers/EmojisContext'
+import CustomText from './Text'
 
 export interface Props {
   autoFocus?: boolean
@@ -106,14 +100,14 @@ const Input: React.FC<Props> = ({
       maxLength={options?.maxLength}
     >
       <View
-        style={[
-          styles.base,
-          {
-            borderColor: colors.border,
-            flexDirection: multiline ? 'column' : 'row',
-            alignItems: 'stretch'
-          }
-        ]}
+        style={{
+          borderWidth: 1,
+          marginVertical: StyleConstants.Spacing.S,
+          padding: StyleConstants.Spacing.S,
+          borderColor: colors.border,
+          flexDirection: multiline ? 'column' : 'row',
+          alignItems: 'stretch'
+        }}
       >
         <EmojisContext.Consumer>
           {({ emojisDispatch }) => (
@@ -124,16 +118,15 @@ const Input: React.FC<Props> = ({
                 setInputFocused(false)
                 emojisDispatch({ type: 'activate', payload: false })
               }}
-              style={[
-                styles.textInput,
-                {
-                  color: colors.primaryDefault,
-                  minHeight:
-                    Platform.OS === 'ios' && multiline
-                      ? StyleConstants.Font.LineHeight.M * 5
-                      : undefined
-                }
-              ]}
+              style={{
+                flex: 1,
+                fontSize: StyleConstants.Font.Size.M,
+                color: colors.primaryDefault,
+                minHeight:
+                  Platform.OS === 'ios' && multiline
+                    ? StyleConstants.Font.LineHeight.M * 5
+                    : undefined
+              }}
               onChangeText={setValue}
               onSelectionChange={onSelectionChange}
               value={value}
@@ -149,16 +142,25 @@ const Input: React.FC<Props> = ({
         </EmojisContext.Consumer>
         {title ? (
           <Animated.Text
-            style={[styles.title, animateTitle, { color: colors.secondary }]}
+            style={[
+              animateTitle,
+              { position: 'absolute', color: colors.secondary }
+            ]}
           >
             {title}
           </Animated.Text>
         ) : null}
         <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
           {options?.maxLength && value?.length ? (
-            <Text style={[styles.maxLength, { color: colors.secondary }]}>
+            <CustomText
+              fontStyle='S'
+              style={{
+                paddingLeft: StyleConstants.Spacing.XS,
+                color: colors.secondary
+              }}
+            >
               {value?.length} / {options.maxLength}
-            </Text>
+            </CustomText>
           ) : null}
           {inputFocused ? <EmojisButton /> : null}
         </View>
@@ -167,25 +169,5 @@ const Input: React.FC<Props> = ({
     </ComponentEmojis>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    alignItems: 'flex-end',
-    borderWidth: 1,
-    marginVertical: StyleConstants.Spacing.S,
-    padding: StyleConstants.Spacing.S
-  },
-  title: {
-    position: 'absolute'
-  },
-  textInput: {
-    flex: 1,
-    fontSize: StyleConstants.Font.Size.M
-  },
-  maxLength: {
-    ...StyleConstants.FontStyle.S,
-    paddingLeft: StyleConstants.Spacing.XS
-  }
-})
 
 export default Input

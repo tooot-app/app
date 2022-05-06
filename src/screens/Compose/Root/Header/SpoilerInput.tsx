@@ -1,8 +1,9 @@
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TextInput } from 'react-native'
+import { TextInput } from 'react-native'
 import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
 
@@ -14,13 +15,16 @@ const ComposeSpoilerInput: React.FC = () => {
   return (
     <TextInput
       keyboardAppearance={mode}
-      style={[
-        styles.spoilerInput,
-        {
-          color: colors.primaryDefault,
-          borderBottomColor: colors.border
-        }
-      ]}
+      style={{
+        ...StyleConstants.FontStyle.M,
+        marginTop: StyleConstants.Spacing.S,
+        paddingBottom: StyleConstants.Spacing.M,
+        marginLeft: StyleConstants.Spacing.Global.PagePadding,
+        marginRight: StyleConstants.Spacing.Global.PagePadding,
+        borderBottomWidth: 0.5,
+        color: colors.primaryDefault,
+        borderBottomColor: colors.border
+      }}
       autoCapitalize='none'
       autoCorrect={false}
       autoFocus
@@ -53,20 +57,9 @@ const ComposeSpoilerInput: React.FC = () => {
         })
       }
     >
-      <Text>{composeState.spoiler.formatted}</Text>
+      <CustomText>{composeState.spoiler.formatted}</CustomText>
     </TextInput>
   )
 }
-
-const styles = StyleSheet.create({
-  spoilerInput: {
-    ...StyleConstants.FontStyle.M,
-    marginTop: StyleConstants.Spacing.S,
-    paddingBottom: StyleConstants.Spacing.M,
-    marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginRight: StyleConstants.Spacing.Global.PagePadding,
-    borderBottomWidth: 0.5
-  }
-})
 
 export default ComposeSpoilerInput

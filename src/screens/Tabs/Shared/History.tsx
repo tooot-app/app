@@ -1,6 +1,7 @@
 import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import ComponentSeparator from '@components/Separator'
+import CustomText from '@components/Text'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineContent from '@components/Timeline/Shared/Content'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
@@ -9,7 +10,7 @@ import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const ContentView = ({
@@ -52,12 +53,12 @@ const ContentView = ({
                     size={StyleConstants.Font.Size.M}
                     color={colors.disabled}
                   />
-                  <Text style={{ flex: 1 }}>
+                  <CustomText style={{ flex: 1 }}>
                     <ParseEmojis
                       content={option.title}
                       emojis={history.poll?.emojis}
                     />
-                  </Text>
+                  </CustomText>
                 </View>
               </View>
             ))

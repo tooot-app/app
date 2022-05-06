@@ -1,5 +1,6 @@
 import analytics from '@components/analytics'
 import { ParseHTML } from '@components/Parse'
+import CustomText from '@components/Text'
 import { useTranslateQuery } from '@utils/queryHooks/translate'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -7,7 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text } from 'react-native'
+import { Pressable } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { useSelector } from 'react-redux'
 
@@ -85,9 +86,9 @@ const TimelineTranslate = React.memo(
             }
           }}
         >
-          <Text
+          <CustomText
+            fontStyle='M'
             style={{
-              ...StyleConstants.FontStyle.M,
               color:
                 isLoading || isSuccess
                   ? colors.secondary
@@ -106,14 +107,14 @@ const TimelineTranslate = React.memo(
                     source: data?.sourceLanguage
                   })
               : t('shared.translate.default')}
-          </Text>
-          <Text>
+          </CustomText>
+          <CustomText>
             {__DEV__
               ? ` Source: ${status.language}; Target: ${
                   Localization.locale || settingsLanguage || 'en'
                 }`
               : undefined}
-          </Text>
+          </CustomText>
           {isLoading ? (
             <Circle
               size={StyleConstants.Font.Size.M}

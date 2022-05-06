@@ -1,11 +1,12 @@
 import analytics from '@components/analytics'
 import Button from '@components/Button'
 import openLink from '@components/openLink'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 
@@ -27,10 +28,14 @@ const AttachmentUnsupported: React.FC<Props> = ({
 
   return (
     <View
-      style={[
-        styles.base,
-        { aspectRatio: attachmentAspectRatio({ total, index }) }
-      ]}
+      style={{
+        flex: 1,
+        flexBasis: '50%',
+        padding: StyleConstants.Spacing.XS / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        aspectRatio: attachmentAspectRatio({ total, index })
+      }}
     >
       {attachment.blurhash ? (
         <Blurhash
@@ -44,18 +49,18 @@ const AttachmentUnsupported: React.FC<Props> = ({
       ) : null}
       {!sensitiveShown ? (
         <>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: attachment.blurhash
-                  ? colors.backgroundDefault
-                  : colors.primaryDefault
-              }
-            ]}
+          <CustomText
+            fontStyle='S'
+            style={{
+              textAlign: 'center',
+              marginBottom: StyleConstants.Spacing.S,
+              color: attachment.blurhash
+                ? colors.backgroundDefault
+                : colors.primaryDefault
+            }}
           >
             {t('shared.attachment.unsupported.text')}
-          </Text>
+          </CustomText>
           {attachment.remote_url ? (
             <Button
               type='text'
@@ -73,20 +78,5 @@ const AttachmentUnsupported: React.FC<Props> = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexBasis: '50%',
-    padding: StyleConstants.Spacing.XS / 2,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    ...StyleConstants.FontStyle.S,
-    textAlign: 'center',
-    marginBottom: StyleConstants.Spacing.S
-  }
-})
 
 export default AttachmentUnsupported

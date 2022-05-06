@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
@@ -20,7 +21,7 @@ import * as Notifications from 'expo-notifications'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, Linking, ScrollView, Text, View } from 'react-native'
+import { AppState, Linking, ScrollView, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const TabMePush: React.FC = () => {
@@ -205,14 +206,9 @@ const TabMePush: React.FC = () => {
             size={StyleConstants.Font.Size.L}
             color={colors.primaryDefault}
           />
-          <Text
-            style={{
-              ...StyleConstants.FontStyle.M,
-              color: colors.primaryDefault
-            }}
-          >
+          <CustomText fontStyle='M' style={{ color: colors.primaryDefault }}>
             {t('me.push.notAvailable')}
-          </Text>
+          </CustomText>
         </View>
       )}
     </ScrollView>

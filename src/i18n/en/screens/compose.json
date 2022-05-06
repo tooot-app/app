@@ -165,7 +165,8 @@
       "content": {
         "accessibilityHint": "Saved draft, tap to edit this draft",
         "textEmpty": "Content empty"
-      }
+      },
+      "checkAttachment": "Checking attachments on the server..."
     }
   }
 }

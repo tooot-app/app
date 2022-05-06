@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import {
   getInstanceAccount,
   getInstanceUri
@@ -6,7 +7,7 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { PlaceholderLine } from 'rn-placeholder'
 
@@ -26,27 +27,19 @@ const AccountInformationAccount: React.FC<Props> = ({
   )
   const instanceUri = useSelector(getInstanceUri)
 
-  const movedStyle = useMemo(
-    () =>
-      StyleSheet.create({
-        base: {
-          textDecorationLine: account?.moved ? 'line-through' : undefined
-        }
-      }),
-    [account?.moved]
-  )
   const movedContent = useMemo(() => {
     if (account?.moved) {
       return (
-        <Text
-          style={[
-            styles.moved,
-            { color: colors.secondary, ...StyleConstants.FontStyle.M }
-          ]}
+        <CustomText
+          fontStyle='M'
+          style={{
+            marginLeft: StyleConstants.Spacing.S,
+            color: colors.secondary
+          }}
           selectable
         >
           @{account.moved.acct}
-        </Text>
+        </CustomText>
       )
     }
   }, [account?.moved])
@@ -54,26 +47,29 @@ const AccountInformationAccount: React.FC<Props> = ({
   if (account || (localInstance && instanceAccount)) {
     return (
       <View
-        style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderRadius: 0,
+          marginBottom: StyleConstants.Spacing.L
+        }}
       >
-        <Text
-          style={[
-            movedStyle.base,
-            {
-              color: colors.secondary,
-              ...StyleConstants.FontStyle.M
-            }
-          ]}
+        <CustomText
+          fontStyle='M'
+          style={{
+            textDecorationLine: account?.moved ? 'line-through' : undefined,
+            color: colors.secondary
+          }}
           selectable
         >
           @{localInstance ? instanceAccount?.acct : account?.acct}
           {localInstance ? `@${instanceUri}` : null}
-        </Text>
+        </CustomText>
         {movedContent}
         {account?.locked ? (
           <Icon
             name='Lock'
-            style={styles.type}
+            style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}
           />
@@ -81,7 +77,7 @@ const AccountInformationAccount: React.FC<Props> = ({
         {account?.bot ? (
           <Icon
             name='HardDrive'
-            style={styles.type}
+            style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}
           />
@@ -95,22 +91,11 @@ const AccountInformationAccount: React.FC<Props> = ({
         height={StyleConstants.Font.LineHeight.M}
         color={colors.shimmerDefault}
         noMargin
-        style={styles.base}
+        style={{ borderRadius: 0, marginBottom: StyleConstants.Spacing.L }}
       />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  base: {
-    borderRadius: 0,
-    marginBottom: StyleConstants.Spacing.L
-  },
-  type: { marginLeft: StyleConstants.Spacing.S },
-  moved: {
-    marginLeft: StyleConstants.Spacing.S
-  }
-})
 
 export default React.memo(
   AccountInformationAccount,

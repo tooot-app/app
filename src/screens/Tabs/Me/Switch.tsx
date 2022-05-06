@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import ComponentInstance from '@components/Instance'
+import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import initQuery from '@utils/initQuery'
 import {
@@ -13,13 +14,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 
@@ -35,7 +30,10 @@ const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
     <Button
       type='text'
       selected={selected}
-      style={styles.button}
+      style={{
+        marginBottom: StyleConstants.Spacing.M,
+        marginRight: StyleConstants.Spacing.M
+      }}
       content={`@${instance.account.acct}@${instance.uri}${
         selected ? ' ✓' : ''
       }`}
@@ -70,13 +68,20 @@ const TabMeSwitch: React.FC = () => {
     >
       <ScrollView
         ref={scrollViewRef}
-        style={styles.base}
+        style={{ marginBottom: StyleConstants.Spacing.L * 2 }}
         keyboardShouldPersistTaps='always'
       >
         <View>
-          <Text style={[styles.header, { color: colors.primaryDefault }]}>
+          <CustomText
+            fontStyle='M'
+            style={{
+              textAlign: 'center',
+              paddingVertical: StyleConstants.Spacing.S,
+              color: colors.primaryDefault
+            }}
+          >
             {t('me.switch.new')}
-          </Text>
+          </CustomText>
           <ComponentInstance
             scrollViewRef={scrollViewRef}
             disableHeaderImage
@@ -85,12 +90,32 @@ const TabMeSwitch: React.FC = () => {
         </View>
 
         <View
-          style={[styles.firstSection, , { borderTopColor: colors.border }]}
+          style={{
+            marginTop: StyleConstants.Spacing.S,
+            paddingTop: StyleConstants.Spacing.M,
+            marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+            borderTopWidth: StyleSheet.hairlineWidth,
+            borderTopColor: colors.border
+          }}
         >
-          <Text style={[styles.header, { color: colors.primaryDefault }]}>
+          <CustomText
+            fontStyle='M'
+            style={{
+              textAlign: 'center',
+              paddingVertical: StyleConstants.Spacing.S,
+              color: colors.primaryDefault
+            }}
+          >
             {t('me.switch.existing')}
-          </Text>
-          <View style={styles.accountButtons}>
+          </CustomText>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              marginTop: StyleConstants.Spacing.M
+            }}
+          >
             {instances.length
               ? instances
                   .slice()
@@ -120,32 +145,5 @@ const TabMeSwitch: React.FC = () => {
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    marginBottom: StyleConstants.Spacing.L * 2
-  },
-  header: {
-    ...StyleConstants.FontStyle.M,
-    textAlign: 'center',
-    paddingVertical: StyleConstants.Spacing.S
-  },
-  firstSection: {
-    marginTop: StyleConstants.Spacing.S,
-    paddingTop: StyleConstants.Spacing.M,
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    borderTopWidth: StyleSheet.hairlineWidth
-  },
-  accountButtons: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: StyleConstants.Spacing.M
-  },
-  button: {
-    marginBottom: StyleConstants.Spacing.M,
-    marginRight: StyleConstants.Spacing.M
-  }
-})
 
 export default TabMeSwitch

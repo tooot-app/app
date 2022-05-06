@@ -1,9 +1,10 @@
 import Input from '@components/Input'
 import { ParseEmojis } from '@components/Parse'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
@@ -17,7 +18,7 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
   const movedContent = useMemo(() => {
     if (account?.moved) {
       return (
-        <View style={styles.moved}>
+        <View style={{ marginLeft: StyleConstants.Spacing.S }}>
           <ParseEmojis
             content={account.moved.display_name || account.moved.username}
             emojis={account.moved.emojis}
@@ -32,13 +33,20 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
   const [displatName, setDisplayName] = useState(account?.display_name)
 
   return (
-    <View style={[styles.base, { flexDirection: 'row' }]}>
+    <View
+      style={{
+        borderRadius: 0,
+        marginTop: StyleConstants.Spacing.S,
+        marginBottom: StyleConstants.Spacing.XS,
+        flexDirection: 'row'
+      }}
+    >
       {account ? (
         edit ? (
           <Input title='昵称' value={displatName} setValue={setDisplayName} />
         ) : (
           <>
-            <Text
+            <CustomText
               style={{
                 textDecorationLine: account?.moved ? 'line-through' : undefined
               }}
@@ -49,7 +57,7 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
                 size='L'
                 fontBold
               />
-            </Text>
+            </CustomText>
             {movedContent}
           </>
         )
@@ -65,17 +73,6 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    borderRadius: 0,
-    marginTop: StyleConstants.Spacing.S,
-    marginBottom: StyleConstants.Spacing.XS
-  },
-  moved: {
-    marginLeft: StyleConstants.Spacing.S
-  }
-})
 
 export default React.memo(
   AccountInformationName,

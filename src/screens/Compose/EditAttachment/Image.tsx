@@ -1,9 +1,10 @@
+import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
@@ -120,7 +121,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
 
   return (
     <>
-      <View style={styles.base}>
+      <View style={{ overflow: 'hidden', flex: 1, alignItems: 'center' }}>
         <Image
           style={{
             width: imageDimensionis.width,
@@ -168,20 +169,18 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
         </PanGestureHandler>
       </View>
       {screenReaderEnabled ? null : (
-        <Text style={[styles.imageFocusText, { color: colors.primaryDefault }]}>
+        <CustomText
+          fontStyle='M'
+          style={{
+            padding: StyleConstants.Spacing.Global.PagePadding,
+            color: colors.primaryDefault
+          }}
+        >
           {t('content.editAttachment.content.imageFocus')}
-        </Text>
+        </CustomText>
       )}
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  base: { overflow: 'hidden', flex: 1, alignItems: 'center' },
-  imageFocusText: {
-    ...StyleConstants.FontStyle.M,
-    padding: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default ComposeEditAttachmentImage

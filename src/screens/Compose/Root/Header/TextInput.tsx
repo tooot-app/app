@@ -1,8 +1,9 @@
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TextInput } from 'react-native'
+import { TextInput } from 'react-native'
 import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
 
@@ -14,13 +15,15 @@ const ComposeTextInput: React.FC = () => {
   return (
     <TextInput
       keyboardAppearance={mode}
-      style={[
-        styles.textInput,
-        {
-          color: colors.primaryDefault,
-          borderBottomColor: colors.border
-        }
-      ]}
+      style={{
+        ...StyleConstants.FontStyle.M,
+        marginTop: StyleConstants.Spacing.S,
+        paddingBottom: StyleConstants.Spacing.M,
+        marginLeft: StyleConstants.Spacing.Global.PagePadding,
+        marginRight: StyleConstants.Spacing.Global.PagePadding,
+        color: colors.primaryDefault,
+        borderBottomColor: colors.border
+      }}
       autoFocus
       enablesReturnKeyAutomatically
       multiline
@@ -52,19 +55,9 @@ const ComposeTextInput: React.FC = () => {
       ref={composeState.textInputFocus.refs.text}
       scrollEnabled={false}
     >
-      <Text>{composeState.text.formatted}</Text>
+      <CustomText>{composeState.text.formatted}</CustomText>
     </TextInput>
   )
 }
-
-const styles = StyleSheet.create({
-  textInput: {
-    ...StyleConstants.FontStyle.M,
-    marginTop: StyleConstants.Spacing.S,
-    paddingBottom: StyleConstants.Spacing.M,
-    marginLeft: StyleConstants.Spacing.Global.PagePadding,
-    marginRight: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default ComposeTextInput

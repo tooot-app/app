@@ -1,6 +1,7 @@
 import ComponentAccount from '@components/Account'
 import ComponentHashtag from '@components/Hashtag'
 import ComponentSeparator from '@components/Separator'
+import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
@@ -13,7 +14,6 @@ import {
   Platform,
   SectionList,
   StyleSheet,
-  Text,
   View
 } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
@@ -66,10 +66,15 @@ const TabSharedSearch: React.FC<
 
   const listEmpty = useMemo(() => {
     return (
-      <View style={styles.emptyBase}>
+      <View
+        style={{
+          marginVertical: StyleConstants.Spacing.Global.PagePadding,
+          alignItems: 'center'
+        }}
+      >
         <View>
           {status === 'loading' ? (
-            <View style={styles.loading}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Circle
                 size={StyleConstants.Font.Size.M * 1.25}
                 color={colors.secondary}
@@ -77,53 +82,61 @@ const TabSharedSearch: React.FC<
             </View>
           ) : (
             <>
-              <Text
-                style={[
-                  styles.emptyDefault,
-                  styles.emptyFontSize,
-                  { color: colors.primaryDefault }
-                ]}
+              <CustomText
+                fontStyle='S'
+                style={{
+                  marginBottom: StyleConstants.Spacing.L,
+                  color: colors.primaryDefault
+                }}
               >
                 <Trans
                   i18nKey='screenTabs:shared.search.empty.general'
-                  components={{ bold: <Text style={styles.emptyFontBold} /> }}
+                  components={{
+                    bold: (
+                      <CustomText
+                        style={{ fontWeight: StyleConstants.Font.Weight.Bold }}
+                      />
+                    )
+                  }}
                 />
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
                 {t('shared.search.empty.advanced.header')}
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: colors.secondary }}>
+                <CustomText style={{ color: colors.secondary }}>
                   @username@domain
-                </Text>
+                </CustomText>
                 {'   '}
                 {t('shared.search.empty.advanced.example.account')}
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: colors.secondary }}>#example</Text>
+                <CustomText style={{ color: colors.secondary }}>
+                  #example
+                </CustomText>
                 {'   '}
                 {t('shared.search.empty.advanced.example.hashtag')}
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: colors.secondary }}>URL</Text>
+                <CustomText style={{ color: colors.secondary }}>URL</CustomText>
                 {'   '}
                 {t('shared.search.empty.advanced.example.statusLink')}
-              </Text>
-              <Text
+              </CustomText>
+              <CustomText
                 style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
               >
-                <Text style={{ color: colors.secondary }}>URL</Text>
+                <CustomText style={{ color: colors.secondary }}>URL</CustomText>
                 {'   '}
                 {t('shared.search.empty.advanced.example.accountLink')}
-              </Text>
+              </CustomText>
             </>
           )}
         </View>
@@ -133,16 +146,21 @@ const TabSharedSearch: React.FC<
   const sectionHeader = useCallback(
     ({ section: { translation } }) => (
       <View
-        style={[
-          styles.sectionHeader,
-          { backgroundColor: colors.backgroundDefault }
-        ]}
+        style={{
+          padding: StyleConstants.Spacing.M,
+          backgroundColor: colors.backgroundDefault
+        }}
       >
-        <Text
-          style={[styles.sectionHeaderText, { color: colors.primaryDefault }]}
+        <CustomText
+          fontStyle='M'
+          style={{
+            fontWeight: StyleConstants.Font.Weight.Bold,
+            textAlign: 'center',
+            color: colors.primaryDefault
+          }}
         >
           {translation}
-        </Text>
+        </CustomText>
       </View>
     ),
     []
@@ -151,18 +169,27 @@ const TabSharedSearch: React.FC<
     ({ section: { data, translation } }) =>
       !data.length ? (
         <View
-          style={[
-            styles.sectionFooter,
-            { backgroundColor: colors.backgroundDefault }
-          ]}
+          style={{
+            padding: StyleConstants.Spacing.S,
+            backgroundColor: colors.backgroundDefault
+          }}
         >
-          <Text style={[styles.sectionFooterText, { color: colors.secondary }]}>
+          <CustomText
+            fontStyle='S'
+            style={{ textAlign: 'center', color: colors.secondary }}
+          >
             <Trans
               i18nKey='screenTabs:shared.search.notFound'
               values={{ searchTerm: text, type: translation }}
-              components={{ bold: <Text style={styles.emptyFontBold} /> }}
+              components={{
+                bold: (
+                  <CustomText
+                    style={{ fontWeight: StyleConstants.Font.Weight.Bold }}
+                  />
+                )
+              }}
             />
-          </Text>
+          </CustomText>
         </View>
       ) : null,
     [text]
@@ -186,7 +213,7 @@ const TabSharedSearch: React.FC<
       style={{ flex: 1 }}
     >
       <SectionList
-        style={styles.base}
+        style={{ minHeight: '100%' }}
         renderItem={listItem}
         stickySectionHeadersEnabled
         sections={data || []}
@@ -203,38 +230,8 @@ const TabSharedSearch: React.FC<
 }
 
 const styles = StyleSheet.create({
-  base: {
-    minHeight: '100%'
-  },
-  emptyBase: {
-    marginVertical: StyleConstants.Spacing.Global.PagePadding,
-    alignItems: 'center'
-  },
-  loading: { flex: 1, alignItems: 'center' },
-  emptyFontSize: { ...StyleConstants.FontStyle.S },
-  emptyFontBold: {
-    fontWeight: StyleConstants.Font.Weight.Bold
-  },
-  emptyDefault: {
-    marginBottom: StyleConstants.Spacing.L
-  },
   emptyAdvanced: {
     marginBottom: StyleConstants.Spacing.S
-  },
-  sectionHeader: {
-    padding: StyleConstants.Spacing.M
-  },
-  sectionHeaderText: {
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold,
-    textAlign: 'center'
-  },
-  sectionFooter: {
-    padding: StyleConstants.Spacing.S
-  },
-  sectionFooterText: {
-    ...StyleConstants.FontStyle.S,
-    textAlign: 'center'
   }
 })
 

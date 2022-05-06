@@ -1,4 +1,5 @@
 import analytics from '@components/analytics'
+import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
@@ -7,7 +8,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 export interface Props {
   status: Pick<
@@ -37,7 +38,7 @@ const TimelineFeedback = React.memo(
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row' }}>
           {status.reblogs_count > 0 ? (
-            <Text
+            <CustomText
               accessibilityLabel={t(
                 'shared.actionsUsers.reblogged_by.accessibilityLabel',
                 {
@@ -64,10 +65,10 @@ const TimelineFeedback = React.memo(
               {t('shared.actionsUsers.reblogged_by.text', {
                 count: status.reblogs_count
               })}
-            </Text>
+            </CustomText>
           ) : null}
           {status.favourites_count > 0 ? (
-            <Text
+            <CustomText
               accessibilityLabel={t(
                 'shared.actionsUsers.favourited_by.accessibilityLabel',
                 {
@@ -94,12 +95,12 @@ const TimelineFeedback = React.memo(
               {t('shared.actionsUsers.favourited_by.text', {
                 count: status.favourites_count
               })}
-            </Text>
+            </CustomText>
           ) : null}
         </View>
         <View>
           {data && data.length > 1 ? (
-            <Text
+            <CustomText
               accessibilityLabel={t(
                 'shared.actionsUsers.history.accessibilityLabel',
                 {
@@ -121,7 +122,7 @@ const TimelineFeedback = React.memo(
               {t('shared.actionsUsers.history.text', {
                 count: data.length - 1
               })}
-            </Text>
+            </CustomText>
           ) : null}
         </View>
       </View>

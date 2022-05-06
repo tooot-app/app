@@ -1,4 +1,5 @@
 import haptics from '@components/haptics'
+import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { countInstanceEmoji } from '@utils/slices/instancesSlice'
@@ -11,8 +12,6 @@ import {
   findNodeHandle,
   Pressable,
   SectionList,
-  StyleSheet,
-  Text,
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -40,7 +39,16 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
 
   const listHeader = useCallback(
     ({ section: { title } }) => (
-      <Text style={[styles.group, { color: colors.secondary }]}>{title}</Text>
+      <CustomText
+        fontStyle='S'
+        style={{
+          position: 'absolute',
+          left: StyleConstants.Spacing.L,
+          color: colors.secondary
+        }}
+      >
+        {title}
+      </CustomText>
     ),
     []
   )
@@ -48,7 +56,15 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const listItem = useCallback(
     ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
       return (
-        <View key={index} style={styles.emojis}>
+        <View
+          key={index}
+          style={{
+            flex: 1,
+            flexWrap: 'wrap',
+            marginTop: StyleConstants.Spacing.M,
+            marginLeft: StyleConstants.Spacing.M
+          }}
+        >
           {item.map(emoji => {
             const uri = reduceMotionEnabled ? emoji.static_url : emoji.url
             if (validUrl.isHttpsUri(uri)) {
@@ -77,7 +93,12 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
                       'screenCompose:content.root.footer.emojis.accessibilityHint'
                     )}
                     source={{ uri }}
-                    style={styles.emoji}
+                    style={{
+                      width: 32,
+                      height: 32,
+                      padding: StyleConstants.Spacing.S,
+                      margin: StyleConstants.Spacing.S
+                    }}
                   />
                 </Pressable>
               )
@@ -92,7 +113,15 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   )
 
   return (
-    <View style={styles.base}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        height: 260
+      }}
+    >
       <SectionList
         accessible
         ref={accessibleRefEmojis}
@@ -107,32 +136,5 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    height: 260
-  },
-  group: {
-    position: 'absolute',
-    left: StyleConstants.Spacing.L,
-    ...StyleConstants.FontStyle.S
-  },
-  emojis: {
-    flex: 1,
-    flexWrap: 'wrap',
-    marginTop: StyleConstants.Spacing.M,
-    marginLeft: StyleConstants.Spacing.M
-  },
-  emoji: {
-    width: 32,
-    height: 32,
-    padding: StyleConstants.Spacing.S,
-    margin: StyleConstants.Spacing.S
-  }
-})
 
 export default React.memo(ComposeEmojis, () => true)

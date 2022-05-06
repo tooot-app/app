@@ -1,11 +1,11 @@
 import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { createElement, Dispatch } from 'react'
-import { Text } from 'react-native'
 import { FetchOptions } from 'react-query/types/core/query'
 import Autolinker from '@root/modules/autolinker'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './utils/types'
 import { instanceConfigurationStatusCharsURL } from './Root'
+import CustomText from '@components/Text'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']
@@ -18,7 +18,7 @@ export interface Params {
 const TagText = ({ text }: { text: string }) => {
   const { colors } = useTheme()
 
-  return <Text style={{ color: colors.blue }}>{text}</Text>
+  return <CustomText style={{ color: colors.blue }}>{text}</CustomText>
 }
 
 const debouncedSuggestions = debounce(
@@ -120,7 +120,7 @@ const formatText = ({
     payload: {
       count: contentLength,
       raw: content,
-      formatted: createElement(Text, null, children)
+      formatted: createElement(CustomText, null, children)
     }
   })
 }
