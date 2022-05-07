@@ -79,7 +79,6 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: (findProperty('expo.jsEngine') ?: "jsc") == "hermes",
-    cliPath: new File(["node", "--print", "require.resolve('react-native/package.json')"].execute().text.trim(), "../cli.js")
 ]
 
 apply from: new File(["node", "--print", "require.resolve('react-native/package.json')"].execute().text.trim(), "../react.gradle")
