@@ -1,6 +1,6 @@
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
-import { useEffect, useState } from 'react'
-import { AccessibilityInfo, Text, TextProps, TextStyle } from 'react-native'
+import { Text, TextProps, TextStyle } from 'react-native'
 
 type Props =
   | {
@@ -27,23 +27,8 @@ const CustomText: React.FC<Props & TextProps> = ({
   lineHeight,
   ...rest
 }) => {
-  const [isBoldText, setIsBoldText] = useState(false)
-  useEffect(() => {
-    const boldTextChangedSubscription = AccessibilityInfo.addEventListener(
-      'boldTextChanged',
-      boldTextChanged => {
-        setIsBoldText(boldTextChanged)
-      }
-    )
+  const { boldTextEnabled } = useAccessibility()
 
-    AccessibilityInfo.isBoldTextEnabled().then(boldTextEnabled => {
-      setIsBoldText(boldTextEnabled)
-    })
-
-    return () => {
-      boldTextChangedSubscription.remove()
-    }
-  }, [])
   enum BoldMapping {
     'Normal' = '600',
     'Bold' = '800'
@@ -61,15 +46,14 @@ const CustomText: React.FC<Props & TextProps> = ({
           })
         },
         {
-          fontWeight: isBoldText
+          fontWeight: boldTextEnabled
             ? BoldMapping[fontWeight]
             : StyleConstants.Font.Weight[fontWeight]
         }
       ]}
       {...rest}
-    >
-      {children}
-    </Text>
+      children={children}
+    />
   )
 }
 
