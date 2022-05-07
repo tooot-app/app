@@ -58,6 +58,12 @@
         "accessibilityLabel": "{{count}}用户喜欢了此嘟文",
         "accessibilityHint": "点击以了解用户",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "此嘟文已被编辑{{count}}次",
+        "accessibilityHint": "点击查看所有编辑记录",
+        "text": "编辑{{count}}次",
+        "text_plural": "编辑{{count}}次"
       }
     },
     "attachment": {
@@ -95,7 +101,10 @@
             "accessibilityHint": "用户帐户名"
           }
         },
-        "application": "发自 {{application}}",
+        "application": "发自于 {{application}}",
+        "edited": {
+          "accessibilityLabel": "嘟文已编辑"
+        },
         "muted": {
           "accessibilityLabel": "已静音此嘟文"
         },
@@ -104,7 +113,7 @@
             "accessibilityLabel": "此嘟文是私信"
           },
           "private": {
-            "accessibilityLabel": "此嘟文仅关注者可见"
+            "accessibilityLabel": "此嘟文仅关注着可见"
           }
         }
       },
@@ -158,18 +167,30 @@
         },
         "status": {
           "heading": "关于嘟文",
+          "edit": {
+            "function": "编辑嘟文",
+            "button": "编辑此条嘟文"
+          },
           "delete": {
             "function": "删除",
-            "button": "删除此条嘟文"
+            "button": "删除此条嘟文",
+            "alert": {
+              "title": "确认删除嘟文？",
+              "message": "确定要删除这条嘟文吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。",
+              "buttons": {
+                "confirm": "确认删除",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
           },
           "deleteEdit": {
-            "function": "删除",
-            "button": "删除并重新编辑此条嘟文",
+            "function": "删除嘟文",
+            "button": "删除此条嘟文",
             "alert": {
               "title": "确认删除嘟文？",
               "message": "确定要删除这条嘟文并重新编辑它吗？所有相关的转嘟和喜欢都会被清除，回复将会失去关联。",
               "buttons": {
-                "confirm": "删除并重新编辑",
+                "confirm": "确认删除",
                 "cancel": "$t(common:buttons.cancel)"
               }
             }
