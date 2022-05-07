@@ -281,6 +281,7 @@
         "accessibilityLabel": "Actions for user {{user}}",
         "accessibilityHint": "You can mute, block, report or share this user"
       },
+      "followed_by": " is following you",
       "moved": "User moved",
       "created_at": "Registered on: {{date}}",
       "summary": {
