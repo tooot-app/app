@@ -62,8 +62,8 @@
       "history": {
         "accessibilityLabel": "此嘟文已被编辑{{count}}次",
         "accessibilityHint": "点击查看所有编辑记录",
-        "text": "编辑{{count}}次",
-        "text_plural": "编辑{{count}}次"
+        "text_one": "编辑{{count}}次",
+        "text_other": "编辑{{count}}次"
       }
     },
     "attachment": {
@@ -219,10 +219,10 @@
           "refresh": "刷新"
         },
         "count": {
-          "voters": "已投{{count}}人",
-          "voters_plural": "已投{{count}}人",
-          "votes": "{{count}}票",
-          "votes_plural": "{{count}}票"
+          "voters_one": "已投{{count}}人",
+          "voters_other": "已投{{count}}人",
+          "votes_one": "{{count}}票",
+          "votes_other": "{{count}}票"
         },
         "expiration": {
           "expired": "投票已结束",
