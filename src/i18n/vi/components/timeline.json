@@ -62,8 +62,8 @@
       "history": {
         "accessibilityLabel": "Tút này đã sửa {{count}} lần",
         "accessibilityHint": "Nhấn để xem lịch sử chỉnh sửa",
-        "text": "{{count}} lượt sửa",
-        "text_plural": "{{count}} lượt sửa"
+        "text_one": "{{count}} lượt sửa",
+        "text_other": "{{count}} lượt sửa"
       }
     },
     "attachment": {
@@ -219,10 +219,10 @@
           "refresh": "Làm mới"
         },
         "count": {
-          "voters": "{{count}} người bình chọn",
-          "voters_plural": "{{count}} người bình chọn",
-          "votes": "{{count}} bình chọn",
-          "votes_plural": "{{count}} bình chọn"
+          "voters_one": "{{count}} người bình chọn",
+          "voters_other": "{{count}} người bình chọn",
+          "votes_one": "{{count}} bình chọn",
+          "votes_other": "{{count}} bình chọn"
         },
         "expiration": {
           "expired": "Đã kết thúc",
