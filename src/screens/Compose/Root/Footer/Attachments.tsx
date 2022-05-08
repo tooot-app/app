@@ -5,6 +5,7 @@ import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
+import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -17,8 +18,10 @@ import React, {
   useRef
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
+import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import chooseAndUploadAttachment from './addAttachment'
@@ -33,8 +36,13 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { colors, mode } = useTheme()
+  const { colors } = useTheme()
   const navigation = useNavigation<any>()
+
+  const maxAttachments = useSelector(
+    getInstanceConfigurationStatusMaxAttachments,
+    () => true
+  )
 
   const flatListRef = useRef<FlatList>(null)
 
@@ -124,7 +132,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             width: calculateWidth(item)
           }}
         >
-          <Image
+          <FastImage
             style={{ width: '100%', height: '100%' }}
             source={{
               uri: item.local?.local_thumbnail || item.remote?.preview_url
@@ -320,7 +328,9 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           item.local?.uri || item.remote?.url || Math.random().toString()
         }
         ListFooterComponent={
-          composeState.attachments.uploads.length < 4 ? listFooter : null
+          composeState.attachments.uploads.length < maxAttachments
+            ? listFooter
+            : null
         }
       />
     </View>

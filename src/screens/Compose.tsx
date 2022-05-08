@@ -1,4 +1,3 @@
-import apiInstance from '@api/instance'
 import analytics from '@components/analytics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'

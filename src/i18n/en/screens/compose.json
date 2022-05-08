@@ -42,7 +42,13 @@
           "placeholder": "Spoiler warning message"
         },
         "textInput": {
-          "placeholder": "What's on your mind"
+          "placeholder": "What's on your mind",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Maximum attachments amount reached",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {

@@ -31,7 +31,7 @@ const AccountInformationAccount: React.FC<Props> = ({
   const instanceUri = useSelector(getInstanceUri)
 
   const { data: relationship } = useRelationshipQuery({
-    id: account!.id,
+    id: account?.id || '',
     options: { enabled: account !== undefined }
   })
 
