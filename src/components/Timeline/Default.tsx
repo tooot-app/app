@@ -102,6 +102,7 @@ const TimelineDefault = React.memo(
             queryKey={disableOnPress ? undefined : queryKey}
             rootQueryKey={disableOnPress ? undefined : rootQueryKey}
             status={actualStatus}
+            highlighted={highlighted}
           />
         </View>
 

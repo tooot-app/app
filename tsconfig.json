@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "module": "esnext",
+    "target": "esnext",
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
     "lib": ["dom", "esnext"],

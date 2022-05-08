@@ -17,6 +17,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { FormattedRelativeTime } from 'react-intl'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
@@ -158,7 +159,16 @@ const TimelinePoll: React.FC<Props> = ({
           <CustomText fontStyle='S' style={{ color: colors.secondary }}>
             <Trans
               i18nKey='componentTimeline:shared.poll.meta.expiration.until'
-              components={[<RelativeTime date={poll.expires_at} />]}
+              components={[
+                <FormattedRelativeTime
+                  value={
+                    (new Date(poll.expires_at).getTime() -
+                      new Date().getTime()) /
+                    1000
+                  }
+                  updateIntervalInSeconds={1}
+                />
+              ]}
             />
           </CustomText>
         )
