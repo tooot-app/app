@@ -1,6 +1,7 @@
 import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
+import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
@@ -13,7 +14,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
 export interface Props {
@@ -185,7 +186,7 @@ const TimelineActions: React.FC<Props> = ({
           size={StyleConstants.Font.Size.L}
         />
         {status.replies_count > 0 ? (
-          <Text
+          <CustomText
             style={{
               color: colors.secondary,
               fontSize: StyleConstants.Font.Size.M,
@@ -193,7 +194,7 @@ const TimelineActions: React.FC<Props> = ({
             }}
           >
             {status.replies_count}
-          </Text>
+          </CustomText>
         ) : null}
       </>
     ),
@@ -213,7 +214,7 @@ const TimelineActions: React.FC<Props> = ({
           size={StyleConstants.Font.Size.L}
         />
         {status.reblogs_count > 0 ? (
-          <Text
+          <CustomText
             style={{
               color: color(status.reblogged),
               fontSize: StyleConstants.Font.Size.M,
@@ -221,7 +222,7 @@ const TimelineActions: React.FC<Props> = ({
             }}
           >
             {status.reblogs_count}
-          </Text>
+          </CustomText>
         ) : null}
       </>
     )
@@ -236,7 +237,7 @@ const TimelineActions: React.FC<Props> = ({
           size={StyleConstants.Font.Size.L}
         />
         {status.favourites_count > 0 ? (
-          <Text
+          <CustomText
             style={{
               color: color(status.favourited),
               fontSize: StyleConstants.Font.Size.M,
@@ -245,7 +246,7 @@ const TimelineActions: React.FC<Props> = ({
             }}
           >
             {status.favourites_count}
-          </Text>
+          </CustomText>
         ) : null}
       </>
     )
@@ -269,7 +270,7 @@ const TimelineActions: React.FC<Props> = ({
           : StyleConstants.Avatar.M + StyleConstants.Spacing.S
       }}
     >
-      <View style={styles.actions}>
+      <View style={{ flexDirection: 'row' }}>
         <Pressable
           {...(highlighted
             ? {
@@ -334,9 +335,6 @@ const TimelineActions: React.FC<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  actions: {
-    flexDirection: 'row'
-  },
   action: {
     flex: 1,
     flexDirection: 'row',

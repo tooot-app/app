@@ -1,5 +1,6 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Input from '@components/Input'
+import CustomText from '@components/Text'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
@@ -7,7 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { isEqual } from 'lodash'
 import React, { RefObject, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -100,13 +101,25 @@ const TabMeProfileFields: React.FC<
   }, [theme, i18n.language, dirty, status, newFields])
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
+    <ScrollView
+      style={{
+        paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+        marginBottom: StyleConstants.Spacing.L
+      }}
+      keyboardShouldPersistTaps='always'
+    >
       <View style={{ marginBottom: StyleConstants.Spacing.L * 2 }}>
         {Array.from(Array(4).keys()).map(index => (
-          <View key={index} style={styles.group}>
-            <Text style={[styles.headline, { color: colors.primaryDefault }]}>
+          <View key={index} style={{ marginBottom: StyleConstants.Spacing.M }}>
+            <CustomText
+              fontStyle='S'
+              style={{
+                marginBottom: StyleConstants.Spacing.XS,
+                color: colors.primaryDefault
+              }}
+            >
               {t('me.profile.fields.group', { index: index + 1 })}
-            </Text>
+            </CustomText>
             <Input
               title={t('me.profile.fields.label')}
               autoFocus={false}
@@ -141,19 +154,5 @@ const TabMeProfileFields: React.FC<
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    marginBottom: StyleConstants.Spacing.L
-  },
-  group: {
-    marginBottom: StyleConstants.Spacing.M
-  },
-  headline: {
-    ...StyleConstants.FontStyle.S,
-    marginBottom: StyleConstants.Spacing.XS
-  }
-})
 
 export default TabMeProfileFields

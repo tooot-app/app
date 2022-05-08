@@ -1,10 +1,11 @@
+import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
@@ -57,7 +58,7 @@ const ParseEmojis = React.memo(
     }, [theme, adaptiveFontsize])
 
     return (
-      <Text style={styles.text}>
+      <CustomText style={styles.text}>
         {emojis ? (
           content
             .split(regexEmoji)
@@ -69,30 +70,34 @@ const ParseEmojis = React.memo(
                   return emojiShortcode === `:${emoji.shortcode}:`
                 })
                 if (emojiIndex === -1) {
-                  return <Text key={emojiShortcode + i}>{emojiShortcode}</Text>
+                  return (
+                    <CustomText key={emojiShortcode + i}>
+                      {emojiShortcode}
+                    </CustomText>
+                  )
                 } else {
                   const uri = reduceMotionEnabled
                     ? emojis[emojiIndex].static_url
                     : emojis[emojiIndex].url
                   if (validUrl.isHttpsUri(uri)) {
                     return (
-                      <Text key={emojiShortcode + i}>
+                      <CustomText key={emojiShortcode + i}>
                         {i === 0 ? ' ' : undefined}
                         <FastImage source={{ uri }} style={styles.image} />
-                      </Text>
+                      </CustomText>
                     )
                   } else {
                     return null
                   }
                 }
               } else {
-                return <Text key={i}>{str}</Text>
+                return <CustomText key={i}>{str}</CustomText>
               }
             })
         ) : (
-          <Text>{content}</Text>
+          <CustomText>{content}</CustomText>
         )}
-      </Text>
+      </CustomText>
     )
   },
   (prev, next) => prev.content === next.content

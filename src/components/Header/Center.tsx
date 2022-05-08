@@ -1,7 +1,7 @@
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
 
 export interface Props {
   content: string
@@ -14,23 +14,17 @@ const HeaderCenter = React.memo(
     const { colors } = useTheme()
 
     return (
-      <Text
-        style={[
-          styles.text,
-          { color: inverted ? colors.primaryOverlay : colors.primaryDefault }
-        ]}
+      <CustomText
+        style={{
+          fontSize: 18,
+          fontWeight: StyleConstants.Font.Weight.Bold,
+          color: inverted ? colors.primaryOverlay : colors.primaryDefault
+        }}
         children={content}
       />
     )
   },
   (prev, next) => prev.content === next.content
 )
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    fontWeight: StyleConstants.Font.Weight.Bold
-  }
-})
 
 export default HeaderCenter

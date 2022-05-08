@@ -1,28 +1,44 @@
 import Icon from '@components/Icon'
-import RelativeTime from '@components/RelativeTime'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
+import { FormattedDate, FormattedRelativeTime, FormattedTime } from 'react-intl'
 
 export interface Props {
-  created_at: Mastodon.Status['created_at']
+  created_at: Mastodon.Status['created_at'] | number
   edited_at?: Mastodon.Status['edited_at']
+  highlighted?: boolean
 }
 
 const HeaderSharedCreated = React.memo(
-  ({ created_at, edited_at }: Props) => {
+  ({ created_at, edited_at, highlighted = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 
+    const actualTime = edited_at || created_at
+
     return (
       <>
-        <Text
-          style={{ ...StyleConstants.FontStyle.S, color: colors.secondary }}
-        >
-          <RelativeTime date={edited_at || created_at} />
-        </Text>
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
+          {highlighted ? (
+            <>
+              <FormattedDate
+                value={new Date(actualTime)}
+                dateStyle='medium'
+                timeStyle='short'
+              />
+            </>
+          ) : (
+            <FormattedRelativeTime
+              value={
+                -(new Date().getTime() - new Date(actualTime).getTime()) / 1000
+              }
+              updateIntervalInSeconds={1}
+            />
+          )}
+        </CustomText>
         {edited_at ? (
           <Icon
             accessibilityLabel={t(

@@ -1,9 +1,10 @@
+import CustomText from '@components/Text'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import ComposeContext from '../utils/createContext'
 import ComposeEditAttachmentImage from './Image'
 
@@ -60,17 +61,28 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
   return (
     <ScrollView ref={scrollViewRef}>
       {mediaDisplay}
-      <View style={styles.altTextContainer}>
-        <Text
-          style={[styles.altTextInputHeading, { color: colors.primaryDefault }]}
+      <View style={{ padding: StyleConstants.Spacing.Global.PagePadding }}>
+        <CustomText
+          fontStyle='M'
+          style={{
+            fontWeight: StyleConstants.Font.Weight.Bold,
+            color: colors.primaryDefault
+          }}
         >
           {t('content.editAttachment.content.altText.heading')}
-        </Text>
+        </CustomText>
         <TextInput
-          style={[
-            styles.altTextInput,
-            { borderColor: colors.border, color: colors.primaryDefault }
-          ]}
+          style={{
+            height: 200,
+            ...StyleConstants.FontStyle.M,
+            marginTop: StyleConstants.Spacing.M,
+            marginBottom: StyleConstants.Spacing.S,
+            padding: StyleConstants.Spacing.Global.PagePadding,
+            paddingTop: StyleConstants.Spacing.S * 1.5,
+            borderWidth: StyleSheet.hairlineWidth,
+            borderColor: colors.border,
+            color: colors.primaryDefault
+          }}
           onFocus={() => scrollViewRef.current?.scrollToEnd()}
           autoCapitalize='none'
           autoCorrect={false}
@@ -83,35 +95,20 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
           value={theAttachment.description}
           keyboardAppearance={mode}
         />
-        <Text style={[styles.altTextLength, { color: colors.secondary }]}>
+        <CustomText
+          fontStyle='S'
+          style={{
+            textAlign: 'right',
+            marginRight: StyleConstants.Spacing.S,
+            marginBottom: StyleConstants.Spacing.M,
+            color: colors.secondary
+          }}
+        >
           {theAttachment.description?.length || 0} / 1500
-        </Text>
+        </CustomText>
       </View>
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  altTextContainer: { padding: StyleConstants.Spacing.Global.PagePadding },
-  altTextInputHeading: {
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold
-  },
-  altTextInput: {
-    height: 200,
-    ...StyleConstants.FontStyle.M,
-    marginTop: StyleConstants.Spacing.M,
-    marginBottom: StyleConstants.Spacing.S,
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    paddingTop: StyleConstants.Spacing.S * 1.5,
-    borderWidth: StyleSheet.hairlineWidth
-  },
-  altTextLength: {
-    textAlign: 'right',
-    marginRight: StyleConstants.Spacing.S,
-    ...StyleConstants.FontStyle.S,
-    marginBottom: StyleConstants.Spacing.M
-  }
-})
 
 export default ComposeEditAttachmentRoot

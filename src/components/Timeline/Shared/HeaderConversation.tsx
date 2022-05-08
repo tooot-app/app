@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
+import CustomText from '@components/Text'
 import {
   QueryKeyTimeline,
   useTimelineMutation
@@ -10,7 +11,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
@@ -20,22 +21,22 @@ const Names = ({ accounts }: { accounts: Mastodon.Account[] }) => {
   const { colors } = useTheme()
 
   return (
-    <Text
+    <CustomText
       numberOfLines={1}
       style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
     >
-      <Text>{t('shared.header.conversation.withAccounts')}</Text>
+      <CustomText>{t('shared.header.conversation.withAccounts')}</CustomText>
       {accounts.map((account, index) => (
-        <Text key={account.id} numberOfLines={1}>
+        <CustomText key={account.id} numberOfLines={1}>
           {index !== 0 ? t('common:separator') : undefined}
           <ParseEmojis
             content={account.display_name || account.username}
             emojis={account.emojis}
             fontBold
           />
-        </Text>
+        </CustomText>
       ))}
-    </Text>
+    </CustomText>
   )
 }
 

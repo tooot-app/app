@@ -1,5 +1,6 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import {
   QueryKeyTimeline,
   TimelineData,
@@ -9,7 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Platform, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -251,9 +252,18 @@ const TimelineRefresh: React.FC<Props> = ({
 
   return (
     <Animated.View style={headerPadding}>
-      <View style={styles.base}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: CONTAINER_HEIGHT * 2,
+          alignItems: 'center'
+        }}
+      >
         {isFetching ? (
-          <View style={styles.container2}>
+          <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
             <Circle
               size={StyleConstants.Font.Size.L}
               color={colors.secondary}
@@ -261,9 +271,19 @@ const TimelineRefresh: React.FC<Props> = ({
           </View>
         ) : (
           <>
-            <View style={styles.container1}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                height: CONTAINER_HEIGHT
+              }}
+            >
+              <CustomText
+                fontStyle='S'
+                style={{
+                  lineHeight: CONTAINER_HEIGHT,
+                  color: colors.primaryDefault
+                }}
                 onLayout={onLayout}
                 children={t('refresh.fetchPreviousPage')}
               />
@@ -285,9 +305,15 @@ const TimelineRefresh: React.FC<Props> = ({
                 }
               />
             </View>
-            <View style={styles.container2}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
+            <View
+              style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}
+            >
+              <CustomText
+                fontStyle='S'
+                style={{
+                  lineHeight: CONTAINER_HEIGHT,
+                  color: colors.primaryDefault
+                }}
                 onLayout={onLayout}
                 children={t('refresh.refetch')}
               />
@@ -298,26 +324,5 @@ const TimelineRefresh: React.FC<Props> = ({
     </Animated.View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: CONTAINER_HEIGHT * 2,
-    alignItems: 'center'
-  },
-  container1: {
-    flex: 1,
-    flexDirection: 'row',
-    height: CONTAINER_HEIGHT
-  },
-  container2: { height: CONTAINER_HEIGHT, justifyContent: 'center' },
-  explanation: {
-    fontSize: StyleConstants.Font.Size.S,
-    lineHeight: CONTAINER_HEIGHT
-  }
-})
 
 export default TimelineRefresh

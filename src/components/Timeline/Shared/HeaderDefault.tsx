@@ -18,9 +18,15 @@ export interface Props {
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
+  highlighted: boolean
 }
 
-const TimelineHeaderDefault = ({ queryKey, rootQueryKey, status }: Props) => {
+const TimelineHeaderDefault = ({
+  queryKey,
+  rootQueryKey,
+  status,
+  highlighted
+}: Props) => {
   const { t } = useTranslation('componentTimeline')
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { colors } = useTheme()
@@ -40,6 +46,7 @@ const TimelineHeaderDefault = ({ queryKey, rootQueryKey, status }: Props) => {
           <HeaderSharedCreated
             created_at={status.created_at}
             edited_at={status.edited_at}
+            highlighted={highlighted}
           />
           <HeaderSharedVisibility visibility={status.visibility} />
           <HeaderSharedMuted muted={status.muted} />

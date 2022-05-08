@@ -1,8 +1,9 @@
 import { ParseEmojis } from '@components/Parse'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import Animated, {
   Extrapolate,
   interpolate,
@@ -46,29 +47,33 @@ const AccountNav = React.memo(
     return (
       <Animated.View
         style={[
-          styles.base,
           styleOpacity,
-          { backgroundColor: colors.backgroundDefault, height: headerHeight }
+          {
+            ...StyleSheet.absoluteFillObject,
+            zIndex: 99,
+            backgroundColor: colors.backgroundDefault,
+            height: headerHeight
+          }
         ]}
       >
         <View
-          style={[
-            styles.content,
-            {
-              marginTop:
-                useSafeAreaInsets().top + (44 - StyleConstants.Font.Size.L) / 2
-            }
-          ]}
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            overflow: 'hidden',
+            marginTop:
+              useSafeAreaInsets().top + (44 - StyleConstants.Font.Size.L) / 2
+          }}
         >
-          <Animated.View style={[styles.display_name, styleMarginTop]}>
+          <Animated.View style={[{ flexDirection: 'row' }, styleMarginTop]}>
             {account ? (
-              <Text numberOfLines={1}>
+              <CustomText numberOfLines={1}>
                 <ParseEmojis
                   content={account.display_name || account.username}
                   emojis={account.emojis}
                   fontBold
                 />
-              </Text>
+              </CustomText>
             ) : null}
           </Animated.View>
         </View>
@@ -77,20 +82,5 @@ const AccountNav = React.memo(
   },
   (_, next) => next.account === undefined
 )
-
-const styles = StyleSheet.create({
-  base: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: 99
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    overflow: 'hidden'
-  },
-  display_name: {
-    flexDirection: 'row'
-  }
-})
 
 export default AccountNav

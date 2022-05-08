@@ -1,7 +1,8 @@
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { View, ViewStyle } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
@@ -16,14 +17,33 @@ const InstanceInfo = React.memo(
     const { colors } = useTheme()
 
     return (
-      <View style={[styles.base, style]} accessible>
-        <Text style={[styles.header, { color: colors.primaryDefault }]}>
-          {header}
-        </Text>
+      <View
+        style={[
+          {
+            flex: 1,
+            marginTop: StyleConstants.Spacing.M,
+            paddingLeft: StyleConstants.Spacing.Global.PagePadding,
+            paddingRight: StyleConstants.Spacing.Global.PagePadding
+          },
+          style
+        ]}
+        accessible
+      >
+        <CustomText
+          fontStyle='S'
+          style={{
+            fontWeight: StyleConstants.Font.Weight.Bold,
+            marginBottom: StyleConstants.Spacing.XS,
+            color: colors.primaryDefault
+          }}
+          children={header}
+        />
         {content ? (
-          <Text style={[styles.content, { color: colors.primaryDefault }]}>
-            {content}
-          </Text>
+          <CustomText
+            fontStyle='M'
+            style={{ color: colors.primaryDefault }}
+            children={content}
+          />
         ) : (
           <PlaceholderLine
             width={
@@ -42,22 +62,5 @@ const InstanceInfo = React.memo(
   },
   (prev, next) => prev.content === next.content
 )
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    marginTop: StyleConstants.Spacing.M,
-    paddingLeft: StyleConstants.Spacing.Global.PagePadding,
-    paddingRight: StyleConstants.Spacing.Global.PagePadding
-  },
-  header: {
-    ...StyleConstants.FontStyle.S,
-    fontWeight: StyleConstants.Font.Weight.Bold,
-    marginBottom: StyleConstants.Spacing.XS
-  },
-  content: {
-    ...StyleConstants.FontStyle.M
-  }
-})
 
 export default InstanceInfo

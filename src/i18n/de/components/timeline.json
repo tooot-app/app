@@ -62,8 +62,8 @@
       "history": {
         "accessibilityLabel": "Dieser Tröt wurde {{count}} mal bearbeitet",
         "accessibilityHint": "Für den vollständigen Verlauf auswählen",
-        "text": "{{count}} bearbeitet",
-        "text_plural": "{{count}} mal bearbeitet"
+        "text_one": "{{count}} bearbeitet",
+        "text_other": "{{count}} mal bearbeitet"
       }
     },
     "attachment": {
@@ -219,10 +219,10 @@
           "refresh": "Aktualisieren"
         },
         "count": {
-          "voters": "{{count}} Benutzer haben abgestimmt",
-          "voters_plural": "{{count}} Benutzer haben abgestimmt",
-          "votes": "{{count}} Stimmen",
-          "votes_plural": "{{count}} Stimmen"
+          "voters_one": "{{count}} Benutzer haben abgestimmt",
+          "voters_other": "{{count}} Benutzer haben abgestimmt",
+          "votes_one": "{{count}} Stimmen",
+          "votes_other": "{{count}} Stimmen"
         },
         "expiration": {
           "expired": "Abstimmung abgelaufen",

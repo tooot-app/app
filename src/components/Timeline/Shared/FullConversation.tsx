@@ -1,9 +1,9 @@
+import CustomText from '@components/Text'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
@@ -22,15 +22,15 @@ const TimelineFullConversation = React.memo(
         status.mentions.filter(
           mention => mention.id !== status.in_reply_to_account_id
         ).length) ? (
-      <Text
+      <CustomText
+        fontStyle='S'
         style={{
-          ...StyleConstants.FontStyle.S,
           color: colors.blue,
           marginTop: StyleConstants.Spacing.S
         }}
       >
         {t('shared.fullConversation')}
-      </Text>
+      </CustomText>
     ) : null
   },
   () => true

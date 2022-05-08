@@ -161,61 +161,159 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Share Extension
   const handleShare = useCallback(
-    (item?: { data?: { mimeType: string; data: string }[] }) => {
+    (
+      item?:
+        | {
+            data: { mimeType: string; data: string }[]
+            mimeType: undefined
+          }
+        | { data: string | string[]; mimeType: string }
+    ) => {
       if (instanceActive < 0) {
         return
       }
-      if (!item || !item.data || !Array.isArray(item.data) || !item.data) {
+      if (!item || !item.data) {
         return
       }
 
       let text: string | undefined = undefined
       let images: { type: string; uri: string }[] = []
       let video: { type: string; uri: string } | undefined = undefined
-      item.data.forEach((d, i) => {
-        const typesImage = ['png', 'jpg', 'jpeg', 'gif']
-        const typesVideo = ['mp4', 'm4v', 'mov', 'webm']
-        const { mimeType, data } = d
-        console.log('mimeType', mimeType)
-        console.log('data', data)
-        if (mimeType.startsWith('image/')) {
-          if (!typesImage.includes(mimeType.split('/')[1])) {
-            console.warn('Image type not supported:', mimeType.split('/')[1])
+
+      switch (Platform.OS) {
+        case 'ios':
+          if (!Array.isArray(item.data) || !item.data) {
             return
           }
-          images.push({ type: mimeType.split('/')[1], uri: data })
-        } else if (mimeType.startsWith('video/')) {
-          if (!typesVideo.includes(mimeType.split('/')[1])) {
-            console.warn('Video type not supported:', mimeType.split('/')[1])
+
+          item.data.forEach(d => {
+            if (typeof d === 'string') return
+            const typesImage = ['png', 'jpg', 'jpeg', 'gif']
+            const typesVideo = ['mp4', 'm4v', 'mov', 'webm']
+            const { mimeType, data } = d
+            if (mimeType.startsWith('image/')) {
+              if (!typesImage.includes(mimeType.split('/')[1])) {
+                console.warn(
+                  'Image type not supported:',
+                  mimeType.split('/')[1]
+                )
+                displayMessage({
+                  message: t('shareError.imageNotSupported', {
+                    type: mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
+                return
+              }
+              images.push({ type: mimeType.split('/')[1], uri: data })
+            } else if (mimeType.startsWith('video/')) {
+              if (!typesVideo.includes(mimeType.split('/')[1])) {
+                console.warn(
+                  'Video type not supported:',
+                  mimeType.split('/')[1]
+                )
+                displayMessage({
+                  message: t('shareError.videoNotSupported', {
+                    type: mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
+                return
+              }
+              video = { type: mimeType.split('/')[1], uri: data }
+            } else {
+              if (typesImage.includes(data.split('.').pop() || '')) {
+                images.push({ type: data.split('.').pop()!, uri: data })
+                return
+              }
+              if (typesVideo.includes(data.split('.').pop() || '')) {
+                video = { type: data.split('.').pop()!, uri: data }
+                return
+              }
+              text = !text ? data : text.concat(text, `\n${data}`)
+            }
+          })
+          break
+        case 'android':
+          if (!item.mimeType) {
             return
           }
-          video = { type: mimeType.split('/')[1], uri: data }
-        } else {
-          if (typesImage.includes(data.split('.').pop() || '')) {
-            images.push({ type: data.split('.').pop()!, uri: data })
-            return
+          let tempData: string[]
+          if (!Array.isArray(item.data)) {
+            tempData = [item.data]
+          } else {
+            tempData = item.data
           }
-          if (typesVideo.includes(data.split('.').pop() || '')) {
-            video = { type: data.split('.').pop()!, uri: data }
-            return
-          }
-          text = !text ? data : text.concat(text, `\n${data}`)
-        }
-      })
-      navigationRef.navigate('Screen-Compose', {
-        type: 'share',
-        text,
-        images,
-        video
-      })
+          tempData.forEach(d => {
+            const typesImage = ['png', 'jpg', 'jpeg', 'gif']
+            const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
+            if (item.mimeType!.startsWith('image/')) {
+              if (!typesImage.includes(item.mimeType.split('/')[1])) {
+                console.warn(
+                  'Image type not supported:',
+                  item.mimeType.split('/')[1]
+                )
+                displayMessage({
+                  message: t('shareError.imageNotSupported', {
+                    type: item.mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
+                return
+              }
+              images.push({ type: item.mimeType.split('/')[1], uri: d })
+            } else if (item.mimeType.startsWith('video/')) {
+              if (!typesVideo.includes(item.mimeType.split('/')[1])) {
+                console.warn(
+                  'Video type not supported:',
+                  item.mimeType.split('/')[1]
+                )
+                displayMessage({
+                  message: t('shareError.videoNotSupported', {
+                    type: item.mimeType.split('/')[1]
+                  }),
+                  type: 'error',
+                  theme
+                })
+                return
+              }
+              video = { type: item.mimeType.split('/')[1], uri: d }
+            } else {
+              if (typesImage.includes(d.split('.').pop() || '')) {
+                images.push({ type: d.split('.').pop()!, uri: d })
+                return
+              }
+              if (typesVideo.includes(d.split('.').pop() || '')) {
+                video = { type: d.split('.').pop()!, uri: d }
+                return
+              }
+              text = !text ? d : text.concat(text, `\n${d}`)
+            }
+          })
+          break
+      }
+
+      if (!text && (!images || !images.length) && !video) {
+        return
+      } else {
+        navigationRef.navigate('Screen-Compose', {
+          type: 'share',
+          text,
+          images,
+          video
+        })
+      }
     },
     [instanceActive]
   )
   useEffect(() => {
-    ShareMenu.getInitialShare(item => handleShare(item))
+    ShareMenu.getInitialShare(handleShare)
   }, [])
   useEffect(() => {
-    const listener = ShareMenu.addNewShareListener(item => handleShare(item))
+    const listener = ShareMenu.addNewShareListener(handleShare)
     return () => {
       listener.remove()
     }

@@ -196,10 +196,10 @@
           "refresh": "새로고침"
         },
         "count": {
-          "voters": "{{count}}명의 사용자가 투표",
-          "voters_plural": "{{count}}명의 사용자가 투표",
-          "votes": "{{count}} 투표",
-          "votes_plural": "{{count}} 투표"
+          "voters_one": "{{count}}명의 사용자가 투표",
+          "voters_other": "{{count}}명의 사용자가 투표",
+          "votes_one": "{{count}} 투표",
+          "votes_other": "{{count}} 투표"
         },
         "expiration": {
           "expired": "투표 종료됨",

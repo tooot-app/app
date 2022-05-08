@@ -2,7 +2,10 @@ import analytics from '@components/analytics'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import * as ImageManipulator from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
-import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
+import {
+  ImageInfo,
+  UIImagePickerPresentationStyle
+} from 'expo-image-picker/build/ImagePicker.types'
 import i18next from 'i18next'
 import { Alert, Linking, Platform } from 'react-native'
 
@@ -39,7 +42,7 @@ const mediaSelector = async ({
             { resize }
           ])
         }
-        resolve(newResult)
+        resolve({ ...newResult, cancelled: false })
       } else {
         resolve(result)
       }
@@ -94,8 +97,8 @@ const mediaSelector = async ({
               exif: false,
               presentationStyle:
                 Platform.OS === 'ios' && parseInt(Platform.Version) < 13
-                  ? 0
-                  : -2
+                  ? UIImagePickerPresentationStyle.FULL_SCREEN
+                  : UIImagePickerPresentationStyle.AUTOMATIC
             })
 
             if (!result.cancelled) {

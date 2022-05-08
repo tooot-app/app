@@ -16,7 +16,9 @@
         "default": "Đăng",
         "conversation": "Tin nhắn",
         "reply": "Trả lời",
-        "edit": "Sửa"
+        "deleteEdit": "Tút",
+        "edit": "Sửa",
+        "share": "Tút"
       },
       "alert": {
         "default": {
@@ -40,7 +42,13 @@
           "placeholder": "Viết nội dung ẩn của bạn ở đây"
         },
         "textInput": {
-          "placeholder": "Bạn đang nghĩ về điều gì?"
+          "placeholder": "Bạn đang nghĩ về điều gì?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Vượt quá số lượng tập tin cho phép",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {
@@ -134,8 +142,8 @@
           "accessibilityHint": "Mở bảng chọn emoji, vuốt qua lại để xem toàn bộ"
         }
       },
-      "drafts": "Nháp ({{count}})",
-      "drafts_plural": "Nháp ({{count}})"
+      "drafts_one": "Nháp ({{count}})",
+      "drafts_other": "Nháp ({{count}})"
     },
     "editAttachment": {
       "header": {
@@ -163,7 +171,8 @@
       "content": {
         "accessibilityHint": "Đã lưu nháp, nhấn để tiếp tục viết",
         "textEmpty": "Chưa có nội dung"
-      }
+      },
+      "checkAttachment": "Đang kiểm tra tập tin đính kèm trên máy chủ..."
     }
   }
 }

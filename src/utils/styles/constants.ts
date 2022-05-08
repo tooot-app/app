@@ -3,11 +3,7 @@ const Base = 4
 export const StyleConstants = {
   Font: {
     Size: { S: 14, M: 16, L: 18 },
-    LineHeight: {
-      S: 20,
-      M: 22,
-      L: 28
-    },
+    LineHeight: { S: 20, M: 22, L: 28 },
     Weight: { Normal: '400' as '400', Bold: '600' as '600' }
   },
   FontStyle: {

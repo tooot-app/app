@@ -10,5 +10,9 @@
   "pushError": {
     "message": "Push service error",
     "description": "Please re-enable push notification in settings"
+  },
+  "shareError": {
+    "imageNotSupported": "Image type {{type}} not supported",
+    "videoNotSupported": "Video type {{type}} not supported"
   }
 }

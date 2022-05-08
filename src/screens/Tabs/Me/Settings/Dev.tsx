@@ -1,13 +1,14 @@
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
+import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { persistor } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { DevSettings, Text } from 'react-native'
+import { DevSettings } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
@@ -18,16 +19,16 @@ const SettingsDev: React.FC = () => {
 
   return (
     <MenuContainer>
-      <Text
+      <CustomText
+        fontStyle='S'
         selectable
         style={{
           paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          ...StyleConstants.FontStyle.S,
           color: colors.primaryDefault
         }}
       >
         {instances[instanceActive]?.token}
-      </Text>
+      </CustomText>
       <MenuRow
         title={'Local active index'}
         content={typeof instanceActive + ' - ' + instanceActive}

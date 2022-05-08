@@ -113,8 +113,8 @@
         },
         "fields": {
           "title": "메타데이터",
-          "total": "{{count}}개 필드",
-          "total_plural": "{{count}}개 필드"
+          "total_one": "{{count}}개 필드",
+          "total_other": "{{count}}개 필드"
         },
         "visibility": {
           "title": "공개 범위",

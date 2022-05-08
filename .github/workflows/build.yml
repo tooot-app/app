@@ -19,17 +19,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: -- Step 3 -- Use Expo action
+      - name: -- Step 3 -- Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: -- Step 4 -- Use Expo action
         uses: expo/expo-github-action@v6
         with:
           expo-version: 5.x
           username: ${{ secrets.EXPO_USERNAME }}
           token: ${{ secrets.EXPO_TOKEN }}
-      - name: -- Step 4 -- Install node dependencies
+      - name: -- Step 5 -- Install node dependencies
         run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
+      - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - name: -- Step 7 -- Run fastlane
         env:
           DEVELOPER_DIR: /Applications/Xcode_13.3.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}

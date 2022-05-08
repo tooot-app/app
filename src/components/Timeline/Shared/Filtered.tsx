@@ -1,3 +1,4 @@
+import CustomText from '@components/Text'
 import { store } from '@root/store'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstance, getInstanceAccount } from '@utils/slices/instancesSlice'
@@ -6,7 +7,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import htmlparser2 from 'htmlparser2-without-node-native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 const TimelineFiltered = React.memo(
   () => {
@@ -15,9 +16,9 @@ const TimelineFiltered = React.memo(
 
     return (
       <View style={{ backgroundColor: colors.backgroundDefault }}>
-        <Text
+        <CustomText
+          fontStyle='S'
           style={{
-            ...StyleConstants.FontStyle.S,
             color: colors.secondary,
             textAlign: 'center',
             paddingVertical: StyleConstants.Spacing.S,
@@ -25,7 +26,7 @@ const TimelineFiltered = React.memo(
           }}
         >
           {t('shared.filtered')}
-        </Text>
+        </CustomText>
       </View>
     )
   },
