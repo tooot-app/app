@@ -13,6 +13,5 @@ export default {
   componentMediaSelector: require('./components/mediaSelector'),
   componentParse: require('./components/parse'),
   componentRelationship: require('./components/relationship'),
-  componentRelativeTime: require('./components/relativeTime'),
   componentTimeline: require('./components/timeline')
 }
