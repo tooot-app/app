@@ -1,6 +1,6 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
-import { Video } from 'expo-av'
+import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
   AppState,
@@ -110,15 +110,14 @@ const AttachmentVideo: React.FC<Props> = ({
               source: { uri: video.url }
             }
           : {
-              resizeMode: 'cover',
+              resizeMode: ResizeMode.COVER,
               posterSource: { uri: video.preview_url },
-              posterStyle: { resizeMode: 'cover' }
+              posterStyle: { resizeMode: ResizeMode.COVER }
             })}
         useNativeControls={false}
         onFullscreenUpdate={async event => {
           if (
-            event.fullscreenUpdate ===
-            Video.FULLSCREEN_UPDATE_PLAYER_DID_DISMISS
+            event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS
           ) {
             if (gifv) {
               await videoPlayer.current?.pauseAsync()

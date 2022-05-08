@@ -7,6 +7,7 @@
  */
 
 import GracefullyImage from '@components/GracefullyImage'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import React, { useState, useCallback } from 'react'
 import { Animated, Dimensions, StyleSheet } from 'react-native'
 import usePanResponder from '../hooks/usePanResponder'
@@ -17,11 +18,11 @@ const SCREEN_WIDTH = SCREEN.width
 const SCREEN_HEIGHT = SCREEN.height
 
 type Props = {
-  imageSrc: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  imageSrc: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   onRequestClose: () => void
   onZoom: (isZoomed: boolean) => void
   onLongPress: (
-    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+    image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   ) => void
   delayLongPress: number
   swipeToCloseEnabled?: boolean

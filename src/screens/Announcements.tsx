@@ -2,7 +2,6 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
-import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
@@ -15,6 +14,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { FormattedRelativeTime } from 'react-intl'
 import { Dimensions, Platform, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
@@ -91,7 +91,17 @@ const ScreenAnnouncements: React.FC<
           >
             <Trans
               i18nKey='screenAnnouncements:content.published'
-              components={[<RelativeTime date={item.published_at} />]}
+              components={[
+                <FormattedRelativeTime
+                  value={
+                    -(
+                      new Date().getTime() -
+                      new Date(item.published_at).getTime()
+                    ) / 1000
+                  }
+                  updateIntervalInSeconds={1}
+                />
+              ]}
             />
           </CustomText>
           <ScrollView

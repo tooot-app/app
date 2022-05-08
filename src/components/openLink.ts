@@ -34,6 +34,7 @@ const openLink = async (url: string, navigation?: any) => {
       // @ts-ignore
       navigation.push(page, options)
     } else {
+      // @ts-ignore
       navigationRef.navigate(page, options)
     }
   }

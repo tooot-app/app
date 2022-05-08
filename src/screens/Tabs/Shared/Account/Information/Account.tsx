@@ -1,5 +1,6 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
+import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import {
   getInstanceAccount,
   getInstanceUri
@@ -7,6 +8,7 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { PlaceholderLine } from 'rn-placeholder'
@@ -20,12 +22,18 @@ const AccountInformationAccount: React.FC<Props> = ({
   account,
   localInstance
 }) => {
+  const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
   const instanceAccount = useSelector(
     getInstanceAccount,
     (prev, next) => prev?.acct === next?.acct
   )
   const instanceUri = useSelector(getInstanceUri)
+
+  const { data: relationship } = useRelationshipQuery({
+    id: account?.id || '',
+    options: { enabled: account !== undefined }
+  })
 
   const movedContent = useMemo(() => {
     if (account?.moved) {
@@ -65,6 +73,11 @@ const AccountInformationAccount: React.FC<Props> = ({
           @{localInstance ? instanceAccount?.acct : account?.acct}
           {localInstance ? `@${instanceUri}` : null}
         </CustomText>
+        {relationship?.followed_by ? (
+          <CustomText fontStyle='M' style={{ color: colors.secondary }}>
+            {t('shared.account.followed_by')}
+          </CustomText>
+        ) : null}
         {movedContent}
         {account?.locked ? (
           <Icon

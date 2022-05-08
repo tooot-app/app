@@ -134,8 +134,8 @@
           "accessibilityHint": "이모지 선택 패널 열기, 가로로 스와이프해서 페이지를 바꿀 수 있어요"
         }
       },
-      "drafts": "초안 ({{count}})",
-      "drafts_plural": "초안 ({{count}})"
+      "drafts_one": "초안 ({{count}})",
+      "drafts_other": "초안 ({{count}})"
     },
     "editAttachment": {
       "header": {
