@@ -116,8 +116,8 @@
         },
         "fields": {
           "title": "Metadata",
-          "total": "{{count}} field",
-          "total_plural": "{{count}} fields"
+          "total_one": "{{count}} field",
+          "total_other": "{{count}} fields"
         },
         "visibility": {
           "title": "Posting Visibility",

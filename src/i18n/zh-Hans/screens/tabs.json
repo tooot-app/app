@@ -116,8 +116,8 @@
         },
         "fields": {
           "title": "附加信息",
-          "total": "{{count}} 项",
-          "total_plural": "{{count}} 项"
+          "total_one": "{{count}} 项",
+          "total_other": "{{count}} 项"
         },
         "visibility": {
           "title": "嘟文默认可见范围",

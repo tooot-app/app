@@ -4,7 +4,6 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
-import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import {
   MutationVarsTimelineUpdateStatusProperty,

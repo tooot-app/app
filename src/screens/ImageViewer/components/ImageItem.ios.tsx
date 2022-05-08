@@ -7,6 +7,7 @@
  */
 
 import GracefullyImage from '@components/GracefullyImage'
+import { RootStackParamList } from '@utils/navigation/navigators'
 import React, { createRef, useCallback, useRef, useState } from 'react'
 import {
   Animated,
@@ -31,11 +32,11 @@ const SCREEN_WIDTH = SCREEN.width
 const SCREEN_HEIGHT = SCREEN.height
 
 type Props = {
-  imageSrc: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+  imageSrc: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   onRequestClose: () => void
   onZoom: (scaled: boolean) => void
   onLongPress: (
-    image: Nav.RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
+    image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
   ) => void
   swipeToCloseEnabled?: boolean
 }

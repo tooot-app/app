@@ -9,11 +9,11 @@ import { FormattedDate, FormattedRelativeTime, FormattedTime } from 'react-intl'
 export interface Props {
   created_at: Mastodon.Status['created_at'] | number
   edited_at?: Mastodon.Status['edited_at']
-  highlighted: boolean
+  highlighted?: boolean
 }
 
 const HeaderSharedCreated = React.memo(
-  ({ created_at, edited_at, highlighted }: Props) => {
+  ({ created_at, edited_at, highlighted = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 

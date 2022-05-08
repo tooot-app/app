@@ -134,8 +134,8 @@
           "accessibilityHint": "Mở bảng chọn emoji, vuốt qua lại để xem toàn bộ"
         }
       },
-      "drafts": "Nháp ({{count}})",
-      "drafts_plural": "Nháp ({{count}})"
+      "drafts_one": "Nháp ({{count}})",
+      "drafts_other": "Nháp ({{count}})"
     },
     "editAttachment": {
       "header": {

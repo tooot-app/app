@@ -136,8 +136,8 @@
           "accessibilityHint": "打开表情选择面板，水平滑动切换页面"
         }
       },
-      "drafts": "草稿 ({{count}})",
-      "drafts_plural": "草稿 ({{count}})"
+      "drafts_one": "草稿 ({{count}})",
+      "drafts_other": "草稿 ({{count}})"
     },
     "editAttachment": {
       "header": {

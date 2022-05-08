@@ -62,8 +62,8 @@
       "history": {
         "accessibilityLabel": "This toot has been edited {{count}} times",
         "accessibilityHint": "Tap to view the full edit history",
-        "text": "{{count}} edit",
-        "text_plural": "{{count}} edits"
+        "text_one": "{{count}} edit",
+        "text_other": "{{count}} edits"
       }
     },
     "attachment": {
@@ -219,10 +219,10 @@
           "refresh": "Refresh"
         },
         "count": {
-          "voters": "{{count}} user voted",
-          "voters_plural": "{{count}} users voted",
-          "votes": "{{count}} vote",
-          "votes_plural": "{{count}} votes"
+          "voters_one": "{{count}} user voted",
+          "voters_other": "{{count}} users voted",
+          "votes_one": "{{count}} vote",
+          "votes_other": "{{count}} votes"
         },
         "expiration": {
           "expired": "Vote expired",
