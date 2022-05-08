@@ -267,7 +267,8 @@
         "heading": "Thu thập dữ liệu",
         "description": "Giúp cải thiện chất lượng app"
       },
-      "version": "Phiên bản {{version}}"
+      "version": "Phiên bản {{version}}",
+      "instanceVersion": "Mastodon phiên bản {{version}}"
     },
     "switch": {
       "existing": "Đã đăng nhập trước đây",
@@ -280,6 +281,7 @@
         "accessibilityLabel": "Hành động đối với {{user}}",
         "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
       },
+      "followed_by": " đang theo dõi bạn",
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {
@@ -331,6 +333,9 @@
         "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
       }
+    },
+    "history": {
+      "name": "Lịch sử chỉnh sửa"
     }
   }
 }

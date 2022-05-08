@@ -42,7 +42,13 @@
           "placeholder": "折叠部分的警告信息"
         },
         "textInput": {
-          "placeholder": "想说点什么呢"
+          "placeholder": "想说点什么呢",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "已达附件数量上限",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {
@@ -165,7 +171,8 @@
       "content": {
         "accessibilityHint": "已保存的草稿，点击编辑此草稿",
         "textEmpty": "无正文内容"
-      }
+      },
+      "checkAttachment": "正在检查服务器上的附件..."
     }
   }
 }

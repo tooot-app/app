@@ -58,6 +58,12 @@
         "accessibilityLabel": "{{count}} người đã thích tút này",
         "accessibilityHint": "Xem những ai thích",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Tút này đã sửa {{count}} lần",
+        "accessibilityHint": "Nhấn để xem lịch sử chỉnh sửa",
+        "text_one": "{{count}} lượt sửa",
+        "text_other": "{{count}} lượt sửa"
       }
     },
     "attachment": {
@@ -96,6 +102,9 @@
           }
         },
         "application": "via {{application}}",
+        "edited": {
+          "accessibilityLabel": "Tút đã sửa"
+        },
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
@@ -158,18 +167,30 @@
         },
         "status": {
           "heading": "Đối với tút",
+          "edit": {
+            "function": "Sửa tút",
+            "button": "Sửa tút này"
+          },
           "delete": {
             "function": "Xóa tút",
-            "button": "Xóa tút này"
+            "button": "Xóa tút này",
+            "alert": {
+              "title": "Vẫn xóa tút?",
+              "message": "Bạn có chắc muốn xóa tút này? Toàn bộ lượt thích, đăng lại và trả lời tút cũng sẽ bị xóa theo.",
+              "buttons": {
+                "confirm": "Xác nhận xóa",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
           },
           "deleteEdit": {
             "function": "Xóa tút",
-            "button": "Xóa và viết lại",
+            "button": "Xóa & viết lại",
             "alert": {
-              "title": "Tiếp tục xóa tút?",
+              "title": "Xác nhận xóa tút?",
               "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, đăng lại và trả lời tút cũng sẽ bị xóa theo.",
               "buttons": {
-                "confirm": "Tiếp tục xóa",
+                "confirm": "Xác nhận xóa",
                 "cancel": "$t(common:buttons.cancel)"
               }
             }

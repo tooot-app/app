@@ -10,5 +10,9 @@
   "pushError": {
     "message": "Lỗi thông báo đẩy",
     "description": "Hãy cho phép thông báo đẩy trong mục cài đặt!"
+  },
+  "shareError": {
+    "imageNotSupported": "Không hỗ trợ định dạng ảnh {{type}}",
+    "videoNotSupported": "Không hỗ trợ định dạng video {{type}}"
   }
 }
