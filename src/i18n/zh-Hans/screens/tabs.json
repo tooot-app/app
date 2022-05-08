@@ -116,8 +116,8 @@
         },
         "fields": {
           "title": "附加信息",
-          "total": "{{count}} 项",
-          "total_plural": "{{count}} 项"
+          "total_one": "{{count}}项",
+          "total_other": "{{count}}项"
         },
         "visibility": {
           "title": "嘟文默认可见范围",
@@ -281,6 +281,7 @@
         "accessibilityLabel": "对用户{{user}} 的操作",
         "accessibilityHint": "您可以静音、屏蔽、举报或分享此用户"
       },
+      "followed_by": " 正在关注你",
       "moved": "账户已迁移",
       "created_at": "注册时间：{{date}}",
       "summary": {
