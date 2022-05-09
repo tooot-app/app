@@ -43,6 +43,7 @@ import {
   getSettingsLanguage
 } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
+import 'expo-asset'
 import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
