@@ -207,7 +207,7 @@ const TimelineActions: React.FC<Props> = ({
         <Icon
           name='Repeat'
           color={
-            status.visibility === 'private' || status.visibility === 'direct'
+            status.visibility === 'direct'
               ? colors.disabled
               : color(status.reblogged)
           }
@@ -297,9 +297,7 @@ const TimelineActions: React.FC<Props> = ({
           style={styles.action}
           onPress={onPressReblog}
           children={childrenReblog}
-          disabled={
-            status.visibility === 'private' || status.visibility === 'direct'
-          }
+          disabled={status.visibility === 'direct'}
         />
 
         <Pressable

@@ -85,15 +85,12 @@ const TabMeSettingsFontsize: React.FC<
               marginBottom: StyleConstants.Spacing.M,
               fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
               lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
-              fontWeight:
-                initialSize === size
-                  ? StyleConstants.Font.Weight.Bold
-                  : undefined,
               color:
                 initialSize === size ? colors.primaryDefault : colors.secondary,
               borderWidth: StyleSheet.hairlineWidth,
               borderColor: colors.border
             }}
+            fontWeight={initialSize === size ? 'Bold' : undefined}
           >
             {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
           </CustomText>

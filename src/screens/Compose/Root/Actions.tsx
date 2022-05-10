@@ -2,7 +2,6 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
-import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useMemo } from 'react'
@@ -175,13 +174,15 @@ const ComposeActions: React.FC = () => {
   return (
     <View
       accessibilityRole='toolbar'
-      style={[
-        styles.additions,
-        {
-          backgroundColor: colors.backgroundDefault,
-          borderTopColor: colors.border
-        }
-      ]}
+      style={{
+        height: 45,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: colors.backgroundDefault,
+        borderTopColor: colors.border
+      }}
     >
       <Pressable
         accessibilityRole='button'
@@ -271,18 +272,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%'
-  },
-  additions: {
-    height: 45,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  count: {
-    textAlign: 'center',
-    ...StyleConstants.FontStyle.M,
-    fontWeight: StyleConstants.Font.Weight.Bold
   }
 })
 

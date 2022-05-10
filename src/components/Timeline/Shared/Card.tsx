@@ -53,9 +53,9 @@ const TimelineCard = React.memo(({ card }: Props) => {
           numberOfLines={2}
           style={{
             marginBottom: StyleConstants.Spacing.XS,
-            fontWeight: StyleConstants.Font.Weight.Bold,
             color: colors.primaryDefault
           }}
+          fontWeight='Bold'
           testID='title'
         >
           {card.title}

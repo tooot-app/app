@@ -64,10 +64,8 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
       <View style={{ padding: StyleConstants.Spacing.Global.PagePadding }}>
         <CustomText
           fontStyle='M'
-          style={{
-            fontWeight: StyleConstants.Font.Weight.Bold,
-            color: colors.primaryDefault
-          }}
+          style={{ color: colors.primaryDefault }}
+          fontWeight='Bold'
         >
           {t('content.editAttachment.content.altText.heading')}
         </CustomText>
