@@ -1,5 +1,4 @@
 import CustomText from '@components/Text'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 
@@ -17,9 +16,9 @@ const HeaderCenter = React.memo(
       <CustomText
         style={{
           fontSize: 18,
-          fontWeight: StyleConstants.Font.Weight.Bold,
           color: inverted ? colors.primaryOverlay : colors.primaryDefault
         }}
+        fontWeight='Bold'
         children={content}
       />
     )

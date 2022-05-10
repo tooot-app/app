@@ -23,7 +23,7 @@ const CustomText: React.FC<Props & TextProps> = ({
   style,
   fontStyle,
   fontSize,
-  fontWeight = 'Normal',
+  fontWeight,
   lineHeight,
   ...rest
 }) => {
@@ -46,9 +46,11 @@ const CustomText: React.FC<Props & TextProps> = ({
           })
         },
         {
-          fontWeight: boldTextEnabled
-            ? BoldMapping[fontWeight]
-            : StyleConstants.Font.Weight[fontWeight]
+          fontWeight: fontWeight
+            ? boldTextEnabled
+              ? BoldMapping[fontWeight]
+              : StyleConstants.Font.Weight[fontWeight]
+            : undefined
         }
       ]}
       {...rest}

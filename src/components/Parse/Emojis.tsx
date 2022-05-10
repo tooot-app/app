@@ -46,8 +46,7 @@ const ParseEmojis = React.memo(
         text: {
           color: colors.primaryDefault,
           fontSize: adaptedFontsize,
-          lineHeight: adaptedLineheight,
-          ...(fontBold && { fontWeight: StyleConstants.Font.Weight.Bold })
+          lineHeight: adaptedLineheight
         },
         image: {
           width: adaptedFontsize,
@@ -58,7 +57,10 @@ const ParseEmojis = React.memo(
     }, [theme, adaptiveFontsize])
 
     return (
-      <CustomText style={styles.text}>
+      <CustomText
+        style={styles.text}
+        fontWeight={fontBold ? 'Bold' : undefined}
+      >
         {emojis ? (
           content
             .split(regexEmoji)

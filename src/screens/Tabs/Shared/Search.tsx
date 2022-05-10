@@ -92,11 +92,7 @@ const TabSharedSearch: React.FC<
                 <Trans
                   i18nKey='screenTabs:shared.search.empty.general'
                   components={{
-                    bold: (
-                      <CustomText
-                        style={{ fontWeight: StyleConstants.Font.Weight.Bold }}
-                      />
-                    )
+                    bold: <CustomText fontWeight='Bold' />
                   }}
                 />
               </CustomText>
@@ -154,10 +150,10 @@ const TabSharedSearch: React.FC<
         <CustomText
           fontStyle='M'
           style={{
-            fontWeight: StyleConstants.Font.Weight.Bold,
             textAlign: 'center',
             color: colors.primaryDefault
           }}
+          fontWeight='Bold'
         >
           {translation}
         </CustomText>
@@ -182,11 +178,7 @@ const TabSharedSearch: React.FC<
               i18nKey='screenTabs:shared.search.notFound'
               values={{ searchTerm: text, type: translation }}
               components={{
-                bold: (
-                  <CustomText
-                    style={{ fontWeight: StyleConstants.Font.Weight.Bold }}
-                  />
-                )
+                bold: <CustomText fontWeight='Bold' />
               }}
             />
           </CustomText>

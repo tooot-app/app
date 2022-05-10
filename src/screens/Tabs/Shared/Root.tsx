@@ -73,10 +73,8 @@ const TabSharedRoot = ({
                     />,
                     <CustomText
                       fontStyle='M'
-                      style={{
-                        color: colors.primaryDefault,
-                        fontWeight: StyleConstants.Font.Weight.Bold
-                      }}
+                      style={{ color: colors.primaryDefault }}
+                      fontWeight='Bold'
                     />
                   ]}
                 />

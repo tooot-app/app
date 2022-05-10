@@ -32,10 +32,10 @@ const InstanceInfo = React.memo(
         <CustomText
           fontStyle='S'
           style={{
-            fontWeight: StyleConstants.Font.Weight.Bold,
             marginBottom: StyleConstants.Spacing.XS,
             color: colors.primaryDefault
           }}
+          fontWeight='Bold'
           children={header}
         />
         {content ? (
