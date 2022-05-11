@@ -31,7 +31,7 @@ PODS:
     - EXJSONUtils
   - EXNotifications (0.15.2):
     - ExpoModulesCore
-  - Expo (45.0.2):
+  - Expo (45.0.3):
     - ExpoModulesCore
   - ExpoCrypto (10.2.0):
     - ExpoModulesCore
@@ -849,7 +849,7 @@ SPEC CHECKSUMS:
   EXJSONUtils: 2a74b8f40f1523cc3f92af99c91aa78201737a77
   EXManifests: 0c6134b7b6f3236a93a778c3f44ba1cfb3f9fa3d
   EXNotifications: ea9fc56d27d1fee229489c5d8f452c7f367c237e
-  Expo: 27c7466cea6c8be416d8e50a0c0faa48cf8b4d1a
+  Expo: 353cd6d2154838c0c8bb1072d3ac89eb535a2ef4
   ExpoCrypto: d0d0f3e20875dc450b4ec88f0fb608da5c2c6c17
   ExpoHaptics: ad58ec96a25e57579c14a47c7d71f0de0de8656a
   ExpoImageManipulator: b55580bbc7b10099c7707949903e7176a8542ee8
