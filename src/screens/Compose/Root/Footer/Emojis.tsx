@@ -3,6 +3,7 @@ import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { countInstanceEmoji } from '@utils/slices/instancesSlice'
+import { getSettingsStaticEmoji } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useContext, useEffect } from 'react'
@@ -10,11 +11,13 @@ import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
   findNodeHandle,
+  Image,
   Pressable,
   SectionList,
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
 import updateText from '../../updateText'
 import ComposeContext from '../../utils/createContext'
@@ -29,6 +32,8 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
   const { colors } = useTheme()
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+
+  const staticEmoji = useSelector(getSettingsStaticEmoji)
 
   useEffect(() => {
     const tagEmojis = findNodeHandle(accessibleRefEmojis.current)
@@ -82,24 +87,45 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
                     dispatch(countInstanceEmoji(emoji))
                   }}
                 >
-                  <FastImage
-                    accessibilityLabel={t(
-                      'common:customEmoji.accessibilityLabel',
-                      {
-                        emoji: emoji.shortcode
-                      }
-                    )}
-                    accessibilityHint={t(
-                      'screenCompose:content.root.footer.emojis.accessibilityHint'
-                    )}
-                    source={{ uri }}
-                    style={{
-                      width: 32,
-                      height: 32,
-                      padding: StyleConstants.Spacing.S,
-                      margin: StyleConstants.Spacing.S
-                    }}
-                  />
+                  {staticEmoji ? (
+                    <Image
+                      accessibilityLabel={t(
+                        'common:customEmoji.accessibilityLabel',
+                        {
+                          emoji: emoji.shortcode
+                        }
+                      )}
+                      accessibilityHint={t(
+                        'screenCompose:content.root.footer.emojis.accessibilityHint'
+                      )}
+                      source={{ uri }}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        padding: StyleConstants.Spacing.S,
+                        margin: StyleConstants.Spacing.S
+                      }}
+                    />
+                  ) : (
+                    <FastImage
+                      accessibilityLabel={t(
+                        'common:customEmoji.accessibilityLabel',
+                        {
+                          emoji: emoji.shortcode
+                        }
+                      )}
+                      accessibilityHint={t(
+                        'screenCompose:content.root.footer.emojis.accessibilityHint'
+                      )}
+                      source={{ uri }}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        padding: StyleConstants.Spacing.S,
+                        margin: StyleConstants.Spacing.S
+                      }}
+                    />
+                  )}
                 </Pressable>
               )
             } else {

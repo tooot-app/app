@@ -130,7 +130,9 @@ const Timeline: React.FC<Props> = ({
       }
       ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
       ItemSeparatorComponent={ItemSeparatorComponent}
-      maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
+      {...(isFetchingPreviousPage && {
+        maintainVisibleContentPosition: { minIndexForVisible: 0 }
+      })}
       refreshing={isFetchingPreviousPage}
       onRefresh={() => {
         if (!disableRefresh && !isFetchingPreviousPage) {

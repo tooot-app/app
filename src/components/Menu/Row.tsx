@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   core: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: StyleConstants.Spacing.S
+    paddingTop: StyleConstants.Spacing.S
   },
   front: {
     flex: 2,
