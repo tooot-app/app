@@ -15,7 +15,9 @@ import {
   getSettingsBrowser,
   getSettingsFontsize,
   getSettingsDarkTheme,
-  changeDarkTheme
+  changeDarkTheme,
+  getSettingsStaticEmoji,
+  changeStaticEmoji
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -37,6 +39,7 @@ const SettingsApp: React.FC = () => {
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const settingsStaticEmoji = useSelector(getSettingsStaticEmoji)
 
   return (
     <MenuContainer>
@@ -265,6 +268,18 @@ const SettingsApp: React.FC = () => {
             }
           )
         }
+      />
+      <MenuRow
+        title={t('me.settings.staticEmoji.heading')}
+        description={t('me.settings.staticEmoji.description')}
+        switchValue={settingsStaticEmoji}
+        switchOnValueChange={() => {
+          analytics('settings_staticemoji_press', {
+            current: settingsStaticEmoji.toString(),
+            new: !settingsStaticEmoji.toString()
+          })
+          dispatch(changeStaticEmoji(!settingsStaticEmoji))
+        }}
       />
     </MenuContainer>
   )

@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "Use static emoji",
+        "description": "If you encounter frequent app crash when viewing emoji list, you can try to use static emoji instead."
+      },
       "feedback": {
         "heading": "Feature Requests"
       },

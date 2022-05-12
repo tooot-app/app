@@ -22,35 +22,39 @@ const SettingsAnalytics: React.FC = () => {
   const instanceVersion = useSelector(getInstanceVersion, () => true)
 
   return (
-    <MenuContainer>
-      <MenuRow
-        title={t('me.settings.analytics.heading')}
-        description={t('me.settings.analytics.description')}
-        switchValue={settingsAnalytics}
-        switchOnValueChange={() =>
-          dispatch(changeAnalytics(!settingsAnalytics))
-        }
-      />
-      <CustomText
-        fontStyle='S'
-        style={{
-          textAlign: 'center',
-          marginTop: StyleConstants.Spacing.S,
-          color: colors.secondary
-        }}
-      >
-        {t('me.settings.version', { version: Constants.manifest?.version })}
-      </CustomText>
-      <CustomText
-        fontStyle='S'
-        style={{
-          textAlign: 'center',
-          color: colors.secondary
-        }}
-      >
-        {t('me.settings.instanceVersion', { version: instanceVersion })}
-      </CustomText>
-    </MenuContainer>
+    <>
+      <MenuContainer>
+        <MenuRow
+          title={t('me.settings.analytics.heading')}
+          description={t('me.settings.analytics.description')}
+          switchValue={settingsAnalytics}
+          switchOnValueChange={() =>
+            dispatch(changeAnalytics(!settingsAnalytics))
+          }
+        />
+      </MenuContainer>
+      <MenuContainer>
+        <CustomText
+          fontStyle='S'
+          style={{
+            textAlign: 'center',
+            marginTop: StyleConstants.Spacing.S,
+            color: colors.secondary
+          }}
+        >
+          {t('me.settings.version', { version: Constants.manifest?.version })}
+        </CustomText>
+        <CustomText
+          fontStyle='S'
+          style={{
+            textAlign: 'center',
+            color: colors.secondary
+          }}
+        >
+          {t('me.settings.instanceVersion', { version: instanceVersion })}
+        </CustomText>
+      </MenuContainer>
+    </>
   )
 }
 
