@@ -1,345 +1,345 @@
 {
   "tabs": {
     "local": {
-      "name": "Home"
+      "name": ""
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "Federazione",
-        "right": "Locale"
+        "left": "",
+        "right": ""
       }
     },
     "notifications": {
-      "name": "Notifiche"
+      "name": ""
     },
     "me": {
-      "name": "Profilo"
+      "name": ""
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "Cerca",
-      "accessibilityHint": "Cerca hashtags, utenti, o toot"
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "Filtri",
-      "accessibilityHint": "Filtra le notifiche mostrate per tipo"
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": "Segnalibri"
+        "name": ""
       },
       "conversations": {
-        "name": "Messaggi diretti"
+        "name": ""
       },
       "favourites": {
-        "name": "Apprezzati"
+        "name": ""
       },
       "fontSize": {
-        "name": "Grandezza del testo dei toot"
+        "name": ""
       },
       "lists": {
-        "name": "Liste"
+        "name": ""
       },
       "list": {
-        "name": "Lista: {{list}}"
+        "name": ""
       },
       "push": {
-        "name": "Notifiche push"
+        "name": ""
       },
       "profile": {
-        "name": "Modifica profilo"
+        "name": ""
       },
       "profileName": {
-        "name": "Modifica nome visualizzato"
+        "name": ""
       },
       "profileNote": {
-        "name": "Modifica descrizione"
+        "name": ""
       },
       "profileFields": {
-        "name": "Modifica metadati profilo"
+        "name": ""
       },
       "settings": {
-        "name": "Impostazioni app"
+        "name": ""
       },
       "webSettings": {
-        "name": "Altre impostazioni account"
+        "name": ""
       },
       "switch": {
-        "name": "Cambia account"
+        "name": ""
       }
     },
     "fontSize": {
-      "showcase": "Toot di esempio",
-      "demo": "<p>Questo toot è un esempio 😺️. Puoi scegliere diverse opzioni di grandezza del testo qui sotto.<br /><br />Questa impostazione si applica solo al testo dei toot, non anche agli altri testi della app.</p>",
-      "availableSizes": "Dimensioni testo",
+      "showcase": "",
+      "demo": "",
+      "availableSizes": "",
       "sizes": {
-        "S": "S",
-        "M": "M - Predefinito",
-        "L": "L",
-        "XL": "XL",
-        "XXL": "XXL"
+        "S": "",
+        "M": "",
+        "L": "",
+        "XL": "",
+        "XXL": ""
       }
     },
     "profile": {
       "cancellation": {
-        "title": "Modifiche non salvate",
-        "message": "Le tue modifiche non sono state salvate. Vuoi scartarle?",
+        "title": "",
+        "message": "",
         "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Scarta"
+          "cancel": "",
+          "discard": ""
         }
       },
       "feedback": {
-        "succeed": "{{type}} aggiornato",
-        "failed": "Aggiornamento di {{type}} fallito, per favore riprova."
+        "succeed": "",
+        "failed": ""
       },
       "root": {
         "name": {
-          "title": "Nome visualizzato"
+          "title": ""
         },
         "avatar": {
-          "title": "Foto profilo",
-          "description": "Sarà ridotta a 400x400 px"
+          "title": "",
+          "description": ""
         },
         "header": {
-          "title": "Immagine dell'intestazione",
-          "description": "Sarà ridotta a 1500x500 px"
+          "title": "",
+          "description": ""
         },
         "note": {
-          "title": "Biografia"
+          "title": ""
         },
         "fields": {
-          "title": "Metadati del profilo",
-          "total_one": "{{count}} campo",
-          "total_other": "{{count}} campi"
+          "title": "",
+          "total_one": "",
+          "total_other": ""
         },
         "visibility": {
-          "title": "Privacy dei post predefinita",
+          "title": "",
           "options": {
-            "public": "Pubblico",
-            "unlisted": "Non listato",
-            "private": "Solo seguaci",
-            "cancel": "$t(common:buttons.cancel)"
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "cancel": ""
           }
         },
         "sensitive": {
-          "title": "Segna sempre i media come sensibili"
+          "title": ""
         },
         "lock": {
-          "title": "Blocca account",
-          "description": "Richiede che approvi i seguaci manualmente"
+          "title": "",
+          "description": ""
         },
         "bot": {
-          "title": "Questo account è un bot",
-          "description": "Questo account esegue operazioni automatiche e potrebbe non essere controllato da una persona"
+          "title": "",
+          "description": ""
         }
       },
       "fields": {
-        "group": "Gruppo {{index}}",
-        "label": "Etichetta",
-        "content": "Contenuto"
+        "group": "",
+        "label": "",
+        "content": ""
       }
     },
     "push": {
-      "notAvailable": "Il tuo dispositivo non supporta le notifiche push per tooot",
+      "notAvailable": "",
       "enable": {
-        "direct": "Abilita notifiche push",
-        "settings": "Abilita nelle impostazioni"
+        "direct": "",
+        "settings": ""
       },
       "global": {
-        "heading": "Abilita per {{acct}}",
-        "description": "I messaggi dovranno attraversare i server di tooot"
+        "heading": "",
+        "description": ""
       },
       "decode": {
-        "heading": "Mostra dettagli del messaggio",
-        "description": "I messaggi, che attraversano i server di tooot, sono cifrati per impostazione predefinita (ma puoi scegliere di disabilitare la cifratura). Il programma server è open source e abbiamo una politica no-log."
+        "heading": "",
+        "description": ""
       },
       "default": {
-        "heading": "Predefinito"
+        "heading": ""
       },
       "follow": {
-        "heading": "Nuovi seguaci"
+        "heading": ""
       },
       "favourite": {
-        "heading": "Apprezzamenti"
+        "heading": ""
       },
       "reblog": {
-        "heading": "Ricondivisioni"
+        "heading": ""
       },
       "mention": {
-        "heading": "Menzioni"
+        "heading": ""
       },
       "poll": {
-        "heading": "Novità sui sondaggi"
+        "heading": ""
       },
-      "howitworks": "Scopri come funziona il traversamento dei messaggi"
+      "howitworks": ""
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "{{amount}} da leggere",
-          "read": "Tutto già letto",
-          "empty": "Vuoto"
+          "unread": "",
+          "read": "",
+          "empty": ""
         }
       },
       "push": {
         "content": {
-          "enabled": "Abilitato",
-          "disabled": "Disabilitato"
+          "enabled": "",
+          "disabled": ""
         }
       },
       "update": {
-        "title": "Aggiorna all'ultima versione"
+        "title": ""
       },
       "logout": {
-        "button": "Esci dall'account",
+        "button": "",
         "alert": {
-          "title": "Uscire dall'account?",
-          "message": "Se esci dal tuo account, dovrai rifare l'accesso",
+          "title": "",
+          "message": "",
           "buttons": {
-            "logout": "Esci",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "",
+            "cancel": ""
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
+        "heading": "",
         "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
+          "S": "",
+          "M": "",
+          "L": "",
+          "XL": "",
+          "XXL": ""
         }
       },
       "language": {
-        "heading": "Lingua",
+        "heading": "",
         "options": {
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "theme": {
-        "heading": "Tema",
+        "heading": "",
         "options": {
-          "auto": "Segui impostazioni di sistema",
-          "light": "Tema chiaro",
-          "dark": "Tema scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "auto": "",
+          "light": "",
+          "dark": "",
+          "cancel": ""
         }
       },
       "darkTheme": {
-        "heading": "Tema scuro",
+        "heading": "",
         "options": {
-          "lighter": "Poco scuro",
-          "darker": "Molto scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "lighter": "",
+          "darker": "",
+          "cancel": ""
         }
       },
       "browser": {
-        "heading": "Apertura link",
+        "heading": "",
         "options": {
-          "internal": "Nella app",
-          "external": "Nel browser di sistema",
-          "cancel": "$t(common:buttons.cancel)"
+          "internal": "",
+          "external": "",
+          "cancel": ""
         }
       },
       "staticEmoji": {
-        "heading": "Usa emoji statiche",
-        "description": "Se la app crasha spesso quando all'apertura della lista di emoji, puoi provare ad attivare le emoji statiche."
+        "heading": "",
+        "description": ""
       },
       "feedback": {
-        "heading": "Richiedi funzionalità"
+        "heading": ""
       },
       "support": {
-        "heading": "Supporta tooot"
+        "heading": ""
       },
       "review": {
-        "heading": "Recensisci tooot"
+        "heading": ""
       },
       "contact": {
-        "heading": "Contatta tooot"
+        "heading": ""
       },
       "analytics": {
-        "heading": "Aiutaci a migliorare",
-        "description": "Vengono raccolti dati di utilizzo anonimi"
+        "heading": "",
+        "description": ""
       },
-      "version": "Versione di tooot: v{{version}}",
-      "instanceVersion": "Versione dell'istanza Mastodon: v{{version}}"
+      "version": "",
+      "instanceVersion": ""
     },
     "switch": {
-      "existing": "Scegli un account già inserito",
-      "new": "Accedi ad un'istanza"
+      "existing": "",
+      "new": ""
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "Azioni per l'utente {{user}}",
-        "accessibilityHint": "Puoi mutare, bloccare, segnalare o condividere l'utente"
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
       },
-      "followed_by": " ti segue",
-      "moved": "Profilo trasferito",
-      "created_at": "Account creato il: {{date}}",
+      "followed_by": "",
+      "moved": "",
+      "created_at": "",
       "summary": {
-        "statuses_count": "{{count}} toot",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "",
+        "following_count": "",
+        "followers_count": ""
       },
       "toots": {
-        "default": "Toot",
-        "all": "Toot e risposte"
+        "default": "",
+        "all": ""
       }
     },
     "attachments": {
-      "name": "Media di <0 /><1>\"</1>"
+      "name": ""
     },
     "search": {
       "header": {
-        "prefix": "Cerca",
-        "placeholder": "qualcosa..."
+        "prefix": "",
+        "placeholder": ""
       },
       "empty": {
-        "general": "Inserisci una parola chiave per cercare <bold>$t(screenTabs:shared.search.sections.accounts)</bold>,<bold>$t(screenTabs:shared.search.sections.hashtags)</bold>, o <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "general": "",
         "advanced": {
-          "header": "Ricerca avanzata",
+          "header": "",
           "example": {
-            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
-            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
-            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
-            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
           }
         }
       },
       "sections": {
-        "accounts": "Utente",
-        "hashtags": "Hashtag",
-        "statuses": "Toot"
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
       },
-      "notFound": "Impossibile trovare <bold>{{searchTerm}}</bold> come {{type}}"
+      "notFound": ""
     },
     "toot": {
-      "name": "Discussioni"
+      "name": ""
     },
     "users": {
       "accounts": {
-        "following": "{{count}} seguiti",
-        "followers": "{{count}} seguaci"
+        "following": "",
+        "followers": ""
       },
       "statuses": {
-        "reblogged_by": "{{count}} ricondivisioni",
-        "favourited_by": "{{count}} apprezzamenti"
+        "reblogged_by": "",
+        "favourited_by": ""
       }
     },
     "history": {
-      "name": "Cronologia delle modifiche"
+      "name": ""
     }
   }
 }
