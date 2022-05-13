@@ -20,7 +20,7 @@
       "title": "Accesso a questa istanza effettuato",
       "message": "Puoi accedere ad ulteriori account, mantenendo l'accesso a quelli già esistenti",
       "buttons": {
-        "cancel": "",
+        "cancel": "$t(common:buttons.cancel)",
         "continue": "Continua"
       }
     }
