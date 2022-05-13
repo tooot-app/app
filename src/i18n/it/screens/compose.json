@@ -1,0 +1,178 @@
+{
+  "heading": {
+    "left": {
+      "button": "Scarta",
+      "alert": {
+        "title": "Scartare il toot?",
+        "buttons": {
+          "save": "Salva come bozza",
+          "delete": "Scarta ed esci",
+          "cancel": "Annulla"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Toot",
+        "conversation": "Messaggio diretto",
+        "reply": "Toot di risposta",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
+      },
+      "alert": {
+        "default": {
+          "title": "Invio fallito",
+          "button": "Riprova"
+        },
+        "removeReply": {
+          "title": "Impossibile trovare il toot a cui si è risposto",
+          "description": "Il toot a cui si è risposto potrebbe essere stato cancellato. Vuoi rimuoverne il riferimento?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Rimuovi"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Pubblicando come @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Avviso di spoiler"
+        },
+        "textInput": {
+          "placeholder": "A cosa stai pensando?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Hai raggiunto il numero massimo di allegati permessi",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Segnala allegati come sensibili",
+          "remove": {
+            "accessibilityLabel": "Rimuovi allegato numero {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Modifica allegato numero {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Carica altri allegati"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Premi per aggiungere delle emoji a questo toot"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Scelta di sondaggio {{index}}",
+              "single": "Risposta singola",
+              "multiple": "Risposta multipla"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Riduci le scelte del sondaggio a {{amount}}",
+              "accessibilityHint": "Hai raggiunto il minimo di scelte possibili per il sondaggio ({{amount}})"
+            },
+            "increase": {
+              "accessibilityLabel": "Aumenta le scelte del sondaggio a {{amount}}",
+              "accessibilityHint": "Hai raggiunto il massimo di scelte possibili per il sondaggio ({{amount}})"
+            }
+          },
+          "multiple": {
+            "heading": "Tipo di risposta",
+            "options": {
+              "single": "Risposta singola",
+              "multiple": "Risposta multipla",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          },
+          "expiration": {
+            "heading": "Durata",
+            "options": {
+              "300": "5 minuti",
+              "1800": "30 minuti",
+              "3600": "1 ora",
+              "21600": "6 ore",
+              "86400": "1 giorno",
+              "259200": "3 giorni",
+              "604800": "7 giorni",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Carica allegato",
+          "accessibilityHint": "Non potrai creare sondaggi se carichi degli allegati",
+          "failed": {
+            "alert": {
+              "title": "Caricamento fallito",
+              "button": "Riprova"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Crea sondaggio",
+          "accessibilityHint": "Non potrai caricare allegati se crei un sondaggio"
+        },
+        "visibility": {
+          "accessibilityLabel": "La visibilità del toot è: {{visibility}}",
+          "title": "Visibilità toot",
+          "options": {
+            "public": "Pubblico",
+            "unlisted": "Non listato",
+            "private": "Solo seguaci",
+            "direct": "Messaggio diretto",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Spoiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Aggiungi emoji",
+          "accessibilityHint": "Apri il pannello di selezione delle emoji, scorri orizzontalmente per cambiare tra le pagine"
+        }
+      },
+      "drafts_one": "Bozze ({{count}})",
+      "drafts_other": "Bozze ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Modifica allegato",
+        "right": {
+          "accessibilityLabel": "Salva le modifiche all'allegato",
+          "failed": {
+            "title": "Modifica fallita",
+            "button": "Riprova"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Descrizione media per ipovedenti",
+          "placeholder": "Puoi aggiungere una descrizione (anche chiamata alt-text) ai tuoi media, così da renderli accessibili a molte più persone, incluse quelle con disabilità visive.\n\nUna buona descrizione è concisa ma presenta il contenuto del media in modo abbastanza accurato da farne capire il contesto."
+        },
+        "imageFocus": "Trascina il cerchio per modificare il punto focale della foto"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Bozza"
+      },
+      "content": {
+        "accessibilityHint": "Bozza salvata, premi per modificarla",
+        "textEmpty": "Testo vuoto"
+      },
+      "checkAttachment": "Controllo degli allegati sul server..."
+    }
+  }
+}

@@ -1,0 +1,345 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Home"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "Federazione",
+        "right": "Locale"
+      }
+    },
+    "notifications": {
+      "name": "Notifiche"
+    },
+    "me": {
+      "name": "Profilo"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Cerca",
+      "accessibilityHint": "Cerca hashtags, utenti, o toot"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "Filtri",
+      "accessibilityHint": "Filtra le notifiche mostrate per tipo"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Segnalibri"
+      },
+      "conversations": {
+        "name": "Messaggi diretti"
+      },
+      "favourites": {
+        "name": "Apprezzati"
+      },
+      "fontSize": {
+        "name": "Grandezza del testo dei toot"
+      },
+      "lists": {
+        "name": "Liste"
+      },
+      "list": {
+        "name": "Lista: {{list}}"
+      },
+      "push": {
+        "name": "Notifiche push"
+      },
+      "profile": {
+        "name": "Modifica profilo"
+      },
+      "profileName": {
+        "name": "Modifica nome visualizzato"
+      },
+      "profileNote": {
+        "name": "Modifica descrizione"
+      },
+      "profileFields": {
+        "name": "Modifica metadati profilo"
+      },
+      "settings": {
+        "name": "Impostazioni app"
+      },
+      "webSettings": {
+        "name": "Altre impostazioni account"
+      },
+      "switch": {
+        "name": "Cambia account"
+      }
+    },
+    "fontSize": {
+      "showcase": "Toot di esempio",
+      "demo": "<p>Questo toot è un esempio 😺️. Puoi scegliere diverse opzioni di grandezza del testo qui sotto.<br /><br />Questa impostazione si applica solo al testo dei toot, non anche agli altri testi della app.</p>",
+      "availableSizes": "Dimensioni testo",
+      "sizes": {
+        "S": "S",
+        "M": "M - Predefinito",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "Modifiche non salvate",
+        "message": "Le tue modifiche non sono state salvate. Vuoi scartarle?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Scarta"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}} aggiornato",
+        "failed": "Aggiornamento di {{type}} fallito, per favore riprova."
+      },
+      "root": {
+        "name": {
+          "title": "Nome visualizzato"
+        },
+        "avatar": {
+          "title": "Foto profilo",
+          "description": "Sarà ridotta a 400x400 px"
+        },
+        "header": {
+          "title": "Immagine dell'intestazione",
+          "description": "Sarà ridotta a 1500x500 px"
+        },
+        "note": {
+          "title": "Biografia"
+        },
+        "fields": {
+          "title": "Metadati del profilo",
+          "total_one": "{{count}} campo",
+          "total_other": "{{count}} campi"
+        },
+        "visibility": {
+          "title": "Privacy dei post predefinita",
+          "options": {
+            "public": "Pubblico",
+            "unlisted": "Non listato",
+            "private": "Solo seguaci",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "Segna sempre i media come sensibili"
+        },
+        "lock": {
+          "title": "Blocca account",
+          "description": "Richiede che approvi i seguaci manualmente"
+        },
+        "bot": {
+          "title": "Questo account è un bot",
+          "description": "Questo account esegue operazioni automatiche e potrebbe non essere controllato da una persona"
+        }
+      },
+      "fields": {
+        "group": "Gruppo {{index}}",
+        "label": "Etichetta",
+        "content": "Contenuto"
+      }
+    },
+    "push": {
+      "notAvailable": "Il tuo dispositivo non supporta le notifiche push per tooot",
+      "enable": {
+        "direct": "Abilita notifiche push",
+        "settings": "Abilita nelle impostazioni"
+      },
+      "global": {
+        "heading": "Abilita per {{acct}}",
+        "description": "I messaggi dovranno attraversare i server di tooot"
+      },
+      "decode": {
+        "heading": "Mostra dettagli del messaggio",
+        "description": "I messaggi, che attraversano i server di tooot, sono cifrati per impostazione predefinita (ma puoi scegliere di disabilitare la cifratura). Il programma server è open source e abbiamo una politica no-log."
+      },
+      "default": {
+        "heading": "Predefinito"
+      },
+      "follow": {
+        "heading": "Nuovi seguaci"
+      },
+      "favourite": {
+        "heading": "Apprezzamenti"
+      },
+      "reblog": {
+        "heading": "Ricondivisioni"
+      },
+      "mention": {
+        "heading": "Menzioni"
+      },
+      "poll": {
+        "heading": "Novità sui sondaggi"
+      },
+      "howitworks": "Scopri come funziona il traversamento dei messaggi"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} da leggere",
+          "read": "Tutto già letto",
+          "empty": "Vuoto"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "Abilitato",
+          "disabled": "Disabilitato"
+        }
+      },
+      "update": {
+        "title": "Aggiorna all'ultima versione"
+      },
+      "logout": {
+        "button": "Esci dall'account",
+        "alert": {
+          "title": "Uscire dall'account?",
+          "message": "Se esci dal tuo account, dovrai rifare l'accesso",
+          "buttons": {
+            "logout": "Esci",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "Lingua",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "Tema",
+        "options": {
+          "auto": "Segui impostazioni di sistema",
+          "light": "Tema chiaro",
+          "dark": "Tema scuro",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "darkTheme": {
+        "heading": "Tema scuro",
+        "options": {
+          "lighter": "Poco scuro",
+          "darker": "Molto scuro",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "Apertura link",
+        "options": {
+          "internal": "Nella app",
+          "external": "Nel browser di sistema",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "staticEmoji": {
+        "heading": "Usa emoji statiche",
+        "description": "Se la app crasha spesso quando all'apertura della lista di emoji, puoi provare ad attivare le emoji statiche."
+      },
+      "feedback": {
+        "heading": "Richiedi funzionalità"
+      },
+      "support": {
+        "heading": "Supporta tooot"
+      },
+      "review": {
+        "heading": "Recensisci tooot"
+      },
+      "contact": {
+        "heading": "Contatta tooot"
+      },
+      "analytics": {
+        "heading": "Aiutaci a migliorare",
+        "description": "Vengono raccolti dati di utilizzo anonimi"
+      },
+      "version": "Versione di tooot: v{{version}}",
+      "instanceVersion": "Versione dell'istanza Mastodon: v{{version}}"
+    },
+    "switch": {
+      "existing": "Scegli un account già inserito",
+      "new": "Accedi ad un'istanza"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Azioni per l'utente {{user}}",
+        "accessibilityHint": "Puoi mutare, bloccare, segnalare o condividere l'utente"
+      },
+      "followed_by": " ti segue",
+      "moved": "Profilo trasferito",
+      "created_at": "Account creato il: {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} toot",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Toot",
+        "all": "Toot e risposte"
+      }
+    },
+    "attachments": {
+      "name": "Media di <0 /><1>\"</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "Cerca",
+        "placeholder": "qualcosa..."
+      },
+      "empty": {
+        "general": "Inserisci una parola chiave per cercare <bold>$t(screenTabs:shared.search.sections.accounts)</bold>,<bold>$t(screenTabs:shared.search.sections.hashtags)</bold>, o <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Ricerca avanzata",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "Utente",
+        "hashtags": "Hashtag",
+        "statuses": "Toot"
+      },
+      "notFound": "Impossibile trovare <bold>{{searchTerm}}</bold> come {{type}}"
+    },
+    "toot": {
+      "name": "Discussioni"
+    },
+    "users": {
+      "accounts": {
+        "following": "{{count}} seguiti",
+        "followers": "{{count}} seguaci"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} ricondivisioni",
+        "favourited_by": "{{count}} apprezzamenti"
+      }
+    },
+    "history": {
+      "name": "Cronologia delle modifiche"
+    }
+  }
+}
