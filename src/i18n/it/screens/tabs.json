@@ -79,11 +79,11 @@
       "demo": "<p>Questo toot è un esempio 😺️. Puoi scegliere diverse opzioni di grandezza del testo qui sotto.<br /><br />Questa impostazione si applica solo al testo dei toot, non anche agli altri testi della app.</p>",
       "availableSizes": "Dimensioni testo",
       "sizes": {
-        "S": "S",
+        "S": "",
         "M": "M - Predefinito",
-        "L": "L",
-        "XL": "XL",
-        "XXL": "XXL"
+        "L": "",
+        "XL": "",
+        "XXL": ""
       }
     },
     "profile": {
@@ -91,7 +91,7 @@
         "title": "Modifiche non salvate",
         "message": "Le tue modifiche non sono state salvate. Vuoi scartarle?",
         "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
+          "cancel": "",
           "discard": "Scarta"
         }
       },
@@ -125,7 +125,7 @@
             "public": "Pubblico",
             "unlisted": "Non listato",
             "private": "Solo seguaci",
-            "cancel": "$t(common:buttons.cancel)"
+            "cancel": ""
           }
         },
         "sensitive": {
@@ -204,26 +204,26 @@
           "message": "Se esci dal tuo account, dovrai rifare l'accesso",
           "buttons": {
             "logout": "Esci",
-            "cancel": "$t(common:buttons.cancel)"
+            "cancel": ""
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
+        "heading": "",
         "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
+          "S": "",
+          "M": "",
+          "L": "",
+          "XL": "",
+          "XXL": ""
         }
       },
       "language": {
         "heading": "Lingua",
         "options": {
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "theme": {
@@ -232,7 +232,7 @@
           "auto": "Segui impostazioni di sistema",
           "light": "Tema chiaro",
           "dark": "Tema scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "darkTheme": {
@@ -240,7 +240,7 @@
         "options": {
           "lighter": "Poco scuro",
           "darker": "Molto scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "browser": {
@@ -248,7 +248,7 @@
         "options": {
           "internal": "Nella app",
           "external": "Nel browser di sistema",
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "staticEmoji": {
@@ -290,8 +290,8 @@
       "created_at": "Account creato il: {{date}}",
       "summary": {
         "statuses_count": "{{count}} toot",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "following_count": "",
+        "followers_count": ""
       },
       "toots": {
         "default": "Toot",
@@ -311,17 +311,17 @@
         "advanced": {
           "header": "Ricerca avanzata",
           "example": {
-            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
-            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
-            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
-            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
           }
         }
       },
       "sections": {
         "accounts": "Utente",
-        "hashtags": "Hashtag",
-        "statuses": "Toot"
+        "hashtags": "",
+        "statuses": ""
       },
       "notFound": "Impossibile trovare <bold>{{searchTerm}}</bold> come {{type}}"
     },
