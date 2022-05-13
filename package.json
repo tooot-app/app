@@ -59,7 +59,7 @@
     "expo-image-picker": "13.1.1",
     "expo-linking": "3.1.0",
     "expo-localization": "13.0.0",
-    "expo-notifications": "0.15.2",
+    "expo-notifications": "0.14.1",
     "expo-random": "12.2.0",
     "expo-screen-capture": "4.2.0",
     "expo-secure-store": "11.2.0",
