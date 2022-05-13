@@ -1,0 +1,345 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Gefolgt"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "Föderiert",
+        "right": "Lokal"
+      }
+    },
+    "notifications": {
+      "name": "Benachrichtigungen"
+    },
+    "me": {
+      "name": "Über mich"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Suche",
+      "accessibilityHint": "Suche nach Hashtags, Benutzern oder Tröts"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "Filter",
+      "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Lesezeichen"
+      },
+      "conversations": {
+        "name": "Direktnachrichten"
+      },
+      "favourites": {
+        "name": "Favoriten"
+      },
+      "fontSize": {
+        "name": "Schriftgröße"
+      },
+      "lists": {
+        "name": "Listen"
+      },
+      "list": {
+        "name": "Liste: {{list}}"
+      },
+      "push": {
+        "name": "Push-Benachrichtigung"
+      },
+      "profile": {
+        "name": "Profil bearbeiten"
+      },
+      "profileName": {
+        "name": "Anzeigename ändern"
+      },
+      "profileNote": {
+        "name": "Beschreibung bearbeiten"
+      },
+      "profileFields": {
+        "name": "Metadaten bearbeiten"
+      },
+      "settings": {
+        "name": "App-Einstellungen"
+      },
+      "webSettings": {
+        "name": "Kontoeinstellungen"
+      },
+      "switch": {
+        "name": "Konto wechseln"
+      }
+    },
+    "fontSize": {
+      "showcase": "Beispieltröt",
+      "demo": "<p>Dies ist ein Beispieltröt😊. Du kannst aus mehreren der unteren Möglichkeiten auswählen.<br /><br />Diese Einstellung betrifft ausschließlich die Haupteinstellungen, nicht die Schriftgröße in anderen Bereichen der App.</p>",
+      "availableSizes": "Verfügbare Größen",
+      "sizes": {
+        "S": "S",
+        "M": "M – Standard",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "Änderungen nicht gespeichert",
+        "message": "Änderung wurde nicht gespeichert. Möchtest du die Änderungen verwerfen?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Verwerfen"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}} aktualisiert",
+        "failed": "{{type}} Aktualisierung fehlgeschlagen, bitte erneut versuchen"
+      },
+      "root": {
+        "name": {
+          "title": "Anzeigename"
+        },
+        "avatar": {
+          "title": "Avatar",
+          "description": "Wird auf 400x400px herunterskaliert"
+        },
+        "header": {
+          "title": "Banner",
+          "description": "Wird auf 1500x500px herunterskaliert"
+        },
+        "note": {
+          "title": "Beschreibung"
+        },
+        "fields": {
+          "title": "Metadaten",
+          "total_one": "",
+          "total_other": ""
+        },
+        "visibility": {
+          "title": "Sichtbarkeit des Beitrags",
+          "options": {
+            "public": "Öffentlich",
+            "unlisted": "Ungelistet",
+            "private": "Nur für Folgende",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "Expliziten Beitrag posten"
+        },
+        "lock": {
+          "title": "Konto sperren",
+          "description": "Follower manuell bestätigen"
+        },
+        "bot": {
+          "title": "Bot-Konto",
+          "description": "Dieses Konto führt hauptsächlich automatisierte Aktionen aus und wird möglicherweise nicht überwacht"
+        }
+      },
+      "fields": {
+        "group": "",
+        "label": "Kennzeichnung",
+        "content": "Inhalt"
+      }
+    },
+    "push": {
+      "notAvailable": "Dein Gerät unterstützt keine Push-Benachrichtigung",
+      "enable": {
+        "direct": "Push-Benachrichtigungen aktivieren",
+        "settings": "In den Einstellungen aktivieren"
+      },
+      "global": {
+        "heading": "Aktivieren für {{acct}}",
+        "description": "Nachrichten werden über den Tooot-Server geleitet"
+      },
+      "decode": {
+        "heading": "Nachrichtendetails anzeigen",
+        "description": "Nachrichten, die über den tooot-Server geleitet werden, sind verschlüsselt, aber du kannst die Nachricht auf dem Server entschlüsseln. Unser Server-Quellcode ist Open Source - es gibt keine Log-Policy."
+      },
+      "default": {
+        "heading": "Standard"
+      },
+      "follow": {
+        "heading": "Neue Follower"
+      },
+      "favourite": {
+        "heading": "Favoriten"
+      },
+      "reblog": {
+        "heading": "Geboostet"
+      },
+      "mention": {
+        "heading": "Hat dich erwähnt"
+      },
+      "poll": {
+        "heading": "Umfrageupdate"
+      },
+      "howitworks": "Erfahre, wie das Routing funktioniert"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} ungelesen",
+          "read": "Alles gelesen",
+          "empty": "Keine"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "Aktiviert",
+          "disabled": "Deaktiviert"
+        }
+      },
+      "update": {
+        "title": "Auf neueste Version aktualisiert"
+      },
+      "logout": {
+        "button": "Abmelden",
+        "alert": {
+          "title": "Abmelden?",
+          "message": "Nach dem Ausloggen musst du dich erneut anmelden",
+          "buttons": {
+            "logout": "Abmelden",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "Sprache",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "Erscheinungsbild",
+        "options": {
+          "auto": "Wie System",
+          "light": "Heller Modus",
+          "dark": "Dunkler Modus",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "darkTheme": {
+        "heading": "Dunkles Design",
+        "options": {
+          "lighter": "Heller",
+          "darker": "Dunkler",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "Link öffnen",
+        "options": {
+          "internal": "Innerhalb der App",
+          "external": "Im Systembrowser öffnen",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
+      "feedback": {
+        "heading": "Neue Funktion vorschlagen"
+      },
+      "support": {
+        "heading": "Unterstütze Tooot"
+      },
+      "review": {
+        "heading": "Tooot überprüfen"
+      },
+      "contact": {
+        "heading": "Nimm Kontakt mit tooot auf"
+      },
+      "analytics": {
+        "heading": "Hilf uns, besser zu werden",
+        "description": "Es werden ausschließlich Daten gesammelt, welche nicht nutzerbezogen sind"
+      },
+      "version": "Version v{{version}}",
+      "instanceVersion": ""
+    },
+    "switch": {
+      "existing": "Wähle ein Konto aus",
+      "new": "Instanz zur Anmeldung wählen"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Aktionen für Benutzer {{user}}",
+        "accessibilityHint": "Du kannst diesen Benutzer stummschalten, blockieren, melden oder teilen"
+      },
+      "followed_by": "",
+      "moved": "Benutzer umgezogen",
+      "created_at": "Registriert am: {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} Tröts",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Tröts",
+        "all": "Tröts und DruTröts"
+      }
+    },
+    "attachments": {
+      "name": "<0 /><1>\"s Medien</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "Suche",
+        "placeholder": "nach..."
+      },
+      "empty": {
+        "general": "Suche nach Schlüsselwort oder nach <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> or <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Erweiterte Suche",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "Benutzer",
+        "hashtags": "Hashtag",
+        "statuses": "Tröt"
+      },
+      "notFound": "Konnte <bold>{{searchTerm}}</bold>-bezogene {{type}} nicht finden"
+    },
+    "toot": {
+      "name": "Diskussionen"
+    },
+    "users": {
+      "accounts": {
+        "following": "Folgt {{count}}",
+        "followers": "{{count}} Follower"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} mal geboosted",
+        "favourited_by": "{{count}} mal geherzt"
+      }
+    },
+    "history": {
+      "name": ""
+    }
+  }
+}
