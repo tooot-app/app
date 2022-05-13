@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "使用静态表情",
+        "description": "如果您在查看表情列表时经常遇到应用闪退，您可以尝试使用静态表情。"
+      },
       "feedback": {
         "heading": "功能建议"
       },
