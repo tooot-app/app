@@ -6,5 +6,10 @@
 
 ## Special thanks
 
+@forenta for German translation
+
+@andrigamerita for Italian translation
+
 @hellojaccc for Korean translation
+
 @duy@mas.to for Vietnamese translation
