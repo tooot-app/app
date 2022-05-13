@@ -16,7 +16,7 @@
   },
   "refresh": {
     "fetchPreviousPage": "",
-    "refetch": ""
+    "refetch": "到最新的位置"
   },
   "shared": {
     "actioned": {
@@ -51,18 +51,18 @@
     "actionsUsers": {
       "reblogged_by": {
         "accessibilityLabel": "{{count}} 個使用者轉嘟了此嘟文",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityHint": "點擊可以取得更多使用者資訊",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} 個使用者喜歡此嘟文",
+        "accessibilityHint": "點擊可以取得使用者資訊",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
+        "accessibilityLabel": "嘟文被編輯了 {{count}} 次",
+        "accessibilityHint": "點擊查看編輯紀錄",
+        "text_one": "{{count}} 次編輯",
         "text_other": ""
       }
     },
