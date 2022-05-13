@@ -1,27 +1,27 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Dominio dell'istanza"
+      "placeholder": ""
     },
-    "button": "Accedi",
+    "button": "",
     "information": {
-      "name": "Nome",
-      "accounts": "Utenti",
-      "statuses": "Toot",
-      "domains": "Universi"
+      "name": "",
+      "accounts": "",
+      "statuses": "",
+      "domains": ""
     },
     "disclaimer": {
-      "base": "Per accedere, verrà aperta una pagina del browser di sistema. I dati di accesso del tuo account sono protetti. Leggi di più:",
-      "privacy": "politica sulla privacy"
+      "base": "",
+      "privacy": ""
     }
   },
   "update": {
     "alert": {
-      "title": "Accesso a questa istanza effettuato",
-      "message": "Puoi accedere ad ulteriori account, mantenendo l'accesso a quelli già esistenti",
+      "title": "",
+      "message": "",
       "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Continua"
+        "cancel": "",
+        "continue": ""
       }
     }
   }
