@@ -1,1 +1,4 @@
-Support iPad
+Support editing toot
+Integrated into system's share menu
+Follow system's font weight setting (iOS)
+Upload gif from keyboard (Android)
