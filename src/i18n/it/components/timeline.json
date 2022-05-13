@@ -52,12 +52,12 @@
       "reblogged_by": {
         "accessibilityLabel": "{{count}} utenti hanno ricondiviso questo toot",
         "accessibilityHint": "Premi per vedere gli utenti",
-        "text": ""
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
         "accessibilityLabel": "{{count}} utenti hanno apprezzato questo toot",
         "accessibilityHint": "Premi per vedere gli utenti",
-        "text": ""
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
         "accessibilityLabel": "Questo toot è stato modificato {{count}} volte",
@@ -151,7 +151,7 @@
             "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
             "buttons": {
               "confirm": "Conferma blocco",
-              "cancel": ""
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         },
@@ -179,7 +179,7 @@
               "message": "Vuoi davvero cancellare questo toot? Tutti gli apprezzamenti, le ricondivisioni, e le risposte verranno persi.",
               "buttons": {
                 "confirm": "Conferma",
-                "cancel": ""
+                "cancel": "$t(common:buttons.cancel)"
               }
             }
           },
@@ -191,7 +191,7 @@
               "message": "Vuoi davvero cancellare e riscrivere questo toot? Tutti gli apprezzamenti, le ricondivisioni, e le risposte verranno persi.",
               "buttons": {
                 "confirm": "Conferma",
-                "cancel": ""
+                "cancel": "$t(common:buttons.cancel)"
               }
             }
           },
