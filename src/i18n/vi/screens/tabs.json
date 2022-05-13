@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
       "feedback": {
         "heading": "Đề xuất tính năng"
       },
