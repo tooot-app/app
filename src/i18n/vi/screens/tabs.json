@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "Dùng emoji có sẵn",
+        "description": "Nếu app thường xuyên bị treo khi xem danh sách emoji, bạn hãy dùng emoji mặc định."
+      },
       "feedback": {
         "heading": "Đề xuất tính năng"
       },
