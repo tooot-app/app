@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": "Segui utente"
+    "function": ""
   },
   "block": {
-    "function": "Blocca utente"
+    "function": ""
   },
   "button": {
-    "error": "Errore di caricamento",
-    "blocked_by": "L'utente ti ha bloccato",
-    "blocking": "Sblocca",
-    "following": "Smetti di seguire",
-    "requested": "Annulla richiesta di seguire",
-    "default": "Segui"
+    "error": "",
+    "blocked_by": "",
+    "blocking": "",
+    "following": "",
+    "requested": "",
+    "default": ""
   }
 }
