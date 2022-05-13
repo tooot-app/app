@@ -1,0 +1,17 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "Weitere Funktionen für das Bild",
+      "accessibilityHint": "Das Bild kann gespeichert oder geteilt werden"
+    },
+    "options": {
+      "save": "Bild speichern",
+      "share": "Bild teilen",
+      "cancel": ""
+    },
+    "save": {
+      "succeed": "Bild gespeichert",
+      "failed": "Speichern fehlgeschlagen"
+    }
+  }
+}

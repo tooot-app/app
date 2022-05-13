@@ -1,0 +1,28 @@
+{
+  "title": "Datenquelle auswählen",
+  "options": {
+    "library": "Hochladen",
+    "photo": "Bild aufnehmen",
+    "cancel": ""
+  },
+  "library": {
+    "alert": {
+      "title": "Kein Zugriff",
+      "message": "Für den Upload ist eine Zugriffsgenehmigung erforderlich",
+      "buttons": {
+        "settings": "Einstellungen bestätigen",
+        "cancel": ""
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "Zugriff verweigert",
+      "message": "Zugriff auf die Kamera erforderlich",
+      "buttons": {
+        "settings": "Einstellungen übernehmen",
+        "cancel": ""
+      }
+    }
+  }
+}
