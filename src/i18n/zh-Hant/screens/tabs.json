@@ -1,0 +1,345 @@
+{
+  "tabs": {
+    "local": {
+      "name": "追隨中"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "聯邦宇宙",
+        "right": "本站"
+      }
+    },
+    "notifications": {
+      "name": "通知"
+    },
+    "me": {
+      "name": "關於我"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "搜尋",
+      "accessibilityHint": "搜尋標籤、使用者或嘟文"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "篩選器",
+      "accessibilityHint": ""
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "書籤"
+      },
+      "conversations": {
+        "name": "私訊"
+      },
+      "favourites": {
+        "name": "最愛"
+      },
+      "fontSize": {
+        "name": "嘟文字體大小"
+      },
+      "lists": {
+        "name": "清單"
+      },
+      "list": {
+        "name": "清單： {{list}}"
+      },
+      "push": {
+        "name": "推播通知"
+      },
+      "profile": {
+        "name": "編輯個人資料"
+      },
+      "profileName": {
+        "name": "編輯顯示名稱"
+      },
+      "profileNote": {
+        "name": "編輯簡介"
+      },
+      "profileFields": {
+        "name": "編輯描述資料"
+      },
+      "settings": {
+        "name": "App 設定"
+      },
+      "webSettings": {
+        "name": "更多的帳號設定"
+      },
+      "switch": {
+        "name": "切換帳號"
+      }
+    },
+    "fontSize": {
+      "showcase": "嘟文範例",
+      "demo": "",
+      "availableSizes": "",
+      "sizes": {
+        "S": "",
+        "M": "",
+        "L": "",
+        "XL": "",
+        "XXL": ""
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "cancel": "",
+          "discard": ""
+        }
+      },
+      "feedback": {
+        "succeed": "",
+        "failed": ""
+      },
+      "root": {
+        "name": {
+          "title": ""
+        },
+        "avatar": {
+          "title": "",
+          "description": ""
+        },
+        "header": {
+          "title": "",
+          "description": ""
+        },
+        "note": {
+          "title": ""
+        },
+        "fields": {
+          "title": "描述資料",
+          "total_one": "",
+          "total_other": ""
+        },
+        "visibility": {
+          "title": "",
+          "options": {
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "cancel": ""
+          }
+        },
+        "sensitive": {
+          "title": ""
+        },
+        "lock": {
+          "title": "",
+          "description": ""
+        },
+        "bot": {
+          "title": "",
+          "description": ""
+        }
+      },
+      "fields": {
+        "group": "",
+        "label": "",
+        "content": ""
+      }
+    },
+    "push": {
+      "notAvailable": "",
+      "enable": {
+        "direct": "",
+        "settings": ""
+      },
+      "global": {
+        "heading": "",
+        "description": ""
+      },
+      "decode": {
+        "heading": "",
+        "description": ""
+      },
+      "default": {
+        "heading": ""
+      },
+      "follow": {
+        "heading": ""
+      },
+      "favourite": {
+        "heading": ""
+      },
+      "reblog": {
+        "heading": ""
+      },
+      "mention": {
+        "heading": ""
+      },
+      "poll": {
+        "heading": ""
+      },
+      "howitworks": ""
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "",
+          "read": "",
+          "empty": ""
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "",
+          "disabled": ""
+        }
+      },
+      "update": {
+        "title": ""
+      },
+      "logout": {
+        "button": "",
+        "alert": {
+          "title": "",
+          "message": "",
+          "buttons": {
+            "logout": "",
+            "cancel": ""
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "",
+        "content": {
+          "S": "",
+          "M": "",
+          "L": "",
+          "XL": "",
+          "XXL": ""
+        }
+      },
+      "language": {
+        "heading": "",
+        "options": {
+          "cancel": ""
+        }
+      },
+      "theme": {
+        "heading": "",
+        "options": {
+          "auto": "",
+          "light": "",
+          "dark": "",
+          "cancel": ""
+        }
+      },
+      "darkTheme": {
+        "heading": "",
+        "options": {
+          "lighter": "",
+          "darker": "",
+          "cancel": ""
+        }
+      },
+      "browser": {
+        "heading": "",
+        "options": {
+          "internal": "",
+          "external": "",
+          "cancel": ""
+        }
+      },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
+      "feedback": {
+        "heading": ""
+      },
+      "support": {
+        "heading": ""
+      },
+      "review": {
+        "heading": ""
+      },
+      "contact": {
+        "heading": ""
+      },
+      "analytics": {
+        "heading": "",
+        "description": ""
+      },
+      "version": "",
+      "instanceVersion": ""
+    },
+    "switch": {
+      "existing": "",
+      "new": ""
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
+      },
+      "followed_by": "",
+      "moved": "",
+      "created_at": "",
+      "summary": {
+        "statuses_count": "",
+        "following_count": "",
+        "followers_count": ""
+      },
+      "toots": {
+        "default": "",
+        "all": ""
+      }
+    },
+    "attachments": {
+      "name": ""
+    },
+    "search": {
+      "header": {
+        "prefix": "",
+        "placeholder": ""
+      },
+      "empty": {
+        "general": "",
+        "advanced": {
+          "header": "",
+          "example": {
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
+          }
+        }
+      },
+      "sections": {
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
+      },
+      "notFound": ""
+    },
+    "toot": {
+      "name": ""
+    },
+    "users": {
+      "accounts": {
+        "following": "",
+        "followers": ""
+      },
+      "statuses": {
+        "reblogged_by": "",
+        "favourited_by": ""
+      }
+    },
+    "history": {
+      "name": ""
+    }
+  }
+}

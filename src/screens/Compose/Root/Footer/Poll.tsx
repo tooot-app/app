@@ -2,13 +2,14 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
+import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { getInstanceConfigurationPoll } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 
@@ -39,8 +40,21 @@ const ComposePoll: React.FC = () => {
   }, [])
 
   return (
-    <View style={[styles.base, { borderColor: colors.border }]}>
-      <View style={styles.options}>
+    <View
+      style={{
+        flex: 1,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderRadius: 6,
+        margin: StyleConstants.Spacing.Global.PagePadding,
+        borderColor: colors.border
+      }}
+    >
+      <View
+        style={{
+          marginTop: StyleConstants.Spacing.M,
+          marginBottom: StyleConstants.Spacing.S
+        }}
+      >
         {[...Array(total)].map((e, i) => {
           const restOptions = Object.keys(options).filter(
             o => parseInt(o) !== i && parseInt(o) < total
@@ -66,13 +80,16 @@ const ComposePoll: React.FC = () => {
                 )}
                 keyboardAppearance={mode}
                 {...(i === 0 && firstRender && { autoFocus: true })}
-                style={[
-                  styles.textInput,
-                  {
-                    borderColor: colors.border,
-                    color: hasConflict ? colors.red : colors.primaryDefault
-                  }
-                ]}
+                style={{
+                  flex: 1,
+                  padding: StyleConstants.Spacing.S,
+                  borderWidth: StyleSheet.hairlineWidth,
+                  borderRadius: 6,
+                  ...StyleConstants.FontStyle.M,
+                  marginLeft: StyleConstants.Spacing.S,
+                  borderColor: colors.border,
+                  color: hasConflict ? colors.red : colors.primaryDefault
+                }}
                 placeholder={
                   multiple
                     ? t('content.root.footer.poll.option.placeholder.multiple')
@@ -93,7 +110,15 @@ const ComposePoll: React.FC = () => {
           )
         })}
       </View>
-      <View style={styles.controlAmount}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginRight: StyleConstants.Spacing.M
+        }}
+      >
         <Button
           {...(total > 2
             ? {
@@ -121,9 +146,14 @@ const ComposePoll: React.FC = () => {
           round
           disabled={!(total > 2)}
         />
-        <Text style={styles.controlCount}>
+        <CustomText
+          style={{
+            marginHorizontal: StyleConstants.Spacing.S,
+            color: colors.secondary
+          }}
+        >
           {total} / {MAX_OPTIONS}
-        </Text>
+        </CustomText>
         <Button
           {...(total < MAX_OPTIONS
             ? {
@@ -152,7 +182,9 @@ const ComposePoll: React.FC = () => {
           disabled={!(total < MAX_OPTIONS)}
         />
       </View>
-      <View style={styles.controlOptions}>
+      <View
+        style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}
+      >
         <MenuRow
           title={t('content.root.footer.poll.multiple.heading')}
           content={
@@ -216,7 +248,7 @@ const ComposePoll: React.FC = () => {
                 userInterfaceStyle: mode
               },
               index => {
-                if (index && index < expirations.length) {
+                if (index !== undefined && index < expirations.length) {
                   analytics('compose_poll_expiration_press', {
                     current: expire,
                     new: expirations[index]
@@ -238,43 +270,12 @@ const ComposePoll: React.FC = () => {
 }
 
 const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6,
-    margin: StyleConstants.Spacing.Global.PagePadding
-  },
-  options: {
-    marginTop: StyleConstants.Spacing.M,
-    marginBottom: StyleConstants.Spacing.S
-  },
   option: {
     marginLeft: StyleConstants.Spacing.M,
     marginRight: StyleConstants.Spacing.M,
     marginBottom: StyleConstants.Spacing.S,
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  textInput: {
-    flex: 1,
-    padding: StyleConstants.Spacing.S,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 6,
-    ...StyleConstants.FontStyle.M,
-    marginLeft: StyleConstants.Spacing.S
-  },
-  controlAmount: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginRight: StyleConstants.Spacing.M
-  },
-  controlOptions: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
-  },
-  controlCount: {
-    marginHorizontal: StyleConstants.Spacing.S
   }
 })
 

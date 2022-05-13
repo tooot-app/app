@@ -16,7 +16,9 @@
         "default": "Toot",
         "conversation": "Toot DM",
         "reply": "Toot reply",
-        "edit": "Toot"
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {
@@ -40,7 +42,13 @@
           "placeholder": "Spoiler warning message"
         },
         "textInput": {
-          "placeholder": "What's on your mind"
+          "placeholder": "What's on your mind",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Maximum attachments amount reached",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {
@@ -134,8 +142,8 @@
           "accessibilityHint": "Open emoji selection panel, swipe horizontally to change page"
         }
       },
-      "drafts": "Draft ({{count}})",
-      "drafts_plural": "Drafts ({{count}})"
+      "drafts_one": "Draft ({{count}})",
+      "drafts_other": "Drafts ({{count}})"
     },
     "editAttachment": {
       "header": {
@@ -163,7 +171,8 @@
       "content": {
         "accessibilityHint": "Saved draft, tap to edit this draft",
         "textEmpty": "Content empty"
-      }
+      },
+      "checkAttachment": "Checking attachments on the server..."
     }
   }
 }

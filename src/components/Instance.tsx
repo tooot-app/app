@@ -15,8 +15,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
-  Text,
   TextInput,
   View
 } from 'react-native'
@@ -26,6 +24,7 @@ import { Placeholder } from 'rn-placeholder'
 import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
+import CustomText from './Text'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -134,40 +133,50 @@ const ComponentInstance: React.FC<Props> = ({
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       {!disableHeaderImage ? (
-        <View style={styles.imageContainer}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             source={require('assets/images/welcome.png')}
-            style={styles.image}
+            style={{ resizeMode: 'contain', flex: 1, aspectRatio: 16 / 9 }}
           />
         </View>
       ) : null}
-      <View style={styles.base}>
-        <View style={styles.inputRow}>
+      <View
+        style={{
+          marginTop: StyleConstants.Spacing.L,
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+          }}
+        >
           <TextInput
             accessible={false}
             accessibilityRole='none'
-            style={[
-              styles.prefix,
-              {
-                color: colors.primaryDefault,
-                borderBottomColor: instanceQuery.isError
-                  ? colors.red
-                  : colors.border
-              }
-            ]}
+            style={{
+              borderBottomWidth: 1,
+              ...StyleConstants.FontStyle.M,
+              color: colors.primaryDefault,
+              borderBottomColor: instanceQuery.isError
+                ? colors.red
+                : colors.border
+            }}
             editable={false}
             defaultValue='https://'
           />
           <TextInput
-            style={[
-              styles.textInput,
-              {
-                color: colors.primaryDefault,
-                borderBottomColor: instanceQuery.isError
-                  ? colors.red
-                  : colors.border
-              }
-            ]}
+            style={{
+              flex: 1,
+              borderBottomWidth: 1,
+              ...StyleConstants.FontStyle.M,
+              marginRight: StyleConstants.Spacing.M,
+              color: colors.primaryDefault,
+              borderBottomColor: instanceQuery.isError
+                ? colors.red
+                : colors.border
+            }}
             onChangeText={onChangeText}
             autoCapitalize='none'
             clearButtonMode='never'
@@ -205,9 +214,9 @@ const ComponentInstance: React.FC<Props> = ({
               content={instanceQuery.data?.title || undefined}
               potentialWidth={2}
             />
-            <View style={styles.instanceStats}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
               <InstanceInfo
-                style={styles.stat1}
+                style={{ alignItems: 'flex-start' }}
                 header={t('server.information.accounts')}
                 content={
                   instanceQuery.data?.stats?.user_count?.toString() || undefined
@@ -215,7 +224,7 @@ const ComponentInstance: React.FC<Props> = ({
                 potentialWidth={4}
               />
               <InstanceInfo
-                style={styles.stat2}
+                style={{ alignItems: 'center' }}
                 header={t('server.information.statuses')}
                 content={
                   instanceQuery.data?.stats?.status_count?.toString() ||
@@ -224,7 +233,7 @@ const ComponentInstance: React.FC<Props> = ({
                 potentialWidth={4}
               />
               <InstanceInfo
-                style={styles.stat3}
+                style={{ alignItems: 'flex-end' }}
                 header={t('server.information.domains')}
                 content={
                   instanceQuery.data?.stats?.domain_count?.toString() ||
@@ -234,15 +243,28 @@ const ComponentInstance: React.FC<Props> = ({
               />
             </View>
           </Placeholder>
-          <View style={styles.disclaimer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+              marginVertical: StyleConstants.Spacing.M
+            }}
+          >
             <Icon
               name='Lock'
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
-              style={styles.disclaimerIcon}
+              style={{
+                marginTop:
+                  (StyleConstants.Font.LineHeight.S -
+                    StyleConstants.Font.Size.S) /
+                  2,
+                marginRight: StyleConstants.Spacing.XS
+              }}
             />
-            <Text
-              style={[styles.disclaimerText, { color: colors.secondary }]}
+            <CustomText
+              fontStyle='S'
+              style={{ flex: 1, color: colors.secondary }}
               accessibilityRole='link'
               onPress={() => {
                 if (screenReaderEnabled) {
@@ -254,7 +276,7 @@ const ComponentInstance: React.FC<Props> = ({
               }}
             >
               {t('server.disclaimer.base')}
-              <Text
+              <CustomText
                 accessible
                 style={{ color: colors.blue }}
                 onPress={() => {
@@ -265,8 +287,8 @@ const ComponentInstance: React.FC<Props> = ({
                 }}
               >
                 {t('server.disclaimer.privacy')}
-              </Text>
-            </Text>
+              </CustomText>
+            </CustomText>
           </View>
         </View>
       </View>
@@ -275,55 +297,5 @@ const ComponentInstance: React.FC<Props> = ({
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({
-  imageContainer: { flexDirection: 'row' },
-  image: { resizeMode: 'contain', flex: 1, aspectRatio: 16 / 9 },
-  base: {
-    marginTop: StyleConstants.Spacing.L,
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding
-  },
-  inputRow: {
-    flexDirection: 'row',
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding
-  },
-  prefix: {
-    borderBottomWidth: 1,
-    ...StyleConstants.FontStyle.M
-  },
-  textInput: {
-    flex: 1,
-    borderBottomWidth: 1,
-    ...StyleConstants.FontStyle.M,
-    marginRight: StyleConstants.Spacing.M
-  },
-  instanceStats: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  stat1: {
-    alignItems: 'flex-start'
-  },
-  stat2: {
-    alignItems: 'center'
-  },
-  stat3: {
-    alignItems: 'flex-end'
-  },
-  disclaimer: {
-    flexDirection: 'row',
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    marginVertical: StyleConstants.Spacing.M
-  },
-  disclaimerIcon: {
-    marginTop:
-      (StyleConstants.Font.LineHeight.S - StyleConstants.Font.Size.S) / 2,
-    marginRight: StyleConstants.Spacing.XS
-  },
-  disclaimerText: {
-    flex: 1,
-    ...StyleConstants.FontStyle.S
-  }
-})
 
 export default ComponentInstance

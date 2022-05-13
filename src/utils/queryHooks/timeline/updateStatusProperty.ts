@@ -14,13 +14,7 @@ const updateStatusProperty = ({
   id,
   reblog,
   payload
-}: {
-  queryKey: MutationVarsTimelineUpdateStatusProperty['queryKey']
-  rootQueryKey?: MutationVarsTimelineUpdateStatusProperty['rootQueryKey']
-  id: MutationVarsTimelineUpdateStatusProperty['id']
-  reblog?: MutationVarsTimelineUpdateStatusProperty['reblog']
-  payload: MutationVarsTimelineUpdateStatusProperty['payload']
-}) => {
+}: MutationVarsTimelineUpdateStatusProperty) => {
   queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
     queryKey,
     old => {

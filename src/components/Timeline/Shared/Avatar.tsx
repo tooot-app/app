@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useCallback } from 'react'
@@ -17,7 +18,7 @@ const TimelineAvatar = React.memo(
   ({ queryKey, account, highlighted }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const navigation =
-      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     // Need to fix go back root
     const onPress = useCallback(() => {
       analytics('timeline_shared_avatar_press', {
@@ -49,8 +50,7 @@ const TimelineAvatar = React.memo(
         }}
       />
     )
-  },
-  () => true
+  }
 )
 
 export default TimelineAvatar

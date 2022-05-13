@@ -27,8 +27,8 @@
       "follow_request": "{{name}} yêu cầu theo dõi bạn",
       "poll": "Cuộc bình chọn đã kết thúc",
       "reblog": {
-        "default": "{{name}} chia sẻ",
-        "notification": "{{name}} chia sẻ tút của bạn"
+        "default": "{{name}} đăng lại",
+        "notification": "{{name}} đăng lại tút của bạn"
       }
     },
     "actions": {
@@ -36,8 +36,8 @@
         "accessibilityLabel": "Trả lời tút này"
       },
       "reblogged": {
-        "accessibilityLabel": "Chia sẻ tút này",
-        "function": "Chia sẻ tút"
+        "accessibilityLabel": "Đăng lại tút này",
+        "function": "Đăng lại tút"
       },
       "favourited": {
         "accessibilityLabel": "Thích tút này",
@@ -50,14 +50,20 @@
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "{{count}} người đã chia sẻ tút này",
-        "accessibilityHint": "Xem những ai chia sẻ",
+        "accessibilityLabel": "{{count}} người đã đăng lại tút này",
+        "accessibilityHint": "Xem những ai đăng lại",
         "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
         "accessibilityLabel": "{{count}} người đã thích tút này",
         "accessibilityHint": "Xem những ai thích",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Tút này đã sửa {{count}} lần",
+        "accessibilityHint": "Nhấn để xem lịch sử chỉnh sửa",
+        "text_one": "{{count}} lượt sửa",
+        "text_other": "{{count}} lượt sửa"
       }
     },
     "attachment": {
@@ -71,7 +77,7 @@
     },
     "avatar": {
       "accessibilityLabel": "Ảnh đại diện của {{name}}",
-      "accessibilityHint": "Đến trang cá nhân {{name}}"
+      "accessibilityHint": "Đến trang của {{name}}"
     },
     "content": {
       "expandHint": "nội dung ẩn"
@@ -96,6 +102,9 @@
           }
         },
         "application": "via {{application}}",
+        "edited": {
+          "accessibilityLabel": "Tút đã sửa"
+        },
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
@@ -148,8 +157,8 @@
         },
         "share": {
           "status": {
-            "heading": "Chia sẻ",
-            "button": "Chia sẻ URL tút"
+            "heading": "Đăng lại",
+            "button": "Đăng lại URL tút"
           },
           "account": {
             "heading": "Chia sẻ",
@@ -158,18 +167,30 @@
         },
         "status": {
           "heading": "Đối với tút",
+          "edit": {
+            "function": "Sửa tút",
+            "button": "Sửa tút này"
+          },
           "delete": {
             "function": "Xóa tút",
-            "button": "Xóa tút này"
-          },
-          "edit": {
-            "function": "Xóa tút",
-            "button": "Xóa và viết lại",
+            "button": "Xóa tút này",
             "alert": {
-              "title": "Tiếp tục xóa tút?",
-              "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, chia sẻ và trả lời tút cũng sẽ bị xóa theo.",
+              "title": "Vẫn xóa tút?",
+              "message": "Bạn có chắc muốn xóa tút này? Toàn bộ lượt thích, đăng lại và trả lời tút cũng sẽ bị xóa theo.",
               "buttons": {
-                "confirm": "Tiếp tục xóa",
+                "confirm": "Xác nhận xóa",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "deleteEdit": {
+            "function": "Xóa tút",
+            "button": "Xóa & viết lại",
+            "alert": {
+              "title": "Xác nhận xóa tút?",
+              "message": "Bạn có chắc muốn xóa và viết lại tút này? Toàn bộ lượt thích, đăng lại và trả lời tút cũng sẽ bị xóa theo.",
+              "buttons": {
+                "confirm": "Xác nhận xóa",
                 "cancel": "$t(common:buttons.cancel)"
               }
             }
@@ -198,10 +219,10 @@
           "refresh": "Làm mới"
         },
         "count": {
-          "voters": "{{count}} người bình chọn",
-          "voters_plural": "{{count}} người bình chọn",
-          "votes": "{{count}} bình chọn",
-          "votes_plural": "{{count}} bình chọn"
+          "voters_one": "{{count}} người bình chọn",
+          "voters_other": "{{count}} người bình chọn",
+          "votes_one": "{{count}} bình chọn",
+          "votes_other": "{{count}} bình chọn"
         },
         "expiration": {
           "expired": "Đã kết thúc",

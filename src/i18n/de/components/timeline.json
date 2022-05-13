@@ -1,0 +1,234 @@
+{
+  "empty": {
+    "error": {
+      "message": "Fehler beim Laden",
+      "button": "Wiederholen"
+    },
+    "success": {
+      "message": "Timeline ist leer"
+    }
+  },
+  "end": {
+    "message": "Ende der Geschichte. Wie wäre es mit einer Tasse <0 />?"
+  },
+  "lookback": {
+    "message": "Letzte Lesung am"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Neuere Einträge",
+    "refetch": "Zum letzten"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Angepinnt",
+      "favourite": "{{name}} mag deinen Tröt",
+      "status": "{{name}} hat gerade getrötet",
+      "follow": "{{name}} folgt dir",
+      "follow_request": "{{name}} möchte dir gerne folgen",
+      "poll": "Eine Umfrage, an der du teilgenommen hast, ist beendet",
+      "reblog": {
+        "default": "{{name}} hat geboostet",
+        "notification": "{{name}} hat deinen Tröt geboostet"
+      }
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Antworten"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Tröt boosten",
+        "function": "Boost"
+      },
+      "favourited": {
+        "accessibilityLabel": "Favorit",
+        "function": "Sternen"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Lesezeichen hinzufügen",
+        "function": "Lesezeichen setzen"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} Leute haben den Tröt geboostet",
+        "accessibilityHint": "Booster anzeigen",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} Leute mögen diesen Tröt",
+        "accessibilityHint": "Anzeigen, wer diesen Tröt mag",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Dieser Tröt wurde {{count}} mal bearbeitet",
+        "accessibilityHint": "Für den vollständigen Verlauf auswählen",
+        "text_one": "{{count}} bearbeitet",
+        "text_other": "{{count}} mal bearbeitet"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Sensiblen Inhalt anzeigen"
+      },
+      "unsupported": {
+        "text": "Ladefehler",
+        "button": "Remote Link versuchen"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Profilbild von {{name}}",
+      "accessibilityHint": "Zum Profil von {{name}}"
+    },
+    "content": {
+      "expandHint": "Ausgeblendeter Inhalt"
+    },
+    "filtered": "Ausgeblendet",
+    "fullConversation": "Unterhaltung anzeigen",
+    "translate": {
+      "default": "Übersetzen",
+      "succeed": "Übersetzt durch {{provider}} von {{source}}",
+      "failed": "Übersetzung fehlgeschlagen",
+      "source_not_supported": "Sprache des Tröts wird nicht unterstützt",
+      "target_not_supported": "Zielsprache wird nicht unterstützt"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Benutzername anzeigen"
+          },
+          "account": {
+            "accessibilityHint": "Profil"
+          }
+        },
+        "application": "Getrötet mit {{application}}",
+        "edited": {
+          "accessibilityLabel": "Tröt bearbeitet"
+        },
+        "muted": {
+          "accessibilityLabel": "Tröt stummgeschaltet"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Tröt ist eine Direktnachricht"
+          },
+          "private": {
+            "accessibilityLabel": "Tröt ist nur für Follower sichtbar"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "mit",
+        "delete": {
+          "function": "Nachricht löschen"
+        }
+      },
+      "actions": {
+        "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
+        "account": {
+          "heading": "Über die Nutzerin/den Nutzer",
+          "mute": {
+            "function": "Profil stummschalten",
+            "button": "@{{acct}} stummschalten"
+          },
+          "block": {
+            "function": "Nutzer blockieren",
+            "button": "@{{acct}} blockieren"
+          },
+          "reports": {
+            "function": "User melden",
+            "button": "@{{acct}} melden"
+          }
+        },
+        "domain": {
+          "heading": "Über diese Instanz",
+          "block": {
+            "function": "Instanz blockieren",
+            "button": "Instanz {{domain}} blockieren"
+          },
+          "alert": {
+            "title": "{{domain}} wirklich blockieren?",
+            "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!",
+            "buttons": {
+              "confirm": "Blockierung bestätigen",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        },
+        "share": {
+          "status": {
+            "heading": "Tröt teilen",
+            "button": "Link zu diesem Tröt teilen"
+          },
+          "account": {
+            "heading": "User verlinken",
+            "button": "Link zu diesem Benutzer teilen"
+          }
+        },
+        "status": {
+          "heading": "Über Toot",
+          "edit": {
+            "function": "Tröt bearbeiten",
+            "button": "Diesen Tröt bearbeiten"
+          },
+          "delete": {
+            "function": "Tröt löschen",
+            "button": "Diesen Tröt löschen",
+            "alert": {
+              "title": "Tröt sicher löschen?",
+              "message": "Bist du wirklich sicher, diesen Tröt löschen zu wollen? Sämtliche Boosts und Sterne werden samt der Antworten entfernt.",
+              "buttons": {
+                "confirm": "Löschen bestätigen",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "deleteEdit": {
+            "function": "Tröt löschen",
+            "button": "Diesen Tröt neu entwerfen",
+            "alert": {
+              "title": "Tröt sicher löschen?",
+              "message": "Bist du wirklich sicher, diesen Tröt neu zu entwerfen? Alle Boosts und Sterne werden entfernt - samt der Antworten.",
+              "buttons": {
+                "confirm": "Löschen bestätigen",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "mute": {
+            "function": "Tröt stummschalten",
+            "button": {
+              "positive": "Diesen Tröt sowie die Antworten stummschalten",
+              "negative": "Diesen Tröt sowie die Antworten nicht mehr stummschalten"
+            }
+          },
+          "pin": {
+            "function": "Anheften",
+            "button": {
+              "positive": "Diesen Tröt anheften",
+              "negative": "Diesen Tröt nicht mehr anheften"
+            }
+          }
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Abstimmen",
+          "refresh": "Aktualisieren"
+        },
+        "count": {
+          "voters_one": "{{count}} Benutzer haben abgestimmt",
+          "voters_other": "{{count}} Benutzer haben abgestimmt",
+          "votes_one": "{{count}} Stimmen",
+          "votes_other": "{{count}} Stimmen"
+        },
+        "expiration": {
+          "expired": "Abstimmung abgelaufen",
+          "until": "Läuft in <0 /> ab"
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
+import CustomText from '@components/Text'
 import { ParseEmojis } from '@root/components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account
@@ -16,48 +17,35 @@ const HeaderSharedAccount = React.memo(
     const { colors } = useTheme()
 
     return (
-      <View style={styles.base}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {withoutName ? null : (
-          <Text
+          <CustomText
             accessibilityHint={t(
               'shared.header.shared.account.name.accessibilityHint'
             )}
-            style={styles.name}
+            style={{ marginRight: StyleConstants.Spacing.XS }}
             numberOfLines={1}
           >
             <ParseEmojis
-              content={account.display_name || account.username}
+              content={account?.display_name || account.username}
               emojis={account.emojis}
               fontBold
             />
-          </Text>
+          </CustomText>
         )}
-        <Text
+        <CustomText
           accessibilityHint={t(
             'shared.header.shared.account.account.accessibilityHint'
           )}
-          style={[styles.acct, { color: colors.secondary }]}
+          style={{ flexShrink: 1, color: colors.secondary }}
           numberOfLines={1}
         >
           @{account.acct}
-        </Text>
+        </CustomText>
       </View>
     )
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  base: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  name: {
-    marginRight: StyleConstants.Spacing.XS
-  },
-  acct: {
-    flexShrink: 1
-  }
-})
 
 export default HeaderSharedAccount

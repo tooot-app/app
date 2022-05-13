@@ -67,6 +67,9 @@
       "settings": {
         "name": "앱 설정"
       },
+      "webSettings": {
+        "name": ""
+      },
       "switch": {
         "name": "계정 전환"
       }
@@ -113,8 +116,8 @@
         },
         "fields": {
           "title": "메타데이터",
-          "total": "{{count}}개 필드",
-          "total_plural": "{{count}}개 필드"
+          "total_one": "{{count}}개 필드",
+          "total_other": "{{count}}개 필드"
         },
         "visibility": {
           "title": "공개 범위",
@@ -232,6 +235,14 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "darkTheme": {
+        "heading": "",
+        "options": {
+          "lighter": "",
+          "darker": "",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
       "browser": {
         "heading": "링크 열기",
         "options": {
@@ -239,6 +250,13 @@
           "external": "시스템 브라우저 사용",
           "cancel": "$t(common:buttons.cancel)"
         }
+      },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
+      "feedback": {
+        "heading": ""
       },
       "support": {
         "heading": "tooot 기부"
@@ -253,7 +271,8 @@
         "heading": "개선할 수 있도록 도와주세요",
         "description": "유저와 관련이 없는 사용량만 수집해요"
       },
-      "version": "버전 v{{version}}"
+      "version": "버전 v{{version}}",
+      "instanceVersion": ""
     },
     "switch": {
       "existing": "로그인된 것 중 선택",
@@ -266,6 +285,7 @@
         "accessibilityLabel": "사용자 {{user}}에 대한 동작",
         "accessibilityHint": "이 사용자를 뮤트, 차단, 신고 또는 공유할 수 있어요"
       },
+      "followed_by": "",
       "moved": "유저가 이동함",
       "created_at": "등록된 날: {{date}}",
       "summary": {
@@ -317,6 +337,9 @@
         "reblogged_by": "{{count}} 부스트함",
         "favourited_by": "{{count}} 즐겨찾기함"
       }
+    },
+    "history": {
+      "name": ""
     }
   }
 }

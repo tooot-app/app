@@ -1,0 +1,9 @@
+{
+  "HTML": {
+    "expanded": {
+      "true": "收起{{hint}}",
+      "false": "展開{{hint}}"
+    },
+    "defaultHint": "全文"
+  }
+}

@@ -2,8 +2,10 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
+import CustomText from '@components/Text'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -11,7 +13,7 @@ import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -35,7 +37,7 @@ const renderNode = ({
   index: number
   adaptedFontsize: number
   adaptedLineheight: number
-  navigation: StackNavigationProp<Nav.TabLocalStackParamList>
+  navigation: StackNavigationProp<TabLocalStackParamList>
   mentions?: Mastodon.Mention[]
   tags?: Mastodon.Tag[]
   showFullLink: boolean
@@ -52,7 +54,7 @@ const renderNode = ({
             ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
             : true
           return (
-            <Text
+            <CustomText
               accessible
               key={index}
               style={{
@@ -71,7 +73,7 @@ const renderNode = ({
             >
               {node.children[0].data}
               {node.children[1]?.children[0].data}
-            </Text>
+            </CustomText>
           )
         } else if (classes.includes('mention') && mentions) {
           const accountIndex = mentions.findIndex(
@@ -81,7 +83,7 @@ const renderNode = ({
             ? routeParams.account.id !== mentions[accountIndex]?.id
             : true
           return (
-            <Text
+            <CustomText
               key={index}
               style={{
                 color:
@@ -101,7 +103,7 @@ const renderNode = ({
             >
               {node.children[0].data}
               {node.children[1]?.children[0].data}
-            </Text>
+            </CustomText>
           )
         }
       } else {
@@ -112,7 +114,7 @@ const renderNode = ({
         const shouldBeTag =
           tags && tags.filter(tag => `#${tag.name}` === content).length > 0
         return (
-          <Text
+          <CustomText
             key={index}
             style={{
               color: colors.blue,
@@ -141,7 +143,7 @@ const renderNode = ({
                 }}
               />
             ) : null}
-          </Text>
+          </CustomText>
         )
       }
       break
@@ -194,7 +196,7 @@ const ParseHTML = React.memo(
     )
 
     const navigation =
-      useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
     const { t, i18n } = useTranslation('componentParse')
@@ -251,7 +253,7 @@ const ParseHTML = React.memo(
 
         return (
           <View style={{ overflow: 'hidden' }}>
-            <Text
+            <CustomText
               children={children}
               onTextLayout={onTextLayout}
               numberOfLines={
@@ -274,7 +276,7 @@ const ParseHTML = React.memo(
                   backgroundColor: colors.backgroundDefault
                 }}
               >
-                <Text
+                <CustomText
                   style={{
                     textAlign: 'center',
                     ...StyleConstants.FontStyle.S,
@@ -301,7 +303,7 @@ const ParseHTML = React.memo(
       />
     )
   },
-  () => true
+  (prev, next) => prev.content === next.content
 )
 
 export default ParseHTML

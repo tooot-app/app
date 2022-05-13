@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable } from 'react-native'
 import analytics from './analytics'
+import CustomText from './Text'
 
 export interface Props {
   hashtag: Mastodon.Tag
@@ -19,7 +21,7 @@ const ComponentHashtag: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
   const navigation =
-    useNavigation<StackNavigationProp<Nav.TabLocalStackParamList>>()
+    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
     analytics('search_account_press', { page: origin })
@@ -29,23 +31,14 @@ const ComponentHashtag: React.FC<Props> = ({
   return (
     <Pressable
       accessibilityRole='button'
-      style={styles.itemDefault}
+      style={{ padding: StyleConstants.Spacing.S * 1.5 }}
       onPress={customOnPress || onPress}
     >
-      <Text style={[styles.itemHashtag, { color: colors.primaryDefault }]}>
+      <CustomText fontStyle='M' style={{ color: colors.primaryDefault }}>
         #{hashtag.name}
-      </Text>
+      </CustomText>
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-  itemDefault: {
-    padding: StyleConstants.Spacing.S * 1.5
-  },
-  itemHashtag: {
-    ...StyleConstants.FontStyle.M
-  }
-})
 
 export default ComponentHashtag

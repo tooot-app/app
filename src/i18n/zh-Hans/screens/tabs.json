@@ -116,8 +116,8 @@
         },
         "fields": {
           "title": "附加信息",
-          "total": "{{count}} 项",
-          "total_plural": "{{count}} 项"
+          "total_one": "{{count}}项",
+          "total_other": "{{count}}项"
         },
         "visibility": {
           "title": "嘟文默认可见范围",
@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "使用静态表情",
+        "description": "如果您在查看表情列表时经常遇到应用闪退，您可以尝试使用静态表情。"
+      },
       "feedback": {
         "heading": "功能建议"
       },
@@ -267,7 +271,8 @@
         "heading": "帮助我们改进",
         "description": "收集不与用户相关联的使用信息"
       },
-      "version": "版本 v{{version}}"
+      "version": "版本 v{{version}}",
+      "instanceVersion": "长毛象版本 v{{version}}"
     },
     "switch": {
       "existing": "选择已登录的账号",
@@ -280,6 +285,7 @@
         "accessibilityLabel": "对用户{{user}} 的操作",
         "accessibilityHint": "您可以静音、屏蔽、举报或分享此用户"
       },
+      "followed_by": " 正在关注你",
       "moved": "账户已迁移",
       "created_at": "注册时间：{{date}}",
       "summary": {
@@ -331,6 +337,9 @@
         "reblogged_by": "{{count}} 人转嘟",
         "favourited_by": "{{count}} 人喜欢"
       }
+    },
+    "history": {
+      "name": "编辑历史"
     }
   }
 }

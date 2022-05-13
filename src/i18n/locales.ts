@@ -1,4 +1,5 @@
 const LOCALES = {
+  de: 'Deutsch',
   en: 'English',
   ko: '한국어',
   vi: 'Tiếng Việt',

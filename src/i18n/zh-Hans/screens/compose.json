@@ -16,7 +16,9 @@
         "default": "发嘟嘟",
         "conversation": "发私信",
         "reply": "发布回复",
-        "edit": "发嘟嘟"
+        "deleteEdit": "发嘟嘟",
+        "edit": "发嘟嘟",
+        "share": "发嘟嘟"
       },
       "alert": {
         "default": {
@@ -40,7 +42,13 @@
           "placeholder": "折叠部分的警告信息"
         },
         "textInput": {
-          "placeholder": "想说点什么呢"
+          "placeholder": "想说点什么呢",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "已达附件数量上限",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {
@@ -134,8 +142,8 @@
           "accessibilityHint": "打开表情选择面板，水平滑动切换页面"
         }
       },
-      "drafts": "草稿 ({{count}})",
-      "drafts_plural": "草稿 ({{count}})"
+      "drafts_one": "草稿 ({{count}})",
+      "drafts_other": "草稿 ({{count}})"
     },
     "editAttachment": {
       "header": {
@@ -163,7 +171,8 @@
       "content": {
         "accessibilityHint": "已保存的草稿，点击编辑此草稿",
         "textEmpty": "无正文内容"
-      }
+      },
+      "checkAttachment": "正在检查服务器上的附件..."
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "content": {
+    "button": {
+      "apply": "",
+      "cancel": ""
+    },
+    "notificationsFilter": {
+      "heading": "",
+      "content": {
+        "follow": "",
+        "favourite": "",
+        "reblog": "",
+        "mention": "",
+        "poll": "",
+        "follow_request": ""
+      }
+    }
+  }
+}

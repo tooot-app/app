@@ -2,7 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
-import RelativeTime from '@components/RelativeTime'
+import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
@@ -14,14 +14,8 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import {
-  Dimensions,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { FormattedRelativeTime } from 'react-intl'
+import { Dimensions, Platform, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -64,27 +58,58 @@ const ScreenAnnouncements: React.FC<
 
   const renderItem = useCallback(
     ({ item, index }: { item: Mastodon.Announcement; index: number }) => (
-      <View key={index} style={styles.announcementContainer}>
+      <View
+        key={index}
+        style={{
+          width: Dimensions.get('screen').width,
+          padding: StyleConstants.Spacing.Global.PagePadding,
+          marginVertical: StyleConstants.Spacing.Global.PagePadding,
+          justifyContent: 'center'
+        }}
+      >
         <Pressable
-          style={styles.pressable}
+          style={StyleSheet.absoluteFillObject}
           onPress={() => navigation.goBack()}
         />
         <View
-          style={[
-            styles.announcement,
-            {
-              borderColor: colors.primaryDefault,
-              backgroundColor: colors.backgroundDefault
-            }
-          ]}
+          style={{
+            flexShrink: 1,
+            padding: StyleConstants.Spacing.Global.PagePadding,
+            marginTop: StyleConstants.Spacing.Global.PagePadding,
+            borderWidth: 1,
+            borderRadius: 6,
+            borderColor: colors.primaryDefault,
+            backgroundColor: colors.backgroundDefault
+          }}
         >
-          <Text style={[styles.published, { color: colors.secondary }]}>
+          <CustomText
+            fontStyle='S'
+            style={{
+              marginBottom: StyleConstants.Spacing.S,
+              color: colors.secondary
+            }}
+          >
             <Trans
               i18nKey='screenAnnouncements:content.published'
-              components={[<RelativeTime date={item.published_at} />]}
+              components={[
+                <FormattedRelativeTime
+                  value={
+                    -(
+                      new Date().getTime() -
+                      new Date(item.published_at).getTime()
+                    ) / 1000
+                  }
+                  updateIntervalInSeconds={1}
+                />
+              ]}
             />
-          </Text>
-          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator>
+          </CustomText>
+          <ScrollView
+            style={{
+              marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
+            }}
+            showsVerticalScrollIndicator
+          >
             <ParseHTML
               content={item.content}
               size='M'
@@ -95,21 +120,31 @@ const ScreenAnnouncements: React.FC<
             />
           </ScrollView>
           {item.reactions?.length ? (
-            <View style={styles.reactions}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
+              }}
+            >
               {item.reactions?.map(reaction => (
                 <Pressable
                   key={reaction.name}
-                  style={[
-                    styles.reaction,
-                    {
-                      borderColor: reaction.me
-                        ? colors.disabled
-                        : colors.primaryDefault,
-                      backgroundColor: reaction.me
-                        ? colors.disabled
-                        : colors.backgroundDefault
-                    }
-                  ]}
+                  style={{
+                    borderWidth: 1,
+                    padding: StyleConstants.Spacing.Global.PagePadding / 2,
+                    marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
+                    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
+                    marginRight: StyleConstants.Spacing.M,
+                    borderRadius: 6,
+                    flexDirection: 'row',
+                    borderColor: reaction.me
+                      ? colors.disabled
+                      : colors.primaryDefault,
+                    backgroundColor: reaction.me
+                      ? colors.disabled
+                      : colors.backgroundDefault
+                  }}
                   onPress={() => {
                     analytics('accnouncement_reaction_press', {
                       current: reaction.me
@@ -129,20 +164,24 @@ const ScreenAnnouncements: React.FC<
                           ? reaction.static_url
                           : reaction.url
                       }}
-                      style={[styles.reactionImage]}
+                      style={{
+                        width: StyleConstants.Font.LineHeight.M + 3,
+                        height: StyleConstants.Font.LineHeight.M
+                      }}
                     />
                   ) : (
-                    <Text style={[styles.reactionText]}>{reaction.name}</Text>
+                    <CustomText fontStyle='M'>{reaction.name}</CustomText>
                   )}
                   {reaction.count ? (
-                    <Text
-                      style={[
-                        styles.reactionCount,
-                        { color: colors.primaryDefault }
-                      ]}
+                    <CustomText
+                      fontStyle='S'
+                      style={{
+                        marginLeft: StyleConstants.Spacing.S,
+                        color: colors.primaryDefault
+                      }}
                     >
                       {reaction.count}
-                    </Text>
+                    </CustomText>
                   ) : null}
                 </Pressable>
               ))}
@@ -210,10 +249,10 @@ const ScreenAnnouncements: React.FC<
     <BlurView
       blurType={mode}
       blurAmount={20}
-      style={styles.base}
+      style={{ flex: 1 }}
       reducedTransparencyFallbackColor={colors.backgroundDefault}
     >
-      <SafeAreaView style={styles.base}>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           horizontal
           data={query.data}
@@ -223,22 +262,30 @@ const ScreenAnnouncements: React.FC<
           onMomentumScrollEnd={onMomentumScrollEnd}
           ListEmptyComponent={ListEmptyComponent}
         />
-        <View style={styles.indicators}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: 49
+          }}
+        >
           {query.data && query.data.length > 1 ? (
             <>
               {query.data.map((d, i) => (
                 <View
                   key={i}
-                  style={[
-                    styles.indicator,
-                    {
-                      borderColor: colors.primaryDefault,
-                      backgroundColor:
-                        i === index ? colors.primaryDefault : undefined,
-                      marginLeft:
-                        i === query.data.length ? 0 : StyleConstants.Spacing.S
-                    }
-                  ]}
+                  style={{
+                    width: StyleConstants.Spacing.S,
+                    height: StyleConstants.Spacing.S,
+                    borderRadius: StyleConstants.Spacing.S,
+                    borderWidth: 1,
+                    borderColor: colors.primaryDefault,
+                    backgroundColor:
+                      i === index ? colors.primaryDefault : undefined,
+                    marginLeft:
+                      i === query.data.length ? 0 : StyleConstants.Spacing.S
+                  }}
                 />
               ))}
             </>
@@ -248,7 +295,7 @@ const ScreenAnnouncements: React.FC<
     </BlurView>
   ) : (
     <SafeAreaView
-      style={[styles.base, { backgroundColor: colors.backgroundDefault }]}
+      style={{ flex: 1, backgroundColor: colors.backgroundDefault }}
     >
       <FlatList
         horizontal
@@ -259,22 +306,30 @@ const ScreenAnnouncements: React.FC<
         onMomentumScrollEnd={onMomentumScrollEnd}
         ListEmptyComponent={ListEmptyComponent}
       />
-      <View style={styles.indicators}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 49
+        }}
+      >
         {query.data && query.data.length > 1 ? (
           <>
             {query.data.map((d, i) => (
               <View
                 key={i}
-                style={[
-                  styles.indicator,
-                  {
-                    borderColor: colors.primaryDefault,
-                    backgroundColor:
-                      i === index ? colors.primaryDefault : undefined,
-                    marginLeft:
-                      i === query.data.length ? 0 : StyleConstants.Spacing.S
-                  }
-                ]}
+                style={{
+                  width: StyleConstants.Spacing.S,
+                  height: StyleConstants.Spacing.S,
+                  borderRadius: StyleConstants.Spacing.S,
+                  borderWidth: 1,
+                  borderColor: colors.primaryDefault,
+                  backgroundColor:
+                    i === index ? colors.primaryDefault : undefined,
+                  marginLeft:
+                    i === query.data.length ? 0 : StyleConstants.Spacing.S
+                }}
               />
             ))}
           </>
@@ -283,70 +338,5 @@ const ScreenAnnouncements: React.FC<
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1
-  },
-  invisibleTextInput: { ...StyleSheet.absoluteFillObject },
-  announcementContainer: {
-    width: Dimensions.get('screen').width,
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    marginVertical: StyleConstants.Spacing.Global.PagePadding,
-    justifyContent: 'center'
-  },
-  published: {
-    ...StyleConstants.FontStyle.S,
-    marginBottom: StyleConstants.Spacing.S
-  },
-  pressable: { ...StyleSheet.absoluteFillObject },
-  announcement: {
-    flexShrink: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding,
-    marginTop: StyleConstants.Spacing.Global.PagePadding,
-    borderWidth: 1,
-    borderRadius: 6
-  },
-  scrollView: {
-    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
-  },
-  reactions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
-  },
-  reaction: {
-    borderWidth: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding / 2,
-    marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
-    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
-    marginRight: StyleConstants.Spacing.M,
-    borderRadius: 6,
-    flexDirection: 'row'
-  },
-  reactionImage: {
-    width: StyleConstants.Font.LineHeight.M + 3,
-    height: StyleConstants.Font.LineHeight.M
-  },
-  reactionText: {
-    ...StyleConstants.FontStyle.M
-  },
-  reactionCount: {
-    ...StyleConstants.FontStyle.S,
-    marginLeft: StyleConstants.Spacing.S
-  },
-  indicators: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: 49
-  },
-  indicator: {
-    width: StyleConstants.Spacing.S,
-    height: StyleConstants.Spacing.S,
-    borderRadius: StyleConstants.Spacing.S,
-    borderWidth: 1
-  }
-})
 
 export default ScreenAnnouncements

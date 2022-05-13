@@ -1,8 +1,10 @@
 import apiInstance from '@api/instance'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
+import CustomText from '@components/Text'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch } from '@root/store'
 import {
   getInstanceDrafts,
   removeInstanceDraft
@@ -17,13 +19,11 @@ import {
   Modal,
   Platform,
   Pressable,
-  StyleSheet,
-  Text,
   View
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import formatText from '../formatText'
 import ComposeContext from '../utils/createContext'
 import { ComposeStateDraft, ExtendedAttachment } from '../utils/types'
@@ -36,7 +36,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const { composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const navigation = useNavigation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { colors, theme } = useTheme()
   const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
     draft => draft.timestamp !== timestamp
@@ -53,10 +53,15 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   const renderItem = useCallback(
     ({ item }: { item: ComposeStateDraft }) => {
+      console.log('timestamp', item.timestamp)
       return (
         <Pressable
           accessibilityHint={t('content.draftsList.content.accessibilityHint')}
-          style={[styles.draft, { backgroundColor: colors.backgroundDefault }]}
+          style={{
+            flex: 1,
+            padding: StyleConstants.Spacing.Global.PagePadding,
+            backgroundColor: colors.backgroundDefault
+          }}
           onPress={async () => {
             setCheckingAttachments(true)
             let tempDraft = item
@@ -102,23 +107,42 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         >
           <View style={{ flex: 1 }}>
             <HeaderSharedCreated created_at={item.timestamp} />
-            <Text
+            <CustomText
+              fontStyle='M'
               numberOfLines={2}
-              style={[styles.text, { color: colors.primaryDefault }]}
+              style={{
+                marginTop: StyleConstants.Spacing.XS,
+                color: colors.primaryDefault
+              }}
             >
               {item.text ||
                 item.spoiler ||
                 t('content.draftsList.content.textEmpty')}
-            </Text>
+            </CustomText>
             {item.attachments?.uploads.length ? (
-              <View style={styles.attachments}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  marginTop: StyleConstants.Spacing.S
+                }}
+              >
                 {item.attachments.uploads.map((attachment, index) => (
                   <Image
                     key={index}
-                    style={[
-                      styles.attachment,
-                      { marginLeft: index !== 0 ? StyleConstants.Spacing.S : 0 }
-                    ]}
+                    style={{
+                      width:
+                        (Dimensions.get('screen').width -
+                          StyleConstants.Spacing.Global.PagePadding * 2 -
+                          StyleConstants.Spacing.S * 3) /
+                        4,
+                      height:
+                        (Dimensions.get('screen').width -
+                          StyleConstants.Spacing.Global.PagePadding * 2 -
+                          StyleConstants.Spacing.S * 3) /
+                        4,
+                      marginLeft: index !== 0 ? StyleConstants.Spacing.S : 0
+                    }}
                     source={{
                       uri:
                         attachment.local?.local_thumbnail ||
@@ -137,10 +161,21 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
   const renderHiddenItem = useCallback(
     ({ item }) => (
       <View
-        style={[styles.hiddenBase, { backgroundColor: colors.red }]}
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          backgroundColor: colors.red
+        }}
         children={
           <Pressable
-            style={styles.action}
+            style={{
+              flexBasis:
+                StyleConstants.Font.Size.L +
+                StyleConstants.Spacing.Global.PagePadding * 4,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
             onPress={() => removeDraft(item.timestamp)}
             children={
               <Icon
@@ -182,17 +217,17 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         visible={checkingAttachments}
         children={
           <View
-            style={[
-              styles.modal,
-              { backgroundColor: colors.backgroundOverlayInvert }
-            ]}
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: colors.backgroundOverlayInvert
+            }}
             children={
-              <Text
-                children='检查附件在服务器的状态…'
-                style={{
-                  ...StyleConstants.FontStyle.M,
-                  color: colors.primaryOverlay
-                }}
+              <CustomText
+                fontStyle='M'
+                children={t('content.draftsList.checkAttachment')}
+                style={{ color: colors.primaryOverlay }}
               />
             }
           />
@@ -201,50 +236,5 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  draft: {
-    flex: 1,
-    padding: StyleConstants.Spacing.Global.PagePadding
-  },
-  text: {
-    marginTop: StyleConstants.Spacing.XS,
-    ...StyleConstants.FontStyle.M
-  },
-  attachments: {
-    flex: 1,
-    flexDirection: 'row',
-    marginTop: StyleConstants.Spacing.S
-  },
-  attachment: {
-    width:
-      (Dimensions.get('screen').width -
-        StyleConstants.Spacing.Global.PagePadding * 2 -
-        StyleConstants.Spacing.S * 3) /
-      4,
-    height:
-      (Dimensions.get('screen').width -
-        StyleConstants.Spacing.Global.PagePadding * 2 -
-        StyleConstants.Spacing.S * 3) /
-      4
-  },
-  hiddenBase: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
-  action: {
-    flexBasis:
-      StyleConstants.Font.Size.L +
-      StyleConstants.Spacing.Global.PagePadding * 4,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
 
 export default ComposeDraftsListRoot

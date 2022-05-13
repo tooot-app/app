@@ -4,7 +4,7 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
-import RelativeTime from '@components/RelativeTime'
+import CustomText from '@components/Text'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -16,6 +16,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { FormattedRelativeTime } from 'react-intl'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useQueryClient } from 'react-query'
 
@@ -83,7 +84,7 @@ const TimelinePoll: React.FC<Props> = ({
     if (!poll.expired) {
       if (!sameAccount && !poll.voted) {
         return (
-          <View style={styles.button}>
+          <View style={{ marginRight: StyleConstants.Spacing.S }}>
             <Button
               onPress={() => {
                 analytics('timeline_shared_vote_vote_press')
@@ -110,7 +111,7 @@ const TimelinePoll: React.FC<Props> = ({
         )
       } else {
         return (
-          <View style={styles.button}>
+          <View style={{ marginRight: StyleConstants.Spacing.S }}>
             <Button
               onPress={() => {
                 analytics('timeline_shared_vote_refresh_press')
@@ -147,19 +148,28 @@ const TimelinePoll: React.FC<Props> = ({
   const pollExpiration = useMemo(() => {
     if (poll.expired) {
       return (
-        <Text style={[styles.expiration, { color: colors.secondary }]}>
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
           {t('shared.poll.meta.expiration.expired')}
-        </Text>
+        </CustomText>
       )
     } else {
       if (poll.expires_at) {
         return (
-          <Text style={[styles.expiration, { color: colors.secondary }]}>
+          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
             <Trans
               i18nKey='componentTimeline:shared.poll.meta.expiration.until'
-              components={[<RelativeTime date={poll.expires_at} />]}
+              components={[
+                <FormattedRelativeTime
+                  value={
+                    (new Date(poll.expires_at).getTime() -
+                      new Date().getTime()) /
+                    1000
+                  }
+                  updateIntervalInSeconds={1}
+                />
+              ]}
             />
-          </Text>
+          </CustomText>
         )
       }
     }
@@ -179,10 +189,17 @@ const TimelinePoll: React.FC<Props> = ({
       option => option.votes_count
     )?.votes_count
     return poll.options.map((option, index) => (
-      <View key={index} style={styles.optionContainer}>
-        <View style={styles.optionContent}>
+      <View
+        key={index}
+        style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
+      >
+        <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
-            style={styles.optionSelection}
+            style={{
+              paddingTop:
+                StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginRight: StyleConstants.Spacing.S
+            }}
             name={
               `${poll.own_votes?.includes(index) ? 'Check' : ''}${
                 poll.multiple ? 'Square' : 'Circle'
@@ -193,11 +210,18 @@ const TimelinePoll: React.FC<Props> = ({
               poll.own_votes?.includes(index) ? colors.blue : colors.disabled
             }
           />
-          <Text style={styles.optionText}>
+          <CustomText style={{ flex: 1 }}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
-          </Text>
-          <Text
-            style={[styles.optionPercentage, { color: colors.primaryDefault }]}
+          </CustomText>
+          <CustomText
+            fontStyle='M'
+            style={{
+              alignSelf: 'center',
+              marginLeft: StyleConstants.Spacing.S,
+              flexBasis: '20%',
+              textAlign: 'center',
+              color: colors.primaryDefault
+            }}
           >
             {poll.votes_count
               ? Math.round(
@@ -207,21 +231,24 @@ const TimelinePoll: React.FC<Props> = ({
                 )
               : 0}
             %
-          </Text>
+          </CustomText>
         </View>
 
         <View
-          style={[
-            styles.background,
-            {
-              width: `${Math.round(
-                (option.votes_count / (poll.voters_count || poll.votes_count)) *
-                  100
-              )}%`,
-              backgroundColor:
-                option.votes_count === maxValue ? colors.blue : colors.disabled
-            }
-          ]}
+          style={{
+            height: StyleConstants.Spacing.XS,
+            minWidth: 2,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 10,
+            marginTop: StyleConstants.Spacing.XS,
+            marginBottom: StyleConstants.Spacing.S,
+            width: `${Math.round(
+              (option.votes_count / (poll.voters_count || poll.votes_count)) *
+                100
+            )}%`,
+            backgroundColor:
+              option.votes_count === maxValue ? colors.blue : colors.disabled
+          }}
         />
       </View>
     ))
@@ -230,7 +257,7 @@ const TimelinePoll: React.FC<Props> = ({
     return poll.options.map((option, index) => (
       <Pressable
         key={index}
-        style={styles.optionContainer}
+        style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
         onPress={() => {
           analytics('timeline_shared_vote_option_press')
           !allOptions[index] && haptics('Light')
@@ -253,16 +280,20 @@ const TimelinePoll: React.FC<Props> = ({
           }
         }}
       >
-        <View style={[styles.optionContent]}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon
-            style={styles.optionSelection}
+            style={{
+              paddingTop:
+                StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+              marginRight: StyleConstants.Spacing.S
+            }}
             name={isSelected(index)}
             size={StyleConstants.Font.Size.M}
             color={colors.primaryDefault}
           />
-          <Text style={styles.optionText}>
+          <CustomText style={{ flex: 1 }}>
             <ParseEmojis content={option.title} emojis={poll.emojis} />
-          </Text>
+          </CustomText>
         </View>
       </Pressable>
     ))
@@ -271,25 +302,32 @@ const TimelinePoll: React.FC<Props> = ({
   const pollVoteCounts = useMemo(() => {
     if (poll.voters_count !== null) {
       return (
-        <Text style={[styles.votes, { color: colors.secondary }]}>
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
           {t('shared.poll.meta.count.voters', { count: poll.voters_count })}
           {' • '}
-        </Text>
+        </CustomText>
       )
     } else if (poll.votes_count !== null) {
       return (
-        <Text style={[styles.votes, { color: colors.secondary }]}>
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
           {t('shared.poll.meta.count.votes', { count: poll.votes_count })}
           {' • '}
-        </Text>
+        </CustomText>
       )
     }
   }, [poll.voters_count, poll.votes_count])
 
   return (
-    <View style={styles.base}>
+    <View style={{ marginTop: StyleConstants.Spacing.M }}>
       {poll.expired || poll.voted ? pollBodyDisallow : pollBodyAllow}
-      <View style={styles.meta}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: StyleConstants.Spacing.XS
+        }}
+      >
         {pollButton}
         {pollVoteCounts}
         {pollExpiration}
@@ -297,56 +335,5 @@ const TimelinePoll: React.FC<Props> = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    marginTop: StyleConstants.Spacing.M
-  },
-  optionContainer: {
-    flex: 1,
-    paddingVertical: StyleConstants.Spacing.S
-  },
-  optionContent: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  optionText: {
-    flex: 1
-  },
-  optionSelection: {
-    paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
-    marginRight: StyleConstants.Spacing.S
-  },
-  optionPercentage: {
-    ...StyleConstants.FontStyle.M,
-    alignSelf: 'center',
-    marginLeft: StyleConstants.Spacing.S,
-    flexBasis: '20%',
-    textAlign: 'center'
-  },
-  background: {
-    height: StyleConstants.Spacing.XS,
-    minWidth: 2,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-    marginTop: StyleConstants.Spacing.XS,
-    marginBottom: StyleConstants.Spacing.S
-  },
-  meta: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: StyleConstants.Spacing.XS
-  },
-  button: {
-    marginRight: StyleConstants.Spacing.S
-  },
-  votes: {
-    ...StyleConstants.FontStyle.S
-  },
-  expiration: {
-    ...StyleConstants.FontStyle.S
-  }
-})
 
 export default TimelinePoll

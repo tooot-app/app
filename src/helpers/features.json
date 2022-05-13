@@ -1,0 +1,12 @@
+[
+  {
+    "feature": "edit_post",
+    "version": 3.5,
+    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+  },
+  {
+    "feature": "deprecate_auth_follow",
+    "version": 3.5,
+    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+  }
+]

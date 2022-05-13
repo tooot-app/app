@@ -7,12 +7,11 @@ import {
   AccessibilityProps,
   Pressable,
   StyleProp,
-  StyleSheet,
-  Text,
   View,
   ViewStyle
 } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
+import CustomText from './Text'
 
 export interface Props {
   accessibilityLabel?: AccessibilityProps['accessibilityLabel']
@@ -116,7 +115,7 @@ const Button: React.FC<Props> = ({
       case 'text':
         return (
           <>
-            <Text
+            <CustomText
               style={{
                 color: mainColor,
                 fontSize:
@@ -146,8 +145,10 @@ const Button: React.FC<Props> = ({
         busy: loading
       }}
       style={[
-        styles.button,
         {
+          borderRadius: 100,
+          justifyContent: 'center',
+          alignItems: 'center',
           borderWidth: overlay ? 0 : 1,
           borderColor: mainColor,
           backgroundColor: colorBackground,
@@ -169,13 +170,5 @@ const Button: React.FC<Props> = ({
     />
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
 
 export default Button

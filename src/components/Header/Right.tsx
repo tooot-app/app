@@ -1,14 +1,9 @@
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import {
-  AccessibilityProps,
-  Pressable,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { AccessibilityProps, Pressable, View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
@@ -72,14 +67,12 @@ const HeaderRight: React.FC<Props> = ({
       case 'text':
         return (
           <>
-            <Text
-              style={[
-                styles.text,
-                {
-                  color: disabled ? colors.secondary : colors.primaryDefault,
-                  opacity: loading ? 0 : 1
-                }
-              ]}
+            <CustomText
+              fontStyle='M'
+              style={{
+                color: disabled ? colors.secondary : colors.primaryDefault,
+                opacity: loading ? 0 : 1
+              }}
               children={content}
             />
             {loading && loadingSpinkit}
@@ -97,38 +90,27 @@ const HeaderRight: React.FC<Props> = ({
       onPress={onPress}
       children={children}
       disabled={disabled || loading}
-      style={[
-        styles.base,
-        {
-          backgroundColor: background
-            ? colors.backgroundOverlayDefault
-            : undefined,
-          minHeight: 44,
-          minWidth: 44,
-          marginRight: native
-            ? -StyleConstants.Spacing.S
-            : StyleConstants.Spacing.S,
-          ...(type === 'icon' && {
-            borderRadius: 100
-          }),
-          ...(type === 'text' && {
-            paddingHorizontal: StyleConstants.Spacing.S
-          })
-        }
-      ]}
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: background
+          ? colors.backgroundOverlayDefault
+          : undefined,
+        minHeight: 44,
+        minWidth: 44,
+        marginRight: native
+          ? -StyleConstants.Spacing.S
+          : StyleConstants.Spacing.S,
+        ...(type === 'icon' && {
+          borderRadius: 100
+        }),
+        ...(type === 'text' && {
+          paddingHorizontal: StyleConstants.Spacing.S
+        })
+      }}
     />
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    ...StyleConstants.FontStyle.M
-  }
-})
 
 export default HeaderRight

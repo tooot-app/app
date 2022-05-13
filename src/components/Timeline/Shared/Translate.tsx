@@ -1,5 +1,6 @@
 import analytics from '@components/analytics'
 import { ParseHTML } from '@components/Parse'
+import CustomText from '@components/Text'
 import { useTranslateQuery } from '@utils/queryHooks/translate'
 import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -7,13 +8,16 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { useSelector } from 'react-redux'
 
 export interface Props {
   highlighted: boolean
-  status: Mastodon.Status
+  status: Pick<
+    Mastodon.Status,
+    'language' | 'spoiler_text' | 'content' | 'emojis'
+  >
 }
 
 const TimelineTranslate = React.memo(
@@ -60,7 +64,12 @@ const TimelineTranslate = React.memo(
     return (
       <>
         <Pressable
-          style={[styles.button, { paddingBottom: isSuccess ? 0 : undefined }]}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: StyleConstants.Spacing.S,
+            paddingBottom: isSuccess ? 0 : undefined
+          }}
           onPress={() => {
             if (enabled) {
               if (!isSuccess) {
@@ -77,9 +86,9 @@ const TimelineTranslate = React.memo(
             }
           }}
         >
-          <Text
+          <CustomText
+            fontStyle='M'
             style={{
-              ...StyleConstants.FontStyle.M,
               color:
                 isLoading || isSuccess
                   ? colors.secondary
@@ -98,14 +107,14 @@ const TimelineTranslate = React.memo(
                     source: data?.sourceLanguage
                   })
               : t('shared.translate.default')}
-          </Text>
-          <Text>
+          </CustomText>
+          <CustomText>
             {__DEV__
               ? ` Source: ${status.language}; Target: ${
                   Localization.locale || settingsLanguage || 'en'
                 }`
               : undefined}
-          </Text>
+          </CustomText>
           {isLoading ? (
             <Circle
               size={StyleConstants.Font.Size.M}
@@ -128,15 +137,10 @@ const TimelineTranslate = React.memo(
       </>
     )
   },
-  () => true
+  (prev, next) =>
+    prev.status.language === next.status.language &&
+    prev.status.content === next.status.content &&
+    prev.status.spoiler_text === next.status.spoiler_text
 )
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: StyleConstants.Spacing.S
-  }
-})
 
 export default TimelineTranslate

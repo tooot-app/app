@@ -1,10 +1,10 @@
 import analytics from '@components/analytics'
 import openLink from '@components/openLink'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text } from 'react-native'
 
 export interface Props {
   application?: Mastodon.Application
@@ -16,7 +16,8 @@ const HeaderSharedApplication = React.memo(
     const { t } = useTranslation('componentTimeline')
 
     return application && application.name !== 'Web' ? (
-      <Text
+      <CustomText
+        fontStyle='S'
         accessibilityRole='link'
         onPress={async () => {
           analytics('timeline_shared_header_application_press', {
@@ -24,24 +25,20 @@ const HeaderSharedApplication = React.memo(
           })
           application.website && (await openLink(application.website))
         }}
-        style={[styles.application, { color: colors.secondary }]}
+        style={{
+          flex: 1,
+          marginLeft: StyleConstants.Spacing.S,
+          color: colors.secondary
+        }}
         numberOfLines={1}
       >
         {t('shared.header.shared.application', {
           application: application.name
         })}
-      </Text>
+      </CustomText>
     ) : null
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  application: {
-    flex: 1,
-    ...StyleConstants.FontStyle.S,
-    marginLeft: StyleConstants.Spacing.S
-  }
-})
 
 export default HeaderSharedApplication

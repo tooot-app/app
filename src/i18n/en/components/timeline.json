@@ -58,6 +58,12 @@
         "accessibilityLabel": "{{count}} users have favourited this toot",
         "accessibilityHint": "Tap to know the users",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "This toot has been edited {{count}} times",
+        "accessibilityHint": "Tap to view the full edit history",
+        "text_one": "{{count}} edit",
+        "text_other": "{{count}} edits"
       }
     },
     "attachment": {
@@ -96,6 +102,9 @@
           }
         },
         "application": "Tooted with {{application}}",
+        "edited": {
+          "accessibilityLabel": "Toot edited"
+        },
         "muted": {
           "accessibilityLabel": "Toot muted"
         },
@@ -158,11 +167,23 @@
         },
         "status": {
           "heading": "About toot",
+          "edit": {
+            "function": "Edit toot",
+            "button": "Edit this toot"
+          },
           "delete": {
             "function": "Delete toot",
-            "button": "Delete this toot"
+            "button": "Delete this toot",
+            "alert": {
+              "title": "Confirm deleting toot?",
+              "message": "Are you sure to delete this toot? All boosts and favourites will be cleared, including all replies.",
+              "buttons": {
+                "confirm": "Confirm deleting",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
           },
-          "edit": {
+          "deleteEdit": {
             "function": "Delete toot",
             "button": "Delete and re-draft",
             "alert": {
@@ -198,10 +219,10 @@
           "refresh": "Refresh"
         },
         "count": {
-          "voters": "{{count}} user voted",
-          "voters_plural": "{{count}} users voted",
-          "votes": "{{count}} vote",
-          "votes_plural": "{{count}} votes"
+          "voters_one": "{{count}} user voted",
+          "voters_other": "{{count}} users voted",
+          "votes_one": "{{count}} vote",
+          "votes_other": "{{count}} votes"
         },
         "expiration": {
           "expired": "Vote expired",

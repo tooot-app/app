@@ -6,11 +6,7 @@ const deleteItem = ({
   queryKey,
   rootQueryKey,
   id
-}: {
-  queryKey?: MutationVarsTimelineDeleteItem['queryKey']
-  rootQueryKey?: MutationVarsTimelineDeleteItem['rootQueryKey']
-  id: MutationVarsTimelineDeleteItem['id']
-}) => {
+}: MutationVarsTimelineDeleteItem) => {
   queryKey &&
     queryClient.setQueryData<InfiniteData<any> | undefined>(queryKey, old => {
       if (old) {

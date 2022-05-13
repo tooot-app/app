@@ -38,10 +38,10 @@
         "name": "Nhắn riêng"
       },
       "favourites": {
-        "name": "Lượt thích"
+        "name": "Đã thích"
       },
       "fontSize": {
-        "name": "Kích cỡ phông chữ"
+        "name": "Cỡ chữ"
       },
       "lists": {
         "name": "Danh sách"
@@ -53,7 +53,7 @@
         "name": "Thông báo đẩy"
       },
       "profile": {
-        "name": "Cài đặt cá nhân"
+        "name": "Sửa hồ sơ"
       },
       "profileName": {
         "name": "Tên hiển thị mới"
@@ -67,13 +67,16 @@
       "settings": {
         "name": "Thiết lập"
       },
+      "webSettings": {
+        "name": "Nâng cao"
+      },
       "switch": {
         "name": "Chuyển đổi tài khoản"
       }
     },
     "fontSize": {
-      "showcase": "Kết quả",
-      "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không thay đổi những phần khác của app.</p>",
+      "showcase": "Xem trước",
+      "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không ảnh hưởng những phần tử khác của app.</p>",
       "availableSizes": "Kích cỡ",
       "sizes": {
         "S": "S",
@@ -113,8 +116,8 @@
         },
         "fields": {
           "title": "Metadata",
-          "total": "{{count}} mục",
-          "total_plural": "{{count}} mục"
+          "total_one": "{{count}} mục",
+          "total_other": "{{count}} mục"
         },
         "visibility": {
           "title": "Kiểu tút mặc định",
@@ -167,7 +170,7 @@
         "heading": "Lượt thích"
       },
       "reblog": {
-        "heading": "Lượt chia sẻ"
+        "heading": "Lượt đăng lại"
       },
       "mention": {
         "heading": "Lượt nhắc đến"
@@ -248,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
       "feedback": {
         "heading": "Đề xuất tính năng"
       },
@@ -264,10 +271,11 @@
         "heading": "Thu thập dữ liệu",
         "description": "Giúp cải thiện chất lượng app"
       },
-      "version": "Phiên bản {{version}}"
+      "version": "Phiên bản {{version}}",
+      "instanceVersion": "Mastodon phiên bản {{version}}"
     },
     "switch": {
-      "existing": "Đã đăng nhập trước đó",
+      "existing": "Đã đăng nhập trước đây",
       "new": "Đăng nhập máy chủ"
     }
   },
@@ -277,6 +285,7 @@
         "accessibilityLabel": "Hành động đối với {{user}}",
         "accessibilityHint": "Bạn có thể ẩn, chặn, báo cáo hoặc chia sẻ người này"
       },
+      "followed_by": " đang theo dõi bạn",
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {
@@ -317,7 +326,7 @@
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
     },
     "toot": {
-      "name": "Thảo luận"
+      "name": "Nội dung tút"
     },
     "users": {
       "accounts": {
@@ -325,9 +334,12 @@
         "followers": "{{count}} người theo dõi"
       },
       "statuses": {
-        "reblogged_by": "{{count}} chia sẻ",
+        "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
       }
+    },
+    "history": {
+      "name": "Lịch sử chỉnh sửa"
     }
   }
 }

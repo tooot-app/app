@@ -1,3 +1,5 @@
+import CustomText from '@components/Text'
+import { useAppDispatch } from '@root/store'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { countInstanceEmoji } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -10,18 +12,15 @@ import {
   findNodeHandle,
   Pressable,
   SectionList,
-  StyleSheet,
-  Text,
   View
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useDispatch } from 'react-redux'
 import validUrl from 'valid-url'
 import EmojisContext from './helpers/EmojisContext'
 
 const EmojisList = React.memo(
   () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const { reduceMotionEnabled } = useAccessibility()
     const { t } = useTranslation()
 
@@ -30,7 +29,12 @@ const EmojisList = React.memo(
 
     const listHeader = useCallback(
       ({ section: { title } }) => (
-        <Text style={[styles.group, { color: colors.secondary }]}>{title}</Text>
+        <CustomText
+          fontStyle='S'
+          style={{ position: 'absolute', color: colors.secondary }}
+        >
+          {title}
+        </CustomText>
       ),
       []
     )
@@ -38,7 +42,15 @@ const EmojisList = React.memo(
     const listItem = useCallback(
       ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
         return (
-          <View key={index} style={styles.emojis}>
+          <View
+            key={index}
+            style={{
+              flex: 1,
+              flexWrap: 'wrap',
+              marginTop: StyleConstants.Spacing.M,
+              marginRight: StyleConstants.Spacing.S
+            }}
+          >
             {item.map(emoji => {
               const uri = reduceMotionEnabled ? emoji.static_url : emoji.url
               if (validUrl.isHttpsUri(uri)) {
@@ -64,7 +76,12 @@ const EmojisList = React.memo(
                         'screenCompose:content.root.footer.emojis.accessibilityHint'
                       )}
                       source={{ uri }}
-                      style={styles.emoji}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        padding: StyleConstants.Spacing.S,
+                        margin: StyleConstants.Spacing.S
+                      }}
                     />
                   </Pressable>
                 )
@@ -103,24 +120,5 @@ const EmojisList = React.memo(
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  group: {
-    position: 'absolute',
-    ...StyleConstants.FontStyle.S
-  },
-  emojis: {
-    flex: 1,
-    flexWrap: 'wrap',
-    marginTop: StyleConstants.Spacing.M,
-    marginRight: StyleConstants.Spacing.S
-  },
-  emoji: {
-    width: 32,
-    height: 32,
-    padding: StyleConstants.Spacing.S,
-    margin: StyleConstants.Spacing.S
-  }
-})
 
 export default EmojisList

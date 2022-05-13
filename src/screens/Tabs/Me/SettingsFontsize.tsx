@@ -1,7 +1,9 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import ComponentSeparator from '@components/Separator'
+import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
+import { useAppDispatch } from '@root/store'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import {
   changeFontsize,
@@ -13,9 +15,9 @@ import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   switch (size) {
@@ -38,7 +40,7 @@ const TabMeSettingsFontsize: React.FC<
   const { colors, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const item = {
     id: 'demo',
@@ -75,31 +77,23 @@ const TabMeSettingsFontsize: React.FC<
     return (
       <>
         {([-1, 0, 1, 2, 3] as [-1, 0, 1, 2, 3]).map(size => (
-          <Text
+          <CustomText
             key={size}
-            style={[
-              styles.size,
-              {
-                fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
-                lineHeight: adaptiveScale(
-                  StyleConstants.Font.LineHeight.M,
-                  size
-                ),
-                fontWeight:
-                  initialSize === size
-                    ? StyleConstants.Font.Weight.Bold
-                    : undefined,
-                color:
-                  initialSize === size
-                    ? colors.primaryDefault
-                    : colors.secondary,
-                borderWidth: StyleSheet.hairlineWidth,
-                borderColor: colors.border
-              }
-            ]}
+            style={{
+              marginHorizontal: StyleConstants.Spacing.XS,
+              paddingHorizontal: StyleConstants.Spacing.XS,
+              marginBottom: StyleConstants.Spacing.M,
+              fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
+              lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
+              color:
+                initialSize === size ? colors.primaryDefault : colors.secondary,
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: colors.border
+            }}
+            fontWeight={initialSize === size ? 'Bold' : undefined}
           >
             {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
-          </Text>
+          </CustomText>
         ))}
       </>
     )
@@ -107,9 +101,17 @@ const TabMeSettingsFontsize: React.FC<
 
   return (
     <ScrollView scrollEnabled={false}>
-      <Text style={[styles.header, { color: colors.primaryDefault }]}>
+      <CustomText
+        fontStyle='M'
+        style={{
+          textAlign: 'center',
+          marginTop: StyleConstants.Spacing.M,
+          marginBottom: StyleConstants.Spacing.M,
+          color: colors.primaryDefault
+        }}
+      >
         {t('me.fontSize.showcase')}
-      </Text>
+      </CustomText>
       <View>
         <ComponentSeparator
           extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
@@ -126,11 +128,33 @@ const TabMeSettingsFontsize: React.FC<
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
         />
       </View>
-      <Text style={[styles.header, { color: colors.primaryDefault }]}>
+      <CustomText
+        fontStyle='M'
+        style={{
+          textAlign: 'center',
+          marginTop: StyleConstants.Spacing.M,
+          marginBottom: StyleConstants.Spacing.M,
+          color: colors.primaryDefault
+        }}
+      >
         {t('me.fontSize.availableSizes')}
-      </Text>
-      <View style={styles.sizesDemo}>{sizesDemo}</View>
-      <View style={styles.controls}>
+      </CustomText>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {sizesDemo}
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <Button
           onPress={() => {
             if (initialSize > -1) {
@@ -143,7 +167,7 @@ const TabMeSettingsFontsize: React.FC<
           content='Minus'
           round
           disabled={initialSize <= -1}
-          style={styles.control}
+          style={{ marginHorizontal: StyleConstants.Spacing.S }}
         />
         <Button
           onPress={() => {
@@ -157,38 +181,11 @@ const TabMeSettingsFontsize: React.FC<
           content='Plus'
           round
           disabled={initialSize >= 3}
-          style={styles.control}
+          style={{ marginHorizontal: StyleConstants.Spacing.S }}
         />
       </View>
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    ...StyleConstants.FontStyle.M,
-    textAlign: 'center',
-    marginTop: StyleConstants.Spacing.M,
-    marginBottom: StyleConstants.Spacing.M
-  },
-  sizesDemo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  size: {
-    marginHorizontal: StyleConstants.Spacing.XS,
-    paddingHorizontal: StyleConstants.Spacing.XS,
-    marginBottom: StyleConstants.Spacing.M
-  },
-  controls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  control: {
-    marginHorizontal: StyleConstants.Spacing.S
-  }
-})
 
 export default TabMeSettingsFontsize

@@ -1,5 +1,6 @@
 {
   "buttons": {
+    "OK": "OK",
     "apply": "Apply",
     "cancel": "Cancel"
   },

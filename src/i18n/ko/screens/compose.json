@@ -16,7 +16,9 @@
         "default": "툿",
         "conversation": "툿 DM",
         "reply": "툿 답장",
-        "edit": "툿"
+        "deleteEdit": "툿",
+        "edit": "툿",
+        "share": "툿"
       },
       "alert": {
         "default": {
@@ -40,7 +42,13 @@
           "placeholder": "스포일러 경고 메시지"
         },
         "textInput": {
-          "placeholder": "무엇을 생각하고 있나요?"
+          "placeholder": "무엇을 생각하고 있나요?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
         }
       },
       "footer": {
@@ -134,8 +142,8 @@
           "accessibilityHint": "이모지 선택 패널 열기, 가로로 스와이프해서 페이지를 바꿀 수 있어요"
         }
       },
-      "drafts": "초안 ({{count}})",
-      "drafts_plural": "초안 ({{count}})"
+      "drafts_one": "초안 ({{count}})",
+      "drafts_other": "초안 ({{count}})"
     },
     "editAttachment": {
       "header": {
@@ -163,7 +171,8 @@
       "content": {
         "accessibilityHint": "저장된 초안, 수정하려면 탭하세요",
         "textEmpty": "콘텐츠 빔"
-      }
+      },
+      "checkAttachment": ""
     }
   }
 }

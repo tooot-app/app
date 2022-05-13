@@ -10,5 +10,9 @@
   "pushError": {
     "message": "푸시 서비스 오류",
     "description": "푸시 알림을 설정에서 다시 활성화해주세요"
+  },
+  "shareError": {
+    "imageNotSupported": "",
+    "videoNotSupported": ""
   }
 }

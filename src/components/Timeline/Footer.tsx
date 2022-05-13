@@ -1,10 +1,11 @@
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
@@ -27,11 +28,18 @@ const TimelineFooter = React.memo(
     const { colors } = useTheme()
 
     return (
-      <View style={styles.base}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          padding: StyleConstants.Spacing.M
+        }}
+      >
         {!disableInfinity && hasNextPage ? (
           <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
         ) : (
-          <Text style={[styles.text, { color: colors.secondary }]}>
+          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
             <Trans
               i18nKey='componentTimeline:end.message'
               components={[
@@ -42,24 +50,12 @@ const TimelineFooter = React.memo(
                 />
               ]}
             />
-          </Text>
+          </CustomText>
         )}
       </View>
     )
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: StyleConstants.Spacing.M
-  },
-  text: {
-    ...StyleConstants.FontStyle.S
-  }
-})
 
 export default TimelineFooter

@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -99,12 +100,13 @@ const MenuRow: React.FC<Props> = ({
                 />
               ) : null}
               <View style={styles.main}>
-                <Text
-                  style={[styles.title, { color: colors.primaryDefault }]}
+                <CustomText
+                  fontStyle='M'
+                  style={{ color: colors.primaryDefault }}
                   numberOfLines={1}
                 >
                   {title}
-                </Text>
+                </CustomText>
               </View>
             </View>
 
@@ -112,18 +114,15 @@ const MenuRow: React.FC<Props> = ({
               <View style={styles.back}>
                 {content ? (
                   typeof content === 'string' ? (
-                    <Text
-                      style={[
-                        styles.content,
-                        {
-                          color: colors.secondary,
-                          opacity: !iconBack && loading ? 0 : 1
-                        }
-                      ]}
+                    <CustomText
+                      style={{
+                        color: colors.secondary,
+                        opacity: !iconBack && loading ? 0 : 1
+                      }}
                       numberOfLines={1}
                     >
                       {content}
-                    </Text>
+                    </CustomText>
                   ) : (
                     content
                   )
@@ -150,9 +149,9 @@ const MenuRow: React.FC<Props> = ({
             ) : null}
           </View>
           {description ? (
-            <Text style={[styles.description, { color: colors.secondary }]}>
+            <CustomText fontStyle='S' style={{ color: colors.secondary }}>
               {description}
-            </Text>
+            </CustomText>
           ) : null}
         </View>
       </TapGestureHandler>
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
   core: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: StyleConstants.Spacing.S
+    paddingTop: StyleConstants.Spacing.S
   },
   front: {
     flex: 2,
@@ -186,9 +185,6 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1
-  },
-  title: {
-    ...StyleConstants.FontStyle.M
   },
   description: {
     ...StyleConstants.FontStyle.S

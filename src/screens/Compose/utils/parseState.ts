@@ -38,7 +38,10 @@ const composeParseState = (
   params: NonNullable<RootStackParamList['Screen-Compose']>
 ): ComposeState => {
   switch (params.type) {
+    case 'share':
+      return { ...composeInitialState, dirty: true, timestamp: Date.now() }
     case 'edit':
+    case 'deleteEdit':
       return {
         ...composeInitialState,
         dirty: true,
@@ -69,7 +72,8 @@ const composeParseState = (
           }
         }),
         ...assignVisibility(params.incomingStatus.visibility),
-        ...(params.replyToStatus && { replyToStatus: params.replyToStatus })
+        ...(params.replyToStatus && { replyToStatus: params.replyToStatus }),
+        visibilityLock: params.type === 'edit'
       }
     case 'reply':
       const actualStatus = params.incomingStatus.reblog || params.incomingStatus

@@ -116,8 +116,8 @@
         },
         "fields": {
           "title": "Metadata",
-          "total": "{{count}} field",
-          "total_plural": "{{count}} fields"
+          "total_one": "{{count}} field",
+          "total_other": "{{count}} fields"
         },
         "visibility": {
           "title": "Posting Visibility",
@@ -251,6 +251,10 @@
           "cancel": "$t(common:buttons.cancel)"
         }
       },
+      "staticEmoji": {
+        "heading": "Use static emoji",
+        "description": "If you encounter frequent app crash when viewing emoji list, you can try to use static emoji instead."
+      },
       "feedback": {
         "heading": "Feature Requests"
       },
@@ -267,7 +271,8 @@
         "heading": "Help us improve",
         "description": "Collecting only non-user relative usage"
       },
-      "version": "Version v{{version}}"
+      "version": "Version v{{version}}",
+      "instanceVersion": "Mastodon version v{{version}}"
     },
     "switch": {
       "existing": "Choose from logged in",
@@ -280,6 +285,7 @@
         "accessibilityLabel": "Actions for user {{user}}",
         "accessibilityHint": "You can mute, block, report or share this user"
       },
+      "followed_by": " is following you",
       "moved": "User moved",
       "created_at": "Registered on: {{date}}",
       "summary": {
@@ -331,6 +337,9 @@
         "reblogged_by": "{{count}} boosted",
         "favourited_by": "{{count}} favourited"
       }
+    },
+    "history": {
+      "name": "Edit History"
     }
   }
 }

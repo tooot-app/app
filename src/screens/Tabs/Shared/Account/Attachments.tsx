@@ -96,7 +96,10 @@ const AccountAttachments = React.memo(
                   item.media_attachments[0]?.url,
                 remote: item.media_attachments[0]?.remote_url
               }}
-              blurhash={item.media_attachments[0].blurhash}
+              blurhash={
+                item.media_attachments[0] &&
+                (item.media_attachments[0].blurhash || undefined)
+              }
               dimension={{ width: width, height: width }}
               style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
               onPress={() => {

@@ -1,5 +1,6 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch } from '@root/store'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import {
@@ -9,13 +10,13 @@ import {
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const Collections: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const navigation = useNavigation<any>()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const mePage = useSelector(getInstanceMePage)
 
   const listsQuery = useListsQuery({

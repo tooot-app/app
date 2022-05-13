@@ -4,6 +4,7 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { LOCALES } from '@root/i18n/locales'
+import { useAppDispatch } from '@root/store'
 import androidDefaults from '@utils/slices/instances/push/androidDefaults'
 import { getInstances } from '@utils/slices/instancesSlice'
 import {
@@ -14,19 +15,21 @@ import {
   getSettingsBrowser,
   getSettingsFontsize,
   getSettingsDarkTheme,
-  changeDarkTheme
+  changeDarkTheme,
+  getSettingsStaticEmoji,
+  changeStaticEmoji
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
 const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { mode } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
@@ -36,6 +39,7 @@ const SettingsApp: React.FC = () => {
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
+  const settingsStaticEmoji = useSelector(getSettingsStaticEmoji)
 
   return (
     <MenuContainer>
@@ -264,6 +268,18 @@ const SettingsApp: React.FC = () => {
             }
           )
         }
+      />
+      <MenuRow
+        title={t('me.settings.staticEmoji.heading')}
+        description={t('me.settings.staticEmoji.description')}
+        switchValue={settingsStaticEmoji}
+        switchOnValueChange={() => {
+          analytics('settings_staticemoji_press', {
+            current: settingsStaticEmoji.toString(),
+            new: !settingsStaticEmoji.toString()
+          })
+          dispatch(changeStaticEmoji(!settingsStaticEmoji))
+        }}
       />
     </MenuContainer>
   )

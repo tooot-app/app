@@ -25,10 +25,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>gizmos</string>
+			<string>com.xmflsct.app.tooot</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>tooot-share</string>
 				<string>tooot</string>
 			</array>
 		</dict>

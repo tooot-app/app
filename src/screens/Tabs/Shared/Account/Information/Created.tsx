@@ -1,9 +1,10 @@
 import Icon from '@components/Icon'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
@@ -24,20 +25,20 @@ const AccountInformationCreated = React.memo(
     if (account) {
       return (
         <View
-          style={[styles.base, { flexDirection: 'row', alignItems: 'center' }]}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 0,
+            marginBottom: StyleConstants.Spacing.M
+          }}
         >
           <Icon
             name='Calendar'
             size={StyleConstants.Font.Size.S}
             color={colors.secondary}
-            style={styles.icon}
+            style={{ marginRight: StyleConstants.Spacing.XS }}
           />
-          <Text
-            style={{
-              color: colors.secondary,
-              ...StyleConstants.FontStyle.S
-            }}
-          >
+          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
             {t('shared.account.created_at', {
               date: new Date(account.created_at || '').toLocaleDateString(
                 i18n.language,
@@ -48,7 +49,7 @@ const AccountInformationCreated = React.memo(
                 }
               )
             })}
-          </Text>
+          </CustomText>
         </View>
       )
     } else {
@@ -58,22 +59,12 @@ const AccountInformationCreated = React.memo(
           height={StyleConstants.Font.LineHeight.S}
           color={colors.shimmerDefault}
           noMargin
-          style={styles.base}
+          style={{ borderRadius: 0, marginBottom: StyleConstants.Spacing.M }}
         />
       )
     }
   },
   (_, next) => next.account === undefined
 )
-
-const styles = StyleSheet.create({
-  base: {
-    borderRadius: 0,
-    marginBottom: StyleConstants.Spacing.M
-  },
-  icon: {
-    marginRight: StyleConstants.Spacing.XS
-  }
-})
 
 export default AccountInformationCreated

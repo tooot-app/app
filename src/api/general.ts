@@ -1,7 +1,6 @@
 import axios from 'axios'
 import chalk from 'chalk'
 import Constants from 'expo-constants'
-import * as Sentry from 'sentry-expo'
 
 const ctx = new chalk.Instance({ level: 3 })
 
@@ -14,7 +13,6 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData | Object
-  sentry?: boolean
 }
 
 const apiGeneral = async <T = unknown>({
@@ -23,8 +21,7 @@ const apiGeneral = async <T = unknown>({
   url,
   params,
   headers,
-  body,
-  sentry = true
+  body
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
@@ -45,7 +42,10 @@ const apiGeneral = async <T = unknown>({
     url,
     params,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type':
+        body && body instanceof FormData
+          ? 'multipart/form-data'
+          : 'application/json',
       'User-Agent': `tooot/${Constants.manifest?.version}`,
       Accept: '*/*',
       ...headers
