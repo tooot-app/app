@@ -1,0 +1,10 @@
+{
+  "heading": "Annunci",
+  "content": {
+    "published": "Pubblicato <0 />",
+    "button": {
+      "read": "Già letto",
+      "unread": "Segna come letto"
+    }
+  }
+}
