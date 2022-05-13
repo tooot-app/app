@@ -1,212 +1,212 @@
 {
   "empty": {
     "error": {
-      "message": "Errore di caricamento",
-      "button": "Riprova"
+      "message": "",
+      "button": ""
     },
     "success": {
-      "message": "Timeline vuota"
+      "message": ""
     }
   },
   "end": {
-    "message": "Hai letto tutto. Vuoi una tazza di <0 />"
+    "message": ""
   },
   "lookback": {
-    "message": "Letto alle"
+    "message": ""
   },
   "refresh": {
-    "fetchPreviousPage": "Più recenti da qui",
-    "refetch": "Vai a recenti"
+    "fetchPreviousPage": "",
+    "refetch": ""
   },
   "shared": {
     "actioned": {
-      "pinned": "Fissato in cima",
-      "favourite": "{{name}} ha apprezzato il tuo toot",
-      "status": "{{name}} ha appena pubblicato",
-      "follow": "{{name}} ti sta seguendo",
-      "follow_request": "{{name}} ha chiesto di seguirti",
-      "poll": "Un sondaggio in cui hai votato è terminato",
+      "pinned": "",
+      "favourite": "",
+      "status": "",
+      "follow": "",
+      "follow_request": "",
+      "poll": "",
       "reblog": {
-        "default": "{{name}} ha ricondiviso",
-        "notification": "{{name}} ha ricondiviso il tuo toot"
+        "default": "",
+        "notification": ""
       }
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": "Rispondi a questo toot"
+        "accessibilityLabel": ""
       },
       "reblogged": {
-        "accessibilityLabel": "Ricondividi questo toot",
-        "function": "Ricondividi toot"
+        "accessibilityLabel": "",
+        "function": ""
       },
       "favourited": {
-        "accessibilityLabel": "Apprezza questo toot",
-        "function": "Apprezza toot"
+        "accessibilityLabel": "",
+        "function": ""
       },
       "bookmarked": {
-        "accessibilityLabel": "Aggiungi questo toot ai segnalibri",
-        "function": "Aggiungi toot ai segnalibri"
+        "accessibilityLabel": "",
+        "function": ""
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "{{count}} utenti hanno ricondiviso questo toot",
-        "accessibilityHint": "Premi per vedere gli utenti",
-        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
       },
       "favourited_by": {
-        "accessibilityLabel": "{{count}} utenti hanno apprezzato questo toot",
-        "accessibilityHint": "Premi per vedere gli utenti",
-        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
       },
       "history": {
-        "accessibilityLabel": "Questo toot è stato modificato {{count}} volte",
-        "accessibilityHint": "Premi per vedere la cronologia di revisioni",
-        "text_one": "{{count}} modifica",
-        "text_other": "{{count}} modifiche"
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
       }
     },
     "attachment": {
       "sensitive": {
-        "button": "Mostra media sensibile"
+        "button": ""
       },
       "unsupported": {
-        "text": "Errore di caricamento",
-        "button": "Apri sul sito dell'istanza remota"
+        "text": "",
+        "button": ""
       }
     },
     "avatar": {
-      "accessibilityLabel": "Foto profilo di {{name}}",
-      "accessibilityHint": "Premi per aprire il profilo di {{name}}"
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
     },
     "content": {
-      "expandHint": "Contenuto nascosto"
+      "expandHint": ""
     },
-    "filtered": "Filtrato",
-    "fullConversation": "Leggi la conversazione",
+    "filtered": "",
+    "fullConversation": "",
     "translate": {
-      "default": "Traduci",
-      "succeed": "Traduzione da {{source}} fornita da {{provider}}",
-      "failed": "Traduzione fallita",
-      "source_not_supported": "La lingua del toot non è supportata",
-      "target_not_supported": "La lingua di destinazione non è supportata"
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": "Nome visualizzato dell'utente"
+            "accessibilityHint": ""
           },
           "account": {
-            "accessibilityHint": "Profilo dell'utente"
+            "accessibilityHint": ""
           }
         },
-        "application": "Pubblicato via {{application}}",
+        "application": "",
         "edited": {
-          "accessibilityLabel": "Toot modificato"
+          "accessibilityLabel": ""
         },
         "muted": {
-          "accessibilityLabel": "Toot mutato"
+          "accessibilityLabel": ""
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": "Questo toot è un messaggio diretto"
+            "accessibilityLabel": ""
           },
           "private": {
-            "accessibilityLabel": "Questo toot è visibile solo ai seguaci"
+            "accessibilityLabel": ""
           }
         }
       },
       "conversation": {
-        "withAccounts": "Con",
+        "withAccounts": "",
         "delete": {
-          "function": "Cancella messaggio"
+          "function": ""
         }
       },
       "actions": {
-        "accessibilityHint": "Azioni per questo toot, per l'utente che l'ha pubblicato o per il toot stesso",
+        "accessibilityHint": "",
         "account": {
-          "heading": "Riguardo quest'utente",
+          "heading": "",
           "mute": {
-            "function": "Muta utente",
-            "button": "Muta @{{acct}}"
+            "function": "",
+            "button": ""
           },
           "block": {
-            "function": "Blocca utente",
-            "button": "Blocca @{{acct}}"
+            "function": "",
+            "button": ""
           },
           "reports": {
-            "function": "Segnala utente",
-            "button": "Segnala @{{acct}}"
+            "function": "",
+            "button": ""
           }
         },
         "domain": {
-          "heading": "Riguardo questa istanza",
+          "heading": "",
           "block": {
-            "function": "Blocca istanza",
-            "button": "Blocca istanza {{domain}}"
+            "function": "",
+            "button": ""
           },
           "alert": {
-            "title": "Conferma blocco di {{domain}} ?",
-            "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
+            "title": "",
+            "message": "",
             "buttons": {
-              "confirm": "Conferma blocco",
-              "cancel": "$t(common:buttons.cancel)"
+              "confirm": "",
+              "cancel": ""
             }
           }
         },
         "share": {
           "status": {
-            "heading": "Condividi toot",
-            "button": "Condividi il link a questo toot"
+            "heading": "",
+            "button": ""
           },
           "account": {
-            "heading": "Condividi utente",
-            "button": "Share il link a questo utente"
+            "heading": "",
+            "button": ""
           }
         },
         "status": {
-          "heading": "Riguardo questo toot",
+          "heading": "",
           "edit": {
-            "function": "Modifica toot",
-            "button": "Modifica questo toot"
+            "function": "",
+            "button": ""
           },
           "delete": {
-            "function": "Cancella toot",
-            "button": "Cancella toot",
+            "function": "",
+            "button": "",
             "alert": {
-              "title": "Cancellare il toot?",
-              "message": "Vuoi davvero cancellare questo toot? Tutti gli apprezzamenti, le ricondivisioni, e le risposte verranno persi.",
+              "title": "",
+              "message": "",
               "buttons": {
-                "confirm": "Conferma",
-                "cancel": "$t(common:buttons.cancel)"
+                "confirm": "",
+                "cancel": ""
               }
             }
           },
           "deleteEdit": {
-            "function": "Cancella toot",
-            "button": "Cancella e riscrivi toot",
+            "function": "",
+            "button": "",
             "alert": {
-              "title": "Cancellare e riscrivere il toot?",
-              "message": "Vuoi davvero cancellare e riscrivere questo toot? Tutti gli apprezzamenti, le ricondivisioni, e le risposte verranno persi.",
+              "title": "",
+              "message": "",
               "buttons": {
-                "confirm": "Conferma",
-                "cancel": "$t(common:buttons.cancel)"
+                "confirm": "",
+                "cancel": ""
               }
             }
           },
           "mute": {
-            "function": "Muta toot",
+            "function": "",
             "button": {
-              "positive": "Muta questo toot e le sue risposte",
-              "negative": "Smuta questo toot e le sue risposte"
+              "positive": "",
+              "negative": ""
             }
           },
           "pin": {
-            "function": "Fissa in cima",
+            "function": "",
             "button": {
-              "positive": "Fissa questo toot in cima al profilo",
-              "negative": "Togli questo toot dalla cima del profilo"
+              "positive": "",
+              "negative": ""
             }
           }
         }
@@ -215,18 +215,18 @@
     "poll": {
       "meta": {
         "button": {
-          "vote": "Vota",
-          "refresh": "Ricarica"
+          "vote": "",
+          "refresh": ""
         },
         "count": {
-          "voters_one": "{{count}} utente ha votato",
-          "voters_other": "{{count}} utenti hanno votato",
-          "votes_one": "{{count}} voto",
-          "votes_other": "{{count}} voti"
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
         },
         "expiration": {
-          "expired": "Voto scaduto",
-          "until": "Scade in <0 />"
+          "expired": "",
+          "until": ""
         }
       }
     }
