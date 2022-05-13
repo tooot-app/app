@@ -1,0 +1,9 @@
+{
+  "HTML": {
+    "expanded": {
+      "true": "Richiudi {{hint}}",
+      "false": "Espandi {{hint}}"
+    },
+    "defaultHint": "toot"
+  }
+}
