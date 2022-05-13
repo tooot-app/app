@@ -1,27 +1,27 @@
 {
-  "title": "Seleziona origine media",
+  "title": "",
   "options": {
-    "library": "Carica da libreria locale",
-    "photo": "Scatta una foto",
-    "cancel": "$t(common:buttons.cancel)"
+    "library": "",
+    "photo": "",
+    "cancel": ""
   },
   "library": {
     "alert": {
-      "title": "Permesso non concesso",
-      "message": "È richiesto l'accesso ai file del dispositivo per il caricamento dalla libreria",
+      "title": "",
+      "message": "",
       "buttons": {
-        "settings": "Correggi impostazioni",
-        "cancel": "$t(common:buttons.cancel)"
+        "settings": "",
+        "cancel": ""
       }
     }
   },
   "photo": {
     "alert": {
-      "title": "Permesso non concesso",
-      "message": "È richiesto l'accesso alla fotocamera per scattare foto",
+      "title": "",
+      "message": "",
       "buttons": {
-        "settings": "Correggi impostazioni",
-        "cancel": "$t(common:buttons.cancel)"
+        "settings": "",
+        "cancel": ""
       }
     }
   }
