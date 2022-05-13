@@ -58,6 +58,12 @@
         "accessibilityLabel": "{{count}}명의 사용자가 이 툿을 즐겨찾기했어요",
         "accessibilityHint": "유저를 보려면 탭하세요",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
       }
     },
     "attachment": {
@@ -81,7 +87,9 @@
     "translate": {
       "default": "번역",
       "succeed": "{{source}}에서 {{provider}}으로 번역됨",
-      "failed": "번역 실패"
+      "failed": "번역 실패",
+      "source_not_supported": "",
+      "target_not_supported": ""
     },
     "header": {
       "shared": {
@@ -94,6 +102,9 @@
           }
         },
         "application": "{{application}}으로 툿",
+        "edited": {
+          "accessibilityLabel": ""
+        },
         "muted": {
           "accessibilityLabel": "툿 음소거됨"
         },
@@ -156,9 +167,21 @@
         },
         "status": {
           "heading": "툿 정보",
+          "edit": {
+            "function": "",
+            "button": ""
+          },
           "delete": {
             "function": "툿 삭제",
-            "button": "이 툿 삭제"
+            "button": "이 툿 삭제",
+            "alert": {
+              "title": "툿을 정말 삭제할까요?",
+              "message": "",
+              "buttons": {
+                "confirm": "삭제 확인",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
           },
           "deleteEdit": {
             "function": "툿 삭제",
