@@ -13,12 +13,12 @@
     },
     "right": {
       "button": {
-        "default": "Toot",
+        "default": "",
         "conversation": "Messaggio diretto",
         "reply": "Toot di risposta",
-        "deleteEdit": "Toot",
-        "edit": "Toot",
-        "share": "Toot"
+        "deleteEdit": "",
+        "edit": "",
+        "share": ""
       },
       "alert": {
         "default": {
@@ -28,7 +28,7 @@
         "removeReply": {
           "title": "Impossibile trovare il toot a cui si è risposto",
           "description": "Il toot a cui si è risposto potrebbe essere stato cancellato. Vuoi rimuoverne il riferimento?",
-          "cancel": "$t(common:buttons.cancel)",
+          "cancel": "",
           "confirm": "Rimuovi"
         }
       }
@@ -46,7 +46,7 @@
           "keyboardImage": {
             "exceedMaximum": {
               "title": "Hai raggiunto il numero massimo di allegati permessi",
-              "OK": "$t(common:buttons.OK)"
+              "OK": ""
             }
           }
         }
@@ -90,7 +90,7 @@
             "options": {
               "single": "Risposta singola",
               "multiple": "Risposta multipla",
-              "cancel": "$t(common:buttons.cancel)"
+              "cancel": ""
             }
           },
           "expiration": {
@@ -103,7 +103,7 @@
               "86400": "1 giorno",
               "259200": "3 giorni",
               "604800": "7 giorni",
-              "cancel": "$t(common:buttons.cancel)"
+              "cancel": ""
             }
           }
         }
@@ -131,11 +131,11 @@
             "unlisted": "Non listato",
             "private": "Solo seguaci",
             "direct": "Messaggio diretto",
-            "cancel": "$t(common:buttons.cancel)"
+            "cancel": ""
           }
         },
         "spoiler": {
-          "accessibilityLabel": "Spoiler"
+          "accessibilityLabel": ""
         },
         "emoji": {
           "accessibilityLabel": "Aggiungi emoji",
