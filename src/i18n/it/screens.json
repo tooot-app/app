@@ -1,18 +1,18 @@
 {
   "screenshot": {
-    "title": "Tutela della privacy",
-    "message": "Per favore, non rivelare l'identità degli altri utenti (nome, foto profilo, ecc..). Grazie!",
-    "button": "Ho capito"
+    "title": "",
+    "message": "",
+    "button": ""
   },
   "localCorrupt": {
-    "message": "La sessione è scaduta, devi riaccedere"
+    "message": ""
   },
   "pushError": {
-    "message": "Errore servizio push",
-    "description": "Riabilita le notifiche push nelle impostazioni"
+    "message": "",
+    "description": ""
   },
   "shareError": {
-    "imageNotSupported": "Tipo immagine {{type}} non supportato",
-    "videoNotSupported": "Tipo video {{type}} non supportato"
+    "imageNotSupported": "",
+    "videoNotSupported": ""
   }
 }
