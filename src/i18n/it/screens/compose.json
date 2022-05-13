@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "Scarta",
+      "button": "",
       "alert": {
-        "title": "Scartare il toot?",
+        "title": "",
         "buttons": {
-          "save": "Salva come bozza",
-          "delete": "Scarta ed esci",
-          "cancel": "Annulla"
+          "save": "",
+          "delete": "",
+          "cancel": ""
         }
       }
     },
     "right": {
       "button": {
-        "default": "Toot",
-        "conversation": "Messaggio diretto",
-        "reply": "Toot di risposta",
-        "deleteEdit": "Toot",
-        "edit": "Toot",
-        "share": "Toot"
+        "default": "",
+        "conversation": "",
+        "reply": "",
+        "deleteEdit": "",
+        "edit": "",
+        "share": ""
       },
       "alert": {
         "default": {
-          "title": "Invio fallito",
-          "button": "Riprova"
+          "title": "",
+          "button": ""
         },
         "removeReply": {
-          "title": "Impossibile trovare il toot a cui si è risposto",
-          "description": "Il toot a cui si è risposto potrebbe essere stato cancellato. Vuoi rimuoverne il riferimento?",
-          "cancel": "$t(common:buttons.cancel)",
-          "confirm": "Rimuovi"
+          "title": "",
+          "description": "",
+          "cancel": "",
+          "confirm": ""
         }
       }
     }
@@ -37,142 +37,142 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "Pubblicando come @{{acct}}@{{domain}}",
+        "postingAs": "",
         "spoilerInput": {
-          "placeholder": "Avviso di spoiler"
+          "placeholder": ""
         },
         "textInput": {
-          "placeholder": "A cosa stai pensando?",
+          "placeholder": "",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Hai raggiunto il numero massimo di allegati permessi",
-              "OK": "$t(common:buttons.OK)"
+              "title": "",
+              "OK": ""
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "Segnala allegati come sensibili",
+          "sensitive": "",
           "remove": {
-            "accessibilityLabel": "Rimuovi allegato numero {{attachment}}"
+            "accessibilityLabel": ""
           },
           "edit": {
-            "accessibilityLabel": "Modifica allegato numero {{attachment}}"
+            "accessibilityLabel": ""
           },
           "upload": {
-            "accessibilityLabel": "Carica altri allegati"
+            "accessibilityLabel": ""
           }
         },
         "emojis": {
-          "accessibilityHint": "Premi per aggiungere delle emoji a questo toot"
+          "accessibilityHint": ""
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "Scelta di sondaggio {{index}}",
-              "single": "Risposta singola",
-              "multiple": "Risposta multipla"
+              "accessibilityLabel": "",
+              "single": "",
+              "multiple": ""
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "Riduci le scelte del sondaggio a {{amount}}",
-              "accessibilityHint": "Hai raggiunto il minimo di scelte possibili per il sondaggio ({{amount}})"
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
             },
             "increase": {
-              "accessibilityLabel": "Aumenta le scelte del sondaggio a {{amount}}",
-              "accessibilityHint": "Hai raggiunto il massimo di scelte possibili per il sondaggio ({{amount}})"
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
             }
           },
           "multiple": {
-            "heading": "Tipo di risposta",
+            "heading": "",
             "options": {
-              "single": "Risposta singola",
-              "multiple": "Risposta multipla",
-              "cancel": "$t(common:buttons.cancel)"
+              "single": "",
+              "multiple": "",
+              "cancel": ""
             }
           },
           "expiration": {
-            "heading": "Durata",
+            "heading": "",
             "options": {
-              "300": "5 minuti",
-              "1800": "30 minuti",
-              "3600": "1 ora",
-              "21600": "6 ore",
-              "86400": "1 giorno",
-              "259200": "3 giorni",
-              "604800": "7 giorni",
-              "cancel": "$t(common:buttons.cancel)"
+              "300": "",
+              "1800": "",
+              "3600": "",
+              "21600": "",
+              "86400": "",
+              "259200": "",
+              "604800": "",
+              "cancel": ""
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "Carica allegato",
-          "accessibilityHint": "Non potrai creare sondaggi se carichi degli allegati",
+          "accessibilityLabel": "",
+          "accessibilityHint": "",
           "failed": {
             "alert": {
-              "title": "Caricamento fallito",
-              "button": "Riprova"
+              "title": "",
+              "button": ""
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "Crea sondaggio",
-          "accessibilityHint": "Non potrai caricare allegati se crei un sondaggio"
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
         },
         "visibility": {
-          "accessibilityLabel": "La visibilità del toot è: {{visibility}}",
-          "title": "Visibilità toot",
+          "accessibilityLabel": "",
+          "title": "",
           "options": {
-            "public": "Pubblico",
-            "unlisted": "Non listato",
-            "private": "Solo seguaci",
-            "direct": "Messaggio diretto",
-            "cancel": "$t(common:buttons.cancel)"
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "direct": "",
+            "cancel": ""
           }
         },
         "spoiler": {
-          "accessibilityLabel": "Spoiler"
+          "accessibilityLabel": ""
         },
         "emoji": {
-          "accessibilityLabel": "Aggiungi emoji",
-          "accessibilityHint": "Apri il pannello di selezione delle emoji, scorri orizzontalmente per cambiare tra le pagine"
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
         }
       },
-      "drafts_one": "Bozze ({{count}})",
-      "drafts_other": "Bozze ({{count}})"
+      "drafts_one": "",
+      "drafts_other": ""
     },
     "editAttachment": {
       "header": {
-        "title": "Modifica allegato",
+        "title": "",
         "right": {
-          "accessibilityLabel": "Salva le modifiche all'allegato",
+          "accessibilityLabel": "",
           "failed": {
-            "title": "Modifica fallita",
-            "button": "Riprova"
+            "title": "",
+            "button": ""
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "Descrizione media per ipovedenti",
-          "placeholder": "Puoi aggiungere una descrizione (anche chiamata alt-text) ai tuoi media, così da renderli accessibili a molte più persone, incluse quelle con disabilità visive.\n\nUna buona descrizione è concisa ma presenta il contenuto del media in modo abbastanza accurato da farne capire il contesto."
+          "heading": "",
+          "placeholder": ""
         },
-        "imageFocus": "Trascina il cerchio per modificare il punto focale della foto"
+        "imageFocus": ""
       }
     },
     "draftsList": {
       "header": {
-        "title": "Bozza"
+        "title": ""
       },
       "content": {
-        "accessibilityHint": "Bozza salvata, premi per modificarla",
-        "textEmpty": "Testo vuoto"
+        "accessibilityHint": "",
+        "textEmpty": ""
       },
-      "checkAttachment": "Controllo degli allegati sul server..."
+      "checkAttachment": ""
     }
   }
 }
