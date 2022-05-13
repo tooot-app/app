@@ -1,17 +1,17 @@
 {
   "content": {
     "button": {
-      "apply": "$t(common:buttons.apply)",
-      "cancel": "$t(common:buttons.cancel)"
+      "apply": "",
+      "cancel": ""
     },
     "notificationsFilter": {
       "heading": "Filtra notifiche per tipo",
       "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "follow": "",
+        "favourite": "",
+        "reblog": "",
+        "mention": "",
+        "poll": "",
         "follow_request": "Richieste di seguirti"
       }
     }
