@@ -1,6 +1,6 @@
 {
   "buttons": {
-    "OK": "OK",
+    "OK": "",
     "apply": "Applica",
     "cancel": "Annulla"
   },
@@ -18,5 +18,5 @@
       "message": "{{function}} fallito, per favore riprova"
     }
   },
-  "separator": ", "
+  "separator": ""
 }
