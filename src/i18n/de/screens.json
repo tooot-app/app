@@ -10,5 +10,9 @@
   "pushError": {
     "message": "Fehler des Benachrichtigungsdienstes",
     "description": "Bitte Benachrichtigungsdienst in den Einstellungen erneut aktivieren"
+  },
+  "shareError": {
+    "imageNotSupported": "",
+    "videoNotSupported": ""
   }
 }
