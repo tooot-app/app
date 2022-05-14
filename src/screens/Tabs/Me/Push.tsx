@@ -4,7 +4,7 @@ import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
-import { isDevelopment } from '@utils/checkEnvironment'
+import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -36,9 +36,8 @@ const TabMePush: React.FC = () => {
   const dispatch = useAppDispatch()
   const instancePush = useSelector(getInstancePush)
 
-  const [pushAvailable, setPushAvailable] = useState<boolean | undefined>(
-    undefined
-  )
+  const [pushAvailable, setPushAvailable] =
+    useState<Notifications.ExpoPushToken>()
   const [pushEnabled, setPushEnabled] = useState<boolean>()
   const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
   const checkPush = async () => {
@@ -49,13 +48,13 @@ const TabMePush: React.FC = () => {
   }
   useEffect(() => {
     if (isDevelopment) {
-      setPushAvailable(true)
+      setPushAvailable({ data: '', type: 'expo' })
     } else {
       Notifications.getExpoPushTokenAsync({
         experienceId: '@xmflsct/tooot'
       })
-        .then(data => setPushAvailable(!!data))
-        .catch(() => setPushAvailable(false))
+        .then(data => setPushAvailable(data))
+        .catch(() => setPushAvailable(undefined))
     }
 
     checkPush()
@@ -114,7 +113,7 @@ const TabMePush: React.FC = () => {
 
   return (
     <ScrollView>
-      {pushAvailable === true ? (
+      {!!pushAvailable ? (
         <>
           {pushEnabled === false ? (
             <MenuContainer>
@@ -191,6 +190,13 @@ const TabMePush: React.FC = () => {
             />
           </MenuContainer>
           <MenuContainer>{alerts}</MenuContainer>
+          {!isRelease ? (
+            <MenuContainer>
+              <CustomText fontSize='M' style={{ color: colors.primaryDefault }}>
+                {pushAvailable.data}
+              </CustomText>
+            </MenuContainer>
+          ) : null}
         </>
       ) : (
         <View
