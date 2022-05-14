@@ -4,7 +4,7 @@ import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
-import { isDevelopment, isRelease } from '@utils/checkEnvironment'
+import { isDevelopment } from '@utils/checkEnvironment'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -36,8 +36,7 @@ const TabMePush: React.FC = () => {
   const dispatch = useAppDispatch()
   const instancePush = useSelector(getInstancePush)
 
-  const [pushAvailable, setPushAvailable] =
-    useState<Notifications.ExpoPushToken>()
+  const [pushAvailable, setPushAvailable] = useState<boolean>()
   const [pushEnabled, setPushEnabled] = useState<boolean>()
   const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
   const checkPush = async () => {
@@ -48,13 +47,14 @@ const TabMePush: React.FC = () => {
   }
   useEffect(() => {
     if (isDevelopment) {
-      setPushAvailable({ data: '', type: 'expo' })
+      setPushAvailable(true)
     } else {
       Notifications.getExpoPushTokenAsync({
-        experienceId: '@xmflsct/tooot'
+        experienceId: '@xmflsct/tooot',
+        applicationId: 'com.xmflsct.tooot.app'
       })
-        .then(data => setPushAvailable(data))
-        .catch(() => setPushAvailable(undefined))
+        .then(data => setPushAvailable(!!data))
+        .catch(() => setPushAvailable(false))
     }
 
     checkPush()
@@ -190,13 +190,6 @@ const TabMePush: React.FC = () => {
             />
           </MenuContainer>
           <MenuContainer>{alerts}</MenuContainer>
-          {!isRelease ? (
-            <MenuContainer>
-              <CustomText fontSize='M' style={{ color: colors.primaryDefault }}>
-                {pushAvailable.data}
-              </CustomText>
-            </MenuContainer>
-          ) : null}
         </>
       ) : (
         <View
