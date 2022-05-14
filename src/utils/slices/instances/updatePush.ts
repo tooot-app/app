@@ -17,7 +17,8 @@ export const updateInstancePush = createAsyncThunk(
       ? 'DEVELOPMENT_TOKEN_1'
       : (
           await Notifications.getExpoPushTokenAsync({
-            experienceId: '@xmflsct/tooot'
+            experienceId: '@xmflsct/tooot',
+            applicationId: 'com.xmflsct.tooot.app'
           })
         ).data
 

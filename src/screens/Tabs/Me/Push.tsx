@@ -36,9 +36,7 @@ const TabMePush: React.FC = () => {
   const dispatch = useAppDispatch()
   const instancePush = useSelector(getInstancePush)
 
-  const [pushAvailable, setPushAvailable] = useState<boolean | undefined>(
-    undefined
-  )
+  const [pushAvailable, setPushAvailable] = useState<boolean>()
   const [pushEnabled, setPushEnabled] = useState<boolean>()
   const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
   const checkPush = async () => {
@@ -52,7 +50,8 @@ const TabMePush: React.FC = () => {
       setPushAvailable(true)
     } else {
       Notifications.getExpoPushTokenAsync({
-        experienceId: '@xmflsct/tooot'
+        experienceId: '@xmflsct/tooot',
+        applicationId: 'com.xmflsct.tooot.app'
       })
         .then(data => setPushAvailable(!!data))
         .catch(() => setPushAvailable(false))
@@ -114,7 +113,7 @@ const TabMePush: React.FC = () => {
 
   return (
     <ScrollView>
-      {pushAvailable === true ? (
+      {!!pushAvailable ? (
         <>
           {pushEnabled === false ? (
             <MenuContainer>

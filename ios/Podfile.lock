@@ -4,6 +4,8 @@ PODS:
   - DoubleConversion (1.1.6)
   - EASClient (0.2.1):
     - ExpoModulesCore
+  - EXApplication (4.1.0):
+    - ExpoModulesCore
   - EXAV (11.2.3):
     - ExpoModulesCore
     - React-runtimeexecutor
@@ -23,6 +25,8 @@ PODS:
   - EXFirebaseCore (5.0.0):
     - ExpoModulesCore
     - Firebase/Core (= 8.14.0)
+  - EXFont (10.1.0):
+    - ExpoModulesCore
   - EXImageLoader (3.2.0):
     - ExpoModulesCore
     - React-Core
@@ -31,7 +35,7 @@ PODS:
     - EXJSONUtils
   - EXNotifications (0.15.2):
     - ExpoModulesCore
-  - Expo (45.0.3):
+  - Expo (45.0.4):
     - ExpoModulesCore
   - ExpoCrypto (10.2.0):
     - ExpoModulesCore
@@ -41,6 +45,8 @@ PODS:
     - EXImageLoader
     - ExpoModulesCore
   - ExpoImagePicker (13.1.1):
+    - ExpoModulesCore
+  - ExpoKeepAwake (10.1.1):
     - ExpoModulesCore
   - ExpoLocalization (13.0.0):
     - ExpoModulesCore
@@ -577,6 +583,7 @@ DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EASClient (from `../node_modules/expo-eas-client/ios`)
+  - EXApplication (from `../node_modules/expo-application/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXDevice (from `../node_modules/expo-device/ios`)
@@ -584,6 +591,7 @@ DEPENDENCIES:
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFirebaseAnalytics (from `../node_modules/expo-firebase-analytics/ios`)
   - EXFirebaseCore (from `../node_modules/expo-firebase-core/ios`)
+  - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXManifests (from `../node_modules/expo-manifests/ios`)
@@ -593,6 +601,7 @@ DEPENDENCIES:
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - ExpoImagePicker (from `../node_modules/expo-image-picker/ios`)
+  - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - ExpoRandom (from `../node_modules/expo-random/ios`)
@@ -684,6 +693,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EASClient:
     :path: "../node_modules/expo-eas-client/ios"
+  EXApplication:
+    :path: "../node_modules/expo-application/ios"
   EXAV:
     :path: "../node_modules/expo-av/ios"
   EXConstants:
@@ -698,6 +709,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-firebase-analytics/ios"
   EXFirebaseCore:
     :path: "../node_modules/expo-firebase-core/ios"
+  EXFont:
+    :path: "../node_modules/expo-font/ios"
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
   EXJSONUtils:
@@ -716,6 +729,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-image-manipulator/ios"
   ExpoImagePicker:
     :path: "../node_modules/expo-image-picker/ios"
+  ExpoKeepAwake:
+    :path: "../node_modules/expo-keep-awake/ios"
   ExpoLocalization:
     :path: "../node_modules/expo-localization/ios"
   ExpoModulesCore:
@@ -838,6 +853,7 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   EASClient: 93565f4d024559b75eac62bc7d50acaa354614f6
+  EXApplication: d6562af1204162e0ac46d341a7d4e5dc720b33de
   EXAV: 88f61c5af8415715b7ee51f084c1020235b85c56
   EXConstants: fdbe52259365b6a6faaa5e99a3b82cfa6bc2eb61
   EXDevice: 0115b360059ccd32c1701744e374e3259ffbdd3c
@@ -845,15 +861,17 @@ SPEC CHECKSUMS:
   EXFileSystem: 2aa2d9289f84bca9532b9ccbd81504fa31eb1ded
   EXFirebaseAnalytics: aeefc63f92277313c3ee86da6a7ecf892f345ed1
   EXFirebaseCore: bdfa87df74fa1b74a6b38957561456aabad28a4f
+  EXFont: 04235cc22e6fef86028feb67db452978dc6f240f
   EXImageLoader: b88e053d760f85a82405b1db2de4abf11978fc9f
   EXJSONUtils: 2a74b8f40f1523cc3f92af99c91aa78201737a77
   EXManifests: 0c6134b7b6f3236a93a778c3f44ba1cfb3f9fa3d
   EXNotifications: ea9fc56d27d1fee229489c5d8f452c7f367c237e
-  Expo: 353cd6d2154838c0c8bb1072d3ac89eb535a2ef4
+  Expo: 64d52669fa3b9342919b5b44b2b4f15f19b0cf76
   ExpoCrypto: d0d0f3e20875dc450b4ec88f0fb608da5c2c6c17
   ExpoHaptics: ad58ec96a25e57579c14a47c7d71f0de0de8656a
   ExpoImageManipulator: b55580bbc7b10099c7707949903e7176a8542ee8
   ExpoImagePicker: d9d6b4f29db437fc7796f13cee5f133f5b4b5f7c
+  ExpoKeepAwake: c0c494b442ecd8122974c13b93ccfb57bd408e88
   ExpoLocalization: 8f619bb6eec64575cd5220bfabbd7b4e2d6f33f8
   ExpoModulesCore: e4278a668e8c13c0269ed8b8a4200989deea2973
   ExpoRandom: 14df0976aa363a71a730ceb7655250f3047c0e42
