@@ -3,7 +3,6 @@ import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import { getInstance, Instance } from '@utils/slices/instancesSlice'
-import Constants from 'expo-constants'
 import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
 import { Platform } from 'react-native'
@@ -57,7 +56,7 @@ const pushRegister = async (
   formData.append('subscription[endpoint]', endpoint)
   formData.append(
     'subscription[keys][p256dh]',
-    Constants.manifest?.extra?.toootPushKeyPublic
+    'BO3P7Fe/FxPNijeXayVYViCoLicnnACc+a55wzcS0qIjYU++dtAl2XltgEfU5qPuXrFg5rnxBzbwQG4cAmdNLK4='
   )
   formData.append('subscription[keys][auth]', auth)
   Object.keys(alerts).map(key =>

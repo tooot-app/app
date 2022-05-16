@@ -12,10 +12,6 @@ export default (): ExpoConfig => ({
   version: toootVersion,
   privacy: 'hidden',
   assetBundlePatterns: ['assets/*'],
-  extra: {
-    sentryDSN: process.env.SENTRY_DSN,
-    toootPushKeyPublic: process.env.TOOOT_PUSH_KEY_PUBLIC
-  },
   hooks: {
     postPublish: [
       {

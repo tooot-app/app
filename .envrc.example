@@ -3,9 +3,6 @@ export ENVIRONMENT="development"
 export SENTRY_ORGANIZATION=""
 export SENTRY_PROJECT=""
 export SENTRY_AUTH_TOKEN=""
-export SENTRY_DSN=""
-
-export TOOOT_PUSH_KEY_PUBLIC=""
 
 # Fastlane start
 export LC_ALL=""
