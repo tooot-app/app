@@ -56,7 +56,7 @@ const pushRegister = async (
   formData.append('subscription[endpoint]', endpoint)
   formData.append(
     'subscription[keys][p256dh]',
-    'BO3P7Fe/FxPNijeXayVYViCoLicnnACc+a55wzcS0qIjYU++dtAl2XltgEfU5qPuXrFg5rnxBzbwQG4cAmdNLK4='
+    'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo='
   )
   formData.append('subscription[keys][auth]', auth)
   Object.keys(alerts).map(key =>

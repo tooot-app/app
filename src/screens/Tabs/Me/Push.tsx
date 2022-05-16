@@ -51,7 +51,7 @@ const TabMePush: React.FC = () => {
     } else {
       Notifications.getExpoPushTokenAsync({
         experienceId: '@xmflsct/tooot',
-        applicationId: 'com.xmflsct.tooot.app'
+        applicationId: 'com.xmflsct.app.tooot'
       })
         .then(data => setPushAvailable(!!data))
         .catch(() => setPushAvailable(false))
