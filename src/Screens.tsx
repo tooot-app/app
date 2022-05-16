@@ -26,6 +26,7 @@ import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
 import { useSelector } from 'react-redux'
@@ -39,7 +40,7 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { t } = useTranslation('screens')
+  const { i18n, t } = useTranslation('screens')
   const dispatch = useAppDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { colors, theme } = useTheme()
@@ -320,7 +321,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
 
   return (
-    <>
+    <IntlProvider locale={i18n.language}>
       <StatusBar backgroundColor={colors.backgroundDefault} />
       <NavigationContainer
         ref={navigationRef}
@@ -381,7 +382,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
         <Message />
       </NavigationContainer>
-    </>
+    </IntlProvider>
   )
 }
 

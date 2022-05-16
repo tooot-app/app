@@ -54,7 +54,6 @@ import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { IntlProvider } from 'react-intl'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -132,9 +131,7 @@ const App: React.FC = () => {
           <ActionSheetProvider>
             <AccessibilityManager>
               <ThemeManager>
-                <IntlProvider locale={language}>
-                  <Screens localCorrupt={localCorrupt} />
-                </IntlProvider>
+                <Screens localCorrupt={localCorrupt} />
               </ThemeManager>
             </AccessibilityManager>
           </ActionSheetProvider>

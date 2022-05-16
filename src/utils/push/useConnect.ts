@@ -26,7 +26,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
         : (
             await Notifications.getExpoPushTokenAsync({
               experienceId: '@xmflsct/tooot',
-              applicationId: 'com.xmflsct.tooot.app'
+              applicationId: 'com.xmflsct.app.tooot'
             })
           ).data
 
