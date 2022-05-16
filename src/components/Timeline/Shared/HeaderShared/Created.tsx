@@ -4,7 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FormattedDate, FormattedRelativeTime, FormattedTime } from 'react-intl'
+import { FormattedDate, FormattedRelativeTime } from 'react-intl'
 
 export interface Props {
   created_at: Mastodon.Status['created_at'] | number

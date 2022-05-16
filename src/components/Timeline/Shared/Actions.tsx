@@ -22,6 +22,7 @@ export interface Props {
   rootQueryKey?: QueryKeyTimeline
   highlighted: boolean
   status: Mastodon.Status
+  ownAccount?: boolean
   accts: Mastodon.Account['acct'][] // When replying to conversations
   reblog: boolean
 }
@@ -31,6 +32,7 @@ const TimelineActions: React.FC<Props> = ({
   rootQueryKey,
   highlighted,
   status,
+  ownAccount = false,
   accts,
   reblog
 }) => {
@@ -207,7 +209,8 @@ const TimelineActions: React.FC<Props> = ({
         <Icon
           name='Repeat'
           color={
-            status.visibility === 'direct'
+            status.visibility === 'direct' ||
+            (status.visibility === 'private' && !ownAccount)
               ? colors.disabled
               : color(status.reblogged)
           }
@@ -216,7 +219,10 @@ const TimelineActions: React.FC<Props> = ({
         {status.reblogs_count > 0 ? (
           <CustomText
             style={{
-              color: color(status.reblogged),
+              color:
+                status.visibility === 'private' && !ownAccount
+                  ? colors.disabled
+                  : color(status.reblogged),
               fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
@@ -297,7 +303,10 @@ const TimelineActions: React.FC<Props> = ({
           style={styles.action}
           onPress={onPressReblog}
           children={childrenReblog}
-          disabled={status.visibility === 'direct'}
+          disabled={
+            status.visibility === 'direct' ||
+            (status.visibility === 'private' && !ownAccount)
+          }
         />
 
         <Pressable

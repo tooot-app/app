@@ -156,6 +156,7 @@ const TimelineDefault = React.memo(
             rootQueryKey={rootQueryKey}
             highlighted={highlighted}
             status={actualStatus}
+            ownAccount={ownAccount}
             accts={uniqBy(
               (
                 [actualStatus.account] as Mastodon.Account[] &
