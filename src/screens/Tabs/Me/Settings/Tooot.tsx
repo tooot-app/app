@@ -64,8 +64,8 @@ const SettingsTooot: React.FC = () => {
           iconBack='ChevronRight'
           onPress={() => {
             analytics('settings_review_press')
-            StoreReview.isAvailableAsync().then(() =>
-              StoreReview.requestReview()
+            StoreReview?.isAvailableAsync().then(() =>
+              StoreReview?.requestReview()
             )
           }}
         />
