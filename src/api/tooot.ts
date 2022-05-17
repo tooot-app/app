@@ -66,16 +66,16 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry && Math.random() < 0.01) {
+      if (sentry && Math.random() < 0.1) {
         Sentry.Native.setExtras({
           API: 'tooot',
-          ...(error.response && { response: error.response }),
-          ...(error.request && { request: error.request })
+          ...(error?.response && { response: error.response }),
+          ...(error?.request && { request: error.request })
         })
         Sentry.Native.captureException(error)
       }
 
-      if (error.response) {
+      if (error?.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         console.error(
@@ -88,7 +88,7 @@ const apiTooot = async <T = unknown>({
           status: error.response.status,
           message: error.response.data.error
         })
-      } else if (error.request) {
+      } else if (error?.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
@@ -102,7 +102,7 @@ const apiTooot = async <T = unknown>({
         console.error(
           ctx.bold(' API tooot '),
           ctx.bold('internal'),
-          error.message,
+          error?.message,
           url
         )
         return Promise.reject()

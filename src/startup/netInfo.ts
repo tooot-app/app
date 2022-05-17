@@ -41,10 +41,10 @@ const netInfo = async (): Promise<{
         }).then(res => res.body)
       } catch (error: any) {
         log('error', 'netInfo', 'local credential check failed')
-        if (error.status && error.status == 401) {
+        if (error?.status && error.status == 401) {
           store.dispatch(removeInstance(instance))
         }
-        return Promise.resolve({ corrupted: error.data.error })
+        return Promise.resolve({ corrupted: error.data?.error })
       }
 
       log('log', 'netInfo', 'local credential check passed')
