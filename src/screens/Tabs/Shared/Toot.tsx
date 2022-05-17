@@ -35,7 +35,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             result.data.pages.flatMap(d => [...d.body])
           : []
         // Auto go back when toot page is empty
-        if (flattenData.length === 0) {
+        if (flattenData.length < 1) {
           navigation.goBack()
           return
         }
@@ -46,13 +46,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           if (pointer < 1) return
           try {
             setTimeout(() => {
-              console.log('scrolling')
               flRef.current?.scrollToIndex({
                 index: pointer,
                 viewOffset: 100
               })
             }, 500)
-          } catch {}
+          } catch (error) {
+            return
+          }
         }
       }
     })

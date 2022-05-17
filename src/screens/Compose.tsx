@@ -377,7 +377,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.Native.captureMessage('Compose posting', error)
+                Sentry.Native.captureMessage('Compose posting', {
+                  contexts: {
+                    errorObject: error,
+                    errorString: error.toString()
+                  }
+                })
                 haptics('Error')
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [

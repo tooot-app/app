@@ -54,6 +54,7 @@ import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import * as Sentry from 'sentry-expo'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -128,13 +129,15 @@ const App: React.FC = () => {
         }
 
         return (
-          <ActionSheetProvider>
-            <AccessibilityManager>
-              <ThemeManager>
-                <Screens localCorrupt={localCorrupt} />
-              </ThemeManager>
-            </AccessibilityManager>
-          </ActionSheetProvider>
+          <Sentry.Native.TouchEventBoundary>
+            <ActionSheetProvider>
+              <AccessibilityManager>
+                <ThemeManager>
+                  <Screens localCorrupt={localCorrupt} />
+                </ThemeManager>
+              </AccessibilityManager>
+            </ActionSheetProvider>
+          </Sentry.Native.TouchEventBoundary>
         )
       } else {
         return null
