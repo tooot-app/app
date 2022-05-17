@@ -306,6 +306,7 @@ const instancesSlice = createSlice({
 
       // Check if frequently used emojis still exist
       .addCase(checkEmojis.fulfilled, (state, action) => {
+        if (!action.payload || !action.payload.length) return
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].frequentEmojis = state.instances[
           activeIndex

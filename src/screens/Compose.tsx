@@ -354,7 +354,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               navigation.goBack()
             })
             .catch(error => {
-              if (error.removeReply) {
+              if (error?.removeReply) {
                 Alert.alert(
                   t('heading.right.alert.removeReply.title'),
                   t('heading.right.alert.removeReply.description'),
@@ -377,7 +377,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.Native.captureMessage('Compose posting', error)
+                Sentry.Native.captureMessage('Compose posting', {
+                  contexts: {
+                    errorObject: error,
+                    errorString: error.toString()
+                  }
+                })
                 haptics('Error')
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [

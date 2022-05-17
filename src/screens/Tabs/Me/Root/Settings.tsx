@@ -28,7 +28,8 @@ const Settings: React.FC = () => {
           onPress={() =>
             WebBrowser.openAuthSessionAsync(
               `https://${url}/settings/preferences`,
-              ''
+              'tooot://tooot',
+              { dismissButtonStyle: 'done', readerMode: false }
             )
           }
         />

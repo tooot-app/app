@@ -35,7 +35,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
         url: `push/connect/${expoToken}`,
         sentry: true
       }).catch(error => {
-        if (error.status == 404) {
+        if (error?.status == 404) {
           displayMessage({
             theme,
             type: 'error',

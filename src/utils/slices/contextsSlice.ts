@@ -41,7 +41,9 @@ const contextsSlice = createSlice({
       if (Updates.releaseChannel.includes('release')) {
         state.storeReview.current = state.storeReview.current + action.payload
         if (state.storeReview.current === state.storeReview.context) {
-          StoreReview.isAvailableAsync().then(() => StoreReview.requestReview())
+          StoreReview?.isAvailableAsync().then(() =>
+            StoreReview.requestReview()
+          )
         }
       }
     },
