@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Seguir usuário"
   },
   "block": {
-    "function": ""
+    "function": "Bloquear usuário"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Erro ao carregar",
+    "blocked_by": "Bloqueado pelo usuário",
+    "blocking": "Desbloquear",
+    "following": "Deixar de seguir",
+    "requested": "Cancelar a solicitação",
+    "default": "Seguir"
   }
 }
