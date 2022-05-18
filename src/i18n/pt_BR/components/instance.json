@@ -1,27 +1,27 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Domínio da instância"
     },
-    "button": "",
+    "button": "Entrar",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "name": "Nome",
+      "accounts": "Usuários",
+      "statuses": "Toots",
+      "domains": "Universo"
     },
     "disclaimer": {
-      "base": "",
-      "privacy": ""
+      "base": "O processo de login usa o navegador do sistema e as informações da sua conta não estarão visíveis para o aplicativo Tooot. Consulte Mais informação ",
+      "privacy": "política de privacidade"
     }
   },
   "update": {
     "alert": {
-      "title": "",
-      "message": "",
+      "title": "Conectado a esta instância",
+      "message": "Você pode fazer login em outra conta mantendo a conta existente logada",
       "buttons": {
-        "cancel": "",
-        "continue": ""
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Continuar"
       }
     }
   }
