@@ -16,67 +16,67 @@
   },
   "refresh": {
     "fetchPreviousPage": "Mais novo aqui",
-    "refetch": ""
+    "refetch": "Mais recente"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Fixado",
+      "favourite": "{{name}} favoritou seu toot",
+      "status": "{{name}} acabou de postar",
+      "follow": "{{name}} seguiu você",
+      "follow_request": "{{name}} pediu para te seguir",
+      "poll": "Uma enquete em que você votou terminou",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} boostou",
+        "notification": "{{name}} deu boost no teu toot"
       }
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Responder a este toot"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Boost este toot",
+        "function": "Boost toot"
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Adicionar este toot aos favoritos",
+        "function": "Toot favorito"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Adicionar este toot aos favoritos",
+        "function": "Favoritos"
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
+        "accessibilityLabel": "{{count}} usuários compartilharam este toot",
+        "accessibilityHint": "Toque para conhecer os usuários",
         "text": ""
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
+        "accessibilityLabel": "{{count}} usuários favoritaram este toot",
+        "accessibilityHint": "Toque para conhecer os usuários",
         "text": ""
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Este toot foi editado {{count}} vezes",
+        "accessibilityHint": "Toque para ver o histórico completo de edição",
+        "text_one": "{{count}} edição",
+        "text_other": "{{count}} edições"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Mostrar mídia sensível"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Erro ao carregar",
+        "button": "Experimente o link remoto"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
+      "accessibilityLabel": "Avatar de {{name}}",
       "accessibilityHint": ""
     },
     "content": {
