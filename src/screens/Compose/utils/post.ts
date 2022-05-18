@@ -1,4 +1,4 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
 import { ComposeState } from '@screens/Compose/utils/types'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import * as Crypto from 'expo-crypto'
@@ -6,7 +6,7 @@ import * as Crypto from 'expo-crypto'
 const composePost = async (
   params: RootStackParamList['Screen-Compose'],
   composeState: ComposeState
-) => {
+): Promise<InstanceResponse<Mastodon.Status>> => {
   const formData = new FormData()
 
   if (composeState.replyToStatus) {

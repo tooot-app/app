@@ -8,8 +8,19 @@ import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice, { SettingsState } from '@utils/slices/settingsSlice'
 import versionSlice from '@utils/slices/versionSlice'
+import { Platform } from 'react-native'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { createMigrate, persistReducer, persistStore } from 'redux-persist'
+import {
+  createMigrate,
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE
+} from 'redux-persist'
 
 const secureStorage = createSecureStore()
 
@@ -27,7 +38,7 @@ const contextsPersistConfig = {
 const instancesPersistConfig = {
   key: 'instances',
   prefix,
-  storage: secureStorage,
+  storage: Platform.OS === 'ios' ? secureStorage : AsyncStorage,
   version: 9,
   // @ts-ignore
   migrate: createMigrate(instancesMigration)
@@ -61,8 +72,13 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST']
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
+    }).concat(store => next => action => {
+      console.log('dispatching', action)
+      let result = next(action)
+      console.log('next state', store.getState())
+      return result
     })
 })
 
