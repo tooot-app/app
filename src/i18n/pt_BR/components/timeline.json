@@ -1,21 +1,21 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Erro ao carregar",
+      "button": "Tentar novamente"
     },
     "success": {
-      "message": ""
+      "message": "Linha do tempo vazia"
     }
   },
   "end": {
-    "message": ""
+    "message": "Que tal um copo de <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Última leitura em"
   },
   "refresh": {
-    "fetchPreviousPage": "",
+    "fetchPreviousPage": "Mais novo aqui",
     "refetch": ""
   },
   "shared": {
