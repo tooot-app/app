@@ -1,0 +1,28 @@
+{
+  "title": "",
+  "options": {
+    "library": "",
+    "photo": "",
+    "cancel": ""
+  },
+  "library": {
+    "alert": {
+      "title": "",
+      "message": "",
+      "buttons": {
+        "settings": "",
+        "cancel": ""
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "",
+      "message": "",
+      "buttons": {
+        "settings": "",
+        "cancel": ""
+      }
+    }
+  }
+}
