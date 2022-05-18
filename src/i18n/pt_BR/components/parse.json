@@ -1,9 +1,9 @@
 {
   "HTML": {
     "expanded": {
-      "true": "",
-      "false": ""
+      "true": "Fechar {{hint}}",
+      "false": "Expandir {{hint}}"
     },
-    "defaultHint": ""
+    "defaultHint": "artigo"
   }
 }
