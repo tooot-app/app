@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Comunicados",
   "content": {
-    "published": "",
+    "published": "Publicado <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Ler",
+      "unread": "Marcar como lido"
     }
   }
 }
