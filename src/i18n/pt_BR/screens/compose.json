@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "Cancelar",
       "alert": {
-        "title": "",
+        "title": "Cancelar edições?",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "Salvar rascunho",
+          "delete": "Apagar rascunho",
+          "cancel": "Cancelar"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Toot",
+        "conversation": "Toot DM",
+        "reply": "Resposta de toot",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {
           "title": "",
-          "button": ""
+          "button": "Tente Novamente"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "cancel": "",
-          "confirm": ""
+          "title": "Não foi possível encontrar um toot respondido",
+          "description": "Um toot respondido pode ter sido excluído. Você quer removê-lo da sua referência?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Remover referência"
         }
       }
     }
@@ -37,47 +37,47 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Tooting cono @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": ""
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "No que você está pensando",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Quantidade máxima de anexos atingida",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Marcar anexos como sensível",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Remover anexo enviado, número {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Editar o anexo enviado, número {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Carregar mais anexos"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Toque para adicionar emojis ao toot"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Opção de enquete {{index}}",
+              "single": "Única escolha",
+              "multiple": "Múltiplas opções"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Reduzir opções da enquete para {{amount}}",
               "accessibilityHint": ""
             },
             "increase": {
