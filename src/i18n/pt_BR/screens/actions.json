@@ -1,18 +1,18 @@
 {
   "content": {
     "button": {
-      "apply": "",
-      "cancel": ""
+      "apply": "$t(common:buttons.apply)",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "notificationsFilter": {
-      "heading": "",
+      "heading": "Exibir notificações",
       "content": {
-        "follow": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "follow_request": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "follow_request": "Seguidores pendentes"
       }
     }
   }
