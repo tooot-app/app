@@ -71,15 +71,15 @@
         "name": "Mais configurações"
       },
       "switch": {
-        "name": ""
+        "name": "Alterar Conta"
       }
     },
     "fontSize": {
-      "showcase": "",
-      "demo": "",
-      "availableSizes": "",
+      "showcase": "Exemplo de toot",
+      "demo": "<p>Esta é uma demonstração também😊. Você pode escolher entre várias opções abaixo.<br /><br />Esta configuração afeta apenas o conteúdo principal dos toots, mas não os tamanhos de outra fonte.</p>",
+      "availableSizes": "Tamanhos disponíveis",
       "sizes": {
-        "S": "",
+        "S": "S",
         "M": "",
         "L": "",
         "XL": "",
