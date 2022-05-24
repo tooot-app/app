@@ -1,74 +1,74 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "Seguindo"
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "left": "Global",
+        "right": "Local"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Notificações"
     },
     "me": {
-      "name": ""
+      "name": "Sobre mim"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Pesquisa",
+      "accessibilityHint": "Pesquisar por hashtags, usuários ou toots"
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Filtro",
+      "accessibilityHint": "Filtrar notificações por tipos"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Favoritos"
       },
       "conversations": {
-        "name": ""
+        "name": "Mensagens diretas"
       },
       "favourites": {
-        "name": ""
+        "name": "Favoritos"
       },
       "fontSize": {
-        "name": ""
+        "name": "Tamanho da fonte do Toot"
       },
       "lists": {
-        "name": ""
+        "name": "Listas"
       },
       "list": {
-        "name": ""
+        "name": "Lista: {{list}}"
       },
       "push": {
-        "name": ""
+        "name": "Notificação"
       },
       "profile": {
-        "name": ""
+        "name": "Editar Perfil"
       },
       "profileName": {
-        "name": ""
+        "name": "Editar nome de exibição"
       },
       "profileNote": {
-        "name": ""
+        "name": "Editar descrição"
       },
       "profileFields": {
-        "name": ""
+        "name": "Editar Metadados"
       },
       "settings": {
-        "name": ""
+        "name": "Configurações do Aplicativo"
       },
       "webSettings": {
-        "name": ""
+        "name": "Mais configurações"
       },
       "switch": {
         "name": ""
