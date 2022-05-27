@@ -22,7 +22,7 @@
       },
       "alert": {
         "default": {
-          "title": "",
+          "title": "Falha no tooting",
           "button": "Tente Novamente"
         },
         "removeReply": {
@@ -39,7 +39,7 @@
       "header": {
         "postingAs": "Tooting cono @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Mensagem de aviso para Spoiler"
         },
         "textInput": {
           "placeholder": "No que você está pensando",
@@ -78,101 +78,101 @@
           "quantity": {
             "reduce": {
               "accessibilityLabel": "Reduzir opções da enquete para {{amount}}",
-              "accessibilityHint": ""
+              "accessibilityHint": "Quantidade mínima de opções da enquete atingida, tem atualmente {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Aumentar opções de enquete para {{amount}}",
+              "accessibilityHint": "Quantidade máxima de opções da enquete atingida, tem atualmente {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Tipo de opção",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "Uma opção",
+              "multiple": "Múltipla escolha",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Validade",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 minutos",
+              "1800": "30 minutos",
+              "3600": "1 hora",
+              "21600": "6 horas",
+              "86400": "1 dia",
+              "259200": "3 dias",
+              "604800": "7 dias",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Fazer upload de um anexo",
+          "accessibilityHint": "A função de enquete será desativada quando houver qualquer anexo",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Falha no envio",
+              "button": "Tente Novamente"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Adicionar enquete",
+          "accessibilityHint": "A função Anexo será desabilitada quando a enquete estiver ativa"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Visibilidade do toot é {{visibility}}",
+          "title": "Visibilidade do Toot",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "Público",
+            "unlisted": "Não listado",
+            "private": "Apenas seguidores",
+            "direct": "Mensagem Direta",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Adicionar emoji",
+          "accessibilityHint": "Abra o painel de seleção de emojis, deslize horizontalmente para alterar a página"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Rascunho ({{count}})",
+      "drafts_other": "Rascunhos ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Editar anexos",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Salvar anexo editado",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Falha ao editar",
+            "button": "Tente Novamente"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Descrever mídia para deficientes visuais",
+          "placeholder": "Você pode adicionar uma descrição, às vezes chamada texto alternativo aos seus meios de comunicação social, assim eles estão acessíveis a ainda mais pessoas, incluindo as que são cegos ou deficientes visuais.\n\nAs boas descrições são concisas, mas apresentam o que está em sua mídia com precisão o suficiente para entender seu contexto."
         },
-        "imageFocus": ""
+        "imageFocus": "Arraste o círculo de foco para atualizar o ponto de foco"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Rascunho"
       },
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Toque para editar este rascunho",
+        "textEmpty": "O conteúdo está vazio"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Verificando anexos no servidor..."
     }
   }
 }
