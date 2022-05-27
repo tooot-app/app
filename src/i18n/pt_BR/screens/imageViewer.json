@@ -1,17 +1,17 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Mais ações desta imagem",
+      "accessibilityHint": "Você pode salvar ou compartilhar esta imagem"
     },
     "options": {
-      "save": "",
-      "share": "",
-      "cancel": ""
+      "save": "Salvar imagem",
+      "share": "Compartilhar Imagem",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Imagem salva",
+      "failed": "Falha ao salvar imagem"
     }
   }
 }
