@@ -178,168 +178,168 @@
       "poll": {
         "heading": "Pesquisa atualizada"
       },
-      "howitworks": ""
+      "howitworks": "Saiba como funciona o roteamento"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} não lidas",
+          "read": "Não há mensagens não lidas",
+          "empty": "Nenhum"
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "Habilitado",
+          "disabled": "Desabilitado"
         }
       },
       "update": {
-        "title": ""
+        "title": "Atualize para a versão mais recente"
       },
       "logout": {
-        "button": "",
+        "button": "Sair",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Desconectar?",
+          "message": "Após sair, você precisa entrar novamente",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": "Sair",
+            "cancel": "$t(common:buttons.cancel)"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": "",
+        "heading": "Idioma",
         "options": {
-          "cancel": ""
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "theme": {
-        "heading": "",
+        "heading": "Aparência",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": "",
-          "cancel": ""
+          "auto": "Como o sistema",
+          "light": "Modo claro",
+          "dark": "Modo escuro",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Tema escuro",
         "options": {
-          "lighter": "",
-          "darker": "",
-          "cancel": ""
+          "lighter": "Claro",
+          "darker": "Escuro",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Abrir links",
         "options": {
-          "internal": "",
-          "external": "",
-          "cancel": ""
+          "internal": "Dentro do aplicativo",
+          "external": "Usar navegador do sistema",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "Usar emojis estáticos",
+        "description": "Se você encontrar falhas frequentes de apps ao visualizar a lista de emojis, você pode tentar usar emojis estáticos."
       },
       "feedback": {
-        "heading": ""
+        "heading": "Pedidos de Funcionalidades"
       },
       "support": {
-        "heading": ""
+        "heading": "Suporte tooot"
       },
       "review": {
-        "heading": ""
+        "heading": "Revisar tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Contatar tooot"
       },
       "analytics": {
-        "heading": "",
-        "description": ""
+        "heading": "Ajude-nos a melhorar",
+        "description": "Coletando somente relativo ao uso, não ao usuário"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Versão v{{version}}",
+      "instanceVersion": "Versão Mastodon v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Escolha a partir do login",
+      "new": "Fazer login para instância"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Ações para o usuário {{user}}",
+        "accessibilityHint": "Você pode silenciar, bloquear, relatar ou compartilhar este usuário"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " está seguindo você",
+      "moved": "Usuário movido",
+      "created_at": "Registrado em: {{date}}",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": "{{count}} toots",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Toots",
+        "all": "Toots e respostas"
       }
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>\"s mídia</1>"
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Procurando",
+        "placeholder": "para..."
       },
       "empty": {
-        "general": "",
+        "general": "Digite a palavra-chave para pesquisar por <bold>$t(screenTabs:shared.search.sections.accounts)</bold>£<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> ou <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Pesquisa avançada",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Usuário",
+        "hashtags": "Palavras-chave",
+        "statuses": "Toot"
       },
-      "notFound": ""
+      "notFound": "Não foi possível encontrar <bold>{{searchTerm}}</bold> {{type}} relacionado"
     },
     "toot": {
-      "name": ""
+      "name": "Discussões"
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "Seguindo {{count}}",
+        "followers": "{{count}} seguidores"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} boostou",
+        "favourited_by": "{{count}} favoritados"
       }
     },
     "history": {
-      "name": ""
+      "name": "Histórico de Edição"
     }
   }
 }
