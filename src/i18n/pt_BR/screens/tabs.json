@@ -80,35 +80,35 @@
       "availableSizes": "Tamanhos disponíveis",
       "sizes": {
         "S": "S",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "M": "M - Padrão",
+        "L": "Grande",
+        "XL": "Extra grande",
+        "XXL": "Extra grande"
       }
     },
     "profile": {
       "cancellation": {
-        "title": "",
-        "message": "",
+        "title": "Alterações não salvas",
+        "message": "Sua alteração não foi salva. Descartar as alterações?",
         "buttons": {
-          "cancel": "",
-          "discard": ""
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Descartar"
         }
       },
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} atualizado",
+        "failed": "{{type}} falhou na atualização. Por favor, tente novamente"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Nome de exibição"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Imagem de perfil",
+          "description": "Será reduzido a 400x400px"
         },
         "header": {
-          "title": "",
+          "title": "Banner",
           "description": ""
         },
         "note": {
