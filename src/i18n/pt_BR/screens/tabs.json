@@ -109,74 +109,74 @@
         },
         "header": {
           "title": "Banner",
-          "description": ""
+          "description": "Será reduzido para 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Descrição"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadados",
+          "total_one": "{{count}} campo",
+          "total_other": "{{count}} campos"
         },
         "visibility": {
-          "title": "",
+          "title": "Visibilidade da Postagem",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "cancel": ""
+            "public": "Público",
+            "unlisted": "Não listado",
+            "private": "Apenas seguidores",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Publicação de Mídia Sensiva"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Trancar conta",
+          "description": "Requer que você aprove manualmente seguidores"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Conta bot",
+          "description": "Essa conta executa principalmente ações automatizadas e pode não ser monitorada"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Grupo {{index}}",
+        "label": "Rótulo",
+        "content": "Conteúdo"
       }
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Seu telefone não suporta notificação de envio de tooot",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Habilitar notificações via push",
+        "settings": "Ativar em configurações"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Habilitar para {{acct}}",
+        "description": "Mensagens são encaminhadas pelo servidor do tooot"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Ver detalhes da mensagem",
+        "description": "As mensagens enviadas através do servidor do tooot são criptografadas, mas você pode optar por decodificar a mensagem no servidor. Nosso código fonte de servidor é open source, e nenhuma política de registro."
       },
       "default": {
-        "heading": ""
+        "heading": "Padrão"
       },
       "follow": {
-        "heading": ""
+        "heading": "Novo seguidor"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Favoritos"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Boosted"
       },
       "mention": {
-        "heading": ""
+        "heading": "Mencionou você"
       },
       "poll": {
-        "heading": ""
+        "heading": "Pesquisa atualizada"
       },
       "howitworks": ""
     },
