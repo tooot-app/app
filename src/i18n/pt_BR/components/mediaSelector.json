@@ -1,0 +1,28 @@
+{
+  "title": "Selecionar fonte de mídia",
+  "options": {
+    "library": "Carregar da biblioteca",
+    "photo": "Tirar foto",
+    "cancel": "$t(common:buttons.cancel)"
+  },
+  "library": {
+    "alert": {
+      "title": "Sem permissão",
+      "message": "Exigir permissão de leitura da biblioteca de fotos para fazer upload",
+      "buttons": {
+        "settings": "Atualizar configurações",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  },
+  "photo": {
+    "alert": {
+      "title": "Sem permissão",
+      "message": "Requer permissão de uso da câmera para fazer upload",
+      "buttons": {
+        "settings": "Atualizar configurações",
+        "cancel": "$t(common:buttons.cancel)"
+      }
+    }
+  }
+}
