@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Schriftgröße"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "Listen"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Sprache",
+        "heading": "",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
