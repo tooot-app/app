@@ -1,0 +1,9 @@
+{
+  "HTML": {
+    "expanded": {
+      "true": "Fechar {{hint}}",
+      "false": "Expandir {{hint}}"
+    },
+    "defaultHint": "artigo"
+  }
+}
