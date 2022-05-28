@@ -44,7 +44,7 @@
         "name": "Tamanho da fonte do Toot"
       },
       "language": {
-        "name": ""
+        "name": "Idioma"
       },
       "lists": {
         "name": "Listas"
@@ -224,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
