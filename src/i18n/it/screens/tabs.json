@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Grandezza del testo dei toot"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "Liste"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Lingua",
+        "heading": "",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
