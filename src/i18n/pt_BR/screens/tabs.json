@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Tamanho da fonte do Toot"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "Listas"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Idioma",
+        "heading": "",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
