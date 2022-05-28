@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} hat geboostet",
         "notification": "{{name}} hat deinen Tröt geboostet"
-      }
+      },
+      "update": ""
     },
     "actions": {
       "reply": {

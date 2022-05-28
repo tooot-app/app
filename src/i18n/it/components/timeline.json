@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} ha ricondiviso",
         "notification": "{{name}} ha ricondiviso il tuo toot"
-      }
+      },
+      "update": ""
     },
     "actions": {
       "reply": {

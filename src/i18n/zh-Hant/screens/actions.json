@@ -8,11 +8,13 @@
       "heading": "",
       "content": {
         "follow": "",
+        "follow_request": "",
         "favourite": "",
         "reblog": "",
         "mention": "",
         "poll": "",
-        "follow_request": ""
+        "status": "",
+        "update": ""
       }
     }
   }

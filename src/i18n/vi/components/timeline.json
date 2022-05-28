@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} đăng lại",
         "notification": "{{name}} đăng lại tút của bạn"
-      }
+      },
+      "update": ""
     },
     "actions": {
       "reply": {
