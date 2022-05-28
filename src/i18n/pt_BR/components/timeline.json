@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} boostou",
         "notification": "{{name}} deu boost no teu toot"
-      }
+      },
+      "update": ""
     },
     "actions": {
       "reply": {
