@@ -74,11 +74,6 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat(store => next => action => {
-      console.log('dispatching', action)
-      let result = next(action)
-      console.log('next state', store.getState())
-      return result
     })
 })
 
