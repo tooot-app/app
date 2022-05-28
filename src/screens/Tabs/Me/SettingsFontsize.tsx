@@ -45,7 +45,7 @@ const TabMeSettingsFontsize: React.FC<
   const item = {
     id: 'demo',
     uri: 'https://tooot.app',
-    created_at: new Date(),
+    created_at: new Date(2021, 4, 16),
     sensitive: false,
     visibility: 'public',
     replies_count: 0,
@@ -67,6 +67,7 @@ const TabMeSettingsFontsize: React.FC<
       username: 'tooot📱',
       acct: 'tooot@xmflsct.com',
       display_name: 'tooot📱',
+      avatar: 'https://avatars.githubusercontent.com/u/77554750?s=100',
       avatar_static: 'https://avatars.githubusercontent.com/u/77554750?s=100'
     },
     media_attachments: [],
@@ -100,7 +101,7 @@ const TabMeSettingsFontsize: React.FC<
   }, [theme, initialSize])
 
   return (
-    <ScrollView scrollEnabled={false}>
+    <ScrollView>
       <CustomText
         fontStyle='M'
         style={{

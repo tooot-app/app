@@ -6,10 +6,12 @@
 
 ## Special thanks
 
-@forenta for German translation
+[@forenta](https://github.com/forenta) for German translation
 
-@andrigamerita for Italian translation
+[@andrigamerita](https://github.com/andrigamerita) for Italian translation
 
-@hellojaccc for Korean translation
+[@hellojaccc](https://github.com/hellojaccc) for Korean translation
 
-@duy@mas.to for Vietnamese translation
+[@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
+
+[@duy@mas.to](https://mas.to/@duy) for Vietnamese translation
