@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "嘟文字号"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "列表"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "切换语言",
+        "heading": "",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
