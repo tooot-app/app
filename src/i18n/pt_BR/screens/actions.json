@@ -8,11 +8,13 @@
       "heading": "Exibir notificações",
       "content": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Seguidores pendentes",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "follow_request": "Seguidores pendentes"
+        "status": "",
+        "update": ""
       }
     }
   }
