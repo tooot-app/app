@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "嘟文字号"
       },
+      "language": {
+        "name": "应用语言"
+      },
       "lists": {
         "name": "列表"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "切换语言",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }

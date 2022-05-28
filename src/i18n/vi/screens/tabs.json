@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Cỡ chữ"
       },
+      "language": {
+        "name": "Ngôn ngữ"
+      },
       "lists": {
         "name": "Danh sách"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Ngôn ngữ",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }

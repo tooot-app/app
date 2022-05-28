@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Schriftgröße"
       },
+      "language": {
+        "name": "Sprache"
+      },
       "lists": {
         "name": "Listen"
       },
@@ -141,7 +144,7 @@
         }
       },
       "fields": {
-        "group": "",
+        "group": "Gruppe {{index}}",
         "label": "Kennzeichnung",
         "content": "Inhalt"
       }
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Sprache",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }

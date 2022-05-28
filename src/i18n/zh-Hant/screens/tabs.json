@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "嘟文字體大小"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "清單"
       },

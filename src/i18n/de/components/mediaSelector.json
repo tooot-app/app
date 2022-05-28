@@ -3,7 +3,7 @@
   "options": {
     "library": "Hochladen",
     "photo": "Bild aufnehmen",
-    "cancel": ""
+    "cancel": "$t(common:buttons.cancel)"
   },
   "library": {
     "alert": {
@@ -11,7 +11,7 @@
       "message": "Für den Upload ist eine Zugriffsgenehmigung erforderlich",
       "buttons": {
         "settings": "Einstellungen bestätigen",
-        "cancel": ""
+        "cancel": "$t(common:buttons.cancel)"
       }
     }
   },
@@ -21,7 +21,7 @@
       "message": "Zugriff auf die Kamera erforderlich",
       "buttons": {
         "settings": "Einstellungen übernehmen",
-        "cancel": ""
+        "cancel": "$t(common:buttons.cancel)"
       }
     }
   }

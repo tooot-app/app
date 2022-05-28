@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "툿 폰트 크기"
       },
+      "language": {
+        "name": "언어"
+      },
       "lists": {
         "name": "목록"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "언어",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
