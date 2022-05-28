@@ -73,12 +73,22 @@ const TabMePush: React.FC = () => {
   const alerts = useMemo(() => {
     return instancePush?.alerts
       ? (
-          ['follow', 'favourite', 'reblog', 'mention', 'poll'] as [
+          [
             'follow',
+            'follow_request',
             'favourite',
             'reblog',
             'mention',
-            'poll'
+            'poll',
+            'status'
+          ] as [
+            'follow',
+            'follow_request',
+            'favourite',
+            'reblog',
+            'mention',
+            'poll',
+            'status'
           ]
         ).map(alert => (
           <MenuRow

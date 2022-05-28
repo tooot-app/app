@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const TabMeSettingsLanguage: React.FC<
   TabMeStackScreenProps<'Tab-Me-Settings-Language'>
-> = () => {
+> = ({ navigation }) => {
   const { i18n, t } = useTranslation('screenTabs')
   const languages = Object.entries(LOCALES)
   const instances = useSelector(getInstances)
@@ -72,6 +72,8 @@ const TabMeSettingsLanguage: React.FC<
         }
       })
     }
+
+    navigation.pop(1)
   }
 
   return (

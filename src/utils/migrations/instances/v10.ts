@@ -38,6 +38,10 @@ export type InstanceV10 = {
         loading: boolean
         value: Mastodon.PushSubscription['alerts']['follow']
       }
+      follow_request: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['follow_request']
+      }
       favourite: {
         loading: boolean
         value: Mastodon.PushSubscription['alerts']['favourite']
@@ -53,6 +57,10 @@ export type InstanceV10 = {
       poll: {
         loading: boolean
         value: Mastodon.PushSubscription['alerts']['poll']
+      }
+      status: {
+        loading: boolean
+        value: Mastodon.PushSubscription['alerts']['status']
       }
     }
     keys: {

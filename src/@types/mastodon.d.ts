@@ -376,10 +376,12 @@ declare namespace Mastodon {
     endpoint: string
     alerts: {
       follow: boolean
+      follow_request: boolean
       favourite: boolean
       reblog: boolean
       mention: boolean
       poll: boolean
+      status: boolean
     }
     server_key: string
   }

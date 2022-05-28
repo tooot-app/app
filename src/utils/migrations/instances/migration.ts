@@ -110,6 +110,20 @@ const instancesMigration = {
             ...instance.notifications_filter,
             status: true,
             update: true
+          },
+          push: {
+            ...instance.push,
+            alerts: {
+              ...instance.push.alerts,
+              follow_request: {
+                loading: false,
+                value: true
+              },
+              status: {
+                loading: false,
+                value: true
+              }
+            }
           }
         }
       })

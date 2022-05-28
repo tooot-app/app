@@ -94,10 +94,12 @@ const addInstance = createAsyncThunk(
           decode: { loading: false, value: false },
           alerts: {
             follow: { loading: false, value: true },
+            follow_request: { loading: false, value: true },
             favourite: { loading: false, value: true },
             reblog: { loading: false, value: true },
             mention: { loading: false, value: true },
-            poll: { loading: false, value: true }
+            poll: { loading: false, value: true },
+            status: { loading: false, value: true }
           },
           keys: { auth: undefined, public: undefined, private: undefined }
         },
