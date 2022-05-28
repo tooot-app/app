@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Cỡ chữ"
       },
+      "language": {
+        "name": ""
+      },
       "lists": {
         "name": "Danh sách"
       },
@@ -221,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "Ngôn ngữ",
+        "heading": "",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
