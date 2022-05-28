@@ -4,7 +4,8 @@ import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
-import { disableAllPushes, Instance } from '@utils/slices/instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { disableAllPushes } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
@@ -12,7 +13,7 @@ import { TFunction } from 'react-i18next'
 
 export interface Params {
   t: TFunction<'screens'>
-  instances: Instance[]
+  instances: InstanceLatest[]
 }
 
 const pushUseConnect = ({ t, instances }: Params) => {

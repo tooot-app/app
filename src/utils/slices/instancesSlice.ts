@@ -3,7 +3,7 @@ import features from '@helpers/features'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
-import { InstanceV9 } from '@utils/migrations/instances/v9'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import addInstance from './instances/add'
 import { checkEmojis } from './instances/checkEmojis'
 import removeInstance from './instances/remove'
@@ -14,24 +14,25 @@ import { updateInstancePush } from './instances/updatePush'
 import { updateInstancePushAlert } from './instances/updatePushAlert'
 import { updateInstancePushDecode } from './instances/updatePushDecode'
 
-export type Instance = InstanceV9
-
 export type InstancesState = {
-  instances: Instance[]
+  instances: InstanceLatest[]
 }
 
 export const instancesInitialState: InstancesState = {
   instances: []
 }
 
-const findInstanceActive = (instances: Instance[]) =>
+const findInstanceActive = (instances: InstanceLatest[]) =>
   instances.findIndex(instance => instance.active)
 
 const instancesSlice = createSlice({
   name: 'instances',
   initialState: instancesInitialState,
   reducers: {
-    updateInstanceActive: ({ instances }, action: PayloadAction<Instance>) => {
+    updateInstanceActive: (
+      { instances },
+      action: PayloadAction<InstanceLatest>
+    ) => {
       instances = instances.map(instance => {
         instance.active =
           instance.url === action.payload.url &&
@@ -42,7 +43,9 @@ const instancesSlice = createSlice({
     },
     updateInstanceAccount: (
       { instances },
-      action: PayloadAction<Pick<Instance['account'], 'acct' & 'avatarStatic'>>
+      action: PayloadAction<
+        Pick<InstanceLatest['account'], 'acct' & 'avatarStatic'>
+      >
     ) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].account = {
@@ -52,7 +55,7 @@ const instancesSlice = createSlice({
     },
     updateInstanceNotificationsFilter: (
       { instances },
-      action: PayloadAction<Instance['notifications_filter']>
+      action: PayloadAction<InstanceLatest['notifications_filter']>
     ) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].notifications_filter = action.payload
@@ -99,7 +102,7 @@ const instancesSlice = createSlice({
     },
     updateInstanceTimelineLookback: (
       { instances },
-      action: PayloadAction<Instance['timelinesLookback']>
+      action: PayloadAction<InstanceLatest['timelinesLookback']>
     ) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex] &&
@@ -110,7 +113,7 @@ const instancesSlice = createSlice({
     },
     updateInstanceMePage: (
       { instances },
-      action: PayloadAction<Partial<Instance['mePage']>>
+      action: PayloadAction<Partial<InstanceLatest['mePage']>>
     ) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].mePage = {
@@ -120,10 +123,12 @@ const instancesSlice = createSlice({
     },
     countInstanceEmoji: (
       { instances },
-      action: PayloadAction<Instance['frequentEmojis'][0]['emoji']>
+      action: PayloadAction<InstanceLatest['frequentEmojis'][0]['emoji']>
     ) => {
       const HALF_LIFE = 60 * 60 * 24 * 7 // 1 week
-      const calculateScore = (emoji: Instance['frequentEmojis'][0]): number => {
+      const calculateScore = (
+        emoji: InstanceLatest['frequentEmojis'][0]
+      ): number => {
         var seconds = (new Date().getTime() - emoji.lastUsed) / 1000
         var score = emoji.count + 1
         var order = Math.log(Math.max(score, 1)) / Math.LN10
@@ -136,7 +141,7 @@ const instancesSlice = createSlice({
           e.emoji.shortcode === action.payload.shortcode &&
           e.emoji.url === action.payload.url
       )
-      let newEmojisSort: Instance['frequentEmojis']
+      let newEmojisSort: InstanceLatest['frequentEmojis']
       if (foundEmojiIndex > -1) {
         newEmojisSort = instances[activeIndex].frequentEmojis
           .map((e, i) =>

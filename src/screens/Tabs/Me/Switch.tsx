@@ -5,11 +5,8 @@ import ComponentInstance from '@components/Instance'
 import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import initQuery from '@utils/initQuery'
-import {
-  getInstanceActive,
-  getInstances,
-  Instance
-} from '@utils/slices/instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
@@ -19,7 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 
 interface Props {
-  instance: Instance
+  instance: InstanceLatest
   selected?: boolean
 }
 

@@ -1,13 +1,14 @@
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
+import { InstanceLatest } from './migrations/instances/migration'
 // import { prefetchTimelineQuery } from './queryHooks/timeline'
-import { Instance, updateInstanceActive } from './slices/instancesSlice'
+import { updateInstanceActive } from './slices/instancesSlice'
 
 const initQuery = async ({
   instance,
   prefetch
 }: {
-  instance: Instance
+  instance: InstanceLatest
   prefetch?: { enabled: boolean; page?: 'Following' | 'LocalPublic' }
 }) => {
   store.dispatch(updateInstanceActive(instance))

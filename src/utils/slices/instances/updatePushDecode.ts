@@ -3,9 +3,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
-import { getInstance, Instance } from '../instancesSlice'
+import { getInstance } from '../instancesSlice'
 import androidDefaults from './push/androidDefaults'
 
 export const updateInstancePushDecode = createAsyncThunk(
@@ -13,7 +14,7 @@ export const updateInstancePushDecode = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<{ disable: Instance['push']['decode']['value'] }> => {
+  ): Promise<{ disable: InstanceLatest['push']['decode']['value'] }> => {
     const state = getState() as RootState
     const instance = getInstance(state)
     if (!instance?.url || !instance.account.id || !instance.push.keys) {

@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import addInstance from '@utils/slices/instances/add'
-import { checkInstanceFeature, Instance } from '@utils/slices/instancesSlice'
+import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
 import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -12,7 +13,7 @@ export interface Props {
   instanceDomain: string
   // Domain can be different than uri
   instance: Mastodon.Instance
-  appData: Instance['appData']
+  appData: InstanceLatest['appData']
   goBack?: boolean
 }
 

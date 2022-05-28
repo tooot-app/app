@@ -5,6 +5,7 @@ import { InstanceV6 } from './v6'
 import { InstanceV7 } from './v7'
 import { InstanceV8 } from './v8'
 import { InstanceV9 } from './v9'
+import { InstanceV10 } from './v10'
 
 const instancesMigration = {
   4: (state: InstanceV3): InstanceV4 => {
@@ -99,7 +100,23 @@ const instancesMigration = {
         }
       })
     }
+  },
+  10: (state: { instances: InstanceV9[] }): { instances: InstanceV10[] } => {
+    return {
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          notifications_filter: {
+            ...instance.notifications_filter,
+            status: true,
+            update: true
+          }
+        }
+      })
+    }
   }
 }
+
+export { InstanceV10 as InstanceLatest }
 
 export default instancesMigration

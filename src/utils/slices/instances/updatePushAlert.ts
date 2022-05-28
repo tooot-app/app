@@ -1,15 +1,15 @@
 import apiInstance from '@api/instance'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Instance } from '../instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 
 export const updateInstancePushAlert = createAsyncThunk(
   'instances/updatePushAlert',
   async ({
     alerts
   }: {
-    changed: keyof Instance['push']['alerts']
-    alerts: Instance['push']['alerts']
-  }): Promise<Instance['push']['alerts']> => {
+    changed: keyof InstanceLatest['push']['alerts']
+    alerts: InstanceLatest['push']['alerts']
+  }): Promise<InstanceLatest['push']['alerts']> => {
     const formData = new FormData()
     Object.keys(alerts).map(alert =>
       // @ts-ignore

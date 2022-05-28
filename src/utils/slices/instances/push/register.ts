@@ -2,7 +2,8 @@ import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
-import { getInstance, Instance } from '@utils/slices/instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { getInstance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
 import { Platform } from 'react-native'
@@ -34,7 +35,7 @@ const subscribe = async ({
 const pushRegister = async (
   state: RootState,
   expoToken: string
-): Promise<Instance['push']['keys']['auth']> => {
+): Promise<InstanceLatest['push']['keys']['auth']> => {
   const instance = getInstance(state)
   const instanceUrl = instance?.url
   const instanceUri = instance?.uri

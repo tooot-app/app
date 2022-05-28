@@ -34,7 +34,7 @@ const TimelineActioned = React.memo(
       navigation.push('Tab-Shared-Account', { account })
     }, [])
 
-    const children = useMemo(() => {
+    const children = () => {
       switch (action) {
         case 'pinned':
           return (
@@ -48,7 +48,6 @@ const TimelineActioned = React.memo(
               {content(t('shared.actioned.pinned'))}
             </>
           )
-          break
         case 'favourite':
           return (
             <>
@@ -63,7 +62,6 @@ const TimelineActioned = React.memo(
               </Pressable>
             </>
           )
-          break
         case 'follow':
           return (
             <>
@@ -78,7 +76,6 @@ const TimelineActioned = React.memo(
               </Pressable>
             </>
           )
-          break
         case 'follow_request':
           return (
             <>
@@ -93,7 +90,6 @@ const TimelineActioned = React.memo(
               </Pressable>
             </>
           )
-          break
         case 'poll':
           return (
             <>
@@ -106,7 +102,6 @@ const TimelineActioned = React.memo(
               {content(t('shared.actioned.poll'))}
             </>
           )
-          break
         case 'reblog':
           return (
             <>
@@ -125,7 +120,6 @@ const TimelineActioned = React.memo(
               </Pressable>
             </>
           )
-          break
         case 'status':
           return (
             <>
@@ -140,9 +134,22 @@ const TimelineActioned = React.memo(
               </Pressable>
             </>
           )
-          break
+        case 'update':
+          return (
+            <>
+              <Icon
+                name='BarChart2'
+                size={StyleConstants.Font.Size.S}
+                color={iconColor}
+                style={styles.icon}
+              />
+              {content(t('shared.actioned.update'))}
+            </>
+          )
+        default:
+          return <></>
       }
-    }, [])
+    }
 
     return (
       <View
@@ -153,8 +160,9 @@ const TimelineActioned = React.memo(
           paddingLeft: StyleConstants.Avatar.M - StyleConstants.Font.Size.S,
           paddingRight: StyleConstants.Spacing.Global.PagePadding
         }}
-        children={children}
-      />
+      >
+        {children()}
+      </View>
     )
   },
   () => true

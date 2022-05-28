@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} boosted",
         "notification": "{{name}} boosted your toot"
-      }
+      },
+      "update": "Reblog has been edited"
     },
     "actions": {
       "reply": {

@@ -1,7 +1,7 @@
 import apiGeneral from '@api/general'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
-import { Instance } from '../instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 
 const addInstance = createAsyncThunk(
   'instances/add',
@@ -11,11 +11,11 @@ const addInstance = createAsyncThunk(
     instance,
     appData
   }: {
-    domain: Instance['url']
-    token: Instance['token']
+    domain: InstanceLatest['url']
+    token: InstanceLatest['token']
     instance: Mastodon.Instance
-    appData: Instance['appData']
-  }): Promise<{ type: 'add' | 'overwrite'; data: Instance }> => {
+    appData: InstanceLatest['appData']
+  }): Promise<{ type: 'add' | 'overwrite'; data: InstanceLatest }> => {
     const { store } = require('@root/store')
     const instances = (store.getState() as RootState).instances.instances
 
@@ -81,11 +81,13 @@ const addInstance = createAsyncThunk(
         filters,
         notifications_filter: {
           follow: true,
+          follow_request: true,
           favourite: true,
           reblog: true,
           mention: true,
           poll: true,
-          follow_request: true
+          status: true,
+          update: true
         },
         push: {
           global: { loading: false, value: false },

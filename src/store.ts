@@ -39,7 +39,7 @@ const instancesPersistConfig = {
   key: 'instances',
   prefix,
   storage: Platform.OS === 'ios' ? secureStorage : AsyncStorage,
-  version: 9,
+  version: 10,
   // @ts-ignore
   migrate: createMigrate(instancesMigration)
 }

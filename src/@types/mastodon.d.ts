@@ -341,6 +341,7 @@ declare namespace Mastodon {
       | 'favourite'
       | 'poll'
       | 'status'
+      | 'update'
     created_at: string
     account: Account
 

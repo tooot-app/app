@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import * as Notifications from 'expo-notifications'
-import { Instance } from '../instancesSlice'
 import pushRegister from './push/register'
 import pushUnregister from './push/unregister'
 
@@ -11,7 +11,7 @@ export const updateInstancePush = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<Instance['push']['keys']['auth'] | undefined> => {
+  ): Promise<InstanceLatest['push']['keys']['auth'] | undefined> => {
     const state = getState() as RootState
     const expoToken = isDevelopment
       ? 'DEVELOPMENT_TOKEN_1'
