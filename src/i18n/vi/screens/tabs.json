@@ -44,7 +44,7 @@
         "name": "Cỡ chữ"
       },
       "language": {
-        "name": ""
+        "name": "Ngôn ngữ"
       },
       "lists": {
         "name": "Danh sách"
@@ -224,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
