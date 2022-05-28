@@ -44,7 +44,7 @@
         "name": "Grandezza del testo dei toot"
       },
       "language": {
-        "name": ""
+        "name": "Lingua"
       },
       "lists": {
         "name": "Liste"
@@ -224,7 +224,7 @@
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }
