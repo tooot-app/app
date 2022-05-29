@@ -169,6 +169,9 @@
       "follow": {
         "heading": "Novo seguidor"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "Favoritos"
       },
@@ -180,6 +183,9 @@
       },
       "poll": {
         "heading": "Pesquisa atualizada"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "Saiba como funciona o roteamento"
     },
