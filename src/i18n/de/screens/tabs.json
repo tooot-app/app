@@ -169,6 +169,9 @@
       "follow": {
         "heading": "Neue Follower"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "Favoriten"
       },
@@ -180,6 +183,9 @@
       },
       "poll": {
         "heading": "Umfrageupdate"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "Erfahre, wie das Routing funktioniert"
     },
