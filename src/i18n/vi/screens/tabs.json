@@ -169,6 +169,9 @@
       "follow": {
         "heading": "Người theo dõi mới"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "Lượt thích"
       },
@@ -180,6 +183,9 @@
       },
       "poll": {
         "heading": "Kết quả bình chọn"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "Tìm hiểu cách truyền"
     },
