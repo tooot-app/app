@@ -7,7 +7,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -35,23 +35,6 @@ const AccountInformationAccount: React.FC<Props> = ({
     options: { enabled: account !== undefined }
   })
 
-  const movedContent = useMemo(() => {
-    if (account?.moved) {
-      return (
-        <CustomText
-          fontStyle='M'
-          style={{
-            marginLeft: StyleConstants.Spacing.S,
-            color: colors.secondary
-          }}
-          selectable
-        >
-          @{account.moved.acct}
-        </CustomText>
-      )
-    }
-  }, [account?.moved])
-
   if (account || (localInstance && instanceAccount)) {
     return (
       <View
@@ -62,23 +45,24 @@ const AccountInformationAccount: React.FC<Props> = ({
           marginBottom: StyleConstants.Spacing.L
         }}
       >
-        <CustomText
-          fontStyle='M'
-          style={{
-            textDecorationLine: account?.moved ? 'line-through' : undefined,
-            color: colors.secondary
-          }}
-          selectable
-        >
-          @{localInstance ? instanceAccount?.acct : account?.acct}
-          {localInstance ? `@${instanceUri}` : null}
-        </CustomText>
-        {relationship?.followed_by ? (
-          <CustomText fontStyle='M' style={{ color: colors.secondary }}>
-            {t('shared.account.followed_by')}
+        <CustomText fontStyle='M' style={{ color: colors.secondary }}>
+          {account?.moved ? (
+            <>
+              {' '}
+              <CustomText selectable>@{account.moved.acct}</CustomText>
+            </>
+          ) : null}
+          <CustomText
+            style={{
+              textDecorationLine: account?.moved ? 'line-through' : undefined
+            }}
+            selectable
+          >
+            @{localInstance ? instanceAccount?.acct : account?.acct}
+            {localInstance ? `@${instanceUri}` : null}
           </CustomText>
-        ) : null}
-        {movedContent}
+          {relationship?.followed_by ? t('shared.account.followed_by') : null}
+        </CustomText>
         {account?.locked ? (
           <Icon
             name='Lock'
