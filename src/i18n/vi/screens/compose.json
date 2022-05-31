@@ -168,6 +168,7 @@
       "header": {
         "title": "Nháp"
       },
+      "warning": "",
       "content": {
         "accessibilityHint": "Đã lưu nháp, nhấn để tiếp tục viết",
         "textEmpty": "Chưa có nội dung"
