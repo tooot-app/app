@@ -440,8 +440,8 @@ const useTimelineMutation = ({
     ...(onMutate && {
       onMutate: params => {
         queryClient.cancelQueries(params.queryKey)
-        let oldData
-        params.queryKey && (oldData = queryClient.getQueryData(params.queryKey))
+        const oldData =
+          params.queryKey && queryClient.getQueryData(params.queryKey)
 
         haptics('Light')
         switch (params.type) {

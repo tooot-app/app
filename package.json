@@ -104,6 +104,7 @@
   "devDependencies": {
     "@babel/core": "7.18.2",
     "@babel/plugin-proposal-optional-chaining": "7.17.12",
+    "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "7.17.12",
     "@expo/config": "6.0.24",
     "@types/lodash": "4.14.182",

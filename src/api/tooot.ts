@@ -19,7 +19,7 @@ export type Params = {
 
 export const TOOOT_API_DOMAIN = mapEnvironment({
   release: 'api.tooot.app',
-  candidate: 'api.tooot.app',
+  candidate: 'api-candidate.tooot.app',
   development: 'api-development.tooot.app'
 })
 
