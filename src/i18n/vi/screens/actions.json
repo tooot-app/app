@@ -13,8 +13,8 @@
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "",
-        "update": ""
+        "status": "Tút từ người đã theo dõi",
+        "update": "Đăng lại đã được sửa"
       }
     }
   }

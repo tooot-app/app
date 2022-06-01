@@ -168,6 +168,7 @@
       "header": {
         "title": "Nháp"
       },
+      "warning": "Tút nháp chỉ được lưu trữ trên điện thoại và có thể bị mất nếu có sự cố. Hãy cẩn thận.",
       "content": {
         "accessibilityHint": "Đã lưu nháp, nhấn để tiếp tục viết",
         "textEmpty": "Chưa có nội dung"
