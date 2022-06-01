@@ -100,8 +100,8 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
                       )}
                       source={{ uri }}
                       style={{
-                        width: 32,
-                        height: 32,
+                        width: 36,
+                        height: 36,
                         padding: StyleConstants.Spacing.S,
                         margin: StyleConstants.Spacing.S
                       }}
@@ -119,8 +119,8 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
                       )}
                       source={{ uri }}
                       style={{
-                        width: 32,
-                        height: 32,
+                        width: 36,
+                        height: 36,
                         padding: StyleConstants.Spacing.S,
                         margin: StyleConstants.Spacing.S
                       }}
@@ -145,7 +145,7 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        height: 260
+        height: 280
       }}
     >
       <SectionList

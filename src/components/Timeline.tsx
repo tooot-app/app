@@ -1,10 +1,6 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
-import {
-  QueryKeyTimeline,
-  TimelineData,
-  useTimelineQuery
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -16,10 +12,20 @@ import {
   RefreshControl,
   StyleSheet
 } from 'react-native'
-import { InfiniteData, useQueryClient } from 'react-query'
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from 'react-native-reanimated'
+import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
+import TimelineRefresh, {
+  SEPARATION_Y_1,
+  SEPARATION_Y_2
+} from './Timeline/Refresh'
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 export interface Props {
   flRef?: RefObject<FlatList<any>>
@@ -40,15 +46,12 @@ const Timeline: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
 
-  const queryClient = useQueryClient()
   const {
     data,
     refetch,
     isFetching,
     isLoading,
-    fetchPreviousPage,
     fetchNextPage,
-    isFetchingPreviousPage,
     isFetchingNextPage
   } = useTimelineQuery({
     ...queryKey[1],
@@ -57,12 +60,6 @@ const Timeline: React.FC<Props> = ({
         ios: ['dataUpdatedAt', 'isFetching'],
         android: ['dataUpdatedAt', 'isFetching', 'isLoading']
       }),
-      getPreviousPageParam: firstPage =>
-        firstPage?.links?.prev && {
-          min_id: firstPage.links.prev,
-          // https://github.com/facebook/react-native/issues/25239
-          limit: '10'
-        },
       getNextPageParam: lastPage =>
         lastPage?.links?.next && {
           max_id: lastPage.links.next
@@ -92,6 +89,27 @@ const Timeline: React.FC<Props> = ({
 
   const flRef = useRef<FlatList>(null)
 
+  const scrollY = useSharedValue(0)
+  const fetchingType = useSharedValue<0 | 1 | 2>(0)
+
+  const onScroll = useAnimatedScrollHandler(
+    {
+      onScroll: ({ contentOffset: { y } }) => {
+        scrollY.value = y
+      },
+      onEndDrag: ({ contentOffset: { y } }) => {
+        if (!disableRefresh && !isFetching) {
+          if (y <= SEPARATION_Y_2) {
+            fetchingType.value = 2
+          } else if (y <= SEPARATION_Y_1) {
+            fetchingType.value = 1
+          }
+        }
+      }
+    },
+    [isFetching]
+  )
+
   const androidRefreshControl = Platform.select({
     android: {
       refreshControl: (
@@ -115,46 +133,40 @@ const Timeline: React.FC<Props> = ({
   })
 
   return (
-    <FlatList
-      ref={customFLRef || flRef}
-      scrollEventThrottle={16}
-      windowSize={7}
-      data={flattenData}
-      initialNumToRender={6}
-      maxToRenderPerBatch={3}
-      style={styles.flatList}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.75}
-      ListFooterComponent={
-        <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />
-      }
-      ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
-      ItemSeparatorComponent={ItemSeparatorComponent}
-      {...(isFetchingPreviousPage && {
-        maintainVisibleContentPosition: { minIndexForVisible: 0 }
-      })}
-      refreshing={isFetchingPreviousPage}
-      onRefresh={() => {
-        if (!disableRefresh && !isFetchingPreviousPage) {
-          queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
-            queryKey,
-            data => {
-              if (data?.pages[0] && data.pages[0].body.length === 0) {
-                return {
-                  pages: data.pages.slice(1),
-                  pageParams: data.pageParams.slice(1)
-                }
-              } else {
-                return data
-              }
-            }
-          )
-          fetchPreviousPage()
+    <>
+      <TimelineRefresh
+        flRef={flRef}
+        queryKey={queryKey}
+        scrollY={scrollY}
+        fetchingType={fetchingType}
+        disableRefresh={disableRefresh}
+      />
+      <AnimatedFlatList
+        ref={customFLRef || flRef}
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+        windowSize={7}
+        data={flattenData}
+        initialNumToRender={6}
+        maxToRenderPerBatch={3}
+        style={styles.flatList}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.75}
+        ListFooterComponent={
+          <TimelineFooter
+            queryKey={queryKey}
+            disableInfinity={disableInfinity}
+          />
         }
-      }}
-      {...androidRefreshControl}
-      {...customProps}
-    />
+        ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        maintainVisibleContentPosition={{
+          minIndexForVisible: 0
+        }}
+        {...androidRefreshControl}
+        {...customProps}
+      />
+    </>
   )
 }
 

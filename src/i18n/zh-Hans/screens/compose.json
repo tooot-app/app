@@ -168,6 +168,7 @@
       "header": {
         "title": "草稿"
       },
+      "warning": "草稿只存储在本地，在部分情况下可能丢失。建议不要长期存储草稿。",
       "content": {
         "accessibilityHint": "已保存的草稿，点击编辑此草稿",
         "textEmpty": "无正文内容"

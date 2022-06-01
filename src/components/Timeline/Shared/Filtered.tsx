@@ -55,7 +55,7 @@ export const shouldFilter = ({
           ) // $& means the whole matched string
           switch (filter.whole_word) {
             case true:
-              if (new RegExp('\\B' + escapedPhrase + '\\B').test(text)) {
+              if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
                 shouldFilter = true
               }
               break
@@ -100,6 +100,7 @@ export const shouldFilter = ({
         })
       }
     })
+    status.spoiler_text && parser.write(status.spoiler_text)
     parser.write(status.content)
     parser.end()
   }

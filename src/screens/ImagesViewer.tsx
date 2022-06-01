@@ -19,94 +19,6 @@ import {
 import ImageViewer from './ImageViewer/Root'
 import saveImage from './ImageViewer/save'
 
-const HeaderComponent = React.memo(
-  ({
-    messageRef,
-    navigation,
-    currentIndex,
-    imageUrls
-  }: {
-    messageRef: RefObject<FlashMessage>
-    navigation: NativeStackNavigationProp<
-      RootStackParamList,
-      'Screen-ImagesViewer'
-    >
-    currentIndex: number
-    imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls']
-  }) => {
-    const insets = useSafeAreaInsets()
-    const { mode, theme } = useTheme()
-    const { t } = useTranslation('screenImageViewer')
-    const { showActionSheetWithOptions } = useActionSheet()
-
-    const onPress = useCallback(() => {
-      analytics('imageviewer_more_press')
-      showActionSheetWithOptions(
-        {
-          options: [
-            t('content.options.save'),
-            t('content.options.share'),
-            t('content.options.cancel')
-          ],
-          cancelButtonIndex: 2,
-          userInterfaceStyle: mode
-        },
-        async buttonIndex => {
-          switch (buttonIndex) {
-            case 0:
-              analytics('imageviewer_more_save_press')
-              saveImage({ messageRef, theme, image: imageUrls[currentIndex] })
-              break
-            case 1:
-              analytics('imageviewer_more_share_press')
-              switch (Platform.OS) {
-                case 'ios':
-                  await Share.share({ url: imageUrls[currentIndex].url })
-                  break
-                case 'android':
-                  await Share.share({ message: imageUrls[currentIndex].url })
-                  break
-              }
-              break
-          }
-        }
-      )
-    }, [currentIndex])
-
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: insets.top
-        }}
-      >
-        <HeaderLeft
-          content='X'
-          native={false}
-          background
-          onPress={() => navigation.goBack()}
-        />
-        <HeaderCenter
-          inverted
-          content={`${currentIndex + 1} / ${imageUrls.length}`}
-        />
-        <HeaderRight
-          accessibilityLabel={t('content.actions.accessibilityLabel')}
-          accessibilityHint={t('content.actions.accessibilityHint')}
-          content='MoreHorizontal'
-          native={false}
-          background
-          onPress={onPress}
-        />
-      </View>
-    )
-  },
-  (prev, next) => prev.currentIndex === next.currentIndex
-)
-
 const ScreenImagesViewer = ({
   route: {
     params: { imageUrls, id }
@@ -118,12 +30,50 @@ const ScreenImagesViewer = ({
     return null
   }
 
-  const { theme } = useTheme()
+  const insets = useSafeAreaInsets()
+
+  const { mode, theme } = useTheme()
+  const { t } = useTranslation('screenImageViewer')
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   const messageRef = useRef<FlashMessage>(null)
+
+  const { showActionSheetWithOptions } = useActionSheet()
+  const onPress = useCallback(() => {
+    analytics('imageviewer_more_press')
+    showActionSheetWithOptions(
+      {
+        options: [
+          t('content.options.save'),
+          t('content.options.share'),
+          t('content.options.cancel')
+        ],
+        cancelButtonIndex: 2,
+        userInterfaceStyle: mode
+      },
+      async buttonIndex => {
+        switch (buttonIndex) {
+          case 0:
+            analytics('imageviewer_more_save_press')
+            saveImage({ messageRef, theme, image: imageUrls[currentIndex] })
+            break
+          case 1:
+            analytics('imageviewer_more_share_press')
+            switch (Platform.OS) {
+              case 'ios':
+                await Share.share({ url: imageUrls[currentIndex].url })
+                break
+              case 'android':
+                await Share.share({ message: imageUrls[currentIndex].url })
+                break
+            }
+            break
+        }
+      }
+    )
+  }, [currentIndex])
 
   return (
     <SafeAreaProvider>
@@ -133,14 +83,74 @@ const ScreenImagesViewer = ({
         imageIndex={initialIndex}
         onImageIndexChange={index => setCurrentIndex(index)}
         onRequestClose={() => navigation.goBack()}
-        onLongPress={image => saveImage({ messageRef, theme, image })}
+        onLongPress={() => {
+          analytics('imageviewer_more_press')
+          showActionSheetWithOptions(
+            {
+              options: [
+                t('content.options.save'),
+                t('content.options.share'),
+                t('content.options.cancel')
+              ],
+              cancelButtonIndex: 2,
+              userInterfaceStyle: mode
+            },
+            async buttonIndex => {
+              switch (buttonIndex) {
+                case 0:
+                  analytics('imageviewer_more_save_press')
+                  saveImage({
+                    messageRef,
+                    theme,
+                    image: imageUrls[currentIndex]
+                  })
+                  break
+                case 1:
+                  analytics('imageviewer_more_share_press')
+                  switch (Platform.OS) {
+                    case 'ios':
+                      await Share.share({ url: imageUrls[currentIndex].url })
+                      break
+                    case 'android':
+                      await Share.share({
+                        message: imageUrls[currentIndex].url
+                      })
+                      break
+                  }
+                  break
+              }
+            }
+          )
+        }}
         HeaderComponent={() => (
-          <HeaderComponent
-            messageRef={messageRef}
-            navigation={navigation}
-            currentIndex={currentIndex}
-            imageUrls={imageUrls}
-          />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: insets.top
+            }}
+          >
+            <HeaderLeft
+              content='X'
+              native={false}
+              background
+              onPress={() => navigation.goBack()}
+            />
+            <HeaderCenter
+              inverted
+              content={`${currentIndex + 1} / ${imageUrls.length}`}
+            />
+            <HeaderRight
+              accessibilityLabel={t('content.actions.accessibilityLabel')}
+              accessibilityHint={t('content.actions.accessibilityHint')}
+              content='MoreHorizontal'
+              native={false}
+              background
+              onPress={onPress}
+            />
+          </View>
         )}
       />
       <Message ref={messageRef} />

@@ -168,6 +168,7 @@
       "header": {
         "title": "Entwurf"
       },
+      "warning": "",
       "content": {
         "accessibilityHint": "Gespeicherter Entwurf, tippe, um diesen zu bearbeiten",
         "textEmpty": "Kein Inhalt"

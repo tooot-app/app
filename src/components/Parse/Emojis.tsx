@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
@@ -51,7 +51,13 @@ const ParseEmojis = React.memo(
         image: {
           width: adaptedFontsize,
           height: adaptedFontsize,
-          transform: [{ translateY: -2 }]
+          ...(Platform.OS === 'ios'
+            ? {
+                transform: [{ translateY: -2 }]
+              }
+            : {
+                transform: [{ translateY: 1 }]
+              })
         }
       })
     }, [theme, adaptiveFontsize])

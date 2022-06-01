@@ -169,6 +169,9 @@
       "follow": {
         "heading": "Nuovi seguaci"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "Apprezzamenti"
       },
@@ -180,6 +183,9 @@
       },
       "poll": {
         "heading": "Novità sui sondaggi"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "Scopri come funziona il traversamento dei messaggi"
     },

@@ -8,11 +8,13 @@ import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   status: Pick<Mastodon.Status, 'media_attachments' | 'sensitive'>
@@ -22,7 +24,23 @@ const TimelineAttachment = React.memo(
   ({ status }: Props) => {
     const { t } = useTranslation('componentTimeline')
 
-    const [sensitiveShown, setSensitiveShown] = useState(status.sensitive)
+    const account = useSelector(
+      getInstanceAccount,
+      (prev, next) =>
+        prev.preferences['reading:expand:media'] ===
+        next.preferences['reading:expand:media']
+    )
+    const defaultSensitive = () => {
+      switch (account.preferences['reading:expand:media']) {
+        case 'show_all':
+          return false
+        case 'hide_all':
+          return true
+        default:
+          return status.sensitive
+      }
+    }
+    const [sensitiveShown, setSensitiveShown] = useState(defaultSensitive())
 
     const imageUrls = useRef<
       RootStackParamList['Screen-ImagesViewer']['imageUrls']
@@ -151,7 +169,7 @@ const TimelineAttachment = React.memo(
           })}
         </View>
 
-        {status.sensitive &&
+        {defaultSensitive() &&
           (sensitiveShown ? (
             <Pressable
               style={{

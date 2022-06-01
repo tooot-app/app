@@ -168,6 +168,7 @@
       "header": {
         "title": "Bozza"
       },
+      "warning": "",
       "content": {
         "accessibilityHint": "Bozza salvata, premi per modificarla",
         "textEmpty": "Testo vuoto"
