@@ -170,7 +170,7 @@
         "heading": "Người theo dõi mới"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Yêu cầu theo dõi"
       },
       "favourite": {
         "heading": "Lượt thích"
@@ -185,7 +185,7 @@
         "heading": "Kết quả bình chọn"
       },
       "status": {
-        "heading": ""
+        "heading": "Tút từ người đã theo dõi"
       },
       "howitworks": "Tìm hiểu cách truyền"
     },
