@@ -30,7 +30,7 @@
         "default": "{{name}} đăng lại",
         "notification": "{{name}} đăng lại tút của bạn"
       },
-      "update": ""
+      "update": "Đăng lại đã được sửa"
     },
     "actions": {
       "reply": {
