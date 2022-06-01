@@ -170,7 +170,7 @@
         "heading": "新关注者"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "关注请求"
       },
       "favourite": {
         "heading": "嘟文被喜欢"
@@ -185,7 +185,7 @@
         "heading": "投票更新"
       },
       "status": {
-        "heading": ""
+        "heading": "订阅用户的嘟文"
       },
       "howitworks": "了解通知消息转发如何工作"
     },
