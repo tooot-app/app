@@ -13,7 +13,7 @@ import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, View } from 'react-native'
+import { Platform, Pressable, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -139,7 +139,13 @@ const renderNode = ({
                 name='ExternalLink'
                 size={adaptedFontsize}
                 style={{
-                  transform: [{ translateY: -2 }]
+                  ...(Platform.OS === 'ios'
+                    ? {
+                        transform: [{ translateY: -2 }]
+                      }
+                    : {
+                        transform: [{ translateY: 1 }]
+                      })
                 }}
               />
             ) : null}
