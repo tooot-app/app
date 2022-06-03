@@ -10,7 +10,6 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useQueryClient } from 'react-query'
@@ -100,20 +99,16 @@ const ActionsNotificationsFilter: React.FC = () => {
       </MenuContainer>
       <Button
         type='text'
-        content={t('content.button.apply')}
+        content={t('common:buttons.apply')}
         onPress={() => {
           queryClient.resetQueries(queryKey)
         }}
-        style={styles.button}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
+        }}
       />
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
-  }
-})
 
 export default ActionsNotificationsFilter
