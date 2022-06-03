@@ -18,7 +18,7 @@ import {
 import {
   getVersionUpdate,
   retriveVersionLatest
-} from '@utils/slices/versionSlice'
+} from '@utils/slices/appSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'

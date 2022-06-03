@@ -48,8 +48,9 @@ const pushRegister = async (
 
   const accountId = instanceAccount.id
   const accountFull = `@${instanceAccount.acct}@${instanceUri}`
+  const randomPath = (Math.random() + 1).toString(36).substring(2)
 
-  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}`
+  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}/${randomPath}`
   const auth = base64.encodeFromByteArray(Random.getRandomBytes(16))
 
   const alerts = instancePush.alerts

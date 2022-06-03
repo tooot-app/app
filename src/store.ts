@@ -4,10 +4,10 @@ import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
 import contextsMigration from '@utils/migrations/contexts/migration'
 import instancesMigration from '@utils/migrations/instances/migration'
 import settingsMigration from '@utils/migrations/settings/migration'
+import appSlice from '@utils/slices/appSlice'
 import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice, { SettingsState } from '@utils/slices/settingsSlice'
-import versionSlice from '@utils/slices/versionSlice'
 import { Platform } from 'react-native'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import {
@@ -67,7 +67,7 @@ const store = configureStore({
       SettingsState,
       AnyAction
     >,
-    version: versionSlice
+    app: appSlice
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

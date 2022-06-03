@@ -17,10 +17,9 @@ import {
 } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import 'expo-asset'
-import * as Notifications from 'expo-notifications'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { AppState, LogBox, Platform } from 'react-native'
+import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-image-keyboard'
 import { enableFreeze } from 'react-native-screens'
@@ -43,18 +42,6 @@ enableFreeze(true)
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
   const [localCorrupt, setLocalCorrupt] = useState<string>()
-
-  const appStateEffect = useCallback(() => {
-    Notifications.setBadgeCountAsync(0)
-    Notifications.dismissAllNotificationsAsync()
-  }, [])
-  useEffect(() => {
-    const appStateListener = AppState.addEventListener('change', appStateEffect)
-
-    return () => {
-      appStateListener.remove()
-    }
-  }, [])
 
   useEffect(() => {
     const delaySplash = async () => {

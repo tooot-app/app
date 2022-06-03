@@ -1,5 +1,5 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { getVersionUpdate } from '@utils/slices/versionSlice'
+import { getVersionUpdate } from '@utils/slices/appSlice'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform } from 'react-native'

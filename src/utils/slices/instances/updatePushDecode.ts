@@ -2,7 +2,6 @@ import apiTooot from '@api/tooot'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
-import { isDevelopment } from '@utils/checkEnvironment'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
@@ -21,14 +20,10 @@ export const updateInstancePushDecode = createAsyncThunk(
       return Promise.reject()
     }
 
-    const expoToken = isDevelopment
-      ? 'DEVELOPMENT_TOKEN_1'
-      : (
-          await Notifications.getExpoPushTokenAsync({
-            experienceId: '@xmflsct/tooot',
-            applicationId: 'com.xmflsct.app.tooot'
-          })
-        ).data
+    const expoToken = state.app.expoToken
+    if (!expoToken) {
+      return Promise.reject()
+    }
 
     await apiTooot({
       method: 'put',
