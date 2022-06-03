@@ -8,6 +8,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
+import AttachmentAltText from './AltText'
 import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
@@ -75,6 +76,10 @@ const AttachmentUnsupported: React.FC<Props> = ({
           ) : null}
         </>
       ) : null}
+      <AttachmentAltText
+        sensitiveShown={sensitiveShown}
+        text={attachment.description}
+      />
     </View>
   )
 }

@@ -91,7 +91,9 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
           }}
         >
           <HeaderSharedCreated
-            created_at={notification.created_at}
+            created_at={
+              notification.status?.created_at || notification.created_at
+            }
             edited_at={notification.status?.edited_at}
           />
           {notification.status?.visibility ? (

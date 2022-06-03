@@ -5,6 +5,7 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
+import { getExpoToken } from '@utils/slices/appSlice'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -45,16 +46,12 @@ const TabMePush: React.FC = () => {
     setPushEnabled(settings.granted)
     setPushCanAskAgain(settings.canAskAgain)
   }
+  const expoToken = useSelector(getExpoToken)
   useEffect(() => {
     if (isDevelopment) {
       setPushAvailable(true)
     } else {
-      Notifications.getExpoPushTokenAsync({
-        experienceId: '@xmflsct/tooot',
-        applicationId: 'com.xmflsct.app.tooot'
-      })
-        .then(data => setPushAvailable(!!data))
-        .catch(() => setPushAvailable(false))
+      setPushAvailable(!!expoToken)
     }
 
     checkPush()

@@ -3,6 +3,7 @@ import GracefullyImage from '@components/GracefullyImage'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { View } from 'react-native'
+import AttachmentAltText from './AltText'
 import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
@@ -34,7 +35,9 @@ const AttachmentImage = ({
         uri={{ original: image.preview_url, remote: image.remote_url }}
         blurhash={image.blurhash}
         onPress={() => {
-          analytics('timeline_shared_attachment_image_press', { id: image.id })
+          analytics('timeline_shared_attachment_image_press', {
+            id: image.id
+          })
           navigateToImagesViewer(image.id)
         }}
         style={{
@@ -47,6 +50,10 @@ const AttachmentImage = ({
               ? 1
               : image.meta.original.width / image.meta.original.height
         }}
+      />
+      <AttachmentAltText
+        sensitiveShown={sensitiveShown}
+        text={image.description}
       />
     </View>
   )

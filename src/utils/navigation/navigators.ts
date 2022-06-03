@@ -20,6 +20,10 @@ export type RootStackParamList = {
     | {
         type: 'notifications_filter'
       }
+    | {
+        type: 'alt_text'
+        text: string
+      }
   'Screen-Announcements': { showAll: boolean }
   'Screen-Compose':
     | {

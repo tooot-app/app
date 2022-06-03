@@ -8,6 +8,7 @@ import { Audio } from 'expo-av'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
+import AttachmentAltText from './AltText'
 import attachmentAspectRatio from './aspectRatio'
 
 export interface Props {
@@ -127,6 +128,10 @@ const AttachmentAudio: React.FC<Props> = ({
           />
         </View>
       ) : null}
+      <AttachmentAltText
+        sensitiveShown={sensitiveShown}
+        text={audio.description}
+      />
     </View>
   )
 }

@@ -29,6 +29,7 @@ export interface Props {
 
   strokeWidth?: number
   size?: 'S' | 'M' | 'L'
+  fontBold?: boolean
   spacing?: 'XS' | 'S' | 'M' | 'L'
   round?: boolean
   overlay?: boolean
@@ -48,6 +49,7 @@ const Button: React.FC<Props> = ({
   disabled = false,
   strokeWidth,
   size = 'M',
+  fontBold = false,
   spacing = 'S',
   round = false,
   overlay = false,
@@ -122,6 +124,7 @@ const Button: React.FC<Props> = ({
                   StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 opacity: loading ? 0 : 1
               }}
+              fontWeight={fontBold ? 'Bold' : 'Normal'}
               children={content}
               testID='text'
             />
