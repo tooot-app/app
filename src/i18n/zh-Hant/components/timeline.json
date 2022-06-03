@@ -29,7 +29,8 @@
       "reblog": {
         "default": "{{name}} 轉嘟了",
         "notification": "{{name}} 轉嘟了您的嘟文"
-      }
+      },
+      "update": ""
     },
     "actions": {
       "reply": {

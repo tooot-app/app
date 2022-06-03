@@ -2,16 +2,11 @@ import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  AppState,
-  AppStateStatus,
-  Pressable,
-  StyleSheet,
-  View
-} from 'react-native'
+import { AppState, AppStateStatus, Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import analytics from '@components/analytics'
+import AttachmentAltText from './AltText'
 
 export interface Props {
   total: number
@@ -88,10 +83,12 @@ const AttachmentVideo: React.FC<Props> = ({
 
   return (
     <View
-      style={[
-        styles.base,
-        { aspectRatio: attachmentAspectRatio({ total, index }) }
-      ]}
+      style={{
+        flex: 1,
+        flexBasis: '50%',
+        padding: StyleConstants.Spacing.XS / 2,
+        aspectRatio: attachmentAspectRatio({ total, index })
+      }}
     >
       <Video
         accessibilityLabel={video.description}
@@ -127,7 +124,17 @@ const AttachmentVideo: React.FC<Props> = ({
           }
         }}
       />
-      <Pressable style={styles.overlay} onPress={gifv ? playOnPress : null}>
+      <Pressable
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+        onPress={gifv ? playOnPress : null}
+      >
         {sensitiveShown ? (
           video.blurhash ? (
             <Blurhash
@@ -149,25 +156,13 @@ const AttachmentVideo: React.FC<Props> = ({
             loading={videoLoading}
           />
         ) : null}
+        <AttachmentAltText
+          sensitiveShown={sensitiveShown}
+          text={video.description}
+        />
       </Pressable>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    flexBasis: '50%',
-    padding: StyleConstants.Spacing.XS / 2
-  },
-  overlay: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
 
 export default AttachmentVideo

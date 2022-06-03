@@ -20,6 +20,10 @@ export type RootStackParamList = {
     | {
         type: 'notifications_filter'
       }
+    | {
+        type: 'alt_text'
+        text: string
+      }
   'Screen-Announcements': { showAll: boolean }
   'Screen-Compose':
     | {
@@ -146,6 +150,7 @@ export type TabMeStackParamList = {
   'Tab-Me-Push': undefined
   'Tab-Me-Settings': undefined
   'Tab-Me-Settings-Fontsize': undefined
+  'Tab-Me-Settings-Language': undefined
   'Tab-Me-Switch': undefined
 } & TabSharedStackParamList
 export type TabMeStackScreenProps<T extends keyof TabMeStackParamList> =

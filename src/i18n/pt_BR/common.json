@@ -1,0 +1,22 @@
+{
+  "buttons": {
+    "OK": "OK",
+    "apply": "Aplicar",
+    "cancel": "Cancelar"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Emoji personalizado {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} com sucesso"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} falhou, por favor, tente novamente"
+    }
+  },
+  "separator": ", "
+}

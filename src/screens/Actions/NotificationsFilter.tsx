@@ -4,12 +4,12 @@ import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
 import { useNavigation } from '@react-navigation/native'
 import {
+  checkInstanceFeature,
   getInstanceNotificationsFilter,
   updateInstanceNotificationsFilter
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useQueryClient } from 'react-query'
@@ -33,42 +33,63 @@ const ActionsNotificationsFilter: React.FC = () => {
     return null
   }
 
+  const hasTypeStatus = useSelector(
+    checkInstanceFeature('notification_type_status')
+  )
+  const hasTypeUpdate = useSelector(
+    checkInstanceFeature('notification_type_update')
+  )
   const options = useMemo(() => {
     return (
       instanceNotificationsFilter &&
       (
         [
           'follow',
+          'follow_request',
           'favourite',
           'reblog',
           'mention',
           'poll',
-          'follow_request'
+          'status',
+          'update'
         ] as [
           'follow',
+          'follow_request',
           'favourite',
           'reblog',
           'mention',
           'poll',
-          'follow_request'
+          'status',
+          'update'
         ]
-      ).map(type => (
-        <MenuRow
-          key={type}
-          title={t(`content.notificationsFilter.content.${type}`)}
-          switchValue={instanceNotificationsFilter[type]}
-          switchOnValueChange={() =>
-            dispatch(
-              updateInstanceNotificationsFilter({
-                ...instanceNotificationsFilter,
-                [type]: !instanceNotificationsFilter[type]
-              })
-            )
+      )
+        .filter(type => {
+          switch (type) {
+            case 'status':
+              return hasTypeStatus
+            case 'update':
+              return hasTypeUpdate
+            default:
+              return true
           }
-        />
-      ))
+        })
+        .map(type => (
+          <MenuRow
+            key={type}
+            title={t(`content.notificationsFilter.content.${type}`)}
+            switchValue={instanceNotificationsFilter[type]}
+            switchOnValueChange={() =>
+              dispatch(
+                updateInstanceNotificationsFilter({
+                  ...instanceNotificationsFilter,
+                  [type]: !instanceNotificationsFilter[type]
+                })
+              )
+            }
+          />
+        ))
     )
-  }, [instanceNotificationsFilter])
+  }, [instanceNotificationsFilter, hasTypeStatus, hasTypeUpdate])
 
   return (
     <>
@@ -78,20 +99,16 @@ const ActionsNotificationsFilter: React.FC = () => {
       </MenuContainer>
       <Button
         type='text'
-        content={t('content.button.apply')}
+        content={t('common:buttons.apply')}
         onPress={() => {
           queryClient.resetQueries(queryKey)
         }}
-        style={styles.button}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
+        }}
       />
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
-  }
-})
 
 export default ActionsNotificationsFilter

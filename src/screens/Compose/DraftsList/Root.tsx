@@ -53,7 +53,6 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   const renderItem = useCallback(
     ({ item }: { item: ComposeStateDraft }) => {
-      console.log('timestamp', item.timestamp)
       return (
         <Pressable
           accessibilityHint={t('content.draftsList.content.accessibilityHint')}
@@ -193,6 +192,30 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   return (
     <>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+          padding: StyleConstants.Spacing.S,
+          borderColor: colors.border,
+          borderWidth: 1,
+          borderRadius: StyleConstants.Spacing.S
+        }}
+      >
+        <Icon
+          name='AlertTriangle'
+          color={colors.secondary}
+          size={StyleConstants.Font.Size.M}
+          style={{ marginRight: StyleConstants.Spacing.S }}
+        />
+        <CustomText
+          fontStyle='S'
+          style={{ flexShrink: 1, color: colors.secondary }}
+        >
+          {t('content.draftsList.warning')}
+        </CustomText>
+      </View>
       <PanGestureHandler enabled={Platform.OS === 'ios'}>
         <SwipeListView
           data={instanceDrafts}

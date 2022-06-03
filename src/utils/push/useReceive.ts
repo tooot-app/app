@@ -1,14 +1,14 @@
 import { displayMessage } from '@components/Message'
 import queryClient from '@helpers/queryClient'
 import initQuery from '@utils/initQuery'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { Instance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import pushUseNavigate from './useNavigate'
 
 export interface Params {
-  instances: Instance[]
+  instances: InstanceLatest[]
 }
 
 const pushUseReceive = ({ instances }: Params) => {

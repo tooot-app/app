@@ -2,7 +2,10 @@ import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
-import { getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
+import {
+  checkInstanceFeature,
+  getInstanceNotificationsFilter
+} from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
@@ -62,16 +65,26 @@ const queryFunction = async ({
     case 'Notifications':
       const rootStore = store.getState()
       const notificationsFilter = getInstanceNotificationsFilter(rootStore)
+      const usePositiveFilter = checkInstanceFeature(
+        'notification_types_positive_filter'
+      )(rootStore)
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',
         params: {
           ...params,
-          ...(notificationsFilter && {
-            exclude_types: Object.keys(notificationsFilter)
-              // @ts-ignore
-              .filter(filter => notificationsFilter[filter] === false)
-          })
+          ...(notificationsFilter &&
+            (usePositiveFilter
+              ? {
+                  types: Object.keys(notificationsFilter)
+                    // @ts-ignore
+                    .filter(filter => notificationsFilter[filter] === true)
+                }
+              : {
+                  exclude_types: Object.keys(notificationsFilter)
+                    // @ts-ignore
+                    .filter(filter => notificationsFilter[filter] === false)
+                }))
         }
       })
 
@@ -427,8 +440,8 @@ const useTimelineMutation = ({
     ...(onMutate && {
       onMutate: params => {
         queryClient.cancelQueries(params.queryKey)
-        let oldData
-        params.queryKey && (oldData = queryClient.getQueryData(params.queryKey))
+        const oldData =
+          params.queryKey && queryClient.getQueryData(params.queryKey)
 
         haptics('Light')
         switch (params.type) {

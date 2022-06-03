@@ -1,18 +1,19 @@
 {
   "content": {
-    "button": {
-      "apply": "",
-      "cancel": ""
+    "altText": {
+      "heading": ""
     },
     "notificationsFilter": {
       "heading": "",
       "content": {
         "follow": "",
+        "follow_request": "",
         "favourite": "",
         "reblog": "",
         "mention": "",
         "poll": "",
-        "follow_request": ""
+        "status": "",
+        "update": ""
       }
     }
   }

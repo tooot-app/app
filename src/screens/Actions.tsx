@@ -7,7 +7,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import {
@@ -30,6 +30,7 @@ import {
 } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 import ActionsAccount from './Actions/Account'
+import ActionsAltText from './Actions/AltText'
 import ActionsDomain from './Actions/Domain'
 import ActionsNotificationsFilter from './Actions/NotificationsFilter'
 import ActionsShare from './Actions/Share'
@@ -173,6 +174,8 @@ const ScreenActions = ({
         )
       case 'notifications_filter':
         return <ActionsNotificationsFilter />
+      case 'alt_text':
+        return <ActionsAltText text={params.text} />
     }
   }
 

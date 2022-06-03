@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "툿 폰트 크기"
       },
+      "language": {
+        "name": "언어"
+      },
       "lists": {
         "name": "목록"
       },
@@ -166,6 +169,9 @@
       "follow": {
         "heading": "새 팔로워"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "즐겨찾기됨"
       },
@@ -177,6 +183,9 @@
       },
       "poll": {
         "heading": "투표 업데이트"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "라우팅 방법 알아보기"
     },
@@ -221,7 +230,7 @@
         }
       },
       "language": {
-        "heading": "언어",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }

@@ -2,7 +2,8 @@ import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
-import { getInstance, Instance } from '@utils/slices/instancesSlice'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { getInstance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
 import { Platform } from 'react-native'
@@ -34,7 +35,7 @@ const subscribe = async ({
 const pushRegister = async (
   state: RootState,
   expoToken: string
-): Promise<Instance['push']['keys']['auth']> => {
+): Promise<InstanceLatest['push']['keys']['auth']> => {
   const instance = getInstance(state)
   const instanceUrl = instance?.url
   const instanceUri = instance?.uri
@@ -47,8 +48,9 @@ const pushRegister = async (
 
   const accountId = instanceAccount.id
   const accountFull = `@${instanceAccount.acct}@${instanceUri}`
+  const randomPath = (Math.random() + 1).toString(36).substring(2)
 
-  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}`
+  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}/${randomPath}`
   const auth = base64.encodeFromByteArray(Random.getRandomBytes(16))
 
   const alerts = instancePush.alerts

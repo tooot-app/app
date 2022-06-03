@@ -14,6 +14,7 @@ import TabMePush from './Me/Push'
 import TabMeRoot from './Me/Root'
 import TabMeSettings from './Me/Settings'
 import TabMeSettingsFontsize from './Me/SettingsFontsize'
+import TabMeSettingsLanguage from './Me/SettingsLanguage'
 import TabMeSwitch from './Me/Switch'
 import TabSharedRoot from './Shared/Root'
 
@@ -147,6 +148,19 @@ const TabMe = React.memo(
             ...(Platform.OS === 'android' && {
               headerCenter: () => (
                 <HeaderCenter content={t('me.stacks.fontSize.name')} />
+              )
+            }),
+            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+          })}
+        />
+        <Stack.Screen
+          name='Tab-Me-Settings-Language'
+          component={TabMeSettingsLanguage}
+          options={({ navigation }: any) => ({
+            title: t('me.stacks.language.name'),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => (
+                <HeaderCenter content={t('me.stacks.language.name')} />
               )
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />

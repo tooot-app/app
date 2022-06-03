@@ -1,18 +1,19 @@
 {
   "content": {
-    "button": {
-      "apply": "$t(common:buttons.apply)",
-      "cancel": "$t(common:buttons.cancel)"
+    "altText": {
+      "heading": "替代文本"
     },
     "notificationsFilter": {
       "heading": "显示通知",
       "content": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "关注请求",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "follow_request": "关注请求"
+        "status": "订阅用户的嘟文",
+        "update": "转嘟被编辑"
       }
     }
   }

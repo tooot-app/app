@@ -145,36 +145,6 @@ const TimelinePoll: React.FC<Props> = ({
     mutation.isLoading
   ])
 
-  const pollExpiration = useMemo(() => {
-    if (poll.expired) {
-      return (
-        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-          {t('shared.poll.meta.expiration.expired')}
-        </CustomText>
-      )
-    } else {
-      if (poll.expires_at) {
-        return (
-          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-            <Trans
-              i18nKey='componentTimeline:shared.poll.meta.expiration.until'
-              components={[
-                <FormattedRelativeTime
-                  value={
-                    (new Date(poll.expires_at).getTime() -
-                      new Date().getTime()) /
-                    1000
-                  }
-                  updateIntervalInSeconds={1}
-                />
-              ]}
-            />
-          </CustomText>
-        )
-      }
-    }
-  }, [theme, i18n.language, poll.expired, poll.expires_at])
-
   const isSelected = useCallback(
     (index: number): string =>
       allOptions[index]
@@ -302,20 +272,37 @@ const TimelinePoll: React.FC<Props> = ({
   const pollVoteCounts = useMemo(() => {
     if (poll.voters_count !== null) {
       return (
-        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-          {t('shared.poll.meta.count.voters', { count: poll.voters_count })}
-          {' • '}
-        </CustomText>
+        t('shared.poll.meta.count.voters', { count: poll.voters_count }) + ' • '
       )
     } else if (poll.votes_count !== null) {
       return (
-        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-          {t('shared.poll.meta.count.votes', { count: poll.votes_count })}
-          {' • '}
-        </CustomText>
+        t('shared.poll.meta.count.votes', { count: poll.votes_count }) + ' • '
       )
     }
   }, [poll.voters_count, poll.votes_count])
+
+  const pollExpiration = useMemo(() => {
+    if (poll.expired) {
+      return t('shared.poll.meta.expiration.expired')
+    } else {
+      if (poll.expires_at) {
+        return (
+          <Trans
+            i18nKey='componentTimeline:shared.poll.meta.expiration.until'
+            components={[
+              <FormattedRelativeTime
+                value={
+                  (new Date(poll.expires_at).getTime() - new Date().getTime()) /
+                  1000
+                }
+                updateIntervalInSeconds={1}
+              />
+            ]}
+          />
+        )
+      }
+    }
+  }, [theme, i18n.language, poll.expired, poll.expires_at])
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M }}>
@@ -329,8 +316,13 @@ const TimelinePoll: React.FC<Props> = ({
         }}
       >
         {pollButton}
-        {pollVoteCounts}
-        {pollExpiration}
+        <CustomText
+          fontStyle='S'
+          style={{ flexShrink: 1, color: colors.secondary }}
+        >
+          {pollVoteCounts}
+          {pollExpiration}
+        </CustomText>
       </View>
     </View>
   )

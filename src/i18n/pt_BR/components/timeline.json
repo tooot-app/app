@@ -1,0 +1,235 @@
+{
+  "empty": {
+    "error": {
+      "message": "Erro ao carregar",
+      "button": "Tentar novamente"
+    },
+    "success": {
+      "message": "Linha do tempo vazia"
+    }
+  },
+  "end": {
+    "message": "Que tal um copo de <0 />"
+  },
+  "lookback": {
+    "message": "Última leitura em"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Mais novo aqui",
+    "refetch": "Mais recente"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Fixado",
+      "favourite": "{{name}} favoritou seu toot",
+      "status": "{{name}} acabou de postar",
+      "follow": "{{name}} seguiu você",
+      "follow_request": "{{name}} pediu para te seguir",
+      "poll": "Uma enquete em que você votou terminou",
+      "reblog": {
+        "default": "{{name}} boostou",
+        "notification": "{{name}} deu boost no teu toot"
+      },
+      "update": ""
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Responder a este toot"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Boost este toot",
+        "function": "Boost toot"
+      },
+      "favourited": {
+        "accessibilityLabel": "Adicionar este toot aos favoritos",
+        "function": "Toot favorito"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Adicionar este toot aos favoritos",
+        "function": "Favoritos"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} usuários compartilharam este toot",
+        "accessibilityHint": "Toque para conhecer os usuários",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} usuários favoritaram este toot",
+        "accessibilityHint": "Toque para conhecer os usuários",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Este toot foi editado {{count}} vezes",
+        "accessibilityHint": "Toque para ver o histórico completo de edição",
+        "text_one": "{{count}} edição",
+        "text_other": "{{count}} edições"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Mostrar mídia sensível"
+      },
+      "unsupported": {
+        "text": "Erro ao carregar",
+        "button": "Experimente o link remoto"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Toque para ir à página de {{name}}"
+    },
+    "content": {
+      "expandHint": "conteúdo oculto"
+    },
+    "filtered": "Filtrado",
+    "fullConversation": "Ler conversas",
+    "translate": {
+      "default": "Traduzir",
+      "succeed": "Traduzido por {{provider}} de {{source}}",
+      "failed": "Falha na tradução",
+      "source_not_supported": "idioma do toot não é suportado",
+      "target_not_supported": "O idioma de destino não é suportado"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Nome de exibição"
+          },
+          "account": {
+            "accessibilityHint": "Conta do usuário"
+          }
+        },
+        "application": "Tooted com {{application}}",
+        "edited": {
+          "accessibilityLabel": "Toot editado"
+        },
+        "muted": {
+          "accessibilityLabel": "Toot silenciado"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Enviar uma mensagem direta"
+          },
+          "private": {
+            "accessibilityLabel": "Toot é visível apenas para seguidores"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Com",
+        "delete": {
+          "function": "Excluir mensagem direta"
+        }
+      },
+      "actions": {
+        "accessibilityHint": "Ações para este toot, como o seu usuário publicado",
+        "account": {
+          "heading": "Sobre o usuário",
+          "mute": {
+            "function": "Silenciar usuário",
+            "button": "Silenciar @{{acct}}"
+          },
+          "block": {
+            "function": "Bloquear usuário",
+            "button": "Bloquear @{{acct}}"
+          },
+          "reports": {
+            "function": "Denunciar usuário",
+            "button": "Reportar @{{acct}}"
+          }
+        },
+        "domain": {
+          "heading": "Sobre a instância",
+          "block": {
+            "function": "Bloquear instância",
+            "button": "Bloquear a instância {{domain}}"
+          },
+          "alert": {
+            "title": "Confirma bloquear {{domain}}?",
+            "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!",
+            "buttons": {
+              "confirm": "Confirmar bloqueio",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        },
+        "share": {
+          "status": {
+            "heading": "Compartilhar toot",
+            "button": "Compartilhar o link para este mundo"
+          },
+          "account": {
+            "heading": "Compartilhar Usuário",
+            "button": "Compartilhar link para este usuário"
+          }
+        },
+        "status": {
+          "heading": "Sobre o toot",
+          "edit": {
+            "function": "Editar toot",
+            "button": "Editar este toot"
+          },
+          "delete": {
+            "function": "Remover toot",
+            "button": "Deletar este toot",
+            "alert": {
+              "title": "Confirmar exclusão?",
+              "message": "Tem certeza que deseja excluir este toot? Todos os boosts e favoritos serão apagados, incluindo todas as respostas.",
+              "buttons": {
+                "confirm": "Confirme a exclusão",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "deleteEdit": {
+            "function": "Remover toot",
+            "button": "Excluir e rascunhar",
+            "alert": {
+              "title": "Confirmar exclusão?",
+              "message": "Tem certeza que deseja excluir este toot? Todos os boosts e favoritos serão apagados, incluindo todas as respostas.",
+              "buttons": {
+                "confirm": "Confirme a exclusão",
+                "cancel": "$t(common:buttons.cancel)"
+              }
+            }
+          },
+          "mute": {
+            "function": "Silenciar toot",
+            "button": {
+              "positive": "Silenciar este toot e respostas",
+              "negative": "Desbloquear este toot e respostas"
+            }
+          },
+          "pin": {
+            "function": "Fixar",
+            "button": {
+              "positive": "Fixar este toot",
+              "negative": "Desafixar este toot"
+            }
+          }
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Votar",
+          "refresh": "Atualizar"
+        },
+        "count": {
+          "voters_one": "{{count}} usuário votou",
+          "voters_other": "{{count}} usuários votaram",
+          "votes_one": "{{count}} voto",
+          "votes_other": "{{count}} votos"
+        },
+        "expiration": {
+          "expired": "Voto expirado",
+          "until": "Expira em <0 />"
+        }
+      }
+    }
+  }
+}

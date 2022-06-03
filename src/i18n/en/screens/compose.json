@@ -168,6 +168,7 @@
       "header": {
         "title": "Draft"
       },
+      "warning": "Drafts are only stored locally, and can be lost in unfortunate events. Advise not using drafts for long term storage.",
       "content": {
         "accessibilityHint": "Saved draft, tap to edit this draft",
         "textEmpty": "Content empty"

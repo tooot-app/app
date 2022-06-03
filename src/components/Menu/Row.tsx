@@ -22,7 +22,7 @@ export interface Props {
   switchDisabled?: boolean
   switchOnValueChange?: () => void
 
-  iconBack?: 'ChevronRight' | 'ExternalLink'
+  iconBack?: 'ChevronRight' | 'ExternalLink' | 'Check'
   iconBackColor?: ColorDefinitions
 
   loading?: boolean

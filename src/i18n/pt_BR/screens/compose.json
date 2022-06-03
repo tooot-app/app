@@ -1,0 +1,179 @@
+{
+  "heading": {
+    "left": {
+      "button": "Cancelar",
+      "alert": {
+        "title": "Cancelar edições?",
+        "buttons": {
+          "save": "Salvar rascunho",
+          "delete": "Apagar rascunho",
+          "cancel": "Cancelar"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Toot",
+        "conversation": "Toot DM",
+        "reply": "Resposta de toot",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
+      },
+      "alert": {
+        "default": {
+          "title": "Falha no tooting",
+          "button": "Tente Novamente"
+        },
+        "removeReply": {
+          "title": "Não foi possível encontrar um toot respondido",
+          "description": "Um toot respondido pode ter sido excluído. Você quer removê-lo da sua referência?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Remover referência"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Tooting cono @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Mensagem de aviso para Spoiler"
+        },
+        "textInput": {
+          "placeholder": "No que você está pensando",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Quantidade máxima de anexos atingida",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Marcar anexos como sensível",
+          "remove": {
+            "accessibilityLabel": "Remover anexo enviado, número {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Editar o anexo enviado, número {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Carregar mais anexos"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Toque para adicionar emojis ao toot"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Opção de enquete {{index}}",
+              "single": "Única escolha",
+              "multiple": "Múltiplas opções"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Reduzir opções da enquete para {{amount}}",
+              "accessibilityHint": "Quantidade mínima de opções da enquete atingida, tem atualmente {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Aumentar opções de enquete para {{amount}}",
+              "accessibilityHint": "Quantidade máxima de opções da enquete atingida, tem atualmente {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Tipo de opção",
+            "options": {
+              "single": "Uma opção",
+              "multiple": "Múltipla escolha",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          },
+          "expiration": {
+            "heading": "Validade",
+            "options": {
+              "300": "5 minutos",
+              "1800": "30 minutos",
+              "3600": "1 hora",
+              "21600": "6 horas",
+              "86400": "1 dia",
+              "259200": "3 dias",
+              "604800": "7 dias",
+              "cancel": "$t(common:buttons.cancel)"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Fazer upload de um anexo",
+          "accessibilityHint": "A função de enquete será desativada quando houver qualquer anexo",
+          "failed": {
+            "alert": {
+              "title": "Falha no envio",
+              "button": "Tente Novamente"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Adicionar enquete",
+          "accessibilityHint": "A função Anexo será desabilitada quando a enquete estiver ativa"
+        },
+        "visibility": {
+          "accessibilityLabel": "Visibilidade do toot é {{visibility}}",
+          "title": "Visibilidade do Toot",
+          "options": {
+            "public": "Público",
+            "unlisted": "Não listado",
+            "private": "Apenas seguidores",
+            "direct": "Mensagem Direta",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Spoiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Adicionar emoji",
+          "accessibilityHint": "Abra o painel de seleção de emojis, deslize horizontalmente para alterar a página"
+        }
+      },
+      "drafts_one": "Rascunho ({{count}})",
+      "drafts_other": "Rascunhos ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Editar anexos",
+        "right": {
+          "accessibilityLabel": "Salvar anexo editado",
+          "failed": {
+            "title": "Falha ao editar",
+            "button": "Tente Novamente"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Descrever mídia para deficientes visuais",
+          "placeholder": "Você pode adicionar uma descrição, às vezes chamada texto alternativo aos seus meios de comunicação social, assim eles estão acessíveis a ainda mais pessoas, incluindo as que são cegos ou deficientes visuais.\n\nAs boas descrições são concisas, mas apresentam o que está em sua mídia com precisão o suficiente para entender seu contexto."
+        },
+        "imageFocus": "Arraste o círculo de foco para atualizar o ponto de foco"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Rascunho"
+      },
+      "warning": "",
+      "content": {
+        "accessibilityHint": "Toque para editar este rascunho",
+        "textEmpty": "O conteúdo está vazio"
+      },
+      "checkAttachment": "Verificando anexos no servidor..."
+    }
+  }
+}

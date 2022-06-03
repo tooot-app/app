@@ -43,6 +43,9 @@
       "fontSize": {
         "name": "Schriftgröße"
       },
+      "language": {
+        "name": "Sprache"
+      },
       "lists": {
         "name": "Listen"
       },
@@ -141,7 +144,7 @@
         }
       },
       "fields": {
-        "group": "",
+        "group": "Gruppe {{index}}",
         "label": "Kennzeichnung",
         "content": "Inhalt"
       }
@@ -166,6 +169,9 @@
       "follow": {
         "heading": "Neue Follower"
       },
+      "follow_request": {
+        "heading": ""
+      },
       "favourite": {
         "heading": "Favoriten"
       },
@@ -177,6 +183,9 @@
       },
       "poll": {
         "heading": "Umfrageupdate"
+      },
+      "status": {
+        "heading": ""
       },
       "howitworks": "Erfahre, wie das Routing funktioniert"
     },
@@ -221,7 +230,7 @@
         }
       },
       "language": {
-        "heading": "Sprache",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
           "cancel": "$t(common:buttons.cancel)"
         }

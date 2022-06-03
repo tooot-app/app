@@ -5,11 +5,8 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { LOCALES } from '@root/i18n/locales'
 import { useAppDispatch } from '@root/store'
-import androidDefaults from '@utils/slices/instances/push/androidDefaults'
-import { getInstances } from '@utils/slices/instancesSlice'
 import {
   changeBrowser,
-  changeLanguage,
   changeTheme,
   getSettingsTheme,
   getSettingsBrowser,
@@ -19,11 +16,8 @@ import {
   getSettingsStaticEmoji,
   changeStaticEmoji
 } from '@utils/slices/settingsSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
-import * as Notifications from 'expo-notifications'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
@@ -31,10 +25,8 @@ const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()
   const dispatch = useAppDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
-  const { mode } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
 
-  const instances = useSelector(getInstances, () => true)
   const settingsFontsize = useSelector(getSettingsFontsize)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
@@ -49,102 +41,14 @@ const SettingsApp: React.FC = () => {
           `me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
         )}
         iconBack='ChevronRight'
-        onPress={() => {
-          navigation.navigate('Tab-Me-Settings-Fontsize')
-        }}
+        onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
       <MenuRow
         title={t('me.settings.language.heading')}
         // @ts-ignore
         content={LOCALES[i18n.language]}
         iconBack='ChevronRight'
-        onPress={() => {
-          const options = Object.keys(LOCALES)
-            // @ts-ignore
-            .map(locale => LOCALES[locale])
-            .concat(t('me.settings.language.options.cancel'))
-
-          showActionSheetWithOptions(
-            {
-              title: t('me.settings.language.heading'),
-              options,
-              cancelButtonIndex: options.length - 1,
-              userInterfaceStyle: mode
-            },
-            buttonIndex => {
-              if (buttonIndex === undefined) return
-              if (buttonIndex < options.length - 1) {
-                analytics('settings_language_press', {
-                  current: i18n.language,
-                  new: options[buttonIndex]
-                })
-                haptics('Success')
-
-                // @ts-ignore
-                dispatch(changeLanguage(Object.keys(LOCALES)[buttonIndex]))
-                i18n.changeLanguage(Object.keys(LOCALES)[buttonIndex])
-
-                // Update Android notification channel language
-                if (Platform.OS === 'android') {
-                  instances.forEach(instance => {
-                    const accountFull = `@${instance.account.acct}@${instance.uri}`
-                    if (instance.push.decode.value === false) {
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_default`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.default.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                    } else {
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_follow`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.follow.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_favourite`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.favourite.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_reblog`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.reblog.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_mention`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.mention.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                      Notifications.setNotificationChannelAsync(
-                        `${accountFull}_poll`,
-                        {
-                          groupId: accountFull,
-                          name: t('me.push.poll.heading'),
-                          ...androidDefaults
-                        }
-                      )
-                    }
-                  })
-                }
-              }
-            }
-          )
-        }}
+        onPress={() => navigation.navigate('Tab-Me-Settings-Language')}
       />
       <MenuRow
         title={t('me.settings.theme.heading')}

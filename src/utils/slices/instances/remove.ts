@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { InstanceLatest } from '@utils/migrations/instances/migration'
 import * as AuthSession from 'expo-auth-session'
-import { Instance } from '../instancesSlice'
 import { updateInstancePush } from './updatePush'
 
 const removeInstance = createAsyncThunk(
   'instances/remove',
-  async (instance: Instance, { dispatch }): Promise<Instance> => {
+  async (instance: InstanceLatest, { dispatch }): Promise<InstanceLatest> => {
     if (instance.push.global.value) {
       dispatch(updateInstancePush(false))
     }
