@@ -1,7 +1,7 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "Texto Alternativo"
     },
     "notificationsFilter": {
       "heading": "Exibir notificações",
@@ -12,7 +12,7 @@
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "",
+        "status": "Toot de usuários inscritos",
         "update": ""
       }
     }
