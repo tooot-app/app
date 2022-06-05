@@ -22,11 +22,3 @@
 ## OTA release channels
 
   * `MAJOR.MINOR-environment`. Environments include `release`, `candidate` and `development`.
-
-## Major versions mapping to native module versions
-
-| Version | Native module version | Expo version |
-| :------:| :-------------------: | :----------: |
-| `0-`    | `210201`              | `40.0.0`     |
-| `1-`    | `210317`              | `40.0.0`     |
-| `2.2`   | `210916`              | `41.0.0`     |
