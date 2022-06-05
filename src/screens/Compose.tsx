@@ -136,18 +136,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   ])
 
   useEffect(() => {
-    const uploadImage = async ({
-      type,
-      uri
-    }: {
-      type: 'image' | 'video'
-      uri: string
-    }) => {
-      await uploadAttachment({
-        composeDispatch,
-        imageInfo: { type, uri, width: 100, height: 100 }
-      })
-    }
     switch (params?.type) {
       case 'share':
         if (params.text) {
@@ -158,12 +146,13 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             disableDebounce: true
           })
         }
-        if (params.images?.length) {
-          params.images.forEach(image => {
-            uploadImage({ type: 'image', uri: image.uri })
-          })
-        } else if (params.video) {
-          uploadImage({ type: 'video', uri: params.video.uri })
+        if (params.media?.length) {
+          for (const m of params.media) {
+            uploadAttachment({
+              composeDispatch,
+              media: { ...m, width: 100, height: 100 }
+            })
+          }
         }
         break
       case 'edit':

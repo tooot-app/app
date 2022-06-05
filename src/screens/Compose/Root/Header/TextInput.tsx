@@ -83,9 +83,9 @@ const ComposeTextInput: React.FC = () => {
         if (nativeEvent.linkUri) {
           uploadAttachment({
             composeDispatch,
-            imageInfo: {
-              uri: nativeEvent.linkUri,
-              type: 'image',
+            media: {
+              path: nativeEvent.linkUri,
+              mime: 'image/gif',
               width: 100,
               height: 100
             }

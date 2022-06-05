@@ -52,8 +52,7 @@ export type RootStackParamList = {
     | {
         type: 'share'
         text?: string
-        images?: { type: string; uri: string }[]
-        video?: { type: string; uri: string }
+        media?: { path: string; mime: string }[]
       }
     | undefined
   'Screen-ImagesViewer': {
