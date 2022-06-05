@@ -109,7 +109,10 @@ const mediaSelector = async ({
         includeExif: false,
         multiple: true,
         minFiles: 1,
-        maxFiles: _maximum
+        maxFiles: _maximum,
+        loadingLabelText: '',
+        compressImageMaxWidth: 4096,
+        compressImageMaxHeight: 4096
       }).catch(() => {})
 
       if (!images) {
@@ -125,7 +128,10 @@ const mediaSelector = async ({
             mediaType: 'photo',
             path: image.path,
             width: resize.width,
-            height: resize.height
+            height: resize.height,
+            cropperChooseText: i18next.t('common:buttons.apply'),
+            cropperCancelText: i18next.t('common:buttons.cancel'),
+            hideBottomControls: true
           }).catch(() => {})
           croppedImage && croppedImages.push(croppedImage)
         }
@@ -135,7 +141,8 @@ const mediaSelector = async ({
     const selectVideo = async () => {
       const video = await ImagePicker.openPicker({
         mediaType: 'video',
-        includeExif: false
+        includeExif: false,
+        loadingLabelText: ''
       }).catch(() => {})
 
       if (video) {
