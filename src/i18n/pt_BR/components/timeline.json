@@ -46,7 +46,7 @@
       },
       "bookmarked": {
         "accessibilityLabel": "Adicionar este toot aos favoritos",
-        "function": "Favoritos"
+        "function": "Salvos"
       }
     },
     "actionsUsers": {
