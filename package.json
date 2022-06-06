@@ -79,6 +79,7 @@
     "react-native-animated-spinkit": "1.5.2",
     "react-native-base64": "^0.2.1",
     "react-native-blurhash": "1.1.10",
+    "react-native-context-menu-view": "xmflsct/react-native-context-menu-view",
     "react-native-fast-image": "8.5.11",
     "react-native-feather": "1.1.2",
     "react-native-flash-message": "0.2.1",

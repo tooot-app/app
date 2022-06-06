@@ -412,6 +412,8 @@ PODS:
     - React-Core
   - react-native-cameraroll (4.1.2):
     - React-Core
+  - react-native-context-menu-view (1.5.4):
+    - React
   - react-native-netinfo (9.0.0):
     - React-Core
   - react-native-pager-view (5.4.11):
@@ -646,6 +648,7 @@ DEPENDENCIES:
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
+  - react-native-context-menu-view (from `../node_modules/react-native-context-menu-view`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - "react-native-paste-input (from `../node_modules/@mattermost/react-native-paste-input`)"
@@ -804,6 +807,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-blurhash"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
+  react-native-context-menu-view:
+    :path: "../node_modules/react-native-context-menu-view"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
@@ -928,6 +933,7 @@ SPEC CHECKSUMS:
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-blurhash: add4df9a937b4e021a24bc67a0714f13e0bd40b7
   react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
+  react-native-context-menu-view: b0beca02aad4bd9f9d7d932bf437e0a03baa69ef
   react-native-netinfo: 5b664b2945a8f02102b296f0f812bddd6827ed9c
   react-native-pager-view: 7f00d63688f7df9fad86dfb0154814419cc5eb8d
   react-native-paste-input: efbf0b08fa1673f0e3131da6ea01678c1bb8003e

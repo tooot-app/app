@@ -49,7 +49,6 @@ const ScreenActions = ({
   let sameAccount = false
   switch (params.type) {
     case 'status':
-      console.log('media length', params.status.media_attachments.length)
       sameAccount = instanceAccount?.id === params.status.account.id
       break
     case 'account':
@@ -117,38 +116,6 @@ const ScreenActions = ({
                 dismiss={dismiss}
               />
             ) : null}
-            {sameAccount && params.status ? (
-              <ActionsStatus
-                navigation={navigation}
-                queryKey={params.queryKey}
-                rootQueryKey={params.rootQueryKey}
-                status={params.status}
-                dismiss={dismiss}
-              />
-            ) : null}
-            {!sameDomain && statusDomain ? (
-              <ActionsDomain
-                queryKey={params.queryKey}
-                rootQueryKey={params.rootQueryKey}
-                domain={statusDomain}
-                dismiss={dismiss}
-              />
-            ) : null}
-            {params.status.visibility !== 'direct' ? (
-              <ActionsShare
-                url={params.status.url || params.status.uri}
-                type={params.type}
-                dismiss={dismiss}
-              />
-            ) : null}
-            <Button
-              type='text'
-              content={t('common:buttons.cancel')}
-              onPress={() => {
-                analytics('bottomsheet_acknowledge')
-              }}
-              style={styles.button}
-            />
           </>
         )
       case 'account':

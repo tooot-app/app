@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "Actions for this toot, such as its posted user, toot itself",
+  "account": {
+    "title": "User actions",
+    "mute": {
+      "action": "Mute user"
+    },
+    "block": {
+      "action": "Block user"
+    },
+    "reports": {
+      "action": "Report user"
+    }
+  },
+  "instance": {
+    "title": "Instance action",
+    "block": {
+      "action": "Block instance {{instance}}",
+      "alert": {
+        "title": "Confirm blocking instance {{instance}} ?",
+        "message": "Mostly you can mute or block certain user.\n\nAfter blocking instance, all its content including followers from this instance will be removed!",
+        "buttons": {
+          "confirm": "Confirm"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Share toot"
+    },
+    "account": {
+      "action": "Share user"
+    }
+  },
+  "status": {
+    "title": "Toot actions",
+    "edit": {
+      "action": "Edit toot"
+    },
+    "delete": {
+      "action": "Delete toot",
+      "alert": {
+        "title": "Confirm deleting?",
+        "message": "All boosts and favourites will be cleared, including all replies.",
+        "buttons": {
+          "confirm": "Confirm"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "Delete toot and repost",
+      "alert": {
+        "title": "Confirm deleting and repost?",
+        "message": "All boosts and favourites will be cleared, including all replies.",
+        "buttons": {
+          "confirm": "Confirm"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "Mute toot and replies",
+      "action-muted_true": "Unmute toot and replies"
+    },
+    "pin": {
+      "action-pinned_false": "Pin toot",
+      "action-pinned_true": "Unpin toot"
+    }
+  }
+}

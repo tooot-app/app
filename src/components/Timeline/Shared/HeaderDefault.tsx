@@ -1,13 +1,13 @@
 import Icon from '@components/Icon'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
+import ContextMenu from 'react-native-context-menu-view'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -16,24 +16,19 @@ import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
   highlighted: boolean
 }
 
-const TimelineHeaderDefault = ({
-  queryKey,
-  rootQueryKey,
-  status,
-  highlighted
-}: Props) => {
-  const { t } = useTranslation('componentTimeline')
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
+  const { t } = useTranslation('componentContextMenu')
   const { colors } = useTheme()
+
+  const contextMenuItems = useContext(ContextMenuContext)
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
-      <View style={{ flex: 5 }}>
+      <View style={{ flex: 7 }}>
         <HeaderSharedAccount account={status.account} />
         <View
           style={{
@@ -56,29 +51,34 @@ const TimelineHeaderDefault = ({
 
       {queryKey ? (
         <Pressable
-          accessibilityHint={t('shared.header.actions.accessibilityHint')}
+          accessibilityHint={t('accessibilityHint')}
           style={{
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingBottom: StyleConstants.Spacing.S
+            marginBottom: StyleConstants.Spacing.L
           }}
-          onPress={() =>
-            navigation.navigate('Screen-Actions', {
-              queryKey,
-              rootQueryKey,
-              status,
-              type: 'status'
-            })
-          }
-          children={
-            <Icon
-              name='MoreHorizontal'
-              color={colors.secondary}
-              size={StyleConstants.Font.Size.L}
-            />
-          }
-        />
+        >
+          <ContextMenu
+            dropdownMenuMode={true}
+            actions={contextMenuItems}
+            // onPress={({ nativeEvent: { index, name } }) => {
+            //   console.log('index', index)
+            //   console.log('name', name)
+            //   // shareOnPress(name)
+            //   // statusOnPress(name)
+            //   accountOnPress(name)
+            //   // instanceOnPress(name)
+            // }}
+            children={
+              <Icon
+                name='MoreHorizontal'
+                color={colors.secondary}
+                size={StyleConstants.Font.Size.L}
+              />
+            }
+          />
+        </Pressable>
       ) : null}
     </View>
   )

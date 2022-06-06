@@ -60,8 +60,8 @@ i18n.use(initReactI18next).init({
   returnEmptyString: false,
 
   saveMissing: true,
-  missingKeyHandler: (ns, key) => {
-    console.log('i18n missing: ' + ns + ' : ' + key)
+  missingKeyHandler: (_, ns, key) => {
+    console.log('i18n missing', ns, key)
   },
 
   interpolation: {
