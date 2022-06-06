@@ -1,27 +1,17 @@
 {
   "title": "选择媒体",
   "options": {
-    "library": "从相册上传",
-    "photo": "拍摄照片",
-    "cancel": "$t(common:buttons.cancel)"
+    "image": "",
+    "image_max": "",
+    "video": "",
+    "video_max": ""
   },
   "library": {
     "alert": {
       "title": "无权限",
       "message": "需要读取相册权限才能上传附件",
       "buttons": {
-        "settings": "去更新设置",
-        "cancel": "$t(common:buttons.cancel)"
-      }
-    }
-  },
-  "photo": {
-    "alert": {
-      "title": "无权限",
-      "message": "需要使用相机权限才能上传附件",
-      "buttons": {
-        "settings": "去更新设置",
-        "cancel": "$t(common:buttons.cancel)"
+        "settings": "去更新设置"
       }
     }
   }
