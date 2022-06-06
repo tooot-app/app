@@ -78,7 +78,6 @@ const pushUseConnect = ({ t, instances }: Params) => {
 
   useEffect(() => {
     const appStateListener = AppState.addEventListener('change', state => {
-      console.log('changing state to', state)
       if (expoToken && pushEnabled.length && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
           if (count > 0) {
@@ -96,6 +95,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
 
   return useEffect(() => {
     if (expoToken && pushEnabled.length) {
+      Notifications.setBadgeCountAsync(0)
       connect()
     }
   }, [expoToken, pushEnabled.length])
