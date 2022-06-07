@@ -1,50 +1,50 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Azioni per questo toot, per l'utente che l'ha pubblicato o per il toot stesso",
   "account": {
     "title": "",
     "mute": {
-      "action": ""
+      "action": "Muta utente"
     },
     "block": {
-      "action": ""
+      "action": "Blocca utente"
     },
     "reports": {
-      "action": ""
+      "action": "Segnala utente"
     }
   },
   "instance": {
     "title": "",
     "block": {
-      "action": "",
+      "action": "Blocca istanza {{instance}}",
       "alert": {
         "title": "",
-        "message": "",
+        "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Ho capito"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Condividi toot"
     },
     "account": {
-      "action": ""
+      "action": "Condividi utente"
     }
   },
   "status": {
     "title": "",
     "edit": {
-      "action": ""
+      "action": "Modifica toot"
     },
     "delete": {
-      "action": "",
+      "action": "Cancella toot",
       "alert": {
-        "title": "",
+        "title": "Conferma?",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Ho capito"
         }
       }
     },
@@ -54,7 +54,7 @@
         "title": "",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Ho capito"
         }
       }
     },
