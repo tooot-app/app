@@ -1,15 +1,15 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Hành động với tút này, bao gồm đăng thủ công hay đăng tự động",
   "account": {
-    "title": "",
+    "title": "Hành động người dùng",
     "mute": {
-      "action": ""
+      "action": "Ẩn người này"
     },
     "block": {
-      "action": ""
+      "action": "Chặn người này"
     },
     "reports": {
-      "action": ""
+      "action": "Báo cáo"
     }
   },
   "instance": {
