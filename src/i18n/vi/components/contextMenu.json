@@ -13,58 +13,58 @@
     }
   },
   "instance": {
-    "title": "",
+    "title": "Hành động máy chủ",
     "block": {
-      "action": "",
+      "action": "Chặn {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Xác nhận chặn {{instance}} ?",
+        "message": "Bạn có thể ẩn hoặc chặn bất kỳ người nào.\n\nĐối với máy chủ, toàn bộ nội dung bao gồm người theo dõi bạn từ máy chủ đó cũng sẽ bị chặn!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Xác nhận"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Đăng lại"
     },
     "account": {
-      "action": ""
+      "action": "Chia sẻ"
     }
   },
   "status": {
-    "title": "",
+    "title": "Hành động tút",
     "edit": {
-      "action": ""
+      "action": "Sửa tút"
     },
     "delete": {
-      "action": "",
+      "action": "Xóa tút",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Tiếp tục xóa?",
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Xác nhận"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Xóa và đăng lại",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Tiếp tục xóa và đăng lại?",
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Xác nhận"
         }
       }
     },
     "mute": {
-      "action-muted_false": "",
-      "action-muted_true": ""
+      "action-muted_false": "Ẩn tút này",
+      "action-muted_true": "Bỏ ẩn tút này"
     },
     "pin": {
-      "action-pinned_false": "",
-      "action-pinned_true": ""
+      "action-pinned_false": "Tút ghim",
+      "action-pinned_true": "Bỏ ghim tút"
     }
   }
 }
