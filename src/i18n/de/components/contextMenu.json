@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
+  "account": {
+    "title": "",
+    "mute": {
+      "action": "Profil stummschalten"
+    },
+    "block": {
+      "action": "Nutzer blockieren"
+    },
+    "reports": {
+      "action": "User melden"
+    }
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "Instanz {{instance}} blockieren",
+      "alert": {
+        "title": "",
+        "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!",
+        "buttons": {
+          "confirm": "Bestätigen"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Tröt teilen"
+    },
+    "account": {
+      "action": "User verlinken"
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": "Tröt bearbeiten"
+    },
+    "delete": {
+      "action": "Tröt löschen",
+      "alert": {
+        "title": "Löschen bestätigen?",
+        "message": "",
+        "buttons": {
+          "confirm": "Bestätigen"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": "Bestätigen"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "",
+      "action-muted_true": ""
+    },
+    "pin": {
+      "action-pinned_false": "",
+      "action-pinned_true": ""
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "Ações para este toot, como o seu usuário publicado",
+  "account": {
+    "title": "",
+    "mute": {
+      "action": "Silenciar usuário"
+    },
+    "block": {
+      "action": "Bloquear usuário"
+    },
+    "reports": {
+      "action": "Denunciar usuário"
+    }
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "Bloquear a instância {{instance}}",
+      "alert": {
+        "title": "",
+        "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!",
+        "buttons": {
+          "confirm": "Confirmar"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Compartilhar toot"
+    },
+    "account": {
+      "action": "Compartilhar Usuário"
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": "Editar toot"
+    },
+    "delete": {
+      "action": "Remover toot",
+      "alert": {
+        "title": "Confirme a exclusão?",
+        "message": "",
+        "buttons": {
+          "confirm": "Confirmar"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": "Confirmar"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "",
+      "action-muted_true": ""
+    },
+    "pin": {
+      "action-pinned_false": "",
+      "action-pinned_true": ""
+    }
+  }
+}

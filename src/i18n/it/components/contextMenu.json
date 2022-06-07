@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "Azioni per questo toot, per l'utente che l'ha pubblicato o per il toot stesso",
+  "account": {
+    "title": "",
+    "mute": {
+      "action": "Muta utente"
+    },
+    "block": {
+      "action": "Blocca utente"
+    },
+    "reports": {
+      "action": "Segnala utente"
+    }
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "Blocca istanza {{instance}}",
+      "alert": {
+        "title": "",
+        "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
+        "buttons": {
+          "confirm": "Ho capito"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Condividi toot"
+    },
+    "account": {
+      "action": "Condividi utente"
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": "Modifica toot"
+    },
+    "delete": {
+      "action": "Cancella toot",
+      "alert": {
+        "title": "Conferma?",
+        "message": "",
+        "buttons": {
+          "confirm": "Ho capito"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": "Ho capito"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "",
+      "action-muted_true": ""
+    },
+    "pin": {
+      "action-pinned_false": "",
+      "action-pinned_true": ""
+    }
+  }
+}
