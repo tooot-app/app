@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>EXUpdatesCheckOnLaunch</key>
-	<string>WIFI_ONLY</string>
-	<key>EXUpdatesEnabled</key>
-	<true/>
-	<key>EXUpdatesLaunchWaitMs</key>
-	<integer>0</integer>
-	<key>EXUpdatesReleaseChannel</key>
-	<string>0-development</string>
-	<key>EXUpdatesSDKVersion</key>
-	<string>0</string>
-	<key>EXUpdatesURL</key>
-	<string>https://exp.host/@xmflsct/tooot</string>
-</dict>
+  <dict>
+    <key>EXUpdatesCheckOnLaunch</key>
+    <string>WIFI_ONLY</string>
+    <key>EXUpdatesEnabled</key>
+    <true/>
+    <key>EXUpdatesLaunchWaitMs</key>
+    <integer>0</integer>
+    <key>EXUpdatesReleaseChannel</key>
+    <string>0-development</string>
+    <key>EXUpdatesSDKVersion</key>
+    <string>0</string>
+    <key>EXUpdatesURL</key>
+    <string>https://exp.host/@xmflsct/tooot</string>
+  </dict>
 </plist>

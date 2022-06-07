@@ -22,6 +22,7 @@
 		E613A80B28282A01003C97D6 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E613A80A28282A01003C97D6 /* AppDelegate.mm */; };
 		E633A42B281EAEAB000E540F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E633A420281EAEAB000E540F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E633A430281EAF38000E540F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E633A42F281EAF38000E540F /* ShareViewController.swift */; };
+		4986628FD0DD4630BFE5F388 /* boop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DF8133F098604A10B0D94952 /* boop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		E633A431281EB55C000E540F /* ShareExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		DF8133F098604A10B0D94952 /* boop.mp3 */ = {isa = PBXFileReference; name = "boop.mp3"; path = "tooot/boop.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				5E36538225C9B8BD009F93EE /* RootViewColor.xcassets */,
 				B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */,
 				5EE088CB26297820007E5FEC /* InfoPlist.strings */,
+				DF8133F098604A10B0D94952 /* boop.mp3 */,
 			);
 			name = tooot;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				DA8B5B7F0DED488CAC0FF169 /* GoogleService-Info.plist in Resources */,
+				4986628FD0DD4630BFE5F388 /* boop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,7 +548,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xmflsct.app.tooot;
-				PRODUCT_NAME = tooot;
+				PRODUCT_NAME = "tooot";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.xmflsct.app.tooot";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -579,7 +583,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xmflsct.app.tooot;
-				PRODUCT_NAME = tooot;
+				PRODUCT_NAME = "tooot";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.xmflsct.app.tooot";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;

@@ -35,5 +35,13 @@ export default (): ExpoConfig => ({
     googleServicesFile: './configs/google-services.json',
     permissions: ['CAMERA', 'VIBRATE'],
     blockedPermissions: ['USE_BIOMETRIC', 'USE_FINGERPRINT']
-  }
+  },
+  plugins: [
+    [
+      'expo-notifications',
+      {
+        sounds: ['./assets/sounds/boop.mp3']
+      }
+    ]
+  ]
 })
