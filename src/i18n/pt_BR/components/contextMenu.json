@@ -1,50 +1,50 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Ações para este toot, como o seu usuário publicado",
   "account": {
     "title": "",
     "mute": {
-      "action": ""
+      "action": "Silenciar usuário"
     },
     "block": {
-      "action": ""
+      "action": "Bloquear usuário"
     },
     "reports": {
-      "action": ""
+      "action": "Denunciar usuário"
     }
   },
   "instance": {
     "title": "",
     "block": {
-      "action": "",
+      "action": "Bloquear a instância {{instance}}",
       "alert": {
         "title": "",
-        "message": "",
+        "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Compartilhar toot"
     },
     "account": {
-      "action": ""
+      "action": "Compartilhar Usuário"
     }
   },
   "status": {
     "title": "",
     "edit": {
-      "action": ""
+      "action": "Editar toot"
     },
     "delete": {
-      "action": "",
+      "action": "Remover toot",
       "alert": {
-        "title": "",
+        "title": "Confirme a exclusão?",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     },
@@ -54,7 +54,7 @@
         "title": "",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     },
