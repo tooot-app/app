@@ -12,6 +12,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		34A37A6C820725DC6DDAA0EE /* libPods-ShareExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3640FCDF7C4396A68A74D1 /* libPods-ShareExtension.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		4986628FD0DD4630BFE5F388 /* boop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DF8133F098604A10B0D94952 /* boop.mp3 */; };
 		5E36538325C9B8BD009F93EE /* RootViewColor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E36538225C9B8BD009F93EE /* RootViewColor.xcassets */; };
 		5EE088C926297820007E5FEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EE088CB26297820007E5FEC /* InfoPlist.strings */; };
 		5EE44DD62600124E00A9BCED /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE44DD52600124E00A9BCED /* File.swift */; };
@@ -71,6 +72,7 @@
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = tooot/SplashScreen.storyboard; sourceTree = "<group>"; };
 		B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tooot/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		DF8133F098604A10B0D94952 /* boop.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = boop.mp3; path = tooot/boop.mp3; sourceTree = "<group>"; };
 		E613A80A28282A01003C97D6 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = tooot/AppDelegate.mm; sourceTree = "<group>"; };
 		E633A420281EAEAB000E540F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E633A427281EAEAB000E540F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				5E36538225C9B8BD009F93EE /* RootViewColor.xcassets */,
 				B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */,
 				5EE088CB26297820007E5FEC /* InfoPlist.strings */,
+				DF8133F098604A10B0D94952 /* boop.mp3 */,
 			);
 			name = tooot;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				DA8B5B7F0DED488CAC0FF169 /* GoogleService-Info.plist in Resources */,
+				4986628FD0DD4630BFE5F388 /* boop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,13 +390,17 @@
 				"${PODS_ROOT}/Target Support Files/Pods-tooot/Pods-tooot-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

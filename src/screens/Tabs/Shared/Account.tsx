@@ -1,5 +1,3 @@
-import analytics from '@components/analytics'
-import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
@@ -23,8 +21,7 @@ const TabSharedAccount: React.FC<
 > = ({
   route: {
     params: { account }
-  },
-  navigation
+  }
 }) => {
   const { t, i18n } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
@@ -32,33 +29,6 @@ const TabSharedAccount: React.FC<
   const { data } = useAccountQuery({ id: account.id })
 
   const scrollY = useSharedValue(0)
-
-  useEffect(() => {
-    const updateHeaderRight = () =>
-      navigation.setOptions({
-        headerRight: () => (
-          <HeaderRight
-            accessibilityLabel={t('shared.account.actions.accessibilityLabel', {
-              user: data?.acct
-            })}
-            accessibilityHint={t('shared.account.actions.accessibilityHint')}
-            content='MoreHorizontal'
-            onPress={() => {
-              analytics('bottomsheet_open_press', {
-                page: 'account'
-              })
-              // @ts-ignore
-              navigation.navigate('Screen-Actions', {
-                type: 'account',
-                account
-              })
-            }}
-            background
-          />
-        )
-      })
-    return updateHeaderRight()
-  }, [i18n.language])
 
   const onScroll = useCallback(({ nativeEvent }) => {
     scrollY.value = nativeEvent.contentOffset.y

@@ -8,16 +8,6 @@ export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>
   'Screen-Actions':
     | {
-        type: 'status'
-        queryKey: QueryKeyTimeline
-        rootQueryKey?: QueryKeyTimeline
-        status: Mastodon.Status
-      }
-    | {
-        type: 'account'
-        account: Mastodon.Account
-      }
-    | {
         type: 'notifications_filter'
       }
     | {
@@ -52,8 +42,7 @@ export type RootStackParamList = {
     | {
         type: 'share'
         text?: string
-        images?: { type: string; uri: string }[]
-        video?: { type: string; uri: string }
+        media?: { path: string; mime: string }[]
       }
     | undefined
   'Screen-ImagesViewer': {

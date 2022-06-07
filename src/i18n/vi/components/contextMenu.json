@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "Hành động với tút này, bao gồm đăng thủ công hay đăng tự động",
+  "account": {
+    "title": "Hành động người dùng",
+    "mute": {
+      "action": "Ẩn người này"
+    },
+    "block": {
+      "action": "Chặn người này"
+    },
+    "reports": {
+      "action": "Báo cáo"
+    }
+  },
+  "instance": {
+    "title": "Hành động máy chủ",
+    "block": {
+      "action": "Chặn {{instance}}",
+      "alert": {
+        "title": "Xác nhận chặn {{instance}} ?",
+        "message": "Bạn có thể ẩn hoặc chặn bất kỳ người nào.\n\nĐối với máy chủ, toàn bộ nội dung bao gồm người theo dõi bạn từ máy chủ đó cũng sẽ bị chặn!",
+        "buttons": {
+          "confirm": "Xác nhận"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Đăng lại"
+    },
+    "account": {
+      "action": "Chia sẻ"
+    }
+  },
+  "status": {
+    "title": "Hành động tút",
+    "edit": {
+      "action": "Sửa tút"
+    },
+    "delete": {
+      "action": "Xóa tút",
+      "alert": {
+        "title": "Tiếp tục xóa?",
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
+        "buttons": {
+          "confirm": "Xác nhận"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "Xóa và đăng lại",
+      "alert": {
+        "title": "Tiếp tục xóa và đăng lại?",
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
+        "buttons": {
+          "confirm": "Xác nhận"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "Ẩn tút này",
+      "action-muted_true": "Bỏ ẩn tút này"
+    },
+    "pin": {
+      "action-pinned_false": "Tút ghim",
+      "action-pinned_true": "Bỏ ghim tút"
+    }
+  }
+}

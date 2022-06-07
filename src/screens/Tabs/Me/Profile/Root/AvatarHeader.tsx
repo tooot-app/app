@@ -3,7 +3,6 @@ import { MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as ImagePicker from 'expo-image-picker'
 import React, { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 import FlashMessage from 'react-native-flash-message'
@@ -30,9 +29,13 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
       iconBack='ChevronRight'
       onPress={async () => {
         const image = await mediaSelector({
+          mediaType: 'photo',
+          maximum: 1,
           showActionSheetWithOptions,
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          resize: { width: 400, height: 400 }
+          resize:
+            type === 'avatar'
+              ? { width: 400, height: 400 }
+              : { width: 1500, height: 500 }
         })
         mutation.mutate({
           theme,
@@ -43,7 +46,7 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
             failed: true
           },
           type,
-          data: image.uri
+          data: image[0].path
         })
       }}
     />

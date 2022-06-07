@@ -3,14 +3,12 @@ import {
   RelationshipIncoming,
   RelationshipOutgoing
 } from '@components/Relationship'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '@utils/navigation/navigators'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Pressable, View } from 'react-native'
+import ContextMenu from 'react-native-context-menu-view'
+import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -18,13 +16,13 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
-  queryKey: QueryKeyTimeline
   notification: Mastodon.Notification
 }
 
-const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+const TimelineHeaderNotification = ({ notification }: Props) => {
   const { colors } = useTheme()
+
+  const contextMenuContext = useContext(ContextMenuContext)
 
   const actions = useMemo(() => {
     switch (notification.type) {
@@ -42,18 +40,18 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
                 justifyContent: 'center',
                 paddingBottom: StyleConstants.Spacing.S
               }}
-              onPress={() =>
-                navigation.navigate('Screen-Actions', {
-                  queryKey,
-                  status: notification.status!,
-                  type: 'status'
-                })
-              }
               children={
-                <Icon
-                  name='MoreHorizontal'
-                  color={colors.secondary}
-                  size={StyleConstants.Font.Size.L}
+                <ContextMenu
+                  dropdownMenuMode
+                  actions={contextMenuContext}
+                  onPress={() => {}}
+                  children={
+                    <Icon
+                      name='MoreHorizontal'
+                      color={colors.secondary}
+                      size={StyleConstants.Font.Size.L}
+                    />
+                  }
                 />
               }
             />

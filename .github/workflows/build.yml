@@ -25,10 +25,9 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       - name: -- Step 4 -- Use Expo action
-        uses: expo/expo-github-action@v6
+        uses: expo/expo-github-action@v7
         with:
-          expo-version: 5.x
-          username: ${{ secrets.EXPO_USERNAME }}
+          expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
       - name: -- Step 5 -- Install node dependencies
         run: yarn install
