@@ -1,10 +1,10 @@
 {
   "title": "选择媒体",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "上传图片",
+    "image_max": "上传照片（上限 {{max}}）",
+    "video": "上传视频",
+    "video_max": "上传视频（上限 {{max}}）"
   },
   "library": {
     "alert": {
