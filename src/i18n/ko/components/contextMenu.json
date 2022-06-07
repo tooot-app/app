@@ -1,36 +1,36 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "이 툿에 할 동작, 툿 자체나 포스트한 사용자",
   "account": {
     "title": "",
     "mute": {
-      "action": ""
+      "action": "사용자 음소거"
     },
     "block": {
-      "action": ""
+      "action": "사용자 차단"
     },
     "reports": {
-      "action": ""
+      "action": "사용자 신고"
     }
   },
   "instance": {
     "title": "",
     "block": {
-      "action": "",
+      "action": "인스턴스 {{instance}} 차단",
       "alert": {
         "title": "",
-        "message": "",
+        "message": "보통은 유저 음소거나 차단으로 충분해요.\n\n인스턴스를 차단하면, 팔로워를 포함하는 인스턴스의 모든 콘텐츠가 삭제됩니다!",
         "buttons": {
-          "confirm": ""
+          "confirm": "확인"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "툿 공유"
     },
     "account": {
-      "action": ""
+      "action": "사용자 공유"
     }
   },
   "status": {
@@ -39,12 +39,12 @@
       "action": ""
     },
     "delete": {
-      "action": "",
+      "action": "툿 삭제",
       "alert": {
-        "title": "",
+        "title": "삭제 확인?",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "확인"
         }
       }
     },
@@ -54,7 +54,7 @@
         "title": "",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "확인"
         }
       }
     },
