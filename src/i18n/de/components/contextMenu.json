@@ -1,50 +1,50 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
   "account": {
     "title": "",
     "mute": {
-      "action": ""
+      "action": "Profil stummschalten"
     },
     "block": {
-      "action": ""
+      "action": "Nutzer blockieren"
     },
     "reports": {
-      "action": ""
+      "action": "User melden"
     }
   },
   "instance": {
     "title": "",
     "block": {
-      "action": "",
+      "action": "Instanz {{instance}} blockieren",
       "alert": {
         "title": "",
-        "message": "",
+        "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bestätigen"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Tröt teilen"
     },
     "account": {
-      "action": ""
+      "action": "User verlinken"
     }
   },
   "status": {
     "title": "",
     "edit": {
-      "action": ""
+      "action": "Tröt bearbeiten"
     },
     "delete": {
-      "action": "",
+      "action": "Tröt löschen",
       "alert": {
-        "title": "",
+        "title": "Löschen bestätigen?",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bestätigen"
         }
       }
     },
@@ -54,7 +54,7 @@
         "title": "",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bestätigen"
         }
       }
     },
