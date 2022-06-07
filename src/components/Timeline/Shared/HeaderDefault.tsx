@@ -2,11 +2,10 @@ import Icon from '@components/Icon'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useRef } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import ContextMenu from 'react-native-context-menu-view'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
@@ -24,7 +23,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
   const { t } = useTranslation('componentContextMenu')
   const { colors } = useTheme()
 
-  const contextMenuItems = useContext(ContextMenuContext)
+  const contextMenuContext = useContext(ContextMenuContext)
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -60,16 +59,9 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
           }}
         >
           <ContextMenu
-            dropdownMenuMode={true}
-            actions={contextMenuItems}
-            // onPress={({ nativeEvent: { index, name } }) => {
-            //   console.log('index', index)
-            //   console.log('name', name)
-            //   // shareOnPress(name)
-            //   // statusOnPress(name)
-            //   accountOnPress(name)
-            //   // instanceOnPress(name)
-            // }}
+            dropdownMenuMode
+            actions={contextMenuContext}
+            onPress={() => {}}
             children={
               <Icon
                 name='MoreHorizontal'

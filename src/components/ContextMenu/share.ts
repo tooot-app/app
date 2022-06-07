@@ -4,23 +4,21 @@ import { Platform, Share } from 'react-native'
 import { ContextMenuAction } from 'react-native-context-menu-view'
 
 export interface Props {
-  menuItems: ContextMenuAction[]
-  status: Mastodon.Status
+  actions: ContextMenuAction[]
+  type: 'status' | 'account'
+  url: string
 }
 
-const contextMenuShare = ({ menuItems, status }: Props) => {
+const contextMenuShare = ({ actions, type, url }: Props) => {
   const { t } = useTranslation('componentContextMenu')
 
-  if (status.visibility !== 'direct') {
-    menuItems.push({
-      id: 'share',
-      title: t(`share.status.action`),
-      systemIcon: 'square.and.arrow.up'
-    })
-  }
+  actions.push({
+    id: 'share',
+    title: t(`share.${type}.action`),
+    systemIcon: 'square.and.arrow.up'
+  })
 
   return (id: string) => {
-    const url = status.url || status.uri
     switch (id) {
       case 'share':
         analytics('timeline_shared_headeractions_share_press')

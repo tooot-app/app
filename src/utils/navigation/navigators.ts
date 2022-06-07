@@ -8,16 +8,6 @@ export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>
   'Screen-Actions':
     | {
-        type: 'status'
-        queryKey: QueryKeyTimeline
-        rootQueryKey?: QueryKeyTimeline
-        status: Mastodon.Status
-      }
-    | {
-        type: 'account'
-        account: Mastodon.Account
-      }
-    | {
         type: 'notifications_filter'
       }
     | {

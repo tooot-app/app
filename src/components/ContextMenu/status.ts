@@ -21,14 +21,14 @@ import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  menuItems: ContextMenuAction[]
+  actions: ContextMenuAction[]
   status: Mastodon.Status
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }
 
 const contextMenuStatus = ({
-  menuItems,
+  actions,
   status,
   queryKey,
   rootQueryKey
@@ -116,7 +116,7 @@ const contextMenuStatus = ({
 
     switch (Platform.OS) {
       case 'ios':
-        menuItems.push({
+        actions.push({
           id: 'status',
           title: t('status.title'),
           inlineChildren: true,
@@ -124,7 +124,7 @@ const contextMenuStatus = ({
         })
         break
       default:
-        menuItems.push(...accountMenuItems)
+        actions.push(...accountMenuItems)
         break
     }
   }

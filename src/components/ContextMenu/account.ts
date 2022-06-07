@@ -14,17 +14,17 @@ import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
 export interface Props {
-  menuItems: ContextMenuAction[]
-  status: Mastodon.Status
-  queryKey: QueryKeyTimeline
+  actions: ContextMenuAction[]
+  queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
+  id: Mastodon.Account['id']
 }
 
 const contextMenuAccount = ({
-  menuItems,
-  status,
+  actions,
   queryKey,
-  rootQueryKey
+  rootQueryKey,
+  id: accountId
 }: Props) => {
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
@@ -68,12 +68,12 @@ const contextMenuAccount = ({
     getInstanceAccount,
     (prev, next) => prev.id === next.id
   )
-  const ownAccount = instanceAccount?.id === status.account.id
+  const ownAccount = instanceAccount?.id === accountId
 
   if (!ownAccount) {
     switch (Platform.OS) {
       case 'ios':
-        menuItems.push({
+        actions.push({
           id: 'account',
           title: t('account.title'),
           inlineChildren: true,
@@ -99,7 +99,7 @@ const contextMenuAccount = ({
         })
         break
       default:
-        menuItems.push(
+        actions.push(
           {
             id: 'account-mute',
             title: t('account.mute.action'),
@@ -123,7 +123,6 @@ const contextMenuAccount = ({
   }
 
   return (id: string) => {
-    const url = status.url || status.uri
     switch (id) {
       case 'account-mute':
         analytics('timeline_shared_headeractions_account_mute_press', {
@@ -132,7 +131,7 @@ const contextMenuAccount = ({
         mutateion.mutate({
           type: 'updateAccountProperty',
           queryKey,
-          id: status.account.id,
+          id: accountId,
           payload: { property: 'mute' }
         })
         break
@@ -143,7 +142,7 @@ const contextMenuAccount = ({
         mutateion.mutate({
           type: 'updateAccountProperty',
           queryKey,
-          id: status.account.id,
+          id: accountId,
           payload: { property: 'block' }
         })
         break
@@ -154,7 +153,7 @@ const contextMenuAccount = ({
         mutateion.mutate({
           type: 'updateAccountProperty',
           queryKey,
-          id: status.account.id,
+          id: accountId,
           payload: { property: 'reports' }
         })
         break

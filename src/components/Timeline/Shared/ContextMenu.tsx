@@ -1,62 +1,79 @@
+import contextMenuAccount from '@components/ContextMenu/account'
+import contextMenuInstance from '@components/ContextMenu/instance'
+import contextMenuShare from '@components/ContextMenu/share'
+import contextMenuStatus from '@components/ContextMenu/status'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import React from 'react'
 import { createContext } from 'react'
-import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
-import contextMenuAccount from './ContextMenu/account'
-import contextMenuInstance from './ContextMenu/instance'
-import contextMenuShare from './ContextMenu/share'
-import contextMenuStatus from './ContextMenu/status'
+import ContextMenu, {
+  ContextMenuAction,
+  ContextMenuProps
+} from 'react-native-context-menu-view'
 
 export interface Props {
-  status: Mastodon.Status
+  status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }
 
 export const ContextMenuContext = createContext<ContextMenuAction[]>([])
 
-const TimelineContextMenu: React.FC<Props> = ({
+const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   children,
   status,
   queryKey,
-  rootQueryKey
+  rootQueryKey,
+  ...props
 }) => {
-  if (!queryKey) {
+  if (!status || !queryKey) {
     return <>{children}</>
   }
 
-  const menuItems: ContextMenuAction[] = []
+  const actions: ContextMenuAction[] = []
 
-  const shareOnPress = contextMenuShare({ menuItems, status })
+  const shareOnPress =
+    status.visibility !== 'direct'
+      ? contextMenuShare({
+          actions,
+          type: 'status',
+          url: status.url || status.uri
+        })
+      : null
   const statusOnPress = contextMenuStatus({
-    menuItems,
+    actions,
     status,
     queryKey,
     rootQueryKey
   })
   const accountOnPress = contextMenuAccount({
-    menuItems,
-    status,
+    actions,
     queryKey,
-    rootQueryKey
+    rootQueryKey,
+    id: status.account.id
   })
   const instanceOnPress = contextMenuInstance({
-    menuItems,
+    actions,
     status,
     queryKey,
     rootQueryKey
   })
 
   return (
-    <ContextMenuContext.Provider value={menuItems}>
+    <ContextMenuContext.Provider value={actions}>
       <ContextMenu
-        actions={menuItems}
+        actions={actions}
         onPress={({ nativeEvent: { id } }) => {
-          shareOnPress(id)
-          statusOnPress(id)
-          accountOnPress(id)
-          instanceOnPress(id)
+          for (const on of [
+            shareOnPress,
+            statusOnPress,
+            accountOnPress,
+            instanceOnPress
+          ]) {
+            on && on(id)
+          }
         }}
         children={children}
+        {...props}
       />
     </ContextMenuContext.Provider>
   )

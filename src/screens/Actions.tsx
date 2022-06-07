@@ -1,14 +1,7 @@
-import analytics from '@components/analytics'
-import Button from '@components/Button'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import {
-  getInstanceAccount,
-  getInstanceUrl
-} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import {
   PanGestureHandler,
@@ -28,46 +21,13 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets
 } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
-import ActionsAccount from './Actions/Account'
 import ActionsAltText from './Actions/AltText'
-import ActionsDomain from './Actions/Domain'
 import ActionsNotificationsFilter from './Actions/NotificationsFilter'
-import ActionsShare from './Actions/Share'
-import ActionsStatus from './Actions/Status'
 
 const ScreenActions = ({
   route: { params },
   navigation
 }: RootStackScreenProps<'Screen-Actions'>) => {
-  const { t } = useTranslation()
-
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.id === next?.id
-  )
-  let sameAccount = false
-  switch (params.type) {
-    case 'status':
-      sameAccount = instanceAccount?.id === params.status.account.id
-      break
-    case 'account':
-      sameAccount = instanceAccount?.id === params.account.id
-      break
-  }
-
-  const instanceDomain = useSelector(getInstanceUrl)
-  let sameDomain = true
-  let statusDomain: string
-  switch (params.type) {
-    case 'status':
-      statusDomain = params.status.uri
-        ? params.status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
-        : ''
-      sameDomain = instanceDomain === statusDomain
-      break
-  }
-
   const { colors } = useTheme()
   const insets = useSafeAreaInsets()
 
@@ -105,40 +65,6 @@ const ScreenActions = ({
 
   const actions = () => {
     switch (params.type) {
-      case 'status':
-        return (
-          <>
-            {!sameAccount ? (
-              <ActionsAccount
-                queryKey={params.queryKey}
-                rootQueryKey={params.rootQueryKey}
-                account={params.status.account}
-                dismiss={dismiss}
-              />
-            ) : null}
-          </>
-        )
-      case 'account':
-        return (
-          <>
-            {!sameAccount ? (
-              <ActionsAccount account={params.account} dismiss={dismiss} />
-            ) : null}
-            <ActionsShare
-              url={params.account.url}
-              type={params.type}
-              dismiss={dismiss}
-            />
-            <Button
-              type='text'
-              content={t('common:buttons.cancel')}
-              onPress={() => {
-                analytics('bottomsheet_acknowledge')
-              }}
-              style={styles.button}
-            />
-          </>
-        )
       case 'notifications_filter':
         return <ActionsNotificationsFilter />
       case 'alt_text':

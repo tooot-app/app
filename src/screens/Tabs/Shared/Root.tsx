@@ -1,4 +1,6 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
+import contextMenuAccount from '@components/ContextMenu/account'
+import contextMenuShare from '@components/ContextMenu/share'
+import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -16,6 +18,7 @@ import { debounce } from 'lodash'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Platform, TextInput, View } from 'react-native'
+import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
 
 const TabSharedRoot = ({
   Stack
@@ -36,7 +39,10 @@ const TabSharedRoot = ({
         name='Tab-Shared-Account'
         component={TabSharedAccount}
         options={({
-          navigation
+          navigation,
+          route: {
+            params: { account }
+          }
         }: TabSharedStackScreenProps<'Tab-Shared-Account'>) => {
           return {
             headerTransparent: true,
@@ -46,7 +52,44 @@ const TabSharedRoot = ({
             title: '',
             headerLeft: () => (
               <HeaderLeft onPress={() => navigation.goBack()} background />
-            )
+            ),
+            headerRight: () => {
+              const actions: ContextMenuAction[] = []
+
+              const shareOnPress = contextMenuShare({
+                actions,
+                type: 'account',
+                url: account.url
+              })
+              const accountOnPress = contextMenuAccount({
+                actions,
+                id: account.id
+              })
+
+              return (
+                <ContextMenu
+                  actions={actions}
+                  onPress={({ nativeEvent: { id } }) => {
+                    shareOnPress(id)
+                    accountOnPress(id)
+                  }}
+                  dropdownMenuMode
+                >
+                  <HeaderRight
+                    accessibilityLabel={t(
+                      'shared.account.actions.accessibilityLabel',
+                      { user: account.acct }
+                    )}
+                    accessibilityHint={t(
+                      'shared.account.actions.accessibilityHint'
+                    )}
+                    content='MoreHorizontal'
+                    onPress={() => {}}
+                    background
+                  />
+                </ContextMenu>
+              )
+            }
           }
         }}
       />
