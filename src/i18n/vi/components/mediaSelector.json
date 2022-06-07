@@ -1,10 +1,10 @@
 {
   "title": "Chọn nguồn",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Tải ảnh lên",
+    "image_max": "Tải ảnh lên (tối đa {{max}})",
+    "video": "Tải video lên",
+    "video_max": "Tải video lên (tối đa {{max}})"
   },
   "library": {
     "alert": {
