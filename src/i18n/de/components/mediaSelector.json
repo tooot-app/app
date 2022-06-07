@@ -1,27 +1,17 @@
 {
   "title": "Datenquelle auswählen",
   "options": {
-    "library": "Hochladen",
-    "photo": "Bild aufnehmen",
-    "cancel": "$t(common:buttons.cancel)"
+    "image": "",
+    "image_max": "",
+    "video": "",
+    "video_max": ""
   },
   "library": {
     "alert": {
       "title": "Kein Zugriff",
       "message": "Für den Upload ist eine Zugriffsgenehmigung erforderlich",
       "buttons": {
-        "settings": "Einstellungen bestätigen",
-        "cancel": "$t(common:buttons.cancel)"
-      }
-    }
-  },
-  "photo": {
-    "alert": {
-      "title": "Zugriff verweigert",
-      "message": "Zugriff auf die Kamera erforderlich",
-      "buttons": {
-        "settings": "Einstellungen übernehmen",
-        "cancel": "$t(common:buttons.cancel)"
+        "settings": "Einstellungen bestätigen"
       }
     }
   }

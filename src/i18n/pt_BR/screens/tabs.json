@@ -170,7 +170,7 @@
         "heading": "Novo seguidor"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Solicitações de seguidores pendentes"
       },
       "favourite": {
         "heading": "Favoritos"
@@ -185,7 +185,7 @@
         "heading": "Pesquisa atualizada"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot de usuários inscritos"
       },
       "howitworks": "Saiba como funciona o roteamento"
     },
