@@ -6,10 +6,11 @@ import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
+import detectLanguage from 'react-native-language-detection'
 import { useSelector } from 'react-redux'
 
 export interface Props {
@@ -32,17 +33,6 @@ const TimelineTranslate = React.memo(
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 
-    const tootLanguage = status.language.slice(0, 2)
-
-    const settingsLanguage = useSelector(getSettingsLanguage)
-
-    if (Localization.locale.includes(tootLanguage)) {
-      return null
-    }
-    if (settingsLanguage?.includes(tootLanguage)) {
-      return null
-    }
-
     let text = status.spoiler_text
       ? [status.spoiler_text, status.content]
       : [status.content]
@@ -53,13 +43,38 @@ const TimelineTranslate = React.memo(
       }
     }
 
+    const [detectedLanguage, setDetectedLanguage] = useState<string>('')
+    useEffect(() => {
+      if (!status.language) {
+        return
+      }
+
+      const detect = async () => {
+        const result = await detectLanguage(text.join(`\n`))
+        setDetectedLanguage(result.detected.slice(0, 2))
+      }
+      detect()
+    }, [])
+
+    const settingsLanguage = useSelector(getSettingsLanguage)
+
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      source: status.language,
+      source: detectedLanguage,
       target: Localization.locale || settingsLanguage || 'en',
       text,
       options: { enabled }
     })
+
+    if (!detectedLanguage) {
+      return null
+    }
+    if (Localization.locale.includes(detectedLanguage)) {
+      return null
+    }
+    if (settingsLanguage?.includes(detectedLanguage)) {
+      return null
+    }
 
     return (
       <>
