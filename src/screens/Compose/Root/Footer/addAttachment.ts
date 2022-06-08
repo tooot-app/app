@@ -82,7 +82,7 @@ export const uploadAttachment = async ({
       break
   }
 
-  const uploadFailed = () => {
+  const uploadFailed = (message?: string) => {
     composeDispatch({
       type: 'attachment/upload/fail',
       payload: hash
@@ -91,7 +91,7 @@ export const uploadAttachment = async ({
       i18next.t(
         'screenCompose:content.root.actions.attachment.failed.alert.title'
       ),
-      undefined,
+      message,
       [
         {
           text: i18next.t(
@@ -126,8 +126,12 @@ export const uploadAttachment = async ({
         uploadFailed()
       }
     })
-    .catch(() => {
-      uploadFailed()
+    .catch((err: any) => {
+      uploadFailed(
+        err?.message && typeof err?.message === 'string'
+          ? err?.message.slice(0, 50)
+          : undefined
+      )
     })
 }
 
@@ -141,6 +145,7 @@ const chooseAndUploadAttachment = async ({
   })
   for (const media of result) {
     uploadAttachment({ composeDispatch, media })
+    await new Promise(res => setTimeout(res, 500))
   }
 }
 
