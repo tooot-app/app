@@ -15,3 +15,5 @@
 [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 
 [@duy@mas.to](https://mas.to/@duy) for Vietnamese translation
+
+[@jk@mastodon.social](https://mastodon.social/@jk) for the famous Mastodon boop sound
