@@ -178,11 +178,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       }
 
       let text: string | undefined = undefined
-      let media: { path: string; mime: string }[] = []
+      let media: { uri: string; mime: string }[] = []
 
       const typesImage = ['png', 'jpg', 'jpeg', 'gif']
       const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
-      const filterMedia = ({ path, mime }: { path: string; mime: string }) => {
+      const filterMedia = ({ uri, mime }: { uri: string; mime: string }) => {
         if (mime.startsWith('image/')) {
           if (!typesImage.includes(mime.split('/')[1])) {
             console.warn('Image type not supported:', mime.split('/')[1])
@@ -195,7 +195,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             })
             return
           }
-          media.push({ path, mime })
+          media.push({ uri, mime })
         } else if (mime.startsWith('video/')) {
           if (!typesVideo.includes(mime.split('/')[1])) {
             console.warn('Video type not supported:', mime.split('/')[1])
@@ -208,17 +208,17 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             })
             return
           }
-          media.push({ path, mime })
+          media.push({ uri, mime })
         } else {
-          if (typesImage.includes(path.split('.').pop() || '')) {
-            media.push({ path: path, mime: 'image/jpg' })
+          if (typesImage.includes(uri.split('.').pop() || '')) {
+            media.push({ uri, mime: 'image/jpg' })
             return
           }
-          if (typesVideo.includes(path.split('.').pop() || '')) {
-            media.push({ path: path, mime: 'video/mp4' })
+          if (typesVideo.includes(uri.split('.').pop() || '')) {
+            media.push({ uri, mime: 'video/mp4' })
             return
           }
-          text = !text ? path : text.concat(text, `\n${path}`)
+          text = !text ? uri : text.concat(text, `\n${uri}`)
         }
       }
 
@@ -230,7 +230,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
           for (const d of item.data) {
             if (typeof d !== 'string') {
-              filterMedia({ path: d.data, mime: d.mimeType })
+              filterMedia({ uri: d.data, mime: d.mimeType })
             }
           }
           break
@@ -245,7 +245,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             tempData = item.data
           }
           for (const d of item.data) {
-            filterMedia({ path: d, mime: item.mimeType })
+            filterMedia({ uri: d, mime: item.mimeType })
           }
           break
       }

@@ -1,7 +1,7 @@
 {
   "accessibilityHint": "Ações para este toot, como o seu usuário publicado",
   "account": {
-    "title": "",
+    "title": "Ações do Usuário",
     "mute": {
       "action": "Silenciar usuário"
     },
@@ -13,11 +13,11 @@
     }
   },
   "instance": {
-    "title": "",
+    "title": "Ação da Instância",
     "block": {
       "action": "Bloquear a instância {{instance}}",
       "alert": {
-        "title": "",
+        "title": "Confirmar o bloqueio da instância {{instance}}?",
         "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!",
         "buttons": {
           "confirm": "Confirmar"
@@ -34,7 +34,7 @@
     }
   },
   "status": {
-    "title": "",
+    "title": "Ações do toot",
     "edit": {
       "action": "Editar toot"
     },
@@ -42,29 +42,29 @@
       "action": "Remover toot",
       "alert": {
         "title": "Confirme a exclusão?",
-        "message": "",
+        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas.",
         "buttons": {
           "confirm": "Confirmar"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Excluir toot e repostar",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Confirmar exclusão e repostagem?",
+        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas.",
         "buttons": {
           "confirm": "Confirmar"
         }
       }
     },
     "mute": {
-      "action-muted_false": "",
-      "action-muted_true": ""
+      "action-muted_false": "Silenciar este toot e respostas",
+      "action-muted_true": "Desbloquear este toot e respostas"
     },
     "pin": {
-      "action-pinned_false": "",
-      "action-pinned_true": ""
+      "action-pinned_false": "Toot fixado",
+      "action-pinned_true": "Desafixar toot"
     }
   }
 }

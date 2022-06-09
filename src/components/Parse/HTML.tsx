@@ -49,7 +49,7 @@ const renderNode = ({
       const href = node.attribs.href
       if (classes) {
         if (classes.includes('hashtag')) {
-          const tag = href.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
+          const tag = href?.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
           const differentTag = routeParams?.hashtag
             ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
             : true
@@ -107,7 +107,7 @@ const renderNode = ({
           )
         }
       } else {
-        const domain = href.split(new RegExp(/:\/\/(.[^\/]+)/))
+        const domain = href?.split(new RegExp(/:\/\/(.[^\/]+)/))
         // Need example here
         const content =
           node.children && node.children[0] && node.children[0].data
@@ -124,11 +124,15 @@ const renderNode = ({
             }}
             onPress={async () => {
               analytics('status_link_press')
-              !disableDetails && !shouldBeTag
-                ? await openLink(href, navigation)
-                : navigation.push('Tab-Shared-Hashtag', {
+              if (!disableDetails) {
+                if (shouldBeTag) {
+                  navigation.push('Tab-Shared-Hashtag', {
                     hashtag: content.substring(1)
                   })
+                } else {
+                  await openLink(href, navigation)
+                }
+              }
             }}
           >
             {(content && content !== href && content) ||

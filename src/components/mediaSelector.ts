@@ -2,9 +2,10 @@ import analytics from '@components/analytics'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import { store } from '@root/store'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
 import * as ExpoImagePicker from 'expo-image-picker'
 import i18next from 'i18next'
-import { Alert, Linking } from 'react-native'
+import { Alert, Linking, Platform } from 'react-native'
 import ImagePicker, {
   Image,
   ImageOrVideo
@@ -27,7 +28,7 @@ const mediaSelector = async ({
   maximum,
   indicateMaximum = false,
   showActionSheetWithOptions
-}: Props): Promise<ImageOrVideo[]> => {
+}: Props): Promise<({ uri: string } & Omit<ImageOrVideo, 'path'>)[]> => {
   const checkLibraryPermission = async (): Promise<boolean> => {
     const { status } =
       await ExpoImagePicker.requestMediaLibraryPermissionsAsync()
@@ -110,17 +111,40 @@ const mediaSelector = async ({
         multiple: true,
         minFiles: 1,
         maxFiles: _maximum,
-        loadingLabelText: '',
-        compressImageMaxWidth: 4096,
-        compressImageMaxHeight: 4096
+        smartAlbums: ['UserLibrary'],
+        writeTempFile: false,
+        loadingLabelText: ''
       }).catch(() => {})
 
       if (!images) {
         return reject()
       }
 
+      // react-native-image-crop-picker may return HEIC as JPG that causes upload failure
+      if (Platform.OS === 'ios') {
+        for (const [index, image] of images.entries()) {
+          if (image.mime === 'image/heic') {
+            const converted = await manipulateAsync(image.sourceURL!, [], {
+              base64: false,
+              compress: 0.8,
+              format: SaveFormat.JPEG
+            })
+            images[index] = {
+              ...images[index],
+              sourceURL: converted.uri,
+              mime: 'image/jpeg'
+            }
+          }
+        }
+      }
+
       if (!resize) {
-        return resolve(images)
+        return resolve(
+          images.map(image => ({
+            ...image,
+            uri: image.sourceURL || `file://${image.path}`
+          }))
+        )
       } else {
         const croppedImages: Image[] = []
         for (const image of images) {
@@ -135,7 +159,12 @@ const mediaSelector = async ({
           }).catch(() => {})
           croppedImage && croppedImages.push(croppedImage)
         }
-        return resolve(croppedImages)
+        return resolve(
+          croppedImages.map(image => ({
+            ...image,
+            uri: `file://${image.path}`
+          }))
+        )
       }
     }
     const selectVideo = async () => {
@@ -146,7 +175,9 @@ const mediaSelector = async ({
       }).catch(() => {})
 
       if (video) {
-        return resolve([video])
+        return resolve([
+          { ...video, uri: video.sourceURL || `file://${video.path}` }
+        ])
       } else {
         return reject()
       }

@@ -42,7 +42,7 @@ export type RootStackParamList = {
     | {
         type: 'share'
         text?: string
-        media?: { path: string; mime: string }[]
+        media?: { uri: string; mime: string }[]
       }
     | undefined
   'Screen-ImagesViewer': {

@@ -22,7 +22,7 @@ const TimelineActioned = React.memo(
     const { colors } = useTheme()
     const navigation =
       useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-    const name = account?.display_name || account.username
+    const name = account?.display_name || account?.username
     const iconColor = colors.primaryDefault
 
     const content = (content: string) => (

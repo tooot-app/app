@@ -15,7 +15,7 @@
       "button": {
         "default": "Toot",
         "conversation": "Toot DM",
-        "reply": "Resposta de toot",
+        "reply": "Responder",
         "deleteEdit": "Toot",
         "edit": "Toot",
         "share": "Toot"

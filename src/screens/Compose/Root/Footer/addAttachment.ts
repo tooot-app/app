@@ -22,28 +22,25 @@ export const uploadAttachment = async ({
   media
 }: {
   composeDispatch: Dispatch<ComposeAction>
-  media: Pick<ImageOrVideo, 'path' | 'mime' | 'width' | 'height'>
+  media: { uri: string } & Pick<ImageOrVideo, 'mime' | 'width' | 'height'>
 }) => {
   const hash = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
-    media.path + Math.random()
+    media.uri + Math.random()
   )
-  let attachmentType: string
 
   switch (media.mime.split('/')[0]) {
     case 'image':
-      attachmentType = `image/${media.path.split('.')[1]}`
       composeDispatch({
         type: 'attachment/upload/start',
         payload: {
-          local: { ...media, type: 'image', local_thumbnail: media.path, hash },
+          local: { ...media, type: 'image', local_thumbnail: media.uri, hash },
           uploading: true
         }
       })
       break
     case 'video':
-      attachmentType = `video/${media.path.split('.')[1]}`
-      VideoThumbnails.getThumbnailAsync(media.path)
+      VideoThumbnails.getThumbnailAsync(media.uri)
         .then(({ uri, width, height }) =>
           composeDispatch({
             type: 'attachment/upload/start',
@@ -71,7 +68,6 @@ export const uploadAttachment = async ({
         )
       break
     default:
-      attachmentType = 'unknown'
       composeDispatch({
         type: 'attachment/upload/start',
         payload: {
@@ -105,9 +101,9 @@ export const uploadAttachment = async ({
 
   const formData = new FormData()
   formData.append('file', {
-    uri: `file://${media.path}`,
-    name: attachmentType,
-    type: attachmentType
+    uri: media.uri,
+    name: media.uri.match(new RegExp(/.*\/(.*)/))?.[1] || 'file.jpg',
+    type: media.mime
   } as any)
 
   return apiInstance<Mastodon.Attachment>({

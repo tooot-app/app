@@ -58,7 +58,7 @@ const composeReducer = (
         attachments: {
           ...state.attachments,
           uploads: state.attachments.uploads.map(upload =>
-            upload.local?.path === action.payload.local?.path
+            upload.local?.uri === action.payload.local?.uri
               ? { ...upload, remote: action.payload.remote, uploading: false }
               : upload
           )
