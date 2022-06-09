@@ -46,7 +46,7 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
             failed: true
           },
           type,
-          data: image[0].path
+          data: image[0].uri
         })
       }}
     />
