@@ -30,7 +30,7 @@
         "default": "{{name}} boostou",
         "notification": "{{name}} deu boost no teu toot"
       },
-      "update": ""
+      "update": "Toot foi editado"
     },
     "actions": {
       "reply": {
