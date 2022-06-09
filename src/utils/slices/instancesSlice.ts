@@ -249,7 +249,7 @@ const instancesSlice = createSlice({
       // Update Instance Configuration
       .addCase(updateConfiguration.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].version = action.payload.version
+        state.instances[activeIndex].version = action.payload?.version || '0'
         state.instances[activeIndex].configuration =
           action.payload.configuration
       })
@@ -316,7 +316,7 @@ const instancesSlice = createSlice({
         state.instances[activeIndex].frequentEmojis = state.instances[
           activeIndex
         ].frequentEmojis?.filter(emoji => {
-          return action.payload.find(
+          return action.payload?.find(
             e =>
               e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
           )

@@ -27,7 +27,7 @@ const HeaderSharedAccount = React.memo(
             numberOfLines={1}
           >
             <ParseEmojis
-              content={account?.display_name || account.username}
+              content={account?.display_name || account?.username}
               emojis={account.emojis}
               fontBold
             />
