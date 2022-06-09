@@ -1,10 +1,10 @@
 {
   "title": "Selecionar fonte de mídia",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Enviar fotos",
+    "image_max": "Carregar fotos (máx. {{max}})",
+    "video": "Enviar vídeo",
+    "video_max": "Carregar vídeo (máx. {{max}})"
   },
   "library": {
     "alert": {
