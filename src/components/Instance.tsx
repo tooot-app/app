@@ -1,6 +1,5 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { getInstances } from '@utils/slices/instancesSlice'
@@ -9,7 +8,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import {
   Alert,
   Image,
@@ -39,7 +38,6 @@ const ComponentInstance: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('componentInstance')
   const { colors, mode } = useTheme()
-  const { screenReaderEnabled } = useAccessibility()
 
   const instances = useSelector(getInstances, () => true)
   const [domain, setDomain] = useState<string>()
@@ -247,7 +245,7 @@ const ComponentInstance: React.FC<Props> = ({
             style={{
               flexDirection: 'row',
               marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-              marginVertical: StyleConstants.Spacing.M
+              marginTop: StyleConstants.Spacing.M
             }}
           >
             <Icon
@@ -265,29 +263,59 @@ const ComponentInstance: React.FC<Props> = ({
             <CustomText
               fontStyle='S'
               style={{ flex: 1, color: colors.secondary }}
-              accessibilityRole='link'
-              onPress={() => {
-                if (screenReaderEnabled) {
-                  analytics('view_privacy')
-                  WebBrowser.openBrowserAsync(
-                    'https://tooot.app/privacy-policy'
-                  )
-                }
-              }}
             >
               {t('server.disclaimer.base')}
-              <CustomText
-                accessible
-                style={{ color: colors.blue }}
-                onPress={() => {
-                  analytics('view_privacy')
-                  WebBrowser.openBrowserAsync(
-                    'https://tooot.app/privacy-policy'
-                  )
-                }}
-              >
-                {t('server.disclaimer.privacy')}
-              </CustomText>
+            </CustomText>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+              marginBottom: StyleConstants.Spacing.M
+            }}
+          >
+            <Icon
+              name='CheckSquare'
+              size={StyleConstants.Font.Size.S}
+              color={colors.secondary}
+              style={{
+                marginTop:
+                  (StyleConstants.Font.LineHeight.S -
+                    StyleConstants.Font.Size.S) /
+                  2,
+                marginRight: StyleConstants.Spacing.XS
+              }}
+            />
+            <CustomText
+              fontStyle='S'
+              style={{ flex: 1, color: colors.secondary }}
+              accessibilityRole='link'
+            >
+              <Trans
+                i18nKey='componentInstance:server.terms.base'
+                components={[
+                  <CustomText
+                    accessible
+                    style={{ color: colors.blue }}
+                    onPress={() => {
+                      analytics('view_privacy')
+                      WebBrowser.openBrowserAsync(
+                        'https://tooot.app/privacy-policy'
+                      )
+                    }}
+                  />,
+                  <CustomText
+                    accessible
+                    style={{ color: colors.blue }}
+                    onPress={() => {
+                      analytics('view_tos')
+                      WebBrowser.openBrowserAsync(
+                        'https://tooot.app/terms-of-service'
+                      )
+                    }}
+                  />
+                ]}
+              />
             </CustomText>
           </View>
         </View>
