@@ -6,8 +6,43 @@ on:
       - release
 
 jobs:
-  build:
+  build-ios:
     runs-on: macos-12
+    steps:
+      - name: -- Step 0 -- Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch
+      - name: -- Step 1 -- Checkout code
+        uses: actions/checkout@v2
+      - name: -- Step 2 -- Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: -- Step 3 -- Install node dependencies
+        run: yarn install
+      - name: -- Step 4 -- Install ruby dependencies
+        run: bundle install
+      - name: -- Step 5 -- Run fastlane
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
+          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+        run: yarn app:build ios
+
+  build-android:
+    runs-on: ubuntu-latest
     steps:
       - name: -- Step 0 -- Extract branch name
         shell: bash
@@ -24,36 +59,50 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
-      - name: -- Step 4 -- Use Expo action
-        uses: expo/expo-github-action@v7
-        with:
-          expo-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-      - name: -- Step 5 -- Install node dependencies
+      - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 6 -- Install ruby dependencies
+      - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 7 -- Run fastlane
+      - name: -- Step 6 -- Run fastlane
         env:
-          DEVELOPER_DIR: /Applications/Xcode_13.3.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
-          SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
-          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
-          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+        run: yarn app:build android
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [build-ios, build-android]
+    steps:
+      - name: -- Step 0 -- Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch
+      - name: -- Step 1 -- Checkout code
+        uses: actions/checkout@v2
+      - name: -- Step 2 -- Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: -- Step 3 -- Use Expo action
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: -- Step 4 -- Install node dependencies
+        run: yarn install
+      - name: -- Step 5 -- Install ruby dependencies
+        run: bundle install
+      - name: -- Step 6 -- Run fastlane
+        env:
+          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
           GH_PAT_GET_RELEASE: ${{ secrets.GH_PAT_GET_RELEASE }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn app:build
+        run: yarn app:build release
