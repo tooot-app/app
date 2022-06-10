@@ -30,35 +30,41 @@ const TimelineTranslate = React.memo(
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 
-    let text = status.spoiler_text
+    const text = status.spoiler_text
       ? [status.spoiler_text, status.content]
       : [status.content]
 
     for (const i in text) {
       for (const emoji of status.emojis) {
-        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, '')
+        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, ' ')
       }
+      text[i] = text[i]
+        .replace(/(<([^>]+)>)/gi, ' ')
+        .replace(/@.*? /gi, ' ')
+        .replace(/#.*? /gi, ' ')
+        .replace(/http(s):\/\/.*? /gi, ' ')
     }
 
     const [detectedLanguage, setDetectedLanguage] = useState<string>('')
     useEffect(() => {
       const detect = async () => {
-        const result = await detectLanguage(text.join(`\n`))
+        const result = await detectLanguage(text.join(`\n\n`))
         setDetectedLanguage(result.detected.slice(0, 2))
       }
       detect()
     }, [])
 
     const settingsLanguage = useSelector(getSettingsLanguage)
+    const targetLanguage = settingsLanguage || Localization.locale || 'en'
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
       source: detectedLanguage,
-      target: Localization.locale || settingsLanguage || 'en',
+      target: targetLanguage,
       text,
       options: { enabled }
     })
-    console.log('detectedLanguage', detectedLanguage)
+
     if (!detectedLanguage) {
       return null
     }
@@ -118,9 +124,7 @@ const TimelineTranslate = React.memo(
           </CustomText>
           <CustomText>
             {__DEV__
-              ? ` Source: ${detectedLanguage}; Target: ${
-                  Localization.locale || settingsLanguage || 'en'
-                }`
+              ? ` Source: ${detectedLanguage}; Target: ${targetLanguage}`
               : undefined}
           </CustomText>
           {isLoading ? (
