@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
+import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
@@ -92,15 +93,7 @@ const ScreenAnnouncements: React.FC<
             <Trans
               i18nKey='screenAnnouncements:content.published'
               components={[
-                <FormattedRelativeTime
-                  value={
-                    -(
-                      new Date().getTime() -
-                      new Date(item.published_at).getTime()
-                    ) / 1000
-                  }
-                  updateIntervalInSeconds={1}
-                />
+                <RelativeTime type='past' time={item.published_at} />
               ]}
             />
           </CustomText>

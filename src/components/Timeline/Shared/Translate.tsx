@@ -26,9 +26,6 @@ const TimelineTranslate = React.memo(
     if (!highlighted) {
       return null
     }
-    if (!status.language) {
-      return null
-    }
 
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
@@ -45,10 +42,6 @@ const TimelineTranslate = React.memo(
 
     const [detectedLanguage, setDetectedLanguage] = useState<string>('')
     useEffect(() => {
-      if (!status.language) {
-        return
-      }
-
       const detect = async () => {
         const result = await detectLanguage(text.join(`\n`))
         setDetectedLanguage(result.detected.slice(0, 2))
@@ -65,14 +58,14 @@ const TimelineTranslate = React.memo(
       text,
       options: { enabled }
     })
-
+    console.log('detectedLanguage', detectedLanguage)
     if (!detectedLanguage) {
       return null
     }
-    if (Localization.locale.includes(detectedLanguage)) {
+    if (Localization.locale.slice(0, 2).includes(detectedLanguage)) {
       return null
     }
-    if (settingsLanguage?.includes(detectedLanguage)) {
+    if (settingsLanguage?.slice(0, 2).includes(detectedLanguage)) {
       return null
     }
 
@@ -89,13 +82,13 @@ const TimelineTranslate = React.memo(
             if (enabled) {
               if (!isSuccess) {
                 analytics('timeline_shared_translate_retry', {
-                  language: status.language
+                  language: detectedLanguage
                 })
                 refetch()
               }
             } else {
               analytics('timeline_shared_translate', {
-                language: status.language
+                language: detectedLanguage
               })
               setEnabled(true)
             }
@@ -125,7 +118,7 @@ const TimelineTranslate = React.memo(
           </CustomText>
           <CustomText>
             {__DEV__
-              ? ` Source: ${status.language}; Target: ${
+              ? ` Source: ${detectedLanguage}; Target: ${
                   Localization.locale || settingsLanguage || 'en'
                 }`
               : undefined}
@@ -153,7 +146,6 @@ const TimelineTranslate = React.memo(
     )
   },
   (prev, next) =>
-    prev.status.language === next.status.language &&
     prev.status.content === next.status.content &&
     prev.status.spoiler_text === next.status.spoiler_text
 )

@@ -1,10 +1,11 @@
 import Icon from '@components/Icon'
+import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FormattedDate, FormattedRelativeTime } from 'react-intl'
+import { FormattedDate } from 'react-intl'
 
 export interface Props {
   created_at: Mastodon.Status['created_at'] | number
@@ -31,12 +32,7 @@ const HeaderSharedCreated = React.memo(
               />
             </>
           ) : (
-            <FormattedRelativeTime
-              value={
-                -(new Date().getTime() - new Date(actualTime).getTime()) / 1000
-              }
-              updateIntervalInSeconds={1}
-            />
+            <RelativeTime type='past' time={actualTime} />
           )}
         </CustomText>
         {edited_at ? (

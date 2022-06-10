@@ -192,8 +192,8 @@ private_lane :build_android do
       task: 'assemble',
       build_type: 'release',
       project_dir: "./android",
-      print_command: false,
-      print_command_output: false,
+      print_command: true,
+      print_command_output: true,
       properties: {
         "expoSDK" => VERSIONS[:expo],
         "releaseChannel" => RELEASE_CHANNEL,
