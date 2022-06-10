@@ -11,8 +11,10 @@
       "domains": "Universi"
     },
     "disclaimer": {
-      "base": "Per accedere, verrà aperta una pagina del browser di sistema. I dati di accesso del tuo account sono protetti. Leggi di più:",
-      "privacy": "politica sulla privacy"
+      "base": ""
+    },
+    "terms": {
+      "base": ""
     }
   },
   "update": {
