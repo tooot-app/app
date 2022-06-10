@@ -11,7 +11,7 @@
       "domains": "Domains"
     },
     "disclaimer": {
-      "base": ""
+      "base": "Der Login erfolgt über den Browser, so dass Ihre Kontoinformationen für die Toot-App nicht sichtbar sind."
     },
     "terms": {
       "base": ""
