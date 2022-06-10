@@ -11,8 +11,10 @@
       "domains": "Liên hợp"
     },
     "disclaimer": {
-      "base": "tooot sẽ không thấy được thông tin tài khoản của bạn. Tìm hiểu thêm ",
-      "privacy": "Bảo mật"
+      "base": ""
+    },
+    "terms": {
+      "base": ""
     }
   },
   "update": {
