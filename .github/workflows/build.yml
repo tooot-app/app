@@ -42,7 +42,7 @@ jobs:
         run: yarn app:build ios
 
   build-android:
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     steps:
       - name: -- Step 0 -- Extract branch name
         shell: bash
