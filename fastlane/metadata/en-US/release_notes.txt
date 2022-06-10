@@ -1,5 +1,2 @@
-Support editing toot
-Integrated into system's share menu
-Follow system's font weight setting (iOS)
-Upload gif from keyboard (Android)
-Added German and Italian
+Support selecting multiple images
+Long press toot to show options
