@@ -58,7 +58,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '11'
       - name: -- Step 4 -- Install node dependencies
         run: yarn install
       - name: -- Step 5 -- Install ruby dependencies
@@ -93,7 +93,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '11'
       - name: -- Step 4 -- Use Expo action
         uses: expo/expo-github-action@v7
         with:
