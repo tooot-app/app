@@ -71,11 +71,10 @@ const mutationFunction = async ({ type, data }: MutationVarsProfile) => {
     })
   } else if (type === 'avatar' || type === 'header') {
     formData.append(type, {
-      // @ts-ignore
-      uri: data,
+      uri: `file://${data}`,
       name: 'image/jpeg',
       type: 'image/jpeg'
-    })
+    } as any)
   } else {
     // @ts-ignore
     formData.append(type, data)

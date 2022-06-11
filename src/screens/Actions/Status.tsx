@@ -49,7 +49,7 @@ const ActionsStatus: React.FC<Props> = ({
         message: t('common:message.error.message', {
           function: t(`shared.header.actions.status.${theFunction}.function`)
         }),
-        ...(err.status &&
+        ...(err?.status &&
           typeof err.status === 'number' &&
           err.data &&
           err.data.error &&

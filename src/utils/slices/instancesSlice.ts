@@ -249,7 +249,7 @@ const instancesSlice = createSlice({
       // Update Instance Configuration
       .addCase(updateConfiguration.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].version = action.payload.version
+        state.instances[activeIndex].version = action.payload?.version || '0'
         state.instances[activeIndex].configuration =
           action.payload.configuration
       })
@@ -316,7 +316,7 @@ const instancesSlice = createSlice({
         state.instances[activeIndex].frequentEmojis = state.instances[
           activeIndex
         ].frequentEmojis?.filter(emoji => {
-          return action.payload.find(
+          return action.payload?.find(
             e =>
               e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
           )
@@ -380,6 +380,43 @@ export const getInstanceConfigurationStatusCharsURL = ({
 }: RootState) =>
   instances[findInstanceActive(instances)]?.configuration?.statuses
     .characters_reserved_per_url || 23
+
+export const getInstanceConfigurationMediaAttachments = ({
+  instances: { instances }
+}: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration
+    ?.media_attachments || {
+    supported_mime_types: [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'video/webm',
+      'video/mp4',
+      'video/quicktime',
+      'video/ogg',
+      'audio/wave',
+      'audio/wav',
+      'audio/x-wav',
+      'audio/x-pn-wave',
+      'audio/ogg',
+      'audio/vorbis',
+      'audio/mpeg',
+      'audio/mp3',
+      'audio/webm',
+      'audio/flac',
+      'audio/aac',
+      'audio/m4a',
+      'audio/x-m4a',
+      'audio/mp4',
+      'audio/3gpp',
+      'video/x-ms-asf'
+    ],
+    image_size_limit: 10485760,
+    image_matrix_limit: 16777216,
+    video_size_limit: 41943040,
+    video_frame_rate_limit: 60,
+    video_matrix_limit: 2304000
+  }
 
 export const getInstanceConfigurationPoll = ({
   instances: { instances }

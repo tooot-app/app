@@ -178,8 +178,49 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       }
 
       let text: string | undefined = undefined
-      let images: { type: string; uri: string }[] = []
-      let video: { type: string; uri: string } | undefined = undefined
+      let media: { uri: string; mime: string }[] = []
+
+      const typesImage = ['png', 'jpg', 'jpeg', 'gif']
+      const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
+      const filterMedia = ({ uri, mime }: { uri: string; mime: string }) => {
+        if (mime.startsWith('image/')) {
+          if (!typesImage.includes(mime.split('/')[1])) {
+            console.warn('Image type not supported:', mime.split('/')[1])
+            displayMessage({
+              message: t('shareError.imageNotSupported', {
+                type: mime.split('/')[1]
+              }),
+              type: 'error',
+              theme
+            })
+            return
+          }
+          media.push({ uri, mime })
+        } else if (mime.startsWith('video/')) {
+          if (!typesVideo.includes(mime.split('/')[1])) {
+            console.warn('Video type not supported:', mime.split('/')[1])
+            displayMessage({
+              message: t('shareError.videoNotSupported', {
+                type: mime.split('/')[1]
+              }),
+              type: 'error',
+              theme
+            })
+            return
+          }
+          media.push({ uri, mime })
+        } else {
+          if (typesImage.includes(uri.split('.').pop() || '')) {
+            media.push({ uri, mime: 'image/jpg' })
+            return
+          }
+          if (typesVideo.includes(uri.split('.').pop() || '')) {
+            media.push({ uri, mime: 'video/mp4' })
+            return
+          }
+          text = !text ? uri : text.concat(text, `\n${uri}`)
+        }
+      }
 
       switch (Platform.OS) {
         case 'ios':
@@ -187,55 +228,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             return
           }
 
-          item.data.forEach(d => {
-            if (typeof d === 'string') return
-            const typesImage = ['png', 'jpg', 'jpeg', 'gif']
-            const typesVideo = ['mp4', 'm4v', 'mov', 'webm']
-            const { mimeType, data } = d
-            if (mimeType.startsWith('image/')) {
-              if (!typesImage.includes(mimeType.split('/')[1])) {
-                console.warn(
-                  'Image type not supported:',
-                  mimeType.split('/')[1]
-                )
-                displayMessage({
-                  message: t('shareError.imageNotSupported', {
-                    type: mimeType.split('/')[1]
-                  }),
-                  type: 'error',
-                  theme
-                })
-                return
-              }
-              images.push({ type: mimeType.split('/')[1], uri: data })
-            } else if (mimeType.startsWith('video/')) {
-              if (!typesVideo.includes(mimeType.split('/')[1])) {
-                console.warn(
-                  'Video type not supported:',
-                  mimeType.split('/')[1]
-                )
-                displayMessage({
-                  message: t('shareError.videoNotSupported', {
-                    type: mimeType.split('/')[1]
-                  }),
-                  type: 'error',
-                  theme
-                })
-                return
-              }
-              video = { type: mimeType.split('/')[1], uri: data }
-            } else {
-              if (typesImage.includes(data.split('.').pop() || '')) {
-                images.push({ type: data.split('.').pop()!, uri: data })
-                return
-              }
-              if (typesVideo.includes(data.split('.').pop() || '')) {
-                video = { type: data.split('.').pop()!, uri: data }
-                return
-              }
-              text = !text ? data : text.concat(text, `\n${data}`)
+          for (const d of item.data) {
+            if (typeof d !== 'string') {
+              filterMedia({ uri: d.data, mime: d.mimeType })
             }
-          })
+          }
           break
         case 'android':
           if (!item.mimeType) {
@@ -247,65 +244,16 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           } else {
             tempData = item.data
           }
-          tempData.forEach(d => {
-            const typesImage = ['png', 'jpg', 'jpeg', 'gif']
-            const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
-            if (item.mimeType!.startsWith('image/')) {
-              if (!typesImage.includes(item.mimeType.split('/')[1])) {
-                console.warn(
-                  'Image type not supported:',
-                  item.mimeType.split('/')[1]
-                )
-                displayMessage({
-                  message: t('shareError.imageNotSupported', {
-                    type: item.mimeType.split('/')[1]
-                  }),
-                  type: 'error',
-                  theme
-                })
-                return
-              }
-              images.push({ type: item.mimeType.split('/')[1], uri: d })
-            } else if (item.mimeType.startsWith('video/')) {
-              if (!typesVideo.includes(item.mimeType.split('/')[1])) {
-                console.warn(
-                  'Video type not supported:',
-                  item.mimeType.split('/')[1]
-                )
-                displayMessage({
-                  message: t('shareError.videoNotSupported', {
-                    type: item.mimeType.split('/')[1]
-                  }),
-                  type: 'error',
-                  theme
-                })
-                return
-              }
-              video = { type: item.mimeType.split('/')[1], uri: d }
-            } else {
-              if (typesImage.includes(d.split('.').pop() || '')) {
-                images.push({ type: d.split('.').pop()!, uri: d })
-                return
-              }
-              if (typesVideo.includes(d.split('.').pop() || '')) {
-                video = { type: d.split('.').pop()!, uri: d }
-                return
-              }
-              text = !text ? d : text.concat(text, `\n${d}`)
-            }
-          })
+          for (const d of item.data) {
+            filterMedia({ uri: d, mime: item.mimeType })
+          }
           break
       }
 
-      if (!text && (!images || !images.length) && !video) {
+      if (!text && !media.length) {
         return
       } else {
-        navigationRef.navigate('Screen-Compose', {
-          type: 'share',
-          text,
-          images,
-          video
-        })
+        navigationRef.navigate('Screen-Compose', { type: 'share', text, media })
       }
     },
     [instanceActive]

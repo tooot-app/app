@@ -1,0 +1,70 @@
+{
+  "accessibilityHint": "更多关于此条嘟文，例如发布者等",
+  "account": {
+    "title": "用户操作",
+    "mute": {
+      "action": "静音用户"
+    },
+    "block": {
+      "action": "屏蔽用户"
+    },
+    "reports": {
+      "action": "举报用户"
+    }
+  },
+  "instance": {
+    "title": "实例操作",
+    "block": {
+      "action": "屏蔽实例 {{instance}}",
+      "alert": {
+        "title": "确认屏蔽实例 {{instance}}？",
+        "message": "多数情况下，隐藏或屏蔽特定用户即可。\n\n屏蔽之后，来自此实例的所有内容将被移除。",
+        "buttons": {
+          "confirm": "确认"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "分享嘟文"
+    },
+    "account": {
+      "action": "分享用户"
+    }
+  },
+  "status": {
+    "title": "嘟文操作",
+    "edit": {
+      "action": "编辑嘟文"
+    },
+    "delete": {
+      "action": "删除嘟文",
+      "alert": {
+        "title": "确认删除？",
+        "message": "所以转发及收藏将被清除，包括所有回复。",
+        "buttons": {
+          "confirm": "确认"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "删除嘟文并重新发布",
+      "alert": {
+        "title": "确认删除并重新发布？",
+        "message": "所以转发及收藏将被清除，包括所有回复。",
+        "buttons": {
+          "confirm": "确认"
+        }
+      }
+    },
+    "mute": {
+      "action-muted_false": "静音嘟文及回复",
+      "action-muted_true": "取消静音嘟文及回复"
+    },
+    "pin": {
+      "action-pinned_false": "置顶嘟文",
+      "action-pinned_true": "取消置顶嘟文"
+    }
+  }
+}

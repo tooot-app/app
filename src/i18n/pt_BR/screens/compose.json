@@ -15,7 +15,7 @@
       "button": {
         "default": "Toot",
         "conversation": "Toot DM",
-        "reply": "Resposta de toot",
+        "reply": "Responder",
         "deleteEdit": "Toot",
         "edit": "Toot",
         "share": "Toot"
@@ -168,7 +168,7 @@
       "header": {
         "title": "Rascunho"
       },
-      "warning": "",
+      "warning": "Os rascunhos são armazenados localmente e podem ser perdidos em eventos infortúnios. Aconselhamos não usar rascunhos para armazenamento de longo prazo.",
       "content": {
         "accessibilityHint": "Toque para editar este rascunho",
         "textEmpty": "O conteúdo está vazio"

@@ -1,6 +1,12 @@
+import { ImageOrVideo } from 'react-native-image-crop-picker'
+
 export type ExtendedAttachment = {
   remote?: Mastodon.Attachment
-  local?: App.IImageInfo & { local_thumbnail?: string; hash?: string }
+  local?: { uri: string } & Pick<ImageOrVideo, 'width' | 'height' | 'mime'> & {
+      type: 'image' | 'video' | 'unknown'
+      local_thumbnail?: string
+      hash?: string
+    }
   uploading?: boolean
 }
 
@@ -115,7 +121,10 @@ export type ComposeAction =
     }
   | {
       type: 'attachment/upload/end'
-      payload: { remote: Mastodon.Attachment; local: ImageInfo }
+      payload: {
+        remote: Mastodon.Attachment
+        local: { uri: string } & Pick<ImageOrVideo, 'width' | 'height' | 'mime'>
+      }
     }
   | {
       type: 'attachment/upload/fail'

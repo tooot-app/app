@@ -1,10 +1,11 @@
 import CustomText from '@components/Text'
+import PasteInput, { PastedFile } from '@mattermost/react-native-paste-input'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, TextInput } from 'react-native'
+import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
@@ -21,7 +22,7 @@ const ComposeTextInput: React.FC = () => {
   )
 
   return (
-    <TextInput
+    <PasteInput
       keyboardAppearance={mode}
       style={{
         ...StyleConstants.FontStyle.M,
@@ -62,8 +63,12 @@ const ComposeTextInput: React.FC = () => {
       }}
       ref={composeState.textInputFocus.refs.text}
       scrollEnabled={false}
-      onImageChange={({ nativeEvent }) => {
-        if (composeState.attachments.uploads.length >= maxAttachments) {
+      disableCopyPaste={false}
+      onPaste={(error: string | null | undefined, files: PastedFile[]) => {
+        if (
+          composeState.attachments.uploads.length + files.length >
+          maxAttachments
+        ) {
           Alert.alert(
             t(
               'content.root.header.textInput.keyboardImage.exceedMaximum.title'
@@ -80,12 +85,13 @@ const ComposeTextInput: React.FC = () => {
           )
           return
         }
-        if (nativeEvent.linkUri) {
+
+        for (const file of files) {
           uploadAttachment({
             composeDispatch,
-            imageInfo: {
-              uri: nativeEvent.linkUri,
-              type: 'image',
+            media: {
+              uri: file.uri,
+              mime: file.type,
               width: 100,
               height: 100
             }
@@ -94,7 +100,7 @@ const ComposeTextInput: React.FC = () => {
       }}
     >
       <CustomText>{composeState.text.formatted}</CustomText>
-    </TextInput>
+    </PasteInput>
   )
 }
 

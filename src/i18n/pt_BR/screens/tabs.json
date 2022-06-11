@@ -32,7 +32,7 @@
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": "Favoritos"
+        "name": "Salvos"
       },
       "conversations": {
         "name": "Mensagens diretas"
@@ -82,7 +82,7 @@
       "demo": "<p>Esta é uma demonstração também😊. Você pode escolher entre várias opções abaixo.<br /><br />Esta configuração afeta apenas o conteúdo principal dos toots, mas não os tamanhos de outra fonte.</p>",
       "availableSizes": "Tamanhos disponíveis",
       "sizes": {
-        "S": "S",
+        "S": "P",
         "M": "M - Padrão",
         "L": "Grande",
         "XL": "Extra grande",
@@ -170,7 +170,7 @@
         "heading": "Novo seguidor"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Solicitações de seguidores pendentes"
       },
       "favourite": {
         "heading": "Favoritos"
@@ -185,7 +185,7 @@
         "heading": "Pesquisa atualizada"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot de usuários inscritos"
       },
       "howitworks": "Saiba como funciona o roteamento"
     },

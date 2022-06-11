@@ -1,27 +1,17 @@
 {
   "title": "미디어 소스 선택",
   "options": {
-    "library": "라이브러리에서 업로드",
-    "photo": "사진 촬영",
-    "cancel": "$t(common:buttons.cancel)"
+    "image": "",
+    "image_max": "",
+    "video": "",
+    "video_max": ""
   },
   "library": {
     "alert": {
       "title": "권한 없음",
       "message": "업로드를 위해 사진 라이브러리 권한이 필요해요",
       "buttons": {
-        "settings": "설정 업데이트",
-        "cancel": "$t(common:buttons.cancel)"
-      }
-    }
-  },
-  "photo": {
-    "alert": {
-      "title": "권한 없음",
-      "message": "업로드를 위해 카메라 사용 권한이 필요해요",
-      "buttons": {
-        "settings": "설정 업데이트",
-        "cancel": "$t(common:buttons.cancel)"
+        "settings": "설정 업데이트"
       }
     }
   }

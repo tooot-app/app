@@ -18,6 +18,7 @@ import { isEqual, uniqBy } from 'lodash'
 import React, { useCallback } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import TimelineContextMenu from './Shared/ContextMenu'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 
@@ -58,103 +59,105 @@ const TimelineNotifications = React.memo(
     }, [])
 
     return (
-      <Pressable
-        style={{
-          padding: StyleConstants.Spacing.Global.PagePadding,
-          backgroundColor: colors.backgroundDefault,
-          paddingBottom: notification.status
-            ? 0
-            : StyleConstants.Spacing.Global.PagePadding
-        }}
-        onPress={onPress}
-      >
-        {notification.type !== 'mention' ? (
-          <TimelineActioned
-            action={notification.type}
-            account={notification.account}
-            notification
-          />
-        ) : null}
-
-        <View
+      <TimelineContextMenu status={notification.status} queryKey={queryKey}>
+        <Pressable
           style={{
-            opacity:
-              notification.type === 'follow' ||
-              notification.type === 'follow_request' ||
-              notification.type === 'mention' ||
-              notification.type === 'status'
-                ? 1
-                : 0.5
+            padding: StyleConstants.Spacing.Global.PagePadding,
+            backgroundColor: colors.backgroundDefault,
+            paddingBottom: notification.status
+              ? 0
+              : StyleConstants.Spacing.Global.PagePadding
           }}
+          onPress={onPress}
+          onLongPress={() => {}}
         >
-          <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
-            <TimelineAvatar
-              queryKey={queryKey}
-              account={actualAccount}
-              highlighted={highlighted}
+          {notification.type !== 'mention' ? (
+            <TimelineActioned
+              action={notification.type}
+              account={notification.account}
+              notification
             />
-            <TimelineHeaderNotification
-              queryKey={queryKey}
-              notification={notification}
-            />
+          ) : null}
+
+          <View
+            style={{
+              opacity:
+                notification.type === 'follow' ||
+                notification.type === 'follow_request' ||
+                notification.type === 'mention' ||
+                notification.type === 'status'
+                  ? 1
+                  : 0.5
+            }}
+          >
+            <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
+              <TimelineAvatar
+                queryKey={queryKey}
+                account={actualAccount}
+                highlighted={highlighted}
+              />
+              <TimelineHeaderNotification notification={notification} />
+            </View>
+
+            {notification.status ? (
+              <View
+                style={{
+                  paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+                  paddingLeft: highlighted
+                    ? 0
+                    : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+                }}
+              >
+                {notification.status.content.length > 0 ? (
+                  <TimelineContent
+                    status={notification.status}
+                    highlighted={highlighted}
+                  />
+                ) : null}
+                {notification.status.poll ? (
+                  <TimelinePoll
+                    queryKey={queryKey}
+                    statusId={notification.status.id}
+                    poll={notification.status.poll}
+                    reblog={false}
+                    sameAccount={
+                      notification.account.id === instanceAccount?.id
+                    }
+                  />
+                ) : null}
+                {notification.status.media_attachments.length > 0 ? (
+                  <TimelineAttachment status={notification.status} />
+                ) : null}
+                {notification.status.card ? (
+                  <TimelineCard card={notification.status.card} />
+                ) : null}
+                <TimelineFullConversation
+                  queryKey={queryKey}
+                  status={notification.status}
+                />
+              </View>
+            ) : null}
           </View>
 
           {notification.status ? (
-            <View
-              style={{
-                paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-                paddingLeft: highlighted
-                  ? 0
-                  : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-              }}
-            >
-              {notification.status.content.length > 0 ? (
-                <TimelineContent
-                  status={notification.status}
-                  highlighted={highlighted}
-                />
-              ) : null}
-              {notification.status.poll ? (
-                <TimelinePoll
-                  queryKey={queryKey}
-                  statusId={notification.status.id}
-                  poll={notification.status.poll}
-                  reblog={false}
-                  sameAccount={notification.account.id === instanceAccount?.id}
-                />
-              ) : null}
-              {notification.status.media_attachments.length > 0 ? (
-                <TimelineAttachment status={notification.status} />
-              ) : null}
-              {notification.status.card ? (
-                <TimelineCard card={notification.status.card} />
-              ) : null}
-              <TimelineFullConversation
-                queryKey={queryKey}
-                status={notification.status}
-              />
-            </View>
+            <TimelineActions
+              queryKey={queryKey}
+              status={notification.status}
+              highlighted={highlighted}
+              accts={uniqBy(
+                (
+                  [notification.status.account] as Mastodon.Account[] &
+                    Mastodon.Mention[]
+                )
+                  .concat(notification.status.mentions)
+                  .filter(d => d?.id !== instanceAccount?.id),
+                d => d?.id
+              ).map(d => d?.acct)}
+              reblog={false}
+            />
           ) : null}
-        </View>
-
-        {notification.status ? (
-          <TimelineActions
-            queryKey={queryKey}
-            status={notification.status}
-            highlighted={highlighted}
-            accts={uniqBy(
-              (
-                [notification.status.account] as Mastodon.Account[] &
-                  Mastodon.Mention[]
-              )
-                .concat(notification.status.mentions)
-                .filter(d => d?.id !== instanceAccount?.id),
-              d => d?.id
-            ).map(d => d?.acct)}
-            reblog={false}
-          />
-        ) : null}
-      </Pressable>
+        </Pressable>
+      </TimelineContextMenu>
     )
   },
   (prev, next) => isEqual(prev.notification, next.notification)

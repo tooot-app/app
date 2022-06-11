@@ -1,9 +1,4 @@
-fastlane_version "2.203.0"
 skip_docs
-
-ensure_env_vars(
-  env_vars: ["ENVIRONMENT", "SENTRY_ORGANIZATION", "SENTRY_PROJECT", "SENTRY_AUTH_TOKEN"]
-)
 
 VERSIONS = read_json( json_path: "./package.json" )[:versions]
 ENVIRONMENT = ENV["ENVIRONMENT"]
@@ -192,8 +187,8 @@ private_lane :build_android do
       task: 'assemble',
       build_type: 'release',
       project_dir: "./android",
-      print_command: false,
-      print_command_output: false,
+      print_command: true,
+      print_command_output: true,
       properties: {
         "expoSDK" => VERSIONS[:expo],
         "releaseChannel" => RELEASE_CHANNEL,
@@ -218,15 +213,32 @@ private_lane :build_android do
   end
 end
 
-lane :build do
+lane :ios do
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
+  if releaseExists
+    puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
+  else
+    puts("Release #{GITHUB_RELEASE} does not exist.")
+    cocoapods(clean_install: true, podfile: "./ios/Podfile")
+    build_ios
+  end
+  rocket
+end
+
+lane :android do
   releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
   if releaseExists
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
     puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
-    cocoapods(clean_install: true, podfile: "./ios/Podfile")
-    build_ios
     build_android
+  end
+  rocket
+end
+
+lane :release do
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
+  if !releaseExists
     case ENVIRONMENT
     when "candidate"
       github_release(prerelease: true)

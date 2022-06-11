@@ -1,5 +1,4 @@
 import * as Crypto from 'expo-crypto'
-import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import { Dispatch } from 'react'
 import { Alert } from 'react-native'
@@ -8,6 +7,7 @@ import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import i18next from 'i18next'
 import apiInstance from '@api/instance'
 import mediaSelector from '@components/mediaSelector'
+import { ImageOrVideo } from 'react-native-image-crop-picker'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>
@@ -19,39 +19,35 @@ export interface Props {
 
 export const uploadAttachment = async ({
   composeDispatch,
-  imageInfo
+  media
 }: {
   composeDispatch: Dispatch<ComposeAction>
-  imageInfo: Pick<ImageInfo, 'type' | 'uri' | 'width' | 'height'>
+  media: { uri: string } & Pick<ImageOrVideo, 'mime' | 'width' | 'height'>
 }) => {
   const hash = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
-    imageInfo.uri + Math.random()
+    media.uri + Math.random()
   )
 
-  let attachmentType: string
-
-  switch (imageInfo.type) {
+  switch (media.mime.split('/')[0]) {
     case 'image':
-      console.log('uri', imageInfo.uri)
-      attachmentType = `image/${imageInfo.uri.split('.')[1]}`
       composeDispatch({
         type: 'attachment/upload/start',
         payload: {
-          local: { ...imageInfo, local_thumbnail: imageInfo.uri, hash },
+          local: { ...media, type: 'image', local_thumbnail: media.uri, hash },
           uploading: true
         }
       })
       break
     case 'video':
-      attachmentType = `video/${imageInfo.uri.split('.')[1]}`
-      VideoThumbnails.getThumbnailAsync(imageInfo.uri)
+      VideoThumbnails.getThumbnailAsync(media.uri)
         .then(({ uri, width, height }) =>
           composeDispatch({
             type: 'attachment/upload/start',
             payload: {
               local: {
-                ...imageInfo,
+                ...media,
+                type: 'video',
                 local_thumbnail: uri,
                 hash,
                 width,
@@ -65,25 +61,24 @@ export const uploadAttachment = async ({
           composeDispatch({
             type: 'attachment/upload/start',
             payload: {
-              local: { ...imageInfo, hash },
+              local: { ...media, type: 'video', hash },
               uploading: true
             }
           })
         )
       break
     default:
-      attachmentType = 'unknown'
       composeDispatch({
         type: 'attachment/upload/start',
         payload: {
-          local: { ...imageInfo, hash },
+          local: { ...media, type: 'unknown', hash },
           uploading: true
         }
       })
       break
   }
 
-  const uploadFailed = () => {
+  const uploadFailed = (message?: string) => {
     composeDispatch({
       type: 'attachment/upload/fail',
       payload: hash
@@ -92,7 +87,7 @@ export const uploadAttachment = async ({
       i18next.t(
         'screenCompose:content.root.actions.attachment.failed.alert.title'
       ),
-      undefined,
+      message,
       [
         {
           text: i18next.t(
@@ -106,14 +101,14 @@ export const uploadAttachment = async ({
 
   const formData = new FormData()
   formData.append('file', {
-    // @ts-ignore
-    uri: imageInfo.uri,
-    name: attachmentType,
-    type: attachmentType
-  })
+    uri: media.uri,
+    name: media.uri.match(new RegExp(/.*\/(.*)/))?.[1] || 'file.jpg',
+    type: media.mime
+  } as any)
 
   return apiInstance<Mastodon.Attachment>({
     method: 'post',
+    version: 'v2',
     url: 'media',
     body: formData
   })
@@ -121,14 +116,18 @@ export const uploadAttachment = async ({
       if (res.body.id) {
         composeDispatch({
           type: 'attachment/upload/end',
-          payload: { remote: res.body, local: imageInfo }
+          payload: { remote: res.body, local: media }
         })
       } else {
         uploadFailed()
       }
     })
-    .catch(() => {
-      uploadFailed()
+    .catch((err: any) => {
+      uploadFailed(
+        err?.message && typeof err?.message === 'string'
+          ? err?.message.slice(0, 50)
+          : undefined
+      )
     })
 }
 
@@ -136,8 +135,14 @@ const chooseAndUploadAttachment = async ({
   composeDispatch,
   showActionSheetWithOptions
 }: Props): Promise<any> => {
-  const result = await mediaSelector({ showActionSheetWithOptions })
-  await uploadAttachment({ composeDispatch, imageInfo: result })
+  const result = await mediaSelector({
+    indicateMaximum: true,
+    showActionSheetWithOptions
+  })
+  for (const media of result) {
+    uploadAttachment({ composeDispatch, media })
+    await new Promise(res => setTimeout(res, 500))
+  }
 }
 
 export default chooseAndUploadAttachment

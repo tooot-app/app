@@ -5,18 +5,11 @@ import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
-import {
-  FlatList,
-  FlatListProps,
-  Platform,
-  RefreshControl,
-  StyleSheet
-} from 'react-native'
+import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from 'react-native-reanimated'
-import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
@@ -149,7 +142,6 @@ const Timeline: React.FC<Props> = ({
         data={flattenData}
         initialNumToRender={6}
         maxToRenderPerBatch={3}
-        style={styles.flatList}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.75}
         ListFooterComponent={
@@ -160,20 +152,18 @@ const Timeline: React.FC<Props> = ({
         }
         ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
         ItemSeparatorComponent={ItemSeparatorComponent}
-        maintainVisibleContentPosition={{
-          minIndexForVisible: 0
-        }}
+        maintainVisibleContentPosition={
+          isFetching
+            ? {
+                minIndexForVisible: 0
+              }
+            : undefined
+        }
         {...androidRefreshControl}
         {...customProps}
       />
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  flatList: {
-    minHeight: '100%'
-  }
-})
 
 export default Timeline

@@ -6,10 +6,11 @@ import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
+import detectLanguage from 'react-native-language-detection'
 import { useSelector } from 'react-redux'
 
 export interface Props {
@@ -25,41 +26,54 @@ const TimelineTranslate = React.memo(
     if (!highlighted) {
       return null
     }
-    if (!status.language) {
-      return null
-    }
 
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 
-    const tootLanguage = status.language.slice(0, 2)
-
-    const settingsLanguage = useSelector(getSettingsLanguage)
-
-    if (Localization.locale.includes(tootLanguage)) {
-      return null
-    }
-    if (settingsLanguage?.includes(tootLanguage)) {
-      return null
-    }
-
-    let text = status.spoiler_text
+    const text = status.spoiler_text
       ? [status.spoiler_text, status.content]
       : [status.content]
 
     for (const i in text) {
       for (const emoji of status.emojis) {
-        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, '')
+        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, ' ')
       }
+      text[i] = text[i]
+        .replace(/(<([^>]+)>)/gi, ' ')
+        .replace(/@.*? /gi, ' ')
+        .replace(/#.*? /gi, ' ')
+        .replace(/http(s):\/\/.*? /gi, ' ')
     }
+
+    const [detectedLanguage, setDetectedLanguage] = useState<string>('')
+    useEffect(() => {
+      const detect = async () => {
+        const result = await detectLanguage(text.join(`\n\n`))
+        setDetectedLanguage(result.detected.slice(0, 2))
+      }
+      detect()
+    }, [])
+
+    const settingsLanguage = useSelector(getSettingsLanguage)
+    const targetLanguage = settingsLanguage || Localization.locale || 'en'
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
-      source: status.language,
-      target: Localization.locale || settingsLanguage || 'en',
+      source: detectedLanguage,
+      target: targetLanguage,
       text,
       options: { enabled }
     })
+
+    if (!detectedLanguage) {
+      return null
+    }
+    if (Localization.locale.slice(0, 2).includes(detectedLanguage)) {
+      return null
+    }
+    if (settingsLanguage?.slice(0, 2).includes(detectedLanguage)) {
+      return null
+    }
 
     return (
       <>
@@ -74,13 +88,13 @@ const TimelineTranslate = React.memo(
             if (enabled) {
               if (!isSuccess) {
                 analytics('timeline_shared_translate_retry', {
-                  language: status.language
+                  language: detectedLanguage
                 })
                 refetch()
               }
             } else {
               analytics('timeline_shared_translate', {
-                language: status.language
+                language: detectedLanguage
               })
               setEnabled(true)
             }
@@ -110,9 +124,7 @@ const TimelineTranslate = React.memo(
           </CustomText>
           <CustomText>
             {__DEV__
-              ? ` Source: ${status.language}; Target: ${
-                  Localization.locale || settingsLanguage || 'en'
-                }`
+              ? ` Source: ${detectedLanguage}; Target: ${targetLanguage}`
               : undefined}
           </CustomText>
           {isLoading ? (
@@ -138,7 +150,6 @@ const TimelineTranslate = React.memo(
     )
   },
   (prev, next) =>
-    prev.status.language === next.status.language &&
     prev.status.content === next.status.content &&
     prev.status.spoiler_text === next.status.spoiler_text
 )

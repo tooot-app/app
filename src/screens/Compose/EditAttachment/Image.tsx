@@ -128,7 +128,9 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
             height: imageDimensionis.height
           }}
           source={{
-            uri: theAttachmentLocal?.uri || theAttachmentRemote?.preview_url
+            uri: theAttachmentLocal?.uri
+              ? theAttachmentLocal.uri
+              : theAttachmentRemote?.preview_url
           }}
         />
         <PanGestureHandler onGestureEvent={onGestureEvent}>
