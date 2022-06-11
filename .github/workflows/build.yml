@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: apk
-          path: ${{ github.workspace }}/tooot.apk
+          path: ./tooot.apk
           if-no-files-found: warn
           retention-days: 7
 
