@@ -83,7 +83,7 @@ jobs:
           retention-days: 7
 
   create-release:
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     needs: [build-ios, build-android]
     steps:
       - name: -- Step 0 -- Extract branch name
