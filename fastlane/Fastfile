@@ -19,46 +19,10 @@ XCODEPROJ = "./ios/tooot.xcodeproj"
 INFO_PLIST = "./ios/tooot/Info.plist"
 EXPO_PLIST = "./ios/tooot/Supporting/Expo.plist"
 
-desc "IOS: Prepare app store"
-private_lane :prepare_appstore_ios do
-  set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
-  set_info_plist_value(
-    path: INFO_PLIST,
-    key: "NSAppTransportSecurity",
-    value: {}
-  )
-  increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
-  app_store_connect_api_key
-end
-
-desc 'IOS: Update expo information'
-private_lane :update_expo_ios do
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
-end
-
 desc "ANDROID: Prepare play store"
 private_lane :prepare_playstore_android do
   android_set_version_name( version_name: VERSION, gradle_file: "./android/app/build.gradle" )
   android_set_version_code( version_code: BUILD_NUMBER, gradle_file: "./android/app/build.gradle" )
-end
-
-desc "Create new GitHub release"
-private_lane :github_release do |options|
-  set_github_release(
-    repository_name: GITHUB_REPO,
-    name: GITHUB_RELEASE,
-    tag_name: GITHUB_RELEASE,
-    description: "No changelog provided",
-    commitish: git_branch,
-    is_prerelease: options[:prerelease],
-    upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
-  )
-end
-
-desc "Expo release"
-private_lane :expo_release do
-  yarn( package_path: "./package.json", flags: "release", command: RELEASE_CHANNEL )
 end
 
 desc "Build and deploy iOS app"
@@ -67,19 +31,29 @@ private_lane :build_ios do
   IPA_FILE = "#{BUILD_DIRECTORY}/tooot.ipa"
   DSYM_FILE = "#{BUILD_DIRECTORY}/tooot.app.dSYM.zip"
 
-  update_expo_ios
+  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
+  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
+
   setup_ci
+  set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
+  set_info_plist_value(
+    path: INFO_PLIST,
+    key: "NSAppTransportSecurity",
+    value: {}
+  )
+  increment_build_number( xcodeproj: XCODEPROJ, build_number: BUILD_NUMBER )
+  app_store_connect_api_key
+  match( type: "appstore", readonly: true )
+
+  build_ios_app(
+    export_method: "app-store",
+    include_symbols: true,
+    output_directory: BUILD_DIRECTORY,
+    silent: false
+  )
 
   case ENVIRONMENT
   when "candidate"
-    prepare_appstore_ios
-    match( type: "appstore", readonly: true )
-    build_ios_app(
-      export_method: "app-store",
-      include_symbols: true,
-      output_directory: BUILD_DIRECTORY,
-      silent: true
-    )
     sentry_upload_dsym(
       org_slug: ENV["SENTRY_ORGANIZATION"],
       project_slug: ENV["SENTRY_PROJECT"],
@@ -94,26 +68,19 @@ private_lane :build_ios do
       changelog: "感谢帮忙测试 tooot 🙏"
     )
   when "release"
-    prepare_appstore_ios
-    match( type: "appstore", readonly: true )
-    build_ios_app(
-      export_method: "app-store",
-      include_bitcode: true,
-      output_directory: BUILD_DIRECTORY,
-      silent: true
+    upload_to_app_store(
+      ipa: IPA_FILE,
+      app_version: VERSION
     )
-    upload_to_app_store( ipa: IPA_FILE, app_version: VERSION )
-    download_dsyms( version: VERSION, build_number: BUILD_NUMBER, wait_for_dsym_processing: true )
+    download_dsyms(
+      version: VERSION,
+      build_number: BUILD_NUMBER,
+      wait_for_dsym_processing: true
+    )
     sentry_upload_dsym(
       org_slug: ENV["SENTRY_ORGANIZATION"],
       project_slug: ENV["SENTRY_PROJECT"],
     )
-  else
-    if !is_ci
-      match( type: "adhoc", readonly: true )
-      build_ios_app( export_method: "ad-hoc", output_directory: BUILD_DIRECTORY, silent: true )
-      install_on_device( skip_wifi: true )
-    end
   end
 end
 
@@ -121,24 +88,26 @@ desc "Build and deploy Android app"
 private_lane :build_android do
   sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
 
+  prepare_playstore_android
+
+  build_android_app(
+    task: 'clean bundle',
+    build_type: 'release',
+    project_dir: "./android",
+    print_command: true,
+    print_command_output: true,
+    properties: {
+      "expoSDK" => VERSIONS[:expo],
+      "releaseChannel" => RELEASE_CHANNEL,
+      "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
+      "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+      "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+      "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
+    }
+  )
+
   case ENVIRONMENT
   when "candidate"
-    prepare_playstore_android
-    build_android_app(
-      task: 'clean bundle',
-      build_type: 'release',
-      project_dir: "./android",
-      print_command: true,
-      print_command_output: true,
-      properties: {
-        "expoSDK" => VERSIONS[:expo],
-        "releaseChannel" => RELEASE_CHANNEL,
-        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
-        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
-      }
-    )
     upload_to_play_store(
       track: "alpha",
       skip_upload_metadata: true,
@@ -146,71 +115,37 @@ private_lane :build_android do
       skip_upload_images: true,
       skip_upload_screenshots: true
     )
-    build_android_app(
-      task: 'assemble',
-      build_type: 'release',
-      project_dir: "./android",
-      print_command: false,
-      print_command_output: false,
-      properties: {
-        "expoSDK" => VERSIONS[:expo],
-        "releaseChannel" => RELEASE_CHANNEL,
-        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
-        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
-      }
-    )
-    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
   when "release"
-    prepare_playstore_android
-    build_android_app(
-      task: 'clean bundle',
-      build_type: 'release',
-      project_dir: "./android",
-      print_command: true,
-      print_command_output: true,
-      properties: {
-        "expoSDK" => VERSIONS[:expo],
-        "releaseChannel" => RELEASE_CHANNEL,
-        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
-        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
-      }
-    )
     upload_to_play_store(
       track: "production",
       skip_upload_changelogs: true
     )
-    build_android_app(
-      task: 'assemble',
-      build_type: 'release',
-      project_dir: "./android",
-      print_command: true,
-      print_command_output: true,
-      properties: {
-        "expoSDK" => VERSIONS[:expo],
-        "releaseChannel" => RELEASE_CHANNEL,
-        "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
-        "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-        "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-        "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
-      }
-    )
-    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
-  else
-    if !is_ci
-      build_android_app(
-        task: 'assemble',
-        build_type: 'release',
-        project_dir: "./android"
-      )
-      adb(
-        command: "install #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-      )
-    end
   end
+end
+
+desc "Build Android apk"
+private_lane :build_android_apk do
+  sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
+
+  prepare_playstore_android
+
+  build_android_app(
+    task: 'assemble',
+    build_type: 'release',
+    project_dir: "./android",
+    print_command: true,
+    print_command_output: true,
+    properties: {
+      "expoSDK" => VERSIONS[:expo],
+      "releaseChannel" => RELEASE_CHANNEL,
+      "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
+      "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
+      "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
+      "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
+    }
+  )
+
+  sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
 end
 
 lane :ios do
@@ -239,13 +174,17 @@ end
 lane :release do
   releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
   if !releaseExists
-    case ENVIRONMENT
-    when "candidate"
-      github_release(prerelease: true)
-    when "release"
-      github_release(prerelease: false)
-    end
+    build_android_apk
+    set_github_release(
+      repository_name: GITHUB_REPO,
+      name: GITHUB_RELEASE,
+      tag_name: GITHUB_RELEASE,
+      description: "No changelog provided",
+      commitish: git_branch,
+      is_prerelease: ENVIRONMENT == 'candidate',
+      upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
+    )
   end
-  expo_release
+  yarn( package_path: "./package.json", flags: "release", command: RELEASE_CHANNEL )
   rocket
 end

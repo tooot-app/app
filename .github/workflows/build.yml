@@ -18,7 +18,7 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
       - name: -- Step 3 -- Install node dependencies
         run: yarn install
       - name: -- Step 4 -- Install ruby dependencies
@@ -53,7 +53,7 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
       - name: -- Step 3 -- Setup Java
         uses: actions/setup-java@v3
         with:
@@ -88,21 +88,30 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - name: -- Step 3 -- Use Expo action
+          node-version-file: '.nvmrc'
+      - name: -- Step 3 -- Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: -- Step 4 -- Use Expo action
         uses: expo/expo-github-action@v7
         with:
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-      - name: -- Step 4 -- Install node dependencies
+      - name: -- Step 5 -- Install node dependencies
         run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
+      - name: -- Step 6 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - name: -- Step 7 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           GH_PAT_GET_RELEASE: ${{ secrets.GH_PAT_GET_RELEASE }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build release
