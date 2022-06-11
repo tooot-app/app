@@ -18,7 +18,7 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
       - name: -- Step 3 -- Install node dependencies
         run: yarn install
       - name: -- Step 4 -- Install ruby dependencies
@@ -53,7 +53,7 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
       - name: -- Step 3 -- Setup Java
         uses: actions/setup-java@v3
         with:
@@ -74,6 +74,13 @@ jobs:
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
         run: yarn app:build android
+      - name: -- Step 7 -- Upload apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk
+          path: ${{ github.workspace }}/tooot.apk
+          if-no-files-found: warn
+          retention-days: 7
 
   create-release:
     runs-on: macos-12
@@ -88,7 +95,7 @@ jobs:
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
       - name: -- Step 3 -- Use Expo action
         uses: expo/expo-github-action@v7
         with:
@@ -98,7 +105,11 @@ jobs:
         run: yarn install
       - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - name: -- Step 6 -- Download apk
+        uses: actions/download-artifact@v3
+        with:
+          name: apk
+      - name: -- Step 7 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
