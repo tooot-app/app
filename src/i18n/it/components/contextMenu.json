@@ -3,11 +3,11 @@
   "account": {
     "title": "",
     "mute": {
-      "action_false": "",
+      "action_false": "Muta utente",
       "action_true": ""
     },
     "block": {
-      "action_false": "",
+      "action_false": "Blocca utente",
       "action_true": ""
     },
     "reports": {
