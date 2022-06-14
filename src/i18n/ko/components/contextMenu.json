@@ -3,11 +3,11 @@
   "account": {
     "title": "",
     "mute": {
-      "action_false": "",
+      "action_false": "사용자 음소거",
       "action_true": ""
     },
     "block": {
-      "action_false": "",
+      "action_false": "사용자 차단",
       "action_true": ""
     },
     "reports": {
