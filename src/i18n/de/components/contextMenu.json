@@ -1,13 +1,13 @@
 {
   "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
   "account": {
-    "title": "",
+    "title": "Benutzeraktionen",
     "mute": {
-      "action_false": "",
+      "action_false": "Profil stummschalten",
       "action_true": ""
     },
     "block": {
-      "action_false": "",
+      "action_false": "Nutzer blockieren",
       "action_true": ""
     },
     "reports": {
