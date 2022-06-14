@@ -149,7 +149,7 @@ private_lane :build_android_apk do
 end
 
 lane :ios do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
   if releaseExists
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
@@ -161,7 +161,7 @@ lane :ios do
 end
 
 lane :android do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
   if releaseExists
     puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
   else
@@ -172,7 +172,7 @@ lane :android do
 end
 
 lane :release do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_token: ENV['GH_PAT_GET_RELEASE'])
+  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
   if !releaseExists
     build_android_apk
     set_github_release(
