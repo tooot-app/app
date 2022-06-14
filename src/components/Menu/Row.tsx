@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 
@@ -61,7 +61,7 @@ const MenuRow: React.FC<Props> = ({
 
   return (
     <View
-      style={styles.base}
+      style={{ minHeight: 50 }}
       accessible
       accessibilityRole={switchValue ? 'switch' : 'button'}
       accessibilityState={switchValue ? { checked: switchValue } : undefined}
@@ -78,14 +78,26 @@ const MenuRow: React.FC<Props> = ({
         }}
       >
         <View style={{ flex: 1 }}>
-          <View style={styles.core}>
-            <View style={styles.front}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              paddingTop: StyleConstants.Spacing.S
+            }}
+          >
+            <View
+              style={{
+                flex: 3,
+                flexDirection: 'row',
+                alignItems: 'center'
+              }}
+            >
               {iconFront && (
                 <Icon
                   name={iconFront}
                   size={StyleConstants.Font.Size.L}
                   color={colors[iconFrontColor]}
-                  style={styles.iconFront}
+                  style={{ marginRight: StyleConstants.Spacing.S }}
                 />
               )}
               {badge ? (
@@ -99,7 +111,7 @@ const MenuRow: React.FC<Props> = ({
                   }}
                 />
               ) : null}
-              <View style={styles.main}>
+              <View style={{ flex: 1 }}>
                 <CustomText
                   fontStyle='M'
                   style={{ color: colors.primaryDefault }}
@@ -111,7 +123,15 @@ const MenuRow: React.FC<Props> = ({
             </View>
 
             {content || switchValue !== undefined || iconBack ? (
-              <View style={styles.back}>
+              <View
+                style={{
+                  flexShrink: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  marginLeft: StyleConstants.Spacing.M
+                }}
+              >
                 {content ? (
                   typeof content === 'string' ? (
                     <CustomText
@@ -141,7 +161,7 @@ const MenuRow: React.FC<Props> = ({
                     name={iconBack}
                     size={StyleConstants.Font.Size.L}
                     color={colors[iconBackColor]}
-                    style={[styles.iconBack, { opacity: loading ? 0 : 1 }]}
+                    style={{ marginLeft: 8, opacity: loading ? 0 : 1 }}
                   />
                 ) : null}
                 {loading && loadingSpinkit}
@@ -158,43 +178,5 @@ const MenuRow: React.FC<Props> = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    minHeight: 50
-  },
-  core: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingTop: StyleConstants.Spacing.S
-  },
-  front: {
-    flex: 2,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  back: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginLeft: StyleConstants.Spacing.M
-  },
-  iconFront: {
-    marginRight: StyleConstants.Spacing.S
-  },
-  main: {
-    flex: 1
-  },
-  description: {
-    ...StyleConstants.FontStyle.S
-  },
-  content: {
-    ...StyleConstants.FontStyle.M
-  },
-  iconBack: {
-    marginLeft: 8
-  }
-})
 
 export default MenuRow
