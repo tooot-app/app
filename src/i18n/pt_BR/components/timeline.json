@@ -139,7 +139,7 @@
         },
         "expiration": {
           "expired": "Voto expirado",
-          "until": ""
+          "until": "Expira <0 />"
         }
       }
     }
