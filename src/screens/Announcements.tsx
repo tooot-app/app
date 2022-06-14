@@ -93,7 +93,7 @@ const ScreenAnnouncements: React.FC<
             <Trans
               i18nKey='screenAnnouncements:content.published'
               components={[
-                <RelativeTime type='past' time={item.published_at} />
+                <RelativeTime time={item.published_at} />
               ]}
             />
           </CustomText>

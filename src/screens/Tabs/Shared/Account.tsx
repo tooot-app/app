@@ -99,7 +99,8 @@ const TabSharedAccount: React.FC<
         customProps={{
           renderItem,
           onScroll,
-          ListHeaderComponent
+          ListHeaderComponent,
+          maintainVisibleContentPosition: undefined
         }}
       />
     </>

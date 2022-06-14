@@ -47,6 +47,7 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   })
   const accountOnPress = contextMenuAccount({
     actions,
+    type: 'status',
     queryKey,
     rootQueryKey,
     id: status.account.id
@@ -62,14 +63,14 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
     <ContextMenuContext.Provider value={actions}>
       <ContextMenu
         actions={actions}
-        onPress={({ nativeEvent: { id } }) => {
+        onPress={({ nativeEvent: { index } }) => {
           for (const on of [
             shareOnPress,
             statusOnPress,
             accountOnPress,
             instanceOnPress
           ]) {
-            on && on(id)
+            on && on(index)
           }
         }}
         children={children}

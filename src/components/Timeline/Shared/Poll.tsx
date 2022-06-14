@@ -269,7 +269,7 @@ const TimelinePoll: React.FC<Props> = ({
     ))
   }, [theme, allOptions])
 
-  const pollVoteCounts = useMemo(() => {
+  const pollVoteCounts = () => {
     if (poll.voters_count !== null) {
       return (
         t('shared.poll.meta.count.voters', { count: poll.voters_count }) + ' • '
@@ -279,9 +279,9 @@ const TimelinePoll: React.FC<Props> = ({
         t('shared.poll.meta.count.votes', { count: poll.votes_count }) + ' • '
       )
     }
-  }, [poll.voters_count, poll.votes_count])
+  }
 
-  const pollExpiration = useMemo(() => {
+  const pollExpiration = () => {
     if (poll.expired) {
       return t('shared.poll.meta.expiration.expired')
     } else {
@@ -289,12 +289,12 @@ const TimelinePoll: React.FC<Props> = ({
         return (
           <Trans
             i18nKey='componentTimeline:shared.poll.meta.expiration.until'
-            components={[<RelativeTime type='future' time={poll.expires_at} />]}
+            components={[<RelativeTime time={poll.expires_at} />]}
           />
         )
       }
     }
-  }, [theme, i18n.language, poll.expired, poll.expires_at])
+  }
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M }}>
@@ -312,8 +312,8 @@ const TimelinePoll: React.FC<Props> = ({
           fontStyle='S'
           style={{ flexShrink: 1, color: colors.secondary }}
         >
-          {pollVoteCounts}
-          {pollExpiration}
+          {pollVoteCounts()}
+          {pollExpiration()}
         </CustomText>
       </View>
     </View>

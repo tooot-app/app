@@ -3,10 +3,12 @@
   "account": {
     "title": "User actions",
     "mute": {
-      "action": "Mute user"
+      "action_false": "Mute user",
+      "action_true": "Unmute user"
     },
     "block": {
-      "action": "Block user"
+      "action_false": "Block user",
+      "action_true": "Unblock user"
     },
     "reports": {
       "action": "Report user"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "Mute toot and replies",
-      "action-muted_true": "Unmute toot and replies"
+      "action_false": "Mute toot and replies",
+      "action_true": "Unmute toot and replies"
     },
     "pin": {
-      "action-pinned_false": "Pin toot",
-      "action-pinned_true": "Unpin toot"
+      "action_false": "Pin toot",
+      "action_true": "Unpin toot"
     }
   }
 }

@@ -314,6 +314,7 @@ export type MutationVarsTimelineUpdateAccountProperty = {
   id: Mastodon.Account['id']
   payload: {
     property: 'mute' | 'block' | 'reports'
+    currentValue?: boolean
   }
 }
 
@@ -383,7 +384,9 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
         case 'mute':
           return apiInstance<Mastodon.Account>({
             method: 'post',
-            url: `accounts/${params.id}/${params.payload.property}`
+            url: `accounts/${params.id}/${
+              params.payload.currentValue ? 'un' : ''
+            }${params.payload.property}`
           })
         case 'reports':
           return apiInstance<Mastodon.Account>({
