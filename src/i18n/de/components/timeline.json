@@ -139,7 +139,7 @@
         },
         "expiration": {
           "expired": "Abstimmung abgelaufen",
-          "until": ""
+          "until": "Läuft <0 /> ab"
         }
       }
     }
