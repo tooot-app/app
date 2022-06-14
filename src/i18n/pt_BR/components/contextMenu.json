@@ -3,10 +3,12 @@
   "account": {
     "title": "Ações do Usuário",
     "mute": {
-      "action": "Silenciar usuário"
+      "action_false": "",
+      "action_true": ""
     },
     "block": {
-      "action": "Bloquear usuário"
+      "action_false": "",
+      "action_true": ""
     },
     "reports": {
       "action": "Denunciar usuário"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "Silenciar este toot e respostas",
-      "action-muted_true": "Desbloquear este toot e respostas"
+      "action_false": "",
+      "action_true": ""
     },
     "pin": {
-      "action-pinned_false": "Toot fixado",
-      "action-pinned_true": "Desafixar toot"
+      "action_false": "",
+      "action_true": ""
     }
   }
 }
