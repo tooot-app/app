@@ -139,7 +139,7 @@
         },
         "expiration": {
           "expired": "Đã kết thúc",
-          "until": ""
+          "until": "Kết thúc <0 />"
         }
       }
     }
