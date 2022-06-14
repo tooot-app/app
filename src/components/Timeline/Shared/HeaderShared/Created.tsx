@@ -32,7 +32,7 @@ const HeaderSharedCreated = React.memo(
               />
             </>
           ) : (
-            <RelativeTime type='past' time={actualTime} />
+            <RelativeTime time={actualTime} />
           )}
         </CustomText>
         {edited_at ? (
