@@ -139,7 +139,7 @@
         },
         "expiration": {
           "expired": "投票已结束",
-          "until": "<0 />截止"
+          "until": ""
         }
       }
     }
