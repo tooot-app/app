@@ -3,10 +3,12 @@
   "account": {
     "title": "",
     "mute": {
-      "action": "사용자 음소거"
+      "action_false": "",
+      "action_true": ""
     },
     "block": {
-      "action": "사용자 차단"
+      "action_false": "",
+      "action_true": ""
     },
     "reports": {
       "action": "사용자 신고"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "",
-      "action-muted_true": ""
+      "action_false": "",
+      "action_true": ""
     },
     "pin": {
-      "action-pinned_false": "",
-      "action-pinned_true": ""
+      "action_false": "",
+      "action_true": ""
     }
   }
 }
