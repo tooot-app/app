@@ -271,8 +271,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   return (
     <IntlProvider locale={i18n.language}>
       <StatusBar
-        {...(Platform.OS === 'ios' && {
-          backgroundColor: colors.backgroundDefault
+        backgroundColor={colors.backgroundDefault}
+        {...(Platform.OS === 'android' && {
+          barStyle: theme === 'light' ? 'dark-content' : 'light-content'
         })}
       />
       <NavigationContainer
