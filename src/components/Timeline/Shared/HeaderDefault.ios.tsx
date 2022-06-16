@@ -48,7 +48,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
         </View>
       </View>
 
-      {queryKey ? (
+      {queryKey && !highlighted ? (
         <Pressable
           accessibilityHint={t('accessibilityHint')}
           style={{
@@ -59,7 +59,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
           }}
         >
           <ContextMenu
-            dropdownMenuMode={Platform.OS === 'android'}
+            dropdownMenuMode
             actions={contextMenuContext}
             onPress={() => {}}
             children={

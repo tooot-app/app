@@ -44,6 +44,7 @@ const TimelineHeaderNotification = ({ notification }: Props) => {
               }}
               children={
                 <ContextMenu
+                  dropdownMenuMode
                   actions={contextMenuContext}
                   onPress={() => {}}
                   children={
