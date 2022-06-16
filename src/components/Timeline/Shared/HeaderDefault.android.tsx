@@ -1,11 +1,15 @@
+import contextMenuAccount from '@components/ContextMenu/account'
+import contextMenuInstance from '@components/ContextMenu/instance'
+import contextMenuShare from '@components/ContextMenu/share'
+import contextMenuStatus from '@components/ContextMenu/status'
 import Icon from '@components/Icon'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, View } from 'react-native'
-import ContextMenu from 'react-native-context-menu-view'
+import { Platform, Pressable, View } from 'react-native'
+import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
 import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
@@ -20,10 +24,37 @@ export interface Props {
 }
 
 const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
+  if (!queryKey) return
+
   const { t } = useTranslation('componentContextMenu')
   const { colors } = useTheme()
 
-  const contextMenuContext = useContext(ContextMenuContext)
+  const actions: ContextMenuAction[] = []
+
+  const shareOnPress =
+    status.visibility !== 'direct'
+      ? contextMenuShare({
+          actions,
+          type: 'status',
+          url: status.url || status.uri
+        })
+      : null
+  const statusOnPress = contextMenuStatus({
+    actions,
+    status,
+    queryKey
+  })
+  const accountOnPress = contextMenuAccount({
+    actions,
+    type: 'status',
+    queryKey,
+    id: status.account.id
+  })
+  const instanceOnPress = contextMenuInstance({
+    actions,
+    status,
+    queryKey
+  })
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -60,8 +91,18 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
         >
           <ContextMenu
             dropdownMenuMode
-            actions={contextMenuContext}
-            onPress={() => {}}
+            actions={actions}
+            onPress={({ nativeEvent: { index } }) => {
+              console.log('index', index)
+              for (const on of [
+                shareOnPress,
+                statusOnPress,
+                accountOnPress,
+                instanceOnPress
+              ]) {
+                on && on(index)
+              }
+            }}
             children={
               <Icon
                 name='MoreHorizontal'

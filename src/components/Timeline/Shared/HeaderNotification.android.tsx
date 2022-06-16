@@ -1,14 +1,18 @@
+import contextMenuAccount from '@components/ContextMenu/account'
+import contextMenuInstance from '@components/ContextMenu/instance'
+import contextMenuShare from '@components/ContextMenu/share'
+import contextMenuStatus from '@components/ContextMenu/status'
 import Icon from '@components/Icon'
 import {
   RelationshipIncoming,
   RelationshipOutgoing
 } from '@components/Relationship'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Pressable, View } from 'react-native'
-import ContextMenu from 'react-native-context-menu-view'
-import { ContextMenuContext } from './ContextMenu'
+import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -16,13 +20,39 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
+  queryKey?: QueryKeyTimeline
   notification: Mastodon.Notification
 }
 
-const TimelineHeaderNotification = ({ notification }: Props) => {
+const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
   const { colors } = useTheme()
 
-  const contextMenuContext = useContext(ContextMenuContext)
+  const contextMenuActions: ContextMenuAction[] = []
+  const status = notification.status
+  const shareOnPress =
+    status && status?.visibility !== 'direct'
+      ? contextMenuShare({
+          actions: contextMenuActions,
+          type: 'status',
+          url: status.url || status.uri
+        })
+      : null
+  const statusOnPress = contextMenuStatus({
+    actions: contextMenuActions,
+    status,
+    queryKey
+  })
+  const accountOnPress = contextMenuAccount({
+    actions: contextMenuActions,
+    type: 'status',
+    queryKey,
+    id: status?.account.id
+  })
+  const instanceOnPress = contextMenuInstance({
+    actions: contextMenuActions,
+    status,
+    queryKey
+  })
 
   const actions = useMemo(() => {
     switch (notification.type) {
@@ -43,8 +73,17 @@ const TimelineHeaderNotification = ({ notification }: Props) => {
               children={
                 <ContextMenu
                   dropdownMenuMode
-                  actions={contextMenuContext}
-                  onPress={() => {}}
+                  actions={contextMenuActions}
+                  onPress={({ nativeEvent: { index } }) => {
+                    for (const on of [
+                      shareOnPress,
+                      statusOnPress,
+                      accountOnPress,
+                      instanceOnPress
+                    ]) {
+                      on && on(index)
+                    }
+                  }}
                   children={
                     <Icon
                       name='MoreHorizontal'

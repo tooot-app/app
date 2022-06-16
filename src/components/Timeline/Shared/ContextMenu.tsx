@@ -5,6 +5,7 @@ import contextMenuStatus from '@components/ContextMenu/status'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React from 'react'
 import { createContext } from 'react'
+import { Platform } from 'react-native'
 import ContextMenu, {
   ContextMenuAction,
   ContextMenuProps
@@ -27,7 +28,7 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   disabled,
   ...props
 }) => {
-  if (!status || !queryKey) {
+  if (!status || !queryKey || disabled || Platform.OS === 'android') {
     return <>{children}</>
   }
 
@@ -61,9 +62,7 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
     rootQueryKey
   })
 
-  return disabled ? (
-    <>{children}</>
-  ) : (
+  return (
     <ContextMenuContext.Provider value={actions}>
       <ContextMenu
         actions={actions}

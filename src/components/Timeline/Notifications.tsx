@@ -100,7 +100,10 @@ const TimelineNotifications = React.memo(
                 account={actualAccount}
                 highlighted={highlighted}
               />
-              <TimelineHeaderNotification notification={notification} />
+              <TimelineHeaderNotification
+                queryKey={queryKey}
+                notification={notification}
+              />
             </View>
 
             {notification.status ? (
