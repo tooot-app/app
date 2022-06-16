@@ -14,6 +14,7 @@ export interface Props {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
+  disabled?: boolean // Allowing toot to be copied when highlighted
 }
 
 export const ContextMenuContext = createContext<ContextMenuAction[]>([])
@@ -23,6 +24,7 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   status,
   queryKey,
   rootQueryKey,
+  disabled,
   ...props
 }) => {
   if (!status || !queryKey) {
@@ -59,7 +61,9 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
     rootQueryKey
   })
 
-  return (
+  return disabled ? (
+    <>{children}</>
+  ) : (
     <ContextMenuContext.Provider value={actions}>
       <ContextMenu
         actions={actions}

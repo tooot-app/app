@@ -59,7 +59,11 @@ const TimelineNotifications = React.memo(
     }, [])
 
     return (
-      <TimelineContextMenu status={notification.status} queryKey={queryKey}>
+      <TimelineContextMenu
+        status={notification.status}
+        queryKey={queryKey}
+        disabled={highlighted}
+      >
         <Pressable
           style={{
             padding: StyleConstants.Spacing.Global.PagePadding,

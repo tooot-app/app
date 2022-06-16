@@ -78,6 +78,7 @@ const TimelineDefault: React.FC<Props> = ({
       status={actualStatus}
       queryKey={queryKey}
       rootQueryKey={rootQueryKey}
+      disabled={highlighted}
     >
       <Pressable
         accessible={highlighted ? false : true}
