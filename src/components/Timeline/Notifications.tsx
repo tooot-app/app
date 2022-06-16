@@ -59,7 +59,11 @@ const TimelineNotifications = React.memo(
     }, [])
 
     return (
-      <TimelineContextMenu status={notification.status} queryKey={queryKey}>
+      <TimelineContextMenu
+        status={notification.status}
+        queryKey={queryKey}
+        disabled={highlighted}
+      >
         <Pressable
           style={{
             padding: StyleConstants.Spacing.Global.PagePadding,
@@ -96,7 +100,10 @@ const TimelineNotifications = React.memo(
                 account={actualAccount}
                 highlighted={highlighted}
               />
-              <TimelineHeaderNotification notification={notification} />
+              <TimelineHeaderNotification
+                queryKey={queryKey}
+                notification={notification}
+              />
             </View>
 
             {notification.status ? (

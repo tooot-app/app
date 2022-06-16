@@ -3,6 +3,7 @@ import {
   RelationshipIncoming,
   RelationshipOutgoing
 } from '@components/Relationship'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useMemo } from 'react'
@@ -16,6 +17,7 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
+  queryKey: QueryKeyTimeline
   notification: Mastodon.Notification
 }
 

@@ -5,6 +5,7 @@ import contextMenuStatus from '@components/ContextMenu/status'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React from 'react'
 import { createContext } from 'react'
+import { Platform } from 'react-native'
 import ContextMenu, {
   ContextMenuAction,
   ContextMenuProps
@@ -14,6 +15,7 @@ export interface Props {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
+  disabled?: boolean // Allowing toot to be copied when highlighted
 }
 
 export const ContextMenuContext = createContext<ContextMenuAction[]>([])
@@ -23,9 +25,10 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   status,
   queryKey,
   rootQueryKey,
+  disabled,
   ...props
 }) => {
-  if (!status || !queryKey) {
+  if (!status || !queryKey || disabled || Platform.OS === 'android') {
     return <>{children}</>
   }
 
