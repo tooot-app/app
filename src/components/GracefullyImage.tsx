@@ -5,12 +5,14 @@ import {
   AccessibilityProps,
   Image,
   ImageStyle,
+  Platform,
   Pressable,
   StyleProp,
   StyleSheet,
   View,
   ViewStyle
 } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Blurhash } from 'react-native-blurhash'
 
 // blurhas -> if blurhash, show before any loading succeed
@@ -125,13 +127,24 @@ const GracefullyImage = ({
           ]}
         />
       ) : null}
-      <Image
-        fadeDuration={0}
-        source={source}
-        style={[{ flex: 1 }, imageStyle]}
-        onLoad={onLoad}
-        onError={onError}
-      />
+      {Platform.OS === 'ios' ? (
+        <Image
+          fadeDuration={0}
+          source={source}
+          style={[{ flex: 1 }, imageStyle]}
+          onLoad={onLoad}
+          onError={onError}
+        />
+      ) : (
+        <FastImage
+          fadeDuration={0}
+          source={source}
+          // @ts-ignore
+          style={[{ flex: 1 }, imageStyle]}
+          onLoad={onLoad}
+          onError={onError}
+        />
+      )}
       {blurhashView}
     </Pressable>
   )

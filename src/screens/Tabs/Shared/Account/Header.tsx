@@ -2,7 +2,8 @@ import Button from '@components/Button'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Dimensions, Image, View } from 'react-native'
+import { Dimensions, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export interface Props {
@@ -18,7 +19,7 @@ const AccountHeader = React.memo(
 
     return (
       <View>
-        <Image
+        <FastImage
           source={{
             uri: reduceMotionEnabled ? account?.header_static : account?.header
           }}
