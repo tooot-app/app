@@ -4,7 +4,7 @@
     "title": "Hành động người dùng",
     "mute": {
       "action_false": "Ẩn người này",
-      "action_true": "Tương tác người dùng"
+      "action_true": "Bỏ ẩn người dùng"
     },
     "block": {
       "action_false": "Chặn người này",
