@@ -70,7 +70,7 @@ const contextMenuStatus = ({
     getInstanceAccount,
     (prev, next) => prev.id === next.id
   )
-  const ownAccount = instanceAccount?.id === status.account.id
+  const ownAccount = instanceAccount?.id === status?.account.id
 
   if (ownAccount) {
     const accountMenuItems: ContextMenuAction[] = [
