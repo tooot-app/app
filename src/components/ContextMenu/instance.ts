@@ -29,7 +29,7 @@ const contextMenuInstance = ({
   const { theme } = useTheme()
 
   const currentInstance = useSelector(getInstanceUrl)
-  const instance = status.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const instance = status?.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({

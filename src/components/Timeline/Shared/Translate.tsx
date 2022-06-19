@@ -48,14 +48,16 @@ const TimelineTranslate = React.memo(
     const [detectedLanguage, setDetectedLanguage] = useState<string>('')
     useEffect(() => {
       const detect = async () => {
-        const result = await detectLanguage(text.join(`\n\n`))
-        setDetectedLanguage(result.detected.slice(0, 2))
+        const result = await detectLanguage(text.join(`\n\n`)).catch(() => {
+          // No need to log language detection failure
+        })
+        result?.detected && setDetectedLanguage(result.detected.slice(0, 2))
       }
       detect()
     }, [])
 
     const settingsLanguage = useSelector(getSettingsLanguage)
-    const targetLanguage = settingsLanguage || Localization.locale || 'en'
+    const targetLanguage = Localization.locale || settingsLanguage || 'en'
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
