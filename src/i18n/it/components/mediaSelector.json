@@ -1,9 +1,9 @@
 {
   "title": "Seleziona origine media",
   "options": {
-    "image": "",
+    "image": "Carica foto",
     "image_max": "",
-    "video": "",
+    "video": "Carica video",
     "video_max": ""
   },
   "library": {
