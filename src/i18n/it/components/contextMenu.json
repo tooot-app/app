@@ -8,7 +8,7 @@
     },
     "block": {
       "action_false": "Blocca utente",
-      "action_true": ""
+      "action_true": "Sblocca utente"
     },
     "reports": {
       "action": "Segnala utente"
