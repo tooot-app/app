@@ -30,7 +30,7 @@
         "default": "{{name}} ha ricondiviso",
         "notification": "{{name}} ha ricondiviso il tuo toot"
       },
-      "update": ""
+      "update": "Retoot ha subito una modifica"
     },
     "actions": {
       "reply": {
