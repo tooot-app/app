@@ -168,7 +168,7 @@
       "header": {
         "title": "Bozza"
       },
-      "warning": "",
+      "warning": "Le bozze sono salvate solo in locale, e potrebbero essere perse in seguito a problemi. Evita di usarle per archiviazione a lungo termine.",
       "content": {
         "accessibilityHint": "Bozza salvata, premi per modificarla",
         "textEmpty": "Testo vuoto"

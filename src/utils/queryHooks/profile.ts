@@ -64,14 +64,18 @@ type MutationVarsProfile = MutationVarsProfileBase & {
 const mutationFunction = async ({ type, data }: MutationVarsProfile) => {
   const formData = new FormData()
   if (type === 'fields_attributes') {
-    const tempData = data as { name: string; value: string }[]
-    tempData.forEach((d, index) => {
-      formData.append(`fields_attributes[${index}][name]`, d.name)
-      formData.append(`fields_attributes[${index}][value]`, d.value)
-    })
+    if (!data.length) {
+      formData.append('fields_attributes[]', '')
+    } else {
+      const tempData = data as { name: string; value: string }[]
+      tempData.forEach((d, index) => {
+        formData.append(`fields_attributes[${index}][name]`, d.name)
+        formData.append(`fields_attributes[${index}][value]`, d.value)
+      })
+    }
   } else if (type === 'avatar' || type === 'header') {
     formData.append(type, {
-      uri: `file://${data}`,
+      uri: data,
       name: 'image/jpeg',
       type: 'image/jpeg'
     } as any)

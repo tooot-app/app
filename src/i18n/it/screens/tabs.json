@@ -170,7 +170,7 @@
         "heading": "Nuovi seguaci"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Richiesta di seguirti"
       },
       "favourite": {
         "heading": "Apprezzamenti"
@@ -185,7 +185,7 @@
         "heading": "Novità sui sondaggi"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot da utenti seguiti"
       },
       "howitworks": "Scopri come funziona il traversamento dei messaggi"
     },

@@ -150,7 +150,7 @@ const mediaSelector = async ({
         for (const image of images) {
           const croppedImage = await ImagePicker.openCropper({
             mediaType: 'photo',
-            path: image.path,
+            path: image.sourceURL || image.path,
             width: resize.width,
             height: resize.height,
             cropperChooseText: i18next.t('common:buttons.apply'),
