@@ -87,7 +87,7 @@ const MenuRow: React.FC<Props> = ({
           >
             <View
               style={{
-                flex: 3,
+                flexGrow: 3,
                 flexDirection: 'row',
                 alignItems: 'center'
               }}
@@ -111,15 +111,13 @@ const MenuRow: React.FC<Props> = ({
                   }}
                 />
               ) : null}
-              <View style={{ flex: 1 }}>
-                <CustomText
-                  fontStyle='M'
-                  style={{ color: colors.primaryDefault }}
-                  numberOfLines={1}
-                >
-                  {title}
-                </CustomText>
-              </View>
+              <CustomText
+                fontStyle='M'
+                style={{ color: colors.primaryDefault }}
+                numberOfLines={1}
+              >
+                {title}
+              </CustomText>
             </View>
 
             {content || switchValue !== undefined || iconBack ? (
