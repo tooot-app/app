@@ -57,7 +57,9 @@ const TimelineTranslate = React.memo(
     }, [])
 
     const settingsLanguage = useSelector(getSettingsLanguage)
-    const targetLanguage = Localization.locale || settingsLanguage || 'en'
+    const targetLanguage = settingsLanguage?.startsWith('en')
+      ? Localization.locale || settingsLanguage || 'en'
+      : settingsLanguage || Localization.locale || 'en'
 
     const [enabled, setEnabled] = useState(false)
     const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
