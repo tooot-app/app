@@ -24,7 +24,7 @@ export interface Props {
 }
 
 const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
-  if (!queryKey) return
+  if (!queryKey) return null
 
   const { t } = useTranslation('componentContextMenu')
   const { colors } = useTheme()

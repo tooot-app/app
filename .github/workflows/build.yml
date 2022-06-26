@@ -110,6 +110,9 @@ jobs:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
+          SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
