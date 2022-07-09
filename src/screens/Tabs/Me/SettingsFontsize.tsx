@@ -102,49 +102,12 @@ const TabMeSettingsFontsize: React.FC<
 
   return (
     <ScrollView>
-      <CustomText
-        fontStyle='M'
-        style={{
-          textAlign: 'center',
-          marginTop: StyleConstants.Spacing.M,
-          marginBottom: StyleConstants.Spacing.M,
-          color: colors.primaryDefault
-        }}
-      >
-        {t('me.fontSize.showcase')}
-      </CustomText>
-      <View>
-        <ComponentSeparator
-          extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
-          extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
-        />
-        <TimelineDefault
-          // @ts-ignore
-          item={item}
-          disableDetails
-          disableOnPress
-        />
-        <ComponentSeparator
-          extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
-          extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
-        />
-      </View>
-      <CustomText
-        fontStyle='M'
-        style={{
-          textAlign: 'center',
-          marginTop: StyleConstants.Spacing.M,
-          marginBottom: StyleConstants.Spacing.M,
-          color: colors.primaryDefault
-        }}
-      >
-        {t('me.fontSize.availableSizes')}
-      </CustomText>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          marginTop: StyleConstants.Spacing.M
         }}
       >
         {sizesDemo}
@@ -183,6 +146,26 @@ const TabMeSettingsFontsize: React.FC<
           round
           disabled={initialSize >= 3}
           style={{ marginHorizontal: StyleConstants.Spacing.S }}
+        />
+      </View>
+      <View
+        style={{
+          marginVertical: StyleConstants.Spacing.L
+        }}
+      >
+        <ComponentSeparator
+          extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
+          extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
+        />
+        <TimelineDefault
+          // @ts-ignore
+          item={item}
+          disableDetails
+          disableOnPress
+        />
+        <ComponentSeparator
+          extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
+          extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}
         />
       </View>
     </ScrollView>
