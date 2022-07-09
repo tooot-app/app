@@ -147,7 +147,8 @@
         "group": "Group {{index}}",
         "label": "Label",
         "content": "Content"
-      }
+      },
+      "mediaSelectionFailed": "Image processing failed. Please try again."
     },
     "push": {
       "notAvailable": "Your phone does not support tooot's push notification",
