@@ -1,0 +1,147 @@
+{
+  "empty": {
+    "error": {
+      "message": "",
+      "button": ""
+    },
+    "success": {
+      "message": ""
+    }
+  },
+  "end": {
+    "message": ""
+  },
+  "lookback": {
+    "message": ""
+  },
+  "refresh": {
+    "fetchPreviousPage": "",
+    "refetch": ""
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "",
+      "favourite": "",
+      "status": "",
+      "follow": "",
+      "follow_request": "",
+      "poll": "",
+      "reblog": {
+        "default": "",
+        "notification": ""
+      },
+      "update": ""
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": ""
+      },
+      "reblogged": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "favourited": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "bookmarked": {
+        "accessibilityLabel": "",
+        "function": ""
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "favourited_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": ""
+      },
+      "unsupported": {
+        "text": "",
+        "button": ""
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "content": {
+      "expandHint": ""
+    },
+    "filtered": "",
+    "fullConversation": "",
+    "translate": {
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": ""
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": ""
+        }
+      }
+    }
+  }
+}
