@@ -1,0 +1,17 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "options": {
+      "save": "",
+      "share": "",
+      "cancel": ""
+    },
+    "save": {
+      "succeed": "",
+      "failed": ""
+    }
+  }
+}
