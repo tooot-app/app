@@ -145,7 +145,8 @@
         "group": "Mục {{index}}",
         "label": "Nhãn",
         "content": "Nội dung"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Điện thoại của bạn chưa bật thông báo đẩy",
