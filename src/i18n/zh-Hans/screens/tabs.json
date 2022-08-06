@@ -145,7 +145,8 @@
         "group": "第 {{index}} 组",
         "label": "标签",
         "content": "内容"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "您的手机不支持tooot推送通知",
