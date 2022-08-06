@@ -1,0 +1,354 @@
+{
+  "tabs": {
+    "local": {
+      "name": ""
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "",
+        "right": ""
+      }
+    },
+    "notifications": {
+      "name": ""
+    },
+    "me": {
+      "name": ""
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": ""
+      },
+      "conversations": {
+        "name": ""
+      },
+      "favourites": {
+        "name": ""
+      },
+      "fontSize": {
+        "name": ""
+      },
+      "language": {
+        "name": ""
+      },
+      "lists": {
+        "name": ""
+      },
+      "list": {
+        "name": ""
+      },
+      "push": {
+        "name": ""
+      },
+      "profile": {
+        "name": ""
+      },
+      "profileName": {
+        "name": ""
+      },
+      "profileNote": {
+        "name": ""
+      },
+      "profileFields": {
+        "name": ""
+      },
+      "settings": {
+        "name": ""
+      },
+      "webSettings": {
+        "name": ""
+      },
+      "switch": {
+        "name": ""
+      }
+    },
+    "fontSize": {
+      "showcase": "",
+      "demo": "",
+      "availableSizes": "",
+      "sizes": {
+        "S": "",
+        "M": "",
+        "L": "",
+        "XL": "",
+        "XXL": ""
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "cancel": "",
+          "discard": ""
+        }
+      },
+      "feedback": {
+        "succeed": "",
+        "failed": ""
+      },
+      "root": {
+        "name": {
+          "title": ""
+        },
+        "avatar": {
+          "title": "",
+          "description": ""
+        },
+        "header": {
+          "title": "",
+          "description": ""
+        },
+        "note": {
+          "title": ""
+        },
+        "fields": {
+          "title": "",
+          "total_one": "",
+          "total_other": ""
+        },
+        "visibility": {
+          "title": "",
+          "options": {
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "cancel": ""
+          }
+        },
+        "sensitive": {
+          "title": ""
+        },
+        "lock": {
+          "title": "",
+          "description": ""
+        },
+        "bot": {
+          "title": "",
+          "description": ""
+        }
+      },
+      "fields": {
+        "group": "",
+        "label": "",
+        "content": ""
+      }
+    },
+    "push": {
+      "notAvailable": "",
+      "enable": {
+        "direct": "",
+        "settings": ""
+      },
+      "global": {
+        "heading": "",
+        "description": ""
+      },
+      "decode": {
+        "heading": "",
+        "description": ""
+      },
+      "default": {
+        "heading": ""
+      },
+      "follow": {
+        "heading": ""
+      },
+      "follow_request": {
+        "heading": ""
+      },
+      "favourite": {
+        "heading": ""
+      },
+      "reblog": {
+        "heading": ""
+      },
+      "mention": {
+        "heading": ""
+      },
+      "poll": {
+        "heading": ""
+      },
+      "status": {
+        "heading": ""
+      },
+      "howitworks": ""
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "",
+          "read": "",
+          "empty": ""
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "",
+          "disabled": ""
+        }
+      },
+      "update": {
+        "title": ""
+      },
+      "logout": {
+        "button": "",
+        "alert": {
+          "title": "",
+          "message": "",
+          "buttons": {
+            "logout": "",
+            "cancel": ""
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "",
+        "content": {
+          "S": "",
+          "M": "",
+          "L": "",
+          "XL": "",
+          "XXL": ""
+        }
+      },
+      "language": {
+        "heading": "",
+        "options": {
+          "cancel": ""
+        }
+      },
+      "theme": {
+        "heading": "",
+        "options": {
+          "auto": "",
+          "light": "",
+          "dark": "",
+          "cancel": ""
+        }
+      },
+      "darkTheme": {
+        "heading": "",
+        "options": {
+          "lighter": "",
+          "darker": "",
+          "cancel": ""
+        }
+      },
+      "browser": {
+        "heading": "",
+        "options": {
+          "internal": "",
+          "external": "",
+          "cancel": ""
+        }
+      },
+      "staticEmoji": {
+        "heading": "",
+        "description": ""
+      },
+      "feedback": {
+        "heading": ""
+      },
+      "support": {
+        "heading": ""
+      },
+      "review": {
+        "heading": ""
+      },
+      "contact": {
+        "heading": ""
+      },
+      "analytics": {
+        "heading": "",
+        "description": ""
+      },
+      "version": "",
+      "instanceVersion": ""
+    },
+    "switch": {
+      "existing": "",
+      "new": ""
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
+      },
+      "followed_by": "",
+      "moved": "",
+      "created_at": "",
+      "summary": {
+        "statuses_count": "",
+        "following_count": "",
+        "followers_count": ""
+      },
+      "toots": {
+        "default": "",
+        "all": ""
+      }
+    },
+    "attachments": {
+      "name": ""
+    },
+    "search": {
+      "header": {
+        "prefix": "",
+        "placeholder": ""
+      },
+      "empty": {
+        "general": "",
+        "advanced": {
+          "header": "",
+          "example": {
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
+          }
+        }
+      },
+      "sections": {
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
+      },
+      "notFound": ""
+    },
+    "toot": {
+      "name": ""
+    },
+    "users": {
+      "accounts": {
+        "following": "",
+        "followers": ""
+      },
+      "statuses": {
+        "reblogged_by": "",
+        "favourited_by": ""
+      }
+    },
+    "history": {
+      "name": ""
+    }
+  }
+}
