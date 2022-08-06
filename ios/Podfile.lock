@@ -482,7 +482,7 @@ PODS:
     - React-Core
   - react-native-pager-view (5.4.25):
     - React-Core
-  - react-native-paste-input (0.4.2):
+  - react-native-paste-input (0.5.0):
     - React-Core
     - Swime (= 3.0.6)
   - react-native-safe-area-context (4.3.1):
@@ -594,7 +594,7 @@ PODS:
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
-    - SDWebImage (~> 5.13.0)
+    - SDWebImage (~> 5.13.2)
     - SDWebImageWebPCoder (~> 0.9.0)
   - RNGestureHandler (2.5.0):
     - React-Core
@@ -1043,7 +1043,7 @@ SPEC CHECKSUMS:
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
   react-native-netinfo: 129bd99f607a2dc5bb096168f3e5c150fd1f1c95
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
-  react-native-paste-input: efbf0b08fa1673f0e3131da6ea01678c1bb8003e
+  react-native-paste-input: 3037f113267c367e863790bcfd57cdb3ace3cad6
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
   React-perflogger: 39d2ba8cbcac54d1bb1d9a980dab348e96aef467
@@ -1059,7 +1059,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 607eb048e22a16388c908ee1f6644200e8d1e19b
   ReactCommon: af7636436b382db7cde4583bbd642f0978e6e3ed
   RNCAsyncStorage: d81ee5c3db1060afd49ea7045ad460eff82d2b7d
-  RNFastImage: 5a76299f87d4fc29a3ac2d60ba39571855485624
+  RNFastImage: 8e9b5b9e6df94d2e359c0a75a4745ad1311506fd
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNReanimated: 2cf7451318bb9cc430abeec8d67693f9cf4e039c
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
@@ -1074,6 +1074,6 @@ SPEC CHECKSUMS:
   Yoga: 44c64131616253fa83366295acdbce3d14926041
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d1c2d7c3a625c9559251a346c19dbb14568a8818
+PODFILE CHECKSUM: a2f2cbb9af4b081ba2a1ca88de325713cfa64ec5
 
 COCOAPODS: 1.11.3
