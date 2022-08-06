@@ -30,18 +30,10 @@ const TabSharedAccount: React.FC<
 
   const scrollY = useSharedValue(0)
 
-  const onScroll = useCallback(({ nativeEvent }) => {
-    scrollY.value = nativeEvent.contentOffset.y
-  }, [])
-
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
     { page: 'Account_Default', account: account.id }
   ])
-  const renderItem = useCallback(
-    ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
-    []
-  )
   const isFetchingTimeline = useIsFetching(queryKey)
   const fetchedTimeline = useRef(false)
   useEffect(() => {
@@ -97,9 +89,13 @@ const TabSharedAccount: React.FC<
         queryKey={queryKey}
         disableRefresh
         customProps={{
-          renderItem,
-          onScroll,
-          ListHeaderComponent
+          renderItem: ({ item }) => (
+            <TimelineDefault item={item} queryKey={queryKey} />
+          ),
+          onScroll: ({ nativeEvent }) =>
+            (scrollY.value = nativeEvent.contentOffset.y),
+          ListHeaderComponent,
+          maintainVisibleContentPosition: undefined
         }}
       />
     </>

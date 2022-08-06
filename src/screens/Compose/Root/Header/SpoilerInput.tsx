@@ -1,9 +1,12 @@
 import CustomText from '@components/Text'
+import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TextInput } from 'react-native'
+import { useSelector } from 'react-redux'
 import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
 
@@ -11,6 +14,16 @@ const ComposeSpoilerInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
   const { colors, mode } = useTheme()
+
+  const adaptiveFontsize = useSelector(getSettingsFontsize)
+  const adaptedFontsize = adaptiveScale(
+    StyleConstants.Font.Size.M,
+    adaptiveFontsize
+  )
+  const adaptedLineheight = adaptiveScale(
+    StyleConstants.Font.LineHeight.M,
+    adaptiveFontsize
+  )
 
   return (
     <TextInput
@@ -23,7 +36,9 @@ const ComposeSpoilerInput: React.FC = () => {
         marginRight: StyleConstants.Spacing.Global.PagePadding,
         borderBottomWidth: 0.5,
         color: colors.primaryDefault,
-        borderBottomColor: colors.border
+        borderBottomColor: colors.border,
+        fontSize: adaptedFontsize,
+        lineHeight: adaptedLineheight
       }}
       autoCapitalize='none'
       autoCorrect={false}

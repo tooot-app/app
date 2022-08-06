@@ -1,15 +1,8 @@
-import analytics from '@components/analytics'
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
 import { store } from '@root/store'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
-import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
-import * as ExpoImagePicker from 'expo-image-picker'
 import i18next from 'i18next'
-import { Alert, Linking, Platform } from 'react-native'
-import ImagePicker, {
-  Image,
-  ImageOrVideo
-} from 'react-native-image-crop-picker'
+import { Asset, launchImageLibrary } from 'react-native-image-picker'
 
 export interface Props {
   mediaType?: 'photo' | 'video'
@@ -28,43 +21,7 @@ const mediaSelector = async ({
   maximum,
   indicateMaximum = false,
   showActionSheetWithOptions
-}: Props): Promise<({ uri: string } & Omit<ImageOrVideo, 'path'>)[]> => {
-  const checkLibraryPermission = async (): Promise<boolean> => {
-    const { status } =
-      await ExpoImagePicker.requestMediaLibraryPermissionsAsync()
-    if (status !== 'granted') {
-      Alert.alert(
-        i18next.t('componentMediaSelector:library.alert.title'),
-        i18next.t('componentMediaSelector:library.alert.message'),
-        [
-          {
-            text: i18next.t('common:buttons.cancel'),
-            style: 'cancel',
-            onPress: () =>
-              analytics('mediaSelector_nopermission', {
-                action: 'cancel'
-              })
-          },
-          {
-            text: i18next.t(
-              'componentMediaSelector:library.alert.buttons.settings'
-            ),
-            style: 'default',
-            onPress: () => {
-              analytics('mediaSelector_nopermission', {
-                action: 'settings'
-              })
-              Linking.openURL('app-settings:')
-            }
-          }
-        ]
-      )
-      return false
-    } else {
-      return true
-    }
-  }
-
+}: Props): Promise<Asset[]> => {
   const _maximum =
     maximum ||
     getInstanceConfigurationStatusMaxAttachments(store.getState()) ||
@@ -105,79 +62,30 @@ const mediaSelector = async ({
 
   return new Promise((resolve, reject) => {
     const selectImage = async () => {
-      const images = await ImagePicker.openPicker({
+      const images = await launchImageLibrary({
         mediaType: 'photo',
-        includeExif: false,
-        multiple: true,
-        minFiles: 1,
-        maxFiles: _maximum,
-        smartAlbums: ['UserLibrary'],
-        writeTempFile: false,
-        loadingLabelText: ''
-      }).catch(() => {})
+        ...(resize && { maxWidth: resize.width, maxHeight: resize.height }),
+        includeBase64: false,
+        includeExtra: false,
+        selectionLimit: _maximum
+      })
 
-      if (!images) {
+      if (!images.assets) {
         return reject()
       }
 
-      // react-native-image-crop-picker may return HEIC as JPG that causes upload failure
-      if (Platform.OS === 'ios') {
-        for (const [index, image] of images.entries()) {
-          if (image.mime === 'image/heic') {
-            const converted = await manipulateAsync(image.sourceURL!, [], {
-              base64: false,
-              compress: 0.8,
-              format: SaveFormat.JPEG
-            })
-            images[index] = {
-              ...images[index],
-              sourceURL: converted.uri,
-              mime: 'image/jpeg'
-            }
-          }
-        }
-      }
-
-      if (!resize) {
-        return resolve(
-          images.map(image => ({
-            ...image,
-            uri: image.sourceURL || `file://${image.path}`
-          }))
-        )
-      } else {
-        const croppedImages: Image[] = []
-        for (const image of images) {
-          const croppedImage = await ImagePicker.openCropper({
-            mediaType: 'photo',
-            path: image.path,
-            width: resize.width,
-            height: resize.height,
-            cropperChooseText: i18next.t('common:buttons.apply'),
-            cropperCancelText: i18next.t('common:buttons.cancel'),
-            hideBottomControls: true
-          }).catch(() => {})
-          croppedImage && croppedImages.push(croppedImage)
-        }
-        return resolve(
-          croppedImages.map(image => ({
-            ...image,
-            uri: `file://${image.path}`
-          }))
-        )
-      }
+      return resolve(images.assets)
     }
     const selectVideo = async () => {
-      const video = await ImagePicker.openPicker({
+      const video = await launchImageLibrary({
         mediaType: 'video',
-        includeExif: false,
-        loadingLabelText: ''
-      }).catch(() => {})
+        includeBase64: false,
+        includeExtra: false,
+        selectionLimit: 1
+      })
 
-      if (video) {
-        return resolve([
-          { ...video, uri: video.sourceURL || `file://${video.path}` }
-        ])
+      if (video.assets?.[0]) {
+        return resolve(video.assets)
       } else {
         return reject()
       }
@@ -189,10 +97,6 @@ const mediaSelector = async ({
         cancelButtonIndex: mediaType ? 1 : 2
       },
       async buttonIndex => {
-        if (!(await checkLibraryPermission())) {
-          return reject()
-        }
-
         switch (mediaType) {
           case 'photo':
             if (buttonIndex === 0) {

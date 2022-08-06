@@ -1,7 +1,9 @@
 import CustomText from '@components/Text'
 import PasteInput, { PastedFile } from '@mattermost/react-native-paste-input'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
+import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +23,16 @@ const ComposeTextInput: React.FC = () => {
     () => true
   )
 
+  const adaptiveFontsize = useSelector(getSettingsFontsize)
+  const adaptedFontsize = adaptiveScale(
+    StyleConstants.Font.Size.M,
+    adaptiveFontsize
+  )
+  const adaptedLineheight = adaptiveScale(
+    StyleConstants.Font.LineHeight.M,
+    adaptiveFontsize
+  )
+
   return (
     <PasteInput
       keyboardAppearance={mode}
@@ -31,7 +43,9 @@ const ComposeTextInput: React.FC = () => {
         marginLeft: StyleConstants.Spacing.Global.PagePadding,
         marginRight: StyleConstants.Spacing.Global.PagePadding,
         color: colors.primaryDefault,
-        borderBottomColor: colors.border
+        borderBottomColor: colors.border,
+        fontSize: adaptedFontsize,
+        lineHeight: adaptedLineheight
       }}
       autoFocus
       enablesReturnKeyAutomatically
@@ -87,15 +101,7 @@ const ComposeTextInput: React.FC = () => {
         }
 
         for (const file of files) {
-          uploadAttachment({
-            composeDispatch,
-            media: {
-              uri: file.uri,
-              mime: file.type,
-              width: 100,
-              height: 100
-            }
-          })
+          uploadAttachment({ composeDispatch, media: file })
         }
       }}
     >

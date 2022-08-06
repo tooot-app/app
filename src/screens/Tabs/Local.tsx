@@ -44,16 +44,16 @@ const TabLocal = React.memo(
     )
 
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
-    const renderItem = useCallback(
-      ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
-      []
-    )
     const children = useCallback(
       () => (
         <Timeline
           queryKey={queryKey}
           lookback='Following'
-          customProps={{ renderItem }}
+          customProps={{
+            renderItem: ({ item }) => (
+              <TimelineDefault item={item} queryKey={queryKey} />
+            )
+          }}
         />
       ),
       []

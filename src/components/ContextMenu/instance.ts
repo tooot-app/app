@@ -29,7 +29,7 @@ const contextMenuInstance = ({
   const { theme } = useTheme()
 
   const currentInstance = useSelector(getInstanceUrl)
-  const instance = status.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const instance = status?.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -71,36 +71,38 @@ const contextMenuInstance = ({
     }
   }
 
-  return (id: string) => {
-    switch (id) {
-      case 'instance-block':
-        analytics('timeline_shared_headeractions_domain_block_press', {
-          page: queryKey[1].page
-        })
-        Alert.alert(
-          t('instance.block.alert.title', { instance }),
-          t('instance.block.alert.message'),
-          [
-            {
-              text: t('instance.block.alert.buttons.confirm'),
-              style: 'destructive',
-              onPress: () => {
-                analytics(
-                  'timeline_shared_headeractions_domain_block_confirm',
-                  { page: queryKey && queryKey[1].page }
-                )
-                mutation.mutate({
-                  type: 'domainBlock',
-                  queryKey,
-                  domain: instance
-                })
-              }
-            },
-            {
-              text: t('common:buttons.cancel')
+  return (index: number) => {
+    if (
+      actions[index].id === 'instance-block' ||
+      (actions[index].id === 'instance' &&
+        actions[index].actions?.[0].id === 'instance-block')
+    ) {
+      analytics('timeline_shared_headeractions_domain_block_press', {
+        page: queryKey[1].page
+      })
+      Alert.alert(
+        t('instance.block.alert.title', { instance }),
+        t('instance.block.alert.message'),
+        [
+          {
+            text: t('instance.block.alert.buttons.confirm'),
+            style: 'destructive',
+            onPress: () => {
+              analytics('timeline_shared_headeractions_domain_block_confirm', {
+                page: queryKey && queryKey[1].page
+              })
+              mutation.mutate({
+                type: 'domainBlock',
+                queryKey,
+                domain: instance
+              })
             }
-          ]
-        )
+          },
+          {
+            text: t('common:buttons.cancel')
+          }
+        ]
+      )
     }
   }
 }

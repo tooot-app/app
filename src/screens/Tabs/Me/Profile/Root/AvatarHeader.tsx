@@ -1,5 +1,6 @@
 import mediaSelector from '@components/mediaSelector'
 import { MenuRow } from '@components/Menu'
+import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -37,6 +38,15 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
               ? { width: 400, height: 400 }
               : { width: 1500, height: 500 }
         })
+        if (!image[0].uri) {
+          displayMessage({
+            ref: messageRef,
+            message: t('screenTabs:me.profile.mediaSelectionFailed'),
+            theme: theme,
+            type: 'error'
+          })
+          return
+        }
         mutation.mutate({
           theme,
           messageRef,

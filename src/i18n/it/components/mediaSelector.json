@@ -1,10 +1,10 @@
 {
   "title": "Seleziona origine media",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Carica foto",
+    "image_max": "Carica foto (massimo {{max}})",
+    "video": "Carica video",
+    "video_max": "Carica video (max {{max}})"
   },
   "library": {
     "alert": {

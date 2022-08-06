@@ -1,19 +1,22 @@
 import Timeline from '@components/Timeline'
 import TimelineConversation from '@components/Timeline/Conversation'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 const TabMeConversations = React.memo(
   () => {
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Conversations' }]
-    const renderItem = useCallback(
-      ({ item }) => (
-        <TimelineConversation conversation={item} queryKey={queryKey} />
-      ),
-      []
-    )
 
-    return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
+    return (
+      <Timeline
+        queryKey={queryKey}
+        customProps={{
+          renderItem: ({ item }) => (
+            <TimelineConversation conversation={item} queryKey={queryKey} />
+          )
+        }}
+      />
+    )
   },
   () => true
 )

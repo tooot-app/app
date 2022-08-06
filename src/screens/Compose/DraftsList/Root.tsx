@@ -47,10 +47,6 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
 
   const [checkingAttachments, setCheckingAttachments] = useState(false)
 
-  const removeDraft = useCallback(ts => {
-    dispatch(removeInstanceDraft(ts))
-  }, [])
-
   const renderItem = useCallback(
     ({ item }: { item: ComposeStateDraft }) => {
       return (
@@ -144,7 +140,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
                     }}
                     source={{
                       uri:
-                        attachment.local?.local_thumbnail ||
+                        attachment.local?.thumbnail ||
                         attachment.remote?.preview_url
                     }}
                   />
@@ -155,38 +151,6 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         </Pressable>
       )
     },
-    [theme]
-  )
-  const renderHiddenItem = useCallback(
-    ({ item }) => (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          backgroundColor: colors.red
-        }}
-        children={
-          <Pressable
-            style={{
-              flexBasis:
-                StyleConstants.Font.Size.L +
-                StyleConstants.Spacing.Global.PagePadding * 4,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-            onPress={() => removeDraft(item.timestamp)}
-            children={
-              <Icon
-                name='Trash'
-                size={StyleConstants.Font.Size.L}
-                color={colors.primaryOverlay}
-              />
-            }
-          />
-        }
-      />
-    ),
     [theme]
   )
 
@@ -220,7 +184,35 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
         <SwipeListView
           data={instanceDrafts}
           renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
+          renderHiddenItem={({ item }) => (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                backgroundColor: colors.red
+              }}
+              children={
+                <Pressable
+                  style={{
+                    flexBasis:
+                      StyleConstants.Font.Size.L +
+                      StyleConstants.Spacing.Global.PagePadding * 4,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                  onPress={() => dispatch(removeInstanceDraft(item.timestamp))}
+                  children={
+                    <Icon
+                      name='Trash'
+                      size={StyleConstants.Font.Size.L}
+                      color={colors.primaryOverlay}
+                    />
+                  }
+                />
+              }
+            />
+          )}
           disableRightSwipe={true}
           rightOpenValue={-actionWidth}
           // previewRowKey={

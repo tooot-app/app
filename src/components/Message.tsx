@@ -80,7 +80,7 @@ const displayMessage = ({
     })
   } else {
     showMessage({
-      duration: type === 'error' ? 3500 : duration === 'short' ? 1500 : 2500,
+      duration: type === 'error' ? 8000 : duration === 'short' ? 3000 : 5000,
       autoHide,
       message,
       description,
@@ -124,7 +124,8 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
         shadowColor: colors.primaryDefault,
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: theme === 'light' ? 0.16 : 0.24,
-        shadowRadius: 4
+        shadowRadius: 4,
+        paddingRight: StyleConstants.Spacing.M * 2
       }}
       titleStyle={{
         color: colors.primaryDefault,

@@ -88,21 +88,6 @@ const ComponentInstance: React.FC<Props> = ({
     }
   }, [domain])
 
-  const onSubmitEditing = useCallback(
-    ({ nativeEvent: { text } }) => {
-      analytics('instance_textinput_submit', { match: text === domain })
-      if (
-        text === domain &&
-        instanceQuery.isSuccess &&
-        instanceQuery.data &&
-        instanceQuery.data.uri
-      ) {
-        processUpdate()
-      }
-    },
-    [domain, instanceQuery.isSuccess, instanceQuery.data]
-  )
-
   const requestAuth = useMemo(() => {
     if (
       domain &&
@@ -180,7 +165,17 @@ const ComponentInstance: React.FC<Props> = ({
             clearButtonMode='never'
             keyboardType='url'
             textContentType='URL'
-            onSubmitEditing={onSubmitEditing}
+            onSubmitEditing={({ nativeEvent: { text } }) => {
+              analytics('instance_textinput_submit', { match: text === domain })
+              if (
+                text === domain &&
+                instanceQuery.isSuccess &&
+                instanceQuery.data &&
+                instanceQuery.data.uri
+              ) {
+                processUpdate()
+              }
+            }}
             placeholder={' ' + t('server.textInput.placeholder')}
             placeholderTextColor={colors.secondary}
             returnKeyType='go'

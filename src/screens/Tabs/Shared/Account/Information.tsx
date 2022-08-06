@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Placeholder, Fade } from 'rn-placeholder'
 import AccountInformationAccount from './Information/Account'
@@ -19,21 +19,21 @@ export interface Props {
 
 const AccountInformation = React.memo(
   ({ account }: Props) => {
-    const { colors, theme } = useTheme()
+    const { colors } = useTheme()
 
     const { name } = useRoute()
     const myInfo = name !== 'Tab-Shared-Account'
 
-    const animation = useCallback(
-      props => (
-        <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
-      ),
-      [theme]
-    )
-
     return (
       <View style={styles.base}>
-        <Placeholder Animation={animation}>
+        <Placeholder
+          Animation={props => (
+            <Fade
+              {...props}
+              style={{ backgroundColor: colors.shimmerHighlight }}
+            />
+          )}
+        >
           <View style={styles.avatarAndActions}>
             <AccountInformationAvatar account={account} myInfo={myInfo} />
             <AccountInformationActions account={account} myInfo={myInfo} />

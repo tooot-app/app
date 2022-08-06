@@ -1,12 +1,14 @@
 {
   "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
   "account": {
-    "title": "",
+    "title": "Benutzeraktionen",
     "mute": {
-      "action": "Profil stummschalten"
+      "action_false": "Profil stummschalten",
+      "action_true": ""
     },
     "block": {
-      "action": "Nutzer blockieren"
+      "action_false": "Nutzer blockieren",
+      "action_true": ""
     },
     "reports": {
       "action": "User melden"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "",
-      "action-muted_true": ""
+      "action_false": "",
+      "action_true": ""
     },
     "pin": {
-      "action-pinned_false": "",
-      "action-pinned_true": ""
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

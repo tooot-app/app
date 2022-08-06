@@ -1,23 +1,25 @@
 {
   "accessibilityHint": "Azioni per questo toot, per l'utente che l'ha pubblicato o per il toot stesso",
   "account": {
-    "title": "",
+    "title": "Azioni utente",
     "mute": {
-      "action": "Muta utente"
+      "action_false": "Muta utente",
+      "action_true": "Riattiva utente"
     },
     "block": {
-      "action": "Blocca utente"
+      "action_false": "Blocca utente",
+      "action_true": "Sblocca utente"
     },
     "reports": {
       "action": "Segnala utente"
     }
   },
   "instance": {
-    "title": "",
+    "title": "Azione sull'istanza",
     "block": {
       "action": "Blocca istanza {{instance}}",
       "alert": {
-        "title": "",
+        "title": "Confermi di voler bloccare l'istanza {{instance}}?",
         "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
         "buttons": {
           "confirm": "Ho capito"
@@ -34,7 +36,7 @@
     }
   },
   "status": {
-    "title": "",
+    "title": "Azioni sul toot",
     "edit": {
       "action": "Modifica toot"
     },
@@ -42,29 +44,29 @@
       "action": "Cancella toot",
       "alert": {
         "title": "Conferma?",
-        "message": "",
+        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati.",
         "buttons": {
           "confirm": "Ho capito"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Cancella e ripubblica toot",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Confermi cancellazione e ripubblicazione?",
+        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati.",
         "buttons": {
           "confirm": "Ho capito"
         }
       }
     },
     "mute": {
-      "action-muted_false": "",
-      "action-muted_true": ""
+      "action_false": "Muta toot e le sue risposte",
+      "action_true": "Riattiva toot e le sue risposte"
     },
     "pin": {
-      "action-pinned_false": "",
-      "action-pinned_true": ""
+      "action_false": "Fissa toot",
+      "action_true": "Togli toot all'alto"
     }
   }
 }

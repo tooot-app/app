@@ -3,10 +3,12 @@
   "account": {
     "title": "用户操作",
     "mute": {
-      "action": "静音用户"
+      "action_false": "静音用户",
+      "action_true": "取消静音用户"
     },
     "block": {
-      "action": "屏蔽用户"
+      "action_false": "屏蔽用户",
+      "action_true": "取消屏蔽用户"
     },
     "reports": {
       "action": "举报用户"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "静音嘟文及回复",
-      "action-muted_true": "取消静音嘟文及回复"
+      "action_false": "静音嘟文及回复",
+      "action_true": "取消静音嘟文及回复"
     },
     "pin": {
-      "action-pinned_false": "置顶嘟文",
-      "action-pinned_true": "取消置顶嘟文"
+      "action_false": "置顶嘟文",
+      "action_true": "取消置顶嘟文"
     }
   }
 }

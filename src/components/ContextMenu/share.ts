@@ -18,19 +18,17 @@ const contextMenuShare = ({ actions, type, url }: Props) => {
     systemIcon: 'square.and.arrow.up'
   })
 
-  return (id: string) => {
-    switch (id) {
-      case 'share':
-        analytics('timeline_shared_headeractions_share_press')
-        switch (Platform.OS) {
-          case 'ios':
-            Share.share({ url })
-            break
-          case 'android':
-            Share.share({ message: url })
-            break
-        }
-        break
+  return (index: number) => {
+    if (actions[index].id === 'share') {
+      analytics('timeline_shared_headeractions_share_press')
+      switch (Platform.OS) {
+        case 'ios':
+          Share.share({ url })
+          break
+        case 'android':
+          Share.share({ message: url })
+          break
+      }
     }
   }
 }

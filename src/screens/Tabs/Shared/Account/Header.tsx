@@ -1,8 +1,8 @@
 import Button from '@components/Button'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import GracefullyImage from '@components/GracefullyImage'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { Dimensions, Image, View } from 'react-native'
+import { Dimensions, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export interface Props {
@@ -12,16 +12,13 @@ export interface Props {
 
 const AccountHeader = React.memo(
   ({ account, edit }: Props) => {
-    const { reduceMotionEnabled } = useAccessibility()
     const { colors } = useTheme()
     const topInset = useSafeAreaInsets().top
 
     return (
       <View>
-        <Image
-          source={{
-            uri: reduceMotionEnabled ? account?.header_static : account?.header
-          }}
+        <GracefullyImage
+          uri={{ original: account?.header, static: account?.header_static }}
           style={{
             height: Dimensions.get('screen').width / 3 + topInset,
             backgroundColor: colors.disabled

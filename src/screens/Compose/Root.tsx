@@ -4,13 +4,7 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react'
+import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import {
   AccessibilityInfo,
   findNodeHandle,
@@ -147,35 +141,25 @@ const ComposeRoot = React.memo(
       }
     }, [isFetching])
 
-    const listItem = useCallback(
-      ({ item }) => (
-        <ComposeRootSuggestion
-          item={item}
-          composeState={composeState}
-          composeDispatch={composeDispatch}
-        />
-      ),
-      [composeState]
-    )
-
-    const ListFooter = useCallback(
-      () => (
-        <ComposeRootFooter
-          accessibleRefAttachments={accessibleRefAttachments}
-          accessibleRefEmojis={accessibleRefEmojis}
-        />
-      ),
-      []
-    )
-
     return (
       <View style={styles.base}>
         <FlatList
-          renderItem={listItem}
+          renderItem={({ item }) => (
+            <ComposeRootSuggestion
+              item={item}
+              composeState={composeState}
+              composeDispatch={composeDispatch}
+            />
+          )}
           ListEmptyComponent={listEmpty}
           keyboardShouldPersistTaps='always'
           ListHeaderComponent={ComposeRootHeader}
-          ListFooterComponent={ListFooter}
+          ListFooterComponent={() => (
+            <ComposeRootFooter
+              accessibleRefAttachments={accessibleRefAttachments}
+              accessibleRefEmojis={accessibleRefEmojis}
+            />
+          )}
           ItemSeparatorComponent={ComponentSeparator}
           // @ts-ignore
           data={data ? data[composeState.tag?.type] : undefined}

@@ -39,6 +39,7 @@ jobs:
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+          GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build ios
 
   build-android:
@@ -73,6 +74,7 @@ jobs:
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+          GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build android
 
   create-release:
@@ -108,10 +110,13 @@ jobs:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
+          SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
-          GH_PAT_GET_RELEASE: ${{ secrets.GH_PAT_GET_RELEASE }}
+          GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build release

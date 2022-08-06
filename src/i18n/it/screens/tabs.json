@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "Toot di esempio",
       "demo": "<p>Questo toot è un esempio 😺️. Puoi scegliere diverse opzioni di grandezza del testo qui sotto.<br /><br />Questa impostazione si applica solo al testo dei toot, non anche agli altri testi della app.</p>",
-      "availableSizes": "Dimensioni testo",
       "sizes": {
         "S": "S",
         "M": "M - Predefinito",
@@ -170,7 +168,7 @@
         "heading": "Nuovi seguaci"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Richiesta di seguirti"
       },
       "favourite": {
         "heading": "Apprezzamenti"
@@ -185,7 +183,7 @@
         "heading": "Novità sui sondaggi"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot da utenti seguiti"
       },
       "howitworks": "Scopri come funziona il traversamento dei messaggi"
     },

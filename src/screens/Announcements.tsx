@@ -15,8 +15,15 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { FormattedRelativeTime } from 'react-intl'
-import { Dimensions, Platform, Pressable, StyleSheet, View } from 'react-native'
+import {
+  Dimensions,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -92,9 +99,7 @@ const ScreenAnnouncements: React.FC<
           >
             <Trans
               i18nKey='screenAnnouncements:content.published'
-              components={[
-                <RelativeTime type='past' time={item.published_at} />
-              ]}
+              components={[<RelativeTime time={item.published_at} />]}
             />
           </CustomText>
           <ScrollView
@@ -218,7 +223,7 @@ const ScreenAnnouncements: React.FC<
         contentOffset: { x },
         layoutMeasurement: { width }
       }
-    }) => {
+    }: NativeSyntheticEvent<NativeScrollEvent>) => {
       setIndex(Math.floor(x / width))
     },
     []

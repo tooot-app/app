@@ -94,8 +94,8 @@ const pushUseConnect = ({ t, instances }: Params) => {
   }, [expoToken, pushEnabled.length])
 
   return useEffect(() => {
+    Notifications.setBadgeCountAsync(0)
     if (expoToken && pushEnabled.length) {
-      Notifications.setBadgeCountAsync(0)
       connect()
     }
   }, [expoToken, pushEnabled.length])

@@ -42,22 +42,6 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
     }
   }, [composeState.emoji.active])
 
-  const listHeader = useCallback(
-    ({ section: { title } }) => (
-      <CustomText
-        fontStyle='S'
-        style={{
-          position: 'absolute',
-          left: StyleConstants.Spacing.L,
-          color: colors.secondary
-        }}
-      >
-        {title}
-      </CustomText>
-    ),
-    []
-  )
-
   const listItem = useCallback(
     ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
       return (
@@ -155,7 +139,18 @@ const ComposeEmojis: React.FC<Props> = ({ accessibleRefEmojis }) => {
         keyboardShouldPersistTaps='always'
         sections={composeState.emoji.emojis || []}
         keyExtractor={item => item[0].shortcode}
-        renderSectionHeader={listHeader}
+        renderSectionHeader={({ section: { title } }) => (
+          <CustomText
+            fontStyle='S'
+            style={{
+              position: 'absolute',
+              left: StyleConstants.Spacing.L,
+              color: colors.secondary
+            }}
+          >
+            {title}
+          </CustomText>
+        )}
         renderItem={listItem}
         windowSize={2}
       />

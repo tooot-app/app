@@ -63,15 +63,16 @@ const TabSharedRoot = ({
               })
               const accountOnPress = contextMenuAccount({
                 actions,
+                type: 'account',
                 id: account.id
               })
 
               return (
                 <ContextMenu
                   actions={actions}
-                  onPress={({ nativeEvent: { id } }) => {
-                    shareOnPress(id)
-                    accountOnPress(id)
+                  onPress={({ nativeEvent: { index } }) => {
+                    shareOnPress(index)
+                    accountOnPress(index)
                   }}
                   dropdownMenuMode
                 >

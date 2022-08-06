@@ -1,7 +1,7 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "Testo descrittivo"
     },
     "notificationsFilter": {
       "heading": "Filtra notifiche per tipo",
@@ -12,8 +12,8 @@
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "",
-        "update": ""
+        "status": "Toot da utenti seguiti",
+        "update": "Retoot ha subito una modifica"
       }
     }
   }

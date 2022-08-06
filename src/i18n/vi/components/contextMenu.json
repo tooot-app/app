@@ -3,10 +3,12 @@
   "account": {
     "title": "Hành động người dùng",
     "mute": {
-      "action": "Ẩn người này"
+      "action_false": "Ẩn người này",
+      "action_true": "Bỏ ẩn người dùng"
     },
     "block": {
-      "action": "Chặn người này"
+      "action_false": "Chặn người này",
+      "action_true": "Bỏ chặn người dùng"
     },
     "reports": {
       "action": "Báo cáo"
@@ -59,12 +61,12 @@
       }
     },
     "mute": {
-      "action-muted_false": "Ẩn tút này",
-      "action-muted_true": "Bỏ ẩn tút này"
+      "action_false": "Ẩn tút này",
+      "action_true": "Bỏ ẩn tút này"
     },
     "pin": {
-      "action-pinned_false": "Tút ghim",
-      "action-pinned_true": "Bỏ ghim tút"
+      "action_false": "Tút ghim",
+      "action_true": "Bỏ ghim tút"
     }
   }
 }

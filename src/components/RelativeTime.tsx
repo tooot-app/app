@@ -3,11 +3,10 @@ import { FormattedRelativeTime } from 'react-intl'
 import { AppState } from 'react-native'
 
 export interface Props {
-  type: 'past' | 'future'
   time: string | number
 }
 
-const RelativeTime: React.FC<Props> = ({ type, time }) => {
+const RelativeTime: React.FC<Props> = ({ time }) => {
   const [now, setNow] = useState(new Date().getTime())
   useEffect(() => {
     const appStateListener = AppState.addEventListener('change', state => {
@@ -21,9 +20,7 @@ const RelativeTime: React.FC<Props> = ({ type, time }) => {
 
   return (
     <FormattedRelativeTime
-      value={
-        ((type === 'past' ? -1 : 1) * (now - new Date(time).getTime())) / 1000
-      }
+      value={(new Date(time).getTime() - now) / 1000}
       updateIntervalInSeconds={1}
     />
   )

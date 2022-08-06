@@ -1,10 +1,7 @@
 import GracefullyImage from '@components/GracefullyImage'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator
-} from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAppDispatch } from '@root/store'
 import {
   RootStackScreenProps,
@@ -15,10 +12,7 @@ import {
   getInstanceAccount,
   getInstanceActive
 } from '@utils/slices/instancesSlice'
-import {
-  getVersionUpdate,
-  retriveVersionLatest
-} from '@utils/slices/appSlice'
+import { getVersionUpdate, retriveVersionLatest } from '@utils/slices/appSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
@@ -32,63 +26,12 @@ const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 
 const ScreenTabs = React.memo(
   ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
-    const { colors, theme } = useTheme()
+    const { colors } = useTheme()
 
     const instanceActive = useSelector(getInstanceActive)
     const instanceAccount = useSelector(
       getInstanceAccount,
       (prev, next) => prev?.avatarStatic === next?.avatarStatic
-    )
-
-    const screenOptions = useCallback(
-      ({ route }): BottomTabNavigationOptions => ({
-        headerShown: false,
-        tabBarActiveTintColor: colors.primaryDefault,
-        tabBarInactiveTintColor: colors.secondary,
-        tabBarShowLabel: false,
-        ...(Platform.OS === 'android' && { tabBarHideOnKeyboard: true }),
-        tabBarStyle: { display: instanceActive !== -1 ? 'flex' : 'none' },
-        tabBarIcon: ({
-          focused,
-          color,
-          size
-        }: {
-          focused: boolean
-          color: string
-          size: number
-        }) => {
-          switch (route.name) {
-            case 'Tab-Local':
-              return <Icon name='Home' size={size} color={color} />
-            case 'Tab-Public':
-              return <Icon name='Globe' size={size} color={color} />
-            case 'Tab-Compose':
-              return <Icon name='Plus' size={size} color={color} />
-            case 'Tab-Notifications':
-              return <Icon name='Bell' size={size} color={color} />
-            case 'Tab-Me':
-              return (
-                <GracefullyImage
-                  key={instanceAccount?.avatarStatic}
-                  uri={{ original: instanceAccount?.avatarStatic }}
-                  dimension={{
-                    width: size,
-                    height: size
-                  }}
-                  style={{
-                    borderRadius: size,
-                    overflow: 'hidden',
-                    borderWidth: focused ? 2 : 0,
-                    borderColor: focused ? colors.secondary : color
-                  }}
-                />
-              )
-            default:
-              return <Icon name='AlertOctagon' size={size} color={color} />
-          }
-        }
-      }),
-      [instanceAccount?.avatarStatic, instanceActive, theme]
     )
 
     const composeListeners = useMemo(
@@ -132,7 +75,53 @@ const ScreenTabs = React.memo(
     return (
       <Tab.Navigator
         initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
-        screenOptions={screenOptions}
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarActiveTintColor: colors.primaryDefault,
+          tabBarInactiveTintColor: colors.secondary,
+          tabBarShowLabel: false,
+          ...(Platform.OS === 'android' && { tabBarHideOnKeyboard: true }),
+          tabBarStyle: { display: instanceActive !== -1 ? 'flex' : 'none' },
+          tabBarIcon: ({
+            focused,
+            color,
+            size
+          }: {
+            focused: boolean
+            color: string
+            size: number
+          }) => {
+            switch (route.name) {
+              case 'Tab-Local':
+                return <Icon name='Home' size={size} color={color} />
+              case 'Tab-Public':
+                return <Icon name='Globe' size={size} color={color} />
+              case 'Tab-Compose':
+                return <Icon name='Plus' size={size} color={color} />
+              case 'Tab-Notifications':
+                return <Icon name='Bell' size={size} color={color} />
+              case 'Tab-Me':
+                return (
+                  <GracefullyImage
+                    key={instanceAccount?.avatarStatic}
+                    uri={{ original: instanceAccount?.avatarStatic }}
+                    dimension={{
+                      width: size,
+                      height: size
+                    }}
+                    style={{
+                      borderRadius: size,
+                      overflow: 'hidden',
+                      borderWidth: focused ? 2 : 0,
+                      borderColor: focused ? colors.secondary : color
+                    }}
+                  />
+                )
+              default:
+                return <Icon name='AlertOctagon' size={size} color={color} />
+            }
+          }
+        })}
       >
         <Tab.Screen name='Tab-Local' component={TabLocal} />
         <Tab.Screen name='Tab-Public' component={TabPublic} />
