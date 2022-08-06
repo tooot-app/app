@@ -74,37 +74,6 @@ const App: React.FC = () => {
     }
   }, [])
 
-  const children = useCallback(
-    bootstrapped => {
-      log('log', 'App', 'bootstrapped')
-      if (bootstrapped) {
-        log('log', 'App', 'loading actual app :)')
-        const language = getSettingsLanguage(store.getState())
-        if (!language) {
-          store.dispatch(changeLanguage('en'))
-          i18n.changeLanguage('en')
-        } else {
-          i18n.changeLanguage(language)
-        }
-
-        return (
-          <Sentry.Native.TouchEventBoundary>
-            <ActionSheetProvider>
-              <AccessibilityManager>
-                <ThemeManager>
-                  <Screens localCorrupt={localCorrupt} />
-                </ThemeManager>
-              </AccessibilityManager>
-            </ActionSheetProvider>
-          </Sentry.Native.TouchEventBoundary>
-        )
-      } else {
-        return null
-      }
-    },
-    [localCorrupt]
-  )
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
@@ -112,7 +81,33 @@ const App: React.FC = () => {
           <PersistGate
             persistor={persistor}
             onBeforeLift={onBeforeLift}
-            children={children}
+            children={bootstrapped => {
+              log('log', 'App', 'bootstrapped')
+              if (bootstrapped) {
+                log('log', 'App', 'loading actual app :)')
+                const language = getSettingsLanguage(store.getState())
+                if (!language) {
+                  store.dispatch(changeLanguage('en'))
+                  i18n.changeLanguage('en')
+                } else {
+                  i18n.changeLanguage(language)
+                }
+
+                return (
+                  <Sentry.Native.TouchEventBoundary>
+                    <ActionSheetProvider>
+                      <AccessibilityManager>
+                        <ThemeManager>
+                          <Screens localCorrupt={localCorrupt} />
+                        </ThemeManager>
+                      </AccessibilityManager>
+                    </ActionSheetProvider>
+                  </Sentry.Native.TouchEventBoundary>
+                )
+              } else {
+                return null
+              }
+            }}
           />
         </Provider>
       </QueryClientProvider>

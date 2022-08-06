@@ -56,9 +56,12 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
     })
   }, [composeState.attachments.sensitive])
 
-  const calculateWidth = useCallback(item => {
+  const calculateWidth = useCallback((item: ExtendedAttachment) => {
     if (item.local) {
-      return (item.local.width / item.local.height) * DEFAULT_HEIGHT
+      return (
+        ((item.local.width || 100) / (item.local.height || 100)) *
+        DEFAULT_HEIGHT
+      )
     } else {
       if (item.remote) {
         if (item.remote.meta.original.aspect) {
@@ -135,7 +138,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           <FastImage
             style={{ width: '100%', height: '100%' }}
             source={{
-              uri: item.local?.local_thumbnail || item.remote?.preview_url
+              uri: item.local?.thumbnail || item.remote?.preview_url
             }}
           />
           {item.remote?.meta?.original?.duration ? (

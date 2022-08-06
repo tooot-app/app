@@ -43,14 +43,17 @@ const TabNotifications = React.memo(
     )
 
     const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
-    const renderItem = useCallback(
-      ({ item }) => (
-        <TimelineNotifications notification={item} queryKey={queryKey} />
-      ),
-      []
-    )
     const children = useCallback(
-      () => <Timeline queryKey={queryKey} customProps={{ renderItem }} />,
+      () => (
+        <Timeline
+          queryKey={queryKey}
+          customProps={{
+            renderItem: ({ item }) => (
+              <TimelineNotifications notification={item} queryKey={queryKey} />
+            )
+          }}
+        />
+      ),
       []
     )
 

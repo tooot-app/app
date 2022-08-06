@@ -170,6 +170,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
+      console.log('item', item)
       if (instanceActive < 0) {
         return
       }
@@ -253,6 +254,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (!text && !media.length) {
         return
       } else {
+        console.log('media', media)
         navigationRef.navigate('Screen-Compose', { type: 'share', text, media })
       }
     },

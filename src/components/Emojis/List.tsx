@@ -27,18 +27,6 @@ const EmojisList = React.memo(
     const { emojisState, emojisDispatch } = useContext(EmojisContext)
     const { colors } = useTheme()
 
-    const listHeader = useCallback(
-      ({ section: { title } }) => (
-        <CustomText
-          fontStyle='S'
-          style={{ position: 'absolute', color: colors.secondary }}
-        >
-          {title}
-        </CustomText>
-      ),
-      []
-    )
-
     const listItem = useCallback(
       ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
         return (
@@ -112,7 +100,14 @@ const EmojisList = React.memo(
         keyboardShouldPersistTaps='always'
         sections={emojisState.emojis}
         keyExtractor={item => item[0].shortcode}
-        renderSectionHeader={listHeader}
+        renderSectionHeader={({ section: { title } }) => (
+          <CustomText
+            fontStyle='S'
+            style={{ position: 'absolute', color: colors.secondary }}
+          >
+            {title}
+          </CustomText>
+        )}
         renderItem={listItem}
         windowSize={4}
       />

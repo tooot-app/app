@@ -101,15 +101,7 @@ const ComposeTextInput: React.FC = () => {
         }
 
         for (const file of files) {
-          uploadAttachment({
-            composeDispatch,
-            media: {
-              uri: file.uri,
-              mime: file.type,
-              width: 100,
-              height: 100
-            }
-          })
+          uploadAttachment({ composeDispatch, media: file })
         }
       }}
     >

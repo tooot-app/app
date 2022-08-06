@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -169,7 +169,7 @@ const TimelineRefresh: React.FC<Props> = ({
 
   const arrowStage = useSharedValue(0)
   const onLayout = useCallback(
-    ({ nativeEvent }) => {
+    ({ nativeEvent }: LayoutChangeEvent) => {
       if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
         setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
       }

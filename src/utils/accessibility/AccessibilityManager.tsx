@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { AccessibilityInfo } from 'react-native'
 
 type ContextType = {
@@ -15,7 +21,7 @@ const AccessibilityContext = createContext<ContextType>({
 
 export const useAccessibility = () => useContext(AccessibilityContext)
 
-const AccessibilityManager: React.FC = ({ children }) => {
+const AccessibilityManager: React.FC<PropsWithChildren> = ({ children }) => {
   const [reduceMotionEnabled, setReduceMotionEnabled] = useState(false)
   const [screenReaderEnabled, setScreenReaderEnabled] = useState(false)
   const [boldTextEnabled, setBoldTextEnabled] = useState(false)

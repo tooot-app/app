@@ -215,7 +215,7 @@ const ParseHTML = React.memo(
     }
 
     const renderNodeCallback = useCallback(
-      (node, index) =>
+      (node: any, index: any) =>
         renderNode({
           routeParams: route.params,
           colors,
@@ -231,7 +231,7 @@ const ParseHTML = React.memo(
         }),
       []
     )
-    const textComponent = useCallback(({ children }) => {
+    const textComponent = useCallback(({ children }: any) => {
       if (children) {
         return (
           <ParseEmojis
@@ -246,26 +246,24 @@ const ParseHTML = React.memo(
       }
     }, [])
     const rootComponent = useCallback(
-      ({ children }) => {
+      ({ children }: any) => {
         const { t } = useTranslation('componentParse')
 
         const [expandAllow, setExpandAllow] = useState(false)
         const [expanded, setExpanded] = useState(highlighted)
 
-        const onTextLayout = useCallback(({ nativeEvent }) => {
-          if (
-            numberOfLines === 1 ||
-            nativeEvent.lines.length >= numberOfLines + 5
-          ) {
-            setExpandAllow(true)
-          }
-        }, [])
-
         return (
           <View style={{ overflow: 'hidden' }}>
             <CustomText
               children={children}
-              onTextLayout={onTextLayout}
+              onTextLayout={({ nativeEvent }) => {
+                if (
+                  numberOfLines === 1 ||
+                  nativeEvent.lines.length >= numberOfLines + 5
+                ) {
+                  setExpandAllow(true)
+                }
+              }}
               numberOfLines={
                 expandAllow ? (expanded ? 999 : numberOfLines) : undefined
               }
