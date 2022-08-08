@@ -91,6 +91,7 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
                       size={StyleConstants.Font.Size.L}
                     />
                   }
+                  style={{ width: '100%', height: '100%' }}
                 />
               }
             />

@@ -109,6 +109,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
                 size={StyleConstants.Font.Size.L}
               />
             }
+            style={{ width: '100%', height: '100%' }}
           />
         </Pressable>
       ) : null}
