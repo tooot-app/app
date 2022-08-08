@@ -20,7 +20,7 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 export interface Props {
-  queryKey?: QueryKeyTimeline
+  queryKey: QueryKeyTimeline
   notification: Mastodon.Notification
 }
 
@@ -39,18 +39,18 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
       : null
   const statusOnPress = contextMenuStatus({
     actions: contextMenuActions,
-    status,
+    status: status!,
     queryKey
   })
   const accountOnPress = contextMenuAccount({
     actions: contextMenuActions,
     type: 'status',
     queryKey,
-    id: status?.account.id
+    id: status!.account.id
   })
   const instanceOnPress = contextMenuInstance({
     actions: contextMenuActions,
-    status,
+    status: status!,
     queryKey
   })
 
