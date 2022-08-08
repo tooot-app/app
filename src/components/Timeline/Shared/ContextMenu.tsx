@@ -12,23 +12,26 @@ import ContextMenu, {
 } from 'react-native-context-menu-view'
 
 export interface Props {
+  copiableContent: React.MutableRefObject<{
+    content: string
+    complete: boolean
+  }>
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-  disabled?: boolean // Allowing toot to be copied when highlighted
 }
 
 export const ContextMenuContext = createContext<ContextMenuAction[]>([])
 
 const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   children,
+  copiableContent,
   status,
   queryKey,
   rootQueryKey,
-  disabled,
   ...props
 }) => {
-  if (!status || !queryKey || disabled || Platform.OS === 'android') {
+  if (!status || !queryKey || Platform.OS === 'android') {
     return <>{children}</>
   }
 
@@ -37,6 +40,7 @@ const TimelineContextMenu: React.FC<Props & ContextMenuProps> = ({
   const shareOnPress =
     status.visibility !== 'direct'
       ? contextMenuShare({
+          copiableContent,
           actions,
           type: 'status',
           url: status.url || status.uri
