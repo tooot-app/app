@@ -81,7 +81,7 @@
       "accessibilityHint": "Tap to go to {{name}}'s page"
     },
     "content": {
-      "expandHint": "hidden content"
+      "expandHint": "Hidden content"
     },
     "filtered": "Filtered",
     "fullConversation": "Read conversations",

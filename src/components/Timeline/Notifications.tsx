@@ -5,6 +5,7 @@ import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineAvatar from '@components/Timeline/Shared/Avatar'
 import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
+// @ts-ignore
 import TimelineHeaderNotification from '@components/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
@@ -15,7 +16,7 @@ import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { isEqual, uniqBy } from 'lodash'
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
@@ -30,9 +31,14 @@ export interface Props {
 
 const TimelineNotifications = React.memo(
   ({ notification, queryKey, highlighted = false }: Props) => {
+    const copiableContent = useRef<{ content: string; complete: boolean }>({
+      content: '',
+      complete: false
+    })
+
     if (
       notification.status &&
-      shouldFilter({ status: notification.status, queryKey })
+      shouldFilter({ copiableContent, status: notification.status, queryKey })
     ) {
       return <TimelineFiltered />
     }
@@ -60,9 +66,9 @@ const TimelineNotifications = React.memo(
 
     return (
       <TimelineContextMenu
+        copiableContent={copiableContent}
         status={notification.status}
         queryKey={queryKey}
-        disabled={highlighted}
       >
         <Pressable
           style={{

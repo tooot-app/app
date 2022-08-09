@@ -41,8 +41,8 @@ const contextMenuAccount = ({
         type: 'success',
         message: t('common:message.success.message', {
           function: t(`account.${theParams.payload.property}.action`, {
-            ...(typeof theParams.payload.currentValue === 'boolean' && {
-              context: theParams.payload.currentValue.toString()
+            ...(theParams.payload.property !== 'reports' && {
+              context: (theParams.payload.currentValue || false).toString()
             })
           })
         })
@@ -55,8 +55,8 @@ const contextMenuAccount = ({
         type: 'error',
         message: t('common:message.error.message', {
           function: t(`account.${theParams.payload.property}.action`, {
-            ...(typeof theParams.payload.currentValue === 'boolean' && {
-              context: theParams.payload.currentValue.toString()
+            ...(theParams.payload.property !== 'reports' && {
+              context: (theParams.payload.currentValue || false).toString()
             })
           })
         }),
