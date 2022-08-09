@@ -14,6 +14,10 @@
       "action": ""
     }
   },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
   "instance": {
     "title": "",
     "block": {
