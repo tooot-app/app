@@ -5,6 +5,7 @@ import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineAvatar from '@components/Timeline/Shared/Avatar'
 import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
+// @ts-ignore
 import TimelineHeaderNotification from '@components/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
