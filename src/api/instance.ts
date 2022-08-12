@@ -1,10 +1,8 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
-import chalk from 'chalk'
 import Constants from 'expo-constants'
 import li from 'li'
-
-const ctx = new chalk.Instance({ level: 3 })
+import handleError, { ctx } from './handleError'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'
@@ -99,36 +97,7 @@ const apiInstance = async <T = unknown>({
         links: { prev, next }
       })
     })
-    .catch(error => {
-      if (error?.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error(
-          ctx.bold(' API instance '),
-          ctx.bold('response'),
-          error.response.status,
-          error.response.data.error
-        )
-        return Promise.reject({
-          status: error?.response.status,
-          message: error?.response.data.error
-        })
-      } else if (error?.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.error(ctx.bold(' API instance '), ctx.bold('request'), error)
-        return Promise.reject()
-      } else {
-        console.error(
-          ctx.bold(' API instance '),
-          ctx.bold('internal'),
-          error?.message,
-          url
-        )
-        return Promise.reject()
-      }
-    })
+    .catch(handleError)
 }
 
 export default apiInstance

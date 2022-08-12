@@ -42,7 +42,6 @@ export const uploadAttachment = async ({
     case 'video':
       VideoThumbnails.getThumbnailAsync(media.uri)
         .then(({ uri, width, height }) => {
-          console.log('new', uri, width, height)
           composeDispatch({
             type: 'attachment/upload/start',
             payload: {

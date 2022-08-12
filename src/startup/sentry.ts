@@ -6,7 +6,6 @@ const sentry = () => {
   Sentry.init({
     dsn: 'https://53348b60ff844d52886e90251b3a5f41@o917354.ingest.sentry.io/6410576',
     enableInExpoDevelopment: false,
-    // debug: !isRelease,
     autoSessionTracking: true
   })
 }

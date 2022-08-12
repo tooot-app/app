@@ -92,7 +92,6 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
             dropdownMenuMode
             actions={actions}
             onPress={({ nativeEvent: { index } }) => {
-              console.log('index', index)
               for (const on of [
                 shareOnPress,
                 statusOnPress,

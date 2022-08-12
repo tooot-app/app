@@ -2,6 +2,7 @@ export default {
   common: require('./common'),
 
   screens: require('./screens'),
+  screenAccountSelection: require('./screens/accountSelection.json'),
   screenActions: require('./screens/actions'),
   screenAnnouncements: require('./screens/announcements'),
   screenCompose: require('./screens/compose'),

@@ -1,9 +1,11 @@
 import analytics from '@components/analytics'
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
+import CustomText from '@components/Text'
 import navigationRef from '@helpers/navigationRef'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import ScreenAccountSelection from '@screens/AccountSelection'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
@@ -170,7 +172,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
-      console.log('item', item)
       if (instanceActive < 0) {
         return
       }
@@ -239,12 +240,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           if (!item.mimeType) {
             return
           }
-          let tempData: string[]
-          if (!Array.isArray(item.data)) {
-            tempData = [item.data]
-          } else {
-            tempData = item.data
-          }
           for (const d of item.data) {
             filterMedia({ uri: d, mime: item.mimeType })
           }
@@ -254,11 +249,20 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (!text && !media.length) {
         return
       } else {
-        console.log('media', media)
-        navigationRef.navigate('Screen-Compose', { type: 'share', text, media })
+        if (instances.length > 1) {
+          navigationRef.navigate('Screen-AccountSelection', {
+            share: { text, media }
+          })
+        } else {
+          navigationRef.navigate('Screen-Compose', {
+            type: 'share',
+            text,
+            media
+          })
+        }
       }
     },
-    [instanceActive]
+    [instances.length]
   )
   useEffect(() => {
     ShareMenu.getInitialShare(handleShare)
@@ -332,6 +336,23 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               presentation: 'fullScreenModal',
               animation: 'fade'
             }}
+          />
+          <Stack.Screen
+            name='Screen-AccountSelection'
+            component={ScreenAccountSelection}
+            options={({ navigation }) => ({
+              title: t('screenAccountSelection:heading'),
+              headerShadowVisible: false,
+              presentation: 'modal',
+              gestureEnabled: false,
+              headerLeft: () => (
+                <HeaderLeft
+                  type='text'
+                  content={t('common:buttons.cancel')}
+                  onPress={() => navigation.goBack()}
+                />
+              )
+            })}
           />
         </Stack.Navigator>
 
