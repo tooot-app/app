@@ -14,6 +14,10 @@
       "action": "사용자 신고"
     }
   },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
   "instance": {
     "title": "",
     "block": {

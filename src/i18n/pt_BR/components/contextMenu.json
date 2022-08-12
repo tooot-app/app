@@ -14,6 +14,10 @@
       "action": "Denunciar usuário"
     }
   },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
   "instance": {
     "title": "Ação da Instância",
     "block": {

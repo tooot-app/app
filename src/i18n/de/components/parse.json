@@ -1,9 +1,11 @@
 {
   "HTML": {
+    "accessibilityHint": "",
     "expanded": {
-      "true": "Zusammenklappen {{hint}}",
-      "false": "Ausklappen {{hint}}"
+      "true": "",
+      "false": ""
     },
-    "defaultHint": "Artikel"
+    "totalLines": "",
+    "defaultHint": ""
   }
 }

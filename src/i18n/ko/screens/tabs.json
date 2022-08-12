@@ -145,7 +145,8 @@
         "group": "그룹 {{index}}",
         "label": "라벨",
         "content": "내용"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "이 기기는 tooot의 푸시 알림을 지원하지 않아요",

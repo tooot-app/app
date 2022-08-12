@@ -145,7 +145,8 @@
         "group": "Grupo {{index}}",
         "label": "Rótulo",
         "content": "Conteúdo"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Seu telefone não suporta notificação de envio de tooot",

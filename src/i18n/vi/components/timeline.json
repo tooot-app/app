@@ -81,7 +81,7 @@
       "accessibilityHint": "Đến trang của {{name}}"
     },
     "content": {
-      "expandHint": "nội dung ẩn"
+      "expandHint": ""
     },
     "filtered": "Đã lọc",
     "fullConversation": "Xem thêm",
