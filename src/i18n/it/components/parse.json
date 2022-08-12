@@ -1,9 +1,11 @@
 {
   "HTML": {
+    "accessibilityHint": "",
     "expanded": {
-      "true": "Richiudi {{hint}}",
-      "false": "Espandi {{hint}}"
+      "true": "",
+      "false": ""
     },
-    "defaultHint": "toot"
+    "totalLines": "",
+    "defaultHint": ""
   }
 }

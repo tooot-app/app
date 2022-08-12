@@ -145,7 +145,8 @@
         "group": "",
         "label": "",
         "content": ""
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "",

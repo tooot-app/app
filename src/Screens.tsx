@@ -4,6 +4,7 @@ import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import ScreenAccountSelection from '@screens/AccountSelection'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
@@ -170,7 +171,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
-      console.log('item', item)
+      if (Platform.OS === 'android') {
+        return
+      }
       if (instanceActive < 0) {
         return
       }
@@ -235,30 +238,34 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             }
           }
           break
-        case 'android':
-          if (!item.mimeType) {
-            return
-          }
-          let tempData: string[]
-          if (!Array.isArray(item.data)) {
-            tempData = [item.data]
-          } else {
-            tempData = item.data
-          }
-          for (const d of item.data) {
-            filterMedia({ uri: d, mime: item.mimeType })
-          }
-          break
+        // case 'android':
+        //   if (!item.mimeType) {
+        //     return
+        //   }
+        //   for (const d of item.data) {
+        //     filterMedia({ uri: d, mime: item.mimeType })
+        //   }
+        //   break
       }
 
       if (!text && !media.length) {
         return
       } else {
-        console.log('media', media)
-        navigationRef.navigate('Screen-Compose', { type: 'share', text, media })
+        console.log('share', text, media)
+        if (instances.length > 1) {
+          navigationRef.navigate('Screen-AccountSelection', {
+            share: { text, media }
+          })
+        } else {
+          navigationRef.navigate('Screen-Compose', {
+            type: 'share',
+            text,
+            media
+          })
+        }
       }
     },
-    [instanceActive]
+    []
   )
   useEffect(() => {
     ShareMenu.getInitialShare(handleShare)
@@ -332,6 +339,23 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               presentation: 'fullScreenModal',
               animation: 'fade'
             }}
+          />
+          <Stack.Screen
+            name='Screen-AccountSelection'
+            component={ScreenAccountSelection}
+            options={({ navigation }) => ({
+              title: t('screenAccountSelection:heading'),
+              headerShadowVisible: false,
+              presentation: 'modal',
+              gestureEnabled: false,
+              headerLeft: () => (
+                <HeaderLeft
+                  type='text'
+                  content={t('common:buttons.cancel')}
+                  onPress={() => navigation.goBack()}
+                />
+              )
+            })}
           />
         </Stack.Navigator>
 

@@ -72,7 +72,6 @@ const openLink = async (url: string, navigation?: any) => {
 
   // If an account can be found
   const matchedAccount = url.match(matcherAccount)
-  console.log(matchedAccount)
   if (matchedAccount) {
     // If the link in current instance
     const instanceUrl = getInstanceUrl(store.getState())

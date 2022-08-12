@@ -81,7 +81,7 @@
       "accessibilityHint": "Zum Profil von {{name}}"
     },
     "content": {
-      "expandHint": "Ausgeblendeter Inhalt"
+      "expandHint": ""
     },
     "filtered": "Ausgeblendet",
     "fullConversation": "Unterhaltung anzeigen",

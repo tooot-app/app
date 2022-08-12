@@ -20,9 +20,9 @@ target 'tooot' do
   use_react_native!(
     :path => config[:reactNativePath],
     :production => production,
-    :hermes_enabled => podfile_properties['expo.jsEngine'] == 'hermes',
+    :hermes_enabled => podfile_properties['jsEngine'] == 'hermes',
     :fabric_enabled => flags[:fabric_enabled],
-    :flipper_configuration => FlipperConfiguration.enabled,
+    :flipper_configuration => FlipperConfiguration.disabled,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -50,7 +50,9 @@ end
 
 target 'ShareExtension' do
   use_react_native!(
-    :hermes_enabled => podfile_properties['expo.jsEngine'] == 'hermes'
+    :production => production,
+    :hermes_enabled => podfile_properties['jsEngine'] == 'hermes',
+    :flipper_configuration => FlipperConfiguration.disabled
   )
 
   pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'

@@ -1,9 +1,11 @@
 {
   "HTML": {
+    "accessibilityHint": "",
     "expanded": {
       "true": "",
       "false": ""
     },
+    "totalLines": "",
     "defaultHint": ""
   }
 }

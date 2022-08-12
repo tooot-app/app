@@ -81,7 +81,7 @@
       "accessibilityHint": "点击进入{{name}}的页面"
     },
     "content": {
-      "expandHint": "隐藏内容"
+      "expandHint": ""
     },
     "filtered": "已过滤",
     "fullConversation": "阅读全部对话",

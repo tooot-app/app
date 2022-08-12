@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "",
       "demo": "",
-      "availableSizes": "",
       "sizes": {
         "S": "",
         "M": "",
@@ -147,7 +145,8 @@
         "group": "",
         "label": "",
         "content": ""
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "",

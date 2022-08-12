@@ -145,7 +145,8 @@
         "group": "Gruppo {{index}}",
         "label": "Etichetta",
         "content": "Contenuto"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Il tuo dispositivo non supporta le notifiche push per tooot",

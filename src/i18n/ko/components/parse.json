@@ -1,9 +1,11 @@
 {
   "HTML": {
+    "accessibilityHint": "",
     "expanded": {
-      "true": "{{hint}} 접기",
-      "false": "{{hint}} 펼치기"
+      "true": "",
+      "false": ""
     },
-    "defaultHint": "글"
+    "totalLines": "",
+    "defaultHint": ""
   }
 }

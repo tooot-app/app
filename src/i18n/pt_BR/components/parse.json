@@ -1,9 +1,11 @@
 {
   "HTML": {
+    "accessibilityHint": "",
     "expanded": {
-      "true": "Fechar {{hint}}",
-      "false": "Expandir {{hint}}"
+      "true": "",
+      "false": ""
     },
-    "defaultHint": "artigo"
+    "totalLines": "",
+    "defaultHint": ""
   }
 }

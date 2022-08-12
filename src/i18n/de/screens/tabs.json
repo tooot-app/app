@@ -145,7 +145,8 @@
         "group": "Gruppe {{index}}",
         "label": "Kennzeichnung",
         "content": "Inhalt"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Dein Gerät unterstützt keine Push-Benachrichtigung",
