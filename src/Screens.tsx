@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
-import CustomText from '@components/Text'
 import navigationRef from '@helpers/navigationRef'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -172,6 +171,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
+      if (Platform.OS === 'android') {
+        return
+      }
       if (instanceActive < 0) {
         return
       }
@@ -236,19 +238,20 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             }
           }
           break
-        case 'android':
-          if (!item.mimeType) {
-            return
-          }
-          for (const d of item.data) {
-            filterMedia({ uri: d, mime: item.mimeType })
-          }
-          break
+        // case 'android':
+        //   if (!item.mimeType) {
+        //     return
+        //   }
+        //   for (const d of item.data) {
+        //     filterMedia({ uri: d, mime: item.mimeType })
+        //   }
+        //   break
       }
 
       if (!text && !media.length) {
         return
       } else {
+        console.log('share', text, media)
         if (instances.length > 1) {
           navigationRef.navigate('Screen-AccountSelection', {
             share: { text, media }
@@ -262,7 +265,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         }
       }
     },
-    [instances.length]
+    []
   )
   useEffect(() => {
     ShareMenu.getInitialShare(handleShare)
