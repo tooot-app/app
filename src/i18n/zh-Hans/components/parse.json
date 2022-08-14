@@ -1,11 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": {
-      "true": "",
-      "false": ""
-    },
-    "totalLines": "",
-    "defaultHint": ""
+    "accessibilityHint": "点击展开或折叠内容",
+    "expanded": "",
+    "totalLines": " ({{count}} 行)",
+    "defaultHint": "长嘟文"
   }
 }
