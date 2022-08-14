@@ -2,13 +2,9 @@ import analytics from '@components/analytics'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import {
-  RootStackParamList,
-  RootStackScreenProps
-} from '@utils/navigation/navigators'
+import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useCallback, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share, StatusBar, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
