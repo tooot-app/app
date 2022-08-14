@@ -1,10 +1,7 @@
 {
   "HTML": {
     "accessibilityHint": "",
-    "expanded": {
-      "true": "",
-      "false": ""
-    },
+    "expanded": "{{hint}}{{totalLines}}",
     "totalLines": "",
     "defaultHint": ""
   }

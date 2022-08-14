@@ -1,0 +1,22 @@
+diff --git a/node_modules/expo-modules-core/android/build.gradle b/node_modules/expo-modules-core/android/build.gradle
+index a57c367..47c7bd6 100644
+--- a/node_modules/expo-modules-core/android/build.gradle
++++ b/node_modules/expo-modules-core/android/build.gradle
+@@ -422,7 +422,7 @@ task prepareFolly(dependsOn: [downloadFolly], type: Copy) {
+ }
+ // END FOLLy
+ 
+-task prepareHermes() {
++task prepareHermes(dependsOn: createNativeDepsDirectories) {
+   if (!FOR_HERMES) {
+     return
+   }
+@@ -444,7 +444,7 @@ afterEvaluate {
+ }
+ 
+ tasks.whenTaskAdded { task ->
+-  if (!task.name.contains("Clean") && (task.name.contains('externalNativeBuild') || task.name.startsWith('configureCMake'))) {
++  if (!task.name.contains("Clean") && (task.name.contains('externalNativeBuild'))) {
+     def buildType = task.name.endsWith('Debug') ? 'Debug' : 'Release'
+     task.dependsOn(extractAARHeaders)
+     task.dependsOn(extractJNIFiles)

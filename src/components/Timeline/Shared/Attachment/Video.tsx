@@ -99,6 +99,7 @@ const AttachmentVideo: React.FC<Props> = ({
           opacity: sensitiveShown ? 0 : 1
         }}
         usePoster
+        resizeMode={ResizeMode.COVER}
         {...(gifv
           ? {
               shouldPlay: true,
@@ -107,7 +108,6 @@ const AttachmentVideo: React.FC<Props> = ({
               source: { uri: video.url }
             }
           : {
-              resizeMode: ResizeMode.COVER,
               posterSource: { uri: video.preview_url },
               posterStyle: { resizeMode: ResizeMode.COVER }
             })}

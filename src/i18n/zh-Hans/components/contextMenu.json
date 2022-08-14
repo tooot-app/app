@@ -15,8 +15,8 @@
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "复制嘟文",
+    "succeed": "已复制"
   },
   "instance": {
     "title": "实例操作",
