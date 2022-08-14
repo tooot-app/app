@@ -28,7 +28,7 @@ PODS:
     - EXJSONUtils
   - EXNotifications (0.16.1):
     - ExpoModulesCore
-  - Expo (46.0.6):
+  - Expo (46.0.7):
     - ExpoModulesCore
   - ExpoCrypto (11.0.0):
     - ExpoModulesCore
@@ -154,7 +154,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
-  - hermes-engine (0.69.3)
+  - hermes-engine (0.69.4)
   - libevent (2.1.12)
   - libwebp (1.2.3):
     - libwebp/demux (= 1.2.3)
@@ -862,7 +862,7 @@ SPEC CHECKSUMS:
   EXJSONUtils: 2a74b8f40f1523cc3f92af99c91aa78201737a77
   EXManifests: b38dc61303f5eede990b4c8ecbfac32f82160e65
   EXNotifications: 9a2aa201deb19dfe1dbe0e370eeb2922de0d2422
-  Expo: efd244782651dd1a73c7bd977babe19ed80e3243
+  Expo: 8cb51419dfec611e6125e09384669eb71d3c4c6d
   ExpoCrypto: e534314db0e1a17ae12b5140d529bd0c5efcbc6a
   ExpoHaptics: efe9e68e9dfe0d15c183c0c70a25f3874124ab9e
   ExpoLocalization: 63204f4b9d4f653469d266332ceaa6c6ac8a305d
@@ -889,7 +889,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  hermes-engine: ff1ba576165861a94a0d101b0a351a8ca2149f36
+  hermes-engine: 761a544537e62df2a37189389b9d2654dc1f75af
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
