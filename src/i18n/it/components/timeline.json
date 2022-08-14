@@ -81,7 +81,7 @@
       "accessibilityHint": "Premi per aprire il profilo di {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Contenuto nascosto"
     },
     "filtered": "Filtrato",
     "fullConversation": "Leggi la conversazione",
