@@ -47,20 +47,6 @@ const TimelineAttachment = React.memo(
     >([])
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     const navigateToImagesViewer = (id: string) => {
-      status.media_attachments.forEach(attachment => {
-        switch (attachment.type) {
-          case 'image':
-            imageUrls.current.push({
-              id: attachment.id,
-              preview_url: attachment.preview_url,
-              url: attachment.url,
-              remote_url: attachment.remote_url,
-              blurhash: attachment.blurhash,
-              width: attachment.meta?.original?.width,
-              height: attachment.meta?.original?.height
-            })
-        }
-      })
       navigation.navigate('Screen-ImagesViewer', {
         imageUrls: imageUrls.current,
         id
@@ -82,6 +68,15 @@ const TimelineAttachment = React.memo(
           {status.media_attachments.map((attachment, index) => {
             switch (attachment.type) {
               case 'image':
+                imageUrls.current.push({
+                  id: attachment.id,
+                  preview_url: attachment.preview_url,
+                  url: attachment.url,
+                  remote_url: attachment.remote_url,
+                  blurhash: attachment.blurhash,
+                  width: attachment.meta?.original?.width,
+                  height: attachment.meta?.original?.height
+                })
                 return (
                   <AttachmentImage
                     key={index}
