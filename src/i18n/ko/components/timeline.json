@@ -81,7 +81,7 @@
       "accessibilityHint": "{{name}}의 페이지로 가려면 탭하세요"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "숨겨진 콘텐츠"
     },
     "filtered": "필터됨",
     "fullConversation": "대화 보기",
