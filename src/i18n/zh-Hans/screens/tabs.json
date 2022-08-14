@@ -146,7 +146,7 @@
         "label": "标签",
         "content": "内容"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "图片处理失败，请重试"
     },
     "push": {
       "notAvailable": "您的手机不支持tooot推送通知",
