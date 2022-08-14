@@ -1104,10 +1104,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.2.8.tgz#a5403d3abca844ee6489041e1af5aa39d842c954"
-  integrity sha512-8+LBXRKommR7Nmmp+anGNnTQaHyGQDvofcbujmo6pjGI99Z07F5lFyeZNL4h5ZJAMxgzjDfJeLxsRHzo0gy4pA==
+"@expo/cli@0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.2.9.tgz#5d1bf563dd63b7c14fc7796d7fbb018a17f22f2e"
+  integrity sha512-CUWtHH5yYEgEA4nf/k7LYW39FKORIB94ROvG+wuxZC4b5IrJs6DAsoFgunqUFFQZ7Jga2XPyx5+d27n2Ez3LCA==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/code-signing-certificates" "^0.0.2"
@@ -4205,13 +4205,13 @@ expo-web-browser@^11.0.0, expo-web-browser@~11.0.0:
   dependencies:
     compare-urls "^2.0.0"
 
-expo@^46.0.6:
-  version "46.0.6"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-46.0.6.tgz#fd1bd159ef5d87196ab13502e86080052e3f573b"
-  integrity sha512-60fM7sqLppVd6jP73uWuqiLW7BbC20WxFRfAz+r4a7bRkrD/jUwvdQlVKIj9KpQQHWaDeuASj3rSGtU9CytPhg==
+expo@^46.0.7:
+  version "46.0.7"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-46.0.7.tgz#ab4dd82584f18758777178bdf60d6098715c4b28"
+  integrity sha512-vBn3/K2CxIVQvHUA6t1qn3ewsJvUvs5xTMFa7wbf275fj5OoiVTfH3qpbkj6K5msN6dMOQ7MqMjrsDmTnMrgqA==
   dependencies:
     "@babel/runtime" "^7.14.0"
-    "@expo/cli" "0.2.8"
+    "@expo/cli" "0.2.9"
     "@expo/vector-icons" "^13.0.0"
     babel-preset-expo "~9.2.0"
     cross-spawn "^6.0.5"
