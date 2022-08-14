@@ -277,7 +277,7 @@ const ParseHTML = React.memo(
                     color: colors.primaryDefault,
                     marginRight: StyleConstants.Spacing.S
                   }}
-                  children={t(`HTML.expanded.${expanded.toString()}`, {
+                  children={t('HTML.expanded', {
                     hint: expandHint,
                     totalLines:
                       numberOfLines > 1 && typeof totalLines === 'number'
