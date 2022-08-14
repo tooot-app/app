@@ -1,10 +1,7 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": {
-      "true": "",
-      "false": ""
-    },
+    "accessibilityHint": "Toque para expandir ou recolher conteúdo",
+    "expanded": "{{hint}}{{totalLines}}",
     "totalLines": "",
     "defaultHint": ""
   }
