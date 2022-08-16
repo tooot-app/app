@@ -171,7 +171,7 @@ android {
             }
         }
         manifestPlaceholders = [
-            expoSDK: project.hasProperty('expoSDK') ? project.property('expoSDK') : "",
+            runtimeVersion: project.hasProperty('runtimeVersion') ? project.property('runtimeVersion') : "",
             releaseChannel: project.hasProperty('releaseChannel') ? project.property('releaseChannel') : "default"
         ]
     }

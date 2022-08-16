@@ -23,13 +23,13 @@ const apiGeneral = async <T = unknown>({
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
-      ' ' +
-      domain +
-      ' ' +
-      method +
-      ctx.green(' -> ') +
-      `/${url}` +
-      (params ? ctx.green(' -> ') : ''),
+    ' ' +
+    domain +
+    ' ' +
+    method +
+    ctx.green(' -> ') +
+    `/${url}` +
+    (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -44,7 +44,7 @@ const apiGeneral = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.manifest?.version}`,
+      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
       ...headers
     },

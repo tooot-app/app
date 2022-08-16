@@ -74,7 +74,7 @@ const apiInstance = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.manifest?.version}`,
+      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
       ...headers,
       ...(token && {
