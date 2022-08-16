@@ -123,27 +123,5 @@
     "postinstall-postinstall": "^2.1.0",
     "react-native-clean-project": "^4.0.1",
     "typescript": "^4.7.4"
-  },
-  "expo": {
-    "autolinking": {
-      "ios": {
-        "exclude": [
-          "expo-application",
-          "expo-font",
-          "expo-keep-awake"
-        ]
-      },
-      "android": {
-        "exclude": [
-          "expo-application",
-          "expo-firebase-analytics",
-          "expo-firebase-core",
-          "expo-font",
-          "expo-keep-awake",
-          "expo-store-review",
-          "react-native-reanimated"
-        ]
-      }
-    }
   }
 }
