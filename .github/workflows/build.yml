@@ -122,5 +122,5 @@ jobs:
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build release
       - name: -- Step 8 -- Publish expo update
-        run: eas update --non-interactive --auto
+        run: eas update --auto
 
