@@ -172,7 +172,7 @@ android {
         }
         manifestPlaceholders = [
             runtimeVersion: project.hasProperty('runtimeVersion') ? project.property('runtimeVersion') : "",
-            releaseChannel: project.hasProperty('releaseChannel') ? project.property('releaseChannel') : "default"
+            branch: project.hasProperty('branch') ? project.property('branch') : "development"
         ]
     }
     if (isNewArchitectureEnabled()) {
