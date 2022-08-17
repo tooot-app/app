@@ -32,25 +32,25 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
   const shareOnPress =
     status && status?.visibility !== 'direct'
       ? contextMenuShare({
-          actions: contextMenuActions,
-          type: 'status',
-          url: status.url || status.uri
-        })
+        actions: contextMenuActions,
+        type: 'status',
+        url: status.url || status.uri
+      })
       : null
-  const statusOnPress = contextMenuStatus({
+  const statusOnPress = status && contextMenuStatus({
     actions: contextMenuActions,
-    status: status!,
+    status: status,
     queryKey
   })
-  const accountOnPress = contextMenuAccount({
+  const accountOnPress = status && contextMenuAccount({
     actions: contextMenuActions,
     type: 'status',
     queryKey,
-    id: status!.account.id
+    id: status.account.id
   })
-  const instanceOnPress = contextMenuInstance({
+  const instanceOnPress = status && contextMenuInstance({
     actions: contextMenuActions,
-    status: status!,
+    status: status,
     queryKey
   })
 
@@ -106,7 +106,7 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
         style={{
           flex:
             notification.type === 'follow' ||
-            notification.type === 'follow_request'
+              notification.type === 'follow_request'
               ? 1
               : 4
         }}
@@ -150,7 +150,7 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
         style={[
           { marginLeft: StyleConstants.Spacing.M },
           notification.type === 'follow' ||
-          notification.type === 'follow_request'
+            notification.type === 'follow_request'
             ? { flexShrink: 1 }
             : { flex: 1 }
         ]}
