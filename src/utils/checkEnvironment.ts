@@ -36,14 +36,14 @@ const mapEnvironment = <T = unknown>({
 
 const isDevelopment =
   __DEV__ ||
-  ['development'].some(channel => (Updates.channel || Updates.releaseChannel) === channel)
+  ['development'].some(channel => (Updates.channel) === channel)
 
 const isCandidate = ['candidate'].some(channel =>
-  (Updates.channel || Updates.releaseChannel) === channel
+  (Updates.channel) === channel
 )
 
 const isRelease = ['release'].some(channel =>
-  (Updates.channel || Updates.releaseChannel) === channel
+  (Updates.channel) === channel
 )
 
 export { mapEnvironment, isDevelopment, isCandidate, isRelease }
