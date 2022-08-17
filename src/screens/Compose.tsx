@@ -150,7 +150,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           for (const m of params.media) {
             uploadAttachment({
               composeDispatch,
-              media: { ...m, width: 100, height: 100 }
+              media: { uri: m.uri, fileName: 'temp.jpg', type: m.mime }
             })
           }
         }

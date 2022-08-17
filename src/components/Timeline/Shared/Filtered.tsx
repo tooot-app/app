@@ -34,9 +34,14 @@ const TimelineFiltered = React.memo(
 )
 
 export const shouldFilter = ({
+  copiableContent,
   status,
   queryKey
 }: {
+  copiableContent: React.MutableRefObject<{
+    content: string
+    complete: boolean
+  }>
   status: Mastodon.Status
   queryKey: QueryKeyTimeline
 }) => {
@@ -48,6 +53,11 @@ export const shouldFilter = ({
   if (!ownAccount) {
     const parser = new htmlparser2.Parser({
       ontext: (text: string) => {
+        if (!copiableContent.current.complete) {
+          copiableContent.current.content =
+            copiableContent.current.content + text
+        }
+
         const checkFilter = (filter: Mastodon.Filter) => {
           const escapedPhrase = filter.phrase.replace(
             /[.*+?^${}()|[\]\\]/g,
@@ -103,6 +113,7 @@ export const shouldFilter = ({
     status.spoiler_text && parser.write(status.spoiler_text)
     parser.write(status.content)
     parser.end()
+    copiableContent.current.complete = true
   }
 
   return shouldFilter

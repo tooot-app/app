@@ -7,6 +7,7 @@ import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, {
   Dispatch,
   MutableRefObject,
+  PropsWithChildren,
   SetStateAction,
   useCallback,
   useEffect,
@@ -57,7 +58,7 @@ export interface Props {
   maxLength?: number
 }
 
-const ComponentEmojis: React.FC<Props> = ({
+const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   enabled = false,
   value,
   setValue,

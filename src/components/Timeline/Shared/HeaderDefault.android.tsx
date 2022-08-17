@@ -6,11 +6,10 @@ import Icon from '@components/Icon'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
-import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -93,7 +92,6 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
             dropdownMenuMode
             actions={actions}
             onPress={({ nativeEvent: { index } }) => {
-              console.log('index', index)
               for (const on of [
                 shareOnPress,
                 statusOnPress,
@@ -110,6 +108,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
                 size={StyleConstants.Font.Size.L}
               />
             }
+            style={{ width: '100%', height: '100%' }}
           />
         </Pressable>
       ) : null}

@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "Toot di esempio",
       "demo": "<p>Questo toot è un esempio 😺️. Puoi scegliere diverse opzioni di grandezza del testo qui sotto.<br /><br />Questa impostazione si applica solo al testo dei toot, non anche agli altri testi della app.</p>",
-      "availableSizes": "Dimensioni testo",
       "sizes": {
         "S": "S",
         "M": "M - Predefinito",
@@ -147,7 +145,8 @@
         "group": "Gruppo {{index}}",
         "label": "Etichetta",
         "content": "Contenuto"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Il tuo dispositivo non supporta le notifiche push per tooot",

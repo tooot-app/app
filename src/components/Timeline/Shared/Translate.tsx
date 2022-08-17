@@ -141,13 +141,7 @@ const TimelineTranslate = React.memo(
         </Pressable>
         {data && data.error === undefined
           ? data.text.map((d, i) => (
-              <ParseHTML
-                key={i}
-                content={d}
-                size={'M'}
-                numberOfLines={999}
-                selectable
-              />
+              <ParseHTML key={i} content={d} size={'M'} numberOfLines={999} />
             ))
           : null}
       </>

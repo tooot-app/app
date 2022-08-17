@@ -35,7 +35,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
                 video.local
                   ? ({
                       url: video.local.uri,
-                      preview_url: video.local.local_thumbnail,
+                      preview_url: video.local.thumbnail,
                       blurhash: video.remote?.blurhash
                     } as Mastodon.AttachmentVideo)
                   : (video.remote as Mastodon.AttachmentVideo)

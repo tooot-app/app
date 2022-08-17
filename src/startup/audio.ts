@@ -5,7 +5,7 @@ const audio = () => {
   log('log', 'audio', 'setting audio playback default options')
   Audio.setAudioModeAsync({
     playsInSilentModeIOS: true,
-    interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+    interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
     interruptionModeAndroid: InterruptionModeAndroid.DuckOthers
   })
 }

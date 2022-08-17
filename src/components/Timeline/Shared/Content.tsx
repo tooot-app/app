@@ -38,7 +38,6 @@ const TimelineContent = React.memo(
               numberOfLines={999}
               highlighted={highlighted}
               disableDetails={disableDetails}
-              selectable={highlighted}
             />
             <ParseHTML
               content={status.content}
@@ -53,7 +52,6 @@ const TimelineContent = React.memo(
               expandHint={t('shared.content.expandHint')}
               highlighted={highlighted}
               disableDetails={disableDetails}
-              selectable={highlighted}
             />
           </>
         ) : (
@@ -66,7 +64,6 @@ const TimelineContent = React.memo(
             tags={status.tags}
             numberOfLines={highlighted ? 999 : numberOfLines}
             disableDetails={disableDetails}
-            selectable={highlighted}
           />
         )}
       </>

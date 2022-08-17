@@ -81,7 +81,7 @@
       "accessibilityHint": "Toque para ir à página de {{name}}"
     },
     "content": {
-      "expandHint": "conteúdo oculto"
+      "expandHint": "Conteúdo oculto"
     },
     "filtered": "Filtrado",
     "fullConversation": "Ler conversas",

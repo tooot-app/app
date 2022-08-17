@@ -1,10 +1,8 @@
 import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
-import chalk from 'chalk'
 import Constants from 'expo-constants'
 import * as Sentry from 'sentry-expo'
-
-const ctx = new chalk.Instance({ level: 3 })
+import handleError, { ctx } from './handleError'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -52,7 +50,7 @@ const apiTooot = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.manifest?.version}`,
+      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
       ...headers
     },
@@ -75,38 +73,7 @@ const apiTooot = async <T = unknown>({
         Sentry.Native.captureException(error)
       }
 
-      if (error?.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error(
-          ctx.bold(' API tooot '),
-          ctx.bold('response'),
-          error.response.status,
-          error.response.data.error
-        )
-        return Promise.reject({
-          status: error?.response.status,
-          message: error?.response.data.error
-        })
-      } else if (error?.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.error(
-          ctx.bold(' API tooot '),
-          ctx.bold('request'),
-          error.request
-        )
-        return Promise.reject()
-      } else {
-        console.error(
-          ctx.bold(' API tooot '),
-          ctx.bold('internal'),
-          error?.message,
-          url
-        )
-        return Promise.reject()
-      }
+      return handleError(error)
     })
 }
 

@@ -64,17 +64,6 @@ const Timeline: React.FC<Props> = ({
     ? data.pages?.flatMap(page => [...page.body])
     : []
 
-  const ItemSeparatorComponent = useCallback(
-    ({ leadingItem }) =>
-      queryKey[1].page === 'Toot' && queryKey[1].toot === leadingItem.id ? (
-        <ComponentSeparator extraMarginLeft={0} />
-      ) : (
-        <ComponentSeparator
-          extraMarginLeft={StyleConstants.Avatar.M + StyleConstants.Spacing.S}
-        />
-      ),
-    []
-  )
   const onEndReached = useCallback(
     () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
     [isFetchingNextPage]
@@ -151,7 +140,17 @@ const Timeline: React.FC<Props> = ({
           />
         }
         ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
-        ItemSeparatorComponent={ItemSeparatorComponent}
+        ItemSeparatorComponent={({ leadingItem }) =>
+          queryKey[1].page === 'Toot' && queryKey[1].toot === leadingItem.id ? (
+            <ComponentSeparator extraMarginLeft={0} />
+          ) : (
+            <ComponentSeparator
+              extraMarginLeft={
+                StyleConstants.Avatar.M + StyleConstants.Spacing.S
+              }
+            />
+          )
+        }
         maintainVisibleContentPosition={
           isFetching
             ? {

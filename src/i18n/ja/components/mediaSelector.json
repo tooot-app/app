@@ -1,0 +1,18 @@
+{
+  "title": "",
+  "options": {
+    "image": "",
+    "image_max": "",
+    "video": "",
+    "video_max": ""
+  },
+  "library": {
+    "alert": {
+      "title": "",
+      "message": "",
+      "buttons": {
+        "settings": ""
+      }
+    }
+  }
+}

@@ -2,11 +2,11 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import React, { useCallback } from 'react'
+import React from 'react'
 
-const TabSharedAttachments: React.FC<TabSharedStackScreenProps<
-  'Tab-Shared-Attachments'
->> = ({
+const TabSharedAttachments: React.FC<
+  TabSharedStackScreenProps<'Tab-Shared-Attachments'>
+> = ({
   route: {
     params: { account }
   }
@@ -15,11 +15,16 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<
     'Timeline',
     { page: 'Account_Attachments', account: account.id }
   ]
-  const renderItem = useCallback(
-    ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
-    []
+  return (
+    <Timeline
+      queryKey={queryKey}
+      customProps={{
+        renderItem: ({ item }) => (
+          <TimelineDefault item={item} queryKey={queryKey} />
+        )
+      }}
+    />
   )
-  return <Timeline queryKey={queryKey} customProps={{ renderItem }} />
 }
 
 export default TabSharedAttachments

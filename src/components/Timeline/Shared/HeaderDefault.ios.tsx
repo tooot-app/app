@@ -4,7 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import ContextMenu from 'react-native-context-menu-view'
 import { ContextMenuContext } from './ContextMenu'
 import HeaderSharedAccount from './HeaderShared/Account'
@@ -48,7 +48,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
         </View>
       </View>
 
-      {queryKey && !highlighted ? (
+      {queryKey ? (
         <Pressable
           accessibilityHint={t('accessibilityHint')}
           style={{

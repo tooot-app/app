@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "Xem trước",
       "demo": "<p>Đây là một tút mẫu 😊 Bạn có thể chọn một trong nhiều lựa chọn bên dưới.<br /><br />Tùy chọn này chỉ áp dụng cho nội dung tút chứ không ảnh hưởng những phần tử khác của app.</p>",
-      "availableSizes": "Kích cỡ",
       "sizes": {
         "S": "S",
         "M": "M - Mặc định",
@@ -147,7 +145,8 @@
         "group": "Mục {{index}}",
         "label": "Nhãn",
         "content": "Nội dung"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Điện thoại của bạn chưa bật thông báo đẩy",

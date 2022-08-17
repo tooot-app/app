@@ -4,7 +4,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, {
   Dispatch,
   SetStateAction,
-  useCallback,
   useEffect,
   useRef,
   useState
@@ -81,10 +80,6 @@ const Input: React.FC<Props> = ({
         }
       : { start: 0, end: 0 }
   )
-  const onSelectionChange = useCallback(
-    ({ nativeEvent: { selection } }) => (selectionRange.current = selection),
-    []
-  )
 
   const [inputFocused, setInputFocused] = useState(false)
   useEffect(() => {
@@ -128,7 +123,9 @@ const Input: React.FC<Props> = ({
                     : undefined
               }}
               onChangeText={setValue}
-              onSelectionChange={onSelectionChange}
+              onSelectionChange={({ nativeEvent: { selection } }) =>
+                (selectionRange.current = selection)
+              }
               value={value}
               {...(multiline && {
                 multiline,

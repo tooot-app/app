@@ -1,29 +1,54 @@
+import Icon from '@components/Icon'
 import CustomText from '@components/Text'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { View } from 'react-native'
 
 export interface Props {
-  content: string
+  content?: string
   inverted?: boolean
+  onPress?: () => void
+  dropdown?: boolean
 }
 
 // Used for Android mostly
-const HeaderCenter = React.memo(
-  ({ content, inverted = false }: Props) => {
-    const { colors } = useTheme()
+const HeaderCenter: React.FC<Props> = ({
+  content,
+  inverted = false,
+  onPress,
+  dropdown = false
+}) => {
+  const { colors } = useTheme()
 
-    return (
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}
+    >
       <CustomText
         style={{
-          fontSize: 18,
           color: inverted ? colors.primaryOverlay : colors.primaryDefault
         }}
+        fontSize='L'
         fontWeight='Bold'
+        numberOfLines={1}
         children={content}
+        {...(onPress && { onPress })}
       />
-    )
-  },
-  (prev, next) => prev.content === next.content
-)
+      {dropdown ? (
+        <Icon
+          name='ChevronDown'
+          size={StyleConstants.Font.Size.M}
+          color={colors.primaryDefault}
+          style={{ marginLeft: StyleConstants.Spacing.XS }}
+          strokeWidth={3}
+        />
+      ) : null}
+    </View>
+  )
+}
 
 export default HeaderCenter

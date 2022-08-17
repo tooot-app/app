@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { Appearance } from 'react-native'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
@@ -74,7 +80,7 @@ const determineTheme = (
   }
 }
 
-const ThemeManager: React.FC = ({ children }) => {
+const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const osTheme = useColorSchemeDelay()
   const userTheme = useSelector(getSettingsTheme)
   const darkTheme = useSelector(getSettingsDarkTheme)

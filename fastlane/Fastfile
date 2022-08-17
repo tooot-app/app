@@ -31,8 +31,8 @@ private_lane :build_ios do
   IPA_FILE = "#{BUILD_DIRECTORY}/tooot.ipa"
   DSYM_FILE = "#{BUILD_DIRECTORY}/tooot.app.dSYM.zip"
 
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesSDKVersion", value: VERSIONS[:expo] )
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: RELEASE_CHANNEL )
+  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesRuntimeVersion", value: VERSION )
+  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesReleaseChannel", value: ENVIRONMENT )
 
   setup_ci
   set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
@@ -97,8 +97,8 @@ private_lane :build_android do
     print_command: true,
     print_command_output: true,
     properties: {
-      "expoSDK" => VERSIONS[:expo],
-      "releaseChannel" => RELEASE_CHANNEL,
+      "runtimeVersion" => VERSION,
+      "releaseChannel" => ENVIRONMENT,
       "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
       "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
       "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
@@ -136,8 +136,8 @@ private_lane :build_android_apk do
     print_command: true,
     print_command_output: true,
     properties: {
-      "expoSDK" => VERSIONS[:expo],
-      "releaseChannel" => RELEASE_CHANNEL,
+      "runtimeVersion" => VERSION,
+      "releaseChannel" => ENVIRONMENT,
       "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
       "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
       "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
@@ -185,6 +185,5 @@ lane :release do
       upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
     )
   end
-  yarn( package_path: "./package.json", flags: "release", command: RELEASE_CHANNEL )
   rocket
 end

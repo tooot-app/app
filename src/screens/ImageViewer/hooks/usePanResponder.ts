@@ -50,11 +50,9 @@ const usePanResponder = ({
   onLongPress,
   delayLongPress,
   onRequestClose
-}: Props): Readonly<[
-  GestureResponderHandlers,
-  Animated.Value,
-  Animated.ValueXY
-]> => {
+}: Props): Readonly<
+  [GestureResponderHandlers, Animated.Value, Animated.ValueXY]
+> => {
   let numberInitialTouches = 1
   let initialTouches: NativeTouchEvent[] = []
   let currentScale = initialScale
@@ -137,6 +135,7 @@ const usePanResponder = ({
 
       if (gestureState.numberActiveTouches > 1) return
 
+      // @ts-ignore
       longPressHandlerRef = setTimeout(onLongPress, delayLongPress)
     },
     onStart: (
@@ -150,6 +149,7 @@ const usePanResponder = ({
 
       const tapTS = Date.now()
       !timer &&
+        // @ts-ignore
         (timer = setTimeout(() => onRequestClose(), DOUBLE_TAP_DELAY + 50))
       // Handle double tap event by calculating diff between first and second taps timestamps
 
@@ -158,6 +158,7 @@ const usePanResponder = ({
       )
 
       if (doubleTapToZoomEnabled && isDoubleTapPerformed) {
+        // @ts-ignore
         clearTimeout(timer)
         const isScaled = currentTranslate.x !== initialTranslate.x // currentScale !== initialScale;
         const { pageX: touchX, pageY: touchY } = event.nativeEvent.touches[0]
@@ -291,9 +292,8 @@ const usePanResponder = ({
       if (isTapGesture && currentScale > initialScale) {
         const { x, y } = currentTranslate
         const { dx, dy } = gestureState
-        const [topBound, leftBound, bottomBound, rightBound] = getBounds(
-          currentScale
-        )
+        const [topBound, leftBound, bottomBound, rightBound] =
+          getBounds(currentScale)
 
         let nextTranslateX = x + dx
         let nextTranslateY = y + dy
@@ -357,9 +357,8 @@ const usePanResponder = ({
 
       if (tmpTranslate) {
         const { x, y } = tmpTranslate
-        const [topBound, leftBound, bottomBound, rightBound] = getBounds(
-          currentScale
-        )
+        const [topBound, leftBound, bottomBound, rightBound] =
+          getBounds(currentScale)
 
         let nextTranslateX = x
         let nextTranslateY = y

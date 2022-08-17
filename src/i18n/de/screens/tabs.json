@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "Beispieltröt",
       "demo": "<p>Dies ist ein Beispieltröt😊. Du kannst aus mehreren der unteren Möglichkeiten auswählen.<br /><br />Diese Einstellung betrifft ausschließlich die Haupteinstellungen, nicht die Schriftgröße in anderen Bereichen der App.</p>",
-      "availableSizes": "Verfügbare Größen",
       "sizes": {
         "S": "S",
         "M": "M – Standard",
@@ -147,7 +145,8 @@
         "group": "Gruppe {{index}}",
         "label": "Kennzeichnung",
         "content": "Inhalt"
-      }
+      },
+      "mediaSelectionFailed": ""
     },
     "push": {
       "notAvailable": "Dein Gerät unterstützt keine Push-Benachrichtigung",

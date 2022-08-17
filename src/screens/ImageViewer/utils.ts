@@ -44,6 +44,7 @@ export const getImageStyles = (
   const transform = translate.getTranslateTransform()
 
   if (scale) {
+    // @ts-ignore
     transform.push({ scale }, { perspective: new Animated.Value(1000) })
   }
 

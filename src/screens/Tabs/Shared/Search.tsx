@@ -139,65 +139,22 @@ const TabSharedSearch: React.FC<
       </View>
     )
   }, [status])
-  const sectionHeader = useCallback(
-    ({ section: { translation } }) => (
-      <View
-        style={{
-          padding: StyleConstants.Spacing.M,
-          backgroundColor: colors.backgroundDefault
-        }}
-      >
-        <CustomText
-          fontStyle='M'
-          style={{
-            textAlign: 'center',
-            color: colors.primaryDefault
-          }}
-          fontWeight='Bold'
-        >
-          {translation}
-        </CustomText>
-      </View>
-    ),
+
+  const listItem = useCallback(
+    ({ item, section }: { item: any; section: any }) => {
+      switch (section.title) {
+        case 'accounts':
+          return <ComponentAccount account={item} origin='search' />
+        case 'hashtags':
+          return <ComponentHashtag hashtag={item} origin='search' />
+        case 'statuses':
+          return <TimelineDefault item={item} disableDetails origin='search' />
+        default:
+          return null
+      }
+    },
     []
   )
-  const sectionFooter = useCallback(
-    ({ section: { data, translation } }) =>
-      !data.length ? (
-        <View
-          style={{
-            padding: StyleConstants.Spacing.S,
-            backgroundColor: colors.backgroundDefault
-          }}
-        >
-          <CustomText
-            fontStyle='S'
-            style={{ textAlign: 'center', color: colors.secondary }}
-          >
-            <Trans
-              i18nKey='screenTabs:shared.search.notFound'
-              values={{ searchTerm: text, type: translation }}
-              components={{
-                bold: <CustomText fontWeight='Bold' />
-              }}
-            />
-          </CustomText>
-        </View>
-      ) : null,
-    [text]
-  )
-  const listItem = useCallback(({ item, section }) => {
-    switch (section.title) {
-      case 'accounts':
-        return <ComponentAccount account={item} origin='search' />
-      case 'hashtags':
-        return <ComponentHashtag hashtag={item} origin='search' />
-      case 'statuses':
-        return <TimelineDefault item={item} disableDetails origin='search' />
-      default:
-        return null
-    }
-  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -211,8 +168,48 @@ const TabSharedSearch: React.FC<
         sections={data || []}
         ListEmptyComponent={listEmpty}
         keyboardShouldPersistTaps='always'
-        renderSectionHeader={sectionHeader}
-        renderSectionFooter={sectionFooter}
+        renderSectionHeader={({ section: { translation } }) => (
+          <View
+            style={{
+              padding: StyleConstants.Spacing.M,
+              backgroundColor: colors.backgroundDefault
+            }}
+          >
+            <CustomText
+              fontStyle='M'
+              style={{
+                textAlign: 'center',
+                color: colors.primaryDefault
+              }}
+              fontWeight='Bold'
+            >
+              {translation}
+            </CustomText>
+          </View>
+        )}
+        renderSectionFooter={({ section: { data, translation } }) =>
+          !data.length ? (
+            <View
+              style={{
+                padding: StyleConstants.Spacing.S,
+                backgroundColor: colors.backgroundDefault
+              }}
+            >
+              <CustomText
+                fontStyle='S'
+                style={{ textAlign: 'center', color: colors.secondary }}
+              >
+                <Trans
+                  i18nKey='screenTabs:shared.search.notFound'
+                  values={{ searchTerm: text, type: translation }}
+                  components={{
+                    bold: <CustomText fontWeight='Bold' />
+                  }}
+                />
+              </CustomText>
+            </View>
+          ) : null
+        }
         keyExtractor={(item, index) => item + index}
         SectionSeparatorComponent={ComponentSeparator}
         ItemSeparatorComponent={ComponentSeparator}

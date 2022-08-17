@@ -9,28 +9,20 @@ import { FlatList } from 'react-native-gesture-handler'
 const TabSharedUsers = React.memo(
   ({ route: { params } }: TabSharedStackScreenProps<'Tab-Shared-Users'>) => {
     const queryKey: QueryKeyUsers = ['Users', params]
-    const {
-      data,
-      hasNextPage,
-      fetchNextPage,
-      isFetchingNextPage
-    } = useUsersQuery({
-      ...queryKey[1],
-      options: {
-        getPreviousPageParam: firstPage =>
-          firstPage.links?.prev && { since_id: firstPage.links.next },
-        getNextPageParam: lastPage =>
-          lastPage.links?.next && { max_id: lastPage.links.next }
-      }
-    })
+    const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+      useUsersQuery({
+        ...queryKey[1],
+        options: {
+          getPreviousPageParam: firstPage =>
+            firstPage.links?.prev && { since_id: firstPage.links.next },
+          getNextPageParam: lastPage =>
+            lastPage.links?.next && { max_id: lastPage.links.next }
+        }
+      })
     const flattenData = data?.pages
       ? data.pages.flatMap(page => [...page.body])
       : []
 
-    const renderItem = useCallback(
-      ({ item }) => <ComponentAccount account={item} origin='relationship' />,
-      []
-    )
     const onEndReached = useCallback(
       () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
       [hasNextPage, isFetchingNextPage]
@@ -41,7 +33,9 @@ const TabSharedUsers = React.memo(
         windowSize={7}
         data={flattenData}
         style={styles.flatList}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <ComponentAccount account={item} origin='relationship' />
+        )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.75}
         ItemSeparatorComponent={ComponentSeparator}

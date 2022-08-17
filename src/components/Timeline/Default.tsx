@@ -5,6 +5,7 @@ import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineAvatar from '@components/Timeline/Shared/Avatar'
 import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
+// @ts-ignore
 import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
@@ -15,7 +16,7 @@ import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
@@ -53,10 +54,15 @@ const TimelineDefault: React.FC<Props> = ({
 
   const ownAccount = actualStatus.account?.id === instanceAccount?.id
 
+  const copiableContent = useRef<{ content: string; complete: boolean }>({
+    content: '',
+    complete: false
+  })
+
   if (
     !highlighted &&
     queryKey &&
-    shouldFilter({ status: actualStatus, queryKey })
+    shouldFilter({ copiableContent, status: actualStatus, queryKey })
   ) {
     return <TimelineFiltered />
   }
@@ -75,10 +81,10 @@ const TimelineDefault: React.FC<Props> = ({
 
   return (
     <TimelineContextMenu
+      copiableContent={copiableContent}
       status={actualStatus}
       queryKey={queryKey}
       rootQueryKey={rootQueryKey}
-      disabled={highlighted}
     >
       <Pressable
         accessible={highlighted ? false : true}

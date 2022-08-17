@@ -9,10 +9,10 @@
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
     <key>EXUpdatesReleaseChannel</key>
-    <string>0-development</string>
-    <key>EXUpdatesSDKVersion</key>
+    <string>development</string>
+    <key>EXUpdatesRuntimeVersion</key>
     <string>0</string>
     <key>EXUpdatesURL</key>
-    <string>https://exp.host/@xmflsct/tooot</string>
+    <string>https://u.expo.dev/3288313f-3ff0-496a-a5a9-d8985e7cad5f</string>
   </dict>
 </plist>

@@ -1,9 +1,8 @@
 {
   "HTML": {
-    "expanded": {
-      "true": "Fold {{hint}}",
-      "false": "Expand {{hint}}"
-    },
-    "defaultHint": "article"
+    "accessibilityHint": "Tap to expand or collapse content",
+    "expanded": "{{hint}}{{totalLines}}",
+    "totalLines": " ({{count}} lines)",
+    "defaultHint": "Long toot"
   }
 }

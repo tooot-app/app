@@ -54,9 +54,9 @@ const appSlice = createSlice({
         }
       })
       .addCase(retriveVersionLatest.fulfilled, (state, action) => {
-        if (action.payload && Constants.manifest?.version) {
+        if (action.payload && Constants.expoConfig?.version) {
           if (
-            parseFloat(action.payload) > parseFloat(Constants.manifest.version)
+            parseFloat(action.payload) > parseFloat(Constants.expoConfig?.version)
           ) {
             state.versionUpdate = true
           }

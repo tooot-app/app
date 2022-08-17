@@ -215,7 +215,7 @@ const ParseHTML = React.memo(
     }
 
     const renderNodeCallback = useCallback(
-      (node, index) =>
+      (node: any, index: any) =>
         renderNode({
           routeParams: route.params,
           colors,
@@ -231,7 +231,7 @@ const ParseHTML = React.memo(
         }),
       []
     )
-    const textComponent = useCallback(({ children }) => {
+    const textComponent = useCallback(({ children }: any) => {
       if (children) {
         return (
           <ParseEmojis
@@ -246,42 +246,26 @@ const ParseHTML = React.memo(
       }
     }, [])
     const rootComponent = useCallback(
-      ({ children }) => {
+      ({ children }: any) => {
         const { t } = useTranslation('componentParse')
 
-        const [expandAllow, setExpandAllow] = useState(false)
+        const [totalLines, setTotalLines] = useState<number>()
         const [expanded, setExpanded] = useState(highlighted)
-
-        const onTextLayout = useCallback(({ nativeEvent }) => {
-          if (
-            numberOfLines === 1 ||
-            nativeEvent.lines.length >= numberOfLines + 5
-          ) {
-            setExpandAllow(true)
-          }
-        }, [])
 
         return (
           <View style={{ overflow: 'hidden' }}>
-            <CustomText
-              children={children}
-              onTextLayout={onTextLayout}
-              numberOfLines={
-                expandAllow ? (expanded ? 999 : numberOfLines) : undefined
-              }
-              selectable={selectable}
-            />
-            {expandAllow ? (
+            {typeof totalLines === 'number' ? (
               <Pressable
-                accessibilityLabel=''
+                accessibilityLabel={t('HTML.accessibilityHint')}
                 onPress={() => {
-                  analytics('status_readmore', { allow: expandAllow, expanded })
+                  analytics('status_readmore', { totalLines, expanded })
                   layoutAnimation()
                   setExpanded(!expanded)
                 }}
                 style={{
+                  flexDirection: 'row',
                   justifyContent: 'center',
-                  marginTop: expanded ? 0 : -adaptedLineheight,
+                  alignItems: 'center',
                   minHeight: 44,
                   backgroundColor: colors.backgroundDefault
                 }}
@@ -290,14 +274,47 @@ const ParseHTML = React.memo(
                   style={{
                     textAlign: 'center',
                     ...StyleConstants.FontStyle.S,
-                    color: colors.primaryDefault
+                    color: colors.primaryDefault,
+                    marginRight: StyleConstants.Spacing.S
                   }}
-                  children={t(`HTML.expanded.${expanded.toString()}`, {
-                    hint: expandHint
+                  children={t('HTML.expanded', {
+                    hint: expandHint,
+                    totalLines:
+                      numberOfLines > 1 && typeof totalLines === 'number'
+                        ? t('HTML.totalLines', { count: totalLines })
+                        : ''
                   })}
+                />
+                <Icon
+                  name={expanded ? 'Minimize2' : 'Maximize2'}
+                  color={colors.primaryDefault}
+                  strokeWidth={2}
+                  size={StyleConstants.Font.Size[size]}
                 />
               </Pressable>
             ) : null}
+            <CustomText
+              children={children}
+              onTextLayout={({ nativeEvent }) => {
+                if (
+                  numberOfLines === 1 ||
+                  nativeEvent.lines.length >= numberOfLines + 5
+                ) {
+                  setTotalLines(nativeEvent.lines.length)
+                }
+              }}
+              style={{
+                height: numberOfLines === 1 && !expanded ? 0 : undefined
+              }}
+              numberOfLines={
+                typeof totalLines === 'number'
+                  ? expanded
+                    ? 999
+                    : numberOfLines
+                  : undefined
+              }
+              selectable={selectable}
+            />
           </View>
         )
       },

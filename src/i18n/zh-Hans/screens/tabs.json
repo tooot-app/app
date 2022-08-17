@@ -78,9 +78,7 @@
       }
     },
     "fontSize": {
-      "showcase": "嘟文示例",
       "demo": "<p>这是一条测试用的嘟文😊。以下是可供选择的字号，从小号至超大号。<br /><br />这个设置仅会调整嘟文的正文字号，不影响其它字号。</p>",
-      "availableSizes": "可选字号",
       "sizes": {
         "S": "小号",
         "M": "默认",
@@ -147,7 +145,8 @@
         "group": "第 {{index}} 组",
         "label": "标签",
         "content": "内容"
-      }
+      },
+      "mediaSelectionFailed": "图片处理失败，请重试"
     },
     "push": {
       "notAvailable": "您的手机不支持tooot推送通知",

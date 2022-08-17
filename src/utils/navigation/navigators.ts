@@ -3,6 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import React from 'react'
 
 export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>
@@ -56,6 +57,10 @@ export type RootStackParamList = {
       height?: number
     }[]
     id: Mastodon.Attachment['id']
+  }
+  'Screen-AccountSelection': {
+    component?: () => JSX.Element | undefined
+    share?: { text?: string; media?: { uri: string; mime: string }[] }
   }
 }
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

@@ -1,9 +1,8 @@
 {
   "HTML": {
-    "expanded": {
-      "true": "Cuộn {{hint}}",
-      "false": "Mở {{hint}}"
-    },
-    "defaultHint": "Tút"
+    "accessibilityHint": "",
+    "expanded": "{{hint}}{{totalLines}}",
+    "totalLines": "",
+    "defaultHint": ""
   }
 }

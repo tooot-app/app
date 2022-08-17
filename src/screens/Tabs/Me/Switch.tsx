@@ -1,11 +1,6 @@
-import analytics from '@components/analytics'
-import Button from '@components/Button'
-import haptics from '@components/haptics'
+import AccountButton from '@components/AccountButton'
 import ComponentInstance from '@components/Instance'
 import CustomText from '@components/Text'
-import { useNavigation } from '@react-navigation/native'
-import initQuery from '@utils/initQuery'
-import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -14,35 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
-
-interface Props {
-  instance: InstanceLatest
-  selected?: boolean
-}
-
-const AccountButton: React.FC<Props> = ({ instance, selected = false }) => {
-  const navigation = useNavigation()
-
-  return (
-    <Button
-      type='text'
-      selected={selected}
-      style={{
-        marginBottom: StyleConstants.Spacing.M,
-        marginRight: StyleConstants.Spacing.M
-      }}
-      content={`@${instance.account.acct}@${instance.uri}${
-        selected ? ' ✓' : ''
-      }`}
-      onPress={() => {
-        haptics('Light')
-        analytics('switch_existing_press')
-        initQuery({ instance, prefetch: { enabled: true } })
-        navigation.goBack()
-      }}
-    />
-  )
-}
 
 const TabMeSwitch: React.FC = () => {
   const { t } = useTranslation('screenTabs')
