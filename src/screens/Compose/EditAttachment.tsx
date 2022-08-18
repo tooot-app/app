@@ -18,44 +18,32 @@ const ComposeEditAttachment: React.FC<ScreenComposeStackScreenProps<
   },
   navigation
 }) => {
-  const { t } = useTranslation('screenCompose')
+    const { t } = useTranslation('screenCompose')
 
-  const headerLeft = useCallback(
-    () => (
-      <HeaderLeft
-        type='icon'
-        content='ChevronDown'
-        onPress={() => navigation.goBack()}
-      />
-    ),
-    []
-  )
-
-  const children = useCallback(
-    () => <ComposeEditAttachmentRoot index={index} />,
-    []
-  )
-
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
-    >
-      <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name='Screen-Compose-EditAttachment-Root'
-            children={children}
-            options={{
-              headerLeft,
-              headerRight: () => <ComposeEditAttachmentSubmit index={index} />,
-              title: t('content.editAttachment.header.title')
-            }}
-          />
-        </Stack.Navigator>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
-  )
-}
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name='Screen-Compose-EditAttachment-Root'
+              children={() => <ComposeEditAttachmentRoot index={index} />}
+              options={{
+                headerLeft: () => <HeaderLeft
+                  type='icon'
+                  content='ChevronDown'
+                  onPress={() => navigation.goBack()}
+                />,
+                headerRight: () => <ComposeEditAttachmentSubmit index={index} />,
+                title: t('content.editAttachment.header.title')
+              }}
+            />
+          </Stack.Navigator>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    )
+  }
 
 export default ComposeEditAttachment
