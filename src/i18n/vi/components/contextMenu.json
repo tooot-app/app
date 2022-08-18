@@ -15,8 +15,8 @@
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Sao chép tút",
+    "succeed": "Đã sao chép"
   },
   "instance": {
     "title": "Hành động máy chủ",
