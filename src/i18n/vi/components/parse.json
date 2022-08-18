@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
+    "accessibilityHint": "Nhấn để mở rộng hoặc thu gọn nội dung",
     "expanded": "{{hint}}{{totalLines}}",
-    "totalLines": "",
-    "defaultHint": ""
+    "totalLines": " ({{count}} dòng)",
+    "defaultHint": "Tút dài"
   }
 }

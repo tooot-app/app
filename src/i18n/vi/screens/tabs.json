@@ -146,7 +146,7 @@
         "label": "Nhãn",
         "content": "Nội dung"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Xử lý không thành công. Vui lòng thử lại."
     },
     "push": {
       "notAvailable": "Điện thoại của bạn chưa bật thông báo đẩy",
