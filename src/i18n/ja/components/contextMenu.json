@@ -1,76 +1,76 @@
 {
   "accessibilityHint": "",
   "account": {
-    "title": "",
+    "title": "ユーザーアクション",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "ユーザーをミュート",
+      "action_true": "ユーザーのミュートを解除"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "ユーザーをブロック",
+      "action_true": "ユーザーのブロックを解除"
     },
     "reports": {
-      "action": ""
+      "action": "ユーザーを報告"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "トゥートをコピー",
+    "succeed": "コピー完了"
   },
   "instance": {
-    "title": "",
+    "title": "インスタンスアクション",
     "block": {
-      "action": "",
+      "action": "インスタンスをブロック {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "インスタンス {{instance}} をブロックしますか？",
+        "message": "ほとんどの場合、特定のユーザーをミュートまたはブロックすることができます。\n\nインスタンスをブロックすると、このインスタンスからフォロワーを含むすべてのコンテンツが削除されます！",
         "buttons": {
-          "confirm": ""
+          "confirm": "確定"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "トゥートを共有"
     },
     "account": {
-      "action": ""
+      "action": "ユーザーを共有"
     }
   },
   "status": {
-    "title": "",
+    "title": "トゥートのアクション",
     "edit": {
-      "action": ""
+      "action": "トゥートを編集"
     },
     "delete": {
-      "action": "",
+      "action": "トゥートを削除",
       "alert": {
-        "title": "",
+        "title": "削除しますか？",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "確定"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "トゥートを削除し、再投稿する",
       "alert": {
-        "title": "",
+        "title": "削除して再投稿しますか？",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "確定"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "トゥートと返信をミュート",
+      "action_true": "トゥートと返信のミュートを解除"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "トゥートを固定",
+      "action_true": "トゥートの固定を解除"
     }
   }
 }
