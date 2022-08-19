@@ -5,7 +5,7 @@
     "cancel": "キャンセル"
   },
   "customEmoji": {
-    "accessibilityLabel": "カスタム絵文字{{emoji}}"
+    "accessibilityLabel": "カスタム絵文字 {{emoji}}"
   },
   "message": {
     "success": {
@@ -15,8 +15,8 @@
       "message": ""
     },
     "error": {
-      "message": "{{function}}接続に失敗しました。再試行してください。"
+      "message": "{{function}} 接続に失敗しました。再試行してください。"
     }
   },
-  "separator": ""
+  "separator": ", "
 }
