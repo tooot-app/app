@@ -2,7 +2,7 @@ import CustomText from '@components/Text'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useMemo, useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import ComposeContext from '../utils/createContext'
@@ -18,7 +18,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const theAttachment = composeState.attachments.uploads[index].remote!
 
-  const mediaDisplay = useMemo(() => {
+  const mediaDisplay = () => {
     if (theAttachment) {
       switch (theAttachment.type) {
         case 'image':
@@ -34,10 +34,10 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
               video={
                 video.local
                   ? ({
-                      url: video.local.uri,
-                      preview_url: video.local.thumbnail,
-                      blurhash: video.remote?.blurhash
-                    } as Mastodon.AttachmentVideo)
+                    url: video.local.uri,
+                    preview_url: video.local.thumbnail,
+                    blurhash: video.remote?.blurhash
+                  } as Mastodon.AttachmentVideo)
                   : (video.remote as Mastodon.AttachmentVideo)
               }
             />
@@ -45,22 +45,13 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
       }
     }
     return null
-  }, [])
-
-  const onChangeText = (e: any) =>
-    composeDispatch({
-      type: 'attachment/edit',
-      payload: {
-        ...theAttachment,
-        description: e
-      }
-    })
+  }
 
   const scrollViewRef = useRef<ScrollView>(null)
 
   return (
     <ScrollView ref={scrollViewRef}>
-      {mediaDisplay}
+      {mediaDisplay()}
       <View style={{ padding: StyleConstants.Spacing.Global.PagePadding }}>
         <CustomText
           fontStyle='M'
@@ -86,7 +77,14 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
           autoCorrect={false}
           maxLength={1500}
           multiline
-          onChangeText={onChangeText}
+          onChangeText={(e) =>
+            composeDispatch({
+              type: 'attachment/edit',
+              payload: {
+                ...theAttachment,
+                description: e
+              }
+            })}
           placeholder={t('content.editAttachment.content.altText.placeholder')}
           placeholderTextColor={colors.secondary}
           scrollEnabled

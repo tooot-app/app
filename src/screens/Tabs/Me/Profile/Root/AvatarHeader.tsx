@@ -38,26 +38,26 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
               ? { width: 400, height: 400 }
               : { width: 1500, height: 500 }
         })
-        if (!image[0].uri) {
+        if (image[0].uri) {
+          mutation.mutate({
+            theme,
+            messageRef,
+            message: {
+              text: `me.profile.root.${type}.title`,
+              succeed: true,
+              failed: true
+            },
+            type,
+            data: image[0].uri
+          })
+        } else {
           displayMessage({
             ref: messageRef,
             message: t('screenTabs:me.profile.mediaSelectionFailed'),
             theme: theme,
             type: 'error'
           })
-          return
         }
-        mutation.mutate({
-          theme,
-          messageRef,
-          message: {
-            text: `me.profile.root.${type}.title`,
-            succeed: true,
-            failed: true
-          },
-          type,
-          data: image[0].uri
-        })
       }}
     />
   )

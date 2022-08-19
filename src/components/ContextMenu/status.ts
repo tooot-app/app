@@ -54,13 +54,13 @@ const contextMenuStatus = ({
         message: t('common:message.error.message', {
           function: t(`status.${theFunction}.action`)
         }),
-        ...(err.status &&
+        ...(err?.status &&
           typeof err.status === 'number' &&
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
-            description: err.data.error
-          })
+          description: err.data.error
+        })
       })
       queryClient.setQueryData(queryKey, oldData)
     }
@@ -70,7 +70,7 @@ const contextMenuStatus = ({
     getInstanceAccount,
     (prev, next) => prev.id === next.id
   )
-  const ownAccount = instanceAccount?.id === status?.account.id
+  const ownAccount = instanceAccount?.id === status?.account?.id
 
   if (ownAccount) {
     const accountMenuItems: ContextMenuAction[] = [
