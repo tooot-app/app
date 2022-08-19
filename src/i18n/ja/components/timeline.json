@@ -1,18 +1,18 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "読み込みエラー",
+      "button": "再試行"
     },
     "success": {
-      "message": ""
+      "message": "表示するものがありません"
     }
   },
   "end": {
     "message": ""
   },
   "lookback": {
-    "message": ""
+    "message": "最終閲覧"
   },
   "refresh": {
     "fetchPreviousPage": "",
@@ -20,75 +20,75 @@
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "固定済み",
+      "favourite": "{name}さんがあなたのトゥートをお気に入りに登録しました",
+      "status": "{name}さんが投稿しました",
+      "follow": "{name}さんにフォローされました",
+      "follow_request": "{{name}}さんがフォローをリクエストしました",
+      "poll": "アンケートが終了しました",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{name}さんがブースト",
+        "notification": "{name}さんがあなたのトゥートをブーストしました"
       },
       "update": ""
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "このトゥートに返信"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをブーストしますか？",
+        "function": "トゥートをブースト"
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをお気に入りに追加",
+        "function": "お気に入りトゥート"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをブックマークに追加",
+        "function": "ブックマークトゥート"
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}}人がこのトゥートをブーストしました",
+        "accessibilityHint": "タップしてユーザーを確認",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}}人がこのトゥートをお気に入りしました",
+        "accessibilityHint": "タップしてユーザーを確認",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "このトゥートは{{count}}回編集されました",
+        "accessibilityHint": "タップして全編集履歴を表示",
+        "text_one": "{{count}}回 編集",
+        "text_other": "{{count}}回 編集"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "閲覧注意のメディアを表示"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "読み込みエラー",
+        "button": "リモートリンクを試す"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "{{name}}のアバター",
+      "accessibilityHint": "{{name}}のページに移動するにはタップしてください"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "内容を非表示にする"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "フィルター済み",
+    "fullConversation": "スレッドを読む",
     "translate": {
-      "default": "",
+      "default": "翻訳",
       "succeed": "",
-      "failed": "",
+      "failed": "翻訳できませんでした",
       "source_not_supported": "",
       "target_not_supported": ""
     },
@@ -111,25 +111,25 @@
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "トゥートはダイレクトメッセージです"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "トゥートはフォロワーのみに公開されます"
           }
         }
       },
       "conversation": {
         "withAccounts": "",
         "delete": {
-          "function": ""
+          "function": "ダイレクトメッセージを削除"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "回答",
+          "refresh": "再読み込み"
         },
         "count": {
           "voters_one": "",
