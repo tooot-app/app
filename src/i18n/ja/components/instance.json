@@ -1,13 +1,13 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "インスタンスのドメイン"
     },
-    "button": "",
+    "button": "ログイン",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
+      "name": "名前",
+      "accounts": "ユーザー",
+      "statuses": "トゥート",
       "domains": ""
     },
     "disclaimer": {
@@ -19,11 +19,11 @@
   },
   "update": {
     "alert": {
-      "title": "",
+      "title": "このインスタンスにログインしました",
       "message": "",
       "buttons": {
-        "cancel": "",
-        "continue": ""
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "続行"
       }
     }
   }
