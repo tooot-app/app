@@ -1,34 +1,34 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "キャンセル",
       "alert": {
-        "title": "",
+        "title": "編集をキャンセルしますか？",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "下書きを保存",
+          "delete": "下書きを削除",
+          "cancel": "キャンセル"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "トゥート",
+        "conversation": "DMをトゥート",
+        "reply": "トゥートに返信",
+        "deleteEdit": "トゥート",
+        "edit": "トゥート",
+        "share": "トゥート"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "トゥートに失敗しました",
+          "button": "もう一度やり直す"
         },
         "removeReply": {
           "title": "",
           "description": "",
-          "cancel": "",
+          "cancel": "$t(common:buttons.cancel)",
           "confirm": ""
         }
       }
