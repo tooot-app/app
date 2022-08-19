@@ -32,7 +32,7 @@ const contextMenuAccount = ({
   const { t } = useTranslation('componentContextMenu')
 
   const queryClient = useQueryClient()
-  const mutateion = useTimelineMutation({
+  const mutation = useTimelineMutation({
     onSuccess: (_, params) => {
       queryClient.refetchQueries(['Relationship', { id: accountId }])
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
@@ -65,8 +65,8 @@ const contextMenuAccount = ({
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
-            description: err.data.error
-          })
+          description: err.data.error
+        })
       })
     },
     onSettled: () => {
@@ -117,7 +117,7 @@ const contextMenuAccount = ({
       analytics('timeline_shared_headeractions_account_mute_press', {
         page: queryKey && queryKey[1].page
       })
-      mutateion.mutate({
+      mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,
         id: accountId,
@@ -128,18 +128,18 @@ const contextMenuAccount = ({
       analytics('timeline_shared_headeractions_account_block_press', {
         page: queryKey && queryKey[1].page
       })
-      mutateion.mutate({
+      mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,
         id: accountId,
         payload: { property: 'block', currentValue: relationship?.blocking }
       })
     }
-    if (actions[index].id === 'account-report') {
+    if (actions[index].id === 'account-reports') {
       analytics('timeline_shared_headeractions_account_reports_press', {
         page: queryKey && queryKey[1].page
       })
-      mutateion.mutate({
+      mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,
         id: accountId,
