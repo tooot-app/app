@@ -1,21 +1,21 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": ""
+    "OK": "はい",
+    "apply": "適用",
+    "cancel": "キャンセル"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "カスタム絵文字{{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}}が成功しました"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}}接続に失敗しました。再試行してください。"
     }
   },
   "separator": ""
