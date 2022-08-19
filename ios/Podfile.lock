@@ -32,7 +32,7 @@ PODS:
     - EXJSONUtils
   - EXNotifications (0.16.1):
     - ExpoModulesCore
-  - Expo (46.0.7):
+  - Expo (46.0.8):
     - ExpoModulesCore
   - ExpoCrypto (11.0.0):
     - ExpoModulesCore
@@ -42,7 +42,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (13.1.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.11.3):
+  - ExpoModulesCore (0.11.4):
     - React-Core
     - ReactCommon/turbomodule/core
   - ExpoRandom (12.3.0):
@@ -564,10 +564,10 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.15.0):
+  - RNScreens (3.16.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.3):
+  - RNSentry (4.2.4):
     - React-Core
     - Sentry (= 7.23.0)
   - RNShareMenu (6.0.0):
@@ -879,12 +879,12 @@ SPEC CHECKSUMS:
   EXJSONUtils: 2a74b8f40f1523cc3f92af99c91aa78201737a77
   EXManifests: b38dc61303f5eede990b4c8ecbfac32f82160e65
   EXNotifications: 9a2aa201deb19dfe1dbe0e370eeb2922de0d2422
-  Expo: 8cb51419dfec611e6125e09384669eb71d3c4c6d
+  Expo: 2322364db3fe1adaa179787edb7e1bc6e5159c78
   ExpoCrypto: e534314db0e1a17ae12b5140d529bd0c5efcbc6a
   ExpoHaptics: efe9e68e9dfe0d15c183c0c70a25f3874124ab9e
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
   ExpoLocalization: 63204f4b9d4f653469d266332ceaa6c6ac8a305d
-  ExpoModulesCore: 8303cc952788be09fc6eab62815d257016ae6dec
+  ExpoModulesCore: e281bb7b78ea47e227dd5af94d04b24d8b2e1255
   ExpoRandom: f9f1faa299a40733867f344d6b7bfa2d1f4ab04d
   ExpoWebBrowser: 5804ac42a8269d0e534bc4461993005f72535649
   EXScreenCapture: 23de056fdb02edd1fb8f147b0fd198c6d5cada3d
@@ -955,8 +955,8 @@ SPEC CHECKSUMS:
   RNFastImage: 8e9b5b9e6df94d2e359c0a75a4745ad1311506fd
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNReanimated: 2cf7451318bb9cc430abeec8d67693f9cf4e039c
-  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: 6798624706227656d942849d593f89c8ca3bdde5
+  RNScreens: ee31ecdf23fe81e93c74feaa086cf173d758ab58
+  RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
   SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866

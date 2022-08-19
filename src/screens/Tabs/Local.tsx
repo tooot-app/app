@@ -3,10 +3,7 @@ import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import {
-  ScreenTabsScreenProps,
-  TabLocalStackParamList
-} from '@utils/navigation/navigators'
+import { ScreenTabsScreenProps, TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -26,10 +23,7 @@ const TabLocal = React.memo(
       layoutAnimation()
     }, [lists?.length])
 
-    const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
-      'Timeline',
-      { page: 'Following' }
-    ])
+    const [queryKey, setQueryKey] = useState<QueryKeyTimeline>(['Timeline', { page: 'Following' }])
 
     return (
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
@@ -51,9 +45,7 @@ const TabLocal = React.memo(
                         ...lists.map(list => ({
                           id: list.id,
                           title: list.title,
-                          disabled:
-                            queryKey[1].page === 'List' &&
-                            queryKey[1].list === list.id
+                          disabled: queryKey[1].page === 'List' && queryKey[1].list === list.id
                         }))
                       ]
                     : undefined
@@ -68,8 +60,7 @@ const TabLocal = React.memo(
                     dropdown={(lists?.length ?? 0) > 0}
                     content={
                       queryKey[1].page === 'List' && queryKey[1].list?.length
-                        ? lists?.find(list => list.id === queryKey[1].list)
-                            ?.title
+                        ? lists?.find(list => list.id === queryKey[1].list)?.title
                         : t('tabs.local.name')
                     }
                   />
@@ -96,9 +87,7 @@ const TabLocal = React.memo(
               queryKey={queryKey}
               lookback='Following'
               customProps={{
-                renderItem: ({ item }) => (
-                  <TimelineDefault item={item} queryKey={queryKey} />
-                )
+                renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
               }}
             />
           )}
