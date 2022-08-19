@@ -22,12 +22,7 @@ const HeaderCenter: React.FC<Props> = ({
   const { colors } = useTheme()
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center'
-      }}
-    >
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <CustomText
         style={{
           color: inverted ? colors.primaryOverlay : colors.primaryDefault
@@ -38,15 +33,13 @@ const HeaderCenter: React.FC<Props> = ({
         children={content}
         {...(onPress && { onPress })}
       />
-      {dropdown ? (
-        <Icon
-          name='ChevronDown'
-          size={StyleConstants.Font.Size.M}
-          color={colors.primaryDefault}
-          style={{ marginLeft: StyleConstants.Spacing.XS }}
-          strokeWidth={3}
-        />
-      ) : null}
+      <Icon
+        name='ChevronDown'
+        size={StyleConstants.Font.Size.M}
+        color={colors.primaryDefault}
+        style={{ marginLeft: StyleConstants.Spacing.XS, opacity: dropdown ? undefined : 0 }}
+        strokeWidth={3}
+      />
     </View>
   )
 }
