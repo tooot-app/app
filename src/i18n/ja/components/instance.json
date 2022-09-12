@@ -8,19 +8,19 @@
       "name": "名前",
       "accounts": "ユーザー",
       "statuses": "トゥート",
-      "domains": ""
+      "domains": "接続連合数"
     },
     "disclaimer": {
-      "base": ""
+      "base": "ログインにはシステムのブラウザを使用するため、あなたのアカウント情報は tooot アプリには表示されません。"
     },
     "terms": {
-      "base": ""
+      "base": "ログインすることで、 tooot の <0>プライバシーポリシー</0> および <1>利用規約</1> に同意したことになります。"
     }
   },
   "update": {
     "alert": {
       "title": "このインスタンスにログインしました",
-      "message": "",
+      "message": "既存のアカウントにログインしたまま、他のアカウントにログインできます",
       "buttons": {
         "cancel": "$t(common:buttons.cancel)",
         "continue": "続行"
