@@ -4,7 +4,7 @@
       "heading": "代替テキスト"
     },
     "notificationsFilter": {
-      "heading": "通知の種類を表示",
+      "heading": "表示する通知の種類",
       "content": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "フォローリクエスト",
@@ -13,7 +13,7 @@
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
         "status": "購読中のユーザーからのトゥート",
-        "update": "リブログが編集されました"
+        "update": "編集されたリブログ"
       }
     }
   }

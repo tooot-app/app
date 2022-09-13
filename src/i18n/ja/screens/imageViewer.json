@@ -1,17 +1,17 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "この画像に対するほかのアクション",
+      "accessibilityHint": "この画像を保存または共有できます"
     },
     "options": {
-      "save": "",
-      "share": "",
-      "cancel": ""
+      "save": "画像を保存",
+      "share": "画像を共有",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "画像を保存しました",
+      "failed": "画像の保存に失敗しました"
     }
   }
 }
