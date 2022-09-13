@@ -9,18 +9,18 @@
     }
   },
   "end": {
-    "message": "スレッドの末端です。コーヒーはいかがですか <0 />"
+    "message": ""
   },
   "lookback": {
     "message": "最終閲覧"
   },
   "refresh": {
-    "fetchPreviousPage": "前のページを取得",
-    "refetch": "更新"
+    "fetchPreviousPage": "",
+    "refetch": ""
   },
   "shared": {
     "actioned": {
-      "pinned": "固定された投稿",
+      "pinned": "固定済み",
       "favourite": "{name}さんがあなたのトゥートをお気に入りに登録しました",
       "status": "{name}さんが投稿しました",
       "follow": "{name}さんにフォローされました",
@@ -30,14 +30,14 @@
         "default": "{name}さんがブースト",
         "notification": "{name}さんがあなたのトゥートをブーストしました"
       },
-      "update": "ブーストしたトゥートが編集されました"
+      "update": ""
     },
     "actions": {
       "reply": {
         "accessibilityLabel": "このトゥートに返信"
       },
       "reblogged": {
-        "accessibilityLabel": "このトゥートをブーストしますか?",
+        "accessibilityLabel": "このトゥートをブーストしますか？",
         "function": "トゥートをブースト"
       },
       "favourited": {
@@ -87,27 +87,27 @@
     "fullConversation": "スレッドを読む",
     "translate": {
       "default": "翻訳",
-      "succeed": "{{provider}} によって {{source}} から翻訳されました",
+      "succeed": "",
       "failed": "翻訳できませんでした",
-      "source_not_supported": "サポートされていない言語のトゥートです",
-      "target_not_supported": "ターゲットの言語の翻訳はサポートされてません"
+      "source_not_supported": "",
+      "target_not_supported": ""
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": "ユーザーの表示名"
+            "accessibilityHint": ""
           },
           "account": {
-            "accessibilityHint": "ユーザーのアカウント名"
+            "accessibilityHint": ""
           }
         },
-        "application": "{{application}}",
+        "application": "",
         "edited": {
-          "accessibilityLabel": "トゥートが編集されました"
+          "accessibilityLabel": ""
         },
         "muted": {
-          "accessibilityLabel": "トゥートがミュートされました"
+          "accessibilityLabel": ""
         },
         "visibility": {
           "direct": {
@@ -119,7 +119,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "@ ",
+        "withAccounts": "",
         "delete": {
           "function": "ダイレクトメッセージを削除"
         }
@@ -128,18 +128,18 @@
     "poll": {
       "meta": {
         "button": {
-          "vote": "投票",
-          "refresh": "更新"
+          "vote": "回答",
+          "refresh": "再読み込み"
         },
         "count": {
-          "voters_one": "{{count}} 人が投票",
-          "voters_other": "{{count}} 人が投票",
-          "votes_one": "{{count}} 票",
-          "votes_other": "{{count}} 票"
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
         },
         "expiration": {
-          "expired": "終了",
-          "until": "終了 <0 />"
+          "expired": "",
+          "until": ""
         }
       }
     }
