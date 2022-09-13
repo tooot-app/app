@@ -43,20 +43,17 @@ export type ComposeState = {
   emoji: {
     active: boolean
     emojis:
-      | {
-          title: string
-          data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-        }[]
-      | undefined
+    | {
+      title: string
+      data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+    }[]
+    | undefined
   }
   poll: {
     active: boolean
     total: number
     options: {
-      '0': string | undefined
-      '1': string | undefined
-      '2': string | undefined
-      '3': string | undefined
+      [key: string]: string | undefined
     }
     multiple: boolean
     expire: '300' | '1800' | '3600' | '21600' | '86400' | '259200' | '604800'
@@ -76,69 +73,69 @@ export type ComposeState = {
 
 export type ComposeAction =
   | {
-      type: 'loadDraft'
-      payload: ComposeStateDraft
-    }
+    type: 'loadDraft'
+    payload: ComposeStateDraft
+  }
   | {
-      type: 'dirty'
-      payload: ComposeState['dirty']
-    }
+    type: 'dirty'
+    payload: ComposeState['dirty']
+  }
   | {
-      type: 'posting'
-      payload: ComposeState['posting']
-    }
+    type: 'posting'
+    payload: ComposeState['posting']
+  }
   | {
-      type: 'spoiler'
-      payload: Partial<ComposeState['spoiler']>
-    }
+    type: 'spoiler'
+    payload: Partial<ComposeState['spoiler']>
+  }
   | {
-      type: 'text'
-      payload: Partial<ComposeState['text']>
-    }
+    type: 'text'
+    payload: Partial<ComposeState['text']>
+  }
   | {
-      type: 'tag'
-      payload: ComposeState['tag']
-    }
+    type: 'tag'
+    payload: ComposeState['tag']
+  }
   | {
-      type: 'emoji'
-      payload: ComposeState['emoji']
-    }
+    type: 'emoji'
+    payload: ComposeState['emoji']
+  }
   | {
-      type: 'poll'
-      payload: Partial<ComposeState['poll']>
-    }
+    type: 'poll'
+    payload: Partial<ComposeState['poll']>
+  }
   | {
-      type: 'attachments/sensitive'
-      payload: Pick<ComposeState['attachments'], 'sensitive'>
-    }
+    type: 'attachments/sensitive'
+    payload: Pick<ComposeState['attachments'], 'sensitive'>
+  }
   | {
-      type: 'attachment/upload/start'
-      payload: Pick<ExtendedAttachment, 'local' | 'uploading'>
-    }
+    type: 'attachment/upload/start'
+    payload: Pick<ExtendedAttachment, 'local' | 'uploading'>
+  }
   | {
-      type: 'attachment/upload/end'
-      payload: { remote: Mastodon.Attachment; local: Asset }
-    }
+    type: 'attachment/upload/end'
+    payload: { remote: Mastodon.Attachment; local: Asset }
+  }
   | {
-      type: 'attachment/upload/fail'
-      payload: ExtendedAttachment['local']['hash']
-    }
+    type: 'attachment/upload/fail'
+    payload: ExtendedAttachment['local']['hash']
+  }
   | {
-      type: 'attachment/delete'
-      payload: NonNullable<ExtendedAttachment['remote']>['id']
-    }
+    type: 'attachment/delete'
+    payload: NonNullable<ExtendedAttachment['remote']>['id']
+  }
   | {
-      type: 'attachment/edit'
-      payload: ExtendedAttachment['remote']
-    }
+    type: 'attachment/edit'
+    payload: ExtendedAttachment['remote']
+  }
   | {
-      type: 'visibility'
-      payload: ComposeState['visibility']
-    }
+    type: 'visibility'
+    payload: ComposeState['visibility']
+  }
   | {
-      type: 'textInputFocus'
-      payload: Partial<ComposeState['textInputFocus']>
-    }
+    type: 'textInputFocus'
+    payload: Partial<ComposeState['textInputFocus']>
+  }
   | {
-      type: 'removeReply'
-    }
+    type: 'removeReply'
+  }
