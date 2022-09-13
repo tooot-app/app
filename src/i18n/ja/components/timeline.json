@@ -1,145 +1,145 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "読み込みエラー",
+      "button": "再試行"
     },
     "success": {
-      "message": ""
+      "message": "表示するものがありません"
     }
   },
   "end": {
-    "message": ""
+    "message": "スレッドの末端です。コーヒーはいかがですか <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "最終閲覧"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "前のページを取得",
+    "refetch": "更新"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "固定された投稿",
+      "favourite": "{name}さんがあなたのトゥートをお気に入りに登録しました",
+      "status": "{name}さんが投稿しました",
+      "follow": "{name}さんにフォローされました",
+      "follow_request": "{{name}}さんがフォローをリクエストしました",
+      "poll": "アンケートが終了しました",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{name}さんがブースト",
+        "notification": "{name}さんがあなたのトゥートをブーストしました"
       },
-      "update": ""
+      "update": "ブーストしたトゥートが編集されました"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "このトゥートに返信"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをブーストしますか?",
+        "function": "トゥートをブースト"
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをお気に入りに追加",
+        "function": "お気に入りトゥート"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "このトゥートをブックマークに追加",
+        "function": "ブックマークトゥート"
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}}人がこのトゥートをブーストしました",
+        "accessibilityHint": "タップしてユーザーを確認",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}}人がこのトゥートをお気に入りしました",
+        "accessibilityHint": "タップしてユーザーを確認",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "このトゥートは{{count}}回編集されました",
+        "accessibilityHint": "タップして全編集履歴を表示",
+        "text_one": "{{count}}回 編集",
+        "text_other": "{{count}}回 編集"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "閲覧注意のメディアを表示"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "読み込みエラー",
+        "button": "リモートリンクを試す"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "{{name}}のアバター",
+      "accessibilityHint": "{{name}}のページに移動するにはタップしてください"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "内容を非表示にする"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "フィルター済み",
+    "fullConversation": "スレッドを読む",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "翻訳",
+      "succeed": "{{provider}} によって {{source}} から翻訳されました",
+      "failed": "翻訳できませんでした",
+      "source_not_supported": "サポートされていない言語のトゥートです",
+      "target_not_supported": "ターゲットの言語の翻訳はサポートされてません"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "ユーザーの表示名"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "ユーザーのアカウント名"
           }
         },
-        "application": "",
+        "application": "{{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "トゥートが編集されました"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "トゥートがミュートされました"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "トゥートはダイレクトメッセージです"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "トゥートはフォロワーのみに公開されます"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "@ ",
         "delete": {
-          "function": ""
+          "function": "ダイレクトメッセージを削除"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "投票",
+          "refresh": "更新"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} 人が投票",
+          "voters_other": "{{count}} 人が投票",
+          "votes_one": "{{count}} 票",
+          "votes_other": "{{count}} 票"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "終了",
+          "until": "終了 <0 />"
         }
       }
     }

@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "ユーザーをフォロー"
   },
   "block": {
-    "function": ""
+    "function": "ユーザーをブロック"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "読み込みエラー",
+    "blocked_by": "ブロックされてます",
+    "blocking": "ブロックを解除",
+    "following": "フォローを解除",
+    "requested": "リクエストを取り消す",
+    "default": "フォロー"
   }
 }
