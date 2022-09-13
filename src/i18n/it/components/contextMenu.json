@@ -16,7 +16,7 @@
   },
   "copy": {
     "action": "",
-    "succeed": ""
+    "succeed": "Copiato"
   },
   "instance": {
     "title": "Azione sull'istanza",
