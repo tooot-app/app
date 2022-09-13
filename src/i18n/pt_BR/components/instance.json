@@ -11,7 +11,7 @@
       "domains": "Universo"
     },
     "disclaimer": {
-      "base": "O processo de login usa o navegador do sistema e as informações da sua conta não estarão visíveis para o aplicativo Tooot."
+      "base": ""
     },
     "terms": {
       "base": "Ao fazer o login, você concorda com a <0>política de privacidade</0> e os <1>termos de serviço</1>."
