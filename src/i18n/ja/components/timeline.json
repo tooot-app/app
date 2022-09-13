@@ -9,18 +9,18 @@
     }
   },
   "end": {
-    "message": ""
+    "message": "スレッドの末端です。コーヒーはいかがですか <0 />"
   },
   "lookback": {
     "message": "最終閲覧"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "前のページを取得",
+    "refetch": "更新"
   },
   "shared": {
     "actioned": {
-      "pinned": "固定済み",
+      "pinned": "固定された投稿",
       "favourite": "{name}さんがあなたのトゥートをお気に入りに登録しました",
       "status": "{name}さんが投稿しました",
       "follow": "{name}さんにフォローされました",
@@ -30,7 +30,7 @@
         "default": "{name}さんがブースト",
         "notification": "{name}さんがあなたのトゥートをブーストしました"
       },
-      "update": ""
+      "update": "ブーストしたトゥートが編集されました"
     },
     "actions": {
       "reply": {
@@ -87,27 +87,27 @@
     "fullConversation": "スレッドを読む",
     "translate": {
       "default": "翻訳",
-      "succeed": "",
+      "succeed": "{{provider}} によって {{source}} から翻訳されました",
       "failed": "翻訳できませんでした",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "source_not_supported": "サポートされていない言語のトゥートです",
+      "target_not_supported": "ターゲットの言語の翻訳はサポートされてません"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "ユーザーの表示名"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "ユーザーのアカウント名"
           }
         },
-        "application": "",
+        "application": "{{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "トゥートが編集されました"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "トゥートがミュートされました"
         },
         "visibility": {
           "direct": {
@@ -119,7 +119,7 @@
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "@ ",
         "delete": {
           "function": "ダイレクトメッセージを削除"
         }
@@ -132,14 +132,14 @@
           "refresh": "再読み込み"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} 人が投票",
+          "voters_other": "{{count}} 人が投票",
+          "votes_one": "{{count}} 票",
+          "votes_other": "{{count}} 票"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "終了",
+          "until": "終了 <0 />"
         }
       }
     }
