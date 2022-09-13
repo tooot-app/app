@@ -1,352 +1,353 @@
 {
   "tabs": {
     "local": {
-      "name": "ホーム"
+      "name": ""
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "連合",
-        "right": "ローカル"
+        "left": "",
+        "right": ""
       }
     },
     "notifications": {
-      "name": "通知"
+      "name": ""
     },
     "me": {
-      "name": "私について"
+      "name": ""
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "検索",
-      "accessibilityHint": "ハッシュタグ、ユーザー、トゥートを検索"
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "フィルター",
-      "accessibilityHint": "表示される通知の種類をフィルターする"
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": "ブックマーク"
+        "name": ""
       },
       "conversations": {
-        "name": "ダイレクトメッセージ"
+        "name": ""
       },
       "favourites": {
-        "name": "お気に入り"
+        "name": ""
       },
       "fontSize": {
-        "name": "トゥートのフォントサイズ"
+        "name": ""
       },
       "language": {
-        "name": "言語"
+        "name": ""
       },
       "lists": {
-        "name": "リスト"
+        "name": ""
       },
       "list": {
-        "name": "リスト: {{list}}"
+        "name": ""
       },
       "push": {
-        "name": "プッシュ通知"
+        "name": ""
       },
       "profile": {
-        "name": "プロフィールを編集"
+        "name": ""
       },
       "profileName": {
-        "name": "表示名を編集"
+        "name": ""
       },
       "profileNote": {
-        "name": "説明文を編集"
+        "name": ""
       },
       "profileFields": {
-        "name": "プロフィール補足情報を編集"
+        "name": ""
       },
       "settings": {
-        "name": "アプリの設定"
+        "name": ""
       },
       "webSettings": {
-        "name": "アカウントの設定"
+        "name": ""
       },
       "switch": {
-        "name": "アカウントを切り替える"
+        "name": ""
       }
     },
     "fontSize": {
-      "demo": "<p>これはトゥートの例です。😊 フォントサイズを以下の選択肢から選択できます。<br /><br />この設定はトゥートのメインコンテンツにのみ影響し、他のフォントサイズには影響しません。</p>",
+      "demo": "",
       "sizes": {
-        "S": "小",
-        "M": "中 (デフォルト)",
-        "L": "大",
-        "XL": "特大",
-        "XXL": "最大"
+        "S": "",
+        "M": "",
+        "L": "",
+        "XL": "",
+        "XXL": ""
       }
     },
     "profile": {
       "cancellation": {
-        "title": "変更を破棄",
-        "message": "変更は保存されていません。変更の保存を破棄しますか?",
+        "title": "",
+        "message": "",
         "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "破棄"
+          "cancel": "",
+          "discard": ""
         }
       },
       "feedback": {
-        "succeed": "{{type}} がアップデートされました",
-        "failed": "{{type}} のアップデートに失敗しました。もういちどお試しください"
+        "succeed": "",
+        "failed": ""
       },
       "root": {
         "name": {
-          "title": "表示名"
+          "title": ""
         },
         "avatar": {
-          "title": "アイコン",
-          "description": "400x400pxまで縮小されます"
+          "title": "",
+          "description": ""
         },
         "header": {
-          "title": "ヘッダー",
-          "description": "1500x1500pxまで縮小されます"
+          "title": "",
+          "description": ""
         },
         "note": {
-          "title": "プロフィール説明文"
+          "title": ""
         },
         "fields": {
-          "title": "プロフィール補足情報",
-          "total_one": "{{count}} つのフィールド",
-          "total_other": "{{count}} つのフィールド"
+          "title": "",
+          "total_one": "",
+          "total_other": ""
         },
         "visibility": {
-          "title": "デフォルトの投稿の公開範囲",
+          "title": "",
           "options": {
-            "public": "公開",
-            "unlisted": "未収載",
-            "private": "フォロワー限定",
-            "cancel": "$t(common:buttons.cancel)"
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "cancel": ""
           }
         },
         "sensitive": {
-          "title": "メディアを常に閲覧注意として投稿する"
+          "title": ""
         },
         "lock": {
-          "title": "承認制アカウント",
-          "description": "フォロワーを手動で承認する必要があります"
+          "title": "",
+          "description": ""
         },
         "bot": {
-          "title": "ボットアカウント",
-          "description": "このアカウントを主に自動で動作するものとし、人による監視がされていない可能性があるものとします"
+          "title": "",
+          "description": ""
         }
       },
       "fields": {
-        "group": "グループ {{index}}",
-        "label": "ラベル",
-        "content": "内容"
+        "group": "",
+        "label": "",
+        "content": ""
       },
-      "mediaSelectionFailed": "画像処理に失敗しました。もういちどお試しください。"
+      "mediaSelectionFailed": ""
     },
     "push": {
-      "notAvailable": "あなたがお使いのデバイスでは tooot のプッシュ通知をサポートしていません",
+      "notAvailable": "",
       "enable": {
-        "direct": "プッシュ通知を有効にする",
-        "settings": "設定で有効にする"
+        "direct": "",
+        "settings": ""
       },
       "global": {
-        "heading": "{{acct}} の通知を有効にする",
-        "description": "メッセージは tooot のサーバー経由で到達します"
+        "heading": "",
+        "description": ""
       },
       "decode": {
-        "heading": "メッセージの詳細を表示",
-        "description": "tooot のサーバーを介して到達するメッセージは暗号化されますが、サーバー上でメッセージを復号することを選択できます。サーバーのソースコードはオープンソースであり、ログを保存することはありません。"
+        "heading": "",
+        "description": ""
       },
       "default": {
-        "heading": "デフォルト"
+        "heading": ""
       },
       "follow": {
-        "heading": "新しいフォロワー"
+        "heading": ""
       },
       "follow_request": {
-        "heading": "フォローリクエスト"
+        "heading": ""
       },
       "favourite": {
-        "heading": "お気に入り"
+        "heading": ""
       },
       "reblog": {
-        "heading": "ブースト"
+        "heading": ""
       },
       "mention": {
-        "heading": "返信"
+        "heading": ""
       },
       "poll": {
-        "heading": "投票"
+        "heading": ""
       },
       "status": {
-        "heading": "購読したユーザーのトゥート"
+        "heading": ""
       },
-      "howitworks": "通知到達(routing)のしくみを学ぶ"
+      "howitworks": ""
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "未読数: {{amount}}",
-          "read": "すべて読みました",
-          "empty": "ありません"
+          "unread": "",
+          "read": "",
+          "empty": ""
         }
       },
       "push": {
         "content": {
-          "enabled": "有効",
-          "disabled": "無効"
+          "enabled": "",
+          "disabled": ""
         }
       },
       "update": {
-        "title": "最新バージョンへのアップデート"
+        "title": ""
       },
       "logout": {
-        "button": "ログアウト",
+        "button": "",
         "alert": {
-          "title": "ログアウトしますか?",
-          "message": "ログアウトすると、再度ログインする必要があります",
+          "title": "",
+          "message": "",
           "buttons": {
-            "logout": "ログアウト",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "",
+            "cancel": ""
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
+        "heading": "",
         "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
+          "S": "",
+          "M": "",
+          "L": "",
+          "XL": "",
+          "XXL": ""
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
+        "heading": "",
         "options": {
-          "cancel": "$t(common:buttons.cancel)"
+          "cancel": ""
         }
       },
       "theme": {
-        "heading": "外観",
+        "heading": "",
         "options": {
-          "auto": "システムの設定に従う",
-          "light": "ライトモード",
-          "dark": "ダークモード",
-          "cancel": "$t(common:buttons.cancel)"
+          "auto": "",
+          "light": "",
+          "dark": "",
+          "cancel": ""
         }
       },
       "darkTheme": {
-        "heading": "ダークテーマ",
+        "heading": "",
         "options": {
-          "lighter": "明るめ",
-          "darker": "暗め",
-          "cancel": "$t(common:buttons.cancel)"
+          "lighter": "",
+          "darker": "",
+          "cancel": ""
         }
       },
       "browser": {
-        "heading": "リンクを開く",
+        "heading": "",
         "options": {
-          "internal": "アプリ内で開く",
-          "external": "システムブラウザを使用する",
-          "cancel": "$t(common:buttons.cancel)"
+          "internal": "",
+          "external": "",
+          "cancel": ""
         }
       },
       "staticEmoji": {
-        "heading": "静的な絵文字リスト",
-        "description": "絵文字リストを表示しているときにアプリが頻繁にクラッシュする場合、代わりにアニメーションが無効化された絵文字リストを使用してみてください。"
+        "heading": "",
+        "description": ""
       },
       "feedback": {
-        "heading": "機能リクエスト"
+        "heading": ""
       },
       "support": {
-        "heading": "tooot をサポート"
+        "heading": ""
       },
       "review": {
-        "heading": "tooot をレビュー"
+        "heading": ""
       },
       "contact": {
-        "heading": "tooot に関する連絡"
+        "heading": ""
       },
       "analytics": {
-        "heading": "ソフトウェア改善への協力",
-        "description": "ユーザーに関連しない情報のみ収集します"
+        "heading": "",
+        "description": ""
       },
-      "version": "バージョン v{{version}}",
-      "instanceVersion": "Mastodonのバージョン v{{version}}"
+      "version": "",
+      "instanceVersion": ""
     },
     "switch": {
-      "existing": "ログイン済みのアカウント",
-      "new": "インスタンスに新規ログイン"
+      "existing": "",
+      "new": ""
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "ユーザー {{user}} に対するアクション",
-        "accessibilityHint": "このユーザーをミュート、ブロック、報告または共有できます"
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
       },
-      "followed_by": "はあなたをフォローしています",
-      "moved": "ユーザーは引っ越ししました",
-      "created_at": "登録日: {{date}}",
+      "followed_by": "",
+      "moved": "",
+      "created_at": "",
       "summary": {
-        "statuses_count": "{{count}} 投稿",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"      },
+        "statuses_count": "",
+        "following_count": "",
+        "followers_count": ""
+      },
       "toots": {
-        "default": "投稿",
-        "all": "投稿と返信"
+        "default": "",
+        "all": ""
       }
     },
     "attachments": {
-      "name": "<0 /><1>\" のメディア</1>"
+      "name": ""
     },
     "search": {
       "header": {
-        "prefix": "検索",
-        "placeholder": "検索したいことは…?"
+        "prefix": "",
+        "placeholder": ""
       },
       "empty": {
-        "general": "検索キーワードを入力して<bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> または <bold>$t(screenTabs:shared.search.sections.statuses)</bold>を検索",
+        "general": "",
         "advanced": {
-          "header": "高度な検索のフォーマット",
+          "header": "",
           "example": {
-            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
-            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
-            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
-            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
           }
         }
       },
       "sections": {
-        "accounts": "ユーザー",
-        "hashtags": "ハッシュタグ",
-        "statuses": "投稿"
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
       },
-      "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした"
+      "notFound": ""
     },
     "toot": {
-      "name": "スレッド"
+      "name": ""
     },
     "users": {
       "accounts": {
-        "following": "{{count}} フォロー",
-        "followers": "{{count}} フォロワー"
+        "following": "",
+        "followers": ""
       },
       "statuses": {
-        "reblogged_by": "{{count}} ブースト",
-        "favourited_by": "{{count}} お気に入り"
+        "reblogged_by": "",
+        "favourited_by": ""
       }
     },
     "history": {
-      "name": "編集履歴"
+      "name": ""
     }
   }
 }
