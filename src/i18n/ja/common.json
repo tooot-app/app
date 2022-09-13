@@ -9,7 +9,7 @@
   },
   "message": {
     "success": {
-      "message": "{{function}}が成功しました"
+      "message": "{{function}} が成功しました"
     },
     "warning": {
       "message": ""
