@@ -1,9 +1,9 @@
 {
-  "heading": "お知らせ",
+  "heading": "",
   "content": {
-    "published": "公開 <0 />",
+    "published": "",
     "button": {
-      "read": "既読",
+      "read": "",
       "unread": "既読にする"
     }
   }
