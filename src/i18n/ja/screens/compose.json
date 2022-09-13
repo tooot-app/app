@@ -26,10 +26,10 @@
           "button": "もう一度やり直す"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
+          "title": "返信されたトゥートが見つかりませんでした",
+          "description": "返信されたトゥートが削除された可能性があります。参照から削除しますか？",
           "cancel": "$t(common:buttons.cancel)",
-          "confirm": ""
+          "confirm": "参照を削除"
         }
       }
     }
@@ -37,143 +37,143 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "@{{acct}}@{{domain}} としてトゥート",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "注意書き"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "今なにかんがえてるの？",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "アップロードできるメディアの数の上限に達しました",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "メディアを閲覧注意にする",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "{{attachment}} のメディアを削除する"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "{{attachment}} のメディアを編集する"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "アップロードするメディアを追加する"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "タップして絵文字を追加"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "投票オプション {{index}}",
+              "single": "単一選択項目",
+              "multiple": "複数選択項目"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "投票の選択肢を {{amount}} に減らす",
+              "accessibilityHint": "最小の投票数 {{amount}} に到達しました"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "投票の選択肢を {{amount}} に増やす",
+              "accessibilityHint": "最大の投票数 {{amount}} に到達しました"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "投票タイプ",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "単一選択式",
+              "multiple": "複数選択式",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "終了時間",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5分",
+              "1800": "30分",
+              "3600": "1時間",
+              "21600": "6時間",
+              "86400": "1日",
+              "259200": "3日",
+              "604800": "7日",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "メディアをアップロード",
+          "accessibilityHint": "メディアをアップロードした場合、投票機能は無効化されます",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "アップロードに失敗",
+              "button": "再試行"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "投票を追加",
+          "accessibilityHint": "投票がアクティブな場合、メディアのアップロードは無効化されます"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "公開範囲は {{visibility}} です",
+          "title": "公開範囲",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "公開",
+            "unlisted": "未収載",
+            "private": "フォロワー限定",
+            "direct": "ダイレクトメッセージ",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "スポイラーの設定"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "絵文字を追加",
+          "accessibilityHint": "絵文字選択パネルを開き、横にスワイプしてページを変更します"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "下書き ({{count}})",
+      "drafts_other": "下書き ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "メディアを編集",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "メディアの編集を保存",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "編集に失敗",
+            "button": "再試行"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "閲覧が難しいユーザーへの説明",
+          "placeholder": "目の不自由な人や視覚障がいを持つ人を含むより多くの人がメディアにアクセスできるようになる、代替テキスト(alt-text)とも呼ばれる説明をメディアに追加することができます。\n\n簡潔でありながらも、メディアの文脈を正確に理解できるような表現が良い説明です。"
         },
-        "imageFocus": ""
+        "imageFocus": "円形の枠をドラッグしてサムネイルの焦点にしたい場所を更新します"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "下書き"
       },
-      "warning": "",
+      "warning": "下書きは端末内のみに保存されます。下書きが不幸な出来事によって失われる可能性があります。そのため下書きを長期保存のために使用しないことを推奨します。",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "下書きを保存しました。タップしてこの下書きを編集します",
+        "textEmpty": "コンテンツが空です"
       },
-      "checkAttachment": ""
+      "checkAttachment": "サーバー上にあるメディアを確認しています…"
     }
   }
 }
