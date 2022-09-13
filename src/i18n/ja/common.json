@@ -9,13 +9,13 @@
   },
   "message": {
     "success": {
-      "message": "{{function}} が成功しました"
+      "message": "{{function}}が成功しました"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": "{{function}} に失敗しました。もういちどお試しください。"
+      "message": "{{function}} 接続に失敗しました。再試行してください。"
     }
   },
   "separator": ", "
