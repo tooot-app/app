@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next'
 import de from '@root/i18n/de/_all'
 import en from '@root/i18n/en/_all'
 import it from '@root/i18n/it/_all'
+import ja from '@root/i18n/ja/_all'
 import ko from '@root/i18n/ko/_all'
 import pt_BR from '@root/i18n/pt_BR/_all'
 import vi from '@root/i18n/vi/_all'
@@ -16,6 +17,7 @@ import '@formatjs/intl-pluralrules/polyfill'
 import '@formatjs/intl-pluralrules/locale-data/de'
 import '@formatjs/intl-pluralrules/locale-data/en'
 import '@formatjs/intl-pluralrules/locale-data/it'
+import '@formatjs/intl-pluralrules/locale-data/ja'
 import '@formatjs/intl-pluralrules/locale-data/ko'
 import '@formatjs/intl-pluralrules/locale-data/pt'
 import '@formatjs/intl-pluralrules/locale-data/vi'
@@ -25,6 +27,7 @@ import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/de'
 import '@formatjs/intl-numberformat/locale-data/en'
 import '@formatjs/intl-numberformat/locale-data/it'
+import '@formatjs/intl-numberformat/locale-data/ja'
 import '@formatjs/intl-numberformat/locale-data/ko'
 import '@formatjs/intl-numberformat/locale-data/pt'
 import '@formatjs/intl-numberformat/locale-data/vi'
@@ -34,6 +37,7 @@ import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/de'
 import '@formatjs/intl-datetimeformat/locale-data/en'
 import '@formatjs/intl-datetimeformat/locale-data/it'
+import '@formatjs/intl-datetimeformat/locale-data/ja'
 import '@formatjs/intl-datetimeformat/locale-data/ko'
 import '@formatjs/intl-datetimeformat/locale-data/pt'
 import '@formatjs/intl-datetimeformat/locale-data/vi'
@@ -44,6 +48,7 @@ import '@formatjs/intl-relativetimeformat/polyfill'
 import '@formatjs/intl-relativetimeformat/locale-data/de'
 import '@formatjs/intl-relativetimeformat/locale-data/en'
 import '@formatjs/intl-relativetimeformat/locale-data/it'
+import '@formatjs/intl-relativetimeformat/locale-data/ja'
 import '@formatjs/intl-relativetimeformat/locale-data/ko'
 import '@formatjs/intl-relativetimeformat/locale-data/pt'
 import '@formatjs/intl-relativetimeformat/locale-data/vi'
@@ -56,7 +61,7 @@ i18n.use(initReactI18next).init({
   ns: ['common'],
   defaultNS: 'common',
 
-  resources: { 'zh-Hans': zh_Hans, vi, 'pt-BR': pt_BR, ko, it, en, de },
+  resources: { de, en, it, ja, ko, 'pt-BR': pt_BR, vi, 'zh-Hans': zh_Hans },
   returnEmptyString: false,
 
   saveMissing: true,

@@ -11,7 +11,7 @@ import { RootStackParamList } from '@utils/navigation/navigators'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -27,8 +27,7 @@ const TimelineAttachment = React.memo(
     const account = useSelector(
       getInstanceAccount,
       (prev, next) =>
-        prev.preferences['reading:expand:media'] ===
-        next.preferences['reading:expand:media']
+        prev.preferences['reading:expand:media'] === next.preferences['reading:expand:media']
     )
     const defaultSensitive = () => {
       switch (account.preferences['reading:expand:media']) {
@@ -42,15 +41,47 @@ const TimelineAttachment = React.memo(
     }
     const [sensitiveShown, setSensitiveShown] = useState(defaultSensitive())
 
-    const imageUrls = useRef<
-      RootStackParamList['Screen-ImagesViewer']['imageUrls']
-    >([])
+    const imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls'] =
+      status.media_attachments
+        .map(attachment => {
+          switch (attachment.type) {
+            case 'image':
+              return {
+                id: attachment.id,
+                preview_url: attachment.preview_url,
+                url: attachment.url,
+                remote_url: attachment.remote_url,
+                blurhash: attachment.blurhash,
+                width: attachment.meta?.original?.width,
+                height: attachment.meta?.original?.height
+              }
+            default:
+              if (
+                attachment.preview_url?.endsWith('.jpg') ||
+                attachment.preview_url?.endsWith('.jpeg') ||
+                attachment.preview_url?.endsWith('.png') ||
+                attachment.preview_url?.endsWith('.gif') ||
+                attachment.remote_url?.endsWith('.jpg') ||
+                attachment.remote_url?.endsWith('.jpeg') ||
+                attachment.remote_url?.endsWith('.png') ||
+                attachment.remote_url?.endsWith('.gif')
+              ) {
+                return {
+                  id: attachment.id,
+                  preview_url: attachment.preview_url,
+                  url: attachment.url,
+                  remote_url: attachment.remote_url,
+                  blurhash: attachment.blurhash,
+                  width: attachment.meta?.original?.width,
+                  height: attachment.meta?.original?.height
+                }
+              }
+          }
+        })
+        .filter(i => i)
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     const navigateToImagesViewer = (id: string) => {
-      navigation.navigate('Screen-ImagesViewer', {
-        imageUrls: imageUrls.current,
-        id
-      })
+      navigation.navigate('Screen-ImagesViewer', { imageUrls, id })
     }
 
     return (
@@ -68,15 +99,6 @@ const TimelineAttachment = React.memo(
           {status.media_attachments.map((attachment, index) => {
             switch (attachment.type) {
               case 'image':
-                imageUrls.current.push({
-                  id: attachment.id,
-                  preview_url: attachment.preview_url,
-                  url: attachment.url,
-                  remote_url: attachment.remote_url,
-                  blurhash: attachment.blurhash,
-                  width: attachment.meta?.original?.width,
-                  height: attachment.meta?.original?.height
-                })
                 return (
                   <AttachmentImage
                     key={index}
@@ -129,15 +151,6 @@ const TimelineAttachment = React.memo(
                   attachment.remote_url?.endsWith('.png') ||
                   attachment.remote_url?.endsWith('.gif')
                 ) {
-                  imageUrls.current.push({
-                    id: attachment.id,
-                    preview_url: attachment.preview_url,
-                    url: attachment.url,
-                    remote_url: attachment.remote_url,
-                    blurhash: attachment.blurhash,
-                    width: attachment.meta?.original?.width,
-                    height: attachment.meta?.original?.height
-                  })
                   return (
                     <AttachmentImage
                       key={index}
@@ -212,19 +225,13 @@ const TimelineAttachment = React.memo(
   (prev, next) => {
     let isEqual = true
 
-    if (
-      prev.status.media_attachments.length !==
-      next.status.media_attachments.length
-    ) {
+    if (prev.status.media_attachments.length !== next.status.media_attachments.length) {
       isEqual = false
       return isEqual
     }
 
     prev.status.media_attachments.forEach((attachment, index) => {
-      if (
-        attachment.preview_url !==
-        next.status.media_attachments[index].preview_url
-      ) {
+      if (attachment.preview_url !== next.status.media_attachments[index].preview_url) {
         isEqual = false
       }
     })

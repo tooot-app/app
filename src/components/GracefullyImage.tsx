@@ -67,9 +67,7 @@ const GracefullyImage = ({
   const onLoad = () => {
     setImageLoaded(true)
     if (setImageDimensions && source.uri) {
-      Image.getSize(source.uri, (width, height) =>
-        setImageDimensions({ width, height })
-      )
+      Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
     }
   }
   const onError = () => {
@@ -81,22 +79,9 @@ const GracefullyImage = ({
   const blurhashView = useMemo(() => {
     if (hidden || !imageLoaded) {
       if (blurhash) {
-        return (
-          <Blurhash
-            decodeAsync
-            blurhash={blurhash}
-            style={styles.placeholder}
-          />
-        )
+        return <Blurhash decodeAsync blurhash={blurhash} style={styles.placeholder} />
       } else {
-        return (
-          <View
-            style={[
-              styles.placeholder,
-              { backgroundColor: colors.shimmerDefault }
-            ]}
-          />
-        )
+        return <View style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]} />
       }
     } else {
       return null
@@ -105,26 +90,17 @@ const GracefullyImage = ({
 
   return (
     <Pressable
-      {...(onPress
-        ? { accessibilityRole: 'imagebutton' }
-        : { accessibilityRole: 'image' })}
+      {...(onPress ? { accessibilityRole: 'imagebutton' } : { accessibilityRole: 'image' })}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       style={[style, dimension, { backgroundColor: colors.shimmerDefault }]}
-      {...(onPress
-        ? hidden
-          ? { disabled: true }
-          : { onPress }
-        : { disabled: true })}
+      {...(onPress ? (hidden ? { disabled: true } : { onPress }) : { disabled: true })}
     >
       {uri.preview && !imageLoaded ? (
         <Image
           fadeDuration={0}
           source={{ uri: uri.preview }}
-          style={[
-            styles.placeholder,
-            { backgroundColor: colors.shimmerDefault }
-          ]}
+          style={[styles.placeholder, { backgroundColor: colors.shimmerDefault }]}
         />
       ) : null}
       {Platform.OS === 'ios' ? (

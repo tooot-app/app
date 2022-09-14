@@ -3,7 +3,7 @@
   "versions": {
     "major": 4,
     "minor": 3,
-    "patch": 0
+    "patch": 1
   },
   "description": "tooot app for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
@@ -86,6 +86,7 @@
     "react-native-language-detection": "^0.1.0",
     "react-native-pager-view": "^5.4.25",
     "react-native-reanimated": "^2.9.1",
+    "react-native-reanimated-zoom": "^0.3.0",
     "react-native-safe-area-context": "^4.3.1",
     "react-native-screens": "^3.16.0",
     "react-native-share-menu": "^6.0.0",

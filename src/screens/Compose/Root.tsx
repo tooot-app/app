@@ -5,13 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  FlatList,
-  StyleSheet,
-  View
-} from 'react-native'
+import { AccessibilityInfo, findNodeHandle, FlatList, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -79,8 +73,7 @@ const ComposeRoot = React.memo(
 
     const { isFetching, data, refetch } = useSearchQuery({
       type:
-        composeState.tag?.type === 'accounts' ||
-        composeState.tag?.type === 'hashtags'
+        composeState.tag?.type === 'accounts' || composeState.tag?.type === 'hashtags'
           ? composeState.tag.type
           : undefined,
       term: composeState.tag?.text.substring(1),
@@ -89,8 +82,7 @@ const ComposeRoot = React.memo(
 
     useEffect(() => {
       if (
-        (composeState.tag?.type === 'accounts' ||
-          composeState.tag?.type === 'hashtags') &&
+        (composeState.tag?.type === 'accounts' || composeState.tag?.type === 'hashtags') &&
         composeState.tag?.text
       ) {
         refetch()
@@ -106,10 +98,8 @@ const ComposeRoot = React.memo(
           title: string
           data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
         }[] = []
-        forEach(
-          groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'),
-          (value, key) =>
-            sortedEmojis.push({ title: key, data: chunk(value, 5) })
+        forEach(groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'), (value, key) =>
+          sortedEmojis.push({ title: key, data: chunk(value, 5) })
         )
         if (frequentEmojis.length) {
           sortedEmojis.unshift({
@@ -132,14 +122,21 @@ const ComposeRoot = React.memo(
       if (isFetching) {
         return (
           <View key='listEmpty' style={styles.loading}>
-            <Circle
-              size={StyleConstants.Font.Size.M * 1.25}
-              color={colors.secondary}
-            />
+            <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
           </View>
         )
       }
     }, [isFetching])
+
+    const Footer = useMemo(
+      () => (
+        <ComposeRootFooter
+          accessibleRefAttachments={accessibleRefAttachments}
+          accessibleRefEmojis={accessibleRefEmojis}
+        />
+      ),
+      [accessibleRefAttachments.current, accessibleRefEmojis.current]
+    )
 
     return (
       <View style={styles.base}>
@@ -154,12 +151,7 @@ const ComposeRoot = React.memo(
           ListEmptyComponent={listEmpty}
           keyboardShouldPersistTaps='always'
           ListHeaderComponent={ComposeRootHeader}
-          ListFooterComponent={() => (
-            <ComposeRootFooter
-              accessibleRefAttachments={accessibleRefAttachments}
-              accessibleRefEmojis={accessibleRefEmojis}
-            />
-          )}
+          ListFooterComponent={Footer}
           ItemSeparatorComponent={ComponentSeparator}
           // @ts-ignore
           data={data ? data[composeState.tag?.type] : undefined}
