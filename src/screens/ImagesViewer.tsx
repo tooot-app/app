@@ -18,7 +18,12 @@ import {
   ViewToken
 } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { LongPressGestureHandler } from 'react-native-gesture-handler'
+import {
+  Directions,
+  FlingGestureHandler,
+  LongPressGestureHandler,
+  State
+} from 'react-native-gesture-handler'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
@@ -93,6 +98,8 @@ const ScreenImagesViewer = ({
     }) => {
       const screenRatio = SCREEN_WIDTH / SCREEN_HEIGHT
       const imageRatio = item.width && item.height ? item.width / item.height : 1
+      const imageWidth = item.width || 100
+      const imageHeight = item.height || 100
 
       const maxWidthScale = item.width ? (item.width / SCREEN_WIDTH / PixelRatio.get()) * 4 : 0
       const maxHeightScale = item.height ? (item.height / SCREEN_WIDTH / PixelRatio.get()) * 4 : 0
@@ -116,9 +123,13 @@ const ScreenImagesViewer = ({
                 blurhash={item.blurhash}
                 dimension={{
                   width:
-                    screenRatio > imageRatio ? (item.height || 100) / screenRatio : SCREEN_WIDTH,
+                    screenRatio > imageRatio
+                      ? (SCREEN_HEIGHT / imageHeight) * imageWidth
+                      : SCREEN_WIDTH,
                   height:
-                    screenRatio > imageRatio ? SCREEN_HEIGHT : (item.width || 100) * screenRatio
+                    screenRatio > imageRatio
+                      ? SCREEN_HEIGHT
+                      : (SCREEN_WIDTH / imageWidth) * imageHeight
                 }}
               />
             </View>
@@ -161,66 +172,71 @@ const ScreenImagesViewer = ({
           onPress={onPress}
         />
       </View>
-      <LongPressGestureHandler
-        onEnded={() => {
-          analytics('imageviewer_more_press')
-          showActionSheetWithOptions(
-            {
-              options: [
-                t('content.options.save'),
-                t('content.options.share'),
-                t('content.options.cancel')
-              ],
-              cancelButtonIndex: 2,
-              userInterfaceStyle: mode
-            },
-            async buttonIndex => {
-              switch (buttonIndex) {
-                case 0:
-                  analytics('imageviewer_more_save_press')
-                  saveImage({
-                    messageRef,
-                    theme,
-                    image: imageUrls[currentIndex]
-                  })
-                  break
-                case 1:
-                  analytics('imageviewer_more_share_press')
-                  switch (Platform.OS) {
-                    case 'ios':
-                      await Share.share({ url: imageUrls[currentIndex].url })
-                      break
-                    case 'android':
-                      await Share.share({
-                        message: imageUrls[currentIndex].url
-                      })
-                      break
-                  }
-                  break
-              }
-            }
-          )
-        }}
+      <FlingGestureHandler
+        direction={Directions.DOWN}
+        numberOfPointers={1}
+        onEnded={() => navigation.goBack()}
       >
-        <ZoomFlatList
-          ref={listRef}
-          data={imageUrls}
-          pagingEnabled
-          horizontal
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50
+        <LongPressGestureHandler
+          onEnded={() => {
+            analytics('imageviewer_more_press')
+            showActionSheetWithOptions(
+              {
+                options: [
+                  t('content.options.save'),
+                  t('content.options.share'),
+                  t('content.options.cancel')
+                ],
+                cancelButtonIndex: 2,
+                userInterfaceStyle: mode
+              },
+              async buttonIndex => {
+                switch (buttonIndex) {
+                  case 0:
+                    analytics('imageviewer_more_save_press')
+                    saveImage({
+                      messageRef,
+                      theme,
+                      image: imageUrls[currentIndex]
+                    })
+                    break
+                  case 1:
+                    analytics('imageviewer_more_share_press')
+                    switch (Platform.OS) {
+                      case 'ios':
+                        await Share.share({ url: imageUrls[currentIndex].url })
+                        break
+                      case 'android':
+                        await Share.share({
+                          message: imageUrls[currentIndex].url
+                        })
+                        break
+                    }
+                    break
+                }
+              }
+            )
           }}
-          initialScrollIndex={initialIndex}
-          getItemLayout={(_, index) => ({
-            length: SCREEN_WIDTH,
-            offset: SCREEN_WIDTH * index,
-            index
-          })}
-        />
-      </LongPressGestureHandler>
+        >
+          <ZoomFlatList
+            data={imageUrls}
+            pagingEnabled
+            horizontal
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50
+            }}
+            initialScrollIndex={initialIndex}
+            getItemLayout={(_, index) => ({
+              length: SCREEN_WIDTH,
+              offset: SCREEN_WIDTH * index,
+              index
+            })}
+          />
+        </LongPressGestureHandler>
+      </FlingGestureHandler>
       <Message ref={messageRef} />
     </SafeAreaProvider>
   )
