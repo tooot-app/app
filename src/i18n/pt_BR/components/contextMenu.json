@@ -16,7 +16,7 @@
   },
   "copy": {
     "action": "",
-    "succeed": ""
+    "succeed": "Copiado"
   },
   "instance": {
     "title": "Ação da Instância",

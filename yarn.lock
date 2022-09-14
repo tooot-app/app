@@ -7081,6 +7081,11 @@ react-native-pager-view@^5.4.25:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.25.tgz#cd639d5387a7f3d5581b55a33c5faa1cbc200f97"
   integrity sha512-3drrYwaLat2fYszymZe3nHMPASJ4aJMaxiejfA1V5SK3OygYmdtmV2u5prX7TnjueJzGSyyaCYEr2JlrRt4YPg==
 
+react-native-reanimated-zoom@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-zoom/-/react-native-reanimated-zoom-0.3.0.tgz#181825c1854853a4db33a86e521057e2e757d290"
+  integrity sha512-kvYVbLayX8Tj52oDmKE78gnEmZD5KsCHxkTSrMfahq9KyqU6aHWistfocFtzBBT+I0puzcHpivzy3dxYL1SL5Q==
+
 react-native-reanimated@^2.9.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.9.1.tgz#d9a932e312c13c05b4f919e43ebbf76d996e0bc1"

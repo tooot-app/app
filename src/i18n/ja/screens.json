@@ -1,18 +1,18 @@
 {
   "screenshot": {
-    "title": "",
-    "message": "",
-    "button": ""
+    "title": "プライバシー保護",
+    "message": "ユーザー名やアバターなど、他のユーザーを特定する情報は公開しないでください。",
+    "button": "確定"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "ログイン期限が切れました。もう一度ログインしてください。"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "プッシュサービスのエラー",
+    "description": "設定でプッシュ通知を再度有効にしてください"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "画像ファイル形式 {{type}} はサポートされていません",
+    "videoNotSupported": "動画ファイル形式 {{type}} はサポートされていません"
   }
 }

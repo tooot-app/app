@@ -4,11 +4,18 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tooot-app/app/build) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/tooot-app/app/build/candidate?label=build%20candidate) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/tooot-app/app/build/release?label=build%20release)
 
+## Contribute to translation
+
+Please **do not** create a pull request to update translation. tooot's translation is managed through [https://crowdin.tooot.app/](https://crowdin.tooot.app/) and Crowdin struggles to properly sync two ways. If there is a minor update and you do not want to register an account on Crowdin, please open an issue.
+
+
 ## Special thanks
 
 [@forenta](https://github.com/forenta) for German translation
 
 [@andrigamerita](https://github.com/andrigamerita) for Italian translation
+
+[@Hikaru](https://github.com/Hikali-47041) and [@la_la](https://mstdn.jp/@la_la_la) for Japanese translation
 
 [@hellojaccc](https://github.com/hellojaccc) for Korean translation
 
