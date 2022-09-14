@@ -7,10 +7,10 @@
   },
   "button": {
     "error": "読み込みエラー",
-    "blocked_by": "ブロックされてます",
+    "blocked_by": "ユーザーによってブロック",
     "blocking": "ブロックを解除",
-    "following": "フォローを解除",
-    "requested": "リクエストを取り消す",
+    "following": "フォローをやめる",
+    "requested": "リクエストを削除",
     "default": "フォロー"
   }
 }

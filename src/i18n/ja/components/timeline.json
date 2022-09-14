@@ -37,7 +37,7 @@
         "accessibilityLabel": "このトゥートに返信"
       },
       "reblogged": {
-        "accessibilityLabel": "このトゥートをブーストしますか?",
+        "accessibilityLabel": "このトゥートをブーストしますか？",
         "function": "トゥートをブースト"
       },
       "favourited": {
@@ -128,8 +128,8 @@
     "poll": {
       "meta": {
         "button": {
-          "vote": "投票",
-          "refresh": "更新"
+          "vote": "回答",
+          "refresh": "再読み込み"
         },
         "count": {
           "voters_one": "{{count}} 人が投票",

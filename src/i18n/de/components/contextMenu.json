@@ -4,7 +4,7 @@
     "title": "Benutzeraktionen",
     "mute": {
       "action_false": "Profil stummschalten",
-      "action_true": ""
+      "action_true": "Stummschaltung Nutzers aufheben"
     },
     "block": {
       "action_false": "Nutzer blockieren",
@@ -16,7 +16,7 @@
   },
   "copy": {
     "action": "",
-    "succeed": ""
+    "succeed": "Kopiert"
   },
   "instance": {
     "title": "",
@@ -65,7 +65,7 @@
       }
     },
     "mute": {
-      "action_false": "",
+      "action_false": "Diesen Tröt sowie die Antworten stummschalten",
       "action_true": ""
     },
     "pin": {

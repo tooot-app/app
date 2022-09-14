@@ -90,7 +90,7 @@
     "profile": {
       "cancellation": {
         "title": "変更を破棄",
-        "message": "変更は保存されていません。変更の保存を破棄しますか?",
+        "message": "変更は保存されていません。変更の保存を破棄しますか？",
         "buttons": {
           "cancel": "$t(common:buttons.cancel)",
           "discard": "破棄"
@@ -113,7 +113,7 @@
           "description": "1500x1500pxまで縮小されます"
         },
         "note": {
-          "title": "プロフィール説明文"
+          "title": "プロフィール補足情報"
         },
         "fields": {
           "title": "プロフィール補足情報",
@@ -208,7 +208,7 @@
       "logout": {
         "button": "ログアウト",
         "alert": {
-          "title": "ログアウトしますか?",
+          "title": "ログアウトしますか？",
           "message": "ログアウトすると、再度ログインする必要があります",
           "buttons": {
             "logout": "ログアウト",
@@ -299,7 +299,8 @@
       "summary": {
         "statuses_count": "{{count}} 投稿",
         "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"      },
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
       "toots": {
         "default": "投稿",
         "all": "投稿と返信"
@@ -311,7 +312,7 @@
     "search": {
       "header": {
         "prefix": "検索",
-        "placeholder": "検索したいことは…?"
+        "placeholder": "検索したいことは…？"
       },
       "empty": {
         "general": "検索キーワードを入力して<bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> または <bold>$t(screenTabs:shared.search.sections.statuses)</bold>を検索",

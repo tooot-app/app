@@ -3,7 +3,7 @@
     "left": {
       "button": "キャンセル",
       "alert": {
-        "title": "編集をキャンセルしますか?",
+        "title": "編集をキャンセルしますか？",
         "buttons": {
           "save": "下書きを保存",
           "delete": "下書きを削除",
@@ -27,7 +27,7 @@
         },
         "removeReply": {
           "title": "返信されたトゥートが見つかりませんでした",
-          "description": "返信されたトゥートが削除された可能性があります。参照から削除しますか?",
+          "description": "返信されたトゥートが削除された可能性があります。参照から削除しますか？",
           "cancel": "$t(common:buttons.cancel)",
           "confirm": "参照を削除"
         }
@@ -42,7 +42,7 @@
           "placeholder": "注意書き"
         },
         "textInput": {
-          "placeholder": "今なにかんがえてるの?",
+          "placeholder": "今なにかんがえてるの？",
           "keyboardImage": {
             "exceedMaximum": {
               "title": "アップロードできるメディアの数の上限に達しました",
