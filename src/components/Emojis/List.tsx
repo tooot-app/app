@@ -7,13 +7,7 @@ import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  Pressable,
-  SectionList,
-  View
-} from 'react-native'
+import { AccessibilityInfo, findNodeHandle, Pressable, SectionList, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import validUrl from 'valid-url'
 import EmojisContext from './helpers/EmojisContext'
@@ -26,6 +20,33 @@ const EmojisList = React.memo(
 
     const { emojisState, emojisDispatch } = useContext(EmojisContext)
     const { colors } = useTheme()
+
+    const addEmoji = (shortcode: string) => {
+      if (!emojisState.targetProps) {
+        return
+      }
+
+      const inputValue = emojisState.targetProps.value
+      const maxLength = emojisState.targetProps.maxLength
+      const selectionRange = emojisState.targetProps.selectionRange || {
+        start: emojisState.targetProps.value.length,
+        end: emojisState.targetProps.value.length
+      }
+
+      if (inputValue?.length) {
+        const contentFront = inputValue.slice(0, selectionRange.start)
+        const contentRear = inputValue.slice(selectionRange.end)
+
+        const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
+
+        const newTextWithSpace = ` ${shortcode}${whiteSpaceRear ? '' : ' '}`
+        emojisState.targetProps.setValue(
+          [contentFront, newTextWithSpace, contentRear].join('').slice(0, maxLength)
+        )
+      } else {
+        emojisState.targetProps.setValue(`${shortcode} `.slice(0, maxLength))
+      }
+    }
 
     const listItem = useCallback(
       ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {
@@ -46,20 +67,14 @@ const EmojisList = React.memo(
                   <Pressable
                     key={emoji.shortcode}
                     onPress={() => {
-                      emojisDispatch({
-                        type: 'shortcode',
-                        payload: `:${emoji.shortcode}:`
-                      })
+                      addEmoji(`:${emoji.shortcode}:`)
                       dispatch(countInstanceEmoji(emoji))
                     }}
                   >
                     <FastImage
-                      accessibilityLabel={t(
-                        'common:customEmoji.accessibilityLabel',
-                        {
-                          emoji: emoji.shortcode
-                        }
-                      )}
+                      accessibilityLabel={t('common:customEmoji.accessibilityLabel', {
+                        emoji: emoji.shortcode
+                      })}
                       accessibilityHint={t(
                         'screenCompose:content.root.footer.emojis.accessibilityHint'
                       )}
@@ -80,19 +95,19 @@ const EmojisList = React.memo(
           </View>
         )
       },
-      []
+      [emojisState.targetProps]
     )
 
     const listRef = useRef<SectionList>(null)
     useEffect(() => {
-      layoutAnimation()
       const tagEmojis = findNodeHandle(listRef.current)
-      if (emojisState.active) {
+      if (emojisState.targetProps) {
+        layoutAnimation()
         tagEmojis && AccessibilityInfo.setAccessibilityFocus(tagEmojis)
       }
-    }, [emojisState.active])
+    }, [emojisState.targetProps])
 
-    return emojisState.active ? (
+    return emojisState.targetProps ? (
       <SectionList
         accessible
         ref={listRef}
@@ -101,15 +116,13 @@ const EmojisList = React.memo(
         sections={emojisState.emojis}
         keyExtractor={item => item[0].shortcode}
         renderSectionHeader={({ section: { title } }) => (
-          <CustomText
-            fontStyle='S'
-            style={{ position: 'absolute', color: colors.secondary }}
-          >
+          <CustomText fontStyle='S' style={{ position: 'absolute', color: colors.secondary }}>
             {title}
           </CustomText>
         )}
         renderItem={listItem}
         windowSize={4}
+        contentContainerStyle={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}
       />
     ) : null
   },

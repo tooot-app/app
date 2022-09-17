@@ -50,10 +50,7 @@ const MenuRow: React.FC<Props> = ({
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Flow
-          size={StyleConstants.Font.Size.M * 1.25}
-          color={colors.secondary}
-        />
+        <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
       </View>
     ),
     [theme]
@@ -111,11 +108,7 @@ const MenuRow: React.FC<Props> = ({
                   }}
                 />
               ) : null}
-              <CustomText
-                fontStyle='M'
-                style={{ color: colors.primaryDefault }}
-                numberOfLines={1}
-              >
+              <CustomText fontStyle='M' style={{ color: colors.primaryDefault }} numberOfLines={1}>
                 {title}
               </CustomText>
             </View>
@@ -127,7 +120,7 @@ const MenuRow: React.FC<Props> = ({
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                  marginLeft: StyleConstants.Spacing.M
+                  paddingLeft: StyleConstants.Spacing.L
                 }}
               >
                 {content ? (

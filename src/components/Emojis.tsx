@@ -4,19 +4,14 @@ import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
-import React, {
-  Dispatch,
-  MutableRefObject,
-  PropsWithChildren,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useReducer
-} from 'react'
+import React, { PropsWithChildren, RefObject, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Keyboard, KeyboardAvoidingView, Text, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { ScrollView } from 'react-native-gesture-handler'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
-import EmojisContext, { emojisReducer } from './Emojis/helpers/EmojisContext'
+import EmojisContext, { emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
 const prefetchEmojis = (
   sortedEmojis: {
@@ -45,71 +40,29 @@ const prefetchEmojis = (
   } catch {}
 }
 
-export interface Props {
-  enabled?: boolean
-  value?: string
-  setValue:
-    | Dispatch<SetStateAction<string | undefined>>
-    | Dispatch<SetStateAction<string>>
-  selectionRange: MutableRefObject<{
-    start: number
-    end: number
-  }>
-  maxLength?: number
+export type Props = {
+  inputProps: EmojisState['inputProps']
+  focusRef?: RefObject<TextInput>
 }
 
 const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
-  enabled = false,
-  value,
-  setValue,
-  selectionRange,
-  maxLength,
-  children
+  children,
+  inputProps,
+  focusRef
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
 
   const [emojisState, emojisDispatch] = useReducer(emojisReducer, {
-    enabled,
-    active: false,
     emojis: [],
-    shortcode: null
+    targetProps: null,
+    inputProps
   })
-
   useEffect(() => {
-    if (emojisState.shortcode) {
-      addEmoji(emojisState.shortcode)
-      emojisDispatch({
-        type: 'shortcode',
-        payload: null
-      })
-    }
-  }, [emojisState.shortcode])
-
-  const addEmoji = useCallback(
-    (emojiShortcode: string) => {
-      if (value?.length) {
-        const contentFront = value.slice(0, selectionRange.current?.start)
-        const contentRear = value.slice(selectionRange.current?.end)
-
-        const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
-
-        const newTextWithSpace = ` ${emojiShortcode}${
-          whiteSpaceRear ? '' : ' '
-        }`
-        setValue(
-          [contentFront, newTextWithSpace, contentRear]
-            .join('')
-            .slice(0, maxLength)
-        )
-      } else {
-        setValue(`${emojiShortcode} `.slice(0, maxLength))
-      }
-    },
-    [value, selectionRange.current?.start, selectionRange.current?.end]
-  )
+    emojisDispatch({ type: 'input', payload: inputProps })
+  }, [inputProps])
 
   const { t } = useTranslation()
-  const { data } = useEmojisQuery({ options: { enabled } })
+  const { data } = useEmojisQuery({})
   const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {
     if (data && data.length) {
@@ -117,9 +70,8 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
         title: string
         data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
       }[] = []
-      forEach(
-        groupBy(sortBy(data, ['category', 'shortcode']), 'category'),
-        (value, key) => sortedEmojis.push({ title: key, data: chunk(value, 5) })
+      forEach(groupBy(sortBy(data, ['category', 'shortcode']), 'category'), (value, key) =>
+        sortedEmojis.push({ title: key, data: chunk(value, 5) })
       )
       if (frequentEmojis.length) {
         sortedEmojis.unshift({
@@ -130,19 +82,56 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
           )
         })
       }
-      emojisDispatch({
-        type: 'load',
-        payload: sortedEmojis
-      })
+      emojisDispatch({ type: 'load', payload: sortedEmojis })
       prefetchEmojis(sortedEmojis, reduceMotionEnabled)
     }
   }, [data, reduceMotionEnabled])
 
+  const insets = useSafeAreaInsets()
+  const [keyboardShown, setKeyboardShown] = useState(false)
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
+      emojisDispatch({ type: 'target', payload: null })
+      setKeyboardShown(true)
+    })
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+      setKeyboardShown(false)
+    })
+
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [])
+  useEffect(() => {
+    if (focusRef) {
+      setTimeout(() => focusRef.current?.focus(), 500)
+    }
+  }, [])
+
   return (
-    <EmojisContext.Provider
-      value={{ emojisState, emojisDispatch }}
-      children={children}
-    />
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+          <EmojisContext.Provider value={{ emojisState, emojisDispatch }}>
+            <ScrollView keyboardShouldPersistTaps='always' children={children} />
+            <View
+              style={[
+                keyboardShown
+                  ? {
+                      position: 'absolute',
+                      bottom: 0,
+                      width: '100%'
+                    }
+                  : null,
+                { marginBottom: keyboardShown ? insets.bottom : 0 }
+              ]}
+              children={keyboardShown ? <EmojisButton /> : <EmojisList />}
+            />
+          </EmojisContext.Provider>
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }
 

@@ -2,49 +2,41 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Keyboard, Pressable } from 'react-native'
 import EmojisContext from './helpers/EmojisContext'
 
-const EmojisButton = React.memo(
-  () => {
-    const { colors } = useTheme()
-    const { emojisState, emojisDispatch } = useContext(EmojisContext)
+const EmojisButton: React.FC = () => {
+  const { colors } = useTheme()
+  const { emojisState, emojisDispatch } = useContext(EmojisContext)
 
-    return emojisState.enabled ? (
-      <Pressable
-        disabled={!emojisState.emojis || !emojisState.emojis.length}
-        onPress={() =>
-          emojisDispatch({ type: 'activate', payload: !emojisState.active })
+  return (
+    <Pressable
+      disabled={!emojisState.emojis || !emojisState.emojis.length}
+      onPress={() => {
+        const targetProps = emojisState.inputProps?.find(props => props.ref.current?.isFocused())
+        if (!targetProps) {
+          return
         }
-        hitSlop={StyleConstants.Spacing.S}
-        style={styles.base}
-        children={
-          <Icon
-            name={
-              emojisState.emojis && emojisState.emojis.length
-                ? emojisState.active
-                  ? 'Type'
-                  : 'Smile'
-                : 'Meh'
-            }
-            size={StyleConstants.Font.Size.L}
-            color={
-              emojisState.emojis && emojisState.emojis.length
-                ? colors.primaryDefault
-                : colors.disabled
-            }
-          />
+        if (emojisState.targetProps === null) {
+          Keyboard.dismiss()
         }
-      />
-    ) : null
-  },
-  () => true
-)
-
-const styles = StyleSheet.create({
-  base: {
-    paddingLeft: StyleConstants.Spacing.S
-  }
-})
+        emojisDispatch({ type: 'target', payload: targetProps })
+      }}
+      hitSlop={StyleConstants.Spacing.S}
+      style={{ alignSelf: 'flex-end', padding: StyleConstants.Spacing.Global.PagePadding }}
+      children={
+        <Icon
+          name={emojisState.emojis && emojisState.emojis.length ? 'Smile' : 'Meh'}
+          size={24}
+          color={
+            emojisState.emojis && emojisState.emojis.length
+              ? colors.primaryDefault
+              : colors.disabled
+          }
+        />
+      }
+    />
+  )
+}
 
 export default EmojisButton

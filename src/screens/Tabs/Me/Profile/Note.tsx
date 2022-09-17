@@ -1,14 +1,15 @@
+import { ComponentEmojis } from '@components/Emojis'
+import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
-import Input from '@components/Input'
+import ComponentInput from '@components/Input'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, TextInput, View } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { ScrollView } from 'react-native-gesture-handler'
 
 const TabMeProfileNote: React.FC<
   TabMeProfileStackScreenProps<'Tab-Me-Profile-Note'> & {
@@ -25,12 +26,19 @@ const TabMeProfileNote: React.FC<
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
-  const [newNote, setNewNote] = useState(note)
+  const [notes, setNotes] = useState(note)
+  const notesProps: NonNullable<EmojisState['targetProps']> = {
+    ref: useRef<TextInput>(null),
+    value: notes,
+    setValue: setNotes,
+    selectionRange: notes ? { start: notes.length, end: notes.length } : { start: 0, end: 0 },
+    maxLength: 500
+  }
 
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
-    setDirty(note !== newNote)
-  }, [newNote])
+    setDirty(note !== notes)
+  }, [notes])
 
   useEffect(() => {
     navigation.setOptions({
@@ -74,7 +82,7 @@ const TabMeProfileNote: React.FC<
                 failed: true
               },
               type: 'note',
-              data: newNote
+              data: notes
             }).then(() => {
               navigation.navigate('Tab-Me-Profile-Root')
             })
@@ -82,27 +90,15 @@ const TabMeProfileNote: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, newNote])
+  }, [theme, i18n.language, dirty, status, notes])
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
-      <View style={{ marginBottom: StyleConstants.Spacing.XL * 2 }}>
-        <Input
-          value={newNote}
-          setValue={setNewNote}
-          multiline
-          emoji
-          options={{ maxLength: 500 }}
-        />
+    <ComponentEmojis inputProps={[notesProps]} focusRef={notesProps.ref}>
+      <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
+        <ComponentInput {...notesProps} multiline />
       </View>
-    </ScrollView>
+    </ComponentEmojis>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default TabMeProfileNote
