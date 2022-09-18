@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
-import { AccessibilityInfo, findNodeHandle, FlatList, StyleSheet, View } from 'react-native'
+import { AccessibilityInfo, findNodeHandle, FlatList, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposeActions from './Root/Actions'
 import ComposePosting from './Posting'
@@ -14,39 +14,13 @@ import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
-import FastImage from 'react-native-fast-image'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { ComposeState } from './utils/types'
 import { useSelector } from 'react-redux'
 import {
   getInstanceConfigurationStatusCharsURL,
   getInstanceFrequentEmojis
 } from '@utils/slices/instancesSlice'
 import { useTranslation } from 'react-i18next'
-
-const prefetchEmojis = (
-  sortedEmojis: NonNullable<ComposeState['emoji']['emojis']>,
-  reduceMotionEnabled: boolean
-) => {
-  const prefetches: { uri: string }[] = []
-  let requestedIndex = 0
-  sortedEmojis.forEach(sorted => {
-    sorted.data.forEach(emojis =>
-      emojis.forEach(emoji => {
-        if (requestedIndex > 40) {
-          return
-        }
-        prefetches.push({
-          uri: reduceMotionEnabled ? emoji.static_url : emoji.url
-        })
-        requestedIndex++
-      })
-    )
-  })
-  try {
-    FastImage.preload(prefetches)
-  } catch {}
-}
 
 export let instanceConfigurationStatusCharsURL = 23
 
@@ -62,7 +36,6 @@ const ComposeRoot = React.memo(
 
     const accessibleRefDrafts = useRef(null)
     const accessibleRefAttachments = useRef(null)
-    const accessibleRefEmojis = useRef(null)
 
     useEffect(() => {
       const tagDrafts = findNodeHandle(accessibleRefDrafts.current)
@@ -110,18 +83,13 @@ const ComposeRoot = React.memo(
             )
           })
         }
-        composeDispatch({
-          type: 'emoji',
-          payload: { ...composeState.emoji, emojis: sortedEmojis }
-        })
-        prefetchEmojis(sortedEmojis, reduceMotionEnabled)
       }
     }, [emojisData, reduceMotionEnabled])
 
     const listEmpty = useMemo(() => {
       if (isFetching) {
         return (
-          <View key='listEmpty' style={styles.loading}>
+          <View key='listEmpty' style={{ flex: 1, alignItems: 'center' }}>
             <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
           </View>
         )
@@ -129,17 +97,12 @@ const ComposeRoot = React.memo(
     }, [isFetching])
 
     const Footer = useMemo(
-      () => (
-        <ComposeRootFooter
-          accessibleRefAttachments={accessibleRefAttachments}
-          accessibleRefEmojis={accessibleRefEmojis}
-        />
-      ),
-      [accessibleRefAttachments.current, accessibleRefEmojis.current]
+      () => <ComposeRootFooter accessibleRefAttachments={accessibleRefAttachments} />,
+      [accessibleRefAttachments.current]
     )
 
     return (
-      <View style={styles.base}>
+      <View style={{ flex: 1 }}>
         <FlatList
           renderItem={({ item }) => (
             <ComposeRootSuggestion
@@ -165,16 +128,5 @@ const ComposeRoot = React.memo(
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  base: {
-    flex: 1
-  },
-  contentView: { flex: 1 },
-  loading: {
-    flex: 1,
-    alignItems: 'center'
-  }
-})
 
 export default ComposeRoot

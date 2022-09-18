@@ -44,7 +44,7 @@ const EmojisList = () => {
     const contentFront = value.slice(0, selection.start)
     const contentRear = value.slice(selection.end)
 
-    const spaceFront = /\s/g.test(contentFront.slice(-1)) ? '' : ' '
+    const spaceFront = value.length === 0 || /\s/g.test(contentFront.slice(-1)) ? '' : ' '
     const spaceRear = /\s/g.test(contentRear[0]) ? '' : ' '
 
     setValue(
@@ -52,7 +52,6 @@ const EmojisList = () => {
     )
 
     const addedLength = spaceFront.length + shortcode.length + spaceRear.length
-
     setSelection({ start: selection.start + addedLength })
     ref?.current?.setNativeProps({
       selection: { start: selection.start + addedLength }

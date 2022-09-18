@@ -7,6 +7,7 @@ type inputProps = {
   isFocused: MutableRefObject<boolean>
   ref?: RefObject<TextInput> // For controlling focus
   maxLength?: number
+  addFunc?: (add: string) => void // For none default state update
 }
 
 export type EmojisState = {

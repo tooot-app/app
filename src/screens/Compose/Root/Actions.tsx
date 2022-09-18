@@ -1,12 +1,13 @@
 import analytics from '@components/analytics'
+import EmojisContext from '@components/Emojis/helpers/EmojisContext'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Keyboard, Pressable, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 import chooseAndUploadAttachment from './Footer/addAttachment'
@@ -30,22 +31,19 @@ const ComposeActions: React.FC = () => {
       return colors.secondary
     }
   }, [composeState.poll.active, composeState.attachments.uploads])
-  const attachmentOnPress = useCallback(async () => {
+  const attachmentOnPress = () => {
     if (composeState.poll.active) return
 
-    if (
-      composeState.attachments.uploads.length <
-      instanceConfigurationStatusMaxAttachments
-    ) {
+    if (composeState.attachments.uploads.length < instanceConfigurationStatusMaxAttachments) {
       analytics('compose_actions_attachment_press', {
         count: composeState.attachments.uploads.length
       })
-      return await chooseAndUploadAttachment({
+      return chooseAndUploadAttachment({
         composeDispatch,
         showActionSheetWithOptions
       })
     }
-  }, [composeState.poll.active, composeState.attachments.uploads])
+  }
 
   const pollColor = useMemo(() => {
     if (composeState.attachments.uploads.length) return colors.disabled
@@ -56,7 +54,7 @@ const ComposeActions: React.FC = () => {
       return colors.secondary
     }
   }, [composeState.poll.active, composeState.attachments.uploads])
-  const pollOnPress = useCallback(() => {
+  const pollOnPress = () => {
     if (!composeState.attachments.uploads.length) {
       analytics('compose_actions_poll_press', {
         current: composeState.poll.active
@@ -70,7 +68,7 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) {
       composeState.textInputFocus.refs.text.current?.focus()
     }
-  }, [composeState.poll.active, composeState.attachments.uploads])
+  }
 
   const visibilityIcon = useMemo(() => {
     switch (composeState.visibility) {
@@ -84,7 +82,7 @@ const ComposeActions: React.FC = () => {
         return 'Mail'
     }
   }, [composeState.visibility])
-  const visibilityOnPress = useCallback(() => {
+  const visibilityOnPress = () => {
     if (!composeState.visibilityLock) {
       showActionSheetWithOptions(
         {
@@ -133,9 +131,9 @@ const ComposeActions: React.FC = () => {
         }
       )
     }
-  }, [composeState.visibility])
+  }
 
-  const spoilerOnPress = useCallback(() => {
+  const spoilerOnPress = () => {
     analytics('compose_actions_spoiler_press', {
       current: composeState.spoiler.active
     })
@@ -147,29 +145,45 @@ const ComposeActions: React.FC = () => {
       type: 'spoiler',
       payload: { active: !composeState.spoiler.active }
     })
-  }, [composeState.spoiler.active, composeState.textInputFocus])
+  }
 
+  const { emojisState, emojisDispatch } = useContext(EmojisContext)
   const emojiColor = useMemo(() => {
-    if (!composeState.emoji.emojis) return colors.disabled
+    if (!emojisState.emojis.length) return colors.disabled
 
-    if (composeState.emoji.active) {
+    if (emojisState.targetIndex !== -1) {
       return colors.primaryDefault
     } else {
       return colors.secondary
     }
-  }, [composeState.emoji.active, composeState.emoji.emojis])
-  const emojiOnPress = useCallback(() => {
-    analytics('compose_actions_emojis_press', {
-      current: composeState.emoji.active
-    })
-    if (composeState.emoji.emojis) {
-      layoutAnimation()
-      composeDispatch({
-        type: 'emoji',
-        payload: { ...composeState.emoji, active: !composeState.emoji.active }
-      })
+  }, [emojisState.emojis.length, emojisState.targetIndex])
+  // useEffect(() => {
+  //   const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
+  //     composeDispatch({ type: 'emoji/shown', payload: false })
+  //   })
+
+  //   return () => {
+  //     showSubscription.remove()
+  //   }
+  // }, [])
+  const emojiOnPress = () => {
+    if (emojisState.targetIndex === -1) {
+      Keyboard.dismiss()
     }
-  }, [composeState.emoji.active, composeState.emoji.emojis])
+    const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)
+    if (focusedPropsIndex === -1) return
+    emojisDispatch({ type: 'target', payload: focusedPropsIndex })
+    // Keyboard.dismiss()
+    // analytics('compose_actions_emojis_press', {
+    //   current: composeState.emoji.active
+    // })
+    // if (composeState.emoji.emojis) {
+    //   composeDispatch({
+    //     type: 'emoji',
+    //     payload: { ...composeState.emoji, active: !composeState.emoji.active }
+    //   })
+    // }
+  }
 
   return (
     <View
@@ -186,12 +200,8 @@ const ComposeActions: React.FC = () => {
     >
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t(
-          'content.root.actions.attachment.accessibilityLabel'
-        )}
-        accessibilityHint={t(
-          'content.root.actions.attachment.accessibilityHint'
-        )}
+        accessibilityLabel={t('content.root.actions.attachment.accessibilityLabel')}
+        accessibilityHint={t('content.root.actions.attachment.accessibilityHint')}
         accessibilityState={{
           disabled: composeState.poll.active
         }}
@@ -213,10 +223,9 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t(
-          'content.root.actions.visibility.accessibilityLabel',
-          { visibility: composeState.visibility }
-        )}
+        accessibilityLabel={t('content.root.actions.visibility.accessibilityLabel', {
+          visibility: composeState.visibility
+        })}
         accessibilityState={{ disabled: composeState.visibilityLock }}
         style={styles.button}
         onPress={visibilityOnPress}
@@ -224,17 +233,13 @@ const ComposeActions: React.FC = () => {
           <Icon
             name={visibilityIcon}
             size={24}
-            color={
-              composeState.visibilityLock ? colors.disabled : colors.secondary
-            }
+            color={composeState.visibilityLock ? colors.disabled : colors.secondary}
           />
         }
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t(
-          'content.root.actions.spoiler.accessibilityLabel'
-        )}
+        accessibilityLabel={t('content.root.actions.spoiler.accessibilityLabel')}
         accessibilityState={{ expanded: composeState.spoiler.active }}
         style={styles.button}
         onPress={spoilerOnPress}
@@ -242,11 +247,7 @@ const ComposeActions: React.FC = () => {
           <Icon
             name='AlertTriangle'
             size={24}
-            color={
-              composeState.spoiler.active
-                ? colors.primaryDefault
-                : colors.secondary
-            }
+            color={composeState.spoiler.active ? colors.primaryDefault : colors.secondary}
           />
         }
       />
@@ -255,8 +256,8 @@ const ComposeActions: React.FC = () => {
         accessibilityLabel={t('content.root.actions.emoji.accessibilityLabel')}
         accessibilityHint={t('content.root.actions.emoji.accessibilityHint')}
         accessibilityState={{
-          disabled: composeState.emoji.emojis ? false : true,
-          expanded: composeState.emoji.active
+          disabled: emojisState.emojis.length ? false : true,
+          expanded: emojisState.targetIndex !== -1
         }}
         style={styles.button}
         onPress={emojiOnPress}

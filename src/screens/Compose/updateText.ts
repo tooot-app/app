@@ -26,9 +26,8 @@ const updateText = ({
     const whiteSpaceFront = /\s/g.test(contentFront.slice(-1))
     const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
 
-    const newTextWithSpace = `${
-      whiteSpaceFront || type === 'suggestion' ? '' : ' '
-    }${newText}${whiteSpaceRear ? '' : ' '}`
+    const newTextWithSpace = `${whiteSpaceFront || type === 'suggestion' ? '' : ' '
+      }${newText}${whiteSpaceRear ? '' : ' '}`
 
     formatText({
       textInput,

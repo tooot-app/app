@@ -9,16 +9,15 @@ const composeInitialState: Omit<ComposeState, 'timestamp'> = {
     count: 0,
     raw: '',
     formatted: undefined,
-    selection: { start: 0, end: 0 }
+    selection: { start: 0 }
   },
   text: {
     count: 0,
     raw: '',
     formatted: undefined,
-    selection: { start: 0, end: 0 }
+    selection: { start: 0 }
   },
   tag: undefined,
-  emoji: { active: false, emojis: undefined },
   poll: {
     active: false,
     total: 2,

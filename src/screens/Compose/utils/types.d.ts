@@ -26,28 +26,19 @@ export type ComposeState = {
     count: number
     raw: string
     formatted: ReactNode
-    selection: { start: number; end: number }
+    selection: { start: number; end?: number }
   }
   text: {
     count: number
     raw: string
     formatted: ReactNode
-    selection: { start: number; end: number }
+    selection: { start: number; end?: number }
   }
   tag?: {
     type: 'url' | 'accounts' | 'hashtags'
     text: string
     offset: number
     length: number
-  }
-  emoji: {
-    active: boolean
-    emojis:
-    | {
-      title: string
-      data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-    }[]
-    | undefined
   }
   poll: {
     active: boolean
@@ -95,10 +86,6 @@ export type ComposeAction =
   | {
     type: 'tag'
     payload: ComposeState['tag']
-  }
-  | {
-    type: 'emoji'
-    payload: ComposeState['emoji']
   }
   | {
     type: 'poll'
