@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
-import { Keyboard, Pressable } from 'react-native'
+import { Keyboard, Pressable, View } from 'react-native'
 import EmojisContext from './helpers/EmojisContext'
 
 const EmojisButton: React.FC = () => {
@@ -23,17 +23,29 @@ const EmojisButton: React.FC = () => {
         emojisDispatch({ type: 'target', payload: targetProps })
       }}
       hitSlop={StyleConstants.Spacing.S}
-      style={{ alignSelf: 'flex-end', padding: StyleConstants.Spacing.Global.PagePadding }}
+      style={{
+        alignSelf: 'flex-end',
+        padding: StyleConstants.Spacing.Global.PagePadding / 2
+      }}
       children={
-        <Icon
-          name={emojisState.emojis && emojisState.emojis.length ? 'Smile' : 'Meh'}
-          size={24}
-          color={
-            emojisState.emojis && emojisState.emojis.length
-              ? colors.primaryDefault
-              : colors.disabled
-          }
-        />
+        <View
+          style={{
+            borderWidth: 2,
+            borderColor: colors.primaryDefault,
+            padding: StyleConstants.Spacing.Global.PagePadding / 2,
+            borderRadius: 100
+          }}
+        >
+          <Icon
+            name={emojisState.emojis && emojisState.emojis.length ? 'Smile' : 'Meh'}
+            size={24}
+            color={
+              emojisState.emojis && emojisState.emojis.length
+                ? colors.primaryDefault
+                : colors.disabled
+            }
+          />
+        </View>
       }
     />
   )

@@ -13,6 +13,7 @@ export type EmojisState = {
   emojis: {
     title: string
     data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+    type?: 'frequent'
   }[]
   targetProps: inputProps | null
   inputProps: inputProps[]

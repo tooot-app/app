@@ -6,7 +6,7 @@ import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { PropsWithChildren, RefObject, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, KeyboardAvoidingView, Text, TextInput, View } from 'react-native'
+import { Keyboard, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -66,10 +66,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {
     if (data && data.length) {
-      let sortedEmojis: {
-        title: string
-        data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-      }[] = []
+      let sortedEmojis: EmojisState['emojis'] = []
       forEach(groupBy(sortBy(data, ['category', 'shortcode']), 'category'), (value, key) =>
         sortedEmojis.push({ title: key, data: chunk(value, 5) })
       )
@@ -79,7 +76,8 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
           data: chunk(
             frequentEmojis.map(e => e.emoji),
             5
-          )
+          ),
+          type: 'frequent'
         })
       }
       emojisDispatch({ type: 'load', payload: sortedEmojis })
@@ -91,7 +89,10 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   const [keyboardShown, setKeyboardShown] = useState(false)
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
-      emojisDispatch({ type: 'target', payload: null })
+      const anyInputHasFocus = inputProps.filter(props => props.ref.current?.isFocused()).length
+      if (anyInputHasFocus) {
+        emojisDispatch({ type: 'target', payload: null })
+      }
       setKeyboardShown(true)
     })
     const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
@@ -102,7 +103,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
       showSubscription.remove()
       hideSubscription.remove()
     }
-  }, [])
+  }, [inputProps])
   useEffect(() => {
     if (focusRef) {
       setTimeout(() => focusRef.current?.focus(), 500)
@@ -117,16 +118,10 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
             <ScrollView keyboardShouldPersistTaps='always' children={children} />
             <View
               style={[
-                keyboardShown
-                  ? {
-                      position: 'absolute',
-                      bottom: 0,
-                      width: '100%'
-                    }
-                  : null,
+                keyboardShown ? { position: 'absolute', bottom: 0, width: '100%' } : null,
                 { marginBottom: keyboardShown ? insets.bottom : 0 }
               ]}
-              children={keyboardShown ? <EmojisButton /> : <EmojisList />}
+              children={emojisState.targetProps ? <EmojisList /> : <EmojisButton />}
             />
           </EmojisContext.Provider>
         </View>
