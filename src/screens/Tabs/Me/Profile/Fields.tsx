@@ -7,10 +7,9 @@ import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { isEqual } from 'lodash'
 import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, TextInput, View } from 'react-native'
+import { Alert, ScrollView } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const Field: React.FC<{
@@ -25,23 +24,21 @@ const Field: React.FC<{
   const [name, setName] = useState(field?.name || '')
   const [value, setValue] = useState(field?.value || '')
   allProps[index * 2] = {
-    ref: useRef<TextInput>(null),
-    value: name,
-    setValue: setName,
-    selectionRange: name ? { start: name.length, end: name.length } : { start: 0, end: 0 },
+    value: [name, setName],
+    selection: useState({ start: name.length }),
+    isFocused: useRef<boolean>(false),
     maxLength: 255
   }
   allProps[index * 2 + 1] = {
-    ref: useRef<TextInput>(null),
-    value,
-    setValue,
-    selectionRange: value ? { start: value.length, end: value.length } : { start: 0, end: 0 },
+    value: [value, setValue],
+    selection: useState({ start: value.length }),
+    isFocused: useRef<boolean>(false),
     maxLength: 255
   }
 
   useEffect(() => {
     setDirty(dirty =>
-      dirty ? dirty : !isEqual(field?.name, name) || !isEqual(field?.value, value)
+      dirty ? dirty : (field?.name || '') !== name || (field?.value || '') !== value
     )
   }, [name, value])
 
@@ -130,11 +127,11 @@ const TabMeProfileFields: React.FC<
               data: Array.from(Array(4).keys())
                 .filter(
                   index =>
-                    allProps[index * 2]?.value.length || allProps[index * 2 + 1]?.value.length
+                    allProps[index * 2]?.value[0].length || allProps[index * 2 + 1]?.value[0].length
                 )
                 .map(index => ({
-                  name: allProps[index * 2].value,
-                  value: allProps[index * 2 + 1].value
+                  name: allProps[index * 2].value[0],
+                  value: allProps[index * 2 + 1].value[0]
                 }))
             }).then(() => {
               navigation.navigate('Tab-Me-Profile-Root')
@@ -147,7 +144,7 @@ const TabMeProfileFields: React.FC<
 
   return (
     <ComponentEmojis inputProps={allProps}>
-      <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
+      <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         {Array.from(Array(4).keys()).map(index => (
           <Field
             key={index}
@@ -157,7 +154,7 @@ const TabMeProfileFields: React.FC<
             field={fields?.[index]}
           />
         ))}
-      </View>
+      </ScrollView>
     </ComponentEmojis>
   )
 }

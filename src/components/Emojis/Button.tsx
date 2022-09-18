@@ -9,18 +9,19 @@ const EmojisButton: React.FC = () => {
   const { colors } = useTheme()
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
 
+  const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)
+  if (focusedPropsIndex === -1) {
+    return null
+  }
+
   return (
     <Pressable
       disabled={!emojisState.emojis || !emojisState.emojis.length}
       onPress={() => {
-        const targetProps = emojisState.inputProps?.find(props => props.ref.current?.isFocused())
-        if (!targetProps) {
-          return
-        }
-        if (emojisState.targetProps === null) {
+        if (emojisState.targetIndex === -1) {
           Keyboard.dismiss()
         }
-        emojisDispatch({ type: 'target', payload: targetProps })
+        emojisDispatch({ type: 'target', payload: focusedPropsIndex })
       }}
       hitSlop={StyleConstants.Spacing.S}
       style={{

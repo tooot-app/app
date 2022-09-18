@@ -1,11 +1,11 @@
-import { createContext, Dispatch, RefObject, SetStateAction } from 'react'
+import { createContext, Dispatch, MutableRefObject, RefObject } from 'react'
 import { TextInput } from 'react-native'
 
 type inputProps = {
-  ref: RefObject<TextInput>
-  value: string
-  setValue: Dispatch<SetStateAction<string>>
-  selectionRange?: { start: number; end: number }
+  value: [string, (value: string) => void]
+  selection: [{ start: number; end?: number }, (selection: { start: number; end?: number }) => void]
+  isFocused: MutableRefObject<boolean>
+  ref?: RefObject<TextInput> // For controlling focus
   maxLength?: number
 }
 
@@ -15,14 +15,14 @@ export type EmojisState = {
     data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
     type?: 'frequent'
   }[]
-  targetProps: inputProps | null
   inputProps: inputProps[]
+  targetIndex: number
 }
 
 export type EmojisAction =
   | { type: 'load'; payload: NonNullable<EmojisState['emojis']> }
-  | { type: 'target'; payload: EmojisState['targetProps'] }
   | { type: 'input'; payload: EmojisState['inputProps'] }
+  | { type: 'target'; payload: EmojisState['targetIndex'] }
 
 type ContextType = {
   emojisState: EmojisState
@@ -34,10 +34,10 @@ export const emojisReducer = (state: EmojisState, action: EmojisAction) => {
   switch (action.type) {
     case 'load':
       return { ...state, emojis: action.payload }
-    case 'target':
-      return { ...state, targetProps: action.payload }
     case 'input':
       return { ...state, inputProps: action.payload }
+    case 'target':
+      return { ...state, targetIndex: action.payload }
   }
 }
 

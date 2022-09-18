@@ -1,30 +1,37 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Dispatch, forwardRef, RefObject, SetStateAction, useRef } from 'react'
+import React, { forwardRef, RefObject } from 'react'
 import { Platform, TextInput, TextInputProps, View } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { EmojisState } from './Emojis/helpers/EmojisContext'
 import CustomText from './Text'
 
 export type Props = {
-  value: string
-  setValue: Dispatch<SetStateAction<string>>
-  selectionRange?: { start: number; end: number }
-
   title?: string
   multiline?: boolean
-} & Omit<
-  TextInputProps,
-  | 'style'
-  | 'onChangeText'
-  | 'onSelectionChange'
-  | 'keyboardAppearance'
-  | 'textAlignVertical'
-  | 'multiline'
->
+} & Pick<NonNullable<EmojisState['inputProps'][0]>, 'value' | 'selection' | 'isFocused'> &
+  Omit<
+    TextInputProps,
+    | 'style'
+    | 'onChangeText'
+    | 'onSelectionChange'
+    | 'keyboardAppearance'
+    | 'textAlignVertical'
+    | 'multiline'
+    | 'selection'
+    | 'value'
+  >
 
 const ComponentInput = forwardRef(
   (
-    { title, multiline = false, value, setValue, selectionRange, ...props }: Props,
+    {
+      title,
+      multiline = false,
+      value: [value, setValue],
+      selection: [selection, setSelection],
+      isFocused,
+      ...props
+    }: Props,
     ref: RefObject<TextInput>
   ) => {
     const { colors, mode } = useTheme()
@@ -69,9 +76,11 @@ const ComponentInput = forwardRef(
             minHeight:
               Platform.OS === 'ios' && multiline ? StyleConstants.Font.LineHeight.M * 5 : undefined
           }}
-          onChangeText={setValue}
-          onSelectionChange={({ nativeEvent: { selection } }) => (selectionRange = selection)}
           value={value}
+          onChangeText={setValue}
+          onFocus={() => (isFocused.current = true)}
+          onBlur={() => (isFocused.current = false)}
+          onSelectionChange={({ nativeEvent }) => setSelection(nativeEvent.selection)}
           {...(multiline && {
             multiline,
             numberOfLines: Platform.OS === 'android' ? 5 : undefined

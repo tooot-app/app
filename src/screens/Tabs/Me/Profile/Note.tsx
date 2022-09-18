@@ -8,7 +8,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, TextInput, View } from 'react-native'
+import { Alert, ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const TabMeProfileNote: React.FC<
@@ -27,11 +27,11 @@ const TabMeProfileNote: React.FC<
   const { mutateAsync, status } = useProfileMutation()
 
   const [notes, setNotes] = useState(note)
-  const notesProps: NonNullable<EmojisState['targetProps']> = {
+  const notesProps: NonNullable<EmojisState['inputProps'][0]> = {
+    value: [notes, setNotes],
+    selection: useState({ start: notes.length }),
+    isFocused: useRef<boolean>(false),
     ref: useRef<TextInput>(null),
-    value: notes,
-    setValue: setNotes,
-    selectionRange: notes ? { start: notes.length, end: notes.length } : { start: 0, end: 0 },
     maxLength: 500
   }
 
@@ -94,9 +94,9 @@ const TabMeProfileNote: React.FC<
 
   return (
     <ComponentEmojis inputProps={[notesProps]} focusRef={notesProps.ref}>
-      <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
+      <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         <ComponentInput {...notesProps} multiline />
-      </View>
+      </ScrollView>
     </ComponentEmojis>
   )
 }

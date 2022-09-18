@@ -1,15 +1,15 @@
 import EmojisButton from '@components/Emojis/Button'
 import EmojisList from '@components/Emojis/List'
+import { PasteInputRef } from '@mattermost/react-native-paste-input'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { PropsWithChildren, RefObject, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, KeyboardAvoidingView, TextInput, View } from 'react-native'
+import { Keyboard, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { ScrollView } from 'react-native-gesture-handler'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 import EmojisContext, { emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
@@ -42,20 +42,26 @@ const prefetchEmojis = (
 
 export type Props = {
   inputProps: EmojisState['inputProps']
-  focusRef?: RefObject<TextInput>
+  focusRef?: RefObject<TextInput | PasteInputRef>
+  customButton?: boolean
+  customEdges?: Edge[]
+  customBehavior?: 'height' | 'padding' | 'position'
 }
 
 const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   children,
   inputProps,
-  focusRef
+  focusRef,
+  customButton = false,
+  customEdges = ['bottom'],
+  customBehavior
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
 
   const [emojisState, emojisDispatch] = useReducer(emojisReducer, {
     emojis: [],
-    targetProps: null,
-    inputProps
+    inputProps,
+    targetIndex: -1
   })
   useEffect(() => {
     emojisDispatch({ type: 'input', payload: inputProps })
@@ -89,9 +95,9 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   const [keyboardShown, setKeyboardShown] = useState(false)
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
-      const anyInputHasFocus = inputProps.filter(props => props.ref.current?.isFocused()).length
+      const anyInputHasFocus = inputProps.filter(props => props.isFocused.current).length
       if (anyInputHasFocus) {
-        emojisDispatch({ type: 'target', payload: null })
+        emojisDispatch({ type: 'target', payload: -1 })
       }
       setKeyboardShown(true)
     })
@@ -111,17 +117,23 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   }, [])
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
-        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={customBehavior}>
+      <SafeAreaView style={{ flex: 1 }} edges={customEdges}>
+        <View style={{ flex: 1 }}>
           <EmojisContext.Provider value={{ emojisState, emojisDispatch }}>
-            <ScrollView keyboardShouldPersistTaps='always' children={children} />
+            {children}
             <View
               style={[
                 keyboardShown ? { position: 'absolute', bottom: 0, width: '100%' } : null,
                 { marginBottom: keyboardShown ? insets.bottom : 0 }
               ]}
-              children={emojisState.targetProps ? <EmojisList /> : <EmojisButton />}
+              children={
+                emojisState.targetIndex !== -1 ? (
+                  <EmojisList />
+                ) : customButton ? null : (
+                  <EmojisButton />
+                )
+              }
             />
           </EmojisContext.Provider>
         </View>

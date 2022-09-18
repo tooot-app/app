@@ -8,7 +8,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, TextInput, View } from 'react-native'
+import { Alert, ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const TabMeProfileName: React.FC<
@@ -26,21 +26,20 @@ const TabMeProfileName: React.FC<
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
-  const [displayName, setDisplayName] = useState(display_name)
-  const displayNameProps: NonNullable<EmojisState['targetProps']> = {
+  const [value, setValue] = useState(display_name)
+  const displayNameProps: NonNullable<EmojisState['inputProps'][0]> = {
+    value: [value, setValue],
+    selection: useState({ start: value.length }),
+    isFocused: useRef<boolean>(false),
     ref: useRef<TextInput>(null),
-    value: displayName,
-    setValue: setDisplayName,
-    selectionRange: displayName
-      ? { start: displayName.length, end: displayName.length }
-      : { start: 0, end: 0 },
     maxLength: 30
   }
+  console.log('true value', value)
 
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
-    setDirty(display_name !== displayName)
-  }, [displayName])
+    setDirty(display_name !== value)
+  }, [value])
 
   useEffect(() => {
     navigation.setOptions({
@@ -84,7 +83,7 @@ const TabMeProfileName: React.FC<
                 failed: true
               },
               type: 'display_name',
-              data: displayName
+              data: value
             }).then(() => {
               navigation.navigate('Tab-Me-Profile-Root')
             })
@@ -92,11 +91,11 @@ const TabMeProfileName: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, displayName])
+  }, [theme, i18n.language, dirty, status, value])
 
   return (
     <ComponentEmojis inputProps={[displayNameProps]} focusRef={displayNameProps.ref}>
-      <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
+      <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         <ComponentInput
           {...displayNameProps}
           autoCapitalize='none'
@@ -104,7 +103,7 @@ const TabMeProfileName: React.FC<
           textContentType='username'
           autoCorrect={false}
         />
-      </View>
+      </ScrollView>
     </ComponentEmojis>
   )
 }
