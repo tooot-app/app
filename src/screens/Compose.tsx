@@ -362,8 +362,20 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         composeState.text.selection,
         selection => composeDispatch({ type: 'text', payload: { selection } })
       ],
-      isFocused: useRef<boolean>(composeState.textInputFocus.current === 'text'),
-      maxLength: maxTootChars
+      isFocused: composeState.textInputFocus.isFocused.text,
+      maxLength: maxTootChars - (composeState.spoiler.active ? composeState.spoiler.count : 0)
+    },
+    {
+      value: [
+        composeState.spoiler.raw,
+        content => formatText({ textInput: 'spoiler', composeDispatch, content })
+      ],
+      selection: [
+        composeState.spoiler.selection,
+        selection => composeDispatch({ type: 'spoiler', payload: { selection } })
+      ],
+      isFocused: composeState.textInputFocus.isFocused.spoiler,
+      maxLength: maxTootChars - composeState.text.count
     }
   ]
 

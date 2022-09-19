@@ -18,20 +18,11 @@ const ComposeTextInput: React.FC = () => {
   const { t } = useTranslation('screenCompose')
   const { colors, mode } = useTheme()
 
-  const maxAttachments = useSelector(
-    getInstanceConfigurationStatusMaxAttachments,
-    () => true
-  )
+  const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
 
   const adaptiveFontsize = useSelector(getSettingsFontsize)
-  const adaptedFontsize = adaptiveScale(
-    StyleConstants.Font.Size.M,
-    adaptiveFontsize
-  )
-  const adaptedLineheight = adaptiveScale(
-    StyleConstants.Font.LineHeight.M,
-    adaptiveFontsize
-  )
+  const adaptedFontsize = adaptiveScale(StyleConstants.Font.Size.M, adaptiveFontsize)
+  const adaptedLineheight = adaptiveScale(StyleConstants.Font.LineHeight.M, adaptiveFontsize)
 
   return (
     <PasteInput
@@ -59,12 +50,16 @@ const ComposeTextInput: React.FC = () => {
           content
         })
       }
-      onFocus={() =>
+      onFocus={() => {
         composeDispatch({
           type: 'textInputFocus',
           payload: { current: 'text' }
         })
-      }
+        composeState.textInputFocus.isFocused.text.current = true
+      }}
+      onBlur={() => {
+        composeState.textInputFocus.isFocused.text.current = false
+      }}
       onSelectionChange={({
         nativeEvent: {
           selection: { start, end }
@@ -79,20 +74,13 @@ const ComposeTextInput: React.FC = () => {
       scrollEnabled={false}
       disableCopyPaste={false}
       onPaste={(error: string | null | undefined, files: PastedFile[]) => {
-        if (
-          composeState.attachments.uploads.length + files.length >
-          maxAttachments
-        ) {
+        if (composeState.attachments.uploads.length + files.length > maxAttachments) {
           Alert.alert(
-            t(
-              'content.root.header.textInput.keyboardImage.exceedMaximum.title'
-            ),
+            t('content.root.header.textInput.keyboardImage.exceedMaximum.title'),
             undefined,
             [
               {
-                text: t(
-                  'content.root.header.textInput.keyboardImage.exceedMaximum.OK'
-                ),
+                text: t('content.root.header.textInput.keyboardImage.exceedMaximum.OK'),
                 style: 'default'
               }
             ]

@@ -59,6 +59,7 @@ export type ComposeState = {
   textInputFocus: {
     current: 'text' | 'spoiler'
     refs: { text: RefObject<TextInput> }
+    isFocused: { text: MutableRefObject<boolean>, spoiler: MutableRefObject<boolean> }
   }
 }
 
