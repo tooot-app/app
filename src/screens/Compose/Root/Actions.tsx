@@ -157,32 +157,19 @@ const ComposeActions: React.FC = () => {
       return colors.secondary
     }
   }, [emojisState.emojis.length, emojisState.targetIndex])
-  // useEffect(() => {
-  //   const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
-  //     composeDispatch({ type: 'emoji/shown', payload: false })
-  //   })
-
-  //   return () => {
-  //     showSubscription.remove()
-  //   }
-  // }, [])
   const emojiOnPress = () => {
+    analytics('compose_actions_emojis_press', {
+      current: emojisState.targetIndex !== -1
+    })
     if (emojisState.targetIndex === -1) {
       Keyboard.dismiss()
+      const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)
+      if (focusedPropsIndex === -1) return
+      emojisDispatch({ type: 'target', payload: focusedPropsIndex })
+    } else {
+      emojisDispatch({ type: 'target', payload: -1 })
+      return
     }
-    const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)
-    if (focusedPropsIndex === -1) return
-    emojisDispatch({ type: 'target', payload: focusedPropsIndex })
-    // Keyboard.dismiss()
-    // analytics('compose_actions_emojis_press', {
-    //   current: composeState.emoji.active
-    // })
-    // if (composeState.emoji.emojis) {
-    //   composeDispatch({
-    //     type: 'emoji',
-    //     payload: { ...composeState.emoji, active: !composeState.emoji.active }
-    //   })
-    // }
   }
 
   return (

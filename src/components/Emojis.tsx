@@ -7,7 +7,7 @@ import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { PropsWithChildren, RefObject, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
+import { Keyboard, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
@@ -74,14 +74,14 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
     if (data && data.length) {
       let sortedEmojis: EmojisState['emojis'] = []
       forEach(groupBy(sortBy(data, ['category', 'shortcode']), 'category'), (value, key) =>
-        sortedEmojis.push({ title: key, data: chunk(value, 5) })
+        sortedEmojis.push({ title: key, data: chunk(value, 4) })
       )
       if (frequentEmojis.length) {
         sortedEmojis.unshift({
           title: t('componentEmojis:frequentUsed'),
           data: chunk(
             frequentEmojis.map(e => e.emoji),
-            5
+            4
           ),
           type: 'frequent'
         })
@@ -125,7 +125,9 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
             <View
               style={[
                 keyboardShown ? { position: 'absolute', bottom: 0, width: '100%' } : null,
-                { marginBottom: keyboardShown ? insets.bottom : 0 }
+                {
+                  marginBottom: keyboardShown && emojisState.targetIndex === -1 ? insets.bottom : 0
+                }
               ]}
               children={
                 emojisState.targetIndex !== -1 ? (

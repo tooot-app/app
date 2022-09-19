@@ -42,7 +42,7 @@ const EmojisList = () => {
     } = emojisState.inputProps[emojisState.targetIndex]
 
     const contentFront = value.slice(0, selection.start)
-    const contentRear = value.slice(selection.end)
+    const contentRear = value.slice(selection.end || selection.start)
 
     const spaceFront = value.length === 0 || /\s/g.test(contentFront.slice(-1)) ? '' : ' '
     const spaceRear = /\s/g.test(contentRear[0]) ? '' : ' '
