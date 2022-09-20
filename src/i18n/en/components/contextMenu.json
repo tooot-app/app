@@ -11,7 +11,7 @@
       "action_true": "Unblock user"
     },
     "reports": {
-      "action": "Report user"
+      "action": "Report and block user"
     }
   },
   "copy": {

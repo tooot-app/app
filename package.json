@@ -1,10 +1,6 @@
 {
   "name": "tooot",
-  "versions": {
-    "major": 4,
-    "minor": 3,
-    "patch": 2
-  },
+  "version": "4.3.2",
   "description": "tooot app for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
   "license": "GPL-3.0-or-later",
@@ -62,7 +58,6 @@
     "expo-secure-store": "^11.3.0",
     "expo-splash-screen": "^0.16.1",
     "expo-store-review": "^5.3.0",
-    "expo-updates": "^0.14.4",
     "expo-video-thumbnails": "^6.4.0",
     "expo-web-browser": "^11.0.0",
     "i18next": "^21.9.1",

@@ -16,7 +16,6 @@ import com.facebook.soloader.SoLoader;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
-import expo.modules.updates.UpdatesController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
