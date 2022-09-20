@@ -11,7 +11,7 @@
       "action_true": "取消屏蔽用户"
     },
     "reports": {
-      "action": "举报用户"
+      "action": "举报并屏蔽用户"
     }
   },
   "copy": {
