@@ -3,7 +3,7 @@
   "versions": {
     "major": 4,
     "minor": 3,
-    "patch": 1
+    "patch": 2
   },
   "description": "tooot app for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
