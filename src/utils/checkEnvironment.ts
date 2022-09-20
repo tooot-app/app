@@ -1,4 +1,4 @@
-import * as Updates from 'expo-updates'
+import Constants from 'expo-constants'
 
 const mapEnvironment = <T = unknown>({
   release,
@@ -36,14 +36,14 @@ const mapEnvironment = <T = unknown>({
 
 const isDevelopment =
   __DEV__ ||
-  ['development'].some(channel => (Updates.channel) === channel)
+  ['development'].some(channel => (Constants.expoConfig?.extra?.environment) === channel)
 
 const isCandidate = ['candidate'].some(channel =>
-  (Updates.channel) === channel
+  (Constants.expoConfig?.extra?.environment) === channel
 )
 
 const isRelease = ['release'].some(channel =>
-  (Updates.channel) === channel
+  (Constants.expoConfig?.extra?.environment) === channel
 )
 
 export { mapEnvironment, isDevelopment, isCandidate, isRelease }
