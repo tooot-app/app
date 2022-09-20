@@ -16,14 +16,8 @@ const ComposeSpoilerInput: React.FC = () => {
   const { colors, mode } = useTheme()
 
   const adaptiveFontsize = useSelector(getSettingsFontsize)
-  const adaptedFontsize = adaptiveScale(
-    StyleConstants.Font.Size.M,
-    adaptiveFontsize
-  )
-  const adaptedLineheight = adaptiveScale(
-    StyleConstants.Font.LineHeight.M,
-    adaptiveFontsize
-  )
+  const adaptedFontsize = adaptiveScale(StyleConstants.Font.Size.M, adaptiveFontsize)
+  const adaptedLineheight = adaptiveScale(StyleConstants.Font.LineHeight.M, adaptiveFontsize)
 
   return (
     <TextInput
@@ -65,12 +59,16 @@ const ComposeSpoilerInput: React.FC = () => {
         })
       }}
       scrollEnabled={false}
-      onFocus={() =>
+      onFocus={() => {
         composeDispatch({
           type: 'textInputFocus',
           payload: { current: 'spoiler' }
         })
-      }
+        composeState.textInputFocus.isFocused.spoiler.current = true
+      }}
+      onBlur={() => {
+        composeState.textInputFocus.isFocused.spoiler.current = false
+      }}
     >
       <CustomText>{composeState.spoiler.formatted}</CustomText>
     </TextInput>

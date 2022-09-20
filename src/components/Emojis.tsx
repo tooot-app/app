@@ -1,22 +1,24 @@
 import EmojisButton from '@components/Emojis/Button'
 import EmojisList from '@components/Emojis/List'
+import { PasteInputRef } from '@mattermost/react-native-paste-input'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, {
-  Dispatch,
-  MutableRefObject,
+  createRef,
   PropsWithChildren,
-  SetStateAction,
-  useCallback,
+  RefObject,
   useEffect,
-  useReducer
+  useReducer,
+  useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Keyboard, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
-import EmojisContext, { emojisReducer } from './Emojis/helpers/EmojisContext'
+import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
 const prefetchEmojis = (
   sortedEmojis: {
@@ -45,104 +47,105 @@ const prefetchEmojis = (
   } catch {}
 }
 
-export interface Props {
-  enabled?: boolean
-  value?: string
-  setValue:
-    | Dispatch<SetStateAction<string | undefined>>
-    | Dispatch<SetStateAction<string>>
-  selectionRange: MutableRefObject<{
-    start: number
-    end: number
-  }>
-  maxLength?: number
+export type Props = {
+  inputProps: EmojisState['inputProps']
+  focusRef?: RefObject<TextInput | PasteInputRef>
+  customButton?: boolean
+  customEdges?: Edge[]
+  customBehavior?: 'height' | 'padding' | 'position'
 }
 
+export const emojis: Emojis = createRef()
+
 const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
-  enabled = false,
-  value,
-  setValue,
-  selectionRange,
-  maxLength,
-  children
+  children,
+  inputProps,
+  focusRef,
+  customButton = false,
+  customEdges = ['bottom'],
+  customBehavior
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
 
-  const [emojisState, emojisDispatch] = useReducer(emojisReducer, {
-    enabled,
-    active: false,
-    emojis: [],
-    shortcode: null
-  })
-
+  const [emojisState, emojisDispatch] = useReducer(emojisReducer, { inputProps, targetIndex: -1 })
   useEffect(() => {
-    if (emojisState.shortcode) {
-      addEmoji(emojisState.shortcode)
-      emojisDispatch({
-        type: 'shortcode',
-        payload: null
-      })
-    }
-  }, [emojisState.shortcode])
-
-  const addEmoji = useCallback(
-    (emojiShortcode: string) => {
-      if (value?.length) {
-        const contentFront = value.slice(0, selectionRange.current?.start)
-        const contentRear = value.slice(selectionRange.current?.end)
-
-        const whiteSpaceRear = /\s/g.test(contentRear.slice(-1))
-
-        const newTextWithSpace = ` ${emojiShortcode}${
-          whiteSpaceRear ? '' : ' '
-        }`
-        setValue(
-          [contentFront, newTextWithSpace, contentRear]
-            .join('')
-            .slice(0, maxLength)
-        )
-      } else {
-        setValue(`${emojiShortcode} `.slice(0, maxLength))
-      }
-    },
-    [value, selectionRange.current?.start, selectionRange.current?.end]
-  )
+    emojisDispatch({ type: 'input', payload: inputProps })
+  }, [inputProps])
 
   const { t } = useTranslation()
-  const { data } = useEmojisQuery({ options: { enabled } })
+  const { data } = useEmojisQuery({})
   const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {
     if (data && data.length) {
-      let sortedEmojis: {
-        title: string
-        data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-      }[] = []
-      forEach(
-        groupBy(sortBy(data, ['category', 'shortcode']), 'category'),
-        (value, key) => sortedEmojis.push({ title: key, data: chunk(value, 5) })
+      let sortedEmojis: NonNullable<Emojis['current']> = []
+      forEach(groupBy(sortBy(data, ['category', 'shortcode']), 'category'), (value, key) =>
+        sortedEmojis.push({ title: key, data: chunk(value, 4) })
       )
       if (frequentEmojis.length) {
         sortedEmojis.unshift({
           title: t('componentEmojis:frequentUsed'),
           data: chunk(
             frequentEmojis.map(e => e.emoji),
-            5
-          )
+            4
+          ),
+          type: 'frequent'
         })
       }
-      emojisDispatch({
-        type: 'load',
-        payload: sortedEmojis
-      })
+      emojis.current = sortedEmojis
       prefetchEmojis(sortedEmojis, reduceMotionEnabled)
     }
   }, [data, reduceMotionEnabled])
 
+  const insets = useSafeAreaInsets()
+  const [keyboardShown, setKeyboardShown] = useState(false)
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
+      const anyInputHasFocus = inputProps.filter(props => props.isFocused.current).length
+      if (anyInputHasFocus) {
+        emojisDispatch({ type: 'target', payload: -1 })
+      }
+      setKeyboardShown(true)
+    })
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+      setKeyboardShown(false)
+    })
+
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [inputProps])
+  useEffect(() => {
+    if (focusRef) {
+      setTimeout(() => focusRef.current?.focus(), 500)
+    }
+  }, [])
+
   return (
-    <EmojisContext.Provider
-      value={{ emojisState, emojisDispatch }}
-      children={children}
-    />
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={customBehavior}>
+      <SafeAreaView style={{ flex: 1 }} edges={customEdges}>
+        <View style={{ flex: 1 }}>
+          <EmojisContext.Provider value={{ emojisState, emojisDispatch }}>
+            {children}
+            <View
+              style={[
+                keyboardShown ? { position: 'absolute', bottom: 0, width: '100%' } : null,
+                {
+                  marginBottom: keyboardShown && emojisState.targetIndex === -1 ? insets.bottom : 0
+                }
+              ]}
+              children={
+                emojisState.targetIndex !== -1 ? (
+                  <EmojisList />
+                ) : customButton ? null : (
+                  <EmojisButton />
+                )
+              }
+            />
+          </EmojisContext.Provider>
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }
 

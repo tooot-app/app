@@ -26,28 +26,23 @@ export type ComposeState = {
     count: number
     raw: string
     formatted: ReactNode
-    selection: { start: number; end: number }
+    selection: { start: number; end?: number }
   }
   text: {
     count: number
     raw: string
     formatted: ReactNode
-    selection: { start: number; end: number }
+    selection: { start: number; end?: number }
   }
   tag?: {
-    type: 'url' | 'accounts' | 'hashtags'
-    text: string
-    offset: number
-    length: number
-  }
-  emoji: {
-    active: boolean
-    emojis:
-    | {
-      title: string
-      data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-    }[]
-    | undefined
+    schema: '@' | '#' | ':' | string
+    index: number
+    lastIndex: number
+    raw: string
+    // type: 'url' | 'accounts' | 'hashtags'
+    // text: string
+    // offset: number
+    // length: number
   }
   poll: {
     active: boolean
@@ -68,6 +63,7 @@ export type ComposeState = {
   textInputFocus: {
     current: 'text' | 'spoiler'
     refs: { text: RefObject<TextInput> }
+    isFocused: { text: MutableRefObject<boolean>, spoiler: MutableRefObject<boolean> }
   }
 }
 
@@ -95,10 +91,6 @@ export type ComposeAction =
   | {
     type: 'tag'
     payload: ComposeState['tag']
-  }
-  | {
-    type: 'emoji'
-    payload: ComposeState['emoji']
   }
   | {
     type: 'poll'

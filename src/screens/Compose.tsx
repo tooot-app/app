@@ -1,4 +1,6 @@
 import analytics from '@components/analytics'
+import { ComponentEmojis } from '@components/Emojis'
+import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
@@ -6,10 +8,7 @@ import { useAppDispatch } from '@root/store'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import {
-  QueryKeyTimeline,
-  useTimelineMutation
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
@@ -20,22 +19,9 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { filter } from 'lodash'
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet
-} from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Alert, Keyboard, Platform } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 import * as Sentry from 'sentry-expo'
@@ -60,12 +46,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
   const [hasKeyboard, setHasKeyboard] = useState(false)
   useEffect(() => {
-    const keyboardShown = Keyboard.addListener('keyboardWillShow', () =>
-      setHasKeyboard(true)
-    )
-    const keyboardHidden = Keyboard.addListener('keyboardWillHide', () =>
-      setHasKeyboard(false)
-    )
+    const keyboardShown = Keyboard.addListener('keyboardWillShow', () => setHasKeyboard(true))
+    const keyboardHidden = Keyboard.addListener('keyboardWillHide', () => setHasKeyboard(false))
 
     return () => {
       keyboardShown.remove()
@@ -89,32 +71,23 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         attachments: {
           ...composeInitialState.attachments,
           sensitive:
-            localAccount?.preferences &&
-            localAccount?.preferences['posting:default:sensitive']
+            localAccount?.preferences && localAccount?.preferences['posting:default:sensitive']
               ? localAccount?.preferences['posting:default:sensitive']
               : false
         },
         visibility:
-          localAccount?.preferences &&
-          localAccount.preferences['posting:default:visibility']
+          localAccount?.preferences && localAccount.preferences['posting:default:visibility']
             ? localAccount.preferences['posting:default:visibility']
             : 'public'
       }
     }
   }, [])
 
-  const [composeState, composeDispatch] = useReducer(
-    composeReducer,
-    initialReducerState
-  )
+  const [composeState, composeDispatch] = useReducer(composeReducer, initialReducerState)
 
-  const maxTootChars = useSelector(
-    getInstanceConfigurationStatusMaxChars,
-    () => true
-  )
+  const maxTootChars = useSelector(getInstanceConfigurationStatusMaxChars, () => true)
   const totalTextCount =
-    (composeState.spoiler.active ? composeState.spoiler.count : 0) +
-    composeState.text.count
+    (composeState.spoiler.active ? composeState.spoiler.count : 0) + composeState.text.count
 
   // If compose state is dirty, then disallow add back drafts
   useEffect(() => {
@@ -173,8 +146,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         })
         break
       case 'reply':
-        const actualStatus =
-          params.incomingStatus.reblog || params.incomingStatus
+        const actualStatus = params.incomingStatus.reblog || params.incomingStatus
         if (actualStatus.spoiler_text) {
           formatText({
             textInput: 'spoiler',
@@ -278,16 +250,10 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     if (totalTextCount > maxTootChars) {
       return true
     }
-    if (
-      composeState.attachments.uploads.filter(upload => upload.uploading)
-        .length > 0
-    ) {
+    if (composeState.attachments.uploads.filter(upload => upload.uploading).length > 0) {
       return true
     }
-    if (
-      composeState.attachments.uploads.length === 0 &&
-      composeState.text.raw.length === 0
-    ) {
+    if (composeState.attachments.uploads.length === 0 && composeState.text.raw.length === 0) {
       return true
     }
     return false
@@ -309,18 +275,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           composePost(params, composeState)
             .then(res => {
               haptics('Success')
-              if (
-                Platform.OS === 'ios' &&
-                Platform.constants.osVersion === '13.3'
-              ) {
+              if (Platform.OS === 'ios' && Platform.constants.osVersion === '13.3') {
                 // https://github.com/tooot-app/app/issues/59
               } else {
                 dispatch(updateStoreReview(1))
               }
-              const queryKey: QueryKeyTimeline = [
-                'Timeline',
-                { page: 'Following' }
-              ]
+              const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
               queryClient.invalidateQueries(queryKey)
 
               switch (params?.type) {
@@ -392,54 +352,75 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     }`
   }, [totalTextCount, maxTootChars, composeState.dirty])
 
+  const inputProps: EmojisState['inputProps'] = [
+    {
+      value: [
+        composeState.text.raw,
+        content => {
+          formatText({ textInput: 'text', composeDispatch, content })
+        }
+      ],
+      selection: [
+        composeState.text.selection,
+        selection => composeDispatch({ type: 'text', payload: { selection } })
+      ],
+      isFocused: composeState.textInputFocus.isFocused.text,
+      maxLength: maxTootChars - (composeState.spoiler.active ? composeState.spoiler.count : 0)
+    },
+    {
+      value: [
+        composeState.spoiler.raw,
+        content => formatText({ textInput: 'spoiler', composeDispatch, content })
+      ],
+      selection: [
+        composeState.spoiler.selection,
+        selection => composeDispatch({ type: 'spoiler', payload: { selection } })
+      ],
+      isFocused: composeState.textInputFocus.isFocused.spoiler,
+      maxLength: maxTootChars - composeState.text.count
+    }
+  ]
+
   return (
-    <KeyboardAvoidingView
-      style={styles.base}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    <ComponentEmojis
+      inputProps={inputProps}
+      customButton
+      customBehavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      customEdges={hasKeyboard ? ['top'] : ['top', 'bottom']}
     >
-      <SafeAreaView
-        style={styles.base}
-        edges={hasKeyboard ? ['top'] : ['top', 'bottom']}
-      >
-        <ComposeContext.Provider value={{ composeState, composeDispatch }}>
-          <Stack.Navigator initialRouteName='Screen-Compose-Root'>
-            <Stack.Screen
-              name='Screen-Compose-Root'
-              component={ComposeRoot}
-              options={{
-                title: headerContent,
-                headerTitleStyle: {
-                  fontWeight:
-                    totalTextCount > maxTootChars
-                      ? StyleConstants.Font.Weight.Bold
-                      : StyleConstants.Font.Weight.Normal,
-                  fontSize: StyleConstants.Font.Size.M
-                },
-                headerTintColor:
-                  totalTextCount > maxTootChars ? colors.red : colors.secondary,
-                headerLeft,
-                headerRight
-              }}
-            />
-            <Stack.Screen
-              name='Screen-Compose-DraftsList'
-              component={ComposeDraftsList}
-              options={{ headerShown: false, presentation: 'modal' }}
-            />
-            <Stack.Screen
-              name='Screen-Compose-EditAttachment'
-              component={ComposeEditAttachment}
-              options={{ headerShown: false, presentation: 'modal' }}
-            />
-          </Stack.Navigator>
-        </ComposeContext.Provider>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      <ComposeContext.Provider value={{ composeState, composeDispatch }}>
+        <Stack.Navigator initialRouteName='Screen-Compose-Root'>
+          <Stack.Screen
+            name='Screen-Compose-Root'
+            component={ComposeRoot}
+            options={{
+              title: headerContent,
+              headerTitleStyle: {
+                fontWeight:
+                  totalTextCount > maxTootChars
+                    ? StyleConstants.Font.Weight.Bold
+                    : StyleConstants.Font.Weight.Normal,
+                fontSize: StyleConstants.Font.Size.M
+              },
+              headerTintColor: totalTextCount > maxTootChars ? colors.red : colors.secondary,
+              headerLeft,
+              headerRight
+            }}
+          />
+          <Stack.Screen
+            name='Screen-Compose-DraftsList'
+            component={ComposeDraftsList}
+            options={{ headerShown: false, presentation: 'modal' }}
+          />
+          <Stack.Screen
+            name='Screen-Compose-EditAttachment'
+            component={ComposeEditAttachment}
+            options={{ headerShown: false, presentation: 'modal' }}
+          />
+        </Stack.Navigator>
+      </ComposeContext.Provider>
+    </ComponentEmojis>
   )
 }
-
-const styles = StyleSheet.create({
-  base: { flex: 1 }
-})
 
 export default ScreenCompose
