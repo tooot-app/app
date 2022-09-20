@@ -1,3 +1,4 @@
+import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -16,7 +17,7 @@ const EmojisButton: React.FC = () => {
 
   return (
     <Pressable
-      disabled={!emojisState.emojis || !emojisState.emojis.length}
+      disabled={!emojis.current || !emojis.current.length}
       onPress={() => {
         if (emojisState.targetIndex === -1) {
           Keyboard.dismiss()
@@ -38,12 +39,10 @@ const EmojisButton: React.FC = () => {
           }}
         >
           <Icon
-            name={emojisState.emojis && emojisState.emojis.length ? 'Smile' : 'Meh'}
+            name={emojis.current && emojis.current.length ? 'Smile' : 'Meh'}
             size={24}
             color={
-              emojisState.emojis && emojisState.emojis.length
-                ? colors.primaryDefault
-                : colors.disabled
+              emojis.current && emojis.current.length ? colors.primaryDefault : colors.disabled
             }
           />
         </View>

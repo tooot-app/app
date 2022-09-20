@@ -35,10 +35,14 @@ export type ComposeState = {
     selection: { start: number; end?: number }
   }
   tag?: {
-    type: 'url' | 'accounts' | 'hashtags'
-    text: string
-    offset: number
-    length: number
+    schema: '@' | '#' | ':' | string
+    index: number
+    lastIndex: number
+    raw: string
+    // type: 'url' | 'accounts' | 'hashtags'
+    // text: string
+    // offset: number
+    // length: number
   }
   poll: {
     active: boolean

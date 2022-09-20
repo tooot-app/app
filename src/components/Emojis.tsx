@@ -5,13 +5,20 @@ import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
-import React, { PropsWithChildren, RefObject, useEffect, useReducer, useState } from 'react'
+import React, {
+  createRef,
+  PropsWithChildren,
+  RefObject,
+  useEffect,
+  useReducer,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, KeyboardAvoidingView, TextInput, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
-import EmojisContext, { emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
+import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
 const prefetchEmojis = (
   sortedEmojis: {
@@ -48,6 +55,8 @@ export type Props = {
   customBehavior?: 'height' | 'padding' | 'position'
 }
 
+export const emojis: Emojis = createRef()
+
 const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   children,
   inputProps,
@@ -58,11 +67,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
 
-  const [emojisState, emojisDispatch] = useReducer(emojisReducer, {
-    emojis: [],
-    inputProps,
-    targetIndex: -1
-  })
+  const [emojisState, emojisDispatch] = useReducer(emojisReducer, { inputProps, targetIndex: -1 })
   useEffect(() => {
     emojisDispatch({ type: 'input', payload: inputProps })
   }, [inputProps])
@@ -72,7 +77,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
   const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {
     if (data && data.length) {
-      let sortedEmojis: EmojisState['emojis'] = []
+      let sortedEmojis: NonNullable<Emojis['current']> = []
       forEach(groupBy(sortBy(data, ['category', 'shortcode']), 'category'), (value, key) =>
         sortedEmojis.push({ title: key, data: chunk(value, 4) })
       )
@@ -86,7 +91,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
           type: 'frequent'
         })
       }
-      emojisDispatch({ type: 'load', payload: sortedEmojis })
+      emojis.current = sortedEmojis
       prefetchEmojis(sortedEmojis, reduceMotionEnabled)
     }
   }, [data, reduceMotionEnabled])

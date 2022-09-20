@@ -251,7 +251,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (!text && !media.length) {
         return
       } else {
-        console.log('share', text, media)
         if (instances.length > 1) {
           navigationRef.navigate('Screen-AccountSelection', {
             share: { text, media }

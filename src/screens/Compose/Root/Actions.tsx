@@ -1,4 +1,5 @@
 import analytics from '@components/analytics'
+import { emojis } from '@components/Emojis'
 import EmojisContext from '@components/Emojis/helpers/EmojisContext'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
@@ -149,14 +150,14 @@ const ComposeActions: React.FC = () => {
 
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
   const emojiColor = useMemo(() => {
-    if (!emojisState.emojis.length) return colors.disabled
+    if (!emojis.current?.length) return colors.disabled
 
     if (emojisState.targetIndex !== -1) {
       return colors.primaryDefault
     } else {
       return colors.secondary
     }
-  }, [emojisState.emojis.length, emojisState.targetIndex])
+  }, [emojis.current?.length, emojisState.targetIndex])
   const emojiOnPress = () => {
     analytics('compose_actions_emojis_press', {
       current: emojisState.targetIndex !== -1
@@ -243,7 +244,7 @@ const ComposeActions: React.FC = () => {
         accessibilityLabel={t('content.root.actions.emoji.accessibilityLabel')}
         accessibilityHint={t('content.root.actions.emoji.accessibilityHint')}
         accessibilityState={{
-          disabled: emojisState.emojis.length ? false : true,
+          disabled: emojis.current?.length ? false : true,
           expanded: emojisState.targetIndex !== -1
         }}
         style={styles.button}
