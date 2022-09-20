@@ -44,19 +44,28 @@ const ComposeRoot = React.memo(
 
     const { composeState, composeDispatch } = useContext(ComposeContext)
 
+    const mapSchemaToType = () => {
+      if (composeState.tag) {
+        switch (composeState.tag?.schema) {
+          case '@':
+            return 'accounts'
+          case '#':
+            return 'hashtags'
+        }
+      } else {
+        return undefined
+      }
+    }
     const { isFetching, data, refetch } = useSearchQuery({
-      type:
-        composeState.tag?.type === 'accounts' || composeState.tag?.type === 'hashtags'
-          ? composeState.tag.type
-          : undefined,
-      term: composeState.tag?.text.substring(1),
+      type: mapSchemaToType(),
+      term: composeState.tag?.raw.substring(1),
       options: { enabled: false }
     })
 
     useEffect(() => {
       if (
-        (composeState.tag?.type === 'accounts' || composeState.tag?.type === 'hashtags') &&
-        composeState.tag?.text
+        (composeState.tag?.schema === '@' || composeState.tag?.schema === '#') &&
+        composeState.tag?.raw
       ) {
         refetch()
       }
@@ -104,20 +113,14 @@ const ComposeRoot = React.memo(
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          renderItem={({ item }) => (
-            <ComposeRootSuggestion
-              item={item}
-              composeState={composeState}
-              composeDispatch={composeDispatch}
-            />
-          )}
+          renderItem={({ item }) => <ComposeRootSuggestion item={item} />}
           ListEmptyComponent={listEmpty}
           keyboardShouldPersistTaps='always'
           ListHeaderComponent={ComposeRootHeader}
           ListFooterComponent={Footer}
           ItemSeparatorComponent={ComponentSeparator}
           // @ts-ignore
-          data={data ? data[composeState.tag?.type] : undefined}
+          data={data ? data[mapSchemaToType()] : undefined}
           keyExtractor={() => Math.random().toString()}
         />
         <ComposeActions />

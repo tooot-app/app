@@ -1,3 +1,4 @@
+import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useAppDispatch } from '@root/store'
@@ -175,17 +176,19 @@ const EmojisList = () => {
             ? [
                 {
                   title: 'Search result',
-                  data: chunk(
-                    emojisState.emojis
-                      .filter(e => e.type !== 'frequent')
-                      .flatMap(e =>
-                        e.data.flatMap(e => e).filter(emoji => emoji.shortcode.includes(search))
-                      ),
-                    2
-                  )
+                  data: emojis.current
+                    ? chunk(
+                        emojis.current
+                          .filter(e => e.type !== 'frequent')
+                          .flatMap(e =>
+                            e.data.flatMap(e => e).filter(emoji => emoji.shortcode.includes(search))
+                          ),
+                        2
+                      )
+                    : []
                 }
               ]
-            : emojisState.emojis
+            : emojis.current || []
         }
         keyExtractor={item => item[0]?.shortcode}
         renderSectionHeader={({ section: { title } }) => (

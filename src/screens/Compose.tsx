@@ -19,7 +19,7 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { filter } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -356,7 +356,9 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     {
       value: [
         composeState.text.raw,
-        content => formatText({ textInput: 'text', composeDispatch, content })
+        content => {
+          formatText({ textInput: 'text', composeDispatch, content })
+        }
       ],
       selection: [
         composeState.text.selection,

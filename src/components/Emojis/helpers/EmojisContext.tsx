@@ -10,18 +10,21 @@ type inputProps = {
   addFunc?: (add: string) => void // For none default state update
 }
 
+export type Emojis = MutableRefObject<
+  | {
+      title: string
+      data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+      type?: 'frequent'
+    }[]
+  | null
+>
+
 export type EmojisState = {
-  emojis: {
-    title: string
-    data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-    type?: 'frequent'
-  }[]
   inputProps: inputProps[]
   targetIndex: number
 }
 
 export type EmojisAction =
-  | { type: 'load'; payload: NonNullable<EmojisState['emojis']> }
   | { type: 'input'; payload: EmojisState['inputProps'] }
   | { type: 'target'; payload: EmojisState['targetIndex'] }
 
@@ -33,8 +36,6 @@ const EmojisContext = createContext<ContextType>({} as ContextType)
 
 export const emojisReducer = (state: EmojisState, action: EmojisAction) => {
   switch (action.type) {
-    case 'load':
-      return { ...state, emojis: action.payload }
     case 'input':
       return { ...state, inputProps: action.payload }
     case 'target':

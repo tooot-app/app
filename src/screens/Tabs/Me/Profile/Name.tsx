@@ -34,7 +34,6 @@ const TabMeProfileName: React.FC<
     ref: useRef<TextInput>(null),
     maxLength: 30
   }
-  console.log('true value', value)
 
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
