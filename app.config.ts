@@ -10,7 +10,6 @@ export default (): ExpoConfig => ({
   version,
   extra: { environment: process.env.ENVIRONMENT },
   privacy: 'hidden',
-  assetBundlePatterns: ['assets/*'],
   hooks: {
     postPublish: [
       {

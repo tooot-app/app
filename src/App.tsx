@@ -16,7 +16,6 @@ import {
   getSettingsLanguage
 } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
-import 'expo-asset'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { LogBox, Platform } from 'react-native'
