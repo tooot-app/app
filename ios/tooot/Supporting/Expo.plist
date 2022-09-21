@@ -6,5 +6,7 @@
     <false/>
     <key>EXUpdatesEnabled</key>
     <false/>
+    <key>EXUpdatesSDKVersion</key>
+    <string>46.0.0</string>
   </dict>
 </plist>
