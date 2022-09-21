@@ -58,6 +58,7 @@
     "expo-secure-store": "^11.3.0",
     "expo-splash-screen": "^0.16.1",
     "expo-store-review": "^5.3.0",
+    "expo-updates": "^0.14.5",
     "expo-video-thumbnails": "^6.4.0",
     "expo-web-browser": "^11.0.0",
     "i18next": "^21.9.1",
