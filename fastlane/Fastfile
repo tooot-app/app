@@ -144,15 +144,17 @@ lane :android do
 end
 
 lane :release do
-  build_android_apk
-  set_github_release(
-    repository_name: GITHUB_REPO,
-    name: GITHUB_RELEASE,
-    tag_name: GITHUB_RELEASE,
-    description: "No changelog provided",
-    commitish: git_branch,
-    is_prerelease: ENVIRONMENT == 'candidate',
-    upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
-  )
+  if ENVIRONMENT == 'release'
+    build_android_apk
+    set_github_release(
+      repository_name: GITHUB_REPO,
+      name: GITHUB_RELEASE,
+      tag_name: GITHUB_RELEASE,
+      description: "No changelog provided",
+      commitish: git_branch,
+      is_prerelease: false,
+      upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
+    )
+  end
   rocket
 end
