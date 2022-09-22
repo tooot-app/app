@@ -1,14 +1,15 @@
+import { ComponentEmojis } from '@components/Emojis'
+import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
-import Input from '@components/Input'
+import ComponentInput from '@components/Input'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet } from 'react-native'
+import { Alert, ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { ScrollView } from 'react-native-gesture-handler'
 
 const TabMeProfileName: React.FC<
   TabMeProfileStackScreenProps<'Tab-Me-Profile-Name'> & {
@@ -25,12 +26,19 @@ const TabMeProfileName: React.FC<
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
-  const [displayName, setDisplayName] = useState(display_name)
+  const [value, setValue] = useState(display_name)
+  const displayNameProps: NonNullable<EmojisState['inputProps'][0]> = {
+    value: [value, setValue],
+    selection: useState({ start: value.length }),
+    isFocused: useRef<boolean>(false),
+    ref: useRef<TextInput>(null),
+    maxLength: 30
+  }
 
   const [dirty, setDirty] = useState(false)
   useEffect(() => {
-    setDirty(display_name !== displayName)
-  }, [displayName])
+    setDirty(display_name !== value)
+  }, [value])
 
   useEffect(() => {
     navigation.setOptions({
@@ -74,7 +82,7 @@ const TabMeProfileName: React.FC<
                 failed: true
               },
               type: 'display_name',
-              data: displayName
+              data: value
             }).then(() => {
               navigation.navigate('Tab-Me-Profile-Root')
             })
@@ -82,30 +90,21 @@ const TabMeProfileName: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, displayName])
+  }, [theme, i18n.language, dirty, status, value])
 
   return (
-    <ScrollView style={styles.base} keyboardShouldPersistTaps='always'>
-      <Input
-        value={displayName}
-        setValue={setDisplayName}
-        emoji
-        options={{
-          maxLength: 30,
-          autoCapitalize: 'none',
-          autoComplete: 'username',
-          textContentType: 'username',
-          autoCorrect: false
-        }}
-      />
-    </ScrollView>
+    <ComponentEmojis inputProps={[displayNameProps]}>
+      <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
+        <ComponentInput
+          {...displayNameProps}
+          autoCapitalize='none'
+          autoComplete='username'
+          textContentType='username'
+          autoCorrect={false}
+        />
+      </ScrollView>
+    </ComponentEmojis>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default TabMeProfileName

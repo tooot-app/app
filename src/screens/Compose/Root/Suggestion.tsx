@@ -2,50 +2,56 @@ import ComponentAccount from '@components/Account'
 import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
-import React, { Dispatch, useCallback } from 'react'
-import updateText from '../updateText'
-import { ComposeAction, ComposeState } from '../utils/types'
+import React, { useContext, useEffect } from 'react'
+import formatText from '../formatText'
+import ComposeContext from '../utils/createContext'
 
-const ComposeRootSuggestion = React.memo(
-  ({
-    item,
-    composeState,
-    composeDispatch
-  }: {
-    item: Mastodon.Account & Mastodon.Tag
-    composeState: ComposeState
-    composeDispatch: Dispatch<ComposeAction>
-  }) => {
-    const onPress = useCallback(() => {
-      analytics('compose_suggestion_press', {
-        type: item.acct ? 'account' : 'hashtag'
-      })
-      const focusedInput = composeState.textInputFocus.current
-      updateText({
-        composeState: {
-          ...composeState,
-          [focusedInput]: {
-            ...composeState[focusedInput],
-            selection: {
-              start: composeState.tag!.offset,
-              end: composeState.tag!.offset + composeState.tag!.text.length + 1
-            }
-          }
-        },
-        composeDispatch,
-        newText: item.acct ? `@${item.acct}` : `#${item.name}`,
-        type: 'suggestion'
-      })
-      haptics('Light')
-    }, [])
+type Props = { item: Mastodon.Account & Mastodon.Tag }
 
-    return item.acct ? (
-      <ComponentAccount account={item} onPress={onPress} origin='suggestion' />
-    ) : (
-      <ComponentHashtag hashtag={item} onPress={onPress} origin='suggestion' />
-    )
-  },
-  () => true
-)
+const ComposeRootSuggestion: React.FC<Props> = ({ item }) => {
+  const { composeState, composeDispatch } = useContext(ComposeContext)
+
+  useEffect(() => {
+    if (composeState.text.raw.length === 0) {
+      composeDispatch({ type: 'tag', payload: undefined })
+    }
+  }, [composeState.text.raw.length])
+
+  const onPress = () => {
+    analytics('compose_suggestion_press', {
+      type: item.acct ? 'account' : 'hashtag'
+    })
+    const focusedInput = composeState.textInputFocus.current
+    const updatedText = (): string => {
+      const main = item.acct ? `@${item.acct}` : `#${item.name}`
+      const textInput = composeState.textInputFocus.current
+      if (composeState.tag) {
+        const contentFront = composeState[textInput].raw.slice(0, composeState.tag.index)
+        const contentRear = composeState[textInput].raw.slice(composeState.tag.lastIndex)
+
+        const spaceFront =
+          composeState[textInput].raw.length === 0 || /\s/g.test(contentFront.slice(-1)) ? '' : ' '
+        const spaceRear = /\s/g.test(contentRear[0]) ? '' : ' '
+
+        return [contentFront, spaceFront, main, spaceRear, contentRear].join('')
+      } else {
+        return composeState[textInput].raw
+      }
+    }
+    formatText({
+      textInput: focusedInput,
+      composeDispatch,
+      content: updatedText(),
+      disableDebounce: true
+    })
+    haptics('Light')
+  }
+
+  return item.acct ? (
+    <ComponentAccount account={item} onPress={onPress} origin='suggestion' />
+  ) : (
+    <ComponentHashtag hashtag={item} onPress={onPress} origin='suggestion' />
+  )
+}
 
 export default ComposeRootSuggestion

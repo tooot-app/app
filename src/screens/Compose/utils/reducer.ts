@@ -35,8 +35,6 @@ const composeReducer = (
       return { ...state, text: { ...state.text, ...action.payload } }
     case 'tag':
       return { ...state, tag: action.payload }
-    case 'emoji':
-      return { ...state, emoji: action.payload }
     case 'poll':
       return { ...state, poll: { ...state.poll, ...action.payload } }
     case 'attachments/sensitive':

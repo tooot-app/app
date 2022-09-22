@@ -11,7 +11,7 @@
       "action_true": "Desbloquear usuário"
     },
     "reports": {
-      "action": "Denunciar usuário"
+      "action": "Denunciar e bloquear"
     }
   },
   "copy": {

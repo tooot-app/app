@@ -1,27 +1,70 @@
+import { ComponentEmojis } from '@components/Emojis'
+import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
-import Input from '@components/Input'
+import ComponentInput from '@components/Input'
 import CustomText from '@components/Text'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation } from '@utils/queryHooks/profile'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { isEqual } from 'lodash'
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, View } from 'react-native'
+import { Alert, ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import { ScrollView } from 'react-native-gesture-handler'
 
-const prepareFields = (
-  fields: Mastodon.Field[] | undefined
-): Mastodon.Field[] => {
-  return Array.from(Array(4).keys()).map(index => {
-    if (fields && fields[index]) {
-      return fields[index]
-    } else {
-      return { name: '', value: '', verified_at: null }
-    }
-  })
+const Field: React.FC<{
+  allProps: EmojisState['inputProps']
+  setDirty: Dispatch<SetStateAction<boolean>>
+  index: number
+  field?: Mastodon.Field
+}> = ({ allProps, setDirty, index, field }) => {
+  const { colors } = useTheme()
+  const { t } = useTranslation('screenTabs')
+
+  const nameRef = useRef<TextInput>(null)
+  const valueRef = useRef<TextInput>(null)
+  const [name, setName] = useState(field?.name || '')
+  const [value, setValue] = useState(field?.value || '')
+  allProps[index * 2] = {
+    value: [name, setName],
+    selection: useState({ start: name.length }),
+    isFocused: useRef<boolean>(false),
+    maxLength: 255,
+    ref: nameRef
+  }
+  allProps[index * 2 + 1] = {
+    value: [value, setValue],
+    selection: useState({ start: value.length }),
+    isFocused: useRef<boolean>(false),
+    maxLength: 255,
+    ref: valueRef
+  }
+
+  useEffect(() => {
+    setDirty(dirty =>
+      dirty ? dirty : (field?.name || '') !== name || (field?.value || '') !== value
+    )
+  }, [name, value])
+
+  return (
+    <>
+      <CustomText
+        fontStyle='S'
+        style={{
+          marginBottom: StyleConstants.Spacing.XS,
+          color: colors.primaryDefault
+        }}
+      >
+        {t('me.profile.fields.group', { index: index + 1 })}
+      </CustomText>
+      <ComponentInput title={t('me.profile.fields.label')} {...allProps[index * 2]} />
+      <ComponentInput
+        title={t('me.profile.fields.content')}
+        {...allProps[index * 2 + 1]}
+        multiline
+      />
+    </>
+  )
 }
 
 const TabMeProfileFields: React.FC<
@@ -35,16 +78,13 @@ const TabMeProfileFields: React.FC<
   },
   navigation
 }) => {
-  const { colors, theme } = useTheme()
+  const { theme } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
-  const [newFields, setNewFields] = useState(prepareFields(fields))
+  const allProps: EmojisState['inputProps'] = []
 
   const [dirty, setDirty] = useState(false)
-  useEffect(() => {
-    setDirty(!isEqual(prepareFields(fields), newFields))
-  }, [newFields])
 
   useEffect(() => {
     navigation.setOptions({
@@ -88,9 +128,15 @@ const TabMeProfileFields: React.FC<
                 failed: true
               },
               type: 'fields_attributes',
-              data: newFields
-                .filter(field => field.name.length && field.value.length)
-                .map(field => ({ name: field.name, value: field.value }))
+              data: Array.from(Array(4).keys())
+                .filter(
+                  index =>
+                    allProps[index * 2]?.value[0].length || allProps[index * 2 + 1]?.value[0].length
+                )
+                .map(index => ({
+                  name: allProps[index * 2].value[0],
+                  value: allProps[index * 2 + 1].value[0]
+                }))
             }).then(() => {
               navigation.navigate('Tab-Me-Profile-Root')
             })
@@ -98,60 +144,22 @@ const TabMeProfileFields: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, newFields])
+  }, [theme, i18n.language, dirty, status, allProps.map(p => p.value)])
 
   return (
-    <ScrollView
-      style={{
-        paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-        marginBottom: StyleConstants.Spacing.L
-      }}
-      keyboardShouldPersistTaps='always'
-    >
-      <View style={{ marginBottom: StyleConstants.Spacing.L * 2 }}>
+    <ComponentEmojis inputProps={allProps}>
+      <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         {Array.from(Array(4).keys()).map(index => (
-          <View key={index} style={{ marginBottom: StyleConstants.Spacing.M }}>
-            <CustomText
-              fontStyle='S'
-              style={{
-                marginBottom: StyleConstants.Spacing.XS,
-                color: colors.primaryDefault
-              }}
-            >
-              {t('me.profile.fields.group', { index: index + 1 })}
-            </CustomText>
-            <Input
-              title={t('me.profile.fields.label')}
-              autoFocus={false}
-              options={{ maxLength: 255 }}
-              value={newFields[index].name}
-              setValue={(v: any) =>
-                setNewFields(
-                  newFields.map((field, i) =>
-                    i === index ? { ...field, name: v } : field
-                  )
-                )
-              }
-              emoji
-            />
-            <Input
-              title={t('me.profile.fields.content')}
-              autoFocus={false}
-              options={{ maxLength: 255 }}
-              value={newFields[index].value}
-              setValue={(v: any) =>
-                setNewFields(
-                  newFields.map((field, i) =>
-                    i === index ? { ...field, value: v } : field
-                  )
-                )
-              }
-              emoji
-            />
-          </View>
+          <Field
+            key={index}
+            allProps={allProps}
+            setDirty={setDirty}
+            index={index}
+            field={fields?.[index]}
+          />
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ComponentEmojis>
   )
 }
 

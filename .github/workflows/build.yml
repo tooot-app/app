@@ -96,17 +96,11 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
-      - name: -- Step 4 -- Use Expo action
-        uses: expo/expo-github-action@v7
-        with:
-          expo-version: latest
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-      - name: -- Step 5 -- Install node dependencies
+      - name: -- Step 4 -- Install node dependencies
         run: yarn install
-      - name: -- Step 6 -- Install ruby dependencies
+      - name: -- Step 5 -- Install ruby dependencies
         run: bundle install
-      - name: -- Step 7 -- Run fastlane
+      - name: -- Step 6 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
@@ -118,9 +112,5 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
-          GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build release
-      - name: -- Step 8 -- Publish expo update
-        run: eas update --auto
-

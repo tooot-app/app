@@ -1,99 +1,62 @@
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { forwardRef, RefObject } from 'react'
 import { Platform, TextInput, TextInputProps, View } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import { ComponentEmojis, EmojisButton, EmojisList } from './Emojis'
-import EmojisContext from './Emojis/helpers/EmojisContext'
+import { EmojisState } from './Emojis/helpers/EmojisContext'
 import CustomText from './Text'
 
-export interface Props {
-  autoFocus?: boolean
-
+export type Props = {
   title?: string
-
   multiline?: boolean
-
-  emoji?: boolean
-
-  value?: string
-  setValue:
-    | Dispatch<SetStateAction<string | undefined>>
-    | Dispatch<SetStateAction<string>>
-
-  options?: Omit<
+} & Pick<NonNullable<EmojisState['inputProps'][0]>, 'value' | 'selection' | 'isFocused'> &
+  Omit<
     TextInputProps,
-    | 'autoFocus'
-    | 'onFocus'
-    | 'onBlur'
     | 'style'
     | 'onChangeText'
     | 'onSelectionChange'
     | 'keyboardAppearance'
     | 'textAlignVertical'
+    | 'multiline'
+    | 'selection'
+    | 'value'
   >
-}
 
-const Input: React.FC<Props> = ({
-  autoFocus = true,
-  title,
-  multiline = false,
-  emoji = false,
-  value,
-  setValue,
-  options
-}) => {
-  const { colors, mode } = useTheme()
+const ComponentInput = forwardRef(
+  (
+    {
+      title,
+      multiline = false,
+      value: [value, setValue],
+      selection: [selection, setSelection],
+      isFocused,
+      ...props
+    }: Props,
+    ref: RefObject<TextInput>
+  ) => {
+    const { colors, mode } = useTheme()
 
-  const animateTitle = useAnimatedStyle(() => {
-    if (value) {
-      return {
-        fontSize: withTiming(StyleConstants.Font.Size.S),
-        paddingHorizontal: withTiming(StyleConstants.Spacing.XS),
-        left: withTiming(StyleConstants.Spacing.S),
-        top: withTiming(-(StyleConstants.Font.Size.S / 2) - 2),
-        backgroundColor: withTiming(colors.backgroundDefault)
-      }
-    } else {
-      return {
-        fontSize: withTiming(StyleConstants.Font.Size.M),
-        paddingHorizontal: withTiming(0),
-        left: withTiming(StyleConstants.Spacing.S),
-        top: withTiming(StyleConstants.Spacing.S + 1),
-        backgroundColor: withTiming(colors.backgroundDefaultTransparent)
-      }
-    }
-  }, [mode, value])
-
-  const selectionRange = useRef<{ start: number; end: number }>(
-    value
-      ? {
-          start: value.length,
-          end: value.length
+    const animateTitle = useAnimatedStyle(() => {
+      if (value) {
+        return {
+          fontSize: withTiming(StyleConstants.Font.Size.S),
+          paddingHorizontal: withTiming(StyleConstants.Spacing.XS),
+          left: withTiming(StyleConstants.Spacing.S),
+          top: withTiming(-(StyleConstants.Font.Size.S / 2) - 2),
+          backgroundColor: withTiming(colors.backgroundDefault)
         }
-      : { start: 0, end: 0 }
-  )
+      } else {
+        return {
+          fontSize: withTiming(StyleConstants.Font.Size.M),
+          paddingHorizontal: withTiming(0),
+          left: withTiming(StyleConstants.Spacing.S),
+          top: withTiming(StyleConstants.Spacing.S + 1),
+          backgroundColor: withTiming(colors.backgroundDefaultTransparent)
+        }
+      }
+    }, [mode, value])
 
-  const [inputFocused, setInputFocused] = useState(false)
-  useEffect(() => {
-    layoutAnimation()
-  }, [inputFocused])
-
-  return (
-    <ComponentEmojis
-      enabled={emoji}
-      value={value}
-      setValue={setValue}
-      selectionRange={selectionRange}
-      maxLength={options?.maxLength}
-    >
+    return (
       <View
         style={{
           borderWidth: 1,
@@ -104,51 +67,37 @@ const Input: React.FC<Props> = ({
           alignItems: 'stretch'
         }}
       >
-        <EmojisContext.Consumer>
-          {({ emojisDispatch }) => (
-            <TextInput
-              autoFocus={autoFocus}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => {
-                setInputFocused(false)
-                emojisDispatch({ type: 'activate', payload: false })
-              }}
-              style={{
-                flex: 1,
-                fontSize: StyleConstants.Font.Size.M,
-                color: colors.primaryDefault,
-                minHeight:
-                  Platform.OS === 'ios' && multiline
-                    ? StyleConstants.Font.LineHeight.M * 5
-                    : undefined
-              }}
-              onChangeText={setValue}
-              onSelectionChange={({ nativeEvent: { selection } }) =>
-                (selectionRange.current = selection)
-              }
-              value={value}
-              {...(multiline && {
-                multiline,
-                numberOfLines: Platform.OS === 'android' ? 5 : undefined
-              })}
-              keyboardAppearance={mode}
-              textAlignVertical='top'
-              {...options}
-            />
-          )}
-        </EmojisContext.Consumer>
+        <TextInput
+          ref={ref}
+          style={{
+            flex: 1,
+            fontSize: StyleConstants.Font.Size.M,
+            color: colors.primaryDefault,
+            minHeight:
+              Platform.OS === 'ios' && multiline ? StyleConstants.Font.LineHeight.M * 5 : undefined
+          }}
+          value={value}
+          onChangeText={setValue}
+          onFocus={() => (isFocused.current = true)}
+          onBlur={() => (isFocused.current = false)}
+          onSelectionChange={({ nativeEvent }) => setSelection(nativeEvent.selection)}
+          {...(multiline && {
+            multiline,
+            numberOfLines: Platform.OS === 'android' ? 5 : undefined
+          })}
+          keyboardAppearance={mode}
+          textAlignVertical='top'
+          {...props}
+        />
+
         {title ? (
-          <Animated.Text
-            style={[
-              animateTitle,
-              { position: 'absolute', color: colors.secondary }
-            ]}
-          >
+          <Animated.Text style={[animateTitle, { position: 'absolute', color: colors.secondary }]}>
             {title}
           </Animated.Text>
         ) : null}
+
         <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
-          {options?.maxLength && value?.length ? (
+          {props?.maxLength && value?.length ? (
             <CustomText
               fontStyle='S'
               style={{
@@ -156,15 +105,13 @@ const Input: React.FC<Props> = ({
                 color: colors.secondary
               }}
             >
-              {value?.length} / {options.maxLength}
+              {value?.length} / {props.maxLength}
             </CustomText>
           ) : null}
-          {inputFocused ? <EmojisButton /> : null}
         </View>
       </View>
-      <EmojisList />
-    </ComponentEmojis>
-  )
-}
+    )
+  }
+)
 
-export default Input
+export default ComponentInput

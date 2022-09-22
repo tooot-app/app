@@ -170,10 +170,6 @@ android {
                 }
             }
         }
-        manifestPlaceholders = [
-            runtimeVersion: project.hasProperty('runtimeVersion') ? project.property('runtimeVersion') : "",
-            branch: project.hasProperty('branch') ? project.property('branch') : "development"
-        ]
     }
     if (isNewArchitectureEnabled()) {
         // We configure the NDK build only if you decide to opt-in for the New Architecture.

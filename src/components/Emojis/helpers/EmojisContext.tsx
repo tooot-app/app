@@ -1,28 +1,31 @@
-import { createContext, Dispatch } from 'react'
+import { createContext, Dispatch, MutableRefObject, RefObject } from 'react'
+import { TextInput } from 'react-native'
+
+type inputProps = {
+  value: [string, (value: string) => void]
+  selection: [{ start: number; end?: number }, (selection: { start: number; end?: number }) => void]
+  isFocused: MutableRefObject<boolean>
+  ref: RefObject<TextInput> // For controlling focus
+  maxLength?: number
+}
+
+export type Emojis = MutableRefObject<
+  | {
+      title: string
+      data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
+      type?: 'frequent'
+    }[]
+  | null
+>
 
 export type EmojisState = {
-  enabled: boolean
-  active: boolean
-  emojis: {
-    title: string
-    data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-  }[]
-  shortcode: Mastodon.Emoji['shortcode'] | null
+  inputProps: inputProps[]
+  targetIndex: number
 }
 
 export type EmojisAction =
-  | {
-      type: 'load'
-      payload: NonNullable<EmojisState['emojis']>
-    }
-  | {
-      type: 'activate'
-      payload: EmojisState['active']
-    }
-  | {
-      type: 'shortcode'
-      payload: EmojisState['shortcode']
-    }
+  | { type: 'input'; payload: EmojisState['inputProps'] }
+  | { type: 'target'; payload: EmojisState['targetIndex'] }
 
 type ContextType = {
   emojisState: EmojisState
@@ -32,12 +35,10 @@ const EmojisContext = createContext<ContextType>({} as ContextType)
 
 export const emojisReducer = (state: EmojisState, action: EmojisAction) => {
   switch (action.type) {
-    case 'activate':
-      return { ...state, active: action.payload }
-    case 'load':
-      return { ...state, emojis: action.payload }
-    case 'shortcode':
-      return { ...state, shortcode: action.payload }
+    case 'input':
+      return { ...state, inputProps: action.payload }
+    case 'target':
+      return { ...state, targetIndex: action.payload }
   }
 }
 

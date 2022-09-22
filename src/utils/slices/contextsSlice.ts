@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
-import * as Updates from 'expo-updates'
+import Constants from 'expo-constants'
 import * as StoreReview from 'expo-store-review'
 
 export type ContextsState = {
@@ -38,7 +38,7 @@ const contextsSlice = createSlice({
   initialState: contextsInitialState as ContextsState,
   reducers: {
     updateStoreReview: (state, action: PayloadAction<1>) => {
-      if (Updates.channel === 'release') {
+      if (Constants.expoConfig?.extra?.environment === 'release') {
         state.storeReview.current = state.storeReview.current + action.payload
         if (state.storeReview.current === state.storeReview.context) {
           StoreReview?.isAvailableAsync().then(() =>

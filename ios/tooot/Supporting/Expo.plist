@@ -2,20 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>EXUpdatesCheckOnLaunch</key>
-    <string>WIFI_ONLY</string>
+    <key>EXUpdatesAutoSetup</key>
+    <false/>
     <key>EXUpdatesEnabled</key>
-    <true/>
-    <key>EXUpdatesLaunchWaitMs</key>
-    <integer>0</integer>
-    <key>EXUpdatesRequestHeaders</key>
-    <dict>
-      <key>expo-channel-name</key>
-      <string>development</string>
-    </dict>
-    <key>EXUpdatesRuntimeVersion</key>
-    <string>0</string>
-    <key>EXUpdatesURL</key>
-    <string>https://u.expo.dev/3288313f-3ff0-496a-a5a9-d8985e7cad5f</string>
+    <false/>
+    <key>EXUpdatesSDKVersion</key>
+    <string>46.0.0</string>
   </dict>
 </plist>

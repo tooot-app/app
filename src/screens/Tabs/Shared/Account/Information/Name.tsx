@@ -1,18 +1,16 @@
-import Input from '@components/Input'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  edit?: boolean // Editing mode
 }
 
-const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
+const AccountInformationName: React.FC<Props> = ({ account }) => {
   const { colors } = useTheme()
 
   const movedContent = useMemo(() => {
@@ -30,8 +28,6 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
     }
   }, [account?.moved])
 
-  const [displatName, setDisplayName] = useState(account?.display_name)
-
   return (
     <View
       style={{
@@ -42,25 +38,21 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
       }}
     >
       {account ? (
-        edit ? (
-          <Input title='昵称' value={displatName} setValue={setDisplayName} />
-        ) : (
-          <>
-            <CustomText
-              style={{
-                textDecorationLine: account?.moved ? 'line-through' : undefined
-              }}
-            >
-              <ParseEmojis
-                content={account.display_name || account.username}
-                emojis={account.emojis}
-                size='L'
-                fontBold
-              />
-            </CustomText>
-            {movedContent}
-          </>
-        )
+        <>
+          <CustomText
+            style={{
+              textDecorationLine: account?.moved ? 'line-through' : undefined
+            }}
+          >
+            <ParseEmojis
+              content={account.display_name || account.username}
+              emojis={account.emojis}
+              size='L'
+              fontBold
+            />
+          </CustomText>
+          {movedContent}
+        </>
       ) : (
         <PlaceholderLine
           width={StyleConstants.Font.Size.L * 2}
@@ -74,7 +66,4 @@ const AccountInformationName: React.FC<Props> = ({ account, edit }) => {
   )
 }
 
-export default React.memo(
-  AccountInformationName,
-  (_, next) => next.account === undefined
-)
+export default React.memo(AccountInformationName, (_, next) => next.account === undefined)

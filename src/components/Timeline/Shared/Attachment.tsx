@@ -41,6 +41,7 @@ const TimelineAttachment = React.memo(
     }
     const [sensitiveShown, setSensitiveShown] = useState(defaultSensitive())
 
+    // @ts-ignore
     const imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls'] =
       status.media_attachments
         .map(attachment => {

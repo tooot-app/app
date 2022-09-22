@@ -1,50 +1,54 @@
+import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Keyboard, Pressable, View } from 'react-native'
 import EmojisContext from './helpers/EmojisContext'
 
-const EmojisButton = React.memo(
-  () => {
-    const { colors } = useTheme()
-    const { emojisState, emojisDispatch } = useContext(EmojisContext)
+const EmojisButton: React.FC = () => {
+  const { colors } = useTheme()
+  const { emojisState, emojisDispatch } = useContext(EmojisContext)
 
-    return emojisState.enabled ? (
-      <Pressable
-        disabled={!emojisState.emojis || !emojisState.emojis.length}
-        onPress={() =>
-          emojisDispatch({ type: 'activate', payload: !emojisState.active })
+  const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)
+  if (focusedPropsIndex === -1) {
+    return null
+  }
+
+  return (
+    <Pressable
+      disabled={!emojis.current || !emojis.current.length}
+      onPress={() => {
+        if (emojisState.targetIndex === -1) {
+          Keyboard.dismiss()
         }
-        hitSlop={StyleConstants.Spacing.S}
-        style={styles.base}
-        children={
+        emojisDispatch({ type: 'target', payload: focusedPropsIndex })
+      }}
+      hitSlop={StyleConstants.Spacing.S}
+      style={{
+        alignSelf: 'flex-end',
+        padding: StyleConstants.Spacing.Global.PagePadding / 2
+      }}
+      children={
+        <View
+          style={{
+            borderWidth: 2,
+            borderColor: colors.primaryDefault,
+            padding: StyleConstants.Spacing.Global.PagePadding / 2,
+            borderRadius: 100
+          }}
+        >
           <Icon
-            name={
-              emojisState.emojis && emojisState.emojis.length
-                ? emojisState.active
-                  ? 'Type'
-                  : 'Smile'
-                : 'Meh'
-            }
-            size={StyleConstants.Font.Size.L}
+            name={emojis.current && emojis.current.length ? 'Smile' : 'Meh'}
+            size={24}
             color={
-              emojisState.emojis && emojisState.emojis.length
-                ? colors.primaryDefault
-                : colors.disabled
+              emojis.current && emojis.current.length ? colors.primaryDefault : colors.disabled
             }
           />
-        }
-      />
-    ) : null
-  },
-  () => true
-)
-
-const styles = StyleSheet.create({
-  base: {
-    paddingLeft: StyleConstants.Spacing.S
-  }
-})
+        </View>
+      }
+    />
+  )
+}
 
 export default EmojisButton

@@ -5,22 +5,12 @@ import CustomText from '@components/Text'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
-import {
-  getInstanceDrafts,
-  removeInstanceDraft
-} from '@utils/slices/instancesSlice'
+import { getInstanceDrafts, removeInstanceDraft } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  Dimensions,
-  Image,
-  Modal,
-  Platform,
-  Pressable,
-  View
-} from 'react-native'
+import { Dimensions, Image, Modal, Platform, Pressable, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { useSelector } from 'react-redux'
@@ -42,8 +32,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
     draft => draft.timestamp !== timestamp
   )
 
-  const actionWidth =
-    StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4
+  const actionWidth = StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4
 
   const [checkingAttachments, setCheckingAttachments] = useState(false)
 
@@ -81,17 +70,9 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
             }
 
             tempDraft.spoiler?.length &&
-              formatText({
-                textInput: 'text',
-                composeDispatch,
-                content: tempDraft.spoiler
-              })
+              formatText({ textInput: 'text', composeDispatch, content: tempDraft.spoiler })
             tempDraft.text?.length &&
-              formatText({
-                textInput: 'text',
-                composeDispatch,
-                content: tempDraft.text
-              })
+              formatText({ textInput: 'text', composeDispatch, content: tempDraft.text })
             composeDispatch({
               type: 'loadDraft',
               payload: tempDraft
@@ -110,9 +91,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
                 color: colors.primaryDefault
               }}
             >
-              {item.text ||
-                item.spoiler ||
-                t('content.draftsList.content.textEmpty')}
+              {item.text || item.spoiler || t('content.draftsList.content.textEmpty')}
             </CustomText>
             {item.attachments?.uploads.length ? (
               <View
@@ -139,9 +118,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
                       marginLeft: index !== 0 ? StyleConstants.Spacing.S : 0
                     }}
                     source={{
-                      uri:
-                        attachment.local?.thumbnail ||
-                        attachment.remote?.preview_url
+                      uri: attachment.local?.thumbnail || attachment.remote?.preview_url
                     }}
                   />
                 ))}
@@ -173,10 +150,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
           size={StyleConstants.Font.Size.M}
           style={{ marginRight: StyleConstants.Spacing.S }}
         />
-        <CustomText
-          fontStyle='S'
-          style={{ flexShrink: 1, color: colors.secondary }}
-        >
+        <CustomText fontStyle='S' style={{ flexShrink: 1, color: colors.secondary }}>
           {t('content.draftsList.warning')}
         </CustomText>
       </View>
@@ -196,8 +170,7 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
                 <Pressable
                   style={{
                     flexBasis:
-                      StyleConstants.Font.Size.L +
-                      StyleConstants.Spacing.Global.PagePadding * 4,
+                      StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4,
                     justifyContent: 'center',
                     alignItems: 'center'
                   }}

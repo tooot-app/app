@@ -1,19 +1,10 @@
 skip_docs
 
-VERSIONS = read_json( json_path: "./package.json" )[:versions]
+VERSION = read_json( json_path: "./package.json" )[:version]
+GITHUB_RELEASE = "v#{VERSION}"
 ENVIRONMENT = ENV["ENVIRONMENT"]
-VERSION = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}"
-RELEASE_CHANNEL = "#{VERSIONS[:major]}.#{VERSIONS[:minor]}-#{ENVIRONMENT}"
 BUILD_NUMBER = "#{Time.now.strftime("%y%m%d")}#{ENV["GITHUB_RUN_NUMBER"]}"
 GITHUB_REPO = "tooot-app/app"
-case ENVIRONMENT
-when "candidate"
-  GITHUB_RELEASE = "v#{VERSION}-#{VERSIONS[:patch]}"
-when "release"
-  GITHUB_RELEASE = "v#{VERSION}"
-else
-  GITHUB_RELEASE= ""
-end
 
 XCODEPROJ = "./ios/tooot.xcodeproj"
 INFO_PLIST = "./ios/tooot/Info.plist"
@@ -30,9 +21,6 @@ private_lane :build_ios do
   BUILD_DIRECTORY = "./ios/build"
   IPA_FILE = "#{BUILD_DIRECTORY}/tooot.ipa"
   DSYM_FILE = "#{BUILD_DIRECTORY}/tooot.app.dSYM.zip"
-
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesRuntimeVersion", value: VERSION )
-  set_info_plist_value( path: EXPO_PLIST, key: "EXUpdatesRequestHeaders", subkey: "expo-channel-name", value: ENVIRONMENT )
 
   setup_ci
   set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
@@ -97,8 +85,6 @@ private_lane :build_android do
     print_command: true,
     print_command_output: true,
     properties: {
-      "runtimeVersion" => VERSION,
-      "branch" => ENVIRONMENT,
       "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
       "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
       "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
@@ -136,8 +122,6 @@ private_lane :build_android_apk do
     print_command: true,
     print_command_output: true,
     properties: {
-      "runtimeVersion" => VERSION,
-      "branch" => ENVIRONMENT,
       "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
       "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
       "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
@@ -149,31 +133,18 @@ private_lane :build_android_apk do
 end
 
 lane :ios do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
-  if releaseExists
-    puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
-  else
-    puts("Release #{GITHUB_RELEASE} does not exist.")
-    cocoapods(clean_install: true, podfile: "./ios/Podfile")
-    build_ios
-  end
+  cocoapods(clean_install: true, podfile: "./ios/Podfile")
+  build_ios
   rocket
 end
 
 lane :android do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
-  if releaseExists
-    puts("Release #{GITHUB_RELEASE} exists. Continue with building React Native only.")
-  else
-    puts("Release #{GITHUB_RELEASE} does not exist. Create new release as well as new native build.")
-    build_android
-  end
+  build_android
   rocket
 end
 
 lane :release do
-  releaseExists = get_github_release(url: GITHUB_REPO, version: "v#{VERSION}", api_bearer: ENV['GH_PAT_GET_RELEASE'])
-  if !releaseExists
+  if ENVIRONMENT == 'release'
     build_android_apk
     set_github_release(
       repository_name: GITHUB_REPO,
@@ -181,7 +152,7 @@ lane :release do
       tag_name: GITHUB_RELEASE,
       description: "No changelog provided",
       commitish: git_branch,
-      is_prerelease: ENVIRONMENT == 'candidate',
+      is_prerelease: false,
       upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
     )
   end

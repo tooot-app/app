@@ -1,11 +1,12 @@
+import LinkifyIt from 'linkify-it'
 import { debounce, differenceWith, isEqual } from 'lodash'
-import React, { createElement, Dispatch } from 'react'
+import React, { Dispatch } from 'react'
 import { FetchOptions } from 'react-query/types/core/query'
-import Autolinker from '@root/modules/autolinker'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './utils/types'
 import { instanceConfigurationStatusCharsURL } from './Root'
 import CustomText from '@components/Text'
+import { emojis } from '@components/Emojis'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']
@@ -21,57 +22,76 @@ const TagText = ({ text }: { text: string }) => {
   return <CustomText style={{ color: colors.blue }}>{text}</CustomText>
 }
 
+const linkify = new LinkifyIt()
+linkify
+  .set({ fuzzyLink: false, fuzzyEmail: false })
+  .add('@', {
+    validate: function (text, pos, self) {
+      var tail = text.slice(pos)
+
+      if (!self.re.mention) {
+        self.re.mention = new RegExp('^\\S+')
+      }
+      if (self.re.mention.test(tail)) {
+        return tail.match(self.re.mention)![0].length
+      }
+      return 0
+    }
+  })
+  .add('#', {
+    validate: function (text, pos, self) {
+      var tail = text.slice(pos)
+
+      if (!self.re.hashtag) {
+        self.re.hashtag = new RegExp('^[A-Za-z0-9_]+')
+      }
+      if (self.re.hashtag.test(tail)) {
+        return tail.match(self.re.hashtag)![0].length
+      }
+      return 0
+    }
+  })
+  .add(':', {
+    validate: function (text, pos, self) {
+      var tail = text.slice(pos)
+
+      if (!self.re.emoji) {
+        self.re.emoji = new RegExp('^(?:([^:]+):)')
+      }
+      if (self.re.emoji.test(tail)) {
+        return tail.match(self.re.emoji)![0].length
+      }
+      return 0
+    }
+  })
+
 const debouncedSuggestions = debounce(
   (composeDispatch, tag) => {
     composeDispatch({ type: 'tag', payload: tag })
   },
   500,
-  {
-    trailing: true
-  }
+  { trailing: true }
 )
 
 let prevTags: ComposeState['tag'][] = []
 
-const formatText = ({
-  textInput,
-  composeDispatch,
-  content,
-  disableDebounce = false
-}: Params) => {
-  const tags: ComposeState['tag'][] = []
-  Autolinker.link(content, {
-    email: false,
-    phone: false,
-    mention: 'mastodon',
-    hashtag: 'twitter',
-    replaceFn: props => {
-      const type = props.getType()
-      let newType: 'url' | 'accounts' | 'hashtags'
-      switch (type) {
-        case 'mention':
-          newType = 'accounts'
-          break
-        case 'hashtag':
-          newType = 'hashtags'
-          break
-        default:
-          newType = 'url'
-          break
+const formatText = ({ textInput, composeDispatch, content, disableDebounce = false }: Params) => {
+  const tags = linkify.match(content)
+  if (!tags) {
+    composeDispatch({
+      type: textInput,
+      payload: {
+        count: content.length,
+        raw: content,
+        formatted: <CustomText children={content} />
       }
-      tags.push({
-        type: newType,
-        text: props.getMatchedText(),
-        offset: props.getOffset(),
-        length: props.getMatchedText().length
-      })
-      return
-    }
-  })
+    })
+    return
+  }
 
-  const changedTag = differenceWith(tags, prevTags, isEqual)
+  const changedTag: LinkifyIt.Match[] = differenceWith(tags, prevTags, isEqual)
   if (changedTag.length > 0 && !disableDebounce) {
-    if (changedTag[0]?.type !== 'url') {
+    if (changedTag[0]?.schema === '@' || changedTag[0]?.schema === '#') {
       debouncedSuggestions(composeDispatch, changedTag[0])
     }
   } else {
@@ -84,33 +104,49 @@ const formatText = ({
   let contentLength: number = 0
   const children = []
   tags.forEach((tag, index) => {
-    if (tag) {
-      const prev = _content.substr(0, tag.offset - pointer)
-      const main = _content.substr(tag.offset - pointer, tag.length)
-      const next = _content.substr(tag.offset - pointer + tag.length)
-      children.push(prev)
-      contentLength = contentLength + prev.length
-      children.push(<TagText key={index} text={main} />)
-      switch (tag.type) {
-        case 'url':
-          contentLength = contentLength + instanceConfigurationStatusCharsURL
-          break
-        case 'accounts':
-          const theMatch = main.match(/@/g)
-          if (theMatch && theMatch.length > 1) {
-            contentLength =
-              contentLength + main.split(new RegExp('(@.*?)@'))[1].length
-          } else {
-            contentLength = contentLength + main.length
-          }
-          break
-        case 'hashtags':
-          contentLength = contentLength + main.length
-          break
+    const prev = _content.substring(0, tag.index - pointer)
+    const main = _content.substring(tag.index - pointer, tag.lastIndex - pointer)
+    const next = _content.substring(tag.lastIndex - pointer)
+    children.push(prev)
+    contentLength = contentLength + prev.length
+
+    if (tag.schema === ':') {
+      if (emojis.current?.length) {
+        const matchedEmoji = emojis.current.filter(
+          emojisSection =>
+            emojisSection.data.filter(
+              emojisGroup => emojisGroup.filter(emoji => `:${emoji.shortcode}:` === main).length
+            ).length
+        ).length
+        if (matchedEmoji) {
+          children.push(<TagText key={index} text={main} />)
+        } else {
+          children.push(main)
+        }
       }
-      _content = next
-      pointer = pointer + prev.length + tag.length
+    } else {
+      children.push(<TagText key={index} text={main} />)
     }
+
+    switch (tag.schema) {
+      case '@':
+        const theMatch = main.match(/@/g)
+        if (theMatch && theMatch.length > 1) {
+          contentLength = contentLength + main.split(new RegExp('(@.*?)@'))[1].length
+        } else {
+          contentLength = contentLength + main.length
+        }
+        break
+      case '#':
+      case ':':
+        contentLength = contentLength + main.length
+        break
+      default:
+        contentLength = contentLength + instanceConfigurationStatusCharsURL
+        break
+    }
+    _content = next
+    pointer = pointer + prev.length + tag.lastIndex - tag.index
   })
   children.push(_content)
   contentLength = contentLength + _content.length
@@ -120,7 +156,7 @@ const formatText = ({
     payload: {
       count: contentLength,
       raw: content,
-      formatted: createElement(CustomText, null, children)
+      formatted: <CustomText children={children} />
     }
   })
 }
