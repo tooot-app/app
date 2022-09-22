@@ -93,7 +93,7 @@ const TabMeProfileName: React.FC<
   }, [theme, i18n.language, dirty, status, value])
 
   return (
-    <ComponentEmojis inputProps={[displayNameProps]} focusRef={displayNameProps.ref}>
+    <ComponentEmojis inputProps={[displayNameProps]}>
       <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         <ComponentInput
           {...displayNameProps}

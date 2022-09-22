@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView } from 'react-native'
+import { Alert, ScrollView, TextInput } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 
 const Field: React.FC<{
@@ -21,19 +21,23 @@ const Field: React.FC<{
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
+  const nameRef = useRef<TextInput>(null)
+  const valueRef = useRef<TextInput>(null)
   const [name, setName] = useState(field?.name || '')
   const [value, setValue] = useState(field?.value || '')
   allProps[index * 2] = {
     value: [name, setName],
     selection: useState({ start: name.length }),
     isFocused: useRef<boolean>(false),
-    maxLength: 255
+    maxLength: 255,
+    ref: nameRef
   }
   allProps[index * 2 + 1] = {
     value: [value, setValue],
     selection: useState({ start: value.length }),
     isFocused: useRef<boolean>(false),
-    maxLength: 255
+    maxLength: 255,
+    ref: valueRef
   }
 
   useEffect(() => {

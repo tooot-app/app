@@ -93,7 +93,7 @@ const TabMeProfileNote: React.FC<
   }, [theme, i18n.language, dirty, status, notes])
 
   return (
-    <ComponentEmojis inputProps={[notesProps]} focusRef={notesProps.ref}>
+    <ComponentEmojis inputProps={[notesProps]}>
       <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         <ComponentInput {...notesProps} multiline />
       </ScrollView>

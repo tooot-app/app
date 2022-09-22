@@ -21,6 +21,7 @@ const ComposeSpoilerInput: React.FC = () => {
 
   return (
     <TextInput
+      ref={composeState.textInputFocus.refs.spoiler}
       keyboardAppearance={mode}
       style={{
         ...StyleConstants.FontStyle.M,

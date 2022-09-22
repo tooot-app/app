@@ -39,7 +39,7 @@ const composeInitialState: Omit<ComposeState, 'timestamp'> = {
   replyToStatus: undefined,
   textInputFocus: {
     current: 'text',
-    refs: { text: createRef() },
+    refs: { text: createRef(), spoiler: createRef() },
     isFocused: { text: createRef(), spoiler: createRef() }
   }
 }

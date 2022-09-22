@@ -1,9 +1,7 @@
 import ComponentSeparator from '@components/Separator'
-import { useEmojisQuery } from '@utils/queryHooks/emojis'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { AccessibilityInfo, findNodeHandle, FlatList, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
@@ -14,19 +12,13 @@ import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useSelector } from 'react-redux'
-import {
-  getInstanceConfigurationStatusCharsURL,
-  getInstanceFrequentEmojis
-} from '@utils/slices/instancesSlice'
-import { useTranslation } from 'react-i18next'
+import { getInstanceConfigurationStatusCharsURL } from '@utils/slices/instancesSlice'
 
 export let instanceConfigurationStatusCharsURL = 23
 
 const ComposeRoot = React.memo(
   () => {
-    const { reduceMotionEnabled } = useAccessibility()
     const { colors } = useTheme()
 
     instanceConfigurationStatusCharsURL = useSelector(
@@ -42,7 +34,7 @@ const ComposeRoot = React.memo(
       tagDrafts && AccessibilityInfo.setAccessibilityFocus(tagDrafts)
     }, [accessibleRefDrafts.current])
 
-    const { composeState, composeDispatch } = useContext(ComposeContext)
+    const { composeState } = useContext(ComposeContext)
 
     const mapSchemaToType = () => {
       if (composeState.tag) {
@@ -70,30 +62,6 @@ const ComposeRoot = React.memo(
         refetch()
       }
     }, [composeState.tag])
-
-    const { t } = useTranslation()
-    const { data: emojisData } = useEmojisQuery({})
-    const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
-    useEffect(() => {
-      if (emojisData && emojisData.length) {
-        const sortedEmojis: {
-          title: string
-          data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-        }[] = []
-        forEach(groupBy(sortBy(emojisData, ['category', 'shortcode']), 'category'), (value, key) =>
-          sortedEmojis.push({ title: key, data: chunk(value, 5) })
-        )
-        if (frequentEmojis.length) {
-          sortedEmojis.unshift({
-            title: t('componentEmojis:frequentUsed'),
-            data: chunk(
-              frequentEmojis.map(e => e.emoji),
-              5
-            )
-          })
-        }
-      }
-    }, [emojisData, reduceMotionEnabled])
 
     const listEmpty = useMemo(() => {
       if (isFetching) {
