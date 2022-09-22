@@ -1,7 +1,7 @@
 import { HeaderLeft } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'

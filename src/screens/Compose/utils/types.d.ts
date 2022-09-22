@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { Asset } from 'react-native-image-picker'
 
 export type ExtendedAttachment = {
@@ -39,10 +40,6 @@ export type ComposeState = {
     index: number
     lastIndex: number
     raw: string
-    // type: 'url' | 'accounts' | 'hashtags'
-    // text: string
-    // offset: number
-    // length: number
   }
   poll: {
     active: boolean
@@ -62,7 +59,7 @@ export type ComposeState = {
   replyToStatus?: Mastodon.Status
   textInputFocus: {
     current: 'text' | 'spoiler'
-    refs: { text: RefObject<TextInput> }
+    refs: { text: RefObject<TextInput>, spoiler: RefObject<TextInput> }
     isFocused: { text: MutableRefObject<boolean>, spoiler: MutableRefObject<boolean> }
   }
 }

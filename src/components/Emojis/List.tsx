@@ -27,7 +27,7 @@ const EmojisList = () => {
   const { reduceMotionEnabled } = useAccessibility()
   const { t } = useTranslation()
 
-  const { emojisState } = useContext(EmojisContext)
+  const { emojisState, emojisDispatch } = useContext(EmojisContext)
   const { colors, mode } = useTheme()
 
   const addEmoji = (shortcode: string) => {
@@ -165,6 +165,17 @@ const EmojisList = () => {
           autoCorrect={false}
           spellCheck={false}
         />
+        <Pressable
+          style={{ paddingLeft: StyleConstants.Spacing.M }}
+          onPress={() => {
+            if (emojisState.targetIndex !== -1) {
+              emojisState.inputProps[emojisState.targetIndex].ref?.current?.focus()
+            }
+            emojisDispatch({ type: 'target', payload: -1 })
+          }}
+        >
+          <Icon name='ChevronDown' size={StyleConstants.Font.Size.L} color={colors.secondary} />
+        </Pressable>
       </View>
       <SectionList
         accessible

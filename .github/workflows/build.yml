@@ -114,6 +114,3 @@ jobs:
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
         run: yarn app:build release
-      - name: -- Step 8 -- Publish expo update
-        run: eas update --auto
-

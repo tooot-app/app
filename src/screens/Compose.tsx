@@ -365,7 +365,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         selection => composeDispatch({ type: 'text', payload: { selection } })
       ],
       isFocused: composeState.textInputFocus.isFocused.text,
-      maxLength: maxTootChars - (composeState.spoiler.active ? composeState.spoiler.count : 0)
+      maxLength: maxTootChars - (composeState.spoiler.active ? composeState.spoiler.count : 0),
+      ref: composeState.textInputFocus.refs.text
     },
     {
       value: [
@@ -377,7 +378,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         selection => composeDispatch({ type: 'spoiler', payload: { selection } })
       ],
       isFocused: composeState.textInputFocus.isFocused.spoiler,
-      maxLength: maxTootChars - composeState.text.count
+      maxLength: maxTootChars - composeState.text.count,
+      ref: composeState.textInputFocus.refs.spoiler
     }
   ]
 
