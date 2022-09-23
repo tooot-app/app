@@ -436,7 +436,7 @@ PODS:
     - React
   - react-native-netinfo (9.3.1):
     - React-Core
-  - react-native-pager-view (5.4.25):
+  - react-native-pager-view (6.0.0):
     - React-Core
   - react-native-paste-input (0.5.0):
     - React-Core
@@ -958,7 +958,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
   react-native-netinfo: c8d02a805706024f8de3a339a028f7e64f63b4b6
-  react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
+  react-native-pager-view: e76d64a5114a152e942caa09136e4e250709378c
   react-native-paste-input: 3037f113267c367e863790bcfd57cdb3ace3cad6
   react-native-safe-area-context: dfe5aa13bee37a0c7e8059d14f72ffc076d120e9
   react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
