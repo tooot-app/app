@@ -11,8 +11,8 @@
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
-    "iphone": "react-native run-ios",
-    "ipad": "react-native run-ios --simulator 'iPad mini (6th generation)'",
+    "iphone": "react-native run-ios --simulator 'iPhone 14 Pro'",
+    "ipad": "react-native run-ios --simulator 'iPad Pro (11-inch) (3rd generation)'",
     "app:build": "bundle exec fastlane",
     "clean": "react-native-clean-project",
     "postinstall": "patch-package"
