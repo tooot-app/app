@@ -22,6 +22,7 @@ private_lane :build_ios do
   DSYM_FILE = "#{BUILD_DIRECTORY}/tooot.app.dSYM.zip"
 
   setup_ci
+  xcversion(version: "13.4.1")
   set_info_plist_value( path: INFO_PLIST, key: "CFBundleShortVersionString", value: VERSION )
   set_info_plist_value(
     path: INFO_PLIST,
