@@ -8,7 +8,6 @@ GITHUB_REPO = "tooot-app/app"
 
 XCODEPROJ = "./ios/tooot.xcodeproj"
 INFO_PLIST = "./ios/tooot/Info.plist"
-EXPO_PLIST = "./ios/tooot/Supporting/Expo.plist"
 
 desc "ANDROID: Prepare play store"
 private_lane :prepare_playstore_android do
@@ -36,6 +35,7 @@ private_lane :build_ios do
   build_ios_app(
     export_method: "app-store",
     include_symbols: true,
+    include_bitcode: true,
     output_directory: BUILD_DIRECTORY,
     silent: false
   )
