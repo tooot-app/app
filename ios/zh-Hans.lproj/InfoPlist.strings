@@ -1,10 +1,2 @@
-/* 
-  InfoPlist.strings
-  tooot
-
-  Created by Zheng Zhiyuan (SEBD) on 2021-04-16.
-  
-*/
-
 "NSPhotoLibraryAddUsageDescription" = "允许tooot保存图片至相册";
-"NSPhotoLibraryUsageDescription" = "允许tooot读取相册图片或视频，以添加嘟文附件";
+"NSPhotoLibraryUsageDescription" = "允许tooot保存图片至相册";
