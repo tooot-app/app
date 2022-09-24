@@ -10,11 +10,9 @@ import push from '@root/startup/push'
 import sentry from '@root/startup/sentry'
 import timezone from '@root/startup/timezone'
 import { persistor, store } from '@root/store'
+import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import {
-  changeLanguage,
-  getSettingsLanguage
-} from '@utils/slices/settingsSlice'
+import { changeLanguage, getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -24,7 +22,6 @@ import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import * as Sentry from 'sentry-expo'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -93,15 +90,13 @@ const App: React.FC = () => {
                 }
 
                 return (
-                  <Sentry.Native.TouchEventBoundary>
-                    <ActionSheetProvider>
-                      <AccessibilityManager>
-                        <ThemeManager>
-                          <Screens localCorrupt={localCorrupt} />
-                        </ThemeManager>
-                      </AccessibilityManager>
-                    </ActionSheetProvider>
-                  </Sentry.Native.TouchEventBoundary>
+                  <ActionSheetProvider>
+                    <AccessibilityManager>
+                      <ThemeManager>
+                        <Screens localCorrupt={localCorrupt} />
+                      </ThemeManager>
+                    </AccessibilityManager>
+                  </ActionSheetProvider>
                 )
               } else {
                 return null
@@ -114,4 +109,4 @@ const App: React.FC = () => {
   )
 }
 
-export default React.memo(App, () => true)
+export default Sentry.wrap(App)

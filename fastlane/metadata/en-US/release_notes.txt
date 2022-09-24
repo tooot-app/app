@@ -1,2 +1,0 @@
-Support selecting multiple images
-Long press toot to show options

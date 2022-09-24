@@ -10,20 +10,6 @@ export default (): ExpoConfig => ({
   version,
   extra: { environment: process.env.ENVIRONMENT },
   privacy: 'hidden',
-  hooks: {
-    postPublish: [
-      {
-        file: 'sentry-expo/upload-sourcemaps',
-        config: {
-          organization: process.env.SENTRY_ORGANIZATION,
-          project: process.env.SENTRY_PROJECT,
-          authToken: process.env.SENTRY_AUTH_TOKEN,
-          setCommits: process.env.GITHUB_SHA || undefined,
-          deployEnv: process.env.ENVIRONMENT
-        }
-      }
-    ]
-  },
   jsEngine: 'hermes',
   ios: {
     bundleIdentifier: 'com.xmflsct.app.tooot'

@@ -7,6 +7,7 @@ import { persistor } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as Localization from 'expo-localization'
 import React from 'react'
 import { DevSettings } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -19,6 +20,16 @@ const SettingsDev: React.FC = () => {
 
   return (
     <MenuContainer>
+      <CustomText
+        fontStyle='S'
+        selectable
+        style={{
+          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+          color: colors.primaryDefault
+        }}
+      >
+        {JSON.stringify(Localization.locales)}
+      </CustomText>
       <CustomText
         fontStyle='S'
         selectable

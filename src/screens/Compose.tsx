@@ -7,6 +7,7 @@ import haptics from '@root/components/haptics'
 import { useAppDispatch } from '@root/store'
 import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
+import * as Sentry from '@sentry/react-native'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
@@ -24,7 +25,6 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
-import * as Sentry from 'sentry-expo'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
@@ -326,7 +326,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.Native.captureMessage('Compose posting', {
+                Sentry.captureMessage('Compose posting', {
                   contexts: { errorObject: error }
                 })
                 haptics('Error')
