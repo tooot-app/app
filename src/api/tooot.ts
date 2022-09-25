@@ -1,7 +1,7 @@
+import * as Sentry from '@sentry/react-native'
 import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
 import Constants from 'expo-constants'
-import * as Sentry from 'sentry-expo'
 import handleError, { ctx } from './handleError'
 
 export type Params = {
@@ -31,11 +31,11 @@ const apiTooot = async <T = unknown>({
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
-      ' ' +
-      method +
-      ctx.green(' -> ') +
-      `/${url}` +
-      (params ? ctx.green(' -> ') : ''),
+    ' ' +
+    method +
+    ctx.green(' -> ') +
+    `/${url}` +
+    (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -65,12 +65,12 @@ const apiTooot = async <T = unknown>({
     })
     .catch(error => {
       if (sentry) {
-        Sentry.Native.setExtras({
+        Sentry.setExtras({
           API: 'tooot',
           ...(error?.response && { response: error.response }),
           ...(error?.request && { request: error.request })
         })
-        Sentry.Native.captureException(error)
+        Sentry.captureException(error)
       }
 
       return handleError(error)

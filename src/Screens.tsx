@@ -10,6 +10,7 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
+import * as Sentry from '@sentry/react-native'
 import initQuery from '@utils/initQuery'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
@@ -31,7 +32,6 @@ import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
 import { useSelector } from 'react-redux'
-import * as Sentry from 'sentry-expo'
 import { useAppDispatch } from './store'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -49,10 +49,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   const routeRef = useRef<{ name?: string; params?: {} }>()
 
   // Push hooks
-  const instances = useSelector(
-    getInstances,
-    (prev, next) => prev.length === next.length
-  )
+  const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
   pushUseConnect({ t, instances })
   pushUseReceive({ instances })
   pushUseRespond({ instances })
@@ -102,9 +99,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const currentRoute = navigationRef.getCurrentRoute()
     routeRef.current = {
       name: currentRoute?.name,
-      params: currentRoute?.params
-        ? JSON.stringify(currentRoute.params)
-        : undefined
+      params: currentRoute?.params ? JSON.stringify(currentRoute.params) : undefined
     }
   }, [])
   const navigationContainerOnStateChange = useCallback(() => {
@@ -119,7 +114,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
     if (previousRoute?.name !== currentRoute?.name) {
       analytics('screen_view', { screen_name: currentRoute?.name })
-      Sentry.Native.setContext('page', {
+      Sentry.setContext('page', {
         previous: previousRoute,
         current: currentRoute
       })
@@ -316,9 +311,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               headerShadowVisible: false,
               headerTransparent: true,
               headerStyle: { backgroundColor: 'transparent' },
-              headerLeft: () => (
-                <HeaderLeft content='X' onPress={() => navigation.goBack()} />
-              ),
+              headerLeft: () => <HeaderLeft content='X' onPress={() => navigation.goBack()} />,
               title: t('screenAnnouncements:heading')
             })}
           />

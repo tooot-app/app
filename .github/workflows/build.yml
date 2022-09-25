@@ -27,6 +27,7 @@ jobs:
         env:
           DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
@@ -67,6 +68,7 @@ jobs:
       - name: -- Step 6 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
@@ -103,6 +105,7 @@ jobs:
       - name: -- Step 6 -- Run fastlane
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}

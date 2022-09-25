@@ -1,5 +1,3 @@
-languages(['de-DE', 'en-US', 'it', 'ko', 'pt-BR', 'vi', 'zh-Hans'])
-
 name({
   'default' => "tooot"
 })
