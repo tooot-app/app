@@ -161,7 +161,7 @@ PODS:
     - GoogleUtilities/MethodSwizzler
   - GoogleUtilities/UserDefaults (7.8.0):
     - GoogleUtilities/Logger
-  - hermes-engine (0.69.5)
+  - hermes-engine (0.69.6)
   - libevent (2.1.12)
   - libwebp (1.2.3):
     - libwebp/demux (= 1.2.3)
@@ -883,7 +883,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 6ee231473fbd75c11221dfce489894334024eead
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
-  hermes-engine: 479687cd0904b24f1b2ae71d1196b44786af5601
+  hermes-engine: c2c873a670bc435451449f918c2b3ab3c39255fc
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
