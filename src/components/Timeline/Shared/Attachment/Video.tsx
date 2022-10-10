@@ -7,6 +7,7 @@ import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import analytics from '@components/analytics'
 import AttachmentAltText from './AltText'
+import { Platform } from 'expo-modules-core'
 
 export interface Props {
   total: number
@@ -27,6 +28,7 @@ const AttachmentVideo: React.FC<Props> = ({
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [videoPosition, setVideoPosition] = useState<number>(0)
+  const [videoResizeMode, setVideoResizeMode] = useState<ResizeMode>(ResizeMode.COVER)
   const playOnPress = useCallback(async () => {
     analytics('timeline_shared_attachment_video_length', {
       length: video.meta?.length
@@ -39,6 +41,7 @@ const AttachmentVideo: React.FC<Props> = ({
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })
     }
+    Platform.OS === 'android' && setVideoResizeMode(ResizeMode.CONTAIN)
     await videoPlayer.current?.setPositionAsync(videoPosition)
     await videoPlayer.current?.presentFullscreenPlayer()
     videoPlayer.current?.playAsync()
@@ -62,11 +65,7 @@ const AttachmentVideo: React.FC<Props> = ({
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {
       await videoPlayer.current?.pauseAsync()
-    } else if (
-      gifv &&
-      appState.current.match(/background/) &&
-      nextAppState.match(/active/)
-    ) {
+    } else if (gifv && appState.current.match(/background/) && nextAppState.match(/active/)) {
       await videoPlayer.current?.setIsMutedAsync(true)
       await videoPlayer.current?.playAsync()
     }
@@ -99,7 +98,7 @@ const AttachmentVideo: React.FC<Props> = ({
           opacity: sensitiveShown ? 0 : 1
         }}
         usePoster
-        resizeMode={ResizeMode.COVER}
+        resizeMode={videoResizeMode}
         {...(gifv
           ? {
               shouldPlay: true,
@@ -113,12 +112,9 @@ const AttachmentVideo: React.FC<Props> = ({
             })}
         useNativeControls={false}
         onFullscreenUpdate={async event => {
-          if (
-            event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS
-          ) {
-            if (gifv) {
-              await videoPlayer.current?.pauseAsync()
-            } else {
+          if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
+            Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
+            if (!gifv) {
               await videoPlayer.current?.pauseAsync()
             }
           }
@@ -156,10 +152,7 @@ const AttachmentVideo: React.FC<Props> = ({
             loading={videoLoading}
           />
         ) : null}
-        <AttachmentAltText
-          sensitiveShown={sensitiveShown}
-          text={video.description}
-        />
+        <AttachmentAltText sensitiveShown={sensitiveShown} text={video.description} />
       </Pressable>
     </View>
   )
