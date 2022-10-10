@@ -1,18 +1,10 @@
 {
   "title": "Seleziona origine media",
+  "message": "",
   "options": {
     "image": "Carica foto",
     "image_max": "Carica foto (massimo {{max}})",
     "video": "Carica video",
     "video_max": "Carica video (max {{max}})"
-  },
-  "library": {
-    "alert": {
-      "title": "Permesso non concesso",
-      "message": "È richiesto l'accesso ai file del dispositivo per il caricamento dalla libreria",
-      "buttons": {
-        "settings": "Correggi impostazioni"
-      }
-    }
   }
 }
