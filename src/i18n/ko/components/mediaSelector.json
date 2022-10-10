@@ -1,18 +1,10 @@
 {
   "title": "미디어 소스 선택",
+  "message": "",
   "options": {
     "image": "",
     "image_max": "",
     "video": "",
     "video_max": ""
-  },
-  "library": {
-    "alert": {
-      "title": "권한 없음",
-      "message": "업로드를 위해 사진 라이브러리 권한이 필요해요",
-      "buttons": {
-        "settings": "설정 업데이트"
-      }
-    }
   }
 }
