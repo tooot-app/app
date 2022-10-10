@@ -1,18 +1,10 @@
 {
   "title": "Selecionar fonte de mídia",
+  "message": "",
   "options": {
     "image": "Enviar fotos",
     "image_max": "Carregar fotos (máx. {{max}})",
     "video": "Enviar vídeo",
     "video_max": "Carregar vídeo (máx. {{max}})"
-  },
-  "library": {
-    "alert": {
-      "title": "Sem permissão",
-      "message": "Exigir permissão de leitura da biblioteca de fotos para fazer upload",
-      "buttons": {
-        "settings": "Atualizar configurações"
-      }
-    }
   }
 }

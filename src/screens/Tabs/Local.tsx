@@ -9,6 +9,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import ContextMenu from 'react-native-context-menu-view'
 import TabSharedRoot from './Shared/Root'
 
@@ -33,7 +34,7 @@ const TabLocal = React.memo(
             headerTitle: () => (
               <ContextMenu
                 dropdownMenuMode
-                style={{ maxWidth: '80%' }}
+                style={{ maxWidth: '80%', flex: Platform.OS === 'android' ? 1 : undefined }}
                 actions={
                   lists?.length
                     ? [
