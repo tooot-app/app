@@ -408,7 +408,7 @@ PODS:
     - React-Core
   - react-native-blurhash (1.1.10):
     - React-Core
-  - react-native-cameraroll (4.1.2):
+  - react-native-cameraroll (5.0.4):
     - React-Core
   - react-native-context-menu-view (1.5.4):
     - React
@@ -638,7 +638,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
-  - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
+  - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-context-menu-view (from `../node_modules/react-native-context-menu-view`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-language-detection (from `../node_modules/react-native-language-detection`)
@@ -783,7 +783,7 @@ EXTERNAL SOURCES:
   react-native-blurhash:
     :path: "../node_modules/react-native-blurhash"
   react-native-cameraroll:
-    :path: "../node_modules/@react-native-community/cameraroll"
+    :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-context-menu-view:
     :path: "../node_modules/react-native-context-menu-view"
   react-native-image-picker:
@@ -905,7 +905,7 @@ SPEC CHECKSUMS:
   React-logger: ebb4d31bbbe4f1a8a1a9b658d7429210b8f68160
   react-native-blur: 3e9c8e8e9f7d17fa1b94e1a0ae9fd816675f5382
   react-native-blurhash: add4df9a937b4e021a24bc67a0714f13e0bd40b7
-  react-native-cameraroll: 2957f2bce63ae896a848fbe0d5352c1bd4d20866
+  react-native-cameraroll: 38b40d9033e4077b6c603f92f95c6d05fa7907df
   react-native-context-menu-view: b0beca02aad4bd9f9d7d932bf437e0a03baa69ef
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d

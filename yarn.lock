@@ -1786,6 +1786,11 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-camera-roll/camera-roll@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.0.4.tgz#341b8275363ee496b796fa58cb592697798d39e5"
+  integrity sha512-3kBRgW3VfmLQmQm70gPUVDu8rPSZymoPc9vmeiPLMKBqtWaqPNuPX0jQ6mZ8AEtYbBdoWC360Q4YYPalXv37zA==
+
 "@react-native-clipboard/clipboard@^1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.11.1.tgz#d3a9e685ce2383b1e92b89a334896c5575cc103d"
@@ -1795,11 +1800,6 @@
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/blur/-/blur-4.2.0.tgz#f100d0ba220ecfed26be3c0ad2ceffa5eee17533"
   integrity sha512-StgP5zQJOCHqDRjmcKnzVkJ920S6DYBKRJfigSUnlkNQp+HzZtVtyKq0j5a7x84NtHcV7j8Uy5mz1Lx9ZKRKfA==
-
-"@react-native-community/cameraroll@^4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-4.1.2.tgz#489c6bb6137571540d93c543d5fcf8c652b548ec"
-  integrity sha512-jkdhMByMKD2CZ/5MPeBieYn8vkCfC4MOTouPpBpps3I8N6HUYJk+1JnDdktVYl2WINnqXpQptDA2YptVyifYAg==
 
 "@react-native-community/cli-clean@^8.0.4":
   version "8.0.4"
