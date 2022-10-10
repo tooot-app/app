@@ -1,18 +1,10 @@
 {
   "title": "Datenquelle auswählen",
+  "message": "",
   "options": {
     "image": "",
     "image_max": "",
     "video": "",
     "video_max": ""
-  },
-  "library": {
-    "alert": {
-      "title": "Kein Zugriff",
-      "message": "Für den Upload ist eine Zugriffsgenehmigung erforderlich",
-      "buttons": {
-        "settings": "Einstellungen bestätigen"
-      }
-    }
   }
 }
