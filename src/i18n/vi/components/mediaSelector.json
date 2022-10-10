@@ -1,18 +1,10 @@
 {
   "title": "Chọn nguồn",
+  "message": "",
   "options": {
     "image": "Tải ảnh lên",
     "image_max": "Tải ảnh lên (tối đa {{max}})",
     "video": "Tải video lên",
     "video_max": "Tải video lên (tối đa {{max}})"
-  },
-  "library": {
-    "alert": {
-      "title": "Chưa được cấp quyền",
-      "message": "Bạn cần cấp quyền đọc thư viện ảnh trước",
-      "buttons": {
-        "settings": "Cài đặt cập nhật"
-      }
-    }
   }
 }
