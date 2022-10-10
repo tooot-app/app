@@ -1,6 +1,6 @@
 {
   "title": "选择媒体",
-  "message": "",
+  "message": "媒体EXIF数据不被上传",
   "options": {
     "image": "上传图片",
     "image_max": "上传照片（上限 {{max}}）",
