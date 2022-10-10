@@ -76,9 +76,7 @@ const renderNode = ({
             </CustomText>
           )
         } else if (classes.includes('mention') && mentions) {
-          const accountIndex = mentions.findIndex(
-            mention => mention.url === href
-          )
+          const accountIndex = mentions.findIndex(mention => mention.url === href)
           const differentAccount = routeParams?.account
             ? routeParams.account.id !== mentions[accountIndex]?.id
             : true
@@ -86,8 +84,7 @@ const renderNode = ({
             <CustomText
               key={index}
               style={{
-                color:
-                  accountIndex !== -1 ? colors.blue : colors.primaryDefault,
+                color: accountIndex !== -1 ? colors.blue : colors.primaryDefault,
                 fontSize: adaptedFontsize,
                 lineHeight: adaptedLineheight
               }}
@@ -109,10 +106,8 @@ const renderNode = ({
       } else {
         const domain = href?.split(new RegExp(/:\/\/(.[^\/]+)/))
         // Need example here
-        const content =
-          node.children && node.children[0] && node.children[0].data
-        const shouldBeTag =
-          tags && tags.filter(tag => `#${tag.name}` === content).length > 0
+        const content = node.children && node.children[0] && node.children[0].data
+        const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content).length > 0
         return (
           <CustomText
             key={index}
@@ -135,8 +130,7 @@ const renderNode = ({
               }
             }}
           >
-            {(content && content !== href && content) ||
-              (showFullLink ? href : domain[1])}
+            {(content && content !== href && content) || (showFullLink ? href : domain[1])}
             {!shouldBeTag ? (
               <Icon
                 color={colors.blue}
@@ -205,8 +199,7 @@ const ParseHTML = React.memo(
       adaptiveSize ? adaptiveFontsize : 0
     )
 
-    const navigation =
-      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
     const { t, i18n } = useTranslation('componentParse')
@@ -254,7 +247,7 @@ const ParseHTML = React.memo(
 
         return (
           <View style={{ overflow: 'hidden' }}>
-            {typeof totalLines === 'number' ? (
+            {typeof totalLines === 'number' || numberOfLines === 1 ? (
               <Pressable
                 accessibilityLabel={t('HTML.accessibilityHint')}
                 onPress={() => {
@@ -296,10 +289,7 @@ const ParseHTML = React.memo(
             <CustomText
               children={children}
               onTextLayout={({ nativeEvent }) => {
-                if (
-                  numberOfLines === 1 ||
-                  nativeEvent.lines.length >= numberOfLines + 5
-                ) {
+                if (numberOfLines === 1 || nativeEvent.lines.length >= numberOfLines + 5) {
                   setTotalLines(nativeEvent.lines.length)
                 }
               }}
@@ -307,11 +297,7 @@ const ParseHTML = React.memo(
                 height: numberOfLines === 1 && !expanded ? 0 : undefined
               }}
               numberOfLines={
-                typeof totalLines === 'number'
-                  ? expanded
-                    ? 999
-                    : numberOfLines
-                  : undefined
+                typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : undefined
               }
               selectable={selectable}
             />

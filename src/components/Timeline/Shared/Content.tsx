@@ -9,18 +9,12 @@ export interface Props {
     mentions?: Mastodon.Status['mentions']
     tags?: Mastodon.Status['tags']
   }
-  numberOfLines?: number
   highlighted?: boolean
   disableDetails?: boolean
 }
 
 const TimelineContent = React.memo(
-  ({
-    status,
-    numberOfLines,
-    highlighted = false,
-    disableDetails = false
-  }: Props) => {
+  ({ status, highlighted = false, disableDetails = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const instanceAccount = useSelector(getInstanceAccount, () => true)
 
@@ -46,9 +40,7 @@ const TimelineContent = React.memo(
               emojis={status.emojis}
               mentions={status.mentions}
               tags={status.tags}
-              numberOfLines={
-                instanceAccount.preferences['reading:expand:spoilers'] ? 999 : 1
-              }
+              numberOfLines={instanceAccount.preferences['reading:expand:spoilers'] ? 999 : 1}
               expandHint={t('shared.content.expandHint')}
               highlighted={highlighted}
               disableDetails={disableDetails}
@@ -62,7 +54,7 @@ const TimelineContent = React.memo(
             emojis={status.emojis}
             mentions={status.mentions}
             tags={status.tags}
-            numberOfLines={highlighted ? 999 : numberOfLines}
+            numberOfLines={highlighted ? 999 : undefined}
             disableDetails={disableDetails}
           />
         )}
