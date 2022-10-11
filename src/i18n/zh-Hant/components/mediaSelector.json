@@ -1,18 +1,10 @@
 {
   "title": "選擇媒體來源",
+  "message": "",
   "options": {
     "image": "",
     "image_max": "",
     "video": "",
     "video_max": ""
-  },
-  "library": {
-    "alert": {
-      "title": "權限不足",
-      "message": "上傳照片需要讀取的權限",
-      "buttons": {
-        "settings": "更新設定"
-      }
-    }
   }
 }

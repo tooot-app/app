@@ -93,6 +93,7 @@ const mediaSelector = async ({
     showActionSheetWithOptions(
       {
         title: i18next.t('componentMediaSelector:title'),
+        message: i18next.t('componentMediaSelector:message'),
         options: options(),
         cancelButtonIndex: mediaType ? 1 : 2
       },

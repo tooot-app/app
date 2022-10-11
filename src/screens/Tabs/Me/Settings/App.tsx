@@ -16,8 +16,10 @@ import {
   getSettingsStaticEmoji,
   changeStaticEmoji
 } from '@utils/slices/settingsSlice'
+import * as Localization from 'expo-localization'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Linking, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { mapFontsizeToName } from '../SettingsFontsize'
 
@@ -37,18 +39,20 @@ const SettingsApp: React.FC = () => {
     <MenuContainer>
       <MenuRow
         title={t('me.settings.fontsize.heading')}
-        content={t(
-          `me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
-        )}
+        content={t(`me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`)}
         iconBack='ChevronRight'
         onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
       <MenuRow
         title={t('me.settings.language.heading')}
         // @ts-ignore
-        content={LOCALES[i18n.language]}
+        content={LOCALES[Platform.OS === 'ios' ? Localization.locale : i18n.language]}
         iconBack='ChevronRight'
-        onPress={() => navigation.navigate('Tab-Me-Settings-Language')}
+        onPress={() =>
+          Platform.OS === 'ios'
+            ? Linking.openSettings()
+            : navigation.navigate('Tab-Me-Settings-Language')
+        }
       />
       <MenuRow
         title={t('me.settings.theme.heading')}

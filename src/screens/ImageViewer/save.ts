@@ -1,6 +1,6 @@
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
-import CameraRoll from '@react-native-community/cameraroll'
+import { CameraRoll } from '@react-native-camera-roll/camera-roll'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import { Theme } from '@utils/styles/themes'
 import * as FileSystem from 'expo-file-system'

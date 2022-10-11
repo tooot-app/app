@@ -1,18 +1,10 @@
 {
   "title": "Select media source",
+  "message": "Media EXIF data are not uploaded",
   "options": {
     "image": "Upload photos",
     "image_max": "Upload photos (max {{max}})",
     "video": "Upload video",
     "video_max": "Upload video (max {{max}})"
-  },
-  "library": {
-    "alert": {
-      "title": "No permission",
-      "message": "Require photo library read permission to upload",
-      "buttons": {
-        "settings": "Update setting"
-      }
-    }
   }
 }
