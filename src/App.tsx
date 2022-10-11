@@ -14,6 +14,7 @@ import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import { changeLanguage, getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
+import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { LogBox, Platform } from 'react-native'
@@ -81,9 +82,15 @@ const App: React.FC = () => {
               log('log', 'App', 'bootstrapped')
               if (bootstrapped) {
                 log('log', 'App', 'loading actual app :)')
-                const language = getSettingsLanguage(store.getState())
+                log('log', 'App', `Locale: ${Localization.locale}`)
+                const language =
+                  Platform.OS === 'ios'
+                    ? Localization.locale
+                    : getSettingsLanguage(store.getState())
                 if (!language) {
-                  store.dispatch(changeLanguage('en'))
+                  if (Platform.OS !== 'ios') {
+                    store.dispatch(changeLanguage('en'))
+                  }
                   i18n.changeLanguage('en')
                 } else {
                   i18n.changeLanguage(language)
