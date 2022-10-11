@@ -1,6 +1,6 @@
 {
   "title": "Chọn nguồn",
-  "message": "",
+  "message": "Chưa tải lên EXIF hình ảnh",
   "options": {
     "image": "Tải ảnh lên",
     "image_max": "Tải ảnh lên (tối đa {{max}})",
