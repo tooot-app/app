@@ -43,7 +43,7 @@ const TabLocal = React.memo(
                           title: t('tabs.local.name'),
                           disabled: queryKey[1].page === 'Following'
                         },
-                        ...lists.map(list => ({
+                        ...lists?.map(list => ({
                           id: list.id,
                           title: list.title,
                           disabled: queryKey[1].page === 'List' && queryKey[1].list === list.id

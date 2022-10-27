@@ -16,7 +16,7 @@ import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
@@ -47,8 +47,7 @@ const TimelineDefault: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
   const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const actualStatus = item.reblog ? item.reblog : item
 
@@ -60,9 +59,9 @@ const TimelineDefault: React.FC<Props> = ({
   })
 
   if (
-    !highlighted &&
     queryKey &&
-    shouldFilter({ copiableContent, status: actualStatus, queryKey })
+    shouldFilter({ copiableContent, status: actualStatus, queryKey }) &&
+    !highlighted
   ) {
     return <TimelineFiltered />
   }
@@ -92,9 +91,7 @@ const TimelineDefault: React.FC<Props> = ({
           padding: StyleConstants.Spacing.Global.PagePadding,
           backgroundColor: colors.backgroundDefault,
           paddingBottom:
-            disableDetails && disableOnPress
-              ? StyleConstants.Spacing.Global.PagePadding
-              : 0
+            disableDetails && disableOnPress ? StyleConstants.Spacing.Global.PagePadding : 0
         }}
         onPress={onPress}
         onLongPress={() => {}}
@@ -121,13 +118,10 @@ const TimelineDefault: React.FC<Props> = ({
         <View
           style={{
             paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-            paddingLeft: highlighted
-              ? 0
-              : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
-          {typeof actualStatus.content === 'string' &&
-          actualStatus.content.length > 0 ? (
+          {typeof actualStatus.content === 'string' && actualStatus.content.length > 0 ? (
             <TimelineContent
               status={actualStatus}
               highlighted={highlighted}
@@ -149,14 +143,9 @@ const TimelineDefault: React.FC<Props> = ({
           actualStatus.media_attachments.length ? (
             <TimelineAttachment status={actualStatus} />
           ) : null}
-          {!disableDetails && actualStatus.card ? (
-            <TimelineCard card={actualStatus.card} />
-          ) : null}
+          {!disableDetails && actualStatus.card ? <TimelineCard card={actualStatus.card} /> : null}
           {!disableDetails ? (
-            <TimelineFullConversation
-              queryKey={queryKey}
-              status={actualStatus}
-            />
+            <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
           ) : null}
           <TimelineTranslate status={actualStatus} highlighted={highlighted} />
           <TimelineFeedback status={actualStatus} highlighted={highlighted} />
@@ -170,10 +159,7 @@ const TimelineDefault: React.FC<Props> = ({
             status={actualStatus}
             ownAccount={ownAccount}
             accts={uniqBy(
-              (
-                [actualStatus.account] as Mastodon.Account[] &
-                  Mastodon.Mention[]
-              )
+              ([actualStatus.account] as Mastodon.Account[] & Mastodon.Mention[])
                 .concat(actualStatus.mentions)
                 .filter(d => d?.id !== instanceAccount?.id),
               d => d?.id
