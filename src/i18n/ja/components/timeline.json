@@ -21,14 +21,14 @@
   "shared": {
     "actioned": {
       "pinned": "固定された投稿",
-      "favourite": "{name}さんがあなたのトゥートをお気に入りに登録しました",
-      "status": "{name}さんが投稿しました",
-      "follow": "{name}さんにフォローされました",
+      "favourite": "{{name}}さんがあなたのトゥートをお気に入りに登録しました",
+      "status": "{{name}}さんが投稿しました",
+      "follow": "{{name}}さんにフォローされました",
       "follow_request": "{{name}}さんがフォローをリクエストしました",
       "poll": "アンケートが終了しました",
       "reblog": {
-        "default": "{name}さんがブースト",
-        "notification": "{name}さんがあなたのトゥートをブーストしました"
+        "default": "{{name}}さんがブースト",
+        "notification": "{{name}}さんがあなたのトゥートをブーストしました"
       },
       "update": "ブーストしたトゥートが編集されました"
     },
