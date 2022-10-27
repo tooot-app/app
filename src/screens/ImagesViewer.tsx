@@ -21,8 +21,7 @@ import FlashMessage from 'react-native-flash-message'
 import {
   Directions,
   FlingGestureHandler,
-  LongPressGestureHandler,
-  State
+  LongPressGestureHandler
 } from 'react-native-gesture-handler'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -142,7 +141,7 @@ const ScreenImagesViewer = ({
 
   const onViewableItemsChanged = useCallback(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      setCurrentIndex(viewableItems[0].index || 0)
+      setCurrentIndex(viewableItems[0]?.index || 0)
     },
     []
   )

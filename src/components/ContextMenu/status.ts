@@ -89,7 +89,7 @@ const contextMenuStatus = ({
       {
         id: 'status-mute',
         title: t('status.mute.action', {
-          context: status.muted.toString()
+          context: (status.muted || false).toString()
         }),
         systemIcon: status.muted ? 'speaker' : 'speaker.slash'
       }
@@ -108,7 +108,7 @@ const contextMenuStatus = ({
       accountMenuItems.push({
         id: 'status-pin',
         title: t('status.pin.action', {
-          context: status.pinned.toString()
+          context: (status.pinned || false).toString()
         }),
         systemIcon: status.pinned ? 'pin.slash' : 'pin'
       })

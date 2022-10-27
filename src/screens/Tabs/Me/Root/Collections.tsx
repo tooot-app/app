@@ -46,7 +46,7 @@ const Collections: React.FC = () => {
         updateInstanceMePage({
           announcements: {
             shown: announcementsQuery.data?.length ? true : false,
-            unread: announcementsQuery.data.filter(
+            unread: announcementsQuery.data?.filter(
               announcement => !announcement.read
             ).length
           }

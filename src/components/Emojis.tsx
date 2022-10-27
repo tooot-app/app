@@ -12,33 +12,6 @@ import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-co
 import { useSelector } from 'react-redux'
 import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
-const prefetchEmojis = (
-  sortedEmojis: {
-    title: string
-    data: Pick<Mastodon.Emoji, 'shortcode' | 'url' | 'static_url'>[][]
-  }[],
-  reduceMotionEnabled: boolean
-) => {
-  const prefetches: { uri: string }[] = []
-  let requestedIndex = 0
-  sortedEmojis.forEach(sorted => {
-    sorted.data.forEach(emojis =>
-      emojis.forEach(emoji => {
-        if (requestedIndex > 40) {
-          return
-        }
-        prefetches.push({
-          uri: reduceMotionEnabled ? emoji.static_url : emoji.url
-        })
-        requestedIndex++
-      })
-    )
-  })
-  try {
-    FastImage.preload(prefetches)
-  } catch {}
-}
-
 export type Props = {
   inputProps: EmojisState['inputProps']
   customButton?: boolean
@@ -82,7 +55,6 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
         })
       }
       emojis.current = sortedEmojis
-      prefetchEmojis(sortedEmojis, reduceMotionEnabled)
     }
   }, [data, reduceMotionEnabled])
 

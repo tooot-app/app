@@ -147,11 +147,11 @@ const instancesSlice = createSlice({
           .map((e, i) =>
             i === foundEmojiIndex
               ? {
-                  ...e,
-                  score: calculateScore(e),
-                  count: e.count + 1,
-                  lastUsed: new Date().getTime()
-                }
+                ...e,
+                score: calculateScore(e),
+                count: e.count + 1,
+                lastUsed: new Date().getTime()
+              }
               : e
           )
           .sort((a, b) => b.score - a.score)
@@ -350,17 +350,17 @@ export const getInstanceVersion = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.version
 export const checkInstanceFeature =
   (feature: string) =>
-  ({ instances: { instances } }: RootState): Boolean => {
-    return (
-      features
-        .filter(f => f.feature === feature)
-        .filter(
-          f =>
-            parseFloat(instances[findInstanceActive(instances)]?.version) >=
-            f.version
-        ).length > 0
-    )
-  }
+    ({ instances: { instances } }: RootState): Boolean => {
+      return (
+        features
+          .filter(f => f.feature === feature)
+          .filter(
+            f =>
+              parseFloat(instances[findInstanceActive(instances)]?.version) >=
+              f.version
+          )?.length > 0
+      )
+    }
 
 /* Get Instance Configuration */
 export const getInstanceConfigurationStatusMaxChars = ({
@@ -434,7 +434,7 @@ export const getInstanceAccount = ({ instances: { instances } }: RootState) =>
 
 export const getInstanceNotificationsFilter = ({
   instances: { instances }
-}: RootState) => instances[findInstanceActive(instances)].notifications_filter
+}: RootState) => instances[findInstanceActive(instances)]?.notifications_filter
 
 export const getInstancePush = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.push
