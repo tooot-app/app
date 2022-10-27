@@ -33,6 +33,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
       url: `push/connect/${expoToken}`,
       sentry: true
     }).catch(error => {
+      Notifications.setBadgeCountAsync(0)
       if (error?.status == 404) {
         displayMessage({
           theme,
