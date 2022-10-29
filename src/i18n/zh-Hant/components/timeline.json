@@ -15,7 +15,7 @@
     "message": "上次閱讀於"
   },
   "refresh": {
-    "fetchPreviousPage": "",
+    "fetchPreviousPage": "較新的嘟文",
     "refetch": "到最新的位置"
   },
   "shared": {
@@ -30,7 +30,7 @@
         "default": "{{name}} 轉嘟了",
         "notification": "{{name}} 轉嘟了您的嘟文"
       },
-      "update": ""
+      "update": "轉嘟已編輯"
     },
     "actions": {
       "reply": {
@@ -64,82 +64,82 @@
         "accessibilityLabel": "嘟文被編輯了 {{count}} 次",
         "accessibilityHint": "點擊查看編輯紀錄",
         "text_one": "{{count}} 次編輯",
-        "text_other": ""
+        "text_other": "{{count}} 次編輯"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "顯示敏感內容"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "載入錯誤",
+        "button": "嘗試遠端連接"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "{{name}} 的大頭貼",
+      "accessibilityHint": "點擊進入 {{name}} 的頁面"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "隱藏內容"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "已過濾",
+    "fullConversation": "閱讀全部對話",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "翻譯",
+      "succeed": "由 {{provider}} 翻譯自 {{source}}",
+      "failed": "翻譯失敗",
+      "source_not_supported": "不支援嘟文的語言",
+      "target_not_supported": "不支援目標翻譯語言"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "使用者顯示名稱"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "使用者帳戶"
           }
         },
-        "application": "",
+        "application": "{{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "嘟文已編輯"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "已靜音此嘟文"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "此嘟文是私訊"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "此嘟文僅跟隨者可見"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "@",
         "delete": {
-          "function": ""
+          "function": "刪除私訊"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "投票",
+          "refresh": "重新整理"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} 人投票",
+          "voters_other": "{{count}} 人投票",
+          "votes_one": "{{count}} 票",
+          "votes_other": "{{count}} 票"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "投票已結束",
+          "until": "<0 />截止"
         }
       }
     }
