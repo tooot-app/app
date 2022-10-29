@@ -25,8 +25,8 @@
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "篩選器",
-      "accessibilityHint": ""
+      "accessibilityLabel": "過濾器",
+      "accessibilityHint": "過濾顯示的通知類型"
     }
   },
   "me": {
@@ -44,7 +44,7 @@
         "name": "嘟文字體大小"
       },
       "language": {
-        "name": ""
+        "name": "語言"
       },
       "lists": {
         "name": "清單"
@@ -78,208 +78,208 @@
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>這是一條測試用的嘟文😊。以下是可供選擇的字體大小，從小至超大。<br /><br />這個設定僅會調整嘟文的本身字體大小，不影響其它字體大小。</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "小",
+        "M": "M - 預設",
+        "L": "大",
+        "XL": "超大",
+        "XXL": "特大"
       }
     },
     "profile": {
       "cancellation": {
-        "title": "",
-        "message": "",
+        "title": "變更尚未儲存",
+        "message": "您的變更尚未儲存。是否放棄儲存變更？",
         "buttons": {
-          "cancel": "",
-          "discard": ""
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "不儲存"
         }
       },
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} 已更新",
+        "failed": "{{type}} 更新失敗，請重試。"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "顯示名稱"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "大頭貼",
+          "description": "會按比例縮小成 400x400 像素"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "頁面頂端",
+          "description": "會按比例縮小成 1500x500 像素"
         },
         "note": {
-          "title": ""
+          "title": "簡介"
         },
         "fields": {
           "title": "描述資料",
-          "total_one": "",
-          "total_other": ""
+          "total_one": "{{count}} 項",
+          "total_other": "{{count}} 項"
         },
         "visibility": {
-          "title": "",
+          "title": "嘟文預設公開範圍",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "cancel": ""
+            "public": "公開",
+            "unlisted": "不公開",
+            "private": "僅限跟隨者",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "媒體預設標為敏感"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "鎖定帳號",
+          "description": "需要您手動批准跟隨請求"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "機器人帳號",
+          "description": "此帳號主要執行自動操作且可能未被監控"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "第 {{index}} 組",
+        "label": "標籤",
+        "content": "內容"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "圖片處理失敗，請重試"
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "您的手機不支援 tooot 推播通知",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "啟用推播通知",
+        "settings": "在設定中啟用"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "啟用 {{acct}}",
+        "description": "通知訊息將經由 tooot 伺服器轉發"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "顯示通知內容",
+        "description": "經由 tooot 伺服器轉發的通知訊息已被加密，但可以允許 tooot 伺服器解密並轉發訊息。tooot 訊息伺服器為開放原始碼，且不儲存任何日誌。"
       },
       "default": {
-        "heading": ""
+        "heading": "預設"
       },
       "follow": {
-        "heading": ""
+        "heading": "新的跟隨者"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "跟隨請求"
       },
       "favourite": {
-        "heading": ""
+        "heading": "嘟文被喜歡"
       },
       "reblog": {
-        "heading": ""
+        "heading": "嘟文被轉嘟"
       },
       "mention": {
-        "heading": ""
+        "heading": "嘟文提及您"
       },
       "poll": {
-        "heading": ""
+        "heading": "投票更新"
       },
       "status": {
-        "heading": ""
+        "heading": "訂閱用戶的嘟文"
       },
-      "howitworks": ""
+      "howitworks": "了解通知訊息轉發如何工作"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} 條未讀",
+          "read": "全部已讀",
+          "empty": "無"
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "啟用",
+          "disabled": "關閉"
         }
       },
       "update": {
-        "title": ""
+        "title": "已更新到最新版本"
       },
       "logout": {
-        "button": "",
+        "button": "登出",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "確定要登出？",
+          "message": "登出後，需要重新驗證帳號",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": "登出",
+            "cancel": "$t(common:buttons.cancel)"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
-          "cancel": ""
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "theme": {
-        "heading": "",
+        "heading": "外觀",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": "",
-          "cancel": ""
+          "auto": "跟隨系統",
+          "light": "淺色模式",
+          "dark": "深色模式",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "深色主題",
         "options": {
-          "lighter": "",
-          "darker": "",
-          "cancel": ""
+          "lighter": "暗淡",
+          "darker": "暗黑",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "開啟連結",
         "options": {
-          "internal": "",
-          "external": "",
-          "cancel": ""
+          "internal": "從應用程式內開啟",
+          "external": "使用系統瀏覽器開啟",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "使用靜態表情",
+        "description": "如果您在查看表情列表時經常遇到程式無預警退出，您可以嘗試使用靜態表情。"
       },
       "feedback": {
-        "heading": ""
+        "heading": "功能建議"
       },
       "support": {
-        "heading": ""
+        "heading": "贊助 tooot 開發"
       },
       "review": {
-        "heading": ""
+        "heading": "給 tooot 評分"
       },
       "contact": {
-        "heading": ""
+        "heading": "聯繫 tooot"
       },
       "analytics": {
-        "heading": "",
-        "description": ""
+        "heading": "幫助我們改善",
+        "description": "僅收集不與使用者關聯的資料"
       },
-      "version": "",
+      "version": "Version v{{version}}",
       "instanceVersion": ""
     },
     "switch": {
@@ -295,59 +295,59 @@
       },
       "followed_by": "",
       "moved": "",
-      "created_at": "",
+      "created_at": "加入於：{{date}}",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": "{{count}} 條嘟文",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "嘟文",
+        "all": "嘟文與回覆"
       }
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>的媒體</1>"
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "搜尋",
+        "placeholder": "什麼呢"
       },
       "empty": {
-        "general": "",
+        "general": "輸入關鍵字搜尋<bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold>或<bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "進階搜尋",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "使用者",
+        "hashtags": "主題標籤",
+        "statuses": "嘟文"
       },
-      "notFound": ""
+      "notFound": "找不到 <bold>{{searchTerm}}</bold> 相關的 {{type}}"
     },
     "toot": {
-      "name": ""
+      "name": "討論"
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "正在跟隨 {{count}} 人",
+        "followers": "被 {{count}} 人跟隨"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} 人轉嘟",
+        "favourited_by": "{{count}} 人喜歡"
       }
     },
     "history": {
-      "name": ""
+      "name": "編輯歷史"
     }
   }
 }
