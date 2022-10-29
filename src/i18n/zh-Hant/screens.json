@@ -9,7 +9,7 @@
   },
   "pushError": {
     "message": "推播服務錯誤",
-    "description": "請在設定裡重新啟用推播"
+    "description": "請在設定中重新啟用推播"
   },
   "shareError": {
     "imageNotSupported": "不支援 {{type}} 類型的圖片",
