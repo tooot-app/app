@@ -184,7 +184,7 @@
         "heading": "投票更新"
       },
       "status": {
-        "heading": "訂閱用戶的嘟文"
+        "heading": "訂閱使用者的嘟文"
       },
       "howitworks": "了解通知訊息轉發如何工作"
     },
@@ -280,21 +280,21 @@
         "description": "僅收集不與使用者關聯的資料"
       },
       "version": "Version v{{version}}",
-      "instanceVersion": ""
+      "instanceVersion": "Mastodon version v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "選擇已登入的帳號",
+      "new": "登入新站點"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "對使用者 {{user}} 的操作",
+        "accessibilityHint": "您可以靜音、封鎖、檢舉或分享此使用者"
       },
-      "followed_by": "",
-      "moved": "",
+      "followed_by": " 正在跟隨你",
+      "moved": "使用者已轉移",
       "created_at": "加入於：{{date}}",
       "summary": {
         "statuses_count": "{{count}} 條嘟文",
