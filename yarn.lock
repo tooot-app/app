@@ -7069,6 +7069,11 @@ react-native-language-detection@^0.1.0:
   resolved "https://registry.yarnpkg.com/react-native-language-detection/-/react-native-language-detection-0.1.0.tgz#06b5d20bffb60dbbd599c8e62b6acf500952afa8"
   integrity sha512-26CLndVMmMbVp40Y9Herza73nfR08JFTcYkJ3MX5MIQbGRoqgNAG89z8pA1y7dPHHK1Nfa6AWKAYpNv7tMRCaw==
 
+react-native-live-text-image-view@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-live-text-image-view/-/react-native-live-text-image-view-0.4.0.tgz#d23d5850788609fd1448533213fc6c453c584761"
+  integrity sha512-PhVFE0YogSLrTlnHIxUWL80CrmbDvxk1JvLx4UHiRHRwLda4dV/e/9Q+Pyh7Vq7qwAPE6vGoN6sjbXNaj4WCew==
+
 react-native-pager-view@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.0.1.tgz#353abf38d3c2b91ed7c586f10af0f94700f5b1dc"

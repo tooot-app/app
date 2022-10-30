@@ -22,6 +22,7 @@ import {
   FlingGestureHandler,
   LongPressGestureHandler
 } from 'react-native-gesture-handler'
+import { LiveTextImageView } from 'react-native-live-text-image-view'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
@@ -115,20 +116,22 @@ const ScreenImagesViewer = ({
                 justifyContent: 'center'
               }}
             >
-              <GracefullyImage
-                uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
-                blurhash={item.blurhash}
-                dimension={{
-                  width:
-                    screenRatio > imageRatio
-                      ? (SCREEN_HEIGHT / imageHeight) * imageWidth
-                      : SCREEN_WIDTH,
-                  height:
-                    screenRatio > imageRatio
-                      ? SCREEN_HEIGHT
-                      : (SCREEN_WIDTH / imageWidth) * imageHeight
-                }}
-              />
+              <LiveTextImageView>
+                <GracefullyImage
+                  uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
+                  blurhash={item.blurhash}
+                  dimension={{
+                    width:
+                      screenRatio > imageRatio
+                        ? (SCREEN_HEIGHT / imageHeight) * imageWidth
+                        : SCREEN_WIDTH,
+                    height:
+                      screenRatio > imageRatio
+                        ? SCREEN_HEIGHT
+                        : (SCREEN_WIDTH / imageWidth) * imageHeight
+                  }}
+                />
+              </LiveTextImageView>
             </View>
           }
         />

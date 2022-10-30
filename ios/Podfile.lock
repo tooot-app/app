@@ -416,6 +416,8 @@ PODS:
     - React-Core
   - react-native-language-detection (0.1.0):
     - React
+  - react-native-live-text-image-view (0.4.0):
+    - React-Core
   - react-native-netinfo (9.3.6):
     - React-Core
   - react-native-pager-view (6.0.1):
@@ -642,6 +644,7 @@ DEPENDENCIES:
   - react-native-context-menu-view (from `../node_modules/react-native-context-menu-view`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-language-detection (from `../node_modules/react-native-language-detection`)
+  - react-native-live-text-image-view (from `../node_modules/react-native-live-text-image-view`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - "react-native-paste-input (from `../node_modules/@mattermost/react-native-paste-input`)"
@@ -790,6 +793,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-language-detection:
     :path: "../node_modules/react-native-language-detection"
+  react-native-live-text-image-view:
+    :path: "../node_modules/react-native-live-text-image-view"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
@@ -909,6 +914,7 @@ SPEC CHECKSUMS:
   react-native-context-menu-view: b0beca02aad4bd9f9d7d932bf437e0a03baa69ef
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
+  react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
   react-native-netinfo: f80db8cac2151405633324cb645c60af098ee461
   react-native-pager-view: 3051346698a0ba0c4e13e40097cc11b00ee03cca
   react-native-paste-input: 183ad7dc224e192719616f4258dde5b548627d08
