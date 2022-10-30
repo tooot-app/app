@@ -1,7 +1,7 @@
 {
   "HTML": {
     "accessibilityHint": "Toque para expandir ou recolher conteúdo",
-    "expanded": "",
+    "expanded": "{{hint}}{{moreLines}}",
     "moreLines": "",
     "defaultHint": ""
   }
