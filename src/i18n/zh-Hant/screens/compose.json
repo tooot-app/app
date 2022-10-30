@@ -39,7 +39,7 @@
       "header": {
         "postingAs": "以 @{{acct}}@{{domain}} 發嘟",
         "spoilerInput": {
-          "placeholder": "警告訊息"
+          "placeholder": "輸入警告訊息"
         },
         "textInput": {
           "placeholder": "正在想些什麼嗎？",
