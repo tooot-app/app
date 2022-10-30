@@ -1,8 +1,8 @@
 {
   "HTML": {
     "accessibilityHint": "点击展开或折叠内容",
-    "expanded": "{{hint}}{{totalLines}}",
-    "totalLines": " ({{count}} 行)",
+    "expanded": "",
+    "moreLines": "",
     "defaultHint": "长嘟文"
   }
 }
