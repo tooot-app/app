@@ -1,7 +1,7 @@
 {
   "HTML": {
     "accessibilityHint": "",
-    "expanded": "",
+    "expanded": "{{hint}}{{moreLines}}",
     "moreLines": "",
     "defaultHint": ""
   }
