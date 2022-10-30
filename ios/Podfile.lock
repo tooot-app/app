@@ -534,7 +534,7 @@ PODS:
     - React-Core
   - RNFastImage (8.6.1):
     - React-Core
-    - SDWebImage (~> 5.13.4)
+    - SDWebImage (~> 5.13.5)
     - SDWebImageWebPCoder (~> 0.9.0)
   - RNGestureHandler (2.8.0):
     - React-Core
@@ -575,9 +575,9 @@ PODS:
     - React
   - RNSVG (13.0.0):
     - React-Core
-  - SDWebImage (5.13.4):
-    - SDWebImage/Core (= 5.13.4)
-  - SDWebImage/Core (5.13.4)
+  - SDWebImage (5.13.5):
+    - SDWebImage/Core (= 5.13.5)
+  - SDWebImage/Core (5.13.5)
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
@@ -928,14 +928,14 @@ SPEC CHECKSUMS:
   ReactCommon: fe7580b9d10f00249facf25659e0ec051320cc8a
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
-  RNFastImage: e6267e27581b81918ebef6432c94c20718ec3b91
+  RNFastImage: 386e5658bdcc109e8f1fe3265884cb35f0b73541
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNReanimated: c3e58924b9418883b0bde9e78c4c957302f02435
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSentry: 694aecc3d8240e4935374974a6636e360ae06394
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
-  SDWebImage: e5cc87bf736e60f49592f307bdf9e157189298a3
+  SDWebImage: 23d714cd599354ee7906dbae26dff89b421c4370
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
   Sentry: 2c6053e4cfe6dea6608135dea1928ffbb4ecfba5
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
