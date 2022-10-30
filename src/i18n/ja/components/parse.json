@@ -1,8 +1,8 @@
 {
   "HTML": {
     "accessibilityHint": "タップして内容を展開または折りたたむ",
-    "expanded": "{{hint}}{{totalLines}}",
-    "totalLines": " ({{count}} 行)",
+    "expanded": "",
+    "moreLines": "",
     "defaultHint": "長いトゥート"
   }
 }
