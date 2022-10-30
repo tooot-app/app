@@ -1,76 +1,76 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "更多關於此條嘟文，例如發佈者等",
   "account": {
-    "title": "",
+    "title": "使用者操作",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "靜音使用者",
+      "action_true": "解除靜音使用者"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "封鎖使用者",
+      "action_true": "解除封鎖使用者"
     },
     "reports": {
-      "action": ""
+      "action": "檢舉並封鎖"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "複製嘟文",
+    "succeed": "已複製"
   },
   "instance": {
-    "title": "",
+    "title": "站點操作",
     "block": {
-      "action": "",
+      "action": "封鎖站點 {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "確認封鎖站點 {{instance}}？",
+        "message": "多數情況下，靜音或封鎖特定使用者即可。\n\n封鎖之後，來自此站點的所有內容將被移除。",
         "buttons": {
-          "confirm": ""
+          "confirm": "確認"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "分享嘟文"
     },
     "account": {
-      "action": ""
+      "action": "分享使用者"
     }
   },
   "status": {
-    "title": "",
+    "title": "嘟文操作",
     "edit": {
-      "action": ""
+      "action": "編輯嘟文"
     },
     "delete": {
-      "action": "",
+      "action": "刪除嘟文",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "確認刪除？",
+        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。",
         "buttons": {
-          "confirm": ""
+          "confirm": "確認"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "刪除嘟文並重新發佈",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "確認刪除並重新發佈？",
+        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。",
         "buttons": {
-          "confirm": ""
+          "confirm": "確認"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "靜音嘟文及回覆",
+      "action_true": "解除靜音嘟文及回覆"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "釘選嘟文",
+      "action_true": "取消釘選嘟文"
     }
   }
 }

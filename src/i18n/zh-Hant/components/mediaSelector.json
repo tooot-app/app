@@ -1,10 +1,10 @@
 {
   "title": "選擇媒體來源",
-  "message": "",
+  "message": "媒體 EXIF 資料不會被上傳",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "上傳圖片",
+    "image_max": "上傳圖片（最大 {{max}}）",
+    "video": "上傳影片",
+    "video_max": "上傳影片（最大 {{max}}）"
   }
 }
