@@ -5,22 +5,18 @@ import { RootStackParamList } from '@utils/navigation/navigators'
 import { Theme } from '@utils/styles/themes'
 import * as FileSystem from 'expo-file-system'
 import i18next from 'i18next'
-import { RefObject } from 'react'
 import { PermissionsAndroid, Platform } from 'react-native'
-import FlashMessage from 'react-native-flash-message'
 
 type CommonProps = {
-  messageRef: RefObject<FlashMessage>
   theme: Theme
   image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
 }
 
-const saveIos = async ({ messageRef, theme, image }: CommonProps) => {
+const saveIos = async ({ theme, image }: CommonProps) => {
   CameraRoll.save(image.url)
     .then(() => {
       haptics('Success')
       displayMessage({
-        ref: messageRef,
         theme,
         type: 'success',
         message: i18next.t('screenImageViewer:content.save.succeed')
@@ -32,7 +28,6 @@ const saveIos = async ({ messageRef, theme, image }: CommonProps) => {
           .then(() => {
             haptics('Success')
             displayMessage({
-              ref: messageRef,
               theme,
               type: 'success',
               message: i18next.t('screenImageViewer:content.save.succeed')
@@ -41,7 +36,6 @@ const saveIos = async ({ messageRef, theme, image }: CommonProps) => {
           .catch(() => {
             haptics('Error')
             displayMessage({
-              ref: messageRef,
               theme,
               type: 'error',
               message: i18next.t('screenImageViewer:content.save.failed')
@@ -50,7 +44,6 @@ const saveIos = async ({ messageRef, theme, image }: CommonProps) => {
       } else {
         haptics('Error')
         displayMessage({
-          ref: messageRef,
           theme,
           type: 'error',
           message: i18next.t('screenImageViewer:content.save.failed')
@@ -59,7 +52,7 @@ const saveIos = async ({ messageRef, theme, image }: CommonProps) => {
     })
 }
 
-const saveAndroid = async ({ messageRef, theme, image }: CommonProps) => {
+const saveAndroid = async ({ theme, image }: CommonProps) => {
   const fileUri: string = `${FileSystem.documentDirectory}${image.id}.jpg`
   const downloadedFile: FileSystem.FileSystemDownloadResult =
     await FileSystem.downloadAsync(image.url, fileUri)
@@ -67,7 +60,6 @@ const saveAndroid = async ({ messageRef, theme, image }: CommonProps) => {
   if (downloadedFile.status != 200) {
     haptics('Error')
     displayMessage({
-      ref: messageRef,
       theme,
       type: 'error',
       message: i18next.t('screenImageViewer:content.save.failed')
@@ -83,7 +75,6 @@ const saveAndroid = async ({ messageRef, theme, image }: CommonProps) => {
     if (status !== 'granted') {
       haptics('Error')
       displayMessage({
-        ref: messageRef,
         theme,
         type: 'error',
         message: i18next.t('screenImageViewer:content.save.failed')
@@ -96,7 +87,6 @@ const saveAndroid = async ({ messageRef, theme, image }: CommonProps) => {
     .then(() => {
       haptics('Success')
       displayMessage({
-        ref: messageRef,
         theme,
         type: 'success',
         message: i18next.t('screenImageViewer:content.save.succeed')
@@ -105,7 +95,6 @@ const saveAndroid = async ({ messageRef, theme, image }: CommonProps) => {
     .catch(() => {
       haptics('Error')
       displayMessage({
-        ref: messageRef,
         theme,
         type: 'error',
         message: i18next.t('screenImageViewer:content.save.failed')

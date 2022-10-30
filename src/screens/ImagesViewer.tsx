@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
-import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -51,7 +50,6 @@ const ScreenImagesViewer = ({
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
-  const listRef = useRef<FlatList>(null)
   const messageRef = useRef<FlashMessage>(null)
 
   const { showActionSheetWithOptions } = useActionSheet()
@@ -71,7 +69,7 @@ const ScreenImagesViewer = ({
         switch (buttonIndex) {
           case 0:
             analytics('imageviewer_more_save_press')
-            saveImage({ messageRef, theme, image: imageUrls[currentIndex] })
+            saveImage({ theme, image: imageUrls[currentIndex] })
             break
           case 1:
             analytics('imageviewer_more_share_press')
@@ -193,11 +191,7 @@ const ScreenImagesViewer = ({
                 switch (buttonIndex) {
                   case 0:
                     analytics('imageviewer_more_save_press')
-                    saveImage({
-                      messageRef,
-                      theme,
-                      image: imageUrls[currentIndex]
-                    })
+                    saveImage({ theme, image: imageUrls[currentIndex] })
                     break
                   case 1:
                     analytics('imageviewer_more_share_press')
@@ -236,7 +230,6 @@ const ScreenImagesViewer = ({
           />
         </LongPressGestureHandler>
       </FlingGestureHandler>
-      <Message ref={messageRef} />
     </SafeAreaProvider>
   )
 }
