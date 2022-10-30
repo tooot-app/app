@@ -17,12 +17,9 @@ import {
   ViewToken
 } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import {
-  Directions,
-  FlingGestureHandler,
-  LongPressGestureHandler
-} from 'react-native-gesture-handler'
+import { Directions, Gesture, LongPressGestureHandler } from 'react-native-gesture-handler'
 import { LiveTextImageView } from 'react-native-live-text-image-view'
+import { runOnJS } from 'react-native-reanimated'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
@@ -106,6 +103,9 @@ const ScreenImagesViewer = ({
       return (
         <Zoom
           maximumZoomScale={max > 8 ? 8 : max}
+          simultaneousGesture={Gesture.Fling()
+            .direction(Directions.DOWN)
+            .onStart(() => runOnJS(navigation.goBack)())}
           children={
             <View
               style={{
@@ -172,67 +172,61 @@ const ScreenImagesViewer = ({
           onPress={onPress}
         />
       </View>
-      <FlingGestureHandler
-        direction={Directions.DOWN}
-        numberOfPointers={1}
-        onEnded={() => navigation.goBack()}
-      >
-        <LongPressGestureHandler
-          onEnded={() => {
-            analytics('imageviewer_more_press')
-            showActionSheetWithOptions(
-              {
-                options: [
-                  t('content.options.save'),
-                  t('content.options.share'),
-                  t('content.options.cancel')
-                ],
-                cancelButtonIndex: 2,
-                userInterfaceStyle: mode
-              },
-              async buttonIndex => {
-                switch (buttonIndex) {
-                  case 0:
-                    analytics('imageviewer_more_save_press')
-                    saveImage({ theme, image: imageUrls[currentIndex] })
-                    break
-                  case 1:
-                    analytics('imageviewer_more_share_press')
-                    switch (Platform.OS) {
-                      case 'ios':
-                        await Share.share({ url: imageUrls[currentIndex].url })
-                        break
-                      case 'android':
-                        await Share.share({
-                          message: imageUrls[currentIndex].url
-                        })
-                        break
-                    }
-                    break
-                }
+      <LongPressGestureHandler
+        onEnded={() => {
+          analytics('imageviewer_more_press')
+          showActionSheetWithOptions(
+            {
+              options: [
+                t('content.options.save'),
+                t('content.options.share'),
+                t('content.options.cancel')
+              ],
+              cancelButtonIndex: 2,
+              userInterfaceStyle: mode
+            },
+            async buttonIndex => {
+              switch (buttonIndex) {
+                case 0:
+                  analytics('imageviewer_more_save_press')
+                  saveImage({ theme, image: imageUrls[currentIndex] })
+                  break
+                case 1:
+                  analytics('imageviewer_more_share_press')
+                  switch (Platform.OS) {
+                    case 'ios':
+                      await Share.share({ url: imageUrls[currentIndex].url })
+                      break
+                    case 'android':
+                      await Share.share({
+                        message: imageUrls[currentIndex].url
+                      })
+                      break
+                  }
+                  break
               }
-            )
+            }
+          )
+        }}
+      >
+        <ZoomFlatList
+          data={imageUrls}
+          pagingEnabled
+          horizontal
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50
           }}
-        >
-          <ZoomFlatList
-            data={imageUrls}
-            pagingEnabled
-            horizontal
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={{
-              itemVisiblePercentThreshold: 50
-            }}
-            initialScrollIndex={initialIndex}
-            getItemLayout={(_, index) => ({
-              length: SCREEN_WIDTH,
-              offset: SCREEN_WIDTH * index,
-              index
-            })}
-          />
-        </LongPressGestureHandler>
-      </FlingGestureHandler>
+          initialScrollIndex={initialIndex}
+          getItemLayout={(_, index) => ({
+            length: SCREEN_WIDTH,
+            offset: SCREEN_WIDTH * index,
+            index
+          })}
+        />
+      </LongPressGestureHandler>
     </SafeAreaProvider>
   )
 }
