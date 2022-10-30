@@ -1,8 +1,8 @@
 {
   "HTML": {
     "accessibilityHint": "Tap to expand or collapse content",
-    "expanded": "{{hint}}{{totalLines}}",
-    "totalLines": " ({{count}} lines)",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} more lines)",
     "defaultHint": "Long toot"
   }
 }

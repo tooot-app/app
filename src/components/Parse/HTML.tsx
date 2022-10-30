@@ -272,9 +272,9 @@ const ParseHTML = React.memo(
                   }}
                   children={t('HTML.expanded', {
                     hint: expandHint,
-                    totalLines:
+                    moreLines:
                       numberOfLines > 1 && typeof totalLines === 'number'
-                        ? t('HTML.totalLines', { count: totalLines })
+                        ? t('HTML.moreLines', { count: totalLines - numberOfLines })
                         : ''
                   })}
                 />

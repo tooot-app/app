@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "公告",
   "content": {
-    "published": "",
+    "published": "發佈於 <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "已讀",
+      "unread": "標記為已讀"
     }
   }
 }

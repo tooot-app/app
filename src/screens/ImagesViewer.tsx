@@ -1,7 +1,6 @@
 import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
-import { Message } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -23,6 +22,7 @@ import {
   FlingGestureHandler,
   LongPressGestureHandler
 } from 'react-native-gesture-handler'
+import { LiveTextImageView } from 'react-native-live-text-image-view'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
@@ -51,7 +51,6 @@ const ScreenImagesViewer = ({
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
-  const listRef = useRef<FlatList>(null)
   const messageRef = useRef<FlashMessage>(null)
 
   const { showActionSheetWithOptions } = useActionSheet()
@@ -71,7 +70,7 @@ const ScreenImagesViewer = ({
         switch (buttonIndex) {
           case 0:
             analytics('imageviewer_more_save_press')
-            saveImage({ messageRef, theme, image: imageUrls[currentIndex] })
+            saveImage({ theme, image: imageUrls[currentIndex] })
             break
           case 1:
             analytics('imageviewer_more_share_press')
@@ -117,20 +116,22 @@ const ScreenImagesViewer = ({
                 justifyContent: 'center'
               }}
             >
-              <GracefullyImage
-                uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
-                blurhash={item.blurhash}
-                dimension={{
-                  width:
-                    screenRatio > imageRatio
-                      ? (SCREEN_HEIGHT / imageHeight) * imageWidth
-                      : SCREEN_WIDTH,
-                  height:
-                    screenRatio > imageRatio
-                      ? SCREEN_HEIGHT
-                      : (SCREEN_WIDTH / imageWidth) * imageHeight
-                }}
-              />
+              <LiveTextImageView>
+                <GracefullyImage
+                  uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
+                  blurhash={item.blurhash}
+                  dimension={{
+                    width:
+                      screenRatio > imageRatio
+                        ? (SCREEN_HEIGHT / imageHeight) * imageWidth
+                        : SCREEN_WIDTH,
+                    height:
+                      screenRatio > imageRatio
+                        ? SCREEN_HEIGHT
+                        : (SCREEN_WIDTH / imageWidth) * imageHeight
+                  }}
+                />
+              </LiveTextImageView>
             </View>
           }
         />
@@ -193,11 +194,7 @@ const ScreenImagesViewer = ({
                 switch (buttonIndex) {
                   case 0:
                     analytics('imageviewer_more_save_press')
-                    saveImage({
-                      messageRef,
-                      theme,
-                      image: imageUrls[currentIndex]
-                    })
+                    saveImage({ theme, image: imageUrls[currentIndex] })
                     break
                   case 1:
                     analytics('imageviewer_more_share_press')
@@ -236,7 +233,6 @@ const ScreenImagesViewer = ({
           />
         </LongPressGestureHandler>
       </FlingGestureHandler>
-      <Message ref={messageRef} />
     </SafeAreaProvider>
   )
 }

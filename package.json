@@ -79,6 +79,7 @@
     "react-native-htmlview": "^0.16.0",
     "react-native-image-picker": "^4.10.0",
     "react-native-language-detection": "^0.1.0",
+    "react-native-live-text-image-view": "^0.4.0",
     "react-native-pager-view": "^6.0.1",
     "react-native-reanimated": "^2.12.0",
     "react-native-reanimated-zoom": "^0.3.1",
