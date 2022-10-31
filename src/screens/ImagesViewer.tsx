@@ -4,11 +4,12 @@ import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   FlatList,
+  Image,
   PixelRatio,
   Platform,
   Share,
@@ -16,10 +17,9 @@ import {
   View,
   ViewToken
 } from 'react-native'
-import FlashMessage from 'react-native-flash-message'
 import { Directions, Gesture, LongPressGestureHandler } from 'react-native-gesture-handler'
 import { LiveTextImageView } from 'react-native-live-text-image-view'
-import { runOnJS } from 'react-native-reanimated'
+import { runOnJS, useSharedValue } from 'react-native-reanimated'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
@@ -47,8 +47,6 @@ const ScreenImagesViewer = ({
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
-
-  const messageRef = useRef<FlashMessage>(null)
 
   const { showActionSheetWithOptions } = useActionSheet()
   const onPress = useCallback(() => {
@@ -85,6 +83,8 @@ const ScreenImagesViewer = ({
     )
   }, [currentIndex])
 
+  const isZoomed = useSharedValue(false)
+
   const renderItem = React.useCallback(
     ({
       item
@@ -102,10 +102,15 @@ const ScreenImagesViewer = ({
 
       return (
         <Zoom
+          isZoomed={isZoomed}
           maximumZoomScale={max > 8 ? 8 : max}
           simultaneousGesture={Gesture.Fling()
             .direction(Directions.DOWN)
-            .onStart(() => runOnJS(navigation.goBack)())}
+            .onStart(() => {
+              if (isZoomed.value === false) {
+                runOnJS(navigation.goBack)()
+              }
+            })}
           children={
             <View
               style={{
@@ -137,7 +142,7 @@ const ScreenImagesViewer = ({
         />
       )
     },
-    []
+    [isZoomed.value]
   )
 
   const onViewableItemsChanged = useCallback(

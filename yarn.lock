@@ -4783,10 +4783,10 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-i18next@^22.0.3:
-  version "22.0.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.0.3.tgz#084e40ec88d63c13385175ddebcc4395c89b97e3"
-  integrity sha512-gG6kCG5+gnPXdK8TLTJ2oiuFSjn6CYMSUwV3vnmISxwTunJHREn/z6gi1g7942c61K1dL3Gm+9a64nZCPv6mlg==
+i18next@^22.0.4:
+  version "22.0.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.0.4.tgz#77d8871687b0ab072b38991e3887187823667e30"
+  integrity sha512-TOp7BTMKDbUkOHMzDlVsCYWpyaFkKakrrO3HNXfSz4EeJaWwnBScRmgQSTaWHScXVHBUFXTvShrCW8uryBYFcg==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
@@ -7012,10 +7012,10 @@ react-native-context-menu-view@xmflsct/react-native-context-menu-view:
   version "1.5.4"
   resolved "https://codeload.github.com/xmflsct/react-native-context-menu-view/tar.gz/bff5773d318970cd67b5cf114d4bec1e200178eb"
 
-react-native-fast-image@^8.6.1:
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.1.tgz#6a3a11b8ebc7629919265d33a420a04d13c897e0"
-  integrity sha512-ILuP7EuakqHNzTr8ZbumhuxG4tE/wGQ66z4nEEuzc0FlqY6rYaPsnq/UD2ahoyFj6QP1WvA2RIK3odib+VcqWg==
+react-native-fast-image@^8.6.3:
+  version "8.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
+  integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
 
 react-native-feather@^1.1.2:
   version "1.1.2"
@@ -7074,15 +7074,15 @@ react-native-live-text-image-view@^0.4.0:
   resolved "https://registry.yarnpkg.com/react-native-live-text-image-view/-/react-native-live-text-image-view-0.4.0.tgz#d23d5850788609fd1448533213fc6c453c584761"
   integrity sha512-PhVFE0YogSLrTlnHIxUWL80CrmbDvxk1JvLx4UHiRHRwLda4dV/e/9Q+Pyh7Vq7qwAPE6vGoN6sjbXNaj4WCew==
 
-react-native-pager-view@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.0.1.tgz#353abf38d3c2b91ed7c586f10af0f94700f5b1dc"
-  integrity sha512-kOVNu+4JnR3Gpykviy4WbOAnQz8TgP6O2pRvne221oPUDQLYrvEE/FINR0P85TxbMgvKTPlLejGw0ZHQbezK/g==
+react-native-pager-view@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.0.2.tgz#447b85fcb9f35225c4d6885c18689a7d30c181d9"
+  integrity sha512-XL3Qc9k7o0BykclGHtuRUz97FpF6rcKbP8LqszLeS2hKnINYcbUPYqg46EhbwVhFOUJE+XhT3idrSO1e/D6jtQ==
 
-react-native-reanimated-zoom@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated-zoom/-/react-native-reanimated-zoom-0.3.1.tgz#f8f7ab088df920e612dce4cd77a2cd772b50bc17"
-  integrity sha512-/RlmFwfRbRABMWJbZZ51u9wEtDXQ6cR5oM6X9/NAJZhg9KDXzy8Ijt/DYSOsEFMIE2BrZZCY7v/UsM3XdsNdFA==
+react-native-reanimated-zoom@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-zoom/-/react-native-reanimated-zoom-0.3.2.tgz#11ffcf9d518023cca68ac1968ddf836abd4653a4"
+  integrity sha512-p/IVINRdejc+hXoHIXuC3fl1ewlZLYTXZ9ShjLkEJY8SXa4swFFLWzoERwhJxYhc7D6Mxc5cQOTxpiEp2bAVGw==
 
 react-native-reanimated@^2.12.0:
   version "2.12.0"
