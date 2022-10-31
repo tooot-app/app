@@ -2,6 +2,7 @@ import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
@@ -95,25 +96,87 @@ const TimelineActions: React.FC<Props> = ({
       queryKey
     })
   }, [status.replies_count])
+  const { showActionSheetWithOptions } = useActionSheet()
   const onPressReblog = useCallback(() => {
-    analytics('timeline_shared_actions_reblog_press', {
-      page: queryKey[1].page,
-      count: status.reblogs_count,
-      current: status.reblogged
-    })
-    mutation.mutate({
-      type: 'updateStatusProperty',
-      queryKey,
-      rootQueryKey,
-      id: status.id,
-      reblog,
-      payload: {
-        property: 'reblogged',
-        currentValue: status.reblogged,
-        propertyCount: 'reblogs_count',
-        countValue: status.reblogs_count
-      }
-    })
+    if (!status.reblogged) {
+      showActionSheetWithOptions(
+        {
+          title: t('shared.actions.reblogged.options.title'),
+          options: [
+            t('shared.actions.reblogged.options.public'),
+            t('shared.actions.reblogged.options.unlisted'),
+            t('common:buttons.cancel')
+          ],
+          cancelButtonIndex: 2
+        },
+        (selectedIndex: number) => {
+          switch (selectedIndex) {
+            case 0:
+              analytics('timeline_shared_actions_reblog_public_press', {
+                page: queryKey[1].page,
+                count: status.reblogs_count,
+                current: status.reblogged
+              })
+              mutation.mutate({
+                type: 'updateStatusProperty',
+                queryKey,
+                rootQueryKey,
+                id: status.id,
+                reblog,
+                payload: {
+                  property: 'reblogged',
+                  currentValue: status.reblogged,
+                  propertyCount: 'reblogs_count',
+                  countValue: status.reblogs_count,
+                  visibility: 'public'
+                }
+              })
+              break
+            case 1:
+              analytics('timeline_shared_actions_reblog_unlisted_press', {
+                page: queryKey[1].page,
+                count: status.reblogs_count,
+                current: status.reblogged
+              })
+              mutation.mutate({
+                type: 'updateStatusProperty',
+                queryKey,
+                rootQueryKey,
+                id: status.id,
+                reblog,
+                payload: {
+                  property: 'reblogged',
+                  currentValue: status.reblogged,
+                  propertyCount: 'reblogs_count',
+                  countValue: status.reblogs_count,
+                  visibility: 'unlisted'
+                }
+              })
+              break
+          }
+        }
+      )
+    } else {
+      analytics('timeline_shared_actions_reblog_press', {
+        page: queryKey[1].page,
+        count: status.reblogs_count,
+        current: status.reblogged
+      })
+      mutation.mutate({
+        type: 'updateStatusProperty',
+        queryKey,
+        rootQueryKey,
+        id: status.id,
+        reblog,
+        payload: {
+          property: 'reblogged',
+          currentValue: status.reblogged,
+          propertyCount: 'reblogs_count',
+          countValue: status.reblogs_count,
+          visibility: 'public'
+        }
+      })
+    }
   }, [status.reblogged, status.reblogs_count])
   const onPressFavourite = useCallback(() => {
     analytics('timeline_shared_actions_favourite_press', {
