@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "Ricondividi questo toot",
-        "function": "Ricondividi toot"
+        "function": "Ricondividi toot",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
       },
       "favourited": {
         "accessibilityLabel": "Apprezza questo toot",
