@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "Tröt boosten",
-        "function": "Boost"
+        "function": "Boost",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
       },
       "favourited": {
         "accessibilityLabel": "Favorit",

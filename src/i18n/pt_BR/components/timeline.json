@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "Boost este toot",
-        "function": "Boost toot"
+        "function": "Boost toot",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
       },
       "favourited": {
         "accessibilityLabel": "Adicionar este toot aos favoritos",
