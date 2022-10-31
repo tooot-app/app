@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "このトゥートをブーストしますか？",
-        "function": "トゥートをブースト"
+        "function": "トゥートをブースト",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
       },
       "favourited": {
         "accessibilityLabel": "このトゥートをお気に入りに追加",
