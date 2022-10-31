@@ -40,9 +40,9 @@
         "accessibilityLabel": "转发此嘟文",
         "function": "转嘟",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "选择转嘟可见性",
+          "public": "公开转嘟",
+          "unlisted": "不公开转嘟"
         }
       },
       "favourited": {
