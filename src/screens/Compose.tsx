@@ -9,7 +9,7 @@ import formatText from '@screens/Compose/formatText'
 import ComposeRoot from '@screens/Compose/Root'
 import * as Sentry from '@sentry/react-native'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
+import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
@@ -280,8 +280,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               } else {
                 dispatch(updateStoreReview(1))
               }
-              const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
-              queryClient.invalidateQueries(queryKey)
 
               switch (params?.type) {
                 case 'edit':

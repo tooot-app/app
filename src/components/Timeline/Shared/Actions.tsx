@@ -48,40 +48,18 @@ const TimelineActions: React.FC<Props> = ({
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       if (
         // Un-bookmark from bookmarks page
-        (queryKey[1].page === 'Bookmarks' &&
-          theParams.payload.property === 'bookmarked') ||
+        (queryKey[1].page === 'Bookmarks' && theParams.payload.property === 'bookmarked') ||
         // Un-favourite from favourites page
-        (queryKey[1].page === 'Favourites' &&
-          theParams.payload.property === 'favourited') ||
-        // Un-reblog from following page
-        (queryKey[1].page === 'Following' &&
-          theParams.payload.property === 'reblogged' &&
-          theParams.payload.currentValue === true)
+        (queryKey[1].page === 'Favourites' && theParams.payload.property === 'favourited')
       ) {
         queryClient.invalidateQueries(queryKey)
-      } else if (
-        theParams.payload.property === 'reblogged' &&
-        queryKey[1].page !== 'Following'
-      ) {
-        // When reblogged, update cache of following page
-        const tempQueryKey: QueryKeyTimeline = [
-          'Timeline',
-          { page: 'Following' }
-        ]
-        queryClient.invalidateQueries(tempQueryKey)
       } else if (theParams.payload.property === 'favourited') {
         // When favourited, update favourited page
-        const tempQueryKey: QueryKeyTimeline = [
-          'Timeline',
-          { page: 'Favourites' }
-        ]
+        const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Favourites' }]
         queryClient.invalidateQueries(tempQueryKey)
       } else if (theParams.payload.property === 'bookmarked') {
         // When bookmarked, update bookmark page
-        const tempQueryKey: QueryKeyTimeline = [
-          'Timeline',
-          { page: 'Bookmarks' }
-        ]
+        const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Bookmarks' }]
         queryClient.invalidateQueries(tempQueryKey)
       }
     },
@@ -91,9 +69,7 @@ const TimelineActions: React.FC<Props> = ({
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(
-            `shared.actions.${correctParam.payload.property}.function`
-          )
+          function: t(`shared.actions.${correctParam.payload.property}.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -182,11 +158,7 @@ const TimelineActions: React.FC<Props> = ({
   const childrenReply = useMemo(
     () => (
       <>
-        <Icon
-          name='MessageCircle'
-          color={iconColor}
-          size={StyleConstants.Font.Size.L}
-        />
+        <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
         {status.replies_count > 0 ? (
           <CustomText
             style={{
@@ -209,8 +181,7 @@ const TimelineActions: React.FC<Props> = ({
         <Icon
           name='Repeat'
           color={
-            status.visibility === 'direct' ||
-            (status.visibility === 'private' && !ownAccount)
+            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
               ? colors.disabled
               : color(status.reblogged)
           }
@@ -237,11 +208,7 @@ const TimelineActions: React.FC<Props> = ({
     const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
-        <Icon
-          name='Heart'
-          color={color(status.favourited)}
-          size={StyleConstants.Font.Size.L}
-        />
+        <Icon name='Heart' color={color(status.favourited)} size={StyleConstants.Font.Size.L} />
         {status.favourites_count > 0 ? (
           <CustomText
             style={{
@@ -260,29 +227,21 @@ const TimelineActions: React.FC<Props> = ({
   const childrenBookmark = useMemo(() => {
     const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
-      <Icon
-        name='Bookmark'
-        color={color(status.bookmarked)}
-        size={StyleConstants.Font.Size.L}
-      />
+      <Icon name='Bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
     )
   }, [status.bookmarked])
 
   return (
     <View
       style={{
-        paddingLeft: highlighted
-          ? 0
-          : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+        paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
       }}
     >
       <View style={{ flexDirection: 'row' }}>
         <Pressable
           {...(highlighted
             ? {
-                accessibilityLabel: t(
-                  'shared.actions.reply.accessibilityLabel'
-                ),
+                accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
                 accessibilityRole: 'button'
               }
             : { accessibilityLabel: '' })}
@@ -294,9 +253,7 @@ const TimelineActions: React.FC<Props> = ({
         <Pressable
           {...(highlighted
             ? {
-                accessibilityLabel: t(
-                  'shared.actions.reblogged.accessibilityLabel'
-                ),
+                accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
                 accessibilityRole: 'button'
               }
             : { accessibilityLabel: '' })}
@@ -304,17 +261,14 @@ const TimelineActions: React.FC<Props> = ({
           onPress={onPressReblog}
           children={childrenReblog}
           disabled={
-            status.visibility === 'direct' ||
-            (status.visibility === 'private' && !ownAccount)
+            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
           }
         />
 
         <Pressable
           {...(highlighted
             ? {
-                accessibilityLabel: t(
-                  'shared.actions.favourited.accessibilityLabel'
-                ),
+                accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
                 accessibilityRole: 'button'
               }
             : { accessibilityLabel: '' })}
@@ -326,9 +280,7 @@ const TimelineActions: React.FC<Props> = ({
         <Pressable
           {...(highlighted
             ? {
-                accessibilityLabel: t(
-                  'shared.actions.bookmarked.accessibilityLabel'
-                ),
+                accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
                 accessibilityRole: 'button'
               }
             : { accessibilityLabel: '' })}
