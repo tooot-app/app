@@ -24,7 +24,7 @@ PODS:
     - ExpoModulesCore
   - EXNotifications (0.16.1):
     - ExpoModulesCore
-  - Expo (46.0.15):
+  - Expo (46.0.16):
     - ExpoModulesCore
   - ExpoCrypto (11.0.0):
     - ExpoModulesCore
@@ -34,7 +34,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (13.1.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.11.7):
+  - ExpoModulesCore (0.11.8):
     - React-Core
     - ReactCommon/turbomodule/core
   - ExpoRandom (12.3.0):
@@ -416,9 +416,11 @@ PODS:
     - React-Core
   - react-native-language-detection (0.1.0):
     - React
-  - react-native-netinfo (9.3.4):
+  - react-native-live-text-image-view (0.4.0):
     - React-Core
-  - react-native-pager-view (6.0.1):
+  - react-native-netinfo (9.3.6):
+    - React-Core
+  - react-native-pager-view (6.0.2):
     - React-Core
   - react-native-paste-input (0.5.1):
     - React-Core
@@ -532,13 +534,13 @@ PODS:
     - React-Core
   - RNCClipboard (1.11.1):
     - React-Core
-  - RNFastImage (8.6.1):
+  - RNFastImage (8.6.3):
     - React-Core
-    - SDWebImage (~> 5.13.4)
-    - SDWebImageWebPCoder (~> 0.9.0)
-  - RNGestureHandler (2.7.1):
+    - SDWebImage (~> 5.13.5)
+    - SDWebImageWebPCoder (~> 0.9.1)
+  - RNGestureHandler (2.8.0):
     - React-Core
-  - RNReanimated (2.10.0):
+  - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -565,25 +567,25 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.18.1):
+  - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.6.1):
+  - RNSentry (4.7.1):
     - React-Core
-    - Sentry (= 7.27.1)
+    - Sentry (= 7.28.0)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.0.0):
     - React-Core
-  - SDWebImage (5.13.4):
-    - SDWebImage/Core (= 5.13.4)
-  - SDWebImage/Core (5.13.4)
+  - SDWebImage (5.13.5):
+    - SDWebImage/Core (= 5.13.5)
+  - SDWebImage/Core (5.13.5)
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry (7.27.1):
-    - Sentry/Core (= 7.27.1)
-  - Sentry/Core (7.27.1)
+  - Sentry (7.28.0):
+    - Sentry/Core (= 7.28.0)
+  - Sentry/Core (7.28.0)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -642,6 +644,7 @@ DEPENDENCIES:
   - react-native-context-menu-view (from `../node_modules/react-native-context-menu-view`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-language-detection (from `../node_modules/react-native-language-detection`)
+  - react-native-live-text-image-view (from `../node_modules/react-native-live-text-image-view`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - "react-native-paste-input (from `../node_modules/@mattermost/react-native-paste-input`)"
@@ -790,6 +793,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-language-detection:
     :path: "../node_modules/react-native-language-detection"
+  react-native-live-text-image-view:
+    :path: "../node_modules/react-native-live-text-image-view"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
@@ -857,12 +862,12 @@ SPEC CHECKSUMS:
   EXFirebaseCore: cb1e6afad20c4c32a4966432c78ebfff29d8db6b
   EXFont: 06df627203afcb8a3b3152ec06eb2f11f46f0cff
   EXNotifications: 9a2aa201deb19dfe1dbe0e370eeb2922de0d2422
-  Expo: 7e821e708a35d2720ef6baa658e224dd91c4821e
+  Expo: 7ac824960a6059d6c68e73f432c8e6bf6d92a0ef
   ExpoCrypto: e534314db0e1a17ae12b5140d529bd0c5efcbc6a
   ExpoHaptics: efe9e68e9dfe0d15c183c0c70a25f3874124ab9e
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
   ExpoLocalization: 63204f4b9d4f653469d266332ceaa6c6ac8a305d
-  ExpoModulesCore: 2d60ec04c49641afb55fee3faac86fb108c68fe0
+  ExpoModulesCore: 39ec590ce622289c060183aba57f77b1e73b4e11
   ExpoRandom: f9f1faa299a40733867f344d6b7bfa2d1f4ab04d
   ExpoWebBrowser: 5804ac42a8269d0e534bc4461993005f72535649
   EXScreenCapture: 23de056fdb02edd1fb8f147b0fd198c6d5cada3d
@@ -909,8 +914,9 @@ SPEC CHECKSUMS:
   react-native-context-menu-view: b0beca02aad4bd9f9d7d932bf437e0a03baa69ef
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
-  react-native-netinfo: 6ac9bcc7c88dc51717bda3484eb99093acb755e0
-  react-native-pager-view: 3051346698a0ba0c4e13e40097cc11b00ee03cca
+  react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
+  react-native-netinfo: f80db8cac2151405633324cb645c60af098ee461
+  react-native-pager-view: 592421df0259bf7a7a4fe85b74c24f3f39905605
   react-native-paste-input: 183ad7dc224e192719616f4258dde5b548627d08
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
@@ -928,19 +934,19 @@ SPEC CHECKSUMS:
   ReactCommon: fe7580b9d10f00249facf25659e0ec051320cc8a
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
-  RNFastImage: e6267e27581b81918ebef6432c94c20718ec3b91
-  RNGestureHandler: b7a872907ee289ada902127f2554fa1d2c076122
-  RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
-  RNScreens: 1b7bb502dac62cc4cf01b94bea591c8da275132f
-  RNSentry: f8591057d48d4f6d64196a76cbca67895667b033
+  RNFastImage: c74e098cb862b4870c3de0b1096b65c63e492938
+  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
+  RNReanimated: c3e58924b9418883b0bde9e78c4c957302f02435
+  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
+  RNSentry: 694aecc3d8240e4935374974a6636e360ae06394
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 42a0c731b11179ebbd27a3eeeafa7201ebb476ff
-  SDWebImage: e5cc87bf736e60f49592f307bdf9e157189298a3
+  SDWebImage: 23d714cd599354ee7906dbae26dff89b421c4370
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: bc644307e2eb6a4c9c55cf117a80b895bb2a25a7
+  Sentry: 2c6053e4cfe6dea6608135dea1928ffbb4ecfba5
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: 75bf4b0131cfb46a659cd0c13309b79a6fcff66d
 
-PODFILE CHECKSUM: 7f078a0355bc9bdbcbbe7257e7e62e1d45f77f75
+PODFILE CHECKSUM: 244b6793e4be83f0909a91b2fe15c8f89a5e8151
 
 COCOAPODS: 1.11.3

@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "取消",
       "alert": {
-        "title": "",
+        "title": "確認取消編輯？",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "儲存草稿",
+          "delete": "刪除草稿",
+          "cancel": "取消"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "發嘟",
+        "conversation": "發送私訊",
+        "reply": "發佈回覆",
+        "deleteEdit": "發嘟",
+        "edit": "發嘟",
+        "share": "發嘟"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "發嘟失敗",
+          "button": "再試一次"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "cancel": "",
-          "confirm": ""
+          "title": "回覆的嘟文不存在",
+          "description": "回覆的嘟文可能已被刪除。確認移除回覆嘟文的關聯？",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "移除關聯"
         }
       }
     }
@@ -37,143 +37,143 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "以 @{{acct}}@{{domain}} 發嘟",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "輸入警告訊息"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "正在想些什麼嗎？",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "已達附件數量上限",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "標記附件為敏感內容",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "刪除已上傳的附件，序號 {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "編輯已上傳的附件，序號 {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "上傳更多附件"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "點擊新增表情符號到嘟文"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "投票選項 {{index}}",
+              "single": "單選題",
+              "multiple": "複選題"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "減少至 {{amount}} 選項",
+              "accessibilityHint": "已達到最低選項數，目前有 {{amount}} 選項"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "增加至 {{amount}} 選項",
+              "accessibilityHint": "已達到最高選項數，目前有 {{amount}} 選項"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "選擇類型",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "單選題",
+              "multiple": "複選題",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "結束時間",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 分鐘",
+              "1800": "30 分鐘",
+              "3600": "1 小時",
+              "21600": "6 小時",
+              "86400": "1 天",
+              "259200": "3 天",
+              "604800": "7 天",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "上傳附件",
+          "accessibilityHint": "當有附件時，投票功能將被禁用",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "上傳失敗",
+              "button": "再試一次"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "新增投票",
+          "accessibilityHint": "當啟用投票功能時，附件功能將被禁用"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "此嘟文公開範圍為 {{visibility}}",
+          "title": "嘟文公開範圍",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "公開",
+            "unlisted": "不公開",
+            "private": "僅限跟隨者",
+            "direct": "私訊",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "劇透"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "新增表情符號",
+          "accessibilityHint": "打開表情選擇面板，水平滑動切換頁面"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "草稿 ({{count}})",
+      "drafts_other": "草稿 ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "編輯附件",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "儲存編輯附件",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "編輯失敗",
+            "button": "再試一次"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "為附件增加文字說明",
+          "placeholder": "你可以為附件增加文字說明，以便更多人可以查看他們（包括視力障礙或視力受損人士）。\n\n優質的描述應該簡潔明瞭，但要準確地描述照片中的內容，以便使用者理解其含義。"
         },
-        "imageFocus": ""
+        "imageFocus": "在預覽圖上拖動圓圈，以選擇縮略圖的焦點"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "草稿"
       },
-      "warning": "",
+      "warning": "草稿只儲存在你的設備上，在部分情況下可能丟失。建議不要長期儲存草稿。",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "已儲存的草稿，點擊編輯此草稿",
+        "textEmpty": "沒有內容"
       },
-      "checkAttachment": ""
+      "checkAttachment": "正在檢查伺服器上的附件..."
     }
   }
 }

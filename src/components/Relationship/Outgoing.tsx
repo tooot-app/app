@@ -33,7 +33,7 @@ const RelationshipOutgoing = React.memo(
           queryKeyRelationship,
           [res]
         )
-        if (action === 'follow' || action === 'block') {
+        if (action === 'block') {
           const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
           queryClient.invalidateQueries(queryKey)
         }

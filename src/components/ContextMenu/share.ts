@@ -25,7 +25,7 @@ const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
     title: t(`share.${type}.action`),
     systemIcon: 'square.and.arrow.up'
   })
-  Platform.OS !== 'android' &&
+  Platform.OS !== 'android' && type === 'status' &&
     actions.push({
       id: 'copy',
       title: t(`copy.action`),

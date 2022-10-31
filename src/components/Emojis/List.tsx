@@ -54,9 +54,6 @@ const EmojisList = () => {
 
     const addedLength = spaceFront.length + shortcode.length + spaceRear.length
     setSelection({ start: selection.start + addedLength })
-    ref?.current?.setNativeProps({
-      selection: { start: selection.start + addedLength }
-    })
   }
 
   const listItem = ({ index, item }: { item: Mastodon.Emoji[]; index: number }) => {

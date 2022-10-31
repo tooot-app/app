@@ -12,10 +12,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     params: { toot, rootQueryKey }
   }
 }) => {
-  const queryKey: QueryKeyTimeline = [
-    'Timeline',
-    { page: 'Toot', toot: toot.id }
-  ]
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Toot', toot: toot.id }]
 
   const flRef = useRef<FlatList>(null)
 
@@ -46,10 +43,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           if (pointer < 1) return
           try {
             setTimeout(() => {
-              flRef.current?.scrollToIndex({
-                index: pointer,
-                viewOffset: 100
-              })
+              try {
+                flRef.current?.scrollToIndex({
+                  index: pointer,
+                  viewOffset: 100
+                })
+              } catch {}
             }, 500)
           } catch (error) {
             return

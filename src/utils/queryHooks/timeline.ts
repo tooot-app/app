@@ -293,10 +293,17 @@ export type MutationVarsTimelineUpdateStatusProperty = {
         countValue: undefined
       }
     | {
-        property: 'favourited' | 'reblogged'
+        property: 'favourited'
         currentValue: boolean
         propertyCount: 'favourites_count' | 'reblogs_count'
         countValue: number
+      }
+    | {
+        property: 'reblogged'
+        currentValue: boolean
+        propertyCount: 'favourites_count' | 'reblogs_count'
+        countValue: number
+        visibility: 'public' | 'unlisted'
       }
     | {
         property: 'poll'
@@ -371,11 +378,16 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             ...(params.payload.type === 'vote' && { body: formData })
           })
         default:
+          const body = new FormData()
+          if (params.payload.property === 'reblogged') {
+            body.append('visibility', params.payload.visibility)
+          }
           return apiInstance<Mastodon.Status>({
             method: 'post',
             url: `statuses/${params.id}/${
               params.payload.currentValue ? 'un' : ''
-            }${MapPropertyToUrl[params.payload.property]}`
+            }${MapPropertyToUrl[params.payload.property]}`,
+            body
           })
       }
     case 'updateAccountProperty':

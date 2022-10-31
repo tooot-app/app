@@ -9,6 +9,7 @@ import {
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { ContextMenuAction } from 'react-native-context-menu-view'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
@@ -94,22 +95,50 @@ const contextMenuAccount = ({
           context: (relationship?.muting || false).toString()
         }),
         systemIcon: 'eye.slash'
-      },
-      {
-        id: 'account-block',
-        title: t('account.block.action', {
-          context: (relationship?.blocking || false).toString()
-        }),
-        systemIcon: 'xmark.circle',
-        destructive: true
-      },
-      {
-        id: 'account-reports',
-        title: t('account.reports.action'),
-        systemIcon: 'flag',
-        destructive: true
       }
     )
+    switch (Platform.OS) {
+      case 'ios':
+        actions.push({
+          id: 'account',
+          title: t('account.title'),
+          actions: [
+            {
+              id: 'account-block',
+              title: t('account.block.action', {
+                context: (relationship?.blocking || false).toString()
+              }),
+              systemIcon: 'xmark.circle',
+              destructive: true
+            },
+            {
+              id: 'account-reports',
+              title: t('account.reports.action'),
+              systemIcon: 'flag',
+              destructive: true
+            }
+          ]
+        })
+        break
+      default:
+        actions.push(
+          {
+            id: 'account-block',
+            title: t('account.block.action', {
+              context: (relationship?.blocking || false).toString()
+            }),
+            systemIcon: 'xmark.circle',
+            destructive: true
+          },
+          {
+            id: 'account-reports',
+            title: t('account.reports.action'),
+            systemIcon: 'flag',
+            destructive: true
+          }
+        )
+        break
+    }
   }
 
   return (index: number) => {

@@ -9,6 +9,7 @@ import ko from '@root/i18n/ko/_all'
 import pt_BR from '@root/i18n/pt_BR/_all'
 import vi from '@root/i18n/vi/_all'
 import zh_Hans from '@root/i18n/zh-Hans/_all'
+import zh_Hant from '@root/i18n/zh-Hant/_all'
 
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'
@@ -32,6 +33,7 @@ import '@formatjs/intl-numberformat/locale-data/ko'
 import '@formatjs/intl-numberformat/locale-data/pt'
 import '@formatjs/intl-numberformat/locale-data/vi'
 import '@formatjs/intl-numberformat/locale-data/zh-Hans'
+import '@formatjs/intl-numberformat/locale-data/zh-Hant'
 
 import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/de'
@@ -42,6 +44,7 @@ import '@formatjs/intl-datetimeformat/locale-data/ko'
 import '@formatjs/intl-datetimeformat/locale-data/pt'
 import '@formatjs/intl-datetimeformat/locale-data/vi'
 import '@formatjs/intl-datetimeformat/locale-data/zh-Hans'
+import '@formatjs/intl-datetimeformat/locale-data/zh-Hant'
 import '@formatjs/intl-datetimeformat/add-all-tz'
 
 import '@formatjs/intl-relativetimeformat/polyfill'
@@ -53,6 +56,7 @@ import '@formatjs/intl-relativetimeformat/locale-data/ko'
 import '@formatjs/intl-relativetimeformat/locale-data/pt'
 import '@formatjs/intl-relativetimeformat/locale-data/vi'
 import '@formatjs/intl-relativetimeformat/locale-data/zh-Hans'
+import '@formatjs/intl-relativetimeformat/locale-data/zh-Hant'
 
 i18n.use(initReactI18next).init({
   lng: 'en',
@@ -61,7 +65,7 @@ i18n.use(initReactI18next).init({
   ns: ['common'],
   defaultNS: 'common',
 
-  resources: { de, en, it, ja, ko, 'pt-BR': pt_BR, vi, 'zh-Hans': zh_Hans },
+  resources: { de, en, it, ja, ko, 'pt-BR': pt_BR, vi, 'zh-Hans': zh_Hans, 'zh-Hant': zh_Hant },
   returnEmptyString: false,
 
   saveMissing: true,

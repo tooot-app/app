@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "Boost this toot",
-        "function": "Boost toot"
+        "function": "Boost toot",
+        "options": {
+          "title": "Choose boost visibility",
+          "public": "Public boost",
+          "unlisted": "Unlist boost"
+        }
       },
       "favourited": {
         "accessibilityLabel": "Add this toot to favourites",

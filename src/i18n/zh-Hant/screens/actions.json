@@ -1,19 +1,19 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "替代文字"
     },
     "notificationsFilter": {
-      "heading": "",
+      "heading": "顯示通知類型",
       "content": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "跟隨請求",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "訂閱使用者的嘟文",
+        "update": "轉嘟被編輯"
       }
     }
   }

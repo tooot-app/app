@@ -38,7 +38,12 @@
       },
       "reblogged": {
         "accessibilityLabel": "转发此嘟文",
-        "function": "转嘟"
+        "function": "转嘟",
+        "options": {
+          "title": "选择转嘟可见性",
+          "public": "公开转嘟",
+          "unlisted": "不公开转嘟"
+        }
       },
       "favourited": {
         "accessibilityLabel": "添加此嘟文至喜欢列表",

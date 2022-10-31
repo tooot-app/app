@@ -326,11 +326,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           <Stack.Screen
             name='Screen-ImagesViewer'
             component={ScreenImagesViewer}
-            options={{
-              headerShown: false,
-              presentation: 'fullScreenModal',
-              animation: 'fade'
-            }}
+            options={{ headerShown: false, animation: 'fade' }}
           />
           <Stack.Screen
             name='Screen-AccountSelection'

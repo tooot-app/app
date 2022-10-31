@@ -24,7 +24,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.3'
@@ -51,7 +50,6 @@ allprojects {
 
         google()
         mavenCentral()
-        jcenter()
         maven { url 'https://www.jitpack.io' }
     }
 }

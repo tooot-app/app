@@ -8,8 +8,8 @@ import { getExpoToken, retriveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
+import { TFunction } from 'i18next'
 import { useEffect } from 'react'
-import { TFunction } from 'react-i18next'
 import { AppState } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -33,6 +33,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
       url: `push/connect/${expoToken}`,
       sentry: true
     }).catch(error => {
+      Notifications.setBadgeCountAsync(0)
       if (error?.status == 404) {
         displayMessage({
           theme,

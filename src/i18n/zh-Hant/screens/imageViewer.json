@@ -1,17 +1,17 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "更多此圖片的操作",
+      "accessibilityHint": "您可以儲存或分享此圖片"
     },
     "options": {
-      "save": "",
-      "share": "",
-      "cancel": ""
+      "save": "儲存圖片",
+      "share": "分享圖片",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "圖片已儲存",
+      "failed": "儲存圖片失敗"
     }
   }
 }

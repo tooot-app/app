@@ -72,7 +72,7 @@ const TabMeProfileRoot: React.FC<
         }
       }
     )
-  }, [theme, data?.source.privacy])
+  }, [theme, data?.source?.privacy])
 
   const onPressSensitive = useCallback(() => {
     analytics('me_profile_sensitive', {

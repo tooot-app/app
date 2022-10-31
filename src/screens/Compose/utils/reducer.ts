@@ -88,7 +88,7 @@ const composeReducer = (
         attachments: {
           ...state.attachments,
           uploads: state.attachments.uploads.map(upload =>
-            upload.remote!.id === action.payload!.id
+            upload.remote?.id === action.payload?.id
               ? { ...upload, remote: action.payload }
               : upload
           )
