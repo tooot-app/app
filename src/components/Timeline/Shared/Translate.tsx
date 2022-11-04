@@ -1,8 +1,8 @@
 import analytics from '@components/analytics'
 import { ParseHTML } from '@components/Parse'
 import CustomText from '@components/Text'
+import getLanguage from '@helpers/getLanguage'
 import { useTranslateQuery } from '@utils/queryHooks/translate'
-import { getSettingsLanguage } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
@@ -11,14 +11,10 @@ import { useTranslation } from 'react-i18next'
 import { Pressable } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import detectLanguage from 'react-native-language-detection'
-import { useSelector } from 'react-redux'
 
 export interface Props {
   highlighted: boolean
-  status: Pick<
-    Mastodon.Status,
-    'language' | 'spoiler_text' | 'content' | 'emojis'
-  >
+  status: Pick<Mastodon.Status, 'language' | 'spoiler_text' | 'content' | 'emojis'>
 }
 
 const TimelineTranslate = React.memo(
@@ -30,9 +26,7 @@ const TimelineTranslate = React.memo(
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
 
-    const text = status.spoiler_text
-      ? [status.spoiler_text, status.content]
-      : [status.content]
+    const text = status.spoiler_text ? [status.spoiler_text, status.content] : [status.content]
 
     for (const i in text) {
       for (const emoji of status.emojis) {
@@ -56,7 +50,7 @@ const TimelineTranslate = React.memo(
       detect()
     }, [])
 
-    const settingsLanguage = useSelector(getSettingsLanguage)
+    const settingsLanguage = getLanguage()
     const targetLanguage = settingsLanguage?.startsWith('en')
       ? Localization.locale || settingsLanguage || 'en'
       : settingsLanguage || Localization.locale || 'en'
@@ -107,12 +101,7 @@ const TimelineTranslate = React.memo(
           <CustomText
             fontStyle='M'
             style={{
-              color:
-                isLoading || isSuccess
-                  ? colors.secondary
-                  : isError
-                  ? colors.red
-                  : colors.blue
+              color: isLoading || isSuccess ? colors.secondary : isError ? colors.red : colors.blue
             }}
           >
             {isError
@@ -127,9 +116,7 @@ const TimelineTranslate = React.memo(
               : t('shared.translate.default')}
           </CustomText>
           <CustomText>
-            {__DEV__
-              ? ` Source: ${detectedLanguage}; Target: ${targetLanguage}`
-              : undefined}
+            {__DEV__ ? ` Source: ${detectedLanguage}; Target: ${targetLanguage}` : undefined}
           </CustomText>
           {isLoading ? (
             <Circle
