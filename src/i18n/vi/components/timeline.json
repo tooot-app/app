@@ -40,9 +40,9 @@
         "accessibilityLabel": "Đăng lại tút này",
         "function": "Đăng lại tút",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Kiểu đăng lại",
+          "public": "Đăng lại công khai",
+          "unlisted": "Đăng lại hạn chế"
         }
       },
       "favourited": {

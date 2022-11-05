@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/react-native'
 import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
-import Constants from 'expo-constants'
 import handleError, { ctx } from './handleError'
+import { userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -50,13 +50,11 @@ const apiTooot = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
+      ...userAgent,
       ...headers
     },
-    ...(body && { data: body }),
-    validateStatus: status =>
-      url.includes('translate') ? status < 500 : status === 200
+    ...(body && { data: body })
   })
     .then(response => {
       return Promise.resolve({

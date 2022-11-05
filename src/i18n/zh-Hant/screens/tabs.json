@@ -1,7 +1,7 @@
 {
   "tabs": {
     "local": {
-      "name": "追隨中"
+      "name": "跟隨中"
     },
     "public": {
       "name": "",
@@ -47,16 +47,16 @@
         "name": "語言"
       },
       "lists": {
-        "name": "清單"
+        "name": "列表"
       },
       "list": {
-        "name": "清單： {{list}}"
+        "name": "列表：{{list}}"
       },
       "push": {
         "name": "推播通知"
       },
       "profile": {
-        "name": "編輯個人資料"
+        "name": "編輯個人檔案"
       },
       "profileName": {
         "name": "編輯顯示名稱"
@@ -71,20 +71,20 @@
         "name": "App 設定"
       },
       "webSettings": {
-        "name": "更多的帳號設定"
+        "name": "更多帳號設定"
       },
       "switch": {
         "name": "切換帳號"
       }
     },
     "fontSize": {
-      "demo": "<p>這是一條測試用的嘟文😊。以下是可供選擇的字體大小，從小至超大。<br /><br />這個設定僅會調整嘟文的本身字體大小，不影響其它字體大小。</p>",
+      "demo": "<p>這是一條測試用的嘟文😊。以下是可供選擇的字體大小，從小到超大。<br /><br />這個設定僅會調整嘟文本身的字體大小，不影響其它介面的字體大小。</p>",
       "sizes": {
         "S": "小",
-        "M": "M - 預設",
+        "M": "中 (預設)",
         "L": "大",
-        "XL": "超大",
-        "XXL": "特大"
+        "XL": "特大",
+        "XXL": "超大"
       }
     },
     "profile": {
@@ -277,7 +277,7 @@
       },
       "analytics": {
         "heading": "幫助我們改善",
-        "description": "僅收集不與使用者關聯的資料"
+        "description": "僅收集不與使用者相關聯的資料"
       },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon version v{{version}}"
