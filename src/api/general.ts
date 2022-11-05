@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Constants from 'expo-constants'
 import handleError, { ctx } from './handleError'
+import { userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -44,8 +44,8 @@ const apiGeneral = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
+      ...userAgent,
       ...headers
     },
     ...(body && { data: body })

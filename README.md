@@ -23,4 +23,6 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 [@duy@mas.to](https://mas.to/@duy) for Vietnamese translation
 
+[@jimmyorz](https://github.com/jimmyorz) for Traditional Chinese translation
+
 [@jk@mastodon.social](https://mastodon.social/@jk) for the famous Mastodon boop sound

@@ -1,4 +1,5 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
+import getLanguage from '@helpers/getLanguage'
 import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
 import Screens from '@root/Screens'
@@ -12,7 +13,7 @@ import timezone from '@root/startup/timezone'
 import { persistor, store } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { changeLanguage, getSettingsLanguage } from '@utils/slices/settingsSlice'
+import { changeLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
@@ -83,10 +84,7 @@ const App: React.FC = () => {
               if (bootstrapped) {
                 log('log', 'App', 'loading actual app :)')
                 log('log', 'App', `Locale: ${Localization.locale}`)
-                const language =
-                  Platform.OS === 'ios'
-                    ? Localization.locale
-                    : getSettingsLanguage(store.getState())
+                const language = getLanguage()
                 if (!language) {
                   if (Platform.OS !== 'ios') {
                     store.dispatch(changeLanguage('en'))

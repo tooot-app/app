@@ -387,7 +387,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             url: `statuses/${params.id}/${
               params.payload.currentValue ? 'un' : ''
             }${MapPropertyToUrl[params.payload.property]}`,
-            body
+            ...(params.payload.property === 'reblogged' && { body })
           })
       }
     case 'updateAccountProperty':
