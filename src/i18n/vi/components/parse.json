@@ -2,7 +2,7 @@
   "HTML": {
     "accessibilityHint": "Nhấn để mở rộng hoặc thu gọn nội dung",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
+    "moreLines": " ({{count}} dòng nữa)",
     "defaultHint": "Tút dài"
   }
 }
