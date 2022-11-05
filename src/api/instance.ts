@@ -1,8 +1,8 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
-import Constants from 'expo-constants'
 import li from 'li'
 import handleError, { ctx } from './handleError'
+import { userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'
@@ -53,13 +53,13 @@ const apiInstance = async <T = unknown>({
 
   console.log(
     ctx.bgGreen.bold(' API instance ') +
-      ' ' +
-      domain +
-      ' ' +
-      method +
-      ctx.green(' -> ') +
-      `/${url}` +
-      (params ? ctx.green(' -> ') : ''),
+    ' ' +
+    domain +
+    ' ' +
+    method +
+    ctx.green(' -> ') +
+    `/${url}` +
+    (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -74,8 +74,8 @@ const apiInstance = async <T = unknown>({
         body && body instanceof FormData
           ? 'multipart/form-data'
           : 'application/json',
-      'User-Agent': `tooot/${Constants.expoConfig?.version}`,
       Accept: '*/*',
+      ...userAgent,
       ...headers,
       ...(token && {
         Authorization: `Bearer ${token}`
