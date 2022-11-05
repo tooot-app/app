@@ -174,6 +174,12 @@ const contextMenuAccount = ({
         id: accountId,
         payload: { property: 'reports' }
       })
+      mutation.mutate({
+        type: 'updateAccountProperty',
+        queryKey,
+        id: accountId,
+        payload: { property: 'block', currentValue: false }
+      })
     }
   }
 }
