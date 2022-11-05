@@ -87,17 +87,13 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
             justifyContent: 'center',
             marginBottom: StyleConstants.Spacing.L
           }}
+          hitSlop={StyleConstants.Font.Size.M}
         >
           <ContextMenu
             dropdownMenuMode
             actions={actions}
             onPress={({ nativeEvent: { index } }) => {
-              for (const on of [
-                shareOnPress,
-                statusOnPress,
-                accountOnPress,
-                instanceOnPress
-              ]) {
+              for (const on of [shareOnPress, statusOnPress, accountOnPress, instanceOnPress]) {
                 on && on(index)
               }
             }}
@@ -108,7 +104,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
                 size={StyleConstants.Font.Size.L}
               />
             }
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', paddingHorizontal: StyleConstants.Font.Size.M }}
           />
         </Pressable>
       ) : null}
