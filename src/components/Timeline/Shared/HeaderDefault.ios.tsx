@@ -57,6 +57,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
             justifyContent: 'center',
             marginBottom: StyleConstants.Spacing.L
           }}
+          hitSlop={StyleConstants.Font.Size.M}
         >
           <ContextMenu
             dropdownMenuMode
@@ -69,6 +70,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
                 size={StyleConstants.Font.Size.L}
               />
             }
+            style={{ paddingHorizontal: StyleConstants.Font.Size.M }}
           />
         </Pressable>
       ) : null}
