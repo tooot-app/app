@@ -54,7 +54,7 @@ const AccountInformationAccount: React.FC<Props> = ({
           ) : null}
           <CustomText
             style={{
-              textDecorationLine: account?.moved ? 'line-through' : undefined
+              textDecorationLine: (account?.moved || account?.suspended) ? 'line-through' : undefined
             }}
             selectable
           >

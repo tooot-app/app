@@ -304,7 +304,8 @@
       "toots": {
         "default": "Toots",
         "all": "Toots and replies"
-      }
+      },
+      "suspended": "Account suspended by the moderators of your server"
     },
     "attachments": {
       "name": "<0 /><1>\"s media</1>"

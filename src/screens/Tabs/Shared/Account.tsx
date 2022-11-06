@@ -6,9 +6,9 @@ import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { useIsFetching } from 'react-query'
 import AccountAttachments from './Account/Attachments'
@@ -16,9 +16,7 @@ import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
 
-const TabSharedAccount: React.FC<
-  TabSharedStackScreenProps<'Tab-Shared-Account'>
-> = ({
+const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>> = ({
   route: {
     params: { account }
   }
@@ -48,35 +46,42 @@ const TabSharedAccount: React.FC<
         <View style={[styles.header, { borderBottomColor: colors.border }]}>
           <AccountHeader account={data} />
           <AccountInformation account={data} />
-          {fetchedTimeline.current ? (
+          {!data?.suspended && fetchedTimeline.current ? (
             <AccountAttachments account={data} />
           ) : null}
         </View>
-        <SegmentedControl
-          appearance={mode}
-          values={[
-            t('shared.account.toots.default'),
-            t('shared.account.toots.all')
-          ]}
-          selectedIndex={queryKey[1].page === 'Account_Default' ? 0 : 1}
-          onChange={({ nativeEvent }) => {
-            switch (nativeEvent.selectedSegmentIndex) {
-              case 0:
-                setQueryKey([
-                  queryKey[0],
-                  { ...queryKey[1], page: 'Account_Default' }
-                ])
-                break
-              case 1:
-                setQueryKey([
-                  queryKey[0],
-                  { ...queryKey[1], page: 'Account_All' }
-                ])
-                break
-            }
-          }}
-          style={styles.segmentsContainer}
-        />
+        {!data?.suspended ? (
+          <SegmentedControl
+            appearance={mode}
+            values={[t('shared.account.toots.default'), t('shared.account.toots.all')]}
+            selectedIndex={queryKey[1].page === 'Account_Default' ? 0 : 1}
+            onChange={({ nativeEvent }) => {
+              switch (nativeEvent.selectedSegmentIndex) {
+                case 0:
+                  setQueryKey([queryKey[0], { ...queryKey[1], page: 'Account_Default' }])
+                  break
+                case 1:
+                  setQueryKey([queryKey[0], { ...queryKey[1], page: 'Account_All' }])
+                  break
+              }
+            }}
+            style={styles.segmentsContainer}
+          />
+        ) : null}
+        {data?.suspended ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+            }}
+          >
+            <Text style={{ ...StyleConstants.FontStyle.M, color: colors.secondary, textAlign: 'center' }}>
+              {t('shared.account.suspended')}
+            </Text>
+          </View>
+        ) : null}
       </>
     )
   }, [data, fetchedTimeline.current, queryKey[1].page, i18n.language, mode])
@@ -85,19 +90,20 @@ const TabSharedAccount: React.FC<
     <>
       <AccountNav scrollY={scrollY} account={data} />
 
-      <Timeline
-        queryKey={queryKey}
-        disableRefresh
-        customProps={{
-          renderItem: ({ item }) => (
-            <TimelineDefault item={item} queryKey={queryKey} />
-          ),
-          onScroll: ({ nativeEvent }) =>
-            (scrollY.value = nativeEvent.contentOffset.y),
-          ListHeaderComponent,
-          maintainVisibleContentPosition: undefined
-        }}
-      />
+      {data?.suspended ? (
+        ListHeaderComponent
+      ) : (
+        <Timeline
+          queryKey={queryKey}
+          disableRefresh
+          customProps={{
+            renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
+            onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),
+            ListHeaderComponent,
+            maintainVisibleContentPosition: undefined
+          }}
+        />
+      )}
     </>
   )
 }
