@@ -305,7 +305,7 @@
         "default": "嘟文",
         "all": "嘟文和回复"
       },
-      "suspended": ""
+      "suspended": "此账户已被服务器管理员停用"
     },
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
