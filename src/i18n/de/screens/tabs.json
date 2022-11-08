@@ -146,7 +146,7 @@
         "label": "Kennzeichnung",
         "content": "Inhalt"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Verarbeitung des Bildes fehlgeschlagen. Bitte erneut versuchen."
     },
     "push": {
       "notAvailable": "Dein Gerät unterstützt keine Push-Benachrichtigung",
@@ -169,7 +169,7 @@
         "heading": "Neue Follower"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Followeranfrage"
       },
       "favourite": {
         "heading": "Favoriten"
@@ -260,8 +260,8 @@
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "System-Emojis verwenden",
+        "description": "Wenn du beim Betrachten der Emoji-Liste häufige App-Abstürze feststellst, kannst du stattdessen versuchen, statische Emoji zu verwenden."
       },
       "feedback": {
         "heading": "Neue Funktion vorschlagen"
@@ -280,7 +280,7 @@
         "description": "Es werden ausschließlich Daten gesammelt, welche nicht nutzerbezogen sind"
       },
       "version": "Version v{{version}}",
-      "instanceVersion": ""
+      "instanceVersion": "Mastodon Version {{version}}"
     },
     "switch": {
       "existing": "Wähle ein Konto aus",
@@ -293,7 +293,7 @@
         "accessibilityLabel": "Aktionen für Benutzer {{user}}",
         "accessibilityHint": "Du kannst diesen Benutzer stummschalten, blockieren, melden oder teilen"
       },
-      "followed_by": "",
+      "followed_by": " folgt dir",
       "moved": "Benutzer umgezogen",
       "created_at": "Registriert am: {{date}}",
       "summary": {
@@ -305,7 +305,7 @@
         "default": "Tröts",
         "all": "Tröts und DruTröts"
       },
-      "suspended": ""
+      "suspended": "Konto wurde von den Instanzmoderation gesperrt"
     },
     "attachments": {
       "name": "<0 /><1>\"s Medien</1>"
@@ -348,7 +348,7 @@
       }
     },
     "history": {
-      "name": ""
+      "name": "Bearbeitungsverlauf"
     }
   }
 }
