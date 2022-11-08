@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
+    "accessibilityHint": "Tippen, um Inhalt aus- oder einzuklappen",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
-    "defaultHint": ""
+    "moreLines": " ({{count}} weitere Zeilen)",
+    "defaultHint": "Langer Tröt"
   }
 }
