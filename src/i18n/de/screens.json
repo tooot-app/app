@@ -12,7 +12,7 @@
     "description": "Bitte Benachrichtigungsdienst in den Einstellungen erneut aktivieren"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Bildformat {{type}} wird nicht unterstützt",
+    "videoNotSupported": "Videoformat {{type}} wird nicht unterstützt"
   }
 }
