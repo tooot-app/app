@@ -68,7 +68,7 @@
       "history": {
         "accessibilityLabel": "Dieser Tröt wurde {{count}} mal bearbeitet",
         "accessibilityHint": "Für den vollständigen Verlauf auswählen",
-        "text_one": "{{count}} bearbeitet",
+        "text_one": "{{count}} Bearbeitung",
         "text_other": "{{count}} mal bearbeitet"
       }
     },
