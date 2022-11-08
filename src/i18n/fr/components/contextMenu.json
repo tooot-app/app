@@ -1,0 +1,76 @@
+{
+  "accessibilityHint": "",
+  "account": {
+    "title": "",
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "block": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "reports": {
+      "action": ""
+    }
+  },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": ""
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": ""
+    },
+    "account": {
+      "action": ""
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": ""
+    },
+    "delete": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": ""
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": "",
+        "buttons": {
+          "confirm": ""
+        }
+      }
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "pin": {
+      "action_false": "",
+      "action_true": ""
+    }
+  }
+}
