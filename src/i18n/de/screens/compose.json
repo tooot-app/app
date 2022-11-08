@@ -168,12 +168,12 @@
       "header": {
         "title": "Entwurf"
       },
-      "warning": "",
+      "warning": "Entwürfe werden nur lokal gespeichert und können bei Abstürzen verloren gehen. Diese Funktion bitte nicht für dauerhafte Entwürfe nutzen.",
       "content": {
         "accessibilityHint": "Gespeicherter Entwurf, tippe, um diesen zu bearbeiten",
         "textEmpty": "Kein Inhalt"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Prüfe Anhänge auf dem Server..."
     }
   }
 }
