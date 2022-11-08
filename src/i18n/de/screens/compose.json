@@ -45,7 +45,7 @@
           "placeholder": "Was geht in dir vor",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
+              "title": "Maximale Anzahl von Anhängen erreicht",
               "OK": "$t(common:buttons.OK)"
             }
           }
@@ -82,7 +82,7 @@
             },
             "increase": {
               "accessibilityLabel": "Erhöhe Anzahl der Antwortmöglichkeiten auf {{amount}}",
-              "accessibilityHint": ""
+              "accessibilityHint": "Maximale Anzahl der Auswahlmöglichkeiten erreicht, aktuell {{amount}}"
             }
           },
           "multiple": {
@@ -114,42 +114,42 @@
           "accessibilityHint": "Umfrage wird entfernt, wenn ein Anhang vorhanden ist",
           "failed": {
             "alert": {
-              "title": "",
+              "title": "Upload fehlgeschlagen",
               "button": "Noch einmal versuchen"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Umfrage hinzufügen",
+          "accessibilityHint": "Anhang ist bei Umfragen nicht möglich"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Sichtbarkeit des Tröts ist {{visibility}}",
+          "title": "Sichtbarkeit des Tröts",
           "options": {
             "public": "Öffentlich",
             "unlisted": "Ungelistet",
             "private": "Nur für Folgende",
-            "direct": "",
+            "direct": "Direktnachricht",
             "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Emoji hinzufügen",
           "accessibilityHint": ""
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Entwurf ({{count}})",
+      "drafts_other": "Entwürfe ({{count}})"
     },
     "editAttachment": {
       "header": {
         "title": "Anhang bearbeiten",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Anhang speichern",
           "failed": {
             "title": "Bearbeitung fehlgeschlagen",
             "button": "Noch einmal versuchen"
