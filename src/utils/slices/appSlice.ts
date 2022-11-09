@@ -5,7 +5,7 @@ import { isDevelopment } from '@utils/checkEnvironment'
 import Constants from 'expo-constants'
 import * as Notifications from 'expo-notifications'
 
-export const retriveExpoToken = createAsyncThunk(
+export const retrieveExpoToken = createAsyncThunk(
   'app/expoToken',
   async (): Promise<string> => {
     if (isDevelopment) {
@@ -20,7 +20,7 @@ export const retriveExpoToken = createAsyncThunk(
   }
 )
 
-export const retriveVersionLatest = createAsyncThunk(
+export const retrieveVersionLatest = createAsyncThunk(
   'app/versionUpdate',
   async (): Promise<string> => {
     const res = await apiGeneral<{ latest: string }>({
@@ -48,12 +48,12 @@ const appSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(retriveExpoToken.fulfilled, (state, action) => {
+      .addCase(retrieveExpoToken.fulfilled, (state, action) => {
         if (action.payload) {
           state.expoToken = action.payload
         }
       })
-      .addCase(retriveVersionLatest.fulfilled, (state, action) => {
+      .addCase(retrieveVersionLatest.fulfilled, (state, action) => {
         if (action.payload && Constants.expoConfig?.version) {
           if (
             parseFloat(action.payload) > parseFloat(Constants.expoConfig?.version)
