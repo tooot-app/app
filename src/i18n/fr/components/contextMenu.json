@@ -1,76 +1,76 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Actions pour ce toot, telles que son utilisateur affiché, le toot lui-même",
   "account": {
-    "title": "",
+    "title": "Actions de l'utilisateur",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Rendre muet l'utilisateur",
+      "action_true": "Rendre la parole"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Bloquer l'utilisateur",
+      "action_true": "Débloquer l'utilisateur"
     },
     "reports": {
-      "action": ""
+      "action": "Signaler et bloquer"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Copier le pouet",
+    "succeed": "Copié"
   },
   "instance": {
-    "title": "",
+    "title": "Action de l'instance",
     "block": {
-      "action": "",
+      "action": "Bloquer l'instance {{instance}}",
       "alert": {
-        "title": "",
+        "title": "Confirmer le blocage de l'instance {{instance}}?",
         "message": "",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmer"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Partager le pouet"
     },
     "account": {
-      "action": ""
+      "action": "Partage l'utilisateur"
     }
   },
   "status": {
-    "title": "",
+    "title": "Actions du pouet",
     "edit": {
-      "action": ""
+      "action": "Editer le pouet"
     },
     "delete": {
-      "action": "",
+      "action": "Supprimer le pouet",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Confirmer la suppression ?",
+        "message": "Tous les boosts et favoris seront effacés, y compris toutes les réponses.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmer"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Supprimer le pouet et le repost",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Confirmer la suppression et le repost ?",
+        "message": "Tous les boosts et favoris seront effacés, y compris toutes les réponses.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmer"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Couper le pouet et les réponses",
+      "action_true": "Couper le pouet et les réponses"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Pouet épinglé",
+      "action_true": "Détacher le pouet"
     }
   }
 }
