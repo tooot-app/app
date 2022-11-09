@@ -1,8 +1,8 @@
 {
   "buttons": {
     "OK": "Ok",
-    "apply": "Appliquer",
-    "cancel": "Abandonner"
+    "apply": "Confirmer",
+    "cancel": "Annuler"
   },
   "customEmoji": {
     "accessibilityLabel": "Émoji personnalisé {{emoji}}"
@@ -15,7 +15,7 @@
       "message": ""
     },
     "error": {
-      "message": "{{function}} a échoué, veuillez réessayer"
+      "message": "Échec de la connexion, veuillez réessayer"
     }
   },
   "separator": ", "
