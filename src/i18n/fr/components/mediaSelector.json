@@ -1,10 +1,10 @@
 {
-  "title": "",
-  "message": "",
+  "title": "Sélectionnez la source du média",
+  "message": "Les données Media EXIF ne sont pas téléchargées",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Télécharger des photos",
+    "image_max": "Télécharger des photos (max {{max}})",
+    "video": "Télécharger une vidéo",
+    "video_max": "Télécharger une vidéo (max {{max}})"
   }
 }
