@@ -14,22 +14,22 @@
     "right": {
       "button": {
         "default": "Pouet",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "conversation": "Pouet DM",
+        "reply": "Réponse de pouet",
+        "deleteEdit": "Pouet",
+        "edit": "Pouet",
+        "share": "Pouet"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Échec du pouet",
+          "button": "Réessayer"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "cancel": "",
-          "confirm": ""
+          "title": "Le pouet répondu est introuvable",
+          "description": "Le pouet répondu a peut-être été supprimé. Voulez-vous le supprimer de votre référence ?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Supprimer la référence"
         }
       }
     }
@@ -37,129 +37,129 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Pouet en tant que @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Voir tous les messages d'avertissement"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Qu’avez-vous en tête",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Nombre maximum de pièces jointes atteint",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Marquer les pièces jointes comme étant sensibles",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Retirer la pièce jointe téléchargée, numéro {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Editer la pièce jointe téléchargée, numéro {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Télécharger plus de pièces jointes"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Tapotez pour ajouter des émojis au pouet"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Option du sondage {{index}}",
+              "single": "Choix unique",
+              "multiple": "Choix multiple"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Réduire les options du sondage à {{amount}}",
+              "accessibilityHint": "Quantité minimale d'options de sondage atteinte, actuellement {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Augmentez les options du sondage à {{amount}}",
+              "accessibilityHint": "Quantité maximum d'options de sondage atteinte, actuellement {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Type de choix",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "Choix unique",
+              "multiple": "Choix multiple",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Validité",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 minutes",
+              "1800": "30 minutes",
+              "3600": "1 heure",
+              "21600": "6 heures",
+              "86400": "1 jour",
+              "259200": "3 jours",
+              "604800": "7 jours",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Téléchargez une pièce-jointe",
+          "accessibilityHint": "La fonction de sondage sera désactivée lorsqu'il y a une pièce jointe",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Le téléchargement a échoué",
+              "button": "Réessayer"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Ajouter un sondage",
+          "accessibilityHint": "La fonction d'attachement sera désactivée lorsque le sondage est actif"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "La visibilité de pouet est {{visibility}}",
+          "title": "Visibilité de pouet",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "Public",
+            "unlisted": "Non listé",
+            "private": "Abonné·e·s uniquement",
+            "direct": "Message direct",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Divulgâchage"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Ajouter un émoji",
+          "accessibilityHint": "Ouvrir le panneau de sélection des émojis, glisser horizontalement pour changer de page"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Brouillon ({{count}})",
+      "drafts_other": "Brouillons ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Modifier la pièce jointe",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Enregistrement de la pièce jointe",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Impossible d'éditer",
+            "button": "Réessayer"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Décrire cette photo pour les personnes malvoyantes",
+          "placeholder": "Vous pouvez ajouter une description, parfois appelée alt-text, à vos médias afin qu'ils soient accessibles à un plus grand nombre de personnes, y compris celles qui sont aveugles ou malvoyantes.\n\nLes bonnes descriptions sont concises, ou présentent ce qui est dans vos médias avec suffisamment de précision pour comprendre leur contexte."
         },
         "imageFocus": ""
       }
