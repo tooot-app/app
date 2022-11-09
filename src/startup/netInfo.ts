@@ -51,7 +51,7 @@ const netInfo = async (): Promise<{
       if (resVerify.id !== instance.account.id) {
         log('error', 'netInfo', 'local id does not match remote id')
         store.dispatch(removeInstance(instance))
-        return Promise.resolve({ connected: true, corruputed: '' })
+        return Promise.resolve({ connected: true, corrupted: '' })
       } else {
         store.dispatch(
           updateInstanceAccount({
