@@ -1,19 +1,19 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "Abandonner",
       "alert": {
-        "title": "",
+        "title": "Annuler l’édition?",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "Enregistrer comme brouillon",
+          "delete": "Supprimer le brouillon",
+          "cancel": "Abandonner"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
+        "default": "Pouet",
         "conversation": "",
         "reply": "",
         "deleteEdit": "",
