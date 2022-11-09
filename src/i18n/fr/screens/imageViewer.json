@@ -1,17 +1,17 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Plus d'actions pour cette image",
+      "accessibilityHint": "Vous pouvez enregistrer ou partager cette image"
     },
     "options": {
-      "save": "",
-      "share": "",
-      "cancel": ""
+      "save": "Enregistrer l'image",
+      "share": "Partager l'image",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Image enregistrée",
+      "failed": "L'enregistrement de l'image a échoué"
     }
   }
 }
