@@ -130,121 +130,121 @@
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Publication de médias sensibles"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Verrouiller le compte",
+          "description": "Nécessite que vous approuviez manuellement chaque abonné·e"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Compte Bot",
+          "description": "Ce compte effectue principalement des actions automatisées et peut ne pas être surveillé"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Groupe {{index}}",
+        "label": "Étiquette",
+        "content": "Contenu"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Le traitement de l'image a échoué. Veuillez réessayer."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Votre téléphone ne prend pas en charge la notification push de tooot",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Activer les notifications push",
+        "settings": "Activer dans les paramètres"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Activer pour {{acct}}",
+        "description": "Les messages sont acheminés via le serveur de tooot"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Détails du message",
+        "description": "Les messages acheminés par le serveur de tooot sont chiffrés, mais vous pouvez choisir de décoder le message sur le serveur. Le code source de notre serveur est open source et aucune politique de log."
       },
       "default": {
-        "heading": ""
+        "heading": "Par défaut"
       },
       "follow": {
-        "heading": ""
+        "heading": "Nouvel abonné"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Demande d'abonnement"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Dans les favoris"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Boosté"
       },
       "mention": {
-        "heading": ""
+        "heading": "Vous a mentionné(e)"
       },
       "poll": {
-        "heading": ""
+        "heading": "Mise à jour du sondage"
       },
       "status": {
-        "heading": ""
+        "heading": "Pouet des utilisateurs inscrits"
       },
-      "howitworks": ""
+      "howitworks": "Apprenez comment cela fonctionne"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} non lus",
+          "read": "Tout lu",
+          "empty": "Aucun"
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "Activé",
+          "disabled": "Désactivé"
         }
       },
       "update": {
-        "title": ""
+        "title": "Mettre à jour vers la dernière version"
       },
       "logout": {
-        "button": "",
+        "button": "Se déconnecter",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Déconnexion?",
+          "message": "Après vous être déconnecté, vous devez vous reconnecter",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": "Déconnexion",
+            "cancel": "$t(common:buttons.cancel)"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
-          "cancel": ""
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "theme": {
-        "heading": "",
+        "heading": "Apparence",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": "",
-          "cancel": ""
+          "auto": "Comme le système",
+          "light": "Mode Clair",
+          "dark": "Mode sombre",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Thème sombre",
         "options": {
           "lighter": "Plus claire",
           "darker": "Plus sombre",
