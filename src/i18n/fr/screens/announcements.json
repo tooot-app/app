@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Annonces",
   "content": {
-    "published": "",
+    "published": "Publié <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Lire",
+      "unread": "Marqué comme lu"
     }
   }
 }
