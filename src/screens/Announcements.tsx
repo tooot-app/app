@@ -144,7 +144,7 @@ const ScreenAnnouncements: React.FC<
                       : colors.backgroundDefault
                   }}
                   onPress={() => {
-                    analytics('accnouncement_reaction_press', {
+                    analytics('announcement_reaction_press', {
                       current: reaction.me
                     })
                     mutation.mutate({
@@ -203,7 +203,7 @@ const ScreenAnnouncements: React.FC<
             loading={mutation.isLoading}
             disabled={item.read}
             onPress={() => {
-              analytics('accnouncement_read_press')
+              analytics('announcement_read_press')
               !item.read &&
                 mutation.mutate({
                   id: item.id,
