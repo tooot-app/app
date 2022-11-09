@@ -24,7 +24,7 @@
       "action": "Bloquer l'instance {{instance}}",
       "alert": {
         "title": "Confirmer le blocage de l'instance {{instance}}?",
-        "message": "",
+        "message": "Vous pouvez masquer ou bloquer certains utilisateurs.\n\nAprès avoir bloqué l'instance, tout son contenu, y compris les followers de cette instance, sera supprimé !",
         "buttons": {
           "confirm": "Confirmer"
         }
