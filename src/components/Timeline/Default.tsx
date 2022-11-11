@@ -58,12 +58,9 @@ const TimelineDefault: React.FC<Props> = ({
     complete: false
   })
 
-  if (
-    queryKey &&
-    shouldFilter({ copiableContent, status: actualStatus, queryKey }) &&
-    !highlighted
-  ) {
-    return <TimelineFiltered />
+  const filtered = queryKey && shouldFilter({ copiableContent, status: actualStatus, queryKey })
+  if (queryKey && filtered && !highlighted) {
+    return <TimelineFiltered phrase={filtered} />
   }
 
   const onPress = useCallback(() => {

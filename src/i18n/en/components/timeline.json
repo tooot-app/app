@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "Hidden content"
     },
-    "filtered": "Filtered",
+    "filtered": "Filtered: {{phrase}}.",
     "fullConversation": "Read conversations",
     "translate": {
       "default": "Translate",
