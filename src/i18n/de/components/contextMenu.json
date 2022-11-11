@@ -8,22 +8,22 @@
     },
     "block": {
       "action_false": "Nutzer blockieren",
-      "action_true": ""
+      "action_true": "User entblocken"
     },
     "reports": {
       "action": "Melden und blockieren"
     }
   },
   "copy": {
-    "action": "",
+    "action": "Tröt kopieren",
     "succeed": "Kopiert"
   },
   "instance": {
-    "title": "",
+    "title": "Instanz-Aktionen",
     "block": {
       "action": "Instanz {{instance}} blockieren",
       "alert": {
-        "title": "",
+        "title": "{{instance}} wirklich blockieren?",
         "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!",
         "buttons": {
           "confirm": "Bestätigen"
@@ -40,7 +40,7 @@
     }
   },
   "status": {
-    "title": "",
+    "title": "Tröt-Befehle",
     "edit": {
       "action": "Tröt bearbeiten"
     },
@@ -48,17 +48,17 @@
       "action": "Tröt löschen",
       "alert": {
         "title": "Löschen bestätigen?",
-        "message": "",
+        "message": "Alle Boosts, Sterne und Antworten werden entfernt.",
         "buttons": {
           "confirm": "Bestätigen"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Tröt und Boost entfernen",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Löschen und Boost bestätigen?",
+        "message": "Alle Boosts und Favoriten inklusive der Antworten werden gelöscht.",
         "buttons": {
           "confirm": "Bestätigen"
         }
@@ -66,11 +66,11 @@
     },
     "mute": {
       "action_false": "Diesen Tröt sowie die Antworten stummschalten",
-      "action_true": ""
+      "action_true": "Tröt und Antworten nicht mehr stummschalten"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tröt anheften",
+      "action_true": "Tröt nicht mehr anheften"
     }
   }
 }

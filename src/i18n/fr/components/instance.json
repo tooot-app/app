@@ -1,0 +1,30 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Domaine d'instance"
+    },
+    "button": "Connexion",
+    "information": {
+      "name": "Nom",
+      "accounts": "Utilisateurs",
+      "statuses": "Pouets",
+      "domains": "Univers"
+    },
+    "disclaimer": {
+      "base": "Le processus de connexion utilise le navigateur du système. Les informations de votre compte ne seront pas visibles par l'application tooot."
+    },
+    "terms": {
+      "base": "En vous connectant, vous acceptez la <0>politique de confidentialité</0> et les <1>conditions de service</1>."
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Connecté à cette instance",
+      "message": "Vous pouvez vous connecter à un autre compte, en maintenant un compte connecté existant",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Continuer"
+      }
+    }
+  }
+}

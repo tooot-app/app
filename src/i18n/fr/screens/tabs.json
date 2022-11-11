@@ -1,0 +1,354 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Suit"
+    },
+    "public": {
+      "name": "",
+      "segments": {
+        "left": "Fédéré",
+        "right": "Local"
+      }
+    },
+    "notifications": {
+      "name": "Notifications"
+    },
+    "me": {
+      "name": "À propos de moi"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Rechercher",
+      "accessibilityHint": "Rechercher des hashtags, des utilisateurs ou des pouets"
+    }
+  },
+  "notifications": {
+    "filter": {
+      "accessibilityLabel": "Filtrer",
+      "accessibilityHint": "Filtrer les types de notifications affichés"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Signets"
+      },
+      "conversations": {
+        "name": "Messages directs"
+      },
+      "favourites": {
+        "name": "Favoris"
+      },
+      "fontSize": {
+        "name": "Taille de la police de Pouet"
+      },
+      "language": {
+        "name": "Langue"
+      },
+      "lists": {
+        "name": "Listes"
+      },
+      "list": {
+        "name": "Liste : {{list}}"
+      },
+      "push": {
+        "name": "Push de Notification"
+      },
+      "profile": {
+        "name": "Modifier le profil"
+      },
+      "profileName": {
+        "name": "Editer le nom d'affichage"
+      },
+      "profileNote": {
+        "name": "Éditer la description"
+      },
+      "profileFields": {
+        "name": "Éditer les métadonnées"
+      },
+      "settings": {
+        "name": "Paramètres de l'application"
+      },
+      "webSettings": {
+        "name": "Plus de paramètres de compte"
+      },
+      "switch": {
+        "name": "Passer sur un autre compte"
+      }
+    },
+    "fontSize": {
+      "demo": "<p>Ceci est un pouet de démo😊. Vous pouvez choisir parmi plusieurs options ci-dessous.<br /><br />Ce paramètre n'affecte que le contenu principal des pouets, mais pas les autres tailles de police.</p>",
+      "sizes": {
+        "S": "S",
+        "M": "M - Par Défaut",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "profile": {
+      "cancellation": {
+        "title": "Modifications non sauvegardées",
+        "message": "Votre modification n'a pas été enregistrée. Voulez-vous annuler l'enregistrement des modifications ?",
+        "buttons": {
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Ne pas tenir compte"
+        }
+      },
+      "feedback": {
+        "succeed": "{{type}} mis à jour",
+        "failed": "{{type}} Échec de la mise à jour, veuillez ré-essayer"
+      },
+      "root": {
+        "name": {
+          "title": "Nom Affiché"
+        },
+        "avatar": {
+          "title": "Avatar",
+          "description": "Sera réduit à 400x400px"
+        },
+        "header": {
+          "title": "Bandeau",
+          "description": "Sera réduit à 1500x500px"
+        },
+        "note": {
+          "title": "Description"
+        },
+        "fields": {
+          "title": "Metadonnés",
+          "total_one": "Champ {{count}}",
+          "total_other": "Champ {{count}}"
+        },
+        "visibility": {
+          "title": "Visibilité de la publication",
+          "options": {
+            "public": "Public",
+            "unlisted": "Non listé",
+            "private": "Abonné·e·s uniquement",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        },
+        "sensitive": {
+          "title": "Publication de médias sensibles"
+        },
+        "lock": {
+          "title": "Verrouiller le compte",
+          "description": "Nécessite que vous approuviez manuellement chaque abonné·e"
+        },
+        "bot": {
+          "title": "Compte Bot",
+          "description": "Ce compte effectue principalement des actions automatisées et peut ne pas être surveillé"
+        }
+      },
+      "fields": {
+        "group": "Groupe {{index}}",
+        "label": "Étiquette",
+        "content": "Contenu"
+      },
+      "mediaSelectionFailed": "Le traitement de l'image a échoué. Veuillez réessayer."
+    },
+    "push": {
+      "notAvailable": "Votre téléphone ne prend pas en charge la notification push de tooot",
+      "enable": {
+        "direct": "Activer les notifications push",
+        "settings": "Activer dans les paramètres"
+      },
+      "global": {
+        "heading": "Activer pour {{acct}}",
+        "description": "Les messages sont acheminés via le serveur de tooot"
+      },
+      "decode": {
+        "heading": "Détails du message",
+        "description": "Les messages acheminés par le serveur de tooot sont chiffrés, mais vous pouvez choisir de décoder le message sur le serveur. Le code source de notre serveur est open source et aucune politique de log."
+      },
+      "default": {
+        "heading": "Par défaut"
+      },
+      "follow": {
+        "heading": "Nouvel abonné"
+      },
+      "follow_request": {
+        "heading": "Demande d'abonnement"
+      },
+      "favourite": {
+        "heading": "Dans les favoris"
+      },
+      "reblog": {
+        "heading": "Boosté"
+      },
+      "mention": {
+        "heading": "Vous a mentionné(e)"
+      },
+      "poll": {
+        "heading": "Mise à jour du sondage"
+      },
+      "status": {
+        "heading": "Pouet des utilisateurs inscrits"
+      },
+      "howitworks": "Apprenez comment cela fonctionne"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} non lus",
+          "read": "Tout lu",
+          "empty": "Aucun"
+        }
+      },
+      "push": {
+        "content": {
+          "enabled": "Activé",
+          "disabled": "Désactivé"
+        }
+      },
+      "update": {
+        "title": "Mettre à jour vers la dernière version"
+      },
+      "logout": {
+        "button": "Se déconnecter",
+        "alert": {
+          "title": "Déconnexion?",
+          "message": "Après vous être déconnecté, vous devez vous reconnecter",
+          "buttons": {
+            "logout": "Déconnexion",
+            "cancel": "$t(common:buttons.cancel)"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "$t(me.stacks.language.name)",
+        "options": {
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "theme": {
+        "heading": "Apparence",
+        "options": {
+          "auto": "Comme le système",
+          "light": "Mode Clair",
+          "dark": "Mode sombre",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "darkTheme": {
+        "heading": "Thème sombre",
+        "options": {
+          "lighter": "Plus claire",
+          "darker": "Plus sombre",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "browser": {
+        "heading": "Ouverture du lien",
+        "options": {
+          "internal": "Dans l'application",
+          "external": "Ouvrir dans le navigateur système",
+          "cancel": "$t(common:buttons.cancel)"
+        }
+      },
+      "staticEmoji": {
+        "heading": "Utiliser des émojis statiques",
+        "description": "Si vous rencontrez des plantages fréquents de l'application lors de l'affichage de la liste d'émojis, vous pouvez essayer d'utiliser des émojis statiques."
+      },
+      "feedback": {
+        "heading": "Demande de fonctionnalités"
+      },
+      "support": {
+        "heading": "Support de tooot"
+      },
+      "review": {
+        "heading": "Examiner le tooot"
+      },
+      "contact": {
+        "heading": "Contacter tooot"
+      },
+      "analytics": {
+        "heading": "Aidez-nous à nous améliorer",
+        "description": "Collecte uniquement de l'usage relatif des non-utilisateurs"
+      },
+      "version": "Version {{version}}",
+      "instanceVersion": "Version de Mastodon v{{version}}"
+    },
+    "switch": {
+      "existing": "Choisir parmi les utilisateurs connectés",
+      "new": "Connectez-vous à une instance"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Actions pour l'utilisateur {{user}}",
+        "accessibilityHint": "Vous pouvez masquer, bloquer, signaler ou partager cet utilisateur"
+      },
+      "followed_by": " vous suit",
+      "moved": "Utilisateur déplacé",
+      "created_at": "Inscrit le : {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} pouets",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Pouets",
+        "all": "Pouets et réponses"
+      },
+      "suspended": "Compte suspendu par les modérateurs de votre serveur"
+    },
+    "attachments": {
+      "name": "<0 /><1>\"s media</1>"
+    },
+    "search": {
+      "header": {
+        "prefix": "Recherche en cours",
+        "placeholder": "pour..."
+      },
+      "empty": {
+        "general": "Entrez le mot clé pour rechercher <bold>$t(screenTabs:shared.search.sections.accounts)</bold><unk><bold>$t(screenTabs:shared.search.sections.hashtags)</bold> ou <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Recherche avancée",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        }
+      },
+      "sections": {
+        "accounts": "Utilisateur",
+        "hashtags": "Hashtag",
+        "statuses": "Pouet"
+      },
+      "notFound": "Impossible de trouver <bold>{{searchTerm}}</bold> lié à {{type}}"
+    },
+    "toot": {
+      "name": "Discussions"
+    },
+    "users": {
+      "accounts": {
+        "following": "Abonnements {{count}}",
+        "followers": "{{count}} abonnés"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} boosté",
+        "favourited_by": "{{count}} mis en favori"
+      }
+    },
+    "history": {
+      "name": "Modifier l'historique"
+    }
+  }
+}
