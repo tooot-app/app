@@ -34,7 +34,7 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
     theAttachmentRemote?.meta?.original?.aspect < 1
       ? windowWidth * theAttachmentRemote?.meta?.original?.aspect
       : windowWidth
-  const imageDimensionis = {
+  const imageDimensions = {
     width: imageWidthBase,
     height:
       imageWidthBase /
@@ -60,11 +60,11 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
   const pan = useSharedValue({
     x:
       (((theAttachmentRemote as Mastodon.AttachmentImage)?.meta?.focus?.x || 0) *
-        imageDimensionis.width) /
+        imageDimensions.width) /
       2,
     y:
       (((theAttachmentRemote as Mastodon.AttachmentImage)?.meta?.focus?.y || 0) *
-        imageDimensionis.height) /
+        imageDimensions.height) /
       2
   })
   const start = useSharedValue({ x: 0, y: 0 })
@@ -80,8 +80,8 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
     })
     .onEnd(() => {
       runOnJS(updateFocus)({
-        x: pan.value.x / (imageDimensionis.width / 2),
-        y: pan.value.y / (imageDimensionis.height / 2)
+        x: pan.value.x / (imageDimensions.width / 2),
+        y: pan.value.y / (imageDimensions.height / 2)
       })
     })
     .onFinalize(() => {
@@ -93,16 +93,16 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
         {
           translateX: interpolate(
             pan.value.x,
-            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
-            [-imageDimensionis.width / 2, imageDimensionis.width / 2],
+            [-imageDimensions.width / 2, imageDimensions.width / 2],
+            [-imageDimensions.width / 2, imageDimensions.width / 2],
             Extrapolate.CLAMP
           )
         },
         {
           translateY: interpolate(
             pan.value.y,
-            [-imageDimensionis.height / 2, imageDimensionis.height / 2],
-            [-imageDimensionis.height / 2, imageDimensionis.height / 2],
+            [-imageDimensions.height / 2, imageDimensions.height / 2],
+            [-imageDimensions.height / 2, imageDimensions.height / 2],
             Extrapolate.CLAMP
           )
         }
@@ -115,8 +115,8 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
       <View style={{ overflow: 'hidden', flex: 1, alignItems: 'center' }}>
         <Image
           style={{
-            width: imageDimensionis.width,
-            height: imageDimensionis.height
+            width: imageDimensions.width,
+            height: imageDimensions.height
           }}
           source={{
             uri: theAttachmentLocal?.uri ? theAttachmentLocal.uri : theAttachmentRemote?.preview_url
@@ -128,10 +128,10 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
               styleTransform,
               {
                 width: windowWidth * 2,
-                height: imageDimensionis.height * 2,
+                height: imageDimensions.height * 2,
                 position: 'absolute',
                 left: -windowWidth / 2,
-                top: -imageDimensionis.height / 2,
+                top: -imageDimensions.height / 2,
                 backgroundColor: colors.backgroundOverlayInvert,
                 flexDirection: 'row',
                 alignItems: 'center',
