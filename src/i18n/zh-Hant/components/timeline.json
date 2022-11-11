@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "隱藏內容"
     },
-    "filtered": "已過濾",
+    "filtered": "",
     "fullConversation": "閱讀全部對話",
     "translate": {
       "default": "翻譯",
