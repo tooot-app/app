@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Platform } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
