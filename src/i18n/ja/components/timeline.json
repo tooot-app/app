@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "内容を非表示にする"
     },
-    "filtered": "フィルター済み",
+    "filtered": "",
     "fullConversation": "スレッドを読む",
     "translate": {
       "default": "翻訳",
