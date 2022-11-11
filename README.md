@@ -11,6 +11,8 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 ## Special thanks
 
+[@pat](https://piaille.fr/@pat) for French translation
+
 [@forenta](https://github.com/forenta) for German translation
 
 [@andrigamerita](https://github.com/andrigamerita) for Italian translation
