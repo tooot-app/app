@@ -9,8 +9,8 @@ import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
-import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
+import formatText from '../../utils/formatText'
 import { uploadAttachment } from '../Footer/addAttachment'
 
 const ComposeTextInput: React.FC = () => {

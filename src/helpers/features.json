@@ -1,5 +1,10 @@
 [
   {
+    "feature": "account_return_suspended",
+    "version": 3.3,
+    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.3.0"
+  },
+  {
     "feature": "edit_post",
     "version": 3.5,
     "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
@@ -8,11 +13,6 @@
     "feature": "deprecate_auth_follow",
     "version": 3.5,
     "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
-  },
-  {
-    "feature": "notification_type_status",
-    "version": 3.3,
-    "reference": "https://docs.joinmastodon.org/entities/notification/#required-attributes"
   },
   {
     "feature": "notification_type_update",

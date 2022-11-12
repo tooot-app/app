@@ -1,6 +1,7 @@
 const LOCALES = {
   de: 'Deutsch',
   en: 'English',
+  fr: 'Français',
   it: 'Italiano',
   ja: '日本語',
   ko: '한국어',

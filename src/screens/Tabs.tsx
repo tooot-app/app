@@ -12,7 +12,7 @@ import {
   getInstanceAccount,
   getInstanceActive
 } from '@utils/slices/instancesSlice'
-import { getVersionUpdate, retriveVersionLatest } from '@utils/slices/appSlice'
+import { getVersionUpdate, retrieveVersionLatest } from '@utils/slices/appSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
@@ -64,7 +64,7 @@ const ScreenTabs = React.memo(
     const versionUpdate = useSelector(getVersionUpdate)
     const dispatch = useAppDispatch()
     useEffect(() => {
-      dispatch(retriveVersionLatest())
+      dispatch(retrieveVersionLatest())
     }, [])
     const tabMeOptions = useMemo(() => {
       if (versionUpdate) {

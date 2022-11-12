@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   FlatList,
-  Image,
   PixelRatio,
   Platform,
   Share,
@@ -102,7 +101,8 @@ const ScreenImagesViewer = ({
 
       return (
         <Zoom
-          isZoomed={isZoomed}
+          onZoomBegin={() => (isZoomed.value = true)}
+          onZoomEnd={() => (isZoomed.value = false)}
           maximumZoomScale={max > 8 ? 8 : max}
           simultaneousGesture={Gesture.Fling()
             .direction(Directions.DOWN)

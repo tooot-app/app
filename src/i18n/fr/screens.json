@@ -1,0 +1,18 @@
+{
+  "screenshot": {
+    "title": "Protection de la confidentialité",
+    "message": "Veuillez ne pas divulguer l'identité d'un autre utilisateur, tel que le nom d'utilisateur, l'avatar, etc. Merci!",
+    "button": "Confirmer"
+  },
+  "localCorrupt": {
+    "message": "Session expirée, veuillez ré-essayer"
+  },
+  "pushError": {
+    "message": "Erreur des services push",
+    "description": "Veuillez réactiver la notification push dans les paramètres"
+  },
+  "shareError": {
+    "imageNotSupported": "Type d'image {{type}} non pris en charge",
+    "videoNotSupported": "Type de vidéo {{type}} non supporté"
+  }
+}

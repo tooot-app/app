@@ -54,7 +54,7 @@ const updateStatusProperty = ({
               const tootIndex = reblog
                 ? items.findIndex(({ reblog }) => reblog?.id === id)
                 : items.findIndex(toot => toot.id === id)
-              // if favouriets page and notifications page, remove the item instead
+              // if favourites page and notifications page, remove the item instead
               if (tootIndex >= 0) {
                 foundToot = true
                 updateStatus({ item: items[tootIndex], reblog, payload })
@@ -111,7 +111,7 @@ const updateStatusProperty = ({
                 const tootIndex = reblog
                   ? items.findIndex(({ reblog }) => reblog?.id === id)
                   : items.findIndex(toot => toot.id === id)
-                // if favouriets page and notifications page, remove the item instead
+                // if favourites page and notifications page, remove the item instead
                 if (tootIndex >= 0) {
                   foundToot = true
                   updateStatus({ item: items[tootIndex], reblog, payload })

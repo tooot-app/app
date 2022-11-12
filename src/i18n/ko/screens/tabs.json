@@ -304,7 +304,8 @@
       "toots": {
         "default": "툿",
         "all": "툿과 답장"
-      }
+      },
+      "suspended": ""
     },
     "attachments": {
       "name": "<0 /><1>\"의 미디어</1>"

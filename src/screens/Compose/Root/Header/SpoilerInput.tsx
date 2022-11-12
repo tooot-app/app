@@ -7,8 +7,8 @@ import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TextInput } from 'react-native'
 import { useSelector } from 'react-redux'
-import formatText from '../../formatText'
 import ComposeContext from '../../utils/createContext'
+import formatText from '../../utils/formatText'
 
 const ComposeSpoilerInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)

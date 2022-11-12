@@ -37,7 +37,7 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
 }
 
 const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
-  if (!account) {
+  if (!account || account.suspended) {
     return null
   }
 

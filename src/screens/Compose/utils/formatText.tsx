@@ -3,8 +3,8 @@ import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { Dispatch } from 'react'
 import { FetchOptions } from 'react-query/types/core/query'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { ComposeAction, ComposeState } from './utils/types'
-import { instanceConfigurationStatusCharsURL } from './Root'
+import { ComposeAction, ComposeState } from './types'
+import { instanceConfigurationStatusCharsURL } from '../Root'
 import CustomText from '@components/Text'
 import { emojis } from '@components/Emojis'
 
@@ -43,7 +43,7 @@ linkify
       var tail = text.slice(pos)
 
       if (!self.re.hashtag) {
-        self.re.hashtag = new RegExp('^[A-Za-z0-9_]+')
+        self.re.hashtag = new RegExp('^[\\S]+')
       }
       if (self.re.hashtag.test(tail)) {
         return tail.match(self.re.hashtag)![0].length

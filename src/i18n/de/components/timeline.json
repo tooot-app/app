@@ -30,7 +30,7 @@
         "default": "{{name}} hat geboostet",
         "notification": "{{name}} hat deinen Tröt geboostet"
       },
-      "update": ""
+      "update": "Boost wurde bearbeitet"
     },
     "actions": {
       "reply": {
@@ -40,8 +40,8 @@
         "accessibilityLabel": "Tröt boosten",
         "function": "Boost",
         "options": {
-          "title": "",
-          "public": "",
+          "title": "Boost-Sichtbarkeit ändern",
+          "public": "Öffentlicher Boost",
           "unlisted": ""
         }
       },
@@ -68,7 +68,7 @@
       "history": {
         "accessibilityLabel": "Dieser Tröt wurde {{count}} mal bearbeitet",
         "accessibilityHint": "Für den vollständigen Verlauf auswählen",
-        "text_one": "{{count}} bearbeitet",
+        "text_one": "{{count}} Bearbeitung",
         "text_other": "{{count}} mal bearbeitet"
       }
     },

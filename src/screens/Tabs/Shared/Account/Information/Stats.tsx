@@ -16,8 +16,11 @@ export interface Props {
 }
 
 const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  if (account?.suspended) {
+    return null
+  }
+
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
@@ -31,9 +34,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           })}
           onPress={() => {
             analytics('account_stats_toots_press')
-            myInfo &&
-              account &&
-              navigation.push('Tab-Shared-Account', { account })
+            myInfo && account && navigation.push('Tab-Shared-Account', { account })
           }}
         />
       ) : (
@@ -47,10 +48,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <CustomText
-          style={[
-            styles.stat,
-            { color: colors.primaryDefault, textAlign: 'right' }
-          ]}
+          style={[styles.stat, { color: colors.primaryDefault, textAlign: 'right' }]}
           children={t('shared.account.summary.following_count', {
             count: account.following_count
           })}
@@ -77,10 +75,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       )}
       {account ? (
         <CustomText
-          style={[
-            styles.stat,
-            { color: colors.primaryDefault, textAlign: 'center' }
-          ]}
+          style={[styles.stat, { color: colors.primaryDefault, textAlign: 'center' }]}
           children={t('shared.account.summary.followers_count', {
             count: account.followers_count
           })}

@@ -51,9 +51,9 @@ const TabLocal = React.memo(
                       ]
                     : undefined
                 }
-                onPress={({ nativeEvent: { id } }) => {
-                  id.length
-                    ? setQueryKey(['Timeline', { page: 'List', list: id }])
+                onPress={({ nativeEvent: { index } }) => {
+                  lists && index
+                    ? setQueryKey(['Timeline', { page: 'List', list: lists[index - 1].id }])
                     : setQueryKey(['Timeline', { page: 'Following' }])
                 }}
                 children={

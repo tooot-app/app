@@ -1,10 +1,10 @@
 {
-  "title": "Datenquelle auswählen",
-  "message": "",
+  "title": "Medienquelle wählen",
+  "message": "EXIF-Metadaten werden nicht hochgeladen",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Fotos hochladen",
+    "image_max": "Fotos hochladen (max {{max}})",
+    "video": "Video hochladen",
+    "video_max": "Video hochladen (max {{max}})"
   }
 }

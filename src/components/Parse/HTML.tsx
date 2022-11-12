@@ -207,6 +207,10 @@ const ParseHTML = React.memo(
       expandHint = t('HTML.defaultHint')
     }
 
+    if (disableDetails) {
+      numberOfLines = 4
+    }
+
     const renderNodeCallback = useCallback(
       (node: any, index: any) =>
         renderNode({
@@ -247,7 +251,7 @@ const ParseHTML = React.memo(
 
         return (
           <View style={{ overflow: 'hidden' }}>
-            {typeof totalLines === 'number' || numberOfLines === 1 ? (
+            {(!disableDetails && typeof totalLines === 'number') || numberOfLines === 1 ? (
               <Pressable
                 accessibilityLabel={t('HTML.accessibilityHint')}
                 onPress={() => {

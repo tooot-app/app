@@ -1,0 +1,76 @@
+{
+  "accessibilityHint": "Actions pour ce toot, telles que son utilisateur affiché, le toot lui-même",
+  "account": {
+    "title": "Actions de l'utilisateur",
+    "mute": {
+      "action_false": "Rendre muet l'utilisateur",
+      "action_true": "Rendre la parole"
+    },
+    "block": {
+      "action_false": "Bloquer l'utilisateur",
+      "action_true": "Débloquer l'utilisateur"
+    },
+    "reports": {
+      "action": "Signaler et bloquer"
+    }
+  },
+  "copy": {
+    "action": "Copier le pouet",
+    "succeed": "Copié"
+  },
+  "instance": {
+    "title": "Action de l'instance",
+    "block": {
+      "action": "Bloquer l'instance {{instance}}",
+      "alert": {
+        "title": "Confirmer le blocage de l'instance {{instance}}?",
+        "message": "Vous pouvez masquer ou bloquer certains utilisateurs.\n\nAprès avoir bloqué l'instance, tout son contenu, y compris les followers de cette instance, sera supprimé !",
+        "buttons": {
+          "confirm": "Confirmer"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Partager le pouet"
+    },
+    "account": {
+      "action": "Partage l'utilisateur"
+    }
+  },
+  "status": {
+    "title": "Actions du pouet",
+    "edit": {
+      "action": "Editer le pouet"
+    },
+    "delete": {
+      "action": "Supprimer le pouet",
+      "alert": {
+        "title": "Confirmer la suppression ?",
+        "message": "Tous les boosts et favoris seront effacés, y compris toutes les réponses.",
+        "buttons": {
+          "confirm": "Confirmer"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "Supprimer le pouet et le repost",
+      "alert": {
+        "title": "Confirmer la suppression et le repost ?",
+        "message": "Tous les boosts et favoris seront effacés, y compris toutes les réponses.",
+        "buttons": {
+          "confirm": "Confirmer"
+        }
+      }
+    },
+    "mute": {
+      "action_false": "Couper le pouet et les réponses",
+      "action_true": "Couper le pouet et les réponses"
+    },
+    "pin": {
+      "action_false": "Pouet épinglé",
+      "action_true": "Détacher le pouet"
+    }
+  }
+}

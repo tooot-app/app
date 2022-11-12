@@ -51,14 +51,10 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
       {queryKey ? (
         <Pressable
           accessibilityHint={t('accessibilityHint')}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: StyleConstants.Spacing.L
-          }}
+          style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
         >
           <ContextMenu
+            style={{ flex: 1, alignItems: 'center' }}
             dropdownMenuMode
             actions={contextMenuContext}
             onPress={() => {}}

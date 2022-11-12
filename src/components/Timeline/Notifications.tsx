@@ -36,24 +36,22 @@ const TimelineNotifications = React.memo(
       complete: false
     })
 
-    if (
+    const filtered =
       notification.status &&
-      shouldFilter({ copiableContent, status: notification.status, queryKey })
-    ) {
-      return <TimelineFiltered />
+      shouldFilter({
+        copiableContent,
+        status: notification.status,
+        queryKey
+      })
+    if (notification.status && filtered) {
+      return <TimelineFiltered phrase={filtered} />
     }
 
     const { colors } = useTheme()
-    const instanceAccount = useSelector(
-      getInstanceAccount,
-      (prev, next) => prev?.id === next?.id
-    )
-    const navigation =
-      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+    const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.id === next?.id)
+    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-    const actualAccount = notification.status
-      ? notification.status.account
-      : notification.account
+    const actualAccount = notification.status ? notification.status.account : notification.account
 
     const onPress = useCallback(() => {
       analytics('timeline_notification_press')
@@ -74,9 +72,7 @@ const TimelineNotifications = React.memo(
           style={{
             padding: StyleConstants.Spacing.Global.PagePadding,
             backgroundColor: colors.backgroundDefault,
-            paddingBottom: notification.status
-              ? 0
-              : StyleConstants.Spacing.Global.PagePadding
+            paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
           }}
           onPress={onPress}
           onLongPress={() => {}}
@@ -106,26 +102,18 @@ const TimelineNotifications = React.memo(
                 account={actualAccount}
                 highlighted={highlighted}
               />
-              <TimelineHeaderNotification
-                queryKey={queryKey}
-                notification={notification}
-              />
+              <TimelineHeaderNotification queryKey={queryKey} notification={notification} />
             </View>
 
             {notification.status ? (
               <View
                 style={{
                   paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-                  paddingLeft: highlighted
-                    ? 0
-                    : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+                  paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
                 }}
               >
                 {notification.status.content.length > 0 ? (
-                  <TimelineContent
-                    status={notification.status}
-                    highlighted={highlighted}
-                  />
+                  <TimelineContent status={notification.status} highlighted={highlighted} />
                 ) : null}
                 {notification.status.poll ? (
                   <TimelinePoll
@@ -133,21 +121,14 @@ const TimelineNotifications = React.memo(
                     statusId={notification.status.id}
                     poll={notification.status.poll}
                     reblog={false}
-                    sameAccount={
-                      notification.account.id === instanceAccount?.id
-                    }
+                    sameAccount={notification.account.id === instanceAccount?.id}
                   />
                 ) : null}
                 {notification.status.media_attachments.length > 0 ? (
                   <TimelineAttachment status={notification.status} />
                 ) : null}
-                {notification.status.card ? (
-                  <TimelineCard card={notification.status.card} />
-                ) : null}
-                <TimelineFullConversation
-                  queryKey={queryKey}
-                  status={notification.status}
-                />
+                {notification.status.card ? <TimelineCard card={notification.status.card} /> : null}
+                <TimelineFullConversation queryKey={queryKey} status={notification.status} />
               </View>
             ) : null}
           </View>
@@ -158,10 +139,7 @@ const TimelineNotifications = React.memo(
               status={notification.status}
               highlighted={highlighted}
               accts={uniqBy(
-                (
-                  [notification.status.account] as Mastodon.Account[] &
-                    Mastodon.Mention[]
-                )
+                ([notification.status.account] as Mastodon.Account[] & Mastodon.Mention[])
                   .concat(notification.status.mentions)
                   .filter(d => d?.id !== instanceAccount?.id),
                 d => d?.id
