@@ -1,5 +1,5 @@
 {
-  "accessibilityHint": "Actions pour ce toot, telles que son utilisateur affiché, le toot lui-même",
+  "accessibilityHint": "Actions pour ce Pouet, telles que son utilisateur affiché, le Pouet lui-même",
   "account": {
     "title": "Actions de l'utilisateur",
     "mute": {
@@ -15,7 +15,7 @@
     }
   },
   "copy": {
-    "action": "Copier le pouet",
+    "action": "Copier le Pouet",
     "succeed": "Copié"
   },
   "instance": {
@@ -55,7 +55,7 @@
       }
     },
     "deleteEdit": {
-      "action": "Supprimer le pouet et le repost",
+      "action": "Supprimer le pouet et le republié",
       "alert": {
         "title": "Confirmer la suppression et le repost ?",
         "message": "Tous les boosts et favoris seront effacés, y compris toutes les réponses.",
