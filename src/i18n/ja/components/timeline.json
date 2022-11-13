@@ -40,9 +40,9 @@
         "accessibilityLabel": "このトゥートをブーストしますか？",
         "function": "トゥートをブースト",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "ブーストの可視性を選択",
+          "public": "公開ブースト",
+          "unlisted": "未収載ブースト"
         }
       },
       "favourited": {
@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "内容を非表示にする"
     },
-    "filtered": "",
+    "filtered": "フィルター: {{phrase}}.",
     "fullConversation": "スレッドを読む",
     "translate": {
       "default": "翻訳",
