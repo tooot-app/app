@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "Contenu masqué"
     },
-    "filtered": "Filtré",
+    "filtered": "Filtré: {{phrase}}.",
     "fullConversation": "Conversations lues",
     "translate": {
       "default": "Traduire",

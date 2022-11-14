@@ -2,7 +2,7 @@
   "HTML": {
     "accessibilityHint": "タップして内容を展開または折りたたむ",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
+    "moreLines": " ({{count}} 行以上)",
     "defaultHint": "長いトゥート"
   }
 }

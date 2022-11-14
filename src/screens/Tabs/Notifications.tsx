@@ -5,6 +5,7 @@ import TimelineNotifications from '@components/Timeline/Notifications'
 import navigationRef from '@helpers/navigationRef'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabNotificationsStackParamList } from '@utils/navigation/navigators'
+import usePopToTop from '@utils/navigation/usePopToTop'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,9 +22,7 @@ const TabNotifications = React.memo(
       () => ({
         title: t('tabs.notifications.name'),
         ...(Platform.OS === 'android' && {
-          headerCenter: () => (
-            <HeaderCenter content={t('tabs.notifications.name')} />
-          )
+          headerCenter: () => <HeaderCenter content={t('tabs.notifications.name')} />
         }),
         headerRight: () => (
           <HeaderRight
@@ -56,6 +55,8 @@ const TabNotifications = React.memo(
       ),
       []
     )
+
+    usePopToTop()
 
     return (
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>

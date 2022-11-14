@@ -4,15 +4,13 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import {
-  ScreenTabsScreenProps,
-  TabPublicStackParamList
-} from '@utils/navigation/navigators'
+import { ScreenTabsScreenProps, TabPublicStackParamList } from '@utils/navigation/navigators'
+import usePopToTop from '@utils/navigation/usePopToTop'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { Dimensions } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 import TabSharedRoot from './Shared/Root'
 
@@ -44,10 +42,8 @@ const TabPublic = React.memo(
             appearance={mode}
             values={pages.map(p => p.title)}
             selectedIndex={segment}
-            onChange={({ nativeEvent }) =>
-              setSegment(nativeEvent.selectedSegmentIndex)
-            }
-            style={styles.segmentsContainer}
+            onChange={({ nativeEvent }) => setSegment(nativeEvent.selectedSegmentIndex)}
+            style={{ flexBasis: '65%' }}
           />
         ),
         headerRight: () => (
@@ -84,9 +80,7 @@ const TabPublic = React.memo(
             queryKey={queryKey}
             lookback={page}
             customProps={{
-              renderItem: ({ item }: any) => (
-                <TimelineDefault item={item} queryKey={queryKey} />
-              )
+              renderItem: ({ item }: any) => <TimelineDefault item={item} queryKey={queryKey} />
             }}
           />
         )
@@ -108,24 +102,16 @@ const TabPublic = React.memo(
       [segment]
     )
 
+    usePopToTop()
+
     return (
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
-        <Stack.Screen
-          name='Tab-Public-Root'
-          options={screenOptionsRoot}
-          children={children}
-        />
+        <Stack.Screen name='Tab-Public-Root' options={screenOptionsRoot} children={children} />
         {TabSharedRoot({ Stack })}
       </Stack.Navigator>
     )
   },
   () => true
 )
-
-const styles = StyleSheet.create({
-  segmentsContainer: {
-    flexBasis: '65%'
-  }
-})
 
 export default TabPublic
