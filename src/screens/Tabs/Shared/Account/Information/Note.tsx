@@ -12,6 +12,7 @@ const AccountInformationNote = React.memo(
   ({ account, myInfo }: Props) => {
     const [note, setNote] = useState(account?.source?.note)
     if (
+      account?.suspended ||
       myInfo ||
       !account?.note ||
       account.note.length === 0 ||

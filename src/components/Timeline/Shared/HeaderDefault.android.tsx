@@ -81,15 +81,10 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
       {queryKey ? (
         <Pressable
           accessibilityHint={t('accessibilityHint')}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: StyleConstants.Spacing.L
-          }}
-          hitSlop={StyleConstants.Font.Size.M}
+          style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
         >
           <ContextMenu
+            style={{ flex: 1, alignItems: 'center' }}
             dropdownMenuMode
             actions={actions}
             onPress={({ nativeEvent: { index } }) => {
@@ -104,7 +99,6 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
                 size={StyleConstants.Font.Size.L}
               />
             }
-            style={{ width: '100%', height: '100%', paddingHorizontal: StyleConstants.Font.Size.M }}
           />
         </Pressable>
       ) : null}

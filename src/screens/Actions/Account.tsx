@@ -28,7 +28,7 @@ const ActionsAccount: React.FC<Props> = ({
   const { t } = useTranslation('componentTimeline')
 
   const queryClient = useQueryClient()
-  const mutateion = useTimelineMutation({
+  const mutation = useTimelineMutation({
     onSuccess: (_, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
@@ -78,7 +78,7 @@ const ActionsAccount: React.FC<Props> = ({
             page: queryKey && queryKey[1].page
           })
           dismiss()
-          mutateion.mutate({
+          mutation.mutate({
             type: 'updateAccountProperty',
             queryKey,
             id: account.id,
@@ -96,7 +96,7 @@ const ActionsAccount: React.FC<Props> = ({
             page: queryKey && queryKey[1].page
           })
           dismiss()
-          mutateion.mutate({
+          mutation.mutate({
             type: 'updateAccountProperty',
             queryKey,
             id: account.id,
@@ -114,7 +114,7 @@ const ActionsAccount: React.FC<Props> = ({
             page: queryKey && queryKey[1].page
           })
           dismiss()
-          mutateion.mutate({
+          mutation.mutate({
             type: 'updateAccountProperty',
             queryKey,
             id: account.id,

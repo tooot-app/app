@@ -29,6 +29,7 @@ declare namespace Mastodon {
     fields: Field[]
     bot: boolean
     source?: Source
+    suspended?: boolean
   }
 
   type Announcement = {

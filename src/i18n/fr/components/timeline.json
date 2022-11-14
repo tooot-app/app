@@ -1,0 +1,152 @@
+{
+  "empty": {
+    "error": {
+      "message": "Erreur de chargement",
+      "button": "Réessayer"
+    },
+    "success": {
+      "message": "La chronologie est vide"
+    }
+  },
+  "end": {
+    "message": "Fin, qu'en est-il d'une tasse de <0 />"
+  },
+  "lookback": {
+    "message": "Dernière lecture à"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Plus récent à partir d'ici",
+    "refetch": "À la dernière"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Épinglé",
+      "favourite": "{{name}} a mis votre pouet en favoris",
+      "status": "{{name}} vient d'être posté",
+      "follow": "{{name}} vous suit",
+      "follow_request": "{{name}} a demandé à vous suivre",
+      "poll": "Un sondage auquel vous avez participé est maintenant terminé",
+      "reblog": {
+        "default": "{{name}} a partagé",
+        "notification": "{{name}} a partagé votre message"
+      },
+      "update": "Le reblog a été modifié"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Répondre à ce pouet"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Partager ce pouet",
+        "function": "Pouet de Boost",
+        "options": {
+          "title": "Choisir la visibilité du boost",
+          "public": "Boost public",
+          "unlisted": "Retirer le boost"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Ajouter ce pouet aux favoris",
+        "function": "Mettre le pouet en favori"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Ajouter ce pouet aux signets",
+        "function": "Pouet de signet"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} utilisateurs ont boosté ce pouet",
+        "accessibilityHint": "Touchez pour connaître les utilisateurs",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} utilisateurs ont boosté ce pouet",
+        "accessibilityHint": "Touchez pour connaître les utilisateurs",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Ce pouet a été modifié {{count}} fois",
+        "accessibilityHint": "Appuyer pour afficher l'historique d'édition complet",
+        "text_one": "{{count}} modification",
+        "text_other": "{{count}} modifications"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Afficher les médias sensibles"
+      },
+      "unsupported": {
+        "text": "Erreur de chargement",
+        "button": "Essayer le lien distant"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Appuyez pour accéder à la page de {{name}}"
+    },
+    "content": {
+      "expandHint": "Contenu masqué"
+    },
+    "filtered": "Filtré: {{phrase}}.",
+    "fullConversation": "Conversations lues",
+    "translate": {
+      "default": "Traduire",
+      "succeed": "Traduit par {{provider}} de {{source}}",
+      "failed": "La traduction a échoué",
+      "source_not_supported": "cette langue n'est pas prise en charge",
+      "target_not_supported": "Cette langue n'est pas prise en charge"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Nom de l'utilisateur"
+          },
+          "account": {
+            "accessibilityHint": "Compte de l'utilisateur"
+          }
+        },
+        "application": "Poussée avec {{application}}",
+        "edited": {
+          "accessibilityLabel": "Pouet édité"
+        },
+        "muted": {
+          "accessibilityLabel": "Pouet rendu muet"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Envoyer un message direct"
+          },
+          "private": {
+            "accessibilityLabel": "Visible uniquement pour les abonné·e·s"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Avec",
+        "delete": {
+          "function": "Supprimer le message direct"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Voter",
+          "refresh": "Actualiser"
+        },
+        "count": {
+          "voters_one": "{{count}} utilisateur a voté",
+          "voters_other": "{{count}} utilisateurs ont voté",
+          "votes_one": "{{count}} votes",
+          "votes_other": "{{count}} votes"
+        },
+        "expiration": {
+          "expired": "Le vote a expiré",
+          "until": "Expire <0 />"
+        }
+      }
+    }
+  }
+}

@@ -3,8 +3,9 @@ import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useAppDispatch } from '@root/store'
+import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
-import { getExpoToken, retriveExpoToken } from '@utils/slices/appSlice'
+import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
@@ -22,7 +23,7 @@ const pushUseConnect = ({ t, instances }: Params) => {
   const dispatch = useAppDispatch()
   const { theme } = useTheme()
   useEffect(() => {
-    dispatch(retriveExpoToken())
+    dispatch(retrieveExpoToken())
   }, [])
 
   const expoToken = useSelector(getExpoToken)
@@ -33,6 +34,12 @@ const pushUseConnect = ({ t, instances }: Params) => {
       url: `push/connect/${expoToken}`,
       sentry: true
     }).catch(error => {
+      Sentry.setExtras({
+        API: 'tooot',
+        ...(error?.response && { response: error.response }),
+        ...(error?.request && { request: error.request })
+      })
+      Sentry.captureException(error)
       Notifications.setBadgeCountAsync(0)
       if (error?.status == 404) {
         displayMessage({

@@ -4,6 +4,7 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ScreenTabsScreenProps, TabLocalStackParamList } from '@utils/navigation/navigators'
+import usePopToTop from '@utils/navigation/usePopToTop'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -25,6 +26,8 @@ const TabLocal = React.memo(
     }, [lists?.length])
 
     const [queryKey, setQueryKey] = useState<QueryKeyTimeline>(['Timeline', { page: 'Following' }])
+
+    usePopToTop()
 
     return (
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
@@ -51,9 +54,9 @@ const TabLocal = React.memo(
                       ]
                     : undefined
                 }
-                onPress={({ nativeEvent: { id } }) => {
-                  id.length
-                    ? setQueryKey(['Timeline', { page: 'List', list: id }])
+                onPress={({ nativeEvent: { index } }) => {
+                  lists && index
+                    ? setQueryKey(['Timeline', { page: 'List', list: lists[index - 1].id }])
                     : setQueryKey(['Timeline', { page: 'Following' }])
                 }}
                 children={

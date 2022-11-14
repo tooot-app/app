@@ -18,9 +18,9 @@ export type ContextsState = {
 }
 
 export const contextsInitialState = {
-  // After 3 successful postings
+  // After 10 successful postings
   storeReview: {
-    context: 3,
+    context: 10,
     current: 0,
     shown: false
   },

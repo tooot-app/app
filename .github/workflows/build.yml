@@ -10,11 +10,10 @@ jobs:
     runs-on: macos-12
     steps:
       - name: -- Step 0 -- Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        uses: tj-actions/branch-names@v6
         id: branch
       - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
@@ -26,8 +25,8 @@ jobs:
       - name: -- Step 5 -- Run fastlane
         env:
           DEVELOPER_DIR: /Applications/Xcode_14.1.app/Contents/Developer
-          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
-          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}
@@ -47,11 +46,10 @@ jobs:
     runs-on: macos-12
     steps:
       - name: -- Step 0 -- Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        uses: tj-actions/branch-names@v6
         id: branch
       - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
@@ -67,8 +65,8 @@ jobs:
         run: bundle install
       - name: -- Step 6 -- Run fastlane
         env:
-          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
-          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
@@ -84,11 +82,10 @@ jobs:
     needs: [build-ios, build-android]
     steps:
       - name: -- Step 0 -- Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        uses: tj-actions/branch-names@v6
         id: branch
       - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: -- Step 2 -- Setup node
         uses: actions/setup-node@v3
         with:
@@ -104,8 +101,8 @@ jobs:
         run: bundle install
       - name: -- Step 6 -- Run fastlane
         env:
-          ENVIRONMENT: ${{ steps.branch.outputs.branch }}
-          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.branch }}
+          ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
+          SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           SENTRY_ORGANIZATION: ${{ secrets.SENTRY_ORGANIZATION }}

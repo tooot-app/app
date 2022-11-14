@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 const TimelineFiltered = React.memo(
-  () => {
+  ({ phrase }: { phrase: string }) => {
     const { colors } = useTheme()
     const { t } = useTranslation('componentTimeline')
 
@@ -25,7 +25,7 @@ const TimelineFiltered = React.memo(
             paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S
           }}
         >
-          {t('shared.filtered')}
+          {t('shared.filtered', { phrase })}
         </CustomText>
       </View>
     )
@@ -44,34 +44,29 @@ export const shouldFilter = ({
   }>
   status: Mastodon.Status
   queryKey: QueryKeyTimeline
-}) => {
+}): string | null => {
   const instance = getInstance(store.getState())
-  const ownAccount =
-    getInstanceAccount(store.getState())?.id === status.account?.id
+  const ownAccount = getInstanceAccount(store.getState())?.id === status.account?.id
 
-  let shouldFilter = false
+  let shouldFilter: string | null = null
   if (!ownAccount) {
     const parser = new htmlparser2.Parser({
       ontext: (text: string) => {
         if (!copiableContent.current.complete) {
-          copiableContent.current.content =
-            copiableContent.current.content + text
+          copiableContent.current.content = copiableContent.current.content + text
         }
 
         const checkFilter = (filter: Mastodon.Filter) => {
-          const escapedPhrase = filter.phrase.replace(
-            /[.*+?^${}()|[\]\\]/g,
-            '\\$&'
-          ) // $& means the whole matched string
+          const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
           switch (filter.whole_word) {
             case true:
               if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
-                shouldFilter = true
+                shouldFilter = filter.phrase
               }
               break
             case false:
               if (new RegExp(escapedPhrase).test(text)) {
-                shouldFilter = true
+                shouldFilter = filter.phrase
               }
               break
           }

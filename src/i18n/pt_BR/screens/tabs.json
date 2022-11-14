@@ -304,7 +304,8 @@
       "toots": {
         "default": "Toots",
         "all": "Toots e respostas"
-      }
+      },
+      "suspended": ""
     },
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"

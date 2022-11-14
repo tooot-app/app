@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "Nội dung ẩn"
     },
-    "filtered": "Đã lọc",
+    "filtered": "Đã lọc: {{phrase}}.",
     "fullConversation": "Xem thêm",
     "translate": {
       "default": "Dịch",

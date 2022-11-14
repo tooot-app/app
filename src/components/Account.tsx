@@ -34,9 +34,11 @@ const ComponentAccount: React.FC<Props> = ({
     <Pressable
       accessibilityRole='button'
       style={{
+        flex: 1,
         paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
         paddingVertical: StyleConstants.Spacing.M,
         flexDirection: 'row',
+        alignSelf: 'flex-start',
         alignItems: 'center'
       }}
       onPress={customOnPress || onPress}

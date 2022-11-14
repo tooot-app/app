@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "숨겨진 콘텐츠"
     },
-    "filtered": "필터됨",
+    "filtered": "",
     "fullConversation": "대화 보기",
     "translate": {
       "default": "번역",

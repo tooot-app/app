@@ -304,7 +304,8 @@
       "toots": {
         "default": "Tút",
         "all": "Lượt trả lời"
-      }
+      },
+      "suspended": "Người này đã bị vô hiệu hóa"
     },
     "attachments": {
       "name": "<0 /><1>'s media</1>"

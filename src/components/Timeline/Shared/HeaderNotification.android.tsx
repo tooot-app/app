@@ -3,10 +3,7 @@ import contextMenuInstance from '@components/ContextMenu/instance'
 import contextMenuShare from '@components/ContextMenu/share'
 import contextMenuStatus from '@components/ContextMenu/status'
 import Icon from '@components/Icon'
-import {
-  RelationshipIncoming,
-  RelationshipOutgoing
-} from '@components/Relationship'
+import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -32,27 +29,33 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
   const shareOnPress =
     status && status?.visibility !== 'direct'
       ? contextMenuShare({
-        actions: contextMenuActions,
-        type: 'status',
-        url: status.url || status.uri
-      })
+          actions: contextMenuActions,
+          type: 'status',
+          url: status.url || status.uri
+        })
       : null
-  const statusOnPress = status && contextMenuStatus({
-    actions: contextMenuActions,
-    status: status,
-    queryKey
-  })
-  const accountOnPress = status && contextMenuAccount({
-    actions: contextMenuActions,
-    type: 'status',
-    queryKey,
-    id: status.account.id
-  })
-  const instanceOnPress = status && contextMenuInstance({
-    actions: contextMenuActions,
-    status: status,
-    queryKey
-  })
+  const statusOnPress =
+    status &&
+    contextMenuStatus({
+      actions: contextMenuActions,
+      status: status,
+      queryKey
+    })
+  const accountOnPress =
+    status &&
+    contextMenuAccount({
+      actions: contextMenuActions,
+      type: 'status',
+      queryKey,
+      id: status.account.id
+    })
+  const instanceOnPress =
+    status &&
+    contextMenuInstance({
+      actions: contextMenuActions,
+      status: status,
+      queryKey
+    })
 
   const actions = useMemo(() => {
     switch (notification.type) {
@@ -64,14 +67,10 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
         if (notification.status) {
           return (
             <Pressable
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                paddingBottom: StyleConstants.Spacing.S
-              }}
+              style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
               children={
                 <ContextMenu
+                  style={{ flex: 1, alignItems: 'center' }}
                   dropdownMenuMode
                   actions={contextMenuActions}
                   onPress={({ nativeEvent: { index } }) => {
@@ -91,7 +90,6 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
                       size={StyleConstants.Font.Size.L}
                     />
                   }
-                  style={{ width: '100%', height: '100%' }}
                 />
               }
             />
@@ -104,21 +102,14 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View
         style={{
-          flex:
-            notification.type === 'follow' ||
-              notification.type === 'follow_request'
-              ? 1
-              : 4
+          flex: notification.type === 'follow' || notification.type === 'follow_request' ? 1 : 4
         }}
       >
         <HeaderSharedAccount
-          account={
-            notification.status
-              ? notification.status.account
-              : notification.account
-          }
-          {...((notification.type === 'follow' ||
-            notification.type === 'follow_request') && { withoutName: true })}
+          account={notification.status ? notification.status.account : notification.account}
+          {...((notification.type === 'follow' || notification.type === 'follow_request') && {
+            withoutName: true
+          })}
         />
         <View
           style={{
@@ -129,28 +120,21 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
           }}
         >
           <HeaderSharedCreated
-            created_at={
-              notification.status?.created_at || notification.created_at
-            }
+            created_at={notification.status?.created_at || notification.created_at}
             edited_at={notification.status?.edited_at}
           />
           {notification.status?.visibility ? (
-            <HeaderSharedVisibility
-              visibility={notification.status.visibility}
-            />
+            <HeaderSharedVisibility visibility={notification.status.visibility} />
           ) : null}
           <HeaderSharedMuted muted={notification.status?.muted} />
-          <HeaderSharedApplication
-            application={notification.status?.application}
-          />
+          <HeaderSharedApplication application={notification.status?.application} />
         </View>
       </View>
 
       <View
         style={[
           { marginLeft: StyleConstants.Spacing.M },
-          notification.type === 'follow' ||
-            notification.type === 'follow_request'
+          notification.type === 'follow' || notification.type === 'follow_request'
             ? { flexShrink: 1 }
             : { flex: 1 }
         ]}

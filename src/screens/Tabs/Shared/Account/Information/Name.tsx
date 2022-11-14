@@ -41,7 +41,7 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
         <>
           <CustomText
             style={{
-              textDecorationLine: account?.moved ? 'line-through' : undefined
+              textDecorationLine: account?.moved || account.suspended ? 'line-through' : undefined
             }}
           >
             <ParseEmojis
