@@ -1,18 +1,18 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Error al cargar",
+      "button": "Reintentar"
     },
     "success": {
-      "message": ""
+      "message": "Cronología vacía"
     }
   },
   "end": {
     "message": ""
   },
   "lookback": {
-    "message": ""
+    "message": "Leído en"
   },
   "refresh": {
     "fetchPreviousPage": "",
@@ -20,12 +20,12 @@
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Fijado",
+      "favourite": "{{name}} marcó tu toot como favorito",
+      "status": "{{name}} acaba de tootear",
+      "follow": "{{name}} te ha seguido",
+      "follow_request": "{{name}} ha solicitado seguirte",
+      "poll": "Una encuesta en la que has votado ha terminado",
       "reblog": {
         "default": "",
         "notification": ""
@@ -34,7 +34,7 @@
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Responder a este toot"
       },
       "reblogged": {
         "accessibilityLabel": "",
@@ -133,14 +133,14 @@
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Votar",
+          "refresh": "Actualizar"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} usuarios ha votado",
+          "voters_other": "{{count}} usuarios han votado",
+          "votes_one": "{{count}} voto",
+          "votes_other": "{{count}} votos"
         },
         "expiration": {
           "expired": "",
