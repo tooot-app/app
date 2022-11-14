@@ -42,7 +42,7 @@
         "options": {
           "title": "Boost-Sichtbarkeit ändern",
           "public": "Öffentlicher Boost",
-          "unlisted": ""
+          "unlisted": "Boost entfernen"
         }
       },
       "favourited": {
@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "Ausgeblendeter Inhalt"
     },
-    "filtered": "",
+    "filtered": "Gefiltert: {{phrase}}.",
     "fullConversation": "Unterhaltung anzeigen",
     "translate": {
       "default": "Übersetzen",
