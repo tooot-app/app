@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "Cancelar",
       "alert": {
-        "title": "",
+        "title": "¿Cancelar edición?",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "Guardar borrador",
+          "delete": "Eliminar borrador",
+          "cancel": "Cancelar"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Toot",
+        "conversation": "Mensaje privado",
+        "reply": "Respuesta al toot",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Error al tootear",
+          "button": "Reintentar"
         },
         "removeReply": {
-          "title": "",
+          "title": "No se pudo encontrar el toot respondido",
           "description": "",
-          "cancel": "",
-          "confirm": ""
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Eliminar referencia"
         }
       }
     }
@@ -37,35 +37,35 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Tooteando como @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Mensaje de aviso de spoiler"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Qué está pasando",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Número máximo de adjuntos alcanzado",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Marcar adjuntos como sensibles",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Eliminar adjunto subido número {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Editar adjunto subido número {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Subir más adjuntos"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Toca para añadir emoji al toot"
         },
         "poll": {
           "option": {
