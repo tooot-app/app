@@ -1,11 +1,11 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": ""
+    "OK": "OK",
+    "apply": "Aplicar",
+    "cancel": "Cancelar"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Emoji personalizado {{emoji}}"
   },
   "message": {
     "success": {
@@ -18,5 +18,5 @@
       "message": ""
     }
   },
-  "separator": ""
+  "separator": ", "
 }
