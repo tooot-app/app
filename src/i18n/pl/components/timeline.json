@@ -1,11 +1,11 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Błąd wczytania",
+      "button": "Spróbuj ponownie"
     },
     "success": {
-      "message": ""
+      "message": "Oś czasu pusta"
     }
   },
   "end": {
