@@ -9,7 +9,7 @@
     }
   },
   "end": {
-    "message": ""
+    "message": "Fin, ¿qué tal una taza de <0 />?"
   },
   "lookback": {
     "message": "Leído en"
@@ -74,26 +74,26 @@
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Mostrar contenido sensible"
       },
       "unsupported": {
-        "text": "",
+        "text": "Error al cargar",
         "button": ""
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Pulsa para ir a la página de {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Contenido oculto"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "Filtrado: {{phrase}}.",
+    "fullConversation": "Leer conversaciones",
     "translate": {
-      "default": "",
+      "default": "Traducir",
       "succeed": "",
-      "failed": "",
+      "failed": "Error al traducir",
       "source_not_supported": "",
       "target_not_supported": ""
     },
@@ -104,10 +104,10 @@
             "accessibilityHint": ""
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Cuenta de usuario"
           }
         },
-        "application": "",
+        "application": "Tooteado con {{application}}",
         "edited": {
           "accessibilityLabel": ""
         },
