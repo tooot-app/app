@@ -1,7 +1,7 @@
 {
   "heading": "Avisos",
   "content": {
-    "published": "",
+    "published": "<0 /> publicado",
     "button": {
       "read": "Leer",
       "unread": "Marcar como leído"
