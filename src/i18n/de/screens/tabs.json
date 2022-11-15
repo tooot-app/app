@@ -117,8 +117,8 @@
         },
         "fields": {
           "title": "Metadaten",
-          "total_one": "",
-          "total_other": ""
+          "total_one": "{{count}} Feld",
+          "total_other": "{{count}} Felder"
         },
         "visibility": {
           "title": "Sichtbarkeit des Beitrags",
