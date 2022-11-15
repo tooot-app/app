@@ -9,7 +9,7 @@
     }
   },
   "end": {
-    "message": "Fin, ¿qué tal una taza de <0 />?"
+    "message": "Ya estás. ¿Te apetece una taza de <0 />?"
   },
   "lookback": {
     "message": "Leído en"
@@ -126,7 +126,7 @@
       "conversation": {
         "withAccounts": "",
         "delete": {
-          "function": ""
+          "function": "Eliminar mensaje directo"
         }
       }
     },
