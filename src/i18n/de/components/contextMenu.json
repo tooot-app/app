@@ -4,7 +4,7 @@
     "title": "Benutzeraktionen",
     "mute": {
       "action_false": "Profil stummschalten",
-      "action_true": "Stummschaltung Nutzers aufheben"
+      "action_true": "Stummschaltung des Nutzers aufheben"
     },
     "block": {
       "action_false": "Nutzer blockieren",
