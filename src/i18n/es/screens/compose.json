@@ -71,18 +71,18 @@
           "option": {
             "placeholder": {
               "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "single": "Respuesta única",
+              "multiple": "Respuesta múltiple"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Reducir las opciones de la encuesta a {{amount}}",
+              "accessibilityHint": "Se ha alcanzado el número mínimo de opciones, ahora mismo hay {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Incrementar el número de opciones a {{amount}}",
+              "accessibilityHint": "Se ha alcanzado el número máximo de opciones, ahora mismo hay {{amount}}"
             }
           },
           "multiple": {
