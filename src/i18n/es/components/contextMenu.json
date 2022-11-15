@@ -23,8 +23,8 @@
     "block": {
       "action": "Bloquear instancia {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "¿Confirmar bloqueo de la instancia {{instance}}?",
+        "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán.",
         "buttons": {
           "confirm": "Confirmar"
         }
@@ -40,25 +40,25 @@
     }
   },
   "status": {
-    "title": "Acciones de toot",
+    "title": "Acciones del toot",
     "edit": {
       "action": "Editar toot"
     },
     "delete": {
       "action": "Eliminar toot",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "¿Confirmar eliminación?",
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
         "buttons": {
           "confirm": "Confirmar"
         }
       }
     },
     "deleteEdit": {
-      "action": "Eliminar toot y republicar",
+      "action": "Eliminar toot y volver a publicar",
       "alert": {
-        "title": "¿Confirmar eliminación y republicación?",
-        "message": "",
+        "title": "¿Confirmar eliminación y volver a publicar?",
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
         "buttons": {
           "confirm": "Confirmar"
         }
@@ -66,7 +66,7 @@
     },
     "mute": {
       "action_false": "Silenciar toot y respuestas",
-      "action_true": "Desilenciar toot y sus respuestas"
+      "action_true": "Dejar de silenciar el toot y sus respuestas"
     },
     "pin": {
       "action_false": "Fijar toot",
