@@ -70,7 +70,7 @@
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Opción {{index}}",
               "single": "Respuesta única",
               "multiple": "Respuesta múltiple"
             }
@@ -86,94 +86,94 @@
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Tipo de encuesta",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "Respuesta única",
+              "multiple": "Respuesta múltiple",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Caducidad",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 minutos",
+              "1800": "30 minutos",
+              "3600": "1 hora",
+              "21600": "6 horas",
+              "86400": "1 día",
+              "259200": "3 días",
+              "604800": "7 días",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Subir archivo",
+          "accessibilityHint": "Se desactivará la encuesta si hay algún archivo adjunto",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Error al subir",
+              "button": "Intentar de nuevo"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Añadir encuesta",
+          "accessibilityHint": "No se pueden adjuntar archivos si hay una encuesta activa"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "La visibilidad del toot es {{visibility}}",
+          "title": "Visibilidad del toot",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "Público",
+            "unlisted": "No listado",
+            "private": "Solo seguidores",
+            "direct": "Mensaje directo",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Espóiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Añadir emoji",
+          "accessibilityHint": "Abrir panel de emojis, desliza horizontalmente para cambiar de página"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Borrador ({{count}})",
+      "drafts_other": "Borradores ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Editar archivo adjunto",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Guardar cambios",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Error al editar",
+            "button": "Intentar de nuevo"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Describir para personas con dificultades de visión",
+          "placeholder": "Añade una descripción, también llamada texto alternativo, a tu archivo y haz que sea más accesible, incluso para personas ciegas o con dificultades de visión.\n\nLo mejor es que sean concisas, pero que expresen todo lo que aparece en las imágenes con exactitud para dar contexto."
         },
-        "imageFocus": ""
+        "imageFocus": "Arrastra el círculo para cambiar el punto de atención"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Borrador"
       },
-      "warning": "",
+      "warning": "Los borradores solo se guardan en este dispositivo y se pueden perder. No se recomienda guardarlos por mucho tiempo.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Se ha guardado el borrador, toca para editar",
+        "textEmpty": "Sin contenido"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Comprobando archivos adjuntos en el servidor..."
     }
   }
 }
