@@ -1,29 +1,29 @@
 {
   "accessibilityHint": "이 툿에 할 동작, 툿 자체나 포스트한 사용자",
   "account": {
-    "title": "",
+    "title": "사용자 동작",
     "mute": {
-      "action_false": "사용자 음소거",
-      "action_true": ""
+      "action_false": "사용자 뮤트",
+      "action_true": "사용자 뮤트 해제"
     },
     "block": {
       "action_false": "사용자 차단",
-      "action_true": ""
+      "action_true": "사용자 차단 해제"
     },
     "reports": {
-      "action": ""
+      "action": "신고 및 차단"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "툿 복사",
+    "succeed": "복사되었습니다."
   },
   "instance": {
-    "title": "",
+    "title": "인스턴스 동작",
     "block": {
-      "action": "인스턴스 {{instance}} 차단",
+      "action": "{{instance}} 인스턴스 차단",
       "alert": {
-        "title": "",
+        "title": "정말 {{instance}} 인스턴스를 차단할까요?",
         "message": "보통은 유저 음소거나 차단으로 충분해요.\n\n인스턴스를 차단하면, 팔로워를 포함하는 인스턴스의 모든 콘텐츠가 삭제됩니다!",
         "buttons": {
           "confirm": "확인"
@@ -40,14 +40,14 @@
     }
   },
   "status": {
-    "title": "",
+    "title": "툿 동작",
     "edit": {
-      "action": ""
+      "action": "툿 수정"
     },
     "delete": {
       "action": "툿 삭제",
       "alert": {
-        "title": "삭제 확인?",
+        "title": "정말 삭제할까요?",
         "message": "",
         "buttons": {
           "confirm": "확인"
@@ -55,9 +55,9 @@
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "툿 삭제 후 다시 게시",
       "alert": {
-        "title": "",
+        "title": "툿을 정말 삭제하고 다시 게시할까요?",
         "message": "",
         "buttons": {
           "confirm": "확인"
@@ -65,12 +65,12 @@
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "툿과 답장 뮤트",
+      "action_true": "툿과 답장 뮤트 해제"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "툿 고정",
+      "action_true": "툿 고정 해제"
     }
   }
 }
