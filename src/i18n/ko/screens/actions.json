@@ -1,7 +1,7 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "대체 텍스트"
     },
     "notificationsFilter": {
       "heading": "알림 종류 표시",
@@ -12,8 +12,8 @@
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "",
-        "update": ""
+        "status": "구독한 사용자의 툿",
+        "update": "리블로그가 수정되었습니다."
       }
     }
   }
