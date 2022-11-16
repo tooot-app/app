@@ -3,10 +3,10 @@
     "left": {
       "button": "취소",
       "alert": {
-        "title": "편집을 취소할까요?",
+        "title": "작성을 취소할까요?",
         "buttons": {
-          "save": "초안 저장",
-          "delete": "초안 삭제",
+          "save": "임시 저장",
+          "delete": "임시 저장한 내용 삭제",
           "cancel": "취소"
         }
       }
@@ -45,7 +45,7 @@
           "placeholder": "무엇을 생각하고 있나요?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
+              "title": "최대 첨부 파일 개수를 초과함",
               "OK": "$t(common:buttons.OK)"
             }
           }
@@ -53,7 +53,7 @@
       },
       "footer": {
         "attachments": {
-          "sensitive": "첨부 파일 민감함으로 표시",
+          "sensitive": "민감한 첨부 파일로 표시",
           "remove": {
             "accessibilityLabel": "업로드한 첨부 파일 삭제, 번호 {{attachment}}"
           },
@@ -65,7 +65,7 @@
           }
         },
         "emojis": {
-          "accessibilityHint": "툿에 이모지를 추가하려면 탭하세요"
+          "accessibilityHint": "탭하여 툿에 에모지 추가"
         },
         "poll": {
           "option": {
@@ -168,12 +168,12 @@
       "header": {
         "title": "초안"
       },
-      "warning": "",
+      "warning": "임시 저장한 내용은 로컬에만 저장되며, 예상하지 못한 이유로 사라질 수 있어요. 내용을 오랫동안 저장할 용도로 사용하지 말아주세요.",
       "content": {
         "accessibilityHint": "저장된 초안, 수정하려면 탭하세요",
         "textEmpty": "콘텐츠 빔"
       },
-      "checkAttachment": ""
+      "checkAttachment": "서버의 첨부 파일을 확인하는 중..."
     }
   }
 }
