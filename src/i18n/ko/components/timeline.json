@@ -5,7 +5,7 @@
       "button": "다시 시도"
     },
     "success": {
-      "message": "타임라인 빔"
+      "message": "타임라인이 비었어요"
     }
   },
   "end": {
@@ -21,14 +21,14 @@
   "shared": {
     "actioned": {
       "pinned": "고정됨",
-      "favourite": "{{name}}이 내 툿을 즐겨찾기했어요",
-      "status": "{{name}}이 방금 포스트했어요",
-      "follow": "{{name}}님이 나를 팔로우했어요",
-      "follow_request": "{{name}}이 나에게 팔로우 요청을 보냈어요",
+      "favourite": "{{name}} 님이 내 툿을 즐겨찾기했어요",
+      "status": "{{name}} 님이 방금 포스트했어요",
+      "follow": "{{name}} 님이 나를 팔로우했어요",
+      "follow_request": "{{name}} 님이 나에게 팔로우 요청을 보냈어요",
       "poll": "내가 참여한 투표가 끝났어요",
       "reblog": {
-        "default": "{{name}}님이 부스트했어요",
-        "notification": "{{name}}이 내 툿을 부스트했어요"
+        "default": "{{name}} 님이 부스트했어요",
+        "notification": "{{name}} 님이 내 툿을 부스트했어요"
       },
       "update": ""
     },
@@ -40,9 +40,9 @@
         "accessibilityLabel": "이 툿 부스트",
         "function": "툿 부스트",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "부스트 공개 범위 선택",
+          "public": "공개 부스트",
+          "unlisted": "타임라인에 비표시 부스트"
         }
       },
       "favourited": {
@@ -66,7 +66,7 @@
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "이 툿은 {{count}}번 수정되었습니다.",
         "accessibilityHint": "",
         "text_one": "",
         "text_other": ""
@@ -109,7 +109,7 @@
         },
         "application": "{{application}}으로 툿",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "툿 수정됨"
         },
         "muted": {
           "accessibilityLabel": "툿 음소거됨"
