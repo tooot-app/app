@@ -295,7 +295,7 @@
       },
       "followed_by": " ti segue",
       "moved": "Profilo trasferito",
-      "created_at": "Account creato il: {{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} toot",
         "following_count": "$t(shared.users.accounts.following)",
