@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "left": "Federado",
+        "right": "Local"
       }
     },
     "notifications": {
@@ -130,116 +130,116 @@
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Publicar contenido multimedia sensible"
         },
         "lock": {
-          "title": "",
+          "title": "Bloquear cuenta",
           "description": ""
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Cuenta bot",
+          "description": "Esta cuenta ejecuta principalmente acciones automatizadas y podría no ser monitorizada"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Grupo {{index}}",
+        "label": "Etiqueta",
+        "content": "Contenido"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "El procesamiento de imagen falló. Por favor, inténtalo otra vez."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Tu teléfono no soporta las notificaciones push de tooot",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Habilitar notificaciones push",
+        "settings": "Activar en Ajustes"
       },
       "global": {
-        "heading": "",
+        "heading": "Habilitar para {{acct}}",
         "description": ""
       },
       "decode": {
-        "heading": "",
+        "heading": "Mostrar detalles del mensaje",
         "description": ""
       },
       "default": {
-        "heading": ""
+        "heading": "Predeterminado"
       },
       "follow": {
-        "heading": ""
+        "heading": "Nuevo seguidor"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Solicitud de seguimiento"
       },
       "favourite": {
         "heading": ""
       },
       "reblog": {
-        "heading": ""
+        "heading": "Impulsado"
       },
       "mention": {
-        "heading": ""
+        "heading": "Te mencionó"
       },
       "poll": {
-        "heading": ""
+        "heading": "Actualizaciones de la encuesta"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot de usuarios suscritos"
       },
       "howitworks": ""
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
+          "unread": "{{amount}} no leídos",
           "read": "",
           "empty": ""
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "Habilitado",
+          "disabled": "Deshabilitado"
         }
       },
       "update": {
         "title": ""
       },
       "logout": {
-        "button": "",
+        "button": "Cerrar sesión",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "¿Cerrar sesión?",
+          "message": "Después de cerrar sesión, necesitas iniciar sesión de nuevo",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": "Cerrar sesión",
+            "cancel": "$t(common:buttons.cancel)"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
-          "cancel": ""
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "theme": {
-        "heading": "",
+        "heading": "Apariencia",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": "",
+          "auto": "Como el sistema",
+          "light": "Modo claro",
+          "dark": "Modo oscuro",
           "cancel": "$t(common:buttons.cancel)"
         }
       },
