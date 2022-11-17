@@ -295,7 +295,7 @@
       },
       "followed_by": " vous suit",
       "moved": "Utilisateur déplacé",
-      "created_at": "",
+      "created_at": "Inscrit le: {{date}}",
       "summary": {
         "statuses_count": "{{count}} pouets",
         "following_count": "$t(shared.users.accounts.following)",
