@@ -295,7 +295,7 @@
       },
       "followed_by": " te sigue",
       "moved": "Se ha transladado",
-      "created_at": "",
+      "created_at": "Se unió en {{date}}",
       "summary": {
         "statuses_count": "{{count}} toots",
         "following_count": "$t(shared.users.accounts.following)",
