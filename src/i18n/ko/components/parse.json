@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
+    "accessibilityHint": "탭 하여 내용을 펼치거나 접기",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
-    "defaultHint": ""
+    "moreLines": " ({{count}}줄 더 보기)",
+    "defaultHint": "긴 툿"
   }
 }

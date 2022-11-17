@@ -1,7 +1,7 @@
 {
   "heading": "공지",
   "content": {
-    "published": "올려짐 <0 />",
+    "published": "<0 />에 작성됨",
     "button": {
       "read": "읽음",
       "unread": "읽음으로 표시"

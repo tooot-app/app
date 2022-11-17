@@ -49,65 +49,76 @@ export const shouldFilter = ({
   const ownAccount = getInstanceAccount(store.getState())?.id === status.account?.id
 
   let shouldFilter: string | null = null
+
   if (!ownAccount) {
+    let rawContent = ''
     const parser = new htmlparser2.Parser({
       ontext: (text: string) => {
         if (!copiableContent.current.complete) {
           copiableContent.current.content = copiableContent.current.content + text
         }
 
-        const checkFilter = (filter: Mastodon.Filter) => {
-          const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
-          switch (filter.whole_word) {
-            case true:
-              if (new RegExp('\\b' + escapedPhrase + '\\b').test(text)) {
-                shouldFilter = filter.phrase
-              }
-              break
-            case false:
-              if (new RegExp(escapedPhrase).test(text)) {
-                shouldFilter = filter.phrase
-              }
-              break
-          }
-        }
-        instance?.filters?.forEach(filter => {
-          if (filter.expires_at) {
-            if (new Date().getTime() > new Date(filter.expires_at).getTime()) {
-              return
-            }
-          }
-
-          switch (queryKey[1].page) {
-            case 'Following':
-            case 'Local':
-            case 'List':
-            case 'Account_Default':
-              if (filter.context.includes('home')) {
-                checkFilter(filter)
-              }
-              break
-            case 'Notifications':
-              if (filter.context.includes('notifications')) {
-                checkFilter(filter)
-              }
-              break
-            case 'LocalPublic':
-              if (filter.context.includes('public')) {
-                checkFilter(filter)
-              }
-              break
-            case 'Toot':
-              if (filter.context.includes('thread')) {
-                checkFilter(filter)
-              }
-          }
-        })
+        rawContent = rawContent + text
       }
     })
-    status.spoiler_text && parser.write(status.spoiler_text)
+    if (status.spoiler_text) {
+      parser.write(status.spoiler_text)
+      rawContent = rawContent + `\n\n`
+    }
     parser.write(status.content)
     parser.end()
+
+    const checkFilter = (filter: Mastodon.Filter) => {
+      const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+      switch (filter.whole_word) {
+        case true:
+          if (new RegExp(`\\B${escapedPhrase}\\b`).test(rawContent)) {
+            shouldFilter = filter.phrase
+          }
+          break
+        case false:
+          if (new RegExp(escapedPhrase).test(rawContent)) {
+            shouldFilter = filter.phrase
+          }
+          break
+      }
+    }
+    instance?.filters?.forEach(filter => {
+      if (shouldFilter) {
+        return
+      }
+      if (filter.expires_at) {
+        if (new Date().getTime() > new Date(filter.expires_at).getTime()) {
+          return
+        }
+      }
+
+      switch (queryKey[1].page) {
+        case 'Following':
+        case 'Local':
+        case 'List':
+        case 'Account_Default':
+          if (filter.context.includes('home')) {
+            checkFilter(filter)
+          }
+          break
+        case 'Notifications':
+          if (filter.context.includes('notifications')) {
+            checkFilter(filter)
+          }
+          break
+        case 'LocalPublic':
+          if (filter.context.includes('public')) {
+            checkFilter(filter)
+          }
+          break
+        case 'Toot':
+          if (filter.context.includes('thread')) {
+            checkFilter(filter)
+          }
+      }
+    })
+
     copiableContent.current.complete = true
   }
 

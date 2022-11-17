@@ -82,6 +82,7 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
         <Pressable
           accessibilityHint={t('accessibilityHint')}
           style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
+          onLongPress={() => null}
         >
           <ContextMenu
             style={{ flex: 1, alignItems: 'center' }}

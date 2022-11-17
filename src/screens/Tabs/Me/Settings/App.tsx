@@ -45,8 +45,12 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('me.settings.language.heading')}
-        // @ts-ignore
-        content={LOCALES[Platform.OS === 'ios' ? Localization.locale : i18n.language]}
+        content={
+          // @ts-ignore
+          LOCALES[
+            Platform.OS === 'ios' ? Localization.locale.toLowerCase() : i18n.language.toLowerCase()
+          ]
+        }
         iconBack='ChevronRight'
         onPress={() =>
           Platform.OS === 'ios'

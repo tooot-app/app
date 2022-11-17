@@ -38,6 +38,7 @@ export type RootStackParamList = {
     | {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
+        text?: string // For contacting tooot only
       }
     | {
         type: 'share'

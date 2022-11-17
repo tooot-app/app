@@ -1,101 +1,101 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Error al cargar",
+      "button": "Reintentar"
     },
     "success": {
-      "message": ""
+      "message": "Cronología vacía"
     }
   },
   "end": {
-    "message": ""
+    "message": "Ya estás. ¿Te apetece una taza de <0 />?"
   },
   "lookback": {
-    "message": ""
+    "message": "Leído en"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "Más reciente desde aquí",
+    "refetch": "Al último"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Fijado",
+      "favourite": "{{name}} marcó tu toot como favorito",
+      "status": "{{name}} acaba de tootear",
+      "follow": "{{name}} te ha seguido",
+      "follow_request": "{{name}} ha solicitado seguirte",
+      "poll": "Una encuesta en la que has votado ha terminado",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} impulsado",
+        "notification": "{{name}} ha impulsado tu toot"
       },
-      "update": ""
+      "update": "El impulso ha sido editado"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Responder a este toot"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Impulsa este toot",
+        "function": "Impulsar toot",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Elige la visibilidad del impulso",
+          "public": "Impulso público",
+          "unlisted": "Impulso no listado"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "Agregar este toot en favoritos",
         "function": ""
       },
       "bookmarked": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "Añadir este toot en marcadores",
         "function": ""
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} usuarios han impulsado este toot",
+        "accessibilityHint": "Pulsa para conocer los usuarios",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} usuarios han marcado como favoritos este toot",
+        "accessibilityHint": "Pulsa para conocer los usuarios",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Este toot ha sido editado {{count}} veces",
+        "accessibilityHint": "Pulse para ver todo el historial de ediciones",
+        "text_one": "{{count}} edición",
+        "text_other": "{{count}} ediciones"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Mostrar contenido sensible"
       },
       "unsupported": {
-        "text": "",
+        "text": "Error al cargar",
         "button": ""
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Pulsa para ir a la página de {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Contenido oculto"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "Filtrado: {{phrase}}.",
+    "fullConversation": "Leer conversaciones",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Traducir",
+      "succeed": "Traducido por {{provider}} desde {{source}}",
+      "failed": "Error al traducir",
+      "source_not_supported": "El idioma del toot no está soportado",
+      "target_not_supported": "Este idioma no está soportado"
     },
     "header": {
       "shared": {
@@ -104,47 +104,47 @@
             "accessibilityHint": ""
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Cuenta de usuario"
           }
         },
-        "application": "",
+        "application": "Con {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot editado"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot silenciado"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "El toot es un mensaje directo"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "El toot es visible solo para los seguidores"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Con",
         "delete": {
-          "function": ""
+          "function": "Eliminar mensaje directo"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Votar",
+          "refresh": "Actualizar"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} usuarios ha votado",
+          "voters_other": "{{count}} usuarios han votado",
+          "votes_one": "{{count}} voto",
+          "votes_other": "{{count}} votos"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Votación expirada",
+          "until": "Expira <0 />"
         }
       }
     }

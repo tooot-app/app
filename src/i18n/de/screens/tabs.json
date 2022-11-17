@@ -117,8 +117,8 @@
         },
         "fields": {
           "title": "Metadaten",
-          "total_one": "",
-          "total_other": ""
+          "total_one": "{{count}} Feld",
+          "total_other": "{{count}} Felder"
         },
         "visibility": {
           "title": "Sichtbarkeit des Beitrags",
@@ -184,7 +184,7 @@
         "heading": "Umfrageupdate"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot eines abonnierten Nutzers"
       },
       "howitworks": "Erfahre, wie das Routing funktioniert"
     },
