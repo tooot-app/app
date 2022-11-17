@@ -68,6 +68,7 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
           return (
             <Pressable
               style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
+              onLongPress={() => null}
               children={
                 <ContextMenu
                   style={{ flex: 1, alignItems: 'center' }}

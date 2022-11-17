@@ -9,7 +9,7 @@ export const retrieveExpoToken = createAsyncThunk(
   'app/expoToken',
   async (): Promise<string> => {
     if (isDevelopment) {
-      return 'DEVELOPMENT_TOKEN_1'
+      return 'ExponentPushToken[DEVELOPMENT_1]'
     }
 
     const res = await Notifications.getExpoPushTokenAsync({

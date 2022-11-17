@@ -1,10 +1,10 @@
 {
   "title": "미디어 소스 선택",
-  "message": "",
+  "message": "미디어의 EXIF 데이터는 업로드되지 않습니다.",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "사진 업로드",
+    "image_max": "사진 업로드 (최대 {{max}}개)",
+    "video": "동영상 업로드",
+    "video_max": "동영상 업로드 (최대 {{max}}개)"
   }
 }

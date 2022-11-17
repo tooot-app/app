@@ -22,13 +22,7 @@ export interface Props {
   id: Mastodon.Account['id']
 }
 
-const contextMenuAccount = ({
-  actions,
-  type,
-  queryKey,
-  rootQueryKey,
-  id: accountId
-}: Props) => {
+const contextMenuAccount = ({ actions, type, queryKey, rootQueryKey, id: accountId }: Props) => {
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
@@ -66,8 +60,8 @@ const contextMenuAccount = ({
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
-          description: err.data.error
-        })
+            description: err.data.error
+          })
       })
     },
     onSettled: () => {
@@ -76,10 +70,7 @@ const contextMenuAccount = ({
     }
   })
 
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev.id === next.id
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
   const ownAccount = instanceAccount?.id === accountId
 
   const { data: relationship } = useRelationshipQuery({
@@ -88,15 +79,13 @@ const contextMenuAccount = ({
   })
 
   if (!ownAccount) {
-    actions.push(
-      {
-        id: 'account-mute',
-        title: t('account.mute.action', {
-          context: (relationship?.muting || false).toString()
-        }),
-        systemIcon: 'eye.slash'
-      }
-    )
+    actions.push({
+      id: 'account-mute',
+      title: t('account.mute.action', {
+        context: (relationship?.muting || false).toString()
+      }),
+      systemIcon: 'eye.slash'
+    })
     switch (Platform.OS) {
       case 'ios':
         actions.push({
@@ -153,7 +142,10 @@ const contextMenuAccount = ({
         payload: { property: 'mute', currentValue: relationship?.muting }
       })
     }
-    if (actions[index].id === 'account-block') {
+    if (
+      actions[index].id === 'account-block' ||
+      (actions[index].id === 'account' && actions[index].actions?.[0].id === 'account-block')
+    ) {
       analytics('timeline_shared_headeractions_account_block_press', {
         page: queryKey && queryKey[1].page
       })
@@ -164,7 +156,10 @@ const contextMenuAccount = ({
         payload: { property: 'block', currentValue: relationship?.blocking }
       })
     }
-    if (actions[index].id === 'account-reports') {
+    if (
+      actions[index].id === 'account-reports' ||
+      (actions[index].id === 'account' && actions[index].actions?.[0].id === 'account-reports')
+    ) {
       analytics('timeline_shared_headeractions_account_reports_press', {
         page: queryKey && queryKey[1].page
       })

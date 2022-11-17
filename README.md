@@ -11,6 +11,8 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 ## Special thanks
 
+[@amrtf](https://crowdin.com/profile/amrtf) for Spanish translation
+
 [@pat](https://piaille.fr/@pat) for French translation
 
 [@forenta](https://github.com/forenta) for German translation

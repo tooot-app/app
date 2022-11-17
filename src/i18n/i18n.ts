@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next'
 
 import de from '@root/i18n/de'
 import en from '@root/i18n/en'
+import es from '@root/i18n/es'
 import fr from '@root/i18n/fr'
 import it from '@root/i18n/it'
 import ja from '@root/i18n/ja'
@@ -18,6 +19,7 @@ import '@formatjs/intl-locale/polyfill'
 import '@formatjs/intl-pluralrules/polyfill'
 import '@formatjs/intl-pluralrules/locale-data/de'
 import '@formatjs/intl-pluralrules/locale-data/en'
+import '@formatjs/intl-pluralrules/locale-data/es'
 import '@formatjs/intl-pluralrules/locale-data/fr'
 import '@formatjs/intl-pluralrules/locale-data/it'
 import '@formatjs/intl-pluralrules/locale-data/ja'
@@ -29,6 +31,7 @@ import '@formatjs/intl-pluralrules/locale-data/zh'
 import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/de'
 import '@formatjs/intl-numberformat/locale-data/en'
+import '@formatjs/intl-numberformat/locale-data/es'
 import '@formatjs/intl-numberformat/locale-data/fr'
 import '@formatjs/intl-numberformat/locale-data/it'
 import '@formatjs/intl-numberformat/locale-data/ja'
@@ -41,6 +44,7 @@ import '@formatjs/intl-numberformat/locale-data/zh-Hant'
 import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/de'
 import '@formatjs/intl-datetimeformat/locale-data/en'
+import '@formatjs/intl-datetimeformat/locale-data/es'
 import '@formatjs/intl-datetimeformat/locale-data/fr'
 import '@formatjs/intl-datetimeformat/locale-data/it'
 import '@formatjs/intl-datetimeformat/locale-data/ja'
@@ -54,6 +58,7 @@ import '@formatjs/intl-datetimeformat/add-all-tz'
 import '@formatjs/intl-relativetimeformat/polyfill'
 import '@formatjs/intl-relativetimeformat/locale-data/de'
 import '@formatjs/intl-relativetimeformat/locale-data/en'
+import '@formatjs/intl-relativetimeformat/locale-data/es'
 import '@formatjs/intl-relativetimeformat/locale-data/fr'
 import '@formatjs/intl-relativetimeformat/locale-data/it'
 import '@formatjs/intl-relativetimeformat/locale-data/ja'
@@ -70,7 +75,19 @@ i18n.use(initReactI18next).init({
   ns: ['common'],
   defaultNS: 'common',
 
-  resources: { de, en, fr, it, ja, ko, 'pt-BR': pt_BR, vi, 'zh-Hans': zh_Hans, 'zh-Hant': zh_Hant },
+  resources: {
+    de,
+    en,
+    es,
+    fr,
+    it,
+    ja,
+    ko,
+    'pt-BR': pt_BR,
+    vi,
+    'zh-Hans': zh_Hans,
+    'zh-Hant': zh_Hant
+  },
   returnEmptyString: false,
 
   saveMissing: true,

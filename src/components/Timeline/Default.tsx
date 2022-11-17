@@ -45,10 +45,6 @@ const TimelineDefault: React.FC<Props> = ({
   disableDetails = false,
   disableOnPress = false
 }) => {
-  if (highlighted) {
-    disableOnPress = true
-  }
-
   const { colors } = useTheme()
   const instanceAccount = useSelector(getInstanceAccount, () => true)
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()

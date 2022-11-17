@@ -71,7 +71,7 @@
         "name": "앱 설정"
       },
       "webSettings": {
-        "name": ""
+        "name": "더 많은 계정 설정"
       },
       "switch": {
         "name": "계정 전환"
@@ -89,7 +89,7 @@
     },
     "profile": {
       "cancellation": {
-        "title": "변경사항이 저장되지 않음",
+        "title": "변경 사항이 저장되지 않음",
         "message": "변경 사항이 저장되지 않았어요. 변경 사항 적용을 취소할까요?",
         "buttons": {
           "cancel": "$t(common:buttons.cancel)",
@@ -146,7 +146,7 @@
         "label": "라벨",
         "content": "내용"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "이미지 처리에 실패했어요. 잠시 후 다시 시도해주세요."
     },
     "push": {
       "notAvailable": "이 기기는 tooot의 푸시 알림을 지원하지 않아요",
@@ -169,7 +169,7 @@
         "heading": "새 팔로워"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "팔로우 요청"
       },
       "favourite": {
         "heading": "즐겨찾기됨"
@@ -184,7 +184,7 @@
         "heading": "투표 업데이트"
       },
       "status": {
-        "heading": ""
+        "heading": "구독한 사용자의 툿"
       },
       "howitworks": "라우팅 방법 알아보기"
     },
@@ -244,10 +244,10 @@
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "다크 테마",
         "options": {
-          "lighter": "",
-          "darker": "",
+          "lighter": "밝게",
+          "darker": "어둡게",
           "cancel": "$t(common:buttons.cancel)"
         }
       },
@@ -260,11 +260,11 @@
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "정적인 에모지 사용",
+        "description": "에모지 목록 화면에서 자주 앱이 강제 종료된다면, 정적인 에모지를 사용해보세요."
       },
       "feedback": {
-        "heading": ""
+        "heading": "기능 제안"
       },
       "support": {
         "heading": "tooot 기부"
@@ -280,7 +280,7 @@
         "description": "유저와 관련이 없는 사용량만 수집해요"
       },
       "version": "버전 v{{version}}",
-      "instanceVersion": ""
+      "instanceVersion": "마스토돈 버전 v{{version}}"
     },
     "switch": {
       "existing": "로그인된 것 중 선택",
@@ -293,7 +293,7 @@
         "accessibilityLabel": "사용자 {{user}}에 대한 동작",
         "accessibilityHint": "이 사용자를 뮤트, 차단, 신고 또는 공유할 수 있어요"
       },
-      "followed_by": "",
+      "followed_by": " 님은 당신을 팔로우 중입니다.",
       "moved": "유저가 이동함",
       "created_at": "등록된 날: {{date}}",
       "summary": {
@@ -305,7 +305,7 @@
         "default": "툿",
         "all": "툿과 답장"
       },
-      "suspended": ""
+      "suspended": "계정이 서버 관리자에 의해 정지되었어요."
     },
     "attachments": {
       "name": "<0 /><1>\"의 미디어</1>"
@@ -348,7 +348,7 @@
       }
     },
     "history": {
-      "name": ""
+      "name": "수정 이력"
     }
   }
 }
