@@ -13,7 +13,7 @@
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
         "status": "Toot de usuarios suscritos",
-        "update": ""
+        "update": "El impulso ha sido editado"
       }
     }
   }
