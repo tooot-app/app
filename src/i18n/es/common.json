@@ -15,7 +15,7 @@
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} falló, vuelva a intentarlo"
     }
   },
   "separator": ", "
