@@ -295,7 +295,7 @@
       },
       "followed_by": " đang theo dõi bạn",
       "moved": "Đã chuyển đi",
-      "created_at": "Đã tham gia {{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} tút",
         "following_count": "$t(shared.users.accounts.following)",
