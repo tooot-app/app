@@ -107,7 +107,7 @@
             "accessibilityHint": "ユーザーのアカウント名"
           }
         },
-        "application": "",
+        "application": "{{application}}",
         "edited": {
           "accessibilityLabel": "トゥートが編集されました"
         },
