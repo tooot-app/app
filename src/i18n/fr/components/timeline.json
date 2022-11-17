@@ -107,7 +107,7 @@
             "accessibilityHint": "Compte de l'utilisateur"
           }
         },
-        "application": "Poussée avec {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Pouet édité"
         },
