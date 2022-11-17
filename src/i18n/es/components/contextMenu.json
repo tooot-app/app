@@ -1,76 +1,76 @@
 {
   "accessibilityHint": "",
   "account": {
-    "title": "",
+    "title": "Acciones de usuario",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Silenciar usuario",
+      "action_true": "Dejar de silenciar al usuario"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Bloquear usuario",
+      "action_true": "Desbloquear usuario"
     },
     "reports": {
-      "action": ""
+      "action": "Reportar y bloquear"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Copiar toot",
+    "succeed": "Copiado"
   },
   "instance": {
-    "title": "",
+    "title": "Acción de instancia",
     "block": {
-      "action": "",
+      "action": "Bloquear instancia {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "¿Confirmar bloqueo de la instancia {{instance}}?",
+        "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Compartir toot"
     },
     "account": {
-      "action": ""
+      "action": "Compartir usuario"
     }
   },
   "status": {
-    "title": "",
+    "title": "Acciones del toot",
     "edit": {
-      "action": ""
+      "action": "Editar toot"
     },
     "delete": {
-      "action": "",
+      "action": "Eliminar toot",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "¿Confirmar eliminación?",
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Eliminar toot y volver a publicar",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "¿Confirmar eliminación y volver a publicar?",
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Confirmar"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Silenciar toot y respuestas",
+      "action_true": "Dejar de silenciar el toot y sus respuestas"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Fijar toot",
+      "action_true": "Desfijar toot"
     }
   }
 }

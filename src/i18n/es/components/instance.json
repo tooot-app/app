@@ -1,29 +1,29 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Dominio de la instancia"
     },
-    "button": "",
+    "button": "Iniciar sesión",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
+      "name": "Nombre",
+      "accounts": "Usuarios",
+      "statuses": "Toots",
       "domains": ""
     },
     "disclaimer": {
-      "base": ""
+      "base": "El inicio de sesión usa el navegador del sistema, y la información de la cuenta no será visible para tooot."
     },
     "terms": {
-      "base": ""
+      "base": "Al iniciar sesión, aceptas la <0>política de privacidad</0> y los <1> términos del servicio</1>."
     }
   },
   "update": {
     "alert": {
-      "title": "",
-      "message": "",
+      "title": "Iniciado sesión en esta instancia",
+      "message": "Puedes iniciar sesión en otra cuenta, manteniendo conectadas las cuentas actuales",
       "buttons": {
-        "cancel": "",
-        "continue": ""
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Continuar"
       }
     }
   }
