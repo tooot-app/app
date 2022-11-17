@@ -305,7 +305,7 @@
         "default": "嘟文",
         "all": "嘟文與回覆"
       },
-      "suspended": ""
+      "suspended": "此帳號已被伺服器管理員停用"
     },
     "attachments": {
       "name": "<0 /><1>的媒體</1>"

@@ -1,10 +1,10 @@
 {
   "title": "",
-  "message": "",
+  "message": "Los datos multimedia EXIF no se han subido",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Subir fotos",
+    "image_max": "Subir fotos (máx. {{max}})",
+    "video": "Subir vídeo",
+    "video_max": "Subir vídeo (máx. {{max}})"
   }
 }

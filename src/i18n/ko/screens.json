@@ -12,7 +12,7 @@
     "description": "푸시 알림을 설정에서 다시 활성화해주세요"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "{{type}} 사진 타입은 지원되지 않아요",
+    "videoNotSupported": "{{type}} 동영상 타입은 지원되지 않아요"
   }
 }
