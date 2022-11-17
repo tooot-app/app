@@ -295,7 +295,7 @@
       },
       "followed_by": " 正在关注你",
       "moved": "账户已迁移",
-      "created_at": "",
+      "created_at": "注册于：{{date}}",
       "summary": {
         "statuses_count": "{{count}} 条嘟文",
         "following_count": "$t(shared.users.accounts.following)",
