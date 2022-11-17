@@ -295,7 +295,7 @@
       },
       "followed_by": " folgt dir",
       "moved": "Benutzer umgezogen",
-      "created_at": "",
+      "created_at": "Registriert am: {{date}}",
       "summary": {
         "statuses_count": "{{count}} Tröts",
         "following_count": "$t(shared.users.accounts.following)",
