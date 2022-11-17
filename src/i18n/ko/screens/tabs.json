@@ -295,7 +295,7 @@
       },
       "followed_by": " 님은 당신을 팔로우 중입니다.",
       "moved": "유저가 이동함",
-      "created_at": "등록된 날: {{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} 툿",
         "following_count": "$t(shared.users.accounts.following)",
