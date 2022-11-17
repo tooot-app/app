@@ -295,7 +295,7 @@
       },
       "followed_by": " 正在跟隨你",
       "moved": "使用者已轉移",
-      "created_at": "加入於：{{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} 條嘟文",
         "following_count": "$t(shared.users.accounts.following)",
