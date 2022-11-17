@@ -1,18 +1,18 @@
 {
   "screenshot": {
-    "title": "",
-    "message": "",
-    "button": ""
+    "title": "Protección de la privacidad",
+    "message": "Por favor, no revele la identidad de otros usuarios, como nombre de usuario, avatar, etc. ¡Gracias!",
+    "button": "Confirmar"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "La sesión se ha expirado. Por favor, vuelve a iniciar sesión"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Error del servicio push",
+    "description": "Por favor, vuelva a habilitar las notificaciones push en los ajustes"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Formato de imagen {{type}} no soportado",
+    "videoNotSupported": "Formato de vídeo {{type}} no soportado"
   }
 }
