@@ -167,7 +167,10 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         formatText({
           textInput: 'text',
           composeDispatch,
-          content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
+          content:
+            (params.text && `${params.text}\n`) +
+            params.accts.map(acct => `@${acct}`).join(' ') +
+            ' ',
           disableDebounce: true
         })
         break
