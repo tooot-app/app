@@ -295,7 +295,7 @@
       },
       "followed_by": "はあなたをフォローしています",
       "moved": "ユーザーは引っ越ししました",
-      "created_at": "登録日: {{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} 投稿",
         "following_count": "$t(shared.users.accounts.following)",
