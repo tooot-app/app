@@ -27,7 +27,7 @@
         },
         "removeReply": {
           "title": "No se pudo encontrar el toot respondido",
-          "description": "",
+          "description": "El toot respondido podría haber sido eliminado. ¿Quieres eliminarlo de tu referencia?",
           "cancel": "$t(common:buttons.cancel)",
           "confirm": "Eliminar referencia"
         }
