@@ -15,8 +15,8 @@
     "message": "Leído en"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "Más reciente desde aquí",
+    "refetch": "Al último"
   },
   "shared": {
     "actioned": {
