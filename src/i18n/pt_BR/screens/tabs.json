@@ -295,7 +295,7 @@
       },
       "followed_by": " está seguindo você",
       "moved": "Usuário movido",
-      "created_at": "Registrado em: {{date}}",
+      "created_at": "",
       "summary": {
         "statuses_count": "{{count}} toots",
         "following_count": "$t(shared.users.accounts.following)",
