@@ -8,7 +8,7 @@
       "name": "Nombre",
       "accounts": "Usuarios",
       "statuses": "Toots",
-      "domains": ""
+      "domains": "Universos"
     },
     "disclaimer": {
       "base": "El inicio de sesión usa el navegador del sistema, y la información de la cuenta no será visible para tooot."
