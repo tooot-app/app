@@ -134,7 +134,7 @@
         },
         "lock": {
           "title": "Bloquear cuenta",
-          "description": ""
+          "description": "Necesitas aprobar manualmente los seguidores nuevos"
         },
         "bot": {
           "title": "Cuenta bot",
@@ -172,7 +172,7 @@
         "heading": "Solicitud de seguimiento"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Favoritos"
       },
       "reblog": {
         "heading": "Impulsado"
