@@ -186,7 +186,7 @@
       "status": {
         "heading": "Toot de usuarios suscritos"
       },
-      "howitworks": ""
+      "howitworks": "Más información sobre las notificaciones push"
     },
     "root": {
       "announcements": {
@@ -313,7 +313,7 @@
     "search": {
       "header": {
         "prefix": "Buscando",
-        "placeholder": ""
+        "placeholder": "algo..."
       },
       "empty": {
         "general": "Escribe para buscar <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> o <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
@@ -332,10 +332,10 @@
         "hashtags": "Hashtag",
         "statuses": "Toot"
       },
-      "notFound": ""
+      "notFound": "No se pudo encontrar <bold>{{searchTerm}}</bold> relacionado con {{type}}"
     },
     "toot": {
-      "name": ""
+      "name": "Discusiones"
     },
     "users": {
       "accounts": {
