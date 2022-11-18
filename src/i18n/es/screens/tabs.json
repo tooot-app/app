@@ -156,11 +156,11 @@
       },
       "global": {
         "heading": "Habilitar para {{acct}}",
-        "description": ""
+        "description": "Los mensajes se envían a través del servidor de tooot"
       },
       "decode": {
         "heading": "Mostrar detalles del mensaje",
-        "description": ""
+        "description": "Los mensajes que se envían a través del servidor de tooot están encriptados, pero puedes optar por desencriptarlos en el servidor. El servidor es de código abierto y tenemos una política de cero registros."
       },
       "default": {
         "heading": "Predeterminado"
@@ -192,8 +192,8 @@
       "announcements": {
         "content": {
           "unread": "{{amount}} no leídos",
-          "read": "",
-          "empty": ""
+          "read": "Todo leído",
+          "empty": "Nada"
         }
       },
       "push": {
@@ -203,7 +203,7 @@
         }
       },
       "update": {
-        "title": ""
+        "title": "Actualizar a la última versión"
       },
       "logout": {
         "button": "Cerrar sesión",
@@ -348,7 +348,7 @@
       }
     },
     "history": {
-      "name": ""
+      "name": "Historial de ediciones"
     }
   }
 }
