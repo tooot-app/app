@@ -1,25 +1,25 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Domän för instansen"
     },
-    "button": "",
+    "button": "Logga in",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "name": "Namn",
+      "accounts": "Användare",
+      "statuses": "Inlägg",
+      "domains": "Universum"
     },
     "disclaimer": {
-      "base": ""
+      "base": "Inloggningsprocessen använder systemets webbläsare så ingen av din kontoinformation är synlig för appen."
     },
     "terms": {
-      "base": ""
+      "base": "Genom att logga in godkänner du <0> integritetspolicyn</0> och <1>användarvillkoren</1>."
     }
   },
   "update": {
     "alert": {
-      "title": "",
+      "title": "Inloggad till denna instans",
       "message": "",
       "buttons": {
         "cancel": "",
