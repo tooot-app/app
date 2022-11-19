@@ -1,22 +1,22 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": ""
+    "OK": "OK",
+    "apply": "Verkställ",
+    "cancel": "Avbryt"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Anpassad emoji {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} lyckades"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} misslyckades, försök igen"
     }
   },
-  "separator": ""
+  "separator": ", "
 }
