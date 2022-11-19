@@ -1,6 +1,6 @@
 {
   "title": "Seleziona origine media",
-  "message": "",
+  "message": "I dati EXIF multimediali non sono stati caricati",
   "options": {
     "image": "Carica foto",
     "image_max": "Carica foto (massimo {{max}})",
