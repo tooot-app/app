@@ -1,57 +1,57 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Laddningsfel",
+      "button": "Försök igen"
     },
     "success": {
-      "message": ""
+      "message": "Tidslinjen är tom"
     }
   },
   "end": {
-    "message": ""
+    "message": "Slut, vad sägs om en kopp <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Senast läst"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "Nyare härifrån",
+    "refetch": "Till senaste"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Fäst",
+      "favourite": "{{name}} favoritmarkerade ditt inlägg",
+      "status": "{{name}} publicerade just ett inlägg",
+      "follow": "{{name}} följde dig",
+      "follow_request": "{{name}} begärde att få följa dig",
+      "poll": "En omröstning du röstat i har avslutats",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} boostade",
+        "notification": "{{name}} boostade ditt inlägg"
       },
-      "update": ""
+      "update": "Boosten har redigerats"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Svara på det här inlägget"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Boosta det här inlägget",
+        "function": "Boosta inlägg",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Välj synlighet på boost",
+          "public": "Offentlig boost",
+          "unlisted": "Olistad boost"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Lägg till detta inlägg till favoriter",
+        "function": "Favoritmarkera inlägg"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Lägg till detta inlägg till dina bokmärken",
+        "function": "Bokmärk inlägg"
       }
     },
     "actionsUsers": {
