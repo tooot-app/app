@@ -311,8 +311,8 @@
       "name": "<0 /><1>\"의 미디어</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "팔로우",
+      "unfollow": "팔로우 해제"
     },
     "history": {
       "name": "수정 이력"
