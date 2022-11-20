@@ -311,8 +311,8 @@
       "name": "<0 /><1>的媒体</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "关注",
+      "unfollow": "取消关注"
     },
     "history": {
       "name": "编辑历史"
