@@ -311,8 +311,8 @@
       "name": "<0 /><1>\"s Medien</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Folgen",
+      "unfollow": "Entfolgen"
     },
     "history": {
       "name": "Bearbeitungsverlauf"
