@@ -168,12 +168,12 @@
       "header": {
         "title": "Utkast"
       },
-      "warning": "",
+      "warning": "Utkasten lagras endast lokalt och kan gå förlorade i sällsynta fall. Ett tips är att inte använda utkast för långtidslagring.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Sparat utkast, tryck för att redigera detta utkast",
+        "textEmpty": "Innehållet är tomt"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Kontrollerar bilagor på servern..."
     }
   }
 }
