@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": "Lịch sử chỉnh sửa"
+    },
     "search": {
       "header": {
         "prefix": "Tìm kiếm",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
       }
-    },
-    "history": {
-      "name": "Lịch sử chỉnh sửa"
     }
   }
 }
