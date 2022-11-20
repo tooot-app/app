@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Meddelanden",
   "content": {
-    "published": "",
+    "published": "Publicerad <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Läst",
+      "unread": "Markera som läst"
     }
   }
 }
