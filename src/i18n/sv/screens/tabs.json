@@ -1,68 +1,68 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "Följer"
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "left": "Federerat",
+        "right": "Lokalt"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Notiser"
     },
     "me": {
-      "name": ""
+      "name": "Om mig"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Sök",
+      "accessibilityHint": "Sök efter hashtaggar, användare eller inlägg"
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Filter",
+      "accessibilityHint": "Filtrera visade notistyper"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Bokmärken"
       },
       "conversations": {
-        "name": ""
+        "name": "Direktmeddelanden"
       },
       "favourites": {
-        "name": ""
+        "name": "Favoriter"
       },
       "fontSize": {
-        "name": ""
+        "name": "Storlek på teckensnitt i inlägg"
       },
       "language": {
-        "name": ""
+        "name": "Språk"
       },
       "lists": {
-        "name": ""
+        "name": "Listor"
       },
       "list": {
-        "name": ""
+        "name": "Lista: {{list}}"
       },
       "push": {
-        "name": ""
+        "name": "Pushnotiser"
       },
       "profile": {
-        "name": ""
+        "name": "Redigera profil"
       },
       "profileName": {
-        "name": ""
+        "name": "Redigera visningsnamn"
       },
       "profileNote": {
-        "name": ""
+        "name": "Redigera beskrivning"
       },
       "profileFields": {
         "name": "Redigera metadata"
