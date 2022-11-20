@@ -20,7 +20,7 @@ import { Directions, Gesture, LongPressGestureHandler } from 'react-native-gestu
 import { LiveTextImageView } from 'react-native-live-text-image-view'
 import { runOnJS, useSharedValue } from 'react-native-reanimated'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import saveImage from './ImageViewer/save'
 
 const ZoomFlatList = createZoomListComponent(FlatList)
@@ -153,7 +153,7 @@ const ScreenImagesViewer = ({
   )
 
   return (
-    <SafeAreaProvider style={{ backgroundColor: 'black' }}>
+    <View style={{ backgroundColor: 'black' }}>
       <StatusBar hidden />
       <View
         style={{
@@ -232,7 +232,7 @@ const ScreenImagesViewer = ({
           })}
         />
       </LongPressGestureHandler>
-    </SafeAreaProvider>
+    </View>
   )
 }
 
