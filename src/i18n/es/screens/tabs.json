@@ -311,8 +311,8 @@
       "name": ""
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Seguir",
+      "unfollow": "Dejar de seguir"
     },
     "history": {
       "name": "Historial de ediciones"
