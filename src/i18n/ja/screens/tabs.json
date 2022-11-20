@@ -311,8 +311,8 @@
       "name": "<0 /><1>\" のメディア</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "フォロー",
+      "unfollow": "フォローをやめる"
     },
     "history": {
       "name": "編集履歴"
