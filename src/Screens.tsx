@@ -166,9 +166,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
-      if (Platform.OS === 'android') {
-        return
-      }
       if (instanceActive < 0) {
         return
       }
@@ -233,14 +230,18 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             }
           }
           break
-        // case 'android':
-        //   if (!item.mimeType) {
-        //     return
-        //   }
-        //   for (const d of item.data) {
-        //     filterMedia({ uri: d, mime: item.mimeType })
-        //   }
-        //   break
+        case 'android':
+          if (!item.mimeType) {
+            return
+          }
+          if (Array.isArray(item.data)) {
+            for (const d of item.data) {
+              filterMedia({ uri: d, mime: item.mimeType })
+            }
+          } else {
+            filterMedia({ uri: item.data, mime: item.mimeType })
+          }
+          break
       }
 
       if (!text && !media.length) {

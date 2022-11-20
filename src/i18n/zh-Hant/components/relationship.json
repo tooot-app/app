@@ -1,6 +1,6 @@
 {
   "follow": {
-    "function": "追蹤使用者"
+    "function": "跟隨使用者"
   },
   "block": {
     "function": "封鎖使用者"
@@ -9,8 +9,8 @@
     "error": "載入錯誤",
     "blocked_by": "已被使用者封鎖",
     "blocking": "解除封鎖",
-    "following": "取消追蹤",
+    "following": "取消跟隨",
     "requested": "收回要求",
-    "default": "追蹤"
+    "default": "跟隨"
   }
 }
