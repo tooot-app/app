@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>s media</1>"
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": "Redigeringshistorik"
+    },
     "search": {
       "header": {
         "prefix": "Söker",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} boostade",
         "favourited_by": "{{count}} favoriter"
       }
-    },
-    "history": {
-      "name": "Redigeringshistorik"
     }
   }
 }
