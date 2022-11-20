@@ -64,6 +64,7 @@ const TimelineDefault: React.FC<Props> = ({
   }
 
   const onPress = () => {
+    if (highlighted) return
     analytics('timeline_default_press', {
       page: queryKey ? queryKey[1].page : origin
     })
