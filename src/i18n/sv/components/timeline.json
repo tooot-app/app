@@ -56,95 +56,95 @@
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} användare har boostat det här inlägget",
+        "accessibilityHint": "Tryck för att lära känna användarna",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} användare har favoritmarkerat det här inlägget",
+        "accessibilityHint": "Tryck för att lära känna användarna",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Detta inlägg har redigerats {{count}} gånger",
+        "accessibilityHint": "Tryck för att visa hela redigeringshistoriken",
+        "text_one": "{{count}} redigering",
+        "text_other": "{{count}} redigeringar"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Visa känslig media"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Laddningsfel",
+        "button": "Prova fjärrlänk"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "{{name}}s avatar",
+      "accessibilityHint": "Tryck för att gå till {{name}}s sida"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Dolt innehåll"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "Filtrerat: {{phrase}}.",
+    "fullConversation": "Läs konversationer",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Översätt",
+      "succeed": "Översatt av {{provider}} från {{source}}",
+      "failed": "Översättning misslyckades",
+      "source_not_supported": "inläggets språk stöds inte",
+      "target_not_supported": "Målspråket stöds inte"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Användarens visningsnamn"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Användarens konto"
           }
         },
-        "application": "",
+        "application": "Via {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Inlägg redigerat"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Inlägg tystat"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Inlägget är ett direktmeddelande"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Inlägget syns endast för följare"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Med",
         "delete": {
-          "function": ""
+          "function": "Ta bort direktmeddelande"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Rösta",
+          "refresh": "Uppdatera"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} användare har röstat",
+          "voters_other": "{{count}} användare har röstat",
+          "votes_one": "{{count}} röst",
+          "votes_other": "{{count}} röster"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Omröstning har gått ut",
+          "until": "Förfaller <0 />"
         }
       }
     }
