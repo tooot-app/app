@@ -16,7 +16,7 @@ import TabMeSettings from './Me/Settings'
 import TabMeSettingsFontsize from './Me/SettingsFontsize'
 import TabMeSettingsLanguage from './Me/SettingsLanguage'
 import TabMeSwitch from './Me/Switch'
-import TabSharedRoot from './Shared/Root'
+import TabShared from './Shared'
 
 const Stack = createNativeStackNavigator<TabMeStackParamList>()
 
@@ -187,7 +187,7 @@ const TabMe = React.memo(
           })}
         />
 
-        {TabSharedRoot({ Stack })}
+        {TabShared({ Stack })}
       </Stack.Navigator>
     )
   },

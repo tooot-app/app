@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\"s media</1>"
     },
+    "hashtag": {
+      "follow": "Follow",
+      "unfollow": "Unfollow"
+    },
+    "history": {
+      "name": "Edit History"
+    },
     "search": {
       "header": {
         "prefix": "Searching",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} boosted",
         "favourited_by": "{{count}} favourited"
       }
-    },
-    "history": {
-      "name": "Edit History"
     }
   }
 }

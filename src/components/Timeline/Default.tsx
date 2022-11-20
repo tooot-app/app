@@ -17,7 +17,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
 import React, { useRef } from 'react'
-import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
+import { Platform, Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
 import TimelineFeedback from './Shared/Feedback'
@@ -64,6 +64,7 @@ const TimelineDefault: React.FC<Props> = ({
   }
 
   const onPress = () => {
+    if (highlighted) return
     analytics('timeline_default_press', {
       page: queryKey ? queryKey[1].page : origin
     })
@@ -156,6 +157,15 @@ const TimelineDefault: React.FC<Props> = ({
 
   return disableOnPress ? (
     <View style={mainStyle}>{main()}</View>
+  ) : Platform.OS === 'android' ? (
+    <Pressable
+      accessible={highlighted ? false : true}
+      style={mainStyle}
+      onPress={onPress}
+      onLongPress={() => {}}
+    >
+      {main()}
+    </Pressable>
   ) : (
     <TimelineContextMenu
       copiableContent={copiableContent}

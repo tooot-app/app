@@ -12,7 +12,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions } from 'react-native'
 import { TabView } from 'react-native-tab-view'
-import TabSharedRoot from './Shared/Root'
+import TabShared from './Shared'
 
 const Stack = createNativeStackNavigator<TabPublicStackParamList>()
 
@@ -107,7 +107,7 @@ const TabPublic = React.memo(
     return (
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen name='Tab-Public-Root' options={screenOptionsRoot} children={children} />
-        {TabSharedRoot({ Stack })}
+        {TabShared({ Stack })}
       </Stack.Navigator>
     )
   },

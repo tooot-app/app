@@ -20,11 +20,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Platform, TextInput, View } from 'react-native'
 import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
 
-const TabSharedRoot = ({
-  Stack
-}: {
-  Stack: ReturnType<typeof createNativeStackNavigator>
-}) => {
+const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
   const { colors, mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
@@ -50,9 +46,7 @@ const TabSharedRoot = ({
               backgroundColor: `rgba(255, 255, 255, 0)`
             },
             title: '',
-            headerLeft: () => (
-              <HeaderLeft onPress={() => navigation.goBack()} background />
-            ),
+            headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />,
             headerRight: () => {
               const actions: ContextMenuAction[] = []
 
@@ -77,13 +71,10 @@ const TabSharedRoot = ({
                   dropdownMenuMode
                 >
                   <HeaderRight
-                    accessibilityLabel={t(
-                      'shared.account.actions.accessibilityLabel',
-                      { user: account.acct }
-                    )}
-                    accessibilityHint={t(
-                      'shared.account.actions.accessibilityHint'
-                    )}
+                    accessibilityLabel={t('shared.account.actions.accessibilityLabel', {
+                      user: account.acct
+                    })}
+                    accessibilityHint={t('shared.account.actions.accessibilityHint')}
                     content='MoreHorizontal'
                     onPress={() => {}}
                     background
@@ -132,9 +123,7 @@ const TabSharedRoot = ({
         key='Tab-Shared-Hashtag'
         name='Tab-Shared-Hashtag'
         component={TabSharedHashtag}
-        options={({
-          route
-        }: TabSharedStackScreenProps<'Tab-Shared-Hashtag'>) => ({
+        options={({ route }: TabSharedStackScreenProps<'Tab-Shared-Hashtag'>) => ({
           title: `#${decodeURIComponent(route.params.hashtag)}`
         })}
       />
@@ -150,24 +139,16 @@ const TabSharedRoot = ({
         key='Tab-Shared-Search'
         name='Tab-Shared-Search'
         component={TabSharedSearch}
-        options={({
-          navigation
-        }: TabSharedStackScreenProps<'Tab-Shared-Search'>) => ({
+        options={({ navigation }: TabSharedStackScreenProps<'Tab-Shared-Search'>) => ({
           ...(Platform.OS === 'ios'
             ? {
-                headerLeft: () => (
-                  <HeaderLeft onPress={() => navigation.goBack()} />
-                )
+                headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
               }
             : { headerLeft: () => null }),
           headerTitle: () => {
-            const onChangeText = debounce(
-              (text: string) => navigation.setParams({ text }),
-              1000,
-              {
-                trailing: true
-              }
-            )
+            const onChangeText = debounce((text: string) => navigation.setParams({ text }), 1000, {
+              trailing: true
+            })
             return (
               <View
                 style={{
@@ -199,9 +180,7 @@ const TabSharedRoot = ({
                   autoCorrect={false}
                   clearButtonMode='never'
                   keyboardType='web-search'
-                  onSubmitEditing={({ nativeEvent: { text } }) =>
-                    navigation.setParams({ text })
-                  }
+                  onSubmitEditing={({ nativeEvent: { text } }) => navigation.setParams({ text })}
                   placeholder={t('shared.search.header.placeholder')}
                   placeholderTextColor={colors.secondary}
                   returnKeyType='go'
@@ -216,9 +195,7 @@ const TabSharedRoot = ({
         key='Tab-Shared-Toot'
         name='Tab-Shared-Toot'
         component={TabSharedToot}
-        options={{
-          title: t('shared.toot.name')
-        }}
+        options={{ title: t('shared.toot.name') }}
       />
 
       <Stack.Screen
@@ -233,9 +210,7 @@ const TabSharedRoot = ({
           title: t(`shared.users.${reference}.${type}`, { count }),
           ...(Platform.OS === 'android' && {
             headerCenter: () => (
-              <HeaderCenter
-                content={t(`shared.users.${reference}.${type}`, { count })}
-              />
+              <HeaderCenter content={t(`shared.users.${reference}.${type}`, { count })} />
             )
           })
         })}
@@ -244,4 +219,4 @@ const TabSharedRoot = ({
   )
 }
 
-export default TabSharedRoot
+export default TabShared

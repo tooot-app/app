@@ -15,24 +15,10 @@ const HeaderSharedVisibility = React.memo(
     const { colors } = useTheme()
 
     switch (visibility) {
-      case 'public':
-        return (
-          <Icon
-            accessibilityLabel={t(
-              'shared.header.shared.visibility.private.accessibilityLabel'
-            )}
-            name='Globe'
-            size={StyleConstants.Font.Size.S}
-            color={colors.secondary}
-            style={styles.visibility}
-          />
-        )
       case 'unlisted':
         return (
           <Icon
-            accessibilityLabel={t(
-              'shared.header.shared.visibility.private.accessibilityLabel'
-            )}
+            accessibilityLabel={t('shared.header.shared.visibility.private.accessibilityLabel')}
             name='Unlock'
             size={StyleConstants.Font.Size.S}
             color={colors.secondary}
@@ -42,9 +28,7 @@ const HeaderSharedVisibility = React.memo(
       case 'private':
         return (
           <Icon
-            accessibilityLabel={t(
-              'shared.header.shared.visibility.private.accessibilityLabel'
-            )}
+            accessibilityLabel={t('shared.header.shared.visibility.private.accessibilityLabel')}
             name='Lock'
             size={StyleConstants.Font.Size.S}
             color={colors.secondary}
@@ -54,9 +38,7 @@ const HeaderSharedVisibility = React.memo(
       case 'direct':
         return (
           <Icon
-            accessibilityLabel={t(
-              'shared.header.shared.visibility.direct.accessibilityLabel'
-            )}
+            accessibilityLabel={t('shared.header.shared.visibility.direct.accessibilityLabel')}
             name='Mail'
             size={StyleConstants.Font.Size.S}
             color={colors.secondary}

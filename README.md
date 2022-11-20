@@ -25,6 +25,8 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 
+[@janlindblom](https://github.com/janlindblom) for Swedish
+
 [@duy@mas.to](https://mas.to/@duy) for Vietnamese translation
 
 [@jimmyorz](https://github.com/jimmyorz) for Traditional Chinese translation

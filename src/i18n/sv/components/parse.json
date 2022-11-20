@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "Tryck för att utöka eller dölja innehåll",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} rader till)",
+    "defaultHint": "Långt inlägg"
+  }
+}

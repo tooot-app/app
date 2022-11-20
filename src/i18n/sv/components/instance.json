@@ -1,0 +1,30 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Domän för instansen"
+    },
+    "button": "Logga in",
+    "information": {
+      "name": "Namn",
+      "accounts": "Användare",
+      "statuses": "Inlägg",
+      "domains": "Universum"
+    },
+    "disclaimer": {
+      "base": "Inloggningsprocessen använder systemets webbläsare så ingen av din kontoinformation är synlig för appen."
+    },
+    "terms": {
+      "base": "Genom att logga in godkänner du <0> integritetspolicyn</0> och <1>användarvillkoren</1>."
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Inloggad till denna instans",
+      "message": "Du kan logga in på ett annat konto och behålla redan inloggade konton",
+      "buttons": {
+        "cancel": "$t(common:buttons.cancel)",
+        "continue": "Fortsätt"
+      }
+    }
+  }
+}

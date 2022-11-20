@@ -16,21 +16,21 @@
   },
   "refresh": {
     "fetchPreviousPage": "Più recenti da qui",
-    "refetch": "Vai a recenti"
+    "refetch": "Al più recente"
   },
   "shared": {
     "actioned": {
       "pinned": "Fissato in cima",
       "favourite": "{{name}} ha apprezzato il tuo toot",
       "status": "{{name}} ha appena pubblicato",
-      "follow": "{{name}} ti sta seguendo",
+      "follow": "{{name}} ti segue",
       "follow_request": "{{name}} ha chiesto di seguirti",
       "poll": "Un sondaggio in cui hai votato è terminato",
       "reblog": {
         "default": "{{name}} ha ricondiviso",
         "notification": "{{name}} ha ricondiviso il tuo toot"
       },
-      "update": "Retoot ha subito una modifica"
+      "update": "Il link è stato modificato"
     },
     "actions": {
       "reply": {
@@ -40,9 +40,9 @@
         "accessibilityLabel": "Ricondividi questo toot",
         "function": "Ricondividi toot",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Scegli visibilità boost",
+          "public": "Boost pubblico",
+          "unlisted": "Rimuovi boost dall'elenco"
         }
       },
       "favourited": {
@@ -88,7 +88,7 @@
     "content": {
       "expandHint": "Contenuto nascosto"
     },
-    "filtered": "",
+    "filtered": "Filtrato: {{phrase}}.",
     "fullConversation": "Leggi la conversazione",
     "translate": {
       "default": "Traduci",

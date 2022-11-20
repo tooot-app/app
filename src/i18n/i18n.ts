@@ -9,6 +9,7 @@ import it from '@root/i18n/it'
 import ja from '@root/i18n/ja'
 import ko from '@root/i18n/ko'
 import pt_BR from '@root/i18n/pt_BR'
+import sv from '@root/i18n/sv'
 import vi from '@root/i18n/vi'
 import zh_Hans from '@root/i18n/zh-Hans'
 import zh_Hant from '@root/i18n/zh-Hant'
@@ -25,6 +26,7 @@ import '@formatjs/intl-pluralrules/locale-data/it'
 import '@formatjs/intl-pluralrules/locale-data/ja'
 import '@formatjs/intl-pluralrules/locale-data/ko'
 import '@formatjs/intl-pluralrules/locale-data/pt'
+import '@formatjs/intl-pluralrules/locale-data/sv'
 import '@formatjs/intl-pluralrules/locale-data/vi'
 import '@formatjs/intl-pluralrules/locale-data/zh'
 
@@ -37,6 +39,7 @@ import '@formatjs/intl-numberformat/locale-data/it'
 import '@formatjs/intl-numberformat/locale-data/ja'
 import '@formatjs/intl-numberformat/locale-data/ko'
 import '@formatjs/intl-numberformat/locale-data/pt'
+import '@formatjs/intl-numberformat/locale-data/sv'
 import '@formatjs/intl-numberformat/locale-data/vi'
 import '@formatjs/intl-numberformat/locale-data/zh-Hans'
 import '@formatjs/intl-numberformat/locale-data/zh-Hant'
@@ -50,6 +53,7 @@ import '@formatjs/intl-datetimeformat/locale-data/it'
 import '@formatjs/intl-datetimeformat/locale-data/ja'
 import '@formatjs/intl-datetimeformat/locale-data/ko'
 import '@formatjs/intl-datetimeformat/locale-data/pt'
+import '@formatjs/intl-datetimeformat/locale-data/sv'
 import '@formatjs/intl-datetimeformat/locale-data/vi'
 import '@formatjs/intl-datetimeformat/locale-data/zh-Hans'
 import '@formatjs/intl-datetimeformat/locale-data/zh-Hant'
@@ -64,6 +68,7 @@ import '@formatjs/intl-relativetimeformat/locale-data/it'
 import '@formatjs/intl-relativetimeformat/locale-data/ja'
 import '@formatjs/intl-relativetimeformat/locale-data/ko'
 import '@formatjs/intl-relativetimeformat/locale-data/pt'
+import '@formatjs/intl-relativetimeformat/locale-data/sv'
 import '@formatjs/intl-relativetimeformat/locale-data/vi'
 import '@formatjs/intl-relativetimeformat/locale-data/zh-Hans'
 import '@formatjs/intl-relativetimeformat/locale-data/zh-Hant'
@@ -84,6 +89,7 @@ i18n.use(initReactI18next).init({
     ja,
     ko,
     'pt-BR': pt_BR,
+    sv,
     vi,
     'zh-Hans': zh_Hans,
     'zh-Hant': zh_Hant

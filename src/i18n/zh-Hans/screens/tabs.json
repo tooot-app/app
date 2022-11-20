@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
     },
+    "hashtag": {
+      "follow": "关注",
+      "unfollow": "取消关注"
+    },
+    "history": {
+      "name": "编辑历史"
+    },
     "search": {
       "header": {
         "prefix": "搜索",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} 人转嘟",
         "favourited_by": "{{count}} 人喜欢"
       }
-    },
-    "history": {
-      "name": "编辑历史"
     }
   }
 }

@@ -310,6 +310,13 @@
     "attachments": {
       "name": ""
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": ""
+    },
     "search": {
       "header": {
         "prefix": "",
@@ -346,9 +353,6 @@
         "reblogged_by": "",
         "favourited_by": ""
       }
-    },
-    "history": {
-      "name": ""
     }
   }
 }

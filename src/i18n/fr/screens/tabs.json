@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\"s media</1>"
     },
+    "hashtag": {
+      "follow": "Suivre",
+      "unfollow": "Ne plus suivre"
+    },
+    "history": {
+      "name": "Modifier l'historique"
+    },
     "search": {
       "header": {
         "prefix": "Recherche en cours",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} boosté",
         "favourited_by": "{{count}} mis en favori"
       }
-    },
-    "history": {
-      "name": "Modifier l'historique"
     }
   }
 }

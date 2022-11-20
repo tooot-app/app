@@ -5,8 +5,8 @@ import { Slider } from '@sharcoux/slider'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { Audio } from 'expo-av'
-import React, { useCallback, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
 import attachmentAspectRatio from './aspectRatio'
@@ -18,12 +18,7 @@ export interface Props {
   audio: Mastodon.AttachmentAudio
 }
 
-const AttachmentAudio: React.FC<Props> = ({
-  total,
-  index,
-  sensitiveShown,
-  audio
-}) => {
+const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio }) => {
   const { colors } = useTheme()
 
   const [audioPlayer, setAudioPlayer] = useState<Audio.Sound>()
@@ -50,6 +45,20 @@ const AttachmentAudio: React.FC<Props> = ({
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])
+
+  const appState = useRef(AppState.currentState)
+  useEffect(() => {
+    const appState = AppState.addEventListener('change', _handleAppStateChange)
+
+    return () => appState.remove()
+  }, [])
+  const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
+    if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {
+      await audioPlayer?.stopAsync()
+    }
+
+    appState.current = nextAppState
+  }
 
   return (
     <View
@@ -90,9 +99,7 @@ const AttachmentAudio: React.FC<Props> = ({
               size='L'
               round
               overlay
-              {...(audioPlaying
-                ? { onPress: pauseAudio }
-                : { onPress: playAudio })}
+              {...(audioPlaying ? { onPress: pauseAudio } : { onPress: playAudio })}
             />
           </>
         )}
@@ -128,10 +135,7 @@ const AttachmentAudio: React.FC<Props> = ({
           />
         </View>
       ) : null}
-      <AttachmentAltText
-        sensitiveShown={sensitiveShown}
-        text={audio.description}
-      />
+      <AttachmentAltText sensitiveShown={sensitiveShown} text={audio.description} />
     </View>
   )
 }

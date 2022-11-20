@@ -1,0 +1,17 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "Fler åtgärder för denna bild",
+      "accessibilityHint": "Du kan spara eller dela denna bild"
+    },
+    "options": {
+      "save": "Spara bild",
+      "share": "Dela bild",
+      "cancel": "$t(common:buttons.cancel)"
+    },
+    "save": {
+      "succeed": "Bild sparad",
+      "failed": "Kunde inte spara bild"
+    }
+  }
+}

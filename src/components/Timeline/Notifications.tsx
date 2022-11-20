@@ -17,7 +17,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { isEqual, uniqBy } from 'lodash'
 import React, { useCallback, useRef } from 'react'
-import { Pressable, View } from 'react-native'
+import { Platform, Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
@@ -29,129 +29,146 @@ export interface Props {
   highlighted?: boolean
 }
 
-const TimelineNotifications = React.memo(
-  ({ notification, queryKey, highlighted = false }: Props) => {
-    const copiableContent = useRef<{ content: string; complete: boolean }>({
-      content: '',
-      complete: false
+const TimelineNotifications: React.FC<Props> = ({
+  notification,
+  queryKey,
+  highlighted = false
+}) => {
+  const copiableContent = useRef<{ content: string; complete: boolean }>({
+    content: '',
+    complete: false
+  })
+
+  const filtered =
+    notification.status &&
+    shouldFilter({
+      copiableContent,
+      status: notification.status,
+      queryKey
     })
+  if (notification.status && filtered) {
+    return <TimelineFiltered phrase={filtered} />
+  }
 
-    const filtered =
-      notification.status &&
-      shouldFilter({
-        copiableContent,
-        status: notification.status,
-        queryKey
+  const { colors } = useTheme()
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.id === next?.id)
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+
+  const actualAccount = notification.status ? notification.status.account : notification.account
+
+  const onPress = useCallback(() => {
+    analytics('timeline_notification_press')
+    notification.status &&
+      navigation.push('Tab-Shared-Toot', {
+        toot: notification.status,
+        rootQueryKey: queryKey
       })
-    if (notification.status && filtered) {
-      return <TimelineFiltered phrase={filtered} />
-    }
+  }, [])
 
-    const { colors } = useTheme()
-    const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.id === next?.id)
-    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-
-    const actualAccount = notification.status ? notification.status.account : notification.account
-
-    const onPress = useCallback(() => {
-      analytics('timeline_notification_press')
-      notification.status &&
-        navigation.push('Tab-Shared-Toot', {
-          toot: notification.status,
-          rootQueryKey: queryKey
-        })
-    }, [])
-
+  const main = () => {
     return (
-      <TimelineContextMenu
-        copiableContent={copiableContent}
-        status={notification.status}
-        queryKey={queryKey}
-      >
-        <Pressable
+      <>
+        {notification.type !== 'mention' ? (
+          <TimelineActioned
+            action={notification.type}
+            account={notification.account}
+            notification
+          />
+        ) : null}
+
+        <View
           style={{
-            padding: StyleConstants.Spacing.Global.PagePadding,
-            backgroundColor: colors.backgroundDefault,
-            paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
+            opacity:
+              notification.type === 'follow' ||
+              notification.type === 'follow_request' ||
+              notification.type === 'mention' ||
+              notification.type === 'status'
+                ? 1
+                : 0.5
           }}
-          onPress={onPress}
-          onLongPress={() => {}}
         >
-          {notification.type !== 'mention' ? (
-            <TimelineActioned
-              action={notification.type}
-              account={notification.account}
-              notification
-            />
-          ) : null}
-
-          <View
-            style={{
-              opacity:
-                notification.type === 'follow' ||
-                notification.type === 'follow_request' ||
-                notification.type === 'mention' ||
-                notification.type === 'status'
-                  ? 1
-                  : 0.5
-            }}
-          >
-            <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
-              <TimelineAvatar
-                queryKey={queryKey}
-                account={actualAccount}
-                highlighted={highlighted}
-              />
-              <TimelineHeaderNotification queryKey={queryKey} notification={notification} />
-            </View>
-
-            {notification.status ? (
-              <View
-                style={{
-                  paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-                  paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-                }}
-              >
-                {notification.status.content.length > 0 ? (
-                  <TimelineContent status={notification.status} highlighted={highlighted} />
-                ) : null}
-                {notification.status.poll ? (
-                  <TimelinePoll
-                    queryKey={queryKey}
-                    statusId={notification.status.id}
-                    poll={notification.status.poll}
-                    reblog={false}
-                    sameAccount={notification.account.id === instanceAccount?.id}
-                  />
-                ) : null}
-                {notification.status.media_attachments.length > 0 ? (
-                  <TimelineAttachment status={notification.status} />
-                ) : null}
-                {notification.status.card ? <TimelineCard card={notification.status.card} /> : null}
-                <TimelineFullConversation queryKey={queryKey} status={notification.status} />
-              </View>
-            ) : null}
+          <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
+            <TimelineAvatar queryKey={queryKey} account={actualAccount} highlighted={highlighted} />
+            <TimelineHeaderNotification queryKey={queryKey} notification={notification} />
           </View>
 
           {notification.status ? (
-            <TimelineActions
-              queryKey={queryKey}
-              status={notification.status}
-              highlighted={highlighted}
-              accts={uniqBy(
-                ([notification.status.account] as Mastodon.Account[] & Mastodon.Mention[])
-                  .concat(notification.status.mentions)
-                  .filter(d => d?.id !== instanceAccount?.id),
-                d => d?.id
-              ).map(d => d?.acct)}
-              reblog={false}
-            />
+            <View
+              style={{
+                paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+                paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+              }}
+            >
+              {notification.status.content.length > 0 ? (
+                <TimelineContent status={notification.status} highlighted={highlighted} />
+              ) : null}
+              {notification.status.poll ? (
+                <TimelinePoll
+                  queryKey={queryKey}
+                  statusId={notification.status.id}
+                  poll={notification.status.poll}
+                  reblog={false}
+                  sameAccount={notification.account.id === instanceAccount?.id}
+                />
+              ) : null}
+              {notification.status.media_attachments.length > 0 ? (
+                <TimelineAttachment status={notification.status} />
+              ) : null}
+              {notification.status.card ? <TimelineCard card={notification.status.card} /> : null}
+              <TimelineFullConversation queryKey={queryKey} status={notification.status} />
+            </View>
           ) : null}
-        </Pressable>
-      </TimelineContextMenu>
+        </View>
+
+        {notification.status ? (
+          <TimelineActions
+            queryKey={queryKey}
+            status={notification.status}
+            highlighted={highlighted}
+            accts={uniqBy(
+              ([notification.status.account] as Mastodon.Account[] & Mastodon.Mention[])
+                .concat(notification.status.mentions)
+                .filter(d => d?.id !== instanceAccount?.id),
+              d => d?.id
+            ).map(d => d?.acct)}
+            reblog={false}
+          />
+        ) : null}
+      </>
     )
-  },
-  (prev, next) => isEqual(prev.notification, next.notification)
-)
+  }
+
+  return Platform.OS === 'android' ? (
+    <Pressable
+      style={{
+        padding: StyleConstants.Spacing.Global.PagePadding,
+        backgroundColor: colors.backgroundDefault,
+        paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
+      }}
+      onPress={onPress}
+      onLongPress={() => {}}
+    >
+      {main()}
+    </Pressable>
+  ) : (
+    <TimelineContextMenu
+      copiableContent={copiableContent}
+      status={notification.status}
+      queryKey={queryKey}
+    >
+      <Pressable
+        style={{
+          padding: StyleConstants.Spacing.Global.PagePadding,
+          backgroundColor: colors.backgroundDefault,
+          paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={onPress}
+        onLongPress={() => {}}
+      >
+        {main()}
+      </Pressable>
+    </TimelineContextMenu>
+  )
+}
 
 export default TimelineNotifications
