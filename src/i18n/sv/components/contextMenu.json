@@ -1,76 +1,76 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Åtgärder för detta inlägg, som t.ex. dess författare, själva inlägget",
   "account": {
-    "title": "",
+    "title": "Användaråtgärder",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tysta användare",
+      "action_true": "Sluta tysta användare"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Blockera användare",
+      "action_true": "Avblockera användare"
     },
     "reports": {
-      "action": ""
+      "action": "Rapportera och blockera"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Kopiera inlägg",
+    "succeed": "Kopierat"
   },
   "instance": {
-    "title": "",
+    "title": "Instansåtgärd",
     "block": {
-      "action": "",
+      "action": "Blockera instansen {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Bekräfta blockering av instansen {{instance}}?",
+        "message": "Oftast kan du tysta eller blockera vissa användare.\n\nEfter blockering av en instans kommer allt innehåll inklusive följare från denna instans att tas bort!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bekräfta"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Dela inlägg"
     },
     "account": {
-      "action": ""
+      "action": "Dela användare"
     }
   },
   "status": {
-    "title": "",
+    "title": "Inläggsåtgärder",
     "edit": {
-      "action": ""
+      "action": "Redigera inlägg"
     },
     "delete": {
-      "action": "",
+      "action": "Radera inlägg",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Bekräfta radering?",
+        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bekräfta"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Radera inlägg och posta på nytt",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Bekräfta radera inlägg och posta på nytt?",
+        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bekräfta"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Tysta inlägg och svar",
+      "action_true": "Sluta tysta inlägg och svar"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Fäst inlägg",
+      "action_true": "Avfäst inlägg"
     }
   }
 }
