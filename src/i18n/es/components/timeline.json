@@ -27,7 +27,7 @@
       "follow_request": "{{name}} ha solicitado seguirte",
       "poll": "Una encuesta en la que has votado ha terminado",
       "reblog": {
-        "default": "{{name}} impulsado",
+        "default": "{{name}} ha impulsado",
         "notification": "{{name}} ha impulsado tu toot"
       },
       "update": "El impulso ha sido editado"
