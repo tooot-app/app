@@ -310,6 +310,13 @@
     "attachments": {
       "name": ""
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": "Historial de ediciones"
+    },
     "search": {
       "header": {
         "prefix": "Buscando",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} impulsados",
         "favourited_by": "{{count}} favoritos"
       }
-    },
-    "history": {
-      "name": "Historial de ediciones"
     }
   }
 }
