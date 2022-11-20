@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\" のメディア</1>"
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": "編集履歴"
+    },
     "search": {
       "header": {
         "prefix": "検索",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} ブースト",
         "favourited_by": "{{count}} お気に入り"
       }
-    },
-    "history": {
-      "name": "編集履歴"
     }
   }
 }
