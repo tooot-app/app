@@ -1,19 +1,19 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "Alternativtext"
     },
     "notificationsFilter": {
-      "heading": "",
+      "heading": "Visa notistyper",
       "content": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Följarförfrågning",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Inlägg från följda användare",
+        "update": "Boosten har redigerats"
       }
     }
   }
