@@ -1,10 +1,10 @@
 {
-  "title": "",
-  "message": "",
+  "title": "Välj mediakälla",
+  "message": "EXIF-data för media laddas inte upp",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Ladda upp bilder",
+    "image_max": "Ladda upp bilder (max {{max}})",
+    "video": "Ladda upp video",
+    "video_max": "Ladda upp video (max {{max}})"
   }
 }
