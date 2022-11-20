@@ -311,8 +311,8 @@
       "name": "<0 /><1>'s media</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Theo dõi",
+      "unfollow": "Ngưng theo dõi"
     },
     "history": {
       "name": "Lịch sử chỉnh sửa"
