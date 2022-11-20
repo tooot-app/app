@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\"s Medien</1>"
     },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": "Bearbeitungsverlauf"
+    },
     "search": {
       "header": {
         "prefix": "Suche",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} mal geboosted",
         "favourited_by": "{{count}} mal geherzt"
       }
-    },
-    "history": {
-      "name": "Bearbeitungsverlauf"
     }
   }
 }
