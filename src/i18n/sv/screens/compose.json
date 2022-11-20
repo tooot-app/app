@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "Avbryt",
       "alert": {
-        "title": "",
+        "title": "Avbryt redigering?",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "Spara utkast",
+          "delete": "Ta bort utkast",
+          "cancel": "Avbryt"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Inlägg",
+        "conversation": "Skicka DM",
+        "reply": "Skicka svar",
+        "deleteEdit": "Inlägg",
+        "edit": "Publicera",
+        "share": "Inlägg"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Kunde inte publicera",
+          "button": "Försök igen"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "cancel": "",
-          "confirm": ""
+          "title": "Inlägget kunde inte hittas",
+          "description": "Inlägget du svarar på kan ha raderats. Vill du ta bort referensen till det?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Ta bort referens"
         }
       }
     }
@@ -37,136 +37,136 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Skriver som @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Spoilervarningsmeddelande"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Vad tänker du på",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Maximalt antal bilagor har uppnåtts",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Markera bilagor som känsliga",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Ta bort uppladdad bilaga, nummer {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Redigera uppladdad bilaga, nummer {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Ladda upp fler bilagor"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Tryck för att lägga till emoji till inlägg"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Omröstningsalternativ {{index}}",
+              "single": "Enval",
+              "multiple": "Flera val"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Minska omröstningsalternativ till {{amount}}",
+              "accessibilityHint": "Minsta antal omröstningsalternativ har uppnåtts, för närvarande {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Öka omröstningsalternativ till {{amount}}",
+              "accessibilityHint": "Maximalt antal omröstningsalternativ har uppnåtts, för närvarande {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Typ av val",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "Enval",
+              "multiple": "Flera val",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Giltighet",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 minuter",
+              "1800": "30 minuter",
+              "3600": "1 timme",
+              "21600": "6 timmar",
+              "86400": "1 dag",
+              "259200": "3 dagar",
+              "604800": "7 dagar",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Ladda upp bilaga",
+          "accessibilityHint": "Omröstningsfunktionen kommer att inaktiveras om det finns bilagor",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Uppladdningen misslyckades",
+              "button": "Försök igen"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Lägg till omröstning",
+          "accessibilityHint": "Bilagefunktionen inaktiveras när en omröstning är aktiv"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Inläggets synlighet är {{visibility}}",
+          "title": "Inläggssynlighet",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "Offentlig",
+            "unlisted": "Olistad",
+            "private": "Endast följare",
+            "direct": "Direktmeddelande",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Lägg till emoji",
+          "accessibilityHint": "Öppna panelen för emoji-val, svep horisontellt för att byta sida"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Utkast ({{count}})",
+      "drafts_other": "Utkast ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Redigera bilaga",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Spara redigering av bilaga",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Kunde inte redigera",
+            "button": "Försök igen"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Beskriv media för synskadade",
+          "placeholder": "Du kan lägga till en beskrivning, som ibland kallas alternativtext, till dina medier så att de är tillgängliga för ännu fler, inklusive dem som är blinda eller synskadade.\n\nBra beskrivningar är kortfattade men presenterar vad som finns i dina medier tillräckligt noggrant för att beskriva deras sammanhang."
         },
-        "imageFocus": ""
+        "imageFocus": "Dra i fokuscirkeln för att uppdatera fokuspunkten"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Utkast"
       },
       "warning": "",
       "content": {
