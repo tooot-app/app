@@ -117,8 +117,8 @@
         },
         "fields": {
           "title": "Metadatos",
-          "total_one": "Campo {{count}}",
-          "total_other": "Campos {{count}}"
+          "total_one": "{{count}} campo",
+          "total_other": "{{count}} campos"
         },
         "visibility": {
           "title": "Visibilidad de publicación",
@@ -308,7 +308,7 @@
       "suspended": "Cuenta suspendida por los moderadores de tu servidor"
     },
     "attachments": {
-      "name": "Multimedia de <0 /><1></1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Seguir",
