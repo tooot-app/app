@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
     },
+    "hashtag": {
+      "follow": "追蹤",
+      "unfollow": "取消追蹤"
+    },
+    "history": {
+      "name": "編輯歷史"
+    },
     "search": {
       "header": {
         "prefix": "搜尋",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} 人轉嘟",
         "favourited_by": "{{count}} 人喜歡"
       }
-    },
-    "history": {
-      "name": "編輯歷史"
     }
   }
 }

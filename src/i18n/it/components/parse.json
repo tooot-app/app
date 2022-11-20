@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
+    "accessibilityHint": "Tocca per espandere o comprimere il contenuto",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": "",
-    "defaultHint": ""
+    "moreLines": " (altre{{count}} linee)",
+    "defaultHint": "Toot lungo"
   }
 }

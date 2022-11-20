@@ -1,19 +1,19 @@
 {
   "content": {
     "altText": {
-      "heading": "Testo descrittivo"
+      "heading": "Alternativtext"
     },
     "notificationsFilter": {
-      "heading": "Filtra notifiche per tipo",
+      "heading": "Visa notistyper",
       "content": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Richiesta di seguirti",
+        "follow_request": "Följarförfrågning",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot da utenti seguiti",
-        "update": "Retoot ha subito una modifica"
+        "status": "Inlägg från följda användare",
+        "update": "Boosten har redigerats"
       }
     }
   }

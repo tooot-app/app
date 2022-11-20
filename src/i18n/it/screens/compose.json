@@ -1,12 +1,12 @@
 {
   "heading": {
     "left": {
-      "button": "Scarta",
+      "button": "Annulla",
       "alert": {
         "title": "Scartare il toot?",
         "buttons": {
-          "save": "Salva come bozza",
-          "delete": "Scarta ed esci",
+          "save": "Salva bozza",
+          "delete": "Elimina bozza",
           "cancel": "Annulla"
         }
       }
@@ -22,14 +22,14 @@
       },
       "alert": {
         "default": {
-          "title": "Invio fallito",
+          "title": "Pubblicazione fallita",
           "button": "Riprova"
         },
         "removeReply": {
           "title": "Impossibile trovare il toot a cui si è risposto",
           "description": "Il toot a cui si è risposto potrebbe essere stato cancellato. Vuoi rimuoverne il riferimento?",
           "cancel": "$t(common:buttons.cancel)",
-          "confirm": "Rimuovi"
+          "confirm": "Rimuovi riferimento"
         }
       }
     }
@@ -37,7 +37,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "Pubblicando come @{{acct}}@{{domain}}",
+        "postingAs": "Pubblica come @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": "Avviso di spoiler"
         },
@@ -65,24 +65,24 @@
           }
         },
         "emojis": {
-          "accessibilityHint": "Premi per aggiungere delle emoji a questo toot"
+          "accessibilityHint": "Tocca per aggiungere emoji al toot"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "Scelta di sondaggio {{index}}",
+              "accessibilityLabel": "Opzione sondaggio {{index}}",
               "single": "Risposta singola",
               "multiple": "Risposta multipla"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "Riduci le scelte del sondaggio a {{amount}}",
-              "accessibilityHint": "Hai raggiunto il minimo di scelte possibili per il sondaggio ({{amount}})"
+              "accessibilityLabel": "Riduce le opzioni del sondaggio a {{amount}}",
+              "accessibilityHint": "Quantità minima di opzioni del sondaggio raggiunta, attualmente ne ha {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "Aumenta le scelte del sondaggio a {{amount}}",
-              "accessibilityHint": "Hai raggiunto il massimo di scelte possibili per il sondaggio ({{amount}})"
+              "accessibilityLabel": "Aumenta le opzioni del sondaggio a {{amount}}",
+              "accessibilityHint": "Massima quantità di opzioni del sondaggio raggiunta, attualmente ne ha {{amount}}"
             }
           },
           "multiple": {

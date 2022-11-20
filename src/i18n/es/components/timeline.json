@@ -47,11 +47,11 @@
       },
       "favourited": {
         "accessibilityLabel": "Agregar este toot en favoritos",
-        "function": ""
+        "function": "Marcar toot como favorito"
       },
       "bookmarked": {
         "accessibilityLabel": "Añadir este toot en marcadores",
-        "function": ""
+        "function": "Añadir toot a marcadores"
       }
     },
     "actionsUsers": {
@@ -78,7 +78,7 @@
       },
       "unsupported": {
         "text": "Error al cargar",
-        "button": ""
+        "button": "Probar con el enlace remoto"
       }
     },
     "avatar": {
@@ -101,7 +101,7 @@
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Nombre de usuario"
           },
           "account": {
             "accessibilityHint": "Cuenta de usuario"

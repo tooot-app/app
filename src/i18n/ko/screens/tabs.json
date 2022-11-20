@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\"의 미디어</1>"
     },
+    "hashtag": {
+      "follow": "팔로우",
+      "unfollow": "팔로우 해제"
+    },
+    "history": {
+      "name": "수정 이력"
+    },
     "search": {
       "header": {
         "prefix": "무엇을",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} 부스트함",
         "favourited_by": "{{count}} 즐겨찾기함"
       }
-    },
-    "history": {
-      "name": "수정 이력"
     }
   }
 }

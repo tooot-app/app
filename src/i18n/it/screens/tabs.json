@@ -310,6 +310,13 @@
     "attachments": {
       "name": "Media di <0 /><1>\"</1>"
     },
+    "hashtag": {
+      "follow": "Segui",
+      "unfollow": "Smetti di seguire"
+    },
+    "history": {
+      "name": "Cronologia delle modifiche"
+    },
     "search": {
       "header": {
         "prefix": "Cerca",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} ricondivisioni",
         "favourited_by": "{{count}} apprezzamenti"
       }
-    },
-    "history": {
-      "name": "Cronologia delle modifiche"
     }
   }
 }

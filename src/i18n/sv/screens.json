@@ -1,0 +1,18 @@
+{
+  "screenshot": {
+    "title": "Integritetsskydd",
+    "message": "Vänligen avslöja inte någon annan användares identitet, såsom användarnamn, profilbild etc. Tack!",
+    "button": "Bekräfta"
+  },
+  "localCorrupt": {
+    "message": "Inloggningen har gått ut. Försök att logga in igen"
+  },
+  "pushError": {
+    "message": "Fel i push-tjänster",
+    "description": "Vänligen återaktivera pushnotiser i inställningar"
+  },
+  "shareError": {
+    "imageNotSupported": "Bildformatet {{type}} stöds inte",
+    "videoNotSupported": "Videoformatet {{type}} stöds inte"
+  }
+}
