@@ -7,6 +7,7 @@ const LOCALES = {
   ja: '日本語',
   ko: '한국어',
   'pt-br': 'Português (Brasil)',
+  sv: 'Svenska',
   vi: 'Tiếng Việt',
   'zh-hans': '简体中文',
   'zh-hant': '繁體中文'

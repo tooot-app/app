@@ -76,6 +76,7 @@
 		E633A427281EAEAB000E540F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E633A42F281EAF38000E540F /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
 		E633A431281EB55C000E540F /* ShareExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareExtension-Bridging-Header.h"; sourceTree = "<group>"; };
+		E63E7FF0292A828100C76FD4 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E66C0842291F095800DFFF60 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E671BDF8290EAFB800287BD0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E690AF692926B737002C38A8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -295,6 +296,7 @@
 				"zh-Hant",
 				fr,
 				es,
+				sv,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -525,6 +527,7 @@
 				E671BDF8290EAFB800287BD0 /* zh-Hant */,
 				E66C0842291F095800DFFF60 /* fr */,
 				E690AF692926B737002C38A8 /* es */,
+				E63E7FF0292A828100C76FD4 /* sv */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
