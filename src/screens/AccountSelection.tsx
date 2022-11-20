@@ -9,7 +9,6 @@ import * as VideoThumbnails from 'expo-video-thumbnails'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Image, ScrollView, View } from 'react-native'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 
 const Share = ({
@@ -76,9 +75,7 @@ const Share = ({
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={{ width: 88, height: 88 }} />
           )}
-          ItemSeparatorComponent={() => (
-            <View style={{ width: StyleConstants.Spacing.S }} />
-          )}
+          ItemSeparatorComponent={() => <View style={{ width: StyleConstants.Spacing.S }} />}
         />
       </View>
     )
@@ -99,64 +96,60 @@ const ScreenAccountSelection = ({
   const instances = useSelector(getInstances, () => true)
 
   return (
-    <SafeAreaProvider>
-      <ScrollView
-        style={{ marginBottom: StyleConstants.Spacing.L * 2 }}
-        keyboardShouldPersistTaps='always'
+    <ScrollView
+      style={{ marginBottom: StyleConstants.Spacing.L * 2 }}
+      keyboardShouldPersistTaps='always'
+    >
+      <View
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+        }}
       >
-        <View
+        {share ? <Share {...share} /> : null}
+        <CustomText
+          fontStyle='M'
+          fontWeight='Bold'
           style={{
-            marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+            textAlign: 'center',
+            marginTop: StyleConstants.Spacing.L,
+            marginBottom: StyleConstants.Spacing.S,
+            color: colors.primaryDefault
           }}
         >
-          {share ? <Share {...share} /> : null}
-          <CustomText
-            fontStyle='M'
-            fontWeight='Bold'
-            style={{
-              textAlign: 'center',
-              marginTop: StyleConstants.Spacing.L,
-              marginBottom: StyleConstants.Spacing.S,
-              color: colors.primaryDefault
-            }}
-          >
-            {t('content.select_account')}
-          </CustomText>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              marginTop: StyleConstants.Spacing.M
-            }}
-          >
-            {instances.length
-              ? instances
-                  .slice()
-                  .sort((a, b) =>
-                    `${a.uri}${a.account.acct}`.localeCompare(
-                      `${b.uri}${b.account.acct}`
-                    )
+          {t('content.select_account')}
+        </CustomText>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            marginTop: StyleConstants.Spacing.M
+          }}
+        >
+          {instances.length
+            ? instances
+                .slice()
+                .sort((a, b) =>
+                  `${a.uri}${a.account.acct}`.localeCompare(`${b.uri}${b.account.acct}`)
+                )
+                .map((instance, index) => {
+                  return (
+                    <AccountButton
+                      key={index}
+                      instance={instance}
+                      additionalActions={() => {
+                        navigationRef.navigate('Screen-Compose', {
+                          type: 'share',
+                          ...share
+                        })
+                      }}
+                    />
                   )
-                  .map((instance, index) => {
-                    return (
-                      <AccountButton
-                        key={index}
-                        instance={instance}
-                        additionalActions={() => {
-                          navigationRef.navigate('Screen-Compose', {
-                            type: 'share',
-                            ...share
-                          })
-                        }}
-                      />
-                    )
-                  })
-              : null}
-          </View>
+                })
+            : null}
         </View>
-      </ScrollView>
-    </SafeAreaProvider>
+      </View>
+    </ScrollView>
   )
 }
 

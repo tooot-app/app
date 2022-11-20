@@ -310,6 +310,13 @@
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
     },
+    "hashtag": {
+      "follow": "Seguir",
+      "unfollow": "Deixar de seguir"
+    },
+    "history": {
+      "name": "Histórico de Edição"
+    },
     "search": {
       "header": {
         "prefix": "Procurando",
@@ -346,9 +353,6 @@
         "reblogged_by": "{{count}} boostou",
         "favourited_by": "{{count}} favoritados"
       }
-    },
-    "history": {
-      "name": "Histórico de Edição"
     }
   }
 }

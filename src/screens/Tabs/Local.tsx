@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import ContextMenu from 'react-native-context-menu-view'
-import TabSharedRoot from './Shared/Root'
+import TabShared from './Shared'
 
 const Stack = createNativeStackNavigator<TabLocalStackParamList>()
 
@@ -96,7 +96,7 @@ const TabLocal = React.memo(
             />
           )}
         />
-        {TabSharedRoot({ Stack })}
+        {TabShared({ Stack })}
       </Stack.Navigator>
     )
   },

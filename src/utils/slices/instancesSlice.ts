@@ -29,10 +29,7 @@ const instancesSlice = createSlice({
   name: 'instances',
   initialState: instancesInitialState,
   reducers: {
-    updateInstanceActive: (
-      { instances },
-      action: PayloadAction<InstanceLatest>
-    ) => {
+    updateInstanceActive: ({ instances }, action: PayloadAction<InstanceLatest>) => {
       instances = instances.map(instance => {
         instance.active =
           instance.url === action.payload.url &&
@@ -43,9 +40,7 @@ const instancesSlice = createSlice({
     },
     updateInstanceAccount: (
       { instances },
-      action: PayloadAction<
-        Pick<InstanceLatest['account'], 'acct' & 'avatarStatic'>
-      >
+      action: PayloadAction<Pick<InstanceLatest['account'], 'acct' & 'avatarStatic'>>
     ) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].account = {
@@ -60,10 +55,7 @@ const instancesSlice = createSlice({
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].notifications_filter = action.payload
     },
-    updateInstanceDraft: (
-      { instances },
-      action: PayloadAction<ComposeStateDraft>
-    ) => {
+    updateInstanceDraft: ({ instances }, action: PayloadAction<ComposeStateDraft>) => {
       const activeIndex = findInstanceActive(instances)
       const draftIndex = instances[activeIndex].drafts.findIndex(
         ({ timestamp }) => timestamp === action.payload.timestamp
@@ -74,10 +66,7 @@ const instancesSlice = createSlice({
         instances[activeIndex].drafts[draftIndex] = action.payload
       }
     },
-    removeInstanceDraft: (
-      { instances },
-      action: PayloadAction<ComposeStateDraft['timestamp']>
-    ) => {
+    removeInstanceDraft: ({ instances }, action: PayloadAction<ComposeStateDraft['timestamp']>) => {
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].drafts = instances[activeIndex].drafts?.filter(
         draft => draft.timestamp !== action.payload
@@ -126,9 +115,7 @@ const instancesSlice = createSlice({
       action: PayloadAction<InstanceLatest['frequentEmojis'][0]['emoji']>
     ) => {
       const HALF_LIFE = 60 * 60 * 24 * 7 // 1 week
-      const calculateScore = (
-        emoji: InstanceLatest['frequentEmojis'][0]
-      ): number => {
+      const calculateScore = (emoji: InstanceLatest['frequentEmojis'][0]): number => {
         var seconds = (new Date().getTime() - emoji.lastUsed) / 1000
         var score = emoji.count + 1
         var order = Math.log(Math.max(score, 1)) / Math.LN10
@@ -137,9 +124,7 @@ const instancesSlice = createSlice({
       }
       const activeIndex = findInstanceActive(instances)
       const foundEmojiIndex = instances[activeIndex].frequentEmojis?.findIndex(
-        e =>
-          e.emoji.shortcode === action.payload.shortcode &&
-          e.emoji.url === action.payload.url
+        e => e.emoji.shortcode === action.payload.shortcode && e.emoji.url === action.payload.url
       )
       let newEmojisSort: InstanceLatest['frequentEmojis']
       if (foundEmojiIndex > -1) {
@@ -147,11 +132,11 @@ const instancesSlice = createSlice({
           .map((e, i) =>
             i === foundEmojiIndex
               ? {
-                ...e,
-                score: calculateScore(e),
-                count: e.count + 1,
-                lastUsed: new Date().getTime()
-              }
+                  ...e,
+                  score: calculateScore(e),
+                  count: e.count + 1,
+                  lastUsed: new Date().getTime()
+                }
               : e
           )
           .sort((a, b) => b.score - a.score)
@@ -218,8 +203,7 @@ const instancesSlice = createSlice({
             return true
           }
         })
-        state.instances.length &&
-          (state.instances[state.instances.length - 1].active = true)
+        state.instances.length && (state.instances[state.instances.length - 1].active = true)
 
         analytics('logout')
       })
@@ -250,8 +234,7 @@ const instancesSlice = createSlice({
       .addCase(updateConfiguration.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].version = action.payload?.version || '0'
-        state.instances[activeIndex].configuration =
-          action.payload.configuration
+        state.instances[activeIndex].configuration = action.payload.configuration
       })
       .addCase(updateConfiguration.rejected, (_, action) => {
         console.error(action.error)
@@ -291,22 +274,16 @@ const instancesSlice = createSlice({
       // Update Instance Push Individual Alert
       .addCase(updateInstancePushAlert.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[
-          action.meta.arg.changed
-        ].loading = false
+        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = false
         state.instances[activeIndex].push.alerts = action.payload
       })
       .addCase(updateInstancePushAlert.rejected, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[
-          action.meta.arg.changed
-        ].loading = false
+        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = false
       })
       .addCase(updateInstancePushAlert.pending, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[
-          action.meta.arg.changed
-        ].loading = true
+        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = true
       })
 
       // Check if frequently used emojis still exist
@@ -317,8 +294,7 @@ const instancesSlice = createSlice({
           activeIndex
         ].frequentEmojis?.filter(emoji => {
           return action.payload?.find(
-            e =>
-              e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
+            e => e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
           )
         })
       })
@@ -331,8 +307,7 @@ const instancesSlice = createSlice({
 export const getInstanceActive = ({ instances: { instances } }: RootState) =>
   findInstanceActive(instances)
 
-export const getInstances = ({ instances: { instances } }: RootState) =>
-  instances
+export const getInstances = ({ instances: { instances } }: RootState) => instances
 
 export const getInstance = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]
@@ -350,42 +325,30 @@ export const getInstanceVersion = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.version
 export const checkInstanceFeature =
   (feature: string) =>
-    ({ instances: { instances } }: RootState): Boolean => {
-      return (
-        features
-          .filter(f => f.feature === feature)
-          .filter(
-            f =>
-              parseFloat(instances[findInstanceActive(instances)]?.version) >=
-              f.version
-          )?.length > 0
-      )
-    }
+  ({ instances: { instances } }: RootState): boolean => {
+    return (
+      features
+        .filter(f => f.feature === feature)
+        .filter(f => parseFloat(instances[findInstanceActive(instances)]?.version) >= f.version)
+        ?.length > 0
+    )
+  }
 
 /* Get Instance Configuration */
-export const getInstanceConfigurationStatusMaxChars = ({
-  instances: { instances }
-}: RootState) =>
-  instances[findInstanceActive(instances)]?.configuration?.statuses
-    .max_characters || 500
+export const getInstanceConfigurationStatusMaxChars = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.statuses.max_characters || 500
 
 export const getInstanceConfigurationStatusMaxAttachments = ({
   instances: { instances }
 }: RootState) =>
-  instances[findInstanceActive(instances)]?.configuration?.statuses
-    .max_media_attachments || 4
+  instances[findInstanceActive(instances)]?.configuration?.statuses.max_media_attachments || 4
 
-export const getInstanceConfigurationStatusCharsURL = ({
-  instances: { instances }
-}: RootState) =>
-  instances[findInstanceActive(instances)]?.configuration?.statuses
-    .characters_reserved_per_url || 23
+export const getInstanceConfigurationStatusCharsURL = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.statuses.characters_reserved_per_url ||
+  23
 
-export const getInstanceConfigurationMediaAttachments = ({
-  instances: { instances }
-}: RootState) =>
-  instances[findInstanceActive(instances)]?.configuration
-    ?.media_attachments || {
+export const getInstanceConfigurationMediaAttachments = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.configuration?.media_attachments || {
     supported_mime_types: [
       'image/jpeg',
       'image/png',
@@ -418,9 +381,7 @@ export const getInstanceConfigurationMediaAttachments = ({
     video_matrix_limit: 2304000
   }
 
-export const getInstanceConfigurationPoll = ({
-  instances: { instances }
-}: RootState) =>
+export const getInstanceConfigurationPoll = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.configuration?.polls || {
     max_options: 4,
     max_characters_per_option: 50,
@@ -432,16 +393,14 @@ export const getInstanceConfigurationPoll = ({
 export const getInstanceAccount = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.account
 
-export const getInstanceNotificationsFilter = ({
-  instances: { instances }
-}: RootState) => instances[findInstanceActive(instances)]?.notifications_filter
+export const getInstanceNotificationsFilter = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.notifications_filter
 
 export const getInstancePush = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.push
 
-export const getInstanceTimelinesLookback = ({
-  instances: { instances }
-}: RootState) => instances[findInstanceActive(instances)]?.timelinesLookback
+export const getInstanceTimelinesLookback = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.timelinesLookback
 
 export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.mePage
@@ -449,9 +408,8 @@ export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
 export const getInstanceDrafts = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.drafts
 
-export const getInstanceFrequentEmojis = ({
-  instances: { instances }
-}: RootState) => instances[findInstanceActive(instances)]?.frequentEmojis
+export const getInstanceFrequentEmojis = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.frequentEmojis
 
 export const {
   updateInstanceActive,

@@ -7,10 +7,10 @@
   },
   "button": {
     "error": "Errore di caricamento",
-    "blocked_by": "L'utente ti ha bloccato",
+    "blocked_by": "Bloccato dall'utente",
     "blocking": "Sblocca",
     "following": "Smetti di seguire",
-    "requested": "Annulla richiesta di seguire",
+    "requested": "Annulla la richiesta",
     "default": "Segui"
   }
 }

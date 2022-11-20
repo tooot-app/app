@@ -475,7 +475,8 @@ declare namespace Mastodon {
     // Base
     name: string
     url: string
-    // history: types
+    history: { day: string; accounts: string; uses: string }[]
+    following: boolean // Since v4.0
   }
 
   type WebSocketStream =

@@ -1,0 +1,10 @@
+{
+  "heading": "Meddelanden",
+  "content": {
+    "published": "Publicerad <0 />",
+    "button": {
+      "read": "Läst",
+      "unread": "Markera som läst"
+    }
+  }
+}

@@ -64,7 +64,7 @@ const AttachmentVideo: React.FC<Props> = ({
   }, [])
   const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
     if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {
-      await videoPlayer.current?.pauseAsync()
+      await videoPlayer.current?.stopAsync()
     } else if (gifv && appState.current.match(/background/) && nextAppState.match(/active/)) {
       await videoPlayer.current?.setIsMutedAsync(true)
       await videoPlayer.current?.playAsync()

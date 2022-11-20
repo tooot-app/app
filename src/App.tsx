@@ -20,6 +20,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
@@ -95,13 +96,15 @@ const App: React.FC = () => {
                 }
 
                 return (
-                  <ActionSheetProvider>
-                    <AccessibilityManager>
-                      <ThemeManager>
-                        <Screens localCorrupt={localCorrupt} />
-                      </ThemeManager>
-                    </AccessibilityManager>
-                  </ActionSheetProvider>
+                  <SafeAreaProvider>
+                    <ActionSheetProvider>
+                      <AccessibilityManager>
+                        <ThemeManager>
+                          <Screens localCorrupt={localCorrupt} />
+                        </ThemeManager>
+                      </AccessibilityManager>
+                    </ActionSheetProvider>
+                  </SafeAreaProvider>
                 )
               } else {
                 return null

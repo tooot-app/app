@@ -3,11 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
-import {
-  PanGestureHandler,
-  State,
-  TapGestureHandler
-} from 'react-native-gesture-handler'
+import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
   Extrapolate,
   interpolate,
@@ -17,10 +13,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets
-} from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import ActionsAltText from './Actions/AltText'
 import ActionsNotificationsFilter from './Actions/NotificationsFilter'
 
@@ -39,12 +32,7 @@ const ScreenActions = ({
   }, [])
   const styleTop = useAnimatedStyle(() => {
     return {
-      bottom: interpolate(
-        panY.value,
-        [0, screenHeight],
-        [0, -screenHeight],
-        Extrapolate.CLAMP
-      )
+      bottom: interpolate(panY.value, [0, screenHeight], [0, -screenHeight], Extrapolate.CLAMP)
     }
   })
   const dismiss = useCallback(() => {
@@ -73,45 +61,35 @@ const ScreenActions = ({
   }
 
   return (
-    <SafeAreaProvider>
-      <Animated.View style={{ flex: 1 }}>
-        <TapGestureHandler
-          onHandlerStateChange={({ nativeEvent }) => {
-            if (nativeEvent.state === State.ACTIVE) {
-              dismiss()
-            }
-          }}
+    <Animated.View style={{ flex: 1 }}>
+      <TapGestureHandler
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === State.ACTIVE) {
+            dismiss()
+          }
+        }}
+      >
+        <Animated.View
+          style={[styles.overlay, { backgroundColor: colors.backgroundOverlayInvert }]}
         >
-          <Animated.View
-            style={[
-              styles.overlay,
-              { backgroundColor: colors.backgroundOverlayInvert }
-            ]}
-          >
-            <PanGestureHandler onGestureEvent={onGestureEvent}>
-              <Animated.View
-                style={[
-                  styles.container,
-                  styleTop,
-                  {
-                    backgroundColor: colors.backgroundDefault,
-                    paddingBottom: insets.bottom || StyleConstants.Spacing.L
-                  }
-                ]}
-              >
-                <View
-                  style={[
-                    styles.handle,
-                    { backgroundColor: colors.primaryOverlay }
-                  ]}
-                />
-                {actions()}
-              </Animated.View>
-            </PanGestureHandler>
-          </Animated.View>
-        </TapGestureHandler>
-      </Animated.View>
-    </SafeAreaProvider>
+          <PanGestureHandler onGestureEvent={onGestureEvent}>
+            <Animated.View
+              style={[
+                styles.container,
+                styleTop,
+                {
+                  backgroundColor: colors.backgroundDefault,
+                  paddingBottom: insets.bottom || StyleConstants.Spacing.L
+                }
+              ]}
+            >
+              <View style={[styles.handle, { backgroundColor: colors.primaryOverlay }]} />
+              {actions()}
+            </Animated.View>
+          </PanGestureHandler>
+        </Animated.View>
+      </TapGestureHandler>
+    </Animated.View>
   )
 }
 

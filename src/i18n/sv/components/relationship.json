@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "Följ användare"
+  },
+  "block": {
+    "function": "Blockera användare"
+  },
+  "button": {
+    "error": "Laddningsfel",
+    "blocked_by": "Blockerad av användare",
+    "blocking": "Avblockera",
+    "following": "Sluta följ",
+    "requested": "Återkalla förfrågan",
+    "default": "Följ"
+  }
+}

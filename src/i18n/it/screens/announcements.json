@@ -3,7 +3,7 @@
   "content": {
     "published": "Pubblicato <0 />",
     "button": {
-      "read": "Già letto",
+      "read": "Letto",
       "unread": "Segna come letto"
     }
   }

@@ -4,10 +4,8 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { getColors, Theme } from '@utils/styles/themes'
 import React, { RefObject } from 'react'
 import { AccessibilityInfo } from 'react-native'
-import FlashMessage, {
-  hideMessage,
-  showMessage
-} from 'react-native-flash-message'
+import FlashMessage, { hideMessage, showMessage } from 'react-native-flash-message'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import haptics from './haptics'
 
 const displayMessage = ({
@@ -112,6 +110,7 @@ const removeMessage = () => {
 
 const Message = React.forwardRef<FlashMessage>((_, ref) => {
   const { colors, theme } = useTheme()
+  const insets = useSafeAreaInsets()
 
   return (
     <FlashMessage
@@ -125,7 +124,8 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: theme === 'light' ? 0.16 : 0.24,
         shadowRadius: 4,
-        paddingRight: StyleConstants.Spacing.M * 2
+        paddingRight: StyleConstants.Spacing.M * 2,
+        marginTop: insets.top
       }}
       titleStyle={{
         color: colors.primaryDefault,

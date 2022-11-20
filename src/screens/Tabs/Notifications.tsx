@@ -10,7 +10,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import TabSharedRoot from './Shared/Root'
+import TabShared from './Shared'
 
 const Stack = createNativeStackNavigator<TabNotificationsStackParamList>()
 
@@ -65,7 +65,7 @@ const TabNotifications = React.memo(
           children={children}
           options={screenOptionsRoot}
         />
-        {TabSharedRoot({ Stack })}
+        {TabShared({ Stack })}
       </Stack.Navigator>
     )
   },
