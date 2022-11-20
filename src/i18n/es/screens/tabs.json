@@ -346,7 +346,7 @@
     },
     "users": {
       "accounts": {
-        "following": "Siguiendo {{count}}",
+        "following": "{{count}} seguidos",
         "followers": "{{count}} seguidores"
       },
       "statuses": {
