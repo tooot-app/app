@@ -320,7 +320,7 @@
     "search": {
       "header": {
         "prefix": "Söker",
-        "placeholder": "för..."
+        "placeholder": "efter..."
       },
       "empty": {
         "general": "Ange sökord för att söka efter <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> eller <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
