@@ -71,7 +71,7 @@
           "option": {
             "placeholder": {
               "accessibilityLabel": "Omröstningsalternativ {{index}}",
-              "single": "Enval",
+              "single": "Alternativ",
               "multiple": "Flera val"
             }
           },
