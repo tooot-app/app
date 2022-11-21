@@ -125,7 +125,7 @@
           "options": {
             "public": "Öffentlich",
             "unlisted": "Ungelistet",
-            "private": "Nur für Folgende",
+            "private": "Nur für Follower",
             "cancel": "$t(common:buttons.cancel)"
           }
         },
