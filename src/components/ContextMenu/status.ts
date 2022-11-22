@@ -9,10 +9,7 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import {
-  checkInstanceFeature,
-  getInstanceAccount
-} from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
@@ -27,16 +24,8 @@ export interface Props {
   rootQueryKey?: QueryKeyTimeline
 }
 
-const contextMenuStatus = ({
-  actions,
-  status,
-  queryKey,
-  rootQueryKey
-}: Props) => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>
-    >()
+const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
@@ -44,8 +33,7 @@ const contextMenuStatus = ({
   const mutation = useTimelineMutation({
     onMutate: true,
     onError: (err: any, params, oldData) => {
-      const theFunction = (params as MutationVarsTimelineUpdateStatusProperty)
-        .payload
+      const theFunction = (params as MutationVarsTimelineUpdateStatusProperty).payload
         ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
         : 'delete'
       displayMessage({
@@ -59,17 +47,14 @@ const contextMenuStatus = ({
           err.data &&
           err.data.error &&
           typeof err.data.error === 'string' && {
-          description: err.data.error
-        })
+            description: err.data.error
+          })
       })
       queryClient.setQueryData(queryKey, oldData)
     }
   })
 
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev.id === next.id
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
   const ownAccount = instanceAccount?.id === status?.account?.id
 
   if (ownAccount) {
@@ -118,83 +103,75 @@ const contextMenuStatus = ({
   }
 
   return async (index: number) => {
+    if (typeof index !== 'number' || !actions[index]) {
+      return // For Android
+    }
     if (actions[index].id === 'status-delete') {
       analytics('timeline_shared_headeractions_status_delete_press', {
         page: queryKey && queryKey[1].page
       })
-      Alert.alert(
-        t('status.delete.alert.title'),
-        t('status.delete.alert.message'),
-        [
-          {
-            text: t('status.delete.alert.buttons.confirm'),
-            style: 'destructive',
-            onPress: async () => {
-              analytics('timeline_shared_headeractions_status_delete_confirm', {
-                page: queryKey && queryKey[1].page
-              })
-              mutation.mutate({
-                type: 'deleteItem',
-                source: 'statuses',
-                queryKey,
-                rootQueryKey,
-                id: status.id
-              })
-            }
-          },
-          {
-            text: t('common:buttons.cancel')
+      Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
+        {
+          text: t('status.delete.alert.buttons.confirm'),
+          style: 'destructive',
+          onPress: async () => {
+            analytics('timeline_shared_headeractions_status_delete_confirm', {
+              page: queryKey && queryKey[1].page
+            })
+            mutation.mutate({
+              type: 'deleteItem',
+              source: 'statuses',
+              queryKey,
+              rootQueryKey,
+              id: status.id
+            })
           }
-        ]
-      )
+        },
+        {
+          text: t('common:buttons.cancel')
+        }
+      ])
     }
     if (actions[index].id === 'status-delete-edit') {
       analytics('timeline_shared_headeractions_status_deleteedit_press', {
         page: queryKey && queryKey[1].page
       })
-      Alert.alert(
-        t('status.deleteEdit.alert.title'),
-        t('status.deleteEdit.alert.message'),
-        [
-          {
-            text: t('status.deleteEdit.alert.buttons.confirm'),
-            style: 'destructive',
-            onPress: async () => {
-              analytics(
-                'timeline_shared_headeractions_status_deleteedit_confirm',
-                {
-                  page: queryKey && queryKey[1].page
-                }
-              )
-              let replyToStatus: Mastodon.Status | undefined = undefined
-              if (status.in_reply_to_id) {
-                replyToStatus = await apiInstance<Mastodon.Status>({
-                  method: 'get',
-                  url: `statuses/${status.in_reply_to_id}`
-                }).then(res => res.body)
-              }
-              mutation
-                .mutateAsync({
-                  type: 'deleteItem',
-                  source: 'statuses',
-                  queryKey,
-                  id: status.id
-                })
-                .then(res => {
-                  navigation.navigate('Screen-Compose', {
-                    type: 'deleteEdit',
-                    incomingStatus: res.body as Mastodon.Status,
-                    ...(replyToStatus && { replyToStatus }),
-                    queryKey
-                  })
-                })
+      Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
+        {
+          text: t('status.deleteEdit.alert.buttons.confirm'),
+          style: 'destructive',
+          onPress: async () => {
+            analytics('timeline_shared_headeractions_status_deleteedit_confirm', {
+              page: queryKey && queryKey[1].page
+            })
+            let replyToStatus: Mastodon.Status | undefined = undefined
+            if (status.in_reply_to_id) {
+              replyToStatus = await apiInstance<Mastodon.Status>({
+                method: 'get',
+                url: `statuses/${status.in_reply_to_id}`
+              }).then(res => res.body)
             }
-          },
-          {
-            text: t('common:buttons.cancel')
+            mutation
+              .mutateAsync({
+                type: 'deleteItem',
+                source: 'statuses',
+                queryKey,
+                id: status.id
+              })
+              .then(res => {
+                navigation.navigate('Screen-Compose', {
+                  type: 'deleteEdit',
+                  incomingStatus: res.body as Mastodon.Status,
+                  ...(replyToStatus && { replyToStatus }),
+                  queryKey
+                })
+              })
           }
-        ]
-      )
+        },
+        {
+          text: t('common:buttons.cancel')
+        }
+      ])
     }
     if (actions[index].id === 'status-mute') {
       analytics('timeline_shared_headeractions_status_mute_press', {

@@ -47,7 +47,7 @@
       },
       "favourited": {
         "accessibilityLabel": "Favorit",
-        "function": "Sternen"
+        "function": "Liken"
       },
       "bookmarked": {
         "accessibilityLabel": "Lesezeichen hinzufügen",
@@ -67,7 +67,7 @@
       },
       "history": {
         "accessibilityLabel": "Dieser Tröt wurde {{count}} mal bearbeitet",
-        "accessibilityHint": "Für den vollständigen Verlauf auswählen",
+        "accessibilityHint": "Bearbeitungsverlauf anzeigen",
         "text_one": "{{count}} Bearbeitung",
         "text_other": "{{count}} mal bearbeitet"
       }

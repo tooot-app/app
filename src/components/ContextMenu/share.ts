@@ -25,7 +25,8 @@ const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
     title: t(`share.${type}.action`),
     systemIcon: 'square.and.arrow.up'
   })
-  Platform.OS !== 'android' && type === 'status' &&
+  Platform.OS !== 'android' &&
+    type === 'status' &&
     actions.push({
       id: 'copy',
       title: t(`copy.action`),
@@ -34,6 +35,9 @@ const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
     })
 
   return (index: number) => {
+    if (typeof index !== 'number' || !actions[index]) {
+      return // For Android
+    }
     if (actions[index].id === 'copy') {
       analytics('timeline_shared_headeractions_copy_press')
       Clipboard.setString(copiableContent?.current.content || '')

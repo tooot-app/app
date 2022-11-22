@@ -312,7 +312,7 @@
     },
     "hashtag": {
       "follow": "フォロー",
-      "unfollow": "フォローをやめる"
+      "unfollow": "フォロー解除"
     },
     "history": {
       "name": "編集履歴"

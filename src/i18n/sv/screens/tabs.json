@@ -78,7 +78,7 @@
       }
     },
     "fontSize": {
-      "demo": "<p>Det här är ett demoinlägg😊. Du kan välja mellan flera alternativ nedan.<br /><br />Denna inställning påverkar endast huvudinnehållet i inlägg men inte andra teckenstorlekar.</p>",
+      "demo": "<p>Det här är ett demoinlägg 😊. Du kan välja mellan flera alternativ ovan.<br /><br />Denna inställning påverkar endast huvudinnehållet i inlägg men inte andra teckenstorlekar.</p>",
       "sizes": {
         "S": "S",
         "M": "M - Standard",
@@ -252,7 +252,7 @@
         }
       },
       "browser": {
-        "heading": "Öppnar länk",
+        "heading": "Öppna länk",
         "options": {
           "internal": "Inuti appen",
           "external": "Använd systemets webbläsare",
@@ -320,7 +320,7 @@
     "search": {
       "header": {
         "prefix": "Söker",
-        "placeholder": "för..."
+        "placeholder": "efter..."
       },
       "empty": {
         "general": "Ange sökord för att söka efter <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> eller <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",

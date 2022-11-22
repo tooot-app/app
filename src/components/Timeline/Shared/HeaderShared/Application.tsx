@@ -26,7 +26,6 @@ const HeaderSharedApplication = React.memo(
           application.website && (await openLink(application.website))
         }}
         style={{
-          flex: 1,
           marginLeft: StyleConstants.Spacing.S,
           color: colors.secondary
         }}

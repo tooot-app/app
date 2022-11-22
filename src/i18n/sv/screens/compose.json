@@ -39,7 +39,7 @@
       "header": {
         "postingAs": "Skriver som @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": "Spoilervarningsmeddelande"
+          "placeholder": "Innehållsvarning"
         },
         "textInput": {
           "placeholder": "Vad tänker du på",
@@ -71,8 +71,8 @@
           "option": {
             "placeholder": {
               "accessibilityLabel": "Omröstningsalternativ {{index}}",
-              "single": "Enval",
-              "multiple": "Flera val"
+              "single": "Alternativ",
+              "multiple": "Alternativ"
             }
           },
           "quantity": {
@@ -89,7 +89,7 @@
             "heading": "Typ av val",
             "options": {
               "single": "Enval",
-              "multiple": "Flera val",
+              "multiple": "Flerval",
               "cancel": "$t(common:buttons.cancel)"
             }
           },
@@ -135,7 +135,7 @@
           }
         },
         "spoiler": {
-          "accessibilityLabel": "Spoiler"
+          "accessibilityLabel": "Innehållsvarning"
         },
         "emoji": {
           "accessibilityLabel": "Lägg till emoji",
