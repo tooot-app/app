@@ -1,9 +1,6 @@
 import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
-import {
-  QueryKeyTimeline,
-  useTimelineMutation
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
@@ -19,12 +16,7 @@ export interface Props {
   rootQueryKey?: QueryKeyTimeline
 }
 
-const contextMenuInstance = ({
-  actions,
-  status,
-  queryKey,
-  rootQueryKey
-}: Props) => {
+const contextMenuInstance = ({ actions, status, queryKey, rootQueryKey }: Props) => {
   const { t } = useTranslation('componentContextMenu')
   const { theme } = useTheme()
 
@@ -72,10 +64,12 @@ const contextMenuInstance = ({
   }
 
   return (index: number) => {
+    if (typeof index !== 'number' || !actions[index]) {
+      return // For Android
+    }
     if (
       actions[index].id === 'instance-block' ||
-      (actions[index].id === 'instance' &&
-        actions[index].actions?.[0].id === 'instance-block')
+      (actions[index].id === 'instance' && actions[index].actions?.[0].id === 'instance-block')
     ) {
       analytics('timeline_shared_headeractions_domain_block_press', {
         page: queryKey[1].page

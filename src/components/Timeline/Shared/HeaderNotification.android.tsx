@@ -4,12 +4,13 @@ import contextMenuShare from '@components/ContextMenu/share'
 import contextMenuStatus from '@components/ContextMenu/status'
 import Icon from '@components/Icon'
 import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
 import { Pressable, View } from 'react-native'
-import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
+import { ContextMenuAction } from 'react-native-context-menu-view'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -57,6 +58,8 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
       queryKey
     })
 
+  const { showActionSheetWithOptions } = useActionSheet()
+
   const actions = useMemo(() => {
     switch (notification.type) {
       case 'follow':
@@ -68,29 +71,34 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
           return (
             <Pressable
               style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
-              onLongPress={() => null}
-              children={
-                <ContextMenu
-                  style={{ flex: 1, alignItems: 'center' }}
-                  dropdownMenuMode
-                  actions={contextMenuActions}
-                  onPress={({ nativeEvent: { index } }) => {
-                    for (const on of [
-                      shareOnPress,
-                      statusOnPress,
-                      accountOnPress,
-                      instanceOnPress
-                    ]) {
-                      on && on(index)
+              onPress={() =>
+                showActionSheetWithOptions(
+                  {
+                    options: contextMenuActions.map(action => action.title),
+                    cancelButtonIndex: 999,
+                    destructiveButtonIndex: contextMenuActions
+                      .map((action, index) => (action.destructive ? index : 999))
+                      .filter(num => num !== 999)
+                  },
+                  index => {
+                    if (index !== undefined) {
+                      for (const on of [
+                        shareOnPress,
+                        statusOnPress,
+                        accountOnPress,
+                        instanceOnPress
+                      ]) {
+                        on && on(index)
+                      }
                     }
-                  }}
-                  children={
-                    <Icon
-                      name='MoreHorizontal'
-                      color={colors.secondary}
-                      size={StyleConstants.Font.Size.L}
-                    />
                   }
+                )
+              }
+              children={
+                <Icon
+                  name='MoreHorizontal'
+                  color={colors.secondary}
+                  size={StyleConstants.Font.Size.L}
                 />
               }
             />
