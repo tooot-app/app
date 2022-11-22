@@ -33,53 +33,55 @@ const pushUseConnect = ({ t, instances }: Params) => {
       method: 'get',
       url: `push/connect/${expoToken}`,
       sentry: true
-    }).catch(error => {
-      Sentry.setExtras({
-        API: 'tooot',
-        ...(error?.response && { response: error.response }),
-        ...(error?.request && { request: error.request })
-      })
-      Sentry.captureException(error)
-      Notifications.setBadgeCountAsync(0)
-      if (error?.status == 404) {
-        displayMessage({
-          theme,
-          type: 'error',
-          duration: 'long',
-          message: t('pushError.message'),
-          description: t('pushError.description'),
-          onPress: () => {
-            navigationRef.navigate('Screen-Tabs', {
-              screen: 'Tab-Me',
-              params: {
-                screen: 'Tab-Me-Root'
-              }
-            })
-            navigationRef.navigate('Screen-Tabs', {
-              screen: 'Tab-Me',
-              params: {
-                screen: 'Tab-Me-Settings'
-              }
-            })
-          }
-        })
-
-        dispatch(disableAllPushes())
-
-        instances.forEach(instance => {
-          if (instance.push.global.value) {
-            apiGeneral<{}>({
-              method: 'delete',
-              domain: instance.url,
-              url: 'api/v1/push/subscription',
-              headers: {
-                Authorization: `Bearer ${instance.token}`
-              }
-            }).catch(() => console.log('error!!!'))
-          }
-        })
-      }
     })
+      .then(() => Notifications.setBadgeCountAsync(0))
+      .catch(error => {
+        Sentry.setExtras({
+          API: 'tooot',
+          ...(error?.response && { response: error.response }),
+          ...(error?.request && { request: error.request })
+        })
+        Sentry.captureException(error)
+        Notifications.setBadgeCountAsync(0)
+        if (error?.status == 404) {
+          displayMessage({
+            theme,
+            type: 'error',
+            duration: 'long',
+            message: t('pushError.message'),
+            description: t('pushError.description'),
+            onPress: () => {
+              navigationRef.navigate('Screen-Tabs', {
+                screen: 'Tab-Me',
+                params: {
+                  screen: 'Tab-Me-Root'
+                }
+              })
+              navigationRef.navigate('Screen-Tabs', {
+                screen: 'Tab-Me',
+                params: {
+                  screen: 'Tab-Me-Settings'
+                }
+              })
+            }
+          })
+
+          dispatch(disableAllPushes())
+
+          instances.forEach(instance => {
+            if (instance.push.global.value) {
+              apiGeneral<{}>({
+                method: 'delete',
+                domain: instance.url,
+                url: 'api/v1/push/subscription',
+                headers: {
+                  Authorization: `Bearer ${instance.token}`
+                }
+              }).catch(() => console.log('error!!!'))
+            }
+          })
+        }
+      })
   }
 
   const pushEnabled = instances.filter(instance => instance.push.global.value)
@@ -89,7 +91,6 @@ const pushUseConnect = ({ t, instances }: Params) => {
       if (expoToken && pushEnabled.length && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
           if (count > 0) {
-            Notifications.setBadgeCountAsync(0)
             connect()
           }
         })
@@ -102,7 +103,6 @@ const pushUseConnect = ({ t, instances }: Params) => {
   }, [expoToken, pushEnabled.length])
 
   return useEffect(() => {
-    Notifications.setBadgeCountAsync(0)
     if (expoToken && pushEnabled.length) {
       connect()
     }
