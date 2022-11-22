@@ -157,15 +157,6 @@ const TimelineDefault: React.FC<Props> = ({
 
   return disableOnPress ? (
     <View style={mainStyle}>{main()}</View>
-  ) : Platform.OS === 'android' ? (
-    <Pressable
-      accessible={highlighted ? false : true}
-      style={mainStyle}
-      onPress={onPress}
-      onLongPress={() => {}}
-    >
-      {main()}
-    </Pressable>
   ) : (
     <TimelineContextMenu
       copiableContent={copiableContent}

@@ -36,7 +36,7 @@
       "action": "Tröt teilen"
     },
     "account": {
-      "action": "User verlinken"
+      "action": "Link zum Profil teilen"
     }
   },
   "status": {
@@ -55,17 +55,17 @@
       }
     },
     "deleteEdit": {
-      "action": "Tröt und Boost entfernen",
+      "action": "Tröt neu entwerfen",
       "alert": {
-        "title": "Löschen und Boost bestätigen?",
-        "message": "Alle Boosts und Favoriten inklusive der Antworten werden gelöscht.",
+        "title": "Beitrag wirklich entfernen?",
+        "message": "Alle Boosts und Likes inklusive der Antworten werden gelöscht.",
         "buttons": {
           "confirm": "Bestätigen"
         }
       }
     },
     "mute": {
-      "action_false": "Diesen Tröt sowie die Antworten stummschalten",
+      "action_false": "Diskussion stummschalten",
       "action_true": "Tröt und Antworten nicht mehr stummschalten"
     },
     "pin": {

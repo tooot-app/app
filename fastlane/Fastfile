@@ -108,29 +108,6 @@ private_lane :build_android do
   end
 end
 
-desc "Build Android apk"
-private_lane :build_android_apk do
-  sh("echo #{ENV["ANDROID_KEYSTORE"]} | base64 -d | tee #{File.expand_path('..', Dir.pwd)}/android/tooot.jks >/dev/null", log: false)
-
-  prepare_playstore_android
-
-  build_android_app(
-    task: 'assemble',
-    build_type: 'release',
-    project_dir: "./android",
-    print_command: true,
-    print_command_output: true,
-    properties: {
-      "android.injected.signing.store.file" => "#{File.expand_path('..', Dir.pwd)}/android/tooot.jks",
-      "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
-      "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_ALIAS"],
-      "android.injected.signing.key.password" => ENV["ANDROID_KEYSTORE_KEY_PASSWORD"],
-    }
-  )
-
-  sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"
-end
-
 lane :ios do
   cocoapods(clean_install: true, podfile: "./ios/Podfile")
   build_ios
@@ -144,15 +121,13 @@ end
 
 lane :release do
   if ENVIRONMENT == 'release'
-    build_android_apk
     set_github_release(
       repository_name: GITHUB_REPO,
       name: GITHUB_RELEASE,
       tag_name: GITHUB_RELEASE,
       description: "No changelog provided",
       commitish: git_branch,
-      is_prerelease: false,
-      upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
+      is_prerelease: false
     )
   end
   rocket

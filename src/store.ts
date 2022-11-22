@@ -4,7 +4,7 @@ import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
 import contextsMigration from '@utils/migrations/contexts/migration'
 import instancesMigration from '@utils/migrations/instances/migration'
 import settingsMigration from '@utils/migrations/settings/migration'
-import appSlice from '@utils/slices/appSlice'
+import appSlice, { AppState } from '@utils/slices/appSlice'
 import contextsSlice, { ContextsState } from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice, { SettingsState } from '@utils/slices/settingsSlice'
@@ -25,6 +25,13 @@ import {
 const secureStorage = createSecureStore()
 
 const prefix = 'tooot'
+
+const appPersistConfig = {
+  key: 'app',
+  prefix,
+  storage: AsyncStorage,
+  version: 0
+}
 
 const contextsPersistConfig = {
   key: 'contexts',
@@ -55,19 +62,19 @@ const settingsPersistConfig = {
 
 const store = configureStore({
   reducer: {
+    app: persistReducer(appPersistConfig, appSlice) as Reducer<AppState, AnyAction>,
     contexts: persistReducer(contextsPersistConfig, contextsSlice) as Reducer<
       ContextsState,
       AnyAction
     >,
-    instances: persistReducer(
-      instancesPersistConfig,
-      instancesSlice
-    ) as Reducer<InstancesState, AnyAction>,
+    instances: persistReducer(instancesPersistConfig, instancesSlice) as Reducer<
+      InstancesState,
+      AnyAction
+    >,
     settings: persistReducer(settingsPersistConfig, settingsSlice) as Reducer<
       SettingsState,
       AnyAction
-    >,
-    app: appSlice
+    >
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

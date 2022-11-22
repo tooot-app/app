@@ -3,13 +3,14 @@ import contextMenuInstance from '@components/ContextMenu/instance'
 import contextMenuShare from '@components/ContextMenu/share'
 import contextMenuStatus from '@components/ContextMenu/status'
 import Icon from '@components/Icon'
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import ContextMenu, { ContextMenuAction } from 'react-native-context-menu-view'
+import { ContextMenuAction } from 'react-native-context-menu-view'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
@@ -55,6 +56,8 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
     queryKey
   })
 
+  const { showActionSheetWithOptions } = useActionSheet()
+
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View style={{ flex: 7 }}>
@@ -82,25 +85,26 @@ const TimelineHeaderDefault = ({ queryKey, status, highlighted }: Props) => {
         <Pressable
           accessibilityHint={t('accessibilityHint')}
           style={{ flex: 1, flexBasis: StyleConstants.Font.Size.L }}
-          onLongPress={() => null}
-        >
-          <ContextMenu
-            style={{ flex: 1, alignItems: 'center' }}
-            dropdownMenuMode
-            actions={actions}
-            onPress={({ nativeEvent: { index } }) => {
-              for (const on of [shareOnPress, statusOnPress, accountOnPress, instanceOnPress]) {
-                on && on(index)
+          onPress={() =>
+            showActionSheetWithOptions(
+              {
+                options: actions.map(action => action.title),
+                cancelButtonIndex: 999,
+                destructiveButtonIndex: actions
+                  .map((action, index) => (action.destructive ? index : 999))
+                  .filter(num => num !== 999)
+              },
+              index => {
+                if (index !== undefined) {
+                  for (const on of [shareOnPress, statusOnPress, accountOnPress, instanceOnPress]) {
+                    on && on(index)
+                  }
+                }
               }
-            }}
-            children={
-              <Icon
-                name='MoreHorizontal'
-                color={colors.secondary}
-                size={StyleConstants.Font.Size.L}
-              />
-            }
-          />
+            )
+          }
+        >
+          <Icon name='MoreHorizontal' color={colors.secondary} size={StyleConstants.Font.Size.L} />
         </Pressable>
       ) : null}
     </View>

@@ -131,6 +131,9 @@ const contextMenuAccount = ({ actions, type, queryKey, rootQueryKey, id: account
   }
 
   return (index: number) => {
+    if (typeof index !== 'number' || !actions[index]) {
+      return // For Android
+    }
     if (actions[index].id === 'account-mute') {
       analytics('timeline_shared_headeractions_account_mute_press', {
         page: queryKey && queryKey[1].page
