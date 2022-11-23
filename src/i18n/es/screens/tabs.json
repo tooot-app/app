@@ -295,7 +295,7 @@
       },
       "followed_by": " te sigue",
       "moved": "Se ha transladado",
-      "created_at": "Se unió en {{date}}",
+      "created_at": "Se unió el {{date}}",
       "summary": {
         "statuses_count": "{{count}} toots",
         "following_count": "$t(shared.users.accounts.following)",
@@ -308,7 +308,7 @@
       "suspended": "Cuenta suspendida por los moderadores de tu servidor"
     },
     "attachments": {
-      "name": ""
+      "name": "Multimedia de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Seguir",
