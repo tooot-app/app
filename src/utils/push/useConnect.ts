@@ -4,44 +4,43 @@ import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
-import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
-import { disableAllPushes } from '@utils/slices/instancesSlice'
+import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
-import { TFunction } from 'i18next'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
 import { useSelector } from 'react-redux'
 
-export interface Params {
-  t: TFunction<'screens'>
-  instances: InstanceLatest[]
-}
-
-const pushUseConnect = ({ t, instances }: Params) => {
-  const dispatch = useAppDispatch()
+const pushUseConnect = () => {
+  const { t } = useTranslation('screens')
   const { theme } = useTheme()
+
+  const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(retrieveExpoToken())
   }, [])
 
   const expoToken = useSelector(getExpoToken)
+  const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
+  const pushEnabled = instances.filter(instance => instance.push.global.value)
 
   const connect = () => {
     apiTooot({
       method: 'get',
-      url: `push/connect/${expoToken}`,
-      sentry: true
+      url: `/push/connect/${expoToken}`
     })
       .then(() => Notifications.setBadgeCountAsync(0))
       .catch(error => {
         Sentry.setExtras({
           API: 'tooot',
-          ...(error?.response && { response: error.response }),
-          ...(error?.request && { request: error.request })
+          expoToken,
+          ...(error?.response && { response: error.response })
         })
-        Sentry.captureException(error)
+        Sentry.captureMessage('Push connect error', {
+          contexts: { errorObject: error }
+        })
         Notifications.setBadgeCountAsync(0)
         if (error?.status == 404) {
           displayMessage({
@@ -84,9 +83,16 @@ const pushUseConnect = ({ t, instances }: Params) => {
       })
   }
 
-  const pushEnabled = instances.filter(instance => instance.push.global.value)
-
   useEffect(() => {
+    Sentry.setExtras({
+      expoToken,
+      pushEnabledCount: pushEnabled
+    })
+
+    if (expoToken && pushEnabled.length) {
+      connect()
+    }
+
     const appStateListener = AppState.addEventListener('change', state => {
       if (expoToken && pushEnabled.length && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
@@ -99,12 +105,6 @@ const pushUseConnect = ({ t, instances }: Params) => {
 
     return () => {
       appStateListener.remove()
-    }
-  }, [expoToken, pushEnabled.length])
-
-  return useEffect(() => {
-    if (expoToken && pushEnabled.length) {
-      connect()
     }
   }, [expoToken, pushEnabled.length])
 }
