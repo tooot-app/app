@@ -50,9 +50,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
   // Push hooks
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
-  pushUseConnect({ t, instances })
-  pushUseReceive({ instances })
-  pushUseRespond({ instances })
+  pushUseConnect()
+  pushUseReceive()
+  pushUseRespond()
 
   // Prevent screenshot alert
   useEffect(() => {

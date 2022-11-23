@@ -1,23 +1,19 @@
 import queryClient from '@helpers/queryClient'
 import initQuery from '@utils/initQuery'
-import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getInstances } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import pushUseNavigate from './useNavigate'
 
-export interface Params {
-  instances: InstanceLatest[]
-}
+const pushUseRespond = () => {
+  const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
 
-const pushUseRespond = ({ instances }: Params) => {
-  return useEffect(() => {
+  useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener(
       ({ notification }) => {
-        const queryKey: QueryKeyTimeline = [
-          'Timeline',
-          { page: 'Notifications' }
-        ]
+        const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
         queryClient.invalidateQueries(queryKey)
         const payloadData = notification.request.content.data as {
           notification_id?: string
