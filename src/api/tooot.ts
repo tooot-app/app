@@ -12,7 +12,6 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData | Object
-  sentry?: boolean
 }
 
 export const TOOOT_API_DOMAIN = mapEnvironment({
@@ -26,16 +25,15 @@ const apiTooot = async <T = unknown>({
   url,
   params,
   headers,
-  body,
-  sentry = true
+  body
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API tooot ') +
-    ' ' +
-    method +
-    ctx.green(' -> ') +
-    `/${url}` +
-    (params ? ctx.green(' -> ') : ''),
+      ' ' +
+      method +
+      ctx.green(' -> ') +
+      `/${url}` +
+      (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -46,10 +44,7 @@ const apiTooot = async <T = unknown>({
     url: `${url}`,
     params,
     headers: {
-      'Content-Type':
-        body && body instanceof FormData
-          ? 'multipart/form-data'
-          : 'application/json',
+      'Content-Type': body && body instanceof FormData ? 'multipart/form-data' : 'application/json',
       Accept: '*/*',
       ...userAgent,
       ...headers
@@ -62,14 +57,14 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      if (sentry) {
-        Sentry.setExtras({
-          API: 'tooot',
-          ...(error?.response && { response: error.response }),
-          ...(error?.request && { request: error.request })
-        })
-        Sentry.captureException(error)
-      }
+      Sentry.setExtras({
+        API: 'tooot',
+        request: { url, params, body },
+        ...(error?.response && { response: error.response })
+      })
+      Sentry.captureMessage('API error', {
+        contexts: { errorObject: error }
+      })
 
       return handleError(error)
     })
