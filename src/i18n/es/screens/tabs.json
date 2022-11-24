@@ -53,7 +53,7 @@
         "name": "Lista: {{list}}"
       },
       "push": {
-        "name": "Notificación push"
+        "name": "Notificaciones push"
       },
       "profile": {
         "name": "Editar perfil"
