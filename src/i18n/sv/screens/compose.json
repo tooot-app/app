@@ -13,7 +13,7 @@
     },
     "right": {
       "button": {
-        "default": "Inlägg",
+        "default": "Publicera",
         "conversation": "Skicka DM",
         "reply": "Skicka svar",
         "deleteEdit": "Inlägg",
