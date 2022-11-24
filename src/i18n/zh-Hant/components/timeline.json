@@ -23,8 +23,8 @@
       "pinned": "置頂",
       "favourite": "{{name}} 把您的嘟文加入了最愛",
       "status": "{{name}} 剛剛嘟文",
-      "follow": "{{name}} 跟隨了您",
-      "follow_request": "{{name}} 要求跟隨您",
+      "follow": "{{name}} 追蹤您了",
+      "follow_request": "{{name}} 要求追蹤您",
       "poll": "您曾投過的投票已經結束",
       "reblog": {
         "default": "{{name}} 轉嘟了",
@@ -37,7 +37,7 @@
         "accessibilityLabel": "回覆嘟文"
       },
       "reblogged": {
-        "accessibilityLabel": "轉發此嘟",
+        "accessibilityLabel": "轉嘟",
         "function": "轉嘟",
         "options": {
           "title": "選擇轉嘟範圍",
@@ -56,18 +56,18 @@
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "{{count}} 個使用者轉嘟了此嘟文",
-        "accessibilityHint": "點擊可以取得更多使用者資訊",
+        "accessibilityLabel": "{{count}} 個使用者轉嘟了",
+        "accessibilityHint": "點擊以取得更多使用者資訊",
         "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
         "accessibilityLabel": "{{count}} 個使用者喜歡此嘟文",
-        "accessibilityHint": "點擊可以取得使用者資訊",
+        "accessibilityHint": "點擊以取得使用者資訊",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
         "accessibilityLabel": "嘟文被編輯了 {{count}} 次",
-        "accessibilityHint": "點擊查看編輯紀錄",
+        "accessibilityHint": "點擊以查看編輯紀錄",
         "text_one": "{{count}} 次編輯",
         "text_other": "{{count}} 次編輯"
       }
