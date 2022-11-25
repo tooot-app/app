@@ -294,7 +294,7 @@
         "accessibilityHint": "Puedes silenciar, bloquear, reportar o compartir este usuario"
       },
       "followed_by": " te sigue",
-      "moved": "Se ha transladado",
+      "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {
         "statuses_count": "{{count}} toots",
