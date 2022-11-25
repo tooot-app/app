@@ -6,6 +6,7 @@ const audio = () => {
   Audio.setAudioModeAsync({
     interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
     interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+    playsInSilentModeIOS: true,
     staysActiveInBackground: false
   })
 }
