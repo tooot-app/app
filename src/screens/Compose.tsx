@@ -168,7 +168,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           textInput: 'text',
           composeDispatch,
           content:
-            (params.text && `${params.text}\n`) +
+            (params.text ? `${params.text}\n` : '') +
             params.accts.map(acct => `@${acct}`).join(' ') +
             ' ',
           disableDebounce: true
