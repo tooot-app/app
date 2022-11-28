@@ -27,7 +27,6 @@ const AttachmentVideo: React.FC<Props> = ({
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
-  const [videoPosition, setVideoPosition] = useState<number>(0)
   const [videoResizeMode, setVideoResizeMode] = useState<ResizeMode>(ResizeMode.COVER)
   const playOnPress = useCallback(async () => {
     analytics('timeline_shared_attachment_video_length', {
@@ -42,19 +41,15 @@ const AttachmentVideo: React.FC<Props> = ({
       await videoPlayer.current?.loadAsync({ uri: video.url })
     }
     Platform.OS === 'android' && setVideoResizeMode(ResizeMode.CONTAIN)
-    await videoPlayer.current?.setPositionAsync(videoPosition)
     await videoPlayer.current?.presentFullscreenPlayer()
     videoPlayer.current?.playAsync()
     setVideoLoading(false)
     videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
       if (props.isLoaded) {
         setVideoLoaded(true)
-        if (props.positionMillis) {
-          setVideoPosition(props.positionMillis)
-        }
       }
     })
-  }, [videoLoaded, videoPosition])
+  }, [videoLoaded])
 
   const appState = useRef(AppState.currentState)
   useEffect(() => {
@@ -115,7 +110,7 @@ const AttachmentVideo: React.FC<Props> = ({
           if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
             Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
             if (!gifv) {
-              await videoPlayer.current?.pauseAsync()
+              await videoPlayer.current?.stopAsync()
             }
           }
         }}
