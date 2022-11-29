@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
@@ -113,7 +112,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
 
     if (previousRoute?.name !== currentRoute?.name) {
-      analytics('screen_view', { screen_name: currentRoute?.name })
       Sentry.setContext('page', {
         previous: previousRoute,
         current: currentRoute

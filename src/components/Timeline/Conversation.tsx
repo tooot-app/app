@@ -1,5 +1,4 @@
 import apiInstance from '@api/instance'
-import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -79,7 +78,6 @@ const TimelineConversation = React.memo(
     const navigation =
       useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const onPress = useCallback(() => {
-      analytics('timeline_conversation_press')
       if (conversation.last_status) {
         conversation.unread && mutate()
         navigation.push('Tab-Shared-Toot', {

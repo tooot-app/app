@@ -1,5 +1,4 @@
 import ComponentAccount from '@components/Account'
-import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
 import React, { useContext, useEffect } from 'react'
@@ -18,9 +17,6 @@ const ComposeRootSuggestion: React.FC<Props> = ({ item }) => {
   }, [composeState.text.raw.length])
 
   const onPress = () => {
-    analytics('compose_suggestion_press', {
-      type: item.acct ? 'account' : 'hashtag'
-    })
     const focusedInput = composeState.textInputFocus.current
     const updatedText = (): string => {
       const main = item.acct ? `@${item.acct}` : `#${item.name}`
@@ -48,7 +44,7 @@ const ComposeRootSuggestion: React.FC<Props> = ({ item }) => {
   }
 
   return item.acct ? (
-    <ComponentAccount account={item} onPress={onPress} origin='suggestion' />
+    <ComponentAccount account={item} onPress={onPress} />
   ) : (
     <ComponentHashtag hashtag={item} onPress={onPress} origin='suggestion' />
   )

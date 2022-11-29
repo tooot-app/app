@@ -47,7 +47,6 @@
     "expo-constants": "^14.0.2",
     "expo-crypto": "^12.0.0",
     "expo-file-system": "^15.1.1",
-    "expo-firebase-analytics": "^8.0.0",
     "expo-haptics": "^12.0.1",
     "expo-linking": "^3.2.3",
     "expo-localization": "^14.0.0",

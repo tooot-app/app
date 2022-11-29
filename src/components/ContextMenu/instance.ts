@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
@@ -71,9 +70,6 @@ const contextMenuInstance = ({ actions, status, queryKey, rootQueryKey }: Props)
       actions[index].id === 'instance-block' ||
       (actions[index].id === 'instance' && actions[index].actions?.[0].id === 'instance-block')
     ) {
-      analytics('timeline_shared_headeractions_domain_block_press', {
-        page: queryKey[1].page
-      })
       Alert.alert(
         t('instance.block.alert.title', { instance }),
         t('instance.block.alert.message'),
@@ -82,9 +78,6 @@ const contextMenuInstance = ({ actions, status, queryKey, rootQueryKey }: Props)
             text: t('instance.block.alert.buttons.confirm'),
             style: 'destructive',
             onPress: () => {
-              analytics('timeline_shared_headeractions_domain_block_confirm', {
-                page: queryKey && queryKey[1].page
-              })
               mutation.mutate({
                 type: 'domainBlock',
                 queryKey,

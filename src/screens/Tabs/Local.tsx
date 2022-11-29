@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
@@ -76,13 +75,12 @@ const TabLocal = React.memo(
                 accessibilityLabel={t('common.search.accessibilityLabel')}
                 accessibilityHint={t('common.search.accessibilityHint')}
                 content='Search'
-                onPress={() => {
-                  analytics('search_tap', { page: 'Local' })
+                onPress={() =>
                   navigation.navigate('Tab-Local', {
                     screen: 'Tab-Shared-Search',
                     params: { text: undefined }
                   })
-                }}
+                }
               />
             )
           }}

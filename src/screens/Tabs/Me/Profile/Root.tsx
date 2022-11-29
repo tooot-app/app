@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useAppDispatch } from '@root/store'
@@ -44,18 +43,12 @@ const TabMeProfileRoot: React.FC<
           case 0:
           case 1:
           case 2:
-            const indexVisibilityMapping = [
+            const indexVisibilityMapping = ['public', 'unlisted', 'private'] as [
               'public',
               'unlisted',
               'private'
-            ] as ['public', 'unlisted', 'private']
+            ]
             if (data?.source.privacy !== indexVisibilityMapping[buttonIndex]) {
-              analytics('me_profile_visibility', {
-                current: t(
-                  `me.profile.root.visibility.options.${data?.source.privacy}`
-                ),
-                new: indexVisibilityMapping[buttonIndex]
-              })
               mutateAsync({
                 theme,
                 messageRef,
@@ -75,10 +68,6 @@ const TabMeProfileRoot: React.FC<
   }, [theme, data?.source?.privacy])
 
   const onPressSensitive = useCallback(() => {
-    analytics('me_profile_sensitive', {
-      current: data?.source.sensitive,
-      new: data?.source.sensitive === undefined ? true : !data.source.sensitive
-    })
     mutateAsync({
       theme,
       messageRef,
@@ -93,10 +82,6 @@ const TabMeProfileRoot: React.FC<
   }, [data?.source.sensitive])
 
   const onPressLock = useCallback(() => {
-    analytics('me_profile_lock', {
-      current: data?.locked,
-      new: data?.locked === undefined ? true : !data.locked
-    })
     mutateAsync({
       theme,
       messageRef,
@@ -111,10 +96,6 @@ const TabMeProfileRoot: React.FC<
   }, [theme, data?.locked])
 
   const onPressBot = useCallback(() => {
-    analytics('me_profile_bot', {
-      current: data?.bot,
-      new: data?.bot === undefined ? true : !data.bot
-    })
     mutateAsync({
       theme,
       messageRef,

@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
@@ -134,7 +133,6 @@ const ComposePoll: React.FC = () => {
                 )
               })}
           onPress={() => {
-            analytics('compose_poll_reduce_press')
             total > 2 &&
               composeDispatch({
                 type: 'poll',
@@ -169,7 +167,6 @@ const ComposePoll: React.FC = () => {
                 )
               })}
           onPress={() => {
-            analytics('compose_poll_increase_press')
             total < MAX_OPTIONS &&
               composeDispatch({
                 type: 'poll',
@@ -205,10 +202,6 @@ const ComposePoll: React.FC = () => {
               },
               index => {
                 if (index && index < 2) {
-                  analytics('compose_poll_expiration_press', {
-                    current: multiple,
-                    new: index === 1
-                  })
                   composeDispatch({
                     type: 'poll',
                     payload: { multiple: index === 1 }
@@ -249,10 +242,6 @@ const ComposePoll: React.FC = () => {
               },
               index => {
                 if (index !== undefined && index < expirations.length) {
-                  analytics('compose_poll_expiration_press', {
-                    current: expire,
-                    new: expirations[index]
-                  })
                   composeDispatch({
                     type: 'poll',
                     // @ts-ignore

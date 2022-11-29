@@ -1,5 +1,4 @@
 import ComponentAccount from '@components/Account'
-import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
 import CustomText from '@components/Text'
@@ -130,10 +129,10 @@ const TimelineCard = React.memo(({ card }: Props) => {
       )
     }
     if (isStatus && foundStatus) {
-      return <TimelineDefault item={foundStatus} disableDetails disableOnPress origin='card' />
+      return <TimelineDefault item={foundStatus} disableDetails disableOnPress />
     }
     if (isAccount && foundAccount) {
-      return <ComponentAccount account={foundAccount} origin='card' />
+      return <ComponentAccount account={foundAccount} />
     }
     return (
       <>
@@ -193,10 +192,7 @@ const TimelineCard = React.memo(({ card }: Props) => {
         overflow: 'hidden',
         borderColor: colors.border
       }}
-      onPress={async () => {
-        analytics('timeline_shared_card_press')
-        await openLink(card.url, navigation)
-      }}
+      onPress={async () => await openLink(card.url, navigation)}
       children={cardContent}
     />
   )

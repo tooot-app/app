@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
@@ -63,7 +62,6 @@ const renderNode = ({
                 lineHeight: adaptedLineheight
               }}
               onPress={() => {
-                analytics('status_hashtag_press')
                 !disableDetails &&
                   differentTag &&
                   navigation.push('Tab-Shared-Hashtag', {
@@ -89,7 +87,6 @@ const renderNode = ({
                 lineHeight: adaptedLineheight
               }}
               onPress={() => {
-                analytics('status_mention_press')
                 accountIndex !== -1 &&
                   !disableDetails &&
                   differentAccount &&
@@ -118,7 +115,6 @@ const renderNode = ({
               lineHeight: adaptedLineheight
             }}
             onPress={async () => {
-              analytics('status_link_press')
               if (!disableDetails) {
                 if (shouldBeTag) {
                   navigation.push('Tab-Shared-Hashtag', {
@@ -255,7 +251,6 @@ const ParseHTML = React.memo(
               <Pressable
                 accessibilityLabel={t('HTML.accessibilityHint')}
                 onPress={() => {
-                  analytics('status_readmore', { totalLines, expanded })
                   layoutAnimation()
                   setExpanded(!expanded)
                 }}

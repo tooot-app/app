@@ -6,29 +6,19 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { Pressable, View } from 'react-native'
-import analytics from './analytics'
 import GracefullyImage from './GracefullyImage'
 import CustomText from './Text'
 
 export interface Props {
   account: Mastodon.Account
   onPress?: () => void
-  origin?: string
 }
 
-const ComponentAccount: React.FC<Props> = ({
-  account,
-  onPress: customOnPress,
-  origin
-}) => {
+const ComponentAccount: React.FC<Props> = ({ account, onPress: customOnPress }) => {
   const { colors } = useTheme()
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const onPress = useCallback(() => {
-    analytics('search_account_press', { page: origin })
-    navigation.push('Tab-Shared-Account', { account })
-  }, [])
+  const onPress = useCallback(() => navigation.push('Tab-Shared-Account', { account }), [])
 
   return (
     <Pressable

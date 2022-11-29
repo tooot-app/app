@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -209,19 +208,15 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         type='text'
         content={t('heading.left.button')}
         onPress={() => {
-          analytics('compose_header_back_press')
           if (!composeState.dirty) {
-            analytics('compose_header_back_empty')
             navigation.goBack()
             return
           } else {
-            analytics('compose_header_back_state_occupied')
             Alert.alert(t('heading.left.alert.title'), undefined, [
               {
                 text: t('heading.left.alert.buttons.delete'),
                 style: 'destructive',
                 onPress: () => {
-                  analytics('compose_header_back_occupied_save')
                   removeDraft()
                   navigation.goBack()
                 }
@@ -229,17 +224,13 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               {
                 text: t('heading.left.alert.buttons.save'),
                 onPress: () => {
-                  analytics('compose_header_back_occupied_delete')
                   saveDraft()
                   navigation.goBack()
                 }
               },
               {
                 text: t('heading.left.alert.buttons.cancel'),
-                style: 'cancel',
-                onPress: () => {
-                  analytics('compose_header_back_occupied_cancel')
-                }
+                style: 'cancel'
               }
             ])
           }
@@ -272,7 +263,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             : t('heading.right.button.default')
         }
         onPress={() => {
-          analytics('compose_header_post_press')
           composeDispatch({ type: 'posting', payload: true })
 
           composePost(params, composeState)

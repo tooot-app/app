@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
@@ -84,18 +83,16 @@ const TimelineActions: React.FC<Props> = ({
     }
   })
 
-  const onPressReply = useCallback(() => {
-    analytics('timeline_shared_actions_reply_press', {
-      page: queryKey[1].page,
-      count: status.replies_count
-    })
-    navigation.navigate('Screen-Compose', {
-      type: 'reply',
-      incomingStatus: status,
-      accts,
-      queryKey
-    })
-  }, [status.replies_count])
+  const onPressReply = useCallback(
+    () =>
+      navigation.navigate('Screen-Compose', {
+        type: 'reply',
+        incomingStatus: status,
+        accts,
+        queryKey
+      }),
+    [status.replies_count]
+  )
   const { showActionSheetWithOptions } = useActionSheet()
   const onPressReblog = useCallback(() => {
     if (!status.reblogged) {
@@ -112,11 +109,6 @@ const TimelineActions: React.FC<Props> = ({
         (selectedIndex: number) => {
           switch (selectedIndex) {
             case 0:
-              analytics('timeline_shared_actions_reblog_public_press', {
-                page: queryKey[1].page,
-                count: status.reblogs_count,
-                current: status.reblogged
-              })
               mutation.mutate({
                 type: 'updateStatusProperty',
                 queryKey,
@@ -133,11 +125,6 @@ const TimelineActions: React.FC<Props> = ({
               })
               break
             case 1:
-              analytics('timeline_shared_actions_reblog_unlisted_press', {
-                page: queryKey[1].page,
-                count: status.reblogs_count,
-                current: status.reblogged
-              })
               mutation.mutate({
                 type: 'updateStatusProperty',
                 queryKey,
@@ -157,11 +144,6 @@ const TimelineActions: React.FC<Props> = ({
         }
       )
     } else {
-      analytics('timeline_shared_actions_reblog_press', {
-        page: queryKey[1].page,
-        count: status.reblogs_count,
-        current: status.reblogged
-      })
       mutation.mutate({
         type: 'updateStatusProperty',
         queryKey,
@@ -179,11 +161,6 @@ const TimelineActions: React.FC<Props> = ({
     }
   }, [status.reblogged, status.reblogs_count])
   const onPressFavourite = useCallback(() => {
-    analytics('timeline_shared_actions_favourite_press', {
-      page: queryKey[1].page,
-      count: status.favourites_count,
-      current: status.favourited
-    })
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
@@ -199,10 +176,6 @@ const TimelineActions: React.FC<Props> = ({
     })
   }, [status.favourited, status.favourites_count])
   const onPressBookmark = useCallback(() => {
-    analytics('timeline_shared_actions_bookmark_press', {
-      page: queryKey[1].page,
-      current: status.bookmarked
-    })
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,

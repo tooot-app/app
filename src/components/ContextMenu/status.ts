@@ -1,5 +1,4 @@
 import apiInstance from '@api/instance'
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -107,17 +106,11 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
       return // For Android
     }
     if (actions[index].id === 'status-delete') {
-      analytics('timeline_shared_headeractions_status_delete_press', {
-        page: queryKey && queryKey[1].page
-      })
       Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
         {
           text: t('status.delete.alert.buttons.confirm'),
           style: 'destructive',
           onPress: async () => {
-            analytics('timeline_shared_headeractions_status_delete_confirm', {
-              page: queryKey && queryKey[1].page
-            })
             mutation.mutate({
               type: 'deleteItem',
               source: 'statuses',
@@ -133,17 +126,11 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
       ])
     }
     if (actions[index].id === 'status-delete-edit') {
-      analytics('timeline_shared_headeractions_status_deleteedit_press', {
-        page: queryKey && queryKey[1].page
-      })
       Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
         {
           text: t('status.deleteEdit.alert.buttons.confirm'),
           style: 'destructive',
           onPress: async () => {
-            analytics('timeline_shared_headeractions_status_deleteedit_confirm', {
-              page: queryKey && queryKey[1].page
-            })
             let replyToStatus: Mastodon.Status | undefined = undefined
             if (status.in_reply_to_id) {
               replyToStatus = await apiInstance<Mastodon.Status>({
@@ -174,9 +161,6 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
       ])
     }
     if (actions[index].id === 'status-mute') {
-      analytics('timeline_shared_headeractions_status_mute_press', {
-        page: queryKey && queryKey[1].page
-      })
       mutation.mutate({
         type: 'updateStatusProperty',
         queryKey,
@@ -191,9 +175,6 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
       })
     }
     if (actions[index].id === 'status-edit') {
-      analytics('timeline_shared_headeractions_status_edit_press', {
-        page: queryKey && queryKey[1].page
-      })
       let replyToStatus: Mastodon.Status | undefined = undefined
       if (status.in_reply_to_id) {
         replyToStatus = await apiInstance<Mastodon.Status>({
@@ -224,9 +205,6 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
     }
     if (actions[index].id === 'status-pin') {
       // Also note that reblogs cannot be pinned.
-      analytics('timeline_shared_headeractions_status_pin_press', {
-        page: queryKey && queryKey[1].page
-      })
       mutation.mutate({
         type: 'updateStatusProperty',
         queryKey,

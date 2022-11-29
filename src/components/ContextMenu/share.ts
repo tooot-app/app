@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -39,7 +38,6 @@ const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
       return // For Android
     }
     if (actions[index].id === 'copy') {
-      analytics('timeline_shared_headeractions_copy_press')
       Clipboard.setString(copiableContent?.current.content || '')
       displayMessage({
         theme,
@@ -48,7 +46,6 @@ const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
       })
     }
     if (actions[index].id === 'share') {
-      analytics('timeline_shared_headeractions_share_press')
       switch (Platform.OS) {
         case 'ios':
           Share.share({ url })

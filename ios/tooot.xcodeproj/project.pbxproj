@@ -17,7 +17,6 @@
 		5EE088C926297820007E5FEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EE088CB26297820007E5FEC /* InfoPlist.strings */; };
 		5EE44DD62600124E00A9BCED /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE44DD52600124E00A9BCED /* File.swift */; };
 		96905EF65AED1B983A6B3ABC /* libPods-tooot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-tooot.a */; };
-		DA8B5B7F0DED488CAC0FF169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */; };
 		E3BC22F5F8ABE515E14CF199 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D878F932AF7A9974E06E461 /* ExpoModulesProvider.swift */; };
 		E613A80B28282A01003C97D6 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E613A80A28282A01003C97D6 /* AppDelegate.mm */; };
 		E633A42B281EAEAB000E540F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E633A420281EAEAB000E540F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -69,7 +68,6 @@
 		7A4D352CD337FB3A3BF06240 /* Pods-tooot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tooot.release.xcconfig"; path = "Target Support Files/Pods-tooot/Pods-tooot.release.xcconfig"; sourceTree = "<group>"; };
 		9D878F932AF7A9974E06E461 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-tooot/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = tooot/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tooot/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF8133F098604A10B0D94952 /* boop.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = boop.mp3; path = tooot/boop.mp3; sourceTree = "<group>"; };
 		E613A80A28282A01003C97D6 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = tooot/AppDelegate.mm; sourceTree = "<group>"; };
 		E633A420281EAEAB000E540F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +120,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				5E36538225C9B8BD009F93EE /* RootViewColor.xcassets */,
-				B96B72E5384D44A7B240B27E /* GoogleService-Info.plist */,
 				5EE088CB26297820007E5FEC /* InfoPlist.strings */,
 				DF8133F098604A10B0D94952 /* boop.mp3 */,
 			);
@@ -319,7 +316,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				DA8B5B7F0DED488CAC0FF169 /* GoogleService-Info.plist in Resources */,
 				4986628FD0DD4630BFE5F388 /* boop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

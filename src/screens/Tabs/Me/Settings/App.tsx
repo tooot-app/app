@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
@@ -77,26 +76,14 @@ const SettingsApp: React.FC = () => {
             buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  analytics('settings_appearance_press', {
-                    current: settingsTheme,
-                    new: 'auto'
-                  })
                   haptics('Success')
                   dispatch(changeTheme('auto'))
                   break
                 case 1:
-                  analytics('settings_appearance_press', {
-                    current: settingsTheme,
-                    new: 'light'
-                  })
                   haptics('Success')
                   dispatch(changeTheme('light'))
                   break
                 case 2:
-                  analytics('settings_appearance_press', {
-                    current: settingsTheme,
-                    new: 'dark'
-                  })
                   haptics('Success')
                   dispatch(changeTheme('dark'))
                   break
@@ -123,18 +110,10 @@ const SettingsApp: React.FC = () => {
             buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  analytics('settings_darktheme_press', {
-                    current: settingsDarkTheme,
-                    new: 'lighter'
-                  })
                   haptics('Success')
                   dispatch(changeDarkTheme('lighter'))
                   break
                 case 1:
-                  analytics('settings_darktheme_press', {
-                    current: settingsDarkTheme,
-                    new: 'darker'
-                  })
                   haptics('Success')
                   dispatch(changeDarkTheme('darker'))
                   break
@@ -161,18 +140,10 @@ const SettingsApp: React.FC = () => {
             buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  analytics('settings_browser_press', {
-                    current: settingsBrowser,
-                    new: 'internal'
-                  })
                   haptics('Success')
                   dispatch(changeBrowser('internal'))
                   break
                 case 1:
-                  analytics('settings_browser_press', {
-                    current: settingsBrowser,
-                    new: 'external'
-                  })
                   haptics('Success')
                   dispatch(changeBrowser('external'))
                   break
@@ -185,13 +156,7 @@ const SettingsApp: React.FC = () => {
         title={t('me.settings.staticEmoji.heading')}
         description={t('me.settings.staticEmoji.description')}
         switchValue={settingsStaticEmoji}
-        switchOnValueChange={() => {
-          analytics('settings_staticemoji_press', {
-            current: settingsStaticEmoji.toString(),
-            new: !settingsStaticEmoji.toString()
-          })
-          dispatch(changeStaticEmoji(!settingsStaticEmoji))
-        }}
+        switchOnValueChange={() => dispatch(changeStaticEmoji(!settingsStaticEmoji))}
       />
     </MenuContainer>
   )

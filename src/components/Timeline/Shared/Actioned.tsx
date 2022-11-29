@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import { useNavigation } from '@react-navigation/native'
@@ -6,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -20,8 +19,7 @@ const TimelineActioned = React.memo(
   ({ account, action, notification = false }: Props) => {
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
-    const navigation =
-      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const name = account?.display_name || account?.username
     const iconColor = colors.primaryDefault
 
@@ -29,10 +27,7 @@ const TimelineActioned = React.memo(
       <ParseEmojis content={content} emojis={account.emojis} size='S' />
     )
 
-    const onPress = useCallback(() => {
-      analytics('timeline_shared_actioned_press', { action })
-      navigation.push('Tab-Shared-Account', { account })
-    }, [])
+    const onPress = () => navigation.push('Tab-Shared-Account', { account })
 
     const children = () => {
       switch (action) {

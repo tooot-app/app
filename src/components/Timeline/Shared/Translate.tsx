@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { ParseHTML } from '@components/Parse'
 import CustomText from '@components/Text'
 import getLanguage from '@helpers/getLanguage'
@@ -85,15 +84,9 @@ const TimelineTranslate = React.memo(
           onPress={() => {
             if (enabled) {
               if (!isSuccess) {
-                analytics('timeline_shared_translate_retry', {
-                  language: detectedLanguage
-                })
                 refetch()
               }
             } else {
-              analytics('timeline_shared_translate', {
-                language: detectedLanguage
-              })
               setEnabled(true)
             }
           }}

@@ -1,15 +1,11 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
-import {
-  QueryKeyTimeline,
-  useTimelineMutation
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -71,27 +67,6 @@ const HeaderConversation = ({ queryKey, conversation }: Props) => {
     }
   })
 
-  const actionOnPress = useCallback(() => {
-    analytics('timeline_conversation_delete_press')
-    mutation.mutate({
-      type: 'deleteItem',
-      source: 'conversations',
-      queryKey,
-      id: conversation.id
-    })
-  }, [])
-
-  const actionChildren = useMemo(
-    () => (
-      <Icon
-        name='Trash'
-        color={colors.secondary}
-        size={StyleConstants.Font.Size.L}
-      />
-    ),
-    []
-  )
-
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View style={{ flex: 3 }}>
@@ -116,8 +91,15 @@ const HeaderConversation = ({ queryKey, conversation }: Props) => {
 
       <Pressable
         style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
-        onPress={actionOnPress}
-        children={actionChildren}
+        onPress={() =>
+          mutation.mutate({
+            type: 'deleteItem',
+            source: 'conversations',
+            queryKey,
+            id: conversation.id
+          })
+        }
+        children={<Icon name='Trash' color={colors.secondary} size={StyleConstants.Font.Size.L} />}
       />
     </View>
   )

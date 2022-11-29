@@ -1,12 +1,8 @@
-import analytics from '@components/analytics'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
 import { displayMessage } from '@components/Message'
-import {
-  QueryKeyTimeline,
-  useTimelineMutation
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,12 +16,7 @@ export interface Props {
   dismiss: () => void
 }
 
-const ActionsDomain: React.FC<Props> = ({
-  queryKey,
-  rootQueryKey,
-  domain,
-  dismiss
-}) => {
+const ActionsDomain: React.FC<Props> = ({ queryKey, rootQueryKey, domain, dismiss }) => {
   const { theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
   const queryClient = useQueryClient()
@@ -47,10 +38,7 @@ const ActionsDomain: React.FC<Props> = ({
     <MenuContainer>
       <MenuHeader heading={t(`shared.header.actions.domain.heading`)} />
       <MenuRow
-        onPress={() => {
-          analytics('timeline_shared_headeractions_domain_block_press', {
-            page: queryKey[1].page
-          })
+        onPress={() =>
           Alert.alert(
             t('shared.header.actions.domain.alert.title', { domain }),
             t('shared.header.actions.domain.alert.message'),
@@ -63,12 +51,6 @@ const ActionsDomain: React.FC<Props> = ({
                 text: t('shared.header.actions.domain.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: () => {
-                  analytics(
-                    'timeline_shared_headeractions_domain_block_confirm',
-                    {
-                      page: queryKey && queryKey[1].page
-                    }
-                  )
                   dismiss()
                   mutation.mutate({
                     type: 'domainBlock',
@@ -79,7 +61,7 @@ const ActionsDomain: React.FC<Props> = ({
               }
             ]
           )
-        }}
+        }
         iconFront='CloudOff'
         title={t(`shared.header.actions.domain.block.button`, {
           domain

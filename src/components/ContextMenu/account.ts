@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import {
@@ -135,9 +134,6 @@ const contextMenuAccount = ({ actions, type, queryKey, rootQueryKey, id: account
       return // For Android
     }
     if (actions[index].id === 'account-mute') {
-      analytics('timeline_shared_headeractions_account_mute_press', {
-        page: queryKey && queryKey[1].page
-      })
       mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,
@@ -149,9 +145,6 @@ const contextMenuAccount = ({ actions, type, queryKey, rootQueryKey, id: account
       actions[index].id === 'account-block' ||
       (actions[index].id === 'account' && actions[index].actions?.[0].id === 'account-block')
     ) {
-      analytics('timeline_shared_headeractions_account_block_press', {
-        page: queryKey && queryKey[1].page
-      })
       mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,
@@ -163,9 +156,6 @@ const contextMenuAccount = ({ actions, type, queryKey, rootQueryKey, id: account
       actions[index].id === 'account-reports' ||
       (actions[index].id === 'account' && actions[index].actions?.[0].id === 'account-reports')
     ) {
-      analytics('timeline_shared_headeractions_account_reports_press', {
-        page: queryKey && queryKey[1].page
-      })
       mutation.mutate({
         type: 'updateAccountProperty',
         queryKey,

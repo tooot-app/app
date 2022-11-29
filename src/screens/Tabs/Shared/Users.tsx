@@ -34,7 +34,7 @@ const TabSharedUsers = React.memo(
         data={flattenData}
         style={styles.flatList}
         renderItem={({ item }) => (
-          <ComponentAccount account={item} origin='relationship' />
+          <ComponentAccount account={item} />
         )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.75}

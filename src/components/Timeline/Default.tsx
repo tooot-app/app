@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import TimelineActioned from '@components/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
@@ -17,7 +16,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
 import React, { useRef } from 'react'
-import { Platform, Pressable, StyleProp, View, ViewStyle } from 'react-native'
+import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 import TimelineContextMenu from './Shared/ContextMenu'
 import TimelineFeedback from './Shared/Feedback'
@@ -29,7 +28,6 @@ export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-  origin?: string
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
@@ -40,7 +38,6 @@ const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
   rootQueryKey,
-  origin,
   highlighted = false,
   disableDetails = false,
   disableOnPress = false
@@ -65,9 +62,6 @@ const TimelineDefault: React.FC<Props> = ({
 
   const onPress = () => {
     if (highlighted) return
-    analytics('timeline_default_press', {
-      page: queryKey ? queryKey[1].page : origin
-    })
     navigation.push('Tab-Shared-Toot', {
       toot: actualStatus,
       rootQueryKey: queryKey

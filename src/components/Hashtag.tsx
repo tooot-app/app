@@ -5,7 +5,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { Pressable } from 'react-native'
-import analytics from './analytics'
 import CustomText from './Text'
 
 export interface Props {
@@ -24,7 +23,6 @@ const ComponentHashtag: React.FC<Props> = ({
     useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
-    analytics('search_account_press', { page: origin })
     navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
   }, [])
 

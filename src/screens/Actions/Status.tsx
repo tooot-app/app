@@ -8,7 +8,6 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import { useTheme } from '@utils/styles/ThemeManager'
 import apiInstance from '@api/instance'
@@ -69,9 +68,6 @@ const ActionsStatus: React.FC<Props> = ({
       {canEditPost ? (
         <MenuRow
           onPress={async () => {
-            analytics('timeline_shared_headeractions_status_edit_press', {
-              page: queryKey && queryKey[1].page
-            })
             let replyToStatus: Mastodon.Status | undefined = undefined
             if (status.in_reply_to_id) {
               replyToStatus = await apiInstance<Mastodon.Status>({
@@ -107,9 +103,6 @@ const ActionsStatus: React.FC<Props> = ({
       ) : null}
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_status_delete_press', {
-            page: queryKey && queryKey[1].page
-          })
           Alert.alert(
             t('shared.header.actions.status.delete.alert.title'),
             t('shared.header.actions.status.delete.alert.message'),
@@ -126,12 +119,6 @@ const ActionsStatus: React.FC<Props> = ({
                 ),
                 style: 'destructive',
                 onPress: async () => {
-                  analytics(
-                    'timeline_shared_headeractions_status_delete_confirm',
-                    {
-                      page: queryKey && queryKey[1].page
-                    }
-                  )
                   dismiss()
                   mutation.mutate({
                     type: 'deleteItem',
@@ -150,9 +137,6 @@ const ActionsStatus: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_status_deleteedit_press', {
-            page: queryKey && queryKey[1].page
-          })
           Alert.alert(
             t('shared.header.actions.status.deleteEdit.alert.title'),
             t('shared.header.actions.status.deleteEdit.alert.message'),
@@ -169,12 +153,6 @@ const ActionsStatus: React.FC<Props> = ({
                 ),
                 style: 'destructive',
                 onPress: async () => {
-                  analytics(
-                    'timeline_shared_headeractions_status_deleteedit_confirm',
-                    {
-                      page: queryKey && queryKey[1].page
-                    }
-                  )
                   let replyToStatus: Mastodon.Status | undefined = undefined
                   if (status.in_reply_to_id) {
                     replyToStatus = await apiInstance<Mastodon.Status>({
@@ -208,9 +186,6 @@ const ActionsStatus: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_status_mute_press', {
-            page: queryKey && queryKey[1].page
-          })
           dismiss()
           mutation.mutate({
             type: 'updateStatusProperty',
@@ -236,9 +211,6 @@ const ActionsStatus: React.FC<Props> = ({
       {(status.visibility === 'public' || status.visibility === 'unlisted') && (
         <MenuRow
           onPress={() => {
-            analytics('timeline_shared_headeractions_status_pin_press', {
-              page: queryKey && queryKey[1].page
-            })
             dismiss()
             mutation.mutate({
               type: 'updateStatusProperty',

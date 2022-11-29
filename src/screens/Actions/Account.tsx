@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { MenuContainer, MenuHeader, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
 import {
@@ -74,9 +73,6 @@ const ActionsAccount: React.FC<Props> = ({
       <MenuHeader heading={t('shared.header.actions.account.heading')} />
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_account_mute_press', {
-            page: queryKey && queryKey[1].page
-          })
           dismiss()
           mutation.mutate({
             type: 'updateAccountProperty',
@@ -92,9 +88,6 @@ const ActionsAccount: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_account_block_press', {
-            page: queryKey && queryKey[1].page
-          })
           dismiss()
           mutation.mutate({
             type: 'updateAccountProperty',
@@ -110,9 +103,6 @@ const ActionsAccount: React.FC<Props> = ({
       />
       <MenuRow
         onPress={() => {
-          analytics('timeline_shared_headeractions_account_reports_press', {
-            page: queryKey && queryKey[1].page
-          })
           dismiss()
           mutation.mutate({
             type: 'updateAccountProperty',

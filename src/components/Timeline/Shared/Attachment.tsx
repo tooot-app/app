@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import AttachmentAudio from '@components/Timeline/Shared/Attachment/Audio'
@@ -195,7 +194,6 @@ const TimelineAttachment = React.memo(
                 content={t('shared.attachment.sensitive.button')}
                 overlay
                 onPress={() => {
-                  analytics('timeline_shared_attachment_blurview_press_show')
                   layoutAnimation()
                   setSensitiveShown(false)
                   haptics('Light')
@@ -209,7 +207,6 @@ const TimelineAttachment = React.memo(
               round
               overlay
               onPress={() => {
-                analytics('timeline_shared_attachment_blurview_press_hide')
                 setSensitiveShown(true)
                 haptics('Light')
               }}

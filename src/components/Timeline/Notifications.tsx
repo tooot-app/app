@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import TimelineActioned from '@components/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
@@ -15,7 +14,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { isEqual, uniqBy } from 'lodash'
+import { uniqBy } from 'lodash'
 import React, { useCallback, useRef } from 'react'
 import { Platform, Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -57,7 +56,6 @@ const TimelineNotifications: React.FC<Props> = ({
   const actualAccount = notification.status ? notification.status.account : notification.account
 
   const onPress = useCallback(() => {
-    analytics('timeline_notification_press')
     notification.status &&
       navigation.push('Tab-Shared-Toot', {
         toot: notification.status,

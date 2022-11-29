@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -11,10 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 export interface Props {
-  status: Pick<
-    Mastodon.Status,
-    'id' | 'edited_at' | 'reblogs_count' | 'favourites_count'
-  >
+  status: Pick<Mastodon.Status, 'id' | 'edited_at' | 'reblogs_count' | 'favourites_count'>
   highlighted: boolean
 }
 
@@ -26,8 +22,7 @@ const TimelineFeedback = React.memo(
 
     const { t } = useTranslation('componentTimeline')
     const { colors } = useTheme()
-    const navigation =
-      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
     const { data } = useStatusHistory({
       id: status.id,
@@ -39,28 +34,20 @@ const TimelineFeedback = React.memo(
         <View style={{ flexDirection: 'row' }}>
           {status.reblogs_count > 0 ? (
             <CustomText
-              accessibilityLabel={t(
-                'shared.actionsUsers.reblogged_by.accessibilityLabel',
-                {
-                  count: status.reblogs_count
-                }
-              )}
-              accessibilityHint={t(
-                'shared.actionsUsers.reblogged_by.accessibilityHint'
-              )}
+              accessibilityLabel={t('shared.actionsUsers.reblogged_by.accessibilityLabel', {
+                count: status.reblogs_count
+              })}
+              accessibilityHint={t('shared.actionsUsers.reblogged_by.accessibilityHint')}
               accessibilityRole='button'
               style={[styles.text, { color: colors.blue }]}
-              onPress={() => {
-                analytics('timeline_shared_feedback_press_reblog', {
-                  count: status.reblogs_count
-                })
+              onPress={() =>
                 navigation.push('Tab-Shared-Users', {
                   reference: 'statuses',
                   id: status.id,
                   type: 'reblogged_by',
                   count: status.reblogs_count
                 })
-              }}
+              }
             >
               {t('shared.actionsUsers.reblogged_by.text', {
                 count: status.reblogs_count
@@ -69,28 +56,20 @@ const TimelineFeedback = React.memo(
           ) : null}
           {status.favourites_count > 0 ? (
             <CustomText
-              accessibilityLabel={t(
-                'shared.actionsUsers.favourited_by.accessibilityLabel',
-                {
-                  count: status.reblogs_count
-                }
-              )}
-              accessibilityHint={t(
-                'shared.actionsUsers.favourited_by.accessibilityHint'
-              )}
+              accessibilityLabel={t('shared.actionsUsers.favourited_by.accessibilityLabel', {
+                count: status.reblogs_count
+              })}
+              accessibilityHint={t('shared.actionsUsers.favourited_by.accessibilityHint')}
               accessibilityRole='button'
               style={[styles.text, { color: colors.blue }]}
-              onPress={() => {
-                analytics('timeline_shared_feedback_press_favourite', {
-                  count: status.favourites_count
-                })
+              onPress={() =>
                 navigation.push('Tab-Shared-Users', {
                   reference: 'statuses',
                   id: status.id,
                   type: 'favourited_by',
                   count: status.favourites_count
                 })
-              }}
+              }
             >
               {t('shared.actionsUsers.favourited_by.text', {
                 count: status.favourites_count
@@ -101,23 +80,13 @@ const TimelineFeedback = React.memo(
         <View>
           {data && data.length > 1 ? (
             <CustomText
-              accessibilityLabel={t(
-                'shared.actionsUsers.history.accessibilityLabel',
-                {
-                  count: data.length - 1
-                }
-              )}
-              accessibilityHint={t(
-                'shared.actionsUsers.history.accessibilityHint'
-              )}
+              accessibilityLabel={t('shared.actionsUsers.history.accessibilityLabel', {
+                count: data.length - 1
+              })}
+              accessibilityHint={t('shared.actionsUsers.history.accessibilityHint')}
               accessibilityRole='button'
               style={[styles.text, { marginRight: 0, color: colors.blue }]}
-              onPress={() => {
-                analytics('timeline_shared_feedback_press_history', {
-                  count: data.length - 1
-                })
-                navigation.push('Tab-Shared-History', { id: status.id })
-              }}
+              onPress={() => navigation.push('Tab-Shared-History', { id: status.id })}
             >
               {t('shared.actionsUsers.history.text', {
                 count: data.length - 1
