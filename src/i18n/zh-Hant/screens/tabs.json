@@ -275,10 +275,6 @@
       "contact": {
         "heading": "聯繫 tooot"
       },
-      "analytics": {
-        "heading": "幫助我們改善",
-        "description": "僅收集不與使用者相關聯的資料"
-      },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon version v{{version}}"
     },
@@ -311,8 +307,8 @@
       "name": "<0 /><1>的媒體</1>"
     },
     "hashtag": {
-      "follow": "跟隨",
-      "unfollow": "取消跟隨"
+      "follow": "追蹤",
+      "unfollow": "取消追蹤"
     },
     "history": {
       "name": "編輯歷史"
