@@ -5,7 +5,9 @@ import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import addInstance from '@utils/slices/instances/add'
 import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 import * as AuthSession from 'expo-auth-session'
+import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect } from 'react'
+import { Platform } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
@@ -24,14 +26,11 @@ const InstanceAuth = React.memo(
       useProxy: false
     })
 
-    const navigation =
-      useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
+    const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
     const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
 
-    const deprecateAuthFollow = useSelector(
-      checkInstanceFeature('deprecate_auth_follow')
-    )
+    const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
     const [request, response, promptAsync] = AuthSession.useAuthRequest(
       {
         clientId: appData.clientId,
@@ -48,7 +47,15 @@ const InstanceAuth = React.memo(
     useEffect(() => {
       ;(async () => {
         if (request?.clientId) {
-          await promptAsync()
+          let browserPackage: string | undefined
+          if (Platform.OS === 'android') {
+            const tabsSupportingBrowsers = await WebBrowser.getCustomTabsSupportingBrowsersAsync()
+            browserPackage =
+              tabsSupportingBrowsers?.preferredBrowserPackage ||
+              tabsSupportingBrowsers.browserPackages[0] ||
+              tabsSupportingBrowsers.servicePackages[0]
+          }
+          await promptAsync({ browserPackage }).catch(e => console.log(e))
         }
       })()
     }, [request])
