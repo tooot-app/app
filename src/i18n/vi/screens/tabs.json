@@ -275,10 +275,6 @@
       "contact": {
         "heading": "Liên hệ tooot"
       },
-      "analytics": {
-        "heading": "Thu thập dữ liệu",
-        "description": "Giúp cải thiện chất lượng app"
-      },
       "version": "Phiên bản {{version}}",
       "instanceVersion": "Mastodon phiên bản {{version}}"
     },
