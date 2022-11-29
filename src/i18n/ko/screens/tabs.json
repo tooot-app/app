@@ -275,10 +275,6 @@
       "contact": {
         "heading": "tooot 연락"
       },
-      "analytics": {
-        "heading": "개선할 수 있도록 도와주세요",
-        "description": "유저와 관련이 없는 사용량만 수집해요"
-      },
       "version": "버전 v{{version}}",
       "instanceVersion": "마스토돈 버전 v{{version}}"
     },
