@@ -275,10 +275,6 @@
       "contact": {
         "heading": "tooot に関する連絡"
       },
-      "analytics": {
-        "heading": "ソフトウェア改善への協力",
-        "description": "ユーザーに関連しない情報のみ収集します"
-      },
       "version": "バージョン v{{version}}",
       "instanceVersion": "Mastodonのバージョン v{{version}}"
     },
