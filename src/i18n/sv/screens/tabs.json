@@ -275,10 +275,6 @@
       "contact": {
         "heading": "Kontakta tooot"
       },
-      "analytics": {
-        "heading": "Hjälp oss att bli bättre",
-        "description": "Samlar endast in användningsdata som inte är kopplad till användaren"
-      },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon version v{{version}}"
     },
