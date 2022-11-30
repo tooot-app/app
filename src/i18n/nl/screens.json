@@ -9,10 +9,10 @@
   },
   "pushError": {
     "message": "",
-    "description": ""
+    "description": "Schakel push-meldingen opnieuw in bij instellingen"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Afbeeldingstype {{type}} wordt niet ondersteund",
+    "videoNotSupported": "Videotype {{type}} wordt niet ondersteund"
   }
 }
