@@ -49,6 +49,12 @@
       "lists": {
         "name": "Lists"
       },
+      "listAdd": {
+        "name": "Add a List"
+      },
+      "listEdit": {
+        "name": "Edit List"
+      },
       "list": {
         "name": "List: {{list}}"
       },
@@ -87,15 +93,18 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Change Not Saved",
-        "message": "Your change has not been saved. Would you discard saving the changes?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Discard"
+    "listEdit": {
+      "title": "Title",
+      "repliesPolicy": {
+        "heading": "Show replies to:",
+        "options": {
+          "none": "No one",
+          "list": "Members of the list",
+          "followed": "Any followed user"
         }
-      },
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} updated",
         "failed": "{{type}} update failed, please try again"
@@ -125,8 +134,7 @@
           "options": {
             "public": "Public",
             "unlisted": "Unlisted",
-            "private": "Followers only",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Followers only"
           }
         },
         "sensitive": {
@@ -211,8 +219,7 @@
           "title": "Logging out?",
           "message": "After logging out, you need to log in again",
           "buttons": {
-            "logout": "Logout",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Logout"
           }
         }
       }
@@ -229,34 +236,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Appearance",
         "options": {
           "auto": "As system",
           "light": "Light mode",
-          "dark": "Dark mode",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Dark mode"
         }
       },
       "darkTheme": {
         "heading": "Dark theme",
         "options": {
           "lighter": "Lighter",
-          "darker": "Darker",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Darker"
         }
       },
       "browser": {
         "heading": "Opening Link",
         "options": {
           "internal": "Inside app",
-          "external": "Use system browser",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Use system browser"
         }
       },
       "staticEmoji": {

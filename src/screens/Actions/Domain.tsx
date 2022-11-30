@@ -44,10 +44,6 @@ const ActionsDomain: React.FC<Props> = ({ queryKey, rootQueryKey, domain, dismis
             t('shared.header.actions.domain.alert.message'),
             [
               {
-                text: t('shared.header.actions.domain.alert.buttons.cancel'),
-                style: 'cancel'
-              },
-              {
                 text: t('shared.header.actions.domain.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: () => {
@@ -58,6 +54,10 @@ const ActionsDomain: React.FC<Props> = ({ queryKey, rootQueryKey, domain, dismis
                     domain: domain
                   })
                 }
+              },
+              {
+                text: t('shared.header.actions.domain.alert.buttons.cancel'),
+                style: 'default'
               }
             ]
           )

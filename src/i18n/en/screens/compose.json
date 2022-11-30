@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Replied toot could not be found",
           "description": "Replied toot could have been deleted. Do you want to remove it from your reference?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Remove reference"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Choice type",
             "options": {
               "single": "Single choice",
-              "multiple": "Multiple choice",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Multiple choice"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 hours",
               "86400": "1 day",
               "259200": "3 days",
-              "604800": "7 days",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 days"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Public",
             "unlisted": "Unlisted",
             "private": "Followers only",
-            "direct": "Direct message",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Direct message"
           }
         },
         "spoiler": {

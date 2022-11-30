@@ -121,7 +121,8 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
           }
         },
         {
-          text: t('common:buttons.cancel')
+          text: t('common:buttons.cancel'),
+          style: 'default'
         }
       ])
     }

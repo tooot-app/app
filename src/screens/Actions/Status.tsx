@@ -38,8 +38,7 @@ const ActionsStatus: React.FC<Props> = ({
   const mutation = useTimelineMutation({
     onMutate: true,
     onError: (err: any, params, oldData) => {
-      const theFunction = (params as MutationVarsTimelineUpdateStatusProperty)
-        .payload
+      const theFunction = (params as MutationVarsTimelineUpdateStatusProperty).payload
         ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
         : 'delete'
       displayMessage({
@@ -108,15 +107,7 @@ const ActionsStatus: React.FC<Props> = ({
             t('shared.header.actions.status.delete.alert.message'),
             [
               {
-                text: t(
-                  'shared.header.actions.status.delete.alert.buttons.cancel'
-                ),
-                style: 'cancel'
-              },
-              {
-                text: t(
-                  'shared.header.actions.status.delete.alert.buttons.confirm'
-                ),
+                text: t('shared.header.actions.status.delete.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
                   dismiss()
@@ -128,6 +119,10 @@ const ActionsStatus: React.FC<Props> = ({
                     id: status.id
                   })
                 }
+              },
+              {
+                text: t('shared.header.actions.status.delete.alert.buttons.cancel'),
+                style: 'default'
               }
             ]
           )
@@ -142,15 +137,7 @@ const ActionsStatus: React.FC<Props> = ({
             t('shared.header.actions.status.deleteEdit.alert.message'),
             [
               {
-                text: t(
-                  'shared.header.actions.status.deleteEdit.alert.buttons.cancel'
-                ),
-                style: 'cancel'
-              },
-              {
-                text: t(
-                  'shared.header.actions.status.deleteEdit.alert.buttons.confirm'
-                ),
+                text: t('shared.header.actions.status.deleteEdit.alert.buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
                   let replyToStatus: Mastodon.Status | undefined = undefined
@@ -177,6 +164,10 @@ const ActionsStatus: React.FC<Props> = ({
                       })
                     })
                 }
+              },
+              {
+                text: t('shared.header.actions.status.deleteEdit.alert.buttons.cancel'),
+                style: 'default'
               }
             ]
           )

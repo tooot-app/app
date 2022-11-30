@@ -33,7 +33,7 @@ const TabMeProfileRoot: React.FC<
           t('me.profile.root.visibility.options.public'),
           t('me.profile.root.visibility.options.unlisted'),
           t('me.profile.root.visibility.options.private'),
-          t('me.profile.root.visibility.options.cancel')
+          t('common:buttons.cancel')
         ],
         cancelButtonIndex: 3,
         userInterfaceStyle: mode

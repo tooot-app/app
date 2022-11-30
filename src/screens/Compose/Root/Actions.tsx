@@ -86,7 +86,7 @@ const ComposeActions: React.FC = () => {
             t('content.root.actions.visibility.options.unlisted'),
             t('content.root.actions.visibility.options.private'),
             t('content.root.actions.visibility.options.direct'),
-            t('content.root.actions.visibility.options.cancel')
+            t('common:buttons.cancel')
           ],
           cancelButtonIndex: 4,
           userInterfaceStyle: mode

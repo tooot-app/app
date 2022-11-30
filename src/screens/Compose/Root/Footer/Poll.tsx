@@ -195,7 +195,7 @@ const ComposePoll: React.FC = () => {
                 options: [
                   t('content.root.footer.poll.multiple.options.single'),
                   t('content.root.footer.poll.multiple.options.multiple'),
-                  t('content.root.footer.poll.multiple.options.cancel')
+                  t('common:buttons.cancel')
                 ],
                 cancelButtonIndex: 2,
                 userInterfaceStyle: mode
@@ -235,7 +235,7 @@ const ComposePoll: React.FC = () => {
                   ...expirations.map(e =>
                     t(`content.root.footer.poll.expiration.options.${e}`)
                   ),
-                  t('content.root.footer.poll.expiration.options.cancel')
+                  t('common:buttons.cancel')
                 ],
                 cancelButtonIndex: expirations.length,
                 userInterfaceStyle: mode

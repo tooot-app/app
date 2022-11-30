@@ -125,7 +125,7 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
         shadowOpacity: theme === 'light' ? 0.16 : 0.24,
         shadowRadius: 4,
         paddingRight: StyleConstants.Spacing.M * 2,
-        marginTop: insets.top
+        marginTop: ref ? undefined : insets.top
       }}
       titleStyle={{
         color: colors.primaryDefault,

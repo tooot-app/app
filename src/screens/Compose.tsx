@@ -300,7 +300,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   t('heading.right.alert.removeReply.description'),
                   [
                     {
-                      text: t('heading.right.alert.removeReply.cancel'),
+                      text: t('common:buttons.cancel'),
                       onPress: () => {
                         composeDispatch({ type: 'posting', payload: false })
                       },

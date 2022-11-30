@@ -60,11 +60,11 @@ const ComponentInstance: React.FC<Props> = ({
       if (instances && instances.filter(instance => instance.url === domain).length) {
         Alert.alert(t('update.alert.title'), t('update.alert.message'), [
           {
-            text: t('update.alert.buttons.cancel'),
+            text: t('common:buttons.cancel'),
             style: 'cancel'
           },
           {
-            text: t('update.alert.buttons.continue'),
+            text: t('common:buttons.continue'),
             onPress: () => {
               appsQuery.refetch()
             }

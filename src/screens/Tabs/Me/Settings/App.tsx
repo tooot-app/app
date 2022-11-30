@@ -69,7 +69,7 @@ const SettingsApp: React.FC = () => {
                 t('me.settings.theme.options.auto'),
                 t('me.settings.theme.options.light'),
                 t('me.settings.theme.options.dark'),
-                t('me.settings.theme.options.cancel')
+                t('common:buttons.cancel')
               ],
               cancelButtonIndex: 3
             },
@@ -103,7 +103,7 @@ const SettingsApp: React.FC = () => {
               options: [
                 t('me.settings.darkTheme.options.lighter'),
                 t('me.settings.darkTheme.options.darker'),
-                t('me.settings.darkTheme.options.cancel')
+                t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2
             },
@@ -133,7 +133,7 @@ const SettingsApp: React.FC = () => {
               options: [
                 t('me.settings.browser.options.internal'),
                 t('me.settings.browser.options.external'),
-                t('me.settings.browser.options.cancel')
+                t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2
             },
