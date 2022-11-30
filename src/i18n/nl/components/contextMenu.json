@@ -1,76 +1,76 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Acties voor deze toot, zoals de geplaatste gebruiker, toot zichzelf",
   "account": {
-    "title": "",
+    "title": "Gebruikersacties",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Gebruiker dempen",
+      "action_true": "Dempen opheffen voor gebruiker"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Gebruiker blokkeren",
+      "action_true": "Gebruiker deblokkeren"
     },
     "reports": {
-      "action": ""
+      "action": "Rapporteren en blokkeren"
     }
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Toot kopiëren",
+    "succeed": "Gekopieerd"
   },
   "instance": {
-    "title": "",
+    "title": "Instantie actie",
     "block": {
-      "action": "",
+      "action": "Blokkeer instantie {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Bevestig blokkeren van {{instance}} ?",
+        "message": "Meestal kunt u bepaalde gebruiker dempen of blokkeren.\n\nNa het blokkeren van de instantie, wordt alle inhoud inclusief volgers van deze instantie verwijderd!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bevestig"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Toot delen"
     },
     "account": {
-      "action": ""
+      "action": "Gebruiker delen"
     }
   },
   "status": {
-    "title": "",
+    "title": "Toot acties",
     "edit": {
-      "action": ""
+      "action": "Toot bewerken"
     },
     "delete": {
-      "action": "",
+      "action": "Toot verwijderen",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Verwijderen bevestigen?",
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bevestig"
         }
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Toot verwijderen en opnieuw plaatsen",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Bevestig verwijderen en opnieuw plaatsen?",
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Bevestig"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Mute toot en reacties",
+      "action_true": "Unmute toot en reacties"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Toot vastzetten",
+      "action_true": "Toot losmaken"
     }
   }
 }
