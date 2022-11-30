@@ -1,12 +1,12 @@
 {
   "content": {
     "altText": {
-      "heading": ""
+      "heading": "Alternatieve tekst"
     },
     "notificationsFilter": {
-      "heading": "",
+      "heading": "Melding soorten weergeven",
       "content": {
-        "follow": "",
+        "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Volgverzoek",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
