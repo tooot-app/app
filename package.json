@@ -33,6 +33,7 @@
     "@react-native-community/blur": "^4.3.0",
     "@react-native-community/netinfo": "9.3.7",
     "@react-native-community/segmented-control": "^2.2.2",
+    "@react-native-menu/menu": "^0.7.2",
     "@react-navigation/bottom-tabs": "^6.4.3",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",
@@ -77,6 +78,7 @@
     "react-native-gesture-handler": "~2.8.0",
     "react-native-htmlview": "^0.16.0",
     "react-native-image-picker": "^4.10.1",
+    "react-native-ios-context-menu": "^1.15.1",
     "react-native-language-detection": "^0.1.0",
     "react-native-live-text-image-view": "^0.4.0",
     "react-native-pager-view": "^6.1.2",
@@ -92,7 +94,8 @@
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
     "rn-placeholder": "^3.0.3",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "zeego": "^0.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",

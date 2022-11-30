@@ -4,7 +4,8 @@
     "apply": "Apply",
     "cancel": "Cancel",
     "discard": "Discard",
-    "continue": "Continue"
+    "continue": "Continue",
+    "delete": "Delete"
   },
   "customEmoji": {
     "accessibilityLabel": "Custom emoji {{emoji}}"

@@ -104,6 +104,13 @@
         }
       }
     },
+    "listDelete": {
+      "heading": "Delete list",
+      "confirm": {
+        "title": "Delete list \"{{list}}\"?",
+        "message": "This action is not recoverable."
+      }
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} updated",

@@ -26,6 +26,10 @@ type MutationVarsLists =
       type: 'edit'
       payload: Mastodon.List
     }
+  | {
+      type: 'delete'
+      payload: Pick<Mastodon.List, 'id'>
+    }
 
 const mutationFunction = async (params: MutationVarsLists) => {
   const body = new FormData()
@@ -48,6 +52,11 @@ const mutationFunction = async (params: MutationVarsLists) => {
         url: `lists/${params.payload.id}`,
         body
       }).then(res => res.body)
+    case 'delete':
+      return apiInstance({
+        method: 'delete',
+        url: `lists/${params.payload.id}`
+      })
   }
 }
 
