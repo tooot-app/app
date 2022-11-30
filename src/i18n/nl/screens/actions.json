@@ -7,13 +7,13 @@
       "heading": "",
       "content": {
         "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": ""
+        "follow_request": "Volgverzoek",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot van geabonneerde gebruikers",
+        "update": "De reblog is bewerkt"
       }
     }
   }
