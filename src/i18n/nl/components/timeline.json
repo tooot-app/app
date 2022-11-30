@@ -1,44 +1,44 @@
 {
   "empty": {
     "error": {
-      "message": "",
-      "button": ""
+      "message": "Fout bij het laden",
+      "button": "Probeer opnieuw"
     },
     "success": {
-      "message": ""
+      "message": "Tijdlijn is leeg"
     }
   },
   "end": {
-    "message": ""
+    "message": "Het einde, wat dacht je van een kopje <0 />"
   },
   "lookback": {
-    "message": ""
+    "message": "Laatst gelezen om"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "Nieuwere vanaf hier",
+    "refetch": "Naar nieuwste"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Vastgezet",
+      "favourite": "{{name}} markeerde jouw bericht als favoriet",
+      "status": "{{name}} heeft zojuist een bericht geplaatst",
+      "follow": "{{name}} volgt jou nu",
+      "follow_request": "{{name}} heeft verzocht je te volgen",
+      "poll": "Een poll waaraan jij hebt meegedaan is beëindigd",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} boostte",
+        "notification": "{{name}} boostte jouw toot"
       },
-      "update": ""
+      "update": "De reblog is bewerkt"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Reageer op deze toot"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Boost deze toot",
+        "function": "Boost toot",
         "options": {
           "title": "",
           "public": "",
