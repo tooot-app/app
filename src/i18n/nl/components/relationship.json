@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Volg gebruiker"
   },
   "block": {
-    "function": ""
+    "function": "Gebruiker blokkeren"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Fout bij het laden",
+    "blocked_by": "Geblokkeerd door gebruiker",
+    "blocking": "Deblokkeer",
+    "following": "Ontvolg",
+    "requested": "Aanvraag intrekken",
+    "default": "Volg"
   }
 }
