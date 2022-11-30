@@ -81,99 +81,99 @@
               "accessibilityHint": "Minimale hoeveelheid poll opties bereikt, momenteel zijn dat er {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Verhoog poll opties naar {{amount}}",
+              "accessibilityHint": "Maximum aantal poll opties bereikt, momenteel is {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Keuze soort",
             "options": {
-              "single": "",
-              "multiple": "",
-              "cancel": ""
+              "single": "Enkele keuze",
+              "multiple": "Meerkeuze",
+              "cancel": "$t(common:buttons.cancel)"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Geldigheid",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": "",
-              "cancel": ""
+              "300": "5 minuten",
+              "1800": "30 minuten",
+              "3600": "1 uur",
+              "21600": "6 uur",
+              "86400": "1 dag",
+              "259200": "3 dagen",
+              "604800": "7 dagen",
+              "cancel": "$t(common:buttons.cancel)"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Bijlage toevoegen",
+          "accessibilityHint": "Poll functie wordt uitgeschakeld wanneer er een bijlage is",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Uploaden mislukt",
+              "button": "Probeer het opnieuw"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Voeg poll toe",
+          "accessibilityHint": "Bijlage functie wordt uitgeschakeld wanneer poll actief is"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Toot zichtbaarheid is {{visibility}}",
+          "title": "Toot zichtbaarheid",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": "",
-            "cancel": ""
+            "public": "Openbaar",
+            "unlisted": "Niet openbaar",
+            "private": "Alleen volgers",
+            "direct": "Direct bericht",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Voeg emoji toe",
+          "accessibilityHint": "Open emoji lijst, veeg horizontaal om de pagina te wijzigen"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Concept ({{count}})",
+      "drafts_other": "Concepten ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Bijlage bewerken",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Sla bewerken van de bijlage op",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Bewerken mislukt",
+            "button": "Probeer het opnieuw"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Omschrijf deze media voor mensen met een visuele beperking",
+          "placeholder": "Je kan een beschrijving aan je media toevoegen, ook wel bekend als alt-text, zodat deze voor meer mensen toegankelijk wordt. Bijvoorbeeld voor mensen met een visuele beperking.\n\nGoede beschrijvingen zijn beknopt, maar geven nauwkeurig genoeg weer wat er in de media staat om de context ervan te begrijpen."
         },
-        "imageFocus": ""
+        "imageFocus": "Sleep de focuscirkel om het focuspunt bij te werken"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Concept"
       },
-      "warning": "",
+      "warning": "Concepten worden alleen lokaal opgeslagen en kunnen verloren gaan. Gebruik daarom de concepten niet voor langdurige opslag.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Opgeslagen concept, tik om dit concept te bewerken",
+        "textEmpty": "Inhoud is leeg"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Controleren van bijlagen op de server..."
     }
   }
 }
