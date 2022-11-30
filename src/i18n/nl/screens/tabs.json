@@ -124,121 +124,121 @@
           "title": "Post zichtbaarheid",
           "options": {
             "public": "Openbaar",
-            "unlisted": "",
-            "private": "",
-            "cancel": ""
+            "unlisted": "Niet openbaar",
+            "private": "Alleen volgers",
+            "cancel": "$t(common:buttons.cancel)"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Posten van gevoelige media"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Account vergrendelen",
+          "description": "Vereist dat je handmatig volgers goedkeurt"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Bot account",
+          "description": "Dit is een geautomatiseerd account en wordt mogelijk niet gemonitord"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Groep {{index}}",
+        "label": "Label",
+        "content": "Inhoud"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Afbeelding verwerken is mislukt. Probeer het opnieuw."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Je telefoon ondersteunt geen push-meldingen",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Push meldingen inschakelen",
+        "settings": "Inschakelen in instellingen"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Inschakelen voor {{acct}}",
+        "description": "Berichten worden doorgestuurd via tooot's server"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Toon berichtdetails",
+        "description": "Berichten die doorgestuurd zijn via tooot's server zijn versleuteld, maar je kunt kiezen om het bericht op de server te decoderen. Onze broncode is open source en we houden geen logs bij."
       },
       "default": {
-        "heading": ""
+        "heading": "Standaard"
       },
       "follow": {
-        "heading": ""
+        "heading": "Nieuwe volger"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Volgverzoek"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Favorieten"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Boosted"
       },
       "mention": {
-        "heading": ""
+        "heading": "Vermeldde jou"
       },
       "poll": {
-        "heading": ""
+        "heading": "Enquete updates"
       },
       "status": {
-        "heading": ""
+        "heading": "Toot van geabonneerde gebruikers"
       },
-      "howitworks": ""
+      "howitworks": "Leer hoe het werkt"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} ongelezen",
+          "read": "Alle gelezen",
+          "empty": "Geen"
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "Ingeschakeld",
+          "disabled": "Uitgeschakeld"
         }
       },
       "update": {
-        "title": ""
+        "title": "Bijwerken naar de laatste versie"
       },
       "logout": {
-        "button": "",
+        "button": "Uitloggen",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Uitloggen?",
+          "message": "Na het uitloggen moet je opnieuw inloggen",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": "Uitloggen",
+            "cancel": "$t(common:buttons.cancel)"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": "",
+        "heading": "$t(me.stacks.language.name)",
         "options": {
-          "cancel": ""
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "theme": {
-        "heading": "",
+        "heading": "Uiterlijk",
         "options": {
-          "auto": "",
-          "light": "",
+          "auto": "Zoals systeem",
+          "light": "Lichte modus",
           "dark": "Donkere modus",
           "cancel": "$t(common:buttons.cancel)"
         }
@@ -343,11 +343,11 @@
     "users": {
       "accounts": {
         "following": "Volgend {{count}}",
-        "followers": ""
+        "followers": "{{count}} volgers"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} boostten",
+        "favourited_by": "{{count}} markeerden als favoriet"
       }
     }
   }
