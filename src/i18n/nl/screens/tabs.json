@@ -1,129 +1,129 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "Volgend"
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "left": "Globaal",
+        "right": "Lokaal"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Meldingen"
     },
     "me": {
-      "name": ""
+      "name": "Over mij"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Zoeken",
+      "accessibilityHint": "Zoek naar hashtags, gebruikers of toots"
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Filter",
+      "accessibilityHint": "Filter getoonde meldingstypes"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Bladwijzers"
       },
       "conversations": {
-        "name": ""
+        "name": "Directe Berichten"
       },
       "favourites": {
-        "name": ""
+        "name": "Favorieten"
       },
       "fontSize": {
-        "name": ""
+        "name": "Grootte van lettertype"
       },
       "language": {
-        "name": ""
+        "name": "Taal"
       },
       "lists": {
-        "name": ""
+        "name": "Lijsten"
       },
       "list": {
-        "name": ""
+        "name": "Lijst: {{list}}"
       },
       "push": {
-        "name": ""
+        "name": "Push Melding"
       },
       "profile": {
-        "name": ""
+        "name": "Profiel bewerken"
       },
       "profileName": {
-        "name": ""
+        "name": "Weergavenaam bewerken"
       },
       "profileNote": {
-        "name": ""
+        "name": "Beschrijving bewerken"
       },
       "profileFields": {
-        "name": ""
+        "name": "Metadata bewerken"
       },
       "settings": {
-        "name": ""
+        "name": "App Instellingen"
       },
       "webSettings": {
-        "name": ""
+        "name": "Meer Accountinstellingen"
       },
       "switch": {
-        "name": ""
+        "name": "Account wisselen"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Dit is een demo toot😊. Je kan uit verschillende opties hieronder kiezen.<br /><br /> Deze instelling heeft alleen invloed op de inhoud van toots, maar niet op andere lettergroottes.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Standaard",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "profile": {
       "cancellation": {
-        "title": "",
-        "message": "",
+        "title": "Wijzigingen zijn niet opgeslagen",
+        "message": "De wijziging is niet opgeslagen. Wilt u de wijzigingen niet opslaan?",
         "buttons": {
-          "cancel": "",
-          "discard": ""
+          "cancel": "$t(common:buttons.cancel)",
+          "discard": "Verwijder"
         }
       },
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} bijgewerkt",
+        "failed": "{{type}} update is mislukt, probeer het opnieuw"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Weergavenaam"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Avatar",
+          "description": "Zal worden teruggebracht naar 400x400px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Omslagfoto",
+          "description": "Zal worden teruggebracht naar 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Omschrijving"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadata",
+          "total_one": "{{count}} veld",
+          "total_other": "{{count}} velden"
         },
         "visibility": {
-          "title": "",
+          "title": "Post zichtbaarheid",
           "options": {
-            "public": "",
+            "public": "Openbaar",
             "unlisted": "",
             "private": "",
             "cancel": ""
@@ -239,110 +239,110 @@
         "options": {
           "auto": "",
           "light": "",
-          "dark": "",
-          "cancel": ""
+          "dark": "Donkere modus",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Donker thema",
         "options": {
-          "lighter": "",
-          "darker": "",
-          "cancel": ""
+          "lighter": "Lichter",
+          "darker": "Donkerder",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Link openen",
         "options": {
-          "internal": "",
-          "external": "",
-          "cancel": ""
+          "internal": "In app",
+          "external": "Systeembrowser gebruiken",
+          "cancel": "$t(common:buttons.cancel)"
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "Statische emoji gebruiken",
+        "description": "Als je vaak een app crash tegenkomt bij het bekijken van de emoji-lijst, kun je proberen om statische emojis te gebruiken."
       },
       "feedback": {
-        "heading": ""
+        "heading": "Feature aanvragen"
       },
       "support": {
-        "heading": ""
+        "heading": "Tooot ondersteunen"
       },
       "review": {
-        "heading": ""
+        "heading": "Tooot beoordelen"
       },
       "contact": {
-        "heading": ""
+        "heading": "Contacteer tooot"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Version v{{version}}",
+      "instanceVersion": "Mastodon versie v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Kies uit ingelogd",
+      "new": "Log in op instantie"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Acties voor gebruiker {{user}}",
+        "accessibilityHint": "Je kunt deze gebruiker dempen, blokkeren, rapporteren of delen"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " volgt jou",
+      "moved": "Gebruiker is verplaatst",
+      "created_at": "Lid sinds {{date}}",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": "{{count}} toots",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Toots",
+        "all": "Toots en reacties"
       },
-      "suspended": ""
+      "suspended": "Account is geschorst door de beheerders van de server"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>\"s media</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Volg",
+      "unfollow": "Ontvolg"
     },
     "history": {
-      "name": ""
+      "name": "Geschiedenis bewerken"
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Zoeken",
+        "placeholder": "naar..."
       },
       "empty": {
-        "general": "",
+        "general": "Enter keyword to search for <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> or <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Geavanceerd zoeken",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Gebruiker",
+        "hashtags": "Hashtag",
+        "statuses": "Toot"
       },
-      "notFound": ""
+      "notFound": "Kan <bold>{{searchTerm}}</bold> niet vinden gerelateerd aan {{type}}"
     },
     "toot": {
-      "name": ""
+      "name": "Discussies"
     },
     "users": {
       "accounts": {
-        "following": "",
+        "following": "Volgend {{count}}",
         "followers": ""
       },
       "statuses": {
