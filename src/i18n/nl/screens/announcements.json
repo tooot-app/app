@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Mededelingen",
   "content": {
-    "published": "",
+    "published": "Gepubliceerd <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Lees",
+      "unread": "Markeren als gelezen"
     }
   }
 }
