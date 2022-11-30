@@ -1,17 +1,17 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Meer acties van deze afbeelding",
+      "accessibilityHint": "Je kunt deze afbeelding opslaan of delen"
     },
     "options": {
-      "save": "",
-      "share": "",
-      "cancel": ""
+      "save": "Afbeelding opslaan",
+      "share": "Afbeelding delen",
+      "cancel": "$t(common:buttons.cancel)"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Afbeelding opgeslagen",
+      "failed": "Afbeelding opslaan mislukt"
     }
   }
 }
