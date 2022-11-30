@@ -1,22 +1,22 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": ""
+    "OK": "OK",
+    "apply": "Toepassen",
+    "cancel": "Annuleer"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Aangepaste emoji {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} geslaagd"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} mislukt, probeer het opnieuw"
     }
   },
-  "separator": ""
+  "separator": ", "
 }
