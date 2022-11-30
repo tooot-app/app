@@ -1,35 +1,35 @@
 {
   "heading": {
     "left": {
-      "button": "",
+      "button": "Annuleer",
       "alert": {
-        "title": "",
+        "title": "Bewerken annuleren?",
         "buttons": {
-          "save": "",
-          "delete": "",
-          "cancel": ""
+          "save": "Concept opslaan",
+          "delete": "Concept verwijderen",
+          "cancel": "Annuleer"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Toot",
+        "conversation": "Toot DM",
+        "reply": "Toot reactie",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Tooten mislukt",
+          "button": "Probeer het opnieuw"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "cancel": "",
-          "confirm": ""
+          "title": "Antwoord toot kon niet worden gevonden",
+          "description": "Het antwoord is mogelijk verwijderd. Wil je het van je referentie verwijderen?",
+          "cancel": "$t(common:buttons.cancel)",
+          "confirm": "Verwijder de referentie"
         }
       }
     }
@@ -37,48 +37,48 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Tooten als @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Spoiler waarschuwingsbericht"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Wat wil je kwijt",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Maximum aantal bijlagen bereikt",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Bijlagen als gevoelig markeren",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Geüploade bijlage, nummer {{attachment}} verwijderen"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Geüploade bijlage, nummer {{attachment}} bewerken"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Upload meer bijlagen"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Tik om emoji toe te voegen"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Poll optie {{index}}",
+              "single": "Enkele keuze",
+              "multiple": "Meerkeuze"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Verminder de poll opties tot {{amount}}",
+              "accessibilityHint": "Minimale hoeveelheid poll opties bereikt, momenteel zijn dat er {{amount}}"
             },
             "increase": {
               "accessibilityLabel": "",
