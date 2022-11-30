@@ -1,14 +1,14 @@
 {
   "screenshot": {
-    "title": "",
-    "message": "",
-    "button": ""
+    "title": "Privacy Bescherming",
+    "message": "Gelieve de identiteit van een andere gebruiker niet openbaar te maken, zoals gebruikersnaam, avatar enz. Bedankt!",
+    "button": "Bevestig"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Sessie verlopen. Log opnieuw in"
   },
   "pushError": {
-    "message": "",
+    "message": "Push service fout",
     "description": "Schakel push-meldingen opnieuw in bij instellingen"
   },
   "shareError": {
