@@ -139,6 +139,7 @@ export type TabMeStackParamList = {
   'Tab-Me-Conversations': undefined
   'Tab-Me-Favourites': undefined
   'Tab-Me-List': Mastodon.List
+  'Tab-Me-List-Accounts': Omit<Mastodon.List, 'replies_policy'>
   'Tab-Me-List-Edit':
     | {
         type: 'add'
@@ -148,7 +149,7 @@ export type TabMeStackParamList = {
         payload: Mastodon.List
         key: string // To update title after successful mutation
       }
-  'Tab-Me-Lists': undefined
+  'Tab-Me-List-List': undefined
   'Tab-Me-Profile': undefined
   'Tab-Me-Push': undefined
   'Tab-Me-Settings': undefined

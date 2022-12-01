@@ -57,7 +57,7 @@ const TimelineEmpty = React.memo(
                 style={{
                   marginTop: StyleConstants.Spacing.S,
                   marginBottom: StyleConstants.Spacing.L,
-                  color: colors.primaryDefault
+                  color: colors.secondary
                 }}
               >
                 {t('empty.success.message')}

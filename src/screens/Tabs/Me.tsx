@@ -8,8 +8,9 @@ import TabMeBookmarks from './Me/Bookmarks'
 import TabMeConversations from './Me/Cconversations'
 import TabMeFavourites from './Me/Favourites'
 import TabMeList from './Me/List'
-import TabMeListEdit from './Me/ListEdit'
-import TabMeLists from './Me/Lists'
+import TabMeListAccounts from './Me/List/Accounts'
+import TabMeListEdit from './Me/List/Edit'
+import TabMeListList from './Me/List/List'
 import TabMeProfile from './Me/Profile'
 import TabMePush from './Me/Push'
 import TabMeRoot from './Me/Root'
@@ -87,20 +88,27 @@ const TabMe = React.memo(
           })}
         />
         <Stack.Screen
+          name='Tab-Me-List-Accounts'
+          component={TabMeListAccounts}
+          options={({ navigation, route: { params } }) => ({
+            title: t('me.stacks.listAccounts.name', { list: params.title }),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => <HeaderCenter content={t('me.stacks.listsAdd.name')} />
+            }),
+            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+          })}
+        />
+        <Stack.Screen
           name='Tab-Me-List-Edit'
           component={TabMeListEdit}
           options={{
             gestureEnabled: false,
-            presentation: 'modal',
-            title: t('me.stacks.listsAdd.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => <HeaderCenter content={t('me.stacks.listsAdd.name')} />
-            })
+            presentation: 'modal'
           }}
         />
         <Stack.Screen
-          name='Tab-Me-Lists'
-          component={TabMeLists}
+          name='Tab-Me-List-List'
+          component={TabMeListList}
           options={({ navigation }: any) => ({
             title: t('me.stacks.lists.name'),
             ...(Platform.OS === 'android' && {

@@ -1,6 +1,6 @@
 import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import haptics from '@components/haptics'
-import { HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import ComponentInput from '@components/Input'
 import { displayMessage, Message } from '@components/Message'
 import Selections from '@components/Selections'
@@ -12,7 +12,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, ScrollView, TextInput } from 'react-native'
+import { Alert, Platform, ScrollView, TextInput } from 'react-native'
 import { useQueryClient } from 'react-query'
 
 const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
@@ -83,6 +83,16 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
 
   useEffect(() => {
     navigation.setOptions({
+      title: params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name'),
+      ...(Platform.OS === 'android' && {
+        headerCenter: () => (
+          <HeaderCenter
+            content={
+              params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name')
+            }
+          />
+        )
+      }),
       headerLeft: () => (
         <HeaderLeft
           content='X'

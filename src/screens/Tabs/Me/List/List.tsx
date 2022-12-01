@@ -5,7 +5,7 @@ import { useListsQuery } from '@utils/queryHooks/lists'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const TabMeLists: React.FC<TabMeStackScreenProps<'Tab-Me-Lists'>> = ({ navigation }) => {
+const TabMeListList: React.FC<TabMeStackScreenProps<'Tab-Me-List-List'>> = ({ navigation }) => {
   const { data } = useListsQuery({})
   const { t } = useTranslation('screenTabs')
 
@@ -23,17 +23,17 @@ const TabMeLists: React.FC<TabMeStackScreenProps<'Tab-Me-Lists'>> = ({ navigatio
 
   return (
     <MenuContainer>
-      {data?.map((d: Mastodon.List, i: number) => (
+      {data?.map((params, index) => (
         <MenuRow
-          key={i}
+          key={index}
           iconFront='List'
           iconBack='ChevronRight'
-          title={d.title}
-          onPress={() => navigation.navigate('Tab-Me-List', d)}
+          title={params.title}
+          onPress={() => navigation.navigate('Tab-Me-List', params)}
         />
       ))}
     </MenuContainer>
   )
 }
 
-export default TabMeLists
+export default TabMeListList

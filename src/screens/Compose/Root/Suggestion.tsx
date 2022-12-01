@@ -44,7 +44,7 @@ const ComposeRootSuggestion: React.FC<Props> = ({ item }) => {
   }
 
   return item.acct ? (
-    <ComponentAccount account={item} onPress={onPress} />
+    <ComponentAccount account={item} props={{ onPress }} />
   ) : (
     <ComponentHashtag hashtag={item} onPress={onPress} origin='suggestion' />
   )

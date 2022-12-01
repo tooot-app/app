@@ -1,6 +1,14 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
 import { AxiosError } from 'axios'
-import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query'
+import {
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
+} from 'react-query'
 
 export type QueryKeyLists = ['Lists']
 
@@ -53,10 +61,10 @@ const mutationFunction = async (params: MutationVarsLists) => {
         body
       }).then(res => res.body)
     case 'delete':
-      return apiInstance({
+      return apiInstance<{}>({
         method: 'delete',
         url: `lists/${params.payload.id}`
-      })
+      }).then(res => res.body)
   }
 }
 
@@ -66,4 +74,54 @@ const useListsMutation = (
   return useMutation(mutationFunction, options)
 }
 
-export { useListsQuery, useListsMutation }
+/* ----- */
+
+export type QueryKeyListAccounts = ['ListAccounts', { id: Mastodon.List['id'] }]
+
+const accountsQueryFunction = async ({
+  queryKey,
+  pageParam
+}: QueryFunctionContext<QueryKeyListAccounts>) => {
+  const { id } = queryKey[1]
+
+  return await apiInstance<Mastodon.Account[]>({
+    method: 'get',
+    url: `lists/${id}/accounts`,
+    params: { ...pageParam, limit: 40 }
+  })
+}
+
+const useListAccountsQuery = ({
+  options,
+  ...queryKeyParams
+}: QueryKeyListAccounts[1] & {
+  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Account[]>, AxiosError>
+}) => {
+  const queryKey: QueryKeyListAccounts = ['ListAccounts', queryKeyParams]
+  return useInfiniteQuery(queryKey, accountsQueryFunction, options)
+}
+
+type AccountsMutationVarsLists = {
+  type: 'add' | 'delete'
+  payload: Pick<Mastodon.List, 'id'> & { accounts: Mastodon.Account['id'][] }
+}
+
+const accountsMutationFunction = async (params: AccountsMutationVarsLists) => {
+  const body = new FormData()
+  for (const account of params.payload.accounts) {
+    body.append('account_ids[]', account)
+  }
+  return apiInstance<{}>({
+    method: params.type === 'add' ? 'post' : 'delete',
+    url: `lists/${params.payload.id}/accounts`,
+    body
+  }).then(res => res.body)
+}
+
+const useListAccountsMutation = (
+  options: UseMutationOptions<Mastodon.List, AxiosError, AccountsMutationVarsLists>
+) => {
+  return useMutation(accountsMutationFunction, options)
+}
+
+export { useListsQuery, useListsMutation, useListAccountsQuery, useListAccountsMutation }

@@ -9,9 +9,9 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
+import { menuListAccounts, menuListDelete, menuListEdit } from './menus'
 
 const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
   navigation,
@@ -40,6 +40,10 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
   })
 
   useEffect(() => {
+    const listAccounts = menuListAccounts({ params })
+    const listEdit = menuListEdit({ params, key })
+    const listDelete = menuListDelete({ params, mutation })
+
     navigation.setOptions({
       headerRight: () => (
         <DropdownMenu.Root>
@@ -52,41 +56,24 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            <DropdownMenu.Item
-              key='list-edit'
-              onSelect={() =>
-                navigation.navigate('Tab-Me-List-Edit', {
-                  type: 'edit',
-                  payload: params,
-                  key
-                })
-              }
-            >
-              <DropdownMenu.ItemTitle children={t('me.stacks.listEdit.name')} />
-              <DropdownMenu.ItemIcon iosIconName='square.and.pencil' />
-            </DropdownMenu.Item>
+            <DropdownMenu.Group>
+              <DropdownMenu.Item key={listAccounts.key} onSelect={listAccounts.onSelect}>
+                <DropdownMenu.ItemTitle children={listAccounts.title} />
+                <DropdownMenu.ItemIcon iosIconName={listAccounts.icon} />
+              </DropdownMenu.Item>
+            </DropdownMenu.Group>
 
-            <DropdownMenu.Item
-              key='list-delete'
-              destructive
-              onSelect={() =>
-                Alert.alert(
-                  t('me.listDelete.confirm.title', { list: params.title.slice(0, 6) }),
-                  t('me.listDelete.confirm.message'),
-                  [
-                    {
-                      text: t('common:buttons.delete'),
-                      style: 'destructive',
-                      onPress: () => mutation.mutate({ type: 'delete', payload: params })
-                    },
-                    { text: t('common:buttons.cancel') }
-                  ]
-                )
-              }
-            >
-              <DropdownMenu.ItemTitle children={t('me.listDelete.heading')} />
-              <DropdownMenu.ItemIcon iosIconName='trash' />
-            </DropdownMenu.Item>
+            <DropdownMenu.Group>
+              <DropdownMenu.Item key={listEdit.key} onSelect={listEdit.onSelect}>
+                <DropdownMenu.ItemTitle children={listEdit.title} />
+                <DropdownMenu.ItemIcon iosIconName={listEdit.icon} />
+              </DropdownMenu.Item>
+
+              <DropdownMenu.Item key={listDelete.key} destructive onSelect={listDelete.onSelect}>
+                <DropdownMenu.ItemTitle children={listDelete.title} />
+                <DropdownMenu.ItemIcon iosIconName={listDelete.icon} />
+              </DropdownMenu.Item>
+            </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )

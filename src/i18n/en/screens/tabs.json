@@ -46,17 +46,20 @@
       "language": {
         "name": "Language"
       },
-      "lists": {
-        "name": "Lists"
+      "list": {
+        "name": "List: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Users in list: {{list}}"
       },
       "listAdd": {
         "name": "Add a List"
       },
       "listEdit": {
-        "name": "Edit List"
+        "name": "Edit List Details"
       },
-      "list": {
-        "name": "List: {{list}}"
+      "lists": {
+        "name": "Lists"
       },
       "push": {
         "name": "Push Notification"
@@ -93,7 +96,13 @@
         "XXL": "XXL"
       }
     },
+    "listAccounts": {
+      "heading": "Manage users",
+      "error": "Delete user from list",
+      "empty": "No user added in this list"
+    },
     "listEdit": {
+      "heading": "Edit list details",
       "title": "Title",
       "repliesPolicy": {
         "heading": "Show replies to:",
