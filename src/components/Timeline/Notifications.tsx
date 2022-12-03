@@ -16,11 +16,11 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { uniqBy } from 'lodash'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
+import StatusContext from './Shared/Context'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 import TimelineHeaderAndroid from './Shared/HeaderAndroid'
@@ -36,6 +36,17 @@ const TimelineNotifications: React.FC<Props> = ({
   queryKey,
   highlighted = false
 }) => {
+  const instanceAccount = useSelector(getInstanceAccount, () => true)
+
+  const status = notification.status
+  const account = notification.status ? notification.status.account : notification.account
+  const ownAccount = notification.account?.id === instanceAccount?.id
+  const [spoilerExpanded, setSpoilerExpanded] = useState(
+    instanceAccount.preferences['reading:expand:spoilers'] || false
+  )
+  const spoilerHidden = notification.status?.spoiler_text?.length
+    ? !instanceAccount.preferences['reading:expand:spoilers'] && !spoilerExpanded
+    : false
   const copiableContent = useRef<{ content: string; complete: boolean }>({
     content: '',
     complete: false
@@ -53,10 +64,7 @@ const TimelineNotifications: React.FC<Props> = ({
   }
 
   const { colors } = useTheme()
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.id === next?.id)
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-
-  const actualAccount = notification.status ? notification.status.account : notification.account
 
   const onPress = useCallback(() => {
     notification.status &&
@@ -70,11 +78,7 @@ const TimelineNotifications: React.FC<Props> = ({
     return (
       <>
         {notification.type !== 'mention' ? (
-          <TimelineActioned
-            action={notification.type}
-            account={notification.account}
-            notification
-          />
+          <TimelineActioned action={notification.type} isNotification account={account} />
         ) : null}
 
         <View
@@ -89,8 +93,8 @@ const TimelineNotifications: React.FC<Props> = ({
           }}
         >
           <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
-            <TimelineAvatar queryKey={queryKey} account={actualAccount} highlighted={highlighted} />
-            <TimelineHeaderNotification queryKey={queryKey} notification={notification} />
+            <TimelineAvatar account={account} />
+            <TimelineHeaderNotification notification={notification} />
           </View>
 
           {notification.status ? (
@@ -100,41 +104,16 @@ const TimelineNotifications: React.FC<Props> = ({
                 paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
               }}
             >
-              {notification.status.content.length > 0 ? (
-                <TimelineContent status={notification.status} highlighted={highlighted} />
-              ) : null}
-              {notification.status.poll ? (
-                <TimelinePoll
-                  queryKey={queryKey}
-                  statusId={notification.status.id}
-                  poll={notification.status.poll}
-                  reblog={false}
-                  sameAccount={notification.account.id === instanceAccount?.id}
-                />
-              ) : null}
-              {notification.status.media_attachments.length > 0 ? (
-                <TimelineAttachment status={notification.status} />
-              ) : null}
-              {notification.status.card ? <TimelineCard card={notification.status.card} /> : null}
-              <TimelineFullConversation queryKey={queryKey} status={notification.status} />
+              <TimelineContent setSpoilerExpanded={setSpoilerExpanded} />
+              <TimelinePoll />
+              <TimelineAttachment />
+              <TimelineCard />
+              <TimelineFullConversation />
             </View>
           ) : null}
         </View>
 
-        {notification.status ? (
-          <TimelineActions
-            queryKey={queryKey}
-            status={notification.status}
-            highlighted={highlighted}
-            accts={uniqBy(
-              ([notification.status.account] as Mastodon.Account[] & Mastodon.Mention[])
-                .concat(notification.status.mentions)
-                .filter(d => d?.id !== instanceAccount?.id),
-              d => d?.id
-            ).map(d => d?.acct)}
-            reblog={false}
-          />
-        ) : null}
+        <TimelineActions />
       </>
     )
   }
@@ -149,7 +128,17 @@ const TimelineNotifications: React.FC<Props> = ({
   const mInstance = menuInstance({ status: notification.status, queryKey })
 
   return (
-    <>
+    <StatusContext.Provider
+      value={{
+        queryKey,
+        status,
+        isReblog: !!status?.reblog,
+        ownAccount,
+        spoilerHidden,
+        copiableContent,
+        highlighted
+      }}
+    >
       <ContextMenu.Root>
         <ContextMenu.Trigger>
           <Pressable
@@ -199,8 +188,8 @@ const TimelineNotifications: React.FC<Props> = ({
           ))}
         </ContextMenu.Content>
       </ContextMenu.Root>
-      <TimelineHeaderAndroid queryKey={queryKey} status={notification.status} />
-    </>
+      <TimelineHeaderAndroid />
+    </StatusContext.Provider>
   )
 }
 

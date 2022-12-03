@@ -3,37 +3,24 @@ import menuInstance from '@components/contextMenu/instance'
 import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
+import StatusContext from './Context'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
-export interface Props {
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  status: Mastodon.Status
-  highlighted: boolean
-  copiableContent: React.MutableRefObject<{
-    content: string
-    complete: boolean
-  }>
-}
+const TimelineHeaderDefault: React.FC = () => {
+  const { queryKey, rootQueryKey, status, copiableContent, highlighted, disableDetails } =
+    useContext(StatusContext)
+  if (!status) return null
 
-const TimelineHeaderDefault: React.FC<Props> = ({
-  queryKey,
-  rootQueryKey,
-  status,
-  highlighted,
-  copiableContent
-}) => {
   const { colors } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
@@ -76,7 +63,7 @@ const TimelineHeaderDefault: React.FC<Props> = ({
         </View>
       </View>
 
-      {Platform.OS !== 'android' && queryKey ? (
+      {Platform.OS !== 'android' && !disableDetails ? (
         <Pressable
           accessibilityHint={t('accessibilityHint')}
           style={{ flex: 1, alignItems: 'center' }}

@@ -3,21 +3,18 @@ import menuInstance from '@components/contextMenu/instance'
 import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Platform, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
+import StatusContext from './Context'
 
-export interface Props {
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  status?: Mastodon.Status
-}
+const TimelineHeaderAndroid: React.FC = () => {
+  const { queryKey, rootQueryKey, status, disableDetails, disableOnPress } =
+    useContext(StatusContext)
 
-const TimelineHeaderAndroid: React.FC<Props> = ({ queryKey, rootQueryKey, status }) => {
-  if (Platform.OS !== 'android' || !status) return null
+  if (Platform.OS !== 'android' || !status || disableDetails || disableOnPress) return null
 
   const { colors } = useTheme()
 

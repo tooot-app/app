@@ -2,46 +2,25 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
-import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
+import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import { useQueryClient } from 'react-query'
+import StatusContext from './Context'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
 
-const Names = ({ accounts }: { accounts: Mastodon.Account[] }) => {
-  const { t } = useTranslation('componentTimeline')
-  const { colors } = useTheme()
-
-  return (
-    <CustomText
-      numberOfLines={1}
-      style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
-    >
-      <CustomText>{t('shared.header.conversation.withAccounts')}</CustomText>
-      {accounts.map((account, index) => (
-        <CustomText key={account.id} numberOfLines={1}>
-          {index !== 0 ? t('common:separator') : undefined}
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            fontBold
-          />
-        </CustomText>
-      ))}
-    </CustomText>
-  )
-}
-
 export interface Props {
-  queryKey: QueryKeyTimeline
   conversation: Mastodon.Conversation
 }
 
-const HeaderConversation = ({ queryKey, conversation }: Props) => {
+const HeaderConversation = ({ conversation }: Props) => {
+  const { queryKey } = useContext(StatusContext)
+  if (!queryKey) return null
+
   const { colors, theme } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
@@ -70,7 +49,22 @@ const HeaderConversation = ({ queryKey, conversation }: Props) => {
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View style={{ flex: 3 }}>
-        <Names accounts={conversation.accounts} />
+        <CustomText
+          numberOfLines={1}
+          style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
+        >
+          <CustomText>{t('shared.header.conversation.withAccounts')}</CustomText>
+          {conversation.accounts.map((account, index) => (
+            <CustomText key={account.id} numberOfLines={1}>
+              {index !== 0 ? t('common:separator') : undefined}
+              <ParseEmojis
+                content={account.display_name || account.username}
+                emojis={account.emojis}
+                fontBold
+              />
+            </CustomText>
+          ))}
+        </CustomText>
         <View
           style={{
             flexDirection: 'row',

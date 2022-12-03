@@ -16,11 +16,11 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { uniqBy } from 'lodash'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
+import StatusContext from './Shared/Context'
 import TimelineFeedback from './Shared/Feedback'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
@@ -46,29 +46,26 @@ const TimelineDefault: React.FC<Props> = ({
   disableOnPress = false
 }) => {
   const { colors } = useTheme()
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const actualStatus = item.reblog ? item.reblog : item
+  const instanceAccount = useSelector(getInstanceAccount, () => true)
 
-  const ownAccount = actualStatus.account?.id === instanceAccount?.id
-
+  const status = item.reblog ? item.reblog : item
+  const ownAccount = status.account?.id === instanceAccount?.id
+  const [spoilerExpanded, setSpoilerExpanded] = useState(
+    instanceAccount.preferences['reading:expand:spoilers'] || false
+  )
+  const spoilerHidden = status.spoiler_text?.length
+    ? !instanceAccount.preferences['reading:expand:spoilers'] && !spoilerExpanded
+    : false
   const copiableContent = useRef<{ content: string; complete: boolean }>({
     content: '',
     complete: false
   })
 
-  const filtered = queryKey && shouldFilter({ copiableContent, status: actualStatus, queryKey })
+  const filtered = queryKey && shouldFilter({ copiableContent, status, queryKey })
   if (queryKey && filtered && !highlighted) {
     return <TimelineFiltered phrase={filtered} />
-  }
-
-  const onPress = () => {
-    if (highlighted) return
-    navigation.push('Tab-Shared-Toot', {
-      toot: actualStatus,
-      rootQueryKey: queryKey
-    })
   }
 
   const mainStyle: StyleProp<ViewStyle> = {
@@ -79,24 +76,14 @@ const TimelineDefault: React.FC<Props> = ({
   const main = () => (
     <>
       {item.reblog ? (
-        <TimelineActioned action='reblog' account={item.account} />
+        <TimelineActioned action='reblog' />
       ) : item._pinned ? (
-        <TimelineActioned action='pinned' account={item.account} />
+        <TimelineActioned action='pinned' />
       ) : null}
 
       <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
-        <TimelineAvatar
-          queryKey={disableOnPress ? undefined : queryKey}
-          account={actualStatus.account}
-          highlighted={highlighted}
-        />
-        <TimelineHeaderDefault
-          queryKey={disableOnPress ? undefined : queryKey}
-          rootQueryKey={rootQueryKey}
-          status={actualStatus}
-          highlighted={highlighted}
-          copiableContent={copiableContent}
-        />
+        <TimelineAvatar />
+        <TimelineHeaderDefault />
       </View>
 
       <View
@@ -105,120 +92,103 @@ const TimelineDefault: React.FC<Props> = ({
           paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
         }}
       >
-        {typeof actualStatus.content === 'string' && actualStatus.content.length > 0 ? (
-          <TimelineContent
-            status={actualStatus}
-            highlighted={highlighted}
-            disableDetails={disableDetails}
-          />
-        ) : null}
-        {queryKey && actualStatus.poll ? (
-          <TimelinePoll
-            queryKey={queryKey}
-            rootQueryKey={rootQueryKey}
-            statusId={actualStatus.id}
-            poll={actualStatus.poll}
-            reblog={item.reblog ? true : false}
-            sameAccount={ownAccount}
-          />
-        ) : null}
-        {!disableDetails &&
-        Array.isArray(actualStatus.media_attachments) &&
-        actualStatus.media_attachments.length ? (
-          <TimelineAttachment status={actualStatus} />
-        ) : null}
-        {!disableDetails && actualStatus.card ? <TimelineCard card={actualStatus.card} /> : null}
-        {!disableDetails ? (
-          <TimelineFullConversation queryKey={queryKey} status={actualStatus} />
-        ) : null}
-        <TimelineTranslate status={actualStatus} highlighted={highlighted} />
-        <TimelineFeedback status={actualStatus} highlighted={highlighted} />
+        <TimelineContent setSpoilerExpanded={setSpoilerExpanded} />
+        <TimelinePoll />
+        <TimelineAttachment />
+        <TimelineCard />
+        <TimelineFullConversation />
+        <TimelineTranslate />
+        <TimelineFeedback />
       </View>
 
-      {queryKey && !disableDetails ? (
-        <TimelineActions
-          queryKey={queryKey}
-          rootQueryKey={rootQueryKey}
-          highlighted={highlighted}
-          status={actualStatus}
-          ownAccount={ownAccount}
-          accts={uniqBy(
-            ([actualStatus.account] as Mastodon.Account[] & Mastodon.Mention[])
-              .concat(actualStatus.mentions)
-              .filter(d => d?.id !== instanceAccount?.id),
-            d => d?.id
-          ).map(d => d?.acct)}
-          reblog={item.reblog ? true : false}
-        />
-      ) : null}
+      <TimelineActions />
     </>
   )
 
   const mShare = menuShare({
-    visibility: actualStatus.visibility,
+    visibility: status.visibility,
     type: 'status',
-    url: actualStatus.url || actualStatus.uri,
+    url: status.url || status.uri,
     copiableContent
   })
-  const mStatus = menuStatus({ status: actualStatus, queryKey, rootQueryKey })
-  const mInstance = menuInstance({ status: actualStatus, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
+  const mInstance = menuInstance({ status, queryKey, rootQueryKey })
 
-  return disableOnPress ? (
-    <View style={mainStyle}>{main()}</View>
-  ) : (
-    <>
-      <ContextMenu.Root>
-        <ContextMenu.Trigger>
-          <Pressable
-            accessible={highlighted ? false : true}
-            style={mainStyle}
-            onPress={onPress}
-            onLongPress={() => {}}
-            children={main()}
-          />
-        </ContextMenu.Trigger>
+  return (
+    <StatusContext.Provider
+      value={{
+        queryKey,
+        rootQueryKey,
+        status,
+        isReblog: !!item.reblog,
+        ownAccount,
+        spoilerHidden,
+        copiableContent,
+        highlighted,
+        disableDetails,
+        disableOnPress
+      }}
+    >
+      {disableOnPress ? (
+        <View style={mainStyle}>{main()}</View>
+      ) : (
+        <>
+          <ContextMenu.Root>
+            <ContextMenu.Trigger>
+              <Pressable
+                accessible={highlighted ? false : true}
+                style={mainStyle}
+                disabled={highlighted}
+                onPress={() =>
+                  navigation.push('Tab-Shared-Toot', {
+                    toot: status,
+                    rootQueryKey: queryKey
+                  })
+                }
+                onLongPress={() => {}}
+                children={main()}
+              />
+            </ContextMenu.Trigger>
 
-        <ContextMenu.Content>
-          {mShare.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
+            <ContextMenu.Content>
+              {mShare.map((mGroup, index) => (
+                <ContextMenu.Group key={index}>
+                  {mGroup.map(menu => (
+                    <ContextMenu.Item key={menu.key} {...menu.item}>
+                      <ContextMenu.ItemTitle children={menu.title} />
+                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                    </ContextMenu.Item>
+                  ))}
+                </ContextMenu.Group>
               ))}
-            </ContextMenu.Group>
-          ))}
 
-          {mStatus.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
+              {mStatus.map((mGroup, index) => (
+                <ContextMenu.Group key={index}>
+                  {mGroup.map(menu => (
+                    <ContextMenu.Item key={menu.key} {...menu.item}>
+                      <ContextMenu.ItemTitle children={menu.title} />
+                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                    </ContextMenu.Item>
+                  ))}
+                </ContextMenu.Group>
               ))}
-            </ContextMenu.Group>
-          ))}
 
-          {mInstance.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
+              {mInstance.map((mGroup, index) => (
+                <ContextMenu.Group key={index}>
+                  {mGroup.map(menu => (
+                    <ContextMenu.Item key={menu.key} {...menu.item}>
+                      <ContextMenu.ItemTitle children={menu.title} />
+                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                    </ContextMenu.Item>
+                  ))}
+                </ContextMenu.Group>
               ))}
-            </ContextMenu.Group>
-          ))}
-        </ContextMenu.Content>
-      </ContextMenu.Root>
-      <TimelineHeaderAndroid
-        queryKey={disableOnPress ? undefined : queryKey}
-        rootQueryKey={rootQueryKey}
-        status={actualStatus}
-      />
-    </>
+            </ContextMenu.Content>
+          </ContextMenu.Root>
+          <TimelineHeaderAndroid />
+        </>
+      )}
+    </StatusContext.Provider>
   )
 }
 

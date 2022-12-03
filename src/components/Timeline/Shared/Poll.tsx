@@ -7,39 +7,28 @@ import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import {
   MutationVarsTimelineUpdateStatusProperty,
-  QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
 import updateStatusProperty from '@utils/queryHooks/timeline/updateStatusProperty'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import { useQueryClient } from 'react-query'
+import StatusContext from './Context'
 
-export interface Props {
-  queryKey: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  statusId: Mastodon.Status['id']
-  poll: NonNullable<Mastodon.Status['poll']>
-  reblog: boolean
-  sameAccount: boolean
-}
+const TimelinePoll: React.FC = () => {
+  const { queryKey, rootQueryKey, status, isReblog, ownAccount, spoilerHidden, disableDetails } =
+    useContext(StatusContext)
+  if (!queryKey || !status || !status.poll) return null
+  const poll = status.poll
 
-const TimelinePoll: React.FC<Props> = ({
-  queryKey,
-  rootQueryKey,
-  statusId,
-  poll,
-  reblog,
-  sameAccount
-}) => {
   const { colors, theme } = useTheme()
   const { t, i18n } = useTranslation('componentTimeline')
 
-  const [allOptions, setAllOptions] = useState(new Array(poll.options.length).fill(false))
+  const [allOptions, setAllOptions] = useState(new Array(status.poll.options.length).fill(false))
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -79,7 +68,7 @@ const TimelinePoll: React.FC<Props> = ({
 
   const pollButton = useMemo(() => {
     if (!poll.expired) {
-      if (!sameAccount && !poll.voted) {
+      if (!ownAccount && !poll.voted) {
         return (
           <View style={{ marginRight: StyleConstants.Spacing.S }}>
             <Button
@@ -88,8 +77,8 @@ const TimelinePoll: React.FC<Props> = ({
                   type: 'updateStatusProperty',
                   queryKey,
                   rootQueryKey,
-                  id: statusId,
-                  reblog,
+                  id: status.id,
+                  isReblog,
                   payload: {
                     property: 'poll',
                     id: poll.id,
@@ -114,8 +103,8 @@ const TimelinePoll: React.FC<Props> = ({
                   type: 'updateStatusProperty',
                   queryKey,
                   rootQueryKey,
-                  id: statusId,
-                  reblog,
+                  id: status.id,
+                  isReblog,
                   payload: {
                     property: 'poll',
                     id: poll.id,
@@ -257,6 +246,8 @@ const TimelinePoll: React.FC<Props> = ({
       }
     }
   }
+
+  if (spoilerHidden || disableDetails) return null
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M }}>

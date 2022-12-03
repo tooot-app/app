@@ -9,23 +9,23 @@ import { useSearchQuery } from '@utils/queryHooks/search'
 import { useStatusQuery } from '@utils/queryHooks/status'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import TimelineDefault from '../Default'
+import StatusContext from './Context'
 
-export interface Props {
-  card: Pick<Mastodon.Card, 'url' | 'image' | 'blurhash' | 'title' | 'description'>
-}
+const TimelineCard: React.FC = () => {
+  const { status, spoilerHidden, disableDetails } = useContext(StatusContext)
+  if (!status || !status.card) return null
 
-const TimelineCard = React.memo(({ card }: Props) => {
   const { colors } = useTheme()
   const navigation = useNavigation()
 
   const [loading, setLoading] = useState(false)
-  const isStatus = matchStatus(card.url)
+  const isStatus = matchStatus(status.card.url)
   const [foundStatus, setFoundStatus] = useState<Mastodon.Status>()
-  const isAccount = matchAccount(card.url)
+  const isAccount = matchAccount(status.card.url)
   const [foundAccount, setFoundAccount] = useState<Mastodon.Account>()
 
   const searchQuery = useSearchQuery({
@@ -38,7 +38,7 @@ const TimelineCard = React.memo(({ card }: Props) => {
         if (isStatus.sameInstance) {
           return
         } else {
-          return card.url
+          return status.card.url
         }
       }
       if (isAccount) {
@@ -49,7 +49,7 @@ const TimelineCard = React.memo(({ card }: Props) => {
             return isAccount.username
           }
         } else {
-          return card.url
+          return status.card.url
         }
       }
     })(),
@@ -136,10 +136,10 @@ const TimelineCard = React.memo(({ card }: Props) => {
     }
     return (
       <>
-        {card.image ? (
+        {status.card?.image ? (
           <GracefullyImage
-            uri={{ original: card.image }}
-            blurhash={card.blurhash}
+            uri={{ original: status.card.image }}
+            blurhash={status.card.blurhash}
             style={{ flexBasis: StyleConstants.Font.LineHeight.M * 5 }}
             imageStyle={{ borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }}
           />
@@ -155,9 +155,9 @@ const TimelineCard = React.memo(({ card }: Props) => {
             fontWeight='Bold'
             testID='title'
           >
-            {card.title}
+            {status.card?.title}
           </CustomText>
-          {card.description ? (
+          {status.card?.description ? (
             <CustomText
               fontStyle='S'
               numberOfLines={1}
@@ -167,16 +167,18 @@ const TimelineCard = React.memo(({ card }: Props) => {
               }}
               testID='description'
             >
-              {card.description}
+              {status.card.description}
             </CustomText>
           ) : null}
           <CustomText fontStyle='S' numberOfLines={1} style={{ color: colors.secondary }}>
-            {card.url}
+            {status.card?.url}
           </CustomText>
         </View>
       </>
     )
   }
+
+  if (spoilerHidden || disableDetails) return null
 
   return (
     <Pressable
@@ -192,10 +194,10 @@ const TimelineCard = React.memo(({ card }: Props) => {
         overflow: 'hidden',
         borderColor: colors.border
       }}
-      onPress={async () => await openLink(card.url, navigation)}
-      children={cardContent}
+      onPress={async () => status.card && (await openLink(status.card.url, navigation))}
+      children={cardContent()}
     />
   )
-})
+}
 
 export default TimelineCard

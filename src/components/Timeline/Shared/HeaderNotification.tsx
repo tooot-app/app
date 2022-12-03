@@ -4,40 +4,41 @@ import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Platform, Pressable, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
+import StatusContext from './Context'
 import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
-export interface Props {
-  queryKey: QueryKeyTimeline
+export type Props = {
   notification: Mastodon.Notification
 }
 
-const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
+const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
+  const { queryKey, status } = useContext(StatusContext)
+
   const { colors } = useTheme()
 
   const [openChange, setOpenChange] = useState(false)
   const mShare = menuShare({
-    visibility: notification.status?.visibility,
+    visibility: status?.visibility,
     type: 'status',
-    url: notification.status?.url || notification.status?.uri
+    url: status?.url || status?.uri
   })
   const mAccount = menuAccount({
     type: 'status',
     openChange,
-    account: notification.status?.account,
+    account: status?.account,
     queryKey
   })
-  const mStatus = menuStatus({ status: notification.status, queryKey })
-  const mInstance = menuInstance({ status: notification.status, queryKey })
+  const mStatus = menuStatus({ status, queryKey })
+  const mInstance = menuInstance({ status, queryKey })
 
   const actions = () => {
     switch (notification.type) {
@@ -46,7 +47,7 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
       case 'follow_request':
         return <RelationshipIncoming id={notification.account.id} />
       default:
-        if (notification.status) {
+        if (status) {
           return (
             <Pressable
               style={{ flex: 1, alignItems: 'center' }}

@@ -168,6 +168,7 @@ export interface Props {
   highlighted?: boolean
   disableDetails?: boolean
   selectable?: boolean
+  setSpoilerExpanded?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ParseHTML = React.memo(
@@ -183,7 +184,8 @@ const ParseHTML = React.memo(
     expandHint,
     highlighted = false,
     disableDetails = false,
-    selectable = false
+    selectable = false,
+    setSpoilerExpanded
   }: Props) => {
     const adaptiveFontsize = useSelector(getSettingsFontsize)
     const adaptedFontsize = adaptiveScale(
@@ -253,6 +255,9 @@ const ParseHTML = React.memo(
                 onPress={() => {
                   layoutAnimation()
                   setExpanded(!expanded)
+                  if (setSpoilerExpanded) {
+                    setSpoilerExpanded(!expanded)
+                  }
                 }}
                 style={{
                   flexDirection: 'row',
