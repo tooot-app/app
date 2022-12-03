@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "OK",
     "apply": "Áp dụng",
-    "cancel": "Hủy bỏ"
+    "cancel": "Hủy bỏ",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} thất bại, xin thử lại sau"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
