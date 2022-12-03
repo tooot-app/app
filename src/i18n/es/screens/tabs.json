@@ -320,6 +320,11 @@
       },
       "suspended": "Cuenta suspendida por los moderadores de tu servidor"
     },
+    "accountInLists": {
+      "name": "Listas de @{{username}}",
+      "inLists": "En listas",
+      "notInLists": "Otras listas"
+    },
     "attachments": {
       "name": "Multimedia de <0 /><1></1>"
     },
