@@ -5,7 +5,8 @@
     "cancel": "취소",
     "discard": "",
     "continue": "",
-    "delete": ""
+    "delete": "",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "커스텀 이모지 {{emoji}}"
