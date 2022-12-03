@@ -5,7 +5,8 @@
     "cancel": "Hủy bỏ",
     "discard": "Bỏ qua",
     "continue": "Tiếp tục",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
