@@ -6,10 +6,11 @@ import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
+import { useTrendsQuery } from '@utils/queryHooks/trends'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import {
   KeyboardAvoidingView,
@@ -38,9 +39,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
           }
         : { headerLeft: () => null }),
       headerTitle: () => {
-        const onChangeText = debounce((text: string) => navigation.setParams({ text }), 1000, {
-          trailing: true
-        })
         return (
           <View
             style={{
@@ -67,7 +65,10 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                 paddingLeft: StyleConstants.Spacing.XS
               }}
               autoFocus
-              onChangeText={onChangeText}
+              value={text}
+              onChangeText={debounce((text: string) => navigation.setParams({ text }), 1000, {
+                trailing: true
+              })}
               autoCapitalize='none'
               autoCorrect={false}
               clearButtonMode='never'
@@ -81,7 +82,9 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
         )
       }
     })
-  }, [mode])
+  }, [text, mode])
+
+  const trendsTags = useTrendsQuery({ type: 'tags' })
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),
@@ -119,21 +122,16 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     }
   })
 
-  const listEmpty = useMemo(() => {
+  const listEmpty = () => {
     return (
-      <View
-        style={{
-          marginVertical: StyleConstants.Spacing.Global.PagePadding,
-          alignItems: 'center'
-        }}
-      >
-        <View>
-          {status === 'loading' ? (
-            <View style={{ flex: 1, alignItems: 'center' }}>
-              <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
-            </View>
-          ) : (
-            <>
+      <View style={{ paddingVertical: StyleConstants.Spacing.Global.PagePadding }}>
+        {status === 'loading' ? (
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+          </View>
+        ) : (
+          <>
+            <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
               <CustomText
                 fontStyle='S'
                 style={{
@@ -148,7 +146,10 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                   }}
                 />
               </CustomText>
-              <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
+              <CustomText
+                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
+                fontWeight='Bold'
+              >
                 {t('shared.search.empty.advanced.header')}
               </CustomText>
               <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
@@ -171,25 +172,37 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                 {'   '}
                 {t('shared.search.empty.advanced.example.accountLink')}
               </CustomText>
-            </>
-          )}
-        </View>
+            </View>
+
+            <CustomText
+              style={{
+                color: colors.primaryDefault,
+                marginTop: StyleConstants.Spacing.M,
+                paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+              }}
+              fontWeight='Bold'
+            >
+              {t('shared.search.empty.trending.tags')}
+            </CustomText>
+            <View>
+              {trendsTags.data?.map((tag, index) => {
+                const hashtag = tag as Mastodon.Tag
+                return (
+                  <React.Fragment key={index}>
+                    {index !== 0 ? <ComponentSeparator /> : null}
+                    <ComponentHashtag
+                      hashtag={hashtag}
+                      onPress={() => navigation.setParams({ text: `#${hashtag.name}` })}
+                    />
+                  </React.Fragment>
+                )
+              })}
+            </View>
+          </>
+        )}
       </View>
     )
-  }, [status])
-
-  const listItem = useCallback(({ item, section }: { item: any; section: any }) => {
-    switch (section.title) {
-      case 'accounts':
-        return <ComponentAccount account={item} />
-      case 'hashtags':
-        return <ComponentHashtag hashtag={item} />
-      case 'statuses':
-        return <TimelineDefault item={item} disableDetails />
-      default:
-        return null
-    }
-  }, [])
+  }
 
   return (
     <KeyboardAvoidingView
@@ -198,10 +211,21 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     >
       <SectionList
         style={{ minHeight: '100%' }}
-        renderItem={listItem}
+        renderItem={({ item, section }: { item: any; section: any }) => {
+          switch (section.title) {
+            case 'accounts':
+              return <ComponentAccount account={item} />
+            case 'hashtags':
+              return <ComponentHashtag hashtag={item} />
+            case 'statuses':
+              return <TimelineDefault item={item} disableDetails />
+            default:
+              return null
+          }
+        }}
         stickySectionHeadersEnabled
         sections={data || []}
-        ListEmptyComponent={listEmpty}
+        ListEmptyComponent={listEmpty()}
         keyboardShouldPersistTaps='always'
         renderSectionHeader={({ section: { translation } }) => (
           <View

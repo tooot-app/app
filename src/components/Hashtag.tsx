@@ -3,9 +3,8 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { sumBy } from 'lodash'
 import React, { useCallback, useState } from 'react'
-import { Dimensions, Pressable, View } from 'react-native'
+import { Dimensions, Pressable } from 'react-native'
 import Sparkline from './Sparkline'
 import CustomText from './Text'
 
@@ -22,7 +21,7 @@ const ComponentHashtag: React.FC<Props> = ({ hashtag, onPress: customOnPress }) 
     navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
   }, [])
 
-  const padding = StyleConstants.Spacing.S * 1.5
+  const padding = StyleConstants.Spacing.Global.PagePadding
   const width = Dimensions.get('window').width / 4
   const [height, setHeight] = useState<number>(0)
 
