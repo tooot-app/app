@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "",
     "apply": "",
-    "cancel": ""
+    "cancel": "",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": ""
@@ -18,5 +21,9 @@
       "message": ""
     }
   },
-  "separator": ""
+  "separator": "",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
