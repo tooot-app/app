@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "확인",
     "apply": "적용",
-    "cancel": "취소"
+    "cancel": "취소",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "커스텀 이모지 {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} 실패, 다시 시도해주세요"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
