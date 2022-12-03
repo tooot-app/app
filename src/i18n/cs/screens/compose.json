@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "",
           "description": "",
-          "cancel": "",
           "confirm": ""
         }
       }
@@ -89,8 +88,7 @@
             "heading": "",
             "options": {
               "single": "",
-              "multiple": "",
-              "cancel": ""
+              "multiple": ""
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "",
               "86400": "",
               "259200": "",
-              "604800": "",
-              "cancel": ""
+              "604800": ""
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "",
             "unlisted": "",
             "private": "",
-            "direct": "",
-            "cancel": ""
+            "direct": ""
           }
         },
         "spoiler": {
