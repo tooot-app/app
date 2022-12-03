@@ -3,9 +3,9 @@
     "OK": "OK",
     "apply": "Aplicar",
     "cancel": "Cancelar",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "Descartar",
+    "continue": "Continuar",
+    "delete": "Borrar"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizado {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Cambios no guardados",
+    "message": "Los cambios no se han guardado. ¿Quieres descartarlos?"
   }
 }
