@@ -45,8 +45,9 @@ const TimelineHeaderDefault: React.FC<Props> = ({
     copiableContent
   })
   const mAccount = menuAccount({
+    type: 'status',
     openChange,
-    id: status.account.id,
+    account: status.account,
     queryKey
   })
   const mStatus = menuStatus({ status, queryKey, rootQueryKey })

@@ -6,6 +6,7 @@
       "action_false": "Follow user",
       "action_true": "Unfollow user"
     },
+    "inLists": "Manage user of lists",
     "mute": {
       "action_false": "Mute user",
       "action_true": "Unmute user"

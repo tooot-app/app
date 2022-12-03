@@ -31,8 +31,9 @@ const TimelineHeaderNotification = ({ queryKey, notification }: Props) => {
     url: notification.status?.url || notification.status?.uri
   })
   const mAccount = menuAccount({
+    type: 'status',
     openChange,
-    id: notification.status?.account.id,
+    account: notification.status?.account,
     queryKey
   })
   const mStatus = menuStatus({ status: notification.status, queryKey })

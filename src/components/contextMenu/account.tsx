@@ -1,5 +1,8 @@
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import {
   QueryKeyRelationship,
   useRelationshipMutation,
@@ -19,25 +22,29 @@ import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
 const menuAccount = ({
+  type,
   openChange,
-  id,
+  account,
   queryKey,
   rootQueryKey
 }: {
+  type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
-  id?: Mastodon.Account['id']
+  account?: Pick<Mastodon.Account, 'id' | 'username'>
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
-  if (!id) return []
+  if (!account) return []
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
   const menus: ContextMenu[][] = [[]]
 
   const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
-  const ownAccount = instanceAccount?.id === id
+  const ownAccount = instanceAccount?.id === account.id
 
   const [enabled, setEnabled] = useState(openChange)
   useEffect(() => {
@@ -45,12 +52,12 @@ const menuAccount = ({
       setEnabled(true)
     }
   }, [openChange, enabled])
-  const { data, isFetching } = useRelationshipQuery({ id, options: { enabled } })
+  const { data, isFetching } = useRelationshipQuery({ id: account.id, options: { enabled } })
 
   const queryClient = useQueryClient()
   const timelineMutation = useTimelineMutation({
     onSuccess: (_, params) => {
-      queryClient.refetchQueries(['Relationship', { id }])
+      queryClient.refetchQueries(['Relationship', { id: account.id }])
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
         theme,
@@ -90,7 +97,7 @@ const menuAccount = ({
       rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
-  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
+  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id: account.id }]
   const relationshipMutation = useRelationshipMutation({
     onSuccess: (res, { payload: { action } }) => {
       haptics('Success')
@@ -118,14 +125,14 @@ const menuAccount = ({
     }
   })
 
-  if (!ownAccount && Platform.OS !== 'android') {
+  if (!ownAccount && Platform.OS !== 'android' && type !== 'account') {
     menus[0].push({
       key: 'account-following',
       item: {
         onSelect: () =>
           data &&
           relationshipMutation.mutate({
-            id,
+            id: account.id,
             type: 'outgoing',
             payload: { action: 'follow', state: !data?.requested ? data.following : true }
           }),
@@ -147,13 +154,24 @@ const menuAccount = ({
   }
   if (!ownAccount) {
     menus[0].push({
+      key: 'account-list',
+      item: {
+        onSelect: () => navigation.navigate('Tab-Shared-Account-In-Lists', { account }),
+        disabled: Platform.OS !== 'android' ? !data || isFetching : false,
+        destructive: false,
+        hidden: isFetching ? false : !data?.following
+      },
+      title: t('account.inLists'),
+      icon: 'checklist'
+    })
+    menus[0].push({
       key: 'account-mute',
       item: {
         onSelect: () =>
           timelineMutation.mutate({
             type: 'updateAccountProperty',
             queryKey,
-            id,
+            id: account.id,
             payload: { property: 'mute', currentValue: data?.muting }
           }),
         disabled: Platform.OS !== 'android' ? !data || isFetching : false,
@@ -176,7 +194,7 @@ const menuAccount = ({
             timelineMutation.mutate({
               type: 'updateAccountProperty',
               queryKey,
-              id,
+              id: account.id,
               payload: { property: 'block', currentValue: data?.blocking }
             }),
           disabled: Platform.OS !== 'android' ? !data || isFetching : false,
@@ -195,13 +213,13 @@ const menuAccount = ({
             timelineMutation.mutate({
               type: 'updateAccountProperty',
               queryKey,
-              id,
+              id: account.id,
               payload: { property: 'reports' }
             })
             timelineMutation.mutate({
               type: 'updateAccountProperty',
               queryKey,
-              id,
+              id: account.id,
               payload: { property: 'block', currentValue: false }
             })
           },

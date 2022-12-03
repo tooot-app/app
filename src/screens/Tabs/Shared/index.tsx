@@ -16,6 +16,7 @@ import { debounce } from 'lodash'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Platform, TextInput, View } from 'react-native'
+import TabSharedAccountInLists from './AccountInLists'
 
 const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
   const { colors, mode } = useTheme()
@@ -46,6 +47,12 @@ const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNaviga
             headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />
           }
         }}
+      />
+
+      <Stack.Screen
+        key='Tab-Shared-Account-In-Lists'
+        name='Tab-Shared-Account-In-Lists'
+        component={TabSharedAccountInLists}
       />
 
       <Stack.Screen

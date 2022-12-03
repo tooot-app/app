@@ -11,7 +11,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { useIsFetching } from 'react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
@@ -30,21 +30,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   const { colors, mode } = useTheme()
 
   const mShare = menuShare({ type: 'account', url: account.url })
-  const mAccount = menuAccount({ openChange: true, id: account.id })
+  const mAccount = menuAccount({ type: 'account', openChange: true, account })
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        // const shareOnPress = contextMenuShare({
-        //   actions,
-        //   type: 'account',
-        //   url: account.url
-        // })
-        // const accountOnPress = contextMenuAccount({
-        //   actions,
-        //   type: 'account',
-        //   id: account.id
-        // })
-
         return (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger>
@@ -107,7 +96,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   const ListHeaderComponent = useMemo(() => {
     return (
       <>
-        <View style={[styles.header, { borderBottomColor: colors.border }]}>
+        <View style={{ borderBottomWidth: 1, borderBottomColor: colors.border }}>
           <AccountHeader account={data} />
           <AccountInformation account={data} />
           {!data?.suspended && fetchedTimeline.current ? (
@@ -129,7 +118,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                   break
               }
             }}
-            style={styles.segmentsContainer}
+            style={{
+              marginTop: StyleConstants.Spacing.M,
+              marginHorizontal: StyleConstants.Spacing.Global.PagePadding
+            }}
           />
         ) : null}
         {data?.suspended ? (
@@ -177,15 +169,5 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    borderBottomWidth: 1
-  },
-  segmentsContainer: {
-    marginTop: StyleConstants.Spacing.M,
-    marginHorizontal: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default TabSharedAccount

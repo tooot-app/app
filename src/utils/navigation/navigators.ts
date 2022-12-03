@@ -92,6 +92,9 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
     account: Mastodon.Account | Mastodon.Mention
   }
+  'Tab-Shared-Account-In-Lists': {
+    account: Pick<Mastodon.Account, 'id' | 'username'>
+  }
   'Tab-Shared-Attachments': { account: Mastodon.Account }
   'Tab-Shared-Hashtag': {
     hashtag: Mastodon.Tag['name']
