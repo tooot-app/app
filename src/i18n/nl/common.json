@@ -3,9 +3,9 @@
     "OK": "OK",
     "apply": "Toepassen",
     "cancel": "Annuleer",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "Verwijder",
+    "continue": "Ga verder",
+    "delete": "Verwijder"
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Wijziging niet opgeslagen",
+    "message": "De wijziging is niet opgeslagen. Wilt u de wijzigingen niet opslaan?"
   }
 }
