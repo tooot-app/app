@@ -320,6 +320,11 @@
       },
       "suspended": "此帳號已被伺服器管理員停用"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
     },
