@@ -320,6 +320,11 @@
       },
       "suspended": "계정이 서버 관리자에 의해 정지되었어요."
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"의 미디어</1>"
     },
