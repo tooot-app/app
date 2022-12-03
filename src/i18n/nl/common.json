@@ -5,7 +5,8 @@
     "cancel": "Annuleer",
     "discard": "Verwijder",
     "continue": "Ga verder",
-    "delete": "Verwijder"
+    "delete": "Verwijder",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"
