@@ -2,6 +2,7 @@ import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
+import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getInstance } from '@utils/slices/instancesSlice'
 import * as Notifications from 'expo-notifications'
@@ -71,6 +72,16 @@ const pushRegister = async (
     url: 'push/subscription',
     body: formData
   })
+
+  if (res.body.server_key) {
+    Sentry.setExtras({
+      API: 'tooot',
+      instance: instanceUri,
+      resBody: res.body
+    })
+    Sentry.captureMessage('Push register error')
+    return Promise.reject()
+  }
 
   await subscribe({
     expoToken,
