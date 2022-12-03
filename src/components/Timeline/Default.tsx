@@ -1,10 +1,12 @@
+import menuInstance from '@components/contextMenu/instance'
+import menuShare from '@components/contextMenu/share'
+import menuStatus from '@components/contextMenu/status'
 import TimelineActioned from '@components/Timeline/Shared/Actioned'
 import TimelineActions from '@components/Timeline/Shared/Actions'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineAvatar from '@components/Timeline/Shared/Avatar'
 import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
-// @ts-ignore
 import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
@@ -18,10 +20,11 @@ import { uniqBy } from 'lodash'
 import React, { useRef } from 'react'
 import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { useSelector } from 'react-redux'
-import TimelineContextMenu from './Shared/ContextMenu'
+import * as ContextMenu from 'zeego/context-menu'
 import TimelineFeedback from './Shared/Feedback'
 import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
+import TimelineHeaderAndroid from './Shared/HeaderAndroid'
 import TimelineTranslate from './Shared/Translate'
 
 export interface Props {
@@ -89,8 +92,10 @@ const TimelineDefault: React.FC<Props> = ({
         />
         <TimelineHeaderDefault
           queryKey={disableOnPress ? undefined : queryKey}
+          rootQueryKey={rootQueryKey}
           status={actualStatus}
           highlighted={highlighted}
+          copiableContent={copiableContent}
         />
       </View>
 
@@ -149,24 +154,71 @@ const TimelineDefault: React.FC<Props> = ({
     </>
   )
 
+  const mShare = menuShare({
+    visibility: actualStatus.visibility,
+    type: 'status',
+    url: actualStatus.url || actualStatus.uri,
+    copiableContent
+  })
+  const mStatus = menuStatus({ status: actualStatus, queryKey, rootQueryKey })
+  const mInstance = menuInstance({ status: actualStatus, queryKey, rootQueryKey })
+
   return disableOnPress ? (
     <View style={mainStyle}>{main()}</View>
   ) : (
-    <TimelineContextMenu
-      copiableContent={copiableContent}
-      status={actualStatus}
-      queryKey={queryKey}
-      rootQueryKey={rootQueryKey}
-    >
-      <Pressable
-        accessible={highlighted ? false : true}
-        style={mainStyle}
-        onPress={onPress}
-        onLongPress={() => {}}
-      >
-        {main()}
-      </Pressable>
-    </TimelineContextMenu>
+    <>
+      <ContextMenu.Root>
+        <ContextMenu.Trigger>
+          <Pressable
+            accessible={highlighted ? false : true}
+            style={mainStyle}
+            onPress={onPress}
+            onLongPress={() => {}}
+            children={main()}
+          />
+        </ContextMenu.Trigger>
+
+        <ContextMenu.Content>
+          {mShare.map((mGroup, index) => (
+            <ContextMenu.Group key={index}>
+              {mGroup.map(menu => (
+                <ContextMenu.Item key={menu.key} {...menu.item}>
+                  <ContextMenu.ItemTitle children={menu.title} />
+                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.Group>
+          ))}
+
+          {mStatus.map((mGroup, index) => (
+            <ContextMenu.Group key={index}>
+              {mGroup.map(menu => (
+                <ContextMenu.Item key={menu.key} {...menu.item}>
+                  <ContextMenu.ItemTitle children={menu.title} />
+                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.Group>
+          ))}
+
+          {mInstance.map((mGroup, index) => (
+            <ContextMenu.Group key={index}>
+              {mGroup.map(menu => (
+                <ContextMenu.Item key={menu.key} {...menu.item}>
+                  <ContextMenu.ItemTitle children={menu.title} />
+                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
+                </ContextMenu.Item>
+              ))}
+            </ContextMenu.Group>
+          ))}
+        </ContextMenu.Content>
+      </ContextMenu.Root>
+      <TimelineHeaderAndroid
+        queryKey={disableOnPress ? undefined : queryKey}
+        rootQueryKey={rootQueryKey}
+        status={actualStatus}
+      />
+    </>
   )
 }
 

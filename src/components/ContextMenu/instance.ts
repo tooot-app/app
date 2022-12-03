@@ -3,24 +3,23 @@ import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timelin
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
-import { Alert, Platform } from 'react-native'
-import { ContextMenuAction } from 'react-native-context-menu-view'
+import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
-export interface Props {
-  actions: ContextMenuAction[]
-  status: Mastodon.Status
-  queryKey: QueryKeyTimeline
+const menuInstance = ({
+  status,
+  queryKey,
+  rootQueryKey
+}: {
+  status?: Mastodon.Status
+  queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-}
+}): ContextMenu[][] => {
+  if (!status || !queryKey) return []
 
-const contextMenuInstance = ({ actions, status, queryKey, rootQueryKey }: Props) => {
-  const { t } = useTranslation('componentContextMenu')
   const { theme } = useTheme()
-
-  const currentInstance = useSelector(getInstanceUrl)
-  const instance = status?.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const { t } = useTranslation('componentContextMenu')
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -37,61 +36,48 @@ const contextMenuInstance = ({ actions, status, queryKey, rootQueryKey }: Props)
     }
   })
 
+  const menus: ContextMenu[][] = []
+
+  const currentInstance = useSelector(getInstanceUrl)
+  const instance = status.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+
   if (currentInstance !== instance && instance) {
-    switch (Platform.OS) {
-      case 'ios':
-        actions.push({
-          id: 'instance',
-          title: t('instance.title'),
-          actions: [
-            {
-              id: 'instance-block',
-              title: t('instance.block.action', { instance }),
-              destructive: true
-            }
-          ]
-        })
-        break
-      default:
-        actions.push({
-          id: 'instance-block',
-          title: t('instance.block.action', { instance }),
-          destructive: true
-        })
-        break
-    }
+    menus.push([
+      {
+        key: 'instance-block',
+        item: {
+          onSelect: () =>
+            Alert.alert(
+              t('instance.block.alert.title', { instance }),
+              t('instance.block.alert.message'),
+              [
+                {
+                  text: t('instance.block.alert.buttons.confirm'),
+                  style: 'destructive',
+                  onPress: () => {
+                    mutation.mutate({
+                      type: 'domainBlock',
+                      queryKey,
+                      domain: instance
+                    })
+                  }
+                },
+                {
+                  text: t('common:buttons.cancel')
+                }
+              ]
+            ),
+          disabled: false,
+          destructive: true,
+          hidden: false
+        },
+        title: t('instance.block.action', { instance }),
+        icon: ''
+      }
+    ])
   }
 
-  return (index: number) => {
-    if (typeof index !== 'number' || !actions[index]) {
-      return // For Android
-    }
-    if (
-      actions[index].id === 'instance-block' ||
-      (actions[index].id === 'instance' && actions[index].actions?.[0].id === 'instance-block')
-    ) {
-      Alert.alert(
-        t('instance.block.alert.title', { instance }),
-        t('instance.block.alert.message'),
-        [
-          {
-            text: t('instance.block.alert.buttons.confirm'),
-            style: 'destructive',
-            onPress: () => {
-              mutation.mutate({
-                type: 'domainBlock',
-                queryKey,
-                domain: instance
-              })
-            }
-          },
-          {
-            text: t('common:buttons.cancel')
-          }
-        ]
-      )
-    }
-  }
+  return menus
 }
 
-export default contextMenuInstance
+export default menuInstance

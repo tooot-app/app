@@ -3,59 +3,74 @@ import Clipboard from '@react-native-clipboard/clipboard'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share } from 'react-native'
-import { ContextMenuAction } from 'react-native-context-menu-view'
 
-export interface Props {
-  copiableContent?: React.MutableRefObject<{
-    content?: string | undefined
-    complete: boolean
-  }>
-  actions: ContextMenuAction[]
-  type: 'status' | 'account'
-  url: string
-}
+const menuShare = (
+  params:
+    | {
+        visibility?: Mastodon.Status['visibility']
+        copiableContent?: React.MutableRefObject<{
+          content?: string | undefined
+          complete: boolean
+        }>
+        type: 'status'
+        url?: string
+      }
+    | {
+        type: 'account'
+        url: string
+      }
+): ContextMenu[][] => {
+  if (params.type === 'status' && params.visibility === 'direct') return []
 
-const contextMenuShare = ({ copiableContent, actions, type, url }: Props) => {
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
-  actions.push({
-    id: 'share',
-    title: t(`share.${type}.action`),
-    systemIcon: 'square.and.arrow.up'
-  })
-  Platform.OS !== 'android' &&
-    type === 'status' &&
-    actions.push({
-      id: 'copy',
-      title: t(`copy.action`),
-      systemIcon: 'doc.on.doc',
-      disabled: !copiableContent?.current.content?.length
+  const menus: ContextMenu[][] = [[]]
+
+  if (params.url) {
+    const url = params.url
+    menus[0].push({
+      key: 'share',
+      item: {
+        onSelect: () => {
+          switch (Platform.OS) {
+            case 'ios':
+              Share.share({ url })
+              break
+            case 'android':
+              Share.share({ message: url })
+              break
+          }
+        },
+        disabled: false,
+        destructive: false,
+        hidden: false
+      },
+      title: t(`share.${params.type}.action`),
+      icon: 'square.and.arrow.up'
+    })
+  }
+  if (params.type === 'status' && Platform.OS === 'ios')
+    menus[0].push({
+      key: 'copy',
+      item: {
+        onSelect: () => {
+          Clipboard.setString(params.copiableContent?.current.content || '')
+          displayMessage({
+            theme,
+            type: 'success',
+            message: t(`copy.succeed`)
+          })
+        },
+        disabled: false,
+        destructive: false,
+        hidden: !params.copiableContent?.current.content?.length
+      },
+      title: t('copy.action'),
+      icon: 'doc.on.doc'
     })
 
-  return (index: number) => {
-    if (typeof index !== 'number' || !actions[index]) {
-      return // For Android
-    }
-    if (actions[index].id === 'copy') {
-      Clipboard.setString(copiableContent?.current.content || '')
-      displayMessage({
-        theme,
-        type: 'success',
-        message: t(`copy.succeed`)
-      })
-    }
-    if (actions[index].id === 'share') {
-      switch (Platform.OS) {
-        case 'ios':
-          Share.share({ url })
-          break
-        case 'android':
-          Share.share({ message: url })
-          break
-      }
-    }
-  }
+  return menus
 }
 
-export default contextMenuShare
+export default menuShare

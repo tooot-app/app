@@ -2,6 +2,10 @@
   "accessibilityHint": "Actions for this toot, such as its posted user, toot itself",
   "account": {
     "title": "User actions",
+    "following": {
+      "action_false": "Follow user",
+      "action_true": "Unfollow user"
+    },
     "mute": {
       "action_false": "Mute user",
       "action_true": "Unmute user"
@@ -11,7 +15,7 @@
       "action_true": "Unblock user"
     },
     "reports": {
-      "action": "Report and block"
+      "action": "Report and block user"
     }
   },
   "copy": {

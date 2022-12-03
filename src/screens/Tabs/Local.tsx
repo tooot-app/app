@@ -9,8 +9,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
-import ContextMenu from 'react-native-context-menu-view'
+import * as DropdownMenu from 'zeego/dropdown-menu'
 import TabShared from './Shared'
 
 const Stack = createNativeStackNavigator<TabLocalStackParamList>()
@@ -34,31 +33,8 @@ const TabLocal = React.memo(
           name='Tab-Local-Root'
           options={{
             headerTitle: () => (
-              <ContextMenu
-                dropdownMenuMode
-                style={{ maxWidth: '80%', flex: Platform.OS === 'android' ? 1 : undefined }}
-                actions={
-                  lists?.length
-                    ? [
-                        {
-                          id: '',
-                          title: t('tabs.local.name'),
-                          disabled: queryKey[1].page === 'Following'
-                        },
-                        ...lists?.map(list => ({
-                          id: list.id,
-                          title: list.title,
-                          disabled: queryKey[1].page === 'List' && queryKey[1].list === list.id
-                        }))
-                      ]
-                    : undefined
-                }
-                onPress={({ nativeEvent: { index } }) => {
-                  lists && index
-                    ? setQueryKey(['Timeline', { page: 'List', list: lists[index - 1].id }])
-                    : setQueryKey(['Timeline', { page: 'Following' }])
-                }}
-                children={
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
                   <HeaderCenter
                     dropdown={(lists?.length ?? 0) > 0}
                     content={
@@ -67,8 +43,43 @@ const TabLocal = React.memo(
                         : t('tabs.local.name')
                     }
                   />
-                }
-              />
+                </DropdownMenu.Trigger>
+
+                <DropdownMenu.Content>
+                  {lists?.length
+                    ? [
+                        {
+                          key: 'default',
+                          item: {
+                            onSelect: () => setQueryKey(['Timeline', { page: 'Following' }]),
+                            disabled: queryKey[1].page === 'Following',
+                            destructive: false,
+                            hidden: false
+                          },
+                          title: t('tabs.local.name'),
+                          icon: ''
+                        },
+                        ...lists?.map(list => ({
+                          key: list.id,
+                          item: {
+                            onSelect: () =>
+                              setQueryKey(['Timeline', { page: 'List', list: list.id }]),
+                            disabled: queryKey[1].page === 'List' && queryKey[1].list === list.id,
+                            destructive: false,
+                            hidden: false
+                          },
+                          title: list.title,
+                          icon: ''
+                        }))
+                      ].map(menu => (
+                        <DropdownMenu.Item key={menu.key} {...menu.item}>
+                          <DropdownMenu.ItemTitle children={menu.title} />
+                          <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                        </DropdownMenu.Item>
+                      ))
+                    : undefined}
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             ),
             headerRight: () => (
               <HeaderRight

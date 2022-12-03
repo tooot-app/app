@@ -1,3 +1,6 @@
+import menuAccount from '@components/contextMenu/account'
+import menuShare from '@components/contextMenu/share'
+import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
@@ -11,18 +14,79 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { useIsFetching } from 'react-query'
+import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
 import AccountInformation from './Account/Information'
 import AccountNav from './Account/Nav'
 
 const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>> = ({
+  navigation,
   route: {
     params: { account }
   }
 }) => {
   const { t, i18n } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
+
+  const mShare = menuShare({ type: 'account', url: account.url })
+  const mAccount = menuAccount({ openChange: true, id: account.id })
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        // const shareOnPress = contextMenuShare({
+        //   actions,
+        //   type: 'account',
+        //   url: account.url
+        // })
+        // const accountOnPress = contextMenuAccount({
+        //   actions,
+        //   type: 'account',
+        //   id: account.id
+        // })
+
+        return (
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <HeaderRight
+                accessibilityLabel={t('shared.account.actions.accessibilityLabel', {
+                  user: account.acct
+                })}
+                accessibilityHint={t('shared.account.actions.accessibilityHint')}
+                content='MoreHorizontal'
+                onPress={() => {}}
+                background
+              />
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Content>
+              {mShare.map((mGroup, index) => (
+                <DropdownMenu.Group key={index}>
+                  {mGroup.map(menu => (
+                    <DropdownMenu.Item key={menu.key} {...menu.item}>
+                      <DropdownMenu.ItemTitle children={menu.title} />
+                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Group>
+              ))}
+
+              {mAccount.map((mGroup, index) => (
+                <DropdownMenu.Group key={index}>
+                  {mGroup.map(menu => (
+                    <DropdownMenu.Item key={menu.key} {...menu.item}>
+                      <DropdownMenu.ItemTitle children={menu.title} />
+                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Group>
+              ))}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        )
+      }
+    })
+  }, [])
 
   const { data } = useAccountQuery({ id: account.id })
 
@@ -77,7 +141,13 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
               paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
             }}
           >
-            <Text style={{ ...StyleConstants.FontStyle.M, color: colors.secondary, textAlign: 'center' }}>
+            <Text
+              style={{
+                ...StyleConstants.FontStyle.M,
+                color: colors.secondary,
+                textAlign: 'center'
+              }}
+            >
               {t('shared.account.suspended')}
             </Text>
           </View>
