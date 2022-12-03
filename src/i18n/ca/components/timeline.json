@@ -21,14 +21,14 @@
   "shared": {
     "actioned": {
       "pinned": "Fixat",
-      "favourite": "{{name}} ha marcat el teu toot com a favorit",
+      "favourite": "{{name}} ha marcat la teva publicació com a favorita",
       "status": "{{name}} ha publicat",
       "follow": "{{name}} et segueix",
       "follow_request": "{{name}} ha sol·licitat seguir-te",
       "poll": "S'ha acabat una enquesta en què havies participat",
       "reblog": {
         "default": "{{name}} ha impulsat",
-        "notification": "{{name}} ha impulsat el teu toot"
+        "notification": "{{name}} ha impulsat la teva publicació"
       },
       "update": "L'impuls ha sigut editat"
     },
@@ -47,7 +47,7 @@
       },
       "favourited": {
         "accessibilityLabel": "Afegeix aquesta publicació a favorits",
-        "function": "Marca la publicació com a favorit"
+        "function": "Marca la publicació com a favorita"
       },
       "bookmarked": {
         "accessibilityLabel": "Afegeix aquesta publicació a marcadors",
@@ -94,7 +94,7 @@
       "default": "Tradueix",
       "succeed": "Traduït per {{provider}} amb {{source}}",
       "failed": "Error al traduir",
-      "source_not_supported": "L'idioma del toot no està suportat",
+      "source_not_supported": "L'idioma de la publicació no està suportada",
       "target_not_supported": "Aquest idioma no està suportat"
     },
     "header": {
