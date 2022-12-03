@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Ingelogd bij deze instantie",
-      "message": "Je kunt inloggen op een ander account met behoud van de huidige aangemelde account",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Doorgaan"
-      }
+      "message": "Je kunt inloggen op een ander account met behoud van de huidige aangemelde account"
     }
   }
 }
