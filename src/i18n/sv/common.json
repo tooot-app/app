@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "OK",
     "apply": "Verkställ",
-    "cancel": "Avbryt"
+    "cancel": "Avbryt",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} misslyckades, försök igen"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
