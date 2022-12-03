@@ -50,13 +50,13 @@
         "name": "Lijst: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Gebruikers in de lijst: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Lijst toevoegen"
       },
       "listEdit": {
-        "name": ""
+        "name": "Lijstdetails bewerken"
       },
       "lists": {
         "name": "Lijsten"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gebruikers beheren",
+      "error": "Gebruiker verwijderen uit lijst",
+      "empty": "Geen gebruiker toegevoegd aan deze lijst"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Lijstdetails bewerken",
+      "title": "Titel",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Toon reacties aan:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Niemand",
+          "list": "Leden van de lijst",
+          "followed": "Elke gevolgde gebruiker"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Verwijder lijst",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Lijst verwijderen \"{{list}}\"?",
+        "message": "Deze actie kan niet worden hersteld."
       }
     },
     "profile": {
