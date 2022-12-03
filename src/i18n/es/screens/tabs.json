@@ -157,7 +157,7 @@
           "title": "Publicar contenido multimedia sensible"
         },
         "lock": {
-          "title": "Bloquear cuenta",
+          "title": "Hacer la cuenta privada",
           "description": "Necesitas aprobar manualmente los seguidores nuevos"
         },
         "bot": {
