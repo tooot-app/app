@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "OK",
     "apply": "Übernehmen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Eigenes Emoji {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} fehlgeschlagen, bitte wiederholen"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
