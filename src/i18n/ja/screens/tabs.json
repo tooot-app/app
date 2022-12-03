@@ -50,13 +50,13 @@
         "name": "リスト: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "リスト {{list}} のユーザー"
       },
       "listAdd": {
-        "name": ""
+        "name": "リストに追加"
       },
       "listEdit": {
-        "name": ""
+        "name": "リストの詳細を編集"
       },
       "lists": {
         "name": "リスト"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "ユーザーの管理",
+      "error": "リストからユーザーを削除",
+      "empty": "このリストにはユーザーが追加されていません"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "リストの詳細を編集",
+      "title": "タイトル",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "返信を表示",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "なし",
+          "list": "リストのメンバー",
+          "followed": "フォロー中のユーザー全員"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "リストを削除",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "リスト \"{{list}}\" を削除しますか?",
+        "message": "この操作は復元できません。"
       }
     },
     "profile": {
