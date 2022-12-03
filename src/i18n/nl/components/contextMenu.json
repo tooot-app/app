@@ -3,8 +3,8 @@
   "account": {
     "title": "Gebruikersacties",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Volg gebruiker",
+      "action_true": "Ontvolg deze gebruiker"
     },
     "mute": {
       "action_false": "Gebruiker dempen",
@@ -15,7 +15,7 @@
       "action_true": "Gebruiker deblokkeren"
     },
     "reports": {
-      "action": ""
+      "action": "Rapporteren en blokkeren"
     }
   },
   "copy": {
