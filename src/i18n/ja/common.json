@@ -3,9 +3,9 @@
     "OK": "はい",
     "apply": "適用",
     "cancel": "キャンセル",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "変更を破棄",
+    "continue": "続ける",
+    "delete": "削除"
   },
   "customEmoji": {
     "accessibilityLabel": "カスタム絵文字 {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "変更は保存されていません",
+    "message": "変更は保存されていません。変更を破棄しますか?"
   }
 }
