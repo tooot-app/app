@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Més accions per aquesta imatge",
+      "accessibilityHint": "Pots desar o compartir aquesta imatge"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Desa la imatge",
+      "share": "Comparteix la imatge"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Imatge desada",
+      "failed": "Error al desar la imatge"
     }
   }
 }
