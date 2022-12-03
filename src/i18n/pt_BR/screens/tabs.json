@@ -320,6 +320,11 @@
       },
       "suspended": ""
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
     },
