@@ -320,6 +320,11 @@
       },
       "suspended": "Konto wurde von den Instanzmoderation gesperrt"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"s Medien</1>"
     },
