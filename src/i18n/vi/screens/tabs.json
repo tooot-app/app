@@ -320,6 +320,11 @@
       },
       "suspended": "Người này đã bị vô hiệu hóa"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
