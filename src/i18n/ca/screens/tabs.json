@@ -134,120 +134,120 @@
           "description": "Es reduirà a 400x400px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Capçalera",
+          "description": "Es reduirà a 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Descripció"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadades",
+          "total_one": "{{count}} camp",
+          "total_other": "{{count}} camps"
         },
         "visibility": {
-          "title": "",
+          "title": "Visibilitat de la publicació",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": ""
+            "public": "Públic",
+            "unlisted": "Sense llistar",
+            "private": "Només als seguidors"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Publica contingut multimèdia sensible"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Fes el compte privat",
+          "description": "Caldrà l'aprovació manual de seguidors nous"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Compte bot",
+          "description": "Aquest compte executa principalment accions automatitzades i no podrà ser monitorat"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Grup {{index}}",
+        "label": "Etiqueta",
+        "content": "Contingut"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Ha fallat el processament d'imatge. Si us plau, torneu-ho a provar."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "El seu telèfon no suporta les notificacions push de tooot",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Habilita les notificacions push",
+        "settings": "Activa'ls a la configuració"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Activa per {{acct}}",
+        "description": "Els missatges s'envien a través del servidor del tooot"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Mostra els detalls del missatge",
+        "description": "Els missatges que s'envien a través del servidor del tooot estan encriptades, però pots escollir per desencriptar-los en el servidor. El nostre servidor és de codi obert i tenim una política de zero registres."
       },
       "default": {
-        "heading": ""
+        "heading": "Per defecte"
       },
       "follow": {
-        "heading": ""
+        "heading": "Nou seguidor"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Sol·licitud de seguiment"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Favorits"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Impulsat"
       },
       "mention": {
-        "heading": ""
+        "heading": "T'ha mencionat"
       },
       "poll": {
-        "heading": ""
+        "heading": "Actualització d'una votació"
       },
       "status": {
-        "heading": ""
+        "heading": "Publicació d'usuaris subscrits"
       },
-      "howitworks": ""
+      "howitworks": "Aprèn com funciona"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} sense llegir",
+          "read": "Tots llegits",
+          "empty": "Cap"
         }
       },
       "push": {
         "content": {
-          "enabled": "",
-          "disabled": ""
+          "enabled": "Habilitat",
+          "disabled": "Deshabilitat"
         }
       },
       "update": {
-        "title": ""
+        "title": "Actualitza a la última versió"
       },
       "logout": {
-        "button": "",
+        "button": "Tanca la sessió",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Vol tancar la sessió?",
+          "message": "Després de tancar la sessió, hauràs de tornar a iniciar la sessió",
           "buttons": {
-            "logout": ""
+            "logout": "Tanca la sessió"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
           "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
@@ -278,98 +278,98 @@
       },
       "staticEmoji": {
         "heading": "Utilitza emojis estàtics",
-        "description": ""
+        "description": "Si l'aplicació falla freqüentment en visualitzar la llista d'emojis, pots intentar fer servir els emojis estàtics."
       },
       "feedback": {
-        "heading": ""
+        "heading": "Peticions de característiques"
       },
       "support": {
-        "heading": ""
+        "heading": "Dona suport al tooot"
       },
       "review": {
-        "heading": ""
+        "heading": "Valora al tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Contacta al tooot"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Versió v{{version}}",
+      "instanceVersion": "Versió del Mastodon v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Escull la sessió",
+      "new": "Inicia la sessió a la instància"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Accions per l'usuari {{user}}",
+        "accessibilityHint": "Pots silenciar, bloquejar, reportar o compartir aquest usuari"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " et segueix",
+      "moved": "S'ha traslladat",
+      "created_at": "Es va unir el dia {{date}}",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": "{{count}} publicacions",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Publicacions",
+        "all": "Publicacions i respostes"
       },
-      "suspended": ""
+      "suspended": "Compte suspès pels moderadors del teu servidor"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Llistes de @{{username}}",
+      "inLists": "En les llistes",
+      "notInLists": "Altres llistes"
     },
     "attachments": {
-      "name": ""
+      "name": "Multimèdia de <0 /><1></1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Segueix",
+      "unfollow": "Deixa de seguir"
     },
     "history": {
-      "name": ""
+      "name": "Edita l'historial"
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Cercant",
+        "placeholder": "alguna cosa..."
       },
       "empty": {
-        "general": "",
+        "general": "Escriu per cercar <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> o <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Cerca avançada",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Usuari",
+        "hashtags": "Etiqueta",
+        "statuses": "Publicació"
       },
-      "notFound": ""
+      "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}"
     },
     "toot": {
       "name": ""
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "{{count}} seguits",
+        "followers": "{{count}} seguidors"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} impulsats",
+        "favourited_by": "{{count}} favorits"
       }
     }
   }
