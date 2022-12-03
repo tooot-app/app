@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "",
-      "message": "",
-      "buttons": {
-        "cancel": "",
-        "continue": ""
-      }
+      "message": ""
     }
   }
 }
