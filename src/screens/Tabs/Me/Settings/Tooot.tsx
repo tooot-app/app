@@ -14,6 +14,7 @@ import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 import { Platform } from 'react-native'
 import Constants from 'expo-constants'
 import { getExpoToken } from '@utils/slices/appSlice'
+import browserPackage from '@helpers/browserPackage'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
@@ -52,7 +53,7 @@ const SettingsTooot: React.FC = () => {
         title={t('me.settings.contact.heading')}
         content={<Icon name='Mail' size={StyleConstants.Font.Size.M} color={colors.secondary} />}
         iconBack='ChevronRight'
-        onPress={() => {
+        onPress={async () => {
           if (instanceActive !== -1) {
             navigation.navigate('Screen-Compose', {
               type: 'conversation',
@@ -71,7 +72,9 @@ const SettingsTooot: React.FC = () => {
                 ']'
             })
           } else {
-            WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot')
+            WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot', {
+              browserPackage: await browserPackage()
+            })
           }
         }}
       />

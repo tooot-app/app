@@ -2,6 +2,7 @@ import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
+import browserPackage from '@helpers/browserPackage'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { getExpoToken } from '@utils/slices/appSlice'
@@ -153,7 +154,11 @@ const TabMePush: React.FC = () => {
             <MenuRow
               title={t('me.push.howitworks')}
               iconBack='ExternalLink'
-              onPress={() => WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')}
+              onPress={async () =>
+                WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
+                  browserPackage: await browserPackage()
+                })
+              }
             />
           </MenuContainer>
           <MenuContainer>{alerts}</MenuContainer>

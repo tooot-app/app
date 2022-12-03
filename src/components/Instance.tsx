@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import browserPackage from '@helpers/browserPackage'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { getInstances } from '@utils/slices/instancesSlice'
@@ -254,13 +255,19 @@ const ComponentInstance: React.FC<Props> = ({
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={() => WebBrowser.openBrowserAsync('https://tooot.app/privacy-policy')}
+                    onPress={async () =>
+                      WebBrowser.openBrowserAsync('https://tooot.app/privacy-policy', {
+                        browserPackage: await browserPackage()
+                      })
+                    }
                   />,
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync('https://tooot.app/terms-of-service')
+                    onPress={async () =>
+                      WebBrowser.openBrowserAsync('https://tooot.app/terms-of-service', {
+                        browserPackage: await browserPackage()
+                      })
                     }
                   />
                 ]}

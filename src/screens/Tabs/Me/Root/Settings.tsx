@@ -1,4 +1,5 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
+import browserPackage from '@helpers/browserPackage'
 import { useNavigation } from '@react-navigation/native'
 import { getInstanceActive, getInstanceUrl } from '@utils/slices/instancesSlice'
 import * as WebBrowser from 'expo-web-browser'
@@ -25,11 +26,15 @@ const Settings: React.FC = () => {
           iconFront='Sliders'
           iconBack='ExternalLink'
           title={t('me.stacks.webSettings.name')}
-          onPress={() =>
+          onPress={async () =>
             WebBrowser.openAuthSessionAsync(
               `https://${url}/settings/preferences`,
               'tooot://tooot',
-              { dismissButtonStyle: 'done', readerMode: false }
+              {
+                browserPackage: await browserPackage(),
+                dismissButtonStyle: 'done',
+                readerMode: false
+              }
             )
           }
         />
