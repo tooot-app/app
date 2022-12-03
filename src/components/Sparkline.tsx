@@ -1,6 +1,7 @@
 import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy, minBy } from 'lodash'
 import React from 'react'
+import { Platform } from 'react-native'
 import Svg, { G, Path } from 'react-native-svg'
 
 export interface Props {
@@ -68,7 +69,7 @@ const Sparkline: React.FC<Props> = ({ data, width, height, margin = 0 }) => {
   const fillPoints = linePoints.concat(closePolyPoints)
 
   return (
-    <Svg height='auto' width={width}>
+    <Svg height={Platform.OS !== 'android' ? 'auto' : 24} width={width}>
       <G>
         <Path d={'M' + fillPoints.join(' ')} fill={colors.blue} fillOpacity={0.1} />
         <Path
