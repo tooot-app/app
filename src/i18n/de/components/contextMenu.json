@@ -3,8 +3,8 @@
   "account": {
     "title": "Benutzeraktionen",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Folgen",
+      "action_true": "Nutzer entfolgen"
     },
     "mute": {
       "action_false": "Profil stummschalten",
@@ -15,7 +15,7 @@
       "action_true": "User entblocken"
     },
     "reports": {
-      "action": ""
+      "action": "Nutzer melden und blockieren"
     }
   },
   "copy": {
