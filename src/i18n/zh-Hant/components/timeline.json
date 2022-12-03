@@ -23,8 +23,8 @@
       "pinned": "置頂",
       "favourite": "{{name}} 把您的嘟文加入了最愛",
       "status": "{{name}} 剛剛嘟文",
-      "follow": "{{name}} 追蹤您了",
-      "follow_request": "{{name}} 要求追蹤您",
+      "follow": "{{name}} 跟隨了您",
+      "follow_request": "{{name}} 要求跟隨您",
       "poll": "您曾投過的投票已經結束",
       "reblog": {
         "default": "{{name}} 轉嘟了",
