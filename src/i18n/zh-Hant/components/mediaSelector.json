@@ -1,6 +1,6 @@
 {
   "title": "選擇媒體來源",
-  "message": "媒體 EXIF 資訊不會被上傳",
+  "message": "媒體 Exif 資訊不會被上傳",
   "options": {
     "image": "上傳照片",
     "image_max": "上傳照片（最多 {{max}} 張）",
