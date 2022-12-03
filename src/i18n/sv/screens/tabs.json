@@ -320,6 +320,11 @@
       },
       "suspended": "Kontot är avstängt av moderatorerna på din server"
     },
+    "accountInLists": {
+      "name": "@{{username}}s listor",
+      "inLists": "I listor",
+      "notInLists": "Andra listor"
+    },
     "attachments": {
       "name": "<0 /><1>s media</1>"
     },
