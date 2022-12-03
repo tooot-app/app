@@ -4,7 +4,7 @@
     "title": "Gebruikersacties",
     "following": {
       "action_false": "Volg gebruiker",
-      "action_true": "Ontvolg deze gebruiker"
+      "action_true": "Ontvolg"
     },
     "mute": {
       "action_false": "Gebruiker dempen",
