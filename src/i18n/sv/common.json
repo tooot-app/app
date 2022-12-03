@@ -3,9 +3,9 @@
     "OK": "OK",
     "apply": "Verkställ",
     "cancel": "Avbryt",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "Kasta bort",
+    "continue": "Fortsätt",
+    "delete": "Radera"
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Ändringen har inte sparats",
+    "message": "Din ändring har inte sparats. Vill du strunta i att spara ändringarna?"
   }
 }
