@@ -1,18 +1,18 @@
 {
   "screenshot": {
-    "title": "",
-    "message": "",
-    "button": ""
+    "title": "Protecció de la privacitat",
+    "message": "Si us plau, no revelis la identitat d'altres usuaris, així com el nom d'usuari, avatar, etc. Gràcies!",
+    "button": "Confirma"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "La sessió ha sigut expirada. Si us plau, torna a iniciar la sessió"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Error del servei push",
+    "description": "Si us plau, torna a habilitar les notificacions push a la configuració"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Format d'imatge {{type}} no suportat",
+    "videoNotSupported": "Format de vídeo {{type}} no suportat"
   }
 }
