@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "OK",
     "apply": "Toepassen",
-    "cancel": "Annuleer"
+    "cancel": "Annuleer",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} mislukt, probeer het opnieuw"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
