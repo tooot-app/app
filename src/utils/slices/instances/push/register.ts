@@ -73,7 +73,7 @@ const pushRegister = async (
     body: formData
   })
 
-  if (res.body.server_key) {
+  if (!res.body.server_key?.length) {
     Sentry.setExtras({
       API: 'tooot',
       instance: instanceUri,
