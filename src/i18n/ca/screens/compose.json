@@ -1,0 +1,175 @@
+{
+  "heading": {
+    "left": {
+      "button": "Cancel·la",
+      "alert": {
+        "title": "Cancel·lar l'edició?",
+        "buttons": {
+          "save": "Desa l'esborrany",
+          "delete": "Esborra l'esborrany",
+          "cancel": "Cancel·la"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Tut",
+        "conversation": "",
+        "reply": "Resposta del tut",
+        "deleteEdit": "Tut",
+        "edit": "Tut",
+        "share": "Tut"
+      },
+      "alert": {
+        "default": {
+          "title": "Error en publicar",
+          "button": "Torna a provar"
+        },
+        "removeReply": {
+          "title": "No s'ha pogut trobar el tut respost",
+          "description": "",
+          "confirm": ""
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Publicant el tut com a @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Missatge d'alerta d'espòiler"
+        },
+        "textInput": {
+          "placeholder": "Què et passa pel cap?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "S'ha arribat al nombre màxim d'adjunts",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Marca els adjunts com a contingut sensible",
+          "remove": {
+            "accessibilityLabel": "Esborra l'adjunt afegit, número {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Edita l'adjunt afegit, número {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Afegeix més adjunts"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Toca per a afegir emojis al tut"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Resposta {{index}}",
+              "single": "Resposta única",
+              "multiple": "Resposta múltiple"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Rebaixa el nombre de respostes a {{amount}}",
+              "accessibilityHint": "S'ha arribat al nombre mínim de respostes, ara mateix n'hi ha {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Augmentar el nombre de respostes a {{amount}}",
+              "accessibilityHint": "S'ha arribat al nombre màxim de respostes, ara mateix n'hi ha {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "",
+            "options": {
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "expiration": {
+            "heading": "",
+            "options": {
+              "300": "",
+              "1800": "",
+              "3600": "",
+              "21600": "",
+              "86400": "",
+              "259200": "",
+              "604800": ""
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "",
+          "accessibilityHint": "",
+          "failed": {
+            "alert": {
+              "title": "",
+              "button": ""
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        },
+        "visibility": {
+          "accessibilityLabel": "",
+          "title": "",
+          "options": {
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "direct": ""
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": ""
+        },
+        "emoji": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        }
+      },
+      "drafts_one": "",
+      "drafts_other": ""
+    },
+    "editAttachment": {
+      "header": {
+        "title": "",
+        "right": {
+          "accessibilityLabel": "",
+          "failed": {
+            "title": "",
+            "button": ""
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "",
+          "placeholder": ""
+        },
+        "imageFocus": ""
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": ""
+      },
+      "warning": "",
+      "content": {
+        "accessibilityHint": "",
+        "textEmpty": ""
+      },
+      "checkAttachment": ""
+    }
+  }
+}
