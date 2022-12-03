@@ -1,0 +1,10 @@
+{
+  "heading": "",
+  "content": {
+    "published": "S'ha publicat <0 />",
+    "button": {
+      "read": "Vist",
+      "unread": "Marca com a llegit"
+    }
+  }
+}
