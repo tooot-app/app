@@ -320,6 +320,11 @@
       },
       "suspended": "此账户已被服务器管理员停用"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
     },
