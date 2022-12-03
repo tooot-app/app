@@ -16,7 +16,7 @@
         "default": "Publicació",
         "conversation": "Envia un missatge directe",
         "reply": "Resposta de la publicació",
-        "deleteEdit": "Tut",
+        "deleteEdit": "Publicació",
         "edit": "Tut",
         "share": "Tut"
       },
@@ -64,7 +64,7 @@
           }
         },
         "emojis": {
-          "accessibilityHint": "Toca per a afegir emojis al tut"
+          "accessibilityHint": "Toca per a afegir emojis a la publicació"
         },
         "poll": {
           "option": {
