@@ -321,9 +321,9 @@
       "suspended": "Account is geschorst door de beheerders van de server"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Lijsten van @{{username}}",
+      "inLists": "In lijsten",
+      "notInLists": "Andere lijsten"
     },
     "attachments": {
       "name": "<0 /><1>\"s media</1>"
