@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "Prem per expandir o contraure el contingut",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} línies més)",
+    "defaultHint": "Toot llarg"
+  }
+}
