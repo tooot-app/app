@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "このインスタンスにログインしました",
-      "message": "既存のアカウントにログインしたまま、他のアカウントにログインできます",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "続行"
-      }
+      "message": "既存のアカウントにログインしたまま、他のアカウントにログインできます"
     }
   }
 }
