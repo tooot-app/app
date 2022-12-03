@@ -3,9 +3,9 @@
     "OK": "OK",
     "apply": "Áp dụng",
     "cancel": "Hủy bỏ",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "Bỏ qua",
+    "continue": "Tiếp tục",
+    "delete": "Xóa"
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Những thay đổi chưa được lưu",
+    "message": "Những thay đổi của bạn chưa được lưu. Bạn có muốn hủy bỏ?"
   }
 }
