@@ -3,8 +3,8 @@
   "account": {
     "title": "Användaråtgärder",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Följ användare",
+      "action_true": "Avfölj användaren"
     },
     "mute": {
       "action_false": "Tysta användare",
@@ -15,7 +15,7 @@
       "action_true": "Avblockera användare"
     },
     "reports": {
-      "action": ""
+      "action": "Rapportera och blockera användare"
     }
   },
   "copy": {
