@@ -46,11 +46,20 @@
       "language": {
         "name": "Lingua"
       },
-      "lists": {
-        "name": "Liste"
-      },
       "list": {
         "name": "Lista: {{list}}"
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": "Liste"
       },
       "push": {
         "name": "Notifiche push"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Modifiche non salvate",
-        "message": "Le tue modifiche non sono state salvate. Vuoi scartarle?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Scarta"
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} aggiornato",
         "failed": "Aggiornamento di {{type}} fallito, per favore riprova."
@@ -125,8 +150,7 @@
           "options": {
             "public": "Pubblico",
             "unlisted": "Non listato",
-            "private": "Solo seguaci",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Solo seguaci"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Uscire dall'account?",
           "message": "Se esci dal tuo account, dovrai rifare l'accesso",
           "buttons": {
-            "logout": "Esci",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Esci"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Tema",
         "options": {
           "auto": "Segui impostazioni di sistema",
           "light": "Tema chiaro",
-          "dark": "Tema scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Tema scuro"
         }
       },
       "darkTheme": {
         "heading": "Tema scuro",
         "options": {
           "lighter": "Poco scuro",
-          "darker": "Molto scuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Molto scuro"
         }
       },
       "browser": {
         "heading": "Apertura link",
         "options": {
           "internal": "Nella app",
-          "external": "Nel browser di sistema",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Nel browser di sistema"
         }
       },
       "staticEmoji": {
