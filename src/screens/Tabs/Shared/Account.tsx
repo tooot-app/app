@@ -1,6 +1,6 @@
 import menuAccount from '@components/contextMenu/account'
 import menuShare from '@components/contextMenu/share'
-import { HeaderRight } from '@components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
@@ -33,6 +33,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   const mAccount = menuAccount({ type: 'account', openChange: true, account })
   useEffect(() => {
     navigation.setOptions({
+      headerTransparent: true,
+      headerStyle: {
+        backgroundColor: `rgba(255, 255, 255, 0)`
+      },
+      title: '',
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} background />,
       headerRight: () => {
         return (
           <DropdownMenu.Root>

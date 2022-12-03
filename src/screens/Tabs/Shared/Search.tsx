@@ -1,5 +1,6 @@
 import ComponentAccount from '@components/Account'
 import ComponentHashtag from '@components/Hashtag'
+import { HeaderLeft } from '@components/Header'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
@@ -7,18 +8,80 @@ import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import { debounce } from 'lodash'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { KeyboardAvoidingView, Platform, SectionList, StyleSheet, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SectionList,
+  StyleSheet,
+  TextInput,
+  View
+} from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 
 const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> = ({
+  navigation,
   route: {
     params: { text }
   }
 }) => {
   const { t } = useTranslation('screenTabs')
-  const { colors } = useTheme()
+  const { colors, mode } = useTheme()
+
+  useEffect(() => {
+    navigation.setOptions({
+      ...(Platform.OS === 'ios'
+        ? {
+            headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+          }
+        : { headerLeft: () => null }),
+      headerTitle: () => {
+        const onChangeText = debounce((text: string) => navigation.setParams({ text }), 1000, {
+          trailing: true
+        })
+        return (
+          <View
+            style={{
+              flexBasis: '80%',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+          >
+            <TextInput
+              editable={false}
+              style={{
+                fontSize: StyleConstants.Font.Size.M,
+                color: colors.primaryDefault
+              }}
+              defaultValue={t('shared.search.header.prefix')}
+            />
+            <TextInput
+              accessibilityRole='search'
+              keyboardAppearance={mode}
+              style={{
+                fontSize: StyleConstants.Font.Size.M,
+                flex: 1,
+                color: colors.primaryDefault,
+                paddingLeft: StyleConstants.Spacing.XS
+              }}
+              autoFocus
+              onChangeText={onChangeText}
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='never'
+              keyboardType='web-search'
+              onSubmitEditing={({ nativeEvent: { text } }) => navigation.setParams({ text })}
+              placeholder={t('shared.search.header.placeholder')}
+              placeholderTextColor={colors.secondary}
+              returnKeyType='go'
+            />
+          </View>
+        )
+      }
+    })
+  }, [])
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),

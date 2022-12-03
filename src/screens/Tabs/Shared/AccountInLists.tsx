@@ -10,7 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SectionList, Text, View } from 'react-native'
+import { SectionList, View } from 'react-native'
 
 const TabSharedAccountInLists: React.FC<
   TabSharedStackScreenProps<'Tab-Shared-Account-In-Lists'>
@@ -27,7 +27,6 @@ const TabSharedAccountInLists: React.FC<
     navigation.setOptions({
       presentation: 'modal',
       title: t('shared.accountInLists.name', { username: account.username }),
-      headerLeft: () => null,
       headerRight: () => {
         return (
           <HeaderRight
@@ -49,8 +48,8 @@ const TabSharedAccountInLists: React.FC<
       id: 'out',
       title: t('shared.accountInLists.notInLists'),
       data:
-        listsQuery.data?.filter(
-          ({ id }) => !accountInListsQuery.data?.filter(d => d.id === id).length
+        listsQuery?.data?.filter(
+          ({ id }) => !accountInListsQuery?.data?.filter(d => d.id === id)?.length
         ) || []
     }
   ]

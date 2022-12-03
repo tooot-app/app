@@ -1,5 +1,5 @@
 import haptics from '@components/haptics'
-import { HeaderRight } from '@components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
@@ -18,6 +18,13 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
     params: { hashtag }
   }
 }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+      title: `#${decodeURIComponent(hashtag)}`
+    })
+  }, [])
+
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
 
   const { theme } = useTheme()

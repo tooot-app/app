@@ -1,3 +1,4 @@
+import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import { ParseEmojis } from '@components/Parse'
 import ComponentSeparator from '@components/Separator'
@@ -9,7 +10,8 @@ import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -23,6 +25,7 @@ const ContentView = ({
   last: boolean
 }) => {
   const { colors } = useTheme()
+
   return (
     <>
       <View
@@ -37,16 +40,11 @@ const ContentView = ({
         ) : null}
         {history.poll
           ? history.poll.options.map((option, index) => (
-              <View
-                key={index}
-                style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
-              >
+              <View key={index} style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                   <Icon
                     style={{
-                      paddingTop:
-                        StyleConstants.Font.LineHeight.M -
-                        StyleConstants.Font.Size.M,
+                      paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
                       marginRight: StyleConstants.Spacing.S
                     }}
                     name='Circle'
@@ -54,17 +52,13 @@ const ContentView = ({
                     color={colors.disabled}
                   />
                   <CustomText style={{ flex: 1 }}>
-                    <ParseEmojis
-                      content={option.title}
-                      emojis={history.poll?.emojis}
-                    />
+                    <ParseEmojis content={option.title} emojis={history.poll?.emojis} />
                   </CustomText>
                 </View>
               </View>
             ))
           : null}
-        {Array.isArray(history.media_attachments) &&
-        history.media_attachments.length ? (
+        {Array.isArray(history.media_attachments) && history.media_attachments.length ? (
           <TimelineAttachment status={history} />
         ) : null}
       </View>
@@ -73,14 +67,21 @@ const ContentView = ({
   )
 }
 
-const TabSharedHistory: React.FC<
-  TabSharedStackScreenProps<'Tab-Shared-History'>
-> = ({
+const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>> = ({
+  navigation,
   route: {
     params: { id }
   }
 }) => {
+  const { t } = useTranslation('screenTabs')
   const { data } = useStatusHistory({ id })
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: t('shared.history.name'),
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+    })
+  }, [])
 
   return (
     <ScrollView>
@@ -90,12 +91,7 @@ const TabSharedHistory: React.FC<
             .reverse()
             .map((d, i) =>
               i !== 0 ? (
-                <ContentView
-                  key={i}
-                  history={d}
-                  first={i === 1}
-                  last={i === data.length - 1}
-                />
+                <ContentView key={i} history={d} first={i === 1} last={i === data.length - 1} />
               ) : null
             )
         : null}
