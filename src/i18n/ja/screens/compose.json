@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "返信されたトゥートが見つかりませんでした",
           "description": "返信されたトゥートが削除された可能性があります。参照から削除しますか？",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "参照を削除"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "投票タイプ",
             "options": {
               "single": "単一選択式",
-              "multiple": "複数選択式",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "複数選択式"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6時間",
               "86400": "1日",
               "259200": "3日",
-              "604800": "7日",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7日"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "公開",
             "unlisted": "未収載",
             "private": "フォロワー限定",
-            "direct": "ダイレクトメッセージ",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "ダイレクトメッセージ"
           }
         },
         "spoiler": {
