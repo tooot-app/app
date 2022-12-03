@@ -50,13 +50,13 @@
         "name": "Lista: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Användare i listan: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Lägg till en lista"
       },
       "listEdit": {
-        "name": ""
+        "name": "Redigera listans detaljer"
       },
       "lists": {
         "name": "Listor"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Hantera användare",
+      "error": "Ta bort användare från lista",
+      "empty": "Ingen användare tillagd i denna lista"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Redigera listans detaljer",
+      "title": "Titel",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Visa svar:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Ingen",
+          "list": "Medlemmar i listan",
+          "followed": "Alla följda användare"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Radera lista",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Radera listan \"{{list}}\"?",
+        "message": "Denna åtgärd kan inte ångras."
       }
     },
     "profile": {
