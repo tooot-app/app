@@ -1,0 +1,26 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Domini de la instància"
+    },
+    "button": "Inicia la sessió",
+    "information": {
+      "name": "Nom",
+      "accounts": "Usuaris",
+      "statuses": "Toots",
+      "domains": "Universos"
+    },
+    "disclaimer": {
+      "base": "L'inici de sessió fa servir el navegador del sistema, per tant, la informació del teu compte no serà visible pel tooot."
+    },
+    "terms": {
+      "base": "En iniciar la sessió, acceptes la <0>política de privacitat</0> i les <1>condicions del servei</1>."
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Iniciada la sessió a aquesta instància",
+      "message": "Pots iniciar la sessió a un altre compte, mantenint els existents connectats"
+    }
+  }
+}
