@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "OK",
     "apply": "Aplicar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizado {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} falhou, por favor, tente novamente"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
