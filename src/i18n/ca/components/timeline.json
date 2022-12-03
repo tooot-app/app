@@ -34,11 +34,11 @@
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": "Respon a aquest toot"
+        "accessibilityLabel": "Respon a aquesta publicació"
       },
       "reblogged": {
-        "accessibilityLabel": "Impulsa aquest toot",
-        "function": "Impulsa el toot",
+        "accessibilityLabel": "Impulsa aquesta publicació",
+        "function": "Impulsa la publicació",
         "options": {
           "title": "Escull la visibilitat de l'impuls",
           "public": "Impuls públic",
@@ -46,27 +46,27 @@
         }
       },
       "favourited": {
-        "accessibilityLabel": "Afegeix aquest toot a favorits",
-        "function": "Marca el toot com a favorit"
+        "accessibilityLabel": "Afegeix aquesta publicació a favorits",
+        "function": "Marca la publicació com a favorit"
       },
       "bookmarked": {
-        "accessibilityLabel": "Afegeix aquest toot a marcadors",
-        "function": "Afegir el toot a marcadors"
+        "accessibilityLabel": "Afegeix aquesta publicació a marcadors",
+        "function": "Afegeix la publicació a marcadors"
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "{{count}} usuaris han impulsat aquest toot",
+        "accessibilityLabel": "{{count}} usuaris han impulsat aquesta publicació",
         "accessibilityHint": "Prem per conèixer els usuaris",
         "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "{{count}} usuaris han marcat com a favorits aquest toot",
+        "accessibilityLabel": "{{count}} usuaris han marcat com a favorits aquesta publicació",
         "accessibilityHint": "Prem per conèixer els usuaris",
         "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "Aquest toot ha sigut editat unes {{count}} vegades",
+        "accessibilityLabel": "Aquesta publicació ha sigut editada unes {{count}} vegades",
         "accessibilityHint": "Prem per veure tot l'historial d'edicions",
         "text_one": "{{count}} edició",
         "text_other": "{{count}} edicions"
@@ -104,47 +104,47 @@
             "accessibilityHint": "Nom d'usuari"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Compte d'usuari"
           }
         },
-        "application": "",
+        "application": "Amb {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Publicació editada"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Publicació silenciada"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "La publicació és un missatge directe"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "La publicació és visible només per als seguidors"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Amb",
         "delete": {
-          "function": ""
+          "function": "Esborra el missatge directe"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Vota",
+          "refresh": "Actualitza"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} usuari ha votat",
+          "voters_other": "{{count}} usuaris han votat",
+          "votes_one": "{{count}} vot",
+          "votes_other": "{{count}} vots"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Votació finalitzada",
+          "until": "Finalitza <0 />"
         }
       }
     }
