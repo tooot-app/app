@@ -6,6 +6,7 @@
       "action_false": "",
       "action_true": ""
     },
+    "inLists": "",
     "mute": {
       "action_false": "静音用户",
       "action_true": "取消静音用户"
