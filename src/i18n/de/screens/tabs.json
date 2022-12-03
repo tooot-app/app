@@ -50,13 +50,13 @@
         "name": "Liste: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Benutzer in dieser Liste: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Eine Liste hinzufügen"
       },
       "listEdit": {
-        "name": ""
+        "name": "Listendetails bearbeiten"
       },
       "lists": {
         "name": "Listen"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Nutzer verwalten",
+      "error": "Nutzer von der Liste löschen",
+      "empty": "Keine Nutzer in diese Liste hinzugefügt"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Listendetails bearbeiten",
+      "title": "Titel",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Antworten anzeigen für:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Niemanden",
+          "list": "Mitglieder der Liste",
+          "followed": "Allen gefolgten Nutzern"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Liste löschen",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Liste \"{{list}}\" löschen?",
+        "message": "Diese Aktion kann nicht rückgängig gemacht werden."
       }
     },
     "profile": {
