@@ -2,6 +2,10 @@
   "accessibilityHint": "Acties voor deze toot, zoals de geplaatste gebruiker, toot zichzelf",
   "account": {
     "title": "Gebruikersacties",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Gebruiker dempen",
       "action_true": "Dempen opheffen voor gebruiker"
@@ -11,7 +15,7 @@
       "action_true": "Gebruiker deblokkeren"
     },
     "reports": {
-      "action": "Rapporteren en blokkeren"
+      "action": ""
     }
   },
   "copy": {
