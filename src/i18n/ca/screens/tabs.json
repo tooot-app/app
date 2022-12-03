@@ -350,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {
@@ -360,7 +363,7 @@
       "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}"
     },
     "toot": {
-      "name": ""
+      "name": "Discussions"
     },
     "users": {
       "accounts": {
