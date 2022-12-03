@@ -2,6 +2,10 @@
   "accessibilityHint": "Actions pour ce Pouet, telles que son utilisateur affiché, le Pouet lui-même",
   "account": {
     "title": "Actions de l'utilisateur",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Rendre muet l'utilisateur",
       "action_true": "Rendre la parole"
@@ -11,7 +15,7 @@
       "action_true": "Débloquer l'utilisateur"
     },
     "reports": {
-      "action": "Signaler et bloquer"
+      "action": ""
     }
   },
   "copy": {
