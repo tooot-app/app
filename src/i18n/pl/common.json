@@ -5,7 +5,8 @@
     "cancel": "Anuluj",
     "discard": "",
     "continue": "",
-    "delete": ""
+    "delete": "",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Własne emoji {{emoji}}"
