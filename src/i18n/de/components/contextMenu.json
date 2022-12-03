@@ -2,6 +2,10 @@
   "accessibilityHint": "Funktionen für diesen Tröt - wie z. B. Autor und Originaltröt",
   "account": {
     "title": "Benutzeraktionen",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Profil stummschalten",
       "action_true": "Stummschaltung des Nutzers aufheben"
@@ -11,7 +15,7 @@
       "action_true": "User entblocken"
     },
     "reports": {
-      "action": "Melden und blockieren"
+      "action": ""
     }
   },
   "copy": {
