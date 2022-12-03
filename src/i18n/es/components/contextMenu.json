@@ -6,7 +6,7 @@
       "action_false": "Seguir usuario",
       "action_true": "Dejar de seguir usuario"
     },
-    "inLists": "",
+    "inLists": "Administrar usuario de listas",
     "mute": {
       "action_false": "Silenciar usuario",
       "action_true": "Dejar de silenciar al usuario"
