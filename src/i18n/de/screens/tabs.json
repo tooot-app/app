@@ -46,11 +46,20 @@
       "language": {
         "name": "Sprache"
       },
-      "lists": {
-        "name": "Listen"
-      },
       "list": {
         "name": "Liste: {{list}}"
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": "Listen"
       },
       "push": {
         "name": "Push-Benachrichtigung"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Änderungen nicht gespeichert",
-        "message": "Änderung wurde nicht gespeichert. Möchtest du die Änderungen verwerfen?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Verwerfen"
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} aktualisiert",
         "failed": "{{type}} Aktualisierung fehlgeschlagen, bitte erneut versuchen"
@@ -125,8 +150,7 @@
           "options": {
             "public": "Öffentlich",
             "unlisted": "Ungelistet",
-            "private": "Nur für Follower",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Nur für Follower"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Abmelden?",
           "message": "Nach dem Ausloggen musst du dich erneut anmelden",
           "buttons": {
-            "logout": "Abmelden",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Abmelden"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Erscheinungsbild",
         "options": {
           "auto": "Wie System",
           "light": "Heller Modus",
-          "dark": "Dunkler Modus",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Dunkler Modus"
         }
       },
       "darkTheme": {
         "heading": "Dunkles Design",
         "options": {
           "lighter": "Heller",
-          "darker": "Dunkler",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Dunkler"
         }
       },
       "browser": {
         "heading": "Link öffnen",
         "options": {
           "internal": "Innerhalb der App",
-          "external": "Im Systembrowser öffnen",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Im Systembrowser öffnen"
         }
       },
       "staticEmoji": {
