@@ -3,9 +3,9 @@
     "OK": "OK",
     "apply": "Übernehmen",
     "cancel": "Abbrechen",
-    "discard": "",
-    "continue": "",
-    "delete": ""
+    "discard": "Abbrechen",
+    "continue": "Weiter",
+    "delete": "Löschen"
   },
   "customEmoji": {
     "accessibilityLabel": "Eigenes Emoji {{emoji}}"
@@ -23,7 +23,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Änderungen nicht gespeichert",
+    "message": "Deine Änderungen wurden nicht gespeichert. Möchtest du die Änderungen verwerfen?"
   }
 }
