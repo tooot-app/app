@@ -5,7 +5,8 @@
     "cancel": "Avbryt",
     "discard": "Kasta bort",
     "continue": "Fortsätt",
-    "delete": "Radera"
+    "delete": "Radera",
+    "done": "Klar"
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"
