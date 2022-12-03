@@ -46,11 +46,20 @@
       "language": {
         "name": "언어"
       },
-      "lists": {
-        "name": "목록"
-      },
       "list": {
         "name": "목록: {{list}}"
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": "목록"
       },
       "push": {
         "name": "푸시 알림"
@@ -87,15 +96,31 @@
         "XXL": "아주 크게"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "변경 사항이 저장되지 않음",
-        "message": "변경 사항이 저장되지 않았어요. 변경 사항 적용을 취소할까요?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "취소"
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} 업데이트됨",
         "failed": "{{type}} 업데이트 실패, 다시 시도해주세요"
@@ -125,8 +150,7 @@
           "options": {
             "public": "공개",
             "unlisted": "공개 타임라인에 비표시",
-            "private": "팔로워만",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "팔로워만"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "로그아웃할까요?",
           "message": "로그아웃한 이후, 다시 로그인해야해요",
           "buttons": {
-            "logout": "로그아웃",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "로그아웃"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "모양",
         "options": {
           "auto": "시스템과 동일",
           "light": "밝은 모드",
-          "dark": "어두운 모드",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "어두운 모드"
         }
       },
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
           "lighter": "밝게",
-          "darker": "어둡게",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "어둡게"
         }
       },
       "browser": {
         "heading": "링크 열기",
         "options": {
           "internal": "앱 안에서",
-          "external": "시스템 브라우저 사용",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "시스템 브라우저 사용"
         }
       },
       "staticEmoji": {
