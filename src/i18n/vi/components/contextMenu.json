@@ -3,8 +3,8 @@
   "account": {
     "title": "Hành động người dùng",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Theo dõi người này",
+      "action_true": "Ngưng theo dõi người này"
     },
     "mute": {
       "action_false": "Ẩn người này",
@@ -15,7 +15,7 @@
       "action_true": "Bỏ chặn người dùng"
     },
     "reports": {
-      "action": ""
+      "action": "Báo cáo và chặn"
     }
   },
   "copy": {
