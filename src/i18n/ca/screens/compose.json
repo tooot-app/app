@@ -17,8 +17,8 @@
         "conversation": "Envia un missatge directe",
         "reply": "Resposta de la publicació",
         "deleteEdit": "Publicació",
-        "edit": "Tut",
-        "share": "Tut"
+        "edit": "Publicació",
+        "share": "Publicació"
       },
       "alert": {
         "default": {
@@ -26,7 +26,7 @@
           "button": "Torna a provar"
         },
         "removeReply": {
-          "title": "No s'ha pogut trobar el tut respost",
+          "title": "No s'ha pogut trobar la publicació resposta",
           "description": "La publicació resposta és possible que hagi sigut esborrada. Vols eliminar-ho de la teva referència?",
           "confirm": "Elimina la referència"
         }
@@ -36,7 +36,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "Publicant el tut com a @{{acct}}@{{domain}}",
+        "postingAs": "Publicant la publicació com a @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": "Missatge d'alerta d'espòiler"
         },
