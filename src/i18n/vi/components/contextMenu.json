@@ -2,6 +2,10 @@
   "accessibilityHint": "Hành động với tút này, bao gồm đăng thủ công hay đăng tự động",
   "account": {
     "title": "Hành động người dùng",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Ẩn người này",
       "action_true": "Bỏ ẩn người dùng"
@@ -11,7 +15,7 @@
       "action_true": "Bỏ chặn người dùng"
     },
     "reports": {
-      "action": "Báo cáo và chặn"
+      "action": ""
     }
   },
   "copy": {
