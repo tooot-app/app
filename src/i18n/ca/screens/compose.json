@@ -3,7 +3,7 @@
     "left": {
       "button": "Cancel·la",
       "alert": {
-        "title": "Cancel·lar l'edició?",
+        "title": "Voleu cancel·lar l'edició?",
         "buttons": {
           "save": "Desa l'esborrany",
           "delete": "Esborra l'esborrany",
@@ -13,9 +13,9 @@
     },
     "right": {
       "button": {
-        "default": "Tut",
-        "conversation": "",
-        "reply": "Resposta del tut",
+        "default": "Publicació",
+        "conversation": "Envia un missatge directe",
+        "reply": "Resposta de la publicació",
         "deleteEdit": "Tut",
         "edit": "Tut",
         "share": "Tut"
@@ -27,8 +27,8 @@
         },
         "removeReply": {
           "title": "No s'ha pogut trobar el tut respost",
-          "description": "",
-          "confirm": ""
+          "description": "La publicació resposta és possible que hagi sigut esborrada. Vols eliminar-ho de la teva referència?",
+          "confirm": "Elimina la referència"
         }
       }
     }
@@ -85,91 +85,91 @@
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Tipus d'enquesta",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Elecció única",
+              "multiple": "Elecció múltiple"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Caducitat",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minuts",
+              "1800": "30 minuts",
+              "3600": "1 hora",
+              "21600": "6 hores",
+              "86400": "1 dia",
+              "259200": "3 dies",
+              "604800": "7 dies"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Puja fitxer",
+          "accessibilityHint": "La funció d'enquesta serà desactivada si hi ha algun fitxer adjunt",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Ha fallat la pujada",
+              "button": "Torna-ho a provar"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Afegeix una enquesta",
+          "accessibilityHint": "La funció d'adjuntar fitxers serà desactivada si hi ha una enquesta"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "La visibilitat de la publicació és {{visibility}}",
+          "title": "Visibilitat de la publicació",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Públic",
+            "unlisted": "Sense llistar",
+            "private": "Només seguidors",
+            "direct": "Missatge directe"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Espòiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Afegeix un emoji",
+          "accessibilityHint": "Obre el panell d'emojis, llisca horitzontalment per canviar de pàgina"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Esborrany ({{count}})",
+      "drafts_other": "Esborranys ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Edita el fitxer adjunt",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Desa canvis",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Error a l'editar",
+            "button": "Torna-ho a provar"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Descriu el contingut per a persones amb discapacitat visual",
+          "placeholder": "Pots afegir una descripció, també conegut com a text alternatiu, als teus fitxers perquè siguin accessibles a més persones, també aquelles amb discapacitat visual.\n\nLes bones descripcions han de ser concises, però que s'expressin tot el que surt als fitxers amb exactitud per poder entendre el seu context."
         },
-        "imageFocus": ""
+        "imageFocus": "Arrossega el cercle per a canviar el seu punt d'atenció"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Esborrany"
       },
-      "warning": "",
+      "warning": "Els esborranys només estan desats en aquest dispositiu i es poden perdre. No es recomana desar-los durant molt de temps.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "S'ha desat l'esborrany, prem per a editar",
+        "textEmpty": "Sense contingut"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Comprovant els fitxers adjunts al servidor..."
     }
   }
 }
