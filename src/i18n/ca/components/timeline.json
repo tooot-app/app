@@ -1,0 +1,152 @@
+{
+  "empty": {
+    "error": {
+      "message": "Error en carregar",
+      "button": "Torna-ho a provar"
+    },
+    "success": {
+      "message": "Cronologia buida"
+    }
+  },
+  "end": {
+    "message": "Ja estàs, vols una tassa de <0 />?"
+  },
+  "lookback": {
+    "message": "Llegit a"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Més recent des d'aquí",
+    "refetch": "A l'últim"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Fixat",
+      "favourite": "{{name}} ha marcat el teu toot com a favorit",
+      "status": "{{name}} ha publicat",
+      "follow": "{{name}} et segueix",
+      "follow_request": "{{name}} ha sol·licitat seguir-te",
+      "poll": "S'ha acabat una enquesta en què havies participat",
+      "reblog": {
+        "default": "{{name}} ha impulsat",
+        "notification": "{{name}} ha impulsat el teu toot"
+      },
+      "update": "L'impuls ha sigut editat"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Respon a aquest toot"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Impulsa aquest toot",
+        "function": "Impulsa el toot",
+        "options": {
+          "title": "Escull la visibilitat de l'impuls",
+          "public": "Impuls públic",
+          "unlisted": "Impuls no llistat"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Afegeix aquest toot a favorits",
+        "function": "Marca el toot com a favorit"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Afegeix aquest toot a marcadors",
+        "function": "Afegir el toot a marcadors"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} usuaris han impulsat aquest toot",
+        "accessibilityHint": "Prem per conèixer els usuaris",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} usuaris han marcat com a favorits aquest toot",
+        "accessibilityHint": "Prem per conèixer els usuaris",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Aquest toot ha sigut editat unes {{count}} vegades",
+        "accessibilityHint": "Prem per veure tot l'historial d'edicions",
+        "text_one": "{{count}} edició",
+        "text_other": "{{count}} edicions"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Mostra contingut sensible"
+      },
+      "unsupported": {
+        "text": "Error en carregar",
+        "button": "Prova amb l'enllaç remot"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Prem per anar a la pàgina de {{name}}"
+    },
+    "content": {
+      "expandHint": "Contingut ocult"
+    },
+    "filtered": "Filtrat: {{phrase}}.",
+    "fullConversation": "Llegeix conversacions",
+    "translate": {
+      "default": "Tradueix",
+      "succeed": "Traduït per {{provider}} amb {{source}}",
+      "failed": "Error al traduir",
+      "source_not_supported": "L'idioma del toot no està suportat",
+      "target_not_supported": "Aquest idioma no està suportat"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Nom d'usuari"
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": ""
+        }
+      }
+    }
+  }
+}
