@@ -6,6 +6,7 @@
       "action_false": "",
       "action_true": ""
     },
+    "inLists": "",
     "mute": {
       "action_false": "Muta utente",
       "action_true": "Riattiva utente"
