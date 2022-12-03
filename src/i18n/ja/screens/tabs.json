@@ -46,11 +46,20 @@
       "language": {
         "name": "言語"
       },
-      "lists": {
-        "name": "リスト"
-      },
       "list": {
         "name": "リスト: {{list}}"
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": "リスト"
       },
       "push": {
         "name": "プッシュ通知"
@@ -87,15 +96,31 @@
         "XXL": "最大"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "変更を破棄",
-        "message": "変更は保存されていません。変更の保存を破棄しますか？",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "破棄"
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} がアップデートされました",
         "failed": "{{type}} のアップデートに失敗しました。もういちどお試しください"
@@ -125,8 +150,7 @@
           "options": {
             "public": "公開",
             "unlisted": "未収載",
-            "private": "フォロワー限定",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "フォロワー限定"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "ログアウトしますか？",
           "message": "ログアウトすると、再度ログインする必要があります",
           "buttons": {
-            "logout": "ログアウト",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "ログアウト"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "外観",
         "options": {
           "auto": "システムの設定に従う",
           "light": "ライトモード",
-          "dark": "ダークモード",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "ダークモード"
         }
       },
       "darkTheme": {
         "heading": "ダークテーマ",
         "options": {
           "lighter": "明るめ",
-          "darker": "暗め",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "暗め"
         }
       },
       "browser": {
         "heading": "リンクを開く",
         "options": {
           "internal": "アプリ内で開く",
-          "external": "システムブラウザを使用する",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "システムブラウザを使用する"
         }
       },
       "staticEmoji": {
