@@ -60,7 +60,7 @@
       }
     },
     "deleteEdit": {
-      "action": "Elimina el toot i torna a publicar",
+      "action": "Elimina la publicació i torna a publicar",
       "alert": {
         "title": "Confirma l'eliminació i tornar a publicar?",
         "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
@@ -70,12 +70,12 @@
       }
     },
     "mute": {
-      "action_false": "Silencia el toot i les respostes",
-      "action_true": "Deixa de silenciar el toot i les respostes"
+      "action_false": "Silencia la publicació i les respostes",
+      "action_true": "Deixa de silenciar la publicació i les respostes"
     },
     "pin": {
-      "action_false": "Fixa el toot",
-      "action_true": "Deixa de fixar el toot"
+      "action_false": "Fixa la publicació",
+      "action_true": "Deixa de fixar la publicació"
     }
   }
 }
