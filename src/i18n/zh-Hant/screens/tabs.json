@@ -50,13 +50,13 @@
         "name": "列表：{{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "使用者在 {{list}} 列表中"
       },
       "listAdd": {
-        "name": ""
+        "name": "新增列表"
       },
       "listEdit": {
-        "name": ""
+        "name": "編輯列表詳細資料"
       },
       "lists": {
         "name": "列表"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "管理使用者",
+      "error": "從列表中刪除使用者",
+      "empty": "此列表中沒有任何使用者"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "編輯列表詳細資料",
+      "title": "標題",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "顯示回覆：",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "沒有人",
+          "list": "列表中的成員",
+          "followed": "任何跟隨的使用者"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "刪除列表",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "要刪除 \"{{list}}\" 列表嗎？",
+        "message": "此操作無法還原。"
       }
     },
     "profile": {
@@ -321,9 +321,9 @@
       "suspended": "此帳號已被伺服器管理員停用"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "@{{username}} 的列表",
+      "inLists": "在列表中",
+      "notInLists": "其它列表"
     },
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
