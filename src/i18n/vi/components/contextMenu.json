@@ -6,6 +6,7 @@
       "action_false": "Theo dõi người này",
       "action_true": "Ngưng theo dõi người này"
     },
+    "inLists": "",
     "mute": {
       "action_false": "Ẩn người này",
       "action_true": "Bỏ ẩn người dùng"
