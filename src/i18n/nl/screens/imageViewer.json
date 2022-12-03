@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "Afbeelding opslaan",
-      "share": "Afbeelding delen",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "Afbeelding delen"
     },
     "save": {
       "succeed": "Afbeelding opgeslagen",
