@@ -320,6 +320,11 @@
       },
       "suspended": "Compte suspendu par les modérateurs de votre serveur"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"s media</1>"
     },
