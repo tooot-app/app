@@ -2,6 +2,10 @@
   "accessibilityHint": "",
   "account": {
     "title": "",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "",
       "action_true": ""
