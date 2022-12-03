@@ -50,13 +50,13 @@
         "name": "Danh sách: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Người trong danh sách: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Thêm một danh sách"
       },
       "listEdit": {
-        "name": ""
+        "name": "Sửa danh sách"
       },
       "lists": {
         "name": "Danh sách"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Quản lý người dùng",
+      "error": "Xoá khỏi danh sách",
+      "empty": "Chưa thêm ai vào danh sách"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Sửa danh sách",
+      "title": "Chức vụ",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Cho phép trả lời với:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Không ai",
+          "list": "Người trong danh sách",
+          "followed": "Bất cứ ai đã theo dõi"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Xoá danh sách",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Xóa danh sách \"{{list}}\"?",
+        "message": "Hành phục này không thể khôi phục được."
       }
     },
     "profile": {
