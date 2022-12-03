@@ -2,7 +2,10 @@
   "buttons": {
     "OK": "はい",
     "apply": "適用",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "discard": "",
+    "continue": "",
+    "delete": ""
   },
   "customEmoji": {
     "accessibilityLabel": "カスタム絵文字 {{emoji}}"
@@ -18,5 +21,9 @@
       "message": "{{function}} 接続に失敗しました。再試行してください。"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
 }
