@@ -320,6 +320,11 @@
       },
       "suspended": "あなたのサーバーのモデレーターによって、アカウントは停止されました"
     },
+    "accountInLists": {
+      "name": "@{{username}}のリスト",
+      "inLists": "リスト内",
+      "notInLists": "その他のリスト"
+    },
     "attachments": {
       "name": "<0 /><1>\" のメディア</1>"
     },
