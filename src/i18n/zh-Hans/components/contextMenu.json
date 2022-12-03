@@ -2,6 +2,10 @@
   "accessibilityHint": "更多关于此条嘟文，例如发布者等",
   "account": {
     "title": "用户操作",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "静音用户",
       "action_true": "取消静音用户"
@@ -11,7 +15,7 @@
       "action_true": "取消屏蔽用户"
     },
     "reports": {
-      "action": "举报并屏蔽"
+      "action": ""
     }
   },
   "copy": {
