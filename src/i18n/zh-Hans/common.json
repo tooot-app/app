@@ -5,7 +5,8 @@
     "cancel": "取消",
     "discard": "",
     "continue": "",
-    "delete": ""
+    "delete": "",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "自定义表情{{emoji}}"
