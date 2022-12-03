@@ -81,7 +81,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
         )
       }
     })
-  }, [])
+  }, [mode])
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),
@@ -183,7 +183,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
       case 'accounts':
         return <ComponentAccount account={item} />
       case 'hashtags':
-        return <ComponentHashtag hashtag={item} origin='search' />
+        return <ComponentHashtag hashtag={item} />
       case 'statuses':
         return <TimelineDefault item={item} disableDetails />
       default:
