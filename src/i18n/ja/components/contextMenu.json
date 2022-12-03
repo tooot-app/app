@@ -6,6 +6,7 @@
       "action_false": "ユーザーをフォロー",
       "action_true": "ユーザーをフォロー解除"
     },
+    "inLists": "リストのユーザーを管理",
     "mute": {
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
