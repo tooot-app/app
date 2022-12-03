@@ -5,6 +5,7 @@ import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import TimelineContent from '@components/Timeline/Shared/Content'
+import StatusContext from '@components/Timeline/Shared/Context'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
@@ -12,58 +13,36 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { FlatList, View } from 'react-native'
 
-const ContentView = ({
-  history,
-  first,
-  last
-}: {
-  history: Mastodon.StatusHistory
-  first: boolean
-  last: boolean
-}) => {
+const ContentView: React.FC<{ item: Mastodon.StatusHistory }> = ({ item }) => {
   const { colors } = useTheme()
 
   return (
-    <>
-      <View
-        style={{
-          padding: StyleConstants.Spacing.Global.PagePadding,
-          paddingTop: first ? 0 : undefined
-        }}
-      >
-        <HeaderSharedCreated created_at={history.created_at} />
-        {typeof history.content === 'string' && history.content.length > 0 ? (
-          <TimelineContent status={history} />
-        ) : null}
-        {history.poll
-          ? history.poll.options.map((option, index) => (
-              <View key={index} style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <Icon
-                    style={{
-                      paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
-                      marginRight: StyleConstants.Spacing.S
-                    }}
-                    name='Circle'
-                    size={StyleConstants.Font.Size.M}
-                    color={colors.disabled}
-                  />
-                  <CustomText style={{ flex: 1 }}>
-                    <ParseEmojis content={option.title} emojis={history.poll?.emojis} />
-                  </CustomText>
-                </View>
-              </View>
-            ))
-          : null}
-        {Array.isArray(history.media_attachments) && history.media_attachments.length ? (
-          <TimelineAttachment status={history} />
-        ) : null}
-      </View>
-      {!last ? <ComponentSeparator extraMarginLeft={0} /> : null}
-    </>
+    // @ts-ignore
+    <StatusContext.Provider value={{ status: item, disableOnPress: true }}>
+      <HeaderSharedCreated created_at={item.created_at} />
+      <TimelineContent />
+      {item.poll?.options.map((option, index) => (
+        <View key={index} style={{ flex: 1, paddingVertical: StyleConstants.Spacing.XS }}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <Icon
+              style={{
+                paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
+                marginRight: StyleConstants.Spacing.S
+              }}
+              name='Circle'
+              size={StyleConstants.Font.Size.M}
+              color={colors.disabled}
+            />
+            <CustomText style={{ flex: 1 }}>
+              <ParseEmojis content={option.title} emojis={item.poll?.emojis} />
+            </CustomText>
+          </View>
+        </View>
+      ))}
+      <TimelineAttachment />
+    </StatusContext.Provider>
   )
 }
 
@@ -84,19 +63,40 @@ const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>
   }, [])
 
   return (
-    <ScrollView>
-      {data && data.length > 0
-        ? data
-            .slice(0)
-            .reverse()
-            .map((d, i) =>
-              i !== 0 ? (
-                <ContentView key={i} history={d} first={i === 1} last={i === data.length - 1} />
-              ) : null
-            )
-        : null}
-    </ScrollView>
+    <FlatList
+      style={{ flex: 1, minHeight: '100%', padding: StyleConstants.Spacing.Global.PagePadding }}
+      data={
+        data && data.length > 0
+          ? data
+              .slice(0)
+              .reverse()
+              .filter((_, index) => index !== 0)
+          : []
+      }
+      renderItem={({ item }) => <ContentView item={item} />}
+      ItemSeparatorComponent={() => (
+        <ComponentSeparator
+          extraMarginLeft={0}
+          style={{ marginVertical: StyleConstants.Spacing.Global.PagePadding }}
+        />
+      )}
+    />
   )
+
+  // return (
+  //   <ScrollView>
+  //     {data && data.length > 0
+  //       ? data
+  //           .slice(0)
+  //           .reverse()
+  //           .map((d, i) =>
+  //             i !== 0 ? (
+  //               <ContentView key={i} history={d} first={i === 1} last={i === data.length - 1} />
+  //             ) : null
+  //           )
+  //       : null}
+  //   </ScrollView>
+  // )
 }
 
 export default TabSharedHistory
