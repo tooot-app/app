@@ -1,137 +1,137 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "Seguint"
     },
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "left": "Federat",
+        "right": "Local"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Notificacions"
     },
     "me": {
-      "name": ""
+      "name": "Sobre mi"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Cerca",
+      "accessibilityHint": "Cerca per a etiquetes, usuaris o publicacions"
     }
   },
   "notifications": {
     "filter": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Filtra",
+      "accessibilityHint": "Filtra els tipus de notificacions"
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Marcadors"
       },
       "conversations": {
-        "name": ""
+        "name": "Missatges directes"
       },
       "favourites": {
-        "name": ""
+        "name": "Favorits"
       },
       "fontSize": {
-        "name": ""
+        "name": "Mida de la font de la publicació"
       },
       "language": {
-        "name": ""
+        "name": "Idioma"
       },
       "list": {
-        "name": ""
+        "name": "Llista: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Usuaris a la llista: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Afegeix a la llista"
       },
       "listEdit": {
-        "name": ""
+        "name": "Edita els detalls de la llista"
       },
       "lists": {
-        "name": ""
+        "name": "Llistes"
       },
       "push": {
-        "name": ""
+        "name": "Notificacions push"
       },
       "profile": {
-        "name": ""
+        "name": "Edita el teu perfil"
       },
       "profileName": {
-        "name": ""
+        "name": "Edita el nom"
       },
       "profileNote": {
-        "name": ""
+        "name": "Edita la descripció"
       },
       "profileFields": {
-        "name": ""
+        "name": "Editar les metadades"
       },
       "settings": {
-        "name": ""
+        "name": "Configuració de l'aplicació"
       },
       "webSettings": {
-        "name": ""
+        "name": "Més configuracions del compte"
       },
       "switch": {
-        "name": ""
+        "name": "Canvia de compte"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Això és una publicació de prova😊. Pots escollir entre moltes opcions<br /><br />Aquesta configuració només afecta el contingut principal de les publicacions, però altres mides de la font.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M - Per defecte",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gestiona els usuaris",
+      "error": "Esborra l'usuari de la llista",
+      "empty": "Cap usuari afegit en aquesta llista"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Edita els detalls de la llista",
+      "title": "Títol",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Mostra respostes a:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Ningú",
+          "list": "Membres de la llista",
+          "followed": "Qualsevol usuari seguit"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Esborra la llista",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Vol esborrar la llista \"{{list}}\"?",
+        "message": "Aquesta acció no es pot desfer."
       }
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} actualitzat",
+        "failed": "Error a l'actualitzar {{type}}. Si us plau, torna-ho a provar."
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Nom"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Avatar",
+          "description": "Es reduirà a 400x400px"
         },
         "header": {
           "title": "",
@@ -248,36 +248,36 @@
           "M": "",
           "L": "",
           "XL": "",
-          "XXL": ""
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": ""
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
-        "heading": "",
+        "heading": "Aspecte",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Com el sistema",
+          "light": "Mode clar",
+          "dark": "Mode fosc"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Tema fosc",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Més clar",
+          "darker": "Més fosc"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Obertura d'enllaços",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Dins de l'aplicació",
+          "external": "Utilitza el navegador del sistema"
         }
       },
       "staticEmoji": {
-        "heading": "",
+        "heading": "Utilitza emojis estàtics",
         "description": ""
       },
       "feedback": {
