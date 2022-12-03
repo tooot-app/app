@@ -6,7 +6,7 @@
       "action_false": "Volg gebruiker",
       "action_true": "Ontvolg"
     },
-    "inLists": "",
+    "inLists": "Gebruiker van lijsten beheren",
     "mute": {
       "action_false": "Gebruiker dempen",
       "action_true": "Dempen opheffen voor gebruiker"
