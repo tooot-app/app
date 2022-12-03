@@ -3,8 +3,8 @@
   "account": {
     "title": "ユーザーアクション",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "ユーザーをフォロー",
+      "action_true": "ユーザーをフォロー解除"
     },
     "mute": {
       "action_false": "ユーザーをミュート",
@@ -15,7 +15,7 @@
       "action_true": "ユーザーのブロックを解除"
     },
     "reports": {
-      "action": ""
+      "action": "ユーザーの報告とブロック"
     }
   },
   "copy": {
