@@ -350,6 +350,9 @@
             "statusLink": "",
             "accountLink": ""
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {
