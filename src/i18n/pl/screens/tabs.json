@@ -46,10 +46,19 @@
       "language": {
         "name": ""
       },
-      "lists": {
+      "list": {
         "name": ""
       },
-      "list": {
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
         "name": ""
       },
       "push": {
@@ -87,15 +96,31 @@
         "XXL": ""
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "",
-        "message": "",
-        "buttons": {
-          "cancel": "",
-          "discard": ""
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "",
         "failed": ""
@@ -125,8 +150,7 @@
           "options": {
             "public": "",
             "unlisted": "",
-            "private": "",
-            "cancel": ""
+            "private": ""
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "",
           "message": "",
           "buttons": {
-            "logout": "",
-            "cancel": ""
+            "logout": ""
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "",
-        "options": {
-          "cancel": ""
-        }
+        "heading": ""
       },
       "theme": {
         "heading": "",
         "options": {
           "auto": "",
           "light": "",
-          "dark": "",
-          "cancel": ""
+          "dark": ""
         }
       },
       "darkTheme": {
         "heading": "",
         "options": {
           "lighter": "",
-          "darker": "",
-          "cancel": ""
+          "darker": ""
         }
       },
       "browser": {
         "heading": "",
         "options": {
           "internal": "",
-          "external": "",
-          "cancel": ""
+          "external": ""
         }
       },
       "staticEmoji": {
