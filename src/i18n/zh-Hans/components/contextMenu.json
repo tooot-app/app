@@ -19,6 +19,10 @@
       "action": "举报并屏蔽用户"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "复制嘟文",
     "succeed": "已复制"
