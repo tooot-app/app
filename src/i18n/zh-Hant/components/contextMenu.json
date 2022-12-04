@@ -19,6 +19,10 @@
       "action": "檢舉並封鎖使用者"
     }
   },
+  "at": {
+    "direct": "私訊",
+    "public": "公開訊息"
+  },
   "copy": {
     "action": "複製嘟文",
     "succeed": "已複製"
