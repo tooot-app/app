@@ -104,7 +104,7 @@ export type TabSharedStackParamList = {
   'Tab-Shared-History': {
     id: Mastodon.Status['id']
   }
-  'Tab-Shared-Search': { text: string | undefined }
+  'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {
     toot: Mastodon.Status
     rootQueryKey?: QueryKeyTimeline

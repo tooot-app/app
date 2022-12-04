@@ -50,12 +50,7 @@ const TabPublic = React.memo(
             accessibilityLabel={t('common.search.accessibilityLabel')}
             accessibilityHint={t('common.search.accessibilityHint')}
             content='Search'
-            onPress={() =>
-              navigation.navigate('Tab-Public', {
-                screen: 'Tab-Shared-Search',
-                params: { text: undefined }
-              })
-            }
+            onPress={() => navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })}
           />
         )
       }),

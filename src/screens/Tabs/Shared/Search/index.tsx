@@ -6,31 +6,22 @@ import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useSearchQuery } from '@utils/queryHooks/search'
-import { useTrendsQuery } from '@utils/queryHooks/trends'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { debounce } from 'lodash'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SectionList,
-  StyleSheet,
-  TextInput,
-  View
-} from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
+import { KeyboardAvoidingView, Platform, SectionList, TextInput, View } from 'react-native'
+import SearchEmpty from './Empty'
 
 const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> = ({
-  navigation,
-  route: {
-    params: { text }
-  }
+  navigation
 }) => {
   const { t } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
 
+  const inputRef = useRef<TextInput>(null)
+  const [searchTerm, setSearchTerm] = useState<string>('')
   useEffect(() => {
     navigation.setOptions({
       ...(Platform.OS === 'ios'
@@ -56,6 +47,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
               defaultValue={t('shared.search.header.prefix')}
             />
             <TextInput
+              ref={inputRef}
               accessibilityRole='search'
               keyboardAppearance={mode}
               style={{
@@ -65,15 +57,18 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                 paddingLeft: StyleConstants.Spacing.XS
               }}
               autoFocus
-              value={text}
-              onChangeText={debounce((text: string) => navigation.setParams({ text }), 1000, {
-                trailing: true
-              })}
+              onChangeText={debounce(
+                text => {
+                  setSearchTerm(text)
+                  refetch()
+                },
+                1000,
+                { trailing: true }
+              )}
               autoCapitalize='none'
               autoCorrect={false}
               clearButtonMode='always'
               keyboardType='web-search'
-              onSubmitEditing={({ nativeEvent: { text } }) => navigation.setParams({ text })}
               placeholder={t('shared.search.header.placeholder')}
               placeholderTextColor={colors.secondary}
               returnKeyType='search'
@@ -82,25 +77,23 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
         )
       }
     })
-  }, [text, mode])
-
-  const trendsTags = useTrendsQuery({ type: 'tags' })
+  }, [mode])
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),
     hashtags: t('shared.search.sections.hashtags'),
     statuses: t('shared.search.sections.statuses')
   }
-  const { status, data } = useSearchQuery<
+  const { isLoading, data, refetch } = useSearchQuery<
     {
       title: string
       translation: string
       data: any[]
     }[]
   >({
-    term: text,
+    term: searchTerm,
     options: {
-      enabled: text !== undefined,
+      enabled: !!searchTerm.length,
       select: data =>
         Object.keys(data as Mastodon.Results)
           .map(key => ({
@@ -110,6 +103,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
             // @ts-ignore
             data: data[key]
           }))
+          .filter(d => d.data.length)
           .sort((a, b) => {
             if (!a.data.length) {
               return 1
@@ -122,88 +116,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     }
   })
 
-  const listEmpty = () => {
-    return (
-      <View style={{ paddingVertical: StyleConstants.Spacing.Global.PagePadding }}>
-        {status === 'loading' ? (
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
-          </View>
-        ) : (
-          <>
-            <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
-              <CustomText
-                fontStyle='S'
-                style={{
-                  marginBottom: StyleConstants.Spacing.L,
-                  color: colors.primaryDefault
-                }}
-              >
-                <Trans
-                  i18nKey='screenTabs:shared.search.empty.general'
-                  components={{
-                    bold: <CustomText fontWeight='Bold' />
-                  }}
-                />
-              </CustomText>
-              <CustomText
-                style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}
-                fontWeight='Bold'
-              >
-                {t('shared.search.empty.advanced.header')}
-              </CustomText>
-              <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
-                <CustomText style={{ color: colors.secondary }}>@username@domain</CustomText>
-                {'   '}
-                {t('shared.search.empty.advanced.example.account')}
-              </CustomText>
-              <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
-                <CustomText style={{ color: colors.secondary }}>#example</CustomText>
-                {'   '}
-                {t('shared.search.empty.advanced.example.hashtag')}
-              </CustomText>
-              <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
-                <CustomText style={{ color: colors.secondary }}>URL</CustomText>
-                {'   '}
-                {t('shared.search.empty.advanced.example.statusLink')}
-              </CustomText>
-              <CustomText style={[styles.emptyAdvanced, { color: colors.primaryDefault }]}>
-                <CustomText style={{ color: colors.secondary }}>URL</CustomText>
-                {'   '}
-                {t('shared.search.empty.advanced.example.accountLink')}
-              </CustomText>
-            </View>
-
-            <CustomText
-              style={{
-                color: colors.primaryDefault,
-                marginTop: StyleConstants.Spacing.M,
-                paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
-              }}
-              fontWeight='Bold'
-            >
-              {t('shared.search.empty.trending.tags')}
-            </CustomText>
-            <View>
-              {trendsTags.data?.map((tag, index) => {
-                const hashtag = tag as Mastodon.Tag
-                return (
-                  <React.Fragment key={index}>
-                    {index !== 0 ? <ComponentSeparator /> : null}
-                    <ComponentHashtag
-                      hashtag={hashtag}
-                      onPress={() => navigation.setParams({ text: `#${hashtag.name}` })}
-                    />
-                  </React.Fragment>
-                )
-              })}
-            </View>
-          </>
-        )}
-      </View>
-    )
-  }
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -211,6 +123,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     >
       <SectionList
         style={{ minHeight: '100%' }}
+        sections={data || []}
         renderItem={({ item, section }: { item: any; section: any }) => {
           switch (section.title) {
             case 'accounts':
@@ -224,8 +137,9 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
           }
         }}
         stickySectionHeadersEnabled
-        sections={data || []}
-        ListEmptyComponent={listEmpty()}
+        ListEmptyComponent={
+          <SearchEmpty isLoading={isLoading} inputRef={inputRef} setSearchTerm={setSearchTerm} />
+        }
         keyboardShouldPersistTaps='always'
         renderSectionHeader={({ section: { translation } }) => (
           <View
@@ -257,7 +171,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
               <CustomText fontStyle='S' style={{ textAlign: 'center', color: colors.secondary }}>
                 <Trans
                   i18nKey='screenTabs:shared.search.notFound'
-                  values={{ searchTerm: text, type: translation }}
+                  values={{ searchTerm, type: translation }}
                   components={{
                     bold: <CustomText fontWeight='Bold' />
                   }}
@@ -273,11 +187,5 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({
-  emptyAdvanced: {
-    marginBottom: StyleConstants.Spacing.S
-  }
-})
 
 export default TabSharedSearch
