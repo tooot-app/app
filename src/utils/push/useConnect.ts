@@ -33,14 +33,11 @@ const pushUseConnect = () => {
     })
       .then(() => Notifications.setBadgeCountAsync(0))
       .catch(error => {
-        Sentry.setExtras({
-          API: 'tooot',
-          expoToken,
-          ...(error?.response && { response: error.response })
+        Sentry.setContext('Error response', {
+          ...(error?.response && { response: error.response?._response })
         })
-        Sentry.captureMessage('Push connect error', {
-          contexts: { errorObject: error }
-        })
+        Sentry.setContext('Error object', { error })
+        Sentry.captureMessage('Push connect error')
         Notifications.setBadgeCountAsync(0)
         if (error?.status == 404) {
           displayMessage({
@@ -84,10 +81,7 @@ const pushUseConnect = () => {
   }
 
   useEffect(() => {
-    Sentry.setExtras({
-      expoToken,
-      pushEnabledCount: pushEnabled
-    })
+    Sentry.setContext('Push', { expoToken, pushEnabledCount: pushEnabled.length })
 
     if (expoToken && pushEnabled.length) {
       connect()

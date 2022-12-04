@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -33,7 +32,6 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
             count: account.statuses_count || 0
           })}
           onPress={() => {
-            analytics('account_stats_toots_press')
             myInfo && account && navigation.push('Tab-Shared-Account', { account })
           }}
         />
@@ -52,17 +50,14 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           children={t('shared.account.summary.following_count', {
             count: account.following_count
           })}
-          onPress={() => {
-            analytics('account_stats_following_press', {
-              count: account.following_count
-            })
+          onPress={() =>
             navigation.push('Tab-Shared-Users', {
               reference: 'accounts',
               id: account.id,
               type: 'following',
               count: account.following_count
             })
-          }}
+          }
         />
       ) : (
         <PlaceholderLine
@@ -79,17 +74,14 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           children={t('shared.account.summary.followers_count', {
             count: account.followers_count
           })}
-          onPress={() => {
-            analytics('account_stats_followers_press', {
-              count: account.followers_count
-            })
+          onPress={() =>
             navigation.push('Tab-Shared-Users', {
               reference: 'accounts',
               id: account.id,
               type: 'followers',
               count: account.followers_count
             })
-          }}
+          }
         />
       ) : (
         <PlaceholderLine

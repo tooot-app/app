@@ -1,4 +1,5 @@
 import apiInstance from '@api/instance'
+import browserPackage from '@helpers/browserPackage'
 import navigationRef from '@helpers/navigationRef'
 import { matchAccount, matchStatus } from '@helpers/urlMatcher'
 import { store } from '@root/store'
@@ -91,7 +92,8 @@ const openLink = async (url: string, navigation?: any) => {
     case 'internal':
       await WebBrowser.openBrowserAsync(encodeURI(url), {
         dismissButtonStyle: 'close',
-        enableBarCollapsing: true
+        enableBarCollapsing: true,
+        browserPackage: await browserPackage()
       })
       break
     case 'external':

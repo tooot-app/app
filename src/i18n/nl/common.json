@@ -1,0 +1,30 @@
+{
+  "buttons": {
+    "OK": "OK",
+    "apply": "Toepassen",
+    "cancel": "Annuleer",
+    "discard": "Verwijder",
+    "continue": "Ga verder",
+    "delete": "Verwijder",
+    "done": "Gereed"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Aangepaste emoji {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} geslaagd"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} mislukt, probeer het opnieuw"
+    }
+  },
+  "separator": ", ",
+  "discard": {
+    "title": "Wijziging niet opgeslagen",
+    "message": "De wijziging is niet opgeslagen. Wilt u de wijzigingen niet opslaan?"
+  }
+}

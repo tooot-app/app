@@ -26,10 +26,10 @@ export const uploadAttachment = async ({
 }) => {
   const hash = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
-    media.uri + Math.random()
+    media.uri + Math.random().toString()
   )
 
-  switch (media.type.split('/')[0]) {
+  switch (media.type?.split('/')[0] || '') {
     case 'image':
       composeDispatch({
         type: 'attachment/upload/start',
@@ -77,15 +77,11 @@ export const uploadAttachment = async ({
       payload: hash
     })
     Alert.alert(
-      i18next.t(
-        'screenCompose:content.root.actions.attachment.failed.alert.title'
-      ),
+      i18next.t('screenCompose:content.root.actions.attachment.failed.alert.title'),
       message,
       [
         {
-          text: i18next.t(
-            'screenCompose:content.root.actions.attachment.failed.alert.button'
-          ),
+          text: i18next.t('screenCompose:content.root.actions.attachment.failed.alert.button'),
           onPress: () => {}
         }
       ]
@@ -117,9 +113,7 @@ export const uploadAttachment = async ({
     })
     .catch((err: any) => {
       uploadFailed(
-        err?.message && typeof err?.message === 'string'
-          ? err?.message.slice(0, 50)
-          : undefined
+        err?.message && typeof err?.message === 'string' ? err?.message.slice(0, 50) : undefined
       )
     })
 }

@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "好的",
     "apply": "应用",
-    "cancel": "取消"
+    "cancel": "取消",
+    "discard": "丢弃",
+    "continue": "继续",
+    "delete": "删除",
+    "done": "完成"
   },
   "customEmoji": {
     "accessibilityLabel": "自定义表情{{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}}失败，请重试"
     }
   },
-  "separator": "，"
+  "separator": "，",
+  "discard": {
+    "title": "更改尚未保存",
+    "message": "您的更改尚未保存。是否放弃保存更改？"
+  }
 }

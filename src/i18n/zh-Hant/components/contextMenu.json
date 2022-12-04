@@ -2,6 +2,11 @@
   "accessibilityHint": "更多關於此條嘟文，例如發佈者等",
   "account": {
     "title": "使用者操作",
+    "following": {
+      "action_false": "跟隨使用者",
+      "action_true": "取消跟隨使用者"
+    },
+    "inLists": "管理使用者列表",
     "mute": {
       "action_false": "靜音使用者",
       "action_true": "解除靜音使用者"
@@ -11,8 +16,12 @@
       "action_true": "解除封鎖使用者"
     },
     "reports": {
-      "action": "檢舉並封鎖"
+      "action": "檢舉並封鎖使用者"
     }
+  },
+  "at": {
+    "direct": "私訊",
+    "public": "公開訊息"
   },
   "copy": {
     "action": "複製嘟文",

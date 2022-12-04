@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { Slider } from '@sharcoux/slider'
@@ -25,7 +24,6 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
   const [audioPlaying, setAudioPlaying] = useState(false)
   const [audioPosition, setAudioPosition] = useState(0)
   const playAudio = useCallback(async () => {
-    analytics('timeline_shared_attachment_audio_play_press', { id: audio.id })
     if (!audioPlayer) {
       const { sound } = await Audio.Sound.createAsync(
         { uri: audio.url },
@@ -41,7 +39,6 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
     }
   }, [audioPlayer, audioPosition])
   const pauseAudio = useCallback(async () => {
-    analytics('timeline_shared_attachment_audio_pause_press', { id: audio.id })
     audioPlayer!.pauseAsync()
     setAudioPlaying(false)
   }, [audioPlayer])

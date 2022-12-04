@@ -46,11 +46,20 @@
       "language": {
         "name": "Sprache"
       },
-      "lists": {
-        "name": "Listen"
-      },
       "list": {
         "name": "Liste: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Benutzer in dieser Liste: {{list}}"
+      },
+      "listAdd": {
+        "name": "Eine Liste hinzufügen"
+      },
+      "listEdit": {
+        "name": "Listendetails bearbeiten"
+      },
+      "lists": {
+        "name": "Listen"
       },
       "push": {
         "name": "Push-Benachrichtigung"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Änderungen nicht gespeichert",
-        "message": "Änderung wurde nicht gespeichert. Möchtest du die Änderungen verwerfen?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Verwerfen"
+    "listAccounts": {
+      "heading": "Nutzer verwalten",
+      "error": "Nutzer von der Liste löschen",
+      "empty": "Keine Nutzer in diese Liste hinzugefügt"
+    },
+    "listEdit": {
+      "heading": "Listendetails bearbeiten",
+      "title": "Titel",
+      "repliesPolicy": {
+        "heading": "Antworten anzeigen für:",
+        "options": {
+          "none": "Niemanden",
+          "list": "Mitglieder der Liste",
+          "followed": "Allen gefolgten Nutzern"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "Liste löschen",
+      "confirm": {
+        "title": "Liste \"{{list}}\" löschen?",
+        "message": "Diese Aktion kann nicht rückgängig gemacht werden."
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} aktualisiert",
         "failed": "{{type}} Aktualisierung fehlgeschlagen, bitte erneut versuchen"
@@ -125,8 +150,7 @@
           "options": {
             "public": "Öffentlich",
             "unlisted": "Ungelistet",
-            "private": "Nur für Follower",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Nur für Follower"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Abmelden?",
           "message": "Nach dem Ausloggen musst du dich erneut anmelden",
           "buttons": {
-            "logout": "Abmelden",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Abmelden"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Erscheinungsbild",
         "options": {
           "auto": "Wie System",
           "light": "Heller Modus",
-          "dark": "Dunkler Modus",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Dunkler Modus"
         }
       },
       "darkTheme": {
         "heading": "Dunkles Design",
         "options": {
           "lighter": "Heller",
-          "darker": "Dunkler",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Dunkler"
         }
       },
       "browser": {
         "heading": "Link öffnen",
         "options": {
           "internal": "Innerhalb der App",
-          "external": "Im Systembrowser öffnen",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Im Systembrowser öffnen"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "Nimm Kontakt mit tooot auf"
-      },
-      "analytics": {
-        "heading": "Hilf uns, besser zu werden",
-        "description": "Es werden ausschließlich Daten gesammelt, welche nicht nutzerbezogen sind"
       },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon Version {{version}}"
@@ -307,6 +320,11 @@
       },
       "suspended": "Konto wurde von den Instanzmoderation gesperrt"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"s Medien</1>"
     },
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": "Angesagte Tags"
         }
       },
       "sections": {

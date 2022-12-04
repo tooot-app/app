@@ -73,8 +73,6 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
             color: colors.primaryDefault
           }}
           onFocus={() => scrollViewRef.current?.scrollToEnd()}
-          autoCapitalize='none'
-          autoCorrect={false}
           maxLength={1500}
           multiline
           onChangeText={(e) =>

@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { HeaderCenter, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineNotifications from '@components/Timeline/Notifications'
@@ -29,12 +28,11 @@ const TabNotifications = React.memo(
             accessibilityLabel={t('notifications.filter.accessibilityLabel')}
             accessibilityHint={t('notifications.filter.accessibilityHint')}
             content='Filter'
-            onPress={() => {
-              analytics('notificationsfilter_tap')
+            onPress={() =>
               navigationRef.navigate('Screen-Actions', {
                 type: 'notifications_filter'
               })
-            }}
+            }
           />
         )
       }),

@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "OK",
     "apply": "Übernehmen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "discard": "Abbrechen",
+    "continue": "Weiter",
+    "delete": "Löschen",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Eigenes Emoji {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} fehlgeschlagen, bitte wiederholen"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "Änderungen nicht gespeichert",
+    "message": "Deine Änderungen wurden nicht gespeichert. Möchtest du die Änderungen verwerfen?"
+  }
 }

@@ -4,75 +4,81 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback } from 'react'
-import { Pressable, View } from 'react-native'
-import analytics from './analytics'
+import React, { PropsWithChildren } from 'react'
+import { Pressable, PressableProps, View } from 'react-native'
 import GracefullyImage from './GracefullyImage'
+import Icon from './Icon'
 import CustomText from './Text'
 
 export interface Props {
   account: Mastodon.Account
-  onPress?: () => void
-  origin?: string
+  props?: PressableProps
 }
 
-const ComponentAccount: React.FC<Props> = ({
-  account,
-  onPress: customOnPress,
-  origin
-}) => {
+const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props, children }) => {
   const { colors } = useTheme()
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const onPress = useCallback(() => {
-    analytics('search_account_press', { page: origin })
-    navigation.push('Tab-Shared-Account', { account })
-  }, [])
+  if (!props) {
+    props = { onPress: () => navigation.push('Tab-Shared-Account', { account }) }
+  }
 
   return (
     <Pressable
-      accessibilityRole='button'
+      {...props}
       style={{
         flex: 1,
         paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
         paddingVertical: StyleConstants.Spacing.M,
         flexDirection: 'row',
-        alignSelf: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center'
       }}
-      onPress={customOnPress || onPress}
-    >
-      <GracefullyImage
-        uri={{ original: account.avatar, static: account.avatar_static }}
-        style={{
-          alignSelf: 'flex-start',
-          width: StyleConstants.Avatar.S,
-          height: StyleConstants.Avatar.S,
-          borderRadius: 6,
-          marginRight: StyleConstants.Spacing.S
-        }}
-      />
-      <View>
-        <CustomText numberOfLines={1}>
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            size='S'
-            fontBold
-          />
-        </CustomText>
-        <CustomText
-          numberOfLines={1}
-          style={{
-            marginTop: StyleConstants.Spacing.XS,
-            color: colors.secondary
-          }}
-        >
-          @{account.acct}
-        </CustomText>
-      </View>
-    </Pressable>
+      children={
+        <>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <GracefullyImage
+              uri={{ original: account.avatar, static: account.avatar_static }}
+              style={{
+                width: StyleConstants.Avatar.S,
+                height: StyleConstants.Avatar.S,
+                borderRadius: 6,
+                marginRight: StyleConstants.Spacing.S
+              }}
+            />
+            <View>
+              <CustomText numberOfLines={1}>
+                <ParseEmojis
+                  content={account.display_name || account.username}
+                  emojis={account.emojis}
+                  size='S'
+                  fontBold
+                />
+              </CustomText>
+              <CustomText
+                numberOfLines={1}
+                style={{
+                  marginTop: StyleConstants.Spacing.XS,
+                  color: colors.secondary
+                }}
+              >
+                @{account.acct}
+              </CustomText>
+            </View>
+          </View>
+          {props.onPress && !props.disabled ? (
+            <Icon
+              name='ChevronRight'
+              size={StyleConstants.Font.Size.L}
+              color={colors.secondary}
+              style={{ marginLeft: 8 }}
+            />
+          ) : (
+            children || null
+          )}
+        </>
+      }
+    />
   )
 }
 

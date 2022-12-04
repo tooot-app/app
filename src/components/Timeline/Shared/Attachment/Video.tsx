@@ -1,11 +1,10 @@
 import Button from '@components/Button'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { AppState, AppStateStatus, Pressable, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
-import analytics from '@components/analytics'
 import AttachmentAltText from './AltText'
 import { Platform } from 'expo-modules-core'
 
@@ -27,58 +26,19 @@ const AttachmentVideo: React.FC<Props> = ({
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
-  const [videoPosition, setVideoPosition] = useState<number>(0)
   const [videoResizeMode, setVideoResizeMode] = useState<ResizeMode>(ResizeMode.COVER)
-  const playOnPress = useCallback(async () => {
-    analytics('timeline_shared_attachment_video_length', {
-      length: video.meta?.length
-    })
-    analytics('timeline_shared_attachment_vide_play_press', {
-      id: video.id,
-      timestamp: Date.now()
-    })
+  const playOnPress = async () => {
     setVideoLoading(true)
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })
     }
-    Platform.OS === 'android' && setVideoResizeMode(ResizeMode.CONTAIN)
-    await videoPlayer.current?.setPositionAsync(videoPosition)
-    await videoPlayer.current?.presentFullscreenPlayer()
-    videoPlayer.current?.playAsync()
     setVideoLoading(false)
-    videoPlayer.current?.setOnPlaybackStatusUpdate(props => {
-      if (props.isLoaded) {
-        setVideoLoaded(true)
-        if (props.positionMillis) {
-          setVideoPosition(props.positionMillis)
-        }
-      }
-    })
-  }, [videoLoaded, videoPosition])
 
-  const appState = useRef(AppState.currentState)
-  useEffect(() => {
-    const appState = AppState.addEventListener('change', _handleAppStateChange)
+    Platform.OS === 'android' && setVideoResizeMode(ResizeMode.CONTAIN)
+    await videoPlayer.current?.presentFullscreenPlayer()
 
-    return () => appState.remove()
-  }, [])
-  const _handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    if (appState.current.match(/active/) && nextAppState.match(/inactive/)) {
-      // await videoPlayer.current?.stopAsync()
-    } else if (gifv && appState.current.match(/background/) && nextAppState.match(/active/)) {
-      await videoPlayer.current?.setIsMutedAsync(true)
-      await videoPlayer.current?.playAsync()
-    }
-
-    appState.current = nextAppState
+    videoPlayer.current?.playAsync()
   }
-
-  const playerStatus = useRef<any>(null)
-  useEffect(() => {
-    videoPlayer.current?.setOnPlaybackStatusUpdate(playbackStatus => {
-      playerStatus.current = playbackStatus
-    })
-  }, [])
 
   return (
     <View
@@ -92,11 +52,7 @@ const AttachmentVideo: React.FC<Props> = ({
       <Video
         accessibilityLabel={video.description}
         ref={videoPlayer}
-        style={{
-          width: '100%',
-          height: '100%',
-          opacity: sensitiveShown ? 0 : 1
-        }}
+        style={{ width: '100%', height: '100%', opacity: sensitiveShown ? 0 : 1 }}
         usePoster
         resizeMode={videoResizeMode}
         {...(gifv
@@ -111,11 +67,22 @@ const AttachmentVideo: React.FC<Props> = ({
               posterStyle: { resizeMode: ResizeMode.COVER }
             })}
         useNativeControls={false}
-        onFullscreenUpdate={async event => {
+        onFullscreenUpdate={event => {
           if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
             Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
             if (!gifv) {
-              await videoPlayer.current?.pauseAsync()
+              videoPlayer.current?.pauseAsync()
+            } else {
+              videoPlayer.current?.playAsync()
+            }
+          }
+        }}
+        onPlaybackStatusUpdate={event => {
+          if (event.isLoaded) {
+            !videoLoaded && setVideoLoaded(true)
+
+            if (event.didJustFinish) {
+              videoPlayer.current?.setPositionAsync(0)
             }
           }
         }}
@@ -129,19 +96,14 @@ const AttachmentVideo: React.FC<Props> = ({
           justifyContent: 'center',
           alignItems: 'center'
         }}
+        disabled={gifv ? (sensitiveShown ? true : false) : true}
         onPress={gifv ? playOnPress : null}
       >
         {sensitiveShown ? (
           video.blurhash ? (
-            <Blurhash
-              blurhash={video.blurhash}
-              style={{
-                width: '100%',
-                height: '100%'
-              }}
-            />
+            <Blurhash blurhash={video.blurhash} style={{ width: '100%', height: '100%' }} />
           ) : null
-        ) : !gifv || (gifv && playerStatus.current === false) ? (
+        ) : !gifv ? (
           <Button
             round
             overlay

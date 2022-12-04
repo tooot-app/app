@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
@@ -11,32 +10,22 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import { uniqBy } from 'lodash'
+import React, { useCallback, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useQueryClient } from 'react-query'
+import { useSelector } from 'react-redux'
+import StatusContext from './Context'
 
-export interface Props {
-  queryKey: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  highlighted: boolean
-  status: Mastodon.Status
-  ownAccount?: boolean
-  accts: Mastodon.Account['acct'][] // When replying to conversations
-  reblog: boolean
-}
+const TimelineActions: React.FC = () => {
+  const { queryKey, rootQueryKey, status, isReblog, ownAccount, highlighted, disableDetails } =
+    useContext(StatusContext)
+  if (!queryKey || !status || disableDetails) return null
 
-const TimelineActions: React.FC<Props> = ({
-  queryKey,
-  rootQueryKey,
-  highlighted,
-  status,
-  ownAccount = false,
-  accts,
-  reblog
-}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { t } = useTranslation('componentTimeline')
   const { colors, theme } = useTheme()
@@ -84,11 +73,14 @@ const TimelineActions: React.FC<Props> = ({
     }
   })
 
+  const instanceAccount = useSelector(getInstanceAccount, () => true)
   const onPressReply = useCallback(() => {
-    analytics('timeline_shared_actions_reply_press', {
-      page: queryKey[1].page,
-      count: status.replies_count
-    })
+    const accts = uniqBy(
+      ([status.account] as Mastodon.Account[] & Mastodon.Mention[])
+        .concat(status.mentions)
+        .filter(d => d?.id !== instanceAccount?.id),
+      d => d?.id
+    ).map(d => d?.acct)
     navigation.navigate('Screen-Compose', {
       type: 'reply',
       incomingStatus: status,
@@ -112,17 +104,12 @@ const TimelineActions: React.FC<Props> = ({
         (selectedIndex: number) => {
           switch (selectedIndex) {
             case 0:
-              analytics('timeline_shared_actions_reblog_public_press', {
-                page: queryKey[1].page,
-                count: status.reblogs_count,
-                current: status.reblogged
-              })
               mutation.mutate({
                 type: 'updateStatusProperty',
                 queryKey,
                 rootQueryKey,
                 id: status.id,
-                reblog,
+                isReblog,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -133,17 +120,12 @@ const TimelineActions: React.FC<Props> = ({
               })
               break
             case 1:
-              analytics('timeline_shared_actions_reblog_unlisted_press', {
-                page: queryKey[1].page,
-                count: status.reblogs_count,
-                current: status.reblogged
-              })
               mutation.mutate({
                 type: 'updateStatusProperty',
                 queryKey,
                 rootQueryKey,
                 id: status.id,
-                reblog,
+                isReblog,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -157,17 +139,12 @@ const TimelineActions: React.FC<Props> = ({
         }
       )
     } else {
-      analytics('timeline_shared_actions_reblog_press', {
-        page: queryKey[1].page,
-        count: status.reblogs_count,
-        current: status.reblogged
-      })
       mutation.mutate({
         type: 'updateStatusProperty',
         queryKey,
         rootQueryKey,
         id: status.id,
-        reblog,
+        isReblog,
         payload: {
           property: 'reblogged',
           currentValue: status.reblogged,
@@ -179,17 +156,12 @@ const TimelineActions: React.FC<Props> = ({
     }
   }, [status.reblogged, status.reblogs_count])
   const onPressFavourite = useCallback(() => {
-    analytics('timeline_shared_actions_favourite_press', {
-      page: queryKey[1].page,
-      count: status.favourites_count,
-      current: status.favourited
-    })
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
       rootQueryKey,
       id: status.id,
-      reblog,
+      isReblog,
       payload: {
         property: 'favourited',
         currentValue: status.favourited,
@@ -199,16 +171,12 @@ const TimelineActions: React.FC<Props> = ({
     })
   }, [status.favourited, status.favourites_count])
   const onPressBookmark = useCallback(() => {
-    analytics('timeline_shared_actions_bookmark_press', {
-      page: queryKey[1].page,
-      current: status.bookmarked
-    })
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
       rootQueryKey,
       id: status.id,
-      reblog,
+      isReblog,
       payload: {
         property: 'bookmarked',
         currentValue: status.bookmarked,

@@ -1,15 +1,8 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
-import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import {
-  AccessibilityProps,
-  Pressable,
-  StyleProp,
-  View,
-  ViewStyle
-} from 'react-native'
+import React, { useMemo, useState } from 'react'
+import { AccessibilityProps, Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import CustomText from './Text'
 
@@ -56,15 +49,6 @@ const Button: React.FC<Props> = ({
   onPress
 }) => {
   const { colors, theme } = useTheme()
-
-  const mounted = useRef(false)
-  useEffect(() => {
-    if (mounted.current) {
-      layoutAnimation()
-    } else {
-      mounted.current = true
-    }
-  }, [content, loading, disabled])
 
   const loadingSpinkit = useMemo(
     () => (
@@ -120,8 +104,7 @@ const Button: React.FC<Props> = ({
             <CustomText
               style={{
                 color: mainColor,
-                fontSize:
-                  StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
+                fontSize: StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 opacity: loading ? 0 : 1
               }}
               fontWeight={fontBold ? 'Bold' : 'Normal'}
@@ -156,15 +139,13 @@ const Button: React.FC<Props> = ({
           borderColor: mainColor,
           backgroundColor: colorBackground,
           paddingVertical: StyleConstants.Spacing[spacing],
-          paddingHorizontal:
-            StyleConstants.Spacing[spacing] + StyleConstants.Spacing.XS,
+          paddingHorizontal: StyleConstants.Spacing[spacing] + StyleConstants.Spacing.XS,
           width: round && layoutHeight ? layoutHeight : undefined
         },
         customStyle
       ]}
       {...(round && {
-        onLayout: ({ nativeEvent }) =>
-          setLayoutHeight(nativeEvent.layout.height)
+        onLayout: ({ nativeEvent }) => setLayoutHeight(nativeEvent.layout.height)
       })}
       testID='base'
       onPress={onPress}

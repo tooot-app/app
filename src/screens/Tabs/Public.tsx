@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
@@ -51,13 +50,7 @@ const TabPublic = React.memo(
             accessibilityLabel={t('common.search.accessibilityLabel')}
             accessibilityHint={t('common.search.accessibilityHint')}
             content='Search'
-            onPress={() => {
-              analytics('search_tap', { page: pages[segment].key })
-              navigation.navigate('Tab-Public', {
-                screen: 'Tab-Shared-Search',
-                params: { text: undefined }
-              })
-            }}
+            onPress={() => navigation.navigate('Tab-Public', { screen: 'Tab-Shared-Search' })}
           />
         )
       }),

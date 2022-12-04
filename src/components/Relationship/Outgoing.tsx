@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
@@ -29,10 +28,7 @@ const RelationshipOutgoing = React.memo(
     const mutation = useRelationshipMutation({
       onSuccess: (res, { payload: { action } }) => {
         haptics('Success')
-        queryClient.setQueryData<Mastodon.Relationship[]>(
-          queryKeyRelationship,
-          [res]
-        )
+        queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
         if (action === 'block') {
           const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
           queryClient.invalidateQueries(queryKey)
@@ -64,17 +60,12 @@ const RelationshipOutgoing = React.memo(
       onPress = () => {}
     } else {
       if (query.data?.blocked_by) {
-        analytics('relationship_outgoing_blocked_by')
         content = t('button.blocked_by')
-        onPress = () => {
-          analytics('relationship_outgoing_blocked_by_press')
-        }
+        onPress = () => {}
       } else {
         if (query.data?.blocking) {
-          analytics('relationship_outgoing_blocking')
           content = t('button.blocking')
           onPress = () => {
-            analytics('relationship_outgoing_blocking_press')
             mutation.mutate({
               id,
               type: 'outgoing',
@@ -86,10 +77,8 @@ const RelationshipOutgoing = React.memo(
           }
         } else {
           if (query.data?.following) {
-            analytics('relationship_outgoing_following')
             content = t('button.following')
             onPress = () => {
-              analytics('relationship_outgoing_following_press')
               mutation.mutate({
                 id,
                 type: 'outgoing',
@@ -101,10 +90,8 @@ const RelationshipOutgoing = React.memo(
             }
           } else {
             if (query.data?.requested) {
-              analytics('relationship_outgoing_requested')
               content = t('button.requested')
               onPress = () => {
-                analytics('relationship_outgoing_requested_press')
                 mutation.mutate({
                   id,
                   type: 'outgoing',
@@ -115,10 +102,8 @@ const RelationshipOutgoing = React.memo(
                 })
               }
             } else {
-              analytics('relationship_outgoing_default')
               content = t('button.default')
               onPress = () => {
-                analytics('relationship_outgoing_default_press')
                 mutation.mutate({
                   id,
                   type: 'outgoing',

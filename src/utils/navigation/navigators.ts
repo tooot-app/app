@@ -2,6 +2,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { ComposeState } from '@screens/Compose/utils/types'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type RootStackParamList = {
@@ -38,6 +39,7 @@ export type RootStackParamList = {
     | {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
+        visibility: ComposeState['visibility']
         text?: string // For contacting tooot only
       }
     | {
@@ -63,17 +65,18 @@ export type RootStackParamList = {
     share?: { text?: string; media?: { uri: string; mime: string }[] }
   }
 }
-export type RootStackScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>
+export type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<
+  RootStackParamList,
+  T
+>
 
 export type ScreenComposeStackParamList = {
   'Screen-Compose-Root': undefined
   'Screen-Compose-EditAttachment': { index: number }
   'Screen-Compose-DraftsList': { timestamp: number }
 }
-export type ScreenComposeStackScreenProps<
-  T extends keyof ScreenComposeStackParamList
-> = NativeStackScreenProps<ScreenComposeStackParamList, T>
+export type ScreenComposeStackScreenProps<T extends keyof ScreenComposeStackParamList> =
+  NativeStackScreenProps<ScreenComposeStackParamList, T>
 
 export type ScreenTabsStackParamList = {
   'Tab-Local': NavigatorScreenParams<TabLocalStackParamList>
@@ -82,12 +85,17 @@ export type ScreenTabsStackParamList = {
   'Tab-Notifications': NavigatorScreenParams<TabNotificationsStackParamList>
   'Tab-Me': NavigatorScreenParams<TabMeStackParamList>
 }
-export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> =
-  BottomTabScreenProps<ScreenTabsStackParamList, T>
+export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> = BottomTabScreenProps<
+  ScreenTabsStackParamList,
+  T
+>
 
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
     account: Mastodon.Account | Mastodon.Mention
+  }
+  'Tab-Shared-Account-In-Lists': {
+    account: Pick<Mastodon.Account, 'id' | 'username'>
   }
   'Tab-Shared-Attachments': { account: Mastodon.Account }
   'Tab-Shared-Hashtag': {
@@ -96,7 +104,7 @@ export type TabSharedStackParamList = {
   'Tab-Shared-History': {
     id: Mastodon.Status['id']
   }
-  'Tab-Shared-Search': { text: string | undefined }
+  'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {
     toot: Mastodon.Status
     rootQueryKey?: QueryKeyTimeline
@@ -135,11 +143,18 @@ export type TabMeStackParamList = {
   'Tab-Me-Bookmarks': undefined
   'Tab-Me-Conversations': undefined
   'Tab-Me-Favourites': undefined
-  'Tab-Me-Lists': undefined
-  'Tab-Me-Lists-List': {
-    list: Mastodon.List['id']
-    title: Mastodon.List['title']
-  }
+  'Tab-Me-List': Mastodon.List
+  'Tab-Me-List-Accounts': Omit<Mastodon.List, 'replies_policy'>
+  'Tab-Me-List-Edit':
+    | {
+        type: 'add'
+      }
+    | {
+        type: 'edit'
+        payload: Mastodon.List
+        key: string // To update title after successful mutation
+      }
+  'Tab-Me-List-List': undefined
   'Tab-Me-Profile': undefined
   'Tab-Me-Push': undefined
   'Tab-Me-Settings': undefined
@@ -147,11 +162,12 @@ export type TabMeStackParamList = {
   'Tab-Me-Settings-Language': undefined
   'Tab-Me-Switch': undefined
 } & TabSharedStackParamList
-export type TabMeStackScreenProps<T extends keyof TabMeStackParamList> =
-  NativeStackScreenProps<TabMeStackParamList, T>
-export type TabMeStackNavigationProp<
-  RouteName extends keyof TabMeStackParamList
-> = StackNavigationProp<TabMeStackParamList, RouteName>
+export type TabMeStackScreenProps<T extends keyof TabMeStackParamList> = NativeStackScreenProps<
+  TabMeStackParamList,
+  T
+>
+export type TabMeStackNavigationProp<RouteName extends keyof TabMeStackParamList> =
+  StackNavigationProp<TabMeStackParamList, RouteName>
 
 export type TabMeProfileStackParamList = {
   'Tab-Me-Profile-Root': undefined
@@ -165,6 +181,5 @@ export type TabMeProfileStackParamList = {
     fields?: Mastodon.Source['fields']
   }
 }
-export type TabMeProfileStackScreenProps<
-  T extends keyof TabMeProfileStackParamList
-> = NativeStackScreenProps<TabMeProfileStackParamList, T>
+export type TabMeProfileStackScreenProps<T extends keyof TabMeProfileStackParamList> =
+  NativeStackScreenProps<TabMeProfileStackParamList, T>

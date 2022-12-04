@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { ParseHTML } from '@components/Parse'
@@ -7,10 +6,7 @@ import CustomText from '@components/Text'
 import { BlurView } from '@react-native-community/blur'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import {
-  useAnnouncementMutation,
-  useAnnouncementQuery
-} from '@utils/queryHooks/announcement'
+import { useAnnouncementMutation, useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -29,9 +25,7 @@ import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const ScreenAnnouncements: React.FC<
-  RootStackScreenProps<'Screen-Announcements'>
-> = ({
+const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>> = ({
   route: {
     params: { showAll = false }
   },
@@ -46,9 +40,7 @@ const ScreenAnnouncements: React.FC<
     showAll,
     options: {
       select: announcements =>
-        announcements.filter(announcement =>
-          showAll ? announcement : !announcement.read
-        )
+        announcements.filter(announcement => (showAll ? announcement : !announcement.read))
     }
   })
   const mutation = useAnnouncementMutation({
@@ -75,10 +67,7 @@ const ScreenAnnouncements: React.FC<
           justifyContent: 'center'
         }}
       >
-        <Pressable
-          style={StyleSheet.absoluteFillObject}
-          onPress={() => navigation.goBack()}
-        />
+        <Pressable style={StyleSheet.absoluteFillObject} onPress={() => navigation.goBack()} />
         <View
           style={{
             flexShrink: 1,
@@ -136,31 +125,22 @@ const ScreenAnnouncements: React.FC<
                     marginRight: StyleConstants.Spacing.M,
                     borderRadius: 6,
                     flexDirection: 'row',
-                    borderColor: reaction.me
-                      ? colors.disabled
-                      : colors.primaryDefault,
-                    backgroundColor: reaction.me
-                      ? colors.disabled
-                      : colors.backgroundDefault
+                    borderColor: reaction.me ? colors.disabled : colors.primaryDefault,
+                    backgroundColor: reaction.me ? colors.disabled : colors.backgroundDefault
                   }}
-                  onPress={() => {
-                    analytics('announcement_reaction_press', {
-                      current: reaction.me
-                    })
+                  onPress={() =>
                     mutation.mutate({
                       id: item.id,
                       type: 'reaction',
                       name: reaction.name,
                       me: reaction.me
                     })
-                  }}
+                  }
                 >
                   {reaction.url ? (
                     <FastImage
                       source={{
-                        uri: reduceMotionEnabled
-                          ? reaction.static_url
-                          : reaction.url
+                        uri: reduceMotionEnabled ? reaction.static_url : reaction.url
                       }}
                       style={{
                         width: StyleConstants.Font.LineHeight.M + 3,
@@ -183,27 +163,14 @@ const ScreenAnnouncements: React.FC<
                   ) : null}
                 </Pressable>
               ))}
-              {/* <Pressable
-                style={[styles.reaction, { borderColor: colors.primaryDefault }]}
-                onPress={() => invisibleTextInputRef.current?.focus()}
-              >
-                <Icon
-                  name='Plus'
-                  size={StyleConstants.Font.Size.M}
-                  color={colors.primaryDefault}
-                />
-              </Pressable> */}
             </View>
           ) : null}
           <Button
             type='text'
-            content={
-              item.read ? t('content.button.read') : t('content.button.unread')
-            }
+            content={item.read ? t('content.button.read') : t('content.button.unread')}
             loading={mutation.isLoading}
             disabled={item.read}
             onPress={() => {
-              analytics('announcement_read_press')
               !item.read &&
                 mutation.mutate({
                   id: item.id,
@@ -279,10 +246,8 @@ const ScreenAnnouncements: React.FC<
                     borderRadius: StyleConstants.Spacing.S,
                     borderWidth: 1,
                     borderColor: colors.primaryDefault,
-                    backgroundColor:
-                      i === index ? colors.primaryDefault : undefined,
-                    marginLeft:
-                      i === query.data.length ? 0 : StyleConstants.Spacing.S
+                    backgroundColor: i === index ? colors.primaryDefault : undefined,
+                    marginLeft: i === query.data.length ? 0 : StyleConstants.Spacing.S
                   }}
                 />
               ))}
@@ -292,9 +257,7 @@ const ScreenAnnouncements: React.FC<
       </SafeAreaView>
     </BlurView>
   ) : (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: colors.backgroundDefault }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.backgroundDefault }}>
       <FlatList
         horizontal
         data={query.data}
@@ -323,10 +286,8 @@ const ScreenAnnouncements: React.FC<
                   borderRadius: StyleConstants.Spacing.S,
                   borderWidth: 1,
                   borderColor: colors.primaryDefault,
-                  backgroundColor:
-                    i === index ? colors.primaryDefault : undefined,
-                  marginLeft:
-                    i === query.data.length ? 0 : StyleConstants.Spacing.S
+                  backgroundColor: i === index ? colors.primaryDefault : undefined,
+                  marginLeft: i === query.data.length ? 0 : StyleConstants.Spacing.S
                 }}
               />
             ))}

@@ -46,11 +46,20 @@
       "language": {
         "name": "Ngôn ngữ"
       },
-      "lists": {
-        "name": "Danh sách"
-      },
       "list": {
         "name": "Danh sách: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Người trong danh sách: {{list}}"
+      },
+      "listAdd": {
+        "name": "Thêm một danh sách"
+      },
+      "listEdit": {
+        "name": "Sửa danh sách"
+      },
+      "lists": {
+        "name": "Danh sách"
       },
       "push": {
         "name": "Thông báo đẩy"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Những thay đổi chưa được lưu",
-        "message": "Những thay đổi của bạn chưa được lưu. Bạn có muốn hủy bỏ?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Hủy bỏ"
+    "listAccounts": {
+      "heading": "Quản lý người dùng",
+      "error": "Xoá khỏi danh sách",
+      "empty": "Chưa thêm ai vào danh sách"
+    },
+    "listEdit": {
+      "heading": "Sửa danh sách",
+      "title": "Chức vụ",
+      "repliesPolicy": {
+        "heading": "Cho phép trả lời với:",
+        "options": {
+          "none": "Không ai",
+          "list": "Người trong danh sách",
+          "followed": "Bất cứ ai đã theo dõi"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "Xoá danh sách",
+      "confirm": {
+        "title": "Xóa danh sách \"{{list}}\"?",
+        "message": "Hành phục này không thể khôi phục được."
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "Đã cập nhật {{type}}",
         "failed": "Cập nhật {{type}} thất bại, xin thử lại"
@@ -125,8 +150,7 @@
           "options": {
             "public": "Công khai",
             "unlisted": "Hạn chế",
-            "private": "Riêng tư",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Riêng tư"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Vẫn đăng xuất?",
           "message": "Sau khi đăng xuất, bạn sẽ phải nhập lại mật khẩu",
           "buttons": {
-            "logout": "Đăng xuất",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Đăng xuất"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Giao diện",
         "options": {
           "auto": "Theo thiết bị",
           "light": "Sáng",
-          "dark": "Tối",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Tối"
         }
       },
       "darkTheme": {
         "heading": "Độ tối",
         "options": {
           "lighter": "Thấp",
-          "darker": "Vừa",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Vừa"
         }
       },
       "browser": {
         "heading": "Mở liên kết",
         "options": {
           "internal": "Bằng app",
-          "external": "Bằng trình duyệt",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Bằng trình duyệt"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "Liên hệ tooot"
-      },
-      "analytics": {
-        "heading": "Thu thập dữ liệu",
-        "description": "Giúp cải thiện chất lượng app"
       },
       "version": "Phiên bản {{version}}",
       "instanceVersion": "Mastodon phiên bản {{version}}"
@@ -307,6 +320,11 @@
       },
       "suspended": "Người này đã bị vô hiệu hóa"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {

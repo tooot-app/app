@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
@@ -15,6 +14,7 @@ import { isDevelopment, isRelease } from '@utils/checkEnvironment'
 import { Platform } from 'react-native'
 import Constants from 'expo-constants'
 import { getExpoToken } from '@utils/slices/appSlice'
+import browserPackage from '@helpers/browserPackage'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
@@ -33,40 +33,32 @@ const SettingsTooot: React.FC = () => {
           <Icon name='MessageSquare' size={StyleConstants.Font.Size.M} color={colors.secondary} />
         }
         iconBack='ChevronRight'
-        onPress={() => {
-          analytics('settings_feedback_press')
-          Linking.openURL('https://feedback.tooot.app/feature-requests')
-        }}
+        onPress={() => Linking.openURL('https://feedback.tooot.app/feature-requests')}
       />
       <MenuRow
         title={t('me.settings.support.heading')}
         content={<Icon name='Heart' size={StyleConstants.Font.Size.M} color={colors.red} />}
         iconBack='ChevronRight'
-        onPress={() => {
-          analytics('settings_support_press')
-          Linking.openURL('https://www.buymeacoffee.com/xmflsct')
-        }}
+        onPress={() => Linking.openURL('https://www.buymeacoffee.com/xmflsct')}
       />
       {isDevelopment || isRelease ? (
         <MenuRow
           title={t('me.settings.review.heading')}
           content={<Icon name='Star' size={StyleConstants.Font.Size.M} color='#FF9500' />}
           iconBack='ChevronRight'
-          onPress={() => {
-            analytics('settings_review_press')
-            StoreReview?.isAvailableAsync().then(() => StoreReview?.requestReview())
-          }}
+          onPress={() => StoreReview?.isAvailableAsync().then(() => StoreReview?.requestReview())}
         />
       ) : null}
       <MenuRow
         title={t('me.settings.contact.heading')}
         content={<Icon name='Mail' size={StyleConstants.Font.Size.M} color={colors.secondary} />}
         iconBack='ChevronRight'
-        onPress={() => {
+        onPress={async () => {
           if (instanceActive !== -1) {
             navigation.navigate('Screen-Compose', {
               type: 'conversation',
               accts: ['tooot@xmflsct.com'],
+              visibility: 'direct',
               text:
                 '[' +
                 `${Platform.OS}/${Platform.Version}` +
@@ -81,7 +73,9 @@ const SettingsTooot: React.FC = () => {
                 ']'
             })
           } else {
-            WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot')
+            WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot', {
+              browserPackage: await browserPackage()
+            })
           }
         }}
       />

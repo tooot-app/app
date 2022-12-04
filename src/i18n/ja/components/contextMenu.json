@@ -2,6 +2,11 @@
   "accessibilityHint": "このトゥートへのアクション、投稿されたユーザー、トゥート自体など",
   "account": {
     "title": "ユーザーアクション",
+    "following": {
+      "action_false": "ユーザーをフォロー",
+      "action_true": "ユーザーをフォロー解除"
+    },
+    "inLists": "リストのユーザーを管理",
     "mute": {
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
@@ -11,8 +16,12 @@
       "action_true": "ユーザーのブロックを解除"
     },
     "reports": {
-      "action": "通報とブロック"
+      "action": "ユーザーの報告とブロック"
     }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
   },
   "copy": {
     "action": "トゥートをコピー",

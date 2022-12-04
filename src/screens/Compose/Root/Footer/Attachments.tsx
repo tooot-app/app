@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
@@ -9,14 +8,7 @@ import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/inst
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, {
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react'
+import React, { RefObject, useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
@@ -39,41 +31,29 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<any>()
 
-  const maxAttachments = useSelector(
-    getInstanceConfigurationStatusMaxAttachments,
-    () => true
-  )
+  const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
 
   const flatListRef = useRef<FlatList>(null)
 
-  const sensitiveOnPress = useCallback(() => {
-    analytics('compose_attachment_sensitive_press', {
-      current: composeState.attachments.sensitive
-    })
-    composeDispatch({
-      type: 'attachments/sensitive',
-      payload: { sensitive: !composeState.attachments.sensitive }
-    })
-  }, [composeState.attachments.sensitive])
+  const sensitiveOnPress = useCallback(
+    () =>
+      composeDispatch({
+        type: 'attachments/sensitive',
+        payload: { sensitive: !composeState.attachments.sensitive }
+      }),
+    [composeState.attachments.sensitive]
+  )
 
   const calculateWidth = useCallback((item: ExtendedAttachment) => {
     if (item.local) {
-      return (
-        ((item.local.width || 100) / (item.local.height || 100)) *
-        DEFAULT_HEIGHT
-      )
+      return ((item.local.width || 100) / (item.local.height || 100)) * DEFAULT_HEIGHT
     } else {
       if (item.remote) {
         if (item.remote.meta.original.aspect) {
           return item.remote.meta.original.aspect * DEFAULT_HEIGHT
-        } else if (
-          item.remote.meta.original.width &&
-          item.remote.meta.original.height
-        ) {
+        } else if (item.remote.meta.original.width && item.remote.meta.original.height) {
           return (
-            (item.remote.meta.original.width /
-              item.remote.meta.original.height) *
-            DEFAULT_HEIGHT
+            (item.remote.meta.original.width / item.remote.meta.original.height) * DEFAULT_HEIGHT
           )
         } else {
           return DEFAULT_HEIGHT
@@ -85,19 +65,17 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   }, [])
 
   const snapToOffsets = useMemo(() => {
-    const attachmentsOffsets = composeState.attachments.uploads.map(
-      (_, index) => {
-        let currentOffset = 0
-        Array.from(Array(index).keys()).map(
-          i =>
-            (currentOffset =
-              currentOffset +
-              calculateWidth(composeState.attachments.uploads[i]) +
-              StyleConstants.Spacing.Global.PagePadding)
-        )
-        return currentOffset
-      }
-    )
+    const attachmentsOffsets = composeState.attachments.uploads.map((_, index) => {
+      let currentOffset = 0
+      Array.from(Array(index).keys()).map(
+        i =>
+          (currentOffset =
+            currentOffset +
+            calculateWidth(composeState.attachments.uploads[i]) +
+            StyleConstants.Spacing.Global.PagePadding)
+      )
+      return currentOffset
+    })
     return attachmentsOffsets.length < 4
       ? [
           ...attachmentsOffsets,
@@ -109,14 +87,9 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   }, [composeState.attachments.uploads.length])
   let prevOffsets = useRef<number[]>()
   useEffect(() => {
-    if (
-      snapToOffsets.length >
-      (prevOffsets.current ? prevOffsets.current.length : 0)
-    ) {
+    if (snapToOffsets.length > (prevOffsets.current ? prevOffsets.current.length : 0)) {
       flatListRef.current?.scrollToOffset({
-        offset:
-          snapToOffsets[snapToOffsets.length - 2] +
-          snapToOffsets[snapToOffsets.length - 1]
+        offset: snapToOffsets[snapToOffsets.length - 2] + snapToOffsets[snapToOffsets.length - 1]
       })
     }
     prevOffsets.current = snapToOffsets
@@ -168,10 +141,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 backgroundColor: colors.backgroundOverlayInvert
               }}
             >
-              <Circle
-                size={StyleConstants.Font.Size.L}
-                color={colors.primaryOverlay}
-              />
+              <Circle size={StyleConstants.Font.Size.L} color={colors.primaryOverlay} />
             </View>
           ) : (
             <View
@@ -184,17 +154,15 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               }}
             >
               <Button
-                accessibilityLabel={t(
-                  'content.root.footer.attachments.remove.accessibilityLabel',
-                  { attachment: index + 1 }
-                )}
+                accessibilityLabel={t('content.root.footer.attachments.remove.accessibilityLabel', {
+                  attachment: index + 1
+                })}
                 type='icon'
                 content='X'
                 spacing='M'
                 round
                 overlay
                 onPress={() => {
-                  analytics('compose_attachment_delete')
                   layoutAnimation()
                   composeDispatch({
                     type: 'attachment/delete',
@@ -204,17 +172,15 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 }}
               />
               <Button
-                accessibilityLabel={t(
-                  'content.root.footer.attachments.edit.accessibilityLabel',
-                  { attachment: index + 1 }
-                )}
+                accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
+                  attachment: index + 1
+                })}
                 type='icon'
                 content='Edit'
                 spacing='M'
                 round
                 overlay
                 onPress={() => {
-                  analytics('compose_attachment_edit')
                   navigation.navigate('Screen-Compose-EditAttachment', {
                     index
                   })
@@ -232,9 +198,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
     () => (
       <Pressable
         accessible
-        accessibilityLabel={t(
-          'content.root.footer.attachments.upload.accessibilityLabel'
-        )}
+        accessibilityLabel={t('content.root.footer.attachments.upload.accessibilityLabel')}
         style={{
           height: DEFAULT_HEIGHT,
           marginLeft: StyleConstants.Spacing.Global.PagePadding,
@@ -244,7 +208,6 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           backgroundColor: colors.backgroundOverlayInvert
         }}
         onPress={async () => {
-          analytics('compose_attachment_add_container_press')
           await chooseAndUploadAttachment({
             composeDispatch,
             showActionSheetWithOptions
@@ -258,7 +221,6 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           round
           overlay
           onPress={async () => {
-            analytics('compose_attachment_add_button_press')
             await chooseAndUploadAttachment({
               composeDispatch,
               showActionSheetWithOptions
@@ -266,16 +228,8 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           }}
           style={{
             position: 'absolute',
-            top:
-              (DEFAULT_HEIGHT -
-                StyleConstants.Spacing.M * 2 -
-                StyleConstants.Font.Size.M) /
-              2,
-            left:
-              (DEFAULT_HEIGHT -
-                StyleConstants.Spacing.M * 2 -
-                StyleConstants.Font.Size.M) /
-              2
+            top: (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2,
+            left: (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2
           }}
         />
       </Pressable>
@@ -327,13 +281,9 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         keyboardShouldPersistTaps='always'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
-        keyExtractor={item =>
-          item.local?.uri || item.remote?.url || Math.random().toString()
-        }
+        keyExtractor={item => item.local?.uri || item.remote?.url || Math.random().toString()}
         ListFooterComponent={
-          composeState.attachments.uploads.length < maxAttachments
-            ? listFooter
-            : null
+          composeState.attachments.uploads.length < maxAttachments ? listFooter : null
         }
       />
     </View>

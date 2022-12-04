@@ -27,27 +27,23 @@ const Logout: React.FC = () => {
       }}
       destructive
       onPress={() =>
-        Alert.alert(
-          t('me.root.logout.alert.title'),
-          t('me.root.logout.alert.message'),
-          [
-            {
-              text: t('me.root.logout.alert.buttons.logout'),
-              style: 'destructive' as const,
-              onPress: () => {
-                if (instance) {
-                  haptics('Success')
-                  queryClient.clear()
-                  dispatch(removeInstance(instance))
-                }
+        Alert.alert(t('me.root.logout.alert.title'), t('me.root.logout.alert.message'), [
+          {
+            text: t('me.root.logout.alert.buttons.logout'),
+            style: 'destructive',
+            onPress: () => {
+              if (instance) {
+                haptics('Success')
+                queryClient.clear()
+                dispatch(removeInstance(instance))
               }
-            },
-            {
-              text: t('me.root.logout.alert.buttons.cancel'),
-              style: 'cancel' as const
             }
-          ]
-        )
+          },
+          {
+            text: t('common:buttons.cancel'),
+            style: 'default'
+          }
+        ])
       }
     />
   )

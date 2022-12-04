@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
@@ -28,7 +27,6 @@ import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
 import { useSelector } from 'react-redux'
@@ -113,7 +111,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     }
 
     if (previousRoute?.name !== currentRoute?.name) {
-      analytics('screen_view', { screen_name: currentRoute?.name })
       Sentry.setContext('page', {
         previous: previousRoute,
         current: currentRoute
@@ -273,7 +270,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
 
   return (
-    <IntlProvider locale={i18n.language}>
+    <>
       <StatusBar
         backgroundColor={colors.backgroundDefault}
         {...(Platform.OS === 'android' && {
@@ -350,7 +347,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
         <Message />
       </NavigationContainer>
-    </IntlProvider>
+    </>
   )
 }
 

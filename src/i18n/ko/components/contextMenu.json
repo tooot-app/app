@@ -2,6 +2,11 @@
   "accessibilityHint": "이 툿에 할 동작, 툿 자체나 포스트한 사용자",
   "account": {
     "title": "사용자 동작",
+    "following": {
+      "action_false": "사용자 팔로우",
+      "action_true": "사용자 팔로우 해제"
+    },
+    "inLists": "리스트의 사용자 관리",
     "mute": {
       "action_false": "사용자 뮤트",
       "action_true": "사용자 뮤트 해제"
@@ -11,8 +16,12 @@
       "action_true": "사용자 차단 해제"
     },
     "reports": {
-      "action": "신고 및 차단"
+      "action": "사용자 신고 및 차단"
     }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
   },
   "copy": {
     "action": "툿 복사",

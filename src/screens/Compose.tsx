@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -168,7 +167,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           textInput: 'text',
           composeDispatch,
           content:
-            (params.text && `${params.text}\n`) +
+            (params.text ? `${params.text}\n` : '') +
             params.accts.map(acct => `@${acct}`).join(' ') +
             ' ',
           disableDebounce: true
@@ -209,19 +208,15 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         type='text'
         content={t('heading.left.button')}
         onPress={() => {
-          analytics('compose_header_back_press')
           if (!composeState.dirty) {
-            analytics('compose_header_back_empty')
             navigation.goBack()
             return
           } else {
-            analytics('compose_header_back_state_occupied')
             Alert.alert(t('heading.left.alert.title'), undefined, [
               {
                 text: t('heading.left.alert.buttons.delete'),
                 style: 'destructive',
                 onPress: () => {
-                  analytics('compose_header_back_occupied_save')
                   removeDraft()
                   navigation.goBack()
                 }
@@ -229,17 +224,13 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               {
                 text: t('heading.left.alert.buttons.save'),
                 onPress: () => {
-                  analytics('compose_header_back_occupied_delete')
                   saveDraft()
                   navigation.goBack()
                 }
               },
               {
                 text: t('heading.left.alert.buttons.cancel'),
-                style: 'cancel',
-                onPress: () => {
-                  analytics('compose_header_back_occupied_cancel')
-                }
+                style: 'cancel'
               }
             ])
           }
@@ -268,11 +259,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         type='text'
         content={
           params?.type
-            ? t(`heading.right.button.${params.type}`)
+            ? params.type === 'conversation' && params.visibility === 'direct'
+              ? t(`heading.right.button.${params.type}`)
+              : t('heading.right.button.default')
             : t('heading.right.button.default')
         }
         onPress={() => {
-          analytics('compose_header_post_press')
           composeDispatch({ type: 'posting', payload: true })
 
           composePost(params, composeState)
@@ -310,7 +302,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   t('heading.right.alert.removeReply.description'),
                   [
                     {
-                      text: t('heading.right.alert.removeReply.cancel'),
+                      text: t('common:buttons.cancel'),
                       onPress: () => {
                         composeDispatch({ type: 'posting', payload: false })
                       },
@@ -327,9 +319,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.captureMessage('Compose posting', {
-                  contexts: { errorObject: error }
-                })
+                Sentry.setContext('Error object', { error })
+                Sentry.captureMessage('Posting error')
                 haptics('Error')
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [

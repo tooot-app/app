@@ -1,11 +1,7 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
-import {
-  QueryKeyRelationship,
-  useRelationshipMutation
-} from '@utils/queryHooks/relationship'
+import { QueryKeyRelationship, useRelationshipMutation } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -23,17 +19,12 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
   const { t } = useTranslation()
 
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
-  const queryKeyNotification: QueryKeyTimeline = [
-    'Timeline',
-    { page: 'Notifications' }
-  ]
+  const queryKeyNotification: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
   const queryClient = useQueryClient()
   const mutation = useRelationshipMutation({
     onSuccess: res => {
       haptics('Success')
-      queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [
-        res
-      ])
+      queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
       queryClient.refetchQueries(queryKeyNotification)
     },
     onError: (err: any, { type }) => {
@@ -62,28 +53,26 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
         type='icon'
         content='X'
         loading={mutation.isLoading}
-        onPress={() => {
-          analytics('relationship_incoming_press_reject')
+        onPress={() =>
           mutation.mutate({
             id,
             type: 'incoming',
             payload: { action: 'reject' }
           })
-        }}
+        }
       />
       <Button
         round
         type='icon'
         content='Check'
         loading={mutation.isLoading}
-        onPress={() => {
-          analytics('relationship_incoming_press_authorize')
+        onPress={() =>
           mutation.mutate({
             id,
             type: 'incoming',
             payload: { action: 'authorize' }
           })
-        }}
+        }
         style={styles.approve}
       />
     </View>

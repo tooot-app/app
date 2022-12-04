@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Ursprungsnachricht nicht verfügbar",
           "description": "Ursprungströt wurde gelöscht. Möchtest du die Verknüpfung zu ihn entfernen?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Referenz entfernen"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Auswahltyp wählen",
             "options": {
               "single": "Einfachauswahl",
-              "multiple": "Mehrfachauswahl",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Mehrfachauswahl"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 Stunden",
               "86400": "1 Tag",
               "259200": "3 Tage",
-              "604800": "7 Tage",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 Tage"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Öffentlich",
             "unlisted": "Ungelistet",
             "private": "Nur für Folgende",
-            "direct": "Direktnachricht",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Direktnachricht"
           }
         },
         "spoiler": {

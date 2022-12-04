@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import browserPackage from '@helpers/browserPackage'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { getInstances } from '@utils/slices/instancesSlice'
@@ -9,18 +10,10 @@ import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-  View
-} from 'react-native'
+import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { Placeholder } from 'rn-placeholder'
-import analytics from './analytics'
 import InstanceAuth from './Instance/Auth'
 import InstanceInfo from './Instance/Info'
 import CustomText from './Text'
@@ -65,18 +58,14 @@ const ComponentInstance: React.FC<Props> = ({
 
   const processUpdate = useCallback(() => {
     if (domain) {
-      analytics('instance_login')
-      if (
-        instances &&
-        instances.filter(instance => instance.url === domain).length
-      ) {
+      if (instances && instances.filter(instance => instance.url === domain).length) {
         Alert.alert(t('update.alert.title'), t('update.alert.message'), [
           {
-            text: t('update.alert.buttons.cancel'),
+            text: t('common:buttons.cancel'),
             style: 'cancel'
           },
           {
-            text: t('update.alert.buttons.continue'),
+            text: t('common:buttons.continue'),
             onPress: () => {
               appsQuery.refetch()
             }
@@ -142,9 +131,7 @@ const ComponentInstance: React.FC<Props> = ({
               borderBottomWidth: 1,
               ...StyleConstants.FontStyle.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError
-                ? colors.red
-                : colors.border
+              borderBottomColor: instanceQuery.isError ? colors.red : colors.border
             }}
             editable={false}
             defaultValue='https://'
@@ -156,9 +143,7 @@ const ComponentInstance: React.FC<Props> = ({
               ...StyleConstants.FontStyle.M,
               marginRight: StyleConstants.Spacing.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError
-                ? colors.red
-                : colors.border
+              borderBottomColor: instanceQuery.isError ? colors.red : colors.border
             }}
             onChangeText={onChangeText}
             autoCapitalize='none'
@@ -166,7 +151,6 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardType='url'
             textContentType='URL'
             onSubmitEditing={({ nativeEvent: { text } }) => {
-              analytics('instance_textinput_submit', { match: text === domain })
               if (
                 text === domain &&
                 instanceQuery.isSuccess &&
@@ -182,11 +166,7 @@ const ComponentInstance: React.FC<Props> = ({
             keyboardAppearance={mode}
             {...(scrollViewRef && {
               onFocus: () =>
-                setTimeout(
-                  () =>
-                    scrollViewRef.current?.scrollTo({ y: 0, animated: true }),
-                  150
-                )
+                setTimeout(() => scrollViewRef.current?.scrollTo({ y: 0, animated: true }), 150)
             })}
             autoCorrect={false}
             spellCheck={false}
@@ -211,27 +191,19 @@ const ComponentInstance: React.FC<Props> = ({
               <InstanceInfo
                 style={{ alignItems: 'flex-start' }}
                 header={t('server.information.accounts')}
-                content={
-                  instanceQuery.data?.stats?.user_count?.toString() || undefined
-                }
+                content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
                 potentialWidth={4}
               />
               <InstanceInfo
                 style={{ alignItems: 'center' }}
                 header={t('server.information.statuses')}
-                content={
-                  instanceQuery.data?.stats?.status_count?.toString() ||
-                  undefined
-                }
+                content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
                 potentialWidth={4}
               />
               <InstanceInfo
                 style={{ alignItems: 'flex-end' }}
                 header={t('server.information.domains')}
-                content={
-                  instanceQuery.data?.stats?.domain_count?.toString() ||
-                  undefined
-                }
+                content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
                 potentialWidth={4}
               />
             </View>
@@ -248,17 +220,11 @@ const ComponentInstance: React.FC<Props> = ({
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{
-                marginTop:
-                  (StyleConstants.Font.LineHeight.S -
-                    StyleConstants.Font.Size.S) /
-                  2,
+                marginTop: (StyleConstants.Font.LineHeight.S - StyleConstants.Font.Size.S) / 2,
                 marginRight: StyleConstants.Spacing.XS
               }}
             />
-            <CustomText
-              fontStyle='S'
-              style={{ flex: 1, color: colors.secondary }}
-            >
+            <CustomText fontStyle='S' style={{ flex: 1, color: colors.secondary }}>
               {t('server.disclaimer.base')}
             </CustomText>
           </View>
@@ -274,10 +240,7 @@ const ComponentInstance: React.FC<Props> = ({
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{
-                marginTop:
-                  (StyleConstants.Font.LineHeight.S -
-                    StyleConstants.Font.Size.S) /
-                  2,
+                marginTop: (StyleConstants.Font.LineHeight.S - StyleConstants.Font.Size.S) / 2,
                 marginRight: StyleConstants.Spacing.XS
               }}
             />
@@ -292,22 +255,20 @@ const ComponentInstance: React.FC<Props> = ({
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={() => {
-                      analytics('view_privacy')
-                      WebBrowser.openBrowserAsync(
-                        'https://tooot.app/privacy-policy'
-                      )
-                    }}
+                    onPress={async () =>
+                      WebBrowser.openBrowserAsync('https://tooot.app/privacy-policy', {
+                        browserPackage: await browserPackage()
+                      })
+                    }
                   />,
                   <CustomText
                     accessible
                     style={{ color: colors.blue }}
-                    onPress={() => {
-                      analytics('view_tos')
-                      WebBrowser.openBrowserAsync(
-                        'https://tooot.app/terms-of-service'
-                      )
-                    }}
+                    onPress={async () =>
+                      WebBrowser.openBrowserAsync('https://tooot.app/terms-of-service', {
+                        browserPackage: await browserPackage()
+                      })
+                    }
                   />
                 ]}
               />

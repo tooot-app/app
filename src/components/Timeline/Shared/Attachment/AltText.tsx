@@ -28,9 +28,7 @@ const AttachmentAltText: React.FC<Props> = ({ sensitiveShown, text }) => {
       type='text'
       content='ALT'
       fontBold
-      onPress={() => {
-        navigation.navigate('Screen-Actions', { type: 'alt_text', text })
-      }}
+      onPress={() => navigation.navigate('Screen-Actions', { type: 'alt_text', text })}
     />
   ) : null
 }

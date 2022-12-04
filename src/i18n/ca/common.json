@@ -1,0 +1,30 @@
+{
+  "buttons": {
+    "OK": "D'acord",
+    "apply": "Aplica",
+    "cancel": "Cancel·la",
+    "discard": "Descarta",
+    "continue": "Continua",
+    "delete": "Esborra",
+    "done": "Fet"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Emoji personalitzat {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} amb èxit"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} ha fallat, torna-ho a intentar"
+    }
+  },
+  "separator": ", ",
+  "discard": {
+    "title": "Canvis no desats",
+    "message": "Els canvis no han sigut desats. Vols descartar-los?"
+  }
+}

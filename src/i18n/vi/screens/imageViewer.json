@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "Lưu ảnh",
-      "share": "Chia sẻ ảnh",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "Chia sẻ ảnh"
     },
     "save": {
       "succeed": "Đã lưu ảnh",

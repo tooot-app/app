@@ -9,7 +9,7 @@ export interface Props {
 const RelativeTime: React.FC<Props> = ({ time }) => {
   const [now, setNow] = useState(new Date().getTime())
   useEffect(() => {
-    const appStateListener = AppState.addEventListener('change', state => {
+    const appStateListener = AppState.addEventListener('change', () => {
       setNow(new Date().getTime())
     })
 

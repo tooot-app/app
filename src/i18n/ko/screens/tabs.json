@@ -46,11 +46,20 @@
       "language": {
         "name": "언어"
       },
-      "lists": {
-        "name": "목록"
-      },
       "list": {
         "name": "목록: {{list}}"
+      },
+      "listAccounts": {
+        "name": "{{list}} 리스트의 사용자"
+      },
+      "listAdd": {
+        "name": "리스트에 추가"
+      },
+      "listEdit": {
+        "name": "리스트 상세 편집"
+      },
+      "lists": {
+        "name": "목록"
       },
       "push": {
         "name": "푸시 알림"
@@ -87,33 +96,49 @@
         "XXL": "아주 크게"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "변경 사항이 저장되지 않음",
-        "message": "변경 사항이 저장되지 않았어요. 변경 사항 적용을 취소할까요?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "취소"
+    "listAccounts": {
+      "heading": "사용자 관리",
+      "error": "사용자를 리스트에서 제거",
+      "empty": "이 리스트에 추가된 사용자가 없어요"
+    },
+    "listEdit": {
+      "heading": "리스트 상세 편집",
+      "title": "이름",
+      "repliesPolicy": {
+        "heading": "답장을 표시할 대상:",
+        "options": {
+          "none": "없음",
+          "list": "리스트의 사용자",
+          "followed": "모든 팔로우 중인 사용자"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "리스트 삭제",
+      "confirm": {
+        "title": "리스트 \"{{list}}\"를 삭제할까요?",
+        "message": "이 작업은 되돌릴 수 없습니다."
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} 업데이트됨",
         "failed": "{{type}} 업데이트 실패, 다시 시도해주세요"
       },
       "root": {
         "name": {
-          "title": "표시 이름"
+          "title": "사옹자 이름"
         },
         "avatar": {
           "title": "아바타",
-          "description": "400x400px으로 다운스케일되어요"
+          "description": "400x400px 크기로 조정돼요"
         },
         "header": {
           "title": "배너",
-          "description": "1500x500px으로 다운스케일되어요"
+          "description": "1500x500px 크기로 조정돼요"
         },
         "note": {
-          "title": "설명"
+          "title": "자기소개"
         },
         "fields": {
           "title": "메타데이터",
@@ -125,20 +150,19 @@
           "options": {
             "public": "공개",
             "unlisted": "공개 타임라인에 비표시",
-            "private": "팔로워만",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "팔로워만"
           }
         },
         "sensitive": {
-          "title": "미디어 민감함으로 포스트"
+          "title": "미디어를 민감함 표시 후 게시"
         },
         "lock": {
           "title": "계정 잠그기",
-          "description": "내가 직접 팔로워를 수락해야해요"
+          "description": "직접 승인한 사람만 나를 팔로우 할 수 있어요"
         },
         "bot": {
           "title": "봇 계정",
-          "description": "이 계정이 대부분 자동으로 작업을 수행하고 잘 확인하지 않는다는 것을 알려요."
+          "description": "이 계정이 대부분 자동으로 작업을 수행하고 잘 확인하지 않는다는 것을 알려요"
         }
       },
       "fields": {
@@ -156,17 +180,17 @@
       },
       "global": {
         "heading": "{{acct}} 활성화",
-        "description": "메시지는 tooot의 서버를 거쳐 라우트되어요"
+        "description": "메시지는 tooot의 서버를 거쳐 전달돼요"
       },
       "decode": {
         "heading": "메시지 세부 정보",
-        "description": "tooot의 서버를 거치는 메시지는 암호화되지만, 메시지를 서버에서 복호화하도록 설정할 수 있습니다. 서버의 소스는 오픈 소스이고, 로그하지 않습니다."
+        "description": "tooot의 서버를 거치는 메시지는 암호화되어 있지만, 서버에서 이를 복호화하도록 선택할 수 있어요. 서버의 소스 코드는 오픈 소스로 관리되며 로그를 남기지 않습니다."
       },
       "default": {
         "heading": "기본값"
       },
       "follow": {
-        "heading": "새 팔로워"
+        "heading": "새로운 팔로워"
       },
       "follow_request": {
         "heading": "팔로우 요청"
@@ -178,7 +202,7 @@
         "heading": "부스트됨"
       },
       "mention": {
-        "heading": "멘션했어요"
+        "heading": "멘션됨"
       },
       "poll": {
         "heading": "투표 업데이트"
@@ -186,7 +210,7 @@
       "status": {
         "heading": "구독한 사용자의 툿"
       },
-      "howitworks": "라우팅 방법 알아보기"
+      "howitworks": "메시지 라우팅 방식 더 알아보기"
     },
     "root": {
       "announcements": {
@@ -211,8 +235,7 @@
           "title": "로그아웃할까요?",
           "message": "로그아웃한 이후, 다시 로그인해야해요",
           "buttons": {
-            "logout": "로그아웃",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "로그아웃"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
-        "heading": "모양",
+        "heading": "테마",
         "options": {
           "auto": "시스템과 동일",
           "light": "밝은 모드",
-          "dark": "어두운 모드",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "어두운 모드"
         }
       },
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
           "lighter": "밝게",
-          "darker": "어둡게",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "어둡게"
         }
       },
       "browser": {
         "heading": "링크 열기",
         "options": {
           "internal": "앱 안에서",
-          "external": "시스템 브라우저 사용",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "시스템 브라우저 사용"
         }
       },
       "staticEmoji": {
@@ -275,15 +292,11 @@
       "contact": {
         "heading": "tooot 연락"
       },
-      "analytics": {
-        "heading": "개선할 수 있도록 도와주세요",
-        "description": "유저와 관련이 없는 사용량만 수집해요"
-      },
       "version": "버전 v{{version}}",
       "instanceVersion": "마스토돈 버전 v{{version}}"
     },
     "switch": {
-      "existing": "로그인된 것 중 선택",
+      "existing": "로그인 한 계정 선택",
       "new": "인스턴스에 로그인"
     }
   },
@@ -305,10 +318,15 @@
         "default": "툿",
         "all": "툿과 답장"
       },
-      "suspended": "계정이 서버 관리자에 의해 정지되었어요."
+      "suspended": "계정이 서버 관리자에 의해 정지되었어요"
+    },
+    "accountInLists": {
+      "name": "@{{username}}의 리스트",
+      "inLists": "포함된 리스트",
+      "notInLists": "다른 리스트"
     },
     "attachments": {
-      "name": "<0 /><1>\"의 미디어</1>"
+      "name": "<0 /><1>의 미디어</1>"
     },
     "hashtag": {
       "follow": "팔로우",
@@ -319,11 +337,11 @@
     },
     "search": {
       "header": {
-        "prefix": "무엇을",
-        "placeholder": "검색할까요..."
+        "prefix": "검색할",
+        "placeholder": "내용을 입력..."
       },
       "empty": {
-        "general": "키워드를 입력해 <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold>이나 <bold>$t(screenTabs:shared.search.sections.statuses)</bold>를 검색할 수 있어요",
+        "general": "키워드를 입력해 <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold>, 또는 <bold>$t(screenTabs:shared.search.sections.statuses)</bold> 등을 검색할 수 있어요",
         "advanced": {
           "header": "고급 검색",
           "example": {
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": "유행하는 태그"
         }
       },
       "sections": {
@@ -346,12 +367,12 @@
     },
     "users": {
       "accounts": {
-        "following": "팔로잉 {{count}}",
+        "following": "{{count}} 팔로잉",
         "followers": "{{count}} 팔로워"
       },
       "statuses": {
-        "reblogged_by": "{{count}} 부스트함",
-        "favourited_by": "{{count}} 즐겨찾기함"
+        "reblogged_by": "{{count}} 부스트",
+        "favourited_by": "{{count}} 즐겨찾기"
       }
     }
   }

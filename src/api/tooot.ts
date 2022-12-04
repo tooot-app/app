@@ -1,8 +1,7 @@
 import * as Sentry from '@sentry/react-native'
 import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
-import handleError, { ctx } from './handleError'
-import { userAgent } from './helpers'
+import { ctx, handleError, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -57,14 +56,12 @@ const apiTooot = async <T = unknown>({
       })
     })
     .catch(error => {
-      Sentry.setExtras({
-        API: 'tooot',
-        request: { url, params, body },
-        ...(error?.response && { response: error.response })
+      Sentry.setContext('API request', { url, params, body })
+      Sentry.setContext('Error response', {
+        ...(error?.response && { response: error.response?._response })
       })
-      Sentry.captureMessage('API error', {
-        contexts: { errorObject: error }
-      })
+      Sentry.setContext('Error object', { error })
+      Sentry.captureMessage('API error')
 
       return handleError(error)
     })

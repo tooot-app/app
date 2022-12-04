@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import features from '@helpers/features'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
@@ -184,8 +183,6 @@ const instancesSlice = createSlice({
               }
             })
         }
-
-        analytics('login')
       })
       .addCase(addInstance.rejected, (state, action) => {
         console.error(state.instances)
@@ -204,8 +201,6 @@ const instancesSlice = createSlice({
           }
         })
         state.instances.length && (state.instances[state.instances.length - 1].active = true)
-
-        analytics('logout')
       })
       .addCase(removeInstance.rejected, (state, action) => {
         console.error(state)
@@ -292,7 +287,7 @@ const instancesSlice = createSlice({
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].frequentEmojis = state.instances[
           activeIndex
-        ].frequentEmojis?.filter(emoji => {
+        ]?.frequentEmojis?.filter(emoji => {
           return action.payload?.find(
             e => e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
           )

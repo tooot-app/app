@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Não foi possível encontrar um toot respondido",
           "description": "Um toot respondido pode ter sido excluído. Você quer removê-lo da sua referência?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Remover referência"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Tipo de opção",
             "options": {
               "single": "Uma opção",
-              "multiple": "Múltipla escolha",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Múltipla escolha"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 horas",
               "86400": "1 dia",
               "259200": "3 dias",
-              "604800": "7 dias",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 dias"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Público",
             "unlisted": "Não listado",
             "private": "Apenas seguidores",
-            "direct": "Mensagem Direta",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Mensagem Direta"
           }
         },
         "spoiler": {

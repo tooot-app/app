@@ -3,10 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import {
-  getInstanceMePage,
-  updateInstanceMePage
-} from '@utils/slices/instancesSlice'
+import { getInstanceMePage, updateInstanceMePage } from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -41,19 +38,17 @@ const Collections: React.FC = () => {
     }
   })
   useEffect(() => {
-    if (announcementsQuery.isSuccess) {
+    if (announcementsQuery.data) {
       dispatch(
         updateInstanceMePage({
           announcements: {
-            shown: announcementsQuery.data?.length ? true : false,
-            unread: announcementsQuery.data?.filter(
-              announcement => !announcement.read
-            ).length
+            shown: announcementsQuery.data.length ? true : false,
+            unread: announcementsQuery.data.filter(announcement => !announcement.read).length
           }
         })
       )
     }
-  }, [announcementsQuery.isSuccess, announcementsQuery.data?.length])
+  }, [announcementsQuery.data])
 
   const instancePush = useSelector(
     getInstancePush,
@@ -85,7 +80,7 @@ const Collections: React.FC = () => {
           iconFront='List'
           iconBack='ChevronRight'
           title={t('me.stacks.lists.name')}
-          onPress={() => navigation.navigate('Tab-Me-Lists')}
+          onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
       {mePage.announcements.shown ? (
@@ -100,9 +95,7 @@ const Collections: React.FC = () => {
                 })
               : t('me.root.announcements.content.read')
           }
-          onPress={() =>
-            navigation.navigate('Screen-Announcements', { showAll: true })
-          }
+          onPress={() => navigation.navigate('Screen-Announcements', { showAll: true })}
         />
       ) : null}
       <MenuRow

@@ -37,25 +37,16 @@ const composePost = async (
     formData.append('poll[multiple]', composeState.poll.multiple.toString())
   }
 
-  if (
-    composeState.attachments.uploads.filter(
-      upload => upload.remote && upload.remote.id
-    ).length
-  ) {
+  if (composeState.attachments.uploads.filter(upload => upload.remote && upload.remote.id).length) {
     formData.append('sensitive', composeState.attachments.sensitive.toString())
-    composeState.attachments.uploads.forEach(e =>
-      formData.append('media_ids[]', e.remote!.id!)
-    )
+    composeState.attachments.uploads.forEach(e => formData.append('media_ids[]', e.remote!.id!))
   }
 
   formData.append('visibility', composeState.visibility)
 
   return apiInstance<Mastodon.Status>({
     method: params?.type === 'edit' ? 'put' : 'post',
-    url:
-      params?.type === 'edit'
-        ? `statuses/${params.incomingStatus.id}`
-        : 'statuses',
+    url: params?.type === 'edit' ? `statuses/${params.incomingStatus.id}` : 'statuses',
     headers: {
       'Idempotency-Key': await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
@@ -70,9 +61,7 @@ const composePost = async (
           composeState.attachments.sensitive +
           composeState.attachments.uploads.map(upload => upload.remote?.id) +
           composeState.visibility +
-          (params?.type === 'edit' || params?.type === 'deleteEdit'
-            ? Math.random()
-            : '')
+          (params?.type === 'edit' || params?.type === 'deleteEdit' ? Math.random().toString() : '')
       )
     },
     body: formData

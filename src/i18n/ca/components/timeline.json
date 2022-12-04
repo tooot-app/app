@@ -1,0 +1,152 @@
+{
+  "empty": {
+    "error": {
+      "message": "Error en carregar",
+      "button": "Torna-ho a provar"
+    },
+    "success": {
+      "message": "Cronologia buida"
+    }
+  },
+  "end": {
+    "message": "Ja estàs, vols una tassa de <0 />?"
+  },
+  "lookback": {
+    "message": "Llegit a"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Més recent des d'aquí",
+    "refetch": "A l'últim"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Fixat",
+      "favourite": "{{name}} ha marcat la teva publicació com a favorita",
+      "status": "{{name}} ha publicat",
+      "follow": "{{name}} et segueix",
+      "follow_request": "{{name}} ha sol·licitat seguir-te",
+      "poll": "S'ha acabat una enquesta en què havies participat",
+      "reblog": {
+        "default": "{{name}} ha impulsat",
+        "notification": "{{name}} ha impulsat la teva publicació"
+      },
+      "update": "L'impuls ha sigut editat"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Respon a aquesta publicació"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Impulsa aquesta publicació",
+        "function": "Impulsa la publicació",
+        "options": {
+          "title": "Escull la visibilitat de l'impuls",
+          "public": "Impuls públic",
+          "unlisted": "Impuls no llistat"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Afegeix aquesta publicació a favorits",
+        "function": "Marca la publicació com a favorita"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Afegeix aquesta publicació a marcadors",
+        "function": "Afegeix la publicació a marcadors"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} usuaris han impulsat aquesta publicació",
+        "accessibilityHint": "Prem per conèixer els usuaris",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} usuaris han marcat com a favorits aquesta publicació",
+        "accessibilityHint": "Prem per conèixer els usuaris",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Aquesta publicació ha sigut editada unes {{count}} vegades",
+        "accessibilityHint": "Prem per veure tot l'historial d'edicions",
+        "text_one": "{{count}} edició",
+        "text_other": "{{count}} edicions"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Mostra contingut sensible"
+      },
+      "unsupported": {
+        "text": "Error en carregar",
+        "button": "Prova amb l'enllaç remot"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Avatar de {{name}}",
+      "accessibilityHint": "Prem per anar a la pàgina de {{name}}"
+    },
+    "content": {
+      "expandHint": "Contingut ocult"
+    },
+    "filtered": "Filtrat: {{phrase}}.",
+    "fullConversation": "Llegeix conversacions",
+    "translate": {
+      "default": "Tradueix",
+      "succeed": "Traduït per {{provider}} amb {{source}}",
+      "failed": "Error al traduir",
+      "source_not_supported": "L'idioma de la publicació no està suportada",
+      "target_not_supported": "Aquest idioma no està suportat"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Nom d'usuari"
+          },
+          "account": {
+            "accessibilityHint": "Compte d'usuari"
+          }
+        },
+        "application": "Amb {{application}}",
+        "edited": {
+          "accessibilityLabel": "Publicació editada"
+        },
+        "muted": {
+          "accessibilityLabel": "Publicació silenciada"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "La publicació és un missatge directe"
+          },
+          "private": {
+            "accessibilityLabel": "La publicació és visible només per als seguidors"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Amb",
+        "delete": {
+          "function": "Esborra el missatge directe"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Vota",
+          "refresh": "Actualitza"
+        },
+        "count": {
+          "voters_one": "{{count}} usuari ha votat",
+          "voters_other": "{{count}} usuaris han votat",
+          "votes_one": "{{count}} vot",
+          "votes_other": "{{count}} vots"
+        },
+        "expiration": {
+          "expired": "Votació finalitzada",
+          "until": "Finalitza <0 />"
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,11 @@
   "accessibilityHint": "Azioni per questo toot, per l'utente che l'ha pubblicato o per il toot stesso",
   "account": {
     "title": "Azioni utente",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "inLists": "",
     "mute": {
       "action_false": "Muta utente",
       "action_true": "Riattiva utente"
@@ -11,8 +16,12 @@
       "action_true": "Sblocca utente"
     },
     "reports": {
-      "action": "Segnala e blocca"
+      "action": ""
     }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
   },
   "copy": {
     "action": "",

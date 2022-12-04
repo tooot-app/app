@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Le pouet répondu est introuvable",
           "description": "Le pouet répondu a peut-être été supprimé. Voulez-vous le supprimer de votre référence ?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Supprimer la référence"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Type de choix",
             "options": {
               "single": "Choix unique",
-              "multiple": "Choix multiple",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Choix multiple"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 heures",
               "86400": "1 jour",
               "259200": "3 jours",
-              "604800": "7 jours",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 jours"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Public",
             "unlisted": "Non listé",
             "private": "Abonné·e·s uniquement",
-            "direct": "Message direct",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Message direct"
           }
         },
         "spoiler": {

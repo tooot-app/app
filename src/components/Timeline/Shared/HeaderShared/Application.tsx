@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import openLink from '@components/openLink'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
@@ -20,9 +19,6 @@ const HeaderSharedApplication = React.memo(
         fontStyle='S'
         accessibilityRole='link'
         onPress={async () => {
-          analytics('timeline_shared_header_application_press', {
-            application
-          })
           application.website && (await openLink(application.website))
         }}
         style={{

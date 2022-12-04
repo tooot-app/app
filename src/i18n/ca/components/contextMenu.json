@@ -1,0 +1,85 @@
+{
+  "accessibilityHint": "Accions per aquesta publicació, com el seu usuari o la mateixa publicació",
+  "account": {
+    "title": "Accions d'usuari",
+    "following": {
+      "action_false": "Segueix l'usuari",
+      "action_true": "Deixa de seguir l'usuari"
+    },
+    "inLists": "Gestionar usuari de llistes",
+    "mute": {
+      "action_false": "Silencia l'usuari",
+      "action_true": "Deixa de silenciar l'usuari"
+    },
+    "block": {
+      "action_false": "Bloqueja l'usuari",
+      "action_true": "Deixa de bloquejar l'usuari"
+    },
+    "reports": {
+      "action": "Denuncia i bloqueja l'usuari"
+    }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
+  "copy": {
+    "action": "Copia la publicació",
+    "succeed": "Copiat"
+  },
+  "instance": {
+    "title": "Acció de la instància",
+    "block": {
+      "action": "Bloquejar la instància {{instance}}",
+      "alert": {
+        "title": "Confirma el bloqueig de la instància {{instance}}?",
+        "message": "Pots silenciar o bloquejar a un usuari.\n\nDesprés de bloquejar una instància, tot el seu contingut, amb els seus seguidors, seran esborrats!",
+        "buttons": {
+          "confirm": "Confirma"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Comparteix la publicació"
+    },
+    "account": {
+      "action": "Comparteix l'usuari"
+    }
+  },
+  "status": {
+    "title": "Accions de la publicació",
+    "edit": {
+      "action": "Edita la publicació"
+    },
+    "delete": {
+      "action": "Elimina la publicació",
+      "alert": {
+        "title": "Confirma l'eliminació?",
+        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
+        "buttons": {
+          "confirm": "Confirma"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "Elimina la publicació i torna a publicar",
+      "alert": {
+        "title": "Confirma l'eliminació i tornar a publicar?",
+        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
+        "buttons": {
+          "confirm": "Confirma"
+        }
+      }
+    },
+    "mute": {
+      "action_false": "Silencia la publicació i les respostes",
+      "action_true": "Deixa de silenciar la publicació i les respostes"
+    },
+    "pin": {
+      "action_false": "Fixa la publicació",
+      "action_true": "Deixa de fixar la publicació"
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -34,27 +33,17 @@ const AttachmentImage = ({
         hidden={sensitiveShown}
         uri={{ original: image.preview_url, remote: image.remote_url }}
         blurhash={image.blurhash}
-        onPress={() => {
-          analytics('timeline_shared_attachment_image_press', {
-            id: image.id
-          })
-          navigateToImagesViewer(image.id)
-        }}
+        onPress={() => navigateToImagesViewer(image.id)}
         style={{
           aspectRatio:
-            total > 1 ||
-            !image.meta?.original?.width ||
-            !image.meta?.original?.height
+            total > 1 || !image.meta?.original?.width || !image.meta?.original?.height
               ? attachmentAspectRatio({ total, index })
               : image.meta.original.height / image.meta.original.width > 1
               ? 1
               : image.meta.original.width / image.meta.original.height
         }}
       />
-      <AttachmentAltText
-        sensitiveShown={sensitiveShown}
-        text={image.description}
-      />
+      <AttachmentAltText sensitiveShown={sensitiveShown} text={image.description} />
     </View>
   )
 }

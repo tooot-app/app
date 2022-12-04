@@ -1,5 +1,4 @@
 import apiInstance from '@api/instance'
-import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { HeaderRight } from '@components/Header'
 import { useNavigation } from '@react-navigation/native'
@@ -29,8 +28,6 @@ const ComposeEditAttachmentSubmit: React.FC<Props> = ({ index }) => {
       content='Save'
       loading={isSubmitting}
       onPress={() => {
-        analytics('editattachment_confirm_press')
-
         setIsSubmitting(true)
         const formData = new FormData()
         if (theAttachment.description) {
