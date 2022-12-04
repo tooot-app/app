@@ -19,6 +19,10 @@
       "action": ""
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "Copier le Pouet",
     "succeed": "Copié"
