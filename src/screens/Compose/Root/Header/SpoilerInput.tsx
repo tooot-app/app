@@ -35,8 +35,6 @@ const ComposeSpoilerInput: React.FC = () => {
         fontSize: adaptedFontsize,
         lineHeight: adaptedLineheight
       }}
-      autoCapitalize='none'
-      autoCorrect={false}
       autoFocus
       enablesReturnKeyAutomatically
       multiline

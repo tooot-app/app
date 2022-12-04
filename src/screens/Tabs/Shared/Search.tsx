@@ -71,12 +71,12 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
               })}
               autoCapitalize='none'
               autoCorrect={false}
-              clearButtonMode='never'
+              clearButtonMode='always'
               keyboardType='web-search'
               onSubmitEditing={({ nativeEvent: { text } }) => navigation.setParams({ text })}
               placeholder={t('shared.search.header.placeholder')}
               placeholderTextColor={colors.secondary}
-              returnKeyType='go'
+              returnKeyType='search'
             />
           </View>
         )
