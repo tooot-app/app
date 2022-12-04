@@ -5,22 +5,17 @@ import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { PropsWithChildren } from 'react'
-import { Pressable, View } from 'react-native'
+import { Pressable, PressableProps, View } from 'react-native'
 import GracefullyImage from './GracefullyImage'
+import Icon from './Icon'
 import CustomText from './Text'
 
 export interface Props {
   account: Mastodon.Account
-  Component?: typeof View | typeof Pressable
-  props?: {}
+  props?: PressableProps
 }
 
-const ComponentAccount: React.FC<PropsWithChildren & Props> = ({
-  account,
-  Component,
-  props,
-  children
-}) => {
+const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props, children }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
@@ -28,50 +23,62 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({
     props = { onPress: () => navigation.push('Tab-Shared-Account', { account }) }
   }
 
-  return React.createElement(
-    Component || Pressable,
-    {
-      ...props,
-      style: {
+  return (
+    <Pressable
+      {...props}
+      style={{
         flex: 1,
         paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
         paddingVertical: StyleConstants.Spacing.M,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
+      }}
+      children={
+        <>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <GracefullyImage
+              uri={{ original: account.avatar, static: account.avatar_static }}
+              style={{
+                width: StyleConstants.Avatar.S,
+                height: StyleConstants.Avatar.S,
+                borderRadius: 6,
+                marginRight: StyleConstants.Spacing.S
+              }}
+            />
+            <View>
+              <CustomText numberOfLines={1}>
+                <ParseEmojis
+                  content={account.display_name || account.username}
+                  emojis={account.emojis}
+                  size='S'
+                  fontBold
+                />
+              </CustomText>
+              <CustomText
+                numberOfLines={1}
+                style={{
+                  marginTop: StyleConstants.Spacing.XS,
+                  color: colors.secondary
+                }}
+              >
+                @{account.acct}
+              </CustomText>
+            </View>
+          </View>
+          {props.onPress && !props.disabled ? (
+            <Icon
+              name='ChevronRight'
+              size={StyleConstants.Font.Size.L}
+              color={colors.secondary}
+              style={{ marginLeft: 8 }}
+            />
+          ) : (
+            children || null
+          )}
+        </>
       }
-    },
-    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-      <GracefullyImage
-        uri={{ original: account.avatar, static: account.avatar_static }}
-        style={{
-          width: StyleConstants.Avatar.S,
-          height: StyleConstants.Avatar.S,
-          borderRadius: 6,
-          marginRight: StyleConstants.Spacing.S
-        }}
-      />
-      <View>
-        <CustomText numberOfLines={1}>
-          <ParseEmojis
-            content={account.display_name || account.username}
-            emojis={account.emojis}
-            size='S'
-            fontBold
-          />
-        </CustomText>
-        <CustomText
-          numberOfLines={1}
-          style={{
-            marginTop: StyleConstants.Spacing.XS,
-            color: colors.secondary
-          }}
-        >
-          @{account.acct}
-        </CustomText>
-      </View>
-    </View>,
-    children
+    />
   )
 }
 

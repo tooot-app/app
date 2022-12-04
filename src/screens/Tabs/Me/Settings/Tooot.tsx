@@ -58,6 +58,7 @@ const SettingsTooot: React.FC = () => {
             navigation.navigate('Screen-Compose', {
               type: 'conversation',
               accts: ['tooot@xmflsct.com'],
+              visibility: 'direct',
               text:
                 '[' +
                 `${Platform.OS}/${Platform.Version}` +

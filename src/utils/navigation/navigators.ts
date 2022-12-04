@@ -2,6 +2,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { ComposeState } from '@screens/Compose/utils/types'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type RootStackParamList = {
@@ -38,6 +39,7 @@ export type RootStackParamList = {
     | {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
+        visibility: ComposeState['visibility']
         text?: string // For contacting tooot only
       }
     | {

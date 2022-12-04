@@ -19,6 +19,10 @@
       "action": "Nutzer melden und blockieren"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "Tröt kopieren",
     "succeed": "Kopiert"

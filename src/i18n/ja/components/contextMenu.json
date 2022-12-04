@@ -19,6 +19,10 @@
       "action": "ユーザーの報告とブロック"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "トゥートをコピー",
     "succeed": "コピー完了"

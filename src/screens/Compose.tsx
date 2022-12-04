@@ -259,7 +259,9 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         type='text'
         content={
           params?.type
-            ? t(`heading.right.button.${params.type}`)
+            ? params.type === 'conversation' && params.visibility === 'direct'
+              ? t(`heading.right.button.${params.type}`)
+              : t('heading.right.button.default')
             : t('heading.right.button.default')
         }
         onPress={() => {
@@ -317,9 +319,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.captureMessage('Compose posting', {
-                  contexts: { errorObject: error }
-                })
+                Sentry.setContext('Error object', { error })
+                Sentry.captureMessage('Posting error')
                 haptics('Error')
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [

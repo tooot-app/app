@@ -1,8 +1,7 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import li from 'li'
-import handleError, { ctx } from './handleError'
-import { userAgent } from './helpers'
+import { ctx, handleError, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'

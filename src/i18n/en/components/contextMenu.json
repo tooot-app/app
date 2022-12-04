@@ -19,6 +19,10 @@
       "action": "Report and block user"
     }
   },
+  "at": {
+    "direct": "Direct message",
+    "public": "Public message"
+  },
   "copy": {
     "action": "Copy toot",
     "succeed": "Copied"

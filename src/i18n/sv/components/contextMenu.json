@@ -19,6 +19,10 @@
       "action": "Rapportera och blockera användare"
     }
   },
+  "at": {
+    "direct": "Direktmeddelande",
+    "public": "Offentligt meddelande"
+  },
   "copy": {
     "action": "Kopiera inlägg",
     "succeed": "Kopierat"

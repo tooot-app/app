@@ -57,7 +57,6 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
         <ComponentAccount
           key={index}
           account={item}
-          Component={View}
           children={
             <Button
               type='icon'
@@ -68,6 +67,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
               }
             />
           }
+          props={{ disabled: true }}
         />
       )}
       ListEmptyComponent={
