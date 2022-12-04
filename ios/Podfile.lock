@@ -297,7 +297,7 @@ PODS:
     - React-Core
   - react-native-cameraroll (5.1.0):
     - React-Core
-  - react-native-image-picker (4.10.1):
+  - react-native-image-picker (4.10.2):
     - React-Core
   - react-native-ios-context-menu (1.15.1):
     - React-Core
@@ -428,7 +428,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.10.0):
+  - RNSentry (4.10.1):
     - React-Core
     - Sentry/HybridSDK (= 7.31.2)
   - RNShareMenu (6.0.0):
@@ -737,7 +737,7 @@ SPEC CHECKSUMS:
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
   react-native-blurhash: add4df9a937b4e021a24bc67a0714f13e0bd40b7
   react-native-cameraroll: a40b082318eb1ecd0336a2f29d9f74b7f2c8cae8
-  react-native-image-picker: f2ab1215d17bcfe27b0eb6417cc236fd1f4775e7
+  react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
   react-native-ios-context-menu: b170594b4448c0cd10c79e13432216bac99de1ac
   react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
   react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
@@ -765,7 +765,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSentry: 211e1a62145d5bcb4bee926823061b5af47816c4
+  RNSentry: 3c27f3c57f16bab9835d9555add298571077e0c1
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
