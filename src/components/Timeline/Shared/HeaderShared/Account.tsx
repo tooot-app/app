@@ -20,23 +20,19 @@ const HeaderSharedAccount = React.memo(
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {withoutName ? null : (
           <CustomText
-            accessibilityHint={t(
-              'shared.header.shared.account.name.accessibilityHint'
-            )}
+            accessibilityHint={t('shared.header.shared.account.name.accessibilityHint')}
             style={{ marginRight: StyleConstants.Spacing.XS }}
             numberOfLines={1}
           >
             <ParseEmojis
               content={account?.display_name || account?.username}
-              emojis={account.emojis}
+              emojis={account?.emojis}
               fontBold
             />
           </CustomText>
         )}
         <CustomText
-          accessibilityHint={t(
-            'shared.header.shared.account.account.accessibilityHint'
-          )}
+          accessibilityHint={t('shared.header.shared.account.account.accessibilityHint')}
           style={{ flexShrink: 1, color: colors.secondary }}
           numberOfLines={1}
         >

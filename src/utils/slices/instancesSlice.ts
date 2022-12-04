@@ -287,7 +287,7 @@ const instancesSlice = createSlice({
         const activeIndex = findInstanceActive(state.instances)
         state.instances[activeIndex].frequentEmojis = state.instances[
           activeIndex
-        ].frequentEmojis?.filter(emoji => {
+        ]?.frequentEmojis?.filter(emoji => {
           return action.payload?.find(
             e => e.shortcode === emoji.emoji.shortcode && e.url === emoji.emoji.url
           )
