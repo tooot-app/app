@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Direktnachricht",
+    "public": "Öffentliche Nachricht"
   },
   "copy": {
     "action": "Tröt kopieren",
