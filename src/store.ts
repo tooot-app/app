@@ -55,7 +55,7 @@ const settingsPersistConfig = {
   key: 'settings',
   prefix,
   storage: AsyncStorage,
-  version: 1,
+  version: 3,
   // @ts-ignore
   migrate: createMigrate(settingsMigration)
 }

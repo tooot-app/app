@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
@@ -25,13 +24,12 @@ const Conversation = ({ account }: { account: Mastodon.Account }) => {
       type='icon'
       content='Mail'
       style={styles.actionLeft}
-      onPress={() => {
-        analytics('account_DM_press')
+      onPress={() =>
         navigation.navigate('Screen-Compose', {
           type: 'conversation',
           accts: [account.acct]
         })
-      }}
+      }
     />
   ) : null
 }
@@ -51,10 +49,7 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
         <Button
           type='text'
           content={t('shared.account.moved')}
-          onPress={() => {
-            analytics('account_gotomoved_press')
-            navigation.push('Tab-Shared-Account', { account: accountMoved })
-          }}
+          onPress={() => navigation.push('Tab-Shared-Account', { account: accountMoved })}
         />
       </View>
     )
@@ -74,9 +69,7 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
   }
 
   const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const ownAccount =
-    account?.id === instanceAccount?.id &&
-    account?.acct === instanceAccount?.acct
+  const ownAccount = account?.id === instanceAccount?.id && account?.acct === instanceAccount?.acct
 
   if (!ownAccount && account) {
     return (

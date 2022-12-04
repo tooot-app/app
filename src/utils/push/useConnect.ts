@@ -14,7 +14,7 @@ import { AppState } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const pushUseConnect = () => {
-  const { t } = useTranslation('screen')
+  const { t } = useTranslation('screens')
   const { theme } = useTheme()
 
   const dispatch = useAppDispatch()

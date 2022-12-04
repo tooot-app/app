@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "OK",
     "apply": "Apply",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "discard": "Discard",
+    "continue": "Continue",
+    "delete": "Delete",
+    "done": "Done"
   },
   "customEmoji": {
     "accessibilityLabel": "Custom emoji {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} failed, please retry"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "Change Not Saved",
+    "message": "Your change has not been saved. Would you discard saving the changes?"
+  }
 }

@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { LOCALES } from '@root/i18n/locales'
@@ -21,10 +20,6 @@ const TabMeSettingsLanguage: React.FC<
   const dispatch = useDispatch()
 
   const change = (lang: string) => {
-    analytics('settings_language_press', {
-      current: i18n.language,
-      new: lang
-    })
     haptics('Success')
 
     dispatch(changeLanguage(lang))

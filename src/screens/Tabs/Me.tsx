@@ -7,8 +7,10 @@ import { Platform } from 'react-native'
 import TabMeBookmarks from './Me/Bookmarks'
 import TabMeConversations from './Me/Cconversations'
 import TabMeFavourites from './Me/Favourites'
-import TabMeLists from './Me/Lists'
-import TabMeListsList from './Me/ListsList'
+import TabMeList from './Me/List'
+import TabMeListAccounts from './Me/List/Accounts'
+import TabMeListEdit from './Me/List/Edit'
+import TabMeListList from './Me/List/List'
 import TabMeProfile from './Me/Profile'
 import TabMePush from './Me/Push'
 import TabMeRoot from './Me/Root'
@@ -41,9 +43,7 @@ const TabMe = React.memo(
           options={({ navigation }: any) => ({
             title: t('me.stacks.bookmarks.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.bookmarks.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.bookmarks.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
@@ -54,9 +54,7 @@ const TabMe = React.memo(
           options={({ navigation }: any) => ({
             title: t('me.stacks.conversations.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.conversations.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.conversations.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
@@ -67,29 +65,14 @@ const TabMe = React.memo(
           options={({ navigation }: any) => ({
             title: t('me.stacks.favourites.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.favourites.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.favourites.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
         />
         <Stack.Screen
-          name='Tab-Me-Lists'
-          component={TabMeLists}
-          options={({ navigation }: any) => ({
-            title: t('me.stacks.lists.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.lists.name')} />
-              )
-            }),
-            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
-          })}
-        />
-        <Stack.Screen
-          name='Tab-Me-Lists-List'
-          component={TabMeListsList}
+          name='Tab-Me-List'
+          component={TabMeList}
           options={({ route, navigation }: any) => ({
             title: t('me.stacks.list.name', { list: route.params.title }),
             ...(Platform.OS === 'android' && {
@@ -100,6 +83,36 @@ const TabMe = React.memo(
                   })}
                 />
               )
+            }),
+            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+          })}
+        />
+        <Stack.Screen
+          name='Tab-Me-List-Accounts'
+          component={TabMeListAccounts}
+          options={({ navigation, route: { params } }) => ({
+            title: t('me.stacks.listAccounts.name', { list: params.title }),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => <HeaderCenter content={t('me.stacks.listsAdd.name')} />
+            }),
+            headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
+          })}
+        />
+        <Stack.Screen
+          name='Tab-Me-List-Edit'
+          component={TabMeListEdit}
+          options={{
+            gestureEnabled: false,
+            presentation: 'modal'
+          }}
+        />
+        <Stack.Screen
+          name='Tab-Me-List-List'
+          component={TabMeListList}
+          options={({ navigation }: any) => ({
+            title: t('me.stacks.lists.name'),
+            ...(Platform.OS === 'android' && {
+              headerCenter: () => <HeaderCenter content={t('me.stacks.lists.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
@@ -120,15 +133,10 @@ const TabMe = React.memo(
             headerShown: true,
             title: t('me.stacks.push.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.push.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.push.name')} />
             }),
             headerLeft: () => (
-              <HeaderLeft
-                content='ChevronDown'
-                onPress={() => navigation.goBack()}
-              />
+              <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
             )
           })}
         />
@@ -146,9 +154,7 @@ const TabMe = React.memo(
           options={({ navigation }: any) => ({
             title: t('me.stacks.fontSize.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.fontSize.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.fontSize.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
@@ -159,9 +165,7 @@ const TabMe = React.memo(
           options={({ navigation }: any) => ({
             title: t('me.stacks.language.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.language.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.language.name')} />
             }),
             headerLeft: () => <HeaderLeft onPress={() => navigation.pop(1)} />
           })}
@@ -174,15 +178,10 @@ const TabMe = React.memo(
             headerShown: true,
             title: t('me.stacks.switch.name'),
             ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.switch.name')} />
-              )
+              headerCenter: () => <HeaderCenter content={t('me.stacks.switch.name')} />
             }),
             headerLeft: () => (
-              <HeaderLeft
-                content='ChevronDown'
-                onPress={() => navigation.goBack()}
-              />
+              <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
             )
           })}
         />

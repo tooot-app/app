@@ -13,7 +13,7 @@
     },
     "right": {
       "button": {
-        "default": "Inlägg",
+        "default": "Publicera",
         "conversation": "Skicka DM",
         "reply": "Skicka svar",
         "deleteEdit": "Inlägg",
@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Inlägget kunde inte hittas",
           "description": "Inlägget du svarar på kan ha raderats. Vill du ta bort referensen till det?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Ta bort referens"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Typ av val",
             "options": {
               "single": "Enval",
-              "multiple": "Flerval",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Flerval"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 timmar",
               "86400": "1 dag",
               "259200": "3 dagar",
-              "604800": "7 dagar",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 dagar"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Offentlig",
             "unlisted": "Olistad",
             "private": "Endast följare",
-            "direct": "Direktmeddelande",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Direktmeddelande"
           }
         },
         "spoiler": {

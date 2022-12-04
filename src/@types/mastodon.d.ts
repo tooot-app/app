@@ -274,6 +274,7 @@ declare namespace Mastodon {
   type List = {
     id: string
     title: string
+    replies_policy: 'none' | 'list' | 'followed'
   }
 
   type Instance = {

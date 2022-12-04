@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": "Segueix l'usuari"
+  },
+  "block": {
+    "function": "Bloqueja l'usuari"
+  },
+  "button": {
+    "error": "Error en carregar",
+    "blocked_by": "Bloquejat per l'usuari",
+    "blocking": "Desbloquejar",
+    "following": "Deixa de seguir",
+    "requested": "Retirar la sol·licitud",
+    "default": "Segueix"
+  }
+}

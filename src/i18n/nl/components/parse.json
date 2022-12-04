@@ -1,0 +1,8 @@
+{
+  "HTML": {
+    "accessibilityHint": "Tik om inhoud uit te vouwen of in te klappen",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} meer lijnen)",
+    "defaultHint": "Lange toot"
+  }
+}

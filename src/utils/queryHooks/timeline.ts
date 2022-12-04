@@ -2,10 +2,7 @@ import apiInstance, { InstanceResponse } from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
-import {
-  checkInstanceFeature,
-  getInstanceNotificationsFilter
-} from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
@@ -30,10 +27,7 @@ export type QueryKeyTimeline = [
   }
 ]
 
-const queryFunction = async ({
-  queryKey,
-  pageParam
-}: QueryFunctionContext<QueryKeyTimeline>) => {
+const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyTimeline>) => {
   const { page, account, hashtag, list, toot } = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -65,9 +59,9 @@ const queryFunction = async ({
     case 'Notifications':
       const rootStore = store.getState()
       const notificationsFilter = getInstanceNotificationsFilter(rootStore)
-      const usePositiveFilter = checkInstanceFeature(
-        'notification_types_positive_filter'
-      )(rootStore)
+      const usePositiveFilter = checkInstanceFeature('notification_types_positive_filter')(
+        rootStore
+      )
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',
@@ -99,9 +93,7 @@ const queryFunction = async ({
           }
         })
       } else {
-        const res1 = await apiInstance<
-          (Mastodon.Status & { _pinned: boolean })[]
-        >({
+        const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
           method: 'get',
           url: `accounts/${account}/statuses`,
           params: {
@@ -190,11 +182,7 @@ const queryFunction = async ({
         url: `statuses/${toot}/context`
       })
       return {
-        body: [
-          ...res2_1.body.ancestors,
-          res1_1.body,
-          ...res2_1.body.descendants
-        ]
+        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
       }
     default:
       return Promise.reject()
@@ -207,10 +195,7 @@ const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<
-    InstanceResponse<Mastodon.Status[]>,
-    AxiosError
-  >
+  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Status[]>, AxiosError>
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, {
@@ -284,7 +269,7 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Status['id'] | Mastodon.Poll['id']
-  reblog?: boolean
+  isReblog?: boolean
   payload:
     | {
         property: 'bookmarked' | 'muted' | 'pinned'
@@ -384,9 +369,9 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${params.id}/${
-              params.payload.currentValue ? 'un' : ''
-            }${MapPropertyToUrl[params.payload.property]}`,
+            url: `statuses/${params.id}/${params.payload.currentValue ? 'un' : ''}${
+              MapPropertyToUrl[params.payload.property]
+            }`,
             ...(params.payload.property === 'reblogged' && { body })
           })
       }
@@ -396,9 +381,9 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
         case 'mute':
           return apiInstance<Mastodon.Account>({
             method: 'post',
-            url: `accounts/${params.id}/${
-              params.payload.currentValue ? 'un' : ''
-            }${params.payload.property}`
+            url: `accounts/${params.id}/${params.payload.currentValue ? 'un' : ''}${
+              params.payload.property
+            }`
           })
         case 'reports':
           return apiInstance<Mastodon.Account>({
@@ -455,8 +440,7 @@ const useTimelineMutation = ({
     ...(onMutate && {
       onMutate: params => {
         queryClient.cancelQueries(params.queryKey)
-        const oldData =
-          params.queryKey && queryClient.getQueryData(params.queryKey)
+        const oldData = params.queryKey && queryClient.getQueryData(params.queryKey)
 
         haptics('Light')
         switch (params.type) {

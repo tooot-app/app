@@ -2,6 +2,11 @@
   "accessibilityHint": "Åtgärder för detta inlägg, som t.ex. dess författare, själva inlägget",
   "account": {
     "title": "Användaråtgärder",
+    "following": {
+      "action_false": "Följ användare",
+      "action_true": "Avfölj användaren"
+    },
+    "inLists": "Hantera användare i listor",
     "mute": {
       "action_false": "Tysta användare",
       "action_true": "Sluta tysta användare"
@@ -11,7 +16,7 @@
       "action_true": "Avblockera användare"
     },
     "reports": {
-      "action": "Rapportera och blockera"
+      "action": "Rapportera och blockera användare"
     }
   },
   "copy": {

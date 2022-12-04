@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "儲存圖片",
-      "share": "分享圖片",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "分享圖片"
     },
     "save": {
       "succeed": "圖片已儲存",

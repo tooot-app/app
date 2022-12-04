@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Đang đăng nhập vào máy chủ",
-      "message": "Bạn có thể đăng nhập nhiều tài khoản cùng lúc",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Tiếp tục"
-      }
+      "message": "Bạn có thể đăng nhập nhiều tài khoản cùng lúc"
     }
   }
 }

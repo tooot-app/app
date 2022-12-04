@@ -1,4 +1,5 @@
 const LOCALES = {
+  ca: 'Català',
   de: 'Deutsch',
   en: 'English',
   es: 'Español',
@@ -6,6 +7,7 @@ const LOCALES = {
   it: 'Italiano',
   ja: '日本語',
   ko: '한국어',
+  nl: 'Nederlands',
   'pt-br': 'Português (Brasil)',
   sv: 'Svenska',
   vi: 'Tiếng Việt',

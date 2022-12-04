@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Inloggad till denna instans",
-      "message": "Du kan logga in på ett annat konto och behålla redan inloggade konton",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Fortsätt"
-      }
+      "message": "Du kan logga in på ett annat konto och behålla redan inloggade konton"
     }
   }
 }

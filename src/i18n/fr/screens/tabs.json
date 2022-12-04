@@ -46,11 +46,20 @@
       "language": {
         "name": "Langue"
       },
-      "lists": {
-        "name": "Listes"
-      },
       "list": {
         "name": "Liste : {{list}}"
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": "Listes"
       },
       "push": {
         "name": "Push de Notification"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Modifications non sauvegardées",
-        "message": "Votre modification n'a pas été enregistrée. Voulez-vous annuler l'enregistrement des modifications ?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Ne pas tenir compte"
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} mis à jour",
         "failed": "{{type}} Échec de la mise à jour, veuillez ré-essayer"
@@ -125,8 +150,7 @@
           "options": {
             "public": "Public",
             "unlisted": "Non listé",
-            "private": "Abonné·e·s uniquement",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Abonné·e·s uniquement"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Déconnexion?",
           "message": "Après vous être déconnecté, vous devez vous reconnecter",
           "buttons": {
-            "logout": "Déconnexion",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Déconnexion"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Apparence",
         "options": {
           "auto": "Comme le système",
           "light": "Mode Clair",
-          "dark": "Mode sombre",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Mode sombre"
         }
       },
       "darkTheme": {
         "heading": "Thème sombre",
         "options": {
           "lighter": "Plus claire",
-          "darker": "Plus sombre",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Plus sombre"
         }
       },
       "browser": {
         "heading": "Ouverture du lien",
         "options": {
           "internal": "Dans l'application",
-          "external": "Ouvrir dans le navigateur système",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Ouvrir dans le navigateur système"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "Contacter tooot"
-      },
-      "analytics": {
-        "heading": "Aidez-nous à nous améliorer",
-        "description": "Collecte uniquement de l'usage relatif des non-utilisateurs"
       },
       "version": "Version {{version}}",
       "instanceVersion": "Version de Mastodon v{{version}}"
@@ -307,6 +320,11 @@
       },
       "suspended": "Compte suspendu par les modérateurs de votre serveur"
     },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
     "attachments": {
       "name": "<0 /><1>\"s media</1>"
     },
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {

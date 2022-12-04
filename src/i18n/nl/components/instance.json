@@ -1,0 +1,26 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": "Domeinnaam van instantie"
+    },
+    "button": "Inloggen",
+    "information": {
+      "name": "Naam",
+      "accounts": "Gebruikers",
+      "statuses": "Toots",
+      "domains": "Universum"
+    },
+    "disclaimer": {
+      "base": "Het inlogproces gebruikt de systeembrowser, accountgegevens zijn niet zichtbaar voor de app."
+    },
+    "terms": {
+      "base": "Door in te loggen, gaat u akkoord met het <0>privacybeleid </0> en met de <1>servicevoorwaarden</1>."
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "Ingelogd bij deze instantie",
+      "message": "Je kunt inloggen op een ander account met behoud van de huidige aangemelde account"
+    }
+  }
+}

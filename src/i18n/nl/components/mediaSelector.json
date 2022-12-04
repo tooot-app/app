@@ -1,0 +1,10 @@
+{
+  "title": "Selecteer mediabron",
+  "message": "Media EXIF-gegevens zijn niet geüpload",
+  "options": {
+    "image": "Foto's uploaden",
+    "image_max": "Foto's uploaden (max {{max}})",
+    "video": "Video uploaden",
+    "video_max": "Video uploaden (max {{max}})"
+  }
+}

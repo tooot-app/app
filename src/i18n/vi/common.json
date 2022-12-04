@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "OK",
     "apply": "Áp dụng",
-    "cancel": "Hủy bỏ"
+    "cancel": "Hủy bỏ",
+    "discard": "Bỏ qua",
+    "continue": "Tiếp tục",
+    "delete": "Xóa",
+    "done": ""
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} thất bại, xin thử lại sau"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "Những thay đổi chưa được lưu",
+    "message": "Những thay đổi của bạn chưa được lưu. Bạn có muốn hủy bỏ?"
+  }
 }

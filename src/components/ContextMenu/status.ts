@@ -1,5 +1,4 @@
 import apiInstance from '@api/instance'
-import analytics from '@components/analytics'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -13,18 +12,20 @@ import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instance
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { ContextMenuAction } from 'react-native-context-menu-view'
 import { useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 
-export interface Props {
-  actions: ContextMenuAction[]
-  status: Mastodon.Status
-  queryKey: QueryKeyTimeline
+const menuStatus = ({
+  status,
+  queryKey,
+  rootQueryKey
+}: {
+  status?: Mastodon.Status
+  queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-}
+}): ContextMenu[][] => {
+  if (!status || !queryKey) return []
 
-const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
   const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
@@ -54,96 +55,19 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
     }
   })
 
+  const menus: ContextMenu[][] = []
+
   const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
-  const ownAccount = instanceAccount?.id === status?.account?.id
+  const ownAccount = instanceAccount?.id === status.account?.id
+
+  const canEditPost = useSelector(checkInstanceFeature('edit_post'))
 
   if (ownAccount) {
-    const accountMenuItems: ContextMenuAction[] = [
+    menus.push([
       {
-        id: 'status-delete',
-        title: t('status.delete.action'),
-        systemIcon: 'trash',
-        destructive: true
-      },
-      {
-        id: 'status-delete-edit',
-        title: t('status.deleteEdit.action'),
-        systemIcon: 'pencil.and.outline',
-        destructive: true
-      },
-      {
-        id: 'status-mute',
-        title: t('status.mute.action', {
-          context: (status.muted || false).toString()
-        }),
-        systemIcon: status.muted ? 'speaker' : 'speaker.slash'
-      }
-    ]
-
-    const canEditPost = useSelector(checkInstanceFeature('edit_post'))
-    if (canEditPost) {
-      accountMenuItems.unshift({
-        id: 'status-edit',
-        title: t('status.edit.action'),
-        systemIcon: 'square.and.pencil'
-      })
-    }
-
-    if (status.visibility === 'public' || status.visibility === 'unlisted') {
-      accountMenuItems.push({
-        id: 'status-pin',
-        title: t('status.pin.action', {
-          context: (status.pinned || false).toString()
-        }),
-        systemIcon: status.pinned ? 'pin.slash' : 'pin'
-      })
-    }
-
-    actions.push(...accountMenuItems)
-  }
-
-  return async (index: number) => {
-    if (typeof index !== 'number' || !actions[index]) {
-      return // For Android
-    }
-    if (actions[index].id === 'status-delete') {
-      analytics('timeline_shared_headeractions_status_delete_press', {
-        page: queryKey && queryKey[1].page
-      })
-      Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
-        {
-          text: t('status.delete.alert.buttons.confirm'),
-          style: 'destructive',
-          onPress: async () => {
-            analytics('timeline_shared_headeractions_status_delete_confirm', {
-              page: queryKey && queryKey[1].page
-            })
-            mutation.mutate({
-              type: 'deleteItem',
-              source: 'statuses',
-              queryKey,
-              rootQueryKey,
-              id: status.id
-            })
-          }
-        },
-        {
-          text: t('common:buttons.cancel')
-        }
-      ])
-    }
-    if (actions[index].id === 'status-delete-edit') {
-      analytics('timeline_shared_headeractions_status_deleteedit_press', {
-        page: queryKey && queryKey[1].page
-      })
-      Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
-        {
-          text: t('status.deleteEdit.alert.buttons.confirm'),
-          style: 'destructive',
-          onPress: async () => {
-            analytics('timeline_shared_headeractions_status_deleteedit_confirm', {
-              page: queryKey && queryKey[1].page
-            })
+        key: 'status-edit',
+        item: {
+          onSelect: async () => {
             let replyToStatus: Mastodon.Status | undefined = undefined
             if (status.in_reply_to_id) {
               replyToStatus = await apiInstance<Mastodon.Status>({
@@ -151,96 +75,166 @@ const contextMenuStatus = ({ actions, status, queryKey, rootQueryKey }: Props) =
                 url: `statuses/${status.in_reply_to_id}`
               }).then(res => res.body)
             }
-            mutation
-              .mutateAsync({
-                type: 'deleteItem',
-                source: 'statuses',
+            apiInstance<{
+              id: Mastodon.Status['id']
+              text: NonNullable<Mastodon.Status['text']>
+              spoiler_text: Mastodon.Status['spoiler_text']
+            }>({
+              method: 'get',
+              url: `statuses/${status.id}/source`
+            }).then(res => {
+              navigation.navigate('Screen-Compose', {
+                type: 'edit',
+                incomingStatus: {
+                  ...status,
+                  text: res.body.text,
+                  spoiler_text: res.body.spoiler_text
+                },
+                ...(replyToStatus && { replyToStatus }),
                 queryKey,
-                id: status.id
+                rootQueryKey
               })
-              .then(res => {
-                navigation.navigate('Screen-Compose', {
-                  type: 'deleteEdit',
-                  incomingStatus: res.body as Mastodon.Status,
-                  ...(replyToStatus && { replyToStatus }),
-                  queryKey
-                })
-              })
-          }
-        },
-        {
-          text: t('common:buttons.cancel')
-        }
-      ])
-    }
-    if (actions[index].id === 'status-mute') {
-      analytics('timeline_shared_headeractions_status_mute_press', {
-        page: queryKey && queryKey[1].page
-      })
-      mutation.mutate({
-        type: 'updateStatusProperty',
-        queryKey,
-        rootQueryKey,
-        id: status.id,
-        payload: {
-          property: 'muted',
-          currentValue: status.muted,
-          propertyCount: undefined,
-          countValue: undefined
-        }
-      })
-    }
-    if (actions[index].id === 'status-edit') {
-      analytics('timeline_shared_headeractions_status_edit_press', {
-        page: queryKey && queryKey[1].page
-      })
-      let replyToStatus: Mastodon.Status | undefined = undefined
-      if (status.in_reply_to_id) {
-        replyToStatus = await apiInstance<Mastodon.Status>({
-          method: 'get',
-          url: `statuses/${status.in_reply_to_id}`
-        }).then(res => res.body)
-      }
-      apiInstance<{
-        id: Mastodon.Status['id']
-        text: NonNullable<Mastodon.Status['text']>
-        spoiler_text: Mastodon.Status['spoiler_text']
-      }>({
-        method: 'get',
-        url: `statuses/${status.id}/source`
-      }).then(res => {
-        navigation.navigate('Screen-Compose', {
-          type: 'edit',
-          incomingStatus: {
-            ...status,
-            text: res.body.text,
-            spoiler_text: res.body.spoiler_text
+            })
           },
-          ...(replyToStatus && { replyToStatus }),
-          queryKey,
-          rootQueryKey
-        })
-      })
-    }
-    if (actions[index].id === 'status-pin') {
-      // Also note that reblogs cannot be pinned.
-      analytics('timeline_shared_headeractions_status_pin_press', {
-        page: queryKey && queryKey[1].page
-      })
-      mutation.mutate({
-        type: 'updateStatusProperty',
-        queryKey,
-        rootQueryKey,
-        id: status.id,
-        payload: {
-          property: 'pinned',
-          currentValue: status.pinned,
-          propertyCount: undefined,
-          countValue: undefined
-        }
-      })
-    }
+          disabled: false,
+          destructive: false,
+          hidden: !canEditPost
+        },
+        title: t('status.edit.action'),
+        icon: 'square.and.pencil'
+      },
+      {
+        key: 'status-delete-edit',
+        item: {
+          onSelect: () =>
+            Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
+              {
+                text: t('status.deleteEdit.alert.buttons.confirm'),
+                style: 'destructive',
+                onPress: async () => {
+                  let replyToStatus: Mastodon.Status | undefined = undefined
+                  if (status.in_reply_to_id) {
+                    replyToStatus = await apiInstance<Mastodon.Status>({
+                      method: 'get',
+                      url: `statuses/${status.in_reply_to_id}`
+                    }).then(res => res.body)
+                  }
+                  mutation
+                    .mutateAsync({
+                      type: 'deleteItem',
+                      source: 'statuses',
+                      queryKey,
+                      id: status.id
+                    })
+                    .then(res => {
+                      navigation.navigate('Screen-Compose', {
+                        type: 'deleteEdit',
+                        incomingStatus: res.body as Mastodon.Status,
+                        ...(replyToStatus && { replyToStatus }),
+                        queryKey
+                      })
+                    })
+                }
+              },
+              {
+                text: t('common:buttons.cancel')
+              }
+            ]),
+          disabled: false,
+          destructive: true,
+          hidden: false
+        },
+        title: t('status.deleteEdit.action'),
+        icon: 'pencil.and.outline'
+      },
+      {
+        key: 'status-delete',
+        item: {
+          onSelect: () =>
+            Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
+              {
+                text: t('status.delete.alert.buttons.confirm'),
+                style: 'destructive',
+                onPress: async () => {
+                  mutation.mutate({
+                    type: 'deleteItem',
+                    source: 'statuses',
+                    queryKey,
+                    rootQueryKey,
+                    id: status.id
+                  })
+                }
+              },
+              {
+                text: t('common:buttons.cancel'),
+                style: 'default'
+              }
+            ]),
+          disabled: false,
+          destructive: true,
+          hidden: false
+        },
+        title: t('status.delete.action'),
+        icon: 'trash'
+      }
+    ])
+
+    menus.push([
+      {
+        key: 'status-mute',
+        item: {
+          onSelect: () =>
+            mutation.mutate({
+              type: 'updateStatusProperty',
+              queryKey,
+              rootQueryKey,
+              id: status.id,
+              payload: {
+                property: 'muted',
+                currentValue: status.muted,
+                propertyCount: undefined,
+                countValue: undefined
+              }
+            }),
+          disabled: false,
+          destructive: false,
+          hidden: false
+        },
+        title: t('status.mute.action', {
+          context: (status.muted || false).toString()
+        }),
+        icon: status.muted ? 'speaker' : 'speaker.slash'
+      },
+      {
+        key: 'status-pin',
+        item: {
+          onSelect: () =>
+            // Also note that reblogs cannot be pinned.
+            mutation.mutate({
+              type: 'updateStatusProperty',
+              queryKey,
+              rootQueryKey,
+              id: status.id,
+              payload: {
+                property: 'pinned',
+                currentValue: status.pinned,
+                propertyCount: undefined,
+                countValue: undefined
+              }
+            }),
+          disabled: false,
+          destructive: false,
+          hidden: status.visibility !== 'public' && status.visibility !== 'unlisted'
+        },
+        title: t('status.pin.action', {
+          context: (status.pinned || false).toString()
+        }),
+        icon: status.pinned ? 'pin.slash' : 'pin'
+      }
+    ])
   }
+
+  return menus
 }
 
-export default contextMenuStatus
+export default menuStatus

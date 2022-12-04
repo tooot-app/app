@@ -1,5 +1,4 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
-import getLanguage from '@helpers/getLanguage'
 import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
 import Screens from '@root/Screens'
@@ -13,11 +12,12 @@ import timezone from '@root/startup/timezone'
 import { persistor, store } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { changeLanguage } from '@utils/slices/settingsSlice'
+import { changeLanguage, getSettingsLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
+import { IntlProvider } from 'react-intl'
 import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
@@ -85,7 +85,7 @@ const App: React.FC = () => {
               if (bootstrapped) {
                 log('log', 'App', 'loading actual app :)')
                 log('log', 'App', `Locale: ${Localization.locale}`)
-                const language = getLanguage()
+                const language = getSettingsLanguage(store.getState())
                 if (!language) {
                   if (Platform.OS !== 'ios') {
                     store.dispatch(changeLanguage('en'))
@@ -96,15 +96,17 @@ const App: React.FC = () => {
                 }
 
                 return (
-                  <SafeAreaProvider>
-                    <ActionSheetProvider>
-                      <AccessibilityManager>
-                        <ThemeManager>
-                          <Screens localCorrupt={localCorrupt} />
-                        </ThemeManager>
-                      </AccessibilityManager>
-                    </ActionSheetProvider>
-                  </SafeAreaProvider>
+                  <IntlProvider locale={language}>
+                    <SafeAreaProvider>
+                      <ActionSheetProvider>
+                        <AccessibilityManager>
+                          <ThemeManager>
+                            <Screens localCorrupt={localCorrupt} />
+                          </ThemeManager>
+                        </AccessibilityManager>
+                      </ActionSheetProvider>
+                    </SafeAreaProvider>
+                  </IntlProvider>
                 )
               } else {
                 return null

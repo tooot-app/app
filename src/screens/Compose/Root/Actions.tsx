@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import { emojis } from '@components/Emojis'
 import EmojisContext from '@components/Emojis/helpers/EmojisContext'
 import Icon from '@components/Icon'
@@ -36,9 +35,6 @@ const ComposeActions: React.FC = () => {
     if (composeState.poll.active) return
 
     if (composeState.attachments.uploads.length < instanceConfigurationStatusMaxAttachments) {
-      analytics('compose_actions_attachment_press', {
-        count: composeState.attachments.uploads.length
-      })
       return chooseAndUploadAttachment({
         composeDispatch,
         showActionSheetWithOptions
@@ -57,9 +53,6 @@ const ComposeActions: React.FC = () => {
   }, [composeState.poll.active, composeState.attachments.uploads])
   const pollOnPress = () => {
     if (!composeState.attachments.uploads.length) {
-      analytics('compose_actions_poll_press', {
-        current: composeState.poll.active
-      })
       layoutAnimation()
       composeDispatch({
         type: 'poll',
@@ -93,7 +86,7 @@ const ComposeActions: React.FC = () => {
             t('content.root.actions.visibility.options.unlisted'),
             t('content.root.actions.visibility.options.private'),
             t('content.root.actions.visibility.options.direct'),
-            t('content.root.actions.visibility.options.cancel')
+            t('common:buttons.cancel')
           ],
           cancelButtonIndex: 4,
           userInterfaceStyle: mode
@@ -101,31 +94,15 @@ const ComposeActions: React.FC = () => {
         buttonIndex => {
           switch (buttonIndex) {
             case 0:
-              analytics('compose_actions_visibility_press', {
-                current: composeState.visibility,
-                new: 'public'
-              })
               composeDispatch({ type: 'visibility', payload: 'public' })
               break
             case 1:
-              analytics('compose_actions_visibility_press', {
-                current: composeState.visibility,
-                new: 'unlisted'
-              })
               composeDispatch({ type: 'visibility', payload: 'unlisted' })
               break
             case 2:
-              analytics('compose_actions_visibility_press', {
-                current: composeState.visibility,
-                new: 'private'
-              })
               composeDispatch({ type: 'visibility', payload: 'private' })
               break
             case 3:
-              analytics('compose_actions_visibility_press', {
-                current: composeState.visibility,
-                new: 'direct'
-              })
               composeDispatch({ type: 'visibility', payload: 'direct' })
               break
           }
@@ -135,9 +112,6 @@ const ComposeActions: React.FC = () => {
   }
 
   const spoilerOnPress = () => {
-    analytics('compose_actions_spoiler_press', {
-      current: composeState.spoiler.active
-    })
     if (composeState.spoiler.active) {
       composeState.textInputFocus.refs.text.current?.focus()
     }
@@ -159,9 +133,6 @@ const ComposeActions: React.FC = () => {
     }
   }, [emojis.current?.length, emojisState.targetIndex])
   const emojiOnPress = () => {
-    analytics('compose_actions_emojis_press', {
-      current: emojisState.targetIndex !== -1
-    })
     if (emojisState.targetIndex === -1) {
       Keyboard.dismiss()
       const focusedPropsIndex = emojisState.inputProps?.findIndex(props => props.isFocused.current)

@@ -1,24 +1,34 @@
+import { HeaderLeft } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
-import { useNavigation } from '@react-navigation/native'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 import { InfiniteQueryObserver, useQueryClient } from 'react-query'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
+  navigation,
   route: {
     params: { toot, rootQueryKey }
   }
 }) => {
+  const { t } = useTranslation('screenTabs')
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: t('shared.toot.name'),
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+    })
+  }, [])
+
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Toot', toot: toot.id }]
 
   const flRef = useRef<FlatList>(null)
 
   const [itemsLength, setItemsLength] = useState(0)
   const scrolled = useRef(false)
-  const navigation = useNavigation()
   const queryClient = useQueryClient()
   const observer = new InfiniteQueryObserver(queryClient, {
     queryKey,

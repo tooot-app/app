@@ -3,40 +3,60 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback } from 'react'
-import { Pressable } from 'react-native'
-import analytics from './analytics'
+import React, { useCallback, useState } from 'react'
+import { Dimensions, Pressable } from 'react-native'
+import Sparkline from './Sparkline'
 import CustomText from './Text'
 
 export interface Props {
   hashtag: Mastodon.Tag
   onPress?: () => void
-  origin?: string
 }
 
-const ComponentHashtag: React.FC<Props> = ({
-  hashtag,
-  onPress: customOnPress,
-  origin
-}) => {
+const ComponentHashtag: React.FC<Props> = ({ hashtag, onPress: customOnPress }) => {
   const { colors } = useTheme()
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = useCallback(() => {
-    analytics('search_account_press', { page: origin })
     navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
   }, [])
+
+  const padding = StyleConstants.Spacing.Global.PagePadding
+  const width = Dimensions.get('window').width / 4
+  const [height, setHeight] = useState<number>(0)
 
   return (
     <Pressable
       accessibilityRole='button'
-      style={{ padding: StyleConstants.Spacing.S * 1.5 }}
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding
+      }}
       onPress={customOnPress || onPress}
+      onLayout={({
+        nativeEvent: {
+          layout: { height }
+        }
+      }) => setHeight(height - padding * 2 - 1)}
     >
-      <CustomText fontStyle='M' style={{ color: colors.primaryDefault }}>
+      <CustomText
+        fontStyle='M'
+        style={{
+          flexShrink: 1,
+          color: colors.primaryDefault,
+          paddingRight: StyleConstants.Spacing.M
+        }}
+        numberOfLines={1}
+      >
         #{hashtag.name}
       </CustomText>
+      <Sparkline
+        data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
+        width={width}
+        height={height}
+      />
     </Pressable>
   )
 }

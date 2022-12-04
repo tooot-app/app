@@ -1,6 +1,6 @@
 {
   "HTML": {
-    "accessibilityHint": "點擊展開或折疊內容",
+    "accessibilityHint": "點擊以展開或折疊內容",
     "expanded": "{{hint}}{{moreLines}}",
     "moreLines": "（還有 {{count}} 行）",
     "defaultHint": "長嘟文"

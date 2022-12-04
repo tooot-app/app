@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import MenuContainer from '@components/Menu/Container'
 import MenuHeader from '@components/Menu/Header'
 import MenuRow from '@components/Menu/Row'
@@ -22,7 +21,6 @@ const ActionsShare: React.FC<Props> = ({ type, url, dismiss }) => {
         iconFront='Share2'
         title={t(`shared.header.actions.share.${type}.button`)}
         onPress={async () => {
-          analytics('timeline_shared_headeractions_share_press')
           switch (Platform.OS) {
             case 'ios':
               await Share.share({

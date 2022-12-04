@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
@@ -25,7 +24,6 @@ const AccountInformationAvatar: React.FC<Props> = ({
     <Pressable
       disabled={!myInfo}
       onPress={() => {
-        analytics('account_avatar_press')
         myInfo && account && navigation.push('Tab-Shared-Account', { account })
       }}
       style={styles.base}

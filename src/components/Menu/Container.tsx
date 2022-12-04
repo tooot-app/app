@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
@@ -7,14 +7,16 @@ export interface Props {
 }
 
 const MenuContainer: React.FC<Props> = ({ children }) => {
-  return <View style={styles.base}>{children}</View>
+  return (
+    <View
+      style={{
+        paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+        marginBottom: StyleConstants.Spacing.Global.PagePadding
+      }}
+    >
+      {children}
+    </View>
+  )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-    marginBottom: StyleConstants.Spacing.Global.PagePadding
-  }
-})
 
 export default MenuContainer

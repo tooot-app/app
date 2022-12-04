@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Conectado a esta instância",
-      "message": "Você pode fazer login em outra conta mantendo a conta existente logada",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Continuar"
-      }
+      "message": "Você pode fazer login em outra conta mantendo a conta existente logada"
     }
   }
 }

@@ -13,10 +13,7 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData
-  extras?: Omit<
-    AxiosRequestConfig,
-    'method' | 'url' | 'params' | 'headers' | 'data'
-  >
+  extras?: Omit<AxiosRequestConfig, 'method' | 'url' | 'params' | 'headers' | 'data'>
 }
 
 export type InstanceResponse<T = unknown> = {
@@ -35,9 +32,7 @@ const apiInstance = async <T = unknown>({
 }: Params): Promise<InstanceResponse<T>> => {
   const { store } = require('@root/store')
   const state = store.getState() as RootState
-  const instanceActive = state.instances.instances.findIndex(
-    instance => instance.active
-  )
+  const instanceActive = state.instances.instances.findIndex(instance => instance.active)
 
   let domain
   let token
@@ -45,21 +40,19 @@ const apiInstance = async <T = unknown>({
     domain = state.instances.instances[instanceActive].url
     token = state.instances.instances[instanceActive].token
   } else {
-    console.warn(
-      ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided'
-    )
+    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided')
     return Promise.reject()
   }
 
   console.log(
     ctx.bgGreen.bold(' API instance ') +
-    ' ' +
-    domain +
-    ' ' +
-    method +
-    ctx.green(' -> ') +
-    `/${url}` +
-    (params ? ctx.green(' -> ') : ''),
+      ' ' +
+      domain +
+      ' ' +
+      method +
+      ctx.green(' -> ') +
+      `/${url}` +
+      (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -70,10 +63,7 @@ const apiInstance = async <T = unknown>({
     url,
     params,
     headers: {
-      'Content-Type':
-        body && body instanceof FormData
-          ? 'multipart/form-data'
-          : 'application/json',
+      'Content-Type': body && body instanceof FormData ? 'multipart/form-data' : 'application/json',
       Accept: '*/*',
       ...userAgent,
       ...headers,
@@ -87,10 +77,10 @@ const apiInstance = async <T = unknown>({
     .then(response => {
       let prev
       let next
-      if (response.headers.link) {
-        const headersLinks = li.parse(response.headers.link)
-        prev = headersLinks.prev?.match(/_id=([0-9]*)/)[1]
-        next = headersLinks.next?.match(/_id=([0-9]*)/)[1]
+      if (response.headers?.link) {
+        const headersLinks = li.parse(response.headers?.link)
+        prev = headersLinks.prev?.match(/_id=([0-9]*)/)?.[1]
+        next = headersLinks.next?.match(/_id=([0-9]*)/)?.[1]
       }
       return Promise.resolve({
         body: response.data,

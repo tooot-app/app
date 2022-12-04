@@ -90,20 +90,21 @@ const TabMeProfileFields: React.FC<
     navigation.setOptions({
       headerLeft: () => (
         <HeaderLeft
+          content='X'
           onPress={() => {
             if (dirty) {
               Alert.alert(
-                t('me.profile.cancellation.title'),
-                t('me.profile.cancellation.message'),
+                t('common:discard.title'),
+                t('common:discard.message'),
                 [
                   {
-                    text: t('me.profile.cancellation.buttons.cancel'),
-                    style: 'default'
-                  },
-                  {
-                    text: t('me.profile.cancellation.buttons.discard'),
+                    text: t('common:buttons.discard'),
                     style: 'destructive',
                     onPress: () => navigation.navigate('Tab-Me-Profile-Root')
+                  },
+                  {
+                    text: t('common:buttons.cancel'),
+                    style: 'default'
                   }
                 ]
               )

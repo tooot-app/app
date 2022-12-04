@@ -4,49 +4,47 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Pressable, View } from 'react-native'
-import analytics from './analytics'
 import GracefullyImage from './GracefullyImage'
 import CustomText from './Text'
 
 export interface Props {
   account: Mastodon.Account
-  onPress?: () => void
-  origin?: string
+  Component?: typeof View | typeof Pressable
+  props?: {}
 }
 
-const ComponentAccount: React.FC<Props> = ({
+const ComponentAccount: React.FC<PropsWithChildren & Props> = ({
   account,
-  onPress: customOnPress,
-  origin
+  Component,
+  props,
+  children
 }) => {
   const { colors } = useTheme()
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const onPress = useCallback(() => {
-    analytics('search_account_press', { page: origin })
-    navigation.push('Tab-Shared-Account', { account })
-  }, [])
+  if (!props) {
+    props = { onPress: () => navigation.push('Tab-Shared-Account', { account }) }
+  }
 
-  return (
-    <Pressable
-      accessibilityRole='button'
-      style={{
+  return React.createElement(
+    Component || Pressable,
+    {
+      ...props,
+      style: {
         flex: 1,
         paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
         paddingVertical: StyleConstants.Spacing.M,
         flexDirection: 'row',
-        alignSelf: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center'
-      }}
-      onPress={customOnPress || onPress}
-    >
+      }
+    },
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
       <GracefullyImage
         uri={{ original: account.avatar, static: account.avatar_static }}
         style={{
-          alignSelf: 'flex-start',
           width: StyleConstants.Avatar.S,
           height: StyleConstants.Avatar.S,
           borderRadius: 6,
@@ -72,7 +70,8 @@ const ComponentAccount: React.FC<Props> = ({
           @{account.acct}
         </CustomText>
       </View>
-    </Pressable>
+    </View>,
+    children
   )
 }
 

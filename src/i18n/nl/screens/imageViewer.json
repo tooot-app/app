@@ -1,0 +1,16 @@
+{
+  "content": {
+    "actions": {
+      "accessibilityLabel": "Meer acties van deze afbeelding",
+      "accessibilityHint": "Je kunt deze afbeelding opslaan of delen"
+    },
+    "options": {
+      "save": "Afbeelding opslaan",
+      "share": "Afbeelding delen"
+    },
+    "save": {
+      "succeed": "Afbeelding opgeslagen",
+      "failed": "Afbeelding opslaan mislukt"
+    }
+  }
+}

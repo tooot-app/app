@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
-import analytics from '@components/analytics'
 import AttachmentAltText from './AltText'
 import { Platform } from 'expo-modules-core'
 
@@ -30,13 +29,6 @@ const AttachmentVideo: React.FC<Props> = ({
   const [videoPosition, setVideoPosition] = useState<number>(0)
   const [videoResizeMode, setVideoResizeMode] = useState<ResizeMode>(ResizeMode.COVER)
   const playOnPress = useCallback(async () => {
-    analytics('timeline_shared_attachment_video_length', {
-      length: video.meta?.length
-    })
-    analytics('timeline_shared_attachment_vide_play_press', {
-      id: video.id,
-      timestamp: Date.now()
-    })
     setVideoLoading(true)
     if (!videoLoaded) {
       await videoPlayer.current?.loadAsync({ uri: video.url })

@@ -1,56 +1,49 @@
-import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useCallback } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import StatusContext from './Context'
 
 export interface Props {
-  queryKey?: QueryKeyTimeline
-  account: Mastodon.Account
-  highlighted: boolean
+  account?: Mastodon.Account
 }
 
-const TimelineAvatar = React.memo(
-  ({ queryKey, account, highlighted }: Props) => {
-    const { t } = useTranslation('componentTimeline')
-    const navigation =
-      useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-    // Need to fix go back root
-    const onPress = useCallback(() => {
-      analytics('timeline_shared_avatar_press', {
-        page: queryKey && queryKey[1].page
-      })
-      queryKey && navigation.push('Tab-Shared-Account', { account })
-    }, [])
+const TimelineAvatar: React.FC<Props> = ({ account }) => {
+  const { status, highlighted, disableOnPress } = useContext(StatusContext)
+  const actualAccount = account || status?.account
+  if (!actualAccount) return null
 
-    return (
-      <GracefullyImage
-        {...(highlighted && {
-          accessibilityLabel: t('shared.avatar.accessibilityLabel', {
-            name: account.display_name
-          }),
-          accessibilityHint: t('shared.avatar.accessibilityHint', {
-            name: account.display_name
-          })
-        })}
-        onPress={onPress}
-        uri={{ original: account?.avatar, static: account?.avatar_static }}
-        dimension={{
-          width: StyleConstants.Avatar.M,
-          height: StyleConstants.Avatar.M
-        }}
-        style={{
-          borderRadius: StyleConstants.Avatar.M,
-          overflow: 'hidden',
-          marginRight: StyleConstants.Spacing.S
-        }}
-      />
-    )
-  }
-)
+  const { t } = useTranslation('componentTimeline')
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+
+  return (
+    <GracefullyImage
+      {...(highlighted && {
+        accessibilityLabel: t('shared.avatar.accessibilityLabel', {
+          name: actualAccount.display_name
+        }),
+        accessibilityHint: t('shared.avatar.accessibilityHint', {
+          name: actualAccount.display_name
+        })
+      })}
+      onPress={() =>
+        !disableOnPress && navigation.push('Tab-Shared-Account', { account: actualAccount })
+      }
+      uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
+      dimension={{
+        width: StyleConstants.Avatar.M,
+        height: StyleConstants.Avatar.M
+      }}
+      style={{
+        borderRadius: StyleConstants.Avatar.M,
+        overflow: 'hidden',
+        marginRight: StyleConstants.Spacing.S
+      }}
+    />
+  )
+}
 
 export default TimelineAvatar

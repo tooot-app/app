@@ -85,7 +85,7 @@ const Collections: React.FC = () => {
           iconFront='List'
           iconBack='ChevronRight'
           title={t('me.stacks.lists.name')}
-          onPress={() => navigation.navigate('Tab-Me-Lists')}
+          onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
       {mePage.announcements.shown ? (

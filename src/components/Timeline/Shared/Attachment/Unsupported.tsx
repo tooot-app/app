@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import openLink from '@components/openLink'
 import CustomText from '@components/Text'
@@ -18,12 +17,7 @@ export interface Props {
   attachment: Mastodon.AttachmentUnknown
 }
 
-const AttachmentUnsupported: React.FC<Props> = ({
-  total,
-  index,
-  sensitiveShown,
-  attachment
-}) => {
+const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, attachment }) => {
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
@@ -55,9 +49,7 @@ const AttachmentUnsupported: React.FC<Props> = ({
             style={{
               textAlign: 'center',
               marginBottom: StyleConstants.Spacing.S,
-              color: attachment.blurhash
-                ? colors.backgroundDefault
-                : colors.primaryDefault
+              color: attachment.blurhash ? colors.backgroundDefault : colors.primaryDefault
             }}
           >
             {t('shared.attachment.unsupported.text')}
@@ -69,17 +61,13 @@ const AttachmentUnsupported: React.FC<Props> = ({
               size='S'
               overlay
               onPress={() => {
-                analytics('timeline_shared_attachment_unsupported_press')
                 attachment.remote_url && openLink(attachment.remote_url)
               }}
             />
           ) : null}
         </>
       ) : null}
-      <AttachmentAltText
-        sensitiveShown={sensitiveShown}
-        text={attachment.description}
-      />
+      <AttachmentAltText sensitiveShown={sensitiveShown} text={attachment.description} />
     </View>
   )
 }

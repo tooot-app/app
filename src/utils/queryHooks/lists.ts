@@ -1,8 +1,16 @@
-import apiInstance from '@api/instance'
+import apiInstance, { InstanceResponse } from '@api/instance'
 import { AxiosError } from 'axios'
-import { useQuery, UseQueryOptions } from 'react-query'
+import {
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
+} from 'react-query'
 
-export type QueryKey = ['Lists']
+export type QueryKeyLists = ['Lists']
 
 const queryFunction = async () => {
   const res = await apiInstance<Mastodon.List[]>({
@@ -12,13 +20,108 @@ const queryFunction = async () => {
   return res.body
 }
 
-const useListsQuery = ({
-  options
-}: {
-  options?: UseQueryOptions<Mastodon.List[], AxiosError>
-}) => {
-  const queryKey: QueryKey = ['Lists']
+const useListsQuery = ({ options }: { options?: UseQueryOptions<Mastodon.List[], AxiosError> }) => {
+  const queryKey: QueryKeyLists = ['Lists']
   return useQuery(queryKey, queryFunction, options)
 }
 
-export { useListsQuery }
+type MutationVarsLists =
+  | {
+      type: 'add'
+      payload: Omit<Mastodon.List, 'id'>
+    }
+  | {
+      type: 'edit'
+      payload: Mastodon.List
+    }
+  | {
+      type: 'delete'
+      payload: Pick<Mastodon.List, 'id'>
+    }
+
+const mutationFunction = async (params: MutationVarsLists) => {
+  const body = new FormData()
+  switch (params.type) {
+    case 'add':
+      body.append('title', params.payload.title)
+      body.append('replies_policy', params.payload.replies_policy)
+
+      return apiInstance<Mastodon.List>({
+        method: 'post',
+        url: 'lists',
+        body
+      }).then(res => res.body)
+    case 'edit':
+      body.append('title', params.payload.title)
+      body.append('replies_policy', params.payload.replies_policy)
+
+      return apiInstance<Mastodon.List>({
+        method: 'put',
+        url: `lists/${params.payload.id}`,
+        body
+      }).then(res => res.body)
+    case 'delete':
+      return apiInstance<{}>({
+        method: 'delete',
+        url: `lists/${params.payload.id}`
+      }).then(res => res.body)
+  }
+}
+
+const useListsMutation = (
+  options: UseMutationOptions<Mastodon.List, AxiosError, MutationVarsLists>
+) => {
+  return useMutation(mutationFunction, options)
+}
+
+/* ----- */
+
+export type QueryKeyListAccounts = ['ListAccounts', { id: Mastodon.List['id'] }]
+
+const accountsQueryFunction = async ({
+  queryKey,
+  pageParam
+}: QueryFunctionContext<QueryKeyListAccounts>) => {
+  const { id } = queryKey[1]
+
+  return await apiInstance<Mastodon.Account[]>({
+    method: 'get',
+    url: `lists/${id}/accounts`,
+    params: { ...pageParam, limit: 40 }
+  })
+}
+
+const useListAccountsQuery = ({
+  options,
+  ...queryKeyParams
+}: QueryKeyListAccounts[1] & {
+  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Account[]>, AxiosError>
+}) => {
+  const queryKey: QueryKeyListAccounts = ['ListAccounts', queryKeyParams]
+  return useInfiniteQuery(queryKey, accountsQueryFunction, options)
+}
+
+type AccountsMutationVarsLists = {
+  type: 'add' | 'delete'
+  payload: Pick<Mastodon.List, 'id'> & { accounts: Mastodon.Account['id'][] }
+}
+
+const accountsMutationFunction = async (params: AccountsMutationVarsLists) => {
+  const body = new FormData()
+  for (const account of params.payload.accounts) {
+    body.append('account_ids[]', account)
+  }
+  return apiInstance<{}>({
+    method: params.type === 'add' ? 'post' : 'delete',
+    url: `lists/${params.payload.id}/accounts`,
+    body
+  }).then(res => res.body)
+}
+
+const useListAccountsMutation = (
+  options: UseMutationOptions<Mastodon.List, AxiosError, AccountsMutationVarsLists>
+) => {
+  return useMutation(accountsMutationFunction, options)
+}
+
+export { useListsQuery, useListsMutation, useListAccountsQuery, useListAccountsMutation }

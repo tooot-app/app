@@ -1,8 +1,8 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
+import browserPackage from '@helpers/browserPackage'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { getExpoToken } from '@utils/slices/appSlice'
@@ -28,10 +28,7 @@ import { useSelector } from 'react-redux'
 const TabMePush: React.FC = () => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.acct === next?.acct
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.acct === next?.acct)
   const instanceUri = useSelector(getInstanceUri)
 
   const dispatch = useAppDispatch()
@@ -70,15 +67,7 @@ const TabMePush: React.FC = () => {
   const alerts = useMemo(() => {
     return instancePush?.alerts
       ? (
-          [
-            'follow',
-            'follow_request',
-            'favourite',
-            'reblog',
-            'mention',
-            'poll',
-            'status'
-          ] as [
+          ['follow', 'follow_request', 'favourite', 'reblog', 'mention', 'poll', 'status'] as [
             'follow',
             'follow_request',
             'favourite',
@@ -91,15 +80,9 @@ const TabMePush: React.FC = () => {
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
-            switchDisabled={
-              !pushEnabled || !instancePush.global.value || isLoading
-            }
+            switchDisabled={!pushEnabled || !instancePush.global.value || isLoading}
             switchValue={instancePush?.alerts[alert].value}
-            switchOnValueChange={() => {
-              analytics(`me_push_${alert}`, {
-                current: instancePush?.alerts[alert].value,
-                new: !instancePush?.alerts[alert].value
-              })
+            switchOnValueChange={() =>
               dispatch(
                 updateInstancePushAlert({
                   changed: alert,
@@ -112,7 +95,7 @@ const TabMePush: React.FC = () => {
                   }
                 })
               )
-            }}
+            }
           />
         ))
       : null
@@ -127,23 +110,18 @@ const TabMePush: React.FC = () => {
               <Button
                 type='text'
                 content={
-                  pushCanAskAgain
-                    ? t('me.push.enable.direct')
-                    : t('me.push.enable.settings')
+                  pushCanAskAgain ? t('me.push.enable.direct') : t('me.push.enable.settings')
                 }
                 style={{
                   marginTop: StyleConstants.Spacing.Global.PagePadding,
-                  marginHorizontal:
-                    StyleConstants.Spacing.Global.PagePadding * 2
+                  marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2
                 }}
                 onPress={async () => {
                   if (pushCanAskAgain) {
-                    analytics('me_push_enabled_dialogue')
                     const result = await Notifications.requestPermissionsAsync()
                     setPushEnabled(result.granted)
                     setPushCanAskAgain(result.canAskAgain)
                   } else {
-                    analytics('me_push_enabled_setting')
                     Linking.openSettings()
                   }
                 }}
@@ -158,16 +136,8 @@ const TabMePush: React.FC = () => {
               description={t('me.push.global.description')}
               loading={instancePush?.global.loading}
               switchDisabled={!pushEnabled || isLoading}
-              switchValue={
-                pushEnabled === false ? false : instancePush?.global.value
-              }
-              switchOnValueChange={() => {
-                analytics('me_push_global', {
-                  current: instancePush?.global.value,
-                  new: !instancePush?.global.value
-                })
-                dispatch(updateInstancePush(!instancePush?.global.value))
-              }}
+              switchValue={pushEnabled === false ? false : instancePush?.global.value}
+              switchOnValueChange={() => dispatch(updateInstancePush(!instancePush?.global.value))}
             />
           </MenuContainer>
           <MenuContainer>
@@ -175,25 +145,20 @@ const TabMePush: React.FC = () => {
               title={t('me.push.decode.heading')}
               description={t('me.push.decode.description')}
               loading={instancePush?.decode.loading}
-              switchDisabled={
-                !pushEnabled || !instancePush?.global.value || isLoading
-              }
+              switchDisabled={!pushEnabled || !instancePush?.global.value || isLoading}
               switchValue={instancePush?.decode.value}
-              switchOnValueChange={() => {
-                analytics('me_push_decode', {
-                  current: instancePush?.decode.value,
-                  new: !instancePush?.decode.value
-                })
+              switchOnValueChange={() =>
                 dispatch(updateInstancePushDecode(!instancePush?.decode.value))
-              }}
+              }
             />
             <MenuRow
               title={t('me.push.howitworks')}
               iconBack='ExternalLink'
-              onPress={() => {
-                analytics('me_push_howitworks')
-                WebBrowser.openBrowserAsync('https://tooot.app/how-push-works')
-              }}
+              onPress={async () =>
+                WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
+                  browserPackage: await browserPackage()
+                })
+              }
             />
           </MenuContainer>
           <MenuContainer>{alerts}</MenuContainer>
@@ -207,11 +172,7 @@ const TabMePush: React.FC = () => {
             alignItems: 'center'
           }}
         >
-          <Icon
-            name='Frown'
-            size={StyleConstants.Font.Size.L}
-            color={colors.primaryDefault}
-          />
+          <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
           <CustomText fontStyle='M' style={{ color: colors.primaryDefault }}>
             {t('me.push.notAvailable')}
           </CustomText>

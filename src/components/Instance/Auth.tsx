@@ -1,3 +1,4 @@
+import browserPackage from '@helpers/browserPackage'
 import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
@@ -24,14 +25,11 @@ const InstanceAuth = React.memo(
       useProxy: false
     })
 
-    const navigation =
-      useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
+    const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
     const queryClient = useQueryClient()
     const dispatch = useAppDispatch()
 
-    const deprecateAuthFollow = useSelector(
-      checkInstanceFeature('deprecate_auth_follow')
-    )
+    const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
     const [request, response, promptAsync] = AuthSession.useAuthRequest(
       {
         clientId: appData.clientId,
@@ -48,7 +46,7 @@ const InstanceAuth = React.memo(
     useEffect(() => {
       ;(async () => {
         if (request?.clientId) {
-          await promptAsync()
+          await promptAsync({ browserPackage: await browserPackage() }).catch(e => console.log(e))
         }
       })()
     }, [request])

@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "已登入站點",
-      "message": "您可以登入其它的帳號，已登入的帳號會被保留",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "繼續"
-      }
+      "message": "您可以登入其它的帳號，已登入的帳號會被保留"
     }
   }
 }

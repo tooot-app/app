@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
@@ -27,20 +26,11 @@ const TimelineEmpty = React.memo(
     const children = () => {
       switch (status) {
         case 'loading':
-          return (
-            <Circle
-              size={StyleConstants.Font.Size.L}
-              color={colors.secondary}
-            />
-          )
+          return <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
         case 'error':
           return (
             <>
-              <Icon
-                name='Frown'
-                size={StyleConstants.Font.Size.L}
-                color={colors.primaryDefault}
-              />
+              <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
               <CustomText
                 fontStyle='M'
                 style={{
@@ -51,14 +41,7 @@ const TimelineEmpty = React.memo(
               >
                 {t('empty.error.message')}
               </CustomText>
-              <Button
-                type='text'
-                content={t('empty.error.button')}
-                onPress={() => {
-                  analytics('timeline_error_press_refetch')
-                  refetch()
-                }}
-              />
+              <Button type='text' content={t('empty.error.button')} onPress={() => refetch()} />
             </>
           )
         case 'success':
@@ -74,7 +57,7 @@ const TimelineEmpty = React.memo(
                 style={{
                   marginTop: StyleConstants.Spacing.S,
                   marginBottom: StyleConstants.Spacing.L,
-                  color: colors.primaryDefault
+                  color: colors.secondary
                 }}
               >
                 {t('empty.success.message')}

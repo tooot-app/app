@@ -1,4 +1,3 @@
-import analytics from '@components/analytics'
 import GracefullyImage from '@components/GracefullyImage'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
@@ -49,13 +48,12 @@ const ScreenImagesViewer = ({
 
   const { showActionSheetWithOptions } = useActionSheet()
   const onPress = useCallback(() => {
-    analytics('imageviewer_more_press')
     showActionSheetWithOptions(
       {
         options: [
           t('content.options.save'),
           t('content.options.share'),
-          t('content.options.cancel')
+          t('common:buttons.cancel')
         ],
         cancelButtonIndex: 2,
         userInterfaceStyle: mode
@@ -63,11 +61,9 @@ const ScreenImagesViewer = ({
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            analytics('imageviewer_more_save_press')
             saveImage({ theme, image: imageUrls[currentIndex] })
             break
           case 1:
-            analytics('imageviewer_more_share_press')
             switch (Platform.OS) {
               case 'ios':
                 await Share.share({ url: imageUrls[currentIndex].url })
@@ -179,7 +175,6 @@ const ScreenImagesViewer = ({
       </View>
       <LongPressGestureHandler
         onEnded={() => {
-          analytics('imageviewer_more_press')
           showActionSheetWithOptions(
             {
               options: [
@@ -193,11 +188,9 @@ const ScreenImagesViewer = ({
             async buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  analytics('imageviewer_more_save_press')
                   saveImage({ theme, image: imageUrls[currentIndex] })
                   break
                 case 1:
-                  analytics('imageviewer_more_share_press')
                   switch (Platform.OS) {
                     case 'ios':
                       await Share.share({ url: imageUrls[currentIndex].url })

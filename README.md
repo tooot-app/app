@@ -11,17 +11,19 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 ## Special thanks
 
-[@amrtf](https://crowdin.com/profile/amrtf) for Spanish translation
-
-[@pat](https://piaille.fr/@pat) for French translation
+[@amrtf](https://crowdin.com/profile/amrtf) for Catalan and Spanish translation
 
 [@forenta](https://github.com/forenta) for German translation
+
+[@pat](https://piaille.fr/@pat) for French translation
 
 [@andrigamerita](https://github.com/andrigamerita) for Italian translation
 
 [@Hikaru](https://github.com/Hikali-47041) and [@la_la](https://mstdn.jp/@la_la_la) for Japanese translation
 
 [@hellojaccc](https://github.com/hellojaccc) for Korean translation
+
+[@jan-vandenberg](https://crowdin.com/profile/jan-vandenberg) for Dutch translation
 
 [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 

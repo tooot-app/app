@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "回覆的嘟文不存在",
           "description": "回覆的嘟文可能已被刪除。確認移除回覆嘟文的關聯？",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "移除關聯"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "選擇類型",
             "options": {
               "single": "單選題",
-              "multiple": "複選題",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "複選題"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 小時",
               "86400": "1 天",
               "259200": "3 天",
-              "604800": "7 天",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 天"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "公開",
             "unlisted": "不公開",
             "private": "僅限跟隨者",
-            "direct": "私訊",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "私訊"
           }
         },
         "spoiler": {

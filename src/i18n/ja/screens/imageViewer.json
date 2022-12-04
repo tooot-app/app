@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "画像を保存",
-      "share": "画像を共有",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "画像を共有"
     },
     "save": {
       "succeed": "画像を保存しました",
