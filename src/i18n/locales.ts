@@ -1,4 +1,5 @@
 const LOCALES = {
+  ca: 'Català',
   de: 'Deutsch',
   en: 'English',
   es: 'Español',
