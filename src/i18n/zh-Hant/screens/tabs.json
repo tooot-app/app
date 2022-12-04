@@ -329,8 +329,8 @@
       "name": "<0 /><1>的媒體</1>"
     },
     "hashtag": {
-      "follow": "追蹤",
-      "unfollow": "取消追蹤"
+      "follow": "跟隨",
+      "unfollow": "取消跟隨"
     },
     "history": {
       "name": "編輯歷史"

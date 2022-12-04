@@ -53,10 +53,10 @@ const TimelineDefault: React.FC<Props> = ({
   const status = item.reblog ? item.reblog : item
   const ownAccount = status.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount.preferences['reading:expand:spoilers'] || false
+    instanceAccount?.preferences['reading:expand:spoilers'] || false
   )
   const spoilerHidden = status.spoiler_text?.length
-    ? !instanceAccount.preferences['reading:expand:spoilers'] && !spoilerExpanded
+    ? !instanceAccount?.preferences['reading:expand:spoilers'] && !spoilerExpanded
     : false
   const copiableContent = useRef<{ content: string; complete: boolean }>({
     content: '',

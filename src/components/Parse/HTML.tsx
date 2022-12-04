@@ -126,7 +126,7 @@ const renderNode = ({
               }
             }}
           >
-            {(content && content !== href && content) || (showFullLink ? href : domain[1])}
+            {content && content !== href ? content : showFullLink ? href : domain?.[1]}
             {!shouldBeTag ? (
               <Icon
                 color={colors.blue}

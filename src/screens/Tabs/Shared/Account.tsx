@@ -81,7 +81,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         )
       }
     })
-  }, [])
+  }, [mAccount])
 
   const { data } = useAccountQuery({ id: account.id })
 
