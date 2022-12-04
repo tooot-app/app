@@ -3,10 +3,10 @@
     "OK": "好的",
     "apply": "应用",
     "cancel": "取消",
-    "discard": "",
-    "continue": "",
-    "delete": "",
-    "done": ""
+    "discard": "丢弃",
+    "continue": "继续",
+    "delete": "删除",
+    "done": "完成"
   },
   "customEmoji": {
     "accessibilityLabel": "自定义表情{{emoji}}"
@@ -24,7 +24,7 @@
   },
   "separator": "，",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "更改尚未保存",
+    "message": "您的更改尚未保存。是否放弃保存更改？"
   }
 }
