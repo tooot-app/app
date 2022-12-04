@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "私信",
+    "public": "公开信息"
   },
   "copy": {
     "action": "复制嘟文",
