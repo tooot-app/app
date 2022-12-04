@@ -1,5 +1,5 @@
-import menuAccount from '@components/contextMenu/account'
-import menuShare from '@components/contextMenu/share'
+import menuAccount from '@components/ContextMenu/account'
+import menuShare from '@components/ContextMenu/share'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
