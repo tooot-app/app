@@ -3,10 +3,10 @@
   "account": {
     "title": "用户操作",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "关注用户",
+      "action_true": "取消关注用户"
     },
-    "inLists": "",
+    "inLists": "管理用户列表",
     "mute": {
       "action_false": "静音用户",
       "action_true": "取消静音用户"
@@ -16,7 +16,7 @@
       "action_true": "取消屏蔽用户"
     },
     "reports": {
-      "action": ""
+      "action": "举报并屏蔽用户"
     }
   },
   "copy": {
