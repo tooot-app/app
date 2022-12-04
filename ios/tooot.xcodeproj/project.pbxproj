@@ -70,6 +70,7 @@
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = tooot/SplashScreen.storyboard; sourceTree = "<group>"; };
 		DF8133F098604A10B0D94952 /* boop.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = boop.mp3; path = tooot/boop.mp3; sourceTree = "<group>"; };
 		E613A80A28282A01003C97D6 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = tooot/AppDelegate.mm; sourceTree = "<group>"; };
+		E6217B7E293C1EBF00B1755E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E633A420281EAEAB000E540F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E633A427281EAEAB000E540F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E633A42F281EAF38000E540F /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
@@ -294,6 +295,7 @@
 				fr,
 				es,
 				sv,
+				nl,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -524,6 +526,7 @@
 				E66C0842291F095800DFFF60 /* fr */,
 				E690AF692926B737002C38A8 /* es */,
 				E63E7FF0292A828100C76FD4 /* sv */,
+				E6217B7E293C1EBF00B1755E /* nl */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

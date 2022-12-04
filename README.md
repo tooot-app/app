@@ -23,6 +23,8 @@ Please **do not** create a pull request to update translation. tooot's translati
 
 [@hellojaccc](https://github.com/hellojaccc) for Korean translation
 
+[@jan-vandenberg](https://crowdin.com/profile/jan-vandenberg) for Dutch translation
+
 [@luizpicolo](https://github.com/luizpicolo) for Brazilian Portuguese
 
 [@janlindblom](https://github.com/janlindblom) for Swedish
