@@ -1,0 +1,10 @@
+{
+  "heading": "Avisos",
+  "content": {
+    "published": "S'ha publicat <0 />",
+    "button": {
+      "read": "Llegit",
+      "unread": "Marca com a llegit"
+    }
+  }
+}

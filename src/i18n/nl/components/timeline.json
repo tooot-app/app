@@ -1,0 +1,152 @@
+{
+  "empty": {
+    "error": {
+      "message": "Fout bij het laden",
+      "button": "Probeer opnieuw"
+    },
+    "success": {
+      "message": "Tijdlijn is leeg"
+    }
+  },
+  "end": {
+    "message": "Het einde, wat dacht je van een kopje <0 />"
+  },
+  "lookback": {
+    "message": "Laatst gelezen om"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Nieuwere vanaf hier",
+    "refetch": "Naar nieuwste"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Vastgezet",
+      "favourite": "{{name}} markeerde jouw bericht als favoriet",
+      "status": "{{name}} heeft zojuist een bericht geplaatst",
+      "follow": "{{name}} volgt jou nu",
+      "follow_request": "{{name}} heeft verzocht je te volgen",
+      "poll": "Een poll waaraan jij hebt meegedaan is beëindigd",
+      "reblog": {
+        "default": "{{name}} boostte",
+        "notification": "{{name}} boostte jouw toot"
+      },
+      "update": "De reblog is bewerkt"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Reageer op deze toot"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Boost deze toot",
+        "function": "Boost toot",
+        "options": {
+          "title": "Kies zichtbaarheid boost",
+          "public": "Openbare boost",
+          "unlisted": "Niet openbare boost"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Toot toevoegen aan favorieten",
+        "function": "Favoriete toot"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Toot toevoegen aan bladwijzers",
+        "function": "Voeg deze toot toe aan bladwijzers"
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} gebruikers hebben deze toot geboost",
+        "accessibilityHint": "Tik om gebruikers te kennen",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} gebruikers hebben deze toot geboost",
+        "accessibilityHint": "Tik om gebruikers te kennen",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Deze toot is {{count}} keer bewerkt",
+        "accessibilityHint": "Tik om de volledige bewerkingsgeschiedenis te bekijken",
+        "text_one": "{{count}} bewerken",
+        "text_other": "{{count}} bewerkingen"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Gevoelige media tonen"
+      },
+      "unsupported": {
+        "text": "Fout bij het laden",
+        "button": "Probeer externe link"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Avatar van {{name}}",
+      "accessibilityHint": "Tik om naar de pagina van {{name}} te gaan"
+    },
+    "content": {
+      "expandHint": "Verborgen inhoud"
+    },
+    "filtered": "Gefilterd: {{phrase}}.",
+    "fullConversation": "Gesprekken lezen",
+    "translate": {
+      "default": "Vertaal",
+      "succeed": "Vertaald door {{provider}} van {{source}}",
+      "failed": "Vertaling mislukt",
+      "source_not_supported": "Deze taal wordt niet ondersteund",
+      "target_not_supported": "Deze taal wordt niet ondersteund"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Weergavenaam gebruiker"
+          },
+          "account": {
+            "accessibilityHint": "Gebruikersaccount"
+          }
+        },
+        "application": "Via {{application}}",
+        "edited": {
+          "accessibilityLabel": "Toot bewerkt"
+        },
+        "muted": {
+          "accessibilityLabel": "Toot gedempt"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Toot is een direct bericht"
+          },
+          "private": {
+            "accessibilityLabel": "Toot is alleen zichtbaar voor volgers"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "Met",
+        "delete": {
+          "function": "Verwijder direct bericht"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Stem",
+          "refresh": "Vernieuw"
+        },
+        "count": {
+          "voters_one": "{{count}} gebruiker heeft gestemd",
+          "voters_other": "{{count}} gebruikers hebben gestemd",
+          "votes_one": "{{count}} stem",
+          "votes_other": "{{count}} stemmen"
+        },
+        "expiration": {
+          "expired": "Stemmen verlopen",
+          "until": "Verloopt <0 />"
+        }
+      }
+    }
+  }
+}

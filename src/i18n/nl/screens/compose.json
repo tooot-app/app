@@ -1,0 +1,175 @@
+{
+  "heading": {
+    "left": {
+      "button": "Annuleer",
+      "alert": {
+        "title": "Bewerken annuleren?",
+        "buttons": {
+          "save": "Concept opslaan",
+          "delete": "Concept verwijderen",
+          "cancel": "Annuleer"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Toot",
+        "conversation": "Toot DM",
+        "reply": "Toot reactie",
+        "deleteEdit": "Toot",
+        "edit": "Toot",
+        "share": "Toot"
+      },
+      "alert": {
+        "default": {
+          "title": "Tooten mislukt",
+          "button": "Probeer het opnieuw"
+        },
+        "removeReply": {
+          "title": "Antwoord toot kon niet worden gevonden",
+          "description": "Het antwoord is mogelijk verwijderd. Wil je het van je referentie verwijderen?",
+          "confirm": "Verwijder de referentie"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Tooten als @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Spoiler waarschuwingsbericht"
+        },
+        "textInput": {
+          "placeholder": "Wat wil je kwijt",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Maximum aantal bijlagen bereikt",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Bijlagen als gevoelig markeren",
+          "remove": {
+            "accessibilityLabel": "Geüploade bijlage, nummer {{attachment}} verwijderen"
+          },
+          "edit": {
+            "accessibilityLabel": "Geüploade bijlage, nummer {{attachment}} bewerken"
+          },
+          "upload": {
+            "accessibilityLabel": "Upload meer bijlagen"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Tik om emoji toe te voegen"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Poll optie {{index}}",
+              "single": "Enkele keuze",
+              "multiple": "Meerkeuze"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Verminder de poll opties tot {{amount}}",
+              "accessibilityHint": "Minimale hoeveelheid poll opties bereikt, momenteel zijn dat er {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Verhoog poll opties naar {{amount}}",
+              "accessibilityHint": "Maximum aantal poll opties bereikt, momenteel is {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Keuze soort",
+            "options": {
+              "single": "Enkele keuze",
+              "multiple": "Meerkeuze"
+            }
+          },
+          "expiration": {
+            "heading": "Geldigheid",
+            "options": {
+              "300": "5 minuten",
+              "1800": "30 minuten",
+              "3600": "1 uur",
+              "21600": "6 uur",
+              "86400": "1 dag",
+              "259200": "3 dagen",
+              "604800": "7 dagen"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Bijlage toevoegen",
+          "accessibilityHint": "Poll functie wordt uitgeschakeld wanneer er een bijlage is",
+          "failed": {
+            "alert": {
+              "title": "Uploaden mislukt",
+              "button": "Probeer het opnieuw"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Voeg poll toe",
+          "accessibilityHint": "Bijlage functie wordt uitgeschakeld wanneer poll actief is"
+        },
+        "visibility": {
+          "accessibilityLabel": "Toot zichtbaarheid is {{visibility}}",
+          "title": "Toot zichtbaarheid",
+          "options": {
+            "public": "Openbaar",
+            "unlisted": "Niet openbaar",
+            "private": "Alleen volgers",
+            "direct": "Direct bericht"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Spoiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Voeg emoji toe",
+          "accessibilityHint": "Open emoji lijst, veeg horizontaal om de pagina te wijzigen"
+        }
+      },
+      "drafts_one": "Concept ({{count}})",
+      "drafts_other": "Concepten ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Bijlage bewerken",
+        "right": {
+          "accessibilityLabel": "Sla bewerken van de bijlage op",
+          "failed": {
+            "title": "Bewerken mislukt",
+            "button": "Probeer het opnieuw"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Omschrijf deze media voor mensen met een visuele beperking",
+          "placeholder": "Je kan een beschrijving aan je media toevoegen, ook wel bekend als alt-text, zodat deze voor meer mensen toegankelijk wordt. Bijvoorbeeld voor mensen met een visuele beperking.\n\nGoede beschrijvingen zijn beknopt, maar geven nauwkeurig genoeg weer wat er in de media staat om de context ervan te begrijpen."
+        },
+        "imageFocus": "Sleep de focuscirkel om het focuspunt bij te werken"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Concept"
+      },
+      "warning": "Concepten worden alleen lokaal opgeslagen en kunnen verloren gaan. Gebruik daarom de concepten niet voor langdurige opslag.",
+      "content": {
+        "accessibilityHint": "Opgeslagen concept, tik om dit concept te bewerken",
+        "textEmpty": "Inhoud is leeg"
+      },
+      "checkAttachment": "Controleren van bijlagen op de server..."
+    }
+  }
+}

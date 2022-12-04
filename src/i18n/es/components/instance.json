@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Iniciado sesión en esta instancia",
-      "message": "Puedes iniciar sesión en otra cuenta, manteniendo conectadas las cuentas actuales",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Continuar"
-      }
+      "message": "Puedes iniciar sesión en otra cuenta, manteniendo conectadas las cuentas actuales"
     }
   }
 }

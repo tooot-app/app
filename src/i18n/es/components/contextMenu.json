@@ -2,6 +2,11 @@
   "accessibilityHint": "Acciones para este toot, como su usuario o el toot en sí mismo",
   "account": {
     "title": "Acciones de usuario",
+    "following": {
+      "action_false": "Seguir usuario",
+      "action_true": "Dejar de seguir usuario"
+    },
+    "inLists": "Administrar usuario de listas",
     "mute": {
       "action_false": "Silenciar usuario",
       "action_true": "Dejar de silenciar al usuario"
@@ -11,7 +16,7 @@
       "action_true": "Desbloquear usuario"
     },
     "reports": {
-      "action": "Reportar y bloquear"
+      "action": "Reportar y bloquear usuario"
     }
   },
   "copy": {

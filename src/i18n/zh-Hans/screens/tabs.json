@@ -46,11 +46,20 @@
       "language": {
         "name": "应用语言"
       },
-      "lists": {
-        "name": "列表"
-      },
       "list": {
         "name": "列表：{{list}}"
+      },
+      "listAccounts": {
+        "name": "列表中的用户：{{list}}"
+      },
+      "listAdd": {
+        "name": "添加列表"
+      },
+      "listEdit": {
+        "name": "编辑列表详情"
+      },
+      "lists": {
+        "name": "列表"
       },
       "push": {
         "name": "推送通知"
@@ -87,15 +96,31 @@
         "XXL": "超大号"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "更改尚未保存",
-        "message": "您的更改尚未保存。是否放弃保存更改？",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "不保存"
+    "listAccounts": {
+      "heading": "管理用户",
+      "error": "从列表中移除用户",
+      "empty": "此列表中没有添加用户"
+    },
+    "listEdit": {
+      "heading": "编辑列表详情",
+      "title": "名称",
+      "repliesPolicy": {
+        "heading": "显示回复给：",
+        "options": {
+          "none": "无",
+          "list": "列表成员",
+          "followed": "任何被关注的用户"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "删除列表",
+      "confirm": {
+        "title": "删除列表“{{list}}”？",
+        "message": "此操作不可恢复。"
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}}已更新",
         "failed": "{{type}}更新失败，请重试"
@@ -125,8 +150,7 @@
           "options": {
             "public": "公开",
             "unlisted": "不公开",
-            "private": "仅关注者",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "仅关注者"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "确认退出登录？",
           "message": "退出登录后，需要重新认证账号",
           "buttons": {
-            "logout": "退出登录",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "退出登录"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "应用外观",
         "options": {
           "auto": "跟随系统",
           "light": "浅色模式",
-          "dark": "深色模式",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "深色模式"
         }
       },
       "darkTheme": {
         "heading": "深色主题",
         "options": {
           "lighter": "暗淡",
-          "darker": "暗黑",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "暗黑"
         }
       },
       "browser": {
         "heading": "外部链接",
         "options": {
           "internal": "应用内打开",
-          "external": "浏览器打开",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "浏览器打开"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "联系 tooot"
-      },
-      "analytics": {
-        "heading": "帮助我们改进",
-        "description": "收集不与用户相关联的使用信息"
       },
       "version": "版本 v{{version}}",
       "instanceVersion": "长毛象版本 v{{version}}"
@@ -307,6 +320,11 @@
       },
       "suspended": "此账户已被服务器管理员停用"
     },
+    "accountInLists": {
+      "name": "@{{username}}所在列表",
+      "inLists": "在列表中",
+      "notInLists": "其它列表"
+    },
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
     },
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix)指定$t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix)指定$t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": "热门标签"
         }
       },
       "sections": {

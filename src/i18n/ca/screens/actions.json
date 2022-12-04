@@ -1,0 +1,20 @@
+{
+  "content": {
+    "altText": {
+      "heading": "Text alternatiu"
+    },
+    "notificationsFilter": {
+      "heading": "Mostra els tipus de notificació",
+      "content": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Sol·licitud de seguiment",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Publicació d'usuaris subscrits",
+        "update": "L'impuls ha sigut editat"
+      }
+    }
+  }
+}

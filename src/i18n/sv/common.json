@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "OK",
     "apply": "Verkställ",
-    "cancel": "Avbryt"
+    "cancel": "Avbryt",
+    "discard": "Kasta bort",
+    "continue": "Fortsätt",
+    "delete": "Radera",
+    "done": "Klar"
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} misslyckades, försök igen"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "Ändringen har inte sparats",
+    "message": "Din ändring har inte sparats. Vill du strunta i att spara ändringarna?"
+  }
 }

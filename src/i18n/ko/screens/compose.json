@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "답장한 툿을 찾을 수 없어요",
           "description": "답장한 툿이 삭제되었을 수 있어요. 참조에서 제거할까요?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "참조 제거"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "선택 유형",
             "options": {
               "single": "단일 선택",
-              "multiple": "다중 선택",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "다중 선택"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6시간",
               "86400": "1일",
               "259200": "3일",
-              "604800": "7일",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7일"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "공개",
             "unlisted": "공개 타임라인에 비표시",
             "private": "팔로워만",
-            "direct": "개인 메시지",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "개인 메시지"
           }
         },
         "spoiler": {

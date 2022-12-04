@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "はい",
     "apply": "適用",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "discard": "変更を破棄",
+    "continue": "続ける",
+    "delete": "削除",
+    "done": "完了"
   },
   "customEmoji": {
     "accessibilityLabel": "カスタム絵文字 {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} 接続に失敗しました。再試行してください。"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "変更は保存されていません",
+    "message": "変更は保存されていません。変更を破棄しますか?"
+  }
 }
