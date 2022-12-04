@@ -74,8 +74,7 @@ const pushRegister = async (
   })
 
   if (!res.body.server_key?.length) {
-    Sentry.setExtras({
-      API: 'tooot',
+    Sentry.setContext('Push server key', {
       instance: instanceUri,
       resBody: res.body
     })

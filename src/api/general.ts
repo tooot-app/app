@@ -1,6 +1,5 @@
 import axios from 'axios'
-import handleError, { ctx } from './handleError'
-import { userAgent } from './helpers'
+import { ctx, handleError, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
