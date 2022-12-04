@@ -46,11 +46,20 @@
       "language": {
         "name": "Språk"
       },
-      "lists": {
-        "name": "Listor"
-      },
       "list": {
         "name": "Lista: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Användare i listan: {{list}}"
+      },
+      "listAdd": {
+        "name": "Lägg till en lista"
+      },
+      "listEdit": {
+        "name": "Redigera listans detaljer"
+      },
+      "lists": {
+        "name": "Listor"
       },
       "push": {
         "name": "Pushnotiser"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Ändringen har inte sparats",
-        "message": "Din ändring har inte sparats. Vill du strunta i att spara ändringarna?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Kasta bort"
+    "listAccounts": {
+      "heading": "Hantera användare",
+      "error": "Ta bort användare från lista",
+      "empty": "Ingen användare tillagd i denna lista"
+    },
+    "listEdit": {
+      "heading": "Redigera listans detaljer",
+      "title": "Titel",
+      "repliesPolicy": {
+        "heading": "Visa svar:",
+        "options": {
+          "none": "Ingen",
+          "list": "Medlemmar i listan",
+          "followed": "Alla följda användare"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "Radera lista",
+      "confirm": {
+        "title": "Radera listan \"{{list}}\"?",
+        "message": "Denna åtgärd kan inte ångras."
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} uppdaterades",
         "failed": "{{type}}-uppdateringen misslyckades, vänligen försök igen"
@@ -125,8 +150,7 @@
           "options": {
             "public": "Offentlig",
             "unlisted": "Olistad",
-            "private": "Endast följare",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Endast följare"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "Logga ut?",
           "message": "Efter att du loggat ut måste du logga in igen",
           "buttons": {
-            "logout": "Logga ut",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Logga ut"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Utseende",
         "options": {
           "auto": "Som systemet",
           "light": "Ljust läge",
-          "dark": "Mörkt läge",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Mörkt läge"
         }
       },
       "darkTheme": {
         "heading": "Mörkt tema",
         "options": {
           "lighter": "Ljusare",
-          "darker": "Mörkare",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Mörkare"
         }
       },
       "browser": {
         "heading": "Öppna länk",
         "options": {
           "internal": "Inuti appen",
-          "external": "Använd systemets webbläsare",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Använd systemets webbläsare"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "Kontakta tooot"
-      },
-      "analytics": {
-        "heading": "Hjälp oss att bli bättre",
-        "description": "Samlar endast in användningsdata som inte är kopplad till användaren"
       },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon version v{{version}}"
@@ -307,6 +320,11 @@
       },
       "suspended": "Kontot är avstängt av moderatorerna på din server"
     },
+    "accountInLists": {
+      "name": "@{{username}}s listor",
+      "inLists": "I listor",
+      "notInLists": "Andra listor"
+    },
     "attachments": {
       "name": "<0 /><1>s media</1>"
     },
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {

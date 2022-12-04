@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "이 인스턴스에 로그인했어요",
-      "message": "기존에 로그인한 계정을 유지한 채로, 새 계정에 로그인할 수 있어요",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "계속"
-      }
+      "message": "기존에 로그인한 계정을 유지한 채로, 새 계정에 로그인할 수 있어요"
     }
   }
 }

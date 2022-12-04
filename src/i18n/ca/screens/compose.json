@@ -1,0 +1,175 @@
+{
+  "heading": {
+    "left": {
+      "button": "Cancel·la",
+      "alert": {
+        "title": "Voleu cancel·lar l'edició?",
+        "buttons": {
+          "save": "Desa l'esborrany",
+          "delete": "Esborra l'esborrany",
+          "cancel": "Cancel·la"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Publicació",
+        "conversation": "Envia un missatge directe",
+        "reply": "Resposta de la publicació",
+        "deleteEdit": "Publicació",
+        "edit": "Publicació",
+        "share": "Publicació"
+      },
+      "alert": {
+        "default": {
+          "title": "Error en publicar",
+          "button": "Torna a provar"
+        },
+        "removeReply": {
+          "title": "No s'ha pogut trobar la publicació resposta",
+          "description": "La publicació resposta és possible que hagi sigut esborrada. Vols eliminar-ho de la teva referència?",
+          "confirm": "Elimina la referència"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Publicant la publicació com a @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Missatge d'alerta d'espòiler"
+        },
+        "textInput": {
+          "placeholder": "Què et passa pel cap?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "S'ha arribat al nombre màxim d'adjunts",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Marca els adjunts com a contingut sensible",
+          "remove": {
+            "accessibilityLabel": "Esborra l'adjunt afegit, número {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Edita l'adjunt afegit, número {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Afegeix més adjunts"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Toca per a afegir emojis a la publicació"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Resposta {{index}}",
+              "single": "Resposta única",
+              "multiple": "Resposta múltiple"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Rebaixa el nombre de respostes a {{amount}}",
+              "accessibilityHint": "S'ha arribat al nombre mínim de respostes, ara mateix n'hi ha {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Augmentar el nombre de respostes a {{amount}}",
+              "accessibilityHint": "S'ha arribat al nombre màxim de respostes, ara mateix n'hi ha {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Tipus d'enquesta",
+            "options": {
+              "single": "Elecció única",
+              "multiple": "Elecció múltiple"
+            }
+          },
+          "expiration": {
+            "heading": "Caducitat",
+            "options": {
+              "300": "5 minuts",
+              "1800": "30 minuts",
+              "3600": "1 hora",
+              "21600": "6 hores",
+              "86400": "1 dia",
+              "259200": "3 dies",
+              "604800": "7 dies"
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "Puja fitxer",
+          "accessibilityHint": "La funció d'enquesta serà desactivada si hi ha algun fitxer adjunt",
+          "failed": {
+            "alert": {
+              "title": "Ha fallat la pujada",
+              "button": "Torna-ho a provar"
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "Afegeix una enquesta",
+          "accessibilityHint": "La funció d'adjuntar fitxers serà desactivada si hi ha una enquesta"
+        },
+        "visibility": {
+          "accessibilityLabel": "La visibilitat de la publicació és {{visibility}}",
+          "title": "Visibilitat de la publicació",
+          "options": {
+            "public": "Públic",
+            "unlisted": "Sense llistar",
+            "private": "Només seguidors",
+            "direct": "Missatge directe"
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": "Espòiler"
+        },
+        "emoji": {
+          "accessibilityLabel": "Afegeix un emoji",
+          "accessibilityHint": "Obre el panell d'emojis, llisca horitzontalment per canviar de pàgina"
+        }
+      },
+      "drafts_one": "Esborrany ({{count}})",
+      "drafts_other": "Esborranys ({{count}})"
+    },
+    "editAttachment": {
+      "header": {
+        "title": "Edita el fitxer adjunt",
+        "right": {
+          "accessibilityLabel": "Desa canvis",
+          "failed": {
+            "title": "Error a l'editar",
+            "button": "Torna-ho a provar"
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "Descriu el contingut per a persones amb discapacitat visual",
+          "placeholder": "Pots afegir una descripció, també conegut com a text alternatiu, als teus fitxers perquè siguin accessibles a més persones, també aquelles amb discapacitat visual.\n\nLes bones descripcions han de ser concises, però que s'expressin tot el que surt als fitxers amb exactitud per poder entendre el seu context."
+        },
+        "imageFocus": "Arrossega el cercle per a canviar el seu punt d'atenció"
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": "Esborrany"
+      },
+      "warning": "Els esborranys només estan desats en aquest dispositiu i es poden perdre. No es recomana desar-los durant molt de temps.",
+      "content": {
+        "accessibilityHint": "S'ha desat l'esborrany, prem per a editar",
+        "textEmpty": "Sense contingut"
+      },
+      "checkAttachment": "Comprovant els fitxers adjunts al servidor..."
+    }
+  }
+}

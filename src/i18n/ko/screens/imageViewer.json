@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "이미지 저장",
-      "share": "이미지 공유",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "이미지 공유"
     },
     "save": {
       "succeed": "이미지 저장됨",

@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "此社区已登录",
-      "message": "你可以登录同个社区的另一个账号，不影响已登录的账号",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "继续"
-      }
+      "message": "你可以登录同个社区的另一个账号，不影响已登录的账号"
     }
   }
 }

@@ -28,7 +28,6 @@
         "removeReply": {
           "title": "Tút trả lời sẽ không tìm thấy",
           "description": "Đã xóa tút trả lời. Bạn có muốn xóa nguồn luôn không?",
-          "cancel": "$t(common:buttons.cancel)",
           "confirm": "Xóa nguồn"
         }
       }
@@ -89,8 +88,7 @@
             "heading": "Kiểu bình chọn",
             "options": {
               "single": "Một lựa chọn",
-              "multiple": "Nhiều lựa chọn",
-              "cancel": "$t(common:buttons.cancel)"
+              "multiple": "Nhiều lựa chọn"
             }
           },
           "expiration": {
@@ -102,8 +100,7 @@
               "21600": "6 giờ",
               "86400": "1 ngày",
               "259200": "3 ngày",
-              "604800": "7 ngày",
-              "cancel": "$t(common:buttons.cancel)"
+              "604800": "7 ngày"
             }
           }
         }
@@ -130,8 +127,7 @@
             "public": "Công khai",
             "unlisted": "Hạn chế",
             "private": "Riêng tư",
-            "direct": "Nhắn riêng",
-            "cancel": "$t(common:buttons.cancel)"
+            "direct": "Nhắn riêng"
           }
         },
         "spoiler": {

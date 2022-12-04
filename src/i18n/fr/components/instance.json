@@ -20,11 +20,7 @@
   "update": {
     "alert": {
       "title": "Connecté à cette instance",
-      "message": "Vous pouvez vous connecter à un autre compte, en maintenant un compte connecté existant",
-      "buttons": {
-        "cancel": "$t(common:buttons.cancel)",
-        "continue": "Continuer"
-      }
+      "message": "Vous pouvez vous connecter à un autre compte, en maintenant un compte connecté existant"
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "title": "Selecciona origen multimèdia",
+  "message": "Les dades multimèdia EXIF no s'han penjat",
+  "options": {
+    "image": "Penja fotos",
+    "image_max": "Penja fotos (màx. {{max}})",
+    "video": "Penja vídeo",
+    "video_max": "Penja vídeo (màx. {{max}})"
+  }
+}

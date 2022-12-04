@@ -2,7 +2,11 @@
   "buttons": {
     "OK": "OK",
     "apply": "Aplicar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "discard": "Descartar",
+    "continue": "Continuar",
+    "delete": "Borrar",
+    "done": "Hecho"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizado {{emoji}}"
@@ -18,5 +22,9 @@
       "message": "{{function}} falló, vuelva a intentarlo"
     }
   },
-  "separator": ", "
+  "separator": ", ",
+  "discard": {
+    "title": "Cambios no guardados",
+    "message": "Los cambios no se han guardado. ¿Quieres descartarlos?"
+  }
 }

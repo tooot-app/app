@@ -46,11 +46,20 @@
       "language": {
         "name": "語言"
       },
-      "lists": {
-        "name": "列表"
-      },
       "list": {
         "name": "列表：{{list}}"
+      },
+      "listAccounts": {
+        "name": "使用者在 {{list}} 列表中"
+      },
+      "listAdd": {
+        "name": "新增列表"
+      },
+      "listEdit": {
+        "name": "編輯列表詳細資料"
+      },
+      "lists": {
+        "name": "列表"
       },
       "push": {
         "name": "推播通知"
@@ -87,15 +96,31 @@
         "XXL": "超大"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "變更尚未儲存",
-        "message": "您的變更尚未儲存。是否放棄儲存變更？",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "不儲存"
+    "listAccounts": {
+      "heading": "管理使用者",
+      "error": "從列表中刪除使用者",
+      "empty": "此列表中沒有任何使用者"
+    },
+    "listEdit": {
+      "heading": "編輯列表詳細資料",
+      "title": "標題",
+      "repliesPolicy": {
+        "heading": "顯示回覆：",
+        "options": {
+          "none": "沒有人",
+          "list": "列表中的成員",
+          "followed": "任何跟隨的使用者"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "刪除列表",
+      "confirm": {
+        "title": "要刪除 \"{{list}}\" 列表嗎？",
+        "message": "此操作無法還原。"
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} 已更新",
         "failed": "{{type}} 更新失敗，請重試。"
@@ -125,8 +150,7 @@
           "options": {
             "public": "公開",
             "unlisted": "不公開",
-            "private": "僅限跟隨者",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "僅限跟隨者"
           }
         },
         "sensitive": {
@@ -211,8 +235,7 @@
           "title": "確定要登出？",
           "message": "登出後，需要重新驗證帳號",
           "buttons": {
-            "logout": "登出",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "登出"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "外觀",
         "options": {
           "auto": "跟隨系統",
           "light": "淺色模式",
-          "dark": "深色模式",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "深色模式"
         }
       },
       "darkTheme": {
         "heading": "深色主題",
         "options": {
           "lighter": "暗淡",
-          "darker": "暗黑",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "暗黑"
         }
       },
       "browser": {
         "heading": "開啟連結",
         "options": {
           "internal": "從應用程式內開啟",
-          "external": "使用系統瀏覽器開啟",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "使用系統瀏覽器開啟"
         }
       },
       "staticEmoji": {
@@ -274,10 +291,6 @@
       },
       "contact": {
         "heading": "聯繫 tooot"
-      },
-      "analytics": {
-        "heading": "幫助我們改善",
-        "description": "僅收集不與使用者相關聯的資料"
       },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon version v{{version}}"
@@ -307,12 +320,17 @@
       },
       "suspended": "此帳號已被伺服器管理員停用"
     },
+    "accountInLists": {
+      "name": "@{{username}} 的列表",
+      "inLists": "在列表中",
+      "notInLists": "其它列表"
+    },
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
     },
     "hashtag": {
-      "follow": "跟隨",
-      "unfollow": "取消跟隨"
+      "follow": "追蹤",
+      "unfollow": "取消追蹤"
     },
     "history": {
       "name": "編輯歷史"
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {

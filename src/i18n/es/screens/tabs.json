@@ -46,14 +46,23 @@
       "language": {
         "name": "Idioma"
       },
-      "lists": {
-        "name": "Listas"
-      },
       "list": {
         "name": "Lista: {{list}}"
       },
+      "listAccounts": {
+        "name": "Usuarios en la lista: {{list}}"
+      },
+      "listAdd": {
+        "name": "Añadir una lista"
+      },
+      "listEdit": {
+        "name": "Editar detalles de lista"
+      },
+      "lists": {
+        "name": "Listas"
+      },
       "push": {
-        "name": "Notificación push"
+        "name": "Notificaciones push"
       },
       "profile": {
         "name": "Editar perfil"
@@ -87,15 +96,31 @@
         "XXL": "XXL"
       }
     },
-    "profile": {
-      "cancellation": {
-        "title": "Cambios no guardados",
-        "message": "Los cambios no se han guardado. ¿Quieres descartarlos?",
-        "buttons": {
-          "cancel": "$t(common:buttons.cancel)",
-          "discard": "Descartar"
+    "listAccounts": {
+      "heading": "Administrar usuarios",
+      "error": "Eliminar usuario de la lista",
+      "empty": "No hay usuarios en esta lista"
+    },
+    "listEdit": {
+      "heading": "Editar detalles de lista",
+      "title": "Título",
+      "repliesPolicy": {
+        "heading": "Mostrar respuestas a:",
+        "options": {
+          "none": "Nadie",
+          "list": "Miembros de la lista",
+          "followed": "Cualquier usuario seguido"
         }
-      },
+      }
+    },
+    "listDelete": {
+      "heading": "Borrar lista",
+      "confirm": {
+        "title": "¿Eliminar lista \"{{list}}\"?",
+        "message": "Esta acción no se podrá deshacer."
+      }
+    },
+    "profile": {
       "feedback": {
         "succeed": "{{type}} actualizado",
         "failed": "Error al actualizar {{type}}, inténtalo de nuevo"
@@ -125,15 +150,14 @@
           "options": {
             "public": "Público",
             "unlisted": "No listado",
-            "private": "Solo seguidores",
-            "cancel": "$t(common:buttons.cancel)"
+            "private": "Solo seguidores"
           }
         },
         "sensitive": {
           "title": "Publicar contenido multimedia sensible"
         },
         "lock": {
-          "title": "Bloquear cuenta",
+          "title": "Hacer la cuenta privada",
           "description": "Necesitas aprobar manualmente los seguidores nuevos"
         },
         "bot": {
@@ -211,8 +235,7 @@
           "title": "¿Cerrar sesión?",
           "message": "Después de cerrar sesión, necesitas iniciar sesión de nuevo",
           "buttons": {
-            "logout": "Cerrar sesión",
-            "cancel": "$t(common:buttons.cancel)"
+            "logout": "Cerrar sesión"
           }
         }
       }
@@ -229,34 +252,28 @@
         }
       },
       "language": {
-        "heading": "$t(me.stacks.language.name)",
-        "options": {
-          "cancel": "$t(common:buttons.cancel)"
-        }
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
         "heading": "Apariencia",
         "options": {
           "auto": "Como el sistema",
           "light": "Modo claro",
-          "dark": "Modo oscuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "dark": "Modo oscuro"
         }
       },
       "darkTheme": {
         "heading": "Tema oscuro",
         "options": {
           "lighter": "Más claro",
-          "darker": "Más oscuro",
-          "cancel": "$t(common:buttons.cancel)"
+          "darker": "Más oscuro"
         }
       },
       "browser": {
         "heading": "Abrir enlaces",
         "options": {
           "internal": "Dentro de la aplicación",
-          "external": "Usar navegador",
-          "cancel": "$t(common:buttons.cancel)"
+          "external": "Usar navegador"
         }
       },
       "staticEmoji": {
@@ -275,10 +292,6 @@
       "contact": {
         "heading": "Contactar tooot"
       },
-      "analytics": {
-        "heading": "Ayúdanos a mejorar",
-        "description": "Recopilar uso no relativo al usuario"
-      },
       "version": "Versión v{{version}}",
       "instanceVersion": "Versión de Mastodon v{{version}}"
     },
@@ -294,8 +307,8 @@
         "accessibilityHint": "Puedes silenciar, bloquear, reportar o compartir este usuario"
       },
       "followed_by": " te sigue",
-      "moved": "Se ha transladado",
-      "created_at": "Se unió en {{date}}",
+      "moved": "Se ha trasladado",
+      "created_at": "Se unió el {{date}}",
       "summary": {
         "statuses_count": "{{count}} toots",
         "following_count": "$t(shared.users.accounts.following)",
@@ -307,8 +320,13 @@
       },
       "suspended": "Cuenta suspendida por los moderadores de tu servidor"
     },
+    "accountInLists": {
+      "name": "Listas de @{{username}}",
+      "inLists": "En listas",
+      "notInLists": "Otras listas"
+    },
     "attachments": {
-      "name": ""
+      "name": "Multimedia de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Seguir",
@@ -332,6 +350,9 @@
             "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
             "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
+        },
+        "trending": {
+          "tags": ""
         }
       },
       "sections": {

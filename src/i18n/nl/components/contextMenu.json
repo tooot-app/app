@@ -1,0 +1,81 @@
+{
+  "accessibilityHint": "Acties voor deze toot, zoals de geplaatste gebruiker, toot zichzelf",
+  "account": {
+    "title": "Gebruikersacties",
+    "following": {
+      "action_false": "Volg gebruiker",
+      "action_true": "Ontvolg"
+    },
+    "inLists": "Gebruiker van lijsten beheren",
+    "mute": {
+      "action_false": "Gebruiker dempen",
+      "action_true": "Dempen opheffen voor gebruiker"
+    },
+    "block": {
+      "action_false": "Gebruiker blokkeren",
+      "action_true": "Gebruiker deblokkeren"
+    },
+    "reports": {
+      "action": "Rapporteren en blokkeren"
+    }
+  },
+  "copy": {
+    "action": "Toot kopiëren",
+    "succeed": "Gekopieerd"
+  },
+  "instance": {
+    "title": "Instantie actie",
+    "block": {
+      "action": "Blokkeer instantie {{instance}}",
+      "alert": {
+        "title": "Bevestig blokkeren van {{instance}} ?",
+        "message": "Meestal kunt u bepaalde gebruiker dempen of blokkeren.\n\nNa het blokkeren van de instantie, wordt alle inhoud inclusief volgers van deze instantie verwijderd!",
+        "buttons": {
+          "confirm": "Bevestig"
+        }
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": "Toot delen"
+    },
+    "account": {
+      "action": "Gebruiker delen"
+    }
+  },
+  "status": {
+    "title": "Toot acties",
+    "edit": {
+      "action": "Toot bewerken"
+    },
+    "delete": {
+      "action": "Toot verwijderen",
+      "alert": {
+        "title": "Verwijderen bevestigen?",
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
+        "buttons": {
+          "confirm": "Bevestig"
+        }
+      }
+    },
+    "deleteEdit": {
+      "action": "Toot verwijderen en opnieuw plaatsen",
+      "alert": {
+        "title": "Bevestig verwijderen en opnieuw plaatsen?",
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
+        "buttons": {
+          "confirm": "Bevestig"
+        }
+      }
+    },
+    "mute": {
+      "action_false": "Mute toot en reacties",
+      "action_true": "Unmute toot en reacties"
+    },
+    "pin": {
+      "action_false": "Toot vastzetten",
+      "action_true": "Toot losmaken"
+    }
+  }
+}

@@ -6,8 +6,7 @@
     },
     "options": {
       "save": "Salvar imagem",
-      "share": "Compartilhar Imagem",
-      "cancel": "$t(common:buttons.cancel)"
+      "share": "Compartilhar Imagem"
     },
     "save": {
       "succeed": "Imagem salva",
