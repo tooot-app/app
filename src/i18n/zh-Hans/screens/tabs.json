@@ -50,13 +50,13 @@
         "name": "列表：{{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "列表中的用户：{{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "添加列表"
       },
       "listEdit": {
-        "name": ""
+        "name": "编辑列表详情"
       },
       "lists": {
         "name": "列表"
@@ -97,27 +97,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "管理用户",
+      "error": "从列表中移除用户",
+      "empty": "此列表中没有添加用户"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "编辑列表详情",
+      "title": "名称",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "显示回复给：",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "无",
+          "list": "列表成员",
+          "followed": "任何被关注的用户"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "删除列表",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "删除列表“{{list}}”？",
+        "message": "此操作不可恢复。"
       }
     },
     "profile": {
@@ -321,9 +321,9 @@
       "suspended": "此账户已被服务器管理员停用"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "@{{username}}所在列表",
+      "inLists": "在列表中",
+      "notInLists": "其它列表"
     },
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
@@ -352,7 +352,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "热门标签"
         }
       },
       "sections": {
