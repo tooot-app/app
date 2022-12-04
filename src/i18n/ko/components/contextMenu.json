@@ -19,6 +19,10 @@
       "action": "사용자 신고 및 차단"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "툿 복사",
     "succeed": "복사됨"
