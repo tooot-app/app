@@ -259,7 +259,9 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         type='text'
         content={
           params?.type
-            ? t(`heading.right.button.${params.type}`)
+            ? params.type === 'conversation' && params.visibility === 'direct'
+              ? t(`heading.right.button.${params.type}`)
+              : t('heading.right.button.default')
             : t('heading.right.button.default')
         }
         onPress={() => {

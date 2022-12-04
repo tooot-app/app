@@ -92,7 +92,7 @@ const composeParseState = (
         ...composeInitialState,
         dirty: true,
         timestamp: Date.now(),
-        ...assignVisibility('direct')
+        ...assignVisibility(params.visibility || 'direct')
       }
   }
 }
