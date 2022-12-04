@@ -19,6 +19,10 @@
       "action": "Denuncia i bloqueja l'usuari"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "Copia la publicació",
     "succeed": "Copiat"

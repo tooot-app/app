@@ -19,6 +19,10 @@
       "action": "Rapporteren en blokkeren"
     }
   },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
   "copy": {
     "action": "Toot kopiëren",
     "succeed": "Gekopieerd"
