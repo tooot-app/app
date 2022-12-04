@@ -27,7 +27,9 @@ const useAccountQuery = ({
 
 export type QueryKeyAccountInLists = ['AccountInLists', { id: Mastodon.Account['id'] }]
 
-const accountInListsQueryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyAccount>) => {
+const accountInListsQueryFunction = ({
+  queryKey
+}: QueryFunctionContext<QueryKeyAccountInLists>) => {
   const { id } = queryKey[1]
 
   return apiInstance<Mastodon.List[]>({
@@ -42,7 +44,7 @@ const useAccountInListsQuery = ({
 }: QueryKeyAccount[1] & {
   options?: UseQueryOptions<Mastodon.List[], AxiosError>
 }) => {
-  const queryKey: QueryKeyAccount = ['Account', { ...queryKeyParams }]
+  const queryKey: QueryKeyAccountInLists = ['AccountInLists', { ...queryKeyParams }]
   return useQuery(queryKey, accountInListsQueryFunction, options)
 }
 
