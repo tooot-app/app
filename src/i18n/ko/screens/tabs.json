@@ -50,13 +50,13 @@
         "name": "목록: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "리스트 {{list}}의 유저"
       },
       "listAdd": {
-        "name": ""
+        "name": "리스트에 추가"
       },
       "listEdit": {
-        "name": ""
+        "name": "리스트 상세 편집"
       },
       "lists": {
         "name": "목록"
