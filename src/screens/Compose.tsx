@@ -1,3 +1,4 @@
+import { handleError } from '@api/helpers'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -6,7 +7,6 @@ import haptics from '@root/components/haptics'
 import { useAppDispatch } from '@root/store'
 import ComposeRoot from '@screens/Compose/Root'
 import formatText from '@screens/Compose/utils/formatText'
-import * as Sentry from '@sentry/react-native'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
@@ -319,9 +319,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.setContext('Error object', { error })
-                Sentry.captureMessage('Posting error')
                 haptics('Error')
+                handleError({ message: 'Posting error', captureResponse: true })
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [
                   {

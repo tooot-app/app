@@ -1,4 +1,5 @@
 import apiGeneral from '@api/general'
+import { handleError } from '@api/helpers'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
@@ -33,11 +34,8 @@ const pushUseConnect = () => {
     })
       .then(() => Notifications.setBadgeCountAsync(0))
       .catch(error => {
-        Sentry.setContext('Error response', {
-          ...(error?.response && { response: error.response?._response })
-        })
-        Sentry.setContext('Error object', { error })
-        Sentry.captureMessage('Push connect error')
+        handleError({ message: 'Push connect error', captureResponse: true })
+
         Notifications.setBadgeCountAsync(0)
         if (error?.status == 404) {
           displayMessage({
