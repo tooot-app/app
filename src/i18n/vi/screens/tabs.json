@@ -321,9 +321,9 @@
       "suspended": "Người này đã bị vô hiệu hóa"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Danh sách của @{{username}}",
+      "inLists": "Trong danh sách",
+      "notInLists": "Danh sách khác"
     },
     "attachments": {
       "name": "<0 /><1>'s media</1>"
@@ -352,7 +352,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Hashtag xu hướng"
         }
       },
       "sections": {
