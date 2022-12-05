@@ -1,6 +1,5 @@
 import { displayMessage } from '@components/Message'
 import Clipboard from '@react-native-clipboard/clipboard'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Platform, Share } from 'react-native'
 
@@ -22,7 +21,6 @@ const menuShare = (
 ): ContextMenu[][] => {
   if (params.type === 'status' && params.visibility === 'direct') return []
 
-  const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
   const menus: ContextMenu[][] = [[]]
@@ -56,11 +54,7 @@ const menuShare = (
       item: {
         onSelect: () => {
           Clipboard.setString(params.copiableContent?.current.content || '')
-          displayMessage({
-            theme,
-            type: 'success',
-            message: t(`copy.succeed`)
-          })
+          displayMessage({ type: 'success', message: t(`copy.succeed`) })
         },
         disabled: false,
         destructive: false,

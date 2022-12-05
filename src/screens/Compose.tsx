@@ -257,13 +257,17 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     () => (
       <HeaderRight
         type='text'
-        content={
-          params?.type
-            ? params.type === 'conversation' && params.visibility === 'direct'
-              ? t(`heading.right.button.${params.type}`)
-              : t('heading.right.button.default')
-            : t('heading.right.button.default')
-        }
+        content={t(
+          `heading.right.button.${
+            (params?.type &&
+              (params.type === 'conversation'
+                ? params.visibility === 'direct'
+                  ? params.type
+                  : 'default'
+                : params.type)) ||
+            'default'
+          }`
+        )}
         onPress={() => {
           composeDispatch({ type: 'posting', payload: true })
 

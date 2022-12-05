@@ -178,6 +178,10 @@
         "direct": "Push meldingen inschakelen",
         "settings": "Inschakelen in instellingen"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Inschakelen voor {{acct}}",
         "description": "Berichten worden doorgestuurd via tooot's server"

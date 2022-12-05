@@ -11,13 +11,10 @@ import ComposeTextInput from './Header/TextInput'
 const ComposeRootHeader: React.FC = () => {
   const { composeState } = useContext(ComposeContext)
   const instanceActive = useSelector(getInstanceActive)
-  const localInstances = useSelector(
-    getInstances,
-    (prev, next) => prev.length === next.length
-  )
+  const localInstances = useSelector(getInstances, (prev, next) => prev.length === next.length)
 
   return (
-    <>
+    <View>
       {instanceActive !== -1 && localInstances.length > 1 ? (
         <View style={styles.postingAs}>
           <ComposePostingAs />
@@ -25,7 +22,7 @@ const ComposeRootHeader: React.FC = () => {
       ) : null}
       {composeState.spoiler.active ? <ComposeSpoilerInput /> : null}
       <ComposeTextInput />
-    </>
+    </View>
   )
 }
 

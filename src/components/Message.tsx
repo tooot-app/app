@@ -1,10 +1,9 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { getColors, Theme } from '@utils/styles/themes'
 import React, { RefObject } from 'react'
 import { AccessibilityInfo } from 'react-native'
-import FlashMessage, { hideMessage, showMessage } from 'react-native-flash-message'
+import FlashMessage, { MessageType, showMessage } from 'react-native-flash-message'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import haptics from './haptics'
 
@@ -15,107 +14,80 @@ const displayMessage = ({
   message,
   description,
   onPress,
-  theme,
   type
-}:
-  | {
-      ref?: RefObject<FlashMessage>
-      duration?: 'short' | 'long'
-      autoHide?: boolean
-      message: string
-      description?: string
-      onPress?: () => void
-      theme?: undefined
-      type?: undefined
-    }
-  | {
-      ref?: RefObject<FlashMessage>
-      duration?: 'short' | 'long'
-      autoHide?: boolean
-      message: string
-      description?: string
-      onPress?: () => void
-      theme: Theme
-      type: 'success' | 'error' | 'warning'
-    }) => {
+}: {
+  ref?: RefObject<FlashMessage>
+  duration?: 'short' | 'long'
+  autoHide?: boolean
+  message: string
+  description?: string
+  onPress?: () => void
+  type?: MessageType
+}) => {
   AccessibilityInfo.announceForAccessibility(message + '.' + description)
 
-  enum iconMapping {
-    success = 'CheckCircle',
-    error = 'XCircle',
-    warning = 'AlertCircle'
-  }
-  enum colorMapping {
-    success = 'blue',
-    error = 'red',
-    warning = 'secondary'
-  }
-
-  if (type && type === 'error') {
+  if (type && type === 'danger') {
     haptics('Error')
   }
 
   if (ref) {
     ref.current?.showMessage({
-      duration: type === 'error' ? 8000 : duration === 'short' ? 3000 : 5000,
+      duration: type === 'danger' ? 8000 : duration === 'short' ? 3000 : 5000,
       autoHide,
       message,
       description,
       onPress,
-      ...(theme &&
-        type && {
-          renderFlashMessageIcon: () => {
-            return (
-              <Icon
-                name={iconMapping[type]}
-                size={StyleConstants.Font.LineHeight.M}
-                color={getColors(theme)[colorMapping[type]]}
-                style={{ marginRight: StyleConstants.Spacing.S }}
-              />
-            )
-          }
-        })
+      type
     })
   } else {
     showMessage({
-      duration: type === 'error' ? 8000 : duration === 'short' ? 3000 : 5000,
+      duration: type === 'danger' ? 8000 : duration === 'short' ? 3000 : 5000,
       autoHide,
       message,
       description,
       onPress,
-      ...(theme &&
-        type && {
-          renderFlashMessageIcon: () => {
-            return (
-              <Icon
-                name={iconMapping[type]}
-                size={StyleConstants.Font.LineHeight.M}
-                color={getColors(theme)[colorMapping[type]]}
-                style={{ marginRight: StyleConstants.Spacing.S }}
-              />
-            )
-          }
-        })
+      type
     })
   }
-}
-
-const removeMessage = () => {
-  // if (ref) {
-  //   ref.current?.hideMessage()
-  // } else {
-  hideMessage()
-  // }
 }
 
 const Message = React.forwardRef<FlashMessage>((_, ref) => {
   const { colors, theme } = useTheme()
   const insets = useSafeAreaInsets()
 
+  enum iconMapping {
+    success = 'CheckCircle',
+    danger = 'XCircle',
+    warning = 'AlertCircle',
+    none = '',
+    default = '',
+    info = '',
+    auto = ''
+  }
+  enum colorMapping {
+    success = 'blue',
+    danger = 'red',
+    warning = 'secondary',
+    none = 'secondary',
+    default = 'secondary',
+    info = 'secondary',
+    auto = 'secondary'
+  }
+
   return (
     <FlashMessage
       ref={ref}
       icon='auto'
+      renderFlashMessageIcon={type => {
+        return typeof type === 'string' && ['success', 'danger', 'warning'].includes(type) ? (
+          <Icon
+            name={iconMapping[type]}
+            size={StyleConstants.Font.LineHeight.M}
+            color={colors[colorMapping[type]]}
+            style={{ marginRight: StyleConstants.Spacing.S }}
+          />
+        ) : null
+      }}
       position='top'
       floating
       style={{
@@ -142,4 +114,4 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
   )
 })
 
-export { Message, displayMessage, removeMessage }
+export { Message, displayMessage }

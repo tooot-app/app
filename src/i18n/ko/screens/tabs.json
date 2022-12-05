@@ -178,6 +178,10 @@
         "direct": "푸시 알림 활성화",
         "settings": "설정에서 활성화"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "{{acct}} 활성화",
         "description": "메시지는 tooot의 서버를 거쳐 전달돼요"

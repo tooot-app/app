@@ -178,6 +178,10 @@
         "direct": "Bật thông báo đẩy",
         "settings": "Bật trong cài đặt"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Bật cho {{acct}}",
         "description": "Thông báo được truyền qua máy chủ tooot"

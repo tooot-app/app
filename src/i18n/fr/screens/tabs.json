@@ -178,6 +178,10 @@
         "direct": "Activer les notifications push",
         "settings": "Activer dans les paramètres"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Activer pour {{acct}}",
         "description": "Les messages sont acheminés via le serveur de tooot"

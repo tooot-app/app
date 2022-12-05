@@ -41,8 +41,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
     },
     onError: () => {
       displayMessage({
-        theme,
-        type: 'error',
+        type: 'danger',
         message: t('common:message.error.message', {
           function: t('me.listAccounts.error')
         })

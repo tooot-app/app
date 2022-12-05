@@ -13,13 +13,13 @@ const ComposeRootFooter: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { composeState } = useContext(ComposeContext)
 
   return (
-    <>
+    <View>
       {composeState.attachments.uploads.length ? (
         <ComposeAttachments accessibleRefAttachments={accessibleRefAttachments} />
       ) : null}
       {composeState.poll.active ? <ComposePoll /> : null}
       {composeState.replyToStatus ? <ComposeReply /> : null}
-    </>
+    </View>
   )
 }
 
