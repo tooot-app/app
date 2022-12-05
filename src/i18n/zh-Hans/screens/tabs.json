@@ -179,8 +179,8 @@
         "settings": "在系统设置中启用"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "服务器推送配置不正确",
+        "description": "请联系您的服务器管理员设置推送支持"
       },
       "global": {
         "heading": "启用 {{acct}}",
