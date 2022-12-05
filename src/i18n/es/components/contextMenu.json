@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Mensaje directo",
+    "public": "Mensaje público"
   },
   "copy": {
     "action": "Copiar toot",
