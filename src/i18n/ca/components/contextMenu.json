@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Missatge directe",
+    "public": "Missatge públic"
   },
   "copy": {
     "action": "Copia la publicació",

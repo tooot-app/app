@@ -23,7 +23,13 @@ const AccountInformationNote = React.memo(
 
     return (
       <View style={styles.note}>
-        <ParseHTML content={account.note!} size={'M'} emojis={account.emojis} selectable />
+        <ParseHTML
+          content={account.note!}
+          size={'M'}
+          emojis={account.emojis}
+          selectable
+          numberOfLines={999}
+        />
       </View>
     )
   },

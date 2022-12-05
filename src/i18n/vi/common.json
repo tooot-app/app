@@ -6,7 +6,7 @@
     "discard": "Bỏ qua",
     "continue": "Tiếp tục",
     "delete": "Xóa",
-    "done": ""
+    "done": "Xong"
   },
   "customEmoji": {
     "accessibilityLabel": "Tùy chỉnh emoji {{emoji}}"

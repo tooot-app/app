@@ -86,7 +86,7 @@ const apiInstance = async <T = unknown>({
         links: { prev, next }
       })
     })
-    .catch(handleError)
+    .catch(handleError())
 }
 
 export default apiInstance
