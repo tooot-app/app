@@ -1,6 +1,6 @@
 {
   "title": "Selecteer mediabron",
-  "message": "Media EXIF-gegevens zijn niet geüpload",
+  "message": "Media EXIF gegevens worden niet geüpload",
   "options": {
     "image": "Foto's uploaden",
     "image_max": "Foto's uploaden (max {{max}})",
