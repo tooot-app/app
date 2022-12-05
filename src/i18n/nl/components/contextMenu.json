@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Direct bericht",
+    "public": "Openbaar bericht"
   },
   "copy": {
     "action": "Toot kopiëren",
