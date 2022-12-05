@@ -290,7 +290,7 @@
         "heading": "Tooot beoordelen"
       },
       "contact": {
-        "heading": "Contacteer tooot"
+        "heading": "Tooot contacteren"
       },
       "version": "Version v{{version}}",
       "instanceVersion": "Mastodon versie v{{version}}"
@@ -341,7 +341,7 @@
         "placeholder": "naar..."
       },
       "empty": {
-        "general": "Enter keyword to search for <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> or <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "general": "Voer trefwoord in om te zoeken naar <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> of <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
           "header": "Geavanceerd zoeken",
           "example": {
@@ -363,7 +363,7 @@
       "notFound": "Kan <bold>{{searchTerm}}</bold> niet vinden gerelateerd aan {{type}}"
     },
     "toot": {
-      "name": "Draadje"
+      "name": "Gesprek"
     },
     "users": {
       "accounts": {
