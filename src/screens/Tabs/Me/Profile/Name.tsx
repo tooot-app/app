@@ -75,7 +75,6 @@ const TabMeProfileName: React.FC<
           content='Save'
           onPress={async () => {
             mutateAsync({
-              theme,
               messageRef,
               message: {
                 text: 'me.profile.root.name.title',

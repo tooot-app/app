@@ -17,7 +17,7 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
   navigation,
   route: { key, params }
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'List', list: params.id }]
 
@@ -30,8 +30,7 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
     },
     onError: () => {
       displayMessage({
-        theme,
-        type: 'error',
+        type: 'danger',
         message: t('common:message.error.message', {
           function: t('me.listDelete.heading')
         })

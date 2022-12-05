@@ -14,7 +14,6 @@ import {
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
@@ -38,7 +37,6 @@ const menuAccount = ({
 
   const navigation =
     useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
-  const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
   const menus: ContextMenu[][] = [[]]
@@ -60,7 +58,6 @@ const menuAccount = ({
       queryClient.refetchQueries(['Relationship', { id: account.id }])
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
-        theme,
         type: 'success',
         message: t('common:message.success.message', {
           function: t(`account.${theParams.payload.property}.action`, {
@@ -74,8 +71,7 @@ const menuAccount = ({
     onError: (err: any, params) => {
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
-        theme,
-        type: 'error',
+        type: 'danger',
         message: t('common:message.error.message', {
           function: t(`account.${theParams.payload.property}.action`, {
             ...(theParams.payload.property !== 'reports' && {
@@ -109,8 +105,7 @@ const menuAccount = ({
     },
     onError: (err: any, { payload: { action } }) => {
       displayMessage({
-        theme,
-        type: 'error',
+        type: 'danger',
         message: t('common:message.error.message', {
           function: t(`${action}.function`)
         }),

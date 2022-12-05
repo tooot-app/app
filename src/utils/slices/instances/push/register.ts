@@ -1,12 +1,15 @@
 import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
+import { displayMessage } from '@components/Message'
 import i18n from '@root/i18n/i18n'
 import { RootState } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getInstance } from '@utils/slices/instancesSlice'
+import { Theme } from '@utils/styles/themes'
 import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
+import i18next from 'i18next'
 import { Platform } from 'react-native'
 import base64 from 'react-native-base64'
 import androidDefaults from './androidDefaults'
@@ -74,6 +77,12 @@ const pushRegister = async (
   })
 
   if (!res.body.server_key?.length) {
+    displayMessage({
+      type: 'danger',
+      duration: 'long',
+      message: i18next.t('screenTabs:me.push.missingServerKey.message'),
+      description: i18next.t('screenTabs:me.push.missingServerKey.description')
+    })
     Sentry.setContext('Push server key', {
       instance: instanceUri,
       resBody: res.body

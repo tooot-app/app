@@ -40,7 +40,7 @@ const ScreenImagesViewer = ({
 
   const insets = useSafeAreaInsets()
 
-  const { mode, theme } = useTheme()
+  const { mode } = useTheme()
   const { t } = useTranslation('screenImageViewer')
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
@@ -61,7 +61,7 @@ const ScreenImagesViewer = ({
       async buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            saveImage({ theme, image: imageUrls[currentIndex] })
+            saveImage({ image: imageUrls[currentIndex] })
             break
           case 1:
             switch (Platform.OS) {
@@ -188,7 +188,7 @@ const ScreenImagesViewer = ({
             async buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  saveImage({ theme, image: imageUrls[currentIndex] })
+                  saveImage({ image: imageUrls[currentIndex] })
                   break
                 case 1:
                   switch (Platform.OS) {

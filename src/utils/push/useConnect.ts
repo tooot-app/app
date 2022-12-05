@@ -7,7 +7,6 @@ import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +15,6 @@ import { useSelector } from 'react-redux'
 
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
-  const { theme } = useTheme()
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -39,8 +37,7 @@ const pushUseConnect = () => {
         Notifications.setBadgeCountAsync(0)
         if (error?.status == 404) {
           displayMessage({
-            theme,
-            type: 'error',
+            type: 'danger',
             duration: 'long',
             message: t('pushError.message'),
             description: t('pushError.description'),

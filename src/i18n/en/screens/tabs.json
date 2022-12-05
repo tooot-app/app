@@ -178,6 +178,10 @@
         "direct": "Enable push notification",
         "settings": "Enable in settings"
       },
+      "missingServerKey": {
+        "message": "Server misconfigured for push",
+        "description": "Please contact your server admin to configure push support"
+      },
       "global": {
         "heading": "Enable for {{acct}}",
         "description": "Messages are routed through tooot's server"
