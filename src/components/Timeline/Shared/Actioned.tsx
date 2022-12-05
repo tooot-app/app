@@ -13,12 +13,12 @@ import StatusContext from './Context'
 export interface Props {
   action: Mastodon.Notification['type'] | 'reblog' | 'pinned'
   isNotification?: boolean
-  account?: Mastodon.Account
+  account?: Mastodon.Account // For notification
 }
 
 const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) => {
-  const { status } = useContext(StatusContext)
-  const account = isNotification ? rest.account : status?.account
+  const { status, reblogStatus } = useContext(StatusContext)
+  const account = rest.account || (reblogStatus ? reblogStatus.account : status?.account)
   if (!status || !account) return null
 
   const { t } = useTranslation('componentTimeline')

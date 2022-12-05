@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
-  const { queryKey, rootQueryKey, status, isReblog, ownAccount, highlighted, disableDetails } =
+  const { queryKey, rootQueryKey, status, reblogStatus, ownAccount, highlighted, disableDetails } =
     useContext(StatusContext)
   if (!queryKey || !status || disableDetails) return null
 
@@ -109,7 +109,7 @@ const TimelineActions: React.FC = () => {
                 queryKey,
                 rootQueryKey,
                 id: status.id,
-                isReblog,
+                isReblog: !!reblogStatus,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -125,7 +125,7 @@ const TimelineActions: React.FC = () => {
                 queryKey,
                 rootQueryKey,
                 id: status.id,
-                isReblog,
+                isReblog: !!reblogStatus,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -144,7 +144,7 @@ const TimelineActions: React.FC = () => {
         queryKey,
         rootQueryKey,
         id: status.id,
-        isReblog,
+        isReblog: !!reblogStatus,
         payload: {
           property: 'reblogged',
           currentValue: status.reblogged,
@@ -161,7 +161,7 @@ const TimelineActions: React.FC = () => {
       queryKey,
       rootQueryKey,
       id: status.id,
-      isReblog,
+      isReblog: !!reblogStatus,
       payload: {
         property: 'favourited',
         currentValue: status.favourited,
@@ -176,7 +176,7 @@ const TimelineActions: React.FC = () => {
       queryKey,
       rootQueryKey,
       id: status.id,
-      isReblog,
+      isReblog: !!reblogStatus,
       payload: {
         property: 'bookmarked',
         currentValue: status.bookmarked,

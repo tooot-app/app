@@ -7,7 +7,7 @@ type ContextType = {
 
   status?: Mastodon.Status
 
-  isReblog?: boolean
+  reblogStatus?: Mastodon.Status // When it is a reblog, pass the root status
   ownAccount?: boolean
   spoilerHidden?: boolean
   copiableContent?: React.MutableRefObject<{
