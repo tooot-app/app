@@ -4,8 +4,8 @@ import log from './log'
 const audio = () => {
   log('log', 'audio', 'setting audio playback default options')
   Audio.setAudioModeAsync({
-    interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-    interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+    interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+    interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
     playsInSilentModeIOS: true,
     staysActiveInBackground: false
   })
