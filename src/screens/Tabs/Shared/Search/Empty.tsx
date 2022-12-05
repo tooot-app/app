@@ -72,16 +72,18 @@ const SearchEmpty: React.FC<Props> = ({ isLoading, inputRef, setSearchTerm }) =>
             </CustomText>
           </View>
 
-          <CustomText
-            style={{
-              color: colors.primaryDefault,
-              marginTop: StyleConstants.Spacing.M,
-              paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
-            }}
-            fontWeight='Bold'
-          >
-            {t('shared.search.empty.trending.tags')}
-          </CustomText>
+          {trendsTags.data?.length ? (
+            <CustomText
+              style={{
+                color: colors.primaryDefault,
+                marginTop: StyleConstants.Spacing.M,
+                paddingHorizontal: StyleConstants.Spacing.Global.PagePadding
+              }}
+              fontWeight='Bold'
+            >
+              {t('shared.search.empty.trending.tags')}
+            </CustomText>
+          ) : null}
           <View>
             {trendsTags.data?.map((tag, index) => {
               const hashtag = tag as Mastodon.Tag
