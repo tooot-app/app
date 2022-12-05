@@ -178,6 +178,10 @@
         "direct": "启用推送通知",
         "settings": "在系统设置中启用"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "启用 {{acct}}",
         "description": "通知消息将经由tooot服务器转发"
