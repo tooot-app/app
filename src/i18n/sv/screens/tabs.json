@@ -178,6 +178,10 @@
         "direct": "Aktivera pushnotiser",
         "settings": "Aktivera i inställningar"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Aktivera för {{acct}}",
         "description": "Meddelanden dirigeras via tooots server"

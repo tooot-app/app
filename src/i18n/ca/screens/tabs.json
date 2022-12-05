@@ -178,6 +178,10 @@
         "direct": "Habilita les notificacions push",
         "settings": "Activa'ls a la configuració"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Activa per {{acct}}",
         "description": "Els missatges s'envien a través del servidor del tooot"
