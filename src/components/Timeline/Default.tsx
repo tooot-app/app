@@ -120,7 +120,7 @@ const TimelineDefault: React.FC<Props> = ({
         queryKey,
         rootQueryKey,
         status,
-        isReblog: !!item.reblog,
+        reblogStatus: item.reblog ? item : undefined,
         ownAccount,
         spoilerHidden,
         copiableContent,

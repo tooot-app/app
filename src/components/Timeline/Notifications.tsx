@@ -38,7 +38,7 @@ const TimelineNotifications: React.FC<Props> = ({
 }) => {
   const instanceAccount = useSelector(getInstanceAccount, () => true)
 
-  const status = notification.status
+  const status = notification.status?.reblog ? notification.status.reblog : notification.status
   const account = notification.status ? notification.status.account : notification.account
   const ownAccount = notification.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
@@ -78,7 +78,11 @@ const TimelineNotifications: React.FC<Props> = ({
     return (
       <>
         {notification.type !== 'mention' ? (
-          <TimelineActioned action={notification.type} isNotification account={account} />
+          <TimelineActioned
+            action={notification.type}
+            isNotification
+            account={notification.account}
+          />
         ) : null}
 
         <View
@@ -132,7 +136,6 @@ const TimelineNotifications: React.FC<Props> = ({
       value={{
         queryKey,
         status,
-        isReblog: !!status?.reblog,
         ownAccount,
         spoilerHidden,
         copiableContent,

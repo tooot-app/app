@@ -20,8 +20,15 @@ import { useQueryClient } from 'react-query'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {
-  const { queryKey, rootQueryKey, status, isReblog, ownAccount, spoilerHidden, disableDetails } =
-    useContext(StatusContext)
+  const {
+    queryKey,
+    rootQueryKey,
+    status,
+    reblogStatus,
+    ownAccount,
+    spoilerHidden,
+    disableDetails
+  } = useContext(StatusContext)
   if (!queryKey || !status || !status.poll) return null
   const poll = status.poll
 
@@ -78,7 +85,7 @@ const TimelinePoll: React.FC = () => {
                   queryKey,
                   rootQueryKey,
                   id: status.id,
-                  isReblog,
+                  isReblog: !!reblogStatus,
                   payload: {
                     property: 'poll',
                     id: poll.id,
@@ -104,7 +111,7 @@ const TimelinePoll: React.FC = () => {
                   queryKey,
                   rootQueryKey,
                   id: status.id,
-                  isReblog,
+                  isReblog: !!reblogStatus,
                   payload: {
                     property: 'poll',
                     id: poll.id,
