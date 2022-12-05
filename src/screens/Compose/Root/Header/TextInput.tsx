@@ -28,11 +28,9 @@ const ComposeTextInput: React.FC = () => {
     <PasteInput
       keyboardAppearance={mode}
       style={{
-        ...StyleConstants.FontStyle.M,
         marginTop: StyleConstants.Spacing.S,
         paddingBottom: StyleConstants.Spacing.M,
-        marginLeft: StyleConstants.Spacing.Global.PagePadding,
-        marginRight: StyleConstants.Spacing.Global.PagePadding,
+        marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
         color: colors.primaryDefault,
         borderBottomColor: colors.border,
         fontSize: adaptedFontsize,
