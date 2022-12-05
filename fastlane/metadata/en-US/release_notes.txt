@@ -1,1 +1,3 @@
-Enjoy using tooot
+Enjoy toooting! This version includes following improvements and fixes:
+- Fix toot attribution of favourites etc.
+- Fix switching language
