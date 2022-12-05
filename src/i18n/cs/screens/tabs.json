@@ -178,6 +178,10 @@
         "direct": "",
         "settings": ""
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "",
         "description": ""
