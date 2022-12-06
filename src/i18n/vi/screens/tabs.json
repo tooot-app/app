@@ -179,8 +179,8 @@
         "settings": "Bật trong cài đặt"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Máy chủ định cấu hình sai để nhận thông báo đẩy",
+        "description": "Vui lòng liên hệ với quản trị viên máy chủ của bạn để định cấu hình thông báo đẩy"
       },
       "global": {
         "heading": "Bật cho {{acct}}",
