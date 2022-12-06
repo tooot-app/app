@@ -42,7 +42,7 @@
         "options": {
           "title": "Boost-Sichtbarkeit ändern",
           "public": "Öffentlicher Boost",
-          "unlisted": "Boost entfernen"
+          "unlisted": "Privater Boost"
         }
       },
       "favourited": {
