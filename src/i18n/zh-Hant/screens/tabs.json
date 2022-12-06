@@ -179,8 +179,8 @@
         "settings": "在設定中啟用"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "伺服器推播設定不正確",
+        "description": "請聯絡您的伺服器管理員啟用推播設定"
       },
       "global": {
         "heading": "啟用 {{acct}}",
