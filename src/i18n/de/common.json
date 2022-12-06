@@ -6,7 +6,7 @@
     "discard": "Abbrechen",
     "continue": "Weiter",
     "delete": "Löschen",
-    "done": ""
+    "done": "Fertig"
   },
   "customEmoji": {
     "accessibilityLabel": "Eigenes Emoji {{emoji}}"
