@@ -179,8 +179,8 @@
         "settings": "Aktivera i inställningar"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Servern är felkonfigurerad för push",
+        "description": "Kontakta din serveradministratör och be dem konfigurera stöd för push"
       },
       "global": {
         "heading": "Aktivera för {{acct}}",
