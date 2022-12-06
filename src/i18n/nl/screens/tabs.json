@@ -179,8 +179,8 @@
         "settings": "Inschakelen in instellingen"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Server is verkeerd geconfigureerd voor push",
+        "description": "Neem contact op met de serverbeheerder om push-ondersteuning te configureren"
       },
       "global": {
         "heading": "Inschakelen voor {{acct}}",
