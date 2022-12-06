@@ -179,8 +179,8 @@
         "settings": "In den Einstellungen aktivieren"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Server ist nicht für Push-Benachrichtigungen konfiguriert",
+        "description": "Bitte kontaktiere den Administrator deiner Instanz, um Push-Benachrichtigungen zu ermöglichen"
       },
       "global": {
         "heading": "Aktivieren für {{acct}}",
@@ -325,9 +325,9 @@
       "suspended": "Konto wurde von den Instanzmoderation gesperrt"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Listen, in denen @{{username}} aufgeführt ist",
+      "inLists": "In Listen",
+      "notInLists": "Andere Listen"
     },
     "attachments": {
       "name": "<0 /><1>\"s Medien</1>"
