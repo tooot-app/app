@@ -27,6 +27,7 @@ const ComposeTextInput: React.FC = () => {
   return (
     <PasteInput
       keyboardAppearance={mode}
+      keyboardType='twitter'
       style={{
         marginTop: StyleConstants.Spacing.S,
         paddingBottom: StyleConstants.Spacing.M,
