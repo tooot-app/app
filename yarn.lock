@@ -10853,10 +10853,10 @@ react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-language-detection@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-language-detection/-/react-native-language-detection-0.1.0.tgz#06b5d20bffb60dbbd599c8e62b6acf500952afa8"
-  integrity sha512-26CLndVMmMbVp40Y9Herza73nfR08JFTcYkJ3MX5MIQbGRoqgNAG89z8pA1y7dPHHK1Nfa6AWKAYpNv7tMRCaw==
+react-native-language-detection@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-language-detection/-/react-native-language-detection-0.2.2.tgz#4cc94177aa1c4575c4656f6d42456fa6c72ed5db"
+  integrity sha512-6u1JBgr+UG/GX/xMmT4K8CaBlSep4XfM91jwUzRA/Y3bMCHDx7bNVxGQvqvzkmOchby9h66XD8F5Eo+kV01CAA==
 
 react-native-live-text-image-view@^0.4.0:
   version "0.4.0"

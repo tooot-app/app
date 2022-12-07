@@ -15,7 +15,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
-import formatText from '../utils/formatText'
+import { formatText } from '../utils/processText'
 import { ComposeStateDraft, ExtendedAttachment } from '../utils/types'
 
 export interface Props {

@@ -301,7 +301,7 @@ PODS:
     - React-Core
   - react-native-ios-context-menu (1.15.1):
     - React-Core
-  - react-native-language-detection (0.1.0):
+  - react-native-language-detection (0.2.2):
     - React
   - react-native-live-text-image-view (0.4.0):
     - React-Core
@@ -739,7 +739,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: a40b082318eb1ecd0336a2f29d9f74b7f2c8cae8
   react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
   react-native-ios-context-menu: b170594b4448c0cd10c79e13432216bac99de1ac
-  react-native-language-detection: 0e43195ad014974f1b7a31b64820eff34a243f2d
+  react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
   react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
   react-native-menu: 8e172cfcf0e42e92f028e7781eddf84d430cae24
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983

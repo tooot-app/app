@@ -150,7 +150,7 @@ const formatText = ({ textInput, composeDispatch, content, disableDebounce = fal
   })
   children.push(_content)
   contentLength = contentLength + _content.length
-
+  getPureContent(content)
   composeDispatch({
     type: textInput,
     payload: {
@@ -161,4 +161,18 @@ const formatText = ({ textInput, composeDispatch, content, disableDebounce = fal
   })
 }
 
-export default formatText
+const getPureContent = (content: string): string => {
+  const tags = linkify.match(content)
+  if (!tags) {
+    return content
+  }
+
+  let _content = content
+  for (const tag of tags) {
+    _content = _content.replace(tag.raw, '')
+  }
+
+  return _content.replace(/\s\s+/g, ' ')
+}
+
+export { formatText, getPureContent }
