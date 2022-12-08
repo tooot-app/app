@@ -13,7 +13,7 @@
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
         "status": "구독한 사용자의 툿",
-        "update": "리블로그가 수정되었습니다."
+        "update": "부스트한 툿이 수정됨"
       }
     }
   }
