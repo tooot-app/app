@@ -6,8 +6,7 @@ import { ScreenTabsScreenProps, TabLocalStackParamList } from '@utils/navigation
 import usePopToTop from '@utils/navigation/usePopToTop'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import layoutAnimation from '@utils/styles/layoutAnimation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import TabShared from './Shared'
@@ -19,9 +18,6 @@ const TabLocal = React.memo(
     const { t } = useTranslation('screenTabs')
 
     const { data: lists } = useListsQuery({})
-    useEffect(() => {
-      layoutAnimation()
-    }, [lists?.length])
 
     const [queryKey, setQueryKey] = useState<QueryKeyTimeline>(['Timeline', { page: 'Following' }])
 

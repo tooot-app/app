@@ -7,6 +7,7 @@ import { Blurhash } from 'react-native-blurhash'
 import attachmentAspectRatio from './aspectRatio'
 import AttachmentAltText from './AltText'
 import { Platform } from 'expo-modules-core'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 
 export interface Props {
   total: number
@@ -23,6 +24,8 @@ const AttachmentVideo: React.FC<Props> = ({
   video,
   gifv = false
 }) => {
+  const { reduceMotionEnabled } = useAccessibility()
+
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
@@ -57,7 +60,7 @@ const AttachmentVideo: React.FC<Props> = ({
         resizeMode={videoResizeMode}
         {...(gifv
           ? {
-              shouldPlay: true,
+              shouldPlay: reduceMotionEnabled ? false : true,
               isMuted: true,
               isLooping: true,
               source: { uri: video.url }
@@ -70,10 +73,10 @@ const AttachmentVideo: React.FC<Props> = ({
         onFullscreenUpdate={event => {
           if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
             Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
-            if (!gifv) {
-              videoPlayer.current?.pauseAsync()
-            } else {
+            if (gifv && !reduceMotionEnabled) {
               videoPlayer.current?.playAsync()
+            } else {
+              videoPlayer.current?.pauseAsync()
             }
           }
         }}
@@ -103,7 +106,7 @@ const AttachmentVideo: React.FC<Props> = ({
           video.blurhash ? (
             <Blurhash blurhash={video.blurhash} style={{ width: '100%', height: '100%' }} />
           ) : null
-        ) : !gifv ? (
+        ) : !gifv || (gifv && reduceMotionEnabled) ? (
           <Button
             round
             overlay
