@@ -179,8 +179,8 @@
         "settings": "설정에서 활성화"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "서버가 푸시를 지원하지 않음",
+        "description": "서버 관리자에게 푸시 알림을 지원하도록 문의해주세요"
       },
       "global": {
         "heading": "{{acct}} 활성화",
