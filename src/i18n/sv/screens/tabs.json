@@ -214,6 +214,12 @@
       "status": {
         "heading": "Inlägg från följda användare"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Läs om hur routing fungerar"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Aktiverad",
-          "disabled": "Inaktiverad"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "Uppdatera till senaste versionen"
