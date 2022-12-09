@@ -215,10 +215,10 @@
         "heading": "Toot de usuarios suscritos"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administración: Registrarse"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administración: denuncias"
       },
       "howitworks": "Más información sobre las notificaciones push"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Habilitado",
+        "content_false": "Deshabilitado"
       },
       "update": {
         "title": "Actualizar a la última versión"
