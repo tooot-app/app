@@ -214,6 +214,12 @@
       "status": {
         "heading": "订阅用户的嘟文"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "了解通知消息转发如何工作"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "已启用",
-          "disabled": "未启用"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "更新至最新版本"
