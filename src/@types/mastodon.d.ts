@@ -30,6 +30,7 @@ declare namespace Mastodon {
     bot: boolean
     source?: Source
     suspended?: boolean
+    role?: Role
   }
 
   type Announcement = {
@@ -384,6 +385,8 @@ declare namespace Mastodon {
       mention: boolean
       poll: boolean
       status: boolean
+      'admin.sign_up': boolean
+      'admin.report': boolean
     }
     server_key: string
   }
@@ -407,6 +410,18 @@ declare namespace Mastodon {
     accounts?: Account[]
     statuses?: Status[]
     hashtags?: Tag[]
+  }
+
+  type Role = {
+    // Added since 4.0
+    id: string
+    name: string
+    color: string
+    position: number
+    permissions: string
+    highlighted: boolean
+    created_at: string
+    updated_at: string
   }
 
   type Status = {
@@ -479,25 +494,4 @@ declare namespace Mastodon {
     history: { day: string; accounts: string; uses: string }[]
     following: boolean // Since v4.0
   }
-
-  type WebSocketStream =
-    | 'user'
-    | 'public'
-    | 'public:local'
-    | 'hashtag'
-    | 'hashtag:local'
-    | 'list'
-    | 'direct'
-  type WebSocket =
-    | {
-        stream: WebSocketStream[]
-        event: 'update'
-        payload: string // Status
-      }
-    | { stream: WebSocketStream[]; event: 'delete'; payload: Status['id'] }
-    | {
-        stream: WebSocketStream[]
-        event: 'notification'
-        payload: string // Notification
-      }
 }

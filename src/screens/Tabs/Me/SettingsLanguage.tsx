@@ -2,6 +2,7 @@ import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { LOCALES } from '@root/i18n/locales'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
+import { useProfileQuery } from '@utils/queryHooks/profile'
 import androidDefaults from '@utils/slices/instances/push/androidDefaults'
 import { getInstances } from '@utils/slices/instancesSlice'
 import { changeLanguage } from '@utils/slices/settingsSlice'
@@ -10,14 +11,17 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import { checkPushAdminPermission, PUSH_ADMIN, PUSH_DEFAULT } from './Push'
 
-const TabMeSettingsLanguage: React.FC<
-  TabMeStackScreenProps<'Tab-Me-Settings-Language'>
-> = ({ navigation }) => {
+const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Language'>> = ({
+  navigation
+}) => {
   const { i18n, t } = useTranslation('screenTabs')
   const languages = Object.entries(LOCALES)
   const instances = useSelector(getInstances)
   const dispatch = useDispatch()
+
+  const profileQuery = useProfileQuery({ options: { enabled: Platform.OS === 'android' } })
 
   const change = (lang: string) => {
     haptics('Success')
@@ -29,41 +33,29 @@ const TabMeSettingsLanguage: React.FC<
     if (Platform.OS === 'android') {
       instances.forEach(instance => {
         const accountFull = `@${instance.account.acct}@${instance.uri}`
-        if (instance.push.decode.value === false) {
+        if (instance.push.decode === false) {
           Notifications.setNotificationChannelAsync(`${accountFull}_default`, {
             groupId: accountFull,
             name: t('me.push.default.heading'),
             ...androidDefaults
           })
         } else {
-          Notifications.setNotificationChannelAsync(`${accountFull}_follow`, {
-            groupId: accountFull,
-            name: t('me.push.follow.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(
-            `${accountFull}_favourite`,
-            {
+          for (const push of PUSH_DEFAULT) {
+            Notifications.setNotificationChannelAsync(`${accountFull}_${push}`, {
               groupId: accountFull,
-              name: t('me.push.favourite.heading'),
+              name: t(`me.push.${push}.heading`),
               ...androidDefaults
+            })
+          }
+          for (const { type, permission } of PUSH_ADMIN) {
+            if (checkPushAdminPermission(permission, profileQuery.data?.role?.permissions)) {
+              Notifications.setNotificationChannelAsync(`${accountFull}_${type}`, {
+                groupId: accountFull,
+                name: t(`me.push.${type}.heading`),
+                ...androidDefaults
+              })
             }
-          )
-          Notifications.setNotificationChannelAsync(`${accountFull}_reblog`, {
-            groupId: accountFull,
-            name: t('me.push.reblog.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${accountFull}_mention`, {
-            groupId: accountFull,
-            name: t('me.push.mention.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${accountFull}_poll`, {
-            groupId: accountFull,
-            name: t('me.push.poll.heading'),
-            ...androidDefaults
-          })
+          }
         }
       })
     }

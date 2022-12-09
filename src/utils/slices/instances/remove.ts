@@ -6,7 +6,7 @@ import { updateInstancePush } from './updatePush'
 const removeInstance = createAsyncThunk(
   'instances/remove',
   async (instance: InstanceLatest, { dispatch }): Promise<InstanceLatest> => {
-    if (instance.push.global.value) {
+    if (instance.push.global) {
       dispatch(updateInstancePush(false))
     }
 

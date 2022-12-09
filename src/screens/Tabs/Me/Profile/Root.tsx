@@ -21,7 +21,7 @@ const TabMeProfileRoot: React.FC<
 
   const { showActionSheetWithOptions } = useActionSheet()
 
-  const { data, isLoading } = useProfileQuery({})
+  const { data, isLoading } = useProfileQuery()
   const { mutateAsync } = useProfileMutation()
   const dispatch = useAppDispatch()
 

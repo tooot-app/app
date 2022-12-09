@@ -13,7 +13,7 @@ export const updateInstancePushDecode = createAsyncThunk(
   async (
     disable: boolean,
     { getState }
-  ): Promise<{ disable: InstanceLatest['push']['decode']['value'] }> => {
+  ): Promise<{ disable: InstanceLatest['push']['decode'] }> => {
     const state = getState() as RootState
     const instance = getInstance(state)
     if (!instance?.url || !instance.account.id || !instance.push.keys) {
@@ -43,14 +43,11 @@ export const updateInstancePushDecode = createAsyncThunk(
             name: i18n.t('meSettingsPush:content.follow.heading'),
             ...androidDefaults
           })
-          Notifications.setNotificationChannelAsync(
-            `${accountFull}_favourite`,
-            {
-              groupId: accountFull,
-              name: i18n.t('meSettingsPush:content.favourite.heading'),
-              ...androidDefaults
-            }
-          )
+          Notifications.setNotificationChannelAsync(`${accountFull}_favourite`, {
+            groupId: accountFull,
+            name: i18n.t('meSettingsPush:content.favourite.heading'),
+            ...androidDefaults
+          })
           Notifications.setNotificationChannelAsync(`${accountFull}_reblog`, {
             groupId: accountFull,
             name: i18n.t('meSettingsPush:content.reblog.heading'),
@@ -74,9 +71,7 @@ export const updateInstancePushDecode = createAsyncThunk(
             ...androidDefaults
           })
           Notifications.deleteNotificationChannelAsync(`${accountFull}_follow`)
-          Notifications.deleteNotificationChannelAsync(
-            `${accountFull}_favourite`
-          )
+          Notifications.deleteNotificationChannelAsync(`${accountFull}_favourite`)
           Notifications.deleteNotificationChannelAsync(`${accountFull}_reblog`)
           Notifications.deleteNotificationChannelAsync(`${accountFull}_mention`)
           Notifications.deleteNotificationChannelAsync(`${accountFull}_poll`)

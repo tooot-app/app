@@ -21,12 +21,12 @@ const queryFunction = async () => {
   return res.body
 }
 
-const useProfileQuery = ({
-  options
-}: {
-  options?: UseQueryOptions<AccountWithSource, AxiosError>
-}) => {
-  return useQuery(queryKey, queryFunction, options)
+const useProfileQuery = (
+  params: {
+    options: UseQueryOptions<AccountWithSource, AxiosError>
+  } | void
+) => {
+  return useQuery(queryKey, queryFunction, params?.options)
 }
 
 type MutationVarsProfileBase =

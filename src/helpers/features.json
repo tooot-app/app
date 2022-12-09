@@ -20,6 +20,11 @@
     "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
   },
   {
+    "feature": "notification_type_admin_signup",
+    "version": 3.5,
+    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+  },
+  {
     "feature": "notification_types_positive_filter",
     "version": 3.5,
     "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
@@ -33,5 +38,10 @@
     "feature": "follow_tags",
     "version": 4.0,
     "reference": "https://github.com/mastodon/mastodon/releases/tag/v4.0.0"
+  },
+  {
+    "feature": "notification_type_admin_report",
+    "version": 4.0,
+    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
   }
 ]

@@ -6,7 +6,6 @@ import { RootState } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getInstance } from '@utils/slices/instancesSlice'
-import { Theme } from '@utils/styles/themes'
 import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
 import i18next from 'i18next'
@@ -97,7 +96,7 @@ const pushRegister = async (
     accountId,
     accountFull,
     serverKey: res.body.server_key,
-    auth: instancePush.decode.value === false ? null : auth
+    auth: instancePush.decode === false ? null : auth
   })
 
   if (Platform.OS === 'android') {
@@ -106,7 +105,7 @@ const pushRegister = async (
       ...androidDefaults
     }).then(group => {
       if (group) {
-        if (instancePush.decode.value === false) {
+        if (instancePush.decode === false) {
           Notifications.setNotificationChannelAsync(`${group.id}_default`, {
             groupId: group.id,
             name: i18n.t('meSettingsPush:content.default.heading'),

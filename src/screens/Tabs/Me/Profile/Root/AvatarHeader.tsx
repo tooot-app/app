@@ -17,7 +17,7 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
 
   const { showActionSheetWithOptions } = useActionSheet()
 
-  const query = useProfileQuery({})
+  const query = useProfileQuery()
   const mutation = useProfileMutation()
 
   return (
