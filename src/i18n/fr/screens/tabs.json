@@ -214,6 +214,12 @@
       "status": {
         "heading": "Pouet des utilisateurs inscrits"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Apprenez comment cela fonctionne"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Activé",
-          "disabled": "Désactivé"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "Mettre à jour vers la dernière version"
