@@ -214,6 +214,12 @@
       "status": {
         "heading": "購読したユーザーのトゥート"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "通知到達(routing)のしくみを学ぶ"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "有効",
-          "disabled": "無効"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "最新バージョンへのアップデート"
