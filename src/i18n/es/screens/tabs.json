@@ -214,6 +214,12 @@
       "status": {
         "heading": "Toot de usuarios suscritos"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Más información sobre las notificaciones push"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Habilitado",
-          "disabled": "Deshabilitado"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "Actualizar a la última versión"
