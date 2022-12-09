@@ -214,6 +214,12 @@
       "status": {
         "heading": "Toot van geabonneerde gebruikers"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Leer hoe het werkt"
     },
     "root": {
@@ -225,10 +231,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Ingeschakeld",
-          "disabled": "Uitgeschakeld"
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": "Bijwerken naar de laatste versie"
