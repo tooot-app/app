@@ -10,10 +10,10 @@ import { useMutation, useQuery, UseQueryOptions } from 'react-query'
 
 type AccountWithSource = Mastodon.Account & Required<Pick<Mastodon.Account, 'source'>>
 
-type QueryKeyProfile = ['Profile']
+export type QueryKeyProfile = ['Profile']
 const queryKey: QueryKeyProfile = ['Profile']
 
-const queryFunction = async () => {
+const queryFunctionProfile = async () => {
   const res = await apiInstance<AccountWithSource>({
     method: 'get',
     url: `accounts/verify_credentials`
@@ -26,7 +26,7 @@ const useProfileQuery = (
     options: UseQueryOptions<AccountWithSource, AxiosError>
   } | void
 ) => {
-  return useQuery(queryKey, queryFunction, params?.options)
+  return useQuery(queryKey, queryFunctionProfile, params?.options)
 }
 
 type MutationVarsProfileBase =
@@ -155,4 +155,4 @@ const useProfileMutation = () => {
   )
 }
 
-export { useProfileQuery, useProfileMutation }
+export { queryFunctionProfile, useProfileQuery, useProfileMutation }
