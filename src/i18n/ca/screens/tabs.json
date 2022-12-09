@@ -215,10 +215,10 @@
         "heading": "Publicació d'usuaris subscrits"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administració: Registra"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administració: denúncies"
       },
       "howitworks": "Aprèn com funciona"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Habilitat",
+        "content_false": "Deshabilitat"
       },
       "update": {
         "title": "Actualitza a la última versió"
