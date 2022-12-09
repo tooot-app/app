@@ -215,10 +215,10 @@
         "heading": "Inlägg från följda användare"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: registrera dig"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: rapporter"
       },
       "howitworks": "Läs om hur routing fungerar"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Aktiverad",
+        "content_false": "Inaktiverad"
       },
       "update": {
         "title": "Uppdatera till senaste versionen"
