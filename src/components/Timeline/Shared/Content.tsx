@@ -6,10 +6,11 @@ import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 
 export interface Props {
+  notificationOwnToot?: boolean
   setSpoilerExpanded?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
+const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoilerExpanded }) => {
   const { status, highlighted, disableDetails } = useContext(StatusContext)
   if (!status || typeof status.content !== 'string' || !status.content.length) return null
 
@@ -38,7 +39,13 @@ const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
             emojis={status.emojis}
             mentions={status.mentions}
             tags={status.tags}
-            numberOfLines={instanceAccount.preferences['reading:expand:spoilers'] ? 999 : 1}
+            numberOfLines={
+              instanceAccount.preferences['reading:expand:spoilers']
+                ? notificationOwnToot
+                  ? 2
+                  : 999
+                : 1
+            }
             expandHint={t('shared.content.expandHint')}
             setSpoilerExpanded={setSpoilerExpanded}
             highlighted={highlighted}
@@ -53,7 +60,7 @@ const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
           emojis={status.emojis}
           mentions={status.mentions}
           tags={status.tags}
-          numberOfLines={highlighted ? 999 : undefined}
+          numberOfLines={highlighted ? 999 : notificationOwnToot ? 2 : undefined}
           disableDetails={disableDetails}
         />
       )}

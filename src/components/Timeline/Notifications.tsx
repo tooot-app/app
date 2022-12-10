@@ -108,7 +108,10 @@ const TimelineNotifications: React.FC<Props> = ({
                 paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
               }}
             >
-              <TimelineContent setSpoilerExpanded={setSpoilerExpanded} />
+              <TimelineContent
+                notificationOwnToot={['favourite', 'reblog'].includes(notification.type)}
+                setSpoilerExpanded={setSpoilerExpanded}
+              />
               <TimelinePoll />
               <TimelineAttachment />
               <TimelineCard />
