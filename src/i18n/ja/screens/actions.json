@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "代替テキスト"
-    },
-    "notificationsFilter": {
-      "heading": "通知の種類を表示",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "フォローリクエスト",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "購読中のユーザーからのトゥート",
-        "update": "リブログが編集されました"
-      }
     }
   }
 }
