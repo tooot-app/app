@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favourites"
       },
+      "followedTags": {
+        "name": "Followed hashtags"
+      },
       "fontSize": {
         "name": "Toot Font Size"
       },
@@ -53,7 +56,7 @@
         "name": "Users in list: {{list}}"
       },
       "listAdd": {
-        "name": "Add a List"
+        "name": "Create a List"
       },
       "listEdit": {
         "name": "Edit List Details"

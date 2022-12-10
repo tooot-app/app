@@ -47,6 +47,7 @@ export type InstanceV11 = {
     }
   }
   mePage: {
+    followedTags: { shown: boolean }
     lists: { shown: boolean }
     announcements: { shown: boolean; unread: number }
   }

@@ -7,14 +7,14 @@ import { useTranslation } from 'react-i18next'
 
 const TabMeListList: React.FC<TabMeStackScreenProps<'Tab-Me-List-List'>> = ({ navigation }) => {
   const { data } = useListsQuery({})
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation()
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRight
-          accessibilityLabel={t('me.stacks.listAdd.name')}
-          content='Plus'
+          type='text'
+          content={t('common:buttons.create')}
           onPress={() => navigation.navigate('Tab-Me-List-Edit', { type: 'add' })}
         />
       )

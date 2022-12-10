@@ -143,6 +143,7 @@ export type TabMeStackParamList = {
   'Tab-Me-Bookmarks': undefined
   'Tab-Me-Conversations': undefined
   'Tab-Me-Favourites': undefined
+  'Tab-Me-FollowedTags': undefined
   'Tab-Me-List': Mastodon.List
   'Tab-Me-List-Accounts': Omit<Mastodon.List, 'replies_policy'>
   'Tab-Me-List-Edit':

@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
+import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
 import { getInstanceMePage, updateInstanceMePage } from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
@@ -16,39 +17,40 @@ const Collections: React.FC = () => {
   const dispatch = useAppDispatch()
   const mePage = useSelector(getInstanceMePage)
 
-  const listsQuery = useListsQuery({
+  useFollowedTagsQuery({
     options: {
-      notifyOnChangeProps: ['data']
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            followedTags: { shown: !!data?.pages?.[0].body?.length }
+          })
+        )
     }
   })
-  useEffect(() => {
-    if (listsQuery.isSuccess) {
-      dispatch(
-        updateInstanceMePage({
-          lists: { shown: listsQuery.data?.length ? true : false }
-        })
-      )
+  useListsQuery({
+    options: {
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            lists: { shown: !!data?.length }
+          })
+        )
     }
-  }, [listsQuery.isSuccess, listsQuery.data?.length])
-
-  const announcementsQuery = useAnnouncementQuery({
+  })
+  useAnnouncementQuery({
     showAll: true,
     options: {
-      notifyOnChangeProps: ['data']
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            announcements: {
+              shown: !!data?.length ? true : false,
+              unread: data?.filter(announcement => !announcement.read).length
+            }
+          })
+        )
     }
   })
-  useEffect(() => {
-    if (announcementsQuery.data) {
-      dispatch(
-        updateInstanceMePage({
-          announcements: {
-            shown: announcementsQuery.data.length ? true : false,
-            unread: announcementsQuery.data.filter(announcement => !announcement.read).length
-          }
-        })
-      )
-    }
-  }, [announcementsQuery.data])
 
   const instancePush = useSelector(getInstancePush, (prev, next) => prev?.global === next?.global)
 
@@ -78,6 +80,14 @@ const Collections: React.FC = () => {
           iconBack='ChevronRight'
           title={t('me.stacks.lists.name')}
           onPress={() => navigation.navigate('Tab-Me-List-List')}
+        />
+      ) : null}
+      {mePage.followedTags.shown ? (
+        <MenuRow
+          iconFront='Hash'
+          iconBack='ChevronRight'
+          title={t('me.stacks.followedTags.name')}
+          onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
         />
       ) : null}
       {mePage.announcements.shown ? (

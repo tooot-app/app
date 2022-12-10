@@ -135,6 +135,7 @@ const instancesMigration = {
       instances: state.instances.map(instance => {
         return {
           ...instance,
+          mePage: { ...instance.mePage, followedTags: { shown: false } },
           push: {
             ...instance.push,
             global: instance.push.global.value,
