@@ -215,10 +215,10 @@
         "heading": "Toot van geabonneerde gebruikers"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: registreren"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: rapporten"
       },
       "howitworks": "Leer hoe het werkt"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Ingeschakeld",
+        "content_false": "Uitgeschakeld"
       },
       "update": {
         "title": "Bijwerken naar de laatste versie"
