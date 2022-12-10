@@ -215,10 +215,10 @@
         "heading": "Toot eines abonnierten Nutzers"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: Registrierung"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: Meldungen"
       },
       "howitworks": "Erfahre, wie das Routing funktioniert"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Aktiviert",
+        "content_false": "Deaktiviert"
       },
       "update": {
         "title": "Auf neueste Version aktualisiert"
