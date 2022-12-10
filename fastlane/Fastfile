@@ -151,7 +151,7 @@ lane :release do
       tag_name: GITHUB_RELEASE,
       description: "No changelog provided",
       commitish: git_branch,
-      is_prerelease: false
+      is_prerelease: false,
       upload_assets: ["#{File.expand_path('..', Dir.pwd)}/tooot-#{GITHUB_RELEASE}.apk"]
     )
   end
