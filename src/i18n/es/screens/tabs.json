@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favoritos"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Tamaño de fuente"
       },
@@ -53,7 +56,7 @@
         "name": "Usuarios en la lista: {{list}}"
       },
       "listAdd": {
-        "name": "Añadir una lista"
+        "name": ""
       },
       "listEdit": {
         "name": "Editar detalles de lista"
