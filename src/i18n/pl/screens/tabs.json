@@ -40,6 +40,9 @@
       "favourites": {
         "name": ""
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": ""
       },
