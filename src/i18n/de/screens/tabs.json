@@ -41,7 +41,7 @@
         "name": "Favoriten"
       },
       "followedTags": {
-        "name": ""
+        "name": "Abonnierte Hashtags"
       },
       "fontSize": {
         "name": "Schriftgröße"
@@ -56,7 +56,7 @@
         "name": "Benutzer in dieser Liste: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Eine Liste erstellen"
       },
       "listEdit": {
         "name": "Listendetails bearbeiten"
