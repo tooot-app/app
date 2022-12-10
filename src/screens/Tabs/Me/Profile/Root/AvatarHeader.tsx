@@ -24,17 +24,14 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
     <MenuRow
       title={t(`me.profile.root.${type}.title`)}
       description={t(`me.profile.root.${type}.description`)}
-      loading={query.isLoading || mutation.isLoading}
+      loading={query.isFetching || mutation.isLoading}
       iconBack='ChevronRight'
       onPress={async () => {
         const image = await mediaSelector({
           mediaType: 'photo',
           maximum: 1,
           showActionSheetWithOptions,
-          resize:
-            type === 'avatar'
-              ? { width: 400, height: 400 }
-              : { width: 1500, height: 500 }
+          resize: type === 'avatar' ? { width: 400, height: 400 } : { width: 1500, height: 500 }
         })
         if (image[0].uri) {
           mutation.mutate({
