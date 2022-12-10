@@ -1,0 +1,175 @@
+{
+  "heading": {
+    "left": {
+      "button": "Скасувати",
+      "alert": {
+        "title": "Скасувати редагування?",
+        "buttons": {
+          "save": "Зберегти чернетку",
+          "delete": "Видалити чернетку",
+          "cancel": "Скасувати"
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "Дмух",
+        "conversation": "Дмух DM",
+        "reply": "Дмухнути",
+        "deleteEdit": "Дмух",
+        "edit": "Дмух",
+        "share": "Дмух"
+      },
+      "alert": {
+        "default": {
+          "title": "Дмухнути не вийшло",
+          "button": "Спробуйте ще раз"
+        },
+        "removeReply": {
+          "title": "Дмух для відповіді не знайдено",
+          "description": "Дмух може бути видалено. Видалити його з вашого посилання?",
+          "confirm": "Видалити посилання"
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "Дмухнути як @{{acct}}@{{domain}}",
+        "spoilerInput": {
+          "placeholder": "Попередження спойлера"
+        },
+        "textInput": {
+          "placeholder": "Що у вас на думці?",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": "Досягнута максимальна кількість вкладень",
+              "OK": "$t(common:buttons.OK)"
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "Позначте вкладення як чутливі",
+          "remove": {
+            "accessibilityLabel": "Видалити завантажене вкладення, номер {{attachment}}"
+          },
+          "edit": {
+            "accessibilityLabel": "Редагувати завантажене вкладення, номер {{attachment}}"
+          },
+          "upload": {
+            "accessibilityLabel": "Завантажити додаткові вкладення"
+          }
+        },
+        "emojis": {
+          "accessibilityHint": "Торкніться, щоб додати емодзі для дмуху"
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "Варіант опитування {{index}}",
+              "single": "Один вибір",
+              "multiple": "Множинний вибір"
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "Зменшити варіанти відповіді на {{amount}}",
+              "accessibilityHint": "Досягнута мінімальна кількість варіантів опитування, наразі має {{amount}}"
+            },
+            "increase": {
+              "accessibilityLabel": "Збільшити варіанти відповіді на {{amount}}",
+              "accessibilityHint": "Досягнута максимальна кількість варіантів опитування, наразі має {{amount}}"
+            }
+          },
+          "multiple": {
+            "heading": "Тип вибору",
+            "options": {
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "expiration": {
+            "heading": "",
+            "options": {
+              "300": "",
+              "1800": "",
+              "3600": "",
+              "21600": "",
+              "86400": "",
+              "259200": "",
+              "604800": ""
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "",
+          "accessibilityHint": "",
+          "failed": {
+            "alert": {
+              "title": "",
+              "button": ""
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        },
+        "visibility": {
+          "accessibilityLabel": "",
+          "title": "",
+          "options": {
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "direct": ""
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": ""
+        },
+        "emoji": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        }
+      },
+      "drafts_one": "",
+      "drafts_other": ""
+    },
+    "editAttachment": {
+      "header": {
+        "title": "",
+        "right": {
+          "accessibilityLabel": "",
+          "failed": {
+            "title": "",
+            "button": ""
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "",
+          "placeholder": ""
+        },
+        "imageFocus": ""
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": ""
+      },
+      "warning": "",
+      "content": {
+        "accessibilityHint": "",
+        "textEmpty": ""
+      },
+      "checkAttachment": ""
+    }
+  }
+}
