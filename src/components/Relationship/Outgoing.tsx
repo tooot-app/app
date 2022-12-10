@@ -10,7 +10,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 export interface Props {
   id: Mastodon.Account['id']

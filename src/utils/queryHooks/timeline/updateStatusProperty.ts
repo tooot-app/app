@@ -1,5 +1,5 @@
 import queryClient from '@helpers/queryClient'
-import { InfiniteData } from 'react-query'
+import { InfiniteData } from '@tanstack/react-query'
 import { MutationVarsTimelineUpdateStatusProperty, TimelineData } from '../timeline'
 import updateConversation from './update/conversation'
 import updateNotification from './update/notification'

@@ -1,16 +1,17 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
-import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 export type QueryKeyStatus = ['Status', { id: Mastodon.Status['id'] }]
 
-const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyStatus>) => {
+const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyStatus>) => {
   const { id } = queryKey[1]
 
-  return apiInstance<Mastodon.Status>({
+  const res = await apiInstance<Mastodon.Status>({
     method: 'get',
     url: `statuses/${id}`
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
 const useStatusQuery = ({

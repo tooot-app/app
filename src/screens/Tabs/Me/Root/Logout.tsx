@@ -7,7 +7,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 
 const Logout: React.FC = () => {

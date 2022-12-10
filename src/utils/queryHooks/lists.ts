@@ -8,7 +8,7 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 export type QueryKeyLists = ['Lists']
 

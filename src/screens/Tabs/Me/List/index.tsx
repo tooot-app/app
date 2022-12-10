@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import { menuListAccounts, menuListDelete, menuListEdit } from './menus'
 

@@ -12,7 +12,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useAppDispatch } from '@root/store'
 
