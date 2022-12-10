@@ -215,10 +215,10 @@
         "heading": "Tút từ người đã theo dõi"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin: đăng ký"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin: báo cáo"
       },
       "howitworks": "Tìm hiểu cách truyền"
     },
@@ -231,8 +231,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Bật",
+        "content_false": "Tắt"
       },
       "update": {
         "title": "Cập nhật phiên bản mới"
