@@ -35,12 +35,7 @@ const TabMePush: React.FC = () => {
   const instance = useSelector(getInstance)
   const expoToken = useSelector(getExpoToken)
 
-  const [serverKeyAvailable, setServerKeyAvailable] = useState<boolean>()
-  useAppsQuery({
-    options: {
-      onSuccess: data => setServerKeyAvailable(!!data.vapid_key)
-    }
-  })
+  const appsQuery = useAppsQuery()
 
   const dispatch = useAppDispatch()
   const instancePush = useSelector(getInstancePush)
@@ -66,7 +61,7 @@ const TabMePush: React.FC = () => {
       }
     }
 
-    if (serverKeyAvailable) {
+    if (appsQuery.data?.vapid_key) {
       checkPush()
 
       if (isDevelopment) {
@@ -80,7 +75,7 @@ const TabMePush: React.FC = () => {
     return () => {
       subscription.remove()
     }
-  }, [serverKeyAvailable])
+  }, [appsQuery.data?.vapid_key])
 
   const alerts = () =>
     instancePush?.alerts
@@ -133,7 +128,7 @@ const TabMePush: React.FC = () => {
 
   return (
     <ScrollView>
-      {!!serverKeyAvailable ? (
+      {!!appsQuery.data?.vapid_key ? (
         <>
           {!!pushAvailable ? (
             <>
