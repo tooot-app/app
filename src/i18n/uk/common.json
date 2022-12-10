@@ -1,0 +1,31 @@
+{
+  "buttons": {
+    "OK": "OK",
+    "apply": "Застосувати",
+    "cancel": "Скасувати",
+    "discard": "Відхилити",
+    "continue": "Продовжити",
+    "create": "Створити",
+    "delete": "Видалити",
+    "done": "Готово"
+  },
+  "customEmoji": {
+    "accessibilityLabel": "Власні емодзі {{emoji}}"
+  },
+  "message": {
+    "success": {
+      "message": "{{function}} успішно"
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": "{{function}} не вдалося, спробуйте ще раз"
+    }
+  },
+  "separator": ", ",
+  "discard": {
+    "title": "Зміни не збережено",
+    "message": "Зміни не збережено. Зберегти зміни?"
+  }
+}
