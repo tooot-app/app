@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Đã thích"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Cỡ chữ"
       },
@@ -53,7 +56,7 @@
         "name": "Người trong danh sách: {{list}}"
       },
       "listAdd": {
-        "name": "Thêm một danh sách"
+        "name": ""
       },
       "listEdit": {
         "name": "Sửa danh sách"
