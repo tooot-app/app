@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favoris"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Taille de la police de Pouet"
       },
