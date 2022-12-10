@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favoriter"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Storlek på teckensnitt i inlägg"
       },
@@ -53,7 +56,7 @@
         "name": "Användare i listan: {{list}}"
       },
       "listAdd": {
-        "name": "Lägg till en lista"
+        "name": ""
       },
       "listEdit": {
         "name": "Redigera listans detaljer"
