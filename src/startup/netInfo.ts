@@ -17,7 +17,7 @@ const netInfo = async (): Promise<{
 
   onlineManager.setEventListener(setOnline => {
     return NetInfo.addEventListener(state => {
-      setOnline(typeof state.isConnected === 'boolean' ? state.isConnected : undefined)
+      setOnline(!!state.isConnected)
     })
   })
 
