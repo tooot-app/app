@@ -40,6 +40,9 @@
       "favourites": {
         "name": "즐겨찾기"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "툿 폰트 크기"
       },
@@ -53,7 +56,7 @@
         "name": "{{list}} 리스트의 사용자"
       },
       "listAdd": {
-        "name": "리스트에 추가"
+        "name": ""
       },
       "listEdit": {
         "name": "리스트 상세 편집"
