@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favoritos"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Tamanho da fonte do Toot"
       },
