@@ -40,6 +40,9 @@
       "favourites": {
         "name": "お気に入り"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "トゥートのフォントサイズ"
       },
@@ -53,7 +56,7 @@
         "name": "リスト {{list}} のユーザー"
       },
       "listAdd": {
-        "name": "リストに追加"
+        "name": ""
       },
       "listEdit": {
         "name": "リストの詳細を編集"
