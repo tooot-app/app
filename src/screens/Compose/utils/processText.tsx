@@ -1,7 +1,6 @@
 import LinkifyIt from 'linkify-it'
 import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { Dispatch } from 'react'
-import { FetchOptions } from 'react-query/types/core/query'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './types'
 import { instanceConfigurationStatusCharsURL } from '../Root'
@@ -12,7 +11,6 @@ export interface Params {
   textInput: ComposeState['textInputFocus']['current']
   composeDispatch: Dispatch<ComposeAction>
   content: string
-  refetch?: (options?: FetchOptions | undefined) => Promise<any>
   disableDebounce?: boolean
 }
 

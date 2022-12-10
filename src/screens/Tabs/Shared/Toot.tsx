@@ -6,7 +6,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
-import { InfiniteQueryObserver, useQueryClient } from 'react-query'
+import { InfiniteQueryObserver, useQueryClient } from '@tanstack/react-query'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   navigation,

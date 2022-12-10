@@ -11,7 +11,7 @@ import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation
-} from 'react-query'
+} from '@tanstack/react-query'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'

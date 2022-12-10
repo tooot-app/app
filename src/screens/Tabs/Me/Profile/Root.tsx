@@ -21,7 +21,7 @@ const TabMeProfileRoot: React.FC<
 
   const { showActionSheetWithOptions } = useActionSheet()
 
-  const { data, isLoading } = useProfileQuery()
+  const { data, isFetching } = useProfileQuery()
   const { mutateAsync } = useProfileMutation()
   const dispatch = useAppDispatch()
 
@@ -31,7 +31,7 @@ const TabMeProfileRoot: React.FC<
         <MenuRow
           title={t('me.profile.root.name.title')}
           content={data?.display_name}
-          loading={isLoading}
+          loading={isFetching}
           iconBack='ChevronRight'
           onPress={() => {
             data &&
@@ -45,7 +45,7 @@ const TabMeProfileRoot: React.FC<
         <MenuRow
           title={t('me.profile.root.note.title')}
           content={data?.source.note}
-          loading={isLoading}
+          loading={isFetching}
           iconBack='ChevronRight'
           onPress={() => {
             data &&
@@ -63,7 +63,7 @@ const TabMeProfileRoot: React.FC<
                 })
               : undefined
           }
-          loading={isLoading}
+          loading={isFetching}
           iconBack='ChevronRight'
           onPress={() => {
             navigation.navigate('Tab-Me-Profile-Fields', {
@@ -80,7 +80,7 @@ const TabMeProfileRoot: React.FC<
               ? t(`me.profile.root.visibility.options.${data?.source.privacy}`)
               : undefined
           }
-          loading={isLoading}
+          loading={isFetching}
           iconBack='ChevronRight'
           onPress={() =>
             showActionSheetWithOptions(
@@ -138,7 +138,7 @@ const TabMeProfileRoot: React.FC<
               data: data?.source.sensitive === undefined ? true : !data.source.sensitive
             }).then(() => dispatch(updateAccountPreferences()))
           }
-          loading={isLoading}
+          loading={isFetching}
         />
       </MenuContainer>
       <MenuContainer>
@@ -158,7 +158,7 @@ const TabMeProfileRoot: React.FC<
               data: data?.locked === undefined ? true : !data.locked
             })
           }
-          loading={isLoading}
+          loading={isFetching}
         />
         <MenuRow
           title={t('me.profile.root.bot.title')}
@@ -176,7 +176,7 @@ const TabMeProfileRoot: React.FC<
               data: data?.bot === undefined ? true : !data.bot
             })
           }
-          loading={isLoading}
+          loading={isFetching}
         />
       </MenuContainer>
     </ScrollView>

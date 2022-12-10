@@ -17,7 +17,7 @@ import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 
 const menuAccount = ({

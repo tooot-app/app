@@ -6,16 +6,16 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 type QueryKeyAnnouncement = ['Announcements', { showAll?: boolean }]
 
-const queryFunction = ({
+const queryFunction = async ({
   queryKey
 }: QueryFunctionContext<QueryKeyAnnouncement>) => {
   const { showAll } = queryKey[1]
 
-  return apiInstance<Mastodon.Announcement[]>({
+  const res = await apiInstance<Mastodon.Announcement[]>({
     method: 'get',
     url: `announcements`,
     ...(showAll && {
@@ -23,7 +23,8 @@ const queryFunction = ({
         with_dismissed: 'true'
       }
     })
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
 const useAnnouncementQuery = ({

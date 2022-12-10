@@ -20,7 +20,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import { InfiniteData, useQueryClient } from 'react-query'
+import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 
 export interface Props {
   flRef: RefObject<FlatList<any>>

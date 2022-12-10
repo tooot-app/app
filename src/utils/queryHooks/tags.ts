@@ -6,7 +6,7 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = ({
@@ -27,10 +27,11 @@ const useFollowedTagsQuery = ({
 }
 
 type QueryKeyTags = ['Tags', { tag: string }]
-const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyTags>) => {
+const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyTags>) => {
   const { tag } = queryKey[1]
 
-  return apiInstance<Mastodon.Tag>({ method: 'get', url: `tags/${tag}` }).then(res => res.body)
+  const res = await apiInstance<Mastodon.Tag>({ method: 'get', url: `tags/${tag}` })
+  return res.body
 }
 const useTagsQuery = ({
   options,
