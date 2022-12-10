@@ -40,6 +40,9 @@
       "favourites": {
         "name": "喜欢"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "嘟文字号"
       },
@@ -53,7 +56,7 @@
         "name": "列表中的用户：{{list}}"
       },
       "listAdd": {
-        "name": "添加列表"
+        "name": ""
       },
       "listEdit": {
         "name": "编辑列表详情"
