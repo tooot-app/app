@@ -7,7 +7,6 @@ export const updateInstancePushAlert = createAsyncThunk(
   async ({
     alerts
   }: {
-    changed: keyof InstanceLatest['push']['alerts']
     alerts: InstanceLatest['push']['alerts']
   }): Promise<InstanceLatest['push']['alerts']> => {
     const formData = new FormData()

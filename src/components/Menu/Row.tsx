@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 

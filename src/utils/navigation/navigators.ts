@@ -136,7 +136,10 @@ export type TabPublicStackParamList = {
 
 export type TabNotificationsStackParamList = {
   'Tab-Notifications-Root': undefined
+  'Tab-Notifications-Filters': undefined
 } & TabSharedStackParamList
+export type TabNotificationsStackScreenProps<T extends keyof TabNotificationsStackParamList> =
+  NativeStackScreenProps<TabNotificationsStackParamList, T>
 
 export type TabMeStackParamList = {
   'Tab-Me-Root': undefined
