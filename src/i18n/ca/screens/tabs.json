@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favorits"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Mida de la font de la publicació"
       },
@@ -53,7 +56,7 @@
         "name": "Usuaris a la llista: {{list}}"
       },
       "listAdd": {
-        "name": "Afegeix a la llista"
+        "name": ""
       },
       "listEdit": {
         "name": "Edita els detalls de la llista"
