@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Apprezzati"
       },
+      "followedTags": {
+        "name": ""
+      },
       "fontSize": {
         "name": "Grandezza del testo dei toot"
       },
