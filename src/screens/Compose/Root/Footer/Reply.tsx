@@ -1,4 +1,5 @@
 import TimelineDefault from '@components/Timeline/Default'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -11,16 +12,24 @@ const ComposeReply: React.FC = () => {
   const { colors } = useTheme()
 
   return (
-    <View style={[styles.base, { borderTopColor: colors.border }]}>
-      <TimelineDefault item={replyToStatus!} disableDetails disableOnPress />
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        minHeight: StyleConstants.Font.LineHeight.M * 5,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderRadius: StyleConstants.Spacing.S,
+        overflow: 'hidden',
+        borderColor: colors.border,
+        marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+        marginTop: StyleConstants.Spacing.M
+      }}
+    >
+      {replyToStatus ? (
+        <TimelineDefault item={replyToStatus} disableDetails disableOnPress />
+      ) : null}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    borderTopWidth: StyleSheet.hairlineWidth
-  }
-})
 
 export default React.memo(ComposeReply, () => true)

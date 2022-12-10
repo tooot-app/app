@@ -50,10 +50,7 @@ const Collections: React.FC = () => {
     }
   }, [announcementsQuery.data])
 
-  const instancePush = useSelector(
-    getInstancePush,
-    (prev, next) => prev?.global.value === next?.global.value
-  )
+  const instancePush = useSelector(getInstancePush, (prev, next) => prev?.global === next?.global)
 
   return (
     <MenuContainer>
@@ -102,11 +99,7 @@ const Collections: React.FC = () => {
         iconFront={instancePush ? 'Bell' : 'BellOff'}
         iconBack='ChevronRight'
         title={t('me.stacks.push.name')}
-        content={
-          instancePush.global.value
-            ? t('me.root.push.content.enabled')
-            : t('me.root.push.content.disabled')
-        }
+        content={t('me.root.push.content', { context: instancePush.global.toString() })}
         onPress={() => navigation.navigate('Tab-Me-Push')}
       />
     </MenuContainer>

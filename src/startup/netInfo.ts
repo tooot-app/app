@@ -1,13 +1,8 @@
 import apiInstance from '@api/instance'
 import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
-import initQuery from '@utils/initQuery'
-import { getPreviousTab } from '@utils/slices/contextsSlice'
 import removeInstance from '@utils/slices/instances/remove'
-import {
-  getInstance,
-  updateInstanceAccount
-} from '@utils/slices/instancesSlice'
+import { getInstance, updateInstanceAccount } from '@utils/slices/instancesSlice'
 import { onlineManager } from 'react-query'
 import log from './log'
 
@@ -22,9 +17,7 @@ const netInfo = async (): Promise<{
 
   onlineManager.setEventListener(setOnline => {
     return NetInfo.addEventListener(state => {
-      setOnline(
-        typeof state.isConnected === 'boolean' ? state.isConnected : undefined
-      )
+      setOnline(typeof state.isConnected === 'boolean' ? state.isConnected : undefined)
     })
   })
 
@@ -59,23 +52,6 @@ const netInfo = async (): Promise<{
             avatarStatic: resVerify.avatar_static
           })
         )
-
-        if (instance.timelinesLookback) {
-          const previousTab = getPreviousTab(store.getState())
-          let loadPage:
-            | Extract<App.Pages, 'Following' | 'Local' | 'LocalPublic'>
-            | undefined = undefined
-          if (previousTab === 'Tab-Local') {
-            loadPage = 'Following'
-          } else if (previousTab === 'Tab-Public') {
-            loadPage = 'LocalPublic'
-          }
-
-          // await initQuery({
-          //   instance,
-          //   prefetch: { enabled: true, page: loadPage }
-          // })
-        }
 
         return Promise.resolve({ connected: true })
       }

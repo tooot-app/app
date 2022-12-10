@@ -55,16 +55,13 @@ const apiTooot = async <T = unknown>({
         body: response.data
       })
     })
-    .catch(error => {
-      Sentry.setContext('API request', { url, params, body })
-      Sentry.setContext('Error response', {
-        ...(error?.response && { response: error.response?._response })
+    .catch(
+      handleError({
+        message: 'API error',
+        captureRequest: { url, params, body },
+        captureResponse: true
       })
-      Sentry.setContext('Error object', { error })
-      Sentry.captureMessage('API error')
-
-      return handleError(error)
-    })
+    )
 }
 
 export default apiTooot

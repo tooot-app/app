@@ -6,6 +6,7 @@ import { InstanceV7 } from './v7'
 import { InstanceV8 } from './v8'
 import { InstanceV9 } from './v9'
 import { InstanceV10 } from './v10'
+import { InstanceV11 } from './v11'
 
 const instancesMigration = {
   4: (state: InstanceV3): InstanceV4 => {
@@ -128,9 +129,34 @@ const instancesMigration = {
         }
       })
     }
+  },
+  11: (state: { instances: InstanceV10[] }): { instances: InstanceV11[] } => {
+    return {
+      instances: state.instances.map(instance => {
+        return {
+          ...instance,
+          push: {
+            ...instance.push,
+            global: instance.push.global.value,
+            decode: instance.push.decode.value,
+            alerts: {
+              follow: instance.push.alerts.follow.value,
+              follow_request: instance.push.alerts.follow_request.value,
+              favourite: instance.push.alerts.favourite.value,
+              reblog: instance.push.alerts.reblog.value,
+              mention: instance.push.alerts.mention.value,
+              poll: instance.push.alerts.poll.value,
+              status: instance.push.alerts.status.value,
+              'admin.sign_up': false,
+              'admin.report': false
+            }
+          }
+        }
+      })
+    }
   }
 }
 
-export { InstanceV10 as InstanceLatest }
+export { InstanceV11 as InstanceLatest }
 
 export default instancesMigration

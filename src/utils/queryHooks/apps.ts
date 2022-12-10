@@ -1,18 +1,41 @@
 import apiGeneral from '@api/general'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import * as AuthSession from 'expo-auth-session'
-import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
+import {
+  QueryFunctionContext,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
+} from 'react-query'
 
-export type QueryKeyApps = ['Apps', { domain?: string }]
+export type QueryKeyApps = ['Apps']
 
-const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyApps>) => {
-  const redirectUri = AuthSession.makeRedirectUri({
-    native: 'tooot://instance-auth',
-    useProxy: false
+const queryFunctionApps = async ({ queryKey }: QueryFunctionContext<QueryKeyApps>) => {
+  const res = await apiInstance<Mastodon.Apps>({
+    method: 'get',
+    url: 'apps/verify_credentials'
   })
+  return res.body
+}
 
-  const { domain } = queryKey[1]
+const useAppsQuery = (
+  params: {
+    options?: UseQueryOptions<Mastodon.Apps, AxiosError>
+  } | void
+) => {
+  const queryKey: QueryKeyApps = ['Apps']
+  return useQuery(queryKey, queryFunctionApps, params?.options)
+}
 
+type MutationVarsApps = { domain: string }
+
+export const redirectUri = AuthSession.makeRedirectUri({
+  native: 'tooot://instance-auth',
+  useProxy: false
+})
+const mutationFunctionApps = async ({ domain }: MutationVarsApps) => {
   const formData = new FormData()
   formData.append('client_name', 'tooot')
   formData.append('website', 'https://tooot.app')
@@ -21,20 +44,16 @@ const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyApps>) => {
 
   return apiGeneral<Mastodon.Apps>({
     method: 'post',
-    domain: domain || '',
+    domain: domain,
     url: `api/v1/apps`,
     body: formData
   }).then(res => res.body)
 }
 
-const useAppsQuery = ({
-  options,
-  ...queryKeyParams
-}: QueryKeyApps[1] & {
-  options?: UseQueryOptions<Mastodon.Apps, AxiosError>
-}) => {
-  const queryKey: QueryKeyApps = ['Apps', { ...queryKeyParams }]
-  return useQuery(queryKey, queryFunction, options)
+const useAppsMutation = (
+  options: UseMutationOptions<Mastodon.Apps, AxiosError, MutationVarsApps>
+) => {
+  return useMutation(mutationFunctionApps, options)
 }
 
-export { useAppsQuery }
+export { useAppsQuery, useAppsMutation }

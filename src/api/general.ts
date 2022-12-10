@@ -22,13 +22,13 @@ const apiGeneral = async <T = unknown>({
 }: Params): Promise<{ body: T }> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
-    ' ' +
-    domain +
-    ' ' +
-    method +
-    ctx.green(' -> ') +
-    `/${url}` +
-    (params ? ctx.green(' -> ') : ''),
+      ' ' +
+      domain +
+      ' ' +
+      method +
+      ctx.green(' -> ') +
+      `/${url}` +
+      (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 
@@ -39,10 +39,7 @@ const apiGeneral = async <T = unknown>({
     url,
     params,
     headers: {
-      'Content-Type':
-        body && body instanceof FormData
-          ? 'multipart/form-data'
-          : 'application/json',
+      'Content-Type': body && body instanceof FormData ? 'multipart/form-data' : 'application/json',
       Accept: '*/*',
       ...userAgent,
       ...headers
@@ -54,7 +51,7 @@ const apiGeneral = async <T = unknown>({
         body: response.data
       })
     })
-    .catch(handleError)
+    .catch(handleError())
 }
 
 export default apiGeneral

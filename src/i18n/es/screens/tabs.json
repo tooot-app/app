@@ -178,6 +178,10 @@
         "direct": "Habilitar notificaciones push",
         "settings": "Activar en Ajustes"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Habilitar para {{acct}}",
         "description": "Los mensajes se envían a través del servidor de tooot"

@@ -178,6 +178,10 @@
         "direct": "プッシュ通知を有効にする",
         "settings": "設定で有効にする"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "{{acct}} の通知を有効にする",
         "description": "メッセージは tooot のサーバー経由で到達します"

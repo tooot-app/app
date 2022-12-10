@@ -129,15 +129,11 @@ const TabMe = React.memo(
           name='Tab-Me-Push'
           component={TabMePush}
           options={({ navigation }) => ({
-            presentation: 'modal',
-            headerShown: true,
             title: t('me.stacks.push.name'),
             ...(Platform.OS === 'android' && {
               headerCenter: () => <HeaderCenter content={t('me.stacks.push.name')} />
             }),
-            headerLeft: () => (
-              <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
-            )
+            headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
           })}
         />
         <Stack.Screen

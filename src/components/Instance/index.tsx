@@ -1,22 +1,27 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import browserPackage from '@helpers/browserPackage'
-import { useAppsQuery } from '@utils/queryHooks/apps'
+import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { getInstances } from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as AuthSession from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
-import React, { RefObject, useCallback, useMemo, useState } from 'react'
+import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { Placeholder } from 'rn-placeholder'
-import InstanceAuth from './Instance/Auth'
-import InstanceInfo from './Instance/Info'
-import CustomText from './Text'
+import InstanceInfo from './Info'
+import CustomText from '../Text'
+import { useNavigation } from '@react-navigation/native'
+import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
+import queryClient from '@helpers/queryClient'
+import { useAppDispatch } from '@root/store'
+import addInstance from '@utils/slices/instances/add'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -31,30 +36,64 @@ const ComponentInstance: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation('componentInstance')
   const { colors, mode } = useTheme()
+  const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
 
+  const [domain, setDomain] = useState<string>('')
+
+  const dispatch = useAppDispatch()
   const instances = useSelector(getInstances, () => true)
-  const [domain, setDomain] = useState<string>()
-
   const instanceQuery = useInstanceQuery({
     domain,
     options: { enabled: !!domain, retry: false }
   })
-  const appsQuery = useAppsQuery({
-    domain,
-    options: { enabled: false, retry: false }
-  })
 
-  const onChangeText = useCallback(
-    debounce(
-      text => {
-        setDomain(text.replace(/^http(s)?\:\/\//i, ''))
-        appsQuery.remove()
-      },
-      1000,
-      { trailing: true }
-    ),
-    []
-  )
+  const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
+
+  const appsMutation = useAppsMutation({
+    retry: false,
+    onSuccess: async (data, variables) => {
+      const clientId = data.client_id
+      const clientSecret = data.client_secret
+
+      const discovery = { authorizationEndpoint: `https://${domain}/oauth/authorize` }
+
+      const request = new AuthSession.AuthRequest({
+        clientId,
+        clientSecret,
+        scopes: deprecateAuthFollow
+          ? ['read', 'write', 'push']
+          : ['read', 'write', 'follow', 'push'],
+        redirectUri
+      })
+      await request.makeAuthUrlAsync(discovery)
+
+      const promptResult = await request.promptAsync(discovery)
+
+      if (promptResult?.type === 'success') {
+        const { accessToken } = await AuthSession.exchangeCodeAsync(
+          {
+            clientId,
+            clientSecret,
+            scopes: ['read', 'write', 'follow', 'push'],
+            redirectUri,
+            code: promptResult.params.code,
+            extraParams: { grant_type: 'authorization_code' }
+          },
+          { tokenEndpoint: `https://${variables.domain}/oauth/token` }
+        )
+        queryClient.clear()
+        dispatch(
+          addInstance({
+            domain,
+            token: accessToken,
+            instance: instanceQuery.data!,
+            appData: { clientId, clientSecret }
+          })
+        )
+        goBack && navigation.goBack()
+      }
+    }
+  })
 
   const processUpdate = useCallback(() => {
     if (domain) {
@@ -66,38 +105,14 @@ const ComponentInstance: React.FC<Props> = ({
           },
           {
             text: t('common:buttons.continue'),
-            onPress: () => {
-              appsQuery.refetch()
-            }
+            onPress: () => appsMutation.mutate({ domain })
           }
         ])
       } else {
-        appsQuery.refetch()
+        appsMutation.mutate({ domain })
       }
     }
   }, [domain])
-
-  const requestAuth = useMemo(() => {
-    if (
-      domain &&
-      instanceQuery.data?.uri &&
-      appsQuery.data?.client_id &&
-      appsQuery.data.client_secret
-    ) {
-      return (
-        <InstanceAuth
-          key={Math.random()}
-          instanceDomain={domain}
-          instance={instanceQuery.data}
-          appData={{
-            clientId: appsQuery.data.client_id,
-            clientSecret: appsQuery.data.client_secret
-          }}
-          goBack={goBack}
-        />
-      )
-    }
-  }, [domain, instanceQuery.data, appsQuery.data])
 
   return (
     <KeyboardAvoidingView
@@ -145,7 +160,9 @@ const ComponentInstance: React.FC<Props> = ({
               color: colors.primaryDefault,
               borderBottomColor: instanceQuery.isError ? colors.red : colors.border
             }}
-            onChangeText={onChangeText}
+            onChangeText={debounce(text => setDomain(text.replace(/^http(s)?\:\/\//i, '')), 1000, {
+              trailing: true
+            })}
             autoCapitalize='none'
             clearButtonMode='never'
             keyboardType='url'
@@ -176,7 +193,7 @@ const ComponentInstance: React.FC<Props> = ({
             content={t('server.button')}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri}
-            loading={instanceQuery.isFetching || appsQuery.isFetching}
+            loading={instanceQuery.isFetching || appsMutation.isLoading}
           />
         </View>
 
@@ -276,8 +293,6 @@ const ComponentInstance: React.FC<Props> = ({
           </View>
         </View>
       </View>
-
-      {requestAuth}
     </KeyboardAvoidingView>
   )
 }

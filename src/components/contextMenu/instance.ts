@@ -1,7 +1,6 @@
 import { displayMessage } from '@components/Message'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from 'react-query'
@@ -18,14 +17,12 @@ const menuInstance = ({
 }): ContextMenu[][] => {
   if (!status || !queryKey) return []
 
-  const { theme } = useTheme()
   const { t } = useTranslation('componentContextMenu')
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     onSettled: () => {
       displayMessage({
-        theme,
         type: 'success',
         message: t('common:message.success.message', {
           function: t(`instance.block.action`, { instance })

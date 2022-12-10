@@ -1,3 +1,4 @@
+import { handleError } from '@api/helpers'
 import { ComponentEmojis } from '@components/Emojis'
 import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
@@ -5,8 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
 import { useAppDispatch } from '@root/store'
 import ComposeRoot from '@screens/Compose/Root'
-import formatText from '@screens/Compose/utils/formatText'
-import * as Sentry from '@sentry/react-native'
+import { formatText } from '@screens/Compose/utils/processText'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
@@ -257,13 +257,17 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     () => (
       <HeaderRight
         type='text'
-        content={
-          params?.type
-            ? params.type === 'conversation' && params.visibility === 'direct'
-              ? t(`heading.right.button.${params.type}`)
-              : t('heading.right.button.default')
-            : t('heading.right.button.default')
-        }
+        content={t(
+          `heading.right.button.${
+            (params?.type &&
+              (params.type === 'conversation'
+                ? params.visibility === 'direct'
+                  ? params.type
+                  : 'default'
+                : params.type)) ||
+            'default'
+          }`
+        )}
         onPress={() => {
           composeDispatch({ type: 'posting', payload: true })
 
@@ -319,9 +323,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   ]
                 )
               } else {
-                Sentry.setContext('Error object', { error })
-                Sentry.captureMessage('Posting error')
                 haptics('Error')
+                handleError({ message: 'Posting error', captureResponse: true })
                 composeDispatch({ type: 'posting', payload: false })
                 Alert.alert(t('heading.right.alert.default.title'), undefined, [
                   {

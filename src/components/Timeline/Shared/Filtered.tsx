@@ -72,12 +72,12 @@ export const shouldFilter = ({
       const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
       switch (filter.whole_word) {
         case true:
-          if (new RegExp(`\\B${escapedPhrase}\\b`).test(rawContent)) {
+          if (new RegExp(`\\b${escapedPhrase}\\b`, 'i').test(rawContent)) {
             shouldFilter = filter.phrase
           }
           break
         case false:
-          if (new RegExp(escapedPhrase).test(rawContent)) {
+          if (new RegExp(escapedPhrase, 'i').test(rawContent)) {
             shouldFilter = filter.phrase
           }
           break

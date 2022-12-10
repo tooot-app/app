@@ -1,4 +1,5 @@
 import apiGeneral from '@api/general'
+import { handleError } from '@api/helpers'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
@@ -6,7 +7,6 @@ import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
-import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux'
 
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
-  const { theme } = useTheme()
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -24,7 +23,7 @@ const pushUseConnect = () => {
 
   const expoToken = useSelector(getExpoToken)
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
-  const pushEnabled = instances.filter(instance => instance.push.global.value)
+  const pushEnabled = instances.filter(instance => instance.push.global)
 
   const connect = () => {
     apiTooot({
@@ -33,16 +32,12 @@ const pushUseConnect = () => {
     })
       .then(() => Notifications.setBadgeCountAsync(0))
       .catch(error => {
-        Sentry.setContext('Error response', {
-          ...(error?.response && { response: error.response?._response })
-        })
-        Sentry.setContext('Error object', { error })
-        Sentry.captureMessage('Push connect error')
+        handleError({ message: 'Push connect error', captureResponse: true })
+
         Notifications.setBadgeCountAsync(0)
         if (error?.status == 404) {
           displayMessage({
-            theme,
-            type: 'error',
+            type: 'danger',
             duration: 'long',
             message: t('pushError.message'),
             description: t('pushError.description'),
@@ -65,7 +60,7 @@ const pushUseConnect = () => {
           dispatch(disableAllPushes())
 
           instances.forEach(instance => {
-            if (instance.push.global.value) {
+            if (instance.push.global) {
               apiGeneral<{}>({
                 method: 'delete',
                 domain: instance.url,

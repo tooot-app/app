@@ -41,8 +41,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
     onError: () => {
       displayMessage({
         ref: messageRef,
-        theme,
-        type: 'error',
+        type: 'danger',
         message: t('common:message.error.message', {
           function:
             params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name')

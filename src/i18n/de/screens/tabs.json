@@ -178,6 +178,10 @@
         "direct": "Push-Benachrichtigungen aktivieren",
         "settings": "In den Einstellungen aktivieren"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Aktivieren für {{acct}}",
         "description": "Nachrichten werden über den Tooot-Server geleitet"

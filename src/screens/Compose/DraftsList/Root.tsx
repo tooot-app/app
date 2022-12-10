@@ -15,7 +15,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
-import formatText from '../utils/formatText'
+import { formatText } from '../utils/processText'
 import { ComposeStateDraft, ExtendedAttachment } from '../utils/types'
 
 export interface Props {
@@ -159,22 +159,23 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
           data={instanceDrafts}
           renderItem={renderItem}
           renderHiddenItem={({ item }) => (
-            <View
+            <Pressable
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 backgroundColor: colors.red
               }}
+              onPress={() => dispatch(removeInstanceDraft(item.timestamp))}
               children={
-                <Pressable
+                <View
                   style={{
                     flexBasis:
                       StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4,
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)'
                   }}
-                  onPress={() => dispatch(removeInstanceDraft(item.timestamp))}
                   children={
                     <Icon
                       name='Trash'
@@ -188,12 +189,6 @@ const ComposeDraftsListRoot: React.FC<Props> = ({ timestamp }) => {
           )}
           disableRightSwipe={true}
           rightOpenValue={-actionWidth}
-          // previewRowKey={
-          //   instanceDrafts?.length
-          //     ? instanceDrafts[0].timestamp.toString()
-          //     : undefined
-          // }
-          // previewDuration={350}
           previewOpenValue={-actionWidth / 2}
           ItemSeparatorComponent={ComponentSeparator}
           keyExtractor={item => item.timestamp.toString()}

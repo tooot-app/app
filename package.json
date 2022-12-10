@@ -1,6 +1,6 @@
 {
   "name": "tooot",
-  "version": "4.6.6",
+  "version": "4.7.0",
   "description": "tooot for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
   "license": "GPL-3.0-or-later",
@@ -12,7 +12,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "iphone": "react-native run-ios --simulator 'iPhone 14 Pro'",
-    "ipad": "react-native run-ios --simulator 'iPad Pro (11-inch) (3rd generation)'",
+    "ipad": "react-native run-ios --simulator 'iPad Pro (11-inch) (4th generation)'",
     "app:build": "bundle exec fastlane",
     "clean": "react-native-clean-project",
     "postinstall": "patch-package"
@@ -78,7 +78,7 @@
     "react-native-htmlview": "^0.16.0",
     "react-native-image-picker": "^4.10.2",
     "react-native-ios-context-menu": "^1.15.1",
-    "react-native-language-detection": "^0.1.0",
+    "react-native-language-detection": "^0.2.2",
     "react-native-live-text-image-view": "^0.4.0",
     "react-native-pager-view": "^6.1.2",
     "react-native-reanimated": "^2.13.0",

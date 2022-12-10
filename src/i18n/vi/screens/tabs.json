@@ -178,6 +178,10 @@
         "direct": "Bật thông báo đẩy",
         "settings": "Bật trong cài đặt"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "Bật cho {{acct}}",
         "description": "Thông báo được truyền qua máy chủ tooot"
@@ -321,9 +325,9 @@
       "suspended": "Người này đã bị vô hiệu hóa"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Danh sách của @{{username}}",
+      "inLists": "Trong danh sách",
+      "notInLists": "Danh sách khác"
     },
     "attachments": {
       "name": "<0 /><1>'s media</1>"
@@ -352,7 +356,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Hashtag xu hướng"
         }
       },
       "sections": {

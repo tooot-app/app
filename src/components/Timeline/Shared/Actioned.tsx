@@ -19,7 +19,7 @@ export interface Props {
 const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) => {
   const { status, reblogStatus } = useContext(StatusContext)
   const account = rest.account || (reblogStatus ? reblogStatus.account : status?.account)
-  if (!status || !account) return null
+  if (!account) return null
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()

@@ -1,15 +1,15 @@
 import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
-import i18n from '@root/i18n/i18n'
+import { displayMessage } from '@components/Message'
 import { RootState } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { getInstance } from '@utils/slices/instancesSlice'
-import * as Notifications from 'expo-notifications'
 import * as Random from 'expo-random'
+import i18next from 'i18next'
 import { Platform } from 'react-native'
 import base64 from 'react-native-base64'
-import androidDefaults from './androidDefaults'
+import { setChannels } from './utils'
 
 const subscribe = async ({
   expoToken,
@@ -74,6 +74,12 @@ const pushRegister = async (
   })
 
   if (!res.body.server_key?.length) {
+    displayMessage({
+      type: 'danger',
+      duration: 'long',
+      message: i18next.t('screenTabs:me.push.missingServerKey.message'),
+      description: i18next.t('screenTabs:me.push.missingServerKey.description')
+    })
     Sentry.setContext('Push server key', {
       instance: instanceUri,
       resBody: res.body
@@ -88,50 +94,11 @@ const pushRegister = async (
     accountId,
     accountFull,
     serverKey: res.body.server_key,
-    auth: instancePush.decode.value === false ? null : auth
+    auth: instancePush.decode === false ? null : auth
   })
 
   if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelGroupAsync(accountFull, {
-      name: accountFull,
-      ...androidDefaults
-    }).then(group => {
-      if (group) {
-        if (instancePush.decode.value === false) {
-          Notifications.setNotificationChannelAsync(`${group.id}_default`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.default.heading'),
-            ...androidDefaults
-          })
-        } else {
-          Notifications.setNotificationChannelAsync(`${group.id}_follow`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.follow.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${group.id}_favourite`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.favourite.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${group.id}_reblog`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.reblog.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${group.id}_mention`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.mention.heading'),
-            ...androidDefaults
-          })
-          Notifications.setNotificationChannelAsync(`${group.id}_poll`, {
-            groupId: group.id,
-            name: i18n.t('meSettingsPush:content.poll.heading'),
-            ...androidDefaults
-          })
-        }
-      }
-    })
+    setChannels(instance)
   }
 
   return Promise.resolve(auth)

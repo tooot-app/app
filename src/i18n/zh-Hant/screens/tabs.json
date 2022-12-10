@@ -178,6 +178,10 @@
         "direct": "啟用推播通知",
         "settings": "在設定中啟用"
       },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
       "global": {
         "heading": "啟用 {{acct}}",
         "description": "通知訊息將經由 tooot 伺服器轉發"

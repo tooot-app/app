@@ -39,7 +39,7 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { i18n, t } = useTranslation('screens')
+  const { t } = useTranslation('screens')
   const dispatch = useAppDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { colors, theme } = useTheme()
@@ -70,8 +70,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         displayMessage({
           message: t('localCorrupt.message'),
           description: localCorrupt.length ? localCorrupt : undefined,
-          type: 'error',
-          theme
+          type: 'danger'
         })
         // @ts-ignore
         navigationRef.navigate('Screen-Tabs', {
@@ -136,10 +135,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
           )
           if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
-            initQuery({
-              instance: instances[instanceIndex],
-              prefetch: { enabled: true }
-            })
+            initQuery({ instance: instances[instanceIndex] })
           }
         }
       }
@@ -183,8 +179,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               message: t('shareError.imageNotSupported', {
                 type: mime.split('/')[1]
               }),
-              type: 'error',
-              theme
+              type: 'danger'
             })
             return
           }
@@ -196,8 +191,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
               message: t('shareError.videoNotSupported', {
                 type: mime.split('/')[1]
               }),
-              type: 'error',
-              theme
+              type: 'danger'
             })
             return
           }
