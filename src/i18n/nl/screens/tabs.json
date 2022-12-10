@@ -40,6 +40,9 @@
       "favourites": {
         "name": "Favorieten"
       },
+      "followedTags": {
+        "name": "Gevolgde hashtags"
+      },
       "fontSize": {
         "name": "Grootte van lettertype"
       },
@@ -53,7 +56,7 @@
         "name": "Gebruikers in de lijst: {{list}}"
       },
       "listAdd": {
-        "name": "Lijst toevoegen"
+        "name": "Lijst aanmaken"
       },
       "listEdit": {
         "name": "Lijstdetails bewerken"
