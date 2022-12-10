@@ -40,6 +40,9 @@
       "favourites": {
         "name": "最愛"
       },
+      "followedTags": {
+        "name": "跟隨主題標籤"
+      },
       "fontSize": {
         "name": "嘟文字體大小"
       },
@@ -53,7 +56,7 @@
         "name": "使用者在 {{list}} 列表中"
       },
       "listAdd": {
-        "name": "新增列表"
+        "name": "建立列表"
       },
       "listEdit": {
         "name": "編輯列表詳細資料"
