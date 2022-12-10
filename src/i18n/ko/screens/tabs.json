@@ -24,9 +24,22 @@
     }
   },
   "notifications": {
-    "filter": {
-      "accessibilityLabel": "필터",
-      "accessibilityHint": "받는 알림 종류 선택"
+    "filters": {
+      "accessibilityLabel": "",
+      "accessibilityHint": "",
+      "title": "",
+      "options": {
+        "follow": "",
+        "follow_request": "",
+        "favourite": "",
+        "reblog": "",
+        "mention": "",
+        "poll": "",
+        "status": "",
+        "update": "",
+        "admin.sign_up": "",
+        "admin.report": ""
+      }
     }
   },
   "me": {
