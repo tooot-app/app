@@ -1,0 +1,152 @@
+{
+  "empty": {
+    "error": {
+      "message": "Помилка завантаження",
+      "button": "Повторити"
+    },
+    "success": {
+      "message": "Часова гілка порожня"
+    }
+  },
+  "end": {
+    "message": "Це кінець, бажаєте філіжанку кави? <0 />"
+  },
+  "lookback": {
+    "message": "Останні прочитані в"
+  },
+  "refresh": {
+    "fetchPreviousPage": "З цього моменту",
+    "refetch": "До кінця"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Прикріплено",
+      "favourite": "{{name}} додав в улюблене дмух",
+      "status": "{{name}} щойно дмухнув",
+      "follow": "{{name}} підписався на вас",
+      "follow_request": "{{name}} відправив запит на підписку",
+      "poll": "Опитування, у якому ви голосували, закінчилося",
+      "reblog": {
+        "default": "{{name}} передмухнув(-ла)",
+        "notification": "{{name}} передмухнув(-ла) ваш дмух"
+      },
+      "update": ""
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": ""
+      },
+      "reblogged": {
+        "accessibilityLabel": "",
+        "function": "",
+        "options": {
+          "title": "",
+          "public": "",
+          "unlisted": ""
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "bookmarked": {
+        "accessibilityLabel": "",
+        "function": ""
+      }
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "favourited_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": ""
+      },
+      "unsupported": {
+        "text": "",
+        "button": ""
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "content": {
+      "expandHint": ""
+    },
+    "filtered": "",
+    "fullConversation": "",
+    "translate": {
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": ""
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": "Спливає <0 />"
+        }
+      }
+    }
+  }
+}
