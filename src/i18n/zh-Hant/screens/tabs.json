@@ -6,9 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
-        "trending": ""
+        "federated": "聯邦",
+        "local": "本站",
+        "trending": "熱門"
       }
     },
     "notifications": {
