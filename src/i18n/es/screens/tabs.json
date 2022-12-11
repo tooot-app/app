@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Federado",
         "local": "Local",
-        "trending": ""
+        "trending": "En tendencia"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrar",
       "accessibilityHint": "Filtrar tipos de notificación",
-      "title": "",
+      "title": "Mostrar las notificaciones",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Solicitud de seguimiento",
@@ -55,7 +55,7 @@
         "name": "Favoritos"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtags seguidos"
       },
       "fontSize": {
         "name": "Tamaño de fuente"
