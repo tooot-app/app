@@ -6,8 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "連合",
-        "right": "ローカル"
+        "federated": "",
+        "local": "",
+        "trending": ""
       }
     },
     "notifications": {
