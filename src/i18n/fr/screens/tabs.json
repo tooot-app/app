@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Fédéré",
+        "local": "Local",
         "trending": ""
       }
     },
@@ -26,20 +26,20 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "Filtrer",
+      "accessibilityHint": "Filtrer les types de notifications affichés",
       "title": "",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Demande d'abonnement",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Pouet des utilisateurs inscrits",
+        "update": "Le reblog a été modifié",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
@@ -248,8 +248,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Activé",
+        "content_false": "Désactivé"
       },
       "update": {
         "title": "Mettre à jour vers la dernière version"
