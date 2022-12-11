@@ -1,10 +1,6 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import {
-  QueryKeyTimeline,
-  TimelineData,
-  useTimelineQuery
-} from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
@@ -31,14 +27,8 @@ export interface Props {
 }
 
 const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
-export const SEPARATION_Y_1 = -(
-  CONTAINER_HEIGHT / 2 +
-  StyleConstants.Font.Size.S / 2
-)
-export const SEPARATION_Y_2 = -(
-  CONTAINER_HEIGHT * 1.5 +
-  StyleConstants.Font.Size.S / 2
-)
+export const SEPARATION_Y_1 = -(CONTAINER_HEIGHT / 2 + StyleConstants.Font.Size.S / 2)
+export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Size.S / 2)
 
 const TimelineRefresh: React.FC<Props> = ({
   flRef,
@@ -57,87 +47,77 @@ const TimelineRefresh: React.FC<Props> = ({
   const fetchingLatestIndex = useRef(0)
   const refetchActive = useRef(false)
 
-  const {
-    refetch,
-    isFetching,
-    isLoading,
-    fetchPreviousPage,
-    hasPreviousPage,
-    isFetchingNextPage
-  } = useTimelineQuery({
-    ...queryKey[1],
-    options: {
-      getPreviousPageParam: firstPage =>
-        firstPage?.links?.prev && {
-          min_id: firstPage.links.prev,
-          // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-          limit: '3'
+  const { refetch, isFetching, isLoading, fetchPreviousPage, hasPreviousPage, isFetchingNextPage } =
+    useTimelineQuery({
+      ...queryKey[1],
+      options: {
+        getPreviousPageParam: firstPage =>
+          firstPage?.links?.prev && {
+            ...(firstPage.links.prev.isOffset
+              ? { offset: firstPage.links.prev.id }
+              : { max_id: firstPage.links.prev.id }),
+            // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
+            limit: '3'
+          },
+        select: data => {
+          if (refetchActive.current) {
+            data.pageParams = [data.pageParams[0]]
+            data.pages = [data.pages[0]]
+            refetchActive.current = false
+          }
+          return data
         },
-      select: data => {
-        if (refetchActive.current) {
-          data.pageParams = [data.pageParams[0]]
-          data.pages = [data.pages[0]]
-          refetchActive.current = false
-        }
-        return data
-      },
-      onSuccess: () => {
-        if (fetchingLatestIndex.current > 0) {
-          if (fetchingLatestIndex.current > 5) {
-            clearFirstPage()
-            fetchingLatestIndex.current = 0
-          } else {
-            if (hasPreviousPage) {
-              fetchPreviousPage()
-              fetchingLatestIndex.current++
-            } else {
+        onSuccess: () => {
+          if (fetchingLatestIndex.current > 0) {
+            if (fetchingLatestIndex.current > 5) {
               clearFirstPage()
               fetchingLatestIndex.current = 0
+            } else {
+              if (hasPreviousPage) {
+                fetchPreviousPage()
+                fetchingLatestIndex.current++
+              } else {
+                clearFirstPage()
+                fetchingLatestIndex.current = 0
+              }
             }
           }
         }
       }
-    }
-  })
+    })
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
   const queryClient = useQueryClient()
   const clearFirstPage = () => {
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
-      queryKey,
-      data => {
-        if (data?.pages[0] && data.pages[0].body.length === 0) {
-          return {
-            pages: data.pages.slice(1),
-            pageParams: data.pageParams.slice(1)
-          }
-        } else {
-          return data
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
+      if (data?.pages[0] && data.pages[0].body.length === 0) {
+        return {
+          pages: data.pages.slice(1),
+          pageParams: data.pageParams.slice(1)
         }
+      } else {
+        return data
       }
-    )
+    })
   }
   const prepareRefetch = () => {
     refetchActive.current = true
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(
-      queryKey,
-      data => {
-        if (data) {
-          data.pageParams = [undefined]
-          const newFirstPage: TimelineData = { body: [] }
-          for (let page of data.pages) {
-            // @ts-ignore
-            newFirstPage.body.push(...page.body)
-            if (newFirstPage.body.length > 10) break
-          }
-          data.pages = [newFirstPage]
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
+      if (data) {
+        data.pageParams = [undefined]
+        const newFirstPage: TimelineData = { body: [] }
+        for (let page of data.pages) {
+          // @ts-ignore
+          newFirstPage.body.push(...page.body)
+          if (newFirstPage.body.length > 10) break
         }
-
-        return data
+        data.pages = [newFirstPage]
       }
-    )
+
+      return data
+    })
   }
   const callRefetch = async () => {
     await refetch()
@@ -161,10 +141,7 @@ const TimelineRefresh: React.FC<Props> = ({
     ]
   }))
   const arrowTop = useAnimatedStyle(() => ({
-    marginTop:
-      scrollY.value < SEPARATION_Y_2
-        ? withTiming(CONTAINER_HEIGHT)
-        : withTiming(0)
+    marginTop: scrollY.value < SEPARATION_Y_2 ? withTiming(CONTAINER_HEIGHT) : withTiming(0)
   }))
 
   const arrowStage = useSharedValue(0)
@@ -241,8 +218,7 @@ const TimelineRefresh: React.FC<Props> = ({
   const headerPadding = useAnimatedStyle(
     () => ({
       paddingTop:
-        fetchingLatestIndex.current !== 0 ||
-        (isFetching && !isLoading && !isFetchingNextPage)
+        fetchingLatestIndex.current !== 0 || (isFetching && !isLoading && !isFetchingNextPage)
           ? withTiming(StyleConstants.Spacing.M * 2.5)
           : withTiming(0)
     }),
@@ -254,10 +230,7 @@ const TimelineRefresh: React.FC<Props> = ({
       <View style={styles.base}>
         {isFetching ? (
           <View style={styles.container2}>
-            <Circle
-              size={StyleConstants.Font.Size.L}
-              color={colors.secondary}
-            />
+            <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
           </View>
         ) : (
           <>
