@@ -295,7 +295,7 @@ PODS:
     - React-Core
   - react-native-blurhash (1.1.10):
     - React-Core
-  - react-native-cameraroll (5.1.0):
+  - react-native-cameraroll (5.2.0):
     - React-Core
   - react-native-image-picker (4.10.2):
     - React-Core
@@ -311,7 +311,7 @@ PODS:
     - React-Core
   - react-native-pager-view (6.1.2):
     - React-Core
-  - react-native-paste-input (0.5.1):
+  - react-native-paste-input (0.5.2):
     - React-Core
     - Swime (= 3.0.6)
   - react-native-safe-area-context (4.4.1):
@@ -428,7 +428,7 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.10.1):
+  - RNSentry (4.11.0):
     - React-Core
     - Sentry/HybridSDK (= 7.31.2)
   - RNShareMenu (6.0.0):
@@ -736,7 +736,7 @@ SPEC CHECKSUMS:
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
   react-native-blurhash: add4df9a937b4e021a24bc67a0714f13e0bd40b7
-  react-native-cameraroll: a40b082318eb1ecd0336a2f29d9f74b7f2c8cae8
+  react-native-cameraroll: 0ff04cc4e0ff5f19a94ff4313e5c8bc4503cd86d
   react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
   react-native-ios-context-menu: b170594b4448c0cd10c79e13432216bac99de1ac
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
@@ -744,7 +744,7 @@ SPEC CHECKSUMS:
   react-native-menu: 8e172cfcf0e42e92f028e7781eddf84d430cae24
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
-  react-native-paste-input: 183ad7dc224e192719616f4258dde5b548627d08
+  react-native-paste-input: 88709b4fd586ea8cc56ba5e2fc4cdfe90597730c
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
@@ -765,7 +765,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSentry: 3c27f3c57f16bab9835d9555add298571077e0c1
+  RNSentry: f052387ebe939949c74c2cae0c850e76f6d14ddb
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84

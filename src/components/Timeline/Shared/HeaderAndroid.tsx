@@ -53,7 +53,6 @@ const TimelineHeaderAndroid: React.FC = () => {
                 {mGroup.map(menu => (
                   <DropdownMenu.Item key={menu.key} {...menu.item}>
                     <DropdownMenu.ItemTitle children={menu.title} />
-                    <DropdownMenu.ItemIcon iosIconName={menu.icon} />
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.Group>
@@ -64,7 +63,6 @@ const TimelineHeaderAndroid: React.FC = () => {
                 {mGroup.map(menu => (
                   <DropdownMenu.Item key={menu.key} {...menu.item}>
                     <DropdownMenu.ItemTitle children={menu.title} />
-                    <DropdownMenu.ItemIcon iosIconName={menu.icon} />
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.Group>
@@ -75,7 +73,6 @@ const TimelineHeaderAndroid: React.FC = () => {
                 {mGroup.map(menu => (
                   <DropdownMenu.Item key={menu.key} {...menu.item}>
                     <DropdownMenu.ItemTitle children={menu.title} />
-                    <DropdownMenu.ItemIcon iosIconName={menu.icon} />
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.Group>
@@ -86,7 +83,6 @@ const TimelineHeaderAndroid: React.FC = () => {
                 {mGroup.map(menu => (
                   <DropdownMenu.Item key={menu.key} {...menu.item}>
                     <DropdownMenu.ItemTitle children={menu.title} />
-                    <DropdownMenu.ItemIcon iosIconName={menu.icon} />
                   </DropdownMenu.Item>
                 ))}
               </DropdownMenu.Group>
