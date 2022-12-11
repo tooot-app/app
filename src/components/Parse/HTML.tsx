@@ -10,6 +10,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { isEqual } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
@@ -133,13 +134,8 @@ const renderNode = ({
                 name='ExternalLink'
                 size={adaptedFontsize}
                 style={{
-                  ...(Platform.OS === 'ios'
-                    ? {
-                        transform: [{ translateY: -2 }]
-                      }
-                    : {
-                        transform: [{ translateY: 1 }]
-                      })
+                  marginLeft: StyleConstants.Spacing.XS,
+                  ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
                 }}
               />
             ) : null}
@@ -320,7 +316,7 @@ const ParseHTML = React.memo(
       />
     )
   },
-  (prev, next) => prev.content === next.content
+  (prev, next) => prev.content === next.content && isEqual(prev.emojis, next.emojis)
 )
 
 export default ParseHTML

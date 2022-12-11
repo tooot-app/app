@@ -1,10 +1,7 @@
 import { HeaderCenter, HeaderLeft } from '@components/Header'
 import { Message } from '@components/Message'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import {
-  TabMeProfileStackParamList,
-  TabMeStackScreenProps
-} from '@utils/navigation/navigators'
+import { TabMeProfileStackParamList, TabMeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
@@ -16,9 +13,7 @@ import TabMeProfileRoot from './Profile/Root'
 
 const Stack = createNativeStackNavigator<TabMeProfileStackParamList>()
 
-const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
-  navigation
-}) => {
+const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ navigation }) => {
   const { t } = useTranslation('screenTabs')
   const messageRef = useRef<FlashMessage>(null)
 
@@ -32,82 +27,37 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({
           name='Tab-Me-Profile-Root'
           options={{
             title: t('me.stacks.profile.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.profile.name')} />
-              )
-            }),
             headerLeft: () => (
-              <HeaderLeft
-                content='ChevronDown'
-                onPress={() => navigation.goBack()}
-              />
+              <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
             )
           }}
         >
           {({ route, navigation }) => (
-            <TabMeProfileRoot
-              messageRef={messageRef}
-              route={route}
-              navigation={navigation}
-            />
+            <TabMeProfileRoot messageRef={messageRef} route={route} navigation={navigation} />
           )}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Name'
-          options={{
-            title: t('me.stacks.profileName.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.profileName.name')} />
-              )
-            })
-          }}
+          options={{ title: t('me.stacks.profileName.name') }}
         >
           {({ route, navigation }) => (
-            <TabMeProfileName
-              messageRef={messageRef}
-              route={route}
-              navigation={navigation}
-            />
+            <TabMeProfileName messageRef={messageRef} route={route} navigation={navigation} />
           )}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Note'
-          options={{
-            title: t('me.stacks.profileNote.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.profileNote.name')} />
-              )
-            })
-          }}
+          options={{ title: t('me.stacks.profileNote.name') }}
         >
           {({ route, navigation }) => (
-            <TabMeProfileNote
-              messageRef={messageRef}
-              route={route}
-              navigation={navigation}
-            />
+            <TabMeProfileNote messageRef={messageRef} route={route} navigation={navigation} />
           )}
         </Stack.Screen>
         <Stack.Screen
           name='Tab-Me-Profile-Fields'
-          options={{
-            title: t('me.stacks.profileFields.name'),
-            ...(Platform.OS === 'android' && {
-              headerCenter: () => (
-                <HeaderCenter content={t('me.stacks.profileFields.name')} />
-              )
-            })
-          }}
+          options={{ title: t('me.stacks.profileFields.name') }}
         >
           {({ route, navigation }) => (
-            <TabMeProfileFields
-              messageRef={messageRef}
-              route={route}
-              navigation={navigation}
-            />
+            <TabMeProfileFields messageRef={messageRef} route={route} navigation={navigation} />
           )}
         </Stack.Screen>
       </Stack.Navigator>

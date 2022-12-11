@@ -16,7 +16,6 @@ const ComposeReply: React.FC = () => {
       style={{
         flex: 1,
         flexDirection: 'row',
-        minHeight: StyleConstants.Font.LineHeight.M * 5,
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: StyleConstants.Spacing.S,
         overflow: 'hidden',
