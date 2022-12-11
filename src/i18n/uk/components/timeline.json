@@ -50,100 +50,100 @@
         "function": "Улюблені дмухи"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Додати цей дмух до закладок",
+        "function": "Закладки дмухів"
       }
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} користувачів передмухнули цей дмух",
+        "accessibilityHint": "Торкніться, щоб дізнатися про користувачів",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} користувачів зробили закладку для цього дмуху",
+        "accessibilityHint": "Торкніться, щоб дізнатися про користувачів",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Цей дмух було відредаговано {{count}} разів",
+        "accessibilityHint": "Натисніть для перегляду повної історії редагування",
+        "text_one": "{{count}} редагування",
+        "text_other": "{{count}} редагували"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Показати чутливі медіа"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
+        "text": "Помилка завантаження",
+        "button": "Спробуйте віддалене посилання"
       }
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Аватар {{name}}",
+      "accessibilityHint": "Натисніть, щоб перейти на сторінку {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Прихований вміст"
     },
-    "filtered": "",
-    "fullConversation": "",
+    "filtered": "Відфільтровано: {{phrase}}.",
+    "fullConversation": "Читати розмови",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Переклад",
+      "succeed": "Перекладено {{provider}} з {{source}}",
+      "failed": "Не вдалося перекласти",
+      "source_not_supported": "мова дмухів не підтримується",
+      "target_not_supported": "Цільова мова не підтримується"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Ім'я для відображення"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Профіль користувача"
           }
         },
-        "application": "",
+        "application": "через {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Дмух відредаговано"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Дмух приглушений"
         },
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Дмухнути особистим повідомленням"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Дмух видимий лише для підписників"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "З",
         "delete": {
-          "function": ""
+          "function": "Видалити особисті повідомлення"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Голосування",
+          "refresh": "Оновити"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} користувач проголосував",
+          "voters_other": "{{count}} користувачів проголосувало",
+          "votes_one": "{{count}} голос",
+          "votes_other": "{{count}} голосів"
         },
         "expiration": {
-          "expired": "",
+          "expired": "Голосування закінчилось",
           "until": "Спливає <0 />"
         }
       }
