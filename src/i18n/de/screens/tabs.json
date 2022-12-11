@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Föderiert",
         "local": "Lokal",
-        "trending": ""
+        "trending": "Im Trend"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern",
-      "title": "",
+      "title": "Benachrichtigungen anzeigen",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Followeranfrage",
