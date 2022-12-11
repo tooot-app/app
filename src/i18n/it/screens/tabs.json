@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Federazione",
+        "local": "Locale",
         "trending": ""
       }
     },
@@ -26,20 +26,20 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "Filtri",
+      "accessibilityHint": "Filtra le notifiche mostrate per tipo",
       "title": "",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Richiesta di seguirti",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot da utenti seguiti",
+        "update": "Il link è stato modificato",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
@@ -248,8 +248,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Abilitato",
+        "content_false": "Disabilitato"
       },
       "update": {
         "title": "Aggiorna all'ultima versione"
