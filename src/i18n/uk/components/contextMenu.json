@@ -64,22 +64,22 @@
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Видалити дмух та репост",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Підтвердьте видалення та повторне розміщення?",
+        "message": "Всі передмухи і уподобання будуть очищені, включаючи всі відповіді.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Підтвердити"
         }
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Заглушити дмух та відповіді",
+      "action_true": "Увімкнути дмух та відповіді"
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Прикріпити дмух",
+      "action_true": "Відкріпити дмух"
     }
   }
 }
