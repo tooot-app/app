@@ -65,6 +65,7 @@ const composeParseState = (
         }),
         ...(params.incomingStatus.media_attachments && {
           attachments: {
+            ...(params.type === 'edit' && { disallowEditing: true }),
             sensitive: params.incomingStatus.sensitive,
             uploads: params.incomingStatus.media_attachments.map(media => ({
               remote: media

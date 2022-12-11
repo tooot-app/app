@@ -87,7 +87,9 @@ const addInstance = createAsyncThunk(
           mention: true,
           poll: true,
           status: true,
-          update: true
+          update: true,
+          'admin.sign_up': true,
+          'admin.report': true
         },
         push: {
           global: false,
@@ -107,6 +109,7 @@ const addInstance = createAsyncThunk(
         },
         timelinesLookback: {},
         mePage: {
+          followedTags: { shown: false },
           lists: { shown: false },
           announcements: { shown: false, unread: 0 }
         },

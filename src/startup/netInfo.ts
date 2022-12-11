@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { store } from '@root/store'
 import removeInstance from '@utils/slices/instances/remove'
 import { getInstance, updateInstanceAccount } from '@utils/slices/instancesSlice'
-import { onlineManager } from 'react-query'
+import { onlineManager } from '@tanstack/react-query'
 import log from './log'
 
 const netInfo = async (): Promise<{
@@ -17,7 +17,7 @@ const netInfo = async (): Promise<{
 
   onlineManager.setEventListener(setOnline => {
     return NetInfo.addEventListener(state => {
-      setOnline(typeof state.isConnected === 'boolean' ? state.isConnected : undefined)
+      setOnline(!!state.isConnected)
     })
   })
 

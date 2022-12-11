@@ -29,6 +29,8 @@ export type InstanceV11 = {
     poll: boolean
     status: boolean
     update: boolean
+    'admin.sign_up': boolean
+    'admin.report': boolean
   }
   push: {
     global: boolean
@@ -47,6 +49,7 @@ export type InstanceV11 = {
     }
   }
   mePage: {
+    followedTags: { shown: boolean }
     lists: { shown: boolean }
     announcements: { shown: boolean; unread: number }
   }

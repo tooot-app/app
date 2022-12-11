@@ -6,25 +6,26 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 export type QueryKeyRelationship = [
   'Relationship',
   { id: Mastodon.Account['id'] }
 ]
 
-const queryFunction = ({
+const queryFunction = async ({
   queryKey
 }: QueryFunctionContext<QueryKeyRelationship>) => {
   const { id } = queryKey[1]
 
-  return apiInstance<Mastodon.Relationship[]>({
+  const res = await apiInstance<Mastodon.Relationship[]>({
     method: 'get',
     url: `accounts/relationships`,
     params: {
       'id[]': id
     }
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
 const useRelationshipQuery = ({

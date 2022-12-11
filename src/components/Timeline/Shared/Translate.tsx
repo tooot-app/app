@@ -56,7 +56,7 @@ const TimelineTranslate = () => {
     : settingsLanguage || Localization.locale || 'en'
 
   const [enabled, setEnabled] = useState(false)
-  const { refetch, data, isLoading, isSuccess, isError } = useTranslateQuery({
+  const { refetch, data, isFetching, isSuccess, isError } = useTranslateQuery({
     source: detectedLanguage.language,
     target: targetLanguage,
     text,
@@ -111,7 +111,7 @@ const TimelineTranslate = () => {
         <CustomText
           fontStyle='M'
           style={{
-            color: isLoading || isSuccess ? colors.secondary : isError ? colors.red : colors.blue
+            color: isFetching || isSuccess ? colors.secondary : isError ? colors.red : colors.blue
           }}
         >
           {isError
@@ -125,7 +125,7 @@ const TimelineTranslate = () => {
                 })
             : t('shared.translate.default')}
         </CustomText>
-        {isLoading ? (
+        {isFetching ? (
           <Circle
             size={StyleConstants.Font.Size.M}
             color={colors.disabled}

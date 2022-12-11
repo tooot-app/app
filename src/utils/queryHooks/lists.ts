@@ -8,7 +8,7 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 export type QueryKeyLists = ['Lists']
 
@@ -20,9 +20,11 @@ const queryFunction = async () => {
   return res.body
 }
 
-const useListsQuery = ({ options }: { options?: UseQueryOptions<Mastodon.List[], AxiosError> }) => {
+const useListsQuery = (
+  params: { options?: UseQueryOptions<Mastodon.List[], AxiosError> } | void
+) => {
   const queryKey: QueryKeyLists = ['Lists']
-  return useQuery(queryKey, queryFunction, options)
+  return useQuery(queryKey, queryFunction, params?.options)
 }
 
 type MutationVarsLists =

@@ -6,17 +6,11 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
 import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from 'react-native-reanimated'
+import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
-import TimelineRefresh, {
-  SEPARATION_Y_1,
-  SEPARATION_Y_2
-} from './Timeline/Refresh'
+import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Timeline/Refresh'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -26,8 +20,7 @@ export interface Props {
   disableRefresh?: boolean
   disableInfinity?: boolean
   lookback?: Extract<App.Pages, 'Following' | 'Local' | 'LocalPublic'>
-  customProps: Partial<FlatListProps<any>> &
-    Pick<FlatListProps<any>, 'renderItem'>
+  customProps: Partial<FlatListProps<any>> & Pick<FlatListProps<any>, 'renderItem'>
 }
 
 const Timeline: React.FC<Props> = ({
@@ -39,30 +32,24 @@ const Timeline: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
 
-  const {
-    data,
-    refetch,
-    isFetching,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage
-  } = useTimelineQuery({
-    ...queryKey[1],
-    options: {
-      notifyOnChangeProps: Platform.select({
-        ios: ['dataUpdatedAt', 'isFetching'],
-        android: ['dataUpdatedAt', 'isFetching', 'isLoading']
-      }),
-      getNextPageParam: lastPage =>
-        lastPage?.links?.next && {
-          max_id: lastPage.links.next
-        }
-    }
-  })
+  const { data, refetch, isFetching, isLoading, fetchNextPage, isFetchingNextPage } =
+    useTimelineQuery({
+      ...queryKey[1],
+      options: {
+        notifyOnChangeProps: Platform.select({
+          ios: ['dataUpdatedAt', 'isFetching'],
+          android: ['dataUpdatedAt', 'isFetching', 'isLoading']
+        }),
+        getNextPageParam: lastPage =>
+          lastPage?.links?.next && {
+            ...(lastPage.links.next.isOffset
+              ? { offset: lastPage.links.next.id }
+              : { max_id: lastPage.links.next.id })
+          }
+      }
+    })
 
-  const flattenData = data?.pages
-    ? data.pages?.flatMap(page => [...page.body])
-    : []
+  const flattenData = data?.pages ? data.pages?.flatMap(page => [...page.body]) : []
 
   const onEndReached = useCallback(
     () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
@@ -134,10 +121,7 @@ const Timeline: React.FC<Props> = ({
         onEndReached={onEndReached}
         onEndReachedThreshold={0.75}
         ListFooterComponent={
-          <TimelineFooter
-            queryKey={queryKey}
-            disableInfinity={disableInfinity}
-          />
+          <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />
         }
         ListEmptyComponent={<TimelineEmpty queryKey={queryKey} />}
         ItemSeparatorComponent={({ leadingItem }) =>
@@ -145,9 +129,7 @@ const Timeline: React.FC<Props> = ({
             <ComponentSeparator extraMarginLeft={0} />
           ) : (
             <ComponentSeparator
-              extraMarginLeft={
-                StyleConstants.Avatar.M + StyleConstants.Spacing.S
-              }
+              extraMarginLeft={StyleConstants.Avatar.M + StyleConstants.Spacing.S}
             />
           )
         }

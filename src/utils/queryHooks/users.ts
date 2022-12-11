@@ -5,7 +5,7 @@ import {
   QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
 
 export type QueryKeyUsers = [
   'Users',

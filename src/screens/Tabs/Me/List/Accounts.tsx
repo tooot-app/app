@@ -27,7 +27,9 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
     options: {
       getNextPageParam: lastPage =>
         lastPage?.links?.next && {
-          max_id: lastPage.links.next
+          ...(lastPage.links.next.isOffset
+            ? { offset: lastPage.links.next.id }
+            : { max_id: lastPage.links.next.id })
         }
     }
   })

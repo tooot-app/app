@@ -6,8 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "Federated",
-        "right": "Local"
+        "federated": "Federated",
+        "local": "Local",
+        "trending": "Trending"
       }
     },
     "notifications": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filter",
-      "accessibilityHint": "Filter shown notifications' types"
+      "accessibilityHint": "Filter shown notifications' types",
+      "title": "Show notifications",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Follow request",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot from subscribed users",
+        "update": "Reblog has been edited",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favourites"
+      },
+      "followedTags": {
+        "name": "Followed hashtags"
       },
       "fontSize": {
         "name": "Toot Font Size"
@@ -53,7 +70,7 @@
         "name": "Users in list: {{list}}"
       },
       "listAdd": {
-        "name": "Add a List"
+        "name": "Create a List"
       },
       "listEdit": {
         "name": "Edit List Details"

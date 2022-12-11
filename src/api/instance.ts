@@ -1,6 +1,5 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
-import li from 'li'
 import { ctx, handleError, userAgent } from './helpers'
 
 export type Params = {
@@ -15,9 +14,10 @@ export type Params = {
   extras?: Omit<AxiosRequestConfig, 'method' | 'url' | 'params' | 'headers' | 'data'>
 }
 
+type LinkFormat = { id: string; isOffset: boolean }
 export type InstanceResponse<T = unknown> = {
   body: T
-  links: { prev?: string; next?: string }
+  links: { prev?: LinkFormat; next?: LinkFormat }
 }
 
 const apiInstance = async <T = unknown>({
@@ -74,17 +74,27 @@ const apiInstance = async <T = unknown>({
     ...extras
   })
     .then(response => {
-      let prev
-      let next
+      let links: {
+        prev?: { id: string; isOffset: boolean }
+        next?: { id: string; isOffset: boolean }
+      } = {}
+
       if (response.headers?.link) {
-        const headersLinks = li.parse(response.headers?.link)
-        prev = headersLinks.prev?.match(/_id=([0-9]*)/)?.[1]
-        next = headersLinks.next?.match(/_id=([0-9]*)/)?.[1]
+        const linksParsed = response.headers.link.matchAll(
+          new RegExp('[?&](.*?_id|offset)=(.*?)>; *rel="(.*?)"', 'gi')
+        )
+        for (const link of linksParsed) {
+          switch (link[3]) {
+            case 'prev':
+              links.prev = { id: link[2], isOffset: link[1].includes('offset') }
+              break
+            case 'next':
+              links.next = { id: link[2], isOffset: link[1].includes('offset') }
+              break
+          }
+        }
       }
-      return Promise.resolve({
-        body: response.data,
-        links: { prev, next }
-      })
+      return Promise.resolve({ body: response.data, links })
     })
     .catch(handleError())
 }

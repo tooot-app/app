@@ -3,16 +3,10 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAppDispatch } from '@root/store'
-import {
-  RootStackScreenProps,
-  ScreenTabsStackParamList
-} from '@utils/navigation/navigators'
-import { getPreviousTab } from '@utils/slices/contextsSlice'
-import {
-  getInstanceAccount,
-  getInstanceActive
-} from '@utils/slices/instancesSlice'
+import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
 import { getVersionUpdate, retrieveVersionLatest } from '@utils/slices/appSlice'
+import { getPreviousTab } from '@utils/slices/contextsSlice'
+import { getInstanceAccount, getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Platform } from 'react-native'
@@ -125,11 +119,7 @@ const ScreenTabs = React.memo(
       >
         <Tab.Screen name='Tab-Local' component={TabLocal} />
         <Tab.Screen name='Tab-Public' component={TabPublic} />
-        <Tab.Screen
-          name='Tab-Compose'
-          component={composeComponent}
-          listeners={composeListeners}
-        />
+        <Tab.Screen name='Tab-Compose' component={composeComponent} listeners={composeListeners} />
         <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
         <Tab.Screen
           name='Tab-Me'

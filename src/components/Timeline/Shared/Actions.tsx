@@ -17,7 +17,7 @@ import { uniqBy } from 'lodash'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 

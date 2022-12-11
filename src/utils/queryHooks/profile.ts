@@ -6,7 +6,7 @@ import { AxiosError } from 'axios'
 import i18next from 'i18next'
 import { RefObject } from 'react'
 import FlashMessage from 'react-native-flash-message'
-import { useMutation, useQuery, UseQueryOptions } from 'react-query'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 type AccountWithSource = Mastodon.Account & Required<Pick<Mastodon.Account, 'source'>>
 

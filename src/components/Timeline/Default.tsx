@@ -125,6 +125,7 @@ const TimelineDefault: React.FC<Props> = ({
         spoilerHidden,
         copiableContent,
         highlighted,
+        inThread: queryKey?.[1].page === 'Toot',
         disableDetails,
         disableOnPress
       }}

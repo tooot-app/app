@@ -135,6 +135,12 @@ const instancesMigration = {
       instances: state.instances.map(instance => {
         return {
           ...instance,
+          mePage: { ...instance.mePage, followedTags: { shown: false } },
+          notifications_filter: {
+            ...instance.notifications_filter,
+            'admin.sign_up': true,
+            'admin.report': true
+          },
           push: {
             ...instance.push,
             global: instance.push.global.value,

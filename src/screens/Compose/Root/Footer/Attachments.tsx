@@ -171,21 +171,23 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                   haptics('Success')
                 }}
               />
-              <Button
-                accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
-                  attachment: index + 1
-                })}
-                type='icon'
-                content='Edit'
-                spacing='M'
-                round
-                overlay
-                onPress={() => {
-                  navigation.navigate('Screen-Compose-EditAttachment', {
-                    index
-                  })
-                }}
-              />
+              {!composeState.attachments.disallowEditing ? (
+                <Button
+                  accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
+                    attachment: index + 1
+                  })}
+                  type='icon'
+                  content='Edit'
+                  spacing='M'
+                  round
+                  overlay
+                  onPress={() => {
+                    navigation.navigate('Screen-Compose-EditAttachment', {
+                      index
+                    })
+                  }}
+                />
+              ) : null}
             </View>
           )}
         </View>

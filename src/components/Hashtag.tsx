@@ -3,8 +3,8 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useState } from 'react'
-import { Dimensions, Pressable } from 'react-native'
+import React, { PropsWithChildren, useCallback, useState } from 'react'
+import { Dimensions, Pressable, View } from 'react-native'
 import Sparkline from './Sparkline'
 import CustomText from './Text'
 
@@ -13,7 +13,11 @@ export interface Props {
   onPress?: () => void
 }
 
-const ComponentHashtag: React.FC<Props> = ({ hashtag, onPress: customOnPress }) => {
+const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
+  hashtag,
+  onPress: customOnPress,
+  children
+}) => {
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
@@ -31,15 +35,11 @@ const ComponentHashtag: React.FC<Props> = ({ hashtag, onPress: customOnPress }) 
       style={{
         flex: 1,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
         padding
       }}
       onPress={customOnPress || onPress}
-      onLayout={({
-        nativeEvent: {
-          layout: { height }
-        }
-      }) => setHeight(height - padding * 2 - 1)}
     >
       <CustomText
         fontStyle='M'
@@ -52,11 +52,22 @@ const ComponentHashtag: React.FC<Props> = ({ hashtag, onPress: customOnPress }) 
       >
         #{hashtag.name}
       </CustomText>
-      <Sparkline
-        data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
-        width={width}
-        height={height}
-      />
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center' }}
+        onLayout={({
+          nativeEvent: {
+            layout: { height }
+          }
+        }) => setHeight(height)}
+      >
+        <Sparkline
+          data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
+          width={width}
+          height={height}
+          margin={children ? StyleConstants.Spacing.S : undefined}
+        />
+        {children}
+      </View>
     </Pressable>
   )
 }

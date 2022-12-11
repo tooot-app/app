@@ -1,23 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
+import { ContextsLatest } from '@utils/migrations/contexts/migration'
 import Constants from 'expo-constants'
 import * as StoreReview from 'expo-store-review'
 
-export type ContextsState = {
-  storeReview: {
-    context: Readonly<number>
-    current: number
-    shown: boolean
-  }
-  publicRemoteNotice: {
-    context: Readonly<number>
-    current: number
-    hidden: boolean
-  }
-  previousTab: 'Tab-Local' | 'Tab-Public' | 'Tab-Notifications' | 'Tab-Me'
-}
-
-export const contextsInitialState = {
+export const contextsInitialState: ContextsLatest = {
   // After 10 successful postings
   storeReview: {
     context: 10,
@@ -30,49 +17,46 @@ export const contextsInitialState = {
     current: 0,
     hidden: false
   },
-  previousTab: 'Tab-Me'
+  previousTab: 'Tab-Me',
+  previousSegment: 'Local'
 }
 
 const contextsSlice = createSlice({
   name: 'contexts',
-  initialState: contextsInitialState as ContextsState,
+  initialState: contextsInitialState,
   reducers: {
     updateStoreReview: (state, action: PayloadAction<1>) => {
       if (Constants.expoConfig?.extra?.environment === 'release') {
         state.storeReview.current = state.storeReview.current + action.payload
         if (state.storeReview.current === state.storeReview.context) {
-          StoreReview?.isAvailableAsync().then(() =>
-            StoreReview.requestReview()
-          )
+          StoreReview?.isAvailableAsync().then(() => StoreReview.requestReview())
         }
       }
     },
     updatePublicRemoteNotice: (state, action: PayloadAction<1>) => {
-      state.publicRemoteNotice.current =
-        state.publicRemoteNotice.current + action.payload
-      if (
-        state.publicRemoteNotice.current === state.publicRemoteNotice.context
-      ) {
+      state.publicRemoteNotice.current = state.publicRemoteNotice.current + action.payload
+      if (state.publicRemoteNotice.current === state.publicRemoteNotice.context) {
         state.publicRemoteNotice.hidden = true
       }
     },
-    updatePreviousTab: (
-      state,
-      action: PayloadAction<ContextsState['previousTab']>
-    ) => {
+    updatePreviousTab: (state, action: PayloadAction<ContextsLatest['previousTab']>) => {
       state.previousTab = action.payload
+    },
+    updatePreviousSegment: (state, action: PayloadAction<ContextsLatest['previousSegment']>) => {
+      state.previousSegment = action.payload
     }
   }
 })
 
-export const getPublicRemoteNotice = (state: RootState) =>
-  state.contexts.publicRemoteNotice
+export const getPublicRemoteNotice = (state: RootState) => state.contexts.publicRemoteNotice
 export const getPreviousTab = (state: RootState) => state.contexts.previousTab
+export const getPreviousSegment = (state: RootState) => state.contexts.previousSegment
 export const getContexts = (state: RootState) => state.contexts
 
 export const {
   updateStoreReview,
   updatePublicRemoteNotice,
-  updatePreviousTab
+  updatePreviousTab,
+  updatePreviousSegment
 } = contextsSlice.actions
 export default contextsSlice.reducer

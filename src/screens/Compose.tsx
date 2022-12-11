@@ -22,7 +22,7 @@ import { filter } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
@@ -407,12 +407,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           <Stack.Screen
             name='Screen-Compose-DraftsList'
             component={ComposeDraftsList}
-            options={{ headerShown: false, presentation: 'modal' }}
+            options={{ presentation: 'modal' }}
           />
           <Stack.Screen
             name='Screen-Compose-EditAttachment'
             component={ComposeEditAttachment}
-            options={{ headerShown: false, presentation: 'modal' }}
+            options={{ presentation: 'modal' }}
           />
         </Stack.Navigator>
       </ComposeContext.Provider>

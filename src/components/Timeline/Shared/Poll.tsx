@@ -16,7 +16,7 @@ import { maxBy } from 'lodash'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {

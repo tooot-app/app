@@ -1,4 +1,8 @@
-import { PERMISSION_MANAGE_REPORTS, PERMISSION_MANAGE_USERS } from '@helpers/permissions'
+import {
+  checkPermission,
+  PERMISSION_MANAGE_REPORTS,
+  PERMISSION_MANAGE_USERS
+} from '@helpers/permissions'
 import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
@@ -19,16 +23,6 @@ export const PUSH_ADMIN: { type: 'admin.sign_up' | 'admin.report'; permission: n
   { type: 'admin.sign_up', permission: PERMISSION_MANAGE_USERS },
   { type: 'admin.report', permission: PERMISSION_MANAGE_REPORTS }
 ]
-
-export const checkPushAdminPermission = (
-  permission: number,
-  permissions?: string | number
-): boolean =>
-  permissions
-    ? !!(
-        (typeof permissions === 'string' ? parseInt(permissions || '0') : permissions) & permission
-      )
-    : false
 
 export const setChannels = async (instance: InstanceLatest) => {
   const account = `@${instance.account.acct}@${instance.uri}`
@@ -68,7 +62,7 @@ export const setChannels = async (instance: InstanceLatest) => {
       await setChannel(push)
     }
     for (const { type, permission } of PUSH_ADMIN) {
-      if (checkPushAdminPermission(permission, profileQuery.role?.permissions)) {
+      if (checkPermission(permission, profileQuery.role?.permissions)) {
         await setChannel(type)
       }
     }

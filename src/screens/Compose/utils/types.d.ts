@@ -51,6 +51,7 @@ export type ComposeState = {
     expire: '300' | '1800' | '3600' | '21600' | '86400' | '259200' | '604800'
   }
   attachments: {
+    disallowEditing?: boolean // https://github.com/mastodon/mastodon/pull/20878
     sensitive: boolean
     uploads: ExtendedAttachment[]
   }
@@ -59,8 +60,8 @@ export type ComposeState = {
   replyToStatus?: Mastodon.Status
   textInputFocus: {
     current: 'text' | 'spoiler'
-    refs: { text: RefObject<TextInput>, spoiler: RefObject<TextInput> }
-    isFocused: { text: MutableRefObject<boolean>, spoiler: MutableRefObject<boolean> }
+    refs: { text: RefObject<TextInput>; spoiler: RefObject<TextInput> }
+    isFocused: { text: MutableRefObject<boolean>; spoiler: MutableRefObject<boolean> }
   }
 }
 

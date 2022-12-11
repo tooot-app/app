@@ -84,7 +84,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
     hashtags: t('shared.search.sections.hashtags'),
     statuses: t('shared.search.sections.statuses')
   }
-  const { isLoading, data, refetch } = useSearchQuery<
+  const { isFetching, data, refetch } = useSearchQuery<
     {
       title: string
       translation: string
@@ -138,7 +138,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
         }}
         stickySectionHeadersEnabled
         ListEmptyComponent={
-          <SearchEmpty isLoading={isLoading} inputRef={inputRef} setSearchTerm={setSearchTerm} />
+          <SearchEmpty isFetching={isFetching} inputRef={inputRef} setSearchTerm={setSearchTerm} />
         }
         keyboardShouldPersistTaps='always'
         renderSectionHeader={({ section: { translation } }) => (

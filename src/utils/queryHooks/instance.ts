@@ -1,6 +1,6 @@
 import apiGeneral from '@api/general'
 import { AxiosError } from 'axios'
-import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 export type QueryKeyInstance = ['Instance', { domain?: string }]
 
