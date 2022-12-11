@@ -30,24 +30,24 @@
         "default": "{{name}} передмухнув(-ла)",
         "notification": "{{name}} передмухнув(-ла) ваш дмух"
       },
-      "update": ""
+      "update": "Передмух був відредагований"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Відповісти на дмух"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Передмухнути",
+        "function": "Передмухнути",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Виберіть видимість передмуху",
+          "public": "Публічний передмух",
+          "unlisted": "Прихований передмух"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Додати дмух до улюблених",
+        "function": "Улюблені дмухи"
       },
       "bookmarked": {
         "accessibilityLabel": "",
