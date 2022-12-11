@@ -95,81 +95,81 @@
             "heading": "Термін дії",
             "options": {
               "300": "5 хвилин",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "1800": "30 хвилин",
+              "3600": "1 година",
+              "21600": "6 годин",
+              "86400": "1 день",
+              "259200": "3 дні",
+              "604800": "7 днів"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Завантажити вкладений файл",
+          "accessibilityHint": "Функція опитування буде вимкнена, коли є вкладені файли",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Помилка завантаження",
+              "button": "Спробуйте ще раз"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Додати голосування",
+          "accessibilityHint": "Функцію вкладення буде відключено, коли опитування активне"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Видимість дмуху {{visibility}}",
+          "title": "Видимість дмуху",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Публічний",
+            "unlisted": "Приватний",
+            "private": "Тільки для підписників",
+            "direct": "Особисті повідомлення"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Спойлер"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Додати емодзі",
+          "accessibilityHint": "Відкрийте панель вибору емодзі, проведіть по горизонталі, щоб змінити сторінку"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Чернетка ({{count}})",
+      "drafts_other": "Чернетки ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Редагувати вкладення",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Зберегти редагування вкладення",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Редагування не вдалося",
+            "button": "Спробуйте ще раз"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Охарактеризуйте медіа для людей з вадами зору",
+          "placeholder": "Ви можете додавати опис, іноді так званий alt-текст, вашим медіа, таким чином, вони доступні ще більшій кількості людей, включаючи тих, хто сліпий, чи має проблеми з зором.\n\nХороші описи - це лаконічно, але представте що є у ваших медіа досить точним, щоб зрозуміти їх контекст."
         },
-        "imageFocus": ""
+        "imageFocus": "Перетягніть круг для оновлення точки фокусу"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Чернетка"
       },
-      "warning": "",
+      "warning": "Чернетки зберігаються лише локально, і їх може бути втрачено у нещасних подіях. Рекомендуємо не використовувати чернетки для довгострокового сховища.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Збережено чернетку, натисніть для редагування чернетки",
+        "textEmpty": "Вміст порожній"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Перевірка вкладень на сервері..."
     }
   }
 }
