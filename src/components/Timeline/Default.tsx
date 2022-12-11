@@ -69,6 +69,7 @@ const TimelineDefault: React.FC<Props> = ({
   }
 
   const mainStyle: StyleProp<ViewStyle> = {
+    flex: 1,
     padding: StyleConstants.Spacing.Global.PagePadding,
     backgroundColor: colors.backgroundDefault,
     paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding : 0
