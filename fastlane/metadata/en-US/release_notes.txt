@@ -1,5 +1,6 @@
 Enjoy toooting! This version includes following improvements and fixes:
 - Automatic setting detected language when tooting
+- Remember public timeline type selection
 - Added notification for admins
 - Fix whole word filter matching
 - Fix tablet cannot delete toot drafts
