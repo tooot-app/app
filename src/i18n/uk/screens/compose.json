@@ -87,14 +87,14 @@
           "multiple": {
             "heading": "Тип вибору",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Один вибір",
+              "multiple": "Множинний вибір"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Термін дії",
             "options": {
-              "300": "",
+              "300": "5 хвилин",
               "1800": "",
               "3600": "",
               "21600": "",
