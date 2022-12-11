@@ -1,65 +1,65 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Дії для цього дмуху, наприклад, його опублікованого користувача, дмуху",
   "account": {
-    "title": "",
+    "title": "Дії користувача",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Підписатися на користувача",
+      "action_true": "Відписатися від користувача"
     },
-    "inLists": "",
+    "inLists": "Керувати списками",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Заглушити користувача",
+      "action_true": "Зняти заглушення з користувача"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Заблокувати користувача",
+      "action_true": "Розблокувати користувача"
     },
     "reports": {
-      "action": ""
+      "action": "Повідомити та заблокувати користувача"
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Особисті повідомлення",
+    "public": "Публічне повідомлення"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Скопіювати дмух",
+    "succeed": "Скопійовано"
   },
   "instance": {
-    "title": "",
+    "title": "Дія інстанса",
     "block": {
-      "action": "",
+      "action": "Заблокувати інстанс {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Підтверджуєте блокування інстанса {{instance}}?",
+        "message": "Здебільшого ви можете вимкнути звук або заблокувати певного користувача.\n\nПісля блокування інстансу весь її контент, включаючи підписників, буде видалено!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Підтвердити"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Поділитися дмухом"
     },
     "account": {
-      "action": ""
+      "action": "Поділитися користувачем"
     }
   },
   "status": {
-    "title": "",
+    "title": "Дії дмуха",
     "edit": {
-      "action": ""
+      "action": "Редагувати дмух"
     },
     "delete": {
-      "action": "",
+      "action": "Видалити дмух",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Видалити?",
+        "message": "Всі передмухи і уподобання будуть очищені, включаючи всі відповіді.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Підтвердити"
         }
       }
     },
