@@ -1,7 +1,7 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "Підписаний"
     },
     "public": {
       "name": "",
@@ -12,16 +12,16 @@
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Сповіщення"
     },
     "me": {
-      "name": ""
+      "name": "Про мене"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Пошук",
+      "accessibilityHint": "Пошук ґештеґів, користувачів або дмухів"
     }
   },
   "notifications": {
@@ -139,120 +139,120 @@
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "{{type}} оновлено",
+        "failed": "{{type}} оновлення не вдалося, будь ласка, спробуйте ще раз"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Ім'я для відображення"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Аватар",
+          "description": "Буде зменшено до 400x400px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Банер",
+          "description": "Буде зменшено до 1500x500px"
         },
         "note": {
-          "title": ""
+          "title": "Опис"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Метадані",
+          "total_one": "{{count}} поле",
+          "total_other": "{{count}} полей"
         },
         "visibility": {
-          "title": "",
+          "title": "Видимість дмухів",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": ""
+            "public": "Публічний",
+            "unlisted": "Приватний",
+            "private": "Тільки для підписників"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Розміщення чутливої інформації"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Закрити акаунт",
+          "description": "Потребує вас вручну затвердити підписників"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Акаунт бота",
+          "description": "Цей акаунт виконує автоматичні дії та може не відстежуватися"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Група {{index}}",
+        "label": "Мітка",
+        "content": "Контент"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Не вдалося виконати обробку зображення. Будь ласка, спробуйте ще раз."
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Ваш телефон не підтримує push-сповіщення tooot",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Увімкнути push сповіщення",
+        "settings": "Включити в налаштуваннях"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Сервер неправильно налаштовано для push",
+        "description": "Будь ласка, зверніться до адміністратора сервера для налаштування підтримки push"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Увімкнути для {{acct}}",
+        "description": "Повідомлення перенаправляються через сервер tooot"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Показати деталі повідомлення",
+        "description": "Повідомлення, які передаються через сервер tooot, зашифровані, але ви можете декодувати повідомлення на сервері. Наш вихідний код сервера є відкритим вихідним кодом і не має політики журналу."
       },
       "default": {
-        "heading": ""
+        "heading": "За замовчуванням"
       },
       "follow": {
-        "heading": ""
+        "heading": "Новий підписник(-ця)"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Запит на підписку"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Улюблене"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Передмухнув"
       },
       "mention": {
-        "heading": ""
+        "heading": "згадав (-ла) вас"
       },
       "poll": {
-        "heading": ""
+        "heading": "Опитування успішно оновлено"
       },
       "status": {
-        "heading": ""
+        "heading": "Дмух від підписників"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Адмін: реєстрація"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Адмін: звіти"
       },
-      "howitworks": ""
+      "howitworks": "Дізнатися, як працює маршрутизація"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} непрочитаних",
+          "read": "Усі прочитані",
+          "empty": "Відсутньо"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Увімкнено",
+        "content_false": "Вимкнено"
       },
       "update": {
-        "title": ""
+        "title": "Оновити до останньої версії"
       },
       "logout": {
         "button": "Вийти",
@@ -363,38 +363,38 @@
         "placeholder": "кого?.."
       },
       "empty": {
-        "general": "",
+        "general": "Введіть ключове слово для пошуку <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> або <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Розширений пошук",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Популярні теги"
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Користувач",
+        "hashtags": "Ґештег",
+        "statuses": "Дмух"
       },
-      "notFound": ""
+      "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}"
     },
     "toot": {
-      "name": ""
+      "name": "Обговорення"
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "Підписки {{count}}",
+        "followers": "{{count}} підписників"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} передмухів",
+        "favourited_by": "{{count}} улюблених"
       }
     }
   }
