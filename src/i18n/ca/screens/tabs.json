@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Federat",
         "local": "Local",
-        "trending": ""
+        "trending": "En tendència"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtra",
       "accessibilityHint": "Filtra els tipus de notificacions",
-      "title": "",
+      "title": "Mostra les notificacions",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Sol·licitud de seguiment",
@@ -55,7 +55,7 @@
         "name": "Favorits"
       },
       "followedTags": {
-        "name": ""
+        "name": "Etiquetes seguides"
       },
       "fontSize": {
         "name": "Mida de la font de la publicació"
