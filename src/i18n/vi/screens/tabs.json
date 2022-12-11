@@ -6,8 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "Liên hợp",
-        "right": "Máy chủ"
+        "federated": "",
+        "local": "",
+        "trending": ""
       }
     },
     "notifications": {
