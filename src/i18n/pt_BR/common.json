@@ -3,8 +3,8 @@
     "OK": "OK",
     "apply": "Aplicar",
     "cancel": "Cancelar",
-    "discard": "",
-    "continue": "",
+    "discard": "Descartar",
+    "continue": "Continuar",
     "create": "",
     "delete": "",
     "done": ""
@@ -25,7 +25,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Alterações não salvas",
+    "message": "Sua alteração não foi salva. Descartar as alterações?"
   }
 }
