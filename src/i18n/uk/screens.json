@@ -1,18 +1,18 @@
 {
   "screenshot": {
-    "title": "",
-    "message": "",
-    "button": ""
+    "title": "Захист конфіденційності",
+    "message": "Будь ласка, не розкривайте особи інших користувачів, наприклад ім'я користувача, аватар і т.д. Дякуємо!",
+    "button": "Підтвердити"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Вхід вичерпано. Будь ласка, увійдіть знову"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Помилка служби push",
+    "description": "Будь ласка, повторно увімкніть сповіщення push в налаштуваннях"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Тип зображення {{type}} не підтримується",
+    "videoNotSupported": "Тип відео {{type}} не підтримується"
   }
 }
