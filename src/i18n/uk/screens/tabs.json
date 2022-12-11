@@ -6,9 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
-        "trending": ""
+        "federated": "Глобальна",
+        "local": "Місцева",
+        "trending": "Популярне"
       }
     },
     "notifications": {
