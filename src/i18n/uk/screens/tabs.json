@@ -6,8 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "federated": "",
+        "local": "",
+        "trending": ""
       }
     },
     "notifications": {
@@ -25,115 +26,115 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": "",
+      "accessibilityLabel": "Фільтр",
+      "accessibilityHint": "Відфільтрувати типи сповіщень, що відображаються",
+      "title": "Показувати сповіщення",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Запит на підписку",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Дмух від підписників",
+        "update": "Передмух був відредагований",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Закладки"
       },
       "conversations": {
-        "name": ""
+        "name": "Особисті повідомлення"
       },
       "favourites": {
-        "name": ""
+        "name": "Улюблене"
       },
       "followedTags": {
-        "name": ""
+        "name": "Стежити за хештегом"
       },
       "fontSize": {
-        "name": ""
+        "name": "Розмір шрифту дмуху"
       },
       "language": {
-        "name": ""
+        "name": "Мова"
       },
       "list": {
-        "name": ""
+        "name": "Список: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Список користувачів: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Створити список"
       },
       "listEdit": {
-        "name": ""
+        "name": "Редагувати деталі списку"
       },
       "lists": {
-        "name": ""
+        "name": "Списки"
       },
       "push": {
-        "name": ""
+        "name": "Push-сповіщення"
       },
       "profile": {
-        "name": ""
+        "name": "Редагувати профіль"
       },
       "profileName": {
-        "name": ""
+        "name": "Редагувати показане ім'я"
       },
       "profileNote": {
-        "name": ""
+        "name": "Редагувати опис"
       },
       "profileFields": {
-        "name": ""
+        "name": "Редагувати метадані"
       },
       "settings": {
-        "name": ""
+        "name": "Налаштування додатку"
       },
       "webSettings": {
-        "name": ""
+        "name": "Додаткові налаштування акаунта"
       },
       "switch": {
-        "name": ""
+        "name": "Переключити аккаунт"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Це демо дмух: smiling_face_with_smiling_eyes:. Ви можете вибрати з декількох варіантів знизу.<br /><br />Це налаштування впливає лише на основний вміст дмухів, але не на інші розміри шрифту.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "М - за замовчуванням",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Керувати користувачами",
+      "error": "Видалити користувача зі списку",
+      "empty": "Користувача не додано в цей список"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Редагувати деталі списку",
+      "title": "Назва",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Показати відповіді від:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Ніхто",
+          "list": "Користувачів списку",
+          "followed": "Будь-який користувач, за яким ви стежите"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Видалити список",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Видалити список \"{{list}}\"?",
+        "message": "Цю дію не можна скасувати."
       }
     },
     "profile": {
@@ -254,112 +255,112 @@
         "title": ""
       },
       "logout": {
-        "button": "",
+        "button": "Вийти",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Виходиш з системи?",
+          "message": "Після виходу з системи необхідно повторно увійти в неї",
           "buttons": {
-            "logout": ""
+            "logout": "Вийти"
           }
         }
       }
     },
     "settings": {
       "fontsize": {
-        "heading": "",
+        "heading": "$t(me.stacks.fontSize.name)",
         "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
         }
       },
       "language": {
-        "heading": ""
+        "heading": "$t(me.stacks.language.name)"
       },
       "theme": {
-        "heading": "",
+        "heading": "Зовнішній вигляд",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "За системними налаштуваннями",
+          "light": "Світла тема",
+          "dark": "Темний режим"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Темна тема",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Світліше",
+          "darker": "Темніше"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Відкривання посилань",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "Всередині додатку",
+          "external": "Використовувати системний браузер"
         }
       },
       "staticEmoji": {
-        "heading": "",
-        "description": ""
+        "heading": "Використовувати статичні емодзі",
+        "description": "Якщо ви стикаєтеся з частими збоями в роботі програми при перегляді списку емодзі, ви можете спробувати використовувати статичні емодзі."
       },
       "feedback": {
-        "heading": ""
+        "heading": "Запропонувати ідею"
       },
       "support": {
-        "heading": ""
+        "heading": "Підтримати tooot"
       },
       "contact": {
-        "heading": ""
+        "heading": "Зв'язатись з tooot"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Версія: {{version}}",
+      "instanceVersion": "Версія Mastodon: v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Вибрати з авторизованих",
+      "new": "Увійти до інстансу"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Дії для користувача {{user}}",
+        "accessibilityHint": "Ви можете приглушити, заблокувати, чи кинути репорт на цього користувача"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " слідує за вами",
+      "moved": "Користувач перемістився",
+      "created_at": "Приєднався: {{date}}",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": "{{count}} дмухів",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Дмухи",
+        "all": "Дмухи та відповіді"
       },
-      "suspended": ""
+      "suspended": "Обліковий запис призупинено модераторами вашого інстансу"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Списки @{{username}}",
+      "inLists": "У списку",
+      "notInLists": "Інші списки"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1> медіа</1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Підписатися",
+      "unfollow": "Відписатися"
     },
     "history": {
-      "name": ""
+      "name": "Редагувати історію"
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Пошук",
+        "placeholder": "кого?.."
       },
       "empty": {
         "general": "",
