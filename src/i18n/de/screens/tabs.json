@@ -6,8 +6,9 @@
     "public": {
       "name": "",
       "segments": {
-        "left": "Föderiert",
-        "right": "Lokal"
+        "federated": "",
+        "local": "",
+        "trending": ""
       }
     },
     "notifications": {
