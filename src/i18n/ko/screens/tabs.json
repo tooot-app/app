@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "연합",
+        "local": "로컬",
         "trending": ""
       }
     },
@@ -26,20 +26,20 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "필터",
+      "accessibilityHint": "받는 알림 종류 선택",
       "title": "",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "팔로우 요청",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "구독한 사용자의 툿",
+        "update": "부스트한 툿이 수정됨",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
@@ -248,8 +248,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "활성화됨",
+        "content_false": "비활성화됨"
       },
       "update": {
         "title": "최신 버전으로 업데이트"
