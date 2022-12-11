@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Globaal",
         "local": "Lokaal",
-        "trending": ""
+        "trending": "Trending"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Filter getoonde meldingstypes",
-      "title": "",
+      "title": "Notificaties weergeven",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Volgverzoek",
