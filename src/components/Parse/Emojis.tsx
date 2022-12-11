@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
@@ -18,10 +18,11 @@ export interface Props {
   size?: 'S' | 'M' | 'L'
   adaptiveSize?: boolean
   fontBold?: boolean
+  style?: TextStyle
 }
 
 const ParseEmojis = React.memo(
-  ({ content, emojis, size = 'M', adaptiveSize = false, fontBold = false }: Props) => {
+  ({ content, emojis, size = 'M', adaptiveSize = false, fontBold = false, style }: Props) => {
     const { reduceMotionEnabled } = useAccessibility()
 
     const adaptiveFontsize = useSelector(getSettingsFontsize)
@@ -51,7 +52,7 @@ const ParseEmojis = React.memo(
     }, [theme, adaptiveFontsize])
 
     return (
-      <CustomText style={styles.text} fontWeight={fontBold ? 'Bold' : undefined}>
+      <CustomText style={[styles.text, style]} fontWeight={fontBold ? 'Bold' : undefined}>
         {emojis ? (
           content
             .split(regexEmoji)
