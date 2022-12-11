@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Global",
+        "local": "Local",
         "trending": ""
       }
     },
@@ -26,20 +26,20 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "Filtro",
+      "accessibilityHint": "Filtrar notificações por tipos",
       "title": "",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Solicitações de seguidores pendentes",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot de usuários inscritos",
+        "update": "Toot foi editado",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
@@ -248,8 +248,8 @@
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Habilitado",
+        "content_false": "Desabilitado"
       },
       "update": {
         "title": "Atualize para a versão mais recente"
@@ -340,7 +340,7 @@
         "default": "Toots",
         "all": "Toots e respostas"
       },
-      "suspended": ""
+      "suspended": "Conta suspensa pelos moderadores do seu servidor"
     },
     "accountInLists": {
       "name": "",
