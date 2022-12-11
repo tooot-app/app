@@ -1,5 +1,6 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
+import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -17,15 +18,19 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 export interface Props {
   flRef?: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
+  queryOptions?: Omit<
+    UseInfiniteQueryOptions<any>,
+    'notifyOnChangeProps' | 'getNextPageParam' | 'getPreviousPageParam' | 'select' | 'onSuccess'
+  >
   disableRefresh?: boolean
   disableInfinity?: boolean
-  lookback?: Extract<App.Pages, 'Following' | 'Local' | 'LocalPublic'>
   customProps: Partial<FlatListProps<any>> & Pick<FlatListProps<any>, 'renderItem'>
 }
 
 const Timeline: React.FC<Props> = ({
   flRef: customFLRef,
   queryKey,
+  queryOptions,
   disableRefresh = false,
   disableInfinity = false,
   customProps
@@ -36,6 +41,7 @@ const Timeline: React.FC<Props> = ({
     useTimelineQuery({
       ...queryKey[1],
       options: {
+        ...queryOptions,
         notifyOnChangeProps: Platform.select({
           ios: ['dataUpdatedAt', 'isFetching'],
           android: ['dataUpdatedAt', 'isFetching', 'isLoading']
