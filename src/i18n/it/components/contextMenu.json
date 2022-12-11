@@ -3,7 +3,7 @@
   "account": {
     "title": "Azioni utente",
     "following": {
-      "action_false": "",
+      "action_false": "Segui utente",
       "action_true": ""
     },
     "inLists": "",
@@ -20,7 +20,7 @@
     }
   },
   "at": {
-    "direct": "",
+    "direct": "Messaggio diretto",
     "public": ""
   },
   "copy": {
