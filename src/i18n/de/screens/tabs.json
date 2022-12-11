@@ -6,8 +6,8 @@
     "public": {
       "name": "",
       "segments": {
-        "federated": "",
-        "local": "",
+        "federated": "Föderiert",
+        "local": "Lokal",
         "trending": ""
       }
     },
@@ -26,20 +26,20 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "Filter",
+      "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern",
       "title": "",
       "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Followeranfrage",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Tröt eines abonnierten Nutzers",
+        "update": "Boost wurde bearbeitet",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
