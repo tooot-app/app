@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Federerat",
         "local": "Lokalt",
-        "trending": ""
+        "trending": "Trendar"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Filtrera visade notistyper",
-      "title": "",
+      "title": "Visa notifikationer",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Följarförfrågning",
@@ -55,7 +55,7 @@
         "name": "Favoriter"
       },
       "followedTags": {
-        "name": ""
+        "name": "Följda hashtaggar"
       },
       "fontSize": {
         "name": "Storlek på teckensnitt i inlägg"
