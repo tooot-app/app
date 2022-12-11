@@ -11,7 +11,7 @@ export interface Props {
 }
 
 const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoilerExpanded }) => {
-  const { status, highlighted, disableDetails } = useContext(StatusContext)
+  const { status, highlighted, inThread, disableDetails } = useContext(StatusContext)
   if (!status || typeof status.content !== 'string' || !status.content.length) return null
 
   const { t } = useTranslation('componentTimeline')
@@ -40,7 +40,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             mentions={status.mentions}
             tags={status.tags}
             numberOfLines={
-              instanceAccount.preferences['reading:expand:spoilers']
+              instanceAccount.preferences['reading:expand:spoilers'] || inThread
                 ? notificationOwnToot
                   ? 2
                   : 999
@@ -60,7 +60,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
           emojis={status.emojis}
           mentions={status.mentions}
           tags={status.tags}
-          numberOfLines={highlighted ? 999 : notificationOwnToot ? 2 : undefined}
+          numberOfLines={highlighted || inThread ? 999 : notificationOwnToot ? 2 : undefined}
           disableDetails={disableDetails}
         />
       )}

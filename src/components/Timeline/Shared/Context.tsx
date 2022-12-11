@@ -16,6 +16,7 @@ type ContextType = {
   }>
 
   highlighted?: boolean
+  inThread?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
 }
