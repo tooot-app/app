@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const TimelineAvatar: React.FC<Props> = ({ account }) => {
-  const { status, highlighted, disableOnPress } = useContext(StatusContext)
+  const { status, highlighted, disableDetails, disableOnPress } = useContext(StatusContext)
   const actualAccount = account || status?.account
   if (!actualAccount) return null
 
@@ -33,10 +33,17 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
         !disableOnPress && navigation.push('Tab-Shared-Account', { account: actualAccount })
       }
       uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
-      dimension={{
-        width: StyleConstants.Avatar.M,
-        height: StyleConstants.Avatar.M
-      }}
+      dimension={
+        disableDetails
+          ? {
+              width: StyleConstants.Avatar.XS,
+              height: StyleConstants.Avatar.XS
+            }
+          : {
+              width: StyleConstants.Avatar.M,
+              height: StyleConstants.Avatar.M
+            }
+      }
       style={{
         borderRadius: StyleConstants.Avatar.M,
         overflow: 'hidden',

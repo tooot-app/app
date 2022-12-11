@@ -146,7 +146,8 @@ const ComponentInstance: React.FC<Props> = ({
               borderBottomWidth: 1,
               ...StyleConstants.FontStyle.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError ? colors.red : colors.border
+              borderBottomColor: instanceQuery.isError ? colors.red : colors.border,
+              ...(Platform.OS === 'android' && { paddingRight: 0 })
             }}
             editable={false}
             defaultValue='https://'
@@ -158,7 +159,8 @@ const ComponentInstance: React.FC<Props> = ({
               ...StyleConstants.FontStyle.M,
               marginRight: StyleConstants.Spacing.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError ? colors.red : colors.border
+              borderBottomColor: instanceQuery.isError ? colors.red : colors.border,
+              ...(Platform.OS === 'android' && { paddingLeft: 0 })
             }}
             onChangeText={debounce(text => setDomain(text.replace(/^http(s)?\:\/\//i, '')), 1000, {
               trailing: true

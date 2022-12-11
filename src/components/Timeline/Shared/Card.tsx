@@ -10,7 +10,7 @@ import { useStatusQuery } from '@utils/queryHooks/status'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import TimelineDefault from '../Default'
 import StatusContext from './Context'
@@ -187,7 +187,10 @@ const TimelineCard: React.FC = () => {
       style={{
         flex: 1,
         flexDirection: 'row',
-        minHeight: isAccount && foundAccount ? undefined : StyleConstants.Font.LineHeight.M * 5,
+        minHeight:
+          (isStatus && foundStatus) || (isAccount && foundAccount)
+            ? undefined
+            : StyleConstants.Font.LineHeight.M * 5,
         marginTop: StyleConstants.Spacing.M,
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: StyleConstants.Spacing.S,

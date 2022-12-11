@@ -42,14 +42,20 @@ const TimelineHeaderDefault: React.FC = () => {
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
-      <View style={{ flex: 7 }}>
+      <View
+        style={{
+          flex: 7,
+          ...(disableDetails && { flexDirection: 'row' })
+        }}
+      >
         <HeaderSharedAccount account={status.account} />
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: StyleConstants.Spacing.XS,
-            marginBottom: StyleConstants.Spacing.S
+            ...(disableDetails
+              ? { marginLeft: StyleConstants.Spacing.S }
+              : { marginTop: StyleConstants.Spacing.XS, marginBottom: StyleConstants.Spacing.S })
           }}
         >
           <HeaderSharedCreated

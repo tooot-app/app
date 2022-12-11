@@ -74,6 +74,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     <Timeline
       flRef={flRef}
       queryKey={queryKey}
+      queryOptions={{ staleTime: 0, refetchOnMount: true }}
       customProps={{
         renderItem: ({ item }) => (
           <TimelineDefault

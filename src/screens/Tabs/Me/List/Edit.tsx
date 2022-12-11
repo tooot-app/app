@@ -83,15 +83,6 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   useEffect(() => {
     navigation.setOptions({
       title: params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name'),
-      ...(Platform.OS === 'android' && {
-        headerCenter: () => (
-          <HeaderCenter
-            content={
-              params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name')
-            }
-          />
-        )
-      }),
       headerLeft: () => (
         <HeaderLeft
           content='X'

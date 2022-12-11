@@ -85,7 +85,6 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
   return (
     <Timeline
       queryKey={queryKey}
-      lookback='Following'
       customProps={{
         renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
       }}

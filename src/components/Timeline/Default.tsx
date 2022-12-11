@@ -69,9 +69,12 @@ const TimelineDefault: React.FC<Props> = ({
   }
 
   const mainStyle: StyleProp<ViewStyle> = {
-    padding: StyleConstants.Spacing.Global.PagePadding,
+    flex: 1,
+    padding: disableDetails
+      ? StyleConstants.Spacing.Global.PagePadding / 1.5
+      : StyleConstants.Spacing.Global.PagePadding,
     backgroundColor: colors.backgroundDefault,
-    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding : 0
+    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0,
   }
   const main = () => (
     <>
@@ -81,7 +84,13 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineActioned action='pinned' />
       ) : null}
 
-      <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          ...(disableDetails && { alignItems: 'flex-start', overflow: 'hidden' })
+        }}
+      >
         <TimelineAvatar />
         <TimelineHeaderDefault />
       </View>
@@ -89,7 +98,11 @@ const TimelineDefault: React.FC<Props> = ({
       <View
         style={{
           paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-          paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+          paddingLeft: highlighted
+            ? 0
+            : (disableDetails ? StyleConstants.Avatar.XS : StyleConstants.Avatar.M) +
+              StyleConstants.Spacing.S,
+          ...(disableDetails && { marginTop: -StyleConstants.Spacing.S })
         }}
       >
         <TimelineContent setSpoilerExpanded={setSpoilerExpanded} />

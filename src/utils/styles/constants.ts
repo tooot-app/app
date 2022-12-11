@@ -21,5 +21,5 @@ export const StyleConstants = {
     Global: { PagePadding: Base * 4 }
   },
 
-  Avatar: { S: 40, M: 48, L: 96 }
+  Avatar: { XS: 32, S: 40, M: 48, L: 96 }
 }
