@@ -8,7 +8,7 @@
       "segments": {
         "federated": "Liên hợp",
         "local": "Máy chủ",
-        "trending": ""
+        "trending": "Xu hướng"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Lọc",
       "accessibilityHint": "Lọc các dạng thông báo",
-      "title": "",
+      "title": "Hiện thông báo",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Yêu cầu theo dõi",
@@ -55,7 +55,7 @@
         "name": "Đã thích"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtag theo dõi"
       },
       "fontSize": {
         "name": "Cỡ chữ"
@@ -70,7 +70,7 @@
         "name": "Người trong danh sách: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Tạo danh sách"
       },
       "listEdit": {
         "name": "Sửa danh sách"
