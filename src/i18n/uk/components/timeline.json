@@ -30,7 +30,9 @@
         "default": "{{name}} передмухнув(-ла)",
         "notification": "{{name}} передмухнув(-ла) ваш дмух"
       },
-      "update": "Передмух був відредагований"
+      "update": "Передмух був відредагований",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Додати цей дмух до закладок",
         "function": "Закладки дмухів"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
