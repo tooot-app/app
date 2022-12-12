@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Instanz"
+      "placeholder": ""
     },
     "button": "Login",
     "information": {
