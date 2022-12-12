@@ -1,13 +1,19 @@
+import Button from '@components/Button'
 import menuAccount from '@components/contextMenu/account'
 import menuInstance from '@components/contextMenu/instance'
 import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
+import browserPackage from '@helpers/browserPackage'
+import { getInstanceUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as WebBrowser from 'expo-web-browser'
 import React, { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
 import HeaderSharedAccount from './HeaderShared/Account'
@@ -21,6 +27,7 @@ export type Props = {
 }
 
 const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
+  const { t } = useTranslation('componentTimeline')
   const { queryKey, status } = useContext(StatusContext)
 
   const { colors } = useTheme()
@@ -40,12 +47,32 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
   const mStatus = menuStatus({ status, queryKey })
   const mInstance = menuInstance({ status, queryKey })
 
+  const url = useSelector(getInstanceUrl)
+
   const actions = () => {
     switch (notification.type) {
       case 'follow':
         return <RelationshipOutgoing id={notification.account.id} />
       case 'follow_request':
         return <RelationshipIncoming id={notification.account.id} />
+      case 'admin.report':
+        return (
+          <Button
+            type='text'
+            content={t('shared.actions.openReport')}
+            onPress={async () =>
+              WebBrowser.openAuthSessionAsync(
+                `https://${url}/admin/reports/${notification.report.id}`,
+                'tooot://tooot',
+                {
+                  browserPackage: await browserPackage(),
+                  dismissButtonStyle: 'done',
+                  readerMode: false
+                }
+              )
+            }
+          />
+        )
       default:
         if (status) {
           return (
@@ -118,12 +145,25 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View
         style={{
-          flex: notification.type === 'follow' || notification.type === 'follow_request' ? 1 : 4
+          flex:
+            notification.type === 'follow' ||
+            notification.type === 'follow_request' ||
+            notification.type === 'admin.report'
+              ? 1
+              : 4
         }}
       >
         <HeaderSharedAccount
-          account={notification.status ? notification.status.account : notification.account}
-          {...((notification.type === 'follow' || notification.type === 'follow_request') && {
+          account={
+            notification.type === 'admin.report'
+              ? notification.report.target_account
+              : notification.status
+              ? notification.status.account
+              : notification.account
+          }
+          {...((notification.type === 'follow' ||
+            notification.type === 'follow_request' ||
+            notification.type === 'admin.report') && {
             withoutName: true
           })}
         />
@@ -151,7 +191,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
         <View
           style={[
             { marginLeft: StyleConstants.Spacing.M },
-            notification.type === 'follow' || notification.type === 'follow_request'
+            notification.type === 'follow' ||
+            notification.type === 'follow_request' ||
+            notification.type === 'admin.report'
               ? { flexShrink: 1 }
               : { flex: 1 }
           ]}

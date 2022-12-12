@@ -30,7 +30,9 @@
         "default": "{{name}} boosted",
         "notification": "{{name}} boosted your toot"
       },
-      "update": "Reblog has been edited"
+      "update": "Reblog has been edited",
+      "admin.sign_up": "{{name}} joined the instance",
+      "admin.report": "{{name}} reported:"
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Add this toot to bookmarks",
         "function": "Bookmark toot"
-      }
+      },
+      "openReport": "Open report"
     },
     "actionsUsers": {
       "reblogged_by": {

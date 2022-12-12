@@ -54,7 +54,11 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                 fontSize: StyleConstants.Font.Size.M,
                 flex: 1,
                 color: colors.primaryDefault,
-                paddingLeft: StyleConstants.Spacing.XS
+                marginLeft: StyleConstants.Spacing.XS,
+                paddingLeft: StyleConstants.Spacing.XS,
+                paddingVertical: StyleConstants.Spacing.XS,
+                borderBottomColor: colors.border,
+                borderBottomWidth: 1
               }}
               autoFocus
               onChangeText={debounce(

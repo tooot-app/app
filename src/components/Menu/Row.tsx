@@ -86,9 +86,10 @@ const MenuRow: React.FC<Props> = ({
           >
             <View
               style={{
-                flex: 3,
+                flexGrow: 3,
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginRight: StyleConstants.Spacing.M
               }}
             >
               {iconFront && (

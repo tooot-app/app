@@ -30,18 +30,24 @@ const matchAccount = (
   // https://social.xmflsct.com/web/accounts/14195 <- default
   // https://social.xmflsct.com/web/@tooot <- pretty ! cannot be searched on the same instance
   // https://social.xmflsct.com/@tooot <- pretty
-  const matcherAccount = new RegExp(/(https?:\/\/)?([^\/]+)(\/web|\/web\/accounts)?\/([0-9]+|@.+)/)
+  const matcherAccount = new RegExp(
+    /(https?:\/\/)?([^\/]+)(\/web\/accounts\/([0-9]+)|\/web\/(@.+)|\/(@.+))/
+  )
 
   const matched = url.match(matcherAccount)
   if (matched) {
     const hostname = matched[2]
-    const style = matched[4].startsWith('@') ? 'pretty' : 'default'
-    const account = matched[4]
+    const account = matched.filter(i => i).reverse()?.[0]
+    if (account) {
+      const style = account.startsWith('@') ? 'pretty' : 'default'
 
-    const instanceUrl = getInstanceUrl(store.getState())
-    return style === 'default'
-      ? { id: account, style, sameInstance: hostname === instanceUrl }
-      : { username: account, style, sameInstance: hostname === instanceUrl }
+      const instanceUrl = getInstanceUrl(store.getState())
+      return style === 'default'
+        ? { id: account, style, sameInstance: hostname === instanceUrl }
+        : { username: account, style, sameInstance: hostname === instanceUrl }
+    } else {
+      return null
+    }
   }
 
   return null

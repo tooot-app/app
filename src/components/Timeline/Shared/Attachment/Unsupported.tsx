@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
-import attachmentAspectRatio from './aspectRatio'
+import { aspectRatio } from './dimensions'
 
 export interface Props {
   total: number
@@ -29,7 +29,7 @@ const AttachmentUnsupported: React.FC<Props> = ({ total, index, sensitiveShown, 
         padding: StyleConstants.Spacing.XS / 2,
         justifyContent: 'center',
         alignItems: 'center',
-        aspectRatio: attachmentAspectRatio({ total, index })
+        aspectRatio: aspectRatio({ total, index, ...attachment.meta?.original })
       }}
     >
       {attachment.blurhash ? (

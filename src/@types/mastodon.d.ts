@@ -333,24 +333,34 @@ declare namespace Mastodon {
     url: string
   }
 
-  type Notification = {
-    // Base
-    id: string
-    type:
-      | 'follow'
-      | 'follow_request'
-      | 'mention'
-      | 'reblog'
-      | 'favourite'
-      | 'poll'
-      | 'status'
-      | 'update'
-    created_at: string
-    account: Account
-
-    // Others
-    status?: Status
-  }
+  type Notification =
+    | {
+        // Base
+        id: string
+        type: 'favourite' | 'mention' | 'poll' | 'reblog' | 'status' | 'update'
+        created_at: string
+        account: Account
+        status: Status
+        report: undefined
+      }
+    | {
+        // Base
+        id: string
+        type: 'follow' | 'follow_request' | 'admin.sign_up'
+        created_at: string
+        account: Account
+        status: undefined
+        report: undefined
+      }
+    | {
+        // Base
+        id: string
+        type: 'admin.report'
+        created_at: string
+        account: Account
+        status: undefined
+        report: Report
+      }
 
   type Poll = {
     // Base
@@ -404,6 +414,19 @@ declare namespace Mastodon {
     domain_blocking: boolean
     endorsed: boolean
     note: string
+  }
+
+  type Report = {
+    id: string
+    action_taken: boolean
+    action_taken_at?: string
+    category: 'spam' | 'violation' | 'other'
+    comment: string
+    forwarded: boolean
+    created_at: string
+    status_ids?: string[]
+    rule_ids?: string[]
+    target_account: Account
   }
 
   type Results = {

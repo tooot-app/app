@@ -206,7 +206,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     () => (
       <HeaderLeft
         type='text'
-        content={t('heading.left.button')}
+        content={t('common:buttons.cancel')}
         onPress={() => {
           if (!composeState.dirty) {
             navigation.goBack()
@@ -229,7 +229,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 }
               },
               {
-                text: t('heading.left.alert.buttons.cancel'),
+                text: t('common:buttons.cancel'),
                 style: 'cancel'
               }
             ])
@@ -342,9 +342,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   )
 
   const headerContent = useMemo(() => {
-    return `${totalTextCount} / ${maxTootChars}${
-      __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
-    }`
+    return `${totalTextCount} / ${maxTootChars}`
   }, [totalTextCount, maxTootChars, composeState.dirty])
 
   const inputProps: EmojisState['inputProps'] = [

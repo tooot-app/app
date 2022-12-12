@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Cancel",
       "alert": {
         "title": "Cancel editing?",
         "buttons": {
           "save": "Save draft",
-          "delete": "Delete draft",
-          "cancel": "Cancel"
+          "delete": "Delete draft"
         }
       }
     },
