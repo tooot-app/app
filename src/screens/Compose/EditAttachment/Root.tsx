@@ -2,7 +2,7 @@ import CustomText from '@components/Text'
 import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useRef } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import ComposeContext from '../utils/createContext'
@@ -34,10 +34,10 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
               video={
                 video.local
                   ? ({
-                    url: video.local.uri,
-                    preview_url: video.local.thumbnail,
-                    blurhash: video.remote?.blurhash
-                  } as Mastodon.AttachmentVideo)
+                      url: video.local.uri,
+                      preview_url: video.local.thumbnail,
+                      blurhash: video.remote?.blurhash
+                    } as Mastodon.AttachmentVideo)
                   : (video.remote as Mastodon.AttachmentVideo)
               }
             />
@@ -47,45 +47,36 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
     return null
   }
 
-  const scrollViewRef = useRef<ScrollView>(null)
-
   return (
-    <ScrollView ref={scrollViewRef}>
-      {mediaDisplay()}
-      <View style={{ padding: StyleConstants.Spacing.Global.PagePadding }}>
-        <CustomText
-          fontStyle='M'
-          style={{ color: colors.primaryDefault }}
-          fontWeight='Bold'
-        >
+    <ScrollView>
+      <View style={{ padding: StyleConstants.Spacing.Global.PagePadding, paddingBottom: 0 }}>
+        <CustomText fontStyle='M' style={{ color: colors.primaryDefault }} fontWeight='Bold'>
           {t('content.editAttachment.content.altText.heading')}
         </CustomText>
         <TextInput
           style={{
-            height: 200,
+            height: StyleConstants.Font.Size.M * 11 + StyleConstants.Spacing.Global.PagePadding * 2,
             ...StyleConstants.FontStyle.M,
             marginTop: StyleConstants.Spacing.M,
             marginBottom: StyleConstants.Spacing.S,
             padding: StyleConstants.Spacing.Global.PagePadding,
-            paddingTop: StyleConstants.Spacing.S * 1.5,
             borderWidth: StyleSheet.hairlineWidth,
             borderColor: colors.border,
             color: colors.primaryDefault
           }}
-          onFocus={() => scrollViewRef.current?.scrollToEnd()}
           maxLength={1500}
           multiline
-          onChangeText={(e) =>
+          onChangeText={e =>
             composeDispatch({
               type: 'attachment/edit',
               payload: {
                 ...theAttachment,
                 description: e
               }
-            })}
+            })
+          }
           placeholder={t('content.editAttachment.content.altText.placeholder')}
           placeholderTextColor={colors.secondary}
-          scrollEnabled
           value={theAttachment.description}
           keyboardAppearance={mode}
         />
@@ -101,6 +92,7 @@ const ComposeEditAttachmentRoot: React.FC<Props> = ({ index }) => {
           {theAttachment.description?.length || 0} / 1500
         </CustomText>
       </View>
+      {mediaDisplay()}
     </ScrollView>
   )
 }
