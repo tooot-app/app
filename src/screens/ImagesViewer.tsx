@@ -180,7 +180,7 @@ const ScreenImagesViewer = ({
               options: [
                 t('content.options.save'),
                 t('content.options.share'),
-                t('content.options.cancel')
+                t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2,
               userInterfaceStyle: mode

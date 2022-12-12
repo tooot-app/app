@@ -28,18 +28,18 @@ import TimelineHeaderAndroid from './Shared/HeaderAndroid'
 export interface Props {
   notification: Mastodon.Notification
   queryKey: QueryKeyTimeline
-  highlighted?: boolean
 }
 
-const TimelineNotifications: React.FC<Props> = ({
-  notification,
-  queryKey,
-  highlighted = false
-}) => {
+const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const instanceAccount = useSelector(getInstanceAccount, () => true)
 
   const status = notification.status?.reblog ? notification.status.reblog : notification.status
-  const account = notification.status ? notification.status.account : notification.account
+  const account =
+    notification.type === 'admin.report'
+      ? notification.report.target_account
+      : notification.status
+      ? notification.status.account
+      : notification.account
   const ownAccount = notification.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
     instanceAccount.preferences['reading:expand:spoilers'] || false
@@ -91,7 +91,8 @@ const TimelineNotifications: React.FC<Props> = ({
               notification.type === 'follow' ||
               notification.type === 'follow_request' ||
               notification.type === 'mention' ||
-              notification.type === 'status'
+              notification.type === 'status' ||
+              notification.type === 'admin.sign_up'
                 ? 1
                 : 0.5
           }}
@@ -102,12 +103,7 @@ const TimelineNotifications: React.FC<Props> = ({
           </View>
 
           {notification.status ? (
-            <View
-              style={{
-                paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-                paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-              }}
-            >
+            <View style={{ paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S }}>
               <TimelineContent
                 notificationOwnToot={['favourite', 'reblog'].includes(notification.type)}
                 setSpoilerExpanded={setSpoilerExpanded}
@@ -141,8 +137,7 @@ const TimelineNotifications: React.FC<Props> = ({
         status,
         ownAccount,
         spoilerHidden,
-        copiableContent,
-        highlighted
+        copiableContent
       }}
     >
       <ContextMenu.Root>
