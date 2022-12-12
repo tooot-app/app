@@ -3,10 +3,10 @@
     "OK": "Ok",
     "apply": "Zastosuj",
     "cancel": "Anuluj",
-    "discard": "",
-    "continue": "",
+    "discard": "Anuluj",
+    "continue": "Dalej",
     "create": "",
-    "delete": "",
+    "delete": "Usuń",
     "done": ""
   },
   "customEmoji": {
@@ -25,7 +25,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Zmiany nie zostały zapisane",
+    "message": "Twoja zmiana nie została zapisana. Potwierdzasz wyjście bez zapisu?"
   }
 }
