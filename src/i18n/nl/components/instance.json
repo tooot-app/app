@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Domeinnaam van instantie"
+      "placeholder": ""
     },
     "button": "Inloggen",
     "information": {
