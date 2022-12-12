@@ -4,7 +4,6 @@
       "name": "Gefolgt"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Föderiert",
         "local": "Lokal",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Benachrichtigungen"
-    },
-    "me": {
-      "name": "Über mich"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "Andere Listen"
     },
     "attachments": {
-      "name": "<0 /><1>\"s Medien</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Folgen",
