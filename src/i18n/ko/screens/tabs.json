@@ -4,7 +4,6 @@
       "name": "팔로우 중"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "연합",
         "local": "로컬",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "알림"
-    },
-    "me": {
-      "name": "내 소개"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "다른 리스트"
     },
     "attachments": {
-      "name": "<0 /><1>의 미디어</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "팔로우",
