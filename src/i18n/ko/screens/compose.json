@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "취소",
       "alert": {
         "title": "작성을 취소할까요?",
         "buttons": {
           "save": "임시 저장",
-          "delete": "임시 저장한 내용 삭제",
-          "cancel": "취소"
+          "delete": "임시 저장한 내용 삭제"
         }
       }
     },
