@@ -30,7 +30,9 @@
         "default": "{{name}} boostou",
         "notification": "{{name}} deu boost no teu toot"
       },
-      "update": "Toot foi editado"
+      "update": "Toot foi editado",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Adicionar este toot aos favoritos",
         "function": "Salvos"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
