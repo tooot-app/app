@@ -4,7 +4,6 @@
       "name": "ホーム"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "連合",
         "local": "ローカル",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "私について"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "その他のリスト"
     },
     "attachments": {
-      "name": "<0 /><1>\" のメディア</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "フォロー",
