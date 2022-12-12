@@ -30,7 +30,9 @@
         "default": "{{name}} hat geboostet",
         "notification": "{{name}} hat deinen Tröt geboostet"
       },
-      "update": "Boost wurde bearbeitet"
+      "update": "Boost wurde bearbeitet",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Lesezeichen hinzufügen",
         "function": "Lesezeichen setzen"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
