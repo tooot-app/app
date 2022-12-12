@@ -26,6 +26,6 @@
   "separator": ", ",
   "discard": {
     "title": "Zmiany nie zostały zapisane",
-    "message": "Twoja zmiana nie została zapisana. Potwierdzasz wyjście bez zapisu?"
+    "message": "Wyjść bez zapisania zmian?"
   }
 }
