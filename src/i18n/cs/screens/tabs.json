@@ -4,7 +4,6 @@
       "name": ""
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "",
         "local": "",
@@ -12,9 +11,6 @@
       }
     },
     "notifications": {
-      "name": ""
-    },
-    "me": {
       "name": ""
     }
   },
