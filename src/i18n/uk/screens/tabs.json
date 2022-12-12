@@ -4,7 +4,6 @@
       "name": "Підписаний"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Глобальна",
         "local": "Місцева",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Сповіщення"
-    },
-    "me": {
-      "name": "Про мене"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "Інші списки"
     },
     "attachments": {
-      "name": "<0 /><1> медіа</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Підписатися",
