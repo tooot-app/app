@@ -4,7 +4,6 @@
       "name": "Siguiendo"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Federado",
         "local": "Local",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Notificaciones"
-    },
-    "me": {
-      "name": "Sobre mí"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "Otras listas"
     },
     "attachments": {
-      "name": "Multimedia de <0 /><1></1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Seguir",
