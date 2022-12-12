@@ -4,7 +4,6 @@
       "name": "我的关注"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "跨站",
         "local": "本站",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "关于我"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "其它列表"
     },
     "attachments": {
-      "name": "<0 /><1>的媒体</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "关注",
