@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Domän för instansen"
+      "placeholder": ""
     },
     "button": "Logga in",
     "information": {
