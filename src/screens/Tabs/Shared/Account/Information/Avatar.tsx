@@ -3,9 +3,11 @@ import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { Pressable, View } from 'react-native'
+import { useSelector } from 'react-redux'
 
 export interface Props {
   account: Mastodon.Account | undefined
@@ -15,6 +17,7 @@ export interface Props {
 
 const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo, edit }) => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  useSelector(getInstanceActive)
   return (
     <Pressable
       disabled={!myInfo}
