@@ -4,7 +4,6 @@
       "name": "Suit"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Fédéré",
         "local": "Local",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Notifications"
-    },
-    "me": {
-      "name": "À propos de moi"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": ""
     },
     "attachments": {
-      "name": "<0 /><1>\"s media</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Suivre",
