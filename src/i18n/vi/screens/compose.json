@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Hủy bỏ",
       "alert": {
         "title": "Không đăng nữa?",
         "buttons": {
           "save": "Lưu bản nháp",
-          "delete": "Xóa bản nháp",
-          "cancel": "Hủy bỏ"
+          "delete": "Xóa bản nháp"
         }
       }
     },
