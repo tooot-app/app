@@ -1,6 +1,7 @@
-const demoStatuses = [
+const demoStatus: Mastodon.Status[] = [
   {
     id: '1',
+    uri: 'https://example.com',
     created_at: new Date().toISOString(),
     sensitive: false,
     visibility: 'public',
@@ -13,7 +14,6 @@ const demoStatuses = [
     bookmarked: false,
     content:
       '<p>Would you like to try out this simple, beautiful and open-source mobile app for Mastodon? 😊</p>',
-    reblog: null,
     application: {
       name: 'tooot',
       website: 'https://tooot.app'
@@ -23,19 +23,31 @@ const demoStatuses = [
       username: 'tooot📱',
       acct: 'tooot@xmflsct.com',
       display_name: 'tooot📱',
-      avatar_static:
-        'https://avatars.githubusercontent.com/u/77554750?s=200&v=4'
+      avatar: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      avatar_static: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      url: '',
+      header: '',
+      header_static: '',
+      locked: false,
+      discoverable: false,
+      created_at: new Date().toISOString(),
+      last_status_at: new Date().toISOString(),
+      statuses_count: 1,
+      followers_count: 1,
+      following_count: 1,
+      fields: [],
+      bot: false
     },
     media_attachments: [],
     poll: {
       id: '1',
-      expires_at: new Date().setDate(new Date().getDate() + 5),
+      expires_at: new Date().setDate(new Date().getDate() + 5).toString(),
       expired: false,
       multiple: false,
       votes_count: 10,
-      voters_count: null,
+      voters_count: 2,
       voted: false,
-      own_votes: null,
+      own_votes: undefined,
       options: [
         {
           title: 'I would love to!',
@@ -48,11 +60,15 @@ const demoStatuses = [
       ],
       emojis: []
     },
-    mentions: []
+    mentions: [],
+    tags: [],
+    emojis: [],
+    pinned: false
   },
   {
     id: '2',
-    created_at: new Date().setMinutes(new Date().getMinutes() - 2),
+    uri: 'https://example.com',
+    created_at: new Date().setMinutes(new Date().getMinutes() - 2).toString(),
     sensitive: false,
     spoiler_text: '',
     visibility: 'public',
@@ -65,18 +81,26 @@ const demoStatuses = [
     bookmarked: false,
     content:
       '<p>Mastodon is a free and open-source self-hosted social networking service. It allows anyone to host their own server node in the network, and its various separately operated user bases are federated across many different servers. These nodes are referred to as "instances" by Mastodon users.</p>',
-    reblog: null,
-    application: {
-      name: 'Web',
-      website: null
-    },
+    application: { name: 'Web' },
     account: {
       id: '1000',
       username: 'Mastodon',
       acct: 'mastodon',
       display_name: 'Mastodon',
-      avatar_static:
-        'https://mastodon.social/apple-touch-icon.png'
+      avatar: 'https://mastodon.social/apple-touch-icon.png',
+      avatar_static: 'https://mastodon.social/apple-touch-icon.png',
+      url: '',
+      header: '',
+      header_static: '',
+      locked: false,
+      discoverable: false,
+      created_at: new Date().toISOString(),
+      last_status_at: new Date().toISOString(),
+      statuses_count: 1,
+      followers_count: 1,
+      following_count: 1,
+      fields: [],
+      bot: false
     },
     media_attachments: [],
     card: {
@@ -85,18 +109,31 @@ const demoStatuses = [
       description:
         'Mastodon is an open source decentralized social network - by the people for the people. Join the federation and take back control of your social media!',
       type: 'link',
-      image:
-        'https://mastodon.social/apple-touch-icon.png'
+      image: 'https://mastodon.social/apple-touch-icon.png',
+      author_name: '',
+      author_url: '',
+      provider_name: '',
+      provider_url: '',
+      html: '<p></p>',
+      width: 100,
+      height: 100,
+      embed_url: 'https://example.com',
+      blurhash: ''
     },
-    mentions: []
+    mentions: [],
+    tags: [],
+    emojis: [],
+    pinned: false
   },
   {
     id: '3',
-    created_at: '2021-01-24T09:50:00.901Z',
+    uri: '',
+    created_at: new Date().setHours(new Date().getHours() - 1).toString(),
+    sensitive: false,
     spoiler_text: '',
     visibility: 'public',
     replies_count: 2,
-    reblogs_count: null,
+    reblogs_count: 1,
     favourites_count: 3,
     favourited: false,
     reblogged: false,
@@ -104,24 +141,38 @@ const demoStatuses = [
     bookmarked: true,
     content:
       '<p>These servers are connected as a federated social network, allowing users from different servers to interact with each other seamlessly. Once a Mastodon server knows another Mastodon server, it "federates" with the other Mastodon server. Mastodon is a part of the wider Fediverse, allowing its users to also interact with users on different open platforms that support the same protocol, such as PeerTube and Friendica.</p>',
-    reblog: null,
-    application: {
-      name: 'Web',
-      website: null
-    },
+    application: { name: 'Web' },
     account: {
       id: '1001',
       username: 'Fediverse',
       acct: 'fediverse',
       display_name: 'Fediverse',
+      avatar:
+        'https://e7.pngegg.com/pngimages/667/514/png-clipart-mastodon-fediverse-social-media-free-software-logo-social-media-blue-text.png',
       avatar_static:
-        'https://e7.pngegg.com/pngimages/667/514/png-clipart-mastodon-fediverse-social-media-free-software-logo-social-media-blue-text.png'
+        'https://e7.pngegg.com/pngimages/667/514/png-clipart-mastodon-fediverse-social-media-free-software-logo-social-media-blue-text.png',
+      url: '',
+      header: '',
+      header_static: '',
+      locked: false,
+      discoverable: false,
+      created_at: new Date().toISOString(),
+      last_status_at: new Date().toISOString(),
+      statuses_count: 1,
+      followers_count: 1,
+      following_count: 1,
+      fields: [],
+      bot: false
     },
     media_attachments: [],
-    mentions: []
+    mentions: [],
+    tags: [],
+    emojis: [],
+    pinned: false
   },
   {
     id: '4',
+    uri: 'https://example.com',
     created_at: '2021-01-24T08:50:00.901Z',
     sensitive: false,
     visibility: 'public',
@@ -134,7 +185,6 @@ const demoStatuses = [
     bookmarked: false,
     content:
       '<p>tooot is an open source, simple mobile client for Mastodon. Focusing on your connections while being able to explore the Fediverse.</p>',
-    reblog: null,
     application: {
       name: 'tooot',
       website: 'https://tooot.app'
@@ -144,14 +194,30 @@ const demoStatuses = [
       username: 'tooot📱',
       acct: 'tooot@xmflsct.com',
       display_name: 'tooot📱',
-      avatar_static:
-        'https://avatars.githubusercontent.com/u/77554750?s=200&v=4'
+      avatar: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      avatar_static: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      url: '',
+      header: '',
+      header_static: '',
+      locked: false,
+      discoverable: false,
+      created_at: new Date().toISOString(),
+      last_status_at: new Date().toISOString(),
+      statuses_count: 1,
+      followers_count: 1,
+      following_count: 1,
+      fields: [],
+      bot: false
     },
     media_attachments: [],
-    mentions: []
+    mentions: [],
+    tags: [],
+    emojis: [],
+    pinned: false
   },
   {
     id: '5',
+    uri: 'https://example.com',
     created_at: '2021-01-24T07:50:00.901Z',
     sensitive: false,
     visibility: 'public',
@@ -164,7 +230,6 @@ const demoStatuses = [
     bookmarked: false,
     content:
       '<p>- tooot supports multiple accounts<br />- tooot supports browsing external instance<br />- tooot aims to support multiple languages</p>',
-    reblog: null,
     application: {
       name: 'tooot',
       website: 'https://tooot.app'
@@ -174,12 +239,27 @@ const demoStatuses = [
       username: 'tooot📱',
       acct: 'tooot@xmflsct.com',
       display_name: 'tooot📱',
-      avatar_static:
-        'https://avatars.githubusercontent.com/u/77554750?s=200&v=4'
+      avatar: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      avatar_static: 'https://avatars.githubusercontent.com/u/77554750?s=200&v=4',
+      url: '',
+      header: '',
+      header_static: '',
+      locked: false,
+      discoverable: false,
+      created_at: new Date().toISOString(),
+      last_status_at: new Date().toISOString(),
+      statuses_count: 1,
+      followers_count: 1,
+      following_count: 1,
+      fields: [],
+      bot: false
     },
     media_attachments: [],
-    mentions: []
+    mentions: [],
+    tags: [],
+    emojis: [],
+    pinned: false
   }
 ]
 
-export default demoStatuses
+export default demoStatus

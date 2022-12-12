@@ -32,7 +32,7 @@ export const menuListDelete = ({
   key: 'list-delete',
   onSelect: () =>
     Alert.alert(
-      i18next.t('screenTabs:me.listDelete.confirm.title', { list: params.title.slice(0, 6) }),
+      i18next.t('screenTabs:me.listDelete.confirm.title', { list: params.title.slice(0, 20) }),
       i18next.t('screenTabs:me.listDelete.confirm.message'),
       [
         {

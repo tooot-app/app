@@ -1,10 +1,7 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import {
-  getInstanceAccount,
-  getInstanceUri
-} from '@utils/slices/instancesSlice'
+import { getInstanceAccount, getInstanceUri } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -15,25 +12,22 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
-  localInstance: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({
-  account,
-  localInstance
-}) => {
+const AccountInformationAccount: React.FC<Props> = ({ account }) => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.acct === next?.acct
-  )
+  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.acct === next?.acct)
   const instanceUri = useSelector(getInstanceUri)
 
   const { data: relationship } = useRelationshipQuery({
     id: account?.id || '',
     options: { enabled: account !== undefined }
   })
+
+  const localInstance = instanceAccount.acct.includes('@')
+    ? instanceAccount.acct.includes(`@${instanceUri}`)
+    : true
 
   if (account || (localInstance && instanceAccount)) {
     return (
@@ -54,7 +48,7 @@ const AccountInformationAccount: React.FC<Props> = ({
           ) : null}
           <CustomText
             style={{
-              textDecorationLine: (account?.moved || account?.suspended) ? 'line-through' : undefined
+              textDecorationLine: account?.moved || account?.suspended ? 'line-through' : undefined
             }}
             selectable
           >
@@ -94,7 +88,4 @@ const AccountInformationAccount: React.FC<Props> = ({
   }
 }
 
-export default React.memo(
-  AccountInformationAccount,
-  (_, next) => next.account === undefined
-)
+export default AccountInformationAccount

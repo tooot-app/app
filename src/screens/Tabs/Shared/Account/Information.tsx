@@ -28,10 +28,7 @@ const AccountInformation = React.memo(
       <View style={styles.base}>
         <Placeholder
           Animation={props => (
-            <Fade
-              {...props}
-              style={{ backgroundColor: colors.shimmerHighlight }}
-            />
+            <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
           )}
         >
           <View style={styles.avatarAndActions}>
@@ -41,7 +38,7 @@ const AccountInformation = React.memo(
 
           <AccountInformationName account={account} />
 
-          <AccountInformationAccount account={account} localInstance={myInfo} />
+          <AccountInformationAccount account={account} />
 
           <AccountInformationFields account={account} myInfo={myInfo} />
 

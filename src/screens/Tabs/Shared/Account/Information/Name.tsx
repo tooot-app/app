@@ -66,4 +66,4 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
   )
 }
 
-export default React.memo(AccountInformationName, (_, next) => next.account === undefined)
+export default AccountInformationName

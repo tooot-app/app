@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 
 export interface Props {
   account: Mastodon.Account | undefined
@@ -13,24 +13,24 @@ export interface Props {
   edit?: boolean
 }
 
-const AccountInformationAvatar: React.FC<Props> = ({
-  account,
-  myInfo,
-  edit
-}) => {
-  const navigation =
-    useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo, edit }) => {
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   return (
     <Pressable
       disabled={!myInfo}
       onPress={() => {
         myInfo && account && navigation.push('Tab-Shared-Account', { account })
       }}
-      style={styles.base}
+      style={{
+        borderRadius: 8,
+        overflow: 'hidden',
+        width: StyleConstants.Avatar.L,
+        height: StyleConstants.Avatar.L
+      }}
     >
       <GracefullyImage
         key={account?.avatar}
-        style={styles.image}
+        style={{ flex: 1 }}
         uri={{ original: account?.avatar, static: account?.avatar_static }}
       />
       {edit ? (
@@ -50,15 +50,5 @@ const AccountInformationAvatar: React.FC<Props> = ({
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    borderRadius: 8,
-    overflow: 'hidden',
-    width: StyleConstants.Avatar.L,
-    height: StyleConstants.Avatar.L
-  },
-  image: { flex: 1 }
-})
 
 export default AccountInformationAvatar

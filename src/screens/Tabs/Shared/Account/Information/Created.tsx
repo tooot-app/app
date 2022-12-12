@@ -12,59 +12,53 @@ export interface Props {
   hidden?: boolean
 }
 
-const AccountInformationCreated = React.memo(
-  ({ account, hidden = false }: Props) => {
-    if (hidden) {
-      return null
-    }
+const AccountInformationCreated: React.FC<Props> = ({ account, hidden = false }) => {
+  if (hidden) {
+    return null
+  }
 
-    const { i18n } = useTranslation()
-    const { colors } = useTheme()
-    const { t } = useTranslation('screenTabs')
+  const { i18n } = useTranslation()
+  const { colors } = useTheme()
+  const { t } = useTranslation('screenTabs')
 
-    if (account) {
-      return (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderRadius: 0,
-            marginBottom: StyleConstants.Spacing.M
-          }}
-        >
-          <Icon
-            name='Calendar'
-            size={StyleConstants.Font.Size.S}
-            color={colors.secondary}
-            style={{ marginRight: StyleConstants.Spacing.XS }}
-          />
-          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-            {t('shared.account.created_at', {
-              date: new Date(account.created_at || '').toLocaleDateString(
-                i18n.language,
-                {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                }
-              )
-            })}
-          </CustomText>
-        </View>
-      )
-    } else {
-      return (
-        <PlaceholderLine
-          width={StyleConstants.Font.Size.S * 4}
-          height={StyleConstants.Font.LineHeight.S}
-          color={colors.shimmerDefault}
-          noMargin
-          style={{ borderRadius: 0, marginBottom: StyleConstants.Spacing.M }}
+  if (account) {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderRadius: 0,
+          marginBottom: StyleConstants.Spacing.M
+        }}
+      >
+        <Icon
+          name='Calendar'
+          size={StyleConstants.Font.Size.S}
+          color={colors.secondary}
+          style={{ marginRight: StyleConstants.Spacing.XS }}
         />
-      )
-    }
-  },
-  (_, next) => next.account === undefined
-)
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
+          {t('shared.account.created_at', {
+            date: new Date(account.created_at || '').toLocaleDateString(i18n.language, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })
+          })}
+        </CustomText>
+      </View>
+    )
+  } else {
+    return (
+      <PlaceholderLine
+        width={StyleConstants.Font.Size.S * 4}
+        height={StyleConstants.Font.LineHeight.S}
+        color={colors.shimmerDefault}
+        noMargin
+        style={{ borderRadius: 0, marginBottom: StyleConstants.Spacing.M }}
+      />
+    )
+  }
+}
 
 export default AccountInformationCreated
