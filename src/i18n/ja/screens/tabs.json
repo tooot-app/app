@@ -7,7 +7,7 @@
       "segments": {
         "federated": "連合",
         "local": "ローカル",
-        "trending": ""
+        "trending": "トレンド"
       }
     },
     "notifications": {
@@ -344,7 +344,7 @@
       "notInLists": "その他のリスト"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>のメディア</1>"
     },
     "hashtag": {
       "follow": "フォロー",
