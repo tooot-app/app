@@ -4,7 +4,6 @@
       "name": "跟隨中"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "聯邦",
         "local": "本站",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "關於我"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "其它列表"
     },
     "attachments": {
-      "name": "<0 /><1>的媒體</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "跟隨",
