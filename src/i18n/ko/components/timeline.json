@@ -30,7 +30,9 @@
         "default": "{{name}} 님이 부스트했어요",
         "notification": "{{name}} 님이 내 툿을 부스트했어요"
       },
-      "update": "부스트한 툿이 수정됨"
+      "update": "부스트한 툿이 수정됨",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "툿 북마크에 추가",
         "function": "툿 북마크"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
