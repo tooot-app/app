@@ -30,7 +30,9 @@
         "default": "{{name}} 转嘟了",
         "notification": "{{name}} 转嘟了你的嘟文"
       },
-      "update": "转嘟已被编辑"
+      "update": "转嘟已被编辑",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "添加此嘟文至书签列表",
         "function": "喜欢嘟文"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
