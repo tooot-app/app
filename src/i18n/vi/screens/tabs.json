@@ -4,7 +4,6 @@
       "name": "Đang theo dõi"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Liên hợp",
         "local": "Máy chủ",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Thông báo"
-    },
-    "me": {
-      "name": "Tôi"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "Danh sách khác"
     },
     "attachments": {
-      "name": "<0 /><1>'s media</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Theo dõi",
