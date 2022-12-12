@@ -30,7 +30,9 @@
         "default": "{{name}} boostte",
         "notification": "{{name}} boostte jouw toot"
       },
-      "update": "De reblog is bewerkt"
+      "update": "De reblog is bewerkt",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Toot toevoegen aan bladwijzers",
         "function": "Voeg deze toot toe aan bladwijzers"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
