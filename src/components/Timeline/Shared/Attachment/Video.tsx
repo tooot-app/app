@@ -4,10 +4,10 @@ import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
-import attachmentAspectRatio from './aspectRatio'
 import AttachmentAltText from './AltText'
 import { Platform } from 'expo-modules-core'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { aspectRatio } from './dimensions'
 
 export interface Props {
   total: number
@@ -49,7 +49,7 @@ const AttachmentVideo: React.FC<Props> = ({
         flex: 1,
         flexBasis: '50%',
         padding: StyleConstants.Spacing.XS / 2,
-        aspectRatio: attachmentAspectRatio({ total, index })
+        aspectRatio: aspectRatio({ total, index, ...video.meta?.original })
       }}
     >
       <Video

@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, AppStateStatus, StyleSheet, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
-import attachmentAspectRatio from './aspectRatio'
+import { aspectRatio } from './dimensions'
 
 export interface Props {
   total: number
@@ -64,7 +64,7 @@ const AttachmentAudio: React.FC<Props> = ({ total, index, sensitiveShown, audio 
         styles.base,
         {
           backgroundColor: colors.disabled,
-          aspectRatio: attachmentAspectRatio({ total, index })
+          aspectRatio: aspectRatio({ total, index, ...audio.meta?.original })
         }
       ]}
     >
