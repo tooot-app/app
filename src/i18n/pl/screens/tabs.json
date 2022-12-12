@@ -67,13 +67,13 @@
         "name": ""
       },
       "listAccounts": {
-        "name": ""
+        "name": "Użytkownicy: {{list}}"
       },
       "listAdd": {
         "name": ""
       },
       "listEdit": {
-        "name": ""
+        "name": "Edycja listy"
       },
       "lists": {
         "name": ""
@@ -114,27 +114,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Zarządzanie użytkownikami",
+      "error": "Usuń z listy",
+      "empty": "Brak użytkowników na liście"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Edytuj szczegóły",
+      "title": "Nazwa listy",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Odpowiedzi będą widoczne dla:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Nikogo",
+          "list": "Członków listy",
+          "followed": "Wszystkich obserwowanych"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Usuń listę",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Usunąć listę \"{{list}}\"?",
+        "message": "Nie będzie można cofnąć tej czynności."
       }
     },
     "profile": {
