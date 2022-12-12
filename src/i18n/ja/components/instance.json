@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "インスタンスのドメイン"
+      "placeholder": ""
     },
     "button": "ログイン",
     "information": {
