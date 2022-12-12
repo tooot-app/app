@@ -30,7 +30,9 @@
         "default": "{{name}} ha impulsado",
         "notification": "{{name}} ha impulsado tu toot"
       },
-      "update": "El impulso ha sido editado"
+      "update": "El impulso ha sido editado",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Añadir este toot en marcadores",
         "function": "Añadir toot a marcadores"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {
