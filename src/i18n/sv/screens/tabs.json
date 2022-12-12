@@ -4,7 +4,6 @@
       "name": "Följer"
     },
     "public": {
-      "name": "",
       "segments": {
         "federated": "Federerat",
         "local": "Lokalt",
@@ -13,9 +12,6 @@
     },
     "notifications": {
       "name": "Notiser"
-    },
-    "me": {
-      "name": "Om mig"
     }
   },
   "common": {
@@ -348,7 +344,7 @@
       "notInLists": "Andra listor"
     },
     "attachments": {
-      "name": "<0 /><1>s media</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Följ",
