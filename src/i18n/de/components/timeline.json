@@ -31,8 +31,8 @@
         "notification": "{{name}} hat deinen Tröt geboostet"
       },
       "update": "Boost wurde bearbeitet",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "admin.sign_up": "{{name}} ist der Instanz beigetreten",
+      "admin.report": "{{name}} hat gemeldet:"
     },
     "actions": {
       "reply": {
