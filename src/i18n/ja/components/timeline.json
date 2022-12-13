@@ -31,7 +31,7 @@
         "notification": "{{name}}さんがあなたのトゥートをブーストしました"
       },
       "update": "ブーストしたトゥートが編集されました",
-      "admin.sign_up": "",
+      "admin.sign_up": "{{name}} がインスタンスに参加しました",
       "admin.report": ""
     },
     "actions": {
