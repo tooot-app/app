@@ -31,7 +31,7 @@
         "notification": ""
       },
       "update": "",
-      "admin.sign_up": "",
+      "admin.sign_up": "{{name}} dołącza do instancji",
       "admin.report": ""
     },
     "actions": {
