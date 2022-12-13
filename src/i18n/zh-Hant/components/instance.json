@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "站點的網域"
     },
     "button": "登入",
     "information": {
