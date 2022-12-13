@@ -31,8 +31,8 @@
         "notification": "{{name}} boostte jouw toot"
       },
       "update": "De reblog is bewerkt",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "admin.sign_up": "{{name}} heeft zich aangesloten bij de instantie",
+      "admin.report": "{{name}} rapporteerde:"
     },
     "actions": {
       "reply": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "Toot toevoegen aan bladwijzers",
         "function": "Voeg deze toot toe aan bladwijzers"
       },
-      "openReport": ""
+      "openReport": "Rapportage openen"
     },
     "actionsUsers": {
       "reblogged_by": {
