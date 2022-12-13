@@ -31,8 +31,8 @@
         "notification": "{{name}} передмухнув(-ла) ваш дмух"
       },
       "update": "Передмух був відредагований",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "admin.sign_up": "{{name}} приєднався до інстансу",
+      "admin.report": "{{name}} повідомлено:"
     },
     "actions": {
       "reply": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "Додати цей дмух до закладок",
         "function": "Закладки дмухів"
       },
-      "openReport": ""
+      "openReport": "Відкрити скаргу"
     },
     "actionsUsers": {
       "reblogged_by": {
