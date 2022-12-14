@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Följer"
+      "name": "Följer",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
