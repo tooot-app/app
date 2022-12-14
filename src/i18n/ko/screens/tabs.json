@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "팔로우 중"
+      "name": "팔로우 중",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
