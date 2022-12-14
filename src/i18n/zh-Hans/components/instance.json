@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "输入社区服务器地址"
+      "placeholder": "实例域名"
     },
     "button": "登录",
     "information": {

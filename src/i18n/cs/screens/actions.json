@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": ""
-    },
-    "notificationsFilter": {
-      "heading": "",
-      "content": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": ""
-      }
     }
   }
 }

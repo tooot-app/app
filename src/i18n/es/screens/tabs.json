@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Siguiendo"
+      "name": "Siguiendo",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Federado",
-        "right": "Local"
+        "federated": "Federado",
+        "local": "Local",
+        "trending": "En tendencia"
       }
     },
     "notifications": {
       "name": "Notificaciones"
-    },
-    "me": {
-      "name": "Sobre mí"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filtrar",
-      "accessibilityHint": "Filtrar tipos de notificación"
+      "accessibilityHint": "Filtrar tipos de notificación",
+      "title": "Mostrar las notificaciones",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Solicitud de seguimiento",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot de usuarios suscritos",
+        "update": "El impulso ha sido editado",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favoritos"
+      },
+      "followedTags": {
+        "name": "Hashtags seguidos"
       },
       "fontSize": {
         "name": "Tamaño de fuente"
@@ -53,7 +70,7 @@
         "name": "Usuarios en la lista: {{list}}"
       },
       "listAdd": {
-        "name": "Añadir una lista"
+        "name": "Crea una lista"
       },
       "listEdit": {
         "name": "Editar detalles de lista"
@@ -179,8 +196,8 @@
         "settings": "Activar en Ajustes"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Servidor mal configurado para las notificaciones push",
+        "description": "Por favor, contacte con el administrador de su servidor para configurar el soporte de notificaciones push"
       },
       "global": {
         "heading": "Habilitar para {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Toot de usuarios suscritos"
       },
+      "admin.sign_up": {
+        "heading": "Administración: Registrarse"
+      },
+      "admin.report": {
+        "heading": "Administración: denuncias"
+      },
       "howitworks": "Más información sobre las notificaciones push"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Habilitado",
-          "disabled": "Deshabilitado"
-        }
+        "content_true": "Habilitado",
+        "content_false": "Deshabilitado"
       },
       "update": {
         "title": "Actualizar a la última versión"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Apoyar tooot"
       },
-      "review": {
-        "heading": "Valorar tooot"
-      },
       "contact": {
         "heading": "Contactar tooot"
       },
@@ -330,7 +348,7 @@
       "notInLists": "Otras listas"
     },
     "attachments": {
-      "name": "Multimedia de <0 /><1></1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Seguir",

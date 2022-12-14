@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "取消",
       "alert": {
         "title": "確認取消編輯？",
         "buttons": {
           "save": "儲存草稿",
-          "delete": "刪除草稿",
-          "cancel": "取消"
+          "delete": "刪除草稿"
         }
       }
     },

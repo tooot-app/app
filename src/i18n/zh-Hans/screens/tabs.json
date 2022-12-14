@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "我的关注"
+      "name": "我的关注",
+      "options": {
+        "showBoosts": "显示转嘟",
+        "showReplies": "显示回复"
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "跨站嘟嘟",
-        "right": "本站嘟嘟"
+        "federated": "跨站",
+        "local": "本站",
+        "trending": "热门"
       }
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "关于我"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "筛选",
-      "accessibilityHint": "筛选显示的通知类型"
+      "accessibilityHint": "筛选显示的通知类型",
+      "title": "显示通知",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "关注请求",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "订阅用户的嘟文",
+        "update": "转嘟被编辑",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "喜欢"
+      },
+      "followedTags": {
+        "name": "关注的话题标签"
       },
       "fontSize": {
         "name": "嘟文字号"
@@ -53,7 +70,7 @@
         "name": "列表中的用户：{{list}}"
       },
       "listAdd": {
-        "name": "添加列表"
+        "name": "创建列表"
       },
       "listEdit": {
         "name": "编辑列表详情"
@@ -214,6 +231,12 @@
       "status": {
         "heading": "订阅用户的嘟文"
       },
+      "admin.sign_up": {
+        "heading": "管理员：用户注册"
+      },
+      "admin.report": {
+        "heading": "管理员：报告"
+      },
       "howitworks": "了解通知消息转发如何工作"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "已启用",
-          "disabled": "未启用"
-        }
+        "content_true": "已启用",
+        "content_false": "未启用"
       },
       "update": {
         "title": "更新至最新版本"
@@ -289,9 +310,6 @@
       },
       "support": {
         "heading": "赞助 tooot 开发"
-      },
-      "review": {
-        "heading": "给 tooot 打分"
       },
       "contact": {
         "heading": "联系 tooot"

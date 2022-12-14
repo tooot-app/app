@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Annulla",
       "alert": {
         "title": "Scartare il toot?",
         "buttons": {
           "save": "Salva bozza",
-          "delete": "Elimina bozza",
-          "cancel": "Annulla"
+          "delete": "Elimina bozza"
         }
       }
     },

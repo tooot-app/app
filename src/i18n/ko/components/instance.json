@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "인스턴스의 도메인"
+      "placeholder": ""
     },
     "button": "로그인",
     "information": {

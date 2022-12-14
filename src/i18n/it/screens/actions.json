@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "Testo descrittivo"
-    },
-    "notificationsFilter": {
-      "heading": "Filtra notifiche per tipo",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Richiesta di seguirti",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot da utenti seguiti",
-        "update": "Retoot ha subito una modifica"
-      }
     }
   }
 }

@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Abandonner",
       "alert": {
         "title": "Annuler l’édition?",
         "buttons": {
           "save": "Enregistrer comme brouillon",
-          "delete": "Supprimer le brouillon",
-          "cancel": "Abandonner"
+          "delete": "Supprimer le brouillon"
         }
       }
     },

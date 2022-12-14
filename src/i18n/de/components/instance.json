@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Instanz"
+      "placeholder": "Domain der Instanz"
     },
     "button": "Login",
     "information": {

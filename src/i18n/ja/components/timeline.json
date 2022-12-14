@@ -30,7 +30,9 @@
         "default": "{{name}}さんがブースト",
         "notification": "{{name}}さんがあなたのトゥートをブーストしました"
       },
-      "update": "ブーストしたトゥートが編集されました"
+      "update": "ブーストしたトゥートが編集されました",
+      "admin.sign_up": "{{name}} がインスタンスに参加しました",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "このトゥートをブックマークに追加",
         "function": "ブックマークトゥート"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

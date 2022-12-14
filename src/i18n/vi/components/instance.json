@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Máy chủ"
+      "placeholder": "Địa chỉ máy chủ"
     },
     "button": "Đăng nhập",
     "information": {

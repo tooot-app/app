@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Seguindo"
+      "name": "Seguindo",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Global",
-        "right": "Local"
+        "federated": "Global",
+        "local": "Local",
+        "trending": ""
       }
     },
     "notifications": {
       "name": "Notificações"
-    },
-    "me": {
-      "name": "Sobre mim"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filtro",
-      "accessibilityHint": "Filtrar notificações por tipos"
+      "accessibilityHint": "Filtrar notificações por tipos",
+      "title": "",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Solicitações de seguidores pendentes",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot de usuários inscritos",
+        "update": "Toot foi editado",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favoritos"
+      },
+      "followedTags": {
+        "name": ""
       },
       "fontSize": {
         "name": "Tamanho da fonte do Toot"
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Toot de usuários inscritos"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Saiba como funciona o roteamento"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Habilitado",
-          "disabled": "Desabilitado"
-        }
+        "content_true": "Habilitado",
+        "content_false": "Desabilitado"
       },
       "update": {
         "title": "Atualize para a versão mais recente"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Suporte tooot"
       },
-      "review": {
-        "heading": "Revisar tooot"
-      },
       "contact": {
         "heading": "Contatar tooot"
       },
@@ -322,7 +340,7 @@
         "default": "Toots",
         "all": "Toots e respostas"
       },
-      "suspended": ""
+      "suspended": "Conta suspensa pelos moderadores do seu servidor"
     },
     "accountInLists": {
       "name": "",
@@ -330,7 +348,7 @@
       "notInLists": ""
     },
     "attachments": {
-      "name": "<0 /><1>\"s mídia</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Seguir",
