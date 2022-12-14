@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Suit"
+      "name": "Suit",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
