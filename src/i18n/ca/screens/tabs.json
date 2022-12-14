@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Seguint"
+      "name": "Seguint",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
