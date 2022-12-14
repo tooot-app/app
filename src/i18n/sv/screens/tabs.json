@@ -3,8 +3,8 @@
     "local": {
       "name": "Följer",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Visa boostar",
+        "showReplies": "Visa svar"
       }
     },
     "public": {
