@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "ホーム"
+      "name": "ホーム",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
