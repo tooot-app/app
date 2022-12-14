@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Following"
+      "name": "Following",
+      "options": {
+        "showBoosts": "Show boosts",
+        "showReplies": "Show replies"
+      }
     },
     "public": {
       "segments": {

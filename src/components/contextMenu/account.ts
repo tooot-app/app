@@ -50,7 +50,7 @@ const menuAccount = ({
       setEnabled(true)
     }
   }, [openChange, enabled])
-  const { data, isFetching } = useRelationshipQuery({ id: account.id, options: { enabled } })
+  const { data, isFetched } = useRelationshipQuery({ id: account.id, options: { enabled } })
 
   const queryClient = useQueryClient()
   const timelineMutation = useTimelineMutation({
@@ -99,8 +99,8 @@ const menuAccount = ({
       haptics('Success')
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
       if (action === 'block') {
-        const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Following' }]
-        queryClient.invalidateQueries(queryKey)
+        const queryKey = ['Timeline', { page: 'Following' }]
+        queryClient.invalidateQueries({ queryKey, exact: false })
       }
     },
     onError: (err: any, { payload: { action } }) => {
@@ -131,7 +131,7 @@ const menuAccount = ({
             type: 'outgoing',
             payload: { action: 'follow', state: !data?.requested ? data.following : true }
           }),
-        disabled: !data || isFetching,
+        disabled: !data || !isFetched,
         destructive: false,
         hidden: false
       },
@@ -152,9 +152,9 @@ const menuAccount = ({
       key: 'account-list',
       item: {
         onSelect: () => navigation.navigate('Tab-Shared-Account-In-Lists', { account }),
-        disabled: Platform.OS !== 'android' ? !data || isFetching : false,
+        disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
         destructive: false,
-        hidden: isFetching ? false : !data?.following
+        hidden: !isFetched || !data?.following
       },
       title: t('account.inLists'),
       icon: 'checklist'
@@ -169,7 +169,7 @@ const menuAccount = ({
             id: account.id,
             payload: { property: 'mute', currentValue: data?.muting }
           }),
-        disabled: Platform.OS !== 'android' ? !data || isFetching : false,
+        disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
         destructive: false,
         hidden: false
       },
@@ -192,7 +192,7 @@ const menuAccount = ({
               id: account.id,
               payload: { property: 'block', currentValue: data?.blocking }
             }),
-          disabled: Platform.OS !== 'android' ? !data || isFetching : false,
+          disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
           destructive: !data?.blocking,
           hidden: false
         },

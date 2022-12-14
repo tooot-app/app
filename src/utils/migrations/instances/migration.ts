@@ -133,8 +133,11 @@ const instancesMigration = {
   11: (state: { instances: InstanceV10[] }): { instances: InstanceV11[] } => {
     return {
       instances: state.instances.map(instance => {
+        delete instance.timelinesLookback
+
         return {
           ...instance,
+          followingPage: { showBoosts: true, showReplies: true },
           mePage: { ...instance.mePage, followedTags: { shown: false } },
           notifications_filter: {
             ...instance.notifications_filter,

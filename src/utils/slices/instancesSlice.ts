@@ -81,16 +81,15 @@ const instancesSlice = createSlice({
         return newInstance
       })
     },
-    updateInstanceTimelineLookback: (
+    updateInstanceFollowingPage: (
       { instances },
-      action: PayloadAction<InstanceLatest['timelinesLookback']>
+      action: PayloadAction<Partial<InstanceLatest['followingPage']>>
     ) => {
       const activeIndex = findInstanceActive(instances)
-      instances[activeIndex] &&
-        (instances[activeIndex].timelinesLookback = {
-          ...instances[activeIndex].timelinesLookback,
-          ...action.payload
-        })
+      instances[activeIndex].followingPage = {
+        ...instances[activeIndex].followingPage,
+        ...action.payload
+      }
     },
     updateInstanceMePage: (
       { instances },
@@ -360,8 +359,8 @@ export const getInstanceNotificationsFilter = ({ instances: { instances } }: Roo
 export const getInstancePush = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.push
 
-export const getInstanceTimelinesLookback = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.timelinesLookback
+export const getInstanceFollowingPage = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.followingPage
 
 export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.mePage
@@ -379,7 +378,7 @@ export const {
   updateInstanceDraft,
   removeInstanceDraft,
   disableAllPushes,
-  updateInstanceTimelineLookback,
+  updateInstanceFollowingPage,
   updateInstanceMePage,
   countInstanceEmoji
 } = instancesSlice.actions

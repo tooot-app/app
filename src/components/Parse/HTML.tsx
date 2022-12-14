@@ -196,7 +196,7 @@ const ParseHTML = React.memo(
     const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
-    const { t, i18n } = useTranslation('componentParse')
+    const { t } = useTranslation('componentParse')
     if (!expandHint) {
       expandHint = t('HTML.defaultHint')
     }
@@ -304,7 +304,7 @@ const ParseHTML = React.memo(
           </View>
         )
       },
-      [theme, i18n.language]
+      [theme]
     )
 
     return (

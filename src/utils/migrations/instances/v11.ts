@@ -1,5 +1,4 @@
 import { ComposeStateDraft } from '@screens/Compose/utils/types'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type InstanceV11 = {
   active: boolean
@@ -42,11 +41,9 @@ export type InstanceV11 = {
       private?: string // legacy
     }
   }
-  timelinesLookback?: {
-    [key: string]: {
-      queryKey: QueryKeyTimeline
-      ids: Mastodon.Status['id'][]
-    }
+  followingPage: {
+    showBoosts: boolean
+    showReplies: boolean
   }
   mePage: {
     followedTags: { shown: boolean }

@@ -45,6 +45,7 @@ export const shouldFilter = ({
   status: Mastodon.Status
   queryKey: QueryKeyTimeline
 }): string | null => {
+  const page = queryKey[1]
   const instance = getInstance(store.getState())
   const ownAccount = getInstanceAccount(store.getState())?.id === status.account?.id
 
@@ -93,11 +94,11 @@ export const shouldFilter = ({
         }
       }
 
-      switch (queryKey[1].page) {
+      switch (page.page) {
         case 'Following':
         case 'Local':
         case 'List':
-        case 'Account_Default':
+        case 'Account':
           if (filter.context.includes('home')) {
             checkFilter(filter)
           }

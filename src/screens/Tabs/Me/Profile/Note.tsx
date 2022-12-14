@@ -23,7 +23,7 @@ const TabMeProfileNote: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t, i18n } = useTranslation('screenTabs')
+  const { t } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
   const [notes, setNotes] = useState(note)
@@ -90,7 +90,7 @@ const TabMeProfileNote: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, notes])
+  }, [theme, dirty, status, notes])
 
   return (
     <ComponentEmojis inputProps={[notesProps]}>

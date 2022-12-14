@@ -33,7 +33,7 @@ const TimelinePoll: React.FC = () => {
   const poll = status.poll
 
   const { colors, theme } = useTheme()
-  const { t, i18n } = useTranslation('componentTimeline')
+  const { t } = useTranslation('componentTimeline')
 
   const [allOptions, setAllOptions] = useState(new Array(status.poll.options.length).fill(false))
 
@@ -127,7 +127,7 @@ const TimelinePoll: React.FC = () => {
         )
       }
     }
-  }, [theme, i18n.language, poll.expired, poll.voted, allOptions, mutation.isLoading])
+  }, [theme, poll.expired, poll.voted, allOptions, mutation.isLoading])
 
   const isSelected = useCallback(
     (index: number): string =>

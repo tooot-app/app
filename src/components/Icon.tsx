@@ -11,6 +11,7 @@ export interface Props {
   fill?: string
   strokeWidth?: number
   style?: StyleProp<ViewStyle>
+  crossOut?: boolean
 }
 
 const Icon: React.FC<Props> = ({
@@ -20,7 +21,8 @@ const Icon: React.FC<Props> = ({
   color,
   fill,
   strokeWidth = 2,
-  style
+  style,
+  crossOut = false
 }) => {
   return (
     <View
@@ -42,6 +44,17 @@ const Icon: React.FC<Props> = ({
         fill,
         strokeWidth
       })}
+      {crossOut ? (
+        <View
+          style={{
+            position: 'absolute',
+            transform: [{ rotate: '45deg' }],
+            width: size * 1.35,
+            borderBottomColor: color,
+            borderBottomWidth: strokeWidth
+          }}
+        />
+      ) : null}
     </View>
   )
 }
