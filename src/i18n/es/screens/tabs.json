@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Siguiendo"
+      "name": "Siguiendo",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
