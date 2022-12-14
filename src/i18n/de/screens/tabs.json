@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Gefolgt"
+      "name": "Gefolgt",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
