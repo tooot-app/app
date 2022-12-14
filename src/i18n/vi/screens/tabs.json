@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Đang theo dõi"
+      "name": "Đang theo dõi",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
