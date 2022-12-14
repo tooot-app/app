@@ -93,6 +93,7 @@
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
     "rn-placeholder": "^3.0.3",
+    "rtl-detect": "^1.0.4",
     "valid-url": "^1.0.9",
     "zeego": "^0.5.0"
   },

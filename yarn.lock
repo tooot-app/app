@@ -11339,7 +11339,7 @@ router-ips@^1.0.0:
   resolved "https://registry.yarnpkg.com/router-ips/-/router-ips-1.0.0.tgz#44e00858ebebc0133d58e40b2cd8a1fbb04203f5"
   integrity sha512-yBo6F52Un/WYioXbedBGvrKIiofbwt+4cUhdqDb9fNMJBI4D4jOy7jlxxaRVEvICPKU7xMmJDtDFR6YswX/sFQ==
 
-rtl-detect@^1.0.2:
+rtl-detect@^1.0.2, rtl-detect@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.4.tgz#40ae0ea7302a150b96bc75af7d749607392ecac6"
   integrity sha512-EBR4I2VDSSYr7PkBmFy04uhycIpDKp+21p/jARYXlCSjQksTBQcJ0HFUPOO79EPPH5JS6VAhiIQbycf0O3JAxQ==
