@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "我的关注"
+      "name": "我的关注",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
