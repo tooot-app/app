@@ -3,8 +3,8 @@
     "local": {
       "name": "我的关注",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "显示转嘟",
+        "showReplies": "显示回复"
       }
     },
     "public": {
@@ -348,7 +348,7 @@
       "notInLists": "其它列表"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>的媒体</1>"
     },
     "hashtag": {
       "follow": "关注",
