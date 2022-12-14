@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Підписаний"
+      "name": "Підписаний",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
