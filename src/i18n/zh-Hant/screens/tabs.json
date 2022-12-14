@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "跟隨中"
+      "name": "跟隨中",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
       "segments": {
