@@ -396,7 +396,7 @@
         "reblogged_by": "{{count}} 人转嘟",
         "favourited_by": "{{count}} 人喜欢"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "来自远程实例的结果不完整"
     }
   }
 }
