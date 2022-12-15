@@ -395,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} impulsats",
         "favourited_by": "{{count}} favorits"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }
