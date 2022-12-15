@@ -3,8 +3,8 @@
     "local": {
       "name": "跟隨中",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "顯示轉嘟",
+        "showReplies": "顯示回覆"
       }
     },
     "public": {
