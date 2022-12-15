@@ -396,7 +396,7 @@
         "reblogged_by": "{{count}} передмухів",
         "favourited_by": "{{count}} улюблених"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Результати з віддаленого інстанса неповні"
     }
   }
 }
