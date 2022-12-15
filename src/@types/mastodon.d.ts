@@ -395,6 +395,7 @@ declare namespace Mastodon {
       mention: boolean
       poll: boolean
       status: boolean
+      update: boolean
       'admin.sign_up': boolean
       'admin.report': boolean
     }

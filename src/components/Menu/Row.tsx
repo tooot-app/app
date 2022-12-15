@@ -85,7 +85,7 @@ const MenuRow: React.FC<Props> = ({
           >
             <View
               style={{
-                flexGrow: 3,
+                flexShrink: 3,
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginRight: StyleConstants.Spacing.M

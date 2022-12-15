@@ -1,47 +1,42 @@
 [
   {
+    "feature": "notification_type_status",
+    "version": 3.3
+  },
+  {
     "feature": "account_return_suspended",
-    "version": 3.3,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.3.0"
+    "version": 3.3
   },
   {
     "feature": "edit_post",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "deprecate_auth_follow",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "notification_type_update",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "notification_type_admin_signup",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "notification_types_positive_filter",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "trends_new_path",
-    "version": 3.5,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 3.5
   },
   {
     "feature": "follow_tags",
-    "version": 4.0,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v4.0.0"
+    "version": 4.0
   },
   {
     "feature": "notification_type_admin_report",
-    "version": 4.0,
-    "reference": "https://github.com/mastodon/mastodon/releases/tag/v3.5.0"
+    "version": 4.0
   }
 ]
