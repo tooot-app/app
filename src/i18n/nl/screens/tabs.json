@@ -3,8 +3,8 @@
     "local": {
       "name": "Volgend",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Boosts tonen",
+        "showReplies": "Reacties tonen"
       }
     },
     "public": {
