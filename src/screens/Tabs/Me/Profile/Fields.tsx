@@ -79,7 +79,7 @@ const TabMeProfileFields: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t, i18n } = useTranslation('screenTabs')
+  const { t } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
   const allProps: EmojisState['inputProps'] = []
@@ -144,7 +144,7 @@ const TabMeProfileFields: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, allProps.map(p => p.value)])
+  }, [theme, dirty, status, allProps.map(p => p.value)])
 
   return (
     <ComponentEmojis inputProps={allProps}>

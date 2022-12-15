@@ -30,7 +30,9 @@
         "default": "",
         "notification": ""
       },
-      "update": ""
+      "update": "",
+      "admin.sign_up": "{{name}} dołącza do instancji",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "",
         "function": ""
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

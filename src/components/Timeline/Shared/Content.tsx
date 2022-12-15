@@ -2,7 +2,9 @@ import { ParseHTML } from '@components/Parse'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { useSelector } from 'react-redux'
+import { isRtlLang } from 'rtl-detect'
 import StatusContext from './Context'
 
 export interface Props {
@@ -31,6 +33,11 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             numberOfLines={999}
             highlighted={highlighted}
             disableDetails={disableDetails}
+            textStyles={
+              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+                ? { writingDirection: 'rtl' }
+                : undefined
+            }
           />
           <ParseHTML
             content={status.content}
@@ -50,6 +57,11 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             setSpoilerExpanded={setSpoilerExpanded}
             highlighted={highlighted}
             disableDetails={disableDetails}
+            textStyles={
+              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+                ? { writingDirection: 'rtl' }
+                : undefined
+            }
           />
         </>
       ) : (
@@ -62,6 +74,11 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
           tags={status.tags}
           numberOfLines={highlighted || inThread ? 999 : notificationOwnToot ? 2 : undefined}
           disableDetails={disableDetails}
+          textStyles={
+            Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+              ? { writingDirection: 'rtl' }
+              : undefined
+          }
         />
       )}
     </>

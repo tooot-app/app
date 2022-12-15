@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "Alternativtext"
-    },
-    "notificationsFilter": {
-      "heading": "Benachrichtigungsart anzeigen",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Followeranfrage",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Tröt eines abonnierten Nutzers",
-        "update": "Boost wurde bearbeitet"
-      }
     }
   }
 }

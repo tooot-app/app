@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "Texte de remplacement"
-    },
-    "notificationsFilter": {
-      "heading": "Afficher les notifications",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Demande d'abonnement",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Pouet des utilisateurs abonnés",
-        "update": "Le reblog a été modifié"
-      }
     }
   }
 }

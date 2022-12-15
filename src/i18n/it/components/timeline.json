@@ -30,7 +30,9 @@
         "default": "{{name}} ha ricondiviso",
         "notification": "{{name}} ha ricondiviso il tuo toot"
       },
-      "update": "Il link è stato modificato"
+      "update": "Il link è stato modificato",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Aggiungi questo toot ai segnalibri",
         "function": "Aggiungi toot ai segnalibri"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

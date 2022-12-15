@@ -30,7 +30,9 @@
         "default": "{{name}} a partagé",
         "notification": "{{name}} a partagé votre message"
       },
-      "update": "Le reblog a été modifié"
+      "update": "Le reblog a été modifié",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Ajouter ce pouet aux signets",
         "function": "Pouet de signet"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

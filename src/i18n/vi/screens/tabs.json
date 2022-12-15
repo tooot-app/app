@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Đang theo dõi"
+      "name": "Đang theo dõi",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Liên hợp",
-        "right": "Máy chủ"
+        "federated": "Liên hợp",
+        "local": "Máy chủ",
+        "trending": "Xu hướng"
       }
     },
     "notifications": {
       "name": "Thông báo"
-    },
-    "me": {
-      "name": "Tôi"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Lọc",
-      "accessibilityHint": "Lọc các dạng thông báo"
+      "accessibilityHint": "Lọc các dạng thông báo",
+      "title": "Hiện thông báo",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Yêu cầu theo dõi",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Tút từ người đã theo dõi",
+        "update": "Đăng lại đã được sửa",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Đã thích"
+      },
+      "followedTags": {
+        "name": "Hashtag theo dõi"
       },
       "fontSize": {
         "name": "Cỡ chữ"
@@ -53,7 +70,7 @@
         "name": "Người trong danh sách: {{list}}"
       },
       "listAdd": {
-        "name": "Thêm một danh sách"
+        "name": "Tạo danh sách"
       },
       "listEdit": {
         "name": "Sửa danh sách"
@@ -179,8 +196,8 @@
         "settings": "Bật trong cài đặt"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Máy chủ định cấu hình sai để nhận thông báo đẩy",
+        "description": "Vui lòng liên hệ với quản trị viên máy chủ của bạn để định cấu hình thông báo đẩy"
       },
       "global": {
         "heading": "Bật cho {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Tút từ người đã theo dõi"
       },
+      "admin.sign_up": {
+        "heading": "Admin: đăng ký"
+      },
+      "admin.report": {
+        "heading": "Admin: báo cáo"
+      },
       "howitworks": "Tìm hiểu cách truyền"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Đã bật",
-          "disabled": "Đã tắt"
-        }
+        "content_true": "Bật",
+        "content_false": "Tắt"
       },
       "update": {
         "title": "Cập nhật phiên bản mới"
@@ -289,9 +310,6 @@
       },
       "support": {
         "heading": "Ủng hộ tooot"
-      },
-      "review": {
-        "heading": "Đánh giá tooot"
       },
       "contact": {
         "heading": "Liên hệ tooot"

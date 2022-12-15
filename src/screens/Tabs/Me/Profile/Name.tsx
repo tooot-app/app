@@ -23,7 +23,7 @@ const TabMeProfileName: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t, i18n } = useTranslation('screenTabs')
+  const { t } = useTranslation('screenTabs')
   const { mutateAsync, status } = useProfileMutation()
 
   const [value, setValue] = useState(display_name)
@@ -90,7 +90,7 @@ const TabMeProfileName: React.FC<
         />
       )
     })
-  }, [theme, i18n.language, dirty, status, value])
+  }, [theme, dirty, status, value])
 
   return (
     <ComponentEmojis inputProps={[displayNameProps]}>

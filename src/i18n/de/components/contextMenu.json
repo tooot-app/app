@@ -6,7 +6,7 @@
       "action_false": "Folgen",
       "action_true": "Nutzer entfolgen"
     },
-    "inLists": "",
+    "inLists": "Konten in Listen verwalten",
     "mute": {
       "action_false": "Profil stummschalten",
       "action_true": "Stummschaltung des Nutzers aufheben"

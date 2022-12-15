@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Domaine d'instance"
+      "placeholder": ""
     },
     "button": "Connexion",
     "information": {

@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Gefolgt"
+      "name": "Gefolgt",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Föderiert",
-        "right": "Lokal"
+        "federated": "Föderiert",
+        "local": "Lokal",
+        "trending": "Im Trend"
       }
     },
     "notifications": {
       "name": "Benachrichtigungen"
-    },
-    "me": {
-      "name": "Über mich"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filter",
-      "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern"
+      "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern",
+      "title": "Benachrichtigungen anzeigen",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Followeranfrage",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Tröt eines abonnierten Nutzers",
+        "update": "Boost wurde bearbeitet",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favoriten"
+      },
+      "followedTags": {
+        "name": "Abonnierte Hashtags"
       },
       "fontSize": {
         "name": "Schriftgröße"
@@ -53,7 +70,7 @@
         "name": "Benutzer in dieser Liste: {{list}}"
       },
       "listAdd": {
-        "name": "Eine Liste hinzufügen"
+        "name": "Eine Liste erstellen"
       },
       "listEdit": {
         "name": "Listendetails bearbeiten"
@@ -179,8 +196,8 @@
         "settings": "In den Einstellungen aktivieren"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Server ist nicht für Push-Benachrichtigungen konfiguriert",
+        "description": "Bitte kontaktiere den Administrator deiner Instanz, um Push-Benachrichtigungen zu ermöglichen"
       },
       "global": {
         "heading": "Aktivieren für {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Toot eines abonnierten Nutzers"
       },
+      "admin.sign_up": {
+        "heading": "Admin: Registrierung"
+      },
+      "admin.report": {
+        "heading": "Admin: Meldungen"
+      },
       "howitworks": "Erfahre, wie das Routing funktioniert"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Aktiviert",
-          "disabled": "Deaktiviert"
-        }
+        "content_true": "Aktiviert",
+        "content_false": "Deaktiviert"
       },
       "update": {
         "title": "Auf neueste Version aktualisiert"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Unterstütze Tooot"
       },
-      "review": {
-        "heading": "Tooot überprüfen"
-      },
       "contact": {
         "heading": "Nimm Kontakt mit tooot auf"
       },
@@ -325,12 +343,12 @@
       "suspended": "Konto wurde von den Instanzmoderation gesperrt"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Listen, in denen @{{username}} aufgeführt ist",
+      "inLists": "In Listen",
+      "notInLists": "Andere Listen"
     },
     "attachments": {
-      "name": "<0 /><1>\"s Medien</1>"
+      "name": "<0 /><1>'s Medien</1>"
     },
     "hashtag": {
       "follow": "Folgen",

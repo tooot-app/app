@@ -13,7 +13,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { isEqual } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, View } from 'react-native'
+import { Platform, Pressable, TextStyleIOS, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -154,6 +154,7 @@ const renderNode = ({
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
+  textStyles?: TextStyleIOS
   adaptiveSize?: boolean
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
@@ -171,6 +172,7 @@ const ParseHTML = React.memo(
   ({
     content,
     size = 'M',
+    textStyles,
     adaptiveSize = false,
     emojis,
     mentions,
@@ -196,7 +198,7 @@ const ParseHTML = React.memo(
     const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
-    const { t, i18n } = useTranslation('componentParse')
+    const { t } = useTranslation('componentParse')
     if (!expandHint) {
       expandHint = t('HTML.defaultHint')
     }
@@ -294,6 +296,7 @@ const ParseHTML = React.memo(
                 }
               }}
               style={{
+                ...textStyles,
                 height: numberOfLines === 1 && !expanded ? 0 : undefined
               }}
               numberOfLines={
@@ -304,7 +307,7 @@ const ParseHTML = React.memo(
           </View>
         )
       },
-      [theme, i18n.language]
+      [theme]
     )
 
     return (

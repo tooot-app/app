@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Domini de la instància"
+      "placeholder": ""
     },
     "button": "Inicia la sessió",
     "information": {

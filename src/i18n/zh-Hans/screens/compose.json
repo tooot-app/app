@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "退出编辑",
       "alert": {
         "title": "确认退出编辑？",
         "buttons": {
           "save": "保存草稿",
-          "delete": "删除草稿",
-          "cancel": "继续编辑"
+          "delete": "删除草稿"
         }
       }
     },

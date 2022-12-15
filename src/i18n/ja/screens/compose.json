@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "キャンセル",
       "alert": {
         "title": "編集をキャンセルしますか？",
         "buttons": {
           "save": "下書きを保存",
-          "delete": "下書きを削除",
-          "cancel": "キャンセル"
+          "delete": "下書きを削除"
         }
       }
     },

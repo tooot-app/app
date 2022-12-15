@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "대체 텍스트"
-    },
-    "notificationsFilter": {
-      "heading": "알림 종류 표시",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "팔로우 요청",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "구독한 사용자의 툿",
-        "update": "리블로그가 수정되었습니다."
-      }
     }
   }
 }

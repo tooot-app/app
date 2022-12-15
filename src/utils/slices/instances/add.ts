@@ -107,7 +107,10 @@ const addInstance = createAsyncThunk(
           },
           keys: { auth: undefined, public: undefined, private: undefined }
         },
-        timelinesLookback: {},
+        followingPage: {
+          showBoosts: true,
+          showReplies: true
+        },
         mePage: {
           followedTags: { shown: false },
           lists: { shown: false },

@@ -1,0 +1,401 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Підписаний",
+      "options": {
+        "showBoosts": "Показати передмухнуті",
+        "showReplies": "Показувати відповіді"
+      }
+    },
+    "public": {
+      "segments": {
+        "federated": "Глобальна",
+        "local": "Місцева",
+        "trending": "Популярне"
+      }
+    },
+    "notifications": {
+      "name": "Сповіщення"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Пошук",
+      "accessibilityHint": "Пошук ґештеґів, користувачів або дмухів"
+    }
+  },
+  "notifications": {
+    "filters": {
+      "accessibilityLabel": "Фільтр",
+      "accessibilityHint": "Відфільтрувати типи сповіщень, що відображаються",
+      "title": "Показувати сповіщення",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Запит на підписку",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Дмух від підписників",
+        "update": "Передмух був відредагований",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Закладки"
+      },
+      "conversations": {
+        "name": "Особисті повідомлення"
+      },
+      "favourites": {
+        "name": "Улюблене"
+      },
+      "followedTags": {
+        "name": "Стежити за хештегом"
+      },
+      "fontSize": {
+        "name": "Розмір шрифту дмуху"
+      },
+      "language": {
+        "name": "Мова"
+      },
+      "list": {
+        "name": "Список: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Список користувачів: {{list}}"
+      },
+      "listAdd": {
+        "name": "Створити список"
+      },
+      "listEdit": {
+        "name": "Редагувати деталі списку"
+      },
+      "lists": {
+        "name": "Списки"
+      },
+      "push": {
+        "name": "Push-сповіщення"
+      },
+      "profile": {
+        "name": "Редагувати профіль"
+      },
+      "profileName": {
+        "name": "Редагувати показане ім'я"
+      },
+      "profileNote": {
+        "name": "Редагувати опис"
+      },
+      "profileFields": {
+        "name": "Редагувати метадані"
+      },
+      "settings": {
+        "name": "Налаштування додатку"
+      },
+      "webSettings": {
+        "name": "Додаткові налаштування акаунта"
+      },
+      "switch": {
+        "name": "Переключити аккаунт"
+      }
+    },
+    "fontSize": {
+      "demo": "<p>Це демо дмух: smiling_face_with_smiling_eyes:. Ви можете вибрати з декількох варіантів знизу.<br /><br />Це налаштування впливає лише на основний вміст дмухів, але не на інші розміри шрифту.</p>",
+      "sizes": {
+        "S": "S",
+        "M": "М - за замовчуванням",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "listAccounts": {
+      "heading": "Керувати користувачами",
+      "error": "Видалити користувача зі списку",
+      "empty": "Користувача не додано в цей список"
+    },
+    "listEdit": {
+      "heading": "Редагувати деталі списку",
+      "title": "Назва",
+      "repliesPolicy": {
+        "heading": "Показати відповіді від:",
+        "options": {
+          "none": "Ніхто",
+          "list": "Користувачів списку",
+          "followed": "Будь-який користувач, за яким ви стежите"
+        }
+      }
+    },
+    "listDelete": {
+      "heading": "Видалити список",
+      "confirm": {
+        "title": "Видалити список \"{{list}}\"?",
+        "message": "Цю дію не можна скасувати."
+      }
+    },
+    "profile": {
+      "feedback": {
+        "succeed": "{{type}} оновлено",
+        "failed": "{{type}} оновлення не вдалося, будь ласка, спробуйте ще раз"
+      },
+      "root": {
+        "name": {
+          "title": "Ім'я для відображення"
+        },
+        "avatar": {
+          "title": "Аватар",
+          "description": "Буде зменшено до 400x400px"
+        },
+        "header": {
+          "title": "Банер",
+          "description": "Буде зменшено до 1500x500px"
+        },
+        "note": {
+          "title": "Опис"
+        },
+        "fields": {
+          "title": "Метадані",
+          "total_one": "{{count}} поле",
+          "total_other": "{{count}} полей"
+        },
+        "visibility": {
+          "title": "Видимість дмухів",
+          "options": {
+            "public": "Публічний",
+            "unlisted": "Приватний",
+            "private": "Тільки для підписників"
+          }
+        },
+        "sensitive": {
+          "title": "Розміщення чутливої інформації"
+        },
+        "lock": {
+          "title": "Закрити акаунт",
+          "description": "Потребує вас вручну затвердити підписників"
+        },
+        "bot": {
+          "title": "Акаунт бота",
+          "description": "Цей акаунт виконує автоматичні дії та може не відстежуватися"
+        }
+      },
+      "fields": {
+        "group": "Група {{index}}",
+        "label": "Мітка",
+        "content": "Контент"
+      },
+      "mediaSelectionFailed": "Не вдалося виконати обробку зображення. Будь ласка, спробуйте ще раз."
+    },
+    "push": {
+      "notAvailable": "Ваш телефон не підтримує push-сповіщення tooot",
+      "enable": {
+        "direct": "Увімкнути push сповіщення",
+        "settings": "Включити в налаштуваннях"
+      },
+      "missingServerKey": {
+        "message": "Сервер неправильно налаштовано для push",
+        "description": "Будь ласка, зверніться до адміністратора сервера для налаштування підтримки push"
+      },
+      "global": {
+        "heading": "Увімкнути для {{acct}}",
+        "description": "Повідомлення перенаправляються через сервер tooot"
+      },
+      "decode": {
+        "heading": "Показати деталі повідомлення",
+        "description": "Повідомлення, які передаються через сервер tooot, зашифровані, але ви можете декодувати повідомлення на сервері. Наш вихідний код сервера є відкритим вихідним кодом і не має політики журналу."
+      },
+      "default": {
+        "heading": "За замовчуванням"
+      },
+      "follow": {
+        "heading": "Новий підписник(-ця)"
+      },
+      "follow_request": {
+        "heading": "Запит на підписку"
+      },
+      "favourite": {
+        "heading": "Улюблене"
+      },
+      "reblog": {
+        "heading": "Передмухнув"
+      },
+      "mention": {
+        "heading": "згадав (-ла) вас"
+      },
+      "poll": {
+        "heading": "Опитування успішно оновлено"
+      },
+      "status": {
+        "heading": "Дмух від підписників"
+      },
+      "admin.sign_up": {
+        "heading": "Адмін: реєстрація"
+      },
+      "admin.report": {
+        "heading": "Адмін: звіти"
+      },
+      "howitworks": "Дізнатися, як працює маршрутизація"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} непрочитаних",
+          "read": "Усі прочитані",
+          "empty": "Відсутньо"
+        }
+      },
+      "push": {
+        "content_true": "Увімкнено",
+        "content_false": "Вимкнено"
+      },
+      "update": {
+        "title": "Оновити до останньої версії"
+      },
+      "logout": {
+        "button": "Вийти",
+        "alert": {
+          "title": "Виходиш з системи?",
+          "message": "Після виходу з системи необхідно повторно увійти в неї",
+          "buttons": {
+            "logout": "Вийти"
+          }
+        }
+      }
+    },
+    "settings": {
+      "fontsize": {
+        "heading": "$t(me.stacks.fontSize.name)",
+        "content": {
+          "S": "$t(me.fontSize.sizes.S)",
+          "M": "$t(me.fontSize.sizes.M)",
+          "L": "$t(me.fontSize.sizes.L)",
+          "XL": "$t(me.fontSize.sizes.XL)",
+          "XXL": "$t(me.fontSize.sizes.XXL)"
+        }
+      },
+      "language": {
+        "heading": "$t(me.stacks.language.name)"
+      },
+      "theme": {
+        "heading": "Зовнішній вигляд",
+        "options": {
+          "auto": "За системними налаштуваннями",
+          "light": "Світла тема",
+          "dark": "Темний режим"
+        }
+      },
+      "darkTheme": {
+        "heading": "Темна тема",
+        "options": {
+          "lighter": "Світліше",
+          "darker": "Темніше"
+        }
+      },
+      "browser": {
+        "heading": "Відкривання посилань",
+        "options": {
+          "internal": "Всередині додатку",
+          "external": "Використовувати системний браузер"
+        }
+      },
+      "staticEmoji": {
+        "heading": "Використовувати статичні емодзі",
+        "description": "Якщо ви стикаєтеся з частими збоями в роботі програми при перегляді списку емодзі, ви можете спробувати використовувати статичні емодзі."
+      },
+      "feedback": {
+        "heading": "Запропонувати ідею"
+      },
+      "support": {
+        "heading": "Підтримати tooot"
+      },
+      "contact": {
+        "heading": "Зв'язатись з tooot"
+      },
+      "version": "Версія: {{version}}",
+      "instanceVersion": "Версія Mastodon: v{{version}}"
+    },
+    "switch": {
+      "existing": "Вибрати з авторизованих",
+      "new": "Увійти до інстансу"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Дії для користувача {{user}}",
+        "accessibilityHint": "Ви можете приглушити, заблокувати, чи кинути репорт на цього користувача"
+      },
+      "followed_by": " слідує за вами",
+      "moved": "Користувач перемістився",
+      "created_at": "Приєднався: {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} дмухів",
+        "following_count": "$t(shared.users.accounts.following)",
+        "followers_count": "$t(shared.users.accounts.followers)"
+      },
+      "toots": {
+        "default": "Дмухи",
+        "all": "Дмухи та відповіді"
+      },
+      "suspended": "Обліковий запис призупинено модераторами вашого інстансу"
+    },
+    "accountInLists": {
+      "name": "Списки @{{username}}",
+      "inLists": "У списку",
+      "notInLists": "Інші списки"
+    },
+    "attachments": {
+      "name": "<0 /><1> медіа</1>"
+    },
+    "hashtag": {
+      "follow": "Підписатися",
+      "unfollow": "Відписатися"
+    },
+    "history": {
+      "name": "Редагувати історію"
+    },
+    "search": {
+      "header": {
+        "prefix": "Пошук",
+        "placeholder": "кого?.."
+      },
+      "empty": {
+        "general": "Введіть ключове слово для пошуку <bold>$t(screenTabs:shared.search.sections.accounts)</bold>、<bold>$t(screenTabs:shared.search.sections.hashtags)</bold> або <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Розширений пошук",
+          "example": {
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
+          }
+        },
+        "trending": {
+          "tags": "Популярні теги"
+        }
+      },
+      "sections": {
+        "accounts": "Користувач",
+        "hashtags": "Ґештег",
+        "statuses": "Дмух"
+      },
+      "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}"
+    },
+    "toot": {
+      "name": "Обговорення"
+    },
+    "users": {
+      "accounts": {
+        "following": "Підписки {{count}}",
+        "followers": "{{count}} підписників"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} передмухів",
+        "favourited_by": "{{count}} улюблених"
+      }
+    }
+  }
+}

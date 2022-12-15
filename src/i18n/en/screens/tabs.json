@@ -1,7 +1,11 @@
 {
   "tabs": {
     "local": {
-      "name": "Following"
+      "name": "Following",
+      "options": {
+        "showBoosts": "Show boosts",
+        "showReplies": "Show replies"
+      }
     },
     "public": {
       "segments": {
@@ -391,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boosted",
         "favourited_by": "{{count}} favourited"
-      }
+      },
+      "resultIncomplete": "Results from a remote instance is incomplete"
     }
   }
 }

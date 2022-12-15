@@ -3,8 +3,9 @@
     "OK": "OK",
     "apply": "Applica",
     "cancel": "Annulla",
-    "discard": "",
-    "continue": "",
+    "discard": "Scarta",
+    "continue": "Continua",
+    "create": "",
     "delete": "",
     "done": ""
   },
@@ -24,7 +25,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Modifiche non salvate",
+    "message": "Le tue modifiche non sono state salvate. Vuoi scartarle?"
   }
 }

@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Cancelar",
       "alert": {
         "title": "Cancelar edições?",
         "buttons": {
           "save": "Salvar rascunho",
-          "delete": "Apagar rascunho",
-          "cancel": "Cancelar"
+          "delete": "Apagar rascunho"
         }
       }
     },

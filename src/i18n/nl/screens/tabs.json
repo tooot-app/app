@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Volgend"
+      "name": "Volgend",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Globaal",
-        "right": "Lokaal"
+        "federated": "Globaal",
+        "local": "Lokaal",
+        "trending": "Trending"
       }
     },
     "notifications": {
       "name": "Meldingen"
-    },
-    "me": {
-      "name": "Over mij"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filter",
-      "accessibilityHint": "Filter getoonde meldingstypes"
+      "accessibilityHint": "Filter getoonde meldingstypes",
+      "title": "Notificaties weergeven",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Volgverzoek",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot van geabonneerde gebruikers",
+        "update": "De reblog is bewerkt",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favorieten"
+      },
+      "followedTags": {
+        "name": "Gevolgde hashtags"
       },
       "fontSize": {
         "name": "Grootte van lettertype"
@@ -53,7 +70,7 @@
         "name": "Gebruikers in de lijst: {{list}}"
       },
       "listAdd": {
-        "name": "Lijst toevoegen"
+        "name": "Lijst aanmaken"
       },
       "listEdit": {
         "name": "Lijstdetails bewerken"
@@ -179,8 +196,8 @@
         "settings": "Inschakelen in instellingen"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Server is verkeerd geconfigureerd voor push",
+        "description": "Neem contact op met de serverbeheerder om push-ondersteuning te configureren"
       },
       "global": {
         "heading": "Inschakelen voor {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Toot van geabonneerde gebruikers"
       },
+      "admin.sign_up": {
+        "heading": "Admin: registreren"
+      },
+      "admin.report": {
+        "heading": "Admin: rapporten"
+      },
       "howitworks": "Leer hoe het werkt"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Ingeschakeld",
-          "disabled": "Uitgeschakeld"
-        }
+        "content_true": "Ingeschakeld",
+        "content_false": "Uitgeschakeld"
       },
       "update": {
         "title": "Bijwerken naar de laatste versie"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Tooot ondersteunen"
       },
-      "review": {
-        "heading": "Tooot beoordelen"
-      },
       "contact": {
         "heading": "Tooot contacteren"
       },
@@ -330,7 +348,7 @@
       "notInLists": "Andere lijsten"
     },
     "attachments": {
-      "name": "<0 /><1>\"s media</1>"
+      "name": "<0 /><1>'s media</1>"
     },
     "hashtag": {
       "follow": "Volg",
