@@ -12,7 +12,8 @@ export interface Props {
 }
 
 const TimelineAvatar: React.FC<Props> = ({ account }) => {
-  const { status, highlighted, disableDetails, disableOnPress } = useContext(StatusContext)
+  const { status, highlighted, disableDetails, disableOnPress, isConversation } =
+    useContext(StatusContext)
   const actualAccount = account || status?.account
   if (!actualAccount) return null
 
@@ -34,7 +35,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
       }
       uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
       dimension={
-        disableDetails
+        disableDetails || isConversation
           ? {
               width: StyleConstants.Avatar.XS,
               height: StyleConstants.Avatar.XS
@@ -47,7 +48,8 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
       style={{
         borderRadius: StyleConstants.Avatar.M,
         overflow: 'hidden',
-        marginRight: StyleConstants.Spacing.S
+        marginRight: StyleConstants.Spacing.S,
+        marginLeft: isConversation ? StyleConstants.Avatar.M - StyleConstants.Avatar.XS : undefined
       }}
     />
   )

@@ -34,6 +34,7 @@ export interface Props {
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
+  isConversation?: boolean
 }
 
 // When the poll is long
@@ -43,7 +44,8 @@ const TimelineDefault: React.FC<Props> = ({
   rootQueryKey,
   highlighted = false,
   disableDetails = false,
-  disableOnPress = false
+  disableOnPress = false,
+  isConversation = false
 }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
@@ -74,7 +76,7 @@ const TimelineDefault: React.FC<Props> = ({
       ? StyleConstants.Spacing.Global.PagePadding / 1.5
       : StyleConstants.Spacing.Global.PagePadding,
     backgroundColor: colors.backgroundDefault,
-    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0,
+    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0
   }
   const main = () => (
     <>
@@ -140,7 +142,8 @@ const TimelineDefault: React.FC<Props> = ({
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,
-        disableOnPress
+        disableOnPress,
+        isConversation
       }}
     >
       {disableOnPress ? (
