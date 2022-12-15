@@ -3,8 +3,8 @@
     "local": {
       "name": "Gefolgt",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Boosts anzeigen",
+        "showReplies": "Antworten anzeigen"
       }
     },
     "public": {
@@ -396,7 +396,7 @@
         "reblogged_by": "{{count}} mal geboosted",
         "favourited_by": "{{count}} mal geherzt"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Ergebnisse einer Instanz sind unvollständig"
     }
   }
 }
