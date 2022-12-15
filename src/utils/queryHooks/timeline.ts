@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
@@ -15,6 +15,7 @@ import {
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
+import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -240,7 +241,7 @@ const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Status[]>, AxiosError>
+  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, {

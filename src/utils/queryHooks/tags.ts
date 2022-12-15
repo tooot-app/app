@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
@@ -10,12 +10,13 @@ import {
   UseQueryOptions
 } from '@tanstack/react-query'
 import { infinitePageParams } from './utils'
+import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (
   params: {
     options?: Omit<
-      UseInfiniteQueryOptions<InstanceResponse<Mastodon.Tag[]>, AxiosError>,
+      UseInfiniteQueryOptions<PagedResponse<Mastodon.Tag[]>, AxiosError>,
       'getPreviousPageParam' | 'getNextPageParam'
     >
   } | void

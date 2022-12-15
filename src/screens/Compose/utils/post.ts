@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import detectLanguage from '@helpers/detectLanguage'
 import { ComposeState } from '@screens/Compose/utils/types'
 import { RootStackParamList } from '@utils/navigation/navigators'
@@ -8,7 +8,7 @@ import { getPureContent } from './processText'
 const composePost = async (
   params: RootStackParamList['Screen-Compose'],
   composeState: ComposeState
-): Promise<InstanceResponse<Mastodon.Status>> => {
+): Promise<Mastodon.Status> => {
   const formData = new FormData()
 
   const detectedLanguage = await detectLanguage(
@@ -74,7 +74,7 @@ const composePost = async (
       )
     },
     body: formData
-  })
+  }).then(res => res.body)
 }
 
 export default composePost

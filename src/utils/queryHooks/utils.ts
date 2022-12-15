@@ -1,8 +1,8 @@
-import { InstanceResponse } from '@api/instance'
+import { PagedResponse } from '@api/helpers'
 
 export const infinitePageParams = {
-  getPreviousPageParam: (firstPage: InstanceResponse<any>) =>
+  getPreviousPageParam: (firstPage: PagedResponse<any>) =>
     firstPage.links?.prev && { min_id: firstPage.links.next },
-  getNextPageParam: (lastPage: InstanceResponse<any>) =>
+  getNextPageParam: (lastPage: PagedResponse<any>) =>
     lastPage.links?.next && { max_id: lastPage.links.next }
 }

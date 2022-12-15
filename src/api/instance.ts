@@ -1,6 +1,6 @@
 import { RootState } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
-import { ctx, handleError, userAgent } from './helpers'
+import { ctx, handleError, PagedResponse, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'
@@ -14,12 +14,6 @@ export type Params = {
   extras?: Omit<AxiosRequestConfig, 'method' | 'url' | 'params' | 'headers' | 'data'>
 }
 
-type LinkFormat = { id: string; isOffset: boolean }
-export type InstanceResponse<T = unknown> = {
-  body: T
-  links: { prev?: LinkFormat; next?: LinkFormat }
-}
-
 const apiInstance = async <T = unknown>({
   method,
   version = 'v1',
@@ -28,7 +22,7 @@ const apiInstance = async <T = unknown>({
   headers,
   body,
   extras
-}: Params): Promise<InstanceResponse<T>> => {
+}: Params): Promise<PagedResponse<T>> => {
   const { store } = require('@root/store')
   const state = store.getState() as RootState
   const instanceActive = state.instances.instances.findIndex(instance => instance.active)

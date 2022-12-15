@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ctx, handleError, userAgent } from './helpers'
+import { ctx, handleError, PagedResponse, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -19,7 +19,7 @@ const apiGeneral = async <T = unknown>({
   params,
   headers,
   body
-}: Params): Promise<{ body: T }> => {
+}: Params): Promise<PagedResponse<T>> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
       ' ' +
