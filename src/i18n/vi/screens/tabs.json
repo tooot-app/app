@@ -3,8 +3,8 @@
     "local": {
       "name": "Đang theo dõi",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Hiện lượt đăng lại",
+        "showReplies": "Hiện lượt trả lời"
       }
     },
     "public": {
@@ -396,7 +396,7 @@
         "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Kết quả từ máy chủ khác luôn không đầy đủ"
     }
   }
 }
