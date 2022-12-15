@@ -1,6 +1,4 @@
-import Icon from '@components/Icon'
 import CustomText from '@components/Text'
-import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { View } from 'react-native'
@@ -9,16 +7,10 @@ export interface Props {
   content?: string
   inverted?: boolean
   onPress?: () => void
-  dropdown?: boolean
 }
 
 // Used for Android mostly
-const HeaderCenter: React.FC<Props> = ({
-  content,
-  inverted = false,
-  onPress,
-  dropdown = false
-}) => {
+const HeaderCenter: React.FC<Props> = ({ content, inverted = false, onPress }) => {
   const { colors } = useTheme()
 
   return (
@@ -32,13 +24,6 @@ const HeaderCenter: React.FC<Props> = ({
         numberOfLines={1}
         children={content}
         {...(onPress && { onPress })}
-      />
-      <Icon
-        name='ChevronDown'
-        size={StyleConstants.Font.Size.M}
-        color={colors.primaryDefault}
-        style={{ marginLeft: StyleConstants.Spacing.XS, opacity: dropdown ? undefined : 0 }}
-        strokeWidth={3}
       />
     </View>
   )

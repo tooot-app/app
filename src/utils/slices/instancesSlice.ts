@@ -73,31 +73,23 @@ const instancesSlice = createSlice({
     },
     clearPushLoading: ({ instances }) => {
       const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].push.global.loading = false
-      instances[activeIndex].push.decode.loading = false
-      instances[activeIndex].push.alerts.favourite.loading = false
-      instances[activeIndex].push.alerts.follow.loading = false
-      instances[activeIndex].push.alerts.mention.loading = false
-      instances[activeIndex].push.alerts.poll.loading = false
-      instances[activeIndex].push.alerts.reblog.loading = false
     },
     disableAllPushes: ({ instances }) => {
       instances = instances.map(instance => {
         let newInstance = instance
-        newInstance.push.global.value = false
+        newInstance.push.global = false
         return newInstance
       })
     },
-    updateInstanceTimelineLookback: (
+    updateInstanceFollowingPage: (
       { instances },
-      action: PayloadAction<InstanceLatest['timelinesLookback']>
+      action: PayloadAction<Partial<InstanceLatest['followingPage']>>
     ) => {
       const activeIndex = findInstanceActive(instances)
-      instances[activeIndex] &&
-        (instances[activeIndex].timelinesLookback = {
-          ...instances[activeIndex].timelinesLookback,
-          ...action.payload
-        })
+      instances[activeIndex].followingPage = {
+        ...instances[activeIndex].followingPage,
+        ...action.payload
+      }
     },
     updateInstanceMePage: (
       { instances },
@@ -238,47 +230,20 @@ const instancesSlice = createSlice({
       // Update Instance Push Global
       .addCase(updateInstancePush.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.global.loading = false
-        state.instances[activeIndex].push.global.value = action.meta.arg
+        state.instances[activeIndex].push.global = action.meta.arg
         state.instances[activeIndex].push.keys = { auth: action.payload }
-      })
-      .addCase(updateInstancePush.rejected, state => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.global.loading = false
-      })
-      .addCase(updateInstancePush.pending, state => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.global.loading = true
       })
 
       // Update Instance Push Decode
       .addCase(updateInstancePushDecode.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.decode.loading = false
-        state.instances[activeIndex].push.decode.value = action.payload.disable
-      })
-      .addCase(updateInstancePushDecode.rejected, state => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.decode.loading = false
-      })
-      .addCase(updateInstancePushDecode.pending, state => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.decode.loading = true
+        state.instances[activeIndex].push.decode = action.payload.disable
       })
 
       // Update Instance Push Individual Alert
       .addCase(updateInstancePushAlert.fulfilled, (state, action) => {
         const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = false
         state.instances[activeIndex].push.alerts = action.payload
-      })
-      .addCase(updateInstancePushAlert.rejected, (state, action) => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = false
-      })
-      .addCase(updateInstancePushAlert.pending, (state, action) => {
-        const activeIndex = findInstanceActive(state.instances)
-        state.instances[activeIndex].push.alerts[action.meta.arg.changed].loading = true
       })
 
       // Check if frequently used emojis still exist
@@ -394,8 +359,8 @@ export const getInstanceNotificationsFilter = ({ instances: { instances } }: Roo
 export const getInstancePush = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.push
 
-export const getInstanceTimelinesLookback = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.timelinesLookback
+export const getInstanceFollowingPage = ({ instances: { instances } }: RootState) =>
+  instances[findInstanceActive(instances)]?.followingPage
 
 export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.mePage
@@ -412,9 +377,8 @@ export const {
   updateInstanceNotificationsFilter,
   updateInstanceDraft,
   removeInstanceDraft,
-  clearPushLoading,
   disableAllPushes,
-  updateInstanceTimelineLookback,
+  updateInstanceFollowingPage,
   updateInstanceMePage,
   countInstanceEmoji
 } = instancesSlice.actions

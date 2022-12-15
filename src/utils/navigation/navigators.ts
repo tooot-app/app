@@ -112,13 +112,13 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Users':
     | {
         reference: 'accounts'
-        id: Mastodon.Account['id']
+        account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
         type: 'following' | 'followers'
         count: number
       }
     | {
         reference: 'statuses'
-        id: Mastodon.Status['id']
+        status: Pick<Mastodon.Status, 'id'>
         type: 'reblogged_by' | 'favourited_by'
         count: number
       }
@@ -136,13 +136,17 @@ export type TabPublicStackParamList = {
 
 export type TabNotificationsStackParamList = {
   'Tab-Notifications-Root': undefined
+  'Tab-Notifications-Filters': undefined
 } & TabSharedStackParamList
+export type TabNotificationsStackScreenProps<T extends keyof TabNotificationsStackParamList> =
+  NativeStackScreenProps<TabNotificationsStackParamList, T>
 
 export type TabMeStackParamList = {
   'Tab-Me-Root': undefined
   'Tab-Me-Bookmarks': undefined
   'Tab-Me-Conversations': undefined
   'Tab-Me-Favourites': undefined
+  'Tab-Me-FollowedTags': undefined
   'Tab-Me-List': Mastodon.List
   'Tab-Me-List-Accounts': Omit<Mastodon.List, 'replies_policy'>
   'Tab-Me-List-Edit':

@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "ホーム"
+      "name": "ホーム",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "連合",
-        "right": "ローカル"
+        "federated": "連合",
+        "local": "ローカル",
+        "trending": "トレンド"
       }
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "私について"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "フィルター",
-      "accessibilityHint": "表示される通知の種類をフィルターする"
+      "accessibilityHint": "表示される通知の種類をフィルターする",
+      "title": "",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "フォローリクエスト",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "購読したユーザーのトゥート",
+        "update": "ブーストしたトゥートが編集されました",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "お気に入り"
+      },
+      "followedTags": {
+        "name": ""
       },
       "fontSize": {
         "name": "トゥートのフォントサイズ"
@@ -53,7 +70,7 @@
         "name": "リスト {{list}} のユーザー"
       },
       "listAdd": {
-        "name": "リストに追加"
+        "name": ""
       },
       "listEdit": {
         "name": "リストの詳細を編集"
@@ -214,6 +231,12 @@
       "status": {
         "heading": "購読したユーザーのトゥート"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "通知到達(routing)のしくみを学ぶ"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "有効",
-          "disabled": "無効"
-        }
+        "content_true": "有効",
+        "content_false": "無効"
       },
       "update": {
         "title": "最新バージョンへのアップデート"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "tooot をサポート"
       },
-      "review": {
-        "heading": "tooot をレビュー"
-      },
       "contact": {
         "heading": "tooot に関する連絡"
       },
@@ -330,7 +348,7 @@
       "notInLists": "その他のリスト"
     },
     "attachments": {
-      "name": "<0 /><1>\" のメディア</1>"
+      "name": "<0 /><1>のメディア</1>"
     },
     "hashtag": {
       "follow": "フォロー",
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} ブースト",
         "favourited_by": "{{count}} お気に入り"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

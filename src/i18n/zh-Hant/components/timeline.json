@@ -30,7 +30,9 @@
         "default": "{{name}} 轉嘟了",
         "notification": "{{name}} 轉嘟了您的嘟文"
       },
-      "update": "轉嘟已編輯"
+      "update": "轉嘟已編輯",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "將嘟文加入書籤",
         "function": "加入書籤"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

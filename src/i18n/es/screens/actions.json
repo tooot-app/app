@@ -2,19 +2,6 @@
   "content": {
     "altText": {
       "heading": "Texto alternativo"
-    },
-    "notificationsFilter": {
-      "heading": "Mostrar tipos de notificación",
-      "content": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Solicitud de seguimiento",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot de usuarios suscritos",
-        "update": "El impulso ha sido editado"
-      }
     }
   }
 }

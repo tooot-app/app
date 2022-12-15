@@ -1,16 +1,17 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
-import { QueryFunctionContext, useQuery, UseQueryOptions } from 'react-query'
+import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 export type QueryKeyAccount = ['Account', { id: Mastodon.Account['id'] }]
 
-const accountQueryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyAccount>) => {
+const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyAccount>) => {
   const { id } = queryKey[1]
 
-  return apiInstance<Mastodon.Account>({
+  const res = await apiInstance<Mastodon.Account>({
     method: 'get',
     url: `accounts/${id}`
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
 const useAccountQuery = ({
@@ -27,15 +28,16 @@ const useAccountQuery = ({
 
 export type QueryKeyAccountInLists = ['AccountInLists', { id: Mastodon.Account['id'] }]
 
-const accountInListsQueryFunction = ({
+const accountInListsQueryFunction = async ({
   queryKey
 }: QueryFunctionContext<QueryKeyAccountInLists>) => {
   const { id } = queryKey[1]
 
-  return apiInstance<Mastodon.List[]>({
+  const res = await apiInstance<Mastodon.List[]>({
     method: 'get',
     url: `accounts/${id}/lists`
-  }).then(res => res.body)
+  })
+  return res.body
 }
 
 const useAccountInListsQuery = ({

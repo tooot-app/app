@@ -3,8 +3,9 @@
     "OK": "Ok",
     "apply": "Confirmer",
     "cancel": "Annuler",
-    "discard": "",
-    "continue": "",
+    "discard": "Ne pas tenir compte",
+    "continue": "Continuer",
+    "create": "",
     "delete": "",
     "done": ""
   },
@@ -24,7 +25,7 @@
   },
   "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Modifications non sauvegardées",
+    "message": "Votre modification n'a pas été enregistrée. Voulez-vous annuler l'enregistrement des modifications ?"
   }
 }

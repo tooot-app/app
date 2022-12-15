@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Seguint"
+      "name": "Seguint",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Federat",
-        "right": "Local"
+        "federated": "Federat",
+        "local": "Local",
+        "trending": "En tendència"
       }
     },
     "notifications": {
       "name": "Notificacions"
-    },
-    "me": {
-      "name": "Sobre mi"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filtra",
-      "accessibilityHint": "Filtra els tipus de notificacions"
+      "accessibilityHint": "Filtra els tipus de notificacions",
+      "title": "Mostra les notificacions",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Sol·licitud de seguiment",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Publicació d'usuaris subscrits",
+        "update": "L'impuls ha sigut editat",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favorits"
+      },
+      "followedTags": {
+        "name": "Etiquetes seguides"
       },
       "fontSize": {
         "name": "Mida de la font de la publicació"
@@ -53,7 +70,7 @@
         "name": "Usuaris a la llista: {{list}}"
       },
       "listAdd": {
-        "name": "Afegeix a la llista"
+        "name": "Crea una llista"
       },
       "listEdit": {
         "name": "Edita els detalls de la llista"
@@ -179,8 +196,8 @@
         "settings": "Activa'ls a la configuració"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Servidor mal configurat per a les notificacions push",
+        "description": "Si us plau, contacta amb l'administrador del teu servidor per a configurar el suport de notificacions push"
       },
       "global": {
         "heading": "Activa per {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Publicació d'usuaris subscrits"
       },
+      "admin.sign_up": {
+        "heading": "Administració: Registra"
+      },
+      "admin.report": {
+        "heading": "Administració: denúncies"
+      },
       "howitworks": "Aprèn com funciona"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Habilitat",
-          "disabled": "Deshabilitat"
-        }
+        "content_true": "Habilitat",
+        "content_false": "Deshabilitat"
       },
       "update": {
         "title": "Actualitza a la última versió"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Dona suport al tooot"
       },
-      "review": {
-        "heading": "Valora al tooot"
-      },
       "contact": {
         "heading": "Contacta al tooot"
       },
@@ -330,7 +348,7 @@
       "notInLists": "Altres llistes"
     },
     "attachments": {
-      "name": "Multimèdia de <0 /><1></1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Segueix",
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} impulsats",
         "favourited_by": "{{count}} favorits"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

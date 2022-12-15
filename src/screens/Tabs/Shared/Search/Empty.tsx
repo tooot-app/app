@@ -10,12 +10,12 @@ import { StyleSheet, TextInput, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
-  isLoading: boolean
+  isFetching: boolean
   inputRef: React.RefObject<TextInput>
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>
 }
 
-const SearchEmpty: React.FC<Props> = ({ isLoading, inputRef, setSearchTerm }) => {
+const SearchEmpty: React.FC<Props> = ({ isFetching, inputRef, setSearchTerm }) => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
@@ -23,7 +23,7 @@ const SearchEmpty: React.FC<Props> = ({ isLoading, inputRef, setSearchTerm }) =>
 
   return (
     <View style={{ paddingVertical: StyleConstants.Spacing.Global.PagePadding }}>
-      {isLoading ? (
+      {isFetching ? (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
         </View>

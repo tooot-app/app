@@ -1,3 +1,11 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Fix toot attribution of favourites etc.
-- Fix switching language
+- Added 🇺🇦 Slava Ukraini
+- Automatic setting detected language when tooting
+- Remember public timeline type selection
+- Show diffing of edit history
+- Allow hiding boosts and replies in home timeline
+- Support toot in RTL languages
+- Added notification for admins
+- Pilot conversation hierarchy
+- Fix whole word filter matching
+- Fix tablet cannot delete toot drafts

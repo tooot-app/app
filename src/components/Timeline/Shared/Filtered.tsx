@@ -45,6 +45,7 @@ export const shouldFilter = ({
   status: Mastodon.Status
   queryKey: QueryKeyTimeline
 }): string | null => {
+  const page = queryKey[1]
   const instance = getInstance(store.getState())
   const ownAccount = getInstanceAccount(store.getState())?.id === status.account?.id
 
@@ -72,12 +73,12 @@ export const shouldFilter = ({
       const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
       switch (filter.whole_word) {
         case true:
-          if (new RegExp(`\\B${escapedPhrase}\\b`).test(rawContent)) {
+          if (new RegExp(`\\b${escapedPhrase}\\b`, 'i').test(rawContent)) {
             shouldFilter = filter.phrase
           }
           break
         case false:
-          if (new RegExp(escapedPhrase).test(rawContent)) {
+          if (new RegExp(escapedPhrase, 'i').test(rawContent)) {
             shouldFilter = filter.phrase
           }
           break
@@ -93,11 +94,11 @@ export const shouldFilter = ({
         }
       }
 
-      switch (queryKey[1].page) {
+      switch (page.page) {
         case 'Following':
         case 'Local':
         case 'List':
-        case 'Account_Default':
+        case 'Account':
           if (filter.context.includes('home')) {
             checkFilter(filter)
           }

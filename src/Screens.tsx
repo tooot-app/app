@@ -135,10 +135,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
           )
           if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
-            initQuery({
-              instance: instances[instanceIndex],
-              prefetch: { enabled: true }
-            })
+            initQuery({ instance: instances[instanceIndex] })
           }
         }
       }

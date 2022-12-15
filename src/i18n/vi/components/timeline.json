@@ -30,7 +30,9 @@
         "default": "{{name}} đăng lại",
         "notification": "{{name}} đăng lại tút của bạn"
       },
-      "update": "Đăng lại đã được sửa"
+      "update": "Đăng lại đã được sửa",
+      "admin.sign_up": "{{name}} tham gia máy chủ",
+      "admin.report": "{{name}} báo cáo:"
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Lưu tút này",
         "function": "Lưu tút"
-      }
+      },
+      "openReport": "Mở báo cáo"
     },
     "actionsUsers": {
       "reblogged_by": {

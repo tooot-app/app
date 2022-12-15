@@ -20,8 +20,8 @@
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "개인 메시지",
+    "public": "공개 메시지"
   },
   "copy": {
     "action": "툿 복사",

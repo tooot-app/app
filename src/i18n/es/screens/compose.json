@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Cancelar",
       "alert": {
         "title": "¿Cancelar edición?",
         "buttons": {
           "save": "Guardar borrador",
-          "delete": "Eliminar borrador",
-          "cancel": "Cancelar"
+          "delete": "Eliminar borrador"
         }
       }
     },

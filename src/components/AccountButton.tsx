@@ -12,11 +12,7 @@ interface Props {
   additionalActions?: () => void
 }
 
-const AccountButton: React.FC<Props> = ({
-  instance,
-  selected = false,
-  additionalActions
-}) => {
+const AccountButton: React.FC<Props> = ({ instance, selected = false, additionalActions }) => {
   const navigation = useNavigation()
 
   return (
@@ -27,12 +23,10 @@ const AccountButton: React.FC<Props> = ({
         marginBottom: StyleConstants.Spacing.M,
         marginRight: StyleConstants.Spacing.M
       }}
-      content={`@${instance.account.acct}@${instance.uri}${
-        selected ? ' ✓' : ''
-      }`}
+      content={`@${instance.account.acct}@${instance.uri}${selected ? ' ✓' : ''}`}
       onPress={() => {
         haptics('Light')
-        initQuery({ instance, prefetch: { enabled: true } })
+        initQuery({ instance })
         navigation.goBack()
         if (additionalActions) {
           additionalActions()

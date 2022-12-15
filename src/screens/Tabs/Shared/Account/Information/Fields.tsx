@@ -10,53 +10,50 @@ export interface Props {
   myInfo?: boolean
 }
 
-const AccountInformationFields = React.memo(
-  ({ account, myInfo }: Props) => {
-    if (account?.suspended || myInfo || !account?.fields || account.fields.length === 0) {
-      return null
-    }
+const AccountInformationFields: React.FC<Props> = ({ account, myInfo }) => {
+  if (account?.suspended || myInfo || !account?.fields || account.fields.length === 0) {
+    return null
+  }
 
-    const { colors } = useTheme()
+  const { colors } = useTheme()
 
-    return (
-      <View style={[styles.fields, { borderTopColor: colors.border }]}>
-        {account.fields.map((field, index) => (
-          <View key={index} style={[styles.field, { borderBottomColor: colors.border }]}>
-            <View style={[styles.fieldLeft, { borderRightColor: colors.border }]}>
-              <ParseHTML
-                content={field.name}
-                size={'S'}
-                emojis={account.emojis}
-                showFullLink
-                numberOfLines={5}
-                selectable
+  return (
+    <View style={[styles.fields, { borderTopColor: colors.border }]}>
+      {account.fields.map((field, index) => (
+        <View key={index} style={[styles.field, { borderBottomColor: colors.border }]}>
+          <View style={[styles.fieldLeft, { borderRightColor: colors.border }]}>
+            <ParseHTML
+              content={field.name}
+              size={'S'}
+              emojis={account.emojis}
+              showFullLink
+              numberOfLines={5}
+              selectable
+            />
+            {field.verified_at ? (
+              <Icon
+                name='CheckCircle'
+                size={StyleConstants.Font.Size.M}
+                color={colors.primaryDefault}
+                style={styles.fieldCheck}
               />
-              {field.verified_at ? (
-                <Icon
-                  name='CheckCircle'
-                  size={StyleConstants.Font.Size.M}
-                  color={colors.primaryDefault}
-                  style={styles.fieldCheck}
-                />
-              ) : null}
-            </View>
-            <View style={styles.fieldRight}>
-              <ParseHTML
-                content={field.value}
-                size={'S'}
-                emojis={account.emojis}
-                showFullLink
-                numberOfLines={5}
-                selectable
-              />
-            </View>
+            ) : null}
           </View>
-        ))}
-      </View>
-    )
-  },
-  (_, next) => next.account === undefined
-)
+          <View style={styles.fieldRight}>
+            <ParseHTML
+              content={field.value}
+              size={'S'}
+              emojis={account.emojis}
+              showFullLink
+              numberOfLines={5}
+              selectable
+            />
+          </View>
+        </View>
+      ))}
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   fields: {

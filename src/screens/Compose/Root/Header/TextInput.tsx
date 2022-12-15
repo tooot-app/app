@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
-import formatText from '../../utils/formatText'
+import { formatText } from '../../utils/processText'
 import { uploadAttachment } from '../Footer/addAttachment'
 
 const ComposeTextInput: React.FC = () => {
@@ -27,6 +27,7 @@ const ComposeTextInput: React.FC = () => {
   return (
     <PasteInput
       keyboardAppearance={mode}
+      keyboardType='twitter'
       style={{
         marginTop: StyleConstants.Spacing.S,
         paddingBottom: StyleConstants.Spacing.M,

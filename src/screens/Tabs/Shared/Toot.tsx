@@ -5,8 +5,10 @@ import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList } from 'react-native'
-import { InfiniteQueryObserver, useQueryClient } from 'react-query'
+import { FlatList, View } from 'react-native'
+import { InfiniteQueryObserver, useQueryClient } from '@tanstack/react-query'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   navigation,
@@ -14,6 +16,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     params: { toot, rootQueryKey }
   }
 }) => {
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   useEffect(() => {
@@ -34,6 +37,10 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     queryKey,
     enabled: false
   })
+
+  const replyLevels = useRef<{ id: string; level: number }[]>([])
+  const data = useRef<Mastodon.Status[]>()
+  const highlightIndex = useRef<number>(0)
   useEffect(() => {
     return observer.subscribe(result => {
       if (result.isSuccess) {
@@ -46,6 +53,24 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           navigation.goBack()
           return
         }
+        data.current = flattenData
+        highlightIndex.current = flattenData.findIndex(({ id }) => id === toot.id)
+
+        for (const [index, status] of flattenData.entries()) {
+          if (status.id === toot.id) continue
+          if (status.in_reply_to_id === toot.id) continue
+
+          if (!replyLevels.current.find(reply => reply.id === status.in_reply_to_id)) {
+            const prevLevel =
+              replyLevels.current.find(reply => reply.id === flattenData[index - 1].in_reply_to_id)
+                ?.level || 0
+            replyLevels.current.push({
+              id: status.in_reply_to_id,
+              level: prevLevel + 1
+            })
+          }
+        }
+
         setItemsLength(flattenData.length)
         if (!scrolled.current) {
           scrolled.current = true
@@ -68,21 +93,92 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         }
       }
     })
-  }, [scrolled.current])
+  }, [scrolled.current, replyLevels.current])
 
   return (
     <Timeline
       flRef={flRef}
       queryKey={queryKey}
+      queryOptions={{ staleTime: 0, refetchOnMount: true }}
       customProps={{
-        renderItem: ({ item }) => (
-          <TimelineDefault
-            item={item}
-            queryKey={queryKey}
-            rootQueryKey={rootQueryKey}
-            highlighted={toot.id === item.id}
-          />
-        ),
+        renderItem: ({ item, index }) => {
+          const levels = {
+            previous:
+              replyLevels.current.find(
+                reply => reply.id === data.current?.[index - 1]?.in_reply_to_id
+              )?.level || 0,
+            current:
+              replyLevels.current.find(reply => reply.id === item.in_reply_to_id)?.level || 0,
+            next:
+              replyLevels.current.find(
+                reply => reply.id === data.current?.[index + 1]?.in_reply_to_id
+              )?.level || 0
+          }
+
+          return (
+            <>
+              <TimelineDefault
+                item={{ ...item, content: `${item.content}${JSON.stringify(levels)}` }}
+                queryKey={queryKey}
+                rootQueryKey={rootQueryKey}
+                highlighted={toot.id === item.id}
+                isConversation={toot.id !== item.id}
+              />
+              {Array.from(Array(levels.current)).map((_, i) => {
+                if (index < highlightIndex.current) return null
+                if (
+                  levels.previous + 1 === levels.current ||
+                  (levels.previous && levels.current && levels.previous === levels.current)
+                ) {
+                  return (
+                    <View
+                      key={i}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: StyleConstants.Spacing.Global.PagePadding / 2 + 8 * i,
+                        height:
+                          levels.current === levels.next
+                            ? StyleConstants.Spacing.Global.PagePadding
+                            : StyleConstants.Spacing.Global.PagePadding + StyleConstants.Avatar.XS,
+                        borderLeftColor: colors.border,
+                        borderLeftWidth: 1
+                      }}
+                    />
+                  )
+                } else {
+                  return null
+                }
+              })}
+              {Array.from(Array(levels.next)).map((_, i) => {
+                if (index < highlightIndex.current) return null
+                if (
+                  levels.current + 1 === levels.next ||
+                  (levels.current && levels.next && levels.current === levels.next)
+                ) {
+                  return (
+                    <View
+                      key={i}
+                      style={{
+                        position: 'absolute',
+                        top:
+                          levels.current + 1 === levels.next && levels.next > i + 1
+                            ? StyleConstants.Spacing.Global.PagePadding + StyleConstants.Avatar.XS
+                            : StyleConstants.Spacing.Global.PagePadding,
+                        left: StyleConstants.Spacing.Global.PagePadding / 2 + 8 * i,
+                        height: 200,
+                        borderLeftColor: colors.border,
+                        borderLeftWidth: 1
+                      }}
+                    />
+                  )
+                } else {
+                  return null
+                }
+              })}
+            </>
+          )
+        },
         onScrollToIndexFailed: error => {
           const offset = error.averageItemLength * error.index
           flRef.current?.scrollToOffset({ offset })

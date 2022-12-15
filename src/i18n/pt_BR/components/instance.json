@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Domínio da instância"
+      "placeholder": ""
     },
     "button": "Entrar",
     "information": {

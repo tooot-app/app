@@ -15,7 +15,6 @@ import Animated, {
 } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import ActionsAltText from './Actions/AltText'
-import ActionsNotificationsFilter from './Actions/NotificationsFilter'
 
 const ScreenActions = ({
   route: { params },
@@ -53,8 +52,6 @@ const ScreenActions = ({
 
   const actions = () => {
     switch (params.type) {
-      case 'notifications_filter':
-        return <ActionsNotificationsFilter />
       case 'alt_text':
         return <ActionsAltText text={params.text} />
     }

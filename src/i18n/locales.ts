@@ -10,6 +10,7 @@ const LOCALES = {
   nl: 'Nederlands',
   'pt-br': 'Português (Brasil)',
   sv: 'Svenska',
+  uk: 'українська',
   vi: 'Tiếng Việt',
   'zh-hans': '简体中文',
   'zh-hant': '繁體中文'

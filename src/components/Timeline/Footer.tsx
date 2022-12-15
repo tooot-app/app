@@ -21,7 +21,11 @@ const TimelineFooter = React.memo(
         enabled: !disableInfinity,
         notifyOnChangeProps: ['hasNextPage'],
         getNextPageParam: lastPage =>
-          lastPage?.links?.next && { max_id: lastPage.links.next }
+          lastPage?.links?.next && {
+            ...(lastPage.links.next.isOffset
+              ? { offset: lastPage.links.next.id }
+              : { max_id: lastPage.links.next.id })
+          }
       }
     })
 
@@ -43,11 +47,7 @@ const TimelineFooter = React.memo(
             <Trans
               i18nKey='componentTimeline:end.message'
               components={[
-                <Icon
-                  name='Coffee'
-                  size={StyleConstants.Font.Size.S}
-                  color={colors.secondary}
-                />
+                <Icon name='Coffee' size={StyleConstants.Font.Size.S} color={colors.secondary} />
               ]}
             />
           </CustomText>

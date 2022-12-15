@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
@@ -8,7 +8,8 @@ import {
   UseMutationOptions,
   useQuery,
   UseQueryOptions
-} from 'react-query'
+} from '@tanstack/react-query'
+import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyLists = ['Lists']
 
@@ -20,9 +21,11 @@ const queryFunction = async () => {
   return res.body
 }
 
-const useListsQuery = ({ options }: { options?: UseQueryOptions<Mastodon.List[], AxiosError> }) => {
+const useListsQuery = (
+  params: { options?: UseQueryOptions<Mastodon.List[], AxiosError> } | void
+) => {
   const queryKey: QueryKeyLists = ['Lists']
-  return useQuery(queryKey, queryFunction, options)
+  return useQuery(queryKey, queryFunction, params?.options)
 }
 
 type MutationVarsLists =
@@ -95,7 +98,7 @@ const useListAccountsQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyListAccounts[1] & {
-  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Account[]>, AxiosError>
+  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Account[]>, AxiosError>
 }) => {
   const queryKey: QueryKeyListAccounts = ['ListAccounts', queryKeyParams]
   return useInfiniteQuery(queryKey, accountsQueryFunction, options)

@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
 import { store } from '@root/store'
@@ -11,35 +11,78 @@ import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useMutation
-} from 'react-query'
+} from '@tanstack/react-query'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
+import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyTimeline = [
   'Timeline',
-  {
-    page: App.Pages
-    hashtag?: Mastodon.Tag['name']
-    list?: Mastodon.List['id']
-    toot?: Mastodon.Status['id']
-    account?: Mastodon.Account['id']
-  }
+  (
+    | {
+        page: Exclude<App.Pages, 'Following' | 'Hashtag' | 'List' | 'Toot' | 'Account'>
+      }
+    | {
+        page: 'Following'
+        showBoosts: boolean
+        showReplies: boolean
+      }
+    | {
+        page: 'Hashtag'
+        hashtag: Mastodon.Tag['name']
+      }
+    | {
+        page: 'List'
+        list: Mastodon.List['id']
+      }
+    | {
+        page: 'Toot'
+        toot: Mastodon.Status['id']
+      }
+    | {
+        page: 'Account'
+        account: Mastodon.Account['id']
+        exclude_reblogs: boolean
+        only_media: boolean
+      }
+  )
 ]
 
 const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyTimeline>) => {
-  const { page, account, hashtag, list, toot } = queryKey[1]
-  let params: { [key: string]: string } = { ...pageParam }
+  const page = queryKey[1]
+  let params: { [key: string]: string } = { ...pageParam, limit: 40 }
 
-  switch (page) {
+  switch (page.page) {
     case 'Following':
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/home',
         params
+      }).then(res => {
+        if (!page.showBoosts || !page.showReplies) {
+          return {
+            ...res,
+            body: res.body
+              .filter(status => {
+                if (!page.showBoosts && status.reblog) {
+                  return null
+                }
+                if (!page.showReplies && status.in_reply_to_id?.length) {
+                  return null
+                }
+
+                return status
+              })
+              .filter(s => s)
+          }
+        } else {
+          return res
+        }
       })
 
     case 'Local':
+      console.log('local', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
@@ -53,6 +96,14 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
+        params
+      })
+
+    case 'Trending':
+      console.log('trending', params)
+      return apiInstance<Mastodon.Status[]>({
+        method: 'get',
+        url: 'trends/statuses',
         params
       })
 
@@ -82,62 +133,57 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         }
       })
 
-    case 'Account_Default':
-      if (pageParam && pageParam.hasOwnProperty('max_id')) {
+    case 'Account':
+      if (page.exclude_reblogs) {
+        if (pageParam && pageParam.hasOwnProperty('max_id')) {
+          return apiInstance<Mastodon.Status[]>({
+            method: 'get',
+            url: `accounts/${page.account}/statuses`,
+            params: {
+              exclude_replies: 'true',
+              ...params
+            }
+          })
+        } else {
+          const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
+            method: 'get',
+            url: `accounts/${page.account}/statuses`,
+            params: {
+              pinned: 'true'
+            }
+          })
+          res1.body = res1.body.map(status => {
+            status._pinned = true
+            return status
+          })
+          const res2 = await apiInstance<Mastodon.Status[]>({
+            method: 'get',
+            url: `accounts/${page.account}/statuses`,
+            params: {
+              exclude_replies: 'true'
+            }
+          })
+          return {
+            body: uniqBy([...res1.body, ...res2.body], 'id'),
+            ...(res2.links.next && { links: { next: res2.links.next } })
+          }
+        }
+      } else {
         return apiInstance<Mastodon.Status[]>({
           method: 'get',
-          url: `accounts/${account}/statuses`,
+          url: `accounts/${page.account}/statuses`,
           params: {
-            exclude_replies: 'true',
-            ...params
+            ...params,
+            exclude_replies: page.exclude_reblogs.toString(),
+            only_media: page.only_media.toString()
           }
         })
-      } else {
-        const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
-          method: 'get',
-          url: `accounts/${account}/statuses`,
-          params: {
-            pinned: 'true'
-          }
-        })
-        res1.body = res1.body.map(status => {
-          status._pinned = true
-          return status
-        })
-        const res2 = await apiInstance<Mastodon.Status[]>({
-          method: 'get',
-          url: `accounts/${account}/statuses`,
-          params: {
-            exclude_replies: 'true'
-          }
-        })
-        return {
-          body: uniqBy([...res1.body, ...res2.body], 'id'),
-          ...(res2.links.next && { links: { next: res2.links.next } })
-        }
       }
-
-    case 'Account_All':
-      return apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: `accounts/${account}/statuses`,
-        params
-      })
-
-    case 'Account_Attachments':
-      return apiInstance<Mastodon.Status[]>({
-        method: 'get',
-        url: `accounts/${account}/statuses`,
-        params: {
-          only_media: 'true',
-          ...params
-        }
-      })
 
     case 'Hashtag':
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
-        url: `timelines/tag/${hashtag}`,
+        url: `timelines/tag/${page.hashtag}`,
         params
       })
 
@@ -165,21 +211,21 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
     case 'List':
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
-        url: `timelines/list/${list}`,
+        url: `timelines/list/${page.list}`,
         params
       })
 
     case 'Toot':
       const res1_1 = await apiInstance<Mastodon.Status>({
         method: 'get',
-        url: `statuses/${toot}`
+        url: `statuses/${page.toot}`
       })
       const res2_1 = await apiInstance<{
         ancestors: Mastodon.Status[]
         descendants: Mastodon.Status[]
       }>({
         method: 'get',
-        url: `statuses/${toot}/context`
+        url: `statuses/${page.toot}/context`
       })
       return {
         body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
@@ -195,7 +241,7 @@ const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<InstanceResponse<Mastodon.Status[]>, AxiosError>
+  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunction, {
@@ -204,53 +250,6 @@ const useTimelineQuery = ({
     refetchOnWindowFocus: false,
     ...options
   })
-}
-
-const prefetchTimelineQuery = async ({
-  ids,
-  queryKey
-}: {
-  ids: Mastodon.Status['id'][]
-  queryKey: QueryKeyTimeline
-}): Promise<Mastodon.Status['id'] | undefined> => {
-  let page: string = ''
-  let local: boolean = false
-  switch (queryKey[1].page) {
-    case 'Following':
-      page = 'home'
-      break
-    case 'Local':
-      page = 'public'
-      local = true
-      break
-    case 'LocalPublic':
-      page = 'public'
-      break
-  }
-
-  for (const id of ids) {
-    const statuses = await apiInstance<Mastodon.Status[]>({
-      method: 'get',
-      url: `timelines/${page}`,
-      params: {
-        min_id: id,
-        limit: 1,
-        ...(local && { local: 'true' })
-      }
-    })
-    if (statuses.body.length) {
-      await queryClient.prefetchInfiniteQuery(queryKey, props =>
-        queryFunction({
-          ...props,
-          queryKey,
-          pageParam: {
-            max_id: statuses.body[0].id
-          }
-        })
-      )
-      return id
-    }
-  }
 }
 
 // --- Separator ---
@@ -460,4 +459,4 @@ const useTimelineMutation = ({
   })
 }
 
-export { prefetchTimelineQuery, useTimelineQuery, useTimelineMutation }
+export { useTimelineQuery, useTimelineMutation }

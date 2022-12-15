@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Suit"
+      "name": "Suit",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Fédéré",
-        "right": "Local"
+        "federated": "Fédéré",
+        "local": "Local",
+        "trending": ""
       }
     },
     "notifications": {
       "name": "Notifications"
-    },
-    "me": {
-      "name": "À propos de moi"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filtrer",
-      "accessibilityHint": "Filtrer les types de notifications affichés"
+      "accessibilityHint": "Filtrer les types de notifications affichés",
+      "title": "",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Demande d'abonnement",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Pouet des utilisateurs inscrits",
+        "update": "Le reblog a été modifié",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favoris"
+      },
+      "followedTags": {
+        "name": ""
       },
       "fontSize": {
         "name": "Taille de la police de Pouet"
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Pouet des utilisateurs inscrits"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Apprenez comment cela fonctionne"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Activé",
-          "disabled": "Désactivé"
-        }
+        "content_true": "Activé",
+        "content_false": "Désactivé"
       },
       "update": {
         "title": "Mettre à jour vers la dernière version"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Support de tooot"
       },
-      "review": {
-        "heading": "Examiner le tooot"
-      },
       "contact": {
         "heading": "Contacter tooot"
       },
@@ -330,7 +348,7 @@
       "notInLists": ""
     },
     "attachments": {
-      "name": "<0 /><1>\"s media</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Suivre",
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boosté",
         "favourited_by": "{{count}} mis en favori"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

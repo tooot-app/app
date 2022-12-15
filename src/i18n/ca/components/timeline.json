@@ -30,7 +30,9 @@
         "default": "{{name}} ha impulsat",
         "notification": "{{name}} ha impulsat la teva publicació"
       },
-      "update": "L'impuls ha sigut editat"
+      "update": "L'impuls ha sigut editat",
+      "admin.sign_up": "",
+      "admin.report": ""
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Afegeix aquesta publicació a marcadors",
         "function": "Afegeix la publicació a marcadors"
-      }
+      },
+      "openReport": ""
     },
     "actionsUsers": {
       "reblogged_by": {

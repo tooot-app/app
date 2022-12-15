@@ -45,6 +45,21 @@ const TimelineAttachment = () => {
   }
   const [sensitiveShown, setSensitiveShown] = useState(defaultSensitive())
 
+  // const testHorizontal: Mastodon.Attachment[] = Array(2).fill({
+  //   id: Math.random().toString(),
+  //   type: 'image',
+  //   url: 'https://images.unsplash.com/photo-1670870764013-f0e36aa376b0?w=1000',
+  //   preview_url: 'https://images.unsplash.com/photo-1543968996-ee822b8176ba?w=300',
+  //   meta: { original: { width: 1000, height: 625 } }
+  // })
+  // const testVertical: Mastodon.Attachment[] = Array(7).fill({
+  //   id: Math.random().toString(),
+  //   type: 'image',
+  //   url: 'https://images.unsplash.com/photo-1670842587871-326b95acbc8c?w=1000',
+  //   preview_url: 'https://images.unsplash.com/photo-1670833288990-64b2f4ef7290?w=300',
+  //   meta: { original: { width: 987, height: 1480 } }
+  // })
+
   // @ts-ignore
   const imageUrls: RootStackParamList['Screen-ImagesViewer']['imageUrls'] = status.media_attachments
     .map(attachment => {

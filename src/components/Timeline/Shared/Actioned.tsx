@@ -28,7 +28,12 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
   const iconColor = colors.primaryDefault
 
   const content = (content: string) => (
-    <ParseEmojis content={content} emojis={account.emojis} size='S' />
+    <ParseEmojis
+      content={content}
+      emojis={account.emojis}
+      size='S'
+      style={{ color: action === 'admin.report' ? colors.red : colors.primaryDefault }}
+    />
   )
 
   const onPress = () => navigation.push('Tab-Shared-Account', { account })
@@ -143,6 +148,30 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
               style={styles.icon}
             />
             {content(t('shared.actioned.update'))}
+          </>
+        )
+      case 'admin.sign_up':
+        return (
+          <>
+            <Icon
+              name='Users'
+              size={StyleConstants.Font.Size.S}
+              color={iconColor}
+              style={styles.icon}
+            />
+            {content(t('shared.actioned.admin.sign_up', { name: `@${account.acct}` }))}
+          </>
+        )
+      case 'admin.report':
+        return (
+          <>
+            <Icon
+              name='AlertOctagon'
+              size={StyleConstants.Font.Size.S}
+              color={colors.red}
+              style={styles.icon}
+            />
+            {content(t('shared.actioned.admin.report', { name: `@${account.acct}` }))}
           </>
         )
       default:

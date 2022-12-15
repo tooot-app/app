@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useMemo } from 'react'
-import { Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
@@ -18,16 +18,11 @@ export interface Props {
   size?: 'S' | 'M' | 'L'
   adaptiveSize?: boolean
   fontBold?: boolean
+  style?: TextStyle
 }
 
 const ParseEmojis = React.memo(
-  ({
-    content,
-    emojis,
-    size = 'M',
-    adaptiveSize = false,
-    fontBold = false
-  }: Props) => {
+  ({ content, emojis, size = 'M', adaptiveSize = false, fontBold = false, style }: Props) => {
     const { reduceMotionEnabled } = useAccessibility()
 
     const adaptiveFontsize = useSelector(getSettingsFontsize)
@@ -51,22 +46,13 @@ const ParseEmojis = React.memo(
         image: {
           width: adaptedFontsize,
           height: adaptedFontsize,
-          ...(Platform.OS === 'ios'
-            ? {
-                transform: [{ translateY: -2 }]
-              }
-            : {
-                transform: [{ translateY: 1 }]
-              })
+          ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
         }
       })
     }, [theme, adaptiveFontsize])
 
     return (
-      <CustomText
-        style={styles.text}
-        fontWeight={fontBold ? 'Bold' : undefined}
-      >
+      <CustomText style={[styles.text, style]} fontWeight={fontBold ? 'Bold' : undefined}>
         {emojis ? (
           content
             .split(regexEmoji)
@@ -78,11 +64,7 @@ const ParseEmojis = React.memo(
                   return emojiShortcode === `:${emoji.shortcode}:`
                 })
                 if (emojiIndex === -1) {
-                  return (
-                    <CustomText key={emojiShortcode + i}>
-                      {emojiShortcode}
-                    </CustomText>
-                  )
+                  return <CustomText key={emojiShortcode + i}>{emojiShortcode}</CustomText>
                 } else {
                   const uri = reduceMotionEnabled
                     ? emojis[emojiIndex].static_url

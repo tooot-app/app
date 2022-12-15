@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": "Dominio de la instancia"
+      "placeholder": ""
     },
     "button": "Iniciar sesión",
     "information": {

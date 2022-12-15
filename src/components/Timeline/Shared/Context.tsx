@@ -16,8 +16,10 @@ type ContextType = {
   }>
 
   highlighted?: boolean
+  inThread?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
+  isConversation?: boolean
 }
 const StatusContext = createContext<ContextType>({} as ContextType)
 

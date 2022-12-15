@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Avbryt",
       "alert": {
         "title": "Avbryt redigering?",
         "buttons": {
           "save": "Spara utkast",
-          "delete": "Ta bort utkast",
-          "cancel": "Avbryt"
+          "delete": "Ta bort utkast"
         }
       }
     },

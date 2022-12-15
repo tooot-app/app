@@ -1,0 +1,155 @@
+{
+  "empty": {
+    "error": {
+      "message": "Помилка завантаження",
+      "button": "Повторити"
+    },
+    "success": {
+      "message": "Часова гілка порожня"
+    }
+  },
+  "end": {
+    "message": "Це кінець, бажаєте філіжанку кави? <0 />"
+  },
+  "lookback": {
+    "message": "Останні прочитані в"
+  },
+  "refresh": {
+    "fetchPreviousPage": "З цього моменту",
+    "refetch": "До кінця"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Прикріплено",
+      "favourite": "{{name}} додав в улюблене дмух",
+      "status": "{{name}} щойно дмухнув",
+      "follow": "{{name}} підписався на вас",
+      "follow_request": "{{name}} відправив запит на підписку",
+      "poll": "Опитування, у якому ви голосували, закінчилося",
+      "reblog": {
+        "default": "{{name}} передмухнув(-ла)",
+        "notification": "{{name}} передмухнув(-ла) ваш дмух"
+      },
+      "update": "Передмух був відредагований",
+      "admin.sign_up": "{{name}} приєднався до інстансу",
+      "admin.report": "{{name}} повідомлено:"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Відповісти на дмух"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Передмухнути",
+        "function": "Передмухнути",
+        "options": {
+          "title": "Виберіть видимість передмуху",
+          "public": "Публічний передмух",
+          "unlisted": "Прихований передмух"
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Додати дмух до улюблених",
+        "function": "Улюблені дмухи"
+      },
+      "bookmarked": {
+        "accessibilityLabel": "Додати цей дмух до закладок",
+        "function": "Закладки дмухів"
+      },
+      "openReport": "Відкрити скаргу"
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "{{count}} користувачів передмухнули цей дмух",
+        "accessibilityHint": "Торкніться, щоб дізнатися про користувачів",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
+      },
+      "favourited_by": {
+        "accessibilityLabel": "{{count}} користувачів зробили закладку для цього дмуху",
+        "accessibilityHint": "Торкніться, щоб дізнатися про користувачів",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
+      },
+      "history": {
+        "accessibilityLabel": "Цей дмух було відредаговано {{count}} разів",
+        "accessibilityHint": "Натисніть для перегляду повної історії редагування",
+        "text_one": "{{count}} редагування",
+        "text_other": "{{count}} редагували"
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": "Показати чутливі медіа"
+      },
+      "unsupported": {
+        "text": "Помилка завантаження",
+        "button": "Спробуйте віддалене посилання"
+      }
+    },
+    "avatar": {
+      "accessibilityLabel": "Аватар {{name}}",
+      "accessibilityHint": "Натисніть, щоб перейти на сторінку {{name}}"
+    },
+    "content": {
+      "expandHint": "Прихований вміст"
+    },
+    "filtered": "Відфільтровано: {{phrase}}.",
+    "fullConversation": "Читати розмови",
+    "translate": {
+      "default": "Переклад",
+      "succeed": "Перекладено {{provider}} з {{source}}",
+      "failed": "Не вдалося перекласти",
+      "source_not_supported": "мова дмухів не підтримується",
+      "target_not_supported": "Цільова мова не підтримується"
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": "Ім'я для відображення"
+          },
+          "account": {
+            "accessibilityHint": "Профіль користувача"
+          }
+        },
+        "application": "через {{application}}",
+        "edited": {
+          "accessibilityLabel": "Дмух відредаговано"
+        },
+        "muted": {
+          "accessibilityLabel": "Дмух приглушений"
+        },
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": "Дмухнути особистим повідомленням"
+          },
+          "private": {
+            "accessibilityLabel": "Дмух видимий лише для підписників"
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "З",
+        "delete": {
+          "function": "Видалити особисті повідомлення"
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "Голосування",
+          "refresh": "Оновити"
+        },
+        "count": {
+          "voters_one": "{{count}} користувач проголосував",
+          "voters_other": "{{count}} користувачів проголосувало",
+          "votes_one": "{{count}} голос",
+          "votes_other": "{{count}} голосів"
+        },
+        "expiration": {
+          "expired": "Голосування закінчилось",
+          "until": "Спливає <0 />"
+        }
+      }
+    }
+  }
+}

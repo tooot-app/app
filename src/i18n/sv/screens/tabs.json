@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Följer"
+      "name": "Följer",
+      "options": {
+        "showBoosts": "Visa boostar",
+        "showReplies": "Visa svar"
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Federerat",
-        "right": "Lokalt"
+        "federated": "Federerat",
+        "local": "Lokalt",
+        "trending": "Trendar"
       }
     },
     "notifications": {
       "name": "Notiser"
-    },
-    "me": {
-      "name": "Om mig"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filter",
-      "accessibilityHint": "Filtrera visade notistyper"
+      "accessibilityHint": "Filtrera visade notistyper",
+      "title": "Visa notifikationer",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Följarförfrågning",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Inlägg från följda användare",
+        "update": "Boosten har redigerats",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Favoriter"
+      },
+      "followedTags": {
+        "name": "Följda hashtaggar"
       },
       "fontSize": {
         "name": "Storlek på teckensnitt i inlägg"
@@ -53,7 +70,7 @@
         "name": "Användare i listan: {{list}}"
       },
       "listAdd": {
-        "name": "Lägg till en lista"
+        "name": "Skapa en lista"
       },
       "listEdit": {
         "name": "Redigera listans detaljer"
@@ -179,8 +196,8 @@
         "settings": "Aktivera i inställningar"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Servern är felkonfigurerad för push",
+        "description": "Kontakta din serveradministratör och be dem konfigurera stöd för push"
       },
       "global": {
         "heading": "Aktivera för {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Inlägg från följda användare"
       },
+      "admin.sign_up": {
+        "heading": "Admin: registrera dig"
+      },
+      "admin.report": {
+        "heading": "Admin: rapporter"
+      },
       "howitworks": "Läs om hur routing fungerar"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Aktiverad",
-          "disabled": "Inaktiverad"
-        }
+        "content_true": "Aktiverad",
+        "content_false": "Inaktiverad"
       },
       "update": {
         "title": "Uppdatera till senaste versionen"
@@ -289,9 +310,6 @@
       },
       "support": {
         "heading": "Stöd tooot"
-      },
-      "review": {
-        "heading": "Recensera tooot"
       },
       "contact": {
         "heading": "Kontakta tooot"
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boostade",
         "favourited_by": "{{count}} favoriter"
-      }
+      },
+      "resultIncomplete": "Resultat från fjärrinstans är ofullständiga"
     }
   }
 }

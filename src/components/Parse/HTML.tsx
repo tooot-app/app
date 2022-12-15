@@ -10,9 +10,10 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
+import { isEqual } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, View } from 'react-native'
+import { Platform, Pressable, TextStyleIOS, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -133,13 +134,8 @@ const renderNode = ({
                 name='ExternalLink'
                 size={adaptedFontsize}
                 style={{
-                  ...(Platform.OS === 'ios'
-                    ? {
-                        transform: [{ translateY: -2 }]
-                      }
-                    : {
-                        transform: [{ translateY: 1 }]
-                      })
+                  marginLeft: StyleConstants.Spacing.XS,
+                  ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
                 }}
               />
             ) : null}
@@ -158,6 +154,7 @@ const renderNode = ({
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
+  textStyles?: TextStyleIOS
   adaptiveSize?: boolean
   emojis?: Mastodon.Emoji[]
   mentions?: Mastodon.Mention[]
@@ -175,6 +172,7 @@ const ParseHTML = React.memo(
   ({
     content,
     size = 'M',
+    textStyles,
     adaptiveSize = false,
     emojis,
     mentions,
@@ -200,7 +198,7 @@ const ParseHTML = React.memo(
     const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
     const route = useRoute()
     const { colors, theme } = useTheme()
-    const { t, i18n } = useTranslation('componentParse')
+    const { t } = useTranslation('componentParse')
     if (!expandHint) {
       expandHint = t('HTML.defaultHint')
     }
@@ -298,6 +296,7 @@ const ParseHTML = React.memo(
                 }
               }}
               style={{
+                ...textStyles,
                 height: numberOfLines === 1 && !expanded ? 0 : undefined
               }}
               numberOfLines={
@@ -308,7 +307,7 @@ const ParseHTML = React.memo(
           </View>
         )
       },
-      [theme, i18n.language]
+      [theme]
     )
 
     return (
@@ -320,7 +319,7 @@ const ParseHTML = React.memo(
       />
     )
   },
-  (prev, next) => prev.content === next.content
+  (prev, next) => prev.content === next.content && isEqual(prev.emojis, next.emojis)
 )
 
 export default ParseHTML

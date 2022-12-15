@@ -30,7 +30,9 @@
         "default": "{{name}} boostade",
         "notification": "{{name}} boostade ditt inlägg"
       },
-      "update": "Boosten har redigerats"
+      "update": "Boosten har redigerats",
+      "admin.sign_up": "{{name}} registrerade sig på servern",
+      "admin.report": "{{name}} rapporterade:"
     },
     "actions": {
       "reply": {
@@ -52,7 +54,8 @@
       "bookmarked": {
         "accessibilityLabel": "Lägg till detta inlägg till dina bokmärken",
         "function": "Bokmärk inlägg"
-      }
+      },
+      "openReport": "Öppna rapport"
     },
     "actionsUsers": {
       "reblogged_by": {

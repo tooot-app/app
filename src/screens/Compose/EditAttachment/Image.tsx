@@ -112,6 +112,17 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
 
   return (
     <>
+      <CustomText
+        fontStyle='M'
+        style={{
+          color: colors.primaryDefault,
+          padding: StyleConstants.Spacing.Global.PagePadding,
+          paddingTop: 0
+        }}
+        fontWeight='Bold'
+      >
+        {t('content.editAttachment.content.imageFocus')}
+      </CustomText>
       <View style={{ overflow: 'hidden', flex: 1, alignItems: 'center' }}>
         <Image
           style={{
@@ -155,17 +166,6 @@ const ComposeEditAttachmentImage: React.FC<Props> = ({ index }) => {
           />
         </GestureDetector>
       </View>
-      {screenReaderEnabled ? null : (
-        <CustomText
-          fontStyle='M'
-          style={{
-            padding: StyleConstants.Spacing.Global.PagePadding,
-            color: colors.primaryDefault
-          }}
-        >
-          {t('content.editAttachment.content.imageFocus')}
-        </CustomText>
-      )}
     </>
   )
 }

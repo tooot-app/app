@@ -3,7 +3,7 @@ import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
 import React, { useContext, useEffect } from 'react'
 import ComposeContext from '../utils/createContext'
-import formatText from '../utils/formatText'
+import { formatText } from '../utils/processText'
 
 type Props = { item: Mastodon.Account & Mastodon.Tag }
 

@@ -30,6 +30,7 @@ declare namespace Mastodon {
     bot: boolean
     source?: Source
     suspended?: boolean
+    role?: Role
   }
 
   type Announcement = {
@@ -332,24 +333,34 @@ declare namespace Mastodon {
     url: string
   }
 
-  type Notification = {
-    // Base
-    id: string
-    type:
-      | 'follow'
-      | 'follow_request'
-      | 'mention'
-      | 'reblog'
-      | 'favourite'
-      | 'poll'
-      | 'status'
-      | 'update'
-    created_at: string
-    account: Account
-
-    // Others
-    status?: Status
-  }
+  type Notification =
+    | {
+        // Base
+        id: string
+        type: 'favourite' | 'mention' | 'poll' | 'reblog' | 'status' | 'update'
+        created_at: string
+        account: Account
+        status: Status
+        report: undefined
+      }
+    | {
+        // Base
+        id: string
+        type: 'follow' | 'follow_request' | 'admin.sign_up'
+        created_at: string
+        account: Account
+        status: undefined
+        report: undefined
+      }
+    | {
+        // Base
+        id: string
+        type: 'admin.report'
+        created_at: string
+        account: Account
+        status: undefined
+        report: Report
+      }
 
   type Poll = {
     // Base
@@ -384,6 +395,9 @@ declare namespace Mastodon {
       mention: boolean
       poll: boolean
       status: boolean
+      update: boolean
+      'admin.sign_up': boolean
+      'admin.report': boolean
     }
     server_key: string
   }
@@ -403,10 +417,35 @@ declare namespace Mastodon {
     note: string
   }
 
+  type Report = {
+    id: string
+    action_taken: boolean
+    action_taken_at?: string
+    category: 'spam' | 'violation' | 'other'
+    comment: string
+    forwarded: boolean
+    created_at: string
+    status_ids?: string[]
+    rule_ids?: string[]
+    target_account: Account
+  }
+
   type Results = {
     accounts?: Account[]
     statuses?: Status[]
     hashtags?: Tag[]
+  }
+
+  type Role = {
+    // Added since 4.0
+    id: string
+    name: string
+    color: string
+    position: number
+    permissions: string
+    highlighted: boolean
+    created_at: string
+    updated_at: string
   }
 
   type Status = {
@@ -479,25 +518,4 @@ declare namespace Mastodon {
     history: { day: string; accounts: string; uses: string }[]
     following: boolean // Since v4.0
   }
-
-  type WebSocketStream =
-    | 'user'
-    | 'public'
-    | 'public:local'
-    | 'hashtag'
-    | 'hashtag:local'
-    | 'list'
-    | 'direct'
-  type WebSocket =
-    | {
-        stream: WebSocketStream[]
-        event: 'update'
-        payload: string // Status
-      }
-    | { stream: WebSocketStream[]; event: 'delete'; payload: Status['id'] }
-    | {
-        stream: WebSocketStream[]
-        event: 'notification'
-        payload: string // Notification
-      }
 }

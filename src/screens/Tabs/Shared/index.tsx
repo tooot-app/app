@@ -6,15 +6,10 @@ import TabSharedHistory from '@screens/Tabs/Shared/History'
 import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
-import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import TabSharedAccountInLists from './AccountInLists'
 
 const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
-  const { colors, mode } = useTheme()
-  const { t } = useTranslation('screenTabs')
-
   return (
     <Stack.Group>
       <Stack.Screen

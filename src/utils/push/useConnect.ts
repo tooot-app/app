@@ -23,7 +23,7 @@ const pushUseConnect = () => {
 
   const expoToken = useSelector(getExpoToken)
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
-  const pushEnabled = instances.filter(instance => instance.push.global.value)
+  const pushEnabled = instances.filter(instance => instance.push.global)
 
   const connect = () => {
     apiTooot({
@@ -60,7 +60,7 @@ const pushUseConnect = () => {
           dispatch(disableAllPushes())
 
           instances.forEach(instance => {
-            if (instance.push.global.value) {
+            if (instance.push.global) {
               apiGeneral<{}>({
                 method: 'delete',
                 domain: instance.url,

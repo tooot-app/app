@@ -3,7 +3,12 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppDispatch } from '@root/store'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import { getInstanceMePage, updateInstanceMePage } from '@utils/slices/instancesSlice'
+import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
+import {
+  checkInstanceFeature,
+  getInstanceMePage,
+  updateInstanceMePage
+} from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,44 +21,44 @@ const Collections: React.FC = () => {
   const dispatch = useAppDispatch()
   const mePage = useSelector(getInstanceMePage)
 
-  const listsQuery = useListsQuery({
+  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
+  useFollowedTagsQuery({
     options: {
-      notifyOnChangeProps: ['data']
+      enabled: canFollowTags,
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            followedTags: { shown: !!data?.pages?.[0].body?.length }
+          })
+        )
     }
   })
-  useEffect(() => {
-    if (listsQuery.isSuccess) {
-      dispatch(
-        updateInstanceMePage({
-          lists: { shown: listsQuery.data?.length ? true : false }
-        })
-      )
+  useListsQuery({
+    options: {
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            lists: { shown: !!data?.length }
+          })
+        )
     }
-  }, [listsQuery.isSuccess, listsQuery.data?.length])
-
-  const announcementsQuery = useAnnouncementQuery({
+  })
+  useAnnouncementQuery({
     showAll: true,
     options: {
-      notifyOnChangeProps: ['data']
+      onSuccess: data =>
+        dispatch(
+          updateInstanceMePage({
+            announcements: {
+              shown: !!data?.length ? true : false,
+              unread: data?.filter(announcement => !announcement.read).length
+            }
+          })
+        )
     }
   })
-  useEffect(() => {
-    if (announcementsQuery.data) {
-      dispatch(
-        updateInstanceMePage({
-          announcements: {
-            shown: announcementsQuery.data.length ? true : false,
-            unread: announcementsQuery.data.filter(announcement => !announcement.read).length
-          }
-        })
-      )
-    }
-  }, [announcementsQuery.data])
 
-  const instancePush = useSelector(
-    getInstancePush,
-    (prev, next) => prev?.global.value === next?.global.value
-  )
+  const instancePush = useSelector(getInstancePush, (prev, next) => prev?.global === next?.global)
 
   return (
     <MenuContainer>
@@ -83,6 +88,14 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
+      {mePage.followedTags.shown ? (
+        <MenuRow
+          iconFront='Hash'
+          iconBack='ChevronRight'
+          title={t('me.stacks.followedTags.name')}
+          onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
+        />
+      ) : null}
       {mePage.announcements.shown ? (
         <MenuRow
           iconFront='Clipboard'
@@ -102,11 +115,7 @@ const Collections: React.FC = () => {
         iconFront={instancePush ? 'Bell' : 'BellOff'}
         iconBack='ChevronRight'
         title={t('me.stacks.push.name')}
-        content={
-          instancePush.global.value
-            ? t('me.root.push.content.enabled')
-            : t('me.root.push.content.disabled')
-        }
+        content={t('me.root.push.content', { context: instancePush.global.toString() })}
         onPress={() => navigation.navigate('Tab-Me-Push')}
       />
     </MenuContainer>

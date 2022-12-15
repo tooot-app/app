@@ -1,7 +1,7 @@
 import navigationRef from '@helpers/navigationRef'
 import i18next from 'i18next'
 import { Alert } from 'react-native'
-import { UseMutationResult } from 'react-query'
+import { UseMutationResult } from '@tanstack/react-query'
 
 export const menuListAccounts = ({ params }: { params: Mastodon.List }) => ({
   key: 'list-accounts',
@@ -32,7 +32,7 @@ export const menuListDelete = ({
   key: 'list-delete',
   onSelect: () =>
     Alert.alert(
-      i18next.t('screenTabs:me.listDelete.confirm.title', { list: params.title.slice(0, 6) }),
+      i18next.t('screenTabs:me.listDelete.confirm.title', { list: params.title.slice(0, 20) }),
       i18next.t('screenTabs:me.listDelete.confirm.message'),
       [
         {

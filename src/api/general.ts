@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ctx, handleError, userAgent } from './helpers'
+import { ctx, handleError, PagedResponse, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -19,7 +19,7 @@ const apiGeneral = async <T = unknown>({
   params,
   headers,
   body
-}: Params): Promise<{ body: T }> => {
+}: Params): Promise<PagedResponse<T>> => {
   console.log(
     ctx.bgGreen.bold(' API general ') +
       ' ' +
@@ -47,9 +47,27 @@ const apiGeneral = async <T = unknown>({
     ...(body && { data: body })
   })
     .then(response => {
-      return Promise.resolve({
-        body: response.data
-      })
+      let links: {
+        prev?: { id: string; isOffset: boolean }
+        next?: { id: string; isOffset: boolean }
+      } = {}
+
+      if (response.headers?.link) {
+        const linksParsed = response.headers.link.matchAll(
+          new RegExp('[?&](.*?_id|offset)=(.*?)>; *rel="(.*?)"', 'gi')
+        )
+        for (const link of linksParsed) {
+          switch (link[3]) {
+            case 'prev':
+              links.prev = { id: link[2], isOffset: link[1].includes('offset') }
+              break
+            case 'next':
+              links.next = { id: link[2], isOffset: link[1].includes('offset') }
+              break
+          }
+        }
+      }
+      return Promise.resolve({ body: response.data, links })
     })
     .catch(handleError())
 }

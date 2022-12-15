@@ -87,24 +87,33 @@ const addInstance = createAsyncThunk(
           mention: true,
           poll: true,
           status: true,
-          update: true
+          update: true,
+          'admin.sign_up': true,
+          'admin.report': true
         },
         push: {
-          global: { loading: false, value: false },
-          decode: { loading: false, value: false },
+          global: false,
+          decode: false,
           alerts: {
-            follow: { loading: false, value: true },
-            follow_request: { loading: false, value: true },
-            favourite: { loading: false, value: true },
-            reblog: { loading: false, value: true },
-            mention: { loading: false, value: true },
-            poll: { loading: false, value: true },
-            status: { loading: false, value: true }
+            follow: true,
+            follow_request: true,
+            favourite: true,
+            reblog: true,
+            mention: true,
+            poll: true,
+            status: true,
+            update: true,
+            'admin.sign_up': false,
+            'admin.report': false
           },
           keys: { auth: undefined, public: undefined, private: undefined }
         },
-        timelinesLookback: {},
+        followingPage: {
+          showBoosts: true,
+          showReplies: true
+        },
         mePage: {
+          followedTags: { shown: false },
           lists: { shown: false },
           announcements: { shown: false, unread: 0 }
         },

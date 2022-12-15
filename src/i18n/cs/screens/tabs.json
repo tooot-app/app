@@ -1,19 +1,20 @@
 {
   "tabs": {
     "local": {
-      "name": ""
+      "name": "",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "",
-        "right": ""
+        "federated": "",
+        "local": "",
+        "trending": ""
       }
     },
     "notifications": {
-      "name": ""
-    },
-    "me": {
       "name": ""
     }
   },
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityHint": "",
+      "title": "",
+      "options": {
+        "follow": "",
+        "follow_request": "",
+        "favourite": "",
+        "reblog": "",
+        "mention": "",
+        "poll": "",
+        "status": "",
+        "update": "",
+        "admin.sign_up": "",
+        "admin.report": ""
+      }
     }
   },
   "me": {
@@ -38,6 +52,9 @@
         "name": ""
       },
       "favourites": {
+        "name": ""
+      },
+      "followedTags": {
         "name": ""
       },
       "fontSize": {
@@ -214,6 +231,12 @@
       "status": {
         "heading": ""
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": ""
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "",
-          "disabled": ""
-        }
+        "content_true": "",
+        "content_false": ""
       },
       "update": {
         "title": ""
@@ -288,9 +309,6 @@
         "heading": ""
       },
       "support": {
-        "heading": ""
-      },
-      "review": {
         "heading": ""
       },
       "contact": {
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "",
         "favourited_by": ""
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

@@ -1,13 +1,11 @@
 {
   "heading": {
     "left": {
-      "button": "Abbrechen",
       "alert": {
         "title": "Bearbeitung abbrechen?",
         "buttons": {
           "save": "Entwurf speichern",
-          "delete": "Entwurf löschen",
-          "cancel": "Abbrechen"
+          "delete": "Entwurf löschen"
         }
       }
     },

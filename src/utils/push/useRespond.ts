@@ -27,10 +27,7 @@ const pushUseRespond = () => {
             instance.account.id === payloadData.accountId
         )
         if (notificationIndex !== -1) {
-          initQuery({
-            instance: instances[notificationIndex],
-            prefetch: { enabled: true }
-          })
+          initQuery({ instance: instances[notificationIndex] })
         }
         pushUseNavigate(payloadData.notification_id)
       }

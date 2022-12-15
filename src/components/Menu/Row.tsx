@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React, { useMemo } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 
@@ -65,7 +65,6 @@ const MenuRow: React.FC<Props> = ({
     >
       <TapGestureHandler
         onHandlerStateChange={async ({ nativeEvent }) => {
-          if (typeof iconBack !== 'string') return // Let icon back handles the gesture
           if (nativeEvent.state === State.ACTIVE && !loading) {
             if (screenReaderEnabled && switchOnValueChange) {
               switchOnValueChange()
@@ -86,9 +85,10 @@ const MenuRow: React.FC<Props> = ({
           >
             <View
               style={{
-                flex: 3,
+                flexShrink: 3,
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginRight: StyleConstants.Spacing.M
               }}
             >
               {iconFront && (

@@ -2,15 +2,18 @@ import { ParseHTML } from '@components/Parse'
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
 import { useSelector } from 'react-redux'
+import { isRtlLang } from 'rtl-detect'
 import StatusContext from './Context'
 
 export interface Props {
+  notificationOwnToot?: boolean
   setSpoilerExpanded?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
-  const { status, highlighted, disableDetails } = useContext(StatusContext)
+const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoilerExpanded }) => {
+  const { status, highlighted, inThread, disableDetails } = useContext(StatusContext)
   if (!status || typeof status.content !== 'string' || !status.content.length) return null
 
   const { t } = useTranslation('componentTimeline')
@@ -30,6 +33,11 @@ const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
             numberOfLines={999}
             highlighted={highlighted}
             disableDetails={disableDetails}
+            textStyles={
+              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+                ? { writingDirection: 'rtl' }
+                : undefined
+            }
           />
           <ParseHTML
             content={status.content}
@@ -38,11 +46,22 @@ const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
             emojis={status.emojis}
             mentions={status.mentions}
             tags={status.tags}
-            numberOfLines={instanceAccount.preferences['reading:expand:spoilers'] ? 999 : 1}
+            numberOfLines={
+              instanceAccount.preferences['reading:expand:spoilers'] || inThread
+                ? notificationOwnToot
+                  ? 2
+                  : 999
+                : 1
+            }
             expandHint={t('shared.content.expandHint')}
             setSpoilerExpanded={setSpoilerExpanded}
             highlighted={highlighted}
             disableDetails={disableDetails}
+            textStyles={
+              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+                ? { writingDirection: 'rtl' }
+                : undefined
+            }
           />
         </>
       ) : (
@@ -53,8 +72,13 @@ const TimelineContent: React.FC<Props> = ({ setSpoilerExpanded }) => {
           emojis={status.emojis}
           mentions={status.mentions}
           tags={status.tags}
-          numberOfLines={highlighted ? 999 : undefined}
+          numberOfLines={highlighted || inThread ? 999 : notificationOwnToot ? 2 : undefined}
           disableDetails={disableDetails}
+          textStyles={
+            Platform.OS === 'ios' && status.language && isRtlLang(status.language)
+              ? { writingDirection: 'rtl' }
+              : undefined
+          }
         />
       )}
     </>

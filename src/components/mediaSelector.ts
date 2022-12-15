@@ -22,10 +22,7 @@ const mediaSelector = async ({
   indicateMaximum = false,
   showActionSheetWithOptions
 }: Props): Promise<Asset[]> => {
-  const _maximum =
-    maximum ||
-    getInstanceConfigurationStatusMaxAttachments(store.getState()) ||
-    4
+  const _maximum = maximum || getInstanceConfigurationStatusMaxAttachments(store.getState()) || 4
 
   const options = () => {
     switch (mediaType) {
@@ -33,7 +30,7 @@ const mediaSelector = async ({
         return [
           i18next.t(
             'componentMediaSelector:options.image',
-            indicateMaximum ? { context: 'max', max: _maximum } : undefined
+            indicateMaximum ? { context: 'max', max: _maximum } : {}
           ),
           i18next.t('common:buttons.cancel')
         ]
@@ -41,7 +38,7 @@ const mediaSelector = async ({
         return [
           i18next.t(
             'componentMediaSelector:options.video',
-            indicateMaximum ? { context: 'max', max: 1 } : undefined
+            indicateMaximum ? { context: 'max', max: 1 } : {}
           ),
           i18next.t('common:buttons.cancel')
         ]
@@ -49,11 +46,11 @@ const mediaSelector = async ({
         return [
           i18next.t(
             'componentMediaSelector:options.image',
-            indicateMaximum ? { context: 'max', max: _maximum } : undefined
+            indicateMaximum ? { context: 'max', max: _maximum } : {}
           ),
           i18next.t(
             'componentMediaSelector:options.video',
-            indicateMaximum ? { context: 'max', max: 1 } : undefined
+            indicateMaximum ? { context: 'max', max: 1 } : {}
           ),
           i18next.t('common:buttons.cancel')
         ]

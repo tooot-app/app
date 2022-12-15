@@ -39,7 +39,7 @@ const TabSharedAccountInLists: React.FC<
     })
   }, [])
 
-  const listsQuery = useListsQuery({})
+  const listsQuery = useListsQuery()
   const accountInListsQuery = useAccountInListsQuery({ id: account.id })
 
   const sections = [
@@ -48,8 +48,10 @@ const TabSharedAccountInLists: React.FC<
       id: 'out',
       title: t('shared.accountInLists.notInLists'),
       data:
-        listsQuery.data?.filter(
-          ({ id }) => accountInListsQuery.data?.filter(d => d.id !== id).length
+        listsQuery.data?.filter(({ id }) =>
+          accountInListsQuery.data?.length
+            ? accountInListsQuery.data.filter(d => d.id !== id).length
+            : true
         ) || []
     }
   ]

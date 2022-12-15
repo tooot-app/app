@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
 import { useAppDispatch } from '@root/store'
 import ComposeRoot from '@screens/Compose/Root'
-import formatText from '@screens/Compose/utils/formatText'
+import { formatText } from '@screens/Compose/utils/processText'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { updateStoreReview } from '@utils/slices/contextsSlice'
@@ -22,7 +22,7 @@ import { filter } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import ComposeDraftsList from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
@@ -206,7 +206,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     () => (
       <HeaderLeft
         type='text'
-        content={t('heading.left.button')}
+        content={t('common:buttons.cancel')}
         onPress={() => {
           if (!composeState.dirty) {
             navigation.goBack()
@@ -229,7 +229,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 }
               },
               {
-                text: t('heading.left.alert.buttons.cancel'),
+                text: t('common:buttons.cancel'),
                 style: 'cancel'
               }
             ])
@@ -286,7 +286,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                     type: 'editItem',
                     queryKey: params.queryKey,
                     rootQueryKey: params.rootQueryKey,
-                    status: res.body
+                    status: res
                   })
                   break
                 case 'deleteEdit':
@@ -342,9 +342,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   )
 
   const headerContent = useMemo(() => {
-    return `${totalTextCount} / ${maxTootChars}${
-      __DEV__ ? ` Dirty: ${composeState.dirty.toString()}` : ''
-    }`
+    return `${totalTextCount} / ${maxTootChars}`
   }, [totalTextCount, maxTootChars, composeState.dirty])
 
   const inputProps: EmojisState['inputProps'] = [
@@ -407,12 +405,12 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           <Stack.Screen
             name='Screen-Compose-DraftsList'
             component={ComposeDraftsList}
-            options={{ headerShown: false, presentation: 'modal' }}
+            options={{ presentation: 'modal' }}
           />
           <Stack.Screen
             name='Screen-Compose-EditAttachment'
             component={ComposeEditAttachment}
-            options={{ headerShown: false, presentation: 'modal' }}
+            options={{ presentation: 'modal' }}
           />
         </Stack.Navigator>
       </ComposeContext.Provider>

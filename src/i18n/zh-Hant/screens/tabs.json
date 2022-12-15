@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "跟隨中"
+      "name": "跟隨中",
+      "options": {
+        "showBoosts": "顯示轉嘟",
+        "showReplies": "顯示回覆"
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "聯邦宇宙",
-        "right": "本站"
+        "federated": "聯邦",
+        "local": "本站",
+        "trending": "熱門"
       }
     },
     "notifications": {
       "name": "通知"
-    },
-    "me": {
-      "name": "關於我"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "過濾器",
-      "accessibilityHint": "過濾顯示的通知類型"
+      "accessibilityHint": "過濾顯示的通知類型",
+      "title": "顯示通知",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "跟隨請求",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "訂閱使用者的嘟文",
+        "update": "轉嘟已編輯",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "最愛"
+      },
+      "followedTags": {
+        "name": "跟隨主題標籤"
       },
       "fontSize": {
         "name": "嘟文字體大小"
@@ -53,7 +70,7 @@
         "name": "使用者在 {{list}} 列表中"
       },
       "listAdd": {
-        "name": "新增列表"
+        "name": "建立列表"
       },
       "listEdit": {
         "name": "編輯列表詳細資料"
@@ -179,8 +196,8 @@
         "settings": "在設定中啟用"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "伺服器推播設定不正確",
+        "description": "請聯絡您的伺服器管理員啟用推播設定"
       },
       "global": {
         "heading": "啟用 {{acct}}",
@@ -214,6 +231,12 @@
       "status": {
         "heading": "訂閱使用者的嘟文"
       },
+      "admin.sign_up": {
+        "heading": "管理員：註冊"
+      },
+      "admin.report": {
+        "heading": "管理員：回報"
+      },
       "howitworks": "了解通知訊息轉發如何工作"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "啟用",
-          "disabled": "關閉"
-        }
+        "content_true": "啟用",
+        "content_false": "關閉"
       },
       "update": {
         "title": "已更新到最新版本"
@@ -289,9 +310,6 @@
       },
       "support": {
         "heading": "贊助 tooot 開發"
-      },
-      "review": {
-        "heading": "給 tooot 評分"
       },
       "contact": {
         "heading": "聯繫 tooot"
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} 人轉嘟",
         "favourited_by": "{{count}} 人喜歡"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

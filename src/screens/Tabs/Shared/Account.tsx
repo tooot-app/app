@@ -13,7 +13,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
-import { useIsFetching } from 'react-query'
+import { useIsFetching } from '@tanstack/react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
@@ -26,7 +26,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     params: { account }
   }
 }) => {
-  const { t, i18n } = useTranslation('screenTabs')
+  const { t } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
 
   const mShare = menuShare({ type: 'account', url: account.url })
@@ -89,8 +89,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
 
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
-    { page: 'Account_Default', account: account.id }
+    { page: 'Account', account: account.id, exclude_reblogs: true, only_media: false }
   ])
+  const page = queryKey[1]
   const isFetchingTimeline = useIsFetching(queryKey)
   const fetchedTimeline = useRef(false)
   useEffect(() => {
@@ -113,14 +114,32 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           <SegmentedControl
             appearance={mode}
             values={[t('shared.account.toots.default'), t('shared.account.toots.all')]}
-            selectedIndex={queryKey[1].page === 'Account_Default' ? 0 : 1}
+            selectedIndex={page.page === 'Account' ? 0 : 1}
             onChange={({ nativeEvent }) => {
               switch (nativeEvent.selectedSegmentIndex) {
                 case 0:
-                  setQueryKey([queryKey[0], { ...queryKey[1], page: 'Account_Default' }])
+                  setQueryKey([
+                    queryKey[0],
+                    {
+                      ...page,
+                      page: 'Account',
+                      account: account.id,
+                      exclude_reblogs: true,
+                      only_media: false
+                    }
+                  ])
                   break
                 case 1:
-                  setQueryKey([queryKey[0], { ...queryKey[1], page: 'Account_All' }])
+                  setQueryKey([
+                    queryKey[0],
+                    {
+                      ...page,
+                      page: 'Account',
+                      account: account.id,
+                      exclude_reblogs: false,
+                      only_media: false
+                    }
+                  ])
                   break
               }
             }}
@@ -152,7 +171,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         ) : null}
       </>
     )
-  }, [data, fetchedTimeline.current, queryKey[1].page, i18n.language, mode])
+  }, [data, fetchedTimeline.current, queryKey[1].page, mode])
 
   return (
     <>

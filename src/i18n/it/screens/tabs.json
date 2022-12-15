@@ -1,20 +1,21 @@
 {
   "tabs": {
     "local": {
-      "name": "Home"
+      "name": "Home",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
     },
     "public": {
-      "name": "",
       "segments": {
-        "left": "Federazione",
-        "right": "Locale"
+        "federated": "Federazione",
+        "local": "Locale",
+        "trending": ""
       }
     },
     "notifications": {
       "name": "Notifiche"
-    },
-    "me": {
-      "name": "Profilo"
     }
   },
   "common": {
@@ -24,9 +25,22 @@
     }
   },
   "notifications": {
-    "filter": {
+    "filters": {
       "accessibilityLabel": "Filtri",
-      "accessibilityHint": "Filtra le notifiche mostrate per tipo"
+      "accessibilityHint": "Filtra le notifiche mostrate per tipo",
+      "title": "",
+      "options": {
+        "follow": "$t(screenTabs:me.push.follow.heading)",
+        "follow_request": "Richiesta di seguirti",
+        "favourite": "$t(screenTabs:me.push.favourite.heading)",
+        "reblog": "$t(screenTabs:me.push.reblog.heading)",
+        "mention": "$t(screenTabs:me.push.mention.heading)",
+        "poll": "$t(screenTabs:me.push.poll.heading)",
+        "status": "Toot da utenti seguiti",
+        "update": "Il link è stato modificato",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
+      }
     }
   },
   "me": {
@@ -39,6 +53,9 @@
       },
       "favourites": {
         "name": "Apprezzati"
+      },
+      "followedTags": {
+        "name": ""
       },
       "fontSize": {
         "name": "Grandezza del testo dei toot"
@@ -214,6 +231,12 @@
       "status": {
         "heading": "Toot da utenti seguiti"
       },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
       "howitworks": "Scopri come funziona il traversamento dei messaggi"
     },
     "root": {
@@ -225,10 +248,8 @@
         }
       },
       "push": {
-        "content": {
-          "enabled": "Abilitato",
-          "disabled": "Disabilitato"
-        }
+        "content_true": "Abilitato",
+        "content_false": "Disabilitato"
       },
       "update": {
         "title": "Aggiorna all'ultima versione"
@@ -290,9 +311,6 @@
       "support": {
         "heading": "Supporta tooot"
       },
-      "review": {
-        "heading": "Recensisci tooot"
-      },
       "contact": {
         "heading": "Contatta tooot"
       },
@@ -330,7 +348,7 @@
       "notInLists": ""
     },
     "attachments": {
-      "name": "Media di <0 /><1>\"</1>"
+      "name": ""
     },
     "hashtag": {
       "follow": "Segui",
@@ -377,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} ricondivisioni",
         "favourited_by": "{{count}} apprezzamenti"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

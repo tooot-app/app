@@ -1,13 +1,22 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
+import detectLanguage from '@helpers/detectLanguage'
 import { ComposeState } from '@screens/Compose/utils/types'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import * as Crypto from 'expo-crypto'
+import { getPureContent } from './processText'
 
 const composePost = async (
   params: RootStackParamList['Screen-Compose'],
   composeState: ComposeState
-): Promise<InstanceResponse<Mastodon.Status>> => {
+): Promise<Mastodon.Status> => {
   const formData = new FormData()
+
+  const detectedLanguage = await detectLanguage(
+    getPureContent([composeState.spoiler.raw, composeState.text.raw].join('\n\n'))
+  )
+  if (detectedLanguage) {
+    formData.append('language', detectedLanguage.language)
+  }
 
   if (composeState.replyToStatus) {
     try {
@@ -65,7 +74,7 @@ const composePost = async (
       )
     },
     body: formData
-  })
+  }).then(res => res.body)
 }
 
 export default composePost

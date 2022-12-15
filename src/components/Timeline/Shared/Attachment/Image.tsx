@@ -1,9 +1,10 @@
 import GracefullyImage from '@components/GracefullyImage'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { View } from 'react-native'
 import AttachmentAltText from './AltText'
-import attachmentAspectRatio from './aspectRatio'
+import { aspectRatio } from './dimensions'
 
 export interface Props {
   total: number
@@ -20,6 +21,8 @@ const AttachmentImage = ({
   image,
   navigateToImagesViewer
 }: Props) => {
+  const { colors } = useTheme()
+
   return (
     <View
       style={{
@@ -28,21 +31,16 @@ const AttachmentImage = ({
         padding: StyleConstants.Spacing.XS / 2
       }}
     >
-      <GracefullyImage
-        accessibilityLabel={image.description}
-        hidden={sensitiveShown}
-        uri={{ original: image.preview_url, remote: image.remote_url }}
-        blurhash={image.blurhash}
-        onPress={() => navigateToImagesViewer(image.id)}
-        style={{
-          aspectRatio:
-            total > 1 || !image.meta?.original?.width || !image.meta?.original?.height
-              ? attachmentAspectRatio({ total, index })
-              : image.meta.original.height / image.meta.original.width > 1
-              ? 1
-              : image.meta.original.width / image.meta.original.height
-        }}
-      />
+      <View style={{ flex: 1, backgroundColor: colors.shimmerDefault }}>
+        <GracefullyImage
+          accessibilityLabel={image.description}
+          hidden={sensitiveShown}
+          uri={{ original: image.preview_url, remote: image.remote_url }}
+          blurhash={image.blurhash}
+          onPress={() => navigateToImagesViewer(image.id)}
+          style={{ aspectRatio: aspectRatio({ total, index, ...image.meta?.original }) }}
+        />
+      </View>
       <AttachmentAltText sensitiveShown={sensitiveShown} text={image.description} />
     </View>
   )
