@@ -28,7 +28,7 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
   const queryKeyParams: QueryKeyTimeline[1] = {
     page: 'Account',
     account: account.id,
-    exclude_reblogs: true,
+    exclude_reblogs: false,
     only_media: true
   }
   const { data, refetch } = useTimelineQuery({

@@ -53,7 +53,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           onPress={() =>
             navigation.push('Tab-Shared-Users', {
               reference: 'accounts',
-              id: account.id,
+              account,
               type: 'following',
               count: account.following_count
             })
@@ -77,7 +77,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
           onPress={() =>
             navigation.push('Tab-Shared-Users', {
               reference: 'accounts',
-              id: account.id,
+              account,
               type: 'followers',
               count: account.followers_count
             })

@@ -112,13 +112,13 @@ export type TabSharedStackParamList = {
   'Tab-Shared-Users':
     | {
         reference: 'accounts'
-        id: Mastodon.Account['id']
+        account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
         type: 'following' | 'followers'
         count: number
       }
     | {
         reference: 'statuses'
-        id: Mastodon.Status['id']
+        status: Pick<Mastodon.Status, 'id'>
         type: 'reblogged_by' | 'favourited_by'
         count: number
       }

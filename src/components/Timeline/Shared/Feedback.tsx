@@ -37,7 +37,7 @@ const TimelineFeedback = () => {
             onPress={() =>
               navigation.push('Tab-Shared-Users', {
                 reference: 'statuses',
-                id: status.id,
+                status,
                 type: 'reblogged_by',
                 count: status.reblogs_count
               })
@@ -59,7 +59,7 @@ const TimelineFeedback = () => {
             onPress={() =>
               navigation.push('Tab-Shared-Users', {
                 reference: 'statuses',
-                id: status.id,
+                status,
                 type: 'favourited_by',
                 count: status.favourites_count
               })

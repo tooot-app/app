@@ -25,8 +25,8 @@ const AccountInformationAccount: React.FC<Props> = ({ account }) => {
     options: { enabled: account !== undefined }
   })
 
-  const localInstance = instanceAccount.acct.includes('@')
-    ? instanceAccount.acct.includes(`@${instanceUri}`)
+  const localInstance = account?.acct.includes('@')
+    ? account?.acct.includes(`@${instanceUri}`)
     : true
 
   if (account || (localInstance && instanceAccount)) {
@@ -52,7 +52,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account }) => {
             }}
             selectable
           >
-            @{localInstance ? instanceAccount?.acct : account?.acct}
+            @{account?.acct}
             {localInstance ? `@${instanceUri}` : null}
           </CustomText>
           {relationship?.followed_by ? t('shared.account.followed_by') : null}
