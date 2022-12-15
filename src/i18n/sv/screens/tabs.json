@@ -396,7 +396,7 @@
         "reblogged_by": "{{count}} boostade",
         "favourited_by": "{{count}} favoriter"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Resultat från fjärrinstans är ofullständiga"
     }
   }
 }
