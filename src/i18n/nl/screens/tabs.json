@@ -3,8 +3,8 @@
     "local": {
       "name": "Volgend",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Boosts tonen",
+        "showReplies": "Reacties tonen"
       }
     },
     "public": {
@@ -395,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boostten",
         "favourited_by": "{{count}} markeerden als favoriet"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

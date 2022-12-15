@@ -395,7 +395,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boostade",
         "favourited_by": "{{count}} favoriter"
-      }
+      },
+      "resultIncomplete": "Resultat från fjärrinstans är ofullständiga"
     }
   }
 }

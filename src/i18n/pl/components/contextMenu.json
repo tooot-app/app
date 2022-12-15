@@ -8,58 +8,58 @@
     },
     "inLists": "",
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Wycisz użytkownika",
+      "action_true": "Wyłącz wyciszenie"
     },
     "block": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Zablokuj użytkownika",
+      "action_true": "Odblokuj użytkownika"
     },
     "reports": {
       "action": "Zgłoś i zablokuj"
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Bezpośrednia wiadomość",
+    "public": "Wiadomość publiczna"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Skopiuj wpis",
+    "succeed": "Skopiowano"
   },
   "instance": {
     "title": "",
     "block": {
-      "action": "",
+      "action": "Zablokuj instancję {{instance}}",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Na pewno zablokować {{instance}}?",
+        "message": "Zazwyczaj wycisza się (albo blokuje) konkretnych użytkowników. \n\nGdy zablokujesz instancję, cała jej zawartość (włączając np. obserwujące Cię osoby, które do niej należą) zostanie usunięta!",
         "buttons": {
-          "confirm": ""
+          "confirm": "Na pewno?"
         }
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Udostępnij wpis"
     },
     "account": {
-      "action": ""
+      "action": "Udostępnij konto"
     }
   },
   "status": {
     "title": "",
     "edit": {
-      "action": ""
+      "action": "Edytuj wpis"
     },
     "delete": {
-      "action": "",
+      "action": "Usuń wpis",
       "alert": {
-        "title": "",
-        "message": "",
+        "title": "Na pewno usunąć?",
+        "message": "Wszystkie podbite i polubione wpisy zostaną wyczyszczone - wraz z odpowiedziami.",
         "buttons": {
-          "confirm": ""
+          "confirm": "Na pewno?"
         }
       }
     },
@@ -78,8 +78,8 @@
       "action_true": ""
     },
     "pin": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Przypnij wpis",
+      "action_true": "Odepnij wpis"
     }
   }
 }
