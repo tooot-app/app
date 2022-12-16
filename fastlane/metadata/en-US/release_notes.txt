@@ -6,6 +6,5 @@ Enjoy toooting! This version includes following improvements and fixes:
 - Allow hiding boosts and replies in home timeline
 - Support toot in RTL languages
 - Added notification for admins
-- Pilot conversation hierarchy
 - Fix whole word filter matching
 - Fix tablet cannot delete toot drafts
