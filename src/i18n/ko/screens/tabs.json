@@ -70,7 +70,7 @@
         "name": "{{list}} 리스트의 사용자"
       },
       "listAdd": {
-        "name": ""
+        "name": "목록 만들기"
       },
       "listEdit": {
         "name": "리스트 상세 편집"
@@ -232,7 +232,7 @@
         "heading": "구독한 사용자의 툿"
       },
       "update": {
-        "heading": ""
+        "heading": "부스트한 툿이 수정됨"
       },
       "admin.sign_up": {
         "heading": ""
@@ -351,7 +351,7 @@
       "notInLists": "다른 리스트"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1>의 미디어</1>"
     },
     "hashtag": {
       "follow": "팔로우",
