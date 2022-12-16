@@ -55,7 +55,7 @@
         "accessibilityLabel": "Lesezeichen hinzufügen",
         "function": "Lesezeichen setzen"
       },
-      "openReport": ""
+      "openReport": "Meldung öffnen"
     },
     "actionsUsers": {
       "reblogged_by": {

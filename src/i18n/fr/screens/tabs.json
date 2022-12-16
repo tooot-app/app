@@ -231,6 +231,9 @@
       "status": {
         "heading": "Pouet des utilisateurs inscrits"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": ""
       },
