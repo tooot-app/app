@@ -231,6 +231,9 @@
       "status": {
         "heading": "Inlägg från följda användare"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": "Admin: registrera dig"
       },
