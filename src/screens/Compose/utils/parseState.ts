@@ -7,9 +7,8 @@ import { ComposeState } from './types'
 const assignVisibility = (
   target: ComposeState['visibility']
 ): Pick<ComposeState, 'visibility' | 'visibilityLock'> => {
-  const accountPreference = getInstanceAccount(store.getState())?.preferences[
-    'posting:default:visibility'
-  ]
+  const accountPreference =
+    getInstanceAccount(store.getState())?.preferences?.['posting:default:visibility'] || 'public'
 
   switch (target) {
     case 'direct':

@@ -64,7 +64,7 @@ const SettingsTooot: React.FC = () => {
             })
           } else {
             WebBrowser.openBrowserAsync('https://social.xmflsct.com/@tooot', {
-              browserPackage: await browserPackage()
+              ...(await browserPackage())
             })
           }
         }}

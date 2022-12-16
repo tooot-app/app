@@ -47,7 +47,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             mentions={status.mentions}
             tags={status.tags}
             numberOfLines={
-              instanceAccount.preferences['reading:expand:spoilers'] || inThread
+              instanceAccount.preferences?.['reading:expand:spoilers'] || inThread
                 ? notificationOwnToot
                   ? 2
                   : 999

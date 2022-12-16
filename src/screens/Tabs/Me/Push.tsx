@@ -92,7 +92,7 @@ const TabMePush: React.FC = () => {
                 updateInstancePushAlert({
                   alerts: {
                     ...instancePush?.alerts,
-                    [alert]: instancePush?.alerts[alert]
+                    [alert]: !instancePush?.alerts[alert]
                   }
                 })
               )
@@ -115,7 +115,7 @@ const TabMePush: React.FC = () => {
                 updateInstancePushAlert({
                   alerts: {
                     ...instancePush?.alerts,
-                    [type]: instancePush?.alerts[type]
+                    [type]: !instancePush?.alerts[type]
                   }
                 })
               )
@@ -179,7 +179,7 @@ const TabMePush: React.FC = () => {
                   iconBack='ExternalLink'
                   onPress={async () =>
                     WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
-                      browserPackage: await browserPackage()
+                      ...(await browserPackage())
                     })
                   }
                 />

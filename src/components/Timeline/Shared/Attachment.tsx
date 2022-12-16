@@ -31,10 +31,10 @@ const TimelineAttachment = () => {
   const account = useSelector(
     getInstanceAccount,
     (prev, next) =>
-      prev.preferences['reading:expand:media'] === next.preferences['reading:expand:media']
+      prev.preferences?.['reading:expand:media'] === next.preferences?.['reading:expand:media']
   )
   const defaultSensitive = () => {
-    switch (account.preferences['reading:expand:media']) {
+    switch (account.preferences?.['reading:expand:media']) {
       case 'show_all':
         return false
       case 'hide_all':

@@ -31,7 +31,7 @@ const Settings: React.FC = () => {
               `https://${url}/settings/preferences`,
               'tooot://tooot',
               {
-                browserPackage: await browserPackage(),
+                ...(await browserPackage()),
                 dismissButtonStyle: 'done',
                 readerMode: false
               }

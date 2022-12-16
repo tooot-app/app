@@ -92,7 +92,7 @@ const openLink = async (url: string, navigation?: any) => {
       await WebBrowser.openBrowserAsync(encodeURI(url), {
         dismissButtonStyle: 'close',
         enableBarCollapsing: true,
-        browserPackage: await browserPackage()
+        ...(await browserPackage())
       })
       break
     case 'external':
