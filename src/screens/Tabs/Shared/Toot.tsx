@@ -118,7 +118,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return (
             <>
               <TimelineDefault
-                item={{ ...item, content: `${item.content}${JSON.stringify(levels)}` }}
+                item={item}
                 queryKey={queryKey}
                 rootQueryKey={rootQueryKey}
                 highlighted={toot.id === item.id}
