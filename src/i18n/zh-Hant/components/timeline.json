@@ -31,8 +31,8 @@
         "notification": "{{name}} 轉嘟了您的嘟文"
       },
       "update": "轉嘟已編輯",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "admin.sign_up": "{{name}} 加入了站點",
+      "admin.report": "{{name}} 檢舉："
     },
     "actions": {
       "reply": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "將嘟文加入書籤",
         "function": "加入書籤"
       },
-      "openReport": ""
+      "openReport": "打開檢舉"
     },
     "actionsUsers": {
       "reblogged_by": {
