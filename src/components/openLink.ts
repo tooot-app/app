@@ -17,7 +17,6 @@ const openLink = async (url: string, navigation?: any) => {
 
   const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: {}) => {
     if (navigation) {
-      // @ts-ignore
       navigation.push(page, options)
     } else {
       // @ts-ignore

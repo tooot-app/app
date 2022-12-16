@@ -62,10 +62,9 @@ const pushRegister = async (
     'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo='
   )
   formData.append('subscription[keys][auth]', auth)
-  Object.keys(alerts).map(key =>
-    // @ts-ignore
-    formData.append(`data[alerts][${key}]`, alerts[key].value.toString())
-  )
+  for (const [key, value] of Object.entries(alerts)) {
+    formData.append(`data[alerts][${key}]`, value.toString())
+  }
 
   const res = await apiInstance<Mastodon.PushSubscription>({
     method: 'post',
