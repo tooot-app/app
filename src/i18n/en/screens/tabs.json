@@ -231,6 +231,9 @@
       "status": {
         "heading": "Toot from subscribed users"
       },
+      "update": {
+        "heading": "Reblog has been edited"
+      },
       "admin.sign_up": {
         "heading": "Admin: sign up"
       },

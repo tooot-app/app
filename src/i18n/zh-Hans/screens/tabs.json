@@ -231,6 +231,9 @@
       "status": {
         "heading": "订阅用户的嘟文"
       },
+      "update": {
+        "heading": "转嘟被编辑"
+      },
       "admin.sign_up": {
         "heading": "管理员：用户注册"
       },

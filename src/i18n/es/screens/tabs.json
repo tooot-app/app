@@ -3,8 +3,8 @@
     "local": {
       "name": "Siguiendo",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Mostrar retoots",
+        "showReplies": "Mostrar respuestas"
       }
     },
     "public": {
@@ -231,6 +231,9 @@
       "status": {
         "heading": "Toot de usuarios suscritos"
       },
+      "update": {
+        "heading": "El impulso ha sido editado"
+      },
       "admin.sign_up": {
         "heading": "Administración: Registrarse"
       },
@@ -348,7 +351,7 @@
       "notInLists": "Otras listas"
     },
     "attachments": {
-      "name": ""
+      "name": "Multimedia de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Seguir",
