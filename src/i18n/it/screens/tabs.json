@@ -232,7 +232,7 @@
         "heading": "Toot da utenti seguiti"
       },
       "update": {
-        "heading": ""
+        "heading": "Il link è stato modificato"
       },
       "admin.sign_up": {
         "heading": ""
@@ -351,7 +351,7 @@
       "notInLists": ""
     },
     "attachments": {
-      "name": ""
+      "name": "Media di <0 /><1>\"</1>"
     },
     "hashtag": {
       "follow": "Segui",
