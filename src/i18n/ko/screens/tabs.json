@@ -231,6 +231,9 @@
       "status": {
         "heading": "구독한 사용자의 툿"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": ""
       },
