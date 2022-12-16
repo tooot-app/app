@@ -54,12 +54,12 @@ const handleError =
       console.error(ctx.bold(' API '), ctx.bold('request'), error)
 
       shouldReportToSentry && Sentry.captureMessage(config.message)
-      return Promise.reject()
+      return Promise.reject(error)
     } else {
       console.error(ctx.bold(' API '), ctx.bold('internal'), error?.message)
 
       shouldReportToSentry && Sentry.captureMessage(config.message)
-      return Promise.reject()
+      return Promise.reject(error)
     }
   }
 

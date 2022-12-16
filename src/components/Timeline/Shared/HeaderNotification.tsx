@@ -65,7 +65,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                 `https://${url}/admin/reports/${notification.report.id}`,
                 'tooot://tooot',
                 {
-                  browserPackage: await browserPackage(),
+                  ...(await browserPackage()),
                   dismissButtonStyle: 'done',
                   readerMode: false
                 }

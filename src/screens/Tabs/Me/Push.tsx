@@ -179,7 +179,7 @@ const TabMePush: React.FC = () => {
                   iconBack='ExternalLink'
                   onPress={async () =>
                     WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
-                      browserPackage: await browserPackage()
+                      ...(await browserPackage())
                     })
                   }
                 />

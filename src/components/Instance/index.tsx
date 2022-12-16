@@ -276,7 +276,7 @@ const ComponentInstance: React.FC<Props> = ({
                     style={{ color: colors.blue }}
                     onPress={async () =>
                       WebBrowser.openBrowserAsync('https://tooot.app/privacy-policy', {
-                        browserPackage: await browserPackage()
+                        ...(await browserPackage())
                       })
                     }
                   />,
@@ -285,7 +285,7 @@ const ComponentInstance: React.FC<Props> = ({
                     style={{ color: colors.blue }}
                     onPress={async () =>
                       WebBrowser.openBrowserAsync('https://tooot.app/terms-of-service', {
-                        browserPackage: await browserPackage()
+                        ...(await browserPackage())
                       })
                     }
                   />

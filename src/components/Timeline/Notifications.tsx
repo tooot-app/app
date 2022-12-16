@@ -42,10 +42,10 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       : notification.account
   const ownAccount = notification.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount.preferences['reading:expand:spoilers'] || false
+    instanceAccount.preferences?.['reading:expand:spoilers'] || false
   )
   const spoilerHidden = notification.status?.spoiler_text?.length
-    ? !instanceAccount.preferences['reading:expand:spoilers'] && !spoilerExpanded
+    ? !instanceAccount.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
   const copiableContent = useRef<{ content: string; complete: boolean }>({
     content: '',

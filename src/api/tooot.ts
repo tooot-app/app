@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react-native'
 import { mapEnvironment } from '@utils/checkEnvironment'
 import axios from 'axios'
 import { ctx, handleError, userAgent } from './helpers'
@@ -37,7 +36,7 @@ const apiTooot = async <T = unknown>({
   )
 
   return axios({
-    timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
+    timeout: method === 'post' ? 1000 * 60 : 1000 * 30,
     method,
     baseURL: `https://${TOOOT_API_DOMAIN}/`,
     url: `${url}`,
