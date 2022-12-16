@@ -232,7 +232,7 @@
         "heading": "Publicació d'usuaris subscrits"
       },
       "update": {
-        "heading": ""
+        "heading": "L'impuls ha sigut editat"
       },
       "admin.sign_up": {
         "heading": "Administració: Registra"
@@ -351,7 +351,7 @@
       "notInLists": "Altres llistes"
     },
     "attachments": {
-      "name": ""
+      "name": "Multimèdia de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Segueix",
