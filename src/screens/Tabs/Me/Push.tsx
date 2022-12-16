@@ -168,7 +168,6 @@ const TabMePush: React.FC = () => {
                 <MenuRow
                   title={t('me.push.decode.heading')}
                   description={t('me.push.decode.description')}
-                  loading={instancePush?.decode}
                   switchDisabled={!pushEnabled || !instancePush?.global}
                   switchValue={instancePush?.decode}
                   switchOnValueChange={() =>

@@ -36,7 +36,12 @@ const TimelineHeaderAndroid: React.FC = () => {
       {queryKey ? (
         <DropdownMenu.Root onOpenChange={setOpenChange}>
           <DropdownMenu.Trigger>
-            <View style={{ padding: StyleConstants.Spacing.L }}>
+            <View
+              style={{
+                padding: StyleConstants.Spacing.L,
+                backgroundColor: colors.backgroundDefault
+              }}
+            >
               <Icon
                 name='MoreHorizontal'
                 color={colors.secondary}
