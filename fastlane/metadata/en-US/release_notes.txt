@@ -1,5 +1,5 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Added 🇺🇦 Slava Ukraini
+- Added Ukrainian (Slava Ukraini)
 - Automatic setting detected language when tooting
 - Remember public timeline type selection
 - Show diffing of edit history
