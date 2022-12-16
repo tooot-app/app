@@ -231,6 +231,9 @@
       "status": {
         "heading": "購読したユーザーのトゥート"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": ""
       },
