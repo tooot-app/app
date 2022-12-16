@@ -231,6 +231,9 @@
       "status": {
         "heading": "Toot van geabonneerde gebruikers"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": "Admin: registreren"
       },
