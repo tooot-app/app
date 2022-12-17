@@ -14,6 +14,7 @@ type ContextType = {
     content: string
     complete: boolean
   }>
+  detectedLanguage?: React.MutableRefObject<string>
 
   highlighted?: boolean
   inThread?: boolean

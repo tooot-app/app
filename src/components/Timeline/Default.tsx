@@ -64,6 +64,7 @@ const TimelineDefault: React.FC<Props> = ({
     content: '',
     complete: false
   })
+  const detectedLanguage = useRef<string>(status.language || '')
 
   const filtered = queryKey && shouldFilter({ copiableContent, status, queryKey })
   if (queryKey && filtered && !highlighted) {
@@ -139,6 +140,7 @@ const TimelineDefault: React.FC<Props> = ({
         ownAccount,
         spoilerHidden,
         copiableContent,
+        detectedLanguage,
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,

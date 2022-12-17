@@ -103,6 +103,7 @@ export type TabSharedStackParamList = {
   }
   'Tab-Shared-History': {
     id: Mastodon.Status['id']
+    detectedLanguage: string
   }
   'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {
