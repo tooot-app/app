@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "インスタンスのドメイン"
     },
+    "whitelisted": "",
     "button": "ログイン",
     "information": {
       "name": "名前",
