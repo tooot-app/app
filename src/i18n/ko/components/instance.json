@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": ""
     },
+    "whitelisted": "",
     "button": "로그인",
     "information": {
       "name": "이름",
