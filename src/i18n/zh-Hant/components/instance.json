@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "站點的網域"
     },
+    "whitelisted": "",
     "button": "登入",
     "information": {
       "name": "名稱",
