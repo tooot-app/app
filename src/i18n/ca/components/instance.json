@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": ""
     },
+    "whitelisted": "",
     "button": "Inicia la sessió",
     "information": {
       "name": "Nom",
