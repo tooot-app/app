@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Домен інстансу"
     },
+    "whitelisted": "",
     "button": "Увійти",
     "information": {
       "name": "Назва",
