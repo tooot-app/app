@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Domain der Instanz"
     },
+    "whitelisted": "",
     "button": "Login",
     "information": {
       "name": "Name",
