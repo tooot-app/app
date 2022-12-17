@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Domeinnaam van instantie"
     },
+    "whitelisted": "",
     "button": "Inloggen",
     "information": {
       "name": "Naam",
