@@ -15,6 +15,7 @@ import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'r
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 import { Placeholder } from 'rn-placeholder'
+import validUrl from 'valid-url'
 import InstanceInfo from './Info'
 import CustomText from '../Text'
 import { useNavigation } from '@react-navigation/native'
@@ -39,12 +40,26 @@ const ComponentInstance: React.FC<Props> = ({
   const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
 
   const [domain, setDomain] = useState<string>('')
+  const [errorCode, setErrorCode] = useState<number | null>(null)
+  const whitelisted: boolean =
+    !!domain.length &&
+    !!errorCode &&
+    !!validUrl.isHttpsUri(`https://${domain}`) &&
+    errorCode === 401
 
   const dispatch = useAppDispatch()
   const instances = useSelector(getInstances, () => true)
   const instanceQuery = useInstanceQuery({
     domain,
-    options: { enabled: !!domain, retry: false }
+    options: {
+      enabled: !!domain,
+      retry: false,
+      onError: err => {
+        if (err.status) {
+          setErrorCode(err.status)
+        }
+      }
+    }
   })
 
   const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
@@ -146,7 +161,11 @@ const ComponentInstance: React.FC<Props> = ({
               borderBottomWidth: 1,
               ...StyleConstants.FontStyle.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError ? colors.red : colors.border,
+              borderBottomColor: instanceQuery.isError
+                ? whitelisted
+                  ? colors.yellow
+                  : colors.red
+                : colors.border,
               ...(Platform.OS === 'android' && { paddingRight: 0 })
             }}
             editable={false}
@@ -159,12 +178,23 @@ const ComponentInstance: React.FC<Props> = ({
               ...StyleConstants.FontStyle.M,
               marginRight: StyleConstants.Spacing.M,
               color: colors.primaryDefault,
-              borderBottomColor: instanceQuery.isError ? colors.red : colors.border,
+              borderBottomColor: instanceQuery.isError
+                ? whitelisted
+                  ? colors.yellow
+                  : colors.red
+                : colors.border,
               ...(Platform.OS === 'android' && { paddingLeft: 0 })
             }}
-            onChangeText={debounce(text => setDomain(text.replace(/^http(s)?\:\/\//i, '')), 1000, {
-              trailing: true
-            })}
+            onChangeText={debounce(
+              text => {
+                setDomain(text.replace(/^http(s)?\:\/\//i, ''))
+                setErrorCode(null)
+              },
+              1000,
+              {
+                trailing: true
+              }
+            )}
             autoCapitalize='none'
             clearButtonMode='never'
             keyboardType='url'
@@ -194,39 +224,52 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={t('server.button')}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri}
+            disabled={!instanceQuery.data?.uri && !whitelisted}
             loading={instanceQuery.isFetching || appsMutation.isLoading}
           />
         </View>
 
         <View>
-          <Placeholder>
-            <InstanceInfo
-              header={t('server.information.name')}
-              content={instanceQuery.data?.title || undefined}
-              potentialWidth={2}
-            />
-            <View style={{ flex: 1, flexDirection: 'row' }}>
+          {whitelisted ? (
+            <CustomText
+              fontStyle='S'
+              style={{
+                color: colors.yellow,
+                paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
+                paddingTop: StyleConstants.Spacing.XS
+              }}
+            >
+              {t('server.whitelisted')}
+            </CustomText>
+          ) : (
+            <Placeholder>
               <InstanceInfo
-                style={{ alignItems: 'flex-start' }}
-                header={t('server.information.accounts')}
-                content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
-                potentialWidth={4}
+                header={t('server.information.name')}
+                content={instanceQuery.data?.title || undefined}
+                potentialWidth={2}
               />
-              <InstanceInfo
-                style={{ alignItems: 'center' }}
-                header={t('server.information.statuses')}
-                content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
-                potentialWidth={4}
-              />
-              <InstanceInfo
-                style={{ alignItems: 'flex-end' }}
-                header={t('server.information.domains')}
-                content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
-                potentialWidth={4}
-              />
-            </View>
-          </Placeholder>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <InstanceInfo
+                  style={{ alignItems: 'flex-start' }}
+                  header={t('server.information.accounts')}
+                  content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
+                  potentialWidth={4}
+                />
+                <InstanceInfo
+                  style={{ alignItems: 'center' }}
+                  header={t('server.information.statuses')}
+                  content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
+                  potentialWidth={4}
+                />
+                <InstanceInfo
+                  style={{ alignItems: 'flex-end' }}
+                  header={t('server.information.domains')}
+                  content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
+                  potentialWidth={4}
+                />
+              </View>
+            </Placeholder>
+          )}
           <View
             style={{
               flexDirection: 'row',

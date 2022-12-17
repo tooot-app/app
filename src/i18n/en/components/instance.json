@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Instance's domain"
     },
+    "whitelisted": "This may be a whitelisted instance that tooot cannot retrieve data from before logging in.",
     "button": "Login",
     "information": {
       "name": "Name",
