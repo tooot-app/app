@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Domän för instansen"
     },
+    "whitelisted": "",
     "button": "Logga in",
     "information": {
       "name": "Namn",
