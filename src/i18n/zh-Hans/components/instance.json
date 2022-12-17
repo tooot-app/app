@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "实例域名"
     },
+    "whitelisted": "",
     "button": "登录",
     "information": {
       "name": "社区名称",
