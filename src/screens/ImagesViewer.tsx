@@ -25,7 +25,7 @@ const ZoomFlatList = createZoomListComponent(FlatList)
 
 const ScreenImagesViewer = ({
   route: {
-    params: { imageUrls, id }
+    params: { imageUrls, id, hideCounter }
   },
   navigation
 }: RootStackScreenProps<'Screen-ImagesViewer'>) => {
@@ -159,7 +159,9 @@ const ScreenImagesViewer = ({
         }}
       >
         <HeaderLeft content='X' native={false} background onPress={() => navigation.goBack()} />
-        <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
+        {!hideCounter ? (
+          <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
+        ) : null}
         <HeaderRight
           accessibilityLabel={t('content.actions.accessibilityLabel')}
           accessibilityHint={t('content.actions.accessibilityHint')}
