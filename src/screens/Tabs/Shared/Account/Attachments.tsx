@@ -23,7 +23,7 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
 
   const DISPLAY_AMOUNT = 6
 
-  const width = (Dimensions.get('screen').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
+  const width = (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
 
   const queryKeyParams: QueryKeyTimeline[1] = {
     page: 'Account',

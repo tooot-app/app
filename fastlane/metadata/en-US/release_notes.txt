@@ -1,3 +1,4 @@
 Enjoy toooting! This version includes following improvements and fixes:
 - Align filter experience with v4.0 and above
 - Supports enlarging user's avatar and banner
+- Fix iPad weird sizing (not optimisation)

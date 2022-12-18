@@ -34,7 +34,7 @@ const AccountHeader: React.FC<Props> = ({ account }) => {
       <GracefullyImage
         uri={{ original: account?.header, static: account?.header_static }}
         style={{
-          height: Dimensions.get('screen').width / 3 + topInset,
+          height: Dimensions.get('window').width / 3 + topInset,
           backgroundColor: colors.disabled
         }}
       />
