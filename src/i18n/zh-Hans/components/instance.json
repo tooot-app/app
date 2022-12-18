@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "实例域名"
     },
-    "whitelisted": "",
+    "whitelisted": "这可能是一个白名单实例，在登录前无法获取数据。",
     "button": "登录",
     "information": {
       "name": "社区名称",
