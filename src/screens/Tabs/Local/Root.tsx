@@ -61,7 +61,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               />
               {page.page === 'Following' && !instanceFollowingPage.showBoosts ? (
                 <Icon
-                  name='MessageCircle'
+                  name='Repeat'
                   size={StyleConstants.Font.Size.M}
                   color={colors.red}
                   style={{ marginLeft: StyleConstants.Spacing.S }}
@@ -70,7 +70,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               ) : null}
               {page.page === 'Following' && !instanceFollowingPage.showReplies ? (
                 <Icon
-                  name='Repeat'
+                  name='MessageCircle'
                   size={StyleConstants.Font.Size.M}
                   color={colors.red}
                   style={{ marginLeft: StyleConstants.Spacing.S }}
