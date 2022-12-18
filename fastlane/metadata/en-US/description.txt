@@ -1,5 +1,10 @@
-tooot is an open source, simple yet elegant Mastodon mobile client.
+tooot is an open source, simple yet elegant Mastodon mobile client. A Mastodon (https://joinmastodon.org/) account is required to use this app.
 
-A Mastodon (https://joinmastodon.org/) account is required to use this app.
+tooot supports:
+- Cross platform, including iPadOS and MacOS
+- Multiple accounts
+- Dark mode or adapt to system
+- Adjustable toot font size
+- Push notification
 
-If you have suggestions, please reach out to @tooot@xmflsct.com or support@tooot.ap.
+If you have suggestions, please reach out to @tooot@xmflsct.com or support@tooot.app.
