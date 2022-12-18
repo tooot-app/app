@@ -103,8 +103,9 @@ const TimelineDefault: React.FC<Props> = ({
           paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
           paddingLeft: highlighted
             ? 0
-            : (disableDetails ? StyleConstants.Avatar.XS : StyleConstants.Avatar.M) +
-              StyleConstants.Spacing.S,
+            : (disableDetails || isConversation
+                ? StyleConstants.Avatar.XS
+                : StyleConstants.Avatar.M) + StyleConstants.Spacing.S,
           ...(disableDetails && { marginTop: -StyleConstants.Spacing.S })
         }}
       >
@@ -115,9 +116,9 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineFullConversation />
         <TimelineTranslate />
         <TimelineFeedback />
-      </View>
 
-      <TimelineActions />
+        <TimelineActions />
+      </View>
     </>
   )
 

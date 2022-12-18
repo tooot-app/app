@@ -47,10 +47,6 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const spoilerHidden = notification.status?.spoiler_text?.length
     ? !instanceAccount.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
-  const copiableContent = useRef<{ content: string; complete: boolean }>({
-    content: '',
-    complete: false
-  })
 
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
@@ -101,11 +97,11 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
               <TimelineAttachment />
               <TimelineCard />
               <TimelineFullConversation />
+
+              <TimelineActions />
             </View>
           ) : null}
         </View>
-
-        <TimelineActions />
       </>
     )
   }
