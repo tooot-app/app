@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Домен інстансу"
     },
-    "whitelisted": "",
+    "whitelisted": "Це може бути інстанс з білого списку, з якого tooot не може отримати дані до входу в систему.",
     "button": "Увійти",
     "information": {
       "name": "Назва",
