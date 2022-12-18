@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "Ausgeblendeter Inhalt"
     },
-    "filtered": "Gefiltert: {{phrase}}.",
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
     "fullConversation": "Unterhaltung anzeigen",
     "translate": {
       "default": "Übersetzen",
