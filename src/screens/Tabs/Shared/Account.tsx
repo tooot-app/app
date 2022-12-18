@@ -4,16 +4,16 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
+import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
-import { useIsFetching } from '@tanstack/react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Account/Attachments'
 import AccountHeader from './Account/Header'
@@ -87,18 +87,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
 
   const scrollY = useSharedValue(0)
 
+  const queryClient = useQueryClient()
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
     { page: 'Account', account: account.id, exclude_reblogs: true, only_media: false }
   ])
   const page = queryKey[1]
-  const isFetchingTimeline = useIsFetching(queryKey)
-  const fetchedTimeline = useRef(false)
-  useEffect(() => {
-    if (!isFetchingTimeline && !fetchedTimeline.current) {
-      fetchedTimeline.current = true
-    }
-  }, [isFetchingTimeline, fetchedTimeline.current])
 
   const [segment, setSegment] = useState<number>(0)
   const ListHeaderComponent = useMemo(() => {
@@ -107,9 +101,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         <View style={{ borderBottomWidth: 1, borderBottomColor: colors.border }}>
           <AccountHeader account={data} />
           <AccountInformation account={data} />
-          {!data?.suspended && fetchedTimeline.current ? (
-            <AccountAttachments account={data} />
-          ) : null}
+          {!data?.suspended ? <AccountAttachments account={data} /> : null}
         </View>
         {!data?.suspended ? (
           <SegmentedControl
@@ -173,7 +165,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         ) : null}
       </>
     )
-  }, [segment, data, fetchedTimeline.current, queryKey[1].page, mode])
+  }, [segment, data, queryKey[1].page, mode])
 
   return (
     <>
@@ -189,7 +181,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
             onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),
             ListHeaderComponent,
-            maintainVisibleContentPosition: undefined
+            maintainVisibleContentPosition: undefined,
+            onRefresh: () => queryClient.refetchQueries(queryKey),
+            refreshing: queryClient.getQueryState(queryKey)?.fetchStatus === 'fetching'
           }}
         />
       )}
