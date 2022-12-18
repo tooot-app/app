@@ -45,21 +45,17 @@ const queryFunction = async ({
             throw new Error()
           }
 
-          const resSearch = await apiGeneral<{ accounts: Mastodon.Account[] }>({
+          const resLookup = await apiGeneral<Mastodon.Account>({
             method: 'get',
             domain,
-            url: 'api/v2/search',
-            params: {
-              q: `@${page.account.acct}`,
-              type: 'accounts',
-              limit: '1'
-            }
+            url: 'api/v1/accounts/lookup',
+            params: { acct: page.account.acct }
           })
-          if (resSearch?.body?.accounts?.length === 1) {
+          if (resLookup?.body) {
             res = await apiGeneral<Mastodon.Account[]>({
               method: 'get',
               domain,
-              url: `api/v1/${page.reference}/${resSearch.body.accounts[0].id}/${page.type}`,
+              url: `api/v1/${page.reference}/${resLookup.body.id}/${page.type}`,
               params
             })
             return { ...res, remoteData: true }
