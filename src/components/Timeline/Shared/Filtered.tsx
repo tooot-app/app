@@ -1,129 +1,133 @@
 import CustomText from '@components/Text'
+import removeHTML from '@helpers/removeHTML'
 import { store } from '@root/store'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstance, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { getInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import htmlparser2 from 'htmlparser2-without-node-native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
-const TimelineFiltered = React.memo(
-  ({ phrase }: { phrase: string }) => {
-    const { colors } = useTheme()
-    const { t } = useTranslation('componentTimeline')
+export interface FilteredProps {
+  filterResults: { title: string; filter_action: Mastodon.Filter<'v2'>['filter_action'] }[]
+}
 
-    return (
-      <View style={{ backgroundColor: colors.backgroundDefault }}>
-        <CustomText
-          fontStyle='S'
-          style={{
-            color: colors.secondary,
-            textAlign: 'center',
-            paddingVertical: StyleConstants.Spacing.S,
-            paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S
-          }}
-        >
-          {t('shared.filtered', { phrase })}
-        </CustomText>
-      </View>
-    )
-  },
-  () => true
-)
+const TimelineFiltered: React.FC<FilteredProps> = ({ filterResults }) => {
+  const { colors } = useTheme()
+  const { t } = useTranslation('componentTimeline')
 
-export const shouldFilter = ({
-  copiableContent,
-  status,
-  queryKey
-}: {
-  copiableContent: React.MutableRefObject<{
-    content: string
-    complete: boolean
-  }>
-  status: Mastodon.Status
-  queryKey: QueryKeyTimeline
-}): string | null => {
-  const page = queryKey[1]
-  const instance = getInstance(store.getState())
-  const ownAccount = getInstanceAccount(store.getState())?.id === status.account?.id
-
-  let shouldFilter: string | null = null
-
-  if (!ownAccount) {
-    let rawContent = ''
-    const parser = new htmlparser2.Parser({
-      ontext: (text: string) => {
-        if (!copiableContent.current.complete) {
-          copiableContent.current.content = copiableContent.current.content + text
-        }
-
-        rawContent = rawContent + text
-      }
-    })
-    if (status.spoiler_text) {
-      parser.write(status.spoiler_text)
-      rawContent = rawContent + `\n\n`
+  const main = () => {
+    if (!filterResults?.length) {
+      return <></>
     }
-    parser.write(status.content)
-    parser.end()
-
-    const checkFilter = (filter: Mastodon.Filter) => {
-      const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
-      switch (filter.whole_word) {
-        case true:
-          if (new RegExp(`\\b${escapedPhrase}\\b`, 'i').test(rawContent)) {
-            shouldFilter = filter.phrase
-          }
-          break
-        case false:
-          if (new RegExp(escapedPhrase, 'i').test(rawContent)) {
-            shouldFilter = filter.phrase
-          }
-          break
-      }
+    switch (typeof filterResults[0]) {
+      case 'string': // v1 filter
+        return <>{t('shared.filtered.match', { context: 'v1', phrase: filterResults[0] })}</>
+      default:
+        return (
+          <>
+            {t('shared.filtered.match', {
+              context: 'v2',
+              count: filterResults.length,
+              filters: filterResults.map(result => result.title).join(t('common:separator'))
+            })}
+            <CustomText
+              style={{ color: colors.blue }}
+              children={`\n${t('shared.filtered.reveal')}`}
+            />
+          </>
+        )
     }
-    instance?.filters?.forEach(filter => {
-      if (shouldFilter) {
-        return
-      }
-      if (filter.expires_at) {
-        if (new Date().getTime() > new Date(filter.expires_at).getTime()) {
-          return
-        }
-      }
-
-      switch (page.page) {
-        case 'Following':
-        case 'Local':
-        case 'List':
-        case 'Account':
-          if (filter.context.includes('home')) {
-            checkFilter(filter)
-          }
-          break
-        case 'Notifications':
-          if (filter.context.includes('notifications')) {
-            checkFilter(filter)
-          }
-          break
-        case 'LocalPublic':
-          if (filter.context.includes('public')) {
-            checkFilter(filter)
-          }
-          break
-        case 'Toot':
-          if (filter.context.includes('thread')) {
-            checkFilter(filter)
-          }
-      }
-    })
-
-    copiableContent.current.complete = true
   }
 
-  return shouldFilter
+  return (
+    <View style={{ backgroundColor: colors.backgroundDefault }}>
+      <CustomText
+        fontStyle='S'
+        style={{
+          color: colors.secondary,
+          textAlign: 'center',
+          paddingVertical: StyleConstants.Spacing.S,
+          paddingLeft: StyleConstants.Avatar.M + StyleConstants.Spacing.S
+        }}
+      >
+        {main()}
+      </CustomText>
+    </View>
+  )
+}
+
+export const shouldFilter = ({
+  queryKey,
+  status
+}: {
+  queryKey: QueryKeyTimeline
+  status: Pick<Mastodon.Status, 'content' | 'spoiler_text'>
+}): FilteredProps['filterResults'] | undefined => {
+  const page = queryKey[1]
+  const instance = getInstance(store.getState())
+
+  let returnFilter: FilteredProps['filterResults'] | undefined
+
+  const rawContentCombined = [
+    removeHTML(status.content),
+    status.spoiler_text ? removeHTML(status.spoiler_text) : ''
+  ]
+    .filter(c => c.length)
+    .join(`\n`)
+  const checkFilter = (filter: Mastodon.Filter<'v1'>) => {
+    const escapedPhrase = filter.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+    switch (filter.whole_word) {
+      case true:
+        if (new RegExp(`\\b${escapedPhrase}\\b`, 'i').test(rawContentCombined)) {
+          returnFilter = [{ title: filter.phrase, filter_action: 'warn' }]
+        }
+        break
+      case false:
+        if (new RegExp(escapedPhrase, 'i').test(rawContentCombined)) {
+          returnFilter = [{ title: filter.phrase, filter_action: 'warn' }]
+        }
+        break
+    }
+  }
+  instance?.filters?.forEach(filter => {
+    if (returnFilter) {
+      return
+    }
+    if (filter.expires_at) {
+      if (new Date().getTime() > new Date(filter.expires_at).getTime()) {
+        return
+      }
+    }
+
+    switch (page.page) {
+      case 'Following':
+      case 'Local':
+      case 'List':
+      case 'Account':
+        if (filter.context.includes('home')) {
+          checkFilter(filter as Mastodon.Filter<'v1'>)
+        }
+        break
+      case 'Notifications':
+        if (filter.context.includes('notifications')) {
+          checkFilter(filter as Mastodon.Filter<'v1'>)
+        }
+        break
+      case 'LocalPublic':
+        if (filter.context.includes('public')) {
+          checkFilter(filter as Mastodon.Filter<'v1'>)
+        }
+        break
+      case 'Toot':
+        if (filter.context.includes('thread')) {
+          checkFilter(filter as Mastodon.Filter<'v1'>)
+        }
+    }
+  })
+
+  return returnFilter
 }
 
 export default TimelineFiltered

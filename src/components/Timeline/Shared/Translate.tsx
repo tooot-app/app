@@ -13,30 +13,11 @@ import { Circle } from 'react-native-animated-spinkit'
 import StatusContext from './Context'
 
 const TimelineTranslate = () => {
-  const { status, highlighted, copiableContent, detectedLanguage } = useContext(StatusContext)
-  if (!status || !highlighted) return null
+  const { status, highlighted, rawContent, detectedLanguage } = useContext(StatusContext)
+  if (!status || !highlighted || !rawContent?.current.length) return null
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
-
-  const backupTextProcessing = (): string[] => {
-    const text = status.spoiler_text ? [status.spoiler_text, status.content] : [status.content]
-
-    for (const i in text) {
-      for (const emoji of status.emojis) {
-        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, ' ')
-      }
-      text[i] = text[i]
-        .replace(/(<([^>]+)>)/gi, ' ')
-        .replace(/@.*? /gi, ' ')
-        .replace(/#.*? /gi, ' ')
-        .replace(/http(s):\/\/.*? /gi, ' ')
-    }
-    return text
-  }
-  const text = copiableContent?.current.content
-    ? [copiableContent?.current.content]
-    : backupTextProcessing()
 
   const [detected, setDetected] = useState<{
     language: string
@@ -44,7 +25,7 @@ const TimelineTranslate = () => {
   }>({ language: status.language || '', confidence: 0 })
   useEffect(() => {
     const detect = async () => {
-      const result = await detectLanguage(text.join('\n\n'))
+      const result = await detectLanguage(rawContent.current.join('\n\n'))
       if (result) {
         setDetected(result)
         if (detectedLanguage) {
@@ -64,7 +45,7 @@ const TimelineTranslate = () => {
   const { refetch, data, isFetching, isSuccess, isError } = useTranslateQuery({
     source: detected.language,
     target: targetLanguage,
-    text,
+    text: rawContent.current,
     options: { enabled }
   })
 

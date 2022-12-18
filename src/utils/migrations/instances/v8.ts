@@ -19,7 +19,7 @@ type Instance = {
   }
   max_toot_chars?: number // To be deprecated in v4
   configuration?: Mastodon.Instance['configuration']
-  filters: Mastodon.Filter[]
+  filters: Mastodon.Filter<any>[]
   notifications_filter: {
     follow: boolean
     favourite: boolean

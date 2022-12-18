@@ -42,5 +42,9 @@
   {
     "feature": "notification_type_admin_report",
     "version": 4.0
+  },
+  {
+    "feature": "filter_server_side",
+    "version": 4.0
   }
 ]

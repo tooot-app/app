@@ -52,7 +52,7 @@ const addInstance = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` }
     })
 
-    const { body: filters } = await apiGeneral<Mastodon.Filter[]>({
+    const { body: filters } = await apiGeneral<Mastodon.Filter<any>[]>({
       method: 'get',
       domain,
       url: `api/v1/filters`,

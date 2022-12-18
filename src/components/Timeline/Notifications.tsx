@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useRef, useState } from 'react'
@@ -21,7 +21,7 @@ import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
-import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
+import TimelineFiltered, { FilteredProps, shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 import TimelineHeaderAndroid from './Shared/HeaderAndroid'
 
@@ -51,17 +51,6 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
     content: '',
     complete: false
   })
-
-  const filtered =
-    notification.status &&
-    shouldFilter({
-      copiableContent,
-      status: notification.status,
-      queryKey
-    })
-  if (notification.status && filtered) {
-    return <TimelineFiltered phrase={filtered} />
-  }
 
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
@@ -124,11 +113,36 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   const mShare = menuShare({
     visibility: notification.status?.visibility,
     type: 'status',
-    url: notification.status?.url || notification.status?.uri,
-    copiableContent
+    url: notification.status?.url || notification.status?.uri
   })
   const mStatus = menuStatus({ status: notification.status, queryKey })
   const mInstance = menuInstance({ status: notification.status, queryKey })
+
+  if (!ownAccount) {
+    let filterResults: FilteredProps['filterResults'] = []
+    const [filterRevealed, setFilterRevealed] = useState(false)
+    const hasFilterServerSide = useSelector(checkInstanceFeature('filter_server_side'))
+    if (notification.status) {
+      if (hasFilterServerSide) {
+        if (notification.status.filtered?.length) {
+          filterResults = notification.status.filtered.map(filter => filter.filter)
+        }
+      } else {
+        const checkFilter = shouldFilter({ queryKey, status: notification.status })
+        if (checkFilter?.length) {
+          filterResults = checkFilter
+        }
+      }
+
+      if (filterResults?.length && !filterRevealed) {
+        return !filterResults.filter(result => result.filter_action === 'hide').length ? (
+          <Pressable onPress={() => setFilterRevealed(!filterRevealed)}>
+            <TimelineFiltered filterResults={filterResults} />
+          </Pressable>
+        ) : null
+      }
+    }
+  }
 
   return (
     <StatusContext.Provider
@@ -136,8 +150,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
         queryKey,
         status,
         ownAccount,
-        spoilerHidden,
-        copiableContent
+        spoilerHidden
       }}
     >
       <ContextMenu.Root>

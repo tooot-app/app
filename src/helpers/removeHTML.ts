@@ -6,6 +6,9 @@ const removeHTML = (text: string): string => {
   const parser = new htmlparser2.Parser({
     ontext: (text: string) => {
       raw = raw + text
+    },
+    onclosetag: (tag: string) => {
+      if (['p', 'br'].includes(tag)) raw = raw + `\n`
     }
   })
 
