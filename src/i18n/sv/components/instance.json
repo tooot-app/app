@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Domän för instansen"
     },
-    "whitelisted": "",
+    "whitelisted": "Detta kan vara en vitlistad server som tooot inte kan hämta data från innan du loggat in.",
     "button": "Logga in",
     "information": {
       "name": "Namn",
