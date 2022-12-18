@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "숨겨진 콘텐츠"
     },
-    "filtered": "필터: {{phrase}}.",
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
     "fullConversation": "대화 보기",
     "translate": {
       "default": "번역",
