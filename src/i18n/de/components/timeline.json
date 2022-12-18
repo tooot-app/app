@@ -92,8 +92,8 @@
       "expandHint": "Ausgeblendeter Inhalt"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
+      "reveal": "Trotzdem anzeigen",
+      "match_v1": "Gefiltert: {{phrase}}.",
       "match_v2_one": "",
       "match_v2_other": ""
     },
