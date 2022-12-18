@@ -94,8 +94,8 @@
     "filtered": {
       "reveal": "Trotzdem anzeigen",
       "match_v1": "Gefiltert: {{phrase}}.",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "match_v2_one": "Gefiltert durch {{filters}}.",
+      "match_v2_other": "Gefiltert durch {{count}} Filter, {{filters}}."
     },
     "fullConversation": "Unterhaltung anzeigen",
     "translate": {
