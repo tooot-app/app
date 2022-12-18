@@ -100,6 +100,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     }
   }, [isFetchingTimeline, fetchedTimeline.current])
 
+  const [segment, setSegment] = useState<number>(0)
   const ListHeaderComponent = useMemo(() => {
     return (
       <>
@@ -114,8 +115,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           <SegmentedControl
             appearance={mode}
             values={[t('shared.account.toots.default'), t('shared.account.toots.all')]}
-            selectedIndex={page.page === 'Account' ? 0 : 1}
+            selectedIndex={segment}
             onChange={({ nativeEvent }) => {
+              setSegment(nativeEvent.selectedSegmentIndex)
               switch (nativeEvent.selectedSegmentIndex) {
                 case 0:
                   setQueryKey([
@@ -171,7 +173,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         ) : null}
       </>
     )
-  }, [data, fetchedTimeline.current, queryKey[1].page, mode])
+  }, [segment, data, fetchedTimeline.current, queryKey[1].page, mode])
 
   return (
     <>
