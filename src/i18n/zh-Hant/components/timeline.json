@@ -92,10 +92,10 @@
       "expandHint": "隱藏內容"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "仍要顯示",
+      "match_v1": "已過濾：{{phrase}}。",
+      "match_v2_one": "由 {{filters}} 過濾。",
+      "match_v2_other": "由 {{count}} 組過濾器過濾，{{filters}}。"
     },
     "fullConversation": "閱讀全部對話",
     "translate": {
