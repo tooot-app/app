@@ -24,7 +24,7 @@ const ScreenActions = ({
   const insets = useSafeAreaInsets()
 
   const DEFAULT_VALUE = 350
-  const screenHeight = Dimensions.get('screen').height
+  const screenHeight = Dimensions.get('window').height
   const panY = useSharedValue(DEFAULT_VALUE)
   useEffect(() => {
     panY.value = withTiming(0)

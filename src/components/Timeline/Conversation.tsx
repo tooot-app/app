@@ -98,19 +98,17 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
         </View>
 
         {conversation.last_status ? (
-          <>
-            <View
-              style={{
-                paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
-                paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-              }}
-            >
-              <TimelineContent />
-              <TimelinePoll />
-            </View>
+          <View
+            style={{
+              paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
+              paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
+            }}
+          >
+            <TimelineContent />
+            <TimelinePoll />
 
             <TimelineActions />
-          </>
+          </View>
         ) : null}
       </Pressable>
     </StatusContext.Provider>

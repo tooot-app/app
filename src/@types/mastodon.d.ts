@@ -263,13 +263,33 @@ declare namespace Mastodon {
     verified_at: string | null
   }
 
-  type Filter = {
+  type Filter<T extends 'v1' | 'v2'> = T extends 'v2' ? Filter_V2 : Filter_V1
+  type Filter_V1 = {
     id: string
     phrase: string
     context: ('home' | 'notifications' | 'public' | 'thread' | 'account')[]
     expires_at?: string
     irreversible: boolean
     whole_word: boolean
+  }
+  type Filter_V2 = {
+    id: string
+    title: string
+    context: ('home' | 'notifications' | 'public' | 'thread' | 'account')[]
+    expires_at?: string
+    filter_action: 'warn' | 'hide'
+    keywords: FilterKeyword[]
+    statuses: FilterStatus[]
+  }
+
+  type FilterKeyword = { id: string; keyword: string; whole_word: boolean }
+
+  type FilterStatus = { id: string; status_id: string }
+
+  type FilterResult = {
+    filter: Filter<'v2'>
+    keyword_matches?: FilterKeyword['keyword'][]
+    status_matches?: FilterStatus['id'][]
   }
 
   type List = {
@@ -461,7 +481,7 @@ declare namespace Mastodon {
     sensitive: boolean
     spoiler_text?: string
     media_attachments: Attachment[]
-    application: Application
+    application?: Application
 
     // Attributes
     mentions: Mention[]
@@ -472,7 +492,7 @@ declare namespace Mastodon {
     reblogs_count: number
     favourites_count: number
     replies_count: number
-    edited_at?: string // FEATURE edit_post
+    edited_at?: string
     favourited: boolean
     reblogged: boolean
     muted: boolean
@@ -488,6 +508,7 @@ declare namespace Mastodon {
     card?: Card
     language?: string
     text?: string
+    filtered?: FilterResult[]
   }
 
   type StatusHistory = {

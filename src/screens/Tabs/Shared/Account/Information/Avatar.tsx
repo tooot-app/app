@@ -1,28 +1,37 @@
-import Button from '@components/Button'
 import GracefullyImage from '@components/GracefullyImage'
+import navigationRef from '@helpers/navigationRef'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
-import { Pressable, View } from 'react-native'
+import { Pressable } from 'react-native'
 import { useSelector } from 'react-redux'
 
 export interface Props {
   account: Mastodon.Account | undefined
   myInfo: boolean
-  edit?: boolean
 }
 
-const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo, edit }) => {
+const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   useSelector(getInstanceActive)
   return (
     <Pressable
-      disabled={!myInfo}
       onPress={() => {
-        myInfo && account && navigation.push('Tab-Shared-Account', { account })
+        if (account) {
+          if (myInfo) {
+            navigation.push('Tab-Shared-Account', { account })
+            return
+          } else {
+            navigationRef.navigate('Screen-ImagesViewer', {
+              imageUrls: [{ id: 'avatar', url: account.avatar }],
+              id: 'avatar',
+              hideCounter: true
+            })
+          }
+        }
       }}
       style={{
         borderRadius: 8,
@@ -36,20 +45,6 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo, edit }) =>
         style={{ flex: 1 }}
         uri={{ original: account?.avatar, static: account?.avatar_static }}
       />
-      {edit ? (
-        <View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            alignContent: 'center',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Button type='icon' content='Edit' round onPress={() => {}} />
-        </View>
-      ) : null}
     </Pressable>
   )
 }

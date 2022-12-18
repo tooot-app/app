@@ -3,10 +3,10 @@ import Icon from '@components/Icon'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { Dimensions, ListRenderItem, Pressable, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
@@ -23,23 +23,14 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
 
   const DISPLAY_AMOUNT = 6
 
-  const width = (Dimensions.get('screen').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
+  const width = (Dimensions.get('window').width - StyleConstants.Spacing.Global.PagePadding * 2) / 4
 
-  const queryKeyParams: QueryKeyTimeline[1] = {
+  const { data } = useTimelineQuery({
     page: 'Account',
     account: account.id,
     exclude_reblogs: false,
     only_media: true
-  }
-  const { data, refetch } = useTimelineQuery({
-    ...queryKeyParams,
-    options: { enabled: false }
   })
-  useEffect(() => {
-    if (account?.id) {
-      refetch()
-    }
-  }, [account])
 
   const flattenData = data?.pages
     ? data.pages

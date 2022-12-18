@@ -46,18 +46,14 @@ const TabMePush: React.FC = () => {
 
   useEffect(() => {
     const checkPush = async () => {
-      switch (Platform.OS) {
-        case 'ios':
-          const settings = await Notifications.getPermissionsAsync()
-          layoutAnimation()
-          setPushEnabled(settings.granted)
-          setPushCanAskAgain(settings.canAskAgain)
-          break
-        case 'android':
-          await setChannels(instance)
-          layoutAnimation()
-          dispatch(retrieveExpoToken())
-          break
+      const permissions = await Notifications.getPermissionsAsync()
+      setPushEnabled(permissions.granted)
+      setPushCanAskAgain(permissions.canAskAgain)
+      layoutAnimation()
+
+      if (Platform.OS === 'android') {
+        await setChannels(instance)
+        dispatch(retrieveExpoToken())
       }
     }
 

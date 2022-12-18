@@ -4,11 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle
-} from 'react-native-reanimated'
+import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export interface Props {
@@ -22,7 +18,7 @@ const AccountNav = React.memo(
     const headerHeight = useSafeAreaInsets().top + 44
 
     const nameY =
-      Dimensions.get('screen').width / 3 +
+      Dimensions.get('window').width / 3 +
       StyleConstants.Avatar.L -
       StyleConstants.Spacing.Global.PagePadding * 2 +
       StyleConstants.Spacing.M -
@@ -35,12 +31,7 @@ const AccountNav = React.memo(
     })
     const styleMarginTop = useAnimatedStyle(() => {
       return {
-        marginTop: interpolate(
-          scrollY.value,
-          [nameY, nameY + 20],
-          [50, 0],
-          Extrapolate.CLAMP
-        )
+        marginTop: interpolate(scrollY.value, [nameY, nameY + 20], [50, 0], Extrapolate.CLAMP)
       }
     })
 
@@ -61,8 +52,7 @@ const AccountNav = React.memo(
             flex: 1,
             alignItems: 'center',
             overflow: 'hidden',
-            marginTop:
-              useSafeAreaInsets().top + (44 - StyleConstants.Font.Size.L) / 2
+            marginTop: useSafeAreaInsets().top + (44 - StyleConstants.Font.Size.L) / 2
           }}
         >
           <Animated.View style={[{ flexDirection: 'row' }, styleMarginTop]}>

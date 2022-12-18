@@ -88,7 +88,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
       renderTabBar={() => null}
       onIndexChange={index => setSegment(index)}
       navigationState={{ index: segment, routes }}
-      initialLayout={{ width: Dimensions.get('screen').width }}
+      initialLayout={{ width: Dimensions.get('window').width }}
     />
   )
 }

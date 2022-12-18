@@ -17,7 +17,7 @@ type Instance = {
     avatarStatic: Mastodon.Account['avatar_static']
     preferences: Mastodon.Preferences
   }
-  filters: Mastodon.Filter[]
+  filters: Mastodon.Filter<any>[]
   notifications_filter: {
     follow: boolean
     favourite: boolean

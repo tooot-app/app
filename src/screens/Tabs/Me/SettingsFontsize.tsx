@@ -5,11 +5,7 @@ import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { useAppDispatch } from '@root/store'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
-import {
-  changeFontsize,
-  getSettingsFontsize,
-  SettingsState
-} from '@utils/slices/settingsSlice'
+import { changeFontsize, getSettingsFontsize, SettingsState } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -34,9 +30,7 @@ export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
   }
 }
 
-const TabMeSettingsFontsize: React.FC<
-  TabMeStackScreenProps<'Tab-Me-Settings-Fontsize'>
-> = () => {
+const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fontsize'>> = () => {
   const { colors, theme } = useTheme()
   const { t } = useTranslation('screenTabs')
   const initialSize = useSelector(getSettingsFontsize)
@@ -86,8 +80,7 @@ const TabMeSettingsFontsize: React.FC<
               marginBottom: StyleConstants.Spacing.M,
               fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
               lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
-              color:
-                initialSize === size ? colors.primaryDefault : colors.secondary,
+              color: initialSize === size ? colors.primaryDefault : colors.secondary,
               borderWidth: StyleSheet.hairlineWidth,
               borderColor: colors.border
             }}

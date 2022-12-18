@@ -263,63 +263,57 @@ const TimelineActions: React.FC = () => {
   }, [status.bookmarked])
 
   return (
-    <View
-      style={{
-        paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-      }}
-    >
-      <View style={{ flexDirection: 'row' }}>
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressReply}
-          children={childrenReply}
-        />
+    <View style={{ flexDirection: 'row' }}>
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressReply}
+        children={childrenReply}
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressReblog}
-          children={childrenReblog}
-          disabled={
-            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
-          }
-        />
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressReblog}
+        children={childrenReblog}
+        disabled={
+          status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
+        }
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressFavourite}
-          children={childrenFavourite}
-        />
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressFavourite}
+        children={childrenFavourite}
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressBookmark}
-          children={childrenBookmark}
-        />
-      </View>
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressBookmark}
+        children={childrenBookmark}
+      />
     </View>
   )
 }

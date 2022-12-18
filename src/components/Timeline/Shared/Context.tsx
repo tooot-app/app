@@ -1,7 +1,9 @@
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { createContext } from 'react'
 
-type ContextType = {
+export type HighlightedStatusContextType = {}
+
+type StatusContextType = {
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 
@@ -10,10 +12,7 @@ type ContextType = {
   reblogStatus?: Mastodon.Status // When it is a reblog, pass the root status
   ownAccount?: boolean
   spoilerHidden?: boolean
-  copiableContent?: React.MutableRefObject<{
-    content: string
-    complete: boolean
-  }>
+  rawContent?: React.MutableRefObject<string[]> // When highlighted, for translate, edit history
   detectedLanguage?: React.MutableRefObject<string>
 
   highlighted?: boolean
@@ -22,6 +21,6 @@ type ContextType = {
   disableOnPress?: boolean
   isConversation?: boolean
 }
-const StatusContext = createContext<ContextType>({} as ContextType)
+const StatusContext = createContext<StatusContextType>({} as StatusContextType)
 
 export default StatusContext

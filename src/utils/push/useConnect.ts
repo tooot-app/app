@@ -35,7 +35,11 @@ const pushUseConnect = () => {
       }),
     {
       enabled: false,
-      retry: 10,
+      retry: (failureCount, error) => {
+        if (error.status == 404) return false
+
+        return failureCount < 10
+      },
       retryOnMount: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,

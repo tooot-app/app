@@ -25,7 +25,7 @@ const ZoomFlatList = createZoomListComponent(FlatList)
 
 const ScreenImagesViewer = ({
   route: {
-    params: { imageUrls, id }
+    params: { imageUrls, id, hideCounter }
   },
   navigation
 }: RootStackScreenProps<'Screen-ImagesViewer'>) => {
@@ -34,8 +34,8 @@ const ScreenImagesViewer = ({
     return null
   }
 
-  const SCREEN_WIDTH = Dimensions.get('screen').width
-  const SCREEN_HEIGHT = Dimensions.get('screen').height
+  const WINDOW_WIDTH = Dimensions.get('window').width
+  const WINDOW_HEIGHT = Dimensions.get('window').height
 
   const insets = useSafeAreaInsets()
 
@@ -85,13 +85,13 @@ const ScreenImagesViewer = ({
     }: {
       item: RootStackScreenProps<'Screen-ImagesViewer'>['route']['params']['imageUrls'][0]
     }) => {
-      const screenRatio = SCREEN_WIDTH / SCREEN_HEIGHT
+      const screenRatio = WINDOW_WIDTH / WINDOW_HEIGHT
       const imageRatio = item.width && item.height ? item.width / item.height : 1
       const imageWidth = item.width || 100
       const imageHeight = item.height || 100
 
-      const maxWidthScale = item.width ? (item.width / SCREEN_WIDTH / PixelRatio.get()) * 4 : 0
-      const maxHeightScale = item.height ? (item.height / SCREEN_WIDTH / PixelRatio.get()) * 4 : 0
+      const maxWidthScale = item.width ? (item.width / WINDOW_WIDTH / PixelRatio.get()) * 4 : 0
+      const maxHeightScale = item.height ? (item.height / WINDOW_WIDTH / PixelRatio.get()) * 4 : 0
       const max = Math.max.apply(Math, [maxWidthScale, maxHeightScale, 4])
 
       return (
@@ -109,8 +109,8 @@ const ScreenImagesViewer = ({
           children={
             <View
               style={{
-                width: SCREEN_WIDTH,
-                height: SCREEN_HEIGHT,
+                width: WINDOW_WIDTH,
+                height: WINDOW_HEIGHT,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -121,12 +121,12 @@ const ScreenImagesViewer = ({
                 dimension={{
                   width:
                     screenRatio > imageRatio
-                      ? (SCREEN_HEIGHT / imageHeight) * imageWidth
-                      : SCREEN_WIDTH,
+                      ? (WINDOW_HEIGHT / imageHeight) * imageWidth
+                      : WINDOW_WIDTH,
                   height:
                     screenRatio > imageRatio
-                      ? SCREEN_HEIGHT
-                      : (SCREEN_WIDTH / imageWidth) * imageHeight
+                      ? WINDOW_HEIGHT
+                      : (WINDOW_WIDTH / imageWidth) * imageHeight
                 }}
               />
             </View>
@@ -159,7 +159,9 @@ const ScreenImagesViewer = ({
         }}
       >
         <HeaderLeft content='X' native={false} background onPress={() => navigation.goBack()} />
-        <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
+        {!hideCounter ? (
+          <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
+        ) : null}
         <HeaderRight
           accessibilityLabel={t('content.actions.accessibilityLabel')}
           accessibilityHint={t('content.actions.accessibilityHint')}
@@ -215,8 +217,8 @@ const ScreenImagesViewer = ({
           }}
           initialScrollIndex={initialIndex}
           getItemLayout={(_, index) => ({
-            length: SCREEN_WIDTH,
-            offset: SCREEN_WIDTH * index,
+            length: WINDOW_WIDTH,
+            offset: WINDOW_WIDTH * index,
             index
           })}
         />

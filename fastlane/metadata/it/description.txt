@@ -1,0 +1,10 @@
+tooot è un client Mastodon semplice e open source.  Per utilizzare questo client, devi disporre di un account Mastodon. (https://joinmastodon.org/).
+
+Tooot supporta:
+- Multipiattaforma, inclusi iPadOS e MacOS
+- Accesso a più account
+- Modalità scura o adattiva
+- Dimensione del carattere del testo regolabile
+- Notifiche push e altre funzioni
+
+Per suggerimenti o commenti sull'utilizzo, contattare @tooot@xmflsct.com o support@tooot.app.

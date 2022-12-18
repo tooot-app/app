@@ -48,8 +48,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
       style={{
         borderRadius: StyleConstants.Avatar.M,
         overflow: 'hidden',
-        marginRight: StyleConstants.Spacing.S,
-        marginLeft: isConversation ? StyleConstants.Avatar.M - StyleConstants.Avatar.XS : undefined
+        marginRight: StyleConstants.Spacing.S
       }}
     />
   )
