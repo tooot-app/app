@@ -51,7 +51,7 @@ export type QueryKeyTimeline = [
 
 const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyTimeline>) => {
   const page = queryKey[1]
-  let params: { [key: string]: string } = { ...pageParam, limit: 40 }
+  let params: { [key: string]: string } = { limit: 40, ...pageParam }
 
   switch (page.page) {
     case 'Following':

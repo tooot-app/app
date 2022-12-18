@@ -55,7 +55,7 @@ const TimelineRefresh: React.FC<Props> = ({
           firstPage?.links?.prev && {
             ...(firstPage.links.prev.isOffset
               ? { offset: firstPage.links.prev.id }
-              : { max_id: firstPage.links.prev.id }),
+              : { min_id: firstPage.links.prev.id }),
             // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
             limit: '3'
           },
