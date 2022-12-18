@@ -34,6 +34,7 @@ export interface Props {
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
+  isConversation?: boolean
 }
 
 // When the poll is long
@@ -43,7 +44,8 @@ const TimelineDefault: React.FC<Props> = ({
   rootQueryKey,
   highlighted = false,
   disableDetails = false,
-  disableOnPress = false
+  disableOnPress = false,
+  isConversation = false
 }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
@@ -53,15 +55,16 @@ const TimelineDefault: React.FC<Props> = ({
   const status = item.reblog ? item.reblog : item
   const ownAccount = status.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount?.preferences['reading:expand:spoilers'] || false
+    instanceAccount?.preferences?.['reading:expand:spoilers'] || false
   )
   const spoilerHidden = status.spoiler_text?.length
-    ? !instanceAccount?.preferences['reading:expand:spoilers'] && !spoilerExpanded
+    ? !instanceAccount?.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
   const copiableContent = useRef<{ content: string; complete: boolean }>({
     content: '',
     complete: false
   })
+  const detectedLanguage = useRef<string>(status.language || '')
 
   const filtered = queryKey && shouldFilter({ copiableContent, status, queryKey })
   if (queryKey && filtered && !highlighted) {
@@ -74,7 +77,7 @@ const TimelineDefault: React.FC<Props> = ({
       ? StyleConstants.Spacing.Global.PagePadding / 1.5
       : StyleConstants.Spacing.Global.PagePadding,
     backgroundColor: colors.backgroundDefault,
-    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0,
+    paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0
   }
   const main = () => (
     <>
@@ -137,10 +140,12 @@ const TimelineDefault: React.FC<Props> = ({
         ownAccount,
         spoilerHidden,
         copiableContent,
+        detectedLanguage,
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,
-        disableOnPress
+        disableOnPress,
+        isConversation
       }}
     >
       {disableOnPress ? (

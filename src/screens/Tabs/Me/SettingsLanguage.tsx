@@ -1,10 +1,11 @@
 import haptics from '@components/haptics'
-import { MenuContainer, MenuRow } from '@components/Menu'
+import { MenuRow } from '@components/Menu'
 import { LOCALES } from '@root/i18n/locales'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { setChannels } from '@utils/slices/instances/push/utils'
 import { getInstances } from '@utils/slices/instancesSlice'
 import { changeLanguage } from '@utils/slices/settingsSlice'
+import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform } from 'react-native'
@@ -33,22 +34,21 @@ const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Lan
   }
 
   return (
-    <MenuContainer>
-      <FlatList
-        data={languages}
-        renderItem={({ item }) => {
-          return (
-            <MenuRow
-              key={item[0]}
-              title={item[1]}
-              iconBack={item[0] === i18n.language ? 'Check' : undefined}
-              iconBackColor={'blue'}
-              onPress={() => item[0] !== i18n.language && change(item[0])}
-            />
-          )
-        }}
-      />
-    </MenuContainer>
+    <FlatList
+      style={{ flex: 1, paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}
+      data={languages}
+      renderItem={({ item }) => {
+        return (
+          <MenuRow
+            key={item[0]}
+            title={item[1]}
+            iconBack={item[0] === i18n.language ? 'Check' : undefined}
+            iconBackColor={'blue'}
+            onPress={() => item[0] !== i18n.language && change(item[0])}
+          />
+        )
+      }}
+    />
   )
 }
 

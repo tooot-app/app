@@ -14,7 +14,7 @@ export type InstanceV11 = {
     id: Mastodon.Account['id']
     acct: Mastodon.Account['acct']
     avatarStatic: Mastodon.Account['avatar_static']
-    preferences: Mastodon.Preferences
+    preferences?: Mastodon.Preferences
   }
   version: string
   configuration?: Mastodon.Instance['configuration']

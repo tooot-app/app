@@ -4,7 +4,11 @@ import { useAppDispatch } from '@root/store'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
-import { getInstanceMePage, updateInstanceMePage } from '@utils/slices/instancesSlice'
+import {
+  checkInstanceFeature,
+  getInstanceMePage,
+  updateInstanceMePage
+} from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,8 +21,10 @@ const Collections: React.FC = () => {
   const dispatch = useAppDispatch()
   const mePage = useSelector(getInstanceMePage)
 
+  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
   useFollowedTagsQuery({
     options: {
+      enabled: canFollowTags,
       onSuccess: data =>
         dispatch(
           updateInstanceMePage({

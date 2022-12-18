@@ -3,8 +3,8 @@
     "local": {
       "name": "Gefolgt",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Boosts anzeigen",
+        "showReplies": "Antworten anzeigen"
       }
     },
     "public": {
@@ -231,6 +231,9 @@
       "status": {
         "heading": "Toot eines abonnierten Nutzers"
       },
+      "update": {
+        "heading": "Boost wurde bearbeitet"
+      },
       "admin.sign_up": {
         "heading": "Admin: Registrierung"
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} mal geboosted",
         "favourited_by": "{{count}} mal geherzt"
-      }
+      },
+      "resultIncomplete": "Ergebnisse einer Instanz sind unvollständig"
     }
   }
 }

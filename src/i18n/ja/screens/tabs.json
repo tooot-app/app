@@ -231,6 +231,9 @@
       "status": {
         "heading": "購読したユーザーのトゥート"
       },
+      "update": {
+        "heading": "ブーストしたトゥートが編集されました"
+      },
       "admin.sign_up": {
         "heading": ""
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} ブースト",
         "favourited_by": "{{count}} お気に入り"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

@@ -1,17 +1,12 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { MenuContainer, MenuRow } from '@components/Menu'
-import {
-  checkPermission,
-  PERMISSION_MANAGE_REPORTS,
-  PERMISSION_MANAGE_USERS
-} from '@helpers/permissions'
 import { useAppDispatch } from '@root/store'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabNotificationsStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instances/push/utils'
 import {
-  checkInstanceFeature,
   getInstanceNotificationsFilter,
   updateInstanceNotificationsFilter
 } from '@utils/slices/instancesSlice'
@@ -22,32 +17,12 @@ import { Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 
-export const NOTIFICATIONS_FILTERS_DEFAULT: [
-  'follow',
-  'follow_request',
-  'favourite',
-  'reblog',
-  'mention',
-  'poll',
-  'status',
-  'update'
-] = ['follow', 'follow_request', 'favourite', 'reblog', 'mention', 'poll', 'status', 'update']
-
-export const NOTIFICATIONS_FILTERS_ADMIN: {
-  type: 'admin.sign_up' | 'admin.report'
-  permission: number
-}[] = [
-  { type: 'admin.sign_up', permission: PERMISSION_MANAGE_USERS },
-  { type: 'admin.report', permission: PERMISSION_MANAGE_REPORTS }
-]
-
 const TabNotificationsFilters: React.FC<
   TabNotificationsStackScreenProps<'Tab-Notifications-Filters'>
 > = ({ navigation }) => {
   const { t } = useTranslation('screenTabs')
 
-  const hasTypeStatus = useSelector(checkInstanceFeature('notification_type_status'))
-  const hasTypeUpdate = useSelector(checkInstanceFeature('notification_type_update'))
+  const pushFeatures = usePushFeatures()
 
   const dispatch = useAppDispatch()
 
@@ -103,16 +78,7 @@ const TabNotificationsFilters: React.FC<
   return (
     <ScrollView style={{ flex: 1 }}>
       <MenuContainer>
-        {NOTIFICATIONS_FILTERS_DEFAULT.filter(type => {
-          switch (type) {
-            case 'status':
-              return hasTypeStatus
-            case 'update':
-              return hasTypeUpdate
-            default:
-              return true
-          }
-        }).map((type, index) => (
+        {PUSH_DEFAULT(pushFeatures).map((type, index) => (
           <MenuRow
             key={index}
             title={t(`notifications.filters.options.${type}`)}
@@ -120,9 +86,7 @@ const TabNotificationsFilters: React.FC<
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />
         ))}
-        {NOTIFICATIONS_FILTERS_ADMIN.filter(({ permission }) =>
-          checkPermission(permission, profileQuery.data?.role?.permissions)
-        ).map(({ type }) => (
+        {PUSH_ADMIN(pushFeatures, profileQuery.data?.role?.permissions).map(({ type }) => (
           <MenuRow
             key={type}
             title={t(`notifications.filters.options.${type}`)}

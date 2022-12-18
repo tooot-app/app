@@ -395,6 +395,7 @@ declare namespace Mastodon {
       mention: boolean
       poll: boolean
       status: boolean
+      update: boolean
       'admin.sign_up': boolean
       'admin.report': boolean
     }
@@ -405,6 +406,8 @@ declare namespace Mastodon {
     id: string
     following: boolean
     showing_reblogs: boolean
+    notifying?: boolean
+    languages?: string[]
     followed_by: boolean
     blocking: boolean
     blocked_by: boolean

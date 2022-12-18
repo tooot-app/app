@@ -1,4 +1,4 @@
-import apiInstance, { InstanceResponse } from '@api/instance'
+import apiInstance from '@api/instance'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
 import {
@@ -7,10 +7,15 @@ import {
   UseInfiniteQueryOptions
 } from '@tanstack/react-query'
 import apiGeneral from '@api/general'
+import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 
-const queryFunction = ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyUsers>) => {
+const queryFunction = async ({
+  queryKey,
+  pageParam,
+  meta
+}: QueryFunctionContext<QueryKeyUsers>) => {
   const page = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -20,7 +25,7 @@ const queryFunction = ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyUse
         method: 'get',
         url: `${page.reference}/${page.status.id}/${page.type}`,
         params
-      }).then(res => ({ ...res, warnIncomplete: false }))
+      })
     case 'accounts':
       const localInstance = page.account.username === page.account.acct
       if (localInstance) {
@@ -28,59 +33,43 @@ const queryFunction = ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyUse
           method: 'get',
           url: `${page.reference}/${page.account.id}/${page.type}`,
           params
-        }).then(res => ({ ...res, warnIncomplete: false }))
+        })
       } else {
-        const domain = page.account.url.match(
-          /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i
-        )?.[1]
-        if (!domain) {
-          return apiInstance<Mastodon.Account[]>({
+        let res: PagedResponse<Mastodon.Account[]>
+
+        try {
+          const domain = page.account.url.match(
+            /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i
+          )?.[1]
+          if (!domain?.length) {
+            throw new Error()
+          }
+
+          const resLookup = await apiGeneral<Mastodon.Account>({
+            method: 'get',
+            domain,
+            url: 'api/v1/accounts/lookup',
+            params: { acct: page.account.acct }
+          })
+          if (resLookup?.body) {
+            res = await apiGeneral<Mastodon.Account[]>({
+              method: 'get',
+              domain,
+              url: `api/v1/${page.reference}/${resLookup.body.id}/${page.type}`,
+              params
+            })
+            return { ...res, remoteData: true }
+          } else {
+            throw new Error()
+          }
+        } catch {
+          res = await apiInstance<Mastodon.Account[]>({
             method: 'get',
             url: `${page.reference}/${page.account.id}/${page.type}`,
             params
-          }).then(res => ({ ...res, warnIncomplete: true }))
+          })
+          return { ...res, warnIncomplete: true }
         }
-        return apiGeneral<{ accounts: Mastodon.Account[] }>({
-          method: 'get',
-          domain,
-          url: 'api/v2/search',
-          params: {
-            q: `@${page.account.acct}`,
-            type: 'accounts',
-            limit: '1'
-          }
-        })
-          .then(res => {
-            if (res?.body?.accounts?.length === 1) {
-              return apiGeneral<Mastodon.Account[]>({
-                method: 'get',
-                domain,
-                url: `api/v1/${page.reference}/${res.body.accounts[0].id}/${page.type}`,
-                params
-              })
-                .catch(() => {
-                  return apiInstance<Mastodon.Account[]>({
-                    method: 'get',
-                    url: `${page.reference}/${page.account.id}/${page.type}`,
-                    params
-                  }).then(res => ({ ...res, warnIncomplete: true }))
-                })
-                .then(res => ({ ...res, warnIncomplete: false }))
-            } else {
-              return apiInstance<Mastodon.Account[]>({
-                method: 'get',
-                url: `${page.reference}/${page.account.id}/${page.type}`,
-                params
-              }).then(res => ({ ...res, warnIncomplete: true }))
-            }
-          })
-          .catch(() => {
-            return apiInstance<Mastodon.Account[]>({
-              method: 'get',
-              url: `${page.reference}/${page.account.id}/${page.type}`,
-              params
-            }).then(res => ({ ...res, warnIncomplete: true }))
-          })
       }
   }
 }
@@ -90,7 +79,7 @@ const useUsersQuery = ({
   ...queryKeyParams
 }: QueryKeyUsers[1] & {
   options?: UseInfiniteQueryOptions<
-    InstanceResponse<Mastodon.Account[]> & { warnIncomplete: boolean },
+    PagedResponse<Mastodon.Account[]> & { warnIncomplete: boolean; remoteData: boolean },
     AxiosError
   >
 }) => {

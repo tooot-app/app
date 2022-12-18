@@ -54,13 +54,19 @@ const handleError =
       console.error(ctx.bold(' API '), ctx.bold('request'), error)
 
       shouldReportToSentry && Sentry.captureMessage(config.message)
-      return Promise.reject()
+      return Promise.reject(error)
     } else {
       console.error(ctx.bold(' API '), ctx.bold('internal'), error?.message)
 
       shouldReportToSentry && Sentry.captureMessage(config.message)
-      return Promise.reject()
+      return Promise.reject(error)
     }
   }
+
+type LinkFormat = { id: string; isOffset: boolean }
+export type PagedResponse<T = unknown> = {
+  body: T
+  links: { prev?: LinkFormat; next?: LinkFormat }
+}
 
 export { ctx, handleError, userAgent }

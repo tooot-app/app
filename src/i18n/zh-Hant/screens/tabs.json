@@ -3,8 +3,8 @@
     "local": {
       "name": "跟隨中",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "顯示轉嘟",
+        "showReplies": "顯示回覆"
       }
     },
     "public": {
@@ -231,11 +231,14 @@
       "status": {
         "heading": "訂閱使用者的嘟文"
       },
+      "update": {
+        "heading": "轉嘟被編輯"
+      },
       "admin.sign_up": {
-        "heading": "管理員：註冊"
+        "heading": "管理員：使用者註冊"
       },
       "admin.report": {
-        "heading": "管理員：回報"
+        "heading": "管理員：檢舉"
       },
       "howitworks": "了解通知訊息轉發如何工作"
     },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} 人轉嘟",
         "favourited_by": "{{count}} 人喜歡"
-      }
+      },
+      "resultIncomplete": "來自遠端站點的結果不完整"
     }
   }
 }

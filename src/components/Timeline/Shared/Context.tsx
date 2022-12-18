@@ -14,11 +14,13 @@ type ContextType = {
     content: string
     complete: boolean
   }>
+  detectedLanguage?: React.MutableRefObject<string>
 
   highlighted?: boolean
   inThread?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
+  isConversation?: boolean
 }
 const StatusContext = createContext<ContextType>({} as ContextType)
 

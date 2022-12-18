@@ -231,6 +231,9 @@
       "status": {
         "heading": "Дмух від підписників"
       },
+      "update": {
+        "heading": "Передмух був відредагований"
+      },
       "admin.sign_up": {
         "heading": "Адмін: реєстрація"
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} передмухів",
         "favourited_by": "{{count}} улюблених"
-      }
+      },
+      "resultIncomplete": "Результати з віддаленого інстанса неповні"
     }
   }
 }

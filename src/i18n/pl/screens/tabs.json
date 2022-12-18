@@ -3,8 +3,8 @@
     "local": {
       "name": "",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Pokaż podbicia",
+        "showReplies": "Pokaż odpowiedzi"
       }
     },
     "public": {
@@ -231,6 +231,9 @@
       "status": {
         "heading": ""
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": ""
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "",
         "favourited_by": ""
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

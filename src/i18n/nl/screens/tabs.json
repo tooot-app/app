@@ -3,8 +3,8 @@
     "local": {
       "name": "Volgend",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Boosts tonen",
+        "showReplies": "Reacties tonen"
       }
     },
     "public": {
@@ -231,6 +231,9 @@
       "status": {
         "heading": "Toot van geabonneerde gebruikers"
       },
+      "update": {
+        "heading": "De reblog is bewerkt"
+      },
       "admin.sign_up": {
         "heading": "Admin: registreren"
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boostten",
         "favourited_by": "{{count}} markeerden als favoriet"
-      }
+      },
+      "resultIncomplete": "Resultaten van een externe instantie zijn onvolledig"
     }
   }
 }

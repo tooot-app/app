@@ -11,25 +11,45 @@ import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { diffWords } from 'diff'
+import { diffChars, diffWords } from 'diff'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
+const SCRIPTS_WITHOUT_BOUNDARIES = [
+  'my',
+  'zh',
+  'ja',
+  'kar',
+  'km',
+  'lp',
+  'phag',
+  'pwo',
+  'kar',
+  'lana',
+  'th',
+  'bo'
+]
+
 const ContentView: React.FC<{
+  withoutBoundary: boolean
   item: Mastodon.StatusHistory
   prevItem?: Mastodon.StatusHistory
-}> = ({ item, prevItem }) => {
+}> = ({ withoutBoundary, item, prevItem }) => {
   const { colors } = useTheme()
 
-  const changesSpoiler = diffWords(
-    removeHTML(prevItem?.spoiler_text || item.spoiler_text || ''),
-    removeHTML(item.spoiler_text || '')
-  )
-  const changesContent = diffWords(
-    removeHTML(prevItem?.content || item.content),
-    removeHTML(item.content)
-  )
+  const changesSpoiler = withoutBoundary
+    ? diffChars(
+        removeHTML(prevItem?.spoiler_text || item.spoiler_text || ''),
+        removeHTML(item.spoiler_text || '')
+      )
+    : diffWords(
+        removeHTML(prevItem?.spoiler_text || item.spoiler_text || ''),
+        removeHTML(item.spoiler_text || '')
+      )
+  const changesContent = withoutBoundary
+    ? diffChars(removeHTML(prevItem?.content || item.content), removeHTML(item.content))
+    : diffWords(removeHTML(prevItem?.content || item.content), removeHTML(item.content))
 
   return (
     // @ts-ignore
@@ -91,7 +111,7 @@ const ContentView: React.FC<{
 const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>> = ({
   navigation,
   route: {
-    params: { id }
+    params: { id, detectedLanguage }
   }
 }) => {
   const { t } = useTranslation('screenTabs')
@@ -106,12 +126,20 @@ const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>
 
   const dataReversed = data ? [...data].reverse() : []
 
+  const withoutBoundary = !!SCRIPTS_WITHOUT_BOUNDARIES.filter(script =>
+    detectedLanguage?.toLocaleLowerCase().startsWith(script)
+  ).length
+
   return (
     <FlatList
       style={{ flex: 1, minHeight: '100%' }}
       data={dataReversed}
       renderItem={({ item, index }) => (
-        <ContentView item={item} prevItem={dataReversed[index + 1]} />
+        <ContentView
+          withoutBoundary={withoutBoundary}
+          item={item}
+          prevItem={dataReversed[index + 1]}
+        />
       )}
       ItemSeparatorComponent={ComponentSeparator}
     />

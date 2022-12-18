@@ -3,8 +3,8 @@
     "local": {
       "name": "Đang theo dõi",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Hiện lượt đăng lại",
+        "showReplies": "Hiện lượt trả lời"
       }
     },
     "public": {
@@ -231,6 +231,9 @@
       "status": {
         "heading": "Tút từ người đã theo dõi"
       },
+      "update": {
+        "heading": "Đăng lại đã được sửa"
+      },
       "admin.sign_up": {
         "heading": "Admin: đăng ký"
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} đăng lại",
         "favourited_by": "{{count}} thích"
-      }
+      },
+      "resultIncomplete": "Kết quả từ máy chủ khác luôn không đầy đủ"
     }
   }
 }

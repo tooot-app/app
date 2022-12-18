@@ -41,7 +41,7 @@ const menuAccount = ({
 
   const menus: ContextMenu[][] = [[]]
 
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
+  const instanceAccount = useSelector(getInstanceAccount)
   const ownAccount = instanceAccount?.id === account.id
 
   const [enabled, setEnabled] = useState(openChange)

@@ -17,17 +17,18 @@ export type SearchResult = {
   statuses: Mastodon.Status[]
 }
 
-const queryFunction = async ({
-  queryKey
-}: QueryFunctionContext<QueryKeySearch>) => {
+const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeySearch>) => {
   const { type, term, limit = 20 } = queryKey[1]
+  if (!term?.length) {
+    return Promise.reject()
+  }
   const res = await apiInstance<SearchResult>({
     version: 'v2',
     method: 'get',
     url: 'search',
     params: {
+      q: term,
       ...(type && { type }),
-      ...(term && { q: term }),
       limit,
       resolve: true
     }
@@ -35,7 +36,7 @@ const queryFunction = async ({
   return res.body
 }
 
-const useSearchQuery = <T = unknown>({
+const useSearchQuery = <T = SearchResult>({
   options,
   ...queryKeyParams
 }: QueryKeySearch[1] & {

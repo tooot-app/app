@@ -286,7 +286,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                     type: 'editItem',
                     queryKey: params.queryKey,
                     rootQueryKey: params.rootQueryKey,
-                    status: res.body
+                    status: res
                   })
                   break
                 case 'deleteEdit':

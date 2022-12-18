@@ -231,6 +231,9 @@
       "status": {
         "heading": "Publicació d'usuaris subscrits"
       },
+      "update": {
+        "heading": "L'impuls ha sigut editat"
+      },
       "admin.sign_up": {
         "heading": "Administració: Registra"
       },
@@ -348,7 +351,7 @@
       "notInLists": "Altres llistes"
     },
     "attachments": {
-      "name": ""
+      "name": "Multimèdia de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Segueix",
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} impulsats",
         "favourited_by": "{{count}} favorits"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

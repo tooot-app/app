@@ -16,7 +16,6 @@ import {
   ViewToken
 } from 'react-native'
 import { Directions, Gesture, LongPressGestureHandler } from 'react-native-gesture-handler'
-import { LiveTextImageView } from 'react-native-live-text-image-view'
 import { runOnJS, useSharedValue } from 'react-native-reanimated'
 import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -117,22 +116,19 @@ const ScreenImagesViewer = ({
                 justifyContent: 'center'
               }}
             >
-              <LiveTextImageView>
-                <GracefullyImage
-                  uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
-                  blurhash={item.blurhash}
-                  dimension={{
-                    width:
-                      screenRatio > imageRatio
-                        ? (SCREEN_HEIGHT / imageHeight) * imageWidth
-                        : SCREEN_WIDTH,
-                    height:
-                      screenRatio > imageRatio
-                        ? SCREEN_HEIGHT
-                        : (SCREEN_WIDTH / imageWidth) * imageHeight
-                  }}
-                />
-              </LiveTextImageView>
+              <GracefullyImage
+                uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
+                dimension={{
+                  width:
+                    screenRatio > imageRatio
+                      ? (SCREEN_HEIGHT / imageHeight) * imageWidth
+                      : SCREEN_WIDTH,
+                  height:
+                    screenRatio > imageRatio
+                      ? SCREEN_HEIGHT
+                      : (SCREEN_WIDTH / imageWidth) * imageHeight
+                }}
+              />
             </View>
           }
         />

@@ -10,10 +10,9 @@ export const updateInstancePushAlert = createAsyncThunk(
     alerts: InstanceLatest['push']['alerts']
   }): Promise<InstanceLatest['push']['alerts']> => {
     const formData = new FormData()
-    Object.keys(alerts).map(alert =>
-      // @ts-ignore
-      formData.append(`data[alerts][${alert}]`, alerts[alert].value.toString())
-    )
+    for (const [key, value] of Object.entries(alerts)) {
+      formData.append(`data[alerts][${key}]`, value.toString())
+    }
 
     await apiInstance<Mastodon.PushSubscription>({
       method: 'put',

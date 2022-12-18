@@ -102,6 +102,7 @@ const addInstance = createAsyncThunk(
             mention: true,
             poll: true,
             status: true,
+            update: true,
             'admin.sign_up': false,
             'admin.report': false
           },

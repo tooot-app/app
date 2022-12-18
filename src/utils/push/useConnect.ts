@@ -1,12 +1,13 @@
 import apiGeneral from '@api/general'
-import { handleError } from '@api/helpers'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
 import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
+import { useQuery } from '@tanstack/react-query'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
+import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,16 +26,22 @@ const pushUseConnect = () => {
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
   const pushEnabled = instances.filter(instance => instance.push.global)
 
-  const connect = () => {
-    apiTooot({
-      method: 'get',
-      url: `/push/connect/${expoToken}`
-    })
-      .then(() => Notifications.setBadgeCountAsync(0))
-      .catch(error => {
-        handleError({ message: 'Push connect error', captureResponse: true })
-
-        Notifications.setBadgeCountAsync(0)
+  const connectQuery = useQuery<any, AxiosError>(
+    ['tooot', { endpoint: 'push/connect' }],
+    () =>
+      apiTooot<Mastodon.Status>({
+        method: 'get',
+        url: `push/connect/${expoToken}`
+      }),
+    {
+      enabled: false,
+      retry: 10,
+      retryOnMount: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      onSettled: () => Notifications.setBadgeCountAsync(0),
+      onError: error => {
         if (error?.status == 404) {
           displayMessage({
             type: 'danger',
@@ -72,21 +79,22 @@ const pushUseConnect = () => {
             }
           })
         }
-      })
-  }
+      }
+    }
+  )
 
   useEffect(() => {
     Sentry.setContext('Push', { expoToken, pushEnabledCount: pushEnabled.length })
 
     if (expoToken && pushEnabled.length) {
-      connect()
+      connectQuery.refetch()
     }
 
     const appStateListener = AppState.addEventListener('change', state => {
       if (expoToken && pushEnabled.length && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
           if (count > 0) {
-            connect()
+            connectQuery.refetch()
           }
         })
       }

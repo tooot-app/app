@@ -231,6 +231,9 @@
       "status": {
         "heading": "订阅用户的嘟文"
       },
+      "update": {
+        "heading": "转嘟被编辑"
+      },
       "admin.sign_up": {
         "heading": "管理员：用户注册"
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} 人转嘟",
         "favourited_by": "{{count}} 人喜欢"
-      }
+      },
+      "resultIncomplete": "来自远程实例的结果不完整"
     }
   }
 }

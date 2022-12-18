@@ -231,6 +231,9 @@
       "status": {
         "heading": "Pouet des utilisateurs inscrits"
       },
+      "update": {
+        "heading": ""
+      },
       "admin.sign_up": {
         "heading": ""
       },
@@ -395,7 +398,8 @@
       "statuses": {
         "reblogged_by": "{{count}} boosté",
         "favourited_by": "{{count}} mis en favori"
-      }
+      },
+      "resultIncomplete": ""
     }
   }
 }

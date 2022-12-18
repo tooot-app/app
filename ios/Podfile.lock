@@ -303,8 +303,6 @@ PODS:
     - React-Core
   - react-native-language-detection (0.2.2):
     - React
-  - react-native-live-text-image-view (0.4.0):
-    - React-Core
   - react-native-menu (0.7.2):
     - React
   - react-native-netinfo (9.3.7):
@@ -428,9 +426,9 @@ PODS:
   - RNScreens (3.18.2):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.11.0):
+  - RNSentry (4.12.0):
     - React-Core
-    - Sentry/HybridSDK (= 7.31.2)
+    - Sentry/HybridSDK (= 7.31.3)
   - RNShareMenu (6.0.0):
     - React
   - RNSVG (13.6.0):
@@ -441,7 +439,7 @@ PODS:
   - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.13)
-  - Sentry/HybridSDK (7.31.2)
+  - Sentry/HybridSDK (7.31.3)
   - Swime (3.0.6)
   - Yoga (1.14.0)
 
@@ -495,7 +493,6 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-ios-context-menu (from `../node_modules/react-native-ios-context-menu`)
   - react-native-language-detection (from `../node_modules/react-native-language-detection`)
-  - react-native-live-text-image-view (from `../node_modules/react-native-live-text-image-view`)
   - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -630,8 +627,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-ios-context-menu"
   react-native-language-detection:
     :path: "../node_modules/react-native-language-detection"
-  react-native-live-text-image-view:
-    :path: "../node_modules/react-native-live-text-image-view"
   react-native-menu:
     :path: "../node_modules/@react-native-menu/menu"
   react-native-netinfo:
@@ -740,7 +735,6 @@ SPEC CHECKSUMS:
   react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
   react-native-ios-context-menu: b170594b4448c0cd10c79e13432216bac99de1ac
   react-native-language-detection: f414937fa715108ab50a6269a3de0bcb95e4ceb0
-  react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
   react-native-menu: 8e172cfcf0e42e92f028e7781eddf84d430cae24
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-pager-view: 54bed894cecebe28cede54c01038d9d1e122de43
@@ -765,12 +759,12 @@ SPEC CHECKSUMS:
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
-  RNSentry: f052387ebe939949c74c2cae0c850e76f6d14ddb
+  RNSentry: 4c09f4dd9740cb9b33e94303de5b6d0dbeb0737d
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
-  Sentry: b15765d11769852fe78c9add942f7df60ed5dbf5
+  Sentry: 08884c523575ec0f6690d94ed3ccb0246a1600bf
   Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
 

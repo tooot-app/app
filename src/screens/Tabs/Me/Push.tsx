@@ -3,13 +3,17 @@ import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import browserPackage from '@helpers/browserPackage'
-import { checkPermission } from '@helpers/permissions'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
-import { PUSH_ADMIN, PUSH_DEFAULT, setChannels } from '@utils/slices/instances/push/utils'
+import {
+  PUSH_ADMIN,
+  PUSH_DEFAULT,
+  setChannels,
+  usePushFeatures
+} from '@utils/slices/instances/push/utils'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -73,9 +77,11 @@ const TabMePush: React.FC = () => {
     }
   }, [appsQuery.data?.vapid_key])
 
+  const pushFeatures = usePushFeatures()
+
   const alerts = () =>
     instancePush?.alerts
-      ? PUSH_DEFAULT.map(alert => (
+      ? PUSH_DEFAULT(pushFeatures).map(alert => (
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
@@ -86,7 +92,7 @@ const TabMePush: React.FC = () => {
                 updateInstancePushAlert({
                   alerts: {
                     ...instancePush?.alerts,
-                    [alert]: instancePush?.alerts[alert]
+                    [alert]: !instancePush?.alerts[alert]
                   }
                 })
               )
@@ -98,26 +104,24 @@ const TabMePush: React.FC = () => {
   const profileQuery = useProfileQuery()
   const adminAlerts = () =>
     profileQuery.data?.role?.permissions
-      ? PUSH_ADMIN.map(({ type, permission }) =>
-          checkPermission(permission, profileQuery.data.role?.permissions) ? (
-            <MenuRow
-              key={type}
-              title={t(`me.push.${type}.heading`)}
-              switchDisabled={!pushEnabled || !instancePush.global}
-              switchValue={instancePush?.alerts[type]}
-              switchOnValueChange={() =>
-                dispatch(
-                  updateInstancePushAlert({
-                    alerts: {
-                      ...instancePush?.alerts,
-                      [type]: instancePush?.alerts[type]
-                    }
-                  })
-                )
-              }
-            />
-          ) : null
-        )
+      ? PUSH_ADMIN(pushFeatures, profileQuery.data?.role?.permissions).map(({ type }) => (
+          <MenuRow
+            key={type}
+            title={t(`me.push.${type}.heading`)}
+            switchDisabled={!pushEnabled || !instancePush.global}
+            switchValue={instancePush?.alerts[type]}
+            switchOnValueChange={() =>
+              dispatch(
+                updateInstancePushAlert({
+                  alerts: {
+                    ...instancePush?.alerts,
+                    [type]: !instancePush?.alerts[type]
+                  }
+                })
+              )
+            }
+          />
+        ))
       : null
 
   return (
@@ -164,7 +168,6 @@ const TabMePush: React.FC = () => {
                 <MenuRow
                   title={t('me.push.decode.heading')}
                   description={t('me.push.decode.description')}
-                  loading={instancePush?.decode}
                   switchDisabled={!pushEnabled || !instancePush?.global}
                   switchValue={instancePush?.decode}
                   switchOnValueChange={() =>
@@ -176,7 +179,7 @@ const TabMePush: React.FC = () => {
                   iconBack='ExternalLink'
                   onPress={async () =>
                     WebBrowser.openBrowserAsync('https://tooot.app/how-push-works', {
-                      browserPackage: await browserPackage()
+                      ...(await browserPackage())
                     })
                   }
                 />

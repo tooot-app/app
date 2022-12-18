@@ -156,6 +156,7 @@ const instancesMigration = {
               mention: instance.push.alerts.mention.value,
               poll: instance.push.alerts.poll.value,
               status: instance.push.alerts.status.value,
+              update: false,
               'admin.sign_up': false,
               'admin.report': false
             }

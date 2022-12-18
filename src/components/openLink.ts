@@ -17,7 +17,6 @@ const openLink = async (url: string, navigation?: any) => {
 
   const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: {}) => {
     if (navigation) {
-      // @ts-ignore
       navigation.push(page, options)
     } else {
       // @ts-ignore
@@ -93,7 +92,7 @@ const openLink = async (url: string, navigation?: any) => {
       await WebBrowser.openBrowserAsync(encodeURI(url), {
         dismissButtonStyle: 'close',
         enableBarCollapsing: true,
-        browserPackage: await browserPackage()
+        ...(await browserPackage())
       })
       break
     case 'external':

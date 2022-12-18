@@ -65,7 +65,6 @@ const MenuRow: React.FC<Props> = ({
     >
       <TapGestureHandler
         onHandlerStateChange={async ({ nativeEvent }) => {
-          if (typeof iconBack !== 'string') return // Let icon back handles the gesture
           if (nativeEvent.state === State.ACTIVE && !loading) {
             if (screenReaderEnabled && switchOnValueChange) {
               switchOnValueChange()
@@ -86,7 +85,7 @@ const MenuRow: React.FC<Props> = ({
           >
             <View
               style={{
-                flexGrow: 3,
+                flexShrink: 3,
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginRight: StyleConstants.Spacing.M
