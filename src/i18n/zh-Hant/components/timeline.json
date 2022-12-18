@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "隱藏內容"
     },
-    "filtered": "已過濾：{{phrase}}。",
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
     "fullConversation": "閱讀全部對話",
     "translate": {
       "default": "翻譯",
