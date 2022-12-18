@@ -1,5 +1,9 @@
 [
   {
+    "feature": "account_follow_notify",
+    "version": 3.3
+  },
+  {
     "feature": "notification_type_status",
     "version": 3.3
   },

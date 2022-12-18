@@ -406,6 +406,8 @@ declare namespace Mastodon {
     id: string
     following: boolean
     showing_reblogs: boolean
+    notifying?: boolean
+    languages?: string[]
     followed_by: boolean
     blocking: boolean
     blocked_by: boolean
