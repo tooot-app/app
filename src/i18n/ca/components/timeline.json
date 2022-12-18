@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "Contingut ocult"
     },
-    "filtered": "Filtrat: {{phrase}}.",
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
     "fullConversation": "Llegeix conversacions",
     "translate": {
       "default": "Tradueix",
