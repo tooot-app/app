@@ -100,7 +100,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               </DropdownMenu.Item>
               <DropdownMenu.CheckboxItem
                 key='showBoosts'
-                value={instanceFollowingPage.showBoosts ? 'on' : 'mixed'}
+                value={instanceFollowingPage.showBoosts ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
@@ -120,7 +120,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               </DropdownMenu.CheckboxItem>
               <DropdownMenu.CheckboxItem
                 key='showReplies'
-                value={instanceFollowingPage.showReplies ? 'on' : 'mixed'}
+                value={instanceFollowingPage.showReplies ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
