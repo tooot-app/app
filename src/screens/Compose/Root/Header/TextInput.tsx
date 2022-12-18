@@ -33,8 +33,6 @@ const ComposeTextInput: React.FC = () => {
         paddingBottom: StyleConstants.Spacing.M,
         marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
         color: colors.primaryDefault,
-        borderBottomWidth: 0.5,
-        borderBottomColor: colors.backgroundDefaultTransparent,
         fontSize: adaptedFontsize,
         lineHeight: adaptedLineheight
       }}
