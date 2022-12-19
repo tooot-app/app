@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Nutzer blockieren",
-      "action_true": "User entblocken"
+      "action_true": "User entblocken",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Nutzer melden und blockieren"
+      "action": "Nutzer melden und blockieren",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Instanz {{instance}} blockieren",
       "alert": {
         "title": "{{instance}} wirklich blockieren?",
-        "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!",
-        "buttons": {
-          "confirm": "Bestätigen"
-        }
+        "message": "Üblicherweise kannst du einen User stummschalten oder blockieren.\nBlockierst du hingegegen eine Instanz, wird deren gesamter Inhalt samt Usern, die dir von dieser Instanz folgen, entfernt!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Tröt löschen",
       "alert": {
         "title": "Löschen bestätigen?",
-        "message": "Alle Boosts, Sterne und Antworten werden entfernt.",
-        "buttons": {
-          "confirm": "Bestätigen"
-        }
+        "message": "Alle Boosts, Sterne und Antworten werden entfernt."
       }
     },
     "deleteEdit": {
       "action": "Tröt neu entwerfen",
       "alert": {
         "title": "Beitrag wirklich entfernen?",
-        "message": "Alle Boosts und Likes inklusive der Antworten werden gelöscht.",
-        "buttons": {
-          "confirm": "Bestätigen"
-        }
+        "message": "Alle Boosts und Likes inklusive der Antworten werden gelöscht."
       }
     },
     "mute": {
