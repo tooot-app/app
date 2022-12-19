@@ -31,7 +31,7 @@
         "notification": "{{name}} ha impulsat la teva publicació"
       },
       "update": "L'impuls ha sigut editat",
-      "admin.sign_up": "",
+      "admin.sign_up": "{{name}} s'ha unit a la instància",
       "admin.report": ""
     },
     "actions": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "Afegeix aquesta publicació a marcadors",
         "function": "Afegeix la publicació a marcadors"
       },
-      "openReport": ""
+      "openReport": "Obre la denúncia"
     },
     "actionsUsers": {
       "reblogged_by": {
@@ -92,10 +92,10 @@
       "expandHint": "Contingut ocult"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Mostra-ho de totes maneres",
+      "match_v1": "Filtrat: {{phrase}}.",
+      "match_v2_one": "Filtrat per {{filters}}.",
+      "match_v2_other": "Filtrat per {{count}} filtres, {{filters}}."
     },
     "fullConversation": "Llegeix conversacions",
     "translate": {
