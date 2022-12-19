@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Bloqueja l'usuari",
-      "action_true": "Deixa de bloquejar l'usuari"
+      "action_true": "Deixa de bloquejar l'usuari",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Denuncia i bloqueja l'usuari"
+      "action": "Denuncia i bloqueja l'usuari",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Bloquejar la instància {{instance}}",
       "alert": {
         "title": "Vols bloquejar la instància {{instance}}?",
-        "message": "Pots silenciar o bloquejar a un usuari.\n\nDesprés de bloquejar una instància, tot el seu contingut, amb els seus seguidors, seran esborrats!",
-        "buttons": {
-          "confirm": "Confirma"
-        }
+        "message": "Pots silenciar o bloquejar a un usuari.\n\nDesprés de bloquejar una instància, tot el seu contingut, amb els seus seguidors, seran esborrats!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Elimina la publicació",
       "alert": {
         "title": "Vols eliminar-ho?",
-        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
-        "buttons": {
-          "confirm": "Confirma"
-        }
+        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes."
       }
     },
     "deleteEdit": {
       "action": "Elimina i torna-ho a publicar",
       "alert": {
         "title": "Vols eliminar i tornar-ho a publicar?",
-        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
-        "buttons": {
-          "confirm": "Confirma"
-        }
+        "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes."
       }
     },
     "mute": {
