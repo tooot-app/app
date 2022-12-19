@@ -1,0 +1,31 @@
+{
+  "buttons": {
+    "OK": "",
+    "apply": "",
+    "cancel": "",
+    "discard": "",
+    "continue": "",
+    "create": "",
+    "delete": "",
+    "done": ""
+  },
+  "customEmoji": {
+    "accessibilityLabel": ""
+  },
+  "message": {
+    "success": {
+      "message": ""
+    },
+    "warning": {
+      "message": ""
+    },
+    "error": {
+      "message": ""
+    }
+  },
+  "separator": "",
+  "discard": {
+    "title": "",
+    "message": ""
+  }
+}
