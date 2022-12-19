@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Bloquear usuario",
-      "action_true": "Desbloquear usuario"
+      "action_true": "Desbloquear usuario",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Reportar y bloquear usuario"
+      "action": "Reportar y bloquear usuario",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Bloquear instancia {{instance}}",
       "alert": {
         "title": "¿Confirmar bloqueo de la instancia {{instance}}?",
-        "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán.",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán."
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Eliminar toot",
       "alert": {
         "title": "¿Confirmar eliminación?",
-        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas."
       }
     },
     "deleteEdit": {
       "action": "Eliminar toot y volver a publicar",
       "alert": {
         "title": "¿Confirmar eliminación y volver a publicar?",
-        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas.",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas."
       }
     },
     "mute": {
