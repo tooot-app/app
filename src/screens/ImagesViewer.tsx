@@ -1,6 +1,7 @@
 import GracefullyImage from '@components/GracefullyImage'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useState } from 'react'
@@ -39,7 +40,7 @@ const ScreenImagesViewer = ({
 
   const insets = useSafeAreaInsets()
 
-  const { mode } = useTheme()
+  const { mode, colors } = useTheme()
   const { t } = useTranslation('screenImageViewer')
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
@@ -55,7 +56,7 @@ const ScreenImagesViewer = ({
           t('common:buttons.cancel')
         ],
         cancelButtonIndex: 2,
-        userInterfaceStyle: mode
+        ...androidActionSheetStyles(colors)
       },
       async buttonIndex => {
         switch (buttonIndex) {
@@ -181,7 +182,7 @@ const ScreenImagesViewer = ({
                 t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2,
-              userInterfaceStyle: mode
+              ...androidActionSheetStyles(colors)
             },
             async buttonIndex => {
               switch (buttonIndex) {

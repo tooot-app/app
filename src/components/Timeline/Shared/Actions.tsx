@@ -2,6 +2,7 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
@@ -99,7 +100,8 @@ const TimelineActions: React.FC = () => {
             t('shared.actions.reblogged.options.unlisted'),
             t('common:buttons.cancel')
           ],
-          cancelButtonIndex: 2
+          cancelButtonIndex: 2,
+          ...androidActionSheetStyles(colors)
         },
         (selectedIndex: number) => {
           switch (selectedIndex) {

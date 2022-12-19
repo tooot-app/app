@@ -2,6 +2,7 @@ import { emojis } from '@components/Emojis'
 import EmojisContext from '@components/Emojis/helpers/EmojisContext'
 import Icon from '@components/Icon'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -16,7 +17,7 @@ const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation('screenCompose')
-  const { colors, mode } = useTheme()
+  const { colors } = useTheme()
   const instanceConfigurationStatusMaxAttachments = useSelector(
     getInstanceConfigurationStatusMaxAttachments,
     () => true
@@ -89,7 +90,7 @@ const ComposeActions: React.FC = () => {
             t('common:buttons.cancel')
           ],
           cancelButtonIndex: 4,
-          userInterfaceStyle: mode
+          ...androidActionSheetStyles(colors)
         },
         buttonIndex => {
           switch (buttonIndex) {

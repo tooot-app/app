@@ -1,6 +1,7 @@
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { LOCALES } from '@root/i18n/locales'
 import { useAppDispatch } from '@root/store'
@@ -15,6 +16,7 @@ import {
   getSettingsStaticEmoji,
   changeStaticEmoji
 } from '@utils/slices/settingsSlice'
+import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +28,7 @@ const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()
   const dispatch = useAppDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
+  const { colors } = useTheme()
   const { t, i18n } = useTranslation('screenTabs')
 
   const settingsFontsize = useSelector(getSettingsFontsize)
@@ -71,7 +74,8 @@ const SettingsApp: React.FC = () => {
                 t('me.settings.theme.options.dark'),
                 t('common:buttons.cancel')
               ],
-              cancelButtonIndex: 3
+              cancelButtonIndex: 3,
+              ...androidActionSheetStyles(colors)
             },
             buttonIndex => {
               switch (buttonIndex) {
@@ -105,7 +109,8 @@ const SettingsApp: React.FC = () => {
                 t('me.settings.darkTheme.options.darker'),
                 t('common:buttons.cancel')
               ],
-              cancelButtonIndex: 2
+              cancelButtonIndex: 2,
+              ...androidActionSheetStyles(colors)
             },
             buttonIndex => {
               switch (buttonIndex) {
@@ -135,7 +140,8 @@ const SettingsApp: React.FC = () => {
                 t('me.settings.browser.options.external'),
                 t('common:buttons.cancel')
               ],
-              cancelButtonIndex: 2
+              cancelButtonIndex: 2,
+              ...androidActionSheetStyles(colors)
             },
             buttonIndex => {
               switch (buttonIndex) {
