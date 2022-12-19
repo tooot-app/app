@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Datenschutz",
-    "message": "Bitte geben Sie nicht die Identität anderer Nutzer preis, wie z. B. Benutzername, Avatar, etc. Vielen Dank!",
-    "button": "Bestätigen"
+    "message": "Bitte geben Sie nicht die Identität anderer Nutzer preis, wie z. B. Benutzername, Avatar, etc. Vielen Dank!"
   },
   "localCorrupt": {
     "message": "Login abgelaufen, bitte erneut anmelden"
