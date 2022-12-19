@@ -8,7 +8,7 @@
     "create": "Crea",
     "delete": "Esborra",
     "done": "Fet",
-    "confirm": ""
+    "confirm": "Confirma"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalitzat {{emoji}}"
