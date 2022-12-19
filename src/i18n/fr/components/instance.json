@@ -1,9 +1,9 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "URL de l’instance"
     },
-    "whitelisted": "",
+    "whitelisted": "Il peut s’agir d’une instance sur liste blanche à partir de laquelle tooot ne peut pas récupérer de données avant de se connecter.",
     "button": "Connexion",
     "information": {
       "name": "Nom",
