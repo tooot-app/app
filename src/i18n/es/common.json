@@ -8,7 +8,7 @@
     "create": "Crear",
     "delete": "Borrar",
     "done": "Hecho",
-    "confirm": ""
+    "confirm": "Confirmar"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizado {{emoji}}"
