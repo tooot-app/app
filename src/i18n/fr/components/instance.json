@@ -21,7 +21,7 @@
   "update": {
     "alert": {
       "title": "Connecté à cette instance",
-      "message": "Vous pouvez vous connecter à un autre compte, en maintenant un compte connecté existant"
+      "message": "Vous pouvez vous connecter à un autre compte, en conservant le compte connecté existant"
     }
   }
 }
