@@ -93,9 +93,9 @@
     },
     "filtered": {
       "reveal": "Montrer quand même",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "match_v1": "Filtré : {{phrase}}.",
+      "match_v2_one": "Filtré par {{filters}}.",
+      "match_v2_other": "Filtré par {{count}} filtres, {{filters}}."
     },
     "fullConversation": "Conversations lues",
     "translate": {
