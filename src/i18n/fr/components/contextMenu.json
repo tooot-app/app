@@ -4,9 +4,9 @@
     "title": "Actions de l'utilisateur",
     "following": {
       "action_false": "Suivre l'utilisateur",
-      "action_true": ""
+      "action_true": "Ne plus suivre l'utilisateur"
     },
-    "inLists": "",
+    "inLists": "Gérer l'utilisateur des listes",
     "mute": {
       "action_false": "Rendre muet l'utilisateur",
       "action_true": "Rendre la parole"
@@ -16,12 +16,12 @@
       "action_true": "Débloquer l'utilisateur"
     },
     "reports": {
-      "action": ""
+      "action": "Signaler et bloquer un utilisateur"
     }
   },
   "at": {
     "direct": "Message direct",
-    "public": ""
+    "public": "Message public"
   },
   "copy": {
     "action": "Copier le Pouet",
