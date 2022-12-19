@@ -4,8 +4,8 @@ import { getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
-import { Platform, StyleSheet, TextStyle } from 'react-native'
+import React from 'react'
+import { Platform, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
@@ -36,23 +36,19 @@ const ParseEmojis = React.memo(
     )
 
     const { colors, theme } = useTheme()
-    const styles = useMemo(() => {
-      return StyleSheet.create({
-        text: {
-          color: colors.primaryDefault,
-          fontSize: adaptedFontsize,
-          lineHeight: adaptedLineheight
-        },
-        image: {
-          width: adaptedFontsize,
-          height: adaptedFontsize,
-          ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
-        }
-      })
-    }, [theme, adaptiveFontsize])
 
     return (
-      <CustomText style={[styles.text, style]} fontWeight={fontBold ? 'Bold' : undefined}>
+      <CustomText
+        style={[
+          {
+            color: colors.primaryDefault,
+            fontSize: adaptedFontsize,
+            lineHeight: adaptedLineheight
+          },
+          style
+        ]}
+        fontWeight={fontBold ? 'Bold' : undefined}
+      >
         {emojis ? (
           content
             .split(regexEmoji)
@@ -73,7 +69,14 @@ const ParseEmojis = React.memo(
                     return (
                       <CustomText key={emojiShortcode + i}>
                         {i === 0 ? ' ' : undefined}
-                        <FastImage source={{ uri }} style={styles.image} />
+                        <FastImage
+                          source={{ uri }}
+                          style={{
+                            width: adaptedFontsize,
+                            height: adaptedFontsize,
+                            transform: [{ translateY: Platform.OS === 'ios' ? -1 : 2 }]
+                          }}
+                        />
                       </CustomText>
                     )
                   } else {

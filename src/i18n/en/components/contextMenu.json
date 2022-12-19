@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Block user",
-      "action_true": "Unblock user"
+      "action_true": "Unblock user",
+      "alert": {
+        "title": "Confirm blocking user @{{username}} ?"
+      }
     },
     "reports": {
-      "action": "Report and block user"
+      "action": "Report and block user",
+      "alert": {
+        "title": "Confirm report and blocking user @{{username}} ?"
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Block instance {{instance}}",
       "alert": {
         "title": "Confirm blocking instance {{instance}} ?",
-        "message": "Mostly you can mute or block certain user.\n\nAfter blocking instance, all its content including followers from this instance will be removed!",
-        "buttons": {
-          "confirm": "Confirm"
-        }
+        "message": "Mostly you can mute or block certain user.\n\nAfter blocking instance, all its content including followers from this instance will be removed!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Delete toot",
       "alert": {
         "title": "Confirm deleting?",
-        "message": "All boosts and favourites will be cleared, including all replies.",
-        "buttons": {
-          "confirm": "Confirm"
-        }
+        "message": "All boosts and favourites will be cleared, including all replies."
       }
     },
     "deleteEdit": {
       "action": "Delete toot and repost",
       "alert": {
         "title": "Confirm deleting and repost?",
-        "message": "All boosts and favourites will be cleared, including all replies.",
-        "buttons": {
-          "confirm": "Confirm"
-        }
+        "message": "All boosts and favourites will be cleared, including all replies."
       }
     },
     "mute": {

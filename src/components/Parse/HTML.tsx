@@ -135,7 +135,7 @@ const renderNode = ({
                 size={adaptedFontsize}
                 style={{
                   marginLeft: StyleConstants.Spacing.XS,
-                  ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
+                  transform: [{ translateY: Platform.OS === 'ios' ? -1 : 2 }]
                 }}
               />
             ) : null}
