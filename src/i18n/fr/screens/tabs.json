@@ -3,15 +3,15 @@
     "local": {
       "name": "Suit",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Afficher les boosts",
+        "showReplies": "Afficher les réponses"
       }
     },
     "public": {
       "segments": {
         "federated": "Fédéré",
         "local": "Local",
-        "trending": ""
+        "trending": "Tendance"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrer",
       "accessibilityHint": "Filtrer les types de notifications affichés",
-      "title": "",
+      "title": "Afficher les notifications",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Demande d'abonnement",
@@ -55,7 +55,7 @@
         "name": "Favoris"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtags suivis"
       },
       "fontSize": {
         "name": "Taille de la police de Pouet"
@@ -67,25 +67,25 @@
         "name": "Liste : {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Utilisateurs dans la liste : {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Créer une liste"
       },
       "listEdit": {
-        "name": ""
+        "name": "Modifier les détails de la liste"
       },
       "lists": {
         "name": "Listes"
       },
       "push": {
-        "name": "Push de Notification"
+        "name": "Push de notification"
       },
       "profile": {
         "name": "Modifier le profil"
       },
       "profileName": {
-        "name": "Editer le nom d'affichage"
+        "name": "Éditer le nom d'affichage"
       },
       "profileNote": {
         "name": "Éditer la description"
@@ -114,33 +114,33 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gérer les utilisateurs",
+      "error": "Supprimer l'utilisateur de la liste",
+      "empty": "Aucun utilisateur ajouté dans cette liste"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Modifier les détails de la liste",
+      "title": "Titre",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Montrer les réponses à :",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Personne",
+          "list": "Un membre de la liste",
+          "followed": "N'importe quel utilisateur suivi"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Supprimer la liste",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Supprimer la liste \"{{list}}\" ?",
+        "message": "Cette action ne peut être annulé."
       }
     },
     "profile": {
       "feedback": {
         "succeed": "{{type}} mis à jour",
-        "failed": "{{type}} Échec de la mise à jour, veuillez ré-essayer"
+        "failed": "La mise à jour de {{type}} a échoué, veuillez réessayer"
       },
       "root": {
         "name": {
@@ -178,13 +178,13 @@
           "description": "Nécessite que vous approuviez manuellement chaque abonné·e"
         },
         "bot": {
-          "title": "Compte Bot",
+          "title": "Compte bot",
           "description": "Ce compte effectue principalement des actions automatisées et peut ne pas être surveillé"
         }
       },
       "fields": {
         "group": "Groupe {{index}}",
-        "label": "Étiquette",
+        "label": "Libellé",
         "content": "Contenu"
       },
       "mediaSelectionFailed": "Le traitement de l'image a échoué. Veuillez réessayer."
@@ -196,8 +196,8 @@
         "settings": "Activer dans les paramètres"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Le serveur n'est pas configuré pour le push",
+        "description": "Veuillez contacter l'administrateur de votre serveur pour configurer le support push"
       },
       "global": {
         "heading": "Activer pour {{acct}}",
@@ -205,13 +205,13 @@
       },
       "decode": {
         "heading": "Détails du message",
-        "description": "Les messages acheminés par le serveur de tooot sont chiffrés, mais vous pouvez choisir de décoder le message sur le serveur. Le code source de notre serveur est open source et aucune politique de log."
+        "description": "Les messages acheminés par le serveur de tooot sont chiffrés, mais vous pouvez choisir de décoder le message sur le serveur. Le code source de notre serveur est open source et il n'y a aucune politique de log."
       },
       "default": {
         "heading": "Par défaut"
       },
       "follow": {
-        "heading": "Nouvel abonné"
+        "heading": "Nouveau⋅elle abonné⋅e"
       },
       "follow_request": {
         "heading": "Demande d'abonnement"
@@ -229,16 +229,16 @@
         "heading": "Mise à jour du sondage"
       },
       "status": {
-        "heading": "Pouet des utilisateurs inscrits"
+        "heading": "Pouet des utilisateurs auxquels vous êtes abonnés"
       },
       "update": {
-        "heading": ""
+        "heading": "Le reblog a été édité"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Admin : s'inscrire"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Admin : signalement"
       },
       "howitworks": "Apprenez comment cela fonctionne"
     },
@@ -261,7 +261,7 @@
         "button": "Se déconnecter",
         "alert": {
           "title": "Déconnexion?",
-          "message": "Après vous être déconnecté, vous devez vous reconnecter",
+          "message": "Après vous être déconnecté, vous devrez vous reconnecter",
           "buttons": {
             "logout": "Déconnexion"
           }
@@ -317,7 +317,7 @@
       "contact": {
         "heading": "Contacter tooot"
       },
-      "version": "Version {{version}}",
+      "version": "Version v{{version}}",
       "instanceVersion": "Version de Mastodon v{{version}}"
     },
     "switch": {
@@ -346,12 +346,12 @@
       "suspended": "Compte suspendu par les modérateurs de votre serveur"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Listes de @{{username}}",
+      "inLists": "Dans les listes",
+      "notInLists": "Autres listes"
     },
     "attachments": {
-      "name": ""
+      "name": "Média de <0 /><1></1>"
     },
     "hashtag": {
       "follow": "Suivre",
@@ -377,7 +377,7 @@
           }
         },
         "trending": {
-          "tags": ""
+          "tags": "Tags tendance"
         }
       },
       "sections": {
@@ -399,7 +399,7 @@
         "reblogged_by": "{{count}} boosté",
         "favourited_by": "{{count}} mis en favori"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Les résultats d'une instance distante sont incomplets"
     }
   }
 }

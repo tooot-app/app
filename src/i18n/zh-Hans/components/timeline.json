@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "隐藏内容"
     },
-    "filtered": "已过滤：{{phrase}}。",
+    "filtered": {
+      "reveal": "继续显示",
+      "match_v1": "已过滤：{{phrase}}。",
+      "match_v2_one": "由 {{filters}} 过滤。",
+      "match_v2_other": "由 {{count}} 个过滤器 {{filters}} 过滤。"
+    },
     "fullConversation": "阅读全部对话",
     "translate": {
       "default": "翻译",

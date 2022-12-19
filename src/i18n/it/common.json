@@ -7,7 +7,8 @@
     "continue": "Continua",
     "create": "",
     "delete": "",
-    "done": ""
+    "done": "",
+    "confirm": "Ho capito"
   },
   "customEmoji": {
     "accessibilityLabel": "Emoji personalizzata {{emoji}}"

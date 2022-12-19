@@ -7,7 +7,8 @@
     "continue": "Fortsätt",
     "create": "Skapa",
     "delete": "Radera",
-    "done": "Klar"
+    "done": "Klar",
+    "confirm": "Bekräfta"
   },
   "customEmoji": {
     "accessibilityLabel": "Anpassad emoji {{emoji}}"

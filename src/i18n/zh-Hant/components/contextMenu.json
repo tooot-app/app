@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "封鎖使用者",
-      "action_true": "解除封鎖使用者"
+      "action_true": "解除封鎖使用者",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "檢舉並封鎖使用者"
+      "action": "檢舉並封鎖使用者",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "封鎖站點 {{instance}}",
       "alert": {
         "title": "確認封鎖站點 {{instance}}？",
-        "message": "多數情況下，靜音或封鎖特定使用者即可。\n\n封鎖之後，來自此站點的所有內容將被移除。",
-        "buttons": {
-          "confirm": "確認"
-        }
+        "message": "多數情況下，靜音或封鎖特定使用者即可。\n\n封鎖之後，來自此站點的所有內容將被移除。"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "刪除嘟文",
       "alert": {
         "title": "確認刪除？",
-        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。",
-        "buttons": {
-          "confirm": "確認"
-        }
+        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。"
       }
     },
     "deleteEdit": {
       "action": "刪除嘟文並重新發佈",
       "alert": {
         "title": "確認刪除並重新發佈？",
-        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。",
-        "buttons": {
-          "confirm": "確認"
-        }
+        "message": "所有轉嘟及最愛將被清除，也包含所有回覆。"
       }
     },
     "mute": {

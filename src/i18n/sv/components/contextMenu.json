@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Blockera användare",
-      "action_true": "Avblockera användare"
+      "action_true": "Avblockera användare",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Rapportera och blockera användare"
+      "action": "Rapportera och blockera användare",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Blockera instansen {{instance}}",
       "alert": {
         "title": "Bekräfta blockering av instansen {{instance}}?",
-        "message": "Oftast kan du tysta eller blockera vissa användare.\n\nEfter blockering av en instans kommer allt innehåll inklusive följare från denna instans att tas bort!",
-        "buttons": {
-          "confirm": "Bekräfta"
-        }
+        "message": "Oftast kan du tysta eller blockera vissa användare.\n\nEfter blockering av en instans kommer allt innehåll inklusive följare från denna instans att tas bort!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Radera inlägg",
       "alert": {
         "title": "Bekräfta radering?",
-        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar.",
-        "buttons": {
-          "confirm": "Bekräfta"
-        }
+        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar."
       }
     },
     "deleteEdit": {
       "action": "Radera inlägg och posta på nytt",
       "alert": {
         "title": "Bekräfta radera inlägg och posta på nytt?",
-        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar.",
-        "buttons": {
-          "confirm": "Bekräfta"
-        }
+        "message": "Alla boostar och favoritmarkeringar kommer tas bort, inklusive alla svar."
       }
     },
     "mute": {

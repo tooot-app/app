@@ -31,8 +31,8 @@
         "notification": "{{name}} 님이 내 툿을 부스트했어요"
       },
       "update": "부스트한 툿이 수정됨",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "admin.sign_up": "{{name}} 님이 인스턴스에 가입함",
+      "admin.report": "{{name}} 님의 신고:"
     },
     "actions": {
       "reply": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "툿 북마크에 추가",
         "function": "툿 북마크"
       },
-      "openReport": ""
+      "openReport": "신고 열기"
     },
     "actionsUsers": {
       "reblogged_by": {
@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "숨겨진 콘텐츠"
     },
-    "filtered": "필터: {{phrase}}.",
+    "filtered": {
+      "reveal": "무시하고 보기",
+      "match_v1": "필터됨: {{phrase}}.",
+      "match_v2_one": "{{filters}}에 의해 필터됨.",
+      "match_v2_other": "{{count}}개의 필터 {{filters}}에 의해 필터됨."
+    },
     "fullConversation": "대화 보기",
     "translate": {
       "default": "번역",

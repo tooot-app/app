@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Tutela della privacy",
-    "message": "Per favore, non rivelare l'identità degli altri utenti (nome, foto profilo, ecc..). Grazie!",
-    "button": "Ho capito"
+    "message": "Per favore, non rivelare l'identità degli altri utenti (nome, foto profilo, ecc..). Grazie!"
   },
   "localCorrupt": {
     "message": "La sessione è scaduta, devi riaccedere"
