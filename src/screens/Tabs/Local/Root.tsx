@@ -174,7 +174,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
         />
       )
     })
-  }, [mode, queryKey[1], instanceFollowingPage])
+  }, [mode, queryKey[1], instanceFollowingPage, lists])
 
   usePopToTop()
 
