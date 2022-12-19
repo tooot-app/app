@@ -5,9 +5,9 @@
     "cancel": "Annuler",
     "discard": "Ne pas tenir compte",
     "continue": "Continuer",
-    "create": "",
-    "delete": "",
-    "done": ""
+    "create": "Créer",
+    "delete": "Supprimer",
+    "done": "Fait"
   },
   "customEmoji": {
     "accessibilityLabel": "Émoji personnalisé {{emoji}}"
