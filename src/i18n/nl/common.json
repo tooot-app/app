@@ -8,7 +8,7 @@
     "create": "Maak",
     "delete": "Verwijder",
     "done": "Gereed",
-    "confirm": ""
+    "confirm": "Bevestig"
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"
