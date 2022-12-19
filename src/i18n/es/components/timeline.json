@@ -31,7 +31,7 @@
         "notification": "{{name}} ha impulsado tu toot"
       },
       "update": "El impulso ha sido editado",
-      "admin.sign_up": "",
+      "admin.sign_up": "{{name}} se unió a la instancia",
       "admin.report": ""
     },
     "actions": {
@@ -55,7 +55,7 @@
         "accessibilityLabel": "Añadir este toot en marcadores",
         "function": "Añadir toot a marcadores"
       },
-      "openReport": ""
+      "openReport": "Abrir denuncia"
     },
     "actionsUsers": {
       "reblogged_by": {
@@ -92,10 +92,10 @@
       "expandHint": "Contenido oculto"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Mostrar de todos modos",
+      "match_v1": "Filtrado: {{phrase}}.",
+      "match_v2_one": "Filtrado por {{filters}}.",
+      "match_v2_other": "Filtrado por {{count}} filtros, {{filters}}."
     },
     "fullConversation": "Leer conversaciones",
     "translate": {
