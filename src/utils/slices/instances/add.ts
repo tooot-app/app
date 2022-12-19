@@ -50,6 +50,12 @@ const addInstance = createAsyncThunk(
       domain,
       url: `api/v1/preferences`,
       headers: { Authorization: `Bearer ${token}` }
+    }).catch(error => {
+      if (error?.status === 404) {
+        return Promise.resolve({ body: {} })
+      } else {
+        return Promise.reject()
+      }
     })
 
     const { body: filters } = await apiGeneral<Mastodon.Filter<any>[]>({

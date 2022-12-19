@@ -61,7 +61,7 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
         }) => setHeight(height)}
       >
         <Sparkline
-          data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
+          data={hashtag.history?.map(h => parseInt(h.uses)).reverse()}
           width={width}
           height={height}
           margin={children ? StyleConstants.Spacing.S : undefined}
