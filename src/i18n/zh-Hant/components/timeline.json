@@ -95,7 +95,7 @@
       "reveal": "仍要顯示",
       "match_v1": "已過濾：{{phrase}}。",
       "match_v2_one": "由 {{filters}} 過濾。",
-      "match_v2_other": "由 {{count}} 組過濾器過濾，{{filters}}。"
+      "match_v2_other": "由 {{filters}} 等 {{count}} 組過濾器過濾。"
     },
     "fullConversation": "閱讀全部對話",
     "translate": {
