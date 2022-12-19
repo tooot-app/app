@@ -3,15 +3,15 @@
     "local": {
       "name": "Suit",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Afficher les boosts",
+        "showReplies": "Afficher les réponses"
       }
     },
     "public": {
       "segments": {
         "federated": "Fédéré",
         "local": "Local",
-        "trending": ""
+        "trending": "Tendance"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrer",
       "accessibilityHint": "Filtrer les types de notifications affichés",
-      "title": "",
+      "title": "Afficher les notifications",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "Demande d'abonnement",
@@ -55,7 +55,7 @@
         "name": "Favoris"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtags suivis"
       },
       "fontSize": {
         "name": "Taille de la police de Pouet"
@@ -67,13 +67,13 @@
         "name": "Liste : {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Utilisateurs dans la liste : {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Créer une liste"
       },
       "listEdit": {
-        "name": ""
+        "name": "Modifier les détails de la liste"
       },
       "lists": {
         "name": "Listes"
@@ -114,27 +114,27 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gérer les utilisateurs",
+      "error": "Supprimer l'utilisateur de la liste",
+      "empty": "Aucun utilisateur ajouté dans cette liste"
     },
     "listEdit": {
-      "heading": "",
-      "title": "",
+      "heading": "Modifier les détails de la liste",
+      "title": "Titre",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Montrer les réponses à :",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Personne",
+          "list": "Un membre de la liste",
+          "followed": "N'importe quel utilisateur suivi"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Supprimer la liste",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Supprimer la liste \"{{list}}\" ?",
+        "message": "Cette action ne peut être annulé."
       }
     },
     "profile": {
@@ -196,8 +196,8 @@
         "settings": "Activer dans les paramètres"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Le serveur n'est pas configuré pour le push",
+        "description": "Veuillez contacter l'administrateur de votre serveur pour configurer le support push"
       },
       "global": {
         "heading": "Activer pour {{acct}}",
