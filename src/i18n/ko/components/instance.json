@@ -1,9 +1,9 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "인스턴스 도메인"
     },
-    "whitelisted": "",
+    "whitelisted": "화이트리스트 등록이 필요한 인스턴스에서 tooot이 정보를 읽어올 수 없는 문제일 수 있습니다.",
     "button": "로그인",
     "information": {
       "name": "이름",
