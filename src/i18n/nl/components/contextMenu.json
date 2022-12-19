@@ -15,7 +15,7 @@
       "action_false": "Gebruiker blokkeren",
       "action_true": "Gebruiker deblokkeren",
       "alert": {
-        "title": ""
+        "title": "Bevestig blokkeren van @{{username}} ?"
       }
     },
     "reports": {
