@@ -53,7 +53,7 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
         #{hashtag.name}
       </CustomText>
       <View
-        style={{ flexDirection: 'row', alignItems: 'center' }}
+        style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch' }}
         onLayout={({
           nativeEvent: {
             layout: { height }
