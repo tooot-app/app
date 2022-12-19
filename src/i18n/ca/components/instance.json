@@ -1,9 +1,9 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Domini de la instància"
     },
-    "whitelisted": "",
+    "whitelisted": "Pot ser una instància que estigui a la llista blanca de la qual tooot no pot obtenir les dades abans d'iniciar la sessió.",
     "button": "Inicia la sessió",
     "information": {
       "name": "Nom",
