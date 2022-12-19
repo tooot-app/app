@@ -1,7 +1,7 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Dominio de la instancia"
     },
     "whitelisted": "",
     "button": "Iniciar sesión",
