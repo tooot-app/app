@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "Dolt innehåll"
     },
-    "filtered": "Filtrerat: {{phrase}}.",
+    "filtered": {
+      "reveal": "Visa ändå",
+      "match_v1": "Filtrerat: {{phrase}}.",
+      "match_v2_one": "Filtrerat av {{filters}}.",
+      "match_v2_other": "Filtrerat av {{count}} filter, {{filters}}."
+    },
     "fullConversation": "Läs konversationer",
     "translate": {
       "default": "Översätt",

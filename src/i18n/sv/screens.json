@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Integritetsskydd",
-    "message": "Vänligen avslöja inte någon annan användares identitet, såsom användarnamn, profilbild etc. Tack!",
-    "button": "Bekräfta"
+    "message": "Vänligen avslöja inte någon annan användares identitet, såsom användarnamn, profilbild etc. Tack!"
   },
   "localCorrupt": {
     "message": "Inloggningen har gått ut. Försök att logga in igen"

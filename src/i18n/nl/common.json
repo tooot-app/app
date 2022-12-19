@@ -7,7 +7,8 @@
     "continue": "Ga verder",
     "create": "Maak",
     "delete": "Verwijder",
-    "done": "Gereed"
+    "done": "Gereed",
+    "confirm": "Bevestig"
   },
   "customEmoji": {
     "accessibilityLabel": "Aangepaste emoji {{emoji}}"

@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Zablokuj użytkownika",
-      "action_true": "Odblokuj użytkownika"
+      "action_true": "Odblokuj użytkownika",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Zgłoś i zablokuj"
+      "action": "Zgłoś i zablokuj",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Zablokuj instancję {{instance}}",
       "alert": {
         "title": "Na pewno zablokować {{instance}}?",
-        "message": "Zazwyczaj wycisza się (albo blokuje) konkretnych użytkowników. \n\nGdy zablokujesz instancję, cała jej zawartość (włączając np. obserwujące Cię osoby, które do niej należą) zostanie usunięta!",
-        "buttons": {
-          "confirm": "Na pewno?"
-        }
+        "message": "Zazwyczaj wycisza się (albo blokuje) konkretnych użytkowników. \n\nGdy zablokujesz instancję, cała jej zawartość (włączając np. obserwujące Cię osoby, które do niej należą) zostanie usunięta!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Usuń wpis",
       "alert": {
         "title": "Na pewno usunąć?",
-        "message": "Wszystkie podbite i polubione wpisy zostaną wyczyszczone - wraz z odpowiedziami.",
-        "buttons": {
-          "confirm": "Na pewno?"
-        }
+        "message": "Wszystkie podbite i polubione wpisy zostaną wyczyszczone - wraz z odpowiedziami."
       }
     },
     "deleteEdit": {
       "action": "",
       "alert": {
         "title": "",
-        "message": "",
-        "buttons": {
-          "confirm": ""
-        }
+        "message": ""
       }
     },
     "mute": {

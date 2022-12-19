@@ -3,15 +3,15 @@
     "local": {
       "name": "Seguint",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Mostra les publicacions",
+        "showReplies": "Mostra les respostes"
       }
     },
     "public": {
       "segments": {
         "federated": "Federat",
         "local": "Local",
-        "trending": "En tendència"
+        "trending": "Tendència"
       }
     },
     "notifications": {
@@ -31,13 +31,13 @@
       "title": "Mostra les notificacions",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Sol·licitud de seguiment",
+        "follow_request": "Sol·licituds de seguiment",
         "favourite": "$t(screenTabs:me.push.favourite.heading)",
         "reblog": "$t(screenTabs:me.push.reblog.heading)",
         "mention": "$t(screenTabs:me.push.mention.heading)",
         "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Publicació d'usuaris subscrits",
-        "update": "L'impuls ha sigut editat",
+        "status": "Publicacions d'usuaris subscrits",
+        "update": "Edicions d'impulsos",
         "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
         "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
@@ -163,7 +163,7 @@
           "total_other": "{{count}} camps"
         },
         "visibility": {
-          "title": "Visibilitat de la publicació",
+          "title": "Visibilitat",
           "options": {
             "public": "Públic",
             "unlisted": "Sense llistar",
@@ -171,7 +171,7 @@
           }
         },
         "sensitive": {
-          "title": "Publica contingut multimèdia sensible"
+          "title": "Continguts multimèdia sensibles"
         },
         "lock": {
           "title": "Fes el compte privat",
@@ -211,28 +211,28 @@
         "heading": "Per defecte"
       },
       "follow": {
-        "heading": "Nou seguidor"
+        "heading": "Seguidors nous"
       },
       "follow_request": {
-        "heading": "Sol·licitud de seguiment"
+        "heading": "Sol·licituds de seguiment"
       },
       "favourite": {
         "heading": "Favorits"
       },
       "reblog": {
-        "heading": "Impulsat"
+        "heading": "Impulsos"
       },
       "mention": {
-        "heading": "T'ha mencionat"
+        "heading": "Mencions"
       },
       "poll": {
-        "heading": "Actualització d'una votació"
+        "heading": "Actualitzacions d'una votació"
       },
       "status": {
-        "heading": "Publicació d'usuaris subscrits"
+        "heading": "Publicacions d'usuaris subscrits"
       },
       "update": {
-        "heading": "L'impuls ha sigut editat"
+        "heading": "Edicions d'impulsos"
       },
       "admin.sign_up": {
         "heading": "Administració: Registra"
@@ -399,7 +399,7 @@
         "reblogged_by": "{{count}} impulsats",
         "favourited_by": "{{count}} favorits"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Els resultats d'una instància remota són incomplets"
     }
   }
 }

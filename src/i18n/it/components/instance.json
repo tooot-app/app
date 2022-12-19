@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": ""
     },
+    "whitelisted": "",
     "button": "Accedi",
     "information": {
       "name": "Nome",

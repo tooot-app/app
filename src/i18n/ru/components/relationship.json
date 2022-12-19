@@ -1,0 +1,16 @@
+{
+  "follow": {
+    "function": ""
+  },
+  "block": {
+    "function": ""
+  },
+  "button": {
+    "error": "",
+    "blocked_by": "",
+    "blocking": "",
+    "following": "",
+    "requested": "",
+    "default": ""
+  }
+}

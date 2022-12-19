@@ -3,15 +3,15 @@
     "local": {
       "name": "팔로우 중",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "부스트 표시",
+        "showReplies": "답글 표시"
       }
     },
     "public": {
       "segments": {
         "federated": "연합",
         "local": "로컬",
-        "trending": ""
+        "trending": "유행"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "필터",
       "accessibilityHint": "받는 알림 종류 선택",
-      "title": "",
+      "title": "알림 표시",
       "options": {
         "follow": "$t(screenTabs:me.push.follow.heading)",
         "follow_request": "팔로우 요청",
@@ -55,7 +55,7 @@
         "name": "즐겨찾기"
       },
       "followedTags": {
-        "name": ""
+        "name": "팔로우 중인 해시태그"
       },
       "fontSize": {
         "name": "툿 폰트 크기"
@@ -235,10 +235,10 @@
         "heading": "부스트한 툿이 수정됨"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "관리자: 신규 가입"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "관리자: 신고 요청"
       },
       "howitworks": "메시지 라우팅 방식 더 알아보기"
     },
@@ -399,7 +399,7 @@
         "reblogged_by": "{{count}} 부스트",
         "favourited_by": "{{count}} 즐겨찾기"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "원격 인스턴스의 응답 형태가 올바르지 않아요"
     }
   }
 }

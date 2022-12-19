@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Bảo vệ quyền riêng tư",
-    "message": "Hãy tôn trọng thông tin cá nhân của người khác như tên tài khoản, ảnh đại diện, nhắn riêng etc. Cám ơn!",
-    "button": "Xác nhận"
+    "message": "Hãy tôn trọng thông tin cá nhân của người khác như tên tài khoản, ảnh đại diện, nhắn riêng etc. Cám ơn!"
   },
   "localCorrupt": {
     "message": "Phiên đăng nhập hết hạn, hãy đăng nhập lại!"

@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Protection de la confidentialité",
-    "message": "Veuillez ne pas divulguer l'identité d'un autre utilisateur, tel que le nom d'utilisateur, l'avatar, etc. Merci!",
-    "button": "Confirmer"
+    "message": "Veuillez ne pas divulguer l'identité d'un autre utilisateur, tel que le nom d'utilisateur, l'avatar, etc. Merci!"
   },
   "localCorrupt": {
     "message": "Session expirée, veuillez ré-essayer"

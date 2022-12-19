@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "屏蔽用户",
-      "action_true": "取消屏蔽用户"
+      "action_true": "取消屏蔽用户",
+      "alert": {
+        "title": "确认屏蔽用户 @{{username}} ？"
+      }
     },
     "reports": {
-      "action": "举报并屏蔽用户"
+      "action": "举报并屏蔽用户",
+      "alert": {
+        "title": "确认举报并屏蔽用户 @{{username}} ？"
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "屏蔽实例 {{instance}}",
       "alert": {
         "title": "确认屏蔽实例 {{instance}}？",
-        "message": "多数情况下，隐藏或屏蔽特定用户即可。\n\n屏蔽之后，来自此实例的所有内容将被移除。",
-        "buttons": {
-          "confirm": "确认"
-        }
+        "message": "多数情况下，隐藏或屏蔽特定用户即可。\n\n屏蔽之后，来自此实例的所有内容将被移除。"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "删除嘟文",
       "alert": {
         "title": "确认删除？",
-        "message": "所有转发及收藏将被清除，包括所有回复。",
-        "buttons": {
-          "confirm": "确认"
-        }
+        "message": "所有转发及收藏将被清除，包括所有回复。"
       }
     },
     "deleteEdit": {
       "action": "删除嘟文并重新发布",
       "alert": {
         "title": "确认删除并重新发布？",
-        "message": "所有转发及收藏将被清除，包括所有回复。",
-        "buttons": {
-          "confirm": "确认"
-        }
+        "message": "所有转发及收藏将被清除，包括所有回复。"
       }
     },
     "mute": {

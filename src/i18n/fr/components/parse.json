@@ -1,6 +1,6 @@
 {
   "HTML": {
-    "accessibilityHint": "Appuyez pour agrandir ou réduire le contenu",
+    "accessibilityHint": "Touchez pour développer ou réduire le contenu",
     "expanded": "{{hint}}{{moreLines}}",
     "moreLines": " ({{count}} lignes en plus)",
     "defaultHint": "Pouet long"
