@@ -92,10 +92,10 @@
       "expandHint": "Verborgen inhoud"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Toch weergeven",
+      "match_v1": "Gefilterd: {{phrase}}.",
+      "match_v2_one": "Gefilterd door {{filters}}.",
+      "match_v2_other": "Gefilterd door {{count}} filters, {{filters}}."
     },
     "fullConversation": "Gesprekken lezen",
     "translate": {
