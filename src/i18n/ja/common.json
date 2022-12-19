@@ -7,7 +7,8 @@
     "continue": "続ける",
     "create": "",
     "delete": "削除",
-    "done": "完了"
+    "done": "完了",
+    "confirm": ""
   },
   "customEmoji": {
     "accessibilityLabel": "カスタム絵文字 {{emoji}}"
