@@ -32,7 +32,7 @@
     "block": {
       "action": "Bloquejar la instància {{instance}}",
       "alert": {
-        "title": "Confirma el bloqueig de la instància {{instance}}?",
+        "title": "Vols bloquejar la instància {{instance}}?",
         "message": "Pots silenciar o bloquejar a un usuari.\n\nDesprés de bloquejar una instància, tot el seu contingut, amb els seus seguidors, seran esborrats!",
         "buttons": {
           "confirm": "Confirma"
@@ -56,7 +56,7 @@
     "delete": {
       "action": "Elimina la publicació",
       "alert": {
-        "title": "Confirma l'eliminació?",
+        "title": "Vols eliminar-ho?",
         "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
         "buttons": {
           "confirm": "Confirma"
@@ -64,9 +64,9 @@
       }
     },
     "deleteEdit": {
-      "action": "Elimina la publicació i torna a publicar",
+      "action": "Elimina i torna-ho a publicar",
       "alert": {
-        "title": "Confirma l'eliminació i tornar a publicar?",
+        "title": "Vols eliminar i tornar-ho a publicar?",
         "message": "Tots els impulsos i favorits s'esborraran, incloses totes les respostes.",
         "buttons": {
           "confirm": "Confirma"
