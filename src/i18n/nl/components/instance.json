@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Domeinnaam van instantie"
     },
-    "whitelisted": "",
+    "whitelisted": "Dit kan een gewhiteliste instantie zijn waarvan tooot geen gegevens kan ophalen voordat er ingelogd is.",
     "button": "Inloggen",
     "information": {
       "name": "Naam",
