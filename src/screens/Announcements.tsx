@@ -61,7 +61,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
       <View
         key={index}
         style={{
-          width: Dimensions.get('screen').width,
+          width: Dimensions.get('window').width,
           padding: StyleConstants.Spacing.Global.PagePadding,
           marginVertical: StyleConstants.Spacing.Global.PagePadding,
           justifyContent: 'center'
@@ -200,7 +200,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
     return (
       <View
         style={{
-          width: Dimensions.get('screen').width,
+          width: Dimensions.get('window').width,
           justifyContent: 'center',
           alignItems: 'center'
         }}

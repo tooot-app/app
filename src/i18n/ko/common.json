@@ -5,9 +5,10 @@
     "cancel": "취소",
     "discard": "취소",
     "continue": "계속",
-    "create": "",
+    "create": "생성",
     "delete": "삭제",
-    "done": "완료"
+    "done": "완료",
+    "confirm": "확인"
   },
   "customEmoji": {
     "accessibilityLabel": "커스텀 에모지 {{emoji}}"

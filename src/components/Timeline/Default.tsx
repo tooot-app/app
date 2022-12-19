@@ -9,11 +9,12 @@ import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
 import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
+import removeHTML from '@helpers/removeHTML'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useRef, useState } from 'react'
@@ -22,7 +23,7 @@ import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
 import TimelineFeedback from './Shared/Feedback'
-import TimelineFiltered, { shouldFilter } from './Shared/Filtered'
+import TimelineFiltered, { FilteredProps, shouldFilter } from './Shared/Filtered'
 import TimelineFullConversation from './Shared/FullConversation'
 import TimelineHeaderAndroid from './Shared/HeaderAndroid'
 import TimelineTranslate from './Shared/Translate'
@@ -47,12 +48,20 @@ const TimelineDefault: React.FC<Props> = ({
   disableOnPress = false,
   isConversation = false
 }) => {
+  const status = item.reblog ? item.reblog : item
+  const rawContent = useRef<string[]>([])
+  if (highlighted) {
+    rawContent.current = [
+      removeHTML(status.content),
+      status.spoiler_text ? removeHTML(status.spoiler_text) : ''
+    ].filter(c => c.length)
+  }
+
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const instanceAccount = useSelector(getInstanceAccount, () => true)
 
-  const status = item.reblog ? item.reblog : item
   const ownAccount = status.account?.id === instanceAccount?.id
   const [spoilerExpanded, setSpoilerExpanded] = useState(
     instanceAccount?.preferences?.['reading:expand:spoilers'] || false
@@ -60,15 +69,7 @@ const TimelineDefault: React.FC<Props> = ({
   const spoilerHidden = status.spoiler_text?.length
     ? !instanceAccount?.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
-  const copiableContent = useRef<{ content: string; complete: boolean }>({
-    content: '',
-    complete: false
-  })
-
-  const filtered = queryKey && shouldFilter({ copiableContent, status, queryKey })
-  if (queryKey && filtered && !highlighted) {
-    return <TimelineFiltered phrase={filtered} />
-  }
+  const detectedLanguage = useRef<string>(status.language || '')
 
   const mainStyle: StyleProp<ViewStyle> = {
     flex: 1,
@@ -102,8 +103,9 @@ const TimelineDefault: React.FC<Props> = ({
           paddingTop: highlighted ? StyleConstants.Spacing.S : 0,
           paddingLeft: highlighted
             ? 0
-            : (disableDetails ? StyleConstants.Avatar.XS : StyleConstants.Avatar.M) +
-              StyleConstants.Spacing.S,
+            : (disableDetails || isConversation
+                ? StyleConstants.Avatar.XS
+                : StyleConstants.Avatar.M) + StyleConstants.Spacing.S,
           ...(disableDetails && { marginTop: -StyleConstants.Spacing.S })
         }}
       >
@@ -114,9 +116,9 @@ const TimelineDefault: React.FC<Props> = ({
         <TimelineFullConversation />
         <TimelineTranslate />
         <TimelineFeedback />
-      </View>
 
-      <TimelineActions />
+        <TimelineActions />
+      </View>
     </>
   )
 
@@ -124,10 +126,35 @@ const TimelineDefault: React.FC<Props> = ({
     visibility: status.visibility,
     type: 'status',
     url: status.url || status.uri,
-    copiableContent
+    rawContent
   })
   const mStatus = menuStatus({ status, queryKey, rootQueryKey })
   const mInstance = menuInstance({ status, queryKey, rootQueryKey })
+
+  if (!ownAccount) {
+    let filterResults: FilteredProps['filterResults'] = []
+    const [filterRevealed, setFilterRevealed] = useState(false)
+    const hasFilterServerSide = useSelector(checkInstanceFeature('filter_server_side'))
+    if (hasFilterServerSide) {
+      if (status.filtered?.length) {
+        filterResults = status.filtered?.map(filter => filter.filter)
+      }
+    } else {
+      if (queryKey) {
+        const checkFilter = shouldFilter({ queryKey, status })
+        if (checkFilter?.length) {
+          filterResults = checkFilter
+        }
+      }
+    }
+    if (queryKey && !highlighted && filterResults?.length && !filterRevealed) {
+      return !filterResults.filter(result => result.filter_action === 'hide').length ? (
+        <Pressable onPress={() => setFilterRevealed(!filterRevealed)}>
+          <TimelineFiltered filterResults={filterResults} />
+        </Pressable>
+      ) : null
+    }
+  }
 
   return (
     <StatusContext.Provider
@@ -138,7 +165,8 @@ const TimelineDefault: React.FC<Props> = ({
         reblogStatus: item.reblog ? item : undefined,
         ownAccount,
         spoilerHidden,
-        copiableContent,
+        rawContent,
+        detectedLanguage,
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,

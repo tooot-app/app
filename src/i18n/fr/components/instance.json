@@ -1,8 +1,9 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "URL de l’instance"
     },
+    "whitelisted": "Il peut s’agir d’une instance sur liste blanche à partir de laquelle tooot ne peut pas récupérer de données avant de se connecter.",
     "button": "Connexion",
     "information": {
       "name": "Nom",
@@ -20,7 +21,7 @@
   "update": {
     "alert": {
       "title": "Connecté à cette instance",
-      "message": "Vous pouvez vous connecter à un autre compte, en maintenant un compte connecté existant"
+      "message": "Vous pouvez vous connecter à un autre compte, en conservant le compte connecté existant"
     }
   }
 }

@@ -19,7 +19,7 @@ export type InstanceV9 = {
   }
   version: string
   configuration?: Mastodon.Instance['configuration']
-  filters: Mastodon.Filter[]
+  filters: Mastodon.Filter<any>[]
   notifications_filter: {
     follow: boolean
     favourite: boolean

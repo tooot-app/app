@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "Nội dung ẩn"
     },
-    "filtered": "Đã lọc: {{phrase}}.",
+    "filtered": {
+      "reveal": "Vẫn cứ xem",
+      "match_v1": "Đã lọc: {{phrase}}.",
+      "match_v2_one": "Đã lọc bởi: {{filters}}.",
+      "match_v2_other": "Đã lọc bởi {{count}} bộ lọc, {{filters}}."
+    },
     "fullConversation": "Xem thêm",
     "translate": {
       "default": "Dịch",

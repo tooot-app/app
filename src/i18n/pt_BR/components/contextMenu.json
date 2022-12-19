@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Bloquear usuário",
-      "action_true": "Desbloquear usuário"
+      "action_true": "Desbloquear usuário",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": ""
+      "action": "",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Bloquear a instância {{instance}}",
       "alert": {
         "title": "Confirmar o bloqueio da instância {{instance}}?",
-        "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Na maioria das vezes, você pode silenciar ou bloquear determinado usuário.\n\nDepois de bloquear a instância, todo seu conteúdo, incluindo seguidores, será removido!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Remover toot",
       "alert": {
         "title": "Confirme a exclusão?",
-        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas.",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas."
       }
     },
     "deleteEdit": {
       "action": "Excluir toot e repostar",
       "alert": {
         "title": "Confirmar exclusão e repostagem?",
-        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas.",
-        "buttons": {
-          "confirm": "Confirmar"
-        }
+        "message": "Todos os boosts e favoritos serão limpos, incluindo todas as respostas."
       }
     },
     "mute": {

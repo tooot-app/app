@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "站點的網域"
     },
+    "whitelisted": "這可能是一個白名單站點，在登入前無法檢索資料。",
     "button": "登入",
     "information": {
       "name": "名稱",

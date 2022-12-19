@@ -3,11 +3,12 @@
     "OK": "Ok",
     "apply": "Confirmer",
     "cancel": "Annuler",
-    "discard": "Ne pas tenir compte",
+    "discard": "Abandonner",
     "continue": "Continuer",
-    "create": "",
-    "delete": "",
-    "done": ""
+    "create": "Créer",
+    "delete": "Supprimer",
+    "done": "Fait",
+    "confirm": "Confirmer"
   },
   "customEmoji": {
     "accessibilityLabel": "Émoji personnalisé {{emoji}}"
@@ -20,12 +21,12 @@
       "message": ""
     },
     "error": {
-      "message": "Échec de la connexion, veuillez réessayer"
+      "message": "{{function}} a échoué, veuillez réessayer"
     }
   },
   "separator": ", ",
   "discard": {
     "title": "Modifications non sauvegardées",
-    "message": "Votre modification n'a pas été enregistrée. Voulez-vous annuler l'enregistrement des modifications ?"
+    "message": "Votre modification n'a pas été enregistrée. Voulez-vous renoncer à enregistrer les modifications ?"
   }
 }

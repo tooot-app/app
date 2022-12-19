@@ -142,12 +142,12 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                           key={index}
                           style={{
                             width:
-                              (Dimensions.get('screen').width -
+                              (Dimensions.get('window').width -
                                 StyleConstants.Spacing.Global.PagePadding * 2 -
                                 StyleConstants.Spacing.S * 3) /
                               4,
                             height:
-                              (Dimensions.get('screen').width -
+                              (Dimensions.get('window').width -
                                 StyleConstants.Spacing.Global.PagePadding * 2 -
                                 StyleConstants.Spacing.S * 3) /
                               4,

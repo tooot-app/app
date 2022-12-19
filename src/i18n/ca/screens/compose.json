@@ -11,11 +11,11 @@
     },
     "right": {
       "button": {
-        "default": "Publicació",
+        "default": "Publica",
         "conversation": "Envia un missatge directe",
-        "reply": "Resposta de la publicació",
+        "reply": "Publica la resposta",
         "deleteEdit": "Publicació",
-        "edit": "Publicació",
+        "edit": "Publica l'edició",
         "share": "Publicació"
       },
       "alert": {

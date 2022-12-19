@@ -2,6 +2,7 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
@@ -99,7 +100,8 @@ const TimelineActions: React.FC = () => {
             t('shared.actions.reblogged.options.unlisted'),
             t('common:buttons.cancel')
           ],
-          cancelButtonIndex: 2
+          cancelButtonIndex: 2,
+          ...androidActionSheetStyles(colors)
         },
         (selectedIndex: number) => {
           switch (selectedIndex) {
@@ -263,63 +265,57 @@ const TimelineActions: React.FC = () => {
   }, [status.bookmarked])
 
   return (
-    <View
-      style={{
-        paddingLeft: highlighted ? 0 : StyleConstants.Avatar.M + StyleConstants.Spacing.S
-      }}
-    >
-      <View style={{ flexDirection: 'row' }}>
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressReply}
-          children={childrenReply}
-        />
+    <View style={{ flexDirection: 'row' }}>
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressReply}
+        children={childrenReply}
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressReblog}
-          children={childrenReblog}
-          disabled={
-            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
-          }
-        />
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressReblog}
+        children={childrenReblog}
+        disabled={
+          status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
+        }
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressFavourite}
-          children={childrenFavourite}
-        />
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressFavourite}
+        children={childrenFavourite}
+      />
 
-        <Pressable
-          {...(highlighted
-            ? {
-                accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
-                accessibilityRole: 'button'
-              }
-            : { accessibilityLabel: '' })}
-          style={styles.action}
-          onPress={onPressBookmark}
-          children={childrenBookmark}
-        />
-      </View>
+      <Pressable
+        {...(highlighted
+          ? {
+              accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
+              accessibilityRole: 'button'
+            }
+          : { accessibilityLabel: '' })}
+        style={styles.action}
+        onPress={onPressBookmark}
+        children={childrenBookmark}
+      />
     </View>
   )
 }

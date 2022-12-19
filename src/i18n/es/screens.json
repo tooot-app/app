@@ -1,8 +1,7 @@
 {
   "screenshot": {
     "title": "Protección de la privacidad",
-    "message": "Por favor, no revele la identidad de otros usuarios, como el nombre de usuario, avatar, etc. ¡Gracias!",
-    "button": "Confirmar"
+    "message": "Por favor, no revele la identidad de otros usuarios, como el nombre de usuario, avatar, etc. ¡Gracias!"
   },
   "localCorrupt": {
     "message": "La sesión se ha expirado. Por favor, vuelve a iniciar sesión"

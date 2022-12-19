@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Gebruiker blokkeren",
-      "action_true": "Gebruiker deblokkeren"
+      "action_true": "Gebruiker deblokkeren",
+      "alert": {
+        "title": "Bevestig blokkeren van @{{username}} ?"
+      }
     },
     "reports": {
-      "action": "Rapporteren en blokkeren"
+      "action": "Rapporteren en blokkeren",
+      "alert": {
+        "title": "Bevestig rapporteren en blokkeren van @{{username}} ?"
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Blokkeer instantie {{instance}}",
       "alert": {
         "title": "Bevestig blokkeren van {{instance}} ?",
-        "message": "Meestal kunt u bepaalde gebruiker dempen of blokkeren.\n\nNa het blokkeren van de instantie, wordt alle inhoud inclusief volgers van deze instantie verwijderd!",
-        "buttons": {
-          "confirm": "Bevestig"
-        }
+        "message": "Meestal kunt u bepaalde gebruiker dempen of blokkeren.\n\nNa het blokkeren van de instantie, wordt alle inhoud inclusief volgers van deze instantie verwijderd!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Toot verwijderen",
       "alert": {
         "title": "Verwijderen bevestigen?",
-        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
-        "buttons": {
-          "confirm": "Bevestig"
-        }
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden."
       }
     },
     "deleteEdit": {
       "action": "Toot verwijderen en opnieuw plaatsen",
       "alert": {
         "title": "Bevestig verwijderen en opnieuw plaatsen?",
-        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden.",
-        "buttons": {
-          "confirm": "Bevestig"
-        }
+        "message": "Alle boosts en favorieten zullen worden gewist, inclusief alle antwoorden."
       }
     },
     "mute": {

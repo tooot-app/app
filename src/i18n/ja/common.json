@@ -5,9 +5,10 @@
     "cancel": "キャンセル",
     "discard": "変更を破棄",
     "continue": "続ける",
-    "create": "",
+    "create": "作成",
     "delete": "削除",
-    "done": "完了"
+    "done": "完了",
+    "confirm": "確認"
   },
   "customEmoji": {
     "accessibilityLabel": "カスタム絵文字 {{emoji}}"

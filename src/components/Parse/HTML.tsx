@@ -102,7 +102,7 @@ const renderNode = ({
           )
         }
       } else {
-        const domain = href?.split(new RegExp(/:\/\/(.[^\/]+)/))
+        const domain = href?.split(new RegExp(/:\/\/(.[^\/]+\/.{3})/))
         // Need example here
         const content = node.children && node.children[0] && node.children[0].data
         const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content).length > 0
@@ -128,17 +128,7 @@ const renderNode = ({
             }}
           >
             {content && content !== href ? content : showFullLink ? href : domain?.[1]}
-            {!shouldBeTag ? (
-              <Icon
-                color={colors.blue}
-                name='ExternalLink'
-                size={adaptedFontsize}
-                style={{
-                  marginLeft: StyleConstants.Spacing.XS,
-                  ...(Platform.OS === 'android' && { transform: [{ translateY: 2 }] })
-                }}
-              />
-            ) : null}
+            {!shouldBeTag ? '...' : null}
           </CustomText>
         )
       }

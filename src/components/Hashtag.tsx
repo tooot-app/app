@@ -53,7 +53,7 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
         #{hashtag.name}
       </CustomText>
       <View
-        style={{ flexDirection: 'row', alignItems: 'center' }}
+        style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch' }}
         onLayout={({
           nativeEvent: {
             layout: { height }
@@ -61,7 +61,7 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
         }) => setHeight(height)}
       >
         <Sparkline
-          data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
+          data={hashtag.history?.map(h => parseInt(h.uses)).reverse()}
           width={width}
           height={height}
           margin={children ? StyleConstants.Spacing.S : undefined}

@@ -91,7 +91,12 @@
     "content": {
       "expandHint": "Hidden content"
     },
-    "filtered": "Filtered: {{phrase}}.",
+    "filtered": {
+      "reveal": "Show anyway",
+      "match_v1": "Filtered: {{phrase}}.",
+      "match_v2_one": "Filtered by {{filters}}.",
+      "match_v2_other": "Filtered by {{count}} filters, {{filters}}."
+    },
     "fullConversation": "Read conversations",
     "translate": {
       "default": "Translate",

@@ -109,7 +109,7 @@ const menuStatus = ({
           onSelect: () =>
             Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
               {
-                text: t('status.deleteEdit.alert.buttons.confirm'),
+                text: t('common:buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
                   let replyToStatus: Mastodon.Status | undefined = undefined
@@ -153,7 +153,7 @@ const menuStatus = ({
           onSelect: () =>
             Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
               {
-                text: t('status.delete.alert.buttons.confirm'),
+                text: t('common:buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
                   mutation.mutate({

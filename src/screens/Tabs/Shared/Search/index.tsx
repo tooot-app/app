@@ -49,7 +49,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
             <TextInput
               ref={inputRef}
               accessibilityRole='search'
-              keyboardAppearance={mode}
               style={{
                 fontSize: StyleConstants.Font.Size.M,
                 flex: 1,
@@ -60,7 +59,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
                 borderBottomColor: colors.border,
                 borderBottomWidth: 1
               }}
-              autoFocus
               onChangeText={debounce(
                 text => {
                   setSearchTerm(text)
@@ -82,6 +80,13 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
       }
     })
   }, [mode])
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('transitionEnd', e => {
+      inputRef.current?.focus()
+    })
+
+    return unsubscribe
+  }, [navigation])
 
   const mapKeyToTranslations = {
     accounts: t('shared.search.sections.accounts'),

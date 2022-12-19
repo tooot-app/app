@@ -11,7 +11,7 @@ import { StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelineFeedback = () => {
-  const { status, highlighted } = useContext(StatusContext)
+  const { status, highlighted, detectedLanguage } = useContext(StatusContext)
   if (!status || !highlighted) return null
 
   const { t } = useTranslation('componentTimeline')
@@ -80,7 +80,12 @@ const TimelineFeedback = () => {
             accessibilityHint={t('shared.actionsUsers.history.accessibilityHint')}
             accessibilityRole='button'
             style={[styles.text, { marginRight: 0, color: colors.blue }]}
-            onPress={() => navigation.push('Tab-Shared-History', { id: status.id })}
+            onPress={() =>
+              navigation.push('Tab-Shared-History', {
+                id: status.id,
+                detectedLanguage: detectedLanguage?.current || status.language || ''
+              })
+            }
           >
             {t('shared.actionsUsers.history.text', {
               count: data.length - 1

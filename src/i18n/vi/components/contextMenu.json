@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Chặn người này",
-      "action_true": "Bỏ chặn người dùng"
+      "action_true": "Bỏ chặn người dùng",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": "Báo cáo và chặn"
+      "action": "Báo cáo và chặn",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Chặn {{instance}}",
       "alert": {
         "title": "Xác nhận chặn {{instance}} ?",
-        "message": "Bạn có thể ẩn hoặc chặn bất kỳ người nào.\n\nĐối với máy chủ, toàn bộ nội dung bao gồm người theo dõi bạn từ máy chủ đó cũng sẽ bị chặn!",
-        "buttons": {
-          "confirm": "Xác nhận"
-        }
+        "message": "Bạn có thể ẩn hoặc chặn bất kỳ người nào.\n\nĐối với máy chủ, toàn bộ nội dung bao gồm người theo dõi bạn từ máy chủ đó cũng sẽ bị chặn!"
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Xóa tút",
       "alert": {
         "title": "Tiếp tục xóa?",
-        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
-        "buttons": {
-          "confirm": "Xác nhận"
-        }
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời."
       }
     },
     "deleteEdit": {
       "action": "Xóa và đăng lại",
       "alert": {
         "title": "Tiếp tục xóa và đăng lại?",
-        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời.",
-        "buttons": {
-          "confirm": "Xác nhận"
-        }
+        "message": "Tất cả lượt thích và đăng lại sẽ bị mất, bao gồm cả những trả lời."
       }
     },
     "mute": {

@@ -70,7 +70,6 @@ const TimelineAttachment = () => {
             preview_url: attachment.preview_url,
             url: attachment.url,
             remote_url: attachment.remote_url,
-            blurhash: attachment.blurhash,
             width: attachment.meta?.original?.width,
             height: attachment.meta?.original?.height
           }
@@ -90,7 +89,6 @@ const TimelineAttachment = () => {
               preview_url: attachment.preview_url,
               url: attachment.url,
               remote_url: attachment.remote_url,
-              blurhash: attachment.blurhash,
               width: attachment.meta?.original?.width,
               height: attachment.meta?.original?.height
             }

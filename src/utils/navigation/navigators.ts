@@ -51,14 +51,14 @@ export type RootStackParamList = {
   'Screen-ImagesViewer': {
     imageUrls: {
       id: Mastodon.Attachment['id']
-      preview_url: Mastodon.AttachmentImage['preview_url']
+      preview_url?: Mastodon.AttachmentImage['preview_url']
       url: Mastodon.AttachmentImage['url']
       remote_url?: Mastodon.AttachmentImage['remote_url']
-      blurhash: Mastodon.AttachmentImage['blurhash']
       width?: number
       height?: number
     }[]
     id: Mastodon.Attachment['id']
+    hideCounter?: boolean
   }
   'Screen-AccountSelection': {
     component?: () => JSX.Element | undefined
@@ -103,6 +103,7 @@ export type TabSharedStackParamList = {
   }
   'Tab-Shared-History': {
     id: Mastodon.Status['id']
+    detectedLanguage: string
   }
   'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {

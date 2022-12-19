@@ -6,120 +6,144 @@ import {
   useRelationshipMutation,
   useRelationshipQuery
 } from '@utils/queryHooks/relationship'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
+import { useSelector } from 'react-redux'
+import { checkInstanceFeature } from '@utils/slices/instancesSlice'
+import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   id: Mastodon.Account['id']
 }
 
-const RelationshipOutgoing = React.memo(
-  ({ id }: Props) => {
-    const { theme } = useTheme()
-    const { t } = useTranslation('componentRelationship')
+const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
+  const { theme } = useTheme()
+  const { t } = useTranslation('componentRelationship')
 
-    const query = useRelationshipQuery({ id })
+  const canFollowNotify = useSelector(checkInstanceFeature('account_follow_notify'))
 
-    const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
-    const queryClient = useQueryClient()
-    const mutation = useRelationshipMutation({
-      onSuccess: (res, { payload: { action } }) => {
-        haptics('Success')
-        queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
-        if (action === 'block') {
-          const queryKey = ['Timeline', { page: 'Following' }]
-          queryClient.invalidateQueries({ queryKey, exact: false })
-        }
-      },
-      onError: (err: any, { payload: { action } }) => {
-        displayMessage({
-          theme,
-          type: 'error',
-          message: t('common:message.error.message', {
-            function: t(`${action}.function`)
-          }),
-          ...(err.status &&
-            typeof err.status === 'number' &&
-            err.data &&
-            err.data.error &&
-            typeof err.data.error === 'string' && {
-              description: err.data.error
-            })
-        })
+  const query = useRelationshipQuery({ id })
+
+  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
+  const queryClient = useQueryClient()
+  const mutation = useRelationshipMutation({
+    onSuccess: (res, { payload: { action } }) => {
+      haptics('Success')
+      queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
+      if (action === 'block') {
+        const queryKey = ['Timeline', { page: 'Following' }]
+        queryClient.invalidateQueries({ queryKey, exact: false })
       }
-    })
+    },
+    onError: (err: any, { payload: { action } }) => {
+      displayMessage({
+        theme,
+        type: 'error',
+        message: t('common:message.error.message', {
+          function: t(`${action}.function`)
+        }),
+        ...(err.status &&
+          typeof err.status === 'number' &&
+          err.data &&
+          err.data.error &&
+          typeof err.data.error === 'string' && {
+            description: err.data.error
+          })
+      })
+    }
+  })
 
-    let content: string
-    let onPress: () => void
+  let content: string
+  let onPress: () => void
 
-    if (query.isError) {
-      content = t('button.error')
+  if (query.isError) {
+    content = t('button.error')
+    onPress = () => {}
+  } else {
+    if (query.data?.blocked_by) {
+      content = t('button.blocked_by')
       onPress = () => {}
     } else {
-      if (query.data?.blocked_by) {
-        content = t('button.blocked_by')
-        onPress = () => {}
+      if (query.data?.blocking) {
+        content = t('button.blocking')
+        onPress = () => {
+          mutation.mutate({
+            id,
+            type: 'outgoing',
+            payload: {
+              action: 'block',
+              state: query.data?.blocking
+            }
+          })
+        }
       } else {
-        if (query.data?.blocking) {
-          content = t('button.blocking')
+        if (query.data?.following) {
+          content = t('button.following')
           onPress = () => {
             mutation.mutate({
               id,
               type: 'outgoing',
               payload: {
-                action: 'block',
-                state: query.data?.blocking
+                action: 'follow',
+                state: query.data?.following
               }
             })
           }
         } else {
-          if (query.data?.following) {
-            content = t('button.following')
+          if (query.data?.requested) {
+            content = t('button.requested')
             onPress = () => {
               mutation.mutate({
                 id,
                 type: 'outgoing',
                 payload: {
                   action: 'follow',
-                  state: query.data?.following
+                  state: query.data?.requested
                 }
               })
             }
           } else {
-            if (query.data?.requested) {
-              content = t('button.requested')
-              onPress = () => {
-                mutation.mutate({
-                  id,
-                  type: 'outgoing',
-                  payload: {
-                    action: 'follow',
-                    state: query.data?.requested
-                  }
-                })
-              }
-            } else {
-              content = t('button.default')
-              onPress = () => {
-                mutation.mutate({
-                  id,
-                  type: 'outgoing',
-                  payload: {
-                    action: 'follow',
-                    state: false
-                  }
-                })
-              }
+            content = t('button.default')
+            onPress = () => {
+              mutation.mutate({
+                id,
+                type: 'outgoing',
+                payload: {
+                  action: 'follow',
+                  state: false
+                }
+              })
             }
           }
         }
       }
     }
+  }
 
-    return (
+  return (
+    <>
+      {canFollowNotify && query.data?.following ? (
+        <Button
+          type='icon'
+          content={query.data.notifying ? 'BellOff' : 'Bell'}
+          round
+          onPress={() =>
+            mutation.mutate({
+              id,
+              type: 'outgoing',
+              payload: {
+                action: 'follow',
+                state: false,
+                notify: !query.data.notifying
+              }
+            })
+          }
+          loading={query.isLoading || mutation.isLoading}
+          style={{ marginRight: StyleConstants.Spacing.S }}
+        />
+      ) : null}
       <Button
         type='text'
         content={content}
@@ -127,9 +151,8 @@ const RelationshipOutgoing = React.memo(
         loading={query.isLoading || mutation.isLoading}
         disabled={query.isError || query.data?.blocked_by}
       />
-    )
-  },
-  () => true
-)
+    </>
+  )
+}
 
 export default RelationshipOutgoing

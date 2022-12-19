@@ -8,14 +8,9 @@ import {
   UseQueryOptions
 } from '@tanstack/react-query'
 
-export type QueryKeyRelationship = [
-  'Relationship',
-  { id: Mastodon.Account['id'] }
-]
+export type QueryKeyRelationship = ['Relationship', { id: Mastodon.Account['id'] }]
 
-const queryFunction = async ({
-  queryKey
-}: QueryFunctionContext<QueryKeyRelationship>) => {
+const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyRelationship>) => {
   const { id } = queryKey[1]
 
   const res = await apiInstance<Mastodon.Relationship[]>({
@@ -32,11 +27,7 @@ const useRelationshipQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyRelationship[1] & {
-  options?: UseQueryOptions<
-    Mastodon.Relationship[],
-    AxiosError,
-    Mastodon.Relationship
-  >
+  options?: UseQueryOptions<Mastodon.Relationship[], AxiosError, Mastodon.Relationship>
 }) => {
   const queryKey: QueryKeyRelationship = ['Relationship', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, {
@@ -54,7 +45,20 @@ type MutationVarsRelationship =
   | {
       id: Mastodon.Account['id']
       type: 'outgoing'
-      payload: { action: 'follow' | 'block'; state: boolean }
+      payload: {
+        action: 'block'
+        state: boolean
+        notify?: undefined
+      }
+    }
+  | {
+      id: Mastodon.Account['id']
+      type: 'outgoing'
+      payload: {
+        action: 'follow'
+        state: boolean
+        notify?: boolean
+      }
     }
 
 const mutationFunction = async (params: MutationVarsRelationship) => {
@@ -65,21 +69,20 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
         url: `follow_requests/${params.id}/${params.payload.action}`
       }).then(res => res.body)
     case 'outgoing':
+      const formData = new FormData()
+      typeof params.payload.notify === 'boolean' &&
+        formData.append('notify', params.payload.notify.toString())
+
       return apiInstance<Mastodon.Relationship>({
         method: 'post',
-        url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${
-          params.payload.action
-        }`
+        url: `accounts/${params.id}/${params.payload.state ? 'un' : ''}${params.payload.action}`,
+        body: formData
       }).then(res => res.body)
   }
 }
 
 const useRelationshipMutation = (
-  options: UseMutationOptions<
-    Mastodon.Relationship,
-    AxiosError,
-    MutationVarsRelationship
-  >
+  options: UseMutationOptions<Mastodon.Relationship, AxiosError, MutationVarsRelationship>
 ) => {
   return useMutation(mutationFunction, options)
 }

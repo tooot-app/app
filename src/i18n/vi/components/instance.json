@@ -3,6 +3,7 @@
     "textInput": {
       "placeholder": "Địa chỉ máy chủ"
     },
+    "whitelisted": "",
     "button": "Đăng nhập",
     "information": {
       "name": "Tên máy chủ",

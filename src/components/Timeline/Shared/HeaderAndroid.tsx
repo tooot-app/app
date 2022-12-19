@@ -10,7 +10,7 @@ import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
 
 const TimelineHeaderAndroid: React.FC = () => {
-  const { queryKey, rootQueryKey, status, disableDetails, disableOnPress } =
+  const { queryKey, rootQueryKey, status, disableDetails, disableOnPress, rawContent } =
     useContext(StatusContext)
 
   if (Platform.OS !== 'android' || !status || disableDetails || disableOnPress) return null
@@ -21,7 +21,8 @@ const TimelineHeaderAndroid: React.FC = () => {
   const mShare = menuShare({
     visibility: status.visibility,
     type: 'status',
-    url: status.url || status.uri
+    url: status.url || status.uri,
+    rawContent
   })
   const mAccount = menuAccount({
     type: 'status',

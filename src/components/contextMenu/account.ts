@@ -16,7 +16,7 @@ import {
 import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 
@@ -186,12 +186,22 @@ const menuAccount = ({
         key: 'account-block',
         item: {
           onSelect: () =>
-            timelineMutation.mutate({
-              type: 'updateAccountProperty',
-              queryKey,
-              id: account.id,
-              payload: { property: 'block', currentValue: data?.blocking }
-            }),
+            Alert.alert(t('account.block.alert.title', { username: account.username }), undefined, [
+              {
+                text: t('common:buttons.confirm'),
+                style: 'destructive',
+                onPress: () =>
+                  timelineMutation.mutate({
+                    type: 'updateAccountProperty',
+                    queryKey,
+                    id: account.id,
+                    payload: { property: 'block', currentValue: data?.blocking }
+                  })
+              },
+              {
+                text: t('common:buttons.cancel')
+              }
+            ]),
           disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
           destructive: !data?.blocking,
           hidden: false
@@ -204,20 +214,34 @@ const menuAccount = ({
       {
         key: 'account-reports',
         item: {
-          onSelect: () => {
-            timelineMutation.mutate({
-              type: 'updateAccountProperty',
-              queryKey,
-              id: account.id,
-              payload: { property: 'reports' }
-            })
-            timelineMutation.mutate({
-              type: 'updateAccountProperty',
-              queryKey,
-              id: account.id,
-              payload: { property: 'block', currentValue: false }
-            })
-          },
+          onSelect: () =>
+            Alert.alert(
+              t('account.reports.alert.title', { username: account.username }),
+              undefined,
+              [
+                {
+                  text: t('common:buttons.confirm'),
+                  style: 'destructive',
+                  onPress: () => {
+                    timelineMutation.mutate({
+                      type: 'updateAccountProperty',
+                      queryKey,
+                      id: account.id,
+                      payload: { property: 'reports' }
+                    })
+                    timelineMutation.mutate({
+                      type: 'updateAccountProperty',
+                      queryKey,
+                      id: account.id,
+                      payload: { property: 'block', currentValue: false }
+                    })
+                  }
+                },
+                {
+                  text: t('common:buttons.cancel')
+                }
+              ]
+            ),
           disabled: false,
           destructive: true,
           hidden: false

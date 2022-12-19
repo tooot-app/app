@@ -13,39 +13,25 @@ import { Circle } from 'react-native-animated-spinkit'
 import StatusContext from './Context'
 
 const TimelineTranslate = () => {
-  const { status, highlighted, copiableContent } = useContext(StatusContext)
-  if (!status || !highlighted) return null
+  const { status, highlighted, rawContent, detectedLanguage } = useContext(StatusContext)
+  if (!status || !highlighted || !rawContent?.current.length) return null
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
-  const backupTextProcessing = (): string[] => {
-    const text = status.spoiler_text ? [status.spoiler_text, status.content] : [status.content]
-
-    for (const i in text) {
-      for (const emoji of status.emojis) {
-        text[i] = text[i].replaceAll(`:${emoji.shortcode}:`, ' ')
-      }
-      text[i] = text[i]
-        .replace(/(<([^>]+)>)/gi, ' ')
-        .replace(/@.*? /gi, ' ')
-        .replace(/#.*? /gi, ' ')
-        .replace(/http(s):\/\/.*? /gi, ' ')
-    }
-    return text
-  }
-  const text = copiableContent?.current.content
-    ? [copiableContent?.current.content]
-    : backupTextProcessing()
-
-  const [detectedLanguage, setDetectedLanguage] = useState<{
+  const [detected, setDetected] = useState<{
     language: string
     confidence: number
   }>({ language: status.language || '', confidence: 0 })
   useEffect(() => {
     const detect = async () => {
-      const result = await detectLanguage(text.join('\n\n'))
-      result && setDetectedLanguage(result)
+      const result = await detectLanguage(rawContent.current.join('\n\n'))
+      if (result) {
+        setDetected(result)
+        if (detectedLanguage) {
+          detectedLanguage.current = result.language
+        }
+      }
     }
     detect()
   }, [])
@@ -57,18 +43,18 @@ const TimelineTranslate = () => {
 
   const [enabled, setEnabled] = useState(false)
   const { refetch, data, isFetching, isSuccess, isError } = useTranslateQuery({
-    source: detectedLanguage.language,
+    source: detected.language,
     target: targetLanguage,
-    text,
+    text: rawContent.current,
     options: { enabled }
   })
 
   const devView = () => {
     return __DEV__ ? (
       <CustomText fontStyle='S' style={{ color: colors.secondary }}>{` Source: ${
-        detectedLanguage?.language
+        detected?.language
       }; Confidence: ${
-        detectedLanguage?.confidence.toString().slice(0, 5) || 'null'
+        detected?.confidence.toString().slice(0, 5) || 'null'
       }; Target: ${targetLanguage}`}</CustomText>
     ) : null
   }
@@ -78,13 +64,13 @@ const TimelineTranslate = () => {
   }
   if (
     Platform.OS === 'ios' &&
-    Localization.locale.slice(0, 2).includes(detectedLanguage.language.slice(0, 2))
+    Localization.locale.slice(0, 2).includes(detected.language.slice(0, 2))
   ) {
     return devView()
   }
   if (
     Platform.OS === 'android' &&
-    settingsLanguage?.slice(0, 2).includes(detectedLanguage.language.slice(0, 2))
+    settingsLanguage?.slice(0, 2).includes(detected.language.slice(0, 2))
   ) {
     return devView()
   }

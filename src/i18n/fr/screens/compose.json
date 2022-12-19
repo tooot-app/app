@@ -2,7 +2,7 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "Annuler l’édition?",
+        "title": "Annuler l’édition ?",
         "buttons": {
           "save": "Enregistrer comme brouillon",
           "delete": "Supprimer le brouillon"
@@ -12,7 +12,7 @@
     "right": {
       "button": {
         "default": "Pouet",
-        "conversation": "Pouet DM",
+        "conversation": "Pouet MP",
         "reply": "Réponse de pouet",
         "deleteEdit": "Pouet",
         "edit": "Pouet",
@@ -24,8 +24,8 @@
           "button": "Réessayer"
         },
         "removeReply": {
-          "title": "Le pouet répondu est introuvable",
-          "description": "Le pouet répondu a peut-être été supprimé. Voulez-vous le supprimer de votre référence ?",
+          "title": "Le pouet réponse est introuvable",
+          "description": "Le pouet réponse a peut-être été supprimé. Voulez-vous le supprimer de votre référence ?",
           "confirm": "Supprimer la référence"
         }
       }
@@ -62,7 +62,7 @@
           }
         },
         "emojis": {
-          "accessibilityHint": "Tapotez pour ajouter des émojis au pouet"
+          "accessibilityHint": "Appuyez pour ajouter des émojis au pouet"
         },
         "poll": {
           "option": {
@@ -90,7 +90,7 @@
             }
           },
           "expiration": {
-            "heading": "Validité",
+            "heading": "Durée",
             "options": {
               "300": "5 minutes",
               "1800": "30 minutes",
@@ -106,7 +106,7 @@
       "actions": {
         "attachment": {
           "accessibilityLabel": "Téléchargez une pièce-jointe",
-          "accessibilityHint": "La fonction de sondage sera désactivée lorsqu'il y a une pièce jointe",
+          "accessibilityHint": "La fonction de sondage sera désactivée s'il y a une pièce jointe",
           "failed": {
             "alert": {
               "title": "Le téléchargement a échoué",

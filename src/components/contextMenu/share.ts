@@ -7,10 +7,7 @@ const menuShare = (
   params:
     | {
         visibility?: Mastodon.Status['visibility']
-        copiableContent?: React.MutableRefObject<{
-          content?: string | undefined
-          complete: boolean
-        }>
+        rawContent?: React.MutableRefObject<string[]>
         type: 'status'
         url?: string
       }
@@ -48,17 +45,17 @@ const menuShare = (
       icon: 'square.and.arrow.up'
     })
   }
-  if (params.type === 'status' && Platform.OS === 'ios')
+  if (params.type === 'status')
     menus[0].push({
       key: 'copy',
       item: {
         onSelect: () => {
-          Clipboard.setString(params.copiableContent?.current.content || '')
+          Clipboard.setString(params.rawContent?.current.join(`\n\n`) || '')
           displayMessage({ type: 'success', message: t(`copy.succeed`) })
         },
         disabled: false,
         destructive: false,
-        hidden: !params.copiableContent?.current.content?.length
+        hidden: !params.rawContent?.current.length
       },
       title: t('copy.action'),
       icon: 'doc.on.doc'

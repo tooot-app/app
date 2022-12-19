@@ -16,7 +16,7 @@ import HeaderSharedMuted from './HeaderShared/Muted'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, rootQueryKey, status, copiableContent, highlighted, disableDetails } =
+  const { queryKey, rootQueryKey, status, highlighted, disableDetails, rawContent } =
     useContext(StatusContext)
   if (!status) return null
 
@@ -28,7 +28,7 @@ const TimelineHeaderDefault: React.FC = () => {
     visibility: status.visibility,
     type: 'status',
     url: status.url || status.uri,
-    copiableContent
+    rawContent
   })
   const mAccount = menuAccount({
     type: 'status',

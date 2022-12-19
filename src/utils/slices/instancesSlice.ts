@@ -280,7 +280,7 @@ export const getInstanceUrl = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.url
 
 export const getInstanceUri = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.uri
+  instances[findInstanceActive(instances)]?.uri.replace(/^https?:\/\//, '') // Pleroma has schema
 
 export const getInstanceUrls = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.urls

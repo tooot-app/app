@@ -145,19 +145,21 @@ const TimelineCard: React.FC = () => {
           />
         ) : null}
         <View style={{ flex: 1, padding: StyleConstants.Spacing.S }}>
-          <CustomText
-            fontStyle='S'
-            numberOfLines={2}
-            style={{
-              marginBottom: StyleConstants.Spacing.XS,
-              color: colors.primaryDefault
-            }}
-            fontWeight='Bold'
-            testID='title'
-          >
-            {status.card?.title}
-          </CustomText>
-          {status.card?.description ? (
+          {status.card?.title.length ? (
+            <CustomText
+              fontStyle='S'
+              numberOfLines={2}
+              style={{
+                marginBottom: StyleConstants.Spacing.XS,
+                color: colors.primaryDefault
+              }}
+              fontWeight='Bold'
+              testID='title'
+            >
+              {status.card.title}
+            </CustomText>
+          ) : null}
+          {status.card?.description.length ? (
             <CustomText
               fontStyle='S'
               numberOfLines={1}
@@ -170,9 +172,11 @@ const TimelineCard: React.FC = () => {
               {status.card.description}
             </CustomText>
           ) : null}
-          <CustomText fontStyle='S' numberOfLines={1} style={{ color: colors.secondary }}>
-            {status.card?.url}
-          </CustomText>
+          {status.card?.url.length ? (
+            <CustomText fontStyle='S' numberOfLines={1} style={{ color: colors.secondary }}>
+              {status.card.url}
+            </CustomText>
+          ) : null}
         </View>
       </>
     )
@@ -187,10 +191,6 @@ const TimelineCard: React.FC = () => {
       style={{
         flex: 1,
         flexDirection: 'row',
-        minHeight:
-          (isStatus && foundStatus) || (isAccount && foundAccount)
-            ? undefined
-            : StyleConstants.Font.LineHeight.M * 5,
         marginTop: StyleConstants.Spacing.M,
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: StyleConstants.Spacing.S,
