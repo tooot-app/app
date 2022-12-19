@@ -15,13 +15,13 @@
       "action_false": "屏蔽用户",
       "action_true": "取消屏蔽用户",
       "alert": {
-        "title": ""
+        "title": "确认屏蔽用户 @{{username}} ？"
       }
     },
     "reports": {
       "action": "举报并屏蔽用户",
       "alert": {
-        "title": ""
+        "title": "确认举报并屏蔽用户 @{{username}} ？"
       }
     }
   },
