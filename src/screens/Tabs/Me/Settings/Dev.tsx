@@ -3,6 +3,7 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { persistor } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
@@ -13,7 +14,7 @@ import { DevSettings } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
-  const { colors, mode } = useTheme()
+  const { colors } = useTheme()
   const { showActionSheetWithOptions } = useActionSheet()
   const instanceActive = useSelector(getInstanceActive)
   const instances = useSelector(getInstances, () => true)
@@ -58,7 +59,7 @@ const SettingsDev: React.FC = () => {
                 })
                 .concat(['Cancel']),
               cancelButtonIndex: instances.length,
-              userInterfaceStyle: mode
+              ...androidActionSheetStyles(colors)
             },
             () => {}
           )

@@ -1,5 +1,6 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useAppDispatch } from '@root/store'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
@@ -16,7 +17,7 @@ const TabMeProfileRoot: React.FC<
     messageRef: RefObject<FlashMessage>
   }
 > = ({ messageRef, navigation }) => {
-  const { mode } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const { showActionSheetWithOptions } = useActionSheet()
@@ -93,7 +94,7 @@ const TabMeProfileRoot: React.FC<
                   t('common:buttons.cancel')
                 ],
                 cancelButtonIndex: 3,
-                userInterfaceStyle: mode
+                ...androidActionSheetStyles(colors)
               },
               async buttonIndex => {
                 switch (buttonIndex) {

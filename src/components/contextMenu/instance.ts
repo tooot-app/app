@@ -49,7 +49,7 @@ const menuInstance = ({
               t('instance.block.alert.message'),
               [
                 {
-                  text: t('instance.block.alert.buttons.confirm'),
+                  text: t('common:buttons.confirm'),
                   style: 'destructive',
                   onPress: () => {
                     mutation.mutate({

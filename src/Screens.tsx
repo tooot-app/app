@@ -56,7 +56,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   useEffect(() => {
     const screenshotListener = addScreenshotListener(() =>
       Alert.alert(t('screenshot.title'), t('screenshot.message'), [
-        { text: t('screenshot.button'), style: 'destructive' }
+        { text: t('common:buttons.confirm'), style: 'destructive' }
       ])
     )
     Platform.select({ ios: screenshotListener })
