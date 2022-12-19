@@ -7,7 +7,8 @@
     "continue": "繼續",
     "create": "建立",
     "delete": "刪除",
-    "done": "完成"
+    "done": "完成",
+    "confirm": ""
   },
   "customEmoji": {
     "accessibilityLabel": "自定的表情符號 {{emoji}}"
