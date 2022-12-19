@@ -399,7 +399,7 @@
         "reblogged_by": "{{count}} impulsados",
         "favourited_by": "{{count}} favoritos"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Los resultados de una instancia remota están incompletos"
     }
   }
 }
