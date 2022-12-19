@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Dominio de la instancia"
     },
-    "whitelisted": "",
+    "whitelisted": "Puede ser que la instancia esté en una lista blanca por la que tooot no pueda obtener los datos antes de iniciar la sesión.",
     "button": "Iniciar sesión",
     "information": {
       "name": "Nombre",
