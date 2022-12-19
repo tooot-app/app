@@ -167,7 +167,7 @@ const ComposeActions: React.FC = () => {
         }}
         style={styles.button}
         onPress={attachmentOnPress}
-        children={<Icon name='Aperture' size={24} color={attachmentColor} />}
+        children={<Icon name='Camera' size={24} color={attachmentColor} />}
       />
       <Pressable
         accessibilityRole='button'
