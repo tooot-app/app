@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "",
-      "action_true": ""
+      "action_true": "",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": ""
+      "action": "",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "",
       "alert": {
         "title": "",
-        "message": "",
-        "buttons": {
-          "confirm": ""
-        }
+        "message": ""
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "",
       "alert": {
         "title": "",
-        "message": "",
-        "buttons": {
-          "confirm": ""
-        }
+        "message": ""
       }
     },
     "deleteEdit": {
       "action": "",
       "alert": {
         "title": "",
-        "message": "",
-        "buttons": {
-          "confirm": ""
-        }
+        "message": ""
       }
     },
     "mute": {
