@@ -8,7 +8,7 @@
     "create": "Створити",
     "delete": "Видалити",
     "done": "Готово",
-    "confirm": ""
+    "confirm": "Підтвердити"
   },
   "customEmoji": {
     "accessibilityLabel": "Власні емодзі {{emoji}}"
