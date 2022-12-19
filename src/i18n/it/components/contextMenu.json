@@ -13,10 +13,16 @@
     },
     "block": {
       "action_false": "Blocca utente",
-      "action_true": "Sblocca utente"
+      "action_true": "Sblocca utente",
+      "alert": {
+        "title": ""
+      }
     },
     "reports": {
-      "action": ""
+      "action": "",
+      "alert": {
+        "title": ""
+      }
     }
   },
   "at": {
@@ -33,10 +39,7 @@
       "action": "Blocca istanza {{instance}}",
       "alert": {
         "title": "Confermi di voler bloccare l'istanza {{instance}}?",
-        "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi.",
-        "buttons": {
-          "confirm": "Ho capito"
-        }
+        "message": "Sarebbe meglio mutare o bloccare singoli utenti.\n\nSe blocchi un'istanza, tutti i suoi contenuti a te relativi, inclusi tutti i tuoi seguaci da questa, saranno rimossi."
       }
     }
   },
@@ -57,20 +60,14 @@
       "action": "Cancella toot",
       "alert": {
         "title": "Conferma?",
-        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati.",
-        "buttons": {
-          "confirm": "Ho capito"
-        }
+        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati."
       }
     },
     "deleteEdit": {
       "action": "Cancella e ripubblica toot",
       "alert": {
         "title": "Confermi cancellazione e ripubblicazione?",
-        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati.",
-        "buttons": {
-          "confirm": "Ho capito"
-        }
+        "message": "Tutti i retoot, gli apprezzamenti, e le risposte, saranno cancellati."
       }
     },
     "mute": {
