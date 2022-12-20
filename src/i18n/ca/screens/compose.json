@@ -2,7 +2,7 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "Voleu cancel·lar l'edició?",
+        "title": "Vols cancel·lar l'edició?",
         "buttons": {
           "save": "Desa l'esborrany",
           "delete": "Esborra l'esborrany"
