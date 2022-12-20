@@ -15,13 +15,13 @@
       "action_false": "封鎖使用者",
       "action_true": "解除封鎖使用者",
       "alert": {
-        "title": ""
+        "title": "確認封鎖使用者 {{username}}？"
       }
     },
     "reports": {
       "action": "檢舉並封鎖使用者",
       "alert": {
-        "title": ""
+        "title": "確認檢舉並封鎖使用者 @{{username}}？"
       }
     }
   },
