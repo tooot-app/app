@@ -72,7 +72,7 @@ const addInstance = createAsyncThunk(
         appData,
         url: domain,
         token,
-        uri: instance.uri,
+        uri: instance.uri.replace(/^https?:\/\//, ''), // Pleroma includes schema
         urls: instance.urls,
         account: {
           id,
