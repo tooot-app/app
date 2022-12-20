@@ -32,7 +32,7 @@
       },
       "update": "L'impuls ha sigut editat",
       "admin.sign_up": "{{name}} s'ha unit a la instància",
-      "admin.report": ""
+      "admin.report": "{{name}} ha reportat:"
     },
     "actions": {
       "reply": {
