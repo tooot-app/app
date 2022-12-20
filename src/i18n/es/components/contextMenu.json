@@ -15,13 +15,13 @@
       "action_false": "Bloquear usuario",
       "action_true": "Desbloquear usuario",
       "alert": {
-        "title": ""
+        "title": "¿Confirmar bloqueo del usuario @{{username}}?"
       }
     },
     "reports": {
       "action": "Reportar y bloquear usuario",
       "alert": {
-        "title": ""
+        "title": "¿Confirmar denuncia y bloquear el usuario @{{username}}?"
       }
     }
   },
