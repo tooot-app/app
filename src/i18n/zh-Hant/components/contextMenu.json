@@ -15,7 +15,7 @@
       "action_false": "封鎖使用者",
       "action_true": "解除封鎖使用者",
       "alert": {
-        "title": "確認封鎖使用者 {{username}}？"
+        "title": "確認封鎖使用者 @{{username}}？"
       }
     },
     "reports": {
