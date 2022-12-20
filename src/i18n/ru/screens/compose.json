@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Отменить изменения?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Сохранить черновик",
+          "delete": "Удалить черновик"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Пост",
+        "conversation": "Пост DM",
+        "reply": "Ответить",
+        "deleteEdit": "Пост",
+        "edit": "Пост",
+        "share": "Пост"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Не удалось опубликовать пост",
+          "button": "Попробовать снова"
         },
         "removeReply": {
-          "title": "",
+          "title": "Пост для ответа не найдет",
           "description": "",
-          "confirm": ""
+          "confirm": "Удалить ссылку"
         }
       }
     }
@@ -34,7 +34,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Запостить как @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": ""
         },
@@ -50,7 +50,7 @@
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Пометить вложения как чувствительные",
           "remove": {
             "accessibilityLabel": ""
           },
@@ -58,32 +58,32 @@
             "accessibilityLabel": ""
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Загрузить больше вложений"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Нажмите, чтобы добавить эмодзи к посту"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Вариант опроса {{index}}",
+              "single": "Единичный выбор",
+              "multiple": "Множественный выбор"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Уменьшить количество вариантов ответа до {{amount}}",
               "accessibilityHint": ""
             },
             "increase": {
-              "accessibilityLabel": "",
+              "accessibilityLabel": "Уменьшить количество вариантов ответа до {{amount}}",
               "accessibilityHint": ""
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Тип выбора",
             "options": {
               "single": "",
               "multiple": ""
@@ -92,25 +92,25 @@
           "expiration": {
             "heading": "",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 минут",
+              "1800": "30 минут",
+              "3600": "1 час",
+              "21600": "6 часов",
+              "86400": "1 день",
+              "259200": "3 дня",
+              "604800": "7 дней"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Загрузить вложение",
           "accessibilityHint": "",
           "failed": {
             "alert": {
               "title": "",
-              "button": ""
+              "button": "Попробовать снова"
             }
           }
         },
@@ -120,7 +120,7 @@
         },
         "visibility": {
           "accessibilityLabel": "",
-          "title": "",
+          "title": "Видимость поста",
           "options": {
             "public": "",
             "unlisted": "",
