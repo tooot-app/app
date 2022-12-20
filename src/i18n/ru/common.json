@@ -1,32 +1,32 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": "",
-    "discard": "",
-    "continue": "",
-    "create": "",
-    "delete": "",
-    "done": "",
-    "confirm": ""
+    "OK": "ОК",
+    "apply": "Применить",
+    "cancel": "Отменить",
+    "discard": "Отклонить",
+    "continue": "Продолжить",
+    "create": "Создать",
+    "delete": "Удалить",
+    "done": "Готово",
+    "confirm": "Подтвердить"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Пользовательские эмодзи {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "Успешно {{function}}"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "Ошибка {{function}}, попробуйте ещё раз"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Изменения не сохранены",
+    "message": "Ваши изменения не были сохранены. Вы хотите отменить изменения?"
   }
 }

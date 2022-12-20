@@ -15,13 +15,13 @@
       "action_false": "Chặn người này",
       "action_true": "Bỏ chặn người dùng",
       "alert": {
-        "title": ""
+        "title": "Bạn có chắc muốn chặn {{username}}?"
       }
     },
     "reports": {
       "action": "Báo cáo và chặn",
       "alert": {
-        "title": ""
+        "title": "Bạn có chắc muốn báo cáo {{username}}?"
       }
     }
   },
