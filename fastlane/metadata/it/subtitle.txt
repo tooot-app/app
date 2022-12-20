@@ -1,1 +1,1 @@
-Client open source per Mastodon
+App open source per Mastodon
