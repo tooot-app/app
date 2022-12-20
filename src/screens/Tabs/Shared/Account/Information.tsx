@@ -17,51 +17,39 @@ export interface Props {
   account: Mastodon.Account | undefined
 }
 
-const AccountInformation = React.memo(
-  ({ account }: Props) => {
-    const { colors } = useTheme()
+const AccountInformation: React.FC<Props> = ({ account }) => {
+  const { colors } = useTheme()
 
-    const { name } = useRoute()
-    const myInfo = name !== 'Tab-Shared-Account'
+  const { name } = useRoute()
+  const myInfo = name !== 'Tab-Shared-Account'
 
-    return (
-      <View style={styles.base}>
-        <Placeholder
-          Animation={props => (
-            <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
-          )}
-        >
-          <View style={styles.avatarAndActions}>
-            <AccountInformationAvatar account={account} myInfo={myInfo} />
-            <AccountInformationActions account={account} myInfo={myInfo} />
-          </View>
+  return (
+    <View style={styles.base}>
+      <Placeholder
+        Animation={props => (
+          <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
+        )}
+      >
+        <View style={styles.avatarAndActions}>
+          <AccountInformationAvatar account={account} myInfo={myInfo} />
+          <AccountInformationActions account={account} myInfo={myInfo} />
+        </View>
 
-          <AccountInformationName account={account} />
+        <AccountInformationName account={account} />
 
-          <AccountInformationAccount account={account} />
+        <AccountInformationAccount account={account} />
 
-          <AccountInformationFields account={account} myInfo={myInfo} />
+        <AccountInformationFields account={account} myInfo={myInfo} />
 
-          <AccountInformationNote account={account} myInfo={myInfo} />
+        <AccountInformationNote account={account} myInfo={myInfo} />
 
-          <AccountInformationCreated account={account} hidden={myInfo} />
+        <AccountInformationCreated account={account} hidden={myInfo} />
 
-          <AccountInformationStats account={account} myInfo={myInfo} />
-        </Placeholder>
-      </View>
-    )
-  },
-  (prev, next) => {
-    let skipUpdate = true
-    if (prev.account?.id !== next.account?.id) {
-      skipUpdate = false
-    }
-    if (prev.account?.acct === next.account?.acct) {
-      skipUpdate = false
-    }
-    return skipUpdate
-  }
-)
+        <AccountInformationStats account={account} myInfo={myInfo} />
+      </Placeholder>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   base: {

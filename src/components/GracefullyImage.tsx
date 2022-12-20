@@ -53,24 +53,15 @@ const GracefullyImage = ({
 }: Props) => {
   const { reduceMotionEnabled } = useAccessibility()
   const { colors } = useTheme()
-  const [originalFailed, setOriginalFailed] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const source = originalFailed
-    ? { uri: uri.remote || undefined }
-    : {
-        uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
-      }
-
+  const source = {
+    uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
+  }
   const onLoad = () => {
     setImageLoaded(true)
     if (setImageDimensions && source.uri) {
       Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
-    }
-  }
-  const onError = () => {
-    if (!originalFailed) {
-      setOriginalFailed(true)
     }
   }
 
@@ -101,10 +92,11 @@ const GracefullyImage = ({
         />
       ) : null}
       <FastImage
-        source={source}
+        source={{
+          uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
+        }}
         style={[{ flex: 1 }, imageStyle]}
         onLoad={onLoad}
-        onError={onError}
       />
       {blurhashView}
     </Pressable>
