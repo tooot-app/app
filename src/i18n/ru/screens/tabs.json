@@ -4,7 +4,7 @@
       "name": "",
       "options": {
         "showBoosts": "",
-        "showReplies": ""
+        "showReplies": "Показать ответы"
       }
     },
     "public": {
@@ -26,8 +26,8 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
+      "accessibilityLabel": "Фильтр",
+      "accessibilityHint": "Фильтр отображаемых типов уведомлений",
       "title": "",
       "options": {
         "follow": "",
