@@ -254,9 +254,6 @@
         "content_true": "Aktiverad",
         "content_false": "Inaktiverad"
       },
-      "update": {
-        "title": "Uppdatera till senaste versionen"
-      },
       "logout": {
         "button": "Logga ut",
         "alert": {

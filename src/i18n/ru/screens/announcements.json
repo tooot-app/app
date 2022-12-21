@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Объявления",
   "content": {
-    "published": "",
+    "published": "Опубликовано <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Прочитано",
+      "unread": "Отметить как прочитанное"
     }
   }
 }

@@ -15,13 +15,13 @@
       "action_false": "Bloquear usuario",
       "action_true": "Desbloquear usuario",
       "alert": {
-        "title": ""
+        "title": "¿Quieres bloquear a @{{username}}?"
       }
     },
     "reports": {
       "action": "Reportar y bloquear usuario",
       "alert": {
-        "title": ""
+        "title": "¿Quieres denunciar y bloquear a @{{username}}?"
       }
     }
   },
@@ -38,7 +38,7 @@
     "block": {
       "action": "Bloquear instancia {{instance}}",
       "alert": {
-        "title": "¿Confirmar bloqueo de la instancia {{instance}}?",
+        "title": "¿Quieres bloquear la instancia {{instance}}?",
         "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán."
       }
     }
@@ -59,14 +59,14 @@
     "delete": {
       "action": "Eliminar toot",
       "alert": {
-        "title": "¿Confirmar eliminación?",
+        "title": "¿Quieres eliminar?",
         "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas."
       }
     },
     "deleteEdit": {
       "action": "Eliminar toot y volver a publicar",
       "alert": {
-        "title": "¿Confirmar eliminación y volver a publicar?",
+        "title": "¿Quieres eliminar y volver a publicar?",
         "message": "Todos los boosts y favoritos se eliminarán, incluidas todas las respuestas."
       }
     },

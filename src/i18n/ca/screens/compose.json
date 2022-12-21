@@ -2,7 +2,7 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "Voleu cancel·lar l'edició?",
+        "title": "Vols cancel·lar l'edició?",
         "buttons": {
           "save": "Desa l'esborrany",
           "delete": "Esborra l'esborrany"
@@ -13,9 +13,9 @@
       "button": {
         "default": "Publica",
         "conversation": "Envia un missatge directe",
-        "reply": "Publica la resposta",
-        "deleteEdit": "Publicació",
-        "edit": "Publica l'edició",
+        "reply": "Respon",
+        "deleteEdit": "Torna-ho a publicar",
+        "edit": "Edita",
         "share": "Publicació"
       },
       "alert": {
