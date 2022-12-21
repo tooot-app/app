@@ -1,38 +1,43 @@
-import apiTooot from '@api/tooot'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
-import Constants from 'expo-constants'
 import * as Notifications from 'expo-notifications'
+import { Platform } from 'react-native'
+import { setChannels } from './instances/push/utils'
+import { getInstance } from './instancesSlice'
 
-export const retrieveExpoToken = createAsyncThunk('app/expoToken', async (): Promise<string> => {
-  if (isDevelopment) {
-    return 'ExponentPushToken[DEVELOPMENT_1]'
-  }
+export const retrieveExpoToken = createAsyncThunk(
+  'app/expoToken',
+  async (_, { getState }): Promise<string> => {
+    const instance = getInstance(getState() as RootState)
+    const expoToken = getExpoToken(getState() as RootState)
 
-  const res = await Notifications.getExpoPushTokenAsync({
-    experienceId: '@xmflsct/tooot',
-    applicationId: 'com.xmflsct.app.tooot'
-  })
-  return res.data
-})
+    if (Platform.OS === 'android') {
+      await setChannels(instance)
+    }
 
-export const retrieveVersionLatest = createAsyncThunk(
-  'app/versionUpdate',
-  async (): Promise<string> => {
-    const res = await apiTooot<{ latest: string }>({ method: 'get', url: 'version.json' })
-    return res.body.latest
+    if (expoToken?.length) {
+      return expoToken
+    } else {
+      if (isDevelopment) {
+        return 'ExponentPushToken[DEVELOPMENT_1]'
+      }
+
+      const res = await Notifications.getExpoPushTokenAsync({
+        experienceId: '@xmflsct/tooot',
+        applicationId: 'com.xmflsct.app.tooot'
+      })
+      return res.data
+    }
   }
 )
 
 export type AppState = {
   expoToken?: string
-  versionUpdate: boolean
 }
 
 export const appInitialState: AppState = {
-  expoToken: undefined,
-  versionUpdate: false
+  expoToken: undefined
 }
 
 const appSlice = createSlice({
@@ -40,22 +45,14 @@ const appSlice = createSlice({
   initialState: appInitialState,
   reducers: {},
   extraReducers: builder => {
-    builder
-      .addCase(retrieveExpoToken.fulfilled, (state, action) => {
-        if (action.payload) {
-          state.expoToken = action.payload
-        }
-      })
-      .addCase(retrieveVersionLatest.fulfilled, (state, action) => {
-        if (action.payload && Constants.expoConfig?.version) {
-          state.versionUpdate =
-            parseFloat(action.payload) > parseFloat(Constants.expoConfig.version)
-        }
-      })
+    builder.addCase(retrieveExpoToken.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.expoToken = action.payload
+      }
+    })
   }
 })
 
 export const getExpoToken = (state: RootState) => state.app.expoToken
-export const getVersionUpdate = (state: RootState) => state.app.versionUpdate
 
 export default appSlice.reducer

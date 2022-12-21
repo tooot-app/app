@@ -218,7 +218,7 @@ const ParseHTML = React.memo(
       if (children) {
         return (
           <ParseEmojis
-            content={children.toString()}
+            content={children?.toString()}
             emojis={emojis}
             size={size}
             adaptiveSize={adaptiveSize}

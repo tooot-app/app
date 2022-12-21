@@ -2,7 +2,7 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "¿Cancelar edición?",
+        "title": "¿Quieres cancelar la edición?",
         "buttons": {
           "save": "Guardar borrador",
           "delete": "Eliminar borrador"
@@ -13,9 +13,9 @@
       "button": {
         "default": "Toot",
         "conversation": "Mensaje privado",
-        "reply": "Respuesta al toot",
-        "deleteEdit": "Toot",
-        "edit": "Edita el toot",
+        "reply": "Responde",
+        "deleteEdit": "Vuelve a publicar",
+        "edit": "Edita",
         "share": "Toot"
       },
       "alert": {
@@ -39,7 +39,7 @@
           "placeholder": "Mensaje de aviso de spoiler"
         },
         "textInput": {
-          "placeholder": "Qué está pasando",
+          "placeholder": "¿Qué está pasando?",
           "keyboardImage": {
             "exceedMaximum": {
               "title": "Número máximo de adjuntos alcanzado",

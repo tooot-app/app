@@ -133,7 +133,7 @@
     "listDelete": {
       "heading": "Esborra la llista",
       "confirm": {
-        "title": "Vol esborrar la llista \"{{list}}\"?",
+        "title": "Vols esborrar la llista \"{{list}}\"?",
         "message": "Aquesta acció no es pot desfer."
       }
     },
@@ -254,13 +254,10 @@
         "content_true": "Habilitat",
         "content_false": "Deshabilitat"
       },
-      "update": {
-        "title": "Actualitza a la última versió"
-      },
       "logout": {
         "button": "Tanca la sessió",
         "alert": {
-          "title": "Vol tancar la sessió?",
+          "title": "Vols tancar la sessió?",
           "message": "Després de tancar la sessió, hauràs de tornar a iniciar la sessió",
           "buttons": {
             "logout": "Tanca la sessió"

@@ -8,12 +8,7 @@ import { isDevelopment } from '@utils/checkEnvironment'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
-import {
-  PUSH_ADMIN,
-  PUSH_DEFAULT,
-  setChannels,
-  usePushFeatures
-} from '@utils/slices/instances/push/utils'
+import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instances/push/utils'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
@@ -25,7 +20,7 @@ import * as Notifications from 'expo-notifications'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, Linking, Platform, ScrollView, View } from 'react-native'
+import { AppState, Linking, ScrollView, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 const TabMePush: React.FC = () => {
@@ -50,11 +45,7 @@ const TabMePush: React.FC = () => {
       setPushEnabled(permissions.granted)
       setPushCanAskAgain(permissions.canAskAgain)
       layoutAnimation()
-
-      if (Platform.OS === 'android') {
-        await setChannels(instance)
-        dispatch(retrieveExpoToken())
-      }
+      dispatch(retrieveExpoToken())
     }
 
     if (appsQuery.data?.vapid_key) {

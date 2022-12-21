@@ -254,9 +254,6 @@
         "content_true": "Ingeschakeld",
         "content_false": "Uitgeschakeld"
       },
-      "update": {
-        "title": "Bijwerken naar de laatste versie"
-      },
       "logout": {
         "button": "Uitloggen",
         "alert": {

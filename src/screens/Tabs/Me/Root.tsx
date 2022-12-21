@@ -12,12 +12,8 @@ import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { getInstanceActive } from '@utils/slices/instancesSlice'
 import React, { useReducer, useRef } from 'react'
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from 'react-native-reanimated'
+import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
-import Update from './Root/Update'
 
 const TabMeRoot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
@@ -29,10 +25,7 @@ const TabMeRoot: React.FC = () => {
   const scrollRef = useRef<Animated.ScrollView>(null)
   useScrollToTop(scrollRef)
 
-  const [accountState, accountDispatch] = useReducer(
-    accountReducer,
-    accountInitialState
-  )
+  const [accountState, accountDispatch] = useReducer(accountReducer, accountInitialState)
 
   const scrollY = useSharedValue(0)
   const onScroll = useAnimatedScrollHandler(event => {
@@ -41,22 +34,15 @@ const TabMeRoot: React.FC = () => {
 
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
-      {instanceActive !== -1 && data ? (
-        <AccountNav scrollY={scrollY} account={data} />
-      ) : null}
+      {instanceActive !== -1 && data ? <AccountNav scrollY={scrollY} account={data} /> : null}
       <Animated.ScrollView
         ref={scrollRef}
         keyboardShouldPersistTaps='handled'
         onScroll={onScroll}
         scrollEventThrottle={16}
       >
-        {instanceActive !== -1 ? (
-          <MyInfo account={data} />
-        ) : (
-          <ComponentInstance />
-        )}
+        {instanceActive !== -1 ? <MyInfo account={data} /> : <ComponentInstance />}
         {instanceActive !== -1 ? <Collections /> : null}
-        <Update />
         <Settings />
         {instanceActive !== -1 ? <AccountInformationSwitch /> : null}
         {instanceActive !== -1 ? <Logout /> : null}

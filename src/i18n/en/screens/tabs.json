@@ -254,9 +254,6 @@
         "content_true": "Enabled",
         "content_false": "Disabled"
       },
-      "update": {
-        "title": "Update to latest version"
-      },
       "logout": {
         "button": "Log out",
         "alert": {

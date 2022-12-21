@@ -254,9 +254,6 @@
         "content_true": "有効",
         "content_false": "無効"
       },
-      "update": {
-        "title": "最新バージョンへのアップデート"
-      },
       "logout": {
         "button": "ログアウト",
         "alert": {

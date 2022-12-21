@@ -254,9 +254,6 @@
         "content_true": "활성화됨",
         "content_false": "비활성화됨"
       },
-      "update": {
-        "title": "최신 버전으로 업데이트"
-      },
       "logout": {
         "button": "로그아웃",
         "alert": {

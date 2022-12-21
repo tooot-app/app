@@ -7,6 +7,7 @@ import { SearchResult } from '@utils/queryHooks/search'
 import { getSettingsBrowser } from '@utils/slices/settingsSlice'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
+import validUrl from 'valid-url'
 
 export let loadingLink = false
 
@@ -86,18 +87,21 @@ const openLink = async (url: string, navigation?: any) => {
   }
 
   loadingLink = false
-  switch (getSettingsBrowser(store.getState())) {
-    // Some links might end with an empty space at the end that triggers an error
-    case 'internal':
-      await WebBrowser.openBrowserAsync(encodeURI(url), {
-        dismissButtonStyle: 'close',
-        enableBarCollapsing: true,
-        ...(await browserPackage())
-      })
-      break
-    case 'external':
-      await Linking.openURL(encodeURI(url))
-      break
+  const validatedUrl = validUrl.isWebUri(url)
+  if (validatedUrl) {
+    switch (getSettingsBrowser(store.getState())) {
+      // Some links might end with an empty space at the end that triggers an error
+      case 'internal':
+        await WebBrowser.openBrowserAsync(validatedUrl, {
+          dismissButtonStyle: 'close',
+          enableBarCollapsing: true,
+          ...(await browserPackage())
+        })
+        break
+      case 'external':
+        await Linking.openURL(validatedUrl)
+        break
+    }
   }
 }
 

@@ -196,7 +196,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
           rightOpenValue={-actionWidth}
           previewOpenValue={-actionWidth / 2}
           ItemSeparatorComponent={ComponentSeparator}
-          keyExtractor={item => item.timestamp.toString()}
+          keyExtractor={item => item.timestamp?.toString()}
         />
       </PanGestureHandler>
       <Modal

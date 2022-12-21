@@ -44,7 +44,10 @@ const apiGeneral = async <T = unknown>({
       ...userAgent,
       ...headers
     },
-    ...(body && { data: body })
+    ...(body &&
+      (body instanceof FormData
+        ? (body as (FormData & { _parts: [][] }) | undefined)?._parts?.length
+        : Object.keys(body).length) && { data: body })
   })
     .then(response => {
       let links: {
