@@ -254,9 +254,6 @@
         "content_true": "Увімкнено",
         "content_false": "Вимкнено"
       },
-      "update": {
-        "title": "Оновити до останньої версії"
-      },
       "logout": {
         "button": "Вийти",
         "alert": {
