@@ -254,9 +254,6 @@
         "content_true": "Habilitado",
         "content_false": "Deshabilitado"
       },
-      "update": {
-        "title": "Actualizar a la última versión"
-      },
       "logout": {
         "button": "Cerrar sesión",
         "alert": {
