@@ -3,7 +3,7 @@
     "local": {
       "name": "Seguint",
       "options": {
-        "showBoosts": "Mostra les publicacions",
+        "showBoosts": "Mostra els impulsos",
         "showReplies": "Mostra les respostes"
       }
     },
