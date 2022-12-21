@@ -254,9 +254,6 @@
         "content_true": "Aktiviert",
         "content_false": "Deaktiviert"
       },
-      "update": {
-        "title": "Auf neueste Version aktualisiert"
-      },
       "logout": {
         "button": "Abmelden",
         "alert": {
