@@ -25,14 +25,14 @@ export const updateInstancePushDecode = createAsyncThunk(
 
     await apiTooot({
       method: 'put',
-      url: `/push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
+      url: `push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
       body: {
         auth: !disable ? null : instance.push.keys.auth
       }
     })
 
     if (Platform.OS === 'android') {
-      setChannels(instance)
+      setChannels(instance, true)
     }
 
     return Promise.resolve({ disable })
