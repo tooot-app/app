@@ -254,9 +254,6 @@
         "content_true": "Activé",
         "content_false": "Désactivé"
       },
-      "update": {
-        "title": "Mettre à jour vers la dernière version"
-      },
       "logout": {
         "button": "Se déconnecter",
         "alert": {
