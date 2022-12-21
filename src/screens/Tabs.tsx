@@ -2,13 +2,11 @@ import GracefullyImage from '@components/GracefullyImage'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useAppDispatch } from '@root/store'
 import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
-import { getVersionUpdate, retrieveVersionLatest } from '@utils/slices/appSlice'
 import { getPreviousTab } from '@utils/slices/contextsSlice'
 import { getInstanceAccount, getInstanceActive } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
@@ -54,17 +52,6 @@ const ScreenTabs = React.memo(
     )
 
     const previousTab = useSelector(getPreviousTab, () => true)
-
-    const versionUpdate = useSelector(getVersionUpdate)
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-      dispatch(retrieveVersionLatest())
-    }, [])
-    const tabMeOptions = useMemo(() => {
-      if (versionUpdate) {
-        return { tabBarBadge: 1 }
-      }
-    }, [versionUpdate])
 
     return (
       <Tab.Navigator
@@ -121,12 +108,7 @@ const ScreenTabs = React.memo(
         <Tab.Screen name='Tab-Public' component={TabPublic} />
         <Tab.Screen name='Tab-Compose' component={composeComponent} listeners={composeListeners} />
         <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
-        <Tab.Screen
-          name='Tab-Me'
-          component={TabMe}
-          options={tabMeOptions}
-          listeners={meListeners}
-        />
+        <Tab.Screen name='Tab-Me' component={TabMe} listeners={meListeners} />
       </Tab.Navigator>
     )
   },
