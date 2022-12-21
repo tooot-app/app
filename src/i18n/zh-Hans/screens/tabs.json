@@ -254,9 +254,6 @@
         "content_true": "已启用",
         "content_false": "未启用"
       },
-      "update": {
-        "title": "更新至最新版本"
-      },
       "logout": {
         "button": "退出当前账号",
         "alert": {
