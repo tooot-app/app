@@ -254,9 +254,6 @@
         "content_true": "啟用",
         "content_false": "關閉"
       },
-      "update": {
-        "title": "更新到最新版本"
-      },
       "logout": {
         "button": "登出",
         "alert": {
