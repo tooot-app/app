@@ -4,8 +4,8 @@
       "alert": {
         "title": "Vols cancel·lar l'edició?",
         "buttons": {
-          "save": "Desa l'esborrany",
-          "delete": "Esborra l'esborrany"
+          "save": "Desa'l",
+          "delete": "Esborra'l"
         }
       }
     },
