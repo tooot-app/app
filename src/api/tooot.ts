@@ -47,7 +47,10 @@ const apiTooot = async <T = unknown>({
       ...userAgent,
       ...headers
     },
-    ...((body as (FormData & { _parts: [][] }) | undefined)?._parts.length && { data: body })
+    ...(body &&
+      (body instanceof FormData
+        ? (body as (FormData & { _parts: [][] }) | undefined)?._parts?.length
+        : Object.keys(body).length) && { data: body })
   })
     .then(response => {
       return Promise.resolve({
