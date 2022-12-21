@@ -254,9 +254,6 @@
         "content_true": "Habilitat",
         "content_false": "Deshabilitat"
       },
-      "update": {
-        "title": "Actualitza a la última versió"
-      },
       "logout": {
         "button": "Tanca la sessió",
         "alert": {
