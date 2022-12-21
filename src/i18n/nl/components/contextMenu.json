@@ -21,7 +21,7 @@
     "reports": {
       "action": "Rapporteren en blokkeren",
       "alert": {
-        "title": ""
+        "title": "Bevestig rapporteren en blokkeren van @{{username}} ?"
       }
     }
   },

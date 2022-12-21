@@ -7,6 +7,14 @@ export const updateAccountPreferences = createAsyncThunk(
     return apiInstance<Mastodon.Preferences>({
       method: 'get',
       url: `preferences`
-    }).then(res => res.body)
+    })
+      .then(res => res.body)
+      .catch(error => {
+        if (error?.status === 404) {
+          return Promise.resolve({})
+        } else {
+          return Promise.reject()
+        }
+      })
   }
 )

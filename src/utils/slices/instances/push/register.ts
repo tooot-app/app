@@ -28,7 +28,7 @@ const subscribe = async ({
 }) => {
   return apiTooot({
     method: 'post',
-    url: `/push/subscribe/${expoToken}/${instanceUrl}/${accountId}`,
+    url: `push/subscribe/${expoToken}/${instanceUrl}/${accountId}`,
     body: { accountFull, serverKey, auth }
   })
 }
@@ -97,7 +97,7 @@ const pushRegister = async (
   })
 
   if (Platform.OS === 'android') {
-    setChannels(instance)
+    setChannels(instance, true)
   }
 
   return Promise.resolve(auth)

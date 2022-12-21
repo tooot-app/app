@@ -115,7 +115,11 @@ const Collections: React.FC = () => {
         iconFront={instancePush ? 'Bell' : 'BellOff'}
         iconBack='ChevronRight'
         title={t('me.stacks.push.name')}
-        content={t('me.root.push.content', { context: instancePush.global.toString() })}
+        content={
+          typeof instancePush.global === 'boolean'
+            ? t('me.root.push.content', { context: instancePush.global.toString() })
+            : undefined
+        }
         onPress={() => navigation.navigate('Tab-Me-Push')}
       />
     </MenuContainer>

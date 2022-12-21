@@ -54,7 +54,7 @@ const TimelineTranslate = () => {
       <CustomText fontStyle='S' style={{ color: colors.secondary }}>{` Source: ${
         detected?.language
       }; Confidence: ${
-        detected?.confidence.toString().slice(0, 5) || 'null'
+        detected?.confidence?.toString().slice(0, 5) || 'null'
       }; Target: ${targetLanguage}`}</CustomText>
     ) : null
   }

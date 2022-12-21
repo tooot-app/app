@@ -15,13 +15,13 @@
       "action_false": "Blockera användare",
       "action_true": "Avblockera användare",
       "alert": {
-        "title": ""
+        "title": "Bekräfta blockering av användaren {{username}}?"
       }
     },
     "reports": {
       "action": "Rapportera och blockera användare",
       "alert": {
-        "title": ""
+        "title": "Bekräfta rapportera och blockera användaren @{{username}}?"
       }
     }
   },

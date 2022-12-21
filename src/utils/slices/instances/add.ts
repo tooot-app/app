@@ -50,6 +50,12 @@ const addInstance = createAsyncThunk(
       domain,
       url: `api/v1/preferences`,
       headers: { Authorization: `Bearer ${token}` }
+    }).catch(error => {
+      if (error?.status === 404) {
+        return Promise.resolve({ body: {} })
+      } else {
+        return Promise.reject()
+      }
     })
 
     const { body: filters } = await apiGeneral<Mastodon.Filter<any>[]>({
@@ -66,7 +72,7 @@ const addInstance = createAsyncThunk(
         appData,
         url: domain,
         token,
-        uri: instance.uri,
+        uri: instance.uri.replace(/^https?:\/\//, ''), // Pleroma includes schema
         urls: instance.urls,
         account: {
           id,

@@ -13,6 +13,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
+import { View } from 'react-native'
+import { useRoute } from '@react-navigation/native'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -122,9 +124,12 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
     }
   }
 
+  const { name } = useRoute()
+  const isPageNotifications = name === 'Tab-Notifications-Root'
+
   return (
-    <>
-      {canFollowNotify && query.data?.following ? (
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      {!isPageNotifications && canFollowNotify && query.data?.following ? (
         <Button
           type='icon'
           content={query.data.notifying ? 'BellOff' : 'Bell'}
@@ -151,7 +156,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         loading={query.isLoading || mutation.isLoading}
         disabled={query.isError || query.data?.blocked_by}
       />
-    </>
+    </View>
   )
 }
 

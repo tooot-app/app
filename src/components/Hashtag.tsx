@@ -52,22 +52,24 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
       >
         #{hashtag.name}
       </CustomText>
-      <View
-        style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch' }}
-        onLayout={({
-          nativeEvent: {
-            layout: { height }
-          }
-        }) => setHeight(height)}
-      >
-        <Sparkline
-          data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
-          width={width}
-          height={height}
-          margin={children ? StyleConstants.Spacing.S : undefined}
-        />
-        {children}
-      </View>
+      {hashtag.history?.length ? (
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch' }}
+          onLayout={({
+            nativeEvent: {
+              layout: { height }
+            }
+          }) => setHeight(height)}
+        >
+          <Sparkline
+            data={hashtag.history.map(h => parseInt(h.uses)).reverse()}
+            width={width}
+            height={height}
+            margin={children ? StyleConstants.Spacing.S : undefined}
+          />
+          {children}
+        </View>
+      ) : null}
     </Pressable>
   )
 }
