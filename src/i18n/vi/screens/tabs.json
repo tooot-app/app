@@ -254,9 +254,6 @@
         "content_true": "Bật",
         "content_false": "Tắt"
       },
-      "update": {
-        "title": "Cập nhật phiên bản mới"
-      },
       "logout": {
         "button": "Đăng xuất",
         "alert": {
