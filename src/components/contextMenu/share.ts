@@ -13,7 +13,7 @@ const menuShare = (
       }
     | {
         type: 'account'
-        url: string
+        url?: string
       }
 ): ContextMenu[][] => {
   if (params.type === 'status' && params.visibility === 'direct') return []

@@ -11,7 +11,7 @@ import Icon from './Icon'
 import CustomText from './Text'
 
 export interface Props {
-  account: Mastodon.Account
+  account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'acct' | 'username'>
   props?: PressableProps
 }
 

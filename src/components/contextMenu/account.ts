@@ -30,7 +30,7 @@ const menuAccount = ({
 }: {
   type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
-  account?: Mastodon.Account
+  account?: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct'>
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
