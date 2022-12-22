@@ -361,10 +361,10 @@
       "name": "",
       "report": "",
       "forward": {
-        "heading": ""
+        "heading": "Envia anònimament al servidor remot {{instance}}"
       },
       "reasons": {
-        "heading": "",
+        "heading": "Què està passant amb aquest compte?",
         "spam": "És contingut brossa",
         "other": "És una altra cosa",
         "violation": "Incompleix les regles del servidor"
