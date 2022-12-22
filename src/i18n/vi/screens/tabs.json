@@ -357,6 +357,25 @@
     "history": {
       "name": "Lịch sử chỉnh sửa"
     },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
+    },
     "search": {
       "header": {
         "prefix": "Tìm kiếm",
