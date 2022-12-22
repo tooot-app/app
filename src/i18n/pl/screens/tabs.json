@@ -37,80 +37,80 @@
         "mention": "",
         "poll": "",
         "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
+        "update": "Podbity tootek został edytowany",
+        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
+        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
       }
     }
   },
   "me": {
     "stacks": {
       "bookmarks": {
-        "name": ""
+        "name": "Zalajkowane"
       },
       "conversations": {
-        "name": ""
+        "name": "Prywatne tootki"
       },
       "favourites": {
-        "name": ""
+        "name": "Ulubione"
       },
       "followedTags": {
-        "name": ""
+        "name": "Obserwowane hasztagi"
       },
       "fontSize": {
-        "name": ""
+        "name": "Rozmiar czcionki"
       },
       "language": {
-        "name": ""
+        "name": "Język"
       },
       "list": {
-        "name": ""
+        "name": "Lista: {{list}}"
       },
       "listAccounts": {
         "name": "Użytkownicy: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Utwórz listę"
       },
       "listEdit": {
         "name": "Edycja listy"
       },
       "lists": {
-        "name": ""
+        "name": "Listy"
       },
       "push": {
-        "name": ""
+        "name": "Powiadomienia Push"
       },
       "profile": {
-        "name": ""
+        "name": "Edytuj profil"
       },
       "profileName": {
-        "name": ""
+        "name": "Edytuj nazwę użytkownika"
       },
       "profileNote": {
-        "name": ""
+        "name": "Edytuj opis"
       },
       "profileFields": {
-        "name": ""
+        "name": "Edytuj metadane"
       },
       "settings": {
-        "name": ""
+        "name": "Ustawienia"
       },
       "webSettings": {
-        "name": ""
+        "name": "Ustawienia konta"
       },
       "switch": {
-        "name": ""
+        "name": "Przełącz konto"
       }
     },
     "fontSize": {
-      "demo": "",
+      "demo": "<p>Oto przykładowy tootek 😊 Wybierz opcje wielkości czcionki z listy poniżej.<br /><br />To ustawienie wpłynie jedynie na zawartość Twoich tootków, ale nie na rozmiar innych komunikatów z apki.</p>",
       "sizes": {
-        "S": "",
-        "M": "",
-        "L": "",
-        "XL": "",
-        "XXL": ""
+        "S": "S",
+        "M": "M (Domyślna)",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
       }
     },
     "listAccounts": {
@@ -139,55 +139,55 @@
     },
     "profile": {
       "feedback": {
-        "succeed": "",
-        "failed": ""
+        "succeed": "Zaktualizowano {{type}}",
+        "failed": "Aktualizacja {{type}} nie powiodła się, prosimy spróbować ponownie"
       },
       "root": {
         "name": {
-          "title": ""
+          "title": "Wyświetlana nazwa"
         },
         "avatar": {
-          "title": "",
-          "description": ""
+          "title": "Zdjęcie profilowe",
+          "description": "Zostanie zmniejszone do 400x400 px"
         },
         "header": {
-          "title": "",
-          "description": ""
+          "title": "Zdjęcie w tle",
+          "description": "Zostanie zmniejszony do 1500x500 px"
         },
         "note": {
-          "title": ""
+          "title": "Opis"
         },
         "fields": {
-          "title": "",
-          "total_one": "",
-          "total_other": ""
+          "title": "Metadane",
+          "total_one": "Pole {{count}}",
+          "total_other": "{{count}} pola"
         },
         "visibility": {
-          "title": "",
+          "title": "Domyślna widoczność tootków",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": ""
+            "public": "Publiczne",
+            "unlisted": "Niepubliczne",
+            "private": "Tylko dla obserwujących"
           }
         },
         "sensitive": {
-          "title": ""
+          "title": "Publikuję rzeczy 18+"
         },
         "lock": {
-          "title": "",
-          "description": ""
+          "title": "Zablokuj konto",
+          "description": "Wymaga ręcznego zatwierdzania obserwujących"
         },
         "bot": {
-          "title": "",
-          "description": ""
+          "title": "Konto bota",
+          "description": "To konto podejmuje głównie zautomatyzowane działania i może nie być nadzorowane"
         }
       },
       "fields": {
-        "group": "",
-        "label": "",
-        "content": ""
+        "group": "Grupa {{index}}",
+        "label": "Nazwa",
+        "content": "Link"
       },
-      "mediaSelectionFailed": ""
+      "mediaSelectionFailed": "Nie udało się przetworzyć obrazka. Prosimy, spróbuj raz jeszcze"
     },
     "push": {
       "notAvailable": "",
@@ -309,13 +309,13 @@
         "heading": ""
       },
       "support": {
-        "heading": ""
+        "heading": "Wesprzyj tooot!"
       },
       "contact": {
-        "heading": ""
+        "heading": "Skontaktuj się z nami"
       },
-      "version": "",
-      "instanceVersion": ""
+      "version": "Wersja: v{{version}}",
+      "instanceVersion": "Wersja Mastodona: v{{version}}"
     },
     "switch": {
       "existing": "",
