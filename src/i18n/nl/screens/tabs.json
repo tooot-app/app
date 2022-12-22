@@ -358,22 +358,22 @@
       "name": "Geschiedenis bewerken"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Rapporteer {{acct}}",
+      "report": "Rapporteer",
       "forward": {
-        "heading": ""
+        "heading": "Anoniem doorsturen naar externe server {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Wat is er aan de hand met dit account?",
+        "spam": "Het is spam",
+        "other": "Het is iets anders",
+        "violation": "Het schendt de serverregels"
       },
       "comment": {
-        "heading": ""
+        "heading": "Wil je nog iets anders toevoegen?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Het is in strijd met de serverregels"
       }
     },
     "search": {
