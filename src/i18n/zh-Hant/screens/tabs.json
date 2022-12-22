@@ -358,14 +358,14 @@
       "name": "編輯歷史"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "檢舉 {{acct}}",
+      "report": "檢舉",
       "forward": {
-        "heading": ""
+        "heading": "匿名轉發到遠端伺服器 {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
+        "heading": "這個帳號發生什麼事？",
+        "spam": "垃圾訊息",
         "other": "",
         "violation": ""
       },
