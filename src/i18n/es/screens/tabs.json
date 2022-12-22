@@ -361,19 +361,19 @@
       "name": "",
       "report": "",
       "forward": {
-        "heading": ""
+        "heading": "Enviar anónimamente al servidor remoto {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "¿Qué está pasando con esta cuenta?",
+        "spam": "Es spam",
+        "other": "Es otra cosa",
+        "violation": "Incumple las reglas del servidor"
       },
       "comment": {
-        "heading": ""
+        "heading": "¿Hay algo más que quieras añadir?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Ha incumplido las reglas del servidor"
       }
     },
     "search": {
