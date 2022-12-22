@@ -9,51 +9,51 @@
     }
   },
   "end": {
-    "message": ""
+    "message": "Koniec! Co powiesz na kubek <0 />?"
   },
   "lookback": {
-    "message": ""
+    "message": "Ostatnio czytane o"
   },
   "refresh": {
-    "fetchPreviousPage": "",
-    "refetch": ""
+    "fetchPreviousPage": "Nowsze",
+    "refetch": "Do najnowszych"
   },
   "shared": {
     "actioned": {
-      "pinned": "",
-      "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
-      "poll": "",
+      "pinned": "Przypięte",
+      "favourite": "{{name}} polubił Twojego tootka",
+      "status": "{{name}} właśnie coś opublikował(a)",
+      "follow": "{{name}} obserwuje Cię",
+      "follow_request": "{{name}} pragnie Cię obserwować",
+      "poll": "Ankieta w której brałeś(-aś) udział zakończyło się",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} podbił(a)",
+        "notification": "{{name}} podbił(a) Twojego tootka"
       },
-      "update": "",
+      "update": "Podbity tootek został edytowany",
       "admin.sign_up": "{{name}} dołącza do instancji",
-      "admin.report": ""
+      "admin.report": "{{name}} zgłosił(a):"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Odpowiedz na tego tootka"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Podbij tego tootka",
+        "function": "Podbij tootka",
         "options": {
-          "title": "",
-          "public": "",
-          "unlisted": ""
+          "title": "Wybierz widoczność podbicia",
+          "public": "Podbicie publiczne",
+          "unlisted": "Niewidoczne podbicie"
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Dodaj do ulubionych",
+        "function": "Polubiony tootek"
       },
       "bookmarked": {
-        "accessibilityLabel": "",
-        "function": ""
+        "accessibilityLabel": "Dodaj tego tootka do ulubionych",
+        "function": "Zapisz tootka"
       },
       "openReport": ""
     },
