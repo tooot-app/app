@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Porzucić zmiany?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Zapisz wersję roboczą",
+          "delete": "Usuń wersję roboczą"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Trąbnij tootka",
+        "conversation": "Wyślij prywatnego tootka",
+        "reply": "Odpowiedz",
+        "deleteEdit": "Trąbnij tootka",
+        "edit": "Trąbnij tootka",
+        "share": "Trąbnij tootka"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Nie udało się trąbnąć tootka",
+          "button": "Spróbuj jeszcze raz"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Nie znaleziono odpowiedzi",
+          "description": "Odpowiedź mogła zostać usunięta. Czy chcesz usunąć ją z odnośnika?",
+          "confirm": "Usuń odnośnik"
         }
       }
     }
@@ -34,42 +34,42 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Trąbię tootka jako @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Ostrzeżenie przed spoilerami"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Co Ci chodzi po głowie?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Osiągnięto maksymalną ilość załączników",
+              "OK": "$t(common:buttons.OK)"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Oznacz załączniki jako kontrowersyjne",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Usuń przesłany załącznik, numer {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Edytuj przesłany załącznik, numer {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Prześlij więcej załączników"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Dotknij, by dodać emoji do tootka"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Opcje ankiety {{index}}",
+              "single": "Pojedynczy wybór",
+              "multiple": "Wielokrotny wybór"
             }
           },
           "quantity": {
