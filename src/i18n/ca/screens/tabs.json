@@ -365,15 +365,15 @@
       },
       "reasons": {
         "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "spam": "És contingut brossa",
+        "other": "És una altra cosa",
+        "violation": "Incompleix les regles del servidor"
       },
       "comment": {
-        "heading": ""
+        "heading": "Vols afegir alguna altra cosa?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Ha incomplert les regles del servidor"
       }
     },
     "search": {
