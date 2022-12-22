@@ -74,42 +74,42 @@
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Zredukuj opcje ankiety do {{amount}}",
+              "accessibilityHint": "Osiągnięto minimalną ilość opcji ankiety, obecnie posiada {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Zwiększ ilość opcji ankiety do {{amount}}",
+              "accessibilityHint": "Osiągnięto maksymalną ilość opcji ankiety, obecnie {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Rodzaj wyboru",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Pojedynczy wybór",
+              "multiple": "Wielokrotny wybór"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Ważność",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minut",
+              "1800": "30 minut",
+              "3600": "1 godzina",
+              "21600": "6 godzin",
+              "86400": "1 dzień",
+              "259200": "3 dni",
+              "604800": "7 dni"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Prześlij załącznik",
+          "accessibilityHint": "Funkcja ankiety zostanie wyłączona jeśli pojawi się jakiś załącznik",
           "failed": {
             "alert": {
-              "title": "",
+              "title": "Błąd przesyłania",
               "button": ""
             }
           }
