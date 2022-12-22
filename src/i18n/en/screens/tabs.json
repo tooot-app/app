@@ -357,6 +357,25 @@
     "history": {
       "name": "Edit History"
     },
+    "report": {
+      "name": "Report {{acct}}",
+      "report": "Report",
+      "forward": {
+        "heading": "Anonymously forward to remote server {{instance}}"
+      },
+      "reasons": {
+        "heading": "What is going on with this account?",
+        "spam": "It is spam",
+        "other": "It is something else",
+        "violation": "It violates server rules"
+      },
+      "comment": {
+        "heading": "Anything else you want to add?"
+      },
+      "violatedRules": {
+        "heading": "Violated server rules"
+      }
+    },
     "search": {
       "header": {
         "prefix": "Searching",

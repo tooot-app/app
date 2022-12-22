@@ -1,3 +1,2 @@
 Enjoy toooting! This version includes following improvements and fixes:
-- Fixed wrongly update notification
-- Fix some random crashes
+- Allowing adding more context of reports

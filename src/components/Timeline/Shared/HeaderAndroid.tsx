@@ -28,6 +28,7 @@ const TimelineHeaderAndroid: React.FC = () => {
     type: 'status',
     openChange,
     account: status.account,
+    ...(status && { status }),
     queryKey
   })
   const mStatus = menuStatus({ status, queryKey, rootQueryKey })

@@ -93,7 +93,7 @@ const ParseEmojis = React.memo(
       </CustomText>
     )
   },
-  (prev, next) => prev.content === next.content
+  (prev, next) => prev.content === next.content && prev.style?.color === next.style?.color
 )
 
 export default ParseEmojis

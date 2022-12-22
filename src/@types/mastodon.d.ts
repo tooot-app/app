@@ -470,6 +470,11 @@ declare namespace Mastodon {
     updated_at: string
   }
 
+  type Rule = {
+    id: string
+    text: string
+  }
+
   type Status = {
     // Base
     id: string

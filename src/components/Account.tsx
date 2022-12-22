@@ -42,11 +42,11 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
               style={{
                 width: StyleConstants.Avatar.S,
                 height: StyleConstants.Avatar.S,
-                borderRadius: 6,
+                borderRadius: 8,
                 marginRight: StyleConstants.Spacing.S
               }}
             />
-            <View>
+            <View style={{ flex: 1 }}>
               <CustomText numberOfLines={1}>
                 <ParseEmojis
                   content={account.display_name || account.username}

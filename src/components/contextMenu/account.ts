@@ -24,12 +24,14 @@ const menuAccount = ({
   type,
   openChange,
   account,
+  status,
   queryKey,
   rootQueryKey
 }: {
   type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
-  account?: Pick<Mastodon.Account, 'id' | 'username'>
+  account?: Mastodon.Account
+  status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
@@ -214,34 +216,7 @@ const menuAccount = ({
       {
         key: 'account-reports',
         item: {
-          onSelect: () =>
-            Alert.alert(
-              t('account.reports.alert.title', { username: account.username }),
-              undefined,
-              [
-                {
-                  text: t('common:buttons.confirm'),
-                  style: 'destructive',
-                  onPress: () => {
-                    timelineMutation.mutate({
-                      type: 'updateAccountProperty',
-                      queryKey,
-                      id: account.id,
-                      payload: { property: 'reports' }
-                    })
-                    timelineMutation.mutate({
-                      type: 'updateAccountProperty',
-                      queryKey,
-                      id: account.id,
-                      payload: { property: 'block', currentValue: false }
-                    })
-                  }
-                },
-                {
-                  text: t('common:buttons.cancel')
-                }
-              ]
-            ),
+          onSelect: () => navigation.navigate('Tab-Shared-Report', { account, status }),
           disabled: false,
           destructive: true,
           hidden: false

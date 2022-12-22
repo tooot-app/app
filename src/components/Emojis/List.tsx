@@ -28,7 +28,7 @@ const EmojisList = () => {
   const { t } = useTranslation()
 
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
-  const { colors, mode } = useTheme()
+  const { colors } = useTheme()
 
   const addEmoji = (shortcode: string) => {
     if (emojisState.targetIndex === -1) {
@@ -158,7 +158,6 @@ const EmojisList = () => {
           onChangeText={setSearch}
           autoCapitalize='none'
           clearButtonMode='always'
-          keyboardAppearance={mode}
           autoCorrect={false}
           spellCheck={false}
         />
