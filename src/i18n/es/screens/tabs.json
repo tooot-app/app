@@ -357,6 +357,25 @@
     "history": {
       "name": "Historial de ediciones"
     },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
+    },
     "search": {
       "header": {
         "prefix": "Buscando",
