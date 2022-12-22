@@ -366,14 +366,14 @@
       "reasons": {
         "heading": "這個帳號發生什麼事？",
         "spam": "垃圾訊息",
-        "other": "",
-        "violation": ""
+        "other": "其它原因",
+        "violation": "它違反了伺服器規則"
       },
       "comment": {
-        "heading": ""
+        "heading": "你還有什麼想補充的嗎？"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "違反伺服器規則"
       }
     },
     "search": {
