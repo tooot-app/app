@@ -8,8 +8,8 @@
     },
     "inLists": "Administrar usuario de listas",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Mostrar los impulsos del usuario",
+      "action_true": "Ocultar los impulsos del usuario"
     },
     "mute": {
       "action_false": "Silenciar usuario",
