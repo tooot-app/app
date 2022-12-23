@@ -47,7 +47,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <CustomText
           style={[styles.stat, { color: colors.primaryDefault, textAlign: 'right' }]}
-          children={t('shared.account.summary.following_count', {
+          children={t('shared.users.accounts.following', {
             count: account.following_count
           })}
           onPress={() =>
@@ -71,7 +71,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <CustomText
           style={[styles.stat, { color: colors.primaryDefault, textAlign: 'center' }]}
-          children={t('shared.account.summary.followers_count', {
+          children={t('shared.users.accounts.followers', {
             count: account.followers_count
           })}
           onPress={() =>

@@ -15,7 +15,7 @@ import { uploadAttachment } from '../Footer/addAttachment'
 
 const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
   const { colors, mode } = useTheme()
 
   const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
@@ -39,7 +39,7 @@ const ComposeTextInput: React.FC = () => {
       autoFocus
       enablesReturnKeyAutomatically
       multiline
-      placeholder={t('content.root.header.textInput.placeholder')}
+      placeholder={t('screenCompose:content.root.header.textInput.placeholder')}
       placeholderTextColor={colors.secondary}
       onChangeText={content =>
         formatText({
@@ -74,11 +74,11 @@ const ComposeTextInput: React.FC = () => {
       onPaste={(error: string | null | undefined, files: PastedFile[]) => {
         if (composeState.attachments.uploads.length + files.length > maxAttachments) {
           Alert.alert(
-            t('content.root.header.textInput.keyboardImage.exceedMaximum.title'),
+            t('screenCompose:content.root.header.textInput.keyboardImage.exceedMaximum.title'),
             undefined,
             [
               {
-                text: t('content.root.header.textInput.keyboardImage.exceedMaximum.OK'),
+                text: t('common:buttons.OK'),
                 style: 'default'
               }
             ]

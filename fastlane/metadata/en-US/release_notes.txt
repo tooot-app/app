@@ -1,2 +1,3 @@
 Enjoy toooting! This version includes following improvements and fixes:
 - Allowing adding more context of reports
+- Option to disable autoplay gif

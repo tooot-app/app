@@ -81,7 +81,7 @@ const TabNotificationsFilters: React.FC<
         {PUSH_DEFAULT(pushFeatures).map((type, index) => (
           <MenuRow
             key={index}
-            title={t(`screenTabs:notifications.filters.options.${type}`)}
+            title={t(`screenTabs:me.push.${type}.heading`)}
             switchValue={filters[type]}
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />
@@ -89,7 +89,7 @@ const TabNotificationsFilters: React.FC<
         {PUSH_ADMIN(pushFeatures, profileQuery.data?.role?.permissions).map(({ type }) => (
           <MenuRow
             key={type}
-            title={t(`screenTabs:notifications.filters.options.${type}`)}
+            title={t(`screenTabs:me.push.${type}.heading`)}
             switchValue={filters[type]}
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />

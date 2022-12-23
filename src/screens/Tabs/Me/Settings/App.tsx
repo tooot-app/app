@@ -13,8 +13,8 @@ import {
   getSettingsFontsize,
   getSettingsDarkTheme,
   changeDarkTheme,
-  getSettingsStaticEmoji,
-  changeStaticEmoji
+  getSettingsAutoplayGifv,
+  changeAutoplayGifv
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
@@ -35,20 +35,18 @@ const SettingsApp: React.FC = () => {
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-  const settingsStaticEmoji = useSelector(getSettingsStaticEmoji)
+  const settingsAutoplayGifv = useSelector(getSettingsAutoplayGifv)
 
   return (
     <MenuContainer>
       <MenuRow
-        title={t('screenTabs:me.settings.fontsize.heading')}
-        content={t(
-          `screenTabs:me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`
-        )}
+        title={t('screenTabs:me.stacks.fontSize.name')}
+        content={t(`screenTabs:me.fontSize.sizes.${mapFontsizeToName(settingsFontsize)}`)}
         iconBack='ChevronRight'
         onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
       <MenuRow
-        title={t('screenTabs:me.settings.language.heading')}
+        title={t('screenTabs:me.stacks.language.name')}
         content={
           // @ts-ignore
           LOCALES[
@@ -161,10 +159,9 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('screenTabs:me.settings.staticEmoji.heading')}
-        description={t('screenTabs:me.settings.staticEmoji.description')}
-        switchValue={settingsStaticEmoji}
-        switchOnValueChange={() => dispatch(changeStaticEmoji(!settingsStaticEmoji))}
+        title={t('screenTabs:me.settings.autoplayGifv.heading')}
+        switchValue={settingsAutoplayGifv}
+        switchOnValueChange={() => dispatch(changeAutoplayGifv(!settingsAutoplayGifv))}
       />
     </MenuContainer>
   )
