@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Filtrera visade notistyper",
-      "title": "Visa notifikationer",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Följarförfrågning",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Inlägg från följda användare",
-        "update": "Boosten har redigerats",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Visa notifikationer"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Utseende",
         "options": {
@@ -301,9 +276,8 @@
           "external": "Använd systemets webbläsare"
         }
       },
-      "staticEmoji": {
-        "heading": "Använd statisk emoji",
-        "description": "Om du stöter på frekventa appkrascher när du visar emoji-listan kan du testa att använda statisk emoji istället."
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "Funktionsförslag"
@@ -332,9 +306,7 @@
       "moved": "Användaren har flyttat",
       "created_at": "Gick med: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} inlägg",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} inlägg"
       },
       "toots": {
         "default": "Inlägg",
