@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrar",
       "accessibilityHint": "Filtrar tipos de notificación",
-      "title": "Mostrar las notificaciones",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Solicitud de seguimiento",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot de usuarios suscritos",
-        "update": "El impulso ha sido editado",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Mostrar las notificaciones"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Apariencia",
         "options": {
@@ -301,9 +276,8 @@
           "external": "Usar navegador"
         }
       },
-      "staticEmoji": {
-        "heading": "Usar emojis estáticos",
-        "description": "Si la aplicación falla al visualizar la lista de emojis, puedes intentar usar emojis estáticos en su lugar."
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "Petición de funciones"
@@ -332,9 +306,7 @@
       "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toots",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toots"
       },
       "toots": {
         "default": "Toots",
