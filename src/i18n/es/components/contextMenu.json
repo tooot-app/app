@@ -7,6 +7,10 @@
       "action_true": "Dejar de seguir usuario"
     },
     "inLists": "Administrar usuario de listas",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Silenciar usuario",
       "action_true": "Dejar de silenciar al usuario"
