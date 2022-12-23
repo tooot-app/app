@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "過濾器",
       "accessibilityHint": "過濾顯示的通知類型",
-      "title": "顯示通知",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "跟隨請求",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "訂閱使用者的嘟文",
-        "update": "轉嘟已編輯",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "顯示通知"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "外觀",
         "options": {
@@ -301,9 +276,8 @@
           "external": "使用系統瀏覽器開啟"
         }
       },
-      "staticEmoji": {
-        "heading": "使用靜態表情",
-        "description": "如果您在查看表情列表時經常遇到程式無預警退出，您可以嘗試使用靜態表情。"
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "功能建議"
@@ -332,9 +306,7 @@
       "moved": "使用者已轉移",
       "created_at": "加入於：{{date}}",
       "summary": {
-        "statuses_count": "{{count}} 條嘟文",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} 條嘟文"
       },
       "toots": {
         "default": "嘟文",
