@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-htmlview/HTMLView.js b/node_modules/react-native-htmlview/HTMLView.js
-index 43f8b7e..728112b 100644
---- a/node_modules/react-native-htmlview/HTMLView.js
-+++ b/node_modules/react-native-htmlview/HTMLView.js
+diff --git a/HTMLView.js b/HTMLView.js
+index 43f8b7eb552d9a44b5feef74ec2ae7d7ddbc2fca..334d144f1fb96067726bca199ff37267c2fa0fb2 100644
+--- a/HTMLView.js
++++ b/HTMLView.js
 @@ -1,7 +1,7 @@
  import React, {PureComponent} from 'react';
  import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ index 43f8b7e..728112b 100644
    RootComponent: PropTypes.func,
    rootComponentProps: PropTypes.object,
 -  style: ViewPropTypes.style,
-+  style: PropTypes.any,
++  style: PropTypes.object,
    stylesheet: PropTypes.object,
    TextComponent: PropTypes.func,
    textComponentProps: PropTypes.object,

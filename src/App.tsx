@@ -4,7 +4,6 @@ import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
 import Screens from '@root/Screens'
 import audio from '@root/startup/audio'
-import dev from '@root/startup/dev'
 import log from '@root/startup/log'
 import netInfo from '@root/startup/netInfo'
 import push from '@root/startup/push'
@@ -31,7 +30,6 @@ Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 })
 
-dev()
 sentry()
 audio()
 push()

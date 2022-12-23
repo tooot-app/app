@@ -1,0 +1,13 @@
+diff --git a/ios/EXAV/EXAudioSessionManager.m b/ios/EXAV/EXAudioSessionManager.m
+index 81dce13366c3947b12c863f7b39c0237882a6c36..fa27e0a354d48a994ca46e19642a5e224d42d9a8 100644
+--- a/ios/EXAV/EXAudioSessionManager.m
++++ b/ios/EXAV/EXAudioSessionManager.m
+@@ -170,7 +170,7 @@ - (void)moduleDidBackground:(id)backgroundingModule
+   [_foregroundedModules compact];
+ 
+   // Any possible failures are silent
+-  [self _updateSessionConfiguration];
++  // [self _updateSessionConfiguration];
+ }
+ 
+ - (void)moduleDidForeground:(id)module
