@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Автовідтворення GIF в стрічці"
       },
       "feedback": {
         "heading": "Запропонувати ідею"
@@ -330,22 +330,22 @@
       "name": "Редагувати історію"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Скарга на {{acct}}",
+      "report": "Скарга",
       "forward": {
-        "heading": ""
+        "heading": "Анонімно переадресовано на віддалений інстанс {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Що не так з цим обліковим записом?",
+        "spam": "Це спам",
+        "other": "Це щось інше",
+        "violation": "Це порушує правила інстанса"
       },
       "comment": {
-        "heading": ""
+        "heading": "Може ви хочете щось додати?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Це порушує правила інстанса"
       }
     },
     "search": {
