@@ -42,8 +42,7 @@
           "placeholder": "想说点什么呢",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "已达附件数量上限",
-              "OK": "$t(common:buttons.OK)"
+              "title": "已达附件数量上限"
             }
           }
         }
