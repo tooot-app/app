@@ -7,6 +7,10 @@
       "action_true": "Przestań obserwować"
     },
     "inLists": "Zarządzaj kontem list",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Wycisz użytkownika",
       "action_true": "Wyłącz wyciszenie"
