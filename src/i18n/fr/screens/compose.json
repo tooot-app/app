@@ -42,8 +42,7 @@
           "placeholder": "Qu’avez-vous en tête",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Nombre maximum de pièces jointes atteint",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Nombre maximum de pièces jointes atteint"
             }
           }
         }
