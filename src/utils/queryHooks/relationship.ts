@@ -48,6 +48,7 @@ type MutationVarsRelationship =
       payload: {
         action: 'block'
         state: boolean
+        reblogs?: undefined
         notify?: undefined
       }
     }
@@ -57,6 +58,7 @@ type MutationVarsRelationship =
       payload: {
         action: 'follow'
         state: boolean
+        reblogs?: boolean
         notify?: boolean
       }
     }
@@ -70,6 +72,8 @@ const mutationFunction = async (params: MutationVarsRelationship) => {
       }).then(res => res.body)
     case 'outgoing':
       const formData = new FormData()
+      typeof params.payload.reblogs === 'boolean' &&
+        formData.append('reblogs', params.payload.reblogs.toString())
       typeof params.payload.notify === 'boolean' &&
         formData.append('notify', params.payload.notify.toString())
 

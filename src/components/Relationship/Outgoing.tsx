@@ -44,7 +44,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`componentRelationship:${action}.function`)
+          function: t(`componentRelationship:${action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

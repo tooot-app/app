@@ -60,7 +60,9 @@ const TimelineActions: React.FC = () => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`componentTimeline:shared.actions.${correctParam.payload.property}.function`)
+          function: t(
+            `componentTimeline:shared.actions.${correctParam.payload.property}.function` as any
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

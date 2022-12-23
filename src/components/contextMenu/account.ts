@@ -158,6 +158,7 @@ const menuAccount = ({
         : 'person.badge.minus'
     })
   }
+
   if (!ownAccount) {
     menus[0].push({
       key: 'account-list',
@@ -169,6 +170,25 @@ const menuAccount = ({
       },
       title: t('componentContextMenu:account.inLists'),
       icon: 'checklist'
+    })
+    menus[0].push({
+      key: 'account-show-boosts',
+      item: {
+        onSelect: () =>
+          relationshipMutation.mutate({
+            id: account.id,
+            type: 'outgoing',
+            payload: { action: 'follow', state: false, reblogs: !data?.showing_reblogs }
+          }),
+        disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
+        destructive: false,
+        hidden: !isFetched || !data?.following
+      },
+      title: t('componentContextMenu:account.showBoosts.action', {
+        defaultValue: 'false',
+        context: (data?.showing_reblogs || false).toString()
+      }),
+      icon: data?.showing_reblogs ? 'rectangle.on.rectangle.slash' : 'rectangle.on.rectangle'
     })
     menus[0].push({
       key: 'account-mute',
@@ -190,9 +210,7 @@ const menuAccount = ({
       }),
       icon: data?.muting ? 'eye' : 'eye.slash'
     })
-  }
 
-  !ownAccount &&
     menus.push([
       {
         key: 'account-block',
@@ -240,6 +258,7 @@ const menuAccount = ({
         icon: 'flag'
       }
     ])
+  }
 
   return menus
 }

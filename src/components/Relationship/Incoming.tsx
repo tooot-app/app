@@ -33,7 +33,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
         type: 'error',
         theme,
         message: t('common:message.error.message', {
-          function: t(`componentRelationship:${type}.function`)
+          function: t(`componentRelationship:${type}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

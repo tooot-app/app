@@ -183,7 +183,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             ListHeaderComponent,
             maintainVisibleContentPosition: undefined,
             onRefresh: () => queryClient.refetchQueries(queryKey),
-            refreshing: queryClient.getQueryState(queryKey)?.fetchStatus === 'fetching'
+            refreshing: false
           }}
         />
       )}
