@@ -42,8 +42,7 @@
           "placeholder": "Què et passa pel cap?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "S'ha arribat al nombre màxim d'adjunts",
-              "OK": "$t(common:buttons.OK)"
+              "title": "S'ha arribat al nombre màxim d'adjunts"
             }
           }
         }
