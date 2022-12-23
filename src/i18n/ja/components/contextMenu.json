@@ -7,6 +7,10 @@
       "action_true": "ユーザーをフォロー解除"
     },
     "inLists": "リストのユーザーを管理",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
