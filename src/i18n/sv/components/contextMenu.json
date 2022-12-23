@@ -7,6 +7,10 @@
       "action_true": "Avfölj användaren"
     },
     "inLists": "Hantera användare i listor",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Tysta användare",
       "action_true": "Sluta tysta användare"
