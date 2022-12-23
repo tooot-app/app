@@ -42,8 +42,7 @@
           "placeholder": "Co Ci chodzi po głowie?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Osiągnięto maksymalną ilość załączników",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Osiągnięto maksymalną ilość załączników"
             }
           }
         }
