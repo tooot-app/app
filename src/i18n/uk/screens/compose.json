@@ -42,8 +42,7 @@
           "placeholder": "Що у вас на думці?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Досягнута максимальна кількість вкладень",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Досягнута максимальна кількість вкладень"
             }
           }
         }
