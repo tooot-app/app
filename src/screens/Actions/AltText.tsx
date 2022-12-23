@@ -16,17 +16,15 @@ export interface Props {
 
 const ActionsAltText: React.FC<Props> = ({ text }) => {
   const navigation = useNavigation()
-  const { t } = useTranslation('screenActions')
+  const { t } = useTranslation(['common', 'screenActions'])
   const { colors } = useTheme()
 
   return (
     <>
       <MenuContainer>
-        <MenuHeader heading={t(`content.altText.heading`)} />
+        <MenuHeader heading={t(`screenActions:content.altText.heading`)} />
         <ScrollView style={{ maxHeight: Dimensions.get('window').height / 2 }}>
-          <CustomText style={{ color: colors.primaryDefault }}>
-            {text}
-          </CustomText>
+          <CustomText style={{ color: colors.primaryDefault }}>{text}</CustomText>
         </ScrollView>
       </MenuContainer>
       <Button

@@ -45,7 +45,8 @@ const TimelineFooter = React.memo(
         ) : (
           <CustomText fontStyle='S' style={{ color: colors.secondary }}>
             <Trans
-              i18nKey='componentTimeline:end.message'
+              ns='componentTimeline'
+              i18nKey='end.message'
               components={[
                 <Icon name='Coffee' size={StyleConstants.Font.Size.S} color={colors.secondary} />
               ]}

@@ -28,7 +28,7 @@ const menuStatus = ({
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
   const { theme } = useTheme()
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu'])
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -41,7 +41,7 @@ const menuStatus = ({
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`status.${theFunction}.action`)
+          function: t(`componentContextMenu:status.${theFunction}.action` as any)
         }),
         ...(err?.status &&
           typeof err.status === 'number' &&
@@ -100,81 +100,89 @@ const menuStatus = ({
           destructive: false,
           hidden: !canEditPost
         },
-        title: t('status.edit.action'),
+        title: t('componentContextMenu:status.edit.action'),
         icon: 'square.and.pencil'
       },
       {
         key: 'status-delete-edit',
         item: {
           onSelect: () =>
-            Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
-              {
-                text: t('common:buttons.confirm'),
-                style: 'destructive',
-                onPress: async () => {
-                  let replyToStatus: Mastodon.Status | undefined = undefined
-                  if (status.in_reply_to_id) {
-                    replyToStatus = await apiInstance<Mastodon.Status>({
-                      method: 'get',
-                      url: `statuses/${status.in_reply_to_id}`
-                    }).then(res => res.body)
-                  }
-                  mutation
-                    .mutateAsync({
-                      type: 'deleteItem',
-                      source: 'statuses',
-                      queryKey,
-                      id: status.id
-                    })
-                    .then(res => {
-                      navigation.navigate('Screen-Compose', {
-                        type: 'deleteEdit',
-                        incomingStatus: res.body as Mastodon.Status,
-                        ...(replyToStatus && { replyToStatus }),
-                        queryKey
+            Alert.alert(
+              t('componentContextMenu:status.deleteEdit.alert.title'),
+              t('componentContextMenu:status.deleteEdit.alert.message'),
+              [
+                {
+                  text: t('common:buttons.confirm'),
+                  style: 'destructive',
+                  onPress: async () => {
+                    let replyToStatus: Mastodon.Status | undefined = undefined
+                    if (status.in_reply_to_id) {
+                      replyToStatus = await apiInstance<Mastodon.Status>({
+                        method: 'get',
+                        url: `statuses/${status.in_reply_to_id}`
+                      }).then(res => res.body)
+                    }
+                    mutation
+                      .mutateAsync({
+                        type: 'deleteItem',
+                        source: 'statuses',
+                        queryKey,
+                        id: status.id
                       })
-                    })
+                      .then(res => {
+                        navigation.navigate('Screen-Compose', {
+                          type: 'deleteEdit',
+                          incomingStatus: res.body as Mastodon.Status,
+                          ...(replyToStatus && { replyToStatus }),
+                          queryKey
+                        })
+                      })
+                  }
+                },
+                {
+                  text: t('common:buttons.cancel')
                 }
-              },
-              {
-                text: t('common:buttons.cancel')
-              }
-            ]),
+              ]
+            ),
           disabled: false,
           destructive: true,
           hidden: false
         },
-        title: t('status.deleteEdit.action'),
+        title: t('componentContextMenu:status.deleteEdit.action'),
         icon: 'pencil.and.outline'
       },
       {
         key: 'status-delete',
         item: {
           onSelect: () =>
-            Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
-              {
-                text: t('common:buttons.confirm'),
-                style: 'destructive',
-                onPress: async () => {
-                  mutation.mutate({
-                    type: 'deleteItem',
-                    source: 'statuses',
-                    queryKey,
-                    rootQueryKey,
-                    id: status.id
-                  })
+            Alert.alert(
+              t('componentContextMenu:status.delete.alert.title'),
+              t('componentContextMenu:status.delete.alert.message'),
+              [
+                {
+                  text: t('common:buttons.confirm'),
+                  style: 'destructive',
+                  onPress: async () => {
+                    mutation.mutate({
+                      type: 'deleteItem',
+                      source: 'statuses',
+                      queryKey,
+                      rootQueryKey,
+                      id: status.id
+                    })
+                  }
+                },
+                {
+                  text: t('common:buttons.cancel'),
+                  style: 'default'
                 }
-              },
-              {
-                text: t('common:buttons.cancel'),
-                style: 'default'
-              }
-            ]),
+              ]
+            ),
           disabled: false,
           destructive: true,
           hidden: false
         },
-        title: t('status.delete.action'),
+        title: t('componentContextMenu:status.delete.action'),
         icon: 'trash'
       }
     ])
@@ -200,7 +208,8 @@ const menuStatus = ({
           destructive: false,
           hidden: false
         },
-        title: t('status.mute.action', {
+        title: t('componentContextMenu:status.mute.action', {
+          defaultValue: 'false',
           context: (status.muted || false).toString()
         }),
         icon: status.muted ? 'speaker' : 'speaker.slash'
@@ -226,7 +235,8 @@ const menuStatus = ({
           destructive: false,
           hidden: status.visibility !== 'public' && status.visibility !== 'unlisted'
         },
-        title: t('status.pin.action', {
+        title: t('componentContextMenu:status.pin.action', {
+          defaultValue: 'false',
           context: (status.pinned || false).toString()
         }),
         icon: status.pinned ? 'pin.slash' : 'pin'

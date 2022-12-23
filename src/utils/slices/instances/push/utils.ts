@@ -70,7 +70,7 @@ export const setChannels = async (instance: InstanceLatest, reset: boolean | und
   const setChannel = async (type: string) =>
     Notifications.setNotificationChannelAsync(`${account}_${type}`, {
       groupId: account,
-      name: i18n.t(`screenTabs:me.push.${type}.heading`),
+      name: i18n.t(`screenTabs:me.push.${type}.heading` as any),
       importance: Notifications.AndroidImportance.DEFAULT,
       bypassDnd: false,
       showBadge: true,

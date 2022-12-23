@@ -19,7 +19,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
   route: { params }
 }) => {
   const { colors, theme } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const queryKey: QueryKeyListAccounts = ['ListAccounts', { id: params.id }]
   const { data, refetch, fetchNextPage, hasNextPage } = useListAccountsQuery({
@@ -45,7 +45,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t('me.listAccounts.error')
+          function: t('screenTabs:me.listAccounts.error')
         })
       })
     }
@@ -88,7 +88,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
               color: colors.secondary
             }}
           >
-            {t('me.listAccounts.empty')}
+            {t('screenTabs:me.listAccounts.empty')}
           </CustomText>
         </View>
       }

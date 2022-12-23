@@ -39,7 +39,12 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { t } = useTranslation('screens')
+  const { t } = useTranslation([
+    'common',
+    'screens',
+    'screenAnnouncements',
+    'screenAccountSelection'
+  ])
   const dispatch = useAppDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { colors, theme } = useTheme()
@@ -55,7 +60,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   // Prevent screenshot alert
   useEffect(() => {
     const screenshotListener = addScreenshotListener(() =>
-      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+      Alert.alert(t('screens:screenshot.title'), t('screens:screenshot.message'), [
         { text: t('common:buttons.confirm'), style: 'destructive' }
       ])
     )
@@ -68,7 +73,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
         displayMessage({
-          message: t('localCorrupt.message'),
+          message: t('screens:localCorrupt.message'),
           description: localCorrupt.length ? localCorrupt : undefined,
           type: 'danger'
         })
@@ -176,7 +181,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           if (!typesImage.includes(mime.split('/')[1])) {
             console.warn('Image type not supported:', mime.split('/')[1])
             displayMessage({
-              message: t('shareError.imageNotSupported', {
+              message: t('screens:shareError.imageNotSupported', {
                 type: mime.split('/')[1]
               }),
               type: 'danger'
@@ -188,7 +193,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           if (!typesVideo.includes(mime.split('/')[1])) {
             console.warn('Video type not supported:', mime.split('/')[1])
             displayMessage({
-              message: t('shareError.videoNotSupported', {
+              message: t('screens:shareError.videoNotSupported', {
                 type: mime.split('/')[1]
               }),
               type: 'danger'

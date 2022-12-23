@@ -22,7 +22,7 @@ export interface Props {
 
 const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('componentRelationship')
+  const { t } = useTranslation(['common', 'componentRelationship'])
 
   const canFollowNotify = useSelector(checkInstanceFeature('account_follow_notify'))
 
@@ -44,7 +44,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`${action}.function`)
+          function: t(`componentRelationship:${action}.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -61,15 +61,15 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   let onPress: () => void
 
   if (query.isError) {
-    content = t('button.error')
+    content = t('componentRelationship:button.error')
     onPress = () => {}
   } else {
     if (query.data?.blocked_by) {
-      content = t('button.blocked_by')
+      content = t('componentRelationship:button.blocked_by')
       onPress = () => {}
     } else {
       if (query.data?.blocking) {
-        content = t('button.blocking')
+        content = t('componentRelationship:button.blocking')
         onPress = () => {
           mutation.mutate({
             id,
@@ -82,7 +82,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         }
       } else {
         if (query.data?.following) {
-          content = t('button.following')
+          content = t('componentRelationship:button.following')
           onPress = () => {
             mutation.mutate({
               id,
@@ -95,7 +95,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
           }
         } else {
           if (query.data?.requested) {
-            content = t('button.requested')
+            content = t('componentRelationship:button.requested')
             onPress = () => {
               mutation.mutate({
                 id,
@@ -107,7 +107,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
               })
             }
           } else {
-            content = t('button.default')
+            content = t('componentRelationship:button.default')
             onPress = () => {
               mutation.mutate({
                 id,

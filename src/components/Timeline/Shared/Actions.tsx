@@ -28,7 +28,7 @@ const TimelineActions: React.FC = () => {
   if (!queryKey || !status || disableDetails) return null
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
   const { colors, theme } = useTheme()
   const iconColor = colors.secondary
 
@@ -54,13 +54,13 @@ const TimelineActions: React.FC = () => {
         queryClient.invalidateQueries(tempQueryKey)
       }
     },
-    onError: (err: any, params, oldData) => {
+    onError: (err: any, params) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       displayMessage({
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`shared.actions.${correctParam.payload.property}.function`)
+          function: t(`componentTimeline:shared.actions.${correctParam.payload.property}.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -94,10 +94,10 @@ const TimelineActions: React.FC = () => {
     if (!status.reblogged) {
       showActionSheetWithOptions(
         {
-          title: t('shared.actions.reblogged.options.title'),
+          title: t('componentTimeline:shared.actions.reblogged.options.title'),
           options: [
-            t('shared.actions.reblogged.options.public'),
-            t('shared.actions.reblogged.options.unlisted'),
+            t('componentTimeline:shared.actions.reblogged.options.public'),
+            t('componentTimeline:shared.actions.reblogged.options.unlisted'),
             t('common:buttons.cancel')
           ],
           cancelButtonIndex: 2,
@@ -269,7 +269,7 @@ const TimelineActions: React.FC = () => {
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
+              accessibilityLabel: t('componentTimeline:shared.actions.reply.accessibilityLabel'),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
@@ -281,7 +281,9 @@ const TimelineActions: React.FC = () => {
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.reblogged.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
@@ -296,7 +298,9 @@ const TimelineActions: React.FC = () => {
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.favourited.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
@@ -308,7 +312,9 @@ const TimelineActions: React.FC = () => {
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.bookmarked.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}

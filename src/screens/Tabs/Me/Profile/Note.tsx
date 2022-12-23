@@ -23,7 +23,7 @@ const TabMeProfileNote: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common'])
   const { mutateAsync, status } = useProfileMutation()
 
   const [notes, setNotes] = useState(note)
@@ -47,21 +47,17 @@ const TabMeProfileNote: React.FC<
           content='X'
           onPress={() => {
             if (dirty) {
-              Alert.alert(
-                t('common:discard.title'),
-                t('common:discard.message'),
-                [
-                  {
-                    text: t('common:buttons.discard'),
-                    style: 'destructive',
-                    onPress: () => navigation.navigate('Tab-Me-Profile-Root')
-                  },
-                  {
-                    text: t('common:buttons.cancel'),
-                    style: 'default'
-                  }
-                ]
-              )
+              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
+                {
+                  text: t('common:buttons.discard'),
+                  style: 'destructive',
+                  onPress: () => navigation.navigate('Tab-Me-Profile-Root')
+                },
+                {
+                  text: t('common:buttons.cancel'),
+                  style: 'default'
+                }
+              ])
             } else {
               navigation.navigate('Tab-Me-Profile-Root')
             }

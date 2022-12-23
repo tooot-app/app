@@ -27,7 +27,7 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
 
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
 
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
   const { data, isFetching, refetch } = useTagsQuery({
@@ -46,7 +46,9 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
       displayMessage({
         type: 'error',
         message: t('common:message.error.message', {
-          function: to ? t('shared.hashtag.follow') : t('shared.hashtag.unfollow')
+          function: to
+            ? t('screenTabs:shared.hashtag.follow')
+            : t('screenTabs:shared.hashtag.unfollow')
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -66,7 +68,11 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
         <HeaderRight
           loading={isFetching || mutation.isLoading}
           type='text'
-          content={data?.following ? t('shared.hashtag.unfollow') : t('shared.hashtag.follow')}
+          content={
+            data?.following
+              ? t('screenTabs:shared.hashtag.unfollow')
+              : t('screenTabs:shared.hashtag.follow')
+          }
           onPress={() =>
             typeof data?.following === 'boolean' &&
             mutation.mutate({ tag: hashtag, to: !data.following })

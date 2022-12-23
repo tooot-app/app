@@ -25,7 +25,7 @@ import EmojisContext from './helpers/EmojisContext'
 const EmojisList = () => {
   const dispatch = useAppDispatch()
   const { reduceMotionEnabled } = useAccessibility()
-  const { t } = useTranslation()
+  const { t } = useTranslation(['common', 'screenCompose'])
 
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
   const { colors } = useTheme()

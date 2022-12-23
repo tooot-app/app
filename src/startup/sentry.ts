@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/react-native";
-import { isDevelopment } from "@utils/checkEnvironment";
+import * as Sentry from '@sentry/react-native'
+import { isDevelopment } from '@utils/checkEnvironment'
 import log from './log'
 
 const sentry = () => {
@@ -10,8 +10,8 @@ const sentry = () => {
     tracesSampleRate: 0.35,
     integrations: [
       new Sentry.ReactNativeTracing({
-        tracingOrigins: ["tooot.app"],
-      }),
+        tracingOrigins: ['api.tooot.app']
+      })
     ],
     autoSessionTracking: true
   })

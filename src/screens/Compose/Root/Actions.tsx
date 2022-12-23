@@ -16,7 +16,7 @@ import chooseAndUploadAttachment from './Footer/addAttachment'
 const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
   const { colors } = useTheme()
   const instanceConfigurationStatusMaxAttachments = useSelector(
     getInstanceConfigurationStatusMaxAttachments,
@@ -81,12 +81,12 @@ const ComposeActions: React.FC = () => {
     if (!composeState.visibilityLock) {
       showActionSheetWithOptions(
         {
-          title: t('content.root.actions.visibility.title'),
+          title: t('screenCompose:content.root.actions.visibility.title'),
           options: [
-            t('content.root.actions.visibility.options.public'),
-            t('content.root.actions.visibility.options.unlisted'),
-            t('content.root.actions.visibility.options.private'),
-            t('content.root.actions.visibility.options.direct'),
+            t('screenCompose:content.root.actions.visibility.options.public'),
+            t('screenCompose:content.root.actions.visibility.options.unlisted'),
+            t('screenCompose:content.root.actions.visibility.options.private'),
+            t('screenCompose:content.root.actions.visibility.options.direct'),
             t('common:buttons.cancel')
           ],
           cancelButtonIndex: 4,
@@ -160,8 +160,8 @@ const ComposeActions: React.FC = () => {
     >
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.attachment.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.attachment.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.attachment.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.attachment.accessibilityHint')}
         accessibilityState={{
           disabled: composeState.poll.active
         }}
@@ -171,8 +171,8 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.poll.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.poll.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.poll.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.poll.accessibilityHint')}
         accessibilityState={{
           disabled: composeState.attachments.uploads.length ? true : false,
           expanded: composeState.poll.active
@@ -183,7 +183,7 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.visibility.accessibilityLabel', {
+        accessibilityLabel={t('screenCompose:content.root.actions.visibility.accessibilityLabel', {
           visibility: composeState.visibility
         })}
         accessibilityState={{ disabled: composeState.visibilityLock }}
@@ -199,7 +199,7 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.spoiler.accessibilityLabel')}
+        accessibilityLabel={t('screenCompose:content.root.actions.spoiler.accessibilityLabel')}
         accessibilityState={{ expanded: composeState.spoiler.active }}
         style={styles.button}
         onPress={spoilerOnPress}
@@ -213,8 +213,8 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.emoji.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.emoji.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.emoji.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.emoji.accessibilityHint')}
         accessibilityState={{
           disabled: emojis.current?.length ? false : true,
           expanded: emojisState.targetIndex !== -1

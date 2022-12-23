@@ -39,7 +39,7 @@ const menuAccount = ({
 
   const navigation =
     useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu', 'componentRelationship'])
 
   const menus: ContextMenu[][] = [[]]
 
@@ -62,11 +62,15 @@ const menuAccount = ({
       displayMessage({
         type: 'success',
         message: t('common:message.success.message', {
-          function: t(`account.${theParams.payload.property}.action`, {
-            ...(theParams.payload.property !== 'reports' && {
-              context: (theParams.payload.currentValue || false).toString()
-            })
-          })
+          function: t(
+            `componentContextMenu:account.${theParams.payload.property}.action`,
+            theParams.payload.property !== 'reports'
+              ? {
+                  defaultValue: 'false',
+                  context: (theParams.payload.currentValue || false).toString()
+                }
+              : { defaultValue: 'false' }
+          )
         })
       })
     },
@@ -75,11 +79,15 @@ const menuAccount = ({
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t(`account.${theParams.payload.property}.action`, {
-            ...(theParams.payload.property !== 'reports' && {
-              context: (theParams.payload.currentValue || false).toString()
-            })
-          })
+          function: t(
+            `componentContextMenu:account.${theParams.payload.property}.action`,
+            theParams.payload.property !== 'reports'
+              ? {
+                  defaultValue: 'false',
+                  context: (theParams.payload.currentValue || false).toString()
+                }
+              : { defaultValue: 'false' }
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -109,7 +117,7 @@ const menuAccount = ({
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t(`${action}.function`)
+          function: t(`componentContextMenu:${action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -138,7 +146,8 @@ const menuAccount = ({
         hidden: false
       },
       title: !data?.requested
-        ? t('account.following.action', {
+        ? t('componentContextMenu:account.following.action', {
+            defaultValue: 'false',
             context: (data?.following || false).toString()
           })
         : t('componentRelationship:button.requested'),
@@ -158,7 +167,7 @@ const menuAccount = ({
         destructive: false,
         hidden: !isFetched || !data?.following
       },
-      title: t('account.inLists'),
+      title: t('componentContextMenu:account.inLists'),
       icon: 'checklist'
     })
     menus[0].push({
@@ -175,7 +184,8 @@ const menuAccount = ({
         destructive: false,
         hidden: false
       },
-      title: t('account.mute.action', {
+      title: t('componentContextMenu:account.mute.action', {
+        defaultValue: 'false',
         context: (data?.muting || false).toString()
       }),
       icon: data?.muting ? 'eye' : 'eye.slash'
@@ -188,27 +198,32 @@ const menuAccount = ({
         key: 'account-block',
         item: {
           onSelect: () =>
-            Alert.alert(t('account.block.alert.title', { username: account.username }), undefined, [
-              {
-                text: t('common:buttons.confirm'),
-                style: 'destructive',
-                onPress: () =>
-                  timelineMutation.mutate({
-                    type: 'updateAccountProperty',
-                    queryKey,
-                    id: account.id,
-                    payload: { property: 'block', currentValue: data?.blocking }
-                  })
-              },
-              {
-                text: t('common:buttons.cancel')
-              }
-            ]),
+            Alert.alert(
+              t('componentContextMenu:account.block.alert.title', { username: account.username }),
+              undefined,
+              [
+                {
+                  text: t('common:buttons.confirm'),
+                  style: 'destructive',
+                  onPress: () =>
+                    timelineMutation.mutate({
+                      type: 'updateAccountProperty',
+                      queryKey,
+                      id: account.id,
+                      payload: { property: 'block', currentValue: data?.blocking }
+                    })
+                },
+                {
+                  text: t('common:buttons.cancel')
+                }
+              ]
+            ),
           disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
           destructive: !data?.blocking,
           hidden: false
         },
-        title: t('account.block.action', {
+        title: t('componentContextMenu:account.block.action', {
+          defaultValue: 'false',
           context: (data?.blocking || false).toString()
         }),
         icon: data?.blocking ? 'checkmark.circle' : 'xmark.circle'
@@ -221,7 +236,7 @@ const menuAccount = ({
           destructive: true,
           hidden: false
         },
-        title: t('account.reports.action'),
+        title: t('componentContextMenu:account.reports.action'),
         icon: 'flag'
       }
     ])

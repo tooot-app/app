@@ -129,7 +129,7 @@ const useProfileMutation = () => {
           displayMessage({
             ref: variables.messageRef,
             message: i18next.t('screenTabs:me.profile.feedback.failed', {
-              type: i18next.t(`screenTabs:${variables.message.text}`)
+              type: i18next.t(`screenTabs:${variables.message.text}` as any)
             }),
             ...(err && { description: err.message }),
             type: 'danger'
@@ -142,7 +142,7 @@ const useProfileMutation = () => {
           displayMessage({
             ref: variables.messageRef,
             message: i18next.t('screenTabs:me.profile.feedback.succeed', {
-              type: i18next.t(`screenTabs:${variables.message.text}`)
+              type: i18next.t(`screenTabs:${variables.message.text}` as any)
             }),
             type: 'success'
           })

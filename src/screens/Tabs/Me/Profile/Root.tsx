@@ -18,7 +18,7 @@ const TabMeProfileRoot: React.FC<
   }
 > = ({ messageRef, navigation }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const { showActionSheetWithOptions } = useActionSheet()
 
@@ -30,7 +30,7 @@ const TabMeProfileRoot: React.FC<
     <ScrollView>
       <MenuContainer>
         <MenuRow
-          title={t('me.profile.root.name.title')}
+          title={t('screenTabs:me.profile.root.name.title')}
           content={data?.display_name}
           loading={isFetching}
           iconBack='ChevronRight'
@@ -44,7 +44,7 @@ const TabMeProfileRoot: React.FC<
         <ProfileAvatarHeader type='avatar' messageRef={messageRef} />
         <ProfileAvatarHeader type='header' messageRef={messageRef} />
         <MenuRow
-          title={t('me.profile.root.note.title')}
+          title={t('screenTabs:me.profile.root.note.title')}
           content={data?.source.note}
           loading={isFetching}
           iconBack='ChevronRight'
@@ -56,10 +56,10 @@ const TabMeProfileRoot: React.FC<
           }}
         />
         <MenuRow
-          title={t('me.profile.root.fields.title')}
+          title={t('screenTabs:me.profile.root.fields.title')}
           content={
             data?.source.fields && data.source.fields.length
-              ? t('me.profile.root.fields.total', {
+              ? t('screenTabs:me.profile.root.fields.total', {
                   count: data.source.fields.length
                 })
               : undefined
@@ -74,58 +74,60 @@ const TabMeProfileRoot: React.FC<
         />
       </MenuContainer>
       <MenuContainer>
-        <MenuRow
-          title={t('me.profile.root.visibility.title')}
-          content={
-            data?.source.privacy
-              ? t(`me.profile.root.visibility.options.${data?.source.privacy}`)
-              : undefined
-          }
-          loading={isFetching}
-          iconBack='ChevronRight'
-          onPress={() =>
-            showActionSheetWithOptions(
-              {
-                title: t('me.profile.root.visibility.title'),
-                options: [
-                  t('me.profile.root.visibility.options.public'),
-                  t('me.profile.root.visibility.options.unlisted'),
-                  t('me.profile.root.visibility.options.private'),
-                  t('common:buttons.cancel')
-                ],
-                cancelButtonIndex: 3,
-                ...androidActionSheetStyles(colors)
-              },
-              async buttonIndex => {
-                switch (buttonIndex) {
-                  case 0:
-                  case 1:
-                  case 2:
-                    const indexVisibilityMapping = ['public', 'unlisted', 'private'] as [
-                      'public',
-                      'unlisted',
-                      'private'
-                    ]
-                    if (data?.source.privacy !== indexVisibilityMapping[buttonIndex]) {
-                      mutateAsync({
-                        messageRef,
-                        message: {
-                          text: 'me.profile.root.visibility.title',
-                          succeed: false,
-                          failed: true
-                        },
-                        type: 'source[privacy]',
-                        data: indexVisibilityMapping[buttonIndex]
-                      }).then(() => dispatch(updateAccountPreferences()))
-                    }
-                    break
+        {data?.source.privacy !== 'direct' ? (
+          <MenuRow
+            title={t('screenTabs:me.profile.root.visibility.title')}
+            content={
+              data?.source.privacy
+                ? t(`screenTabs:me.profile.root.visibility.options.${data.source.privacy}`)
+                : undefined
+            }
+            loading={isFetching}
+            iconBack='ChevronRight'
+            onPress={() =>
+              showActionSheetWithOptions(
+                {
+                  title: t('screenTabs:me.profile.root.visibility.title'),
+                  options: [
+                    t('screenTabs:me.profile.root.visibility.options.public'),
+                    t('screenTabs:me.profile.root.visibility.options.unlisted'),
+                    t('screenTabs:me.profile.root.visibility.options.private'),
+                    t('common:buttons.cancel')
+                  ],
+                  cancelButtonIndex: 3,
+                  ...androidActionSheetStyles(colors)
+                },
+                async buttonIndex => {
+                  switch (buttonIndex) {
+                    case 0:
+                    case 1:
+                    case 2:
+                      const indexVisibilityMapping = ['public', 'unlisted', 'private'] as [
+                        'public',
+                        'unlisted',
+                        'private'
+                      ]
+                      if (data?.source.privacy !== indexVisibilityMapping[buttonIndex]) {
+                        mutateAsync({
+                          messageRef,
+                          message: {
+                            text: 'me.profile.root.visibility.title',
+                            succeed: false,
+                            failed: true
+                          },
+                          type: 'source[privacy]',
+                          data: indexVisibilityMapping[buttonIndex]
+                        }).then(() => dispatch(updateAccountPreferences()))
+                      }
+                      break
+                  }
                 }
-              }
-            )
-          }
-        />
+              )
+            }
+          />
+        ) : null}
         <MenuRow
-          title={t('me.profile.root.sensitive.title')}
+          title={t('screenTabs:me.profile.root.sensitive.title')}
           switchValue={data?.source.sensitive}
           switchOnValueChange={() =>
             mutateAsync({
@@ -144,8 +146,8 @@ const TabMeProfileRoot: React.FC<
       </MenuContainer>
       <MenuContainer>
         <MenuRow
-          title={t('me.profile.root.lock.title')}
-          description={t('me.profile.root.lock.description')}
+          title={t('screenTabs:me.profile.root.lock.title')}
+          description={t('screenTabs:me.profile.root.lock.description')}
           switchValue={data?.locked}
           switchOnValueChange={() =>
             mutateAsync({
@@ -162,8 +164,8 @@ const TabMeProfileRoot: React.FC<
           loading={isFetching}
         />
         <MenuRow
-          title={t('me.profile.root.bot.title')}
-          description={t('me.profile.root.bot.description')}
+          title={t('screenTabs:me.profile.root.bot.title')}
+          description={t('screenTabs:me.profile.root.bot.description')}
           switchValue={data?.bot}
           switchOnValueChange={() =>
             mutateAsync({

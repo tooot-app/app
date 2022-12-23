@@ -21,14 +21,14 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
   }
 }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const [categories, setCategories] = useState<
     { selected: boolean; content: string; type: 'spam' | 'other' | 'violation' }[]
   >([
-    { selected: true, content: t('shared.report.reasons.spam'), type: 'spam' },
-    { selected: false, content: t('shared.report.reasons.other'), type: 'other' },
-    { selected: false, content: t('shared.report.reasons.violation'), type: 'violation' }
+    { selected: true, content: t('screenTabs:shared.report.reasons.spam'), type: 'spam' },
+    { selected: false, content: t('screenTabs:shared.report.reasons.other'), type: 'other' },
+    { selected: false, content: t('screenTabs:shared.report.reasons.violation'), type: 'violation' }
   ])
   const [rules, setRules] = useState<{ selected: boolean; content: string; id: string }[]>([])
   const [forward, setForward] = useState<boolean>(true)
@@ -37,7 +37,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
   const [isReporting, setIsReporting] = useState(false)
   useEffect(() => {
     navigation.setOptions({
-      title: t('shared.report.name', { acct: `@${account.acct}` }),
+      title: t('screenTabs:shared.report.name', { acct: `@${account.acct}` }),
       headerLeft: () => (
         <HeaderLeft
           type='text'
@@ -48,7 +48,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
       headerRight: () => (
         <HeaderRight
           type='text'
-          content={t('shared.report.report')}
+          content={t('screenTabs:shared.report.report')}
           destructive
           onPress={() => {
             const body = new FormData()
@@ -119,7 +119,9 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
               style={{ color: colors.primaryDefault, paddingRight: StyleConstants.Spacing.M }}
               numberOfLines={2}
             >
-              {t('shared.report.forward.heading', { instance: account.acct.match(/@(.*)/)?.[1] })}
+              {t('screenTabs:shared.report.forward.heading', {
+                instance: account.acct.match(/@(.*)/)?.[1]
+              })}
             </CustomText>
             <Switch
               value={forward}
@@ -133,7 +135,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           fontStyle='M'
           style={{ color: colors.primaryDefault, marginBottom: StyleConstants.Spacing.S }}
         >
-          {t('shared.report.reasons.heading')}
+          {t('screenTabs:shared.report.reasons.heading')}
         </CustomText>
         <View style={{ marginLeft: StyleConstants.Spacing.M }}>
           <Selections options={categories} setOptions={setCategories} />
@@ -149,7 +151,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
                 marginBottom: StyleConstants.Spacing.XS
               }}
             >
-              {t('shared.report.comment.heading')}
+              {t('screenTabs:shared.report.comment.heading')}
             </CustomText>
             <View
               style={{
@@ -198,7 +200,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
                 marginBottom: StyleConstants.Spacing.S
               }}
             >
-              {t('shared.report.violatedRules.heading')}
+              {t('screenTabs:shared.report.violatedRules.heading')}
             </CustomText>
             <View style={{ marginLeft: StyleConstants.Spacing.M }}>
               <Selections

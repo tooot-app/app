@@ -35,7 +35,7 @@ const ComponentInstance: React.FC<Props> = ({
   disableHeaderImage,
   goBack = false
 }) => {
-  const { t } = useTranslation('componentInstance')
+  const { t } = useTranslation(['common', 'componentInstance'])
   const { colors, mode } = useTheme()
   const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
 
@@ -113,16 +113,20 @@ const ComponentInstance: React.FC<Props> = ({
   const processUpdate = useCallback(() => {
     if (domain) {
       if (instances && instances.filter(instance => instance.url === domain).length) {
-        Alert.alert(t('update.alert.title'), t('update.alert.message'), [
-          {
-            text: t('common:buttons.cancel'),
-            style: 'cancel'
-          },
-          {
-            text: t('common:buttons.continue'),
-            onPress: () => appsMutation.mutate({ domain })
-          }
-        ])
+        Alert.alert(
+          t('componentInstance:update.alert.title'),
+          t('componentInstance:update.alert.message'),
+          [
+            {
+              text: t('common:buttons.cancel'),
+              style: 'cancel'
+            },
+            {
+              text: t('common:buttons.continue'),
+              onPress: () => appsMutation.mutate({ domain })
+            }
+          ]
+        )
       } else {
         appsMutation.mutate({ domain })
       }
@@ -209,7 +213,7 @@ const ComponentInstance: React.FC<Props> = ({
                 processUpdate()
               }
             }}
-            placeholder={' ' + t('server.textInput.placeholder')}
+            placeholder={' ' + t('componentInstance:server.textInput.placeholder')}
             placeholderTextColor={colors.secondary}
             returnKeyType='go'
             keyboardAppearance={mode}
@@ -222,7 +226,7 @@ const ComponentInstance: React.FC<Props> = ({
           />
           <Button
             type='text'
-            content={t('server.button')}
+            content={t('componentInstance:server.button')}
             onPress={processUpdate}
             disabled={!instanceQuery.data?.uri && !whitelisted}
             loading={instanceQuery.isFetching || appsMutation.isLoading}
@@ -239,31 +243,31 @@ const ComponentInstance: React.FC<Props> = ({
                 paddingTop: StyleConstants.Spacing.XS
               }}
             >
-              {t('server.whitelisted')}
+              {t('componentInstance:server.whitelisted')}
             </CustomText>
           ) : (
             <Placeholder>
               <InstanceInfo
-                header={t('server.information.name')}
+                header={t('componentInstance:server.information.name')}
                 content={instanceQuery.data?.title || undefined}
                 potentialWidth={2}
               />
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <InstanceInfo
                   style={{ alignItems: 'flex-start' }}
-                  header={t('server.information.accounts')}
+                  header={t('componentInstance:server.information.accounts')}
                   content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
                   potentialWidth={4}
                 />
                 <InstanceInfo
                   style={{ alignItems: 'center' }}
-                  header={t('server.information.statuses')}
+                  header={t('componentInstance:server.information.statuses')}
                   content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
                   potentialWidth={4}
                 />
                 <InstanceInfo
                   style={{ alignItems: 'flex-end' }}
-                  header={t('server.information.domains')}
+                  header={t('componentInstance:server.information.domains')}
                   content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
                   potentialWidth={4}
                 />
@@ -287,7 +291,7 @@ const ComponentInstance: React.FC<Props> = ({
               }}
             />
             <CustomText fontStyle='S' style={{ flex: 1, color: colors.secondary }}>
-              {t('server.disclaimer.base')}
+              {t('componentInstance:server.disclaimer.base')}
             </CustomText>
           </View>
           <View
@@ -312,7 +316,8 @@ const ComponentInstance: React.FC<Props> = ({
               accessibilityRole='link'
             >
               <Trans
-                i18nKey='componentInstance:server.terms.base'
+                ns='componentInstance'
+                i18nKey='server.terms.base'
                 components={[
                   <CustomText
                     accessible

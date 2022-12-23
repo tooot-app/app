@@ -22,7 +22,7 @@ const HeaderConversation = ({ conversation }: Props) => {
   if (!queryKey) return null
 
   const { colors, theme } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -32,7 +32,7 @@ const HeaderConversation = ({ conversation }: Props) => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`shared.header.conversation.delete.function`)
+          function: t(`componentTimeline:shared.header.conversation.delete.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -53,7 +53,7 @@ const HeaderConversation = ({ conversation }: Props) => {
           numberOfLines={1}
           style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
         >
-          <CustomText>{t('shared.header.conversation.withAccounts')}</CustomText>
+          <CustomText>{t('componentTimeline:shared.header.conversation.withAccounts')}</CustomText>
           {conversation.accounts.map((account, index) => (
             <CustomText key={account.id} numberOfLines={1}>
               {index !== 0 ? t('common:separator') : undefined}
