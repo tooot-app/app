@@ -8,8 +8,8 @@
     },
     "inLists": "Gestionar usuari de llistes",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Mostra els impulsos de l'usuari",
+      "action_true": "Oculta els impulsos de l'usuari"
     },
     "mute": {
       "action_false": "Silencia l'usuari",
