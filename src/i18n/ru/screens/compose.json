@@ -42,8 +42,7 @@
           "placeholder": "",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": ""
             }
           }
         }
