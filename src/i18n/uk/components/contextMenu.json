@@ -8,8 +8,8 @@
     },
     "inLists": "Керувати списками",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Показати передмухи користувача",
+      "action_true": "Приховати передмухи користувача"
     },
     "mute": {
       "action_false": "Заглушити користувача",
