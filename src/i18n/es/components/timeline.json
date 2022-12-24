@@ -32,7 +32,7 @@
       },
       "update": "El impulso ha sido editado",
       "admin.sign_up": "{{name}} se unió a la instancia",
-      "admin.report": "{{name}} reportó:"
+      "admin.report": "{{name}} denunció:"
     },
     "actions": {
       "reply": {
