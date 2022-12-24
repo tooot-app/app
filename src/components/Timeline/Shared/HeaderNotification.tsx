@@ -75,7 +75,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
           />
         )
       default:
-        if (status) {
+        if (status && Platform.OS !== 'android') {
           return (
             <Pressable
               style={{ flex: 1, alignItems: 'center' }}
@@ -159,19 +159,17 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
         </View>
       </View>
 
-      {Platform.OS !== 'android' ? (
-        <View
-          style={[
-            { marginLeft: StyleConstants.Spacing.M },
-            notification.type === 'follow' ||
-            notification.type === 'follow_request' ||
-            notification.type === 'admin.report'
-              ? { flexShrink: 1 }
-              : { flex: 1 }
-          ]}
-          children={actions()}
-        />
-      ) : null}
+      <View
+        style={[
+          { marginLeft: StyleConstants.Spacing.M },
+          notification.type === 'follow' ||
+          notification.type === 'follow_request' ||
+          notification.type === 'admin.report'
+            ? { flexShrink: 1 }
+            : { flex: 1 }
+        ]}
+        children={actions()}
+      />
     </View>
   )
 }
