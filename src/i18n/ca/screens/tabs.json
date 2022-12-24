@@ -300,7 +300,7 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Accions per l'usuari {{user}}",
-        "accessibilityHint": "Pots silenciar, bloquejar, reportar o compartir aquest usuari"
+        "accessibilityHint": "Pots silenciar, bloquejar, denunciar o compartir aquest usuari"
       },
       "followed_by": " et segueix",
       "moved": "S'ha traslladat",
@@ -330,8 +330,8 @@
       "name": "Edita l'historial"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Denúncia {{acct}}",
+      "report": "Denúncia",
       "forward": {
         "heading": "Envia anònimament al servidor remot {{instance}}"
       },
