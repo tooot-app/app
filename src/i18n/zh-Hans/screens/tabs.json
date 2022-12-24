@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "时间轴自动播放GIF"
       },
       "feedback": {
         "heading": "功能建议"
@@ -330,22 +330,22 @@
       "name": "编辑历史"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "举报 @{{acct}}",
+      "report": "举报",
       "forward": {
-        "heading": ""
+        "heading": "匿名举报至远程服务器 {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "这个账户有什么问题？",
+        "spam": "这是垃圾信息",
+        "other": "其他原因",
+        "violation": "它违反了服务器规则"
       },
       "comment": {
-        "heading": ""
+        "heading": "添加其它信息？"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "违反的服务器规则"
       }
     },
     "search": {
