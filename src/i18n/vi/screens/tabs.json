@@ -330,22 +330,22 @@
       "name": "Lịch sử chỉnh sửa"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Báo cáo @{{acct}}",
+      "report": "Báo cáo",
       "forward": {
         "heading": ""
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Có vấn đề gì với người này?",
+        "spam": "Đây là spam",
+        "other": "Lý do khác",
+        "violation": "Vi phạm quy tắc máy chủ"
       },
       "comment": {
-        "heading": ""
+        "heading": "Bạn có muốn bổ sung gì không?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Vi phạm quy tắc máy chủ"
       }
     },
     "search": {
