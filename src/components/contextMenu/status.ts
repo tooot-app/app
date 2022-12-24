@@ -62,187 +62,185 @@ const menuStatus = ({
 
   const canEditPost = useSelector(checkInstanceFeature('edit_post'))
 
-  if (ownAccount) {
-    menus.push([
-      {
-        key: 'status-edit',
-        item: {
-          onSelect: async () => {
-            let replyToStatus: Mastodon.Status | undefined = undefined
-            if (status.in_reply_to_id) {
-              replyToStatus = await apiInstance<Mastodon.Status>({
-                method: 'get',
-                url: `statuses/${status.in_reply_to_id}`
-              }).then(res => res.body)
-            }
-            apiInstance<{
-              id: Mastodon.Status['id']
-              text: NonNullable<Mastodon.Status['text']>
-              spoiler_text: Mastodon.Status['spoiler_text']
-            }>({
+  menus.push([
+    {
+      key: 'status-edit',
+      item: {
+        onSelect: async () => {
+          let replyToStatus: Mastodon.Status | undefined = undefined
+          if (status.in_reply_to_id) {
+            replyToStatus = await apiInstance<Mastodon.Status>({
               method: 'get',
-              url: `statuses/${status.id}/source`
-            }).then(res => {
-              navigation.navigate('Screen-Compose', {
-                type: 'edit',
-                incomingStatus: {
-                  ...status,
-                  text: res.body.text,
-                  spoiler_text: res.body.spoiler_text
-                },
-                ...(replyToStatus && { replyToStatus }),
-                queryKey,
-                rootQueryKey
-              })
+              url: `statuses/${status.in_reply_to_id}`
+            }).then(res => res.body)
+          }
+          apiInstance<{
+            id: Mastodon.Status['id']
+            text: NonNullable<Mastodon.Status['text']>
+            spoiler_text: Mastodon.Status['spoiler_text']
+          }>({
+            method: 'get',
+            url: `statuses/${status.id}/source`
+          }).then(res => {
+            navigation.navigate('Screen-Compose', {
+              type: 'edit',
+              incomingStatus: {
+                ...status,
+                text: res.body.text,
+                spoiler_text: res.body.spoiler_text
+              },
+              ...(replyToStatus && { replyToStatus }),
+              queryKey,
+              rootQueryKey
             })
-          },
-          disabled: false,
-          destructive: false,
-          hidden: !canEditPost
+          })
         },
-        title: t('componentContextMenu:status.edit.action'),
-        icon: 'square.and.pencil'
+        disabled: false,
+        destructive: false,
+        hidden: !ownAccount || !canEditPost
       },
-      {
-        key: 'status-delete-edit',
-        item: {
-          onSelect: () =>
-            Alert.alert(
-              t('componentContextMenu:status.deleteEdit.alert.title'),
-              t('componentContextMenu:status.deleteEdit.alert.message'),
-              [
-                {
-                  text: t('common:buttons.confirm'),
-                  style: 'destructive',
-                  onPress: async () => {
-                    let replyToStatus: Mastodon.Status | undefined = undefined
-                    if (status.in_reply_to_id) {
-                      replyToStatus = await apiInstance<Mastodon.Status>({
-                        method: 'get',
-                        url: `statuses/${status.in_reply_to_id}`
-                      }).then(res => res.body)
-                    }
-                    mutation
-                      .mutateAsync({
-                        type: 'deleteItem',
-                        source: 'statuses',
-                        queryKey,
-                        id: status.id
-                      })
-                      .then(res => {
-                        navigation.navigate('Screen-Compose', {
-                          type: 'deleteEdit',
-                          incomingStatus: res.body as Mastodon.Status,
-                          ...(replyToStatus && { replyToStatus }),
-                          queryKey
-                        })
-                      })
+      title: t('componentContextMenu:status.edit.action'),
+      icon: 'square.and.pencil'
+    },
+    {
+      key: 'status-delete-edit',
+      item: {
+        onSelect: () =>
+          Alert.alert(
+            t('componentContextMenu:status.deleteEdit.alert.title'),
+            t('componentContextMenu:status.deleteEdit.alert.message'),
+            [
+              {
+                text: t('common:buttons.confirm'),
+                style: 'destructive',
+                onPress: async () => {
+                  let replyToStatus: Mastodon.Status | undefined = undefined
+                  if (status.in_reply_to_id) {
+                    replyToStatus = await apiInstance<Mastodon.Status>({
+                      method: 'get',
+                      url: `statuses/${status.in_reply_to_id}`
+                    }).then(res => res.body)
                   }
-                },
-                {
-                  text: t('common:buttons.cancel')
-                }
-              ]
-            ),
-          disabled: false,
-          destructive: true,
-          hidden: false
-        },
-        title: t('componentContextMenu:status.deleteEdit.action'),
-        icon: 'pencil.and.outline'
-      },
-      {
-        key: 'status-delete',
-        item: {
-          onSelect: () =>
-            Alert.alert(
-              t('componentContextMenu:status.delete.alert.title'),
-              t('componentContextMenu:status.delete.alert.message'),
-              [
-                {
-                  text: t('common:buttons.confirm'),
-                  style: 'destructive',
-                  onPress: async () => {
-                    mutation.mutate({
+                  mutation
+                    .mutateAsync({
                       type: 'deleteItem',
                       source: 'statuses',
                       queryKey,
-                      rootQueryKey,
                       id: status.id
                     })
-                  }
-                },
-                {
-                  text: t('common:buttons.cancel'),
-                  style: 'default'
+                    .then(res => {
+                      navigation.navigate('Screen-Compose', {
+                        type: 'deleteEdit',
+                        incomingStatus: res.body as Mastodon.Status,
+                        ...(replyToStatus && { replyToStatus }),
+                        queryKey
+                      })
+                    })
                 }
-              ]
-            ),
-          disabled: false,
-          destructive: true,
-          hidden: false
-        },
-        title: t('componentContextMenu:status.delete.action'),
-        icon: 'trash'
-      }
-    ])
-
-    menus.push([
-      {
-        key: 'status-mute',
-        item: {
-          onSelect: () =>
-            mutation.mutate({
-              type: 'updateStatusProperty',
-              queryKey,
-              rootQueryKey,
-              id: status.id,
-              payload: {
-                property: 'muted',
-                currentValue: status.muted,
-                propertyCount: undefined,
-                countValue: undefined
+              },
+              {
+                text: t('common:buttons.cancel')
               }
-            }),
-          disabled: false,
-          destructive: false,
-          hidden: false
-        },
-        title: t('componentContextMenu:status.mute.action', {
-          defaultValue: 'false',
-          context: (status.muted || false).toString()
-        }),
-        icon: status.muted ? 'speaker' : 'speaker.slash'
+            ]
+          ),
+        disabled: false,
+        destructive: true,
+        hidden: !ownAccount
       },
-      {
-        key: 'status-pin',
-        item: {
-          onSelect: () =>
-            // Also note that reblogs cannot be pinned.
-            mutation.mutate({
-              type: 'updateStatusProperty',
-              queryKey,
-              rootQueryKey,
-              id: status.id,
-              payload: {
-                property: 'pinned',
-                currentValue: status.pinned,
-                propertyCount: undefined,
-                countValue: undefined
+      title: t('componentContextMenu:status.deleteEdit.action'),
+      icon: 'pencil.and.outline'
+    },
+    {
+      key: 'status-delete',
+      item: {
+        onSelect: () =>
+          Alert.alert(
+            t('componentContextMenu:status.delete.alert.title'),
+            t('componentContextMenu:status.delete.alert.message'),
+            [
+              {
+                text: t('common:buttons.confirm'),
+                style: 'destructive',
+                onPress: async () => {
+                  mutation.mutate({
+                    type: 'deleteItem',
+                    source: 'statuses',
+                    queryKey,
+                    rootQueryKey,
+                    id: status.id
+                  })
+                }
+              },
+              {
+                text: t('common:buttons.cancel'),
+                style: 'default'
               }
-            }),
-          disabled: false,
-          destructive: false,
-          hidden: status.visibility !== 'public' && status.visibility !== 'unlisted'
-        },
-        title: t('componentContextMenu:status.pin.action', {
-          defaultValue: 'false',
-          context: (status.pinned || false).toString()
-        }),
-        icon: status.pinned ? 'pin.slash' : 'pin'
-      }
-    ])
-  }
+            ]
+          ),
+        disabled: false,
+        destructive: true,
+        hidden: !ownAccount
+      },
+      title: t('componentContextMenu:status.delete.action'),
+      icon: 'trash'
+    }
+  ])
+
+  menus.push([
+    {
+      key: 'status-mute',
+      item: {
+        onSelect: () =>
+          mutation.mutate({
+            type: 'updateStatusProperty',
+            queryKey,
+            rootQueryKey,
+            id: status.id,
+            payload: {
+              property: 'muted',
+              currentValue: status.muted
+            }
+          }),
+        disabled: false,
+        destructive: false,
+        hidden:
+          !ownAccount &&
+          !status.mentions.filter(mention => mention.id === instanceAccount.id).length
+      },
+      title: t('componentContextMenu:status.mute.action', {
+        defaultValue: 'false',
+        context: (status.muted || false).toString()
+      }),
+      icon: status.muted ? 'speaker' : 'speaker.slash'
+    },
+    {
+      key: 'status-pin',
+      item: {
+        onSelect: () =>
+          // Also note that reblogs cannot be pinned.
+          mutation.mutate({
+            type: 'updateStatusProperty',
+            queryKey,
+            rootQueryKey,
+            id: status.id,
+            payload: {
+              property: 'pinned',
+              currentValue: status.pinned,
+              propertyCount: undefined,
+              countValue: undefined
+            }
+          }),
+        disabled: false,
+        destructive: false,
+        hidden: !ownAccount || (status.visibility !== 'public' && status.visibility !== 'unlisted')
+      },
+      title: t('componentContextMenu:status.pin.action', {
+        defaultValue: 'false',
+        context: (status.pinned || false).toString()
+      }),
+      icon: status.pinned ? 'pin.slash' : 'pin'
+    }
+  ])
 
   return menus
 }

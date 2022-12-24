@@ -55,26 +55,19 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {mShare.map((mGroup, index) => (
-                <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                    </DropdownMenu.Item>
+              {[mShare, mAccount].map(type => (
+                <>
+                  {type.map((mGroup, index) => (
+                    <DropdownMenu.Group key={index}>
+                      {mGroup.map(menu => (
+                        <DropdownMenu.Item key={menu.key} {...menu.item}>
+                          <DropdownMenu.ItemTitle children={menu.title} />
+                          <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Group>
                   ))}
-                </DropdownMenu.Group>
-              ))}
-
-              {mAccount.map((mGroup, index) => (
-                <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Group>
+                </>
               ))}
             </DropdownMenu.Content>
           </DropdownMenu.Root>

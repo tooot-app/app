@@ -55,24 +55,14 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            <DropdownMenu.Group>
-              <DropdownMenu.Item key={listAccounts.key} onSelect={listAccounts.onSelect}>
-                <DropdownMenu.ItemTitle children={listAccounts.title} />
-                <DropdownMenu.ItemIcon iosIconName={listAccounts.icon} />
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
-
-            <DropdownMenu.Group>
-              <DropdownMenu.Item key={listEdit.key} onSelect={listEdit.onSelect}>
-                <DropdownMenu.ItemTitle children={listEdit.title} />
-                <DropdownMenu.ItemIcon iosIconName={listEdit.icon} />
-              </DropdownMenu.Item>
-
-              <DropdownMenu.Item key={listDelete.key} destructive onSelect={listDelete.onSelect}>
-                <DropdownMenu.ItemTitle children={listDelete.title} />
-                <DropdownMenu.ItemIcon iosIconName={listDelete.icon} />
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
+            {[listAccounts, listEdit, listDelete].map((menu, index) => (
+              <DropdownMenu.Group key={index}>
+                <DropdownMenu.Item key={menu.key} onSelect={menu.onSelect}>
+                  <DropdownMenu.ItemTitle children={menu.title} />
+                  <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
+                </DropdownMenu.Item>
+              </DropdownMenu.Group>
+            ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )

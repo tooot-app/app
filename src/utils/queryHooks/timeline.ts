@@ -273,8 +273,8 @@ export type MutationVarsTimelineUpdateStatusProperty = {
     | {
         property: 'bookmarked' | 'muted' | 'pinned'
         currentValue: boolean
-        propertyCount: undefined
-        countValue: undefined
+        propertyCount?: undefined
+        countValue?: undefined
       }
     | {
         property: 'favourited'
