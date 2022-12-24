@@ -14,7 +14,7 @@ const TabMeListList: React.FC<TabMeStackScreenProps<'Tab-Me-List-List'>> = ({ na
       headerRight: () => (
         <HeaderRight
           type='text'
-          content={t('common:buttons.create')}
+          content={t('buttons.create')}
           onPress={() => navigation.navigate('Tab-Me-List-Edit', { type: 'add' })}
         />
       )

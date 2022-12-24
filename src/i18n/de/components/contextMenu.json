@@ -7,6 +7,10 @@
       "action_true": "Nutzer entfolgen"
     },
     "inLists": "Konten in Listen verwalten",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Profil stummschalten",
       "action_true": "Stummschaltung des Nutzers aufheben"
@@ -15,13 +19,13 @@
       "action_false": "Nutzer blockieren",
       "action_true": "User entblocken",
       "alert": {
-        "title": ""
+        "title": "{{username}} wirklich blockieren?"
       }
     },
     "reports": {
       "action": "Nutzer melden und blockieren",
       "alert": {
-        "title": ""
+        "title": "{{username}} wirklich blockieren und melden?"
       }
     }
   },

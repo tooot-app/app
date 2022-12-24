@@ -42,8 +42,7 @@
           "placeholder": "무엇을 생각하고 있나요?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "최대 첨부 파일 개수를 초과함",
-              "OK": "$t(common:buttons.OK)"
+              "title": "최대 첨부 파일 개수를 초과함"
             }
           }
         }

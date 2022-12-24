@@ -32,7 +32,7 @@
       },
       "update": "L'impuls ha sigut editat",
       "admin.sign_up": "{{name}} s'ha unit a la instància",
-      "admin.report": ""
+      "admin.report": "{{name}} ha reportat:"
     },
     "actions": {
       "reply": {
@@ -100,7 +100,7 @@
     "fullConversation": "Llegeix conversacions",
     "translate": {
       "default": "Tradueix",
-      "succeed": "Traduït per {{provider}} amb {{source}}",
+      "succeed": "Traduït per {{provider}} des de l'idioma {{source}}",
       "failed": "Error al traduir",
       "source_not_supported": "L'idioma de la publicació no està suportada",
       "target_not_supported": "Aquest idioma no està suportat"

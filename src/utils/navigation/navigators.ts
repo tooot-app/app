@@ -92,7 +92,7 @@ export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> = Bo
 
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
-    account: Mastodon.Account | Mastodon.Mention
+    account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct'>
   }
   'Tab-Shared-Account-In-Lists': {
     account: Pick<Mastodon.Account, 'id' | 'username'>
@@ -104,6 +104,10 @@ export type TabSharedStackParamList = {
   'Tab-Shared-History': {
     id: Mastodon.Status['id']
     detectedLanguage: string
+  }
+  'Tab-Shared-Report': {
+    account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'acct' | 'username'>
+    status?: Pick<Mastodon.Status, 'id'>
   }
   'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {

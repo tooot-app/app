@@ -112,6 +112,7 @@ i18n.use(initReactI18next).init({
     'zh-Hans': zh_Hans,
     'zh-Hant': zh_Hant
   },
+  returnNull: false,
   returnEmptyString: false,
 
   saveMissing: true,

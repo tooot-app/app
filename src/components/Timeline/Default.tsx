@@ -196,37 +196,19 @@ const TimelineDefault: React.FC<Props> = ({
             </ContextMenu.Trigger>
 
             <ContextMenu.Content>
-              {mShare.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
+              {[mShare, mStatus, mInstance].map(type => (
+                <>
+                  {type.map((mGroup, index) => (
+                    <ContextMenu.Group key={index}>
+                      {mGroup.map(menu => (
+                        <ContextMenu.Item key={menu.key} {...menu.item}>
+                          <ContextMenu.ItemTitle children={menu.title} />
+                          <ContextMenu.ItemIcon ios={{ name: menu.icon }} />
+                        </ContextMenu.Item>
+                      ))}
+                    </ContextMenu.Group>
                   ))}
-                </ContextMenu.Group>
-              ))}
-
-              {mStatus.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
-                  ))}
-                </ContextMenu.Group>
-              ))}
-
-              {mInstance.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
-                  ))}
-                </ContextMenu.Group>
+                </>
               ))}
             </ContextMenu.Content>
           </ContextMenu.Root>

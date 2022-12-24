@@ -4,8 +4,9 @@ import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
 import { useAppDispatch } from '@root/store'
+import { SettingsLatest } from '@utils/migrations/settings/migration'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
-import { changeFontsize, getSettingsFontsize, SettingsState } from '@utils/slices/settingsSlice'
+import { changeFontsize, getSettingsFontsize } from '@utils/slices/settingsSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -15,7 +16,7 @@ import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 
-export const mapFontsizeToName = (size: SettingsState['fontsize']) => {
+export const mapFontsizeToName = (size: SettingsLatest['fontsize']) => {
   switch (size) {
     case -1:
       return 'S'

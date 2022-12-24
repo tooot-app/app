@@ -96,7 +96,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                 disabled={page.page === 'Following'}
               >
                 <DropdownMenu.ItemTitle children={t('tabs.local.name')} />
-                <DropdownMenu.ItemIcon iosIconName='house' />
+                <DropdownMenu.ItemIcon ios={{ name: 'house' }} />
               </DropdownMenu.Item>
               <DropdownMenu.CheckboxItem
                 key='showBoosts'
@@ -157,7 +157,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                   ].map(menu => (
                     <DropdownMenu.Item key={menu.key} {...menu.item}>
                       <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                      <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
                     </DropdownMenu.Item>
                   ))
                 : undefined}

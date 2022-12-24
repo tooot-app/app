@@ -20,11 +20,11 @@
   },
   "shared": {
     "actioned": {
-      "pinned": "",
+      "pinned": "Закрепить",
       "favourite": "",
-      "status": "",
-      "follow": "",
-      "follow_request": "",
+      "status": "{{name}} только что запостил",
+      "follow": "{{name}} подписался (-лась) на вас",
+      "follow_request": "{{name}} хочет подписаться на вас",
       "poll": "",
       "reblog": {
         "default": "",
@@ -92,7 +92,7 @@
       "expandHint": ""
     },
     "filtered": {
-      "reveal": "",
+      "reveal": "Все равно показать",
       "match_v1": "",
       "match_v2_one": "",
       "match_v2_other": ""

@@ -4,7 +4,7 @@
       "name": "",
       "options": {
         "showBoosts": "",
-        "showReplies": ""
+        "showReplies": "Показать ответы"
       }
     },
     "public": {
@@ -26,21 +26,9 @@
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": "",
-      "options": {
-        "follow": "",
-        "follow_request": "",
-        "favourite": "",
-        "reblog": "",
-        "mention": "",
-        "poll": "",
-        "status": "",
-        "update": "",
-        "admin.sign_up": "",
-        "admin.report": ""
-      }
+      "accessibilityLabel": "Фильтр",
+      "accessibilityHint": "Фильтр отображаемых типов уведомлений",
+      "title": ""
     }
   },
   "me": {
@@ -254,9 +242,6 @@
         "content_true": "",
         "content_false": ""
       },
-      "update": {
-        "title": ""
-      },
       "logout": {
         "button": "",
         "alert": {
@@ -269,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "",
-        "content": {
-          "S": "",
-          "M": "",
-          "L": "",
-          "XL": "",
-          "XXL": ""
-        }
-      },
-      "language": {
-        "heading": ""
-      },
       "theme": {
         "heading": "",
         "options": {
@@ -304,9 +276,8 @@
           "external": ""
         }
       },
-      "staticEmoji": {
-        "heading": "",
-        "description": ""
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": ""
@@ -335,9 +306,7 @@
       "moved": "",
       "created_at": "",
       "summary": {
-        "statuses_count": "",
-        "following_count": "",
-        "followers_count": ""
+        "statuses_count": ""
       },
       "toots": {
         "default": "",
@@ -359,6 +328,25 @@
     },
     "history": {
       "name": ""
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {

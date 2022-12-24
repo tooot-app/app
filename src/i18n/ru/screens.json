@@ -1,17 +1,17 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Защита Персональных Данных",
+    "message": "Пожалуйста, не раскрывайте личность других пользователей, таких как имя пользователя, аватар и т.д. Спасибо!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Время входа истекло, повторите вход"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Ошибка службы Push",
+    "description": "Пожалуйста, повторно включите push-уведомления в настройках"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Формат изображения {{type}} не поддерживается",
+    "videoNotSupported": "Формат видео {{type}} не поддерживается"
   }
 }

@@ -41,7 +41,7 @@ const ScreenImagesViewer = ({
   const insets = useSafeAreaInsets()
 
   const { mode, colors } = useTheme()
-  const { t } = useTranslation('screenImageViewer')
+  const { t } = useTranslation(['common', 'screenImageViewer'])
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
@@ -51,8 +51,8 @@ const ScreenImagesViewer = ({
     showActionSheetWithOptions(
       {
         options: [
-          t('content.options.save'),
-          t('content.options.share'),
+          t('screenImageViewer:content.options.save'),
+          t('screenImageViewer:content.options.share'),
           t('common:buttons.cancel')
         ],
         cancelButtonIndex: 2,
@@ -164,8 +164,8 @@ const ScreenImagesViewer = ({
           <HeaderCenter inverted content={`${currentIndex + 1} / ${imageUrls.length}`} />
         ) : null}
         <HeaderRight
-          accessibilityLabel={t('content.actions.accessibilityLabel')}
-          accessibilityHint={t('content.actions.accessibilityHint')}
+          accessibilityLabel={t('screenImageViewer:content.actions.accessibilityLabel')}
+          accessibilityHint={t('screenImageViewer:content.actions.accessibilityHint')}
           content='MoreHorizontal'
           native={false}
           background
@@ -177,8 +177,8 @@ const ScreenImagesViewer = ({
           showActionSheetWithOptions(
             {
               options: [
-                t('content.options.save'),
-                t('content.options.share'),
+                t('screenImageViewer:content.options.save'),
+                t('screenImageViewer:content.options.share'),
                 t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2,

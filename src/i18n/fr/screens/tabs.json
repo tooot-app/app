@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrer",
       "accessibilityHint": "Filtrer les types de notifications affichés",
-      "title": "Afficher les notifications",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Demande d'abonnement",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Pouet des utilisateurs inscrits",
-        "update": "Le reblog a été modifié",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Afficher les notifications"
     }
   },
   "me": {
@@ -254,9 +242,6 @@
         "content_true": "Activé",
         "content_false": "Désactivé"
       },
-      "update": {
-        "title": "Mettre à jour vers la dernière version"
-      },
       "logout": {
         "button": "Se déconnecter",
         "alert": {
@@ -269,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Apparence",
         "options": {
@@ -304,9 +276,8 @@
           "external": "Ouvrir dans le navigateur système"
         }
       },
-      "staticEmoji": {
-        "heading": "Utiliser des émojis statiques",
-        "description": "Si vous rencontrez des plantages fréquents de l'application lors de l'affichage de la liste d'émojis, vous pouvez essayer d'utiliser des émojis statiques."
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "Demande de fonctionnalités"
@@ -335,9 +306,7 @@
       "moved": "Utilisateur déplacé",
       "created_at": "Inscrit le: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} pouets",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} pouets"
       },
       "toots": {
         "default": "Pouets",
@@ -359,6 +328,25 @@
     },
     "history": {
       "name": "Modifier l'historique"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {

@@ -13,49 +13,47 @@ export interface Props {
   disableInfinity: boolean
 }
 
-const TimelineFooter = React.memo(
-  ({ queryKey, disableInfinity }: Props) => {
-    const { hasNextPage } = useTimelineQuery({
-      ...queryKey[1],
-      options: {
-        enabled: !disableInfinity,
-        notifyOnChangeProps: ['hasNextPage'],
-        getNextPageParam: lastPage =>
-          lastPage?.links?.next && {
-            ...(lastPage.links.next.isOffset
-              ? { offset: lastPage.links.next.id }
-              : { max_id: lastPage.links.next.id })
-          }
-      }
-    })
+const TimelineFooter: React.FC<Props> = ({ queryKey, disableInfinity }) => {
+  const { hasNextPage } = useTimelineQuery({
+    ...queryKey[1],
+    options: {
+      enabled: !disableInfinity,
+      notifyOnChangeProps: ['hasNextPage'],
+      getNextPageParam: lastPage =>
+        lastPage?.links?.next && {
+          ...(lastPage.links.next.isOffset
+            ? { offset: lastPage.links.next.id }
+            : { max_id: lastPage.links.next.id })
+        }
+    }
+  })
 
-    const { colors } = useTheme()
+  const { colors } = useTheme()
 
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          padding: StyleConstants.Spacing.M
-        }}
-      >
-        {!disableInfinity && hasNextPage ? (
-          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-        ) : (
-          <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-            <Trans
-              i18nKey='componentTimeline:end.message'
-              components={[
-                <Icon name='Coffee' size={StyleConstants.Font.Size.S} color={colors.secondary} />
-              ]}
-            />
-          </CustomText>
-        )}
-      </View>
-    )
-  },
-  () => true
-)
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: StyleConstants.Spacing.M
+      }}
+    >
+      {!disableInfinity && hasNextPage ? (
+        <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+      ) : (
+        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
+          <Trans
+            ns='componentTimeline'
+            i18nKey='end.message'
+            components={[
+              <Icon name='Coffee' size={StyleConstants.Font.Size.S} color={colors.secondary} />
+            ]}
+          />
+        </CustomText>
+      )}
+    </View>
+  )
+}
 
 export default TimelineFooter

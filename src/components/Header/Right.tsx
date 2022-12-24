@@ -18,6 +18,7 @@ export interface Props {
 
   loading?: boolean
   disabled?: boolean
+  destructive?: boolean
 
   onPress: () => void
 }
@@ -34,6 +35,7 @@ const HeaderRight: React.FC<Props> = ({
   background = false,
   loading,
   disabled,
+  destructive = false,
   onPress
 }) => {
   const { colors, theme } = useTheme()
@@ -41,10 +43,7 @@ const HeaderRight: React.FC<Props> = ({
   const loadingSpinkit = useMemo(
     () => (
       <View style={{ position: 'absolute' }}>
-        <Flow
-          size={StyleConstants.Font.Size.M * 1.25}
-          color={colors.secondary}
-        />
+        <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
       </View>
     ),
     [theme]
@@ -59,7 +58,7 @@ const HeaderRight: React.FC<Props> = ({
               name={content}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Spacing.M * 1.25}
-              color={disabled ? colors.secondary : colors.primaryDefault}
+              color={disabled ? colors.secondary : destructive ? colors.red : colors.primaryDefault}
             />
             {loading && loadingSpinkit}
           </>
@@ -69,8 +68,13 @@ const HeaderRight: React.FC<Props> = ({
           <>
             <CustomText
               fontStyle='M'
+              fontWeight={destructive ? 'Bold' : 'Normal'}
               style={{
-                color: disabled ? colors.secondary : colors.primaryDefault,
+                color: disabled
+                  ? colors.secondary
+                  : destructive
+                  ? colors.red
+                  : colors.primaryDefault,
                 opacity: loading ? 0 : 1
               }}
               children={content}
@@ -94,14 +98,10 @@ const HeaderRight: React.FC<Props> = ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: background
-          ? colors.backgroundOverlayDefault
-          : undefined,
+        backgroundColor: background ? colors.backgroundOverlayDefault : undefined,
         minHeight: 44,
         minWidth: 44,
-        marginRight: native
-          ? -StyleConstants.Spacing.S
-          : StyleConstants.Spacing.S,
+        marginRight: native ? -StyleConstants.Spacing.S : StyleConstants.Spacing.S,
         ...(type === 'icon' && {
           borderRadius: 100
         }),

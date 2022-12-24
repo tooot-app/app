@@ -7,6 +7,10 @@
       "action_true": "Ne plus suivre l'utilisateur"
     },
     "inLists": "Gérer l'utilisateur des listes",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Rendre muet l'utilisateur",
       "action_true": "Rendre la parole"

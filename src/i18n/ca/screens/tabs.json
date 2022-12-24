@@ -3,7 +3,7 @@
     "local": {
       "name": "Seguint",
       "options": {
-        "showBoosts": "Mostra les publicacions",
+        "showBoosts": "Mostra els impulsos",
         "showReplies": "Mostra les respostes"
       }
     },
@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtra",
       "accessibilityHint": "Filtra els tipus de notificacions",
-      "title": "Mostra les notificacions",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Sol·licituds de seguiment",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Publicacions d'usuaris subscrits",
-        "update": "Edicions d'impulsos",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Mostra les notificacions"
     }
   },
   "me": {
@@ -133,7 +121,7 @@
     "listDelete": {
       "heading": "Esborra la llista",
       "confirm": {
-        "title": "Vol esborrar la llista \"{{list}}\"?",
+        "title": "Vols esborrar la llista \"{{list}}\"?",
         "message": "Aquesta acció no es pot desfer."
       }
     },
@@ -254,13 +242,10 @@
         "content_true": "Habilitat",
         "content_false": "Deshabilitat"
       },
-      "update": {
-        "title": "Actualitza a la última versió"
-      },
       "logout": {
         "button": "Tanca la sessió",
         "alert": {
-          "title": "Vol tancar la sessió?",
+          "title": "Vols tancar la sessió?",
           "message": "Després de tancar la sessió, hauràs de tornar a iniciar la sessió",
           "buttons": {
             "logout": "Tanca la sessió"
@@ -269,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Aspecte",
         "options": {
@@ -304,9 +276,8 @@
           "external": "Utilitza el navegador del sistema"
         }
       },
-      "staticEmoji": {
-        "heading": "Utilitza emojis estàtics",
-        "description": "Si l'aplicació falla freqüentment en visualitzar la llista d'emojis, pots intentar fer servir els emojis estàtics."
+      "autoplayGifv": {
+        "heading": "Reprodueix els GIF automàticament"
       },
       "feedback": {
         "heading": "Peticions de característiques"
@@ -335,9 +306,7 @@
       "moved": "S'ha traslladat",
       "created_at": "Es va unir el dia {{date}}",
       "summary": {
-        "statuses_count": "{{count}} publicacions",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} publicacions"
       },
       "toots": {
         "default": "Publicacions",
@@ -359,6 +328,25 @@
     },
     "history": {
       "name": "Edita l'historial"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": "Envia anònimament al servidor remot {{instance}}"
+      },
+      "reasons": {
+        "heading": "Què està passant amb aquest compte?",
+        "spam": "És contingut brossa",
+        "other": "És una altra cosa",
+        "violation": "Incompleix les regles del servidor"
+      },
+      "comment": {
+        "heading": "Vols afegir alguna altra cosa?"
+      },
+      "violatedRules": {
+        "heading": "Ha incomplert les regles del servidor"
+      }
     },
     "search": {
       "header": {

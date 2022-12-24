@@ -10,7 +10,7 @@
     },
     "save": {
       "succeed": "",
-      "failed": ""
+      "failed": "Zapisywanie obrazka nie powiodło się"
     }
   }
 }

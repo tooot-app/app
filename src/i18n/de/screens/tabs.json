@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Angezeigte Benachrichtigungstypen filtern",
-      "title": "Benachrichtigungen anzeigen",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Followeranfrage",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Tröt eines abonnierten Nutzers",
-        "update": "Boost wurde bearbeitet",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Benachrichtigungen anzeigen"
     }
   },
   "me": {
@@ -254,9 +242,6 @@
         "content_true": "Aktiviert",
         "content_false": "Deaktiviert"
       },
-      "update": {
-        "title": "Auf neueste Version aktualisiert"
-      },
       "logout": {
         "button": "Abmelden",
         "alert": {
@@ -269,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Erscheinungsbild",
         "options": {
@@ -304,9 +276,8 @@
           "external": "Im Systembrowser öffnen"
         }
       },
-      "staticEmoji": {
-        "heading": "System-Emojis verwenden",
-        "description": "Wenn du beim Betrachten der Emoji-Liste häufige App-Abstürze feststellst, kannst du stattdessen versuchen, statische Emoji zu verwenden."
+      "autoplayGifv": {
+        "heading": "GIFs in der Timeline automatisch abspielen"
       },
       "feedback": {
         "heading": "Neue Funktion vorschlagen"
@@ -335,9 +306,7 @@
       "moved": "Benutzer umgezogen",
       "created_at": "Registriert am: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} Tröts",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} Tröts"
       },
       "toots": {
         "default": "Tröts",
@@ -359,6 +328,25 @@
     },
     "history": {
       "name": "Bearbeitungsverlauf"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {

@@ -1,19 +1,10 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState
-} from 'react'
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { Appearance } from 'react-native'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
-import {
-  getSettingsDarkTheme,
-  getSettingsTheme,
-  SettingsState
-} from '@utils/slices/settingsSlice'
+import { getSettingsDarkTheme, getSettingsTheme } from '@utils/slices/settingsSlice'
 import { throttle } from 'lodash'
+import { SettingsLatest } from '@utils/migrations/settings/migration'
 
 type ContextType = {
   mode: 'light' | 'dark'
@@ -30,9 +21,7 @@ const ManageThemeContext = createContext<ContextType>({
 export const useTheme = () => useContext(ManageThemeContext)
 
 const useColorSchemeDelay = (delay = 500) => {
-  const [colorScheme, setColorScheme] = React.useState(
-    Appearance.getColorScheme()
-  )
+  const [colorScheme, setColorScheme] = React.useState(Appearance.getColorScheme())
   const onColorSchemeChange = React.useCallback(
     throttle(
       ({ colorScheme }) => {
@@ -57,8 +46,8 @@ const useColorSchemeDelay = (delay = 500) => {
 
 const determineTheme = (
   osTheme: 'light' | 'dark' | null | undefined,
-  userTheme: SettingsState['theme'],
-  darkTheme: SettingsState['darkTheme']
+  userTheme: SettingsLatest['theme'],
+  darkTheme: SettingsLatest['darkTheme']
 ): 'light' | 'dark_lighter' | 'dark_darker' => {
   enum DarkTheme {
     lighter = 'dark_lighter',
@@ -85,12 +74,8 @@ const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const userTheme = useSelector(getSettingsTheme)
   const darkTheme = useSelector(getSettingsDarkTheme)
 
-  const [mode, setMode] = useState(
-    userTheme === 'auto' ? osTheme || 'light' : userTheme
-  )
-  const [theme, setTheme] = useState<Theme>(
-    determineTheme(osTheme, userTheme, darkTheme)
-  )
+  const [mode, setMode] = useState(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  const [theme, setTheme] = useState<Theme>(determineTheme(osTheme, userTheme, darkTheme))
 
   useEffect(() => {
     setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme)
@@ -100,9 +85,7 @@ const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   }, [osTheme, userTheme, darkTheme])
 
   return (
-    <ManageThemeContext.Provider
-      value={{ mode, theme, colors: getColors(theme) }}
-    >
+    <ManageThemeContext.Provider value={{ mode, theme, colors: getColors(theme) }}>
       {children}
     </ManageThemeContext.Provider>
   )

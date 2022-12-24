@@ -23,7 +23,9 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
   const { t } = useTranslation('screenTabs')
   useEffect(() => {
     navigation.setOptions({
-      title: t(`shared.users.${params.reference}.${params.type}`, { count: params.count }),
+      title: t(`shared.users.${params.reference}.${params.type}`, {
+        count: params.count
+      } as any) as any,
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
     })
   }, [])

@@ -2,6 +2,7 @@ import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
 import CustomText from '@components/Text'
+import { getHost } from '@helpers/urlMatcher'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
@@ -13,7 +14,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { isEqual } from 'lodash'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, TextStyleIOS, View } from 'react-native'
+import { Pressable, TextStyleIOS, View } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { useSelector } from 'react-redux'
 
@@ -102,7 +103,7 @@ const renderNode = ({
           )
         }
       } else {
-        const domain = href?.split(new RegExp(/:\/\/(.[^\/]+\/.{3})/))
+        const host = getHost(href)
         // Need example here
         const content = node.children && node.children[0] && node.children[0].data
         const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content).length > 0
@@ -127,8 +128,8 @@ const renderNode = ({
               }
             }}
           >
-            {content && content !== href ? content : showFullLink ? href : domain?.[1]}
-            {!shouldBeTag ? '...' : null}
+            {content && content !== href ? content : showFullLink ? href : host}
+            {!shouldBeTag ? '/...' : null}
           </CustomText>
         )
       }

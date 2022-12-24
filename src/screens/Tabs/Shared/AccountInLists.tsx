@@ -21,12 +21,12 @@ const TabSharedAccountInLists: React.FC<
   }
 }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   useEffect(() => {
     navigation.setOptions({
       presentation: 'modal',
-      title: t('shared.accountInLists.name', { username: account.username }),
+      title: t('screenTabs:shared.accountInLists.name', { username: account.username }),
       headerRight: () => {
         return (
           <HeaderRight
@@ -43,10 +43,14 @@ const TabSharedAccountInLists: React.FC<
   const accountInListsQuery = useAccountInListsQuery({ id: account.id })
 
   const sections = [
-    { id: 'in', title: t('shared.accountInLists.inLists'), data: accountInListsQuery.data || [] },
+    {
+      id: 'in',
+      title: t('screenTabs:shared.accountInLists.inLists'),
+      data: accountInListsQuery.data || []
+    },
     {
       id: 'out',
-      title: t('shared.accountInLists.notInLists'),
+      title: t('screenTabs:shared.accountInLists.notInLists'),
       data:
         listsQuery.data?.filter(({ id }) =>
           accountInListsQuery.data?.length

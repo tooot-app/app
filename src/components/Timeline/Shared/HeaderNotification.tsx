@@ -42,6 +42,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     type: 'status',
     openChange,
     account: status?.account,
+    ...(status && { status }),
     queryKey
   })
   const mStatus = menuStatus({ status, queryKey })
@@ -74,7 +75,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
           />
         )
       default:
-        if (status) {
+        if (status && Platform.OS !== 'android') {
           return (
             <Pressable
               style={{ flex: 1, alignItems: 'center' }}
@@ -89,48 +90,19 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                   </DropdownMenu.Trigger>
 
                   <DropdownMenu.Content>
-                    {mShare.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
+                    {[mShare, mStatus, mAccount, mInstance].map(type => (
+                      <>
+                        {type.map((mGroup, index) => (
+                          <DropdownMenu.Group key={index}>
+                            {mGroup.map(menu => (
+                              <DropdownMenu.Item key={menu.key} {...menu.item}>
+                                <DropdownMenu.ItemTitle children={menu.title} />
+                                <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
+                              </DropdownMenu.Item>
+                            ))}
+                          </DropdownMenu.Group>
                         ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mAccount.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mStatus.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mInstance.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
+                      </>
                     ))}
                   </DropdownMenu.Content>
                 </DropdownMenu.Root>
@@ -187,19 +159,17 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
         </View>
       </View>
 
-      {Platform.OS !== 'android' ? (
-        <View
-          style={[
-            { marginLeft: StyleConstants.Spacing.M },
-            notification.type === 'follow' ||
-            notification.type === 'follow_request' ||
-            notification.type === 'admin.report'
-              ? { flexShrink: 1 }
-              : { flex: 1 }
-          ]}
-          children={actions()}
-        />
-      ) : null}
+      <View
+        style={[
+          { marginLeft: StyleConstants.Spacing.M },
+          notification.type === 'follow' ||
+          notification.type === 'follow_request' ||
+          notification.type === 'admin.report'
+            ? { flexShrink: 1 }
+            : { flex: 1 }
+        ]}
+        children={actions()}
+      />
     </View>
   )
 }

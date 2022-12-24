@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtro",
       "accessibilityHint": "Filtrar notificações por tipos",
-      "title": "",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Solicitações de seguidores pendentes",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot de usuários inscritos",
-        "update": "Toot foi editado",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": ""
     }
   },
   "me": {
@@ -254,9 +242,6 @@
         "content_true": "Habilitado",
         "content_false": "Desabilitado"
       },
-      "update": {
-        "title": "Atualize para a versão mais recente"
-      },
       "logout": {
         "button": "Sair",
         "alert": {
@@ -269,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Aparência",
         "options": {
@@ -304,9 +276,8 @@
           "external": "Usar navegador do sistema"
         }
       },
-      "staticEmoji": {
-        "heading": "Usar emojis estáticos",
-        "description": "Se você encontrar falhas frequentes de apps ao visualizar a lista de emojis, você pode tentar usar emojis estáticos."
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "Pedidos de Funcionalidades"
@@ -335,9 +306,7 @@
       "moved": "Usuário movido",
       "created_at": "Registrado em: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toots",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toots"
       },
       "toots": {
         "default": "Toots",
@@ -359,6 +328,25 @@
     },
     "history": {
       "name": "Histórico de Edição"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {

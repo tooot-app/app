@@ -16,7 +16,7 @@ export interface Props {
 
 const RelationshipIncoming: React.FC<Props> = ({ id }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation()
+  const { t } = useTranslation(['common', 'componentRelationship'])
 
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id }]
   const queryKeyNotification: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
@@ -33,7 +33,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
         type: 'error',
         theme,
         message: t('common:message.error.message', {
-          function: t(`relationship:${type}.function`)
+          function: t(`componentRelationship:${type}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&

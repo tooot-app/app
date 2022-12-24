@@ -17,87 +17,84 @@ import { getInstanceConfigurationStatusCharsURL } from '@utils/slices/instancesS
 
 export let instanceConfigurationStatusCharsURL = 23
 
-const ComposeRoot = React.memo(
-  () => {
-    const { colors } = useTheme()
+const ComposeRoot = () => {
+  const { colors } = useTheme()
 
-    instanceConfigurationStatusCharsURL = useSelector(
-      getInstanceConfigurationStatusCharsURL,
-      () => true
-    )
+  instanceConfigurationStatusCharsURL = useSelector(
+    getInstanceConfigurationStatusCharsURL,
+    () => true
+  )
 
-    const accessibleRefDrafts = useRef(null)
-    const accessibleRefAttachments = useRef(null)
+  const accessibleRefDrafts = useRef(null)
+  const accessibleRefAttachments = useRef(null)
 
-    useEffect(() => {
-      const tagDrafts = findNodeHandle(accessibleRefDrafts.current)
-      tagDrafts && AccessibilityInfo.setAccessibilityFocus(tagDrafts)
-    }, [accessibleRefDrafts.current])
+  useEffect(() => {
+    const tagDrafts = findNodeHandle(accessibleRefDrafts.current)
+    tagDrafts && AccessibilityInfo.setAccessibilityFocus(tagDrafts)
+  }, [accessibleRefDrafts.current])
 
-    const { composeState } = useContext(ComposeContext)
+  const { composeState } = useContext(ComposeContext)
 
-    const mapSchemaToType = () => {
-      if (composeState.tag) {
-        switch (composeState.tag?.schema) {
-          case '@':
-            return 'accounts'
-          case '#':
-            return 'hashtags'
-        }
-      } else {
-        return undefined
+  const mapSchemaToType = () => {
+    if (composeState.tag) {
+      switch (composeState.tag?.schema) {
+        case '@':
+          return 'accounts'
+        case '#':
+          return 'hashtags'
       }
+    } else {
+      return undefined
     }
-    const { isFetching, data, refetch } = useSearchQuery({
-      type: mapSchemaToType(),
-      term: composeState.tag?.raw.substring(1),
-      options: { enabled: false }
-    })
+  }
+  const { isFetching, data, refetch } = useSearchQuery({
+    type: mapSchemaToType(),
+    term: composeState.tag?.raw.substring(1),
+    options: { enabled: false }
+  })
 
-    useEffect(() => {
-      if (
-        (composeState.tag?.schema === '@' || composeState.tag?.schema === '#') &&
-        composeState.tag?.raw
-      ) {
-        refetch()
-      }
-    }, [composeState.tag])
+  useEffect(() => {
+    if (
+      (composeState.tag?.schema === '@' || composeState.tag?.schema === '#') &&
+      composeState.tag?.raw
+    ) {
+      refetch()
+    }
+  }, [composeState.tag])
 
-    const listEmpty = useMemo(() => {
-      if (isFetching) {
-        return (
-          <View key='listEmpty' style={{ flex: 1, alignItems: 'center' }}>
-            <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
-          </View>
-        )
-      }
-    }, [isFetching])
+  const listEmpty = useMemo(() => {
+    if (isFetching) {
+      return (
+        <View key='listEmpty' style={{ flex: 1, alignItems: 'center' }}>
+          <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+        </View>
+      )
+    }
+  }, [isFetching])
 
-    const Footer = useMemo(
-      () => <ComposeRootFooter accessibleRefAttachments={accessibleRefAttachments} />,
-      [accessibleRefAttachments.current]
-    )
+  const Footer = useMemo(
+    () => <ComposeRootFooter accessibleRefAttachments={accessibleRefAttachments} />,
+    [accessibleRefAttachments.current]
+  )
 
-    return (
-      <View style={{ flex: 1 }}>
-        <FlatList
-          renderItem={({ item }) => <ComposeRootSuggestion item={item} />}
-          ListEmptyComponent={listEmpty}
-          keyboardShouldPersistTaps='always'
-          ListHeaderComponent={ComposeRootHeader}
-          ListFooterComponent={Footer}
-          ItemSeparatorComponent={ComponentSeparator}
-          // @ts-ignore
-          data={data ? data[mapSchemaToType()] : undefined}
-          keyExtractor={() => Math.random().toString()}
-        />
-        <ComposeActions />
-        <ComposeDrafts accessibleRefDrafts={accessibleRefDrafts} />
-        <ComposePosting />
-      </View>
-    )
-  },
-  () => true
-)
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        renderItem={({ item }) => <ComposeRootSuggestion item={item} />}
+        ListEmptyComponent={listEmpty}
+        keyboardShouldPersistTaps='always'
+        ListHeaderComponent={ComposeRootHeader}
+        ListFooterComponent={Footer}
+        ItemSeparatorComponent={ComponentSeparator}
+        // @ts-ignore
+        data={data ? data[mapSchemaToType()] : undefined}
+        keyExtractor={() => Math.random().toString()}
+      />
+      <ComposeActions />
+      <ComposeDrafts accessibleRefDrafts={accessibleRefDrafts} />
+      <ComposePosting />
+    </View>
+  )
+}
 
 export default ComposeRoot

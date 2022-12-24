@@ -11,7 +11,7 @@ import Icon from './Icon'
 import CustomText from './Text'
 
 export interface Props {
-  account: Mastodon.Account
+  account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'acct' | 'username'>
   props?: PressableProps
 }
 
@@ -42,11 +42,11 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
               style={{
                 width: StyleConstants.Avatar.S,
                 height: StyleConstants.Avatar.S,
-                borderRadius: 6,
+                borderRadius: 8,
                 marginRight: StyleConstants.Spacing.S
               }}
             />
-            <View>
+            <View style={{ flex: 1 }}>
               <CustomText numberOfLines={1}>
                 <ParseEmojis
                   content={account.display_name || account.username}

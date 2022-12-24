@@ -15,7 +15,7 @@ export interface FilteredProps {
 
 const TimelineFiltered: React.FC<FilteredProps> = ({ filterResults }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
 
   const main = () => {
     if (!filterResults?.length) {
@@ -23,18 +23,27 @@ const TimelineFiltered: React.FC<FilteredProps> = ({ filterResults }) => {
     }
     switch (typeof filterResults[0]) {
       case 'string': // v1 filter
-        return <>{t('shared.filtered.match', { context: 'v1', phrase: filterResults[0] })}</>
+        return (
+          <>
+            {t('componentTimeline:shared.filtered.match', {
+              defaultValue: 'v1',
+              context: 'v1',
+              phrase: filterResults[0]
+            })}
+          </>
+        )
       default:
         return (
           <>
-            {t('shared.filtered.match', {
+            {t('componentTimeline:shared.filtered.match', {
+              defaultValue: 'v2',
               context: 'v2',
               count: filterResults.length,
               filters: filterResults.map(result => result.title).join(t('common:separator'))
             })}
             <CustomText
               style={{ color: colors.blue }}
-              children={`\n${t('shared.filtered.reveal')}`}
+              children={`\n${t('componentTimeline:shared.filtered.reveal')}`}
             />
           </>
         )

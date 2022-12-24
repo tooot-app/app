@@ -9,7 +9,6 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImagesViewer'
 import ScreenTabs from '@screens/Tabs'
-import * as Sentry from '@sentry/react-native'
 import initQuery from '@utils/initQuery'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
@@ -25,11 +24,12 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
 import { useSelector } from 'react-redux'
+import { routingInstrumentation } from './startup/sentry'
 import { useAppDispatch } from './store'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -39,12 +39,15 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { t } = useTranslation('screens')
+  const { t } = useTranslation([
+    'common',
+    'screens',
+    'screenAnnouncements',
+    'screenAccountSelection'
+  ])
   const dispatch = useAppDispatch()
   const instanceActive = useSelector(getInstanceActive)
   const { colors, theme } = useTheme()
-
-  const routeRef = useRef<{ name?: string; params?: {} }>()
 
   // Push hooks
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
@@ -55,7 +58,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   // Prevent screenshot alert
   useEffect(() => {
     const screenshotListener = addScreenshotListener(() =>
-      Alert.alert(t('screenshot.title'), t('screenshot.message'), [
+      Alert.alert(t('screens:screenshot.title'), t('screens:screenshot.message'), [
         { text: t('common:buttons.confirm'), style: 'destructive' }
       ])
     )
@@ -68,7 +71,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const showLocalCorrect = () => {
       if (localCorrupt) {
         displayMessage({
-          message: t('localCorrupt.message'),
+          message: t('screens:localCorrupt.message'),
           description: localCorrupt.length ? localCorrupt : undefined,
           type: 'danger'
         })
@@ -92,15 +95,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [instanceActive])
 
   // Callbacks
-  const navigationContainerOnReady = useCallback(() => {
-    const currentRoute = navigationRef.getCurrentRoute()
-    routeRef.current = {
-      name: currentRoute?.name,
-      params: currentRoute?.params ? JSON.stringify(currentRoute.params) : undefined
-    }
-  }, [])
   const navigationContainerOnStateChange = useCallback(() => {
-    const previousRoute = routeRef.current
     const currentRoute = navigationRef.getCurrentRoute()
 
     const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
@@ -108,15 +103,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       //@ts-ignore
       dispatch(updatePreviousTab(matchTabName[1]))
     }
-
-    if (previousRoute?.name !== currentRoute?.name) {
-      Sentry.setContext('page', {
-        previous: previousRoute,
-        current: currentRoute
-      })
-    }
-
-    routeRef.current = currentRoute
   }, [])
 
   // Deep linking for compose
@@ -176,7 +162,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           if (!typesImage.includes(mime.split('/')[1])) {
             console.warn('Image type not supported:', mime.split('/')[1])
             displayMessage({
-              message: t('shareError.imageNotSupported', {
+              message: t('screens:shareError.imageNotSupported', {
                 type: mime.split('/')[1]
               }),
               type: 'danger'
@@ -188,7 +174,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           if (!typesVideo.includes(mime.split('/')[1])) {
             console.warn('Video type not supported:', mime.split('/')[1])
             displayMessage({
-              message: t('shareError.videoNotSupported', {
+              message: t('screens:shareError.videoNotSupported', {
                 type: mime.split('/')[1]
               }),
               type: 'danger'
@@ -274,7 +260,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       <NavigationContainer
         ref={navigationRef}
         theme={themes[theme]}
-        onReady={navigationContainerOnReady}
+        onReady={() => routingInstrumentation.registerNavigationContainer(navigationRef)}
         onStateChange={navigationContainerOnStateChange}
       >
         <Stack.Navigator initialRouteName='Screen-Tabs'>
@@ -345,4 +331,4 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   )
 }
 
-export default React.memo(Screens, () => true)
+export default Screens

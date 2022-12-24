@@ -13,43 +13,34 @@ export interface Props {
   highlighted?: boolean
 }
 
-const HeaderSharedCreated = React.memo(
-  ({ created_at, edited_at, highlighted = false }: Props) => {
-    const { t } = useTranslation('componentTimeline')
-    const { colors } = useTheme()
+const HeaderSharedCreated: React.FC<Props> = ({ created_at, edited_at, highlighted = false }) => {
+  const { t } = useTranslation('componentTimeline')
+  const { colors } = useTheme()
 
-    const actualTime = edited_at || created_at
+  const actualTime = edited_at || created_at
 
-    return (
-      <>
-        <CustomText fontStyle='S' style={{ color: colors.secondary }}>
-          {highlighted ? (
-            <>
-              <FormattedDate
-                value={new Date(actualTime)}
-                dateStyle='medium'
-                timeStyle='short'
-              />
-            </>
-          ) : (
-            <RelativeTime time={actualTime} />
-          )}
-        </CustomText>
-        {edited_at ? (
-          <Icon
-            accessibilityLabel={t(
-              'shared.header.shared.edited.accessibilityLabel'
-            )}
-            name='Edit'
-            size={StyleConstants.Font.Size.S}
-            color={colors.secondary}
-            style={{ marginLeft: StyleConstants.Spacing.S }}
-          />
-        ) : null}
-      </>
-    )
-  },
-  (prev, next) => prev.edited_at === next.edited_at
-)
+  return (
+    <>
+      <CustomText fontStyle='S' style={{ color: colors.secondary }}>
+        {highlighted ? (
+          <>
+            <FormattedDate value={new Date(actualTime)} dateStyle='medium' timeStyle='short' />
+          </>
+        ) : (
+          <RelativeTime time={actualTime} />
+        )}
+      </CustomText>
+      {edited_at ? (
+        <Icon
+          accessibilityLabel={t('shared.header.shared.edited.accessibilityLabel')}
+          name='Edit'
+          size={StyleConstants.Font.Size.S}
+          color={colors.secondary}
+          style={{ marginLeft: StyleConstants.Spacing.S }}
+        />
+      ) : null}
+    </>
+  )
+}
 
 export default HeaderSharedCreated

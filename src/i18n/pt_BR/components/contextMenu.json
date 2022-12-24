@@ -7,6 +7,10 @@
       "action_true": ""
     },
     "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Silenciar usuário",
       "action_true": "Desativar o silêncio do usuário"
