@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Tự động phát GIF"
       },
       "feedback": {
         "heading": "Đề xuất tính năng"
@@ -333,7 +333,7 @@
       "name": "Báo cáo @{{acct}}",
       "report": "Báo cáo",
       "forward": {
-        "heading": ""
+        "heading": "Chuyển tiếp tới {{instance}}"
       },
       "reasons": {
         "heading": "Có vấn đề gì với người này?",
