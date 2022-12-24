@@ -7,6 +7,10 @@
       "action_true": "Ontvolg"
     },
     "inLists": "Gebruiker op lijsten beheren",
+    "showBoosts": {
+      "action_false": "Boosts van gebruiker weergeven",
+      "action_true": "Boosts van gebruiker verbergen"
+    },
     "mute": {
       "action_false": "Gebruiker dempen",
       "action_true": "Dempen opheffen voor gebruiker"

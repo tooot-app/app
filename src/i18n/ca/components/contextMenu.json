@@ -7,6 +7,10 @@
       "action_true": "Deixa de seguir l'usuari"
     },
     "inLists": "Gestionar usuari de llistes",
+    "showBoosts": {
+      "action_false": "Mostra els impulsos de l'usuari",
+      "action_true": "Oculta els impulsos de l'usuari"
+    },
     "mute": {
       "action_false": "Silencia l'usuari",
       "action_true": "Deixa de silenciar l'usuari"

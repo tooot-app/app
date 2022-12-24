@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Фільтр",
       "accessibilityHint": "Відфільтрувати типи сповіщень, що відображаються",
-      "title": "Показувати сповіщення",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Запит на підписку",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Дмух від підписників",
-        "update": "Передмух був відредагований",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Показувати сповіщення"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Зовнішній вигляд",
         "options": {
@@ -301,9 +276,8 @@
           "external": "Використовувати системний браузер"
         }
       },
-      "staticEmoji": {
-        "heading": "Використовувати статичні емодзі",
-        "description": "Якщо ви стикаєтеся з частими збоями в роботі програми при перегляді списку емодзі, ви можете спробувати використовувати статичні емодзі."
+      "autoplayGifv": {
+        "heading": "Автовідтворення GIF в стрічці"
       },
       "feedback": {
         "heading": "Запропонувати ідею"
@@ -332,9 +306,7 @@
       "moved": "Користувач перемістився",
       "created_at": "Приєднався: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} дмухів",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} дмухів"
       },
       "toots": {
         "default": "Дмухи",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Редагувати історію"
+    },
+    "report": {
+      "name": "Скарга на {{acct}}",
+      "report": "Скарга",
+      "forward": {
+        "heading": "Анонімно переадресовано на віддалений інстанс {{instance}}"
+      },
+      "reasons": {
+        "heading": "Що не так з цим обліковим записом?",
+        "spam": "Це спам",
+        "other": "Це щось інше",
+        "violation": "Це порушує правила інстанса"
+      },
+      "comment": {
+        "heading": "Може ви хочете щось додати?"
+      },
+      "violatedRules": {
+        "heading": "Це порушує правила інстанса"
+      }
     },
     "search": {
       "header": {

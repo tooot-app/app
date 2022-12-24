@@ -42,8 +42,7 @@
           "placeholder": "今なにかんがえてるの？",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "アップロードできるメディアの数の上限に達しました",
-              "OK": "$t(common:buttons.OK)"
+              "title": "アップロードできるメディアの数の上限に達しました"
             }
           }
         }

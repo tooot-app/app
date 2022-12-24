@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": "",
-    "moreLines": "",
-    "defaultHint": ""
+    "accessibilityHint": "Dotknij, by rozwinąć lub zwinąć zawartość",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} więcej linii tekstu)",
+    "defaultHint": "Tootek o znacznej długości"
   }
 }

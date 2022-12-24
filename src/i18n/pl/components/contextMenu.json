@@ -1,12 +1,16 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Akcje dla tego tootka, takie jak jego konto lub sam tootek",
   "account": {
-    "title": "",
+    "title": "Działania użytkownika",
     "following": {
       "action_false": "Obserwuj",
       "action_true": "Przestań obserwować"
     },
-    "inLists": "",
+    "inLists": "Zarządzaj kontem list",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Wycisz użytkownika",
       "action_true": "Wyłącz wyciszenie"
@@ -15,13 +19,13 @@
       "action_false": "Zablokuj użytkownika",
       "action_true": "Odblokuj użytkownika",
       "alert": {
-        "title": ""
+        "title": "Na pewno zablokować {{username}}?"
       }
     },
     "reports": {
       "action": "Zgłoś i zablokuj",
       "alert": {
-        "title": ""
+        "title": "Potwierdzić zgłoszenie i zablokować {{username}}?"
       }
     }
   },
@@ -34,7 +38,7 @@
     "succeed": "Skopiowano"
   },
   "instance": {
-    "title": "",
+    "title": "Opcje instancji",
     "block": {
       "action": "Zablokuj instancję {{instance}}",
       "alert": {
@@ -52,7 +56,7 @@
     }
   },
   "status": {
-    "title": "",
+    "title": "Opcje tootka",
     "edit": {
       "action": "Edytuj wpis"
     },
@@ -64,15 +68,15 @@
       }
     },
     "deleteEdit": {
-      "action": "",
+      "action": "Skasuj tootka i opublikuj ponownie",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Potwierdzasz usunięcie i ponowną publikację?",
+        "message": "Wszystkie podbicia i lajki zostaną usunięte, łącznie ze wszystkimi odpowiedziami."
       }
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Wycisz tootka i odpowiedzi na niego",
+      "action_true": "Wyłącz wyciszenie tootka i odpowiedzi na niego"
     },
     "pin": {
       "action_false": "Przypnij wpis",

@@ -4,8 +4,8 @@
       "alert": {
         "title": "Vols cancel·lar l'edició?",
         "buttons": {
-          "save": "Desa l'esborrany",
-          "delete": "Esborra l'esborrany"
+          "save": "Desa'l",
+          "delete": "Esborra'l"
         }
       }
     },
@@ -42,8 +42,7 @@
           "placeholder": "Què et passa pel cap?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "S'ha arribat al nombre màxim d'adjunts",
-              "OK": "$t(common:buttons.OK)"
+              "title": "S'ha arribat al nombre màxim d'adjunts"
             }
           }
         }

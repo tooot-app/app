@@ -42,8 +42,7 @@
           "placeholder": "A cosa stai pensando?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Hai raggiunto il numero massimo di allegati permessi",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Hai raggiunto il numero massimo di allegati permessi"
             }
           }
         }

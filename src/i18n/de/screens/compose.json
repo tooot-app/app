@@ -42,8 +42,7 @@
           "placeholder": "Was geht in dir vor",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Maximale Anzahl von Anhängen erreicht",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Maximale Anzahl von Anhängen erreicht"
             }
           }
         }

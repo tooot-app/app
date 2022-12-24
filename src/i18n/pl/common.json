@@ -5,10 +5,10 @@
     "cancel": "Anuluj",
     "discard": "Anuluj",
     "continue": "Dalej",
-    "create": "",
+    "create": "Utwórz",
     "delete": "Usuń",
-    "done": "",
-    "confirm": ""
+    "done": "Gotowe",
+    "confirm": "Potwierdź"
   },
   "customEmoji": {
     "accessibilityLabel": "Własne emoji {{emoji}}"

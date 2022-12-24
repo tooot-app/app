@@ -7,6 +7,10 @@
       "action_true": "取消跟隨使用者"
     },
     "inLists": "管理使用者列表",
+    "showBoosts": {
+      "action_false": "顯示使用者的轉嘟",
+      "action_true": "隱藏使用者的轉嘟"
+    },
     "mute": {
       "action_false": "靜音使用者",
       "action_true": "解除靜音使用者"
