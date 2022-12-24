@@ -19,7 +19,7 @@ const Field: React.FC<{
   field?: Mastodon.Field
 }> = ({ allProps, setDirty, index, field }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const nameRef = useRef<TextInput>(null)
   const valueRef = useRef<TextInput>(null)
@@ -55,11 +55,11 @@ const Field: React.FC<{
           color: colors.primaryDefault
         }}
       >
-        {t('me.profile.fields.group', { index: index + 1 })}
+        {t('screenTabs:me.profile.fields.group', { index: index + 1 })}
       </CustomText>
-      <ComponentInput title={t('me.profile.fields.label')} {...allProps[index * 2]} />
+      <ComponentInput title={t('screenTabs:me.profile.fields.label')} {...allProps[index * 2]} />
       <ComponentInput
-        title={t('me.profile.fields.content')}
+        title={t('screenTabs:me.profile.fields.content')}
         {...allProps[index * 2 + 1]}
         multiline
       />
@@ -79,7 +79,7 @@ const TabMeProfileFields: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common'])
   const { mutateAsync, status } = useProfileMutation()
 
   const allProps: EmojisState['inputProps'] = []
@@ -93,21 +93,17 @@ const TabMeProfileFields: React.FC<
           content='X'
           onPress={() => {
             if (dirty) {
-              Alert.alert(
-                t('common:discard.title'),
-                t('common:discard.message'),
-                [
-                  {
-                    text: t('common:buttons.discard'),
-                    style: 'destructive',
-                    onPress: () => navigation.navigate('Tab-Me-Profile-Root')
-                  },
-                  {
-                    text: t('common:buttons.cancel'),
-                    style: 'default'
-                  }
-                ]
-              )
+              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
+                {
+                  text: t('common:buttons.discard'),
+                  style: 'destructive',
+                  onPress: () => navigation.navigate('Tab-Me-Profile-Root')
+                },
+                {
+                  text: t('common:buttons.cancel'),
+                  style: 'default'
+                }
+              ])
             } else {
               navigation.navigate('Tab-Me-Profile-Root')
             }

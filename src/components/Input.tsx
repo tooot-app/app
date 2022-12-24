@@ -85,7 +85,6 @@ const ComponentInput = forwardRef(
             multiline,
             numberOfLines: Platform.OS === 'android' ? 5 : undefined
           })}
-          keyboardAppearance={mode}
           textAlignVertical='top'
           {...props}
         />

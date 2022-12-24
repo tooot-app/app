@@ -1,6 +1,13 @@
 import { store } from '@root/store'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
 
+const getHost = (url: unknown): string | void => {
+  if (typeof url !== 'string') return undefined
+
+  const matches = url.match(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i)
+  return matches?.[1]
+}
+
 const matchStatus = (
   url: string
 ): { id: string; style: 'default' | 'pretty'; sameInstance: boolean } | null => {
@@ -53,4 +60,4 @@ const matchAccount = (
   return null
 }
 
-export { matchStatus, matchAccount }
+export { getHost, matchStatus, matchAccount }

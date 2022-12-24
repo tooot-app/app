@@ -25,10 +25,10 @@ import EmojisContext from './helpers/EmojisContext'
 const EmojisList = () => {
   const dispatch = useAppDispatch()
   const { reduceMotionEnabled } = useAccessibility()
-  const { t } = useTranslation()
+  const { t } = useTranslation(['common', 'screenCompose'])
 
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
-  const { colors, mode } = useTheme()
+  const { colors } = useTheme()
 
   const addEmoji = (shortcode: string) => {
     if (emojisState.targetIndex === -1) {
@@ -158,7 +158,6 @@ const EmojisList = () => {
           onChangeText={setSearch}
           autoCapitalize='none'
           clearButtonMode='always'
-          keyboardAppearance={mode}
           autoCorrect={false}
           spellCheck={false}
         />

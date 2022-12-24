@@ -87,7 +87,8 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
             }}
           >
             <Trans
-              i18nKey='screenAnnouncements:content.published'
+              ns='screenAnnouncements'
+              i18nKey='content.published'
               components={[<RelativeTime time={item.published_at} />]}
             />
           </CustomText>

@@ -5,8 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, View } from 'react-native'
-import { Path, Svg } from 'react-native-svg'
+import { Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { isRtlLang } from 'rtl-detect'
 import StatusContext from './Context'
@@ -45,7 +44,14 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             }
           />
           {inThread ? (
-            <CustomText fontStyle='S' style={{ textAlign: 'center', color: colors.secondary, paddingVertical: StyleConstants.Spacing.XS }}>
+            <CustomText
+              fontStyle='S'
+              style={{
+                textAlign: 'center',
+                color: colors.secondary,
+                paddingVertical: StyleConstants.Spacing.XS
+              }}
+            >
               {t('shared.content.expandHint')}
             </CustomText>
           ) : null}

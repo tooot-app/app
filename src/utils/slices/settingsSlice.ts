@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LOCALES } from '@root/i18n/locales'
 import { RootState } from '@root/store'
-import { SettingsV3 } from '@utils/migrations/settings/v3'
+import { SettingsLatest } from '@utils/migrations/settings/migration'
 import * as Localization from 'expo-localization'
 import { pickBy } from 'lodash'
-
-export type SettingsState = SettingsV3
 
 export const settingsInitialState = {
   fontsize: 0,
@@ -18,33 +16,33 @@ export const settingsInitialState = {
   theme: 'auto',
   darkTheme: 'lighter',
   browser: 'internal',
-  staticEmoji: false
+  autoplayGifv: true
 }
 
 const settingsSlice = createSlice({
   name: 'settings',
-  initialState: settingsInitialState as SettingsState,
+  initialState: settingsInitialState as SettingsLatest,
   reducers: {
-    changeFontsize: (state, action: PayloadAction<SettingsState['fontsize']>) => {
+    changeFontsize: (state, action: PayloadAction<SettingsLatest['fontsize']>) => {
       state.fontsize = action.payload
     },
-    changeLanguage: (state, action: PayloadAction<NonNullable<SettingsState['language']>>) => {
+    changeLanguage: (state, action: PayloadAction<NonNullable<SettingsLatest['language']>>) => {
       state.language = action.payload
     },
-    changeTheme: (state, action: PayloadAction<NonNullable<SettingsState['theme']>>) => {
+    changeTheme: (state, action: PayloadAction<NonNullable<SettingsLatest['theme']>>) => {
       state.theme = action.payload
     },
-    changeDarkTheme: (state, action: PayloadAction<NonNullable<SettingsState['darkTheme']>>) => {
+    changeDarkTheme: (state, action: PayloadAction<NonNullable<SettingsLatest['darkTheme']>>) => {
       state.darkTheme = action.payload
     },
-    changeBrowser: (state, action: PayloadAction<NonNullable<SettingsState['browser']>>) => {
+    changeBrowser: (state, action: PayloadAction<NonNullable<SettingsLatest['browser']>>) => {
       state.browser = action.payload
     },
-    changeStaticEmoji: (
+    changeAutoplayGifv: (
       state,
-      action: PayloadAction<NonNullable<SettingsState['staticEmoji']>>
+      action: PayloadAction<NonNullable<SettingsLatest['autoplayGifv']>>
     ) => {
-      state.staticEmoji = action.payload
+      state.autoplayGifv = action.payload
     }
   }
 })
@@ -54,7 +52,7 @@ export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
 export const getSettingsDarkTheme = (state: RootState) => state.settings.darkTheme
 export const getSettingsBrowser = (state: RootState) => state.settings.browser
-export const getSettingsStaticEmoji = (state: RootState) => state.settings.staticEmoji
+export const getSettingsAutoplayGifv = (state: RootState) => state.settings.autoplayGifv
 
 export const {
   changeFontsize,
@@ -62,6 +60,6 @@ export const {
   changeTheme,
   changeDarkTheme,
   changeBrowser,
-  changeStaticEmoji
+  changeAutoplayGifv
 } = settingsSlice.actions
 export default settingsSlice.reducer

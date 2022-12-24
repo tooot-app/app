@@ -24,12 +24,14 @@ const menuAccount = ({
   type,
   openChange,
   account,
+  status,
   queryKey,
   rootQueryKey
 }: {
   type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
-  account?: Pick<Mastodon.Account, 'id' | 'username'>
+  account?: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct'>
+  status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
@@ -37,7 +39,7 @@ const menuAccount = ({
 
   const navigation =
     useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu', 'componentRelationship'])
 
   const menus: ContextMenu[][] = [[]]
 
@@ -60,11 +62,15 @@ const menuAccount = ({
       displayMessage({
         type: 'success',
         message: t('common:message.success.message', {
-          function: t(`account.${theParams.payload.property}.action`, {
-            ...(theParams.payload.property !== 'reports' && {
-              context: (theParams.payload.currentValue || false).toString()
-            })
-          })
+          function: t(
+            `componentContextMenu:account.${theParams.payload.property}.action`,
+            theParams.payload.property !== 'reports'
+              ? {
+                  defaultValue: 'false',
+                  context: (theParams.payload.currentValue || false).toString()
+                }
+              : { defaultValue: 'false' }
+          )
         })
       })
     },
@@ -73,11 +79,15 @@ const menuAccount = ({
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t(`account.${theParams.payload.property}.action`, {
-            ...(theParams.payload.property !== 'reports' && {
-              context: (theParams.payload.currentValue || false).toString()
-            })
-          })
+          function: t(
+            `componentContextMenu:account.${theParams.payload.property}.action`,
+            theParams.payload.property !== 'reports'
+              ? {
+                  defaultValue: 'false',
+                  context: (theParams.payload.currentValue || false).toString()
+                }
+              : { defaultValue: 'false' }
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -107,7 +117,7 @@ const menuAccount = ({
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t(`${action}.function`)
+          function: t(`componentContextMenu:${action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -136,7 +146,8 @@ const menuAccount = ({
         hidden: false
       },
       title: !data?.requested
-        ? t('account.following.action', {
+        ? t('componentContextMenu:account.following.action', {
+            defaultValue: 'false',
             context: (data?.following || false).toString()
           })
         : t('componentRelationship:button.requested'),
@@ -147,6 +158,7 @@ const menuAccount = ({
         : 'person.badge.minus'
     })
   }
+
   if (!ownAccount) {
     menus[0].push({
       key: 'account-list',
@@ -156,8 +168,27 @@ const menuAccount = ({
         destructive: false,
         hidden: !isFetched || !data?.following
       },
-      title: t('account.inLists'),
+      title: t('componentContextMenu:account.inLists'),
       icon: 'checklist'
+    })
+    menus[0].push({
+      key: 'account-show-boosts',
+      item: {
+        onSelect: () =>
+          relationshipMutation.mutate({
+            id: account.id,
+            type: 'outgoing',
+            payload: { action: 'follow', state: false, reblogs: !data?.showing_reblogs }
+          }),
+        disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
+        destructive: false,
+        hidden: !isFetched || !data?.following
+      },
+      title: t('componentContextMenu:account.showBoosts.action', {
+        defaultValue: 'false',
+        context: (data?.showing_reblogs || false).toString()
+      }),
+      icon: data?.showing_reblogs ? 'rectangle.on.rectangle.slash' : 'rectangle.on.rectangle'
     })
     menus[0].push({
       key: 'account-mute',
@@ -173,40 +204,44 @@ const menuAccount = ({
         destructive: false,
         hidden: false
       },
-      title: t('account.mute.action', {
+      title: t('componentContextMenu:account.mute.action', {
+        defaultValue: 'false',
         context: (data?.muting || false).toString()
       }),
       icon: data?.muting ? 'eye' : 'eye.slash'
     })
-  }
 
-  !ownAccount &&
     menus.push([
       {
         key: 'account-block',
         item: {
           onSelect: () =>
-            Alert.alert(t('account.block.alert.title', { username: account.username }), undefined, [
-              {
-                text: t('common:buttons.confirm'),
-                style: 'destructive',
-                onPress: () =>
-                  timelineMutation.mutate({
-                    type: 'updateAccountProperty',
-                    queryKey,
-                    id: account.id,
-                    payload: { property: 'block', currentValue: data?.blocking }
-                  })
-              },
-              {
-                text: t('common:buttons.cancel')
-              }
-            ]),
+            Alert.alert(
+              t('componentContextMenu:account.block.alert.title', { username: account.username }),
+              undefined,
+              [
+                {
+                  text: t('common:buttons.confirm'),
+                  style: 'destructive',
+                  onPress: () =>
+                    timelineMutation.mutate({
+                      type: 'updateAccountProperty',
+                      queryKey,
+                      id: account.id,
+                      payload: { property: 'block', currentValue: data?.blocking }
+                    })
+                },
+                {
+                  text: t('common:buttons.cancel')
+                }
+              ]
+            ),
           disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
           destructive: !data?.blocking,
           hidden: false
         },
-        title: t('account.block.action', {
+        title: t('componentContextMenu:account.block.action', {
+          defaultValue: 'false',
           context: (data?.blocking || false).toString()
         }),
         icon: data?.blocking ? 'checkmark.circle' : 'xmark.circle'
@@ -214,42 +249,16 @@ const menuAccount = ({
       {
         key: 'account-reports',
         item: {
-          onSelect: () =>
-            Alert.alert(
-              t('account.reports.alert.title', { username: account.username }),
-              undefined,
-              [
-                {
-                  text: t('common:buttons.confirm'),
-                  style: 'destructive',
-                  onPress: () => {
-                    timelineMutation.mutate({
-                      type: 'updateAccountProperty',
-                      queryKey,
-                      id: account.id,
-                      payload: { property: 'reports' }
-                    })
-                    timelineMutation.mutate({
-                      type: 'updateAccountProperty',
-                      queryKey,
-                      id: account.id,
-                      payload: { property: 'block', currentValue: false }
-                    })
-                  }
-                },
-                {
-                  text: t('common:buttons.cancel')
-                }
-              ]
-            ),
+          onSelect: () => navigation.navigate('Tab-Shared-Report', { account, status }),
           disabled: false,
           destructive: true,
           hidden: false
         },
-        title: t('account.reports.action'),
+        title: t('componentContextMenu:account.reports.action'),
         icon: 'flag'
       }
     ])
+  }
 
   return menus
 }

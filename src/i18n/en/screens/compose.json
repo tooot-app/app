@@ -42,8 +42,7 @@
           "placeholder": "What's on your mind",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Maximum attachments amount reached",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Maximum attachments amount reached"
             }
           }
         }

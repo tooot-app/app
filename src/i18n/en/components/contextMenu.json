@@ -7,6 +7,10 @@
       "action_true": "Unfollow user"
     },
     "inLists": "Manage user of lists",
+    "showBoosts": {
+      "action_false": "Show user's boosts",
+      "action_true": "Hide users's boosts"
+    },
     "mute": {
       "action_false": "Mute user",
       "action_true": "Unmute user"

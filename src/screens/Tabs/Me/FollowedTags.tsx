@@ -12,7 +12,7 @@ import { FlatList } from 'react-native-gesture-handler'
 const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> = ({
   navigation
 }) => {
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const { data, fetchNextPage, refetch } = useFollowedTagsQuery()
   const flattenData = data?.pages ? data.pages.flatMap(page => [...page.body]) : []
@@ -31,7 +31,9 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
       displayMessage({
         type: 'error',
         message: t('common:message.error.message', {
-          function: to ? t('shared.hashtag.follow') : t('shared.hashtag.unfollow')
+          function: to
+            ? t('screenTabs:shared.hashtag.follow')
+            : t('screenTabs:shared.hashtag.unfollow')
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -55,7 +57,7 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
           children={
             <Button
               type='text'
-              content={t('shared.hashtag.unfollow')}
+              content={t('screenTabs:shared.hashtag.unfollow')}
               onPress={() => mutation.mutate({ tag: item.name, to: !item.following })}
             />
           }

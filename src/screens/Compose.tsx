@@ -39,7 +39,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   route: { params },
   navigation
 }) => {
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
   const { colors } = useTheme()
   const queryClient = useQueryClient()
 
@@ -212,9 +212,9 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             navigation.goBack()
             return
           } else {
-            Alert.alert(t('heading.left.alert.title'), undefined, [
+            Alert.alert(t('screenCompose:heading.left.alert.title'), undefined, [
               {
-                text: t('heading.left.alert.buttons.delete'),
+                text: t('screenCompose:heading.left.alert.buttons.delete'),
                 style: 'destructive',
                 onPress: () => {
                   removeDraft()
@@ -222,7 +222,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 }
               },
               {
-                text: t('heading.left.alert.buttons.save'),
+                text: t('screenCompose:heading.left.alert.buttons.save'),
                 onPress: () => {
                   saveDraft()
                   navigation.goBack()
@@ -266,7 +266,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   : 'default'
                 : params.type)) ||
             'default'
-          }`
+          }` as any
         )}
         onPress={() => {
           composeDispatch({ type: 'posting', payload: true })
@@ -302,8 +302,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             .catch(error => {
               if (error?.removeReply) {
                 Alert.alert(
-                  t('heading.right.alert.removeReply.title'),
-                  t('heading.right.alert.removeReply.description'),
+                  t('screenCompose:heading.right.alert.removeReply.title'),
+                  t('screenCompose:heading.right.alert.removeReply.description'),
                   [
                     {
                       text: t('common:buttons.cancel'),
@@ -313,7 +313,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                       style: 'destructive'
                     },
                     {
-                      text: t('heading.right.alert.removeReply.confirm'),
+                      text: t('screenCompose:heading.right.alert.removeReply.confirm'),
                       onPress: () => {
                         composeDispatch({ type: 'removeReply' })
                         composeDispatch({ type: 'posting', payload: false })
@@ -326,10 +326,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 haptics('Error')
                 handleError({ message: 'Posting error', captureResponse: true })
                 composeDispatch({ type: 'posting', payload: false })
-                Alert.alert(t('heading.right.alert.default.title'), undefined, [
-                  {
-                    text: t('heading.right.alert.default.button')
-                  }
+                Alert.alert(t('screenCompose:heading.right.alert.default.title'), undefined, [
+                  { text: t('screenCompose:heading.right.alert.default.button') }
                 ])
               }
             })

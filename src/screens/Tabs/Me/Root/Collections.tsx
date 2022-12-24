@@ -10,12 +10,12 @@ import {
   updateInstanceMePage
 } from '@utils/slices/instancesSlice'
 import { getInstancePush } from '@utils/slices/instancesSlice'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 const Collections: React.FC = () => {
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['screenAnnouncements', 'screenTabs'])
   const navigation = useNavigation<any>()
 
   const dispatch = useAppDispatch()
@@ -65,26 +65,26 @@ const Collections: React.FC = () => {
       <MenuRow
         iconFront='Mail'
         iconBack='ChevronRight'
-        title={t('me.stacks.conversations.name')}
+        title={t('screenTabs:me.stacks.conversations.name')}
         onPress={() => navigation.navigate('Tab-Me-Conversations')}
       />
       <MenuRow
         iconFront='Bookmark'
         iconBack='ChevronRight'
-        title={t('me.stacks.bookmarks.name')}
+        title={t('screenTabs:me.stacks.bookmarks.name')}
         onPress={() => navigation.navigate('Tab-Me-Bookmarks')}
       />
       <MenuRow
         iconFront='Heart'
         iconBack='ChevronRight'
-        title={t('me.stacks.favourites.name')}
+        title={t('screenTabs:me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
       {mePage.lists.shown ? (
         <MenuRow
           iconFront='List'
           iconBack='ChevronRight'
-          title={t('me.stacks.lists.name')}
+          title={t('screenTabs:me.stacks.lists.name')}
           onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
@@ -92,7 +92,7 @@ const Collections: React.FC = () => {
         <MenuRow
           iconFront='Hash'
           iconBack='ChevronRight'
-          title={t('me.stacks.followedTags.name')}
+          title={t('screenTabs:me.stacks.followedTags.name')}
           onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
         />
       ) : null}
@@ -103,10 +103,10 @@ const Collections: React.FC = () => {
           title={t('screenAnnouncements:heading')}
           content={
             mePage.announcements.unread
-              ? t('me.root.announcements.content.unread', {
+              ? t('screenTabs:me.root.announcements.content.unread', {
                   amount: mePage.announcements.unread
                 })
-              : t('me.root.announcements.content.read')
+              : t('screenTabs:me.root.announcements.content.read')
           }
           onPress={() => navigation.navigate('Screen-Announcements', { showAll: true })}
         />
@@ -114,8 +114,15 @@ const Collections: React.FC = () => {
       <MenuRow
         iconFront={instancePush ? 'Bell' : 'BellOff'}
         iconBack='ChevronRight'
-        title={t('me.stacks.push.name')}
-        content={t('me.root.push.content', { context: instancePush.global.toString() })}
+        title={t('screenTabs:me.stacks.push.name')}
+        content={
+          typeof instancePush.global === 'boolean'
+            ? t('screenTabs:me.root.push.content', {
+                defaultValue: 'false',
+                context: instancePush.global.toString()
+              })
+            : undefined
+        }
         onPress={() => navigation.navigate('Tab-Me-Push')}
       />
     </MenuContainer>

@@ -20,7 +20,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   route: { params }
 }) => {
   const { colors, theme } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const messageRef = useRef(null)
 
@@ -44,7 +44,9 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
         type: 'danger',
         message: t('common:message.error.message', {
           function:
-            params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name')
+            params.type === 'add'
+              ? t('screenTabs:me.stacks.listAdd.name')
+              : t('screenTabs:me.stacks.listEdit.name')
         })
       })
     }
@@ -65,24 +67,27 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   >([
     {
       id: 'none',
-      content: t('me.listEdit.repliesPolicy.options.none'),
+      content: t('screenTabs:me.listEdit.repliesPolicy.options.none'),
       selected: params.type === 'edit' ? params.payload.replies_policy === 'none' : false
     },
     {
       id: 'list',
-      content: t('me.listEdit.repliesPolicy.options.list'),
+      content: t('screenTabs:me.listEdit.repliesPolicy.options.list'),
       selected: params.type === 'edit' ? params.payload.replies_policy === 'list' : true
     },
     {
       id: 'followed',
-      content: t('me.listEdit.repliesPolicy.options.followed'),
+      content: t('screenTabs:me.listEdit.repliesPolicy.options.followed'),
       selected: params.type === 'edit' ? params.payload.replies_policy === 'followed' : false
     }
   ])
 
   useEffect(() => {
     navigation.setOptions({
-      title: params.type === 'add' ? t('me.stacks.listAdd.name') : t('me.stacks.listEdit.name'),
+      title:
+        params.type === 'add'
+          ? t('screenTabs:me.stacks.listAdd.name')
+          : t('screenTabs:me.stacks.listEdit.name'),
       headerLeft: () => (
         <HeaderLeft
           content='X'
@@ -140,7 +145,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
 
   return (
     <ScrollView style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
-      <ComponentInput {...inputProps} autoFocus title={t('me.listEdit.title')} />
+      <ComponentInput {...inputProps} autoFocus title={t('screenTabs:me.listEdit.title')} />
 
       <CustomText
         fontStyle='M'
@@ -151,7 +156,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
           marginTop: StyleConstants.Spacing.M
         }}
       >
-        {t('me.listEdit.repliesPolicy.heading')}
+        {t('screenTabs:me.listEdit.repliesPolicy.heading')}
       </CustomText>
       <Selections options={options} setOptions={setOptions} />
 

@@ -13,8 +13,8 @@ import {
   getSettingsFontsize,
   getSettingsDarkTheme,
   changeDarkTheme,
-  getSettingsStaticEmoji,
-  changeStaticEmoji
+  getSettingsAutoplayGifv,
+  changeAutoplayGifv
 } from '@utils/slices/settingsSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
@@ -29,24 +29,24 @@ const SettingsApp: React.FC = () => {
   const dispatch = useAppDispatch()
   const { showActionSheetWithOptions } = useActionSheet()
   const { colors } = useTheme()
-  const { t, i18n } = useTranslation('screenTabs')
+  const { t, i18n } = useTranslation(['common', 'screenTabs'])
 
   const settingsFontsize = useSelector(getSettingsFontsize)
   const settingsTheme = useSelector(getSettingsTheme)
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
-  const settingsStaticEmoji = useSelector(getSettingsStaticEmoji)
+  const settingsAutoplayGifv = useSelector(getSettingsAutoplayGifv)
 
   return (
     <MenuContainer>
       <MenuRow
-        title={t('me.settings.fontsize.heading')}
-        content={t(`me.settings.fontsize.content.${mapFontsizeToName(settingsFontsize)}`)}
+        title={t('screenTabs:me.stacks.fontSize.name')}
+        content={t(`screenTabs:me.fontSize.sizes.${mapFontsizeToName(settingsFontsize)}`)}
         iconBack='ChevronRight'
         onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
       <MenuRow
-        title={t('me.settings.language.heading')}
+        title={t('screenTabs:me.stacks.language.name')}
         content={
           // @ts-ignore
           LOCALES[
@@ -61,17 +61,17 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('me.settings.theme.heading')}
-        content={t(`me.settings.theme.options.${settingsTheme}`)}
+        title={t('screenTabs:me.settings.theme.heading')}
+        content={t(`screenTabs:me.settings.theme.options.${settingsTheme}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              title: t('me.settings.theme.heading'),
+              title: t('screenTabs:me.settings.theme.heading'),
               options: [
-                t('me.settings.theme.options.auto'),
-                t('me.settings.theme.options.light'),
-                t('me.settings.theme.options.dark'),
+                t('screenTabs:me.settings.theme.options.auto'),
+                t('screenTabs:me.settings.theme.options.light'),
+                t('screenTabs:me.settings.theme.options.dark'),
                 t('common:buttons.cancel')
               ],
               cancelButtonIndex: 3,
@@ -97,16 +97,16 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('me.settings.darkTheme.heading')}
-        content={t(`me.settings.darkTheme.options.${settingsDarkTheme}`)}
+        title={t('screenTabs:me.settings.darkTheme.heading')}
+        content={t(`screenTabs:me.settings.darkTheme.options.${settingsDarkTheme}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              title: t('me.settings.darkTheme.heading'),
+              title: t('screenTabs:me.settings.darkTheme.heading'),
               options: [
-                t('me.settings.darkTheme.options.lighter'),
-                t('me.settings.darkTheme.options.darker'),
+                t('screenTabs:me.settings.darkTheme.options.lighter'),
+                t('screenTabs:me.settings.darkTheme.options.darker'),
                 t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2,
@@ -128,16 +128,16 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('me.settings.browser.heading')}
-        content={t(`me.settings.browser.options.${settingsBrowser}`)}
+        title={t('screenTabs:me.settings.browser.heading')}
+        content={t(`screenTabs:me.settings.browser.options.${settingsBrowser}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              title: t('me.settings.browser.heading'),
+              title: t('screenTabs:me.settings.browser.heading'),
               options: [
-                t('me.settings.browser.options.internal'),
-                t('me.settings.browser.options.external'),
+                t('screenTabs:me.settings.browser.options.internal'),
+                t('screenTabs:me.settings.browser.options.external'),
                 t('common:buttons.cancel')
               ],
               cancelButtonIndex: 2,
@@ -159,10 +159,9 @@ const SettingsApp: React.FC = () => {
         }
       />
       <MenuRow
-        title={t('me.settings.staticEmoji.heading')}
-        description={t('me.settings.staticEmoji.description')}
-        switchValue={settingsStaticEmoji}
-        switchOnValueChange={() => dispatch(changeStaticEmoji(!settingsStaticEmoji))}
+        title={t('screenTabs:me.settings.autoplayGifv.heading')}
+        switchValue={settingsAutoplayGifv}
+        switchOnValueChange={() => dispatch(changeAutoplayGifv(!settingsAutoplayGifv))}
       />
     </MenuContainer>
   )

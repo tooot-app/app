@@ -43,11 +43,11 @@ const composePost = async (
       e => e && e.length && formData.append('poll[options][]', e)
     )
     formData.append('poll[expires_in]', composeState.poll.expire)
-    formData.append('poll[multiple]', composeState.poll.multiple.toString())
+    formData.append('poll[multiple]', composeState.poll.multiple?.toString())
   }
 
   if (composeState.attachments.uploads.filter(upload => upload.remote && upload.remote.id).length) {
-    formData.append('sensitive', composeState.attachments.sensitive.toString())
+    formData.append('sensitive', composeState.attachments.sensitive?.toString())
     composeState.attachments.uploads.forEach(e => formData.append('media_ids[]', e.remote!.id!))
   }
 

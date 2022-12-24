@@ -16,7 +16,7 @@ const TimelineTranslate = () => {
   const { status, highlighted, rawContent, detectedLanguage } = useContext(StatusContext)
   if (!status || !highlighted || !rawContent?.current.length) return null
 
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['componentTimeline'])
   const { colors } = useTheme()
 
   const [detected, setDetected] = useState<{
@@ -54,7 +54,7 @@ const TimelineTranslate = () => {
       <CustomText fontStyle='S' style={{ color: colors.secondary }}>{` Source: ${
         detected?.language
       }; Confidence: ${
-        detected?.confidence.toString().slice(0, 5) || 'null'
+        detected?.confidence?.toString().slice(0, 5) || 'null'
       }; Target: ${targetLanguage}`}</CustomText>
     ) : null
   }
@@ -101,15 +101,15 @@ const TimelineTranslate = () => {
           }}
         >
           {isError
-            ? t('shared.translate.failed')
+            ? t('componentTimeline:shared.translate.failed')
             : isSuccess
             ? typeof data?.error === 'string'
-              ? t(`shared.translate.${data.error}`)
-              : t('shared.translate.succeed', {
+              ? t(`componentTimeline:shared.translate.${data.error}` as any)
+              : t('componentTimeline:shared.translate.succeed', {
                   provider: data?.provider,
                   source: data?.sourceLanguage
                 })
-            : t('shared.translate.default')}
+            : t('componentTimeline:shared.translate.default')}
         </CustomText>
         {isFetching ? (
           <Circle

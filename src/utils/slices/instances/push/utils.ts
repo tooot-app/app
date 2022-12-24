@@ -62,7 +62,7 @@ export const PUSH_ADMIN = (
     }
   }) as { type: 'admin.sign_up' | 'admin.report'; permission: number }[]
 
-export const setChannels = async (instance: InstanceLatest) => {
+export const setChannels = async (instance: InstanceLatest, reset: boolean | undefined = false) => {
   const account = `@${instance.account.acct}@${instance.uri}`
 
   const deleteChannel = async (type: string) =>
@@ -70,7 +70,7 @@ export const setChannels = async (instance: InstanceLatest) => {
   const setChannel = async (type: string) =>
     Notifications.setNotificationChannelAsync(`${account}_${type}`, {
       groupId: account,
-      name: i18n.t(`screenTabs:me.push.${type}.heading`),
+      name: i18n.t(`screenTabs:me.push.${type}.heading` as any),
       importance: Notifications.AndroidImportance.DEFAULT,
       bypassDnd: false,
       showBadge: true,
@@ -82,6 +82,9 @@ export const setChannels = async (instance: InstanceLatest) => {
   const profileQuery = await queryClient.fetchQuery(queryKey, queryFunctionProfile)
 
   const channelGroup = await Notifications.getNotificationChannelGroupAsync(account)
+  if (channelGroup && !reset) {
+    return
+  }
   if (!channelGroup) {
     await Notifications.setNotificationChannelGroupAsync(account, { name: account })
   }

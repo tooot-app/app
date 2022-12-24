@@ -7,7 +7,6 @@ import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { createRef, PropsWithChildren, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, KeyboardAvoidingView, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
@@ -35,7 +34,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
     emojisDispatch({ type: 'input', payload: inputProps })
   }, [inputProps])
 
-  const { t } = useTranslation()
+  const { t } = useTranslation(['componentEmojis'])
   const { data } = useEmojisQuery({})
   const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
   useEffect(() => {

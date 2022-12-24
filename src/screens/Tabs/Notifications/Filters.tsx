@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux'
 const TabNotificationsFilters: React.FC<
   TabNotificationsStackScreenProps<'Tab-Notifications-Filters'>
 > = ({ navigation }) => {
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common', 'screenTabs'])
 
   const pushFeatures = usePushFeatures()
 
@@ -33,7 +33,7 @@ const TabNotificationsFilters: React.FC<
   useEffect(() => {
     const changed = !isEqual(instanceNotificationsFilter, filters)
     navigation.setOptions({
-      title: t('notifications.filters.title'),
+      title: t('screenTabs:notifications.filters.title'),
       headerLeft: () => (
         <HeaderLeft
           content='ChevronDown'
@@ -81,7 +81,7 @@ const TabNotificationsFilters: React.FC<
         {PUSH_DEFAULT(pushFeatures).map((type, index) => (
           <MenuRow
             key={index}
-            title={t(`notifications.filters.options.${type}`)}
+            title={t(`screenTabs:me.push.${type}.heading`)}
             switchValue={filters[type]}
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />
@@ -89,7 +89,7 @@ const TabNotificationsFilters: React.FC<
         {PUSH_ADMIN(pushFeatures, profileQuery.data?.role?.permissions).map(({ type }) => (
           <MenuRow
             key={type}
-            title={t(`notifications.filters.options.${type}`)}
+            title={t(`screenTabs:me.push.${type}.heading`)}
             switchValue={filters[type]}
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />

@@ -13,7 +13,7 @@ export interface Props {
 }
 
 const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['screenTabs'])
 
   const { showActionSheetWithOptions } = useActionSheet()
 
@@ -22,8 +22,8 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
 
   return (
     <MenuRow
-      title={t(`me.profile.root.${type}.title`)}
-      description={t(`me.profile.root.${type}.description`)}
+      title={t(`screenTabs:me.profile.root.${type}.title`)}
+      description={t(`screenTabs:me.profile.root.${type}.description`)}
       loading={query.isFetching || mutation.isLoading}
       iconBack='ChevronRight'
       onPress={async () => {

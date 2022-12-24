@@ -179,7 +179,8 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
             >
               <CustomText fontStyle='S' style={{ textAlign: 'center', color: colors.secondary }}>
                 <Trans
-                  i18nKey='screenTabs:shared.search.notFound'
+                  ns='screenTabs'
+                  i18nKey='shared.search.notFound'
                   values={{ searchTerm, type: translation }}
                   components={{
                     bold: <CustomText fontWeight='Bold' />

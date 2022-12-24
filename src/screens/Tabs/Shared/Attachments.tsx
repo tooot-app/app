@@ -23,7 +23,8 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
       headerTitle: () => (
         <CustomText numberOfLines={1}>
           <Trans
-            i18nKey='screenTabs:shared.attachments.name'
+            ns='screenTabs'
+            i18nKey='shared.attachments.name'
             components={[
               <ParseEmojis
                 content={account.display_name || account.username}

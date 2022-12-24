@@ -64,7 +64,7 @@ const apiInstance = async <T = unknown>({
         Authorization: `Bearer ${token}`
       })
     },
-    ...(body && { data: body }),
+    ...((body as (FormData & { _parts: [][] }) | undefined)?._parts.length && { data: body }),
     ...extras
   })
     .then(response => {

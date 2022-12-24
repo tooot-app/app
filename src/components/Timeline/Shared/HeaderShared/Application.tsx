@@ -9,31 +9,28 @@ export interface Props {
   application?: Mastodon.Application
 }
 
-const HeaderSharedApplication = React.memo(
-  ({ application }: Props) => {
-    const { colors } = useTheme()
-    const { t } = useTranslation('componentTimeline')
+const HeaderSharedApplication: React.FC<Props> = ({ application }) => {
+  const { colors } = useTheme()
+  const { t } = useTranslation('componentTimeline')
 
-    return application && application.name !== 'Web' ? (
-      <CustomText
-        fontStyle='S'
-        accessibilityRole='link'
-        onPress={async () => {
-          application.website && (await openLink(application.website))
-        }}
-        style={{
-          marginLeft: StyleConstants.Spacing.S,
-          color: colors.secondary
-        }}
-        numberOfLines={1}
-      >
-        {t('shared.header.shared.application', {
-          application: application.name
-        })}
-      </CustomText>
-    ) : null
-  },
-  () => true
-)
+  return application && application.name !== 'Web' ? (
+    <CustomText
+      fontStyle='S'
+      accessibilityRole='link'
+      onPress={async () => {
+        application.website && (await openLink(application.website))
+      }}
+      style={{
+        marginLeft: StyleConstants.Spacing.S,
+        color: colors.secondary
+      }}
+      numberOfLines={1}
+    >
+      {t('shared.header.shared.application', {
+        application: application.name
+      })}
+    </CustomText>
+  ) : null
+}
 
 export default HeaderSharedApplication

@@ -11,9 +11,15 @@ export interface Props {
   multiple?: boolean
   options: { selected: boolean; content: string }[]
   setOptions: React.Dispatch<React.SetStateAction<{ selected: boolean; content: string }[]>>
+  disabled?: boolean
 }
 
-const Selections: React.FC<Props> = ({ multiple = false, options, setOptions }) => {
+const Selections: React.FC<Props> = ({
+  multiple = false,
+  options,
+  setOptions,
+  disabled = false
+}) => {
   const { colors } = useTheme()
 
   const isSelected = (index: number): string =>
@@ -22,10 +28,11 @@ const Selections: React.FC<Props> = ({ multiple = false, options, setOptions }) 
       : `${multiple ? 'Square' : 'Circle'}`
 
   return (
-    <>
+    <View>
       {options.map((option, index) => (
         <Pressable
           key={index}
+          disabled={disabled}
           style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
           onPress={() => {
             if (multiple) {
@@ -56,15 +63,18 @@ const Selections: React.FC<Props> = ({ multiple = false, options, setOptions }) 
               }}
               name={isSelected(index)}
               size={StyleConstants.Font.Size.M}
-              color={colors.primaryDefault}
+              color={disabled ? colors.disabled : colors.primaryDefault}
             />
             <CustomText style={{ flex: 1 }}>
-              <ParseEmojis content={option.content} />
+              <ParseEmojis
+                content={option.content}
+                style={{ color: disabled ? colors.disabled : colors.primaryDefault }}
+              />
             </CustomText>
           </View>
         </Pressable>
       ))}
-    </>
+    </View>
   )
 }
 

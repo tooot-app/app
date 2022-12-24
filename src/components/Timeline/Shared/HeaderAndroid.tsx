@@ -28,6 +28,7 @@ const TimelineHeaderAndroid: React.FC = () => {
     type: 'status',
     openChange,
     account: status.account,
+    ...(status && { status }),
     queryKey
   })
   const mStatus = menuStatus({ status, queryKey, rootQueryKey })
@@ -52,34 +53,19 @@ const TimelineHeaderAndroid: React.FC = () => {
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            {mShare.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
+            {[mShare, mAccount, mStatus].map(type => (
+              <>
+                {type.map((mGroup, index) => (
+                  <DropdownMenu.Group key={index}>
+                    {mGroup.map(menu => (
+                      <DropdownMenu.Item key={menu.key} {...menu.item}>
+                        <DropdownMenu.ItemTitle children={menu.title} />
+                        <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
+                      </DropdownMenu.Item>
+                    ))}
+                  </DropdownMenu.Group>
                 ))}
-              </DropdownMenu.Group>
-            ))}
-
-            {mAccount.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Group>
-            ))}
-
-            {mStatus.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Group>
+              </>
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

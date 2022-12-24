@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-query'
 import apiGeneral from '@api/general'
 import { PagedResponse } from '@api/helpers'
+import { getHost } from '@helpers/urlMatcher'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 
@@ -38,9 +39,7 @@ const queryFunction = async ({
         let res: PagedResponse<Mastodon.Account[]>
 
         try {
-          const domain = page.account.url.match(
-            /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i
-          )?.[1]
+          const domain = getHost(page.account.url)
           if (!domain?.length) {
             throw new Error()
           }

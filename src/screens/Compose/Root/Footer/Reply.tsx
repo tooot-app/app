@@ -31,4 +31,4 @@ const ComposeReply: React.FC = () => {
   )
 }
 
-export default React.memo(ComposeReply, () => true)
+export default ComposeReply

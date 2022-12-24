@@ -292,4 +292,4 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   )
 }
 
-export default React.memo(ComposeAttachments, () => true)
+export default ComposeAttachments

@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-share-menu/android/build.gradle b/node_modules/react-native-share-menu/android/build.gradle
-index 9557fdb..ebdeb6f 100644
---- a/node_modules/react-native-share-menu/android/build.gradle
-+++ b/node_modules/react-native-share-menu/android/build.gradle
+diff --git a/android/build.gradle b/android/build.gradle
+index 9557fdbf2fbf97b7f7aeaf7ce86d301a8ced213d..ebdeb6f4de7846d3241101001755595c52a4b05e 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
 @@ -1,12 +1,12 @@
  apply plugin: 'com.android.library'
  
@@ -19,10 +19,10 @@ index 9557fdb..ebdeb6f 100644
          versionCode 1
          versionName "1.0"
          ndk {
-diff --git a/node_modules/react-native-share-menu/ios/ReactShareViewController.swift b/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
-index f42bce6..ee36062 100644
---- a/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
-+++ b/node_modules/react-native-share-menu/ios/ReactShareViewController.swift
+diff --git a/ios/ReactShareViewController.swift b/ios/ReactShareViewController.swift
+index f42bce6ce7e3f48a7ddc83f3366b68fd0664b1a0..ee360622b1d03cc9661c78c6f210b84c3b19a725 100644
+--- a/ios/ReactShareViewController.swift
++++ b/ios/ReactShareViewController.swift
 @@ -13,7 +13,7 @@ class ReactShareViewController: ShareViewController, RCTBridgeDelegate, ReactSha
    func sourceURL(for bridge: RCTBridge!) -> URL! {
  #if DEBUG
@@ -32,10 +32,10 @@ index f42bce6..ee36062 100644
  #else
      return Bundle.main.url(forResource: "main", withExtension: "jsbundle")
  #endif
-diff --git a/node_modules/react-native-share-menu/ios/ShareViewController.swift b/node_modules/react-native-share-menu/ios/ShareViewController.swift
-index 12d8c92..64aa72b 100644
---- a/node_modules/react-native-share-menu/ios/ShareViewController.swift
-+++ b/node_modules/react-native-share-menu/ios/ShareViewController.swift
+diff --git a/ios/ShareViewController.swift b/ios/ShareViewController.swift
+index 12d8c92dda20fabd9e7b55fec57b3d867414063c..8a1db0de285b18a9358a10b2ca8293a8c7d56a8e 100644
+--- a/ios/ShareViewController.swift
++++ b/ios/ShareViewController.swift
 @@ -19,8 +19,8 @@ class ShareViewController: SLComposeServiceViewController {
    var hostAppUrlScheme: String?
    var sharedItems: [Any] = []
@@ -78,7 +78,7 @@ index 12d8c92..64aa72b 100644
      override func configurationItems() -> [Any]! {
          // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
          return []
-@@ -238,11 +235,10 @@ class ShareViewController: SLComposeServiceViewController {
+@@ -238,7 +235,7 @@ class ShareViewController: SLComposeServiceViewController {
    
    func completeRequest() {
      // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
@@ -87,7 +87,3 @@ index 12d8c92..64aa72b 100644
    }
    
    func cancelRequest() {
-     extensionContext!.cancelRequest(withError: NSError())
-   }
--
- }

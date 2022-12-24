@@ -33,7 +33,7 @@ const TimelinePoll: React.FC = () => {
   const poll = status.poll
 
   const { colors, theme } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
 
   const [allOptions, setAllOptions] = useState(new Array(status.poll.options.length).fill(false))
 
@@ -58,8 +58,7 @@ const TimelinePoll: React.FC = () => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          // @ts-ignore
-          function: t(`shared.poll.meta.button.${theParams.payload.type}`)
+          function: t(`componentTimeline:shared.poll.meta.button.${theParams.payload.type}` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -95,7 +94,7 @@ const TimelinePoll: React.FC = () => {
                 })
               }
               type='text'
-              content={t('shared.poll.meta.button.vote')}
+              content={t('componentTimeline:shared.poll.meta.button.vote')}
               loading={mutation.isLoading}
               disabled={allOptions.filter(o => o !== false).length === 0}
             />
@@ -120,7 +119,7 @@ const TimelinePoll: React.FC = () => {
                 })
               }
               type='text'
-              content={t('shared.poll.meta.button.refresh')}
+              content={t('componentTimeline:shared.poll.meta.button.refresh')}
               loading={mutation.isLoading}
             />
           </View>
@@ -233,20 +232,25 @@ const TimelinePoll: React.FC = () => {
 
   const pollVoteCounts = () => {
     if (poll.voters_count !== null) {
-      return t('shared.poll.meta.count.voters', { count: poll.voters_count }) + ' • '
+      return (
+        t('componentTimeline:shared.poll.meta.count.voters', { count: poll.voters_count }) + ' • '
+      )
     } else if (poll.votes_count !== null) {
-      return t('shared.poll.meta.count.votes', { count: poll.votes_count }) + ' • '
+      return (
+        t('componentTimeline:shared.poll.meta.count.votes', { count: poll.votes_count }) + ' • '
+      )
     }
   }
 
   const pollExpiration = () => {
     if (poll.expired) {
-      return t('shared.poll.meta.expiration.expired')
+      return t('componentTimeline:shared.poll.meta.expiration.expired')
     } else {
       if (poll.expires_at) {
         return (
           <Trans
-            i18nKey='componentTimeline:shared.poll.meta.expiration.until'
+            ns='componentTimeline'
+            i18nKey='shared.poll.meta.expiration.until'
             components={[<RelativeTime time={poll.expires_at} />]}
           />
         )

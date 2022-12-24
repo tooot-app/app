@@ -13,7 +13,7 @@ import validUrl from 'valid-url'
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
 export interface Props {
-  content: string
+  content?: string
   emojis?: Mastodon.Emoji[]
   size?: 'S' | 'M' | 'L'
   adaptiveSize?: boolean
@@ -23,6 +23,8 @@ export interface Props {
 
 const ParseEmojis = React.memo(
   ({ content, emojis, size = 'M', adaptiveSize = false, fontBold = false, style }: Props) => {
+    if (!content) return null
+
     const { reduceMotionEnabled } = useAccessibility()
 
     const adaptiveFontsize = useSelector(getSettingsFontsize)
@@ -93,7 +95,7 @@ const ParseEmojis = React.memo(
       </CustomText>
     )
   },
-  (prev, next) => prev.content === next.content
+  (prev, next) => prev.content === next.content && prev.style?.color === next.style?.color
 )
 
 export default ParseEmojis

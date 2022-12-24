@@ -17,7 +17,7 @@ const menuInstance = ({
 }): ContextMenu[][] => {
   if (!status || !queryKey) return []
 
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu'])
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -25,7 +25,7 @@ const menuInstance = ({
       displayMessage({
         type: 'success',
         message: t('common:message.success.message', {
-          function: t(`instance.block.action`, { instance })
+          function: t(`componentContextMenu:instance.block.action`, { instance })
         })
       })
       queryClient.invalidateQueries(queryKey)
@@ -45,8 +45,8 @@ const menuInstance = ({
         item: {
           onSelect: () =>
             Alert.alert(
-              t('instance.block.alert.title', { instance }),
-              t('instance.block.alert.message'),
+              t('componentContextMenu:instance.block.alert.title', { instance }),
+              t('componentContextMenu:instance.block.alert.message'),
               [
                 {
                   text: t('common:buttons.confirm'),
@@ -68,7 +68,7 @@ const menuInstance = ({
           destructive: true,
           hidden: false
         },
-        title: t('instance.block.action', { instance }),
+        title: t('componentContextMenu:instance.block.action', { instance }),
         icon: ''
       }
     ])
