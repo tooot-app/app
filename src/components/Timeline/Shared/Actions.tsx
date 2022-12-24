@@ -211,15 +211,14 @@ const TimelineActions: React.FC = () => {
   )
   const childrenReblog = useMemo(() => {
     const color = (state: boolean) => (state ? colors.green : colors.secondary)
+    const disabled =
+      status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
     return (
       <>
         <Icon
           name='Repeat'
-          color={
-            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
-              ? colors.disabled
-              : color(status.reblogged)
-          }
+          color={disabled ? colors.disabled : color(status.reblogged)}
+          crossOut={disabled}
           size={StyleConstants.Font.Size.L}
         />
         {status.reblogs_count > 0 ? (

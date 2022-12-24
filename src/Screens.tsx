@@ -331,4 +331,4 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   )
 }
 
-export default React.memo(Screens, () => true)
+export default Screens
