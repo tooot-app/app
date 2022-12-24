@@ -3,7 +3,7 @@
     "textInput": {
       "placeholder": "Địa chỉ máy chủ"
     },
-    "whitelisted": "",
+    "whitelisted": "Đây có thể là một máy chủ không cho phép truy xuất dữ liệu trước khi đăng nhập.",
     "button": "Đăng nhập",
     "information": {
       "name": "Tên máy chủ",
