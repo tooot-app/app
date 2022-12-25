@@ -16,7 +16,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
@@ -164,8 +164,8 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
         </ContextMenu.Trigger>
 
         <ContextMenu.Content>
-          {[mShare, mStatus, mInstance].map(type => (
-            <>
+          {[mShare, mStatus, mInstance].map((type, i) => (
+            <Fragment key={i}>
               {type.map((mGroup, index) => (
                 <ContextMenu.Group key={index}>
                   {mGroup.map(menu => (
@@ -176,7 +176,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
                   ))}
                 </ContextMenu.Group>
               ))}
-            </>
+            </Fragment>
           ))}
         </ContextMenu.Content>
       </ContextMenu.Root>

@@ -10,7 +10,7 @@ import { getInstanceUrl } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -90,8 +90,8 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                   </DropdownMenu.Trigger>
 
                   <DropdownMenu.Content>
-                    {[mShare, mStatus, mAccount, mInstance].map(type => (
-                      <>
+                    {[mShare, mStatus, mAccount, mInstance].map((type, i) => (
+                      <Fragment key={i}>
                         {type.map((mGroup, index) => (
                           <DropdownMenu.Group key={index}>
                             {mGroup.map(menu => (
@@ -102,7 +102,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                             ))}
                           </DropdownMenu.Group>
                         ))}
-                      </>
+                      </Fragment>
                     ))}
                   </DropdownMenu.Content>
                 </DropdownMenu.Root>

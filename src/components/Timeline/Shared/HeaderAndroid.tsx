@@ -4,7 +4,7 @@ import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { Platform, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
@@ -53,8 +53,8 @@ const TimelineHeaderAndroid: React.FC = () => {
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            {[mShare, mAccount, mStatus].map(type => (
-              <>
+            {[mShare, mAccount, mStatus].map((type, i) => (
+              <Fragment key={i}>
                 {type.map((mGroup, index) => (
                   <DropdownMenu.Group key={index}>
                     {mGroup.map(menu => (
@@ -65,7 +65,7 @@ const TimelineHeaderAndroid: React.FC = () => {
                     ))}
                   </DropdownMenu.Group>
                 ))}
-              </>
+              </Fragment>
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

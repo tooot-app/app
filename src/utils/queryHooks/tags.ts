@@ -11,6 +11,8 @@ import {
 } from '@tanstack/react-query'
 import { infinitePageParams } from './utils'
 import { PagedResponse } from '@api/helpers'
+import { useSelector } from 'react-redux'
+import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (
@@ -21,14 +23,23 @@ const useFollowedTagsQuery = (
     >
   } | void
 ) => {
+  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
+
   const queryKey: QueryKeyFollowedTags = ['FollowedTags']
   return useInfiniteQuery(
     queryKey,
     async ({ pageParam }: QueryFunctionContext<QueryKeyFollowedTags>) => {
       const params: { [key: string]: string } = { ...pageParam }
-      return await apiInstance<Mastodon.Tag[]>({ method: 'get', url: `followed_tags`, params })
+      return await apiInstance<Mastodon.Tag[]>({
+        method: 'get',
+        url: `followed_tags`,
+        params: { limit: 200, ...params }
+      })
     },
     {
+      enabled: canFollowTags,
+      staleTime: Infinity,
+      cacheTime: Infinity,
       ...params?.options,
       ...infinitePageParams
     }

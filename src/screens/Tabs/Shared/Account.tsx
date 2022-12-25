@@ -10,7 +10,7 @@ import { useAccountQuery } from '@utils/queryHooks/account'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
@@ -55,8 +55,8 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {[mShare, mAccount].map(type => (
-                <>
+              {[mShare, mAccount].map((type, i) => (
+                <Fragment key={i}>
                   {type.map((mGroup, index) => (
                     <DropdownMenu.Group key={index}>
                       {mGroup.map(menu => (
@@ -67,7 +67,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                       ))}
                     </DropdownMenu.Group>
                   ))}
-                </>
+                </Fragment>
               ))}
             </DropdownMenu.Content>
           </DropdownMenu.Root>

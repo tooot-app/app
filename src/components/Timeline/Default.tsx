@@ -17,7 +17,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
@@ -196,8 +196,8 @@ const TimelineDefault: React.FC<Props> = ({
             </ContextMenu.Trigger>
 
             <ContextMenu.Content>
-              {[mShare, mStatus, mInstance].map(type => (
-                <>
+              {[mShare, mStatus, mInstance].map((type, i) => (
+                <Fragment key={i}>
                   {type.map((mGroup, index) => (
                     <ContextMenu.Group key={index}>
                       {mGroup.map(menu => (
@@ -208,7 +208,7 @@ const TimelineDefault: React.FC<Props> = ({
                       ))}
                     </ContextMenu.Group>
                   ))}
-                </>
+                </Fragment>
               ))}
             </ContextMenu.Content>
           </ContextMenu.Root>
