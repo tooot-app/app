@@ -115,7 +115,7 @@
             "accessibilityHint": "User's account"
           }
         },
-        "application": "Via {{application}}",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Toot edited"
         },
