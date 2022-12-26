@@ -18,13 +18,14 @@ import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { IntlProvider } from 'react-intl'
-import { LogBox, Platform } from 'react-native'
+import { InteractionManager, LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from '@utils/migrations/toMMKV'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -52,7 +53,20 @@ const App: React.FC = () => {
     delaySplash()
   }, [])
 
-  const onBeforeLift = useCallback(async () => {
+  const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage)
+
+  const onBeforeLift = async () => {
+    if (!hasMigrated && !hasMigratedFromAsyncStorage) {
+      try {
+        await migrateFromAsyncStorage()
+        setHasMigrated(true)
+      } catch (e) {
+        // TODO: fall back to AsyncStorage? Wipe storage clean and use MMKV? Crash app?
+      }
+    } else {
+      log('log', 'App', 'migrated to MMKV')
+    }
+
     let netInfoRes = undefined
     try {
       netInfoRes = await netInfo()
@@ -70,7 +84,7 @@ const App: React.FC = () => {
       console.warn(e)
       return Promise.reject()
     }
-  }, [])
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -81,9 +95,9 @@ const App: React.FC = () => {
             onBeforeLift={onBeforeLift}
             children={bootstrapped => {
               log('log', 'App', 'bootstrapped')
-              if (bootstrapped) {
+              if (hasMigrated && bootstrapped) {
                 log('log', 'App', 'loading actual app :)')
-                log('log', 'App', `Locale: ${Localization.locale}`)
+                log('log', 'App', `locale: ${Localization.locale}`)
                 const language = getLanguage()
                 if (!language) {
                   if (Platform.OS !== 'ios') {

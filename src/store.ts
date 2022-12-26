@@ -9,6 +9,7 @@ import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import settingsSlice from '@utils/slices/settingsSlice'
 import { Platform } from 'react-native'
+import { MMKV } from 'react-native-mmkv'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import {
   createMigrate,
@@ -22,7 +23,9 @@ import {
   REHYDRATE
 } from 'redux-persist'
 
-const secureStorage = createSecureStore()
+export const storage: { global: MMKV; account?: MMKV } = { global: new MMKV(), account: undefined }
+
+export const secureStorage = createSecureStore()
 
 const prefix = 'tooot'
 

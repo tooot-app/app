@@ -4,13 +4,14 @@ import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { persistor } from '@root/store'
+import { persistor, storage } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React from 'react'
 import { DevSettings } from 'react-native'
+import { MMKV } from 'react-native-mmkv'
 import { useSelector } from 'react-redux'
 
 const SettingsDev: React.FC = () => {
@@ -73,6 +74,26 @@ const SettingsDev: React.FC = () => {
           marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
         onPress={() => displayMessage({ message: 'This is a testing message' })}
+      />
+      <Button
+        type='text'
+        content={'Purge MMKV'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
+        }}
+        destructive
+        onPress={() => {
+          const accounts = JSON.parse(storage.global.getString('accounts') || '{}')
+          for (const identifier in accounts) {
+            const account = `${accounts[identifier].domain}/${accounts[identifier].id}`
+            console.log('Clearing', account)
+            const temp = new MMKV({ id: account })
+            temp.clearAll()
+          }
+          console.log('Clearing', 'global')
+          storage.global.clearAll()
+        }}
       />
       <Button
         type='text'

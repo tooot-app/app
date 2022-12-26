@@ -9614,6 +9614,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-mmkv@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "react-native-mmkv@npm:2.5.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 6f0cf484e71d8069c9b3cdb57b76eafaca40aa75f359beb6959c77d0ef66d0481d4459b1ffa94640170ce4744e337fefb38b8ccf6e1a3c3663561ede5f7a2c20
+  languageName: node
+  linkType: hard
+
 "react-native-pager-view@npm:^6.1.2":
   version: 6.1.2
   resolution: "react-native-pager-view@npm:6.1.2"
@@ -11337,6 +11347,7 @@ __metadata:
     react-native-image-picker: ^4.10.3
     react-native-ios-context-menu: ^1.15.1
     react-native-language-detection: ^0.2.2
+    react-native-mmkv: ^2.5.1
     react-native-pager-view: ^6.1.2
     react-native-reanimated: ^2.13.0
     react-native-reanimated-zoom: ^0.3.3
