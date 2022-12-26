@@ -1,4 +1,4 @@
-import htmlparser2 from 'htmlparser2-without-node-native'
+import * as htmlparser2 from 'htmlparser2'
 
 const removeHTML = (text: string): string => {
   let raw: string = ''

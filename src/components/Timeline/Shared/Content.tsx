@@ -5,7 +5,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { Platform, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { isRtlLang } from 'rtl-detect'
 import StatusContext from './Context'
@@ -24,7 +24,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
   const instanceAccount = useSelector(getInstanceAccount, () => true)
 
   return (
-    <>
+    <View>
       {status.spoiler_text?.length ? (
         <>
           <ParseHTML
@@ -97,7 +97,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
           }
         />
       )}
-    </>
+    </View>
   )
 }
 

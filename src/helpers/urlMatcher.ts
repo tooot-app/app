@@ -1,7 +1,7 @@
 import { store } from '@root/store'
 import { getInstanceUrl } from '@utils/slices/instancesSlice'
 
-const getHost = (url: unknown): string | void => {
+const getHost = (url: unknown): string | undefined | null => {
   if (typeof url !== 'string') return undefined
 
   const matches = url.match(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i)
