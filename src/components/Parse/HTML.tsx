@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
-import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
@@ -16,7 +16,6 @@ import { isEqual } from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, TextStyleIOS, View } from 'react-native'
-import { useSelector } from 'react-redux'
 
 export interface Props {
   content: string
@@ -52,7 +51,7 @@ const ParseHTML = React.memo(
     selectable = false,
     setSpoilerExpanded
   }: Props) => {
-    const adaptiveFontsize = useSelector(getSettingsFontsize)
+    const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
     const adaptedFontsize = adaptiveScale(
       StyleConstants.Font.Size[size],
       adaptiveSize ? adaptiveFontsize : 0

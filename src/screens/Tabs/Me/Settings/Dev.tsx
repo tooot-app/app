@@ -84,9 +84,8 @@ const SettingsDev: React.FC = () => {
         }}
         destructive
         onPress={() => {
-          const accounts = JSON.parse(storage.global.getString('accounts') || '{}')
-          for (const identifier in accounts) {
-            const account = `${accounts[identifier].domain}/${accounts[identifier].id}`
+          const accounts = JSON.parse(storage.global.getString('accounts') || '[]')
+          for (const account of accounts) {
             console.log('Clearing', account)
             const temp = new MMKV({ id: account })
             temp.clearAll()

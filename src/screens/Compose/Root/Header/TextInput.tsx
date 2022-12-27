@@ -1,7 +1,7 @@
 import CustomText from '@components/Text'
 import PasteInput, { PastedFile } from '@mattermost/react-native-paste-input'
 import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
-import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -20,7 +20,7 @@ const ComposeTextInput: React.FC = () => {
 
   const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
 
-  const adaptiveFontsize = useSelector(getSettingsFontsize)
+  const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
   const adaptedFontsize = adaptiveScale(StyleConstants.Font.Size.M, adaptiveFontsize)
   const adaptedLineheight = adaptiveScale(StyleConstants.Font.LineHeight.M, adaptiveFontsize)
 

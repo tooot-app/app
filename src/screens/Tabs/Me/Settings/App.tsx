@@ -8,14 +8,13 @@ import { useAppDispatch } from '@root/store'
 import {
   changeBrowser,
   changeTheme,
-  getSettingsTheme,
   getSettingsBrowser,
-  getSettingsFontsize,
   getSettingsDarkTheme,
   changeDarkTheme,
   getSettingsAutoplayGifv,
   changeAutoplayGifv
 } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import React from 'react'
@@ -31,8 +30,8 @@ const SettingsApp: React.FC = () => {
   const { colors } = useTheme()
   const { t, i18n } = useTranslation(['common', 'screenTabs'])
 
-  const settingsFontsize = useSelector(getSettingsFontsize)
-  const settingsTheme = useSelector(getSettingsTheme)
+  const [fontSize] = useGlobalStorage.number('app.font_size')
+  const [theme, setTheme] = useGlobalStorage.string('app.theme')
   const settingsDarkTheme = useSelector(getSettingsDarkTheme)
   const settingsBrowser = useSelector(getSettingsBrowser)
   const settingsAutoplayGifv = useSelector(getSettingsAutoplayGifv)
@@ -41,7 +40,7 @@ const SettingsApp: React.FC = () => {
     <MenuContainer>
       <MenuRow
         title={t('screenTabs:me.stacks.fontSize.name')}
-        content={t(`screenTabs:me.fontSize.sizes.${mapFontsizeToName(settingsFontsize)}`)}
+        content={t(`screenTabs:me.fontSize.sizes.${mapFontsizeToName(fontSize || 0)}`)}
         iconBack='ChevronRight'
         onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
@@ -62,7 +61,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.theme.heading')}
-        content={t(`screenTabs:me.settings.theme.options.${settingsTheme}`)}
+        content={t(`screenTabs:me.settings.theme.options.${theme}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
@@ -80,16 +79,17 @@ const SettingsApp: React.FC = () => {
             buttonIndex => {
               switch (buttonIndex) {
                 case 0:
-                  haptics('Success')
+                  haptics('Light')
+                  setTheme('auto')
                   dispatch(changeTheme('auto'))
                   break
                 case 1:
-                  haptics('Success')
-                  dispatch(changeTheme('light'))
+                  haptics('Light')
+                  setTheme('light')
                   break
                 case 2:
-                  haptics('Success')
-                  dispatch(changeTheme('dark'))
+                  haptics('Light')
+                  setTheme('dark')
                   break
               }
             }

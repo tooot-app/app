@@ -9,16 +9,16 @@ import netInfo from '@root/startup/netInfo'
 import push from '@root/startup/push'
 import sentry from '@root/startup/sentry'
 import timezone from '@root/startup/timezone'
-import { persistor, store } from '@root/store'
+import { persistor, storage, store } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import { changeLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IntlProvider } from 'react-intl'
-import { InteractionManager, LogBox, Platform } from 'react-native'
+import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
@@ -26,6 +26,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from '@utils/migrations/toMMKV'
+import { MMKV } from 'react-native-mmkv'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -54,6 +55,7 @@ const App: React.FC = () => {
   }, [])
 
   const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage)
+  const [loadedFromMMKV, setLoadedFromMMKV] = useState(!hasMigratedFromAsyncStorage)
 
   const onBeforeLift = async () => {
     if (!hasMigrated && !hasMigratedFromAsyncStorage) {
@@ -64,7 +66,16 @@ const App: React.FC = () => {
         // TODO: fall back to AsyncStorage? Wipe storage clean and use MMKV? Crash app?
       }
     } else {
-      log('log', 'App', 'migrated to MMKV')
+      log('log', 'App', 'loading from MMKV')
+      const account = storage.global.getString('account.active')
+      if (account) {
+        const storageAccount = new MMKV({ id: account })
+        const token = storageAccount.getString('auth.token')
+        if (token) {
+          storage.account = storageAccount
+        }
+      }
+      setLoadedFromMMKV(true)
     }
 
     let netInfoRes = undefined
@@ -95,7 +106,7 @@ const App: React.FC = () => {
             onBeforeLift={onBeforeLift}
             children={bootstrapped => {
               log('log', 'App', 'bootstrapped')
-              if (hasMigrated && bootstrapped) {
+              if (hasMigrated && loadedFromMMKV && bootstrapped) {
                 log('log', 'App', 'loading actual app :)')
                 log('log', 'App', `locale: ${Localization.locale}`)
                 const language = getLanguage()
@@ -109,7 +120,7 @@ const App: React.FC = () => {
                 }
 
                 return (
-                  <IntlProvider locale={language}>
+                  <IntlProvider locale={language || 'en'}>
                     <SafeAreaProvider>
                       <ActionSheetProvider>
                         <AccessibilityManager>

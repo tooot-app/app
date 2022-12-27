@@ -3,20 +3,18 @@ import haptics from '@components/haptics'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
-import { useAppDispatch } from '@root/store'
-import { SettingsLatest } from '@utils/migrations/settings/migration'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
-import { changeFontsize, getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/versions/global'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
 
-export const mapFontsizeToName = (size: SettingsLatest['fontsize']) => {
+export const mapFontsizeToName = (size: StorageGlobal['app.font_size']) => {
   switch (size) {
     case -1:
       return 'S'
@@ -32,10 +30,10 @@ export const mapFontsizeToName = (size: SettingsLatest['fontsize']) => {
 }
 
 const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fontsize'>> = () => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
-  const initialSize = useSelector(getSettingsFontsize)
-  const dispatch = useAppDispatch()
+
+  const [fontSize, setFontSize] = useGlobalStorage.number('app.font_size')
 
   const item = {
     id: 'demo',
@@ -69,31 +67,6 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
     mentions: []
   }
 
-  const sizesDemo = useMemo(() => {
-    return (
-      <>
-        {([-1, 0, 1, 2, 3] as [-1, 0, 1, 2, 3]).map(size => (
-          <CustomText
-            key={size}
-            style={{
-              marginHorizontal: StyleConstants.Spacing.XS,
-              paddingHorizontal: StyleConstants.Spacing.XS,
-              marginBottom: StyleConstants.Spacing.M,
-              fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
-              lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
-              color: initialSize === size ? colors.primaryDefault : colors.secondary,
-              borderWidth: StyleSheet.hairlineWidth,
-              borderColor: colors.border
-            }}
-            fontWeight={initialSize === size ? 'Bold' : undefined}
-          >
-            {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
-          </CustomText>
-        ))}
-      </>
-    )
-  }, [theme, initialSize])
-
   return (
     <ScrollView>
       <View
@@ -104,7 +77,24 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
           marginTop: StyleConstants.Spacing.M
         }}
       >
-        {sizesDemo}
+        {([-1, 0, 1, 2, 3] as [-1, 0, 1, 2, 3]).map(size => (
+          <CustomText
+            key={size}
+            style={{
+              marginHorizontal: StyleConstants.Spacing.XS,
+              paddingHorizontal: StyleConstants.Spacing.XS,
+              marginBottom: StyleConstants.Spacing.M,
+              fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
+              lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
+              color: fontSize === size ? colors.primaryDefault : colors.secondary,
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: colors.border
+            }}
+            fontWeight={fontSize === size ? 'Bold' : undefined}
+          >
+            {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
+          </CustomText>
+        ))}
       </View>
       <View
         style={{
@@ -115,38 +105,34 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
       >
         <Button
           onPress={() => {
-            if (initialSize > -1) {
+            if (fontSize > -1) {
               haptics('Light')
               // @ts-ignore
-              dispatch(changeFontsize(initialSize - 1))
+              setFontSize(fontSize - 1)
             }
           }}
           type='icon'
           content='Minus'
           round
-          disabled={initialSize <= -1}
+          disabled={(fontSize || 0) <= -1}
           style={{ marginHorizontal: StyleConstants.Spacing.S }}
         />
         <Button
           onPress={() => {
-            if (initialSize < 3) {
+            if (fontSize < 3) {
               haptics('Light')
               // @ts-ignore
-              dispatch(changeFontsize(initialSize + 1))
+              setFontSize(fontSize + 1)
             }
           }}
           type='icon'
           content='Plus'
           round
-          disabled={initialSize >= 3}
+          disabled={(fontSize || 0) >= 3}
           style={{ marginHorizontal: StyleConstants.Spacing.S }}
         />
       </View>
-      <View
-        style={{
-          marginVertical: StyleConstants.Spacing.L
-        }}
-      >
+      <View style={{ marginVertical: StyleConstants.Spacing.L }}>
         <ComponentSeparator
           extraMarginLeft={-StyleConstants.Spacing.Global.PagePadding}
           extraMarginRight={-StyleConstants.Spacing.Global.PagePadding}

@@ -23,9 +23,6 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState: settingsInitialState as SettingsLatest,
   reducers: {
-    changeFontsize: (state, action: PayloadAction<SettingsLatest['fontsize']>) => {
-      state.fontsize = action.payload
-    },
     changeLanguage: (state, action: PayloadAction<NonNullable<SettingsLatest['language']>>) => {
       state.language = action.payload
     },
@@ -47,19 +44,12 @@ const settingsSlice = createSlice({
   }
 })
 
-export const getSettingsFontsize = (state: RootState) => state.settings.fontsize || 0
 export const getSettingsLanguage = (state: RootState) => state.settings.language
 export const getSettingsTheme = (state: RootState) => state.settings.theme
 export const getSettingsDarkTheme = (state: RootState) => state.settings.darkTheme
 export const getSettingsBrowser = (state: RootState) => state.settings.browser
 export const getSettingsAutoplayGifv = (state: RootState) => state.settings.autoplayGifv
 
-export const {
-  changeFontsize,
-  changeLanguage,
-  changeTheme,
-  changeDarkTheme,
-  changeBrowser,
-  changeAutoplayGifv
-} = settingsSlice.actions
+export const { changeLanguage, changeTheme, changeDarkTheme, changeBrowser, changeAutoplayGifv } =
+  settingsSlice.actions
 export default settingsSlice.reducer

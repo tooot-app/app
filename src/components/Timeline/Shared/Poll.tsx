@@ -58,6 +58,7 @@ const TimelinePoll: React.FC = () => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
+          // @ts-ignore
           function: t(`componentTimeline:shared.poll.meta.button.${theParams.payload.type}` as any)
         }),
         ...(err.status &&

@@ -1,12 +1,9 @@
-import { store } from '@root/store'
-import { getSettingsLanguage } from '@utils/slices/settingsSlice'
+import { storage } from '@root/store'
 import * as Localization from 'expo-localization'
-import { Platform } from "react-native"
+import { Platform } from 'react-native'
 
-const getLanguage = (): string => {
-  return Platform.OS === 'ios'
-    ? Localization.locale
-    : getSettingsLanguage(store.getState())
+const getLanguage = (): string | undefined => {
+  return Platform.OS === 'ios' ? Localization.locale : storage.global.getString('app.language')
 }
 
 export default getLanguage

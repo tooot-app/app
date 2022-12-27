@@ -1,9 +1,8 @@
 import apiInstance from '@api/instance'
 import NetInfo from '@react-native-community/netinfo'
-import { store } from '@root/store'
-import removeInstance from '@utils/slices/instances/remove'
-import { getInstance, updateInstanceAccount } from '@utils/slices/instancesSlice'
+import { storage } from '@root/store'
 import { onlineManager } from '@tanstack/react-query'
+import { removeAccount } from '@utils/storage/actions'
 import log from './log'
 
 const netInfo = async (): Promise<{
@@ -13,7 +12,6 @@ const netInfo = async (): Promise<{
   log('log', 'netInfo', 'initializing')
 
   const netInfo = await NetInfo.fetch()
-  const instance = getInstance(store.getState())
 
   onlineManager.setEventListener(setOnline => {
     return NetInfo.addEventListener(state => {
@@ -23,7 +21,10 @@ const netInfo = async (): Promise<{
 
   if (netInfo.isConnected) {
     log('log', 'netInfo', 'network connected')
-    if (instance) {
+    if (storage.account) {
+      const domain = storage.account.getString('auth.domain')
+      const id = storage.account.getString('auth.account_id')
+      const account = `${domain}/${id}`
       log('log', 'netInfo', 'checking locally stored credentials')
 
       let resVerify: Mastodon.Account
@@ -35,21 +36,22 @@ const netInfo = async (): Promise<{
       } catch (error: any) {
         log('error', 'netInfo', 'local credential check failed')
         if (error?.status && error.status == 401) {
-          store.dispatch(removeInstance(instance))
+          removeAccount(account)
         }
         return Promise.resolve({ corrupted: error.data?.error })
       }
 
       log('log', 'netInfo', 'local credential check passed')
-      if (resVerify.id !== instance.account.id) {
+      if (resVerify.id !== id) {
         log('error', 'netInfo', 'local id does not match remote id')
-        store.dispatch(removeInstance(instance))
+        removeAccount(account)
         return Promise.resolve({ connected: true, corrupted: '' })
       } else {
-        store.dispatch(
-          updateInstanceAccount({
+        storage.account.set(
+          'account',
+          JSON.stringify({
             acct: resVerify.acct,
-            avatarStatic: resVerify.avatar_static
+            avatar_static: resVerify.avatar_static
           })
         )
 

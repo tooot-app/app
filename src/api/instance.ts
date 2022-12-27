@@ -1,4 +1,4 @@
-import { RootState } from '@root/store'
+import { storage } from '@root/store'
 import axios, { AxiosRequestConfig } from 'axios'
 import { ctx, handleError, PagedResponse, userAgent } from './helpers'
 
@@ -23,17 +23,15 @@ const apiInstance = async <T = unknown>({
   body,
   extras
 }: Params): Promise<PagedResponse<T>> => {
-  const { store } = require('@root/store')
-  const state = store.getState() as RootState
-  const instanceActive = state.instances.instances.findIndex(instance => instance.active)
-
-  let domain
-  let token
-  if (instanceActive !== -1 && state.instances.instances[instanceActive]) {
-    domain = state.instances.instances[instanceActive].url
-    token = state.instances.instances[instanceActive].token
-  } else {
-    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No instance domain is provided')
+  const storageAccount = storage.account
+  if (!storageAccount) {
+    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No account storage available')
+    return Promise.reject()
+  }
+  const domain = storageAccount.getString('auth.domain')
+  const token = storageAccount.getString('auth.token')
+  if (!domain || !token) {
+    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No domain or token available')
     return Promise.reject()
   }
 
