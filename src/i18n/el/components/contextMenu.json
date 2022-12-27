@@ -1,0 +1,86 @@
+{
+  "accessibilityHint": "",
+  "account": {
+    "title": "",
+    "following": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "block": {
+      "action_false": "",
+      "action_true": "",
+      "alert": {
+        "title": ""
+      }
+    },
+    "reports": {
+      "action": "",
+      "alert": {
+        "title": ""
+      }
+    }
+  },
+  "at": {
+    "direct": "",
+    "public": ""
+  },
+  "copy": {
+    "action": "",
+    "succeed": ""
+  },
+  "instance": {
+    "title": "",
+    "block": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    }
+  },
+  "share": {
+    "status": {
+      "action": ""
+    },
+    "account": {
+      "action": ""
+    }
+  },
+  "status": {
+    "title": "",
+    "edit": {
+      "action": ""
+    },
+    "delete": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "deleteEdit": {
+      "action": "",
+      "alert": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "mute": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "pin": {
+      "action_false": "",
+      "action_true": ""
+    }
+  }
+}
