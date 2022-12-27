@@ -2,13 +2,12 @@ import EmojisButton from '@components/Emojis/Button'
 import EmojisList from '@components/Emojis/List'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useEmojisQuery } from '@utils/queryHooks/emojis'
-import { getInstanceFrequentEmojis } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { chunk, forEach, groupBy, sortBy } from 'lodash'
 import React, { createRef, PropsWithChildren, useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, KeyboardAvoidingView, View } from 'react-native'
 import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
 import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
 
 export type Props = {
@@ -36,7 +35,7 @@ const ComponentEmojis: React.FC<Props & PropsWithChildren> = ({
 
   const { t } = useTranslation(['componentEmojis'])
   const { data } = useEmojisQuery({})
-  const frequentEmojis = useSelector(getInstanceFrequentEmojis, () => true)
+  const [frequentEmojis] = useAccountStorage.object('emojis_frequent')
   useEffect(() => {
     if (data && data.length) {
       let sortedEmojis: NonNullable<Emojis['current']> = []
