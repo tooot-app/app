@@ -286,7 +286,7 @@
         "heading": "Підтримати tooot"
       },
       "contact": {
-        "heading": "Зв'язатись з tooot"
+        "heading": "Зв'язатися з tooot"
       },
       "version": "Версія: {{version}}",
       "instanceVersion": "Версія Mastodon: v{{version}}"
@@ -300,11 +300,11 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Дії для користувача {{user}}",
-        "accessibilityHint": "Ви можете приглушити, заблокувати, чи кинути репорт на цього користувача"
+        "accessibilityHint": "Ви можете приглушити, заблокувати, чи поскаржитись на цього користувача"
       },
       "followed_by": " слідує за вами",
       "moved": "Користувач перемістився",
-      "created_at": "Приєднався: {{date}}",
+      "created_at": "Приєднується: {{date}}",
       "summary": {
         "statuses_count": "{{count}} дмухів"
       },
@@ -339,7 +339,7 @@
         "heading": "Що не так з цим обліковим записом?",
         "spam": "Це спам",
         "other": "Це щось інше",
-        "violation": "Це порушує правила інстанса"
+        "violation": "Це порушує правила сервера"
       },
       "comment": {
         "heading": "Може ви хочете щось додати?"
