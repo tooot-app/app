@@ -1,8 +1,6 @@
 import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import queryClient from '@helpers/queryClient'
-import { store } from '@root/store'
-import { checkInstanceFeature, getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import {
@@ -16,6 +14,8 @@ import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
 import { PagedResponse } from '@api/helpers'
+import { getAccountStorage } from '@utils/storage/actions'
+import { featureCheck } from '@helpers/featureCheck'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -106,11 +106,8 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Notifications':
-      const rootStore = store.getState()
-      const notificationsFilter = getInstanceNotificationsFilter(rootStore)
-      const usePositiveFilter = checkInstanceFeature('notification_types_positive_filter')(
-        rootStore
-      )
+      const notificationsFilter = getAccountStorage.object('notifications')
+      const usePositiveFilter = featureCheck('notification_types_positive_filter')
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',

@@ -12,8 +12,8 @@ import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instanc
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
-import { getInstance, getInstancePush } from '@utils/slices/instancesSlice'
-import { useGlobalStorage } from '@utils/storage/actions'
+import { getInstance } from '@utils/slices/instancesSlice'
+import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -34,7 +34,7 @@ const TabMePush: React.FC = () => {
   const appsQuery = useAppsQuery()
 
   const dispatch = useAppDispatch()
-  const instancePush = useSelector(getInstancePush)
+  const [instancePush] = useAccountStorage.object('push')
 
   const [pushAvailable, setPushAvailable] = useState<boolean>()
   const [pushEnabled, setPushEnabled] = useState<boolean>()

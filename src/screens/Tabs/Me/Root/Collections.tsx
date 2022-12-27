@@ -5,7 +5,7 @@ import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
 import { getInstanceMePage, updateInstanceMePage } from '@utils/slices/instancesSlice'
-import { getInstancePush } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -52,7 +52,7 @@ const Collections: React.FC = () => {
     }
   })
 
-  const instancePush = useSelector(getInstancePush, (prev, next) => prev?.global === next?.global)
+  const [instancePush] = useAccountStorage.object('push')
 
   return (
     <MenuContainer>

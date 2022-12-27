@@ -1,21 +1,16 @@
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { MenuContainer, MenuRow } from '@components/Menu'
-import { useAppDispatch } from '@root/store'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabNotificationsStackScreenProps } from '@utils/navigation/navigators'
 import { useProfileQuery } from '@utils/queryHooks/profile'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instances/push/utils'
-import {
-  getInstanceNotificationsFilter,
-  updateInstanceNotificationsFilter
-} from '@utils/slices/instancesSlice'
+import { setAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
 
 const TabNotificationsFilters: React.FC<
   TabNotificationsStackScreenProps<'Tab-Notifications-Filters'>
@@ -24,9 +19,7 @@ const TabNotificationsFilters: React.FC<
 
   const pushFeatures = usePushFeatures()
 
-  const dispatch = useAppDispatch()
-
-  const instanceNotificationsFilter = useSelector(getInstanceNotificationsFilter)
+  const [instanceNotificationsFilter] = useAccountStorage.object('notifications')
   const [filters, setFilters] = useState(instanceNotificationsFilter)
 
   const queryClient = useQueryClient()
@@ -62,7 +55,7 @@ const TabNotificationsFilters: React.FC<
           content={t('common:buttons.apply')}
           onPress={() => {
             if (changed) {
-              dispatch(updateInstanceNotificationsFilter(filters))
+              setAccountStorage('notifications', filters)
               const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
               queryClient.invalidateQueries({ queryKey })
             }

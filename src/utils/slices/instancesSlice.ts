@@ -47,29 +47,12 @@ const instancesSlice = createSlice({
         ...action.payload
       }
     },
-    updateInstanceNotificationsFilter: (
-      { instances },
-      action: PayloadAction<InstanceLatest['notifications_filter']>
-    ) => {
-      const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].notifications_filter = action.payload
-    },
     disableAllPushes: ({ instances }) => {
       instances = instances.map(instance => {
         let newInstance = instance
         newInstance.push.global = false
         return newInstance
       })
-    },
-    updateInstanceFollowingPage: (
-      { instances },
-      action: PayloadAction<Partial<InstanceLatest['followingPage']>>
-    ) => {
-      const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].followingPage = {
-        ...instances[activeIndex].followingPage,
-        ...action.payload
-      }
     },
     updateInstanceMePage: (
       { instances },
@@ -292,21 +275,13 @@ export const getInstanceAccount = ({ instances: { instances } }: RootState) =>
 export const getInstanceNotificationsFilter = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.notifications_filter
 
-export const getInstancePush = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.push
-
-export const getInstanceFollowingPage = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.followingPage
-
 export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.mePage
 
 export const {
   updateInstanceActive,
   updateInstanceAccount,
-  updateInstanceNotificationsFilter,
   disableAllPushes,
-  updateInstanceFollowingPage,
   updateInstanceMePage
 } = instancesSlice.actions
 

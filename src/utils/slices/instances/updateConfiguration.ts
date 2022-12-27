@@ -6,7 +6,7 @@ export const updateConfiguration = createAsyncThunk(
   async (): Promise<Mastodon.Instance> => {
     return apiInstance<Mastodon.Instance>({
       method: 'get',
-      url: `instance`
+      url: 'instance'
     }).then(res => res.body)
   }
 )
