@@ -9,7 +9,6 @@ import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
-import { updateStoreReview } from '@utils/slices/contextsSlice'
 import {
   getInstanceAccount,
   getInstanceConfigurationStatusMaxChars,
@@ -18,6 +17,7 @@ import {
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import * as StoreReview from 'expo-store-review'
 import { filter } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +32,7 @@ import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
+import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 
 const Stack = createNativeStackNavigator()
 
@@ -277,7 +278,14 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
               if (Platform.OS === 'ios' && Platform.constants.osVersion === '13.3') {
                 // https://github.com/tooot-app/app/issues/59
               } else {
-                dispatch(updateStoreReview(1))
+                const currentCount = getGlobalStorage.number('app.count_till_store_review')
+                if (currentCount === 10) {
+                  StoreReview?.isAvailableAsync()
+                    .then(() => StoreReview.requestReview())
+                    .catch(() => {})
+                } else {
+                  setGlobalStorage('app.count_till_store_review', currentCount + 1)
+                }
               }
 
               switch (params?.type) {

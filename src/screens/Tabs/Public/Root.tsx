@@ -3,18 +3,16 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { useAppDispatch } from '@root/store'
 import { ContextsLatest } from '@utils/migrations/contexts/migration'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
 import usePopToTop from '@utils/navigation/usePopToTop'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getPreviousSegment, updatePreviousSegment } from '@utils/slices/contextsSlice'
+import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
-import { useSelector } from 'react-redux'
 
 const Route = ({ route: { key: page } }: { route: any }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { page }]
@@ -41,8 +39,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   const { mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
-  const dispatch = useAppDispatch()
-  const previousSegment = useSelector(getPreviousSegment, () => true)
+  const previousSegment = getGlobalStorage.string('app.prev_public_segment')
   const segments: ContextsLatest['previousSegment'][] = ['Local', 'LocalPublic', 'Trending']
   const [segment, setSegment] = useState<number>(
     segments.findIndex(segment => segment === previousSegment)
@@ -62,7 +59,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
           selectedIndex={segment}
           onChange={({ nativeEvent }) => {
             setSegment(nativeEvent.selectedSegmentIndex)
-            dispatch(updatePreviousSegment(segments[nativeEvent.selectedSegmentIndex]))
+            setGlobalStorage('app.prev_public_segment', segments[nativeEvent.selectedSegmentIndex])
           }}
           style={{ flexBasis: '65%' }}
         />

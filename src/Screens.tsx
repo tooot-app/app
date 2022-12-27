@@ -14,12 +14,12 @@ import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
-import { updatePreviousTab } from '@utils/slices/contextsSlice'
 import { checkEmojis } from '@utils/slices/instances/checkEmojis'
 import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
 import { updateFilters } from '@utils/slices/instances/updateFilters'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import { setGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Linking from 'expo-linking'
@@ -99,9 +99,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     const currentRoute = navigationRef.getCurrentRoute()
 
     const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
-    if (matchTabName) {
-      //@ts-ignore
-      dispatch(updatePreviousTab(matchTabName[1]))
+    if (matchTabName?.[1]) {
+      // @ts-ignore
+      setGlobalStorage('app.prev_tab', matchTabName[1])
     }
   }, [])
 

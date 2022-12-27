@@ -82,7 +82,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Local':
-      console.log('local', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
@@ -100,7 +99,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Trending':
-      console.log('trending', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'trends/statuses',

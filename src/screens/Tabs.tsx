@@ -3,8 +3,8 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
-import { getPreviousTab } from '@utils/slices/contextsSlice'
 import { getInstanceAccount, getInstanceActive } from '@utils/slices/instancesSlice'
+import { getGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
@@ -50,7 +50,7 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
     []
   )
 
-  const previousTab = useSelector(getPreviousTab, () => true)
+  const previousTab = getGlobalStorage.string('app.prev_tab')
 
   return (
     <Tab.Navigator

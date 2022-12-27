@@ -1,10 +1,9 @@
 import createSecureStore from '@neverdull-agency/expo-unlimited-secure-store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
-import contextsMigration, { ContextsLatest } from '@utils/migrations/contexts/migration'
+import contextsMigration from '@utils/migrations/contexts/migration'
 import instancesMigration from '@utils/migrations/instances/migration'
 import appSlice, { AppState } from '@utils/slices/appSlice'
-import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
 import { Platform } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
@@ -55,10 +54,6 @@ const instancesPersistConfig = {
 const store = configureStore({
   reducer: {
     app: persistReducer(appPersistConfig, appSlice) as Reducer<AppState, AnyAction>,
-    contexts: persistReducer(contextsPersistConfig, contextsSlice) as Reducer<
-      ContextsLatest,
-      AnyAction
-    >,
     instances: persistReducer(instancesPersistConfig, instancesSlice) as Reducer<
       InstancesState,
       AnyAction
