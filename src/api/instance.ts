@@ -1,4 +1,4 @@
-import { storage } from '@root/store'
+import { getAccountDetails } from '@utils/storage/actions'
 import axios, { AxiosRequestConfig } from 'axios'
 import { ctx, handleError, PagedResponse, userAgent } from './helpers'
 
@@ -23,14 +23,13 @@ const apiInstance = async <T = unknown>({
   body,
   extras
 }: Params): Promise<PagedResponse<T>> => {
-  const storageAccount = storage.account
-  if (!storageAccount) {
-    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No account storage available')
+  const accountDetails = getAccountDetails(['auth.domain', 'auth.token'])
+  if (!accountDetails) {
+    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No account detail available')
     return Promise.reject()
   }
-  const domain = storageAccount.getString('auth.domain')
-  const token = storageAccount.getString('auth.token')
-  if (!domain || !token) {
+
+  if (!accountDetails['auth.domain'] || !accountDetails['auth.token']) {
     console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No domain or token available')
     return Promise.reject()
   }
@@ -38,7 +37,7 @@ const apiInstance = async <T = unknown>({
   console.log(
     ctx.bgGreen.bold(' API instance ') +
       ' ' +
-      domain +
+      accountDetails['auth.domain'] +
       ' ' +
       method +
       ctx.green(' -> ') +
@@ -50,7 +49,7 @@ const apiInstance = async <T = unknown>({
   return axios({
     timeout: method === 'post' ? 1000 * 60 : 1000 * 15,
     method,
-    baseURL: `https://${domain}/api/${version}/`,
+    baseURL: `https://${accountDetails['auth.domain']}/api/${version}/`,
     url,
     params,
     headers: {
@@ -58,9 +57,7 @@ const apiInstance = async <T = unknown>({
       Accept: '*/*',
       ...userAgent,
       ...headers,
-      ...(token && {
-        Authorization: `Bearer ${token}`
-      })
+      Authorization: `Bearer ${accountDetails['auth.token']}`
     },
     ...((body as (FormData & { _parts: [][] }) | undefined)?._parts.length && { data: body }),
     ...extras

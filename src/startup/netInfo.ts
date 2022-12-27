@@ -2,7 +2,7 @@ import apiInstance from '@api/instance'
 import NetInfo from '@react-native-community/netinfo'
 import { storage } from '@root/store'
 import { onlineManager } from '@tanstack/react-query'
-import { removeAccount } from '@utils/storage/actions'
+import { getAccountStorage, removeAccount, setAccountStorage } from '@utils/storage/actions'
 import log from './log'
 
 const netInfo = async (): Promise<{
@@ -22,8 +22,8 @@ const netInfo = async (): Promise<{
   if (netInfo.isConnected) {
     log('log', 'netInfo', 'network connected')
     if (storage.account) {
-      const domain = storage.account.getString('auth.domain')
-      const id = storage.account.getString('auth.account_id')
+      const domain = getAccountStorage.string('auth.domain')
+      const id = getAccountStorage.string('auth.account.id')
       const account = `${domain}/${id}`
       log('log', 'netInfo', 'checking locally stored credentials')
 
@@ -47,13 +47,8 @@ const netInfo = async (): Promise<{
         removeAccount(account)
         return Promise.resolve({ connected: true, corrupted: '' })
       } else {
-        storage.account.set(
-          'account',
-          JSON.stringify({
-            acct: resVerify.acct,
-            avatar_static: resVerify.avatar_static
-          })
-        )
+        setAccountStorage('auth.account.acct', resVerify.acct)
+        setAccountStorage('auth.account.avatar_static', resVerify.avatar_static)
 
         return Promise.resolve({ connected: true })
       }

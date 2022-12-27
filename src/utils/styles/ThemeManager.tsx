@@ -1,10 +1,9 @@
 import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { Appearance } from 'react-native'
-import { useSelector } from 'react-redux'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
 import { throttle } from 'lodash'
-import { SettingsLatest } from '@utils/migrations/settings/migration'
 import { useGlobalStorage } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/versions/global'
 
 type ContextType = {
   mode: 'light' | 'dark'
@@ -46,8 +45,8 @@ const useColorSchemeDelay = (delay = 500) => {
 
 const determineTheme = (
   osTheme: 'light' | 'dark' | null | undefined,
-  userTheme: SettingsLatest['theme'],
-  darkTheme: SettingsLatest['darkTheme']
+  userTheme: StorageGlobal['app.theme'],
+  darkTheme: StorageGlobal['app.theme.dark']
 ): 'light' | 'dark_lighter' | 'dark_darker' => {
   enum DarkTheme {
     lighter = 'dark_lighter',

@@ -5,7 +5,6 @@ import { MMKV } from 'react-native-mmkv'
 import { AppV0 } from './app/v0'
 import { ContextsLatest } from './contexts/migration'
 import { InstanceLatest } from './instances/migration'
-import { SettingsLatest } from './settings/migration'
 
 export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
 
@@ -42,7 +41,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
             )
             break
           case 'persist:settings':
-            const storeSettings: SettingsLatest = JSON.parse(value)
+            const storeSettings = JSON.parse(value)
             storage.global.set('app.font_size', storeSettings.fontsize)
             storage.global.set('app.language', storeSettings.language.replaceAll(`\"`, ``))
             storage.global.set('app.theme', storeSettings.theme.replaceAll(`\"`, ``))

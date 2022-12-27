@@ -39,46 +39,71 @@ export const useGlobalStorage = {
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never
 }
+export const setGlobalStorage = <T extends keyof StorageGlobal>(key: T, value: StorageGlobal[T]) =>
+  storage.global.set(
+    key,
+    typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
+      ? value
+      : JSON.stringify(value)
+  )
 
 export const getAccountStorage = {
   string: <T extends keyof StorageAccount>(key: T) =>
-    storage.global.getString(key) as StorageAccount[T] extends string ? StorageAccount[T] : never,
+    storage.account?.getString(key) as StorageAccount[T] extends string ? StorageAccount[T] : never,
   number: <T extends keyof StorageAccount>(key: T) =>
-    storage.global.getNumber(key) as StorageAccount[T] extends number ? StorageAccount[T] : never,
+    storage.account?.getNumber(key) as StorageAccount[T] extends number ? StorageAccount[T] : never,
   boolean: <T extends keyof StorageAccount>(key: T) =>
-    storage.global.getBoolean(key) as StorageAccount[T] extends boolean ? StorageAccount[T] : never,
+    storage.account?.getBoolean(key) as StorageAccount[T] extends boolean
+      ? StorageAccount[T]
+      : never,
   object: <T extends keyof StorageAccount>(key: T) =>
-    JSON.parse(storage.global.getString(key) || '') as StorageAccount[T] extends object
+    JSON.parse(storage.account?.getString(key) || '') as StorageAccount[T] extends object
       ? StorageAccount[T]
       : never
 }
 export const useAccountStorage = {
   string: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVString(key, storage.global) as StorageAccount[T] extends string
+    useMMKVString(key, storage.account) as StorageAccount[T] extends string
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   number: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVNumber(key, storage.global) as StorageAccount[T] extends number
+    useMMKVNumber(key, storage.account) as StorageAccount[T] extends number
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   boolean: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVBoolean(key, storage.global) as StorageAccount[T] extends boolean
+    useMMKVBoolean(key, storage.account) as StorageAccount[T] extends boolean
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   object: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVObject(key, storage.global) as StorageAccount[T] extends object
+    useMMKVObject(key, storage.account) as StorageAccount[T] extends object
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never
 }
+export const setAccountStorage = <T extends keyof StorageAccount>(
+  key: T,
+  value: StorageAccount[T]
+) =>
+  storage.account?.set(
+    key,
+    typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
+      ? value
+      : JSON.stringify(value)
+  )
 
 export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
   keys: T,
   account?: string
 ): Pick<StorageAccount, T[number]> | null => {
-  const id = account || getGlobalStorage.string('account.active')
-  if (!id) return null
+  let temp: MMKV
+  if (account) {
+    temp = new MMKV({ id: account })
+  } else {
+    if (!storage.account) {
+      return null
+    }
+    temp = storage.account
+  }
 
-  const temp = new MMKV({ id })
   const result = {}
   for (const key of keys) {
     switch (key) {
@@ -108,14 +133,6 @@ export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
   // @ts-ignore
   return result
 }
-
-export const setGlobalStorage = <T extends keyof StorageGlobal>(key: T, value: StorageGlobal[T]) =>
-  storage.global.set(
-    key,
-    typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
-      ? value
-      : JSON.stringify(value)
-  )
 
 export const removeAccount = (account: string) => {
   const valueAccounts = storage.global.getString('accounts')
