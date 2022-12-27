@@ -1,0 +1,172 @@
+{
+  "heading": {
+    "left": {
+      "alert": {
+        "title": "",
+        "buttons": {
+          "save": "",
+          "delete": ""
+        }
+      }
+    },
+    "right": {
+      "button": {
+        "default": "",
+        "conversation": "",
+        "reply": "",
+        "deleteEdit": "",
+        "edit": "",
+        "share": ""
+      },
+      "alert": {
+        "default": {
+          "title": "",
+          "button": ""
+        },
+        "removeReply": {
+          "title": "",
+          "description": "",
+          "confirm": ""
+        }
+      }
+    }
+  },
+  "content": {
+    "root": {
+      "header": {
+        "postingAs": "",
+        "spoilerInput": {
+          "placeholder": ""
+        },
+        "textInput": {
+          "placeholder": "",
+          "keyboardImage": {
+            "exceedMaximum": {
+              "title": ""
+            }
+          }
+        }
+      },
+      "footer": {
+        "attachments": {
+          "sensitive": "",
+          "remove": {
+            "accessibilityLabel": ""
+          },
+          "edit": {
+            "accessibilityLabel": ""
+          },
+          "upload": {
+            "accessibilityLabel": ""
+          }
+        },
+        "emojis": {
+          "accessibilityHint": ""
+        },
+        "poll": {
+          "option": {
+            "placeholder": {
+              "accessibilityLabel": "",
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "quantity": {
+            "reduce": {
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
+            },
+            "increase": {
+              "accessibilityLabel": "",
+              "accessibilityHint": ""
+            }
+          },
+          "multiple": {
+            "heading": "",
+            "options": {
+              "single": "",
+              "multiple": ""
+            }
+          },
+          "expiration": {
+            "heading": "",
+            "options": {
+              "300": "",
+              "1800": "",
+              "3600": "",
+              "21600": "",
+              "86400": "",
+              "259200": "",
+              "604800": ""
+            }
+          }
+        }
+      },
+      "actions": {
+        "attachment": {
+          "accessibilityLabel": "",
+          "accessibilityHint": "",
+          "failed": {
+            "alert": {
+              "title": "",
+              "button": ""
+            }
+          }
+        },
+        "poll": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        },
+        "visibility": {
+          "accessibilityLabel": "",
+          "title": "",
+          "options": {
+            "public": "",
+            "unlisted": "",
+            "private": "",
+            "direct": ""
+          }
+        },
+        "spoiler": {
+          "accessibilityLabel": ""
+        },
+        "emoji": {
+          "accessibilityLabel": "",
+          "accessibilityHint": ""
+        }
+      },
+      "drafts_one": "",
+      "drafts_other": ""
+    },
+    "editAttachment": {
+      "header": {
+        "title": "",
+        "right": {
+          "accessibilityLabel": "",
+          "failed": {
+            "title": "",
+            "button": ""
+          }
+        }
+      },
+      "content": {
+        "altText": {
+          "heading": "",
+          "placeholder": ""
+        },
+        "imageFocus": ""
+      }
+    },
+    "draftsList": {
+      "header": {
+        "title": ""
+      },
+      "warning": "",
+      "content": {
+        "accessibilityHint": "",
+        "textEmpty": ""
+      },
+      "checkAttachment": ""
+    }
+  }
+}
