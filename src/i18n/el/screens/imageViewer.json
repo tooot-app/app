@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Περισσότερες ενέργειες για αυτή την εικόνα",
+      "accessibilityHint": "Μπορείτε να αποθηκεύσετε ή να μοιραστείτε αυτή την εικόνα"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Αποθήκευση εικόνας",
+      "share": "Κοινοποίηση εικόνας"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Η εικόνα αποθηκεύτηκε",
+      "failed": "Η αποθήκευση της εικόνας απέτυχε"
     }
   }
 }
