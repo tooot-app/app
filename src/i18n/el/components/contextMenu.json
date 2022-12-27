@@ -1,69 +1,69 @@
 {
-  "accessibilityHint": "",
+  "accessibilityHint": "Ενέργειες για την ανάρτηση αυτή, όπως τον χρήστη της, την ίδια ανάρτηση",
   "account": {
-    "title": "",
+    "title": "Ενέργειες χρήστη",
     "following": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Ακολουθήστε",
+      "action_true": "Κατάργηση παρακολούθησης"
     },
-    "inLists": "",
+    "inLists": "Διαχείριση χρηστών λιστών",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Εμφάνιση προωθήσεων χρήστη",
+      "action_true": "Απόκρυψη προωθήσεων χρήστη"
     },
     "mute": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Σίγαση χρήστη",
+      "action_true": "Κατάργηση σίγασης χρήστη"
     },
     "block": {
-      "action_false": "",
-      "action_true": "",
+      "action_false": "Αποκλεισμός χρήστη",
+      "action_true": "Κατάργηση αποκλεισμού χρήστη",
       "alert": {
-        "title": ""
+        "title": "Επιβεβαίωνετε τον αποκλεισμού χρήστη @{{username}};"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Αναφορά και αποκλεισμός χρήστη",
       "alert": {
-        "title": ""
+        "title": "Επιβεβαίωνετε την αναφορά και τον αποκλεισμού χρήστη @{{username}};"
       }
     }
   },
   "at": {
-    "direct": "",
-    "public": ""
+    "direct": "Προσωπικό μήνυμα",
+    "public": "Δημόσιο μήνυμα"
   },
   "copy": {
-    "action": "",
-    "succeed": ""
+    "action": "Αντιγραφή ανάρτησης",
+    "succeed": "Αντιγράφηκε"
   },
   "instance": {
-    "title": "",
+    "title": "Ενέργεια διακομιστή",
     "block": {
-      "action": "",
+      "action": "Αποκλεισμός διακομιστή {{instance}}",
       "alert": {
-        "title": "",
-        "message": ""
+        "title": "Επιβεβαίωνετε τον αποκλεισμό του διακομιστή {{instance}};",
+        "message": "Συνήθως επιθυμείτε να σιγάσετε ή αποκλείσετε συγκεκριμένους χρήστες.\n\nΜετά τον αποκλεισμό του διακομιστή, θα αφαιρεθεί όλο το περιεχόμενο και οι χρήστες που ακολουθείτε από αυτό το διακομιστή!"
       }
     }
   },
   "share": {
     "status": {
-      "action": ""
+      "action": "Κοινοποίηση ανάρτησης"
     },
     "account": {
-      "action": ""
+      "action": "Κοινοποίηση χρήστη"
     }
   },
   "status": {
-    "title": "",
+    "title": "Ενέργειες ανάρτησης",
     "edit": {
-      "action": ""
+      "action": "Επεξεργασία ανάρτησης"
     },
     "delete": {
-      "action": "",
+      "action": "Διαγραφή ανάρτησης",
       "alert": {
-        "title": "",
+        "title": "Επιβεβαίωνετε τη διαγραφή;",
         "message": ""
       }
     },
