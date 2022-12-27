@@ -1,17 +1,17 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Προστασία Ιδιωτικότητας",
+    "message": "Παρακαλούμε μην αποκαλύπτετε την ταυτότητα άλλου χρήστη, όπως όνομα χρήστη, avatar, κλπ. Ευχαριστούμε!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Η σύνδεση έληξε, παρακαλούμε συνδεθείτε ξανά"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Σφάλμα υπηρεσίας push",
+    "description": "Παρακαλούμε ενεργοποιήστε ξανά τις ειδοποιήσεις push στις ρυθμίσεις"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Ο τύπος εικόνας {{type}} δεν υποστηρίζεται",
+    "videoNotSupported": "Ο τύπος βίντεο {{type}} δεν υποστηρίζεται"
   }
 }
