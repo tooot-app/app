@@ -1,32 +1,32 @@
 {
   "buttons": {
-    "OK": "",
-    "apply": "",
-    "cancel": "",
-    "discard": "",
-    "continue": "",
-    "create": "",
-    "delete": "",
-    "done": "",
-    "confirm": ""
+    "OK": "ΟΚ",
+    "apply": "Εφαρμογή",
+    "cancel": "Ακύρωση",
+    "discard": "Απόρριψη",
+    "continue": "Συνέχεια",
+    "create": "Δημιουργία",
+    "delete": "Διαγραφή",
+    "done": "Ολοκλήρωση",
+    "confirm": "Επιβεβαίωση"
   },
   "customEmoji": {
-    "accessibilityLabel": ""
+    "accessibilityLabel": "Προσαρμοσμένα emoji {{emoji}}"
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} επιτυχές"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}} απέτυχε, παρακαλούμε προσπαθήστε ξανά"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Οι αλλαγές δεν αποθηκεύτηκαν",
+    "message": "Η αλλαγές σας δεν έχουν αποθηκευτεί. Θα απορρίψετε τις αλλαγές;"
   }
 }
