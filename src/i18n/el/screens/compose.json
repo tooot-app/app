@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Θέλετε να ακυρώσετε την επεξεργασίας;",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Αποθήκευση προσχεδίου",
+          "delete": "Διαγραφή προσχεδίου"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Ανάρτηση",
+        "conversation": "Ανάρτηση προσωπικού μηνύματος",
+        "reply": "Ανάρτηση απάντησης",
+        "deleteEdit": "Ανάρτηση",
+        "edit": "Ανάρτηση",
+        "share": "Ανάρτηση"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Αποτυχία ανάρτησης",
+          "button": "Προσπαθήστε ξανά"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Δεν βρέθηκε η απαντημένη στην ανάρτηση",
+          "description": "Η απάντηση στην ανάρτηση έχει πιθανώς διαγραφεί. Θέλετε να την αφαιρέσετε από την παραπομπή σας;",
+          "confirm": "Διαγραφή παραπομπής"
         }
       }
     }
@@ -34,139 +34,139 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Ανάρτηση από @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Προειδοποίηση spoiler"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Τι σκέφτεστε",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": ""
+              "title": "Συμπληρώθηκε ο μέγιστος αριθμός συνημμένων"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Σήμανση συνημμένων ως ευαίσθητα",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Αφαίρεση συνημμένου που μεταφορτώθηκε, με αριθμό {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Επεξεργασία συνημμένου που μεταφορτώθηκε, με αριθμό {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Μεταφόρτωση περισσότερων συνημμένων"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Αγγίξτε για να προσθέσετε emoji στην ανάρτηση"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Επιλογή δημοσκόπησης {{index}}",
+              "single": "Μοναδικής επιλογής",
+              "multiple": "Πολλαπλής επιλογής"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Μείωση επιλογών δημοσκόπησης σε {{amount}}",
+              "accessibilityHint": "Ελάχιστος αριθμός επιλογών δημοσκόπησης, αυτή τη στιγμή έχει {{amount}} επιλογές"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Αύξηση επιλογών δημοσκόπησης σε {{amount}}",
+              "accessibilityHint": "Μέγιστος αριθμός επιλογών δημοσκόπησης, αυτή τη στιγμή έχει {{amount}} επιλογές"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Τύπος επιλογής",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Μοναδικής επιλογής",
+              "multiple": "Πολλαπλής επιλογής"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Διάρκεια",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 λεπτά",
+              "1800": "30 λεπτά",
+              "3600": "1 ώρα",
+              "21600": "6 ώρες",
+              "86400": "1 ημέρα",
+              "259200": "3 ημέρες",
+              "604800": "7 ημέρες"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Φορτώστε τις επισυνάψεις",
+          "accessibilityHint": "Η λειτουργία δημοσκόπησης θα απενεργοποιηθεί όταν υπάρξει κάποιο συνημμένο",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Αποτυχία μεταμόρφωσης",
+              "button": "Προσπαθήστε ξανά"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Προσθήκη δημοσκόπησης",
+          "accessibilityHint": "Η λειτουργία συνημμένου θα απενεργοποιηθεί όταν είναι ενεργή η δημοσκόπηση"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Η ορατότητα της ανάρτησης είναι {{visibility}}",
+          "title": "Ορατότητα ανάρτησης",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Δημόσιο",
+            "unlisted": "Μη καταχωρημένη",
+            "private": "Μόνο ακόλουθοι",
+            "direct": "Προσωπικό μήνυμα"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Χαλάστρα"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Προσθήκη emoji",
+          "accessibilityHint": "Ανοίξτε τον πίνακα επιλογής emoji, σύρετε οριζόντια για να αλλάξετε σελίδα"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Προσχέδιο ({{count}})",
+      "drafts_other": "Προσχέδια ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Επεξεργασία συνημμένου",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Αποθήκευση επεξεργασίας συνημμένου",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Αποτυχία επεξεργασίας",
+            "button": "Προσπαθήστε ξανά"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Περιγραφή πολυμέσων για άτομα με προβλήματα όρασης",
+          "placeholder": "Μπορείτε να προσθέσετε μια περιγραφή, που μερικές φορές ονομάζεται alt-text, στα πολυμέσα σας, ώστε να είναι προσβάσιμα σε ακόμα περισσότερους ανθρώπους, συμπεριλαμβανομένων εκείνων που είναι τυφλοί ή έχουν προβλήματα όρασης.\n\nΟι καλές περιγραφές είναι συνοπτικές, αλλά παρουσιάζουν τι απεικονίζεται με αρκετή ακρίβεια ώστε να είναι κατανοητό το συγκείμενο."
         },
-        "imageFocus": ""
+        "imageFocus": "Σύρετε τον κύκλο για να την ενημέρωση του κέντρου προσοχής"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Προσχέδιο"
       },
-      "warning": "",
+      "warning": "Τα προσχέδια αποθηκεύονται μόνο τοπικά, και μπορεί να χαθούν σε ατυχείς περιστάσεις. Προτείνουμε να μην χρησιμοποιείτε τα προσχέδια για μακροχρόνια αποθήκευση.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Αποθηκευμένο προσχέδιο, αγγίξτε για επεξεργασία",
+        "textEmpty": "Κενό περιεχόμενο"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Έλεγχος συνημμένων στο διακομιστή..."
     }
   }
 }
