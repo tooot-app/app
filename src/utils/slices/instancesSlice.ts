@@ -54,26 +54,6 @@ const instancesSlice = createSlice({
       const activeIndex = findInstanceActive(instances)
       instances[activeIndex].notifications_filter = action.payload
     },
-    updateInstanceDraft: ({ instances }, action: PayloadAction<ComposeStateDraft>) => {
-      const activeIndex = findInstanceActive(instances)
-      const draftIndex = instances[activeIndex].drafts.findIndex(
-        ({ timestamp }) => timestamp === action.payload.timestamp
-      )
-      if (draftIndex === -1) {
-        instances[activeIndex].drafts.unshift(action.payload)
-      } else {
-        instances[activeIndex].drafts[draftIndex] = action.payload
-      }
-    },
-    removeInstanceDraft: ({ instances }, action: PayloadAction<ComposeStateDraft['timestamp']>) => {
-      const activeIndex = findInstanceActive(instances)
-      instances[activeIndex].drafts = instances[activeIndex].drafts?.filter(
-        draft => draft.timestamp !== action.payload
-      )
-    },
-    clearPushLoading: ({ instances }) => {
-      const activeIndex = findInstanceActive(instances)
-    },
     disableAllPushes: ({ instances }) => {
       instances = instances.map(instance => {
         let newInstance = instance
@@ -321,15 +301,10 @@ export const getInstanceFollowingPage = ({ instances: { instances } }: RootState
 export const getInstanceMePage = ({ instances: { instances } }: RootState) =>
   instances[findInstanceActive(instances)]?.mePage
 
-export const getInstanceDrafts = ({ instances: { instances } }: RootState) =>
-  instances[findInstanceActive(instances)]?.drafts
-
 export const {
   updateInstanceActive,
   updateInstanceAccount,
   updateInstanceNotificationsFilter,
-  updateInstanceDraft,
-  removeInstanceDraft,
   disableAllPushes,
   updateInstanceFollowingPage,
   updateInstanceMePage

@@ -1,12 +1,11 @@
 import Button from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
-import { getInstanceDrafts } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { RefObject, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 
 export interface Props {
@@ -17,15 +16,14 @@ const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
   const { t } = useTranslation('screenCompose')
   const navigation = useNavigation<any>()
   const { composeState } = useContext(ComposeContext)
-  const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
-    draft => draft.timestamp !== composeState.timestamp
-  )
+  const [drafts] = useAccountStorage.object('drafts')
+  const draftsCount = drafts.filter(draft => draft.timestamp !== composeState.timestamp).length
 
   useEffect(() => {
     layoutAnimation()
   }, [composeState.dirty])
 
-  if (!composeState.dirty && instanceDrafts?.length) {
+  if (!composeState.dirty && draftsCount) {
     return (
       <View
         accessible
@@ -34,9 +32,7 @@ const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
         children={
           <Button
             type='text'
-            content={t('content.root.drafts', {
-              count: instanceDrafts.length
-            })}
+            content={t('content.root.drafts', { count: draftsCount })}
             onPress={() =>
               navigation.navigate('Screen-Compose-DraftsList', {
                 timestamp: composeState.timestamp

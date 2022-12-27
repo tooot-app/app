@@ -4,9 +4,8 @@ import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
-import { useAppDispatch } from '@root/store'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
-import { getInstanceDrafts, removeInstanceDraft } from '@utils/slices/instancesSlice'
+import { getAccountStorage, setAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
@@ -15,10 +14,15 @@ import { Dimensions, Modal, Platform, Pressable, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { useSelector } from 'react-redux'
 import ComposeContext from './utils/createContext'
 import { formatText } from './utils/processText'
 import { ComposeStateDraft, ExtendedAttachment } from './utils/types'
+
+export const removeDraft = (timestamp: number) =>
+  setAccountStorage(
+    'drafts',
+    getAccountStorage.object('drafts').filter(draft => draft.timestamp !== timestamp)
+  )
 
 const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-DraftsList'>> = ({
   navigation,
@@ -39,11 +43,8 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
   }, [])
 
   const { composeDispatch } = useContext(ComposeContext)
-  const instanceDrafts = useSelector(getInstanceDrafts)?.filter(
-    draft => draft.timestamp !== timestamp
-  )
+  const [drafts] = useAccountStorage.object('drafts')
   const [checkingAttachments, setCheckingAttachments] = useState(false)
-  const dispatch = useAppDispatch()
 
   const actionWidth = StyleConstants.Font.Size.L + StyleConstants.Spacing.Global.PagePadding * 4
 
@@ -72,7 +73,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
       </View>
       <PanGestureHandler enabled={Platform.OS === 'ios'}>
         <SwipeListView
-          data={instanceDrafts}
+          data={drafts.filter(draft => draft.timestamp !== timestamp)}
           renderItem={({ item }: { item: ComposeStateDraft }) => {
             return (
               <Pressable
@@ -113,7 +114,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                     type: 'loadDraft',
                     payload: tempDraft
                   })
-                  dispatch(removeInstanceDraft(item.timestamp))
+                  removeDraft(item.timestamp)
                   navigation.goBack()
                 }}
               >
@@ -172,7 +173,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                 justifyContent: 'flex-end',
                 backgroundColor: colors.red
               }}
-              onPress={() => dispatch(removeInstanceDraft(item.timestamp))}
+              onPress={() => removeDraft(item.timestamp)}
               children={
                 <View
                   style={{

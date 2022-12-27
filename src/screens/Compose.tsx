@@ -4,16 +4,13 @@ import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import haptics from '@root/components/haptics'
-import { useAppDispatch } from '@root/store'
 import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import {
   getInstanceAccount,
-  getInstanceConfigurationStatusMaxChars,
-  removeInstanceDraft,
-  updateInstanceDraft
+  getInstanceConfigurationStatusMaxChars
 } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -24,7 +21,7 @@ import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
-import ComposeDraftsList from './Compose/DraftsList'
+import ComposeDraftsList, { removeDraft } from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
 import ComposeContext from './Compose/utils/createContext'
@@ -32,7 +29,12 @@ import composeInitialState from './Compose/utils/initialState'
 import composeParseState from './Compose/utils/parseState'
 import composePost from './Compose/utils/post'
 import composeReducer from './Compose/utils/reducer'
-import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import {
+  getAccountStorage,
+  getGlobalStorage,
+  setAccountStorage,
+  setGlobalStorage
+} from '@utils/storage/actions'
 
 const Stack = createNativeStackNavigator()
 
@@ -178,28 +180,34 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
   }, [params?.type])
 
   const saveDraft = () => {
-    dispatch(
-      updateInstanceDraft({
-        timestamp: composeState.timestamp,
-        spoiler: composeState.spoiler.raw,
-        text: composeState.text.raw,
-        poll: composeState.poll,
-        attachments: composeState.attachments,
-        visibility: composeState.visibility,
-        visibilityLock: composeState.visibilityLock,
-        replyToStatus: composeState.replyToStatus
-      })
+    const payload = {
+      timestamp: composeState.timestamp,
+      spoiler: composeState.spoiler.raw,
+      text: composeState.text.raw,
+      poll: composeState.poll,
+      attachments: composeState.attachments,
+      visibility: composeState.visibility,
+      visibilityLock: composeState.visibilityLock,
+      replyToStatus: composeState.replyToStatus
+    }
+
+    const currentDrafts = getAccountStorage.object('drafts')
+    const draftIndex = currentDrafts.findIndex(
+      ({ timestamp }) => timestamp === composeState.timestamp
     )
+    if (draftIndex === -1) {
+      currentDrafts.unshift(payload)
+    } else {
+      currentDrafts[draftIndex] = payload
+    }
+    setAccountStorage('drafts', currentDrafts)
   }
-  const removeDraft = useCallback(() => {
-    dispatch(removeInstanceDraft(composeState.timestamp))
-  }, [composeState.timestamp])
   useEffect(() => {
     const autoSave = composeState.dirty
       ? setInterval(() => {
           saveDraft()
         }, 1000)
-      : removeDraft()
+      : removeDraft(composeState.timestamp)
     return () => autoSave && clearInterval(autoSave)
   }, [composeState])
 
@@ -218,7 +226,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 text: t('screenCompose:heading.left.alert.buttons.delete'),
                 style: 'destructive',
                 onPress: () => {
-                  removeDraft()
+                  removeDraft(composeState.timestamp)
                   navigation.goBack()
                 }
               },
@@ -240,7 +248,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     ),
     [composeState]
   )
-  const dispatch = useAppDispatch()
   const headerRightDisabled = useMemo(() => {
     if (totalTextCount > maxTootChars) {
       return true
@@ -304,7 +311,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                   }
                   break
               }
-              removeDraft()
+              removeDraft(composeState.timestamp)
               navigation.goBack()
             })
             .catch(error => {
