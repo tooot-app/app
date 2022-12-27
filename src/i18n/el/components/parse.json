@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "",
-    "expanded": "",
-    "moreLines": "",
-    "defaultHint": ""
+    "accessibilityHint": "Αγγίξτε για επέκταση ή σύμπτυξη περιεχομένου",
+    "expanded": "{{hint}}{{moreLines}}",
+    "moreLines": " ({{count}} σειρές ακόμα)",
+    "defaultHint": "Μακροσκελής ανάρτηση"
   }
 }
