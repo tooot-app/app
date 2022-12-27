@@ -3,11 +3,11 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { ContextsLatest } from '@utils/migrations/contexts/migration'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
 import usePopToTop from '@utils/navigation/usePopToTop'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/versions/global'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +40,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   const { t } = useTranslation('screenTabs')
 
   const previousSegment = getGlobalStorage.string('app.prev_public_segment')
-  const segments: ContextsLatest['previousSegment'][] = ['Local', 'LocalPublic', 'Trending']
+  const segments: StorageGlobal['app.prev_public_segment'][] = ['Local', 'LocalPublic', 'Trending']
   const [segment, setSegment] = useState<number>(
     segments.findIndex(segment => segment === previousSegment)
   )

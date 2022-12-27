@@ -5,14 +5,15 @@ import CustomText from '@components/Text'
 import browserPackage from '@helpers/browserPackage'
 import { useAppDispatch } from '@root/store'
 import { isDevelopment } from '@utils/checkEnvironment'
+import { updateExpoToken } from '@utils/push/updateExpoToken'
 import { useAppsQuery } from '@utils/queryHooks/apps'
 import { useProfileQuery } from '@utils/queryHooks/profile'
-import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instances/push/utils'
 import { updateInstancePush } from '@utils/slices/instances/updatePush'
 import { updateInstancePushAlert } from '@utils/slices/instances/updatePushAlert'
 import { updateInstancePushDecode } from '@utils/slices/instances/updatePushDecode'
 import { getInstance, getInstancePush } from '@utils/slices/instancesSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -28,7 +29,7 @@ const TabMePush: React.FC = () => {
   const { t } = useTranslation('screenTabs')
 
   const instance = useSelector(getInstance)
-  const expoToken = useSelector(getExpoToken)
+  const [expoToken] = useGlobalStorage.string('app.expo_token')
 
   const appsQuery = useAppsQuery()
 
@@ -45,7 +46,7 @@ const TabMePush: React.FC = () => {
       setPushEnabled(permissions.granted)
       setPushCanAskAgain(permissions.canAskAgain)
       layoutAnimation()
-      dispatch(retrieveExpoToken())
+      await updateExpoToken()
     }
 
     if (appsQuery.data?.vapid_key) {
@@ -54,7 +55,7 @@ const TabMePush: React.FC = () => {
       if (isDevelopment) {
         setPushAvailable(true)
       } else {
-        setPushAvailable(!!expoToken)
+        setPushAvailable(!!expoToken.length)
       }
     }
 

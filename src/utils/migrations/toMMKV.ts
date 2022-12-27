@@ -2,8 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import log from '@root/startup/log'
 import { secureStorage, storage } from '@root/store'
 import { MMKV } from 'react-native-mmkv'
-import { AppV0 } from './app/v0'
-import { ContextsLatest } from './contexts/migration'
 import { InstanceLatest } from './instances/migration'
 
 export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
@@ -24,13 +22,13 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       if (value != null) {
         switch (key) {
           case 'persist:app':
-            const storeApp: AppV0 = JSON.parse(value)
+            const storeApp = JSON.parse(value)
             if (storeApp.expoToken) {
               storage.global.set('app.expo_token', storeApp.expoToken.replaceAll(`\"`, ``))
             }
             break
           case 'persist:contexts':
-            const storeContexts: ContextsLatest = JSON.parse(value)
+            const storeContexts = JSON.parse(value)
             if (storeContexts.storeReview.current) {
               storage.global.set('app.count_till_store_review', storeContexts.storeReview.current)
             }

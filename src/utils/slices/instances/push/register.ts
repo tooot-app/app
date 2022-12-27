@@ -1,60 +1,39 @@
 import apiInstance from '@api/instance'
 import apiTooot, { TOOOT_API_DOMAIN } from '@api/tooot'
 import { displayMessage } from '@components/Message'
-import { RootState } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
-import { getInstance } from '@utils/slices/instancesSlice'
+import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import * as Random from 'expo-random'
 import i18next from 'i18next'
 import { Platform } from 'react-native'
 import base64 from 'react-native-base64'
 import { setChannels } from './utils'
 
-const subscribe = async ({
-  expoToken,
-  instanceUrl,
-  accountId,
-  accountFull,
-  serverKey,
-  auth
-}: {
-  expoToken: string
-  instanceUrl: string
-  accountId: Mastodon.Account['id']
-  accountFull: string
-  serverKey: string
-  auth: string | null
-}) => {
-  return apiTooot({
-    method: 'post',
-    url: `push/subscribe/${expoToken}/${instanceUrl}/${accountId}`,
-    body: { accountFull, serverKey, auth }
-  })
-}
+const pushRegister = async (): Promise<InstanceLatest['push']['keys']['auth']> => {
+  const expoToken = getGlobalStorage.string('app.expo_token')
+  const accountDetails = getAccountDetails([
+    'push',
+    'auth.domain',
+    'auth.account.id',
+    'auth.account.acct'
+  ])
+  const domain = accountDetails?.['auth.domain']
+  const accountId = accountDetails?.['auth.account.id']
 
-const pushRegister = async (
-  state: RootState,
-  expoToken: string
-): Promise<InstanceLatest['push']['keys']['auth']> => {
-  const instance = getInstance(state)
-  const instanceUrl = instance?.url
-  const instanceUri = instance?.uri
-  const instanceAccount = instance?.account
-  const instancePush = instance?.push
-
-  if (!instanceUrl || !instanceUri || !instanceAccount || !instancePush) {
+  if (!domain || !accountId || !accountDetails?.push) {
     return Promise.reject()
   }
 
-  const accountId = instanceAccount.id
-  const accountFull = `@${instanceAccount.acct}@${instanceUri}`
+  const pushPath = `${expoToken}/${domain}/${accountId}`
+
+  const accountFull = `@${accountDetails['auth.account.acct']}@${domain}`
   const randomPath = (Math.random() + 1).toString(36).substring(2)
 
-  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${expoToken}/${instanceUrl}/${accountId}/${randomPath}`
+  const endpoint = `https://${TOOOT_API_DOMAIN}/push/send/${pushPath}/${randomPath}`
   const auth = base64.encodeFromByteArray(Random.getRandomBytes(16))
 
-  const alerts = instancePush.alerts
+  const alerts = accountDetails.push.alerts
   const formData = new FormData()
   formData.append('subscription[endpoint]', endpoint)
   formData.append(
@@ -80,20 +59,21 @@ const pushRegister = async (
       description: i18next.t('screenTabs:me.push.missingServerKey.description')
     })
     Sentry.setContext('Push server key', {
-      instance: instanceUri,
+      instance: domain,
       resBody: res.body
     })
     Sentry.captureMessage('Push register error')
     return Promise.reject()
   }
 
-  await subscribe({
-    expoToken,
-    instanceUrl,
-    accountId,
-    accountFull,
-    serverKey: res.body.server_key,
-    auth: instancePush.decode === false ? null : auth
+  await apiTooot({
+    method: 'post',
+    url: `push/subscribe/${pushPath}`,
+    body: {
+      accountFull,
+      serverKey: res.body.server_key,
+      auth: accountDetails.push.decode === false ? null : auth
+    }
   })
 
   if (Platform.OS === 'android') {

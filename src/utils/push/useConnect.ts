@@ -5,24 +5,25 @@ import navigationRef from '@helpers/navigationRef'
 import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { useQuery } from '@tanstack/react-query'
-import { getExpoToken, retrieveExpoToken } from '@utils/slices/appSlice'
 import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
 import { useSelector } from 'react-redux'
+import { updateExpoToken } from './updateExpoToken'
 
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(retrieveExpoToken())
+    updateExpoToken()
   }, [])
 
-  const expoToken = useSelector(getExpoToken)
+  const [expoToken] = useGlobalStorage.string('app.expo_token')
   const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
   const pushEnabled = instances.filter(instance => instance.push.global)
 

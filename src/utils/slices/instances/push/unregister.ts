@@ -1,16 +1,23 @@
 import apiInstance from '@api/instance'
 import apiTooot from '@api/tooot'
-import { RootState } from '@root/store'
-import { getInstance } from '@utils/slices/instancesSlice'
+import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 
-const pushUnregister = async (state: RootState, expoToken: string) => {
-  const instance = getInstance(state)
-  const instanceUri = instance?.uri
-  const instanceAccount = instance?.account
+const pushUnregister = async () => {
+  const expoToken = getGlobalStorage.string('app.expo_token')
+  const accountDetails = getAccountDetails([
+    'push',
+    'auth.domain',
+    'auth.account.id',
+    'auth.account.acct'
+  ])
+  const domain = accountDetails?.['auth.domain']
+  const accountId = accountDetails?.['auth.account.id']
 
-  if (!instance?.url || !instance.account.id) {
+  const pushPath = `${expoToken}/${domain}/${accountId}`
+
+  if (!domain || !accountId || !accountDetails?.push) {
     return Promise.reject()
   }
 
@@ -21,11 +28,11 @@ const pushUnregister = async (state: RootState, expoToken: string) => {
 
   await apiTooot<{ endpoint: string; publicKey: string; auth: string }>({
     method: 'delete',
-    url: `push/unsubscribe/${expoToken}/${instance.url}/${instance.account.id}`
+    url: `push/unsubscribe/${pushPath}`
   })
 
   if (Platform.OS === 'android') {
-    const accountFull = `@${instanceAccount?.acct}@${instanceUri}`
+    const accountFull = `@${accountDetails['auth.account.acct']}@${domain}`
     Notifications.deleteNotificationChannelGroupAsync(accountFull)
   }
 

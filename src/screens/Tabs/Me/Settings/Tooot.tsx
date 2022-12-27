@@ -11,8 +11,8 @@ import { useSelector } from 'react-redux'
 import { getInstanceActive, getInstanceVersion } from '@utils/slices/instancesSlice'
 import { Platform } from 'react-native'
 import Constants from 'expo-constants'
-import { getExpoToken } from '@utils/slices/appSlice'
 import browserPackage from '@helpers/browserPackage'
+import { useGlobalStorage } from '@utils/storage/actions'
 
 const SettingsTooot: React.FC = () => {
   const instanceActive = useSelector(getInstanceActive)
@@ -21,7 +21,7 @@ const SettingsTooot: React.FC = () => {
   const { t } = useTranslation('screenTabs')
 
   const instanceVersion = useSelector(getInstanceVersion, () => true)
-  const expoToken = useSelector(getExpoToken)
+  const [expoToken] = useGlobalStorage.string('app.expo_token')
 
   return (
     <MenuContainer>
