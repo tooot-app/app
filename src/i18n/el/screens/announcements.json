@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Ανακοινώσεις",
   "content": {
-    "published": "",
+    "published": "Δημοσιευμένα <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Αναγνωσμένα",
+      "unread": "Σήμανση ως αναγνωσμένο"
     }
   }
 }
