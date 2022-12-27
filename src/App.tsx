@@ -12,7 +12,6 @@ import timezone from '@root/startup/timezone'
 import { persistor, storage, store } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { changeLanguage } from '@utils/slices/settingsSlice'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
@@ -27,6 +26,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from '@utils/migrations/toMMKV'
 import { MMKV } from 'react-native-mmkv'
+import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -67,7 +67,7 @@ const App: React.FC = () => {
       }
     } else {
       log('log', 'App', 'loading from MMKV')
-      const account = storage.global.getString('account.active')
+      const account = getGlobalStorage.string('account.active')
       if (account) {
         const storageAccount = new MMKV({ id: account })
         const token = storageAccount.getString('auth.token')
@@ -112,7 +112,7 @@ const App: React.FC = () => {
                 const language = getLanguage()
                 if (!language) {
                   if (Platform.OS !== 'ios') {
-                    store.dispatch(changeLanguage('en'))
+                    setGlobalStorage('app.language', 'en')
                   }
                   i18n.changeLanguage('en')
                 } else {

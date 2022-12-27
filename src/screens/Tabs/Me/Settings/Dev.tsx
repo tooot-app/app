@@ -6,6 +6,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { persistor, storage } from '@root/store'
 import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import { getGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
@@ -84,7 +85,7 @@ const SettingsDev: React.FC = () => {
         }}
         destructive
         onPress={() => {
-          const accounts = JSON.parse(storage.global.getString('accounts') || '[]')
+          const accounts = getGlobalStorage.object('accounts')
           for (const account of accounts) {
             console.log('Clearing', account)
             const temp = new MMKV({ id: account })

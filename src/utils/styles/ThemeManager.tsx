@@ -2,9 +2,9 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 import { Appearance } from 'react-native'
 import { useSelector } from 'react-redux'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
-import { getSettingsDarkTheme, getSettingsTheme } from '@utils/slices/settingsSlice'
 import { throttle } from 'lodash'
 import { SettingsLatest } from '@utils/migrations/settings/migration'
+import { useGlobalStorage } from '@utils/storage/actions'
 
 type ContextType = {
   mode: 'light' | 'dark'
@@ -71,8 +71,8 @@ const determineTheme = (
 
 const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const osTheme = useColorSchemeDelay()
-  const userTheme = useSelector(getSettingsTheme)
-  const darkTheme = useSelector(getSettingsDarkTheme)
+  const [userTheme] = useGlobalStorage.string('app.theme')
+  const [darkTheme] = useGlobalStorage.string('app.theme.dark')
 
   const [mode, setMode] = useState(userTheme === 'auto' ? osTheme || 'light' : userTheme)
   const [theme, setTheme] = useState<Theme>(determineTheme(osTheme, userTheme, darkTheme))

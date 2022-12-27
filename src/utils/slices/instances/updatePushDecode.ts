@@ -1,9 +1,8 @@
 import apiTooot from '@api/tooot'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { RootState } from '@root/store'
 import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import { Platform } from 'react-native'
-import { getInstance } from '../instancesSlice'
 import { setChannels } from './push/utils'
 
 export const updateInstancePushDecode = createAsyncThunk(
@@ -12,27 +11,28 @@ export const updateInstancePushDecode = createAsyncThunk(
     disable: boolean,
     { getState }
   ): Promise<{ disable: InstanceLatest['push']['decode'] }> => {
-    const state = getState() as RootState
-    const instance = getInstance(state)
-    if (!instance?.url || !instance.account.id || !instance.push.keys) {
+    const expoToken = getGlobalStorage.string('app.expo_token')
+    if (!expoToken) {
       return Promise.reject()
     }
 
-    const expoToken = state.app.expoToken
-    if (!expoToken) {
+    const accountDetails = getAccountDetails(['auth.domain', 'auth.account.id', 'push'])
+    if (
+      !accountDetails?.['auth.domain'] ||
+      !accountDetails['auth.account.id'] ||
+      !accountDetails.push.key
+    ) {
       return Promise.reject()
     }
 
     await apiTooot({
       method: 'put',
-      url: `push/update-decode/${expoToken}/${instance.url}/${instance.account.id}`,
-      body: {
-        auth: !disable ? null : instance.push.keys.auth
-      }
+      url: `push/update-decode/${expoToken}/${accountDetails['auth.domain']}/${accountDetails['auth.account.id']}`,
+      body: { auth: !disable ? null : accountDetails.push.key }
     })
 
     if (Platform.OS === 'android') {
-      setChannels(instance, true)
+      setChannels(true)
     }
 
     return Promise.resolve({ disable })

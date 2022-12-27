@@ -8,8 +8,7 @@ import AttachmentAltText from './AltText'
 import { Platform } from 'expo-modules-core'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { aspectRatio } from './dimensions'
-import { useSelector } from 'react-redux'
-import { getSettingsAutoplayGifv } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 
 export interface Props {
   total: number
@@ -27,7 +26,7 @@ const AttachmentVideo: React.FC<Props> = ({
   gifv = false
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
-  const autoplayGifv = useSelector(getSettingsAutoplayGifv)
+  const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)

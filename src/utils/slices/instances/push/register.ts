@@ -97,7 +97,7 @@ const pushRegister = async (
   })
 
   if (Platform.OS === 'android') {
-    setChannels(instance, true)
+    setChannels(true)
   }
 
   return Promise.resolve(auth)

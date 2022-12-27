@@ -3,11 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AnyAction, configureStore, Reducer } from '@reduxjs/toolkit'
 import contextsMigration, { ContextsLatest } from '@utils/migrations/contexts/migration'
 import instancesMigration from '@utils/migrations/instances/migration'
-import settingsMigration, { SettingsLatest } from '@utils/migrations/settings/migration'
 import appSlice, { AppState } from '@utils/slices/appSlice'
 import contextsSlice from '@utils/slices/contextsSlice'
 import instancesSlice, { InstancesState } from '@utils/slices/instancesSlice'
-import settingsSlice from '@utils/slices/settingsSlice'
 import { Platform } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
@@ -54,15 +52,6 @@ const instancesPersistConfig = {
   migrate: createMigrate(instancesMigration)
 }
 
-const settingsPersistConfig = {
-  key: 'settings',
-  prefix,
-  storage: AsyncStorage,
-  version: 3,
-  // @ts-ignore
-  migrate: createMigrate(settingsMigration)
-}
-
 const store = configureStore({
   reducer: {
     app: persistReducer(appPersistConfig, appSlice) as Reducer<AppState, AnyAction>,
@@ -72,10 +61,6 @@ const store = configureStore({
     >,
     instances: persistReducer(instancesPersistConfig, instancesSlice) as Reducer<
       InstancesState,
-      AnyAction
-    >,
-    settings: persistReducer(settingsPersistConfig, settingsSlice) as Reducer<
-      SettingsLatest,
       AnyAction
     >
   },

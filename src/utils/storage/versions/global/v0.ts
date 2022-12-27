@@ -1,6 +1,7 @@
 export type GlobalV0 = {
+  //// app
   // string
-  'app.expo_token': string | undefined
+  'app.expo_token': string
   'app.prev_tab': string
   'app.prev_public_segment': string
   'app.language': string
@@ -12,4 +13,10 @@ export type GlobalV0 = {
   'app.font_size': -1 | 0 | 1 | 2 | 3
   // boolean
   'app.auto_play_gifv': boolean
+
+  //// account
+  // string
+  'account.active': string
+  // object
+  accounts: string[]
 }

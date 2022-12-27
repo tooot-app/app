@@ -4,6 +4,7 @@ import { secureStorage, storage } from '@root/store'
 import { MMKV } from 'react-native-mmkv'
 import { AppV0 } from './app/v0'
 import { ContextsLatest } from './contexts/migration'
+import { InstanceLatest } from './instances/migration'
 import { SettingsLatest } from './settings/migration'
 
 export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
@@ -26,7 +27,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
           case 'persist:app':
             const storeApp: AppV0 = JSON.parse(value)
             if (storeApp.expoToken) {
-              storage.global.set('app.expo_token', storeApp.expoToken)
+              storage.global.set('app.expo_token', storeApp.expoToken.replaceAll(`\"`, ``))
             }
             break
           case 'persist:contexts':
@@ -34,16 +35,19 @@ export async function migrateFromAsyncStorage(): Promise<void> {
             if (storeContexts.storeReview.current) {
               storage.global.set('app.count_till_store_review', storeContexts.storeReview.current)
             }
-            storage.global.set('app.prev_tab', storeContexts.previousTab)
-            storage.global.set('app.prev_public_segment', storeContexts.previousSegment)
+            storage.global.set('app.prev_tab', storeContexts.previousTab.replaceAll(`\"`, ``))
+            storage.global.set(
+              'app.prev_public_segment',
+              storeContexts.previousSegment.replaceAll(`\"`, ``)
+            )
             break
           case 'persist:settings':
             const storeSettings: SettingsLatest = JSON.parse(value)
             storage.global.set('app.font_size', storeSettings.fontsize)
-            storage.global.set('app.language', storeSettings.language)
-            storage.global.set('app.theme', storeSettings.theme)
-            storage.global.set('app.theme.dark', storeSettings.darkTheme)
-            storage.global.set('app.browser', storeSettings.browser)
+            storage.global.set('app.language', storeSettings.language.replaceAll(`\"`, ``))
+            storage.global.set('app.theme', storeSettings.theme.replaceAll(`\"`, ``))
+            storage.global.set('app.theme.dark', storeSettings.darkTheme.replaceAll(`\"`, ``))
+            storage.global.set('app.browser', storeSettings.browser.replaceAll(`\"`, ``))
             storage.global.set('app.auto_play_gifv', storeSettings.autoplayGifv)
             break
         }
@@ -63,7 +67,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       const storeInstances: { instances: string } = JSON.parse(value)
       const accounts: string[] = []
 
-      for (const instance of JSON.parse(storeInstances.instances)) {
+      for (const instance of JSON.parse(storeInstances.instances) as InstanceLatest[]) {
         const account = `${instance.uri}/${instance.account.id}`
 
         const temp = new MMKV({ id: account })
@@ -71,15 +75,11 @@ export async function migrateFromAsyncStorage(): Promise<void> {
         temp.set('auth.clientSecret', instance.appData.clientSecret)
         temp.set('auth.token', instance.token)
         temp.set('auth.domain', instance.uri)
-        temp.set('auth.account_id', instance.account.id)
 
-        temp.set(
-          'account',
-          JSON.stringify({
-            acct: instance.account.acct,
-            avatar_static: instance.account.avatarStatic
-          })
-        )
+        temp.set('auth.account.id', instance.account.id)
+        temp.set('auth.account.acct', instance.account.acct)
+        temp.set('auth.account.avatar_static', instance.account.avatarStatic)
+
         if (instance.account.preferences) {
           temp.set('preferences', JSON.stringify(instance.account.preferences))
         }
@@ -87,7 +87,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
         temp.set('notifications', JSON.stringify(instance.notifications_filter))
         temp.set('push', JSON.stringify(instance.push))
         temp.set('page_local', JSON.stringify(instance.followingPage))
-        temp.set('instance.mePage', JSON.stringify(instance.mePage))
+        temp.set('page_me', JSON.stringify(instance.mePage))
         temp.set('drafts', JSON.stringify(instance.drafts))
         temp.set('emojis_frequent', JSON.stringify(instance.frequentEmojis))
         temp.set('version', instance.version)

@@ -6,9 +6,9 @@ import {
 } from '@helpers/permissions'
 import queryClient from '@helpers/queryClient'
 import i18n from '@root/i18n/i18n'
-import { InstanceLatest } from '@utils/migrations/instances/migration'
 import { queryFunctionProfile, QueryKeyProfile } from '@utils/queryHooks/profile'
 import { checkInstanceFeature } from '@utils/slices/instancesSlice'
+import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { useSelector } from 'react-redux'
 
@@ -62,8 +62,10 @@ export const PUSH_ADMIN = (
     }
   }) as { type: 'admin.sign_up' | 'admin.report'; permission: number }[]
 
-export const setChannels = async (instance: InstanceLatest, reset: boolean | undefined = false) => {
-  const account = `@${instance.account.acct}@${instance.uri}`
+export const setChannels = async (reset: boolean | undefined = false, specificAccount?: string) => {
+  const account = specificAccount || getGlobalStorage.string('account.active')
+  const accountDetails = getAccountDetails(['version', 'push'])
+  if (!accountDetails) return null
 
   const deleteChannel = async (type: string) =>
     Notifications.deleteNotificationChannelAsync(`${account}_${type}`)
@@ -92,7 +94,7 @@ export const setChannels = async (instance: InstanceLatest, reset: boolean | und
   const checkFeature = (feature: string) =>
     features
       .filter(f => f.feature === feature)
-      .filter(f => parseFloat(instance.version) >= f.version)?.length > 0
+      .filter(f => parseFloat(accountDetails.version) >= f.version)?.length > 0
   const checkFeatures = {
     hasTypeStatus: checkFeature('notification_type_status'),
     hasTypeUpdate: checkFeature('notification_type_update'),
@@ -100,7 +102,7 @@ export const setChannels = async (instance: InstanceLatest, reset: boolean | und
     hasTypeAdminReport: checkFeature('notification_type_admin_report')
   }
 
-  if (!instance.push.decode) {
+  if (!accountDetails.push.decode) {
     await setChannel('default')
     for (const push of PUSH_DEFAULT(checkFeatures)) {
       await deleteChannel(push)
