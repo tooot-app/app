@@ -2,8 +2,8 @@ import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { StorageAccount } from '@utils/storage/account'
 import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
-import { StorageAccount } from '@utils/storage/versions/account'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -20,7 +20,7 @@ import {
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import validUrl from 'valid-url'
-import EmojisContext from './helpers/EmojisContext'
+import EmojisContext from './Context'
 
 const EmojisList = () => {
   const { reduceMotionEnabled } = useAccessibility()

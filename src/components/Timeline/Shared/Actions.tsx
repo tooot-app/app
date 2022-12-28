@@ -2,24 +2,24 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { useQueryClient } from '@tanstack/react-query'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
 import React, { useCallback, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
 import StatusContext from './Context'
-import { useAccountStorage } from '@utils/storage/actions'
 
 const TimelineActions: React.FC = () => {
   const { queryKey, rootQueryKey, status, reblogStatus, ownAccount, highlighted, disableDetails } =

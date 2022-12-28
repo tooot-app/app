@@ -1,5 +1,3 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
   useInfiniteQuery,
@@ -9,9 +7,11 @@ import {
   useQuery,
   UseQueryOptions
 } from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { AxiosError } from 'axios'
 import { infinitePageParams } from './utils'
-import { PagedResponse } from '@api/helpers'
-import { featureCheck } from '@helpers/featureCheck'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (

@@ -1,30 +1,32 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
-import getLanguage from '@helpers/getLanguage'
-import queryClient from '@helpers/queryClient'
-import i18n from '@root/i18n/i18n'
-import Screens from '@root/Screens'
-import audio from '@root/startup/audio'
-import log from '@root/startup/log'
-import netInfo from '@root/startup/netInfo'
-import push from '@root/startup/push'
-import sentry from '@root/startup/sentry'
-import timezone from '@root/startup/timezone'
-import { storage } from '@root/store'
 import * as Sentry from '@sentry/react-native'
+import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
+import getLanguage from '@utils/helpers/getLanguage'
+import queryClient from '@utils/helpers/queryClient'
+import audio from '@utils/startup/audio'
+import log from '@utils/startup/log'
+import netInfo from '@utils/startup/netInfo'
+import push from '@utils/startup/push'
+import sentry from '@utils/startup/sentry'
+import timezone from '@utils/startup/timezone'
+import { storage } from '@utils/storage'
+import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import {
+  hasMigratedFromAsyncStorage,
+  migrateFromAsyncStorage
+} from '@utils/storage/migrations/toMMKV'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { IntlProvider } from 'react-intl'
 import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { MMKV } from 'react-native-mmkv'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from '@utils/migrations/toMMKV'
-import { MMKV } from 'react-native-mmkv'
-import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import i18n from './i18n'
+import Screens from './screens'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -105,17 +107,15 @@ const App: React.FC = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientProvider client={queryClient}>
-        <IntlProvider locale={getLanguage() || 'en'}>
-          <SafeAreaProvider>
-            <ActionSheetProvider>
-              <AccessibilityManager>
-                <ThemeManager>
-                  <Screens localCorrupt={localCorrupt} />
-                </ThemeManager>
-              </AccessibilityManager>
-            </ActionSheetProvider>
-          </SafeAreaProvider>
-        </IntlProvider>
+        <SafeAreaProvider>
+          <ActionSheetProvider>
+            <AccessibilityManager>
+              <ThemeManager>
+                <Screens localCorrupt={localCorrupt} />
+              </ThemeManager>
+            </AccessibilityManager>
+          </ActionSheetProvider>
+        </SafeAreaProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   )

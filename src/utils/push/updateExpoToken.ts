@@ -1,5 +1,5 @@
-import { isDevelopment } from '@utils/checkEnvironment'
-import { setChannels } from '@utils/slices/instances/push/utils'
+import { isDevelopment } from '@utils/helpers/checkEnvironment'
+import { setChannels } from '@utils/push/constants'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'

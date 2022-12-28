@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
-import browserPackage from '@helpers/browserPackage'
 import { useNavigation } from '@react-navigation/native'
+import browserPackage from '@utils/helpers/browserPackage'
 import { getAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'

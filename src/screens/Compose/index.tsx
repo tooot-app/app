@@ -1,13 +1,22 @@
-import { handleError } from '@api/helpers'
 import { ComponentEmojis } from '@components/Emojis'
-import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
+import { EmojisState } from '@components/Emojis/Context'
+import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import haptics from '@root/components/haptics'
 import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
+import { useQueryClient } from '@tanstack/react-query'
+import { handleError } from '@utils/api/helpers'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
+import {
+  getAccountStorage,
+  getGlobalStorage,
+  setAccountStorage,
+  setGlobalStorage
+} from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as StoreReview from 'expo-store-review'
@@ -15,23 +24,14 @@ import { filter } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import ComposeDraftsList, { removeDraft } from './Compose/DraftsList'
-import ComposeEditAttachment from './Compose/EditAttachment'
-import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
-import ComposeContext from './Compose/utils/createContext'
-import composeInitialState from './Compose/utils/initialState'
-import composeParseState from './Compose/utils/parseState'
-import composePost from './Compose/utils/post'
-import composeReducer from './Compose/utils/reducer'
-import {
-  getAccountStorage,
-  getGlobalStorage,
-  setAccountStorage,
-  setGlobalStorage
-} from '@utils/storage/actions'
-import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { usePreferencesQuery } from '@utils/queryHooks/preferences'
+import ComposeDraftsList, { removeDraft } from './DraftsList'
+import ComposeEditAttachment from './EditAttachment'
+import { uploadAttachment } from './Root/Footer/addAttachment'
+import ComposeContext from './utils/createContext'
+import composeInitialState from './utils/initialState'
+import composeParseState from './utils/parseState'
+import composePost from './utils/post'
+import composeReducer from './utils/reducer'
 
 const Stack = createNativeStackNavigator()
 

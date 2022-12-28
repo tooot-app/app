@@ -1,14 +1,14 @@
-import apiGeneral from '@api/general'
-import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
-import navigationRef from '@helpers/navigationRef'
 import * as Sentry from '@sentry/react-native'
 import { useQuery } from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
+import apiTooot from '@utils/api/tooot'
+import navigationRef from '@utils/navigation/navigationRef'
 import {
-  getAccountDetails,
-  getGlobalStorage,
-  setAccountDetails,
-  useGlobalStorage
+    getAccountDetails,
+    getGlobalStorage,
+    setAccountDetails,
+    useGlobalStorage
 } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'

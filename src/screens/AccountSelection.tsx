@@ -1,6 +1,6 @@
 import AccountButton from '@components/AccountButton'
 import CustomText from '@components/Text'
-import navigationRef from '@helpers/navigationRef'
+import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { getGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'

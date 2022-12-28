@@ -7,10 +7,10 @@ import { getGlobalStorage, useAccountStorage, useGlobalStorage } from '@utils/st
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
-import TabLocal from './Tabs/Local'
-import TabMe from './Tabs/Me'
-import TabNotifications from './Tabs/Notifications'
-import TabPublic from './Tabs/Public'
+import TabLocal from './Local'
+import TabMe from './Me'
+import TabNotifications from './Notifications'
+import TabPublic from './Public'
 
 const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 

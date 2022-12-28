@@ -4,7 +4,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Keyboard, Pressable, View } from 'react-native'
-import EmojisContext from './helpers/EmojisContext'
+import EmojisContext from './Context'
 
 const EmojisButton: React.FC = () => {
   const { colors } = useTheme()

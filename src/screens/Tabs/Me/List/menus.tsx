@@ -1,7 +1,7 @@
-import navigationRef from '@helpers/navigationRef'
+import { UseMutationResult } from '@tanstack/react-query'
+import navigationRef from '@utils/navigation/navigationRef'
 import i18next from 'i18next'
 import { Alert } from 'react-native'
-import { UseMutationResult } from '@tanstack/react-query'
 
 export const menuListAccounts = ({ params }: { params: Mastodon.List }) => ({
   key: 'list-accounts',

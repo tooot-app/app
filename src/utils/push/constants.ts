@@ -1,11 +1,11 @@
-import { featureCheck } from '@helpers/featureCheck'
+import i18n from '@i18n/index'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import {
   checkPermission,
   PERMISSION_MANAGE_REPORTS,
   PERMISSION_MANAGE_USERS
-} from '@helpers/permissions'
-import queryClient from '@helpers/queryClient'
-import i18n from '@root/i18n/i18n'
+} from '@utils/helpers/permissions'
+import queryClient from '@utils/helpers/queryClient'
 import { QueryKeyProfile } from '@utils/queryHooks/profile'
 import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'

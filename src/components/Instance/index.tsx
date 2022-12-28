@@ -1,8 +1,15 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
-import browserPackage from '@helpers/browserPackage'
+import { useNavigation } from '@react-navigation/native'
+import apiGeneral from '@utils/api/general'
+import browserPackage from '@utils/helpers/browserPackage'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import queryClient from '@utils/helpers/queryClient'
+import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
+import { StorageAccount } from '@utils/storage/account'
+import { generateAccountKey, getGlobalStorage, setAccountDetails } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
@@ -12,17 +19,10 @@ import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
+import base64 from 'react-native-base64'
 import { ScrollView } from 'react-native-gesture-handler'
 import validUrl from 'valid-url'
 import CustomText from '../Text'
-import { useNavigation } from '@react-navigation/native'
-import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
-import queryClient from '@helpers/queryClient'
-import { featureCheck } from '@helpers/featureCheck'
-import { generateAccountKey, getGlobalStorage, setAccountDetails } from '@utils/storage/actions'
-import apiGeneral from '@api/general'
-import { StorageAccount } from '@utils/storage/versions/account'
-import base64 from 'react-native-base64'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -269,6 +269,7 @@ const ComponentInstance: React.FC<Props> = ({
                 text === domain &&
                 instanceQuery.isSuccess &&
                 instanceQuery.data &&
+                // @ts-ignore
                 (instanceQuery.data.domain || instanceQuery.data.uri)
               ) {
                 processUpdate()
@@ -289,6 +290,7 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={t('componentInstance:server.button')}
             onPress={processUpdate}
+            // @ts-ignore
             disabled={!(instanceQuery.data?.domain || instanceQuery.data?.uri) && !whitelisted}
             loading={instanceQuery.isFetching || appsMutation.isLoading}
           />

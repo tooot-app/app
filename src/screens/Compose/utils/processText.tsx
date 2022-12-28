@@ -1,12 +1,12 @@
+import { emojis } from '@components/Emojis'
+import CustomText from '@components/Text'
+import queryClient from '@utils/helpers/queryClient'
+import { QueryKeyInstance } from '@utils/queryHooks/instance'
+import { useTheme } from '@utils/styles/ThemeManager'
 import LinkifyIt from 'linkify-it'
 import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { Dispatch } from 'react'
-import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './types'
-import CustomText from '@components/Text'
-import { emojis } from '@components/Emojis'
-import queryClient from '@helpers/queryClient'
-import { QueryKeyInstance } from '@utils/queryHooks/instance'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']

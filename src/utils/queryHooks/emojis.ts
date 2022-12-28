@@ -1,7 +1,7 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
 import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
+import { AxiosError } from 'axios'
 
 type QueryKeyEmojis = ['Emojis']
 

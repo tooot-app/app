@@ -8,9 +8,9 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
 import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import TimelineEmpty from './Timeline/Empty'
-import TimelineFooter from './Timeline/Footer'
-import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Timeline/Refresh'
+import TimelineEmpty from './Empty'
+import TimelineFooter from './Footer'
+import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Refresh'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 

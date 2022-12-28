@@ -2,6 +2,7 @@ import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import {
   QueryKeyRelationship,
@@ -13,11 +14,10 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { useAccountStorage } from '@utils/storage/actions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useAccountStorage } from '@utils/storage/actions'
 
 const menuAccount = ({
   type,

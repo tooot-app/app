@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react-native'
-import { isDevelopment } from '@utils/checkEnvironment'
+import { isDevelopment } from '@utils/helpers/checkEnvironment'
 import log from './log'
 
 export const routingInstrumentation = new Sentry.ReactNavigationInstrumentation()

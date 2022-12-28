@@ -1,7 +1,7 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import { featureCheck } from '@helpers/featureCheck'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { AxiosError } from 'axios'
 
 export type QueryKeyTrends = ['Trends', { type: 'tags' | 'statuses' | 'links' }]
 

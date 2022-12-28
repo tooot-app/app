@@ -1,10 +1,10 @@
-import { isDevelopment } from '@utils/checkEnvironment'
+import { isDevelopment } from '@utils/helpers/checkEnvironment'
 import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
-import SettingsAnalytics from './Settings/Analytics'
-import SettingsApp from './Settings/App'
-import SettingsDev from './Settings/Dev'
-import SettingsTooot from './Settings/Tooot'
+import SettingsAnalytics from './Analytics'
+import SettingsApp from './App'
+import SettingsDev from './Dev'
+import SettingsTooot from './Tooot'
 
 const TabMeSettings: React.FC = () => {
   return (

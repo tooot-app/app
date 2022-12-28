@@ -1,4 +1,4 @@
-import { HeaderCenter, HeaderLeft } from '@components/Header'
+import { HeaderLeft } from '@components/Header'
 import { Message } from '@components/Message'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabMeProfileStackParamList, TabMeStackScreenProps } from '@utils/navigation/navigators'
@@ -6,10 +6,10 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import TabMeProfileFields from './Profile/Fields'
-import TabMeProfileName from './Profile/Name'
-import TabMeProfileNote from './Profile/Note'
-import TabMeProfileRoot from './Profile/Root'
+import TabMeProfileFields from './Fields'
+import TabMeProfileName from './Name'
+import TabMeProfileNote from './Note'
+import TabMeProfileRoot from './Root'
 
 const Stack = createNativeStackNavigator<TabMeProfileStackParamList>()
 

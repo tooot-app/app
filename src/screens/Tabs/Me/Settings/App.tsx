@@ -1,9 +1,8 @@
 import haptics from '@components/haptics'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
-import { LOCALES } from '@root/i18n/locales'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
@@ -11,6 +10,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform } from 'react-native'
 import { mapFontsizeToName } from '../SettingsFontsize'
+import { LOCALES } from '@i18n/locales'
 
 const SettingsApp: React.FC = () => {
   const navigation = useNavigation<any>()

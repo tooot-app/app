@@ -1,7 +1,8 @@
-import apiGeneral from '@api/general'
-import { AxiosError } from 'axios'
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
-import apiInstance from '@api/instance'
+import apiGeneral from '@utils/api/general'
+import apiInstance from '@utils/api/instance'
+import { setAccountStorage } from '@utils/storage/actions'
+import { AxiosError } from 'axios'
 
 export type QueryKeyInstance = ['Instance'] | ['Instance', { domain: string }]
 
@@ -49,7 +50,12 @@ const useInstanceQuery = (
   return useQuery(queryKey, queryFunction, {
     ...params?.options,
     staleTime: Infinity,
-    cacheTime: Infinity
+    cacheTime: Infinity,
+    onSuccess: data =>
+      setAccountStorage(
+        'version',
+        data.version.match(new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)/))?.[0] || '0'
+      )
   })
 }
 

@@ -1,7 +1,7 @@
 import GracefullyImage from '@components/GracefullyImage'
 import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useState } from 'react'
@@ -18,9 +18,9 @@ import {
 } from 'react-native'
 import { Directions, Gesture, LongPressGestureHandler } from 'react-native-gesture-handler'
 import { runOnJS, useSharedValue } from 'react-native-reanimated'
-import { Zoom, createZoomListComponent } from 'react-native-reanimated-zoom'
+import { createZoomListComponent, Zoom } from 'react-native-reanimated-zoom'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import saveImage from './ImageViewer/save'
+import saveImage from './save'
 
 const ZoomFlatList = createZoomListComponent(FlatList)
 

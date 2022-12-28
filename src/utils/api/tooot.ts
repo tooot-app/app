@@ -1,4 +1,4 @@
-import { mapEnvironment } from '@utils/checkEnvironment'
+import { mapEnvironment } from '@utils/helpers/checkEnvironment'
 import axios from 'axios'
 import { ctx, handleError, userAgent } from './helpers'
 

@@ -1,11 +1,11 @@
 import Button from '@components/Button'
-import haptics from '@root/components/haptics'
+import haptics from '@components/haptics'
+import { useQueryClient } from '@tanstack/react-query'
+import { removeAccount, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { removeAccount, useGlobalStorage } from '@utils/storage/actions'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation(['common', 'screenTabs'])

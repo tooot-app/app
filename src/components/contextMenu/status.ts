@@ -1,19 +1,19 @@
-import apiInstance from '@api/instance'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useQueryClient } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
+import { useAccountStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { featureCheck } from '@helpers/featureCheck'
-import { useAccountStorage } from '@utils/storage/actions'
 
 const menuStatus = ({
   status,

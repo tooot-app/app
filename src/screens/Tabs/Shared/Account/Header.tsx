@@ -1,5 +1,5 @@
 import GracefullyImage from '@components/GracefullyImage'
-import navigationRef from '@helpers/navigationRef'
+import navigationRef from '@utils/navigation/navigationRef'
 import { useGlobalStorage } from '@utils/storage/actions'
 import React from 'react'
 import { Dimensions, Image } from 'react-native'

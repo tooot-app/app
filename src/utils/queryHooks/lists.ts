@@ -1,15 +1,15 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import {
-  QueryFunctionContext,
-  useInfiniteQuery,
-  UseInfiniteQueryOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions
+    QueryFunctionContext,
+    useInfiniteQuery,
+    UseInfiniteQueryOptions,
+    useMutation,
+    UseMutationOptions,
+    useQuery,
+    UseQueryOptions
 } from '@tanstack/react-query'
-import { PagedResponse } from '@api/helpers'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { AxiosError } from 'axios'
 
 export type QueryKeyLists = ['Lists']
 

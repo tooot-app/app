@@ -1,15 +1,15 @@
 import { HeaderLeft } from '@components/Header'
 import { displayMessage, Message } from '@components/Message'
-import navigationRef from '@helpers/navigationRef'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenAccountSelection from '@screens/AccountSelection'
 import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
-import ScreenImagesViewer from '@screens/ImagesViewer'
+import ScreenImagesViewer from '@screens/ImageViewer'
 import ScreenTabs from '@screens/Tabs'
-import initQuery from '@utils/initQuery'
+import initQuery from '@utils/helpers/resetQuries'
+import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
@@ -26,9 +26,10 @@ import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
-import { routingInstrumentation } from './startup/sentry'
+import { routingInstrumentation } from '../utils/startup/sentry'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -37,7 +38,7 @@ export interface Props {
 }
 
 const Screens: React.FC<Props> = ({ localCorrupt }) => {
-  const { t } = useTranslation([
+  const { t, i18n } = useTranslation([
     'common',
     'screens',
     'screenAnnouncements',
@@ -242,7 +243,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [])
 
   return (
-    <>
+    <IntlProvider locale={i18n.language}>
       <StatusBar
         backgroundColor={colors.backgroundDefault}
         {...(Platform.OS === 'android' && {
@@ -319,7 +320,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
         <Message />
       </NavigationContainer>
-    </>
+    </IntlProvider>
   )
 }
 

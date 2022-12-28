@@ -1,6 +1,6 @@
 import { displayMessage } from '@components/Message'
-import queryClient from '@helpers/queryClient'
-import initQuery from '@utils/initQuery'
+import queryClient from '@utils/helpers/queryClient'
+import initQuery from '@utils/helpers/resetQuries'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'

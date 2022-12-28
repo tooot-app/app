@@ -1,4 +1,4 @@
-import { storage } from '@root/store'
+import { storage } from '@utils/storage'
 import {
   MMKV,
   useMMKVBoolean,
@@ -7,8 +7,8 @@ import {
   useMMKVObject,
   useMMKVString
 } from 'react-native-mmkv'
-import { StorageAccount } from './versions/account'
-import { StorageGlobal } from './versions/global'
+import { StorageAccount } from './account'
+import { StorageGlobal } from './global'
 
 export const getGlobalStorage = {
   string: <T extends keyof StorageGlobal>(key: T) =>

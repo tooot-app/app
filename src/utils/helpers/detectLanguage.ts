@@ -1,4 +1,4 @@
-import detect from 'react-native-language-detection'
+import detect from 'react-native-language-detection';
 
 const detectLanguage = async (
   text: string

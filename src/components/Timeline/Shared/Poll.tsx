@@ -5,6 +5,7 @@ import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
+import { useQueryClient } from '@tanstack/react-query'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   useTimelineMutation
@@ -16,7 +17,6 @@ import { maxBy } from 'lodash'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {

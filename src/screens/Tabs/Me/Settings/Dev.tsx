@@ -1,14 +1,12 @@
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
-import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { storage } from '@root/store'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { storage } from '@utils/storage'
 import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Localization from 'expo-localization'
 import React from 'react'
 import { MMKV } from 'react-native-mmkv'
 
@@ -21,16 +19,6 @@ const SettingsDev: React.FC = () => {
 
   return (
     <MenuContainer>
-      <CustomText
-        fontStyle='S'
-        selectable
-        style={{
-          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          color: colors.primaryDefault
-        }}
-      >
-        {JSON.stringify(Localization.locales)}
-      </CustomText>
       <MenuRow title='Active account' content={account || '-'} onPress={() => {}} />
       <MenuRow
         title={'Saved local instances'}

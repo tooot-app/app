@@ -1,4 +1,4 @@
-import { StackActions, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { useEffect } from 'react'
 

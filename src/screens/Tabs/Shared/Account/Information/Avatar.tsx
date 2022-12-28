@@ -1,7 +1,7 @@
 import GracefullyImage from '@components/GracefullyImage'
-import navigationRef from '@helpers/navigationRef'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import navigationRef from '@utils/navigation/navigationRef'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
-import ComposePostingAs from './Header/PostingAs'
-import ComposeSpoilerInput from './Header/SpoilerInput'
-import ComposeTextInput from './Header/TextInput'
-import ComposeContext from '../utils/createContext'
+import ComposeContext from '../../utils/createContext'
+import ComposePostingAs from './PostingAs'
+import ComposeSpoilerInput from './SpoilerInput'
+import ComposeTextInput from './TextInput'
 
 const ComposeRootHeader: React.FC = () => {
   const { composeState } = useContext(ComposeContext)

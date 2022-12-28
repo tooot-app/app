@@ -1,19 +1,19 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
+import { useRoute } from '@react-navigation/native'
+import { useQueryClient } from '@tanstack/react-query'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import {
   QueryKeyRelationship,
   useRelationshipMutation,
   useRelationshipQuery
 } from '@utils/queryHooks/relationship'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQueryClient } from '@tanstack/react-query'
-import { StyleConstants } from '@utils/styles/constants'
 import { View } from 'react-native'
-import { useRoute } from '@react-navigation/native'
-import { featureCheck } from '@helpers/featureCheck'
 
 export interface Props {
   id: Mastodon.Account['id']

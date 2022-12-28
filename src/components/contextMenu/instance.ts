@@ -1,10 +1,10 @@
 import { displayMessage } from '@components/Message'
+import { useQueryClient } from '@tanstack/react-query'
+import { getHost } from '@utils/helpers/urlMatcher'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
+import { getAccountStorage } from '@utils/storage/actions'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { getHost } from '@helpers/urlMatcher'
-import { getAccountStorage } from '@utils/storage/actions'
 
 const menuInstance = ({
   status,

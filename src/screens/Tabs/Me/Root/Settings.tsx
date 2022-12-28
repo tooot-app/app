@@ -1,6 +1,6 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
-import browserPackage from '@helpers/browserPackage'
 import { useNavigation } from '@react-navigation/native'
+import browserPackage from '@utils/helpers/browserPackage'
 import { getAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import * as WebBrowser from 'expo-web-browser'
 import React from 'react'

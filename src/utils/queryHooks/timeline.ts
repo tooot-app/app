@@ -1,21 +1,21 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
-import queryClient from '@helpers/queryClient'
+import {
+    MutationOptions,
+    QueryFunctionContext,
+    useInfiniteQuery,
+    UseInfiniteQueryOptions,
+    useMutation
+} from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import queryClient from '@utils/helpers/queryClient'
+import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
-import {
-  MutationOptions,
-  QueryFunctionContext,
-  useInfiniteQuery,
-  UseInfiniteQueryOptions,
-  useMutation
-} from '@tanstack/react-query'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
-import { PagedResponse } from '@api/helpers'
-import { getAccountStorage } from '@utils/storage/actions'
-import { featureCheck } from '@helpers/featureCheck'
 
 export type QueryKeyTimeline = [
   'Timeline',

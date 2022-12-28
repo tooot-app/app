@@ -1,7 +1,7 @@
-import apiInstance from '@api/instance'
 import NetInfo from '@react-native-community/netinfo'
-import { storage } from '@root/store'
 import { onlineManager } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import { storage } from '@utils/storage'
 import { getAccountStorage, removeAccount, setAccountStorage } from '@utils/storage/actions'
 import log from './log'
 

@@ -1,9 +1,9 @@
-import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
-import { Appearance } from 'react-native'
+import { useGlobalStorage } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/global'
 import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
 import { throttle } from 'lodash'
-import { useGlobalStorage } from '@utils/storage/actions'
-import { StorageGlobal } from '@utils/storage/versions/global'
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
+import { Appearance } from 'react-native'
 
 type ContextType = {
   mode: 'light' | 'dark'

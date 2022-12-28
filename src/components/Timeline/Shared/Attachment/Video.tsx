@@ -1,14 +1,14 @@
 import Button from '@components/Button'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
+import { Platform } from 'expo-modules-core'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
-import { Platform } from 'expo-modules-core'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { aspectRatio } from './dimensions'
-import { useGlobalStorage } from '@utils/storage/actions'
 
 export interface Props {
   total: number

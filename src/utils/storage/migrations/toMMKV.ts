@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import log from '@root/startup/log'
-import { secureStorage, storage } from '@root/store'
+import log from '@utils/startup/log'
+import { secureStorage, storage } from '@utils/storage'
 import { MMKV } from 'react-native-mmkv'
 
 export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
@@ -22,14 +22,17 @@ export async function migrateFromAsyncStorage(): Promise<void> {
         switch (key) {
           case 'persist:app':
             const storeApp = JSON.parse(value)
-            if (storeApp.expoToken) {
+            if (storeApp.expoToken?.length) {
               storage.global.set('app.expo_token', storeApp.expoToken.replaceAll(`\"`, ``))
             }
             break
           case 'persist:contexts':
             const storeContexts = JSON.parse(value)
             if (storeContexts.storeReview.current) {
-              storage.global.set('app.count_till_store_review', storeContexts.storeReview.current)
+              storage.global.set(
+                'app.count_till_store_review',
+                storeContexts.storeReview.current || 0
+              )
             }
             storage.global.set('app.prev_tab', storeContexts.previousTab.replaceAll(`\"`, ``))
             storage.global.set(
@@ -39,12 +42,12 @@ export async function migrateFromAsyncStorage(): Promise<void> {
             break
           case 'persist:settings':
             const storeSettings = JSON.parse(value)
-            storage.global.set('app.font_size', storeSettings.fontsize)
+            storage.global.set('app.font_size', storeSettings.fontsize || 0)
             storage.global.set('app.language', storeSettings.language.replaceAll(`\"`, ``))
             storage.global.set('app.theme', storeSettings.theme.replaceAll(`\"`, ``))
             storage.global.set('app.theme.dark', storeSettings.darkTheme.replaceAll(`\"`, ``))
             storage.global.set('app.browser', storeSettings.browser.replaceAll(`\"`, ``))
-            storage.global.set('app.auto_play_gifv', storeSettings.autoplayGifv)
+            storage.global.set('app.auto_play_gifv', storeSettings.autoplayGifv || true)
             break
         }
 

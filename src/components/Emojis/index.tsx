@@ -8,7 +8,7 @@ import React, { createRef, PropsWithChildren, useEffect, useReducer, useState } 
 import { useTranslation } from 'react-i18next'
 import { Keyboard, KeyboardAvoidingView, View } from 'react-native'
 import { Edge, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Emojis/helpers/EmojisContext'
+import EmojisContext, { Emojis, emojisReducer, EmojisState } from './Context'
 
 export type Props = {
   inputProps: EmojisState['inputProps']
