@@ -2,7 +2,6 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
-import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
 import { useAccountStorage } from '@utils/storage/actions'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,12 +12,6 @@ const Collections: React.FC = () => {
 
   const [pageMe, setPageMe] = useAccountStorage.object('page_me')
 
-  useFollowedTagsQuery({
-    options: {
-      onSuccess: data =>
-        setPageMe({ ...pageMe, followedTags: { shown: !!data?.pages?.[0].body?.length } })
-    }
-  })
   useListsQuery({
     options: {
       onSuccess: data => setPageMe({ ...pageMe, lists: { shown: !!data?.length } })

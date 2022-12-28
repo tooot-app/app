@@ -18,6 +18,7 @@ import { useFiltersQuery } from '@utils/queryHooks/filters'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { useProfileQuery } from '@utils/queryHooks/profile'
+import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
 import { setAccount, setGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
@@ -88,6 +89,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   usePreferencesQuery({ options: { enabled: !!accountActive } })
   useFiltersQuery({ options: { enabled: !!accountActive } })
   useEmojisQuery({ options: { enabled: !!accountActive } })
+  useFollowedTagsQuery({ options: { enabled: !!accountActive } })
 
   // Callbacks
   const navigationContainerOnStateChange = () => {

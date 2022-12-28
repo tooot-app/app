@@ -4,15 +4,13 @@ import ParseEmojis from '@components/Parse/Emojis'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
-import { useGlobalStorage } from '@utils/storage/actions'
+import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ChildNode } from 'domhandler'
 import { ElementType, parseDocument } from 'htmlparser2'
-import { isEqual } from 'lodash'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, Text, TextStyleIOS, View } from 'react-native'
@@ -72,7 +70,7 @@ const ParseHTML: React.FC<Props> = ({
     numberOfLines = 4
   }
 
-  const followedTags = useFollowedTagsQuery()
+  const [followedTags] = useAccountStorage.object('followed_tags')
 
   const [totalLines, setTotalLines] = useState<number>()
   const [expanded, setExpanded] = useState(highlighted)
@@ -112,11 +110,11 @@ const ParseHTML: React.FC<Props> = ({
             const href = node.attribs.href
             if (classes) {
               if (classes.includes('hashtag')) {
-                const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1]
+                const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1].toLowerCase()
                 const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
                   ?.hashtag
                 const sameHashtag = paramsHashtag === tag
-                const isFollowing = followedTags.data?.pages[0]?.body.find(t => t.name === tag)
+                const isFollowing = followedTags?.find(t => t.name === tag)
                 return (
                   <Text
                     key={index}

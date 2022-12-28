@@ -10,6 +10,7 @@ import {
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
+import { setAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { infinitePageParams } from './utils'
 
@@ -40,7 +41,21 @@ const useFollowedTagsQuery = (
       staleTime: Infinity,
       cacheTime: Infinity,
       ...params?.options,
-      ...infinitePageParams
+      ...infinitePageParams,
+      onSuccess: data => {
+        setAccountStorage([
+          {
+            key: 'followed_tags',
+            value: data.pages[0].body.map(tag => ({
+              name: tag.name.toLowerCase(),
+              following: tag.following
+            }))
+          }
+        ])
+        if (params?.options?.onSuccess) {
+          params.options.onSuccess(data)
+        }
+      }
     }
   )
 }

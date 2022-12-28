@@ -27,6 +27,7 @@ export type AccountV0 = {
   // boolean
   // object
   preferences?: Mastodon.Preferences
+  followed_tags?: Pick<Mastodon.Tag, 'name' | 'following'>[]
   notifications: PushNotification
   push: {
     global: boolean
