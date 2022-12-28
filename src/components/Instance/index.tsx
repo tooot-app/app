@@ -1,28 +1,35 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
-import browserPackage from '@helpers/browserPackage'
+import { useNavigation } from '@react-navigation/native'
+import apiGeneral from '@utils/api/general'
+import browserPackage from '@utils/helpers/browserPackage'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import queryClient from '@utils/queryHooks'
+import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { checkInstanceFeature, getInstances } from '@utils/slices/instancesSlice'
+import { StorageAccount } from '@utils/storage/account'
+import {
+  generateAccountKey,
+  getGlobalStorage,
+  setAccountStorage,
+  setGlobalStorage
+} from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
+import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
+import base64 from 'react-native-base64'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
-import { Placeholder } from 'rn-placeholder'
 import validUrl from 'valid-url'
-import InstanceInfo from './Info'
 import CustomText from '../Text'
-import { useNavigation } from '@react-navigation/native'
-import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
-import queryClient from '@helpers/queryClient'
-import { useAppDispatch } from '@root/store'
-import addInstance from '@utils/slices/instances/add'
+import { storage } from '@utils/storage'
+import { MMKV } from 'react-native-mmkv'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -47,8 +54,6 @@ const ComponentInstance: React.FC<Props> = ({
     !!validUrl.isHttpsUri(`https://${domain}`) &&
     errorCode === 401
 
-  const dispatch = useAppDispatch()
-  const instances = useSelector(getInstances, () => true)
   const instanceQuery = useInstanceQuery({
     domain,
     options: {
@@ -62,7 +67,7 @@ const ComponentInstance: React.FC<Props> = ({
     }
   })
 
-  const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
+  const deprecateAuthFollow = featureCheck('deprecate_auth_follow')
 
   const appsMutation = useAppsMutation({
     retry: false,
@@ -97,14 +102,86 @@ const ComponentInstance: React.FC<Props> = ({
           { tokenEndpoint: `https://${variables.domain}/oauth/token` }
         )
         queryClient.clear()
-        dispatch(
-          addInstance({
-            domain,
-            token: accessToken,
-            instance: instanceQuery.data!,
-            appData: { clientId, clientSecret }
-          })
+
+        const {
+          body: { id, acct, avatar_static }
+        } = await apiGeneral<Mastodon.Account>({
+          method: 'get',
+          domain,
+          url: `api/v1/accounts/verify_credentials`,
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+
+        const accounts = getGlobalStorage.object('accounts')
+        const accountKey = generateAccountKey({ domain, id })
+        const account = accounts?.find(account => account === accountKey)
+
+        const accountDetails: StorageAccount = {
+          'auth.clientId': clientId,
+          'auth.clientSecret': clientSecret,
+          'auth.token': accessToken,
+          'auth.domain': domain,
+          'auth.account.id': id,
+          'auth.account.acct': acct,
+          'auth.account.avatar_static': avatar_static,
+          version: instanceQuery.data?.version || '0',
+          preferences: undefined,
+          notifications: {
+            follow: true,
+            follow_request: true,
+            favourite: true,
+            reblog: true,
+            mention: true,
+            poll: true,
+            status: true,
+            update: true,
+            'admin.sign_up': true,
+            'admin.report': true
+          },
+          push: {
+            global: false,
+            decode: false,
+            alerts: {
+              follow: true,
+              follow_request: true,
+              favourite: true,
+              reblog: true,
+              mention: true,
+              poll: true,
+              status: true,
+              update: true,
+              'admin.sign_up': false,
+              'admin.report': false
+            },
+            key: base64.encodeFromByteArray(Random.getRandomBytes(16))
+          },
+          page_local: {
+            showBoosts: true,
+            showReplies: true
+          },
+          page_me: {
+            followedTags: { shown: false },
+            lists: { shown: false },
+            announcements: { shown: false, unread: 0 }
+          },
+          drafts: [],
+          emojis_frequent: []
+        }
+
+        setAccountStorage(
+          Object.keys(accountDetails).map((key: keyof StorageAccount) => ({
+            key,
+            value: accountDetails[key]
+          })),
+          accountKey
         )
+        storage.account = new MMKV({ id: accountKey })
+
+        if (!account) {
+          setGlobalStorage('accounts', accounts?.concat([accountKey]))
+        }
+        setGlobalStorage('account.active', accountKey)
+
         goBack && navigation.goBack()
       }
     }
@@ -112,7 +189,8 @@ const ComponentInstance: React.FC<Props> = ({
 
   const processUpdate = useCallback(() => {
     if (domain) {
-      if (instances && instances.filter(instance => instance.url === domain).length) {
+      const accounts = getGlobalStorage.object('accounts')
+      if (accounts && accounts.filter(account => account.startsWith(`${domain}/`)).length) {
         Alert.alert(
           t('componentInstance:update.alert.title'),
           t('componentInstance:update.alert.message'),
@@ -208,7 +286,8 @@ const ComponentInstance: React.FC<Props> = ({
                 text === domain &&
                 instanceQuery.isSuccess &&
                 instanceQuery.data &&
-                instanceQuery.data.uri
+                // @ts-ignore
+                (instanceQuery.data.domain || instanceQuery.data.uri)
               ) {
                 processUpdate()
               }
@@ -228,7 +307,8 @@ const ComponentInstance: React.FC<Props> = ({
             type='text'
             content={t('componentInstance:server.button')}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri && !whitelisted}
+            // @ts-ignore
+            disabled={!(instanceQuery.data?.domain || instanceQuery.data?.uri) && !whitelisted}
             loading={instanceQuery.isFetching || appsMutation.isLoading}
           />
         </View>
@@ -245,35 +325,7 @@ const ComponentInstance: React.FC<Props> = ({
             >
               {t('componentInstance:server.whitelisted')}
             </CustomText>
-          ) : (
-            <Placeholder>
-              <InstanceInfo
-                header={t('componentInstance:server.information.name')}
-                content={instanceQuery.data?.title || undefined}
-                potentialWidth={2}
-              />
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <InstanceInfo
-                  style={{ alignItems: 'flex-start' }}
-                  header={t('componentInstance:server.information.accounts')}
-                  content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-                <InstanceInfo
-                  style={{ alignItems: 'center' }}
-                  header={t('componentInstance:server.information.statuses')}
-                  content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-                <InstanceInfo
-                  style={{ alignItems: 'flex-end' }}
-                  header={t('componentInstance:server.information.domains')}
-                  content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-              </View>
-            </Placeholder>
-          )}
+          ) : null}
           <View
             style={{
               flexDirection: 'row',

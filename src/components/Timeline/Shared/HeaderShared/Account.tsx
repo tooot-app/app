@@ -1,5 +1,5 @@
+import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
-import { ParseEmojis } from '@root/components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'

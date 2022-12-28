@@ -1,12 +1,12 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
-import queryClient from '@helpers/queryClient'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import queryClient from '@utils/queryHooks'
 import { AxiosError } from 'axios'
 import i18next from 'i18next'
 import { RefObject } from 'react'
 import FlashMessage from 'react-native-flash-message'
-import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 type AccountWithSource = Mastodon.Account & Required<Pick<Mastodon.Account, 'source'>>
 

@@ -1,10 +1,10 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import chooseAndUploadAttachment from './addAttachment'
@@ -30,8 +29,6 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { t } = useTranslation('screenCompose')
   const { colors } = useTheme()
   const navigation = useNavigation<any>()
-
-  const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
 
   const flatListRef = useRef<FlatList>(null)
 
@@ -285,7 +282,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         data={composeState.attachments.uploads}
         keyExtractor={item => item.local?.uri || item.remote?.url || Math.random().toString()}
         ListFooterComponent={
-          composeState.attachments.uploads.length < maxAttachments ? listFooter : null
+          composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS ? listFooter : null
         }
       />
     </View>

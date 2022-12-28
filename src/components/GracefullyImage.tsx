@@ -10,8 +10,8 @@ import {
   View,
   ViewStyle
 } from 'react-native'
-import FastImage, { ImageStyle } from 'react-native-fast-image'
 import { Blurhash } from 'react-native-blurhash'
+import FastImage, { ImageStyle } from 'react-native-fast-image'
 
 // blurhas -> if blurhash, show before any loading succeed
 // original -> load original

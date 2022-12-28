@@ -1,5 +1,3 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
   useInfiniteQuery,
@@ -9,10 +7,11 @@ import {
   useQuery,
   UseQueryOptions
 } from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { AxiosError } from 'axios'
 import { infinitePageParams } from './utils'
-import { PagedResponse } from '@api/helpers'
-import { useSelector } from 'react-redux'
-import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (
@@ -23,7 +22,7 @@ const useFollowedTagsQuery = (
     >
   } | void
 ) => {
-  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
+  const canFollowTags = featureCheck('follow_tags')
 
   const queryKey: QueryKeyFollowedTags = ['FollowedTags']
   return useInfiniteQuery(

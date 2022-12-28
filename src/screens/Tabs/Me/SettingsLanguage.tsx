@@ -1,33 +1,32 @@
 import haptics from '@components/haptics'
 import { MenuRow } from '@components/Menu'
-import { LOCALES } from '@root/i18n/locales'
+import { LOCALES } from '@i18n/locales'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
-import { setChannels } from '@utils/slices/instances/push/utils'
-import { getInstances } from '@utils/slices/instancesSlice'
-import { changeLanguage } from '@utils/slices/settingsSlice'
+import { setChannels } from '@utils/push/constants'
+import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
 
 const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Language'>> = ({
   navigation
 }) => {
   const { i18n } = useTranslation('screenTabs')
   const languages = Object.entries(LOCALES)
-  const instances = useSelector(getInstances)
-  const dispatch = useDispatch()
+
+  const [_, setLanguage] = useGlobalStorage.string('app.language')
 
   const change = (lang: string) => {
     haptics('Success')
 
-    dispatch(changeLanguage(lang))
+    setLanguage(lang)
     i18n.changeLanguage(lang)
 
     // Update Android notification channel language
     if (Platform.OS === 'android') {
-      instances.forEach(instance => setChannels(instance, true))
+      const accounts = getGlobalStorage.object('accounts')
+      accounts?.forEach(account => setChannels(true, account))
     }
 
     navigation.pop(1)

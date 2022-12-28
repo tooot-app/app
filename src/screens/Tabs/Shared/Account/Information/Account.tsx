@@ -1,35 +1,34 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import { getInstanceAccount, getInstanceUri } from '@utils/slices/instancesSlice'
+import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
 import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  myInfo?: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({ account }) => {
+const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.acct === next?.acct)
-  const instanceUri = useSelector(getInstanceUri)
+
+  const [acct] = useAccountStorage.string('auth.account.acct')
+  const domain = getAccountStorage.string('auth.domain')
 
   const { data: relationship } = useRelationshipQuery({
     id: account?.id || '',
     options: { enabled: account !== undefined }
   })
 
-  const localInstance = account?.acct.includes('@')
-    ? account?.acct.includes(`@${instanceUri}`)
-    : true
+  const localInstance = account?.acct.includes('@') ? account?.acct.includes(`@${domain}`) : true
 
-  if (account || (localInstance && instanceAccount)) {
+  if (account || localInstance) {
     return (
       <View
         style={{
@@ -52,8 +51,8 @@ const AccountInformationAccount: React.FC<Props> = ({ account }) => {
             }}
             selectable
           >
-            @{account?.acct}
-            {localInstance ? `@${instanceUri}` : null}
+            @{myInfo ? acct : account?.acct}
+            {localInstance ? `@${domain}` : null}
           </CustomText>
           {relationship?.followed_by ? t('shared.account.followed_by') : null}
         </CustomText>

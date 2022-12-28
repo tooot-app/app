@@ -1,8 +1,8 @@
-import React from 'react'
-import { View } from 'react-native'
+import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import CustomText from '@components/Text'
+import React from 'react'
+import { View } from 'react-native'
 
 export interface Props {
   heading: string

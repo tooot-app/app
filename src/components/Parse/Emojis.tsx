@@ -1,13 +1,12 @@
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Platform, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { useSelector } from 'react-redux'
 import validUrl from 'valid-url'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
@@ -27,7 +26,7 @@ const ParseEmojis = React.memo(
 
     const { reduceMotionEnabled } = useAccessibility()
 
-    const adaptiveFontsize = useSelector(getSettingsFontsize)
+    const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
     const adaptedFontsize = adaptiveScale(
       StyleConstants.Font.Size[size],
       adaptiveSize ? adaptiveFontsize : 0

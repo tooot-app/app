@@ -1,5 +1,6 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -16,7 +17,6 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 
 export interface Props {
   flRef: RefObject<FlatList<any>>

@@ -1,6 +1,6 @@
-import apiInstance from '@api/instance'
-import detectLanguage from '@helpers/detectLanguage'
 import { ComposeState } from '@screens/Compose/utils/types'
+import apiInstance from '@utils/api/instance'
+import detectLanguage from '@utils/helpers/detectLanguage'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import * as Crypto from 'expo-crypto'
 import { getPureContent } from './processText'

@@ -1,14 +1,14 @@
 import { HeaderLeft } from '@components/Header'
+import ComponentSeparator from '@components/Separator'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
+import { InfiniteQueryObserver, useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { StyleConstants } from '@utils/styles/constants'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
-import { InfiniteQueryObserver, useQueryClient } from '@tanstack/react-query'
-import ComponentSeparator from '@components/Separator'
-import { StyleConstants } from '@utils/styles/constants'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   navigation,
@@ -132,7 +132,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           }
 
           return (
-            <View style={{ marginLeft: Math.max(0, levels.current - 1) * StyleConstants.Spacing.S }}>
+            <View
+              style={{ marginLeft: Math.max(0, levels.current - 1) * StyleConstants.Spacing.S }}
+            >
               <TimelineDefault
                 item={item}
                 queryKey={queryKey}

@@ -1,10 +1,9 @@
+import { useGlobalStorage } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/global'
+import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
+import { throttle } from 'lodash'
 import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 import { Appearance } from 'react-native'
-import { useSelector } from 'react-redux'
-import { ColorDefinitions, getColors, Theme } from '@utils/styles/themes'
-import { getSettingsDarkTheme, getSettingsTheme } from '@utils/slices/settingsSlice'
-import { throttle } from 'lodash'
-import { SettingsLatest } from '@utils/migrations/settings/migration'
 
 type ContextType = {
   mode: 'light' | 'dark'
@@ -46,14 +45,14 @@ const useColorSchemeDelay = (delay = 500) => {
 
 const determineTheme = (
   osTheme: 'light' | 'dark' | null | undefined,
-  userTheme: SettingsLatest['theme'],
-  darkTheme: SettingsLatest['darkTheme']
+  userTheme: StorageGlobal['app.theme'],
+  darkTheme: StorageGlobal['app.theme.dark']
 ): 'light' | 'dark_lighter' | 'dark_darker' => {
   enum DarkTheme {
     lighter = 'dark_lighter',
     darker = 'dark_darker'
   }
-  const determineDarkTheme = DarkTheme[darkTheme]
+  const determineDarkTheme = DarkTheme[darkTheme || 'lighter']
   switch (userTheme) {
     case 'auto':
       switch (osTheme) {
@@ -66,19 +65,23 @@ const determineTheme = (
       return 'light'
     case 'dark':
       return determineDarkTheme
+    default:
+      return determineDarkTheme
   }
 }
 
 const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const osTheme = useColorSchemeDelay()
-  const userTheme = useSelector(getSettingsTheme)
-  const darkTheme = useSelector(getSettingsDarkTheme)
+  const [userTheme] = useGlobalStorage.string('app.theme')
+  const [darkTheme] = useGlobalStorage.string('app.theme.dark')
 
-  const [mode, setMode] = useState(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  const [mode, setMode] = useState<'light' | 'dark'>(
+    userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light'
+  )
   const [theme, setTheme] = useState<Theme>(determineTheme(osTheme, userTheme, darkTheme))
 
   useEffect(() => {
-    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light')
   }, [osTheme, userTheme])
   useEffect(() => {
     setTheme(determineTheme(osTheme, userTheme, darkTheme))

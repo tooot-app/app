@@ -1,6 +1,6 @@
+import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { View } from 'react-native'
-import { StyleConstants } from '@utils/styles/constants'
 
 export interface Props {
   children: React.ReactNode

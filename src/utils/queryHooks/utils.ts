@@ -1,4 +1,4 @@
-import { PagedResponse } from '@api/helpers'
+import { PagedResponse } from '@utils/api/helpers'
 
 export const infinitePageParams = {
   getPreviousPageParam: (firstPage: PagedResponse<any>) =>
