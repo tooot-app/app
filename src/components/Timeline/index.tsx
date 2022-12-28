@@ -5,7 +5,7 @@ import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { useGlobalStorageListener } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useCallback, useRef } from 'react'
+import React, { RefObject, useRef } from 'react'
 import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import TimelineEmpty from './Empty'
@@ -55,11 +55,6 @@ const Timeline: React.FC<Props> = ({
     })
 
   const flattenData = data?.pages ? data.pages?.flatMap(page => [...page.body]) : []
-
-  const onEndReached = useCallback(
-    () => !disableInfinity && !isFetchingNextPage && fetchNextPage(),
-    [isFetchingNextPage]
-  )
 
   const flRef = useRef<FlatList>(null)
 
@@ -120,7 +115,7 @@ const Timeline: React.FC<Props> = ({
         data={flattenData}
         initialNumToRender={6}
         maxToRenderPerBatch={3}
-        onEndReached={onEndReached}
+        onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
         onEndReachedThreshold={0.75}
         ListFooterComponent={
           <TimelineFooter queryKey={queryKey} disableInfinity={disableInfinity} />

@@ -9,7 +9,7 @@ import { SearchResult } from '@utils/queryHooks/search'
 import { QueryKeyUsers, useUsersQuery } from '@utils/queryHooks/users'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Circle, Flow } from 'react-native-animated-spinkit'
@@ -40,11 +40,6 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
     }
   })
   const flattenData = data?.pages ? data.pages.flatMap(page => [...page.body]) : []
-
-  const onEndReached = useCallback(
-    () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
-    [hasNextPage, isFetchingNextPage]
-  )
 
   const [isSearching, setIsSearching] = useState(false)
 
@@ -90,7 +85,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
           children={<Flow size={StyleConstants.Font.Size.L} color={colors.secondary} />}
         />
       )}
-      onEndReached={onEndReached}
+      onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       onEndReachedThreshold={0.75}
       ItemSeparatorComponent={ComponentSeparator}
       ListEmptyComponent={

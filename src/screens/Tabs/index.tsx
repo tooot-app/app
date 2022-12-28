@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
 import { getGlobalStorage, useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 import { Platform } from 'react-native'
 import TabLocal from './Local'
 import TabMe from './Me'
@@ -19,31 +19,6 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
 
   const [accountActive] = useGlobalStorage.string('account.active')
   const [avatarStatic] = useAccountStorage.string('auth.account.avatar_static')
-
-  const composeListeners = useMemo(
-    () => ({
-      tabPress: (e: any) => {
-        e.preventDefault()
-        haptics('Light')
-        navigation.navigate('Screen-Compose')
-      }
-    }),
-    []
-  )
-  const composeComponent = useCallback(() => null, [])
-
-  const meListeners = useMemo(
-    () => ({
-      tabLongPress: () => {
-        haptics('Light')
-        //@ts-ignore
-        navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })
-        //@ts-ignore
-        navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
-      }
-    }),
-    []
-  )
 
   return (
     <Tab.Navigator
@@ -97,9 +72,32 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
     >
       <Tab.Screen name='Tab-Local' component={TabLocal} />
       <Tab.Screen name='Tab-Public' component={TabPublic} />
-      <Tab.Screen name='Tab-Compose' component={composeComponent} listeners={composeListeners} />
+      <Tab.Screen
+        name='Tab-Compose'
+        listeners={{
+          tabPress: e => {
+            e.preventDefault()
+            haptics('Light')
+            navigation.navigate('Screen-Compose')
+          }
+        }}
+      >
+        {() => null}
+      </Tab.Screen>
       <Tab.Screen name='Tab-Notifications' component={TabNotifications} />
-      <Tab.Screen name='Tab-Me' component={TabMe} listeners={meListeners} />
+      <Tab.Screen
+        name='Tab-Me'
+        component={TabMe}
+        listeners={{
+          tabLongPress: () => {
+            haptics('Light')
+            //@ts-ignore
+            navigation.navigate('Tab-Me', { screen: 'Tab-Me-Root' })
+            //@ts-ignore
+            navigation.navigate('Tab-Me', { screen: 'Tab-Me-Switch' })
+          }
+        }}
+      />
     </Tab.Navigator>
   )
 }

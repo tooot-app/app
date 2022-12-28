@@ -221,4 +221,4 @@ const TimelineDefault: React.FC<Props> = ({
   )
 }
 
-export default TimelineDefault
+export default React.memo(TimelineDefault, () => true)

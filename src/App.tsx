@@ -17,10 +17,7 @@ import {
   setAccount,
   setGlobalStorage
 } from '@utils/storage/actions'
-import {
-  hasMigratedFromAsyncStorage,
-  migrateFromAsyncStorage
-} from '@utils/storage/migrations/toMMKV'
+import { migrateFromAsyncStorage, versionStorageGlobal } from '@utils/storage/migrations/toMMKV'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
@@ -51,17 +48,15 @@ const App: React.FC = () => {
   const [appIsReady, setAppIsReady] = useState(false)
   const [localCorrupt, setLocalCorrupt] = useState<string>()
 
-  const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage)
+  const [hasMigrated, setHasMigrated] = useState<boolean>(versionStorageGlobal !== undefined)
 
   useEffect(() => {
     const prepare = async () => {
-      if (!hasMigrated && !hasMigratedFromAsyncStorage) {
+      if (!hasMigrated) {
         try {
           await migrateFromAsyncStorage()
           setHasMigrated(true)
-        } catch (e) {
-          // TODO: fall back to AsyncStorage? Wipe storage clean and use MMKV? Crash app?
-        }
+        } catch {}
       } else {
         log('log', 'App', 'loading from MMKV')
         const account = getGlobalStorage.string('account.active')

@@ -13,6 +13,8 @@ export type GlobalV0 = {
   // number
   'app.count_till_store_review'?: number
   'app.font_size'?: -1 | 0 | 1 | 2 | 3
+  'version.global': number
+  'version.account': number
   // boolean
   'app.auto_play_gifv'?: boolean
 

@@ -18,7 +18,7 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
@@ -52,14 +52,6 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
 
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-
-  const onPress = useCallback(() => {
-    notification.status &&
-      navigation.push('Tab-Shared-Toot', {
-        toot: notification.status,
-        rootQueryKey: queryKey
-      })
-  }, [])
 
   const main = () => {
     return (
@@ -159,7 +151,13 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
               backgroundColor: colors.backgroundDefault,
               paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
             }}
-            onPress={onPress}
+            onPress={() =>
+              notification.status &&
+              navigation.push('Tab-Shared-Toot', {
+                toot: notification.status,
+                rootQueryKey: queryKey
+              })
+            }
             onLongPress={() => {}}
             children={main()}
           />
@@ -187,4 +185,4 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   )
 }
 
-export default TimelineNotifications
+export default React.memo(TimelineNotifications, () => true)

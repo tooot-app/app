@@ -16,7 +16,7 @@ import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
@@ -76,7 +76,7 @@ const TimelineActions: React.FC = () => {
   })
 
   const [accountId] = useAccountStorage.string('auth.account.id')
-  const onPressReply = useCallback(() => {
+  const onPressReply = () => {
     const accts = uniqBy(
       ([status.account] as Mastodon.Account[] & Mastodon.Mention[])
         .concat(status.mentions)
@@ -89,9 +89,9 @@ const TimelineActions: React.FC = () => {
       accts,
       queryKey
     })
-  }, [status.replies_count])
+  }
   const { showActionSheetWithOptions } = useActionSheet()
-  const onPressReblog = useCallback(() => {
+  const onPressReblog = () => {
     if (!status.reblogged) {
       showActionSheetWithOptions(
         {
@@ -157,8 +157,8 @@ const TimelineActions: React.FC = () => {
         }
       })
     }
-  }, [status.reblogged, status.reblogs_count])
-  const onPressFavourite = useCallback(() => {
+  }
+  const onPressFavourite = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
@@ -172,8 +172,8 @@ const TimelineActions: React.FC = () => {
         countValue: status.favourites_count
       }
     })
-  }, [status.favourited, status.favourites_count])
-  const onPressBookmark = useCallback(() => {
+  }
+  const onPressBookmark = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
@@ -187,28 +187,25 @@ const TimelineActions: React.FC = () => {
         countValue: undefined
       }
     })
-  }, [status.bookmarked])
+  }
 
-  const childrenReply = useMemo(
-    () => (
-      <>
-        <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
-        {status.replies_count > 0 ? (
-          <CustomText
-            style={{
-              color: colors.secondary,
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS
-            }}
-          >
-            {status.replies_count}
-          </CustomText>
-        ) : null}
-      </>
-    ),
-    [status.replies_count]
+  const childrenReply = () => (
+    <>
+      <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
+      {status.replies_count > 0 ? (
+        <CustomText
+          style={{
+            color: colors.secondary,
+            fontSize: StyleConstants.Font.Size.M,
+            marginLeft: StyleConstants.Spacing.XS
+          }}
+        >
+          {status.replies_count}
+        </CustomText>
+      ) : null}
+    </>
   )
-  const childrenReblog = useMemo(() => {
+  const childrenReblog = () => {
     const color = (state: boolean) => (state ? colors.green : colors.secondary)
     const disabled =
       status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
@@ -236,8 +233,8 @@ const TimelineActions: React.FC = () => {
         ) : null}
       </>
     )
-  }, [status.reblogged, status.reblogs_count])
-  const childrenFavourite = useMemo(() => {
+  }
+  const childrenFavourite = () => {
     const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
@@ -256,13 +253,13 @@ const TimelineActions: React.FC = () => {
         ) : null}
       </>
     )
-  }, [status.favourited, status.favourites_count])
-  const childrenBookmark = useMemo(() => {
+  }
+  const childrenBookmark = () => {
     const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
       <Icon name='Bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
     )
-  }, [status.bookmarked])
+  }
 
   return (
     <View style={{ flexDirection: 'row' }}>
@@ -275,7 +272,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReply}
-        children={childrenReply}
+        children={childrenReply()}
       />
 
       <Pressable
@@ -289,7 +286,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReblog}
-        children={childrenReblog}
+        children={childrenReblog()}
         disabled={
           status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
         }
@@ -306,7 +303,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressFavourite}
-        children={childrenFavourite}
+        children={childrenFavourite()}
       />
 
       <Pressable
@@ -320,7 +317,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressBookmark}
-        children={childrenBookmark}
+        children={childrenBookmark()}
       />
     </View>
   )

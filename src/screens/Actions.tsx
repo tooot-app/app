@@ -1,7 +1,7 @@
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler'
 import Animated, {
@@ -34,9 +34,8 @@ const ScreenActions = ({
       bottom: interpolate(panY.value, [0, screenHeight], [0, -screenHeight], Extrapolate.CLAMP)
     }
   })
-  const dismiss = useCallback(() => {
-    navigation.goBack()
-  }, [])
+  const dismiss = () => navigation.goBack()
+
   const onGestureEvent = useAnimatedGestureHandler({
     onActive: ({ translationY }) => {
       panY.value = translationY

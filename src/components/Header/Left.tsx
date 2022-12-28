@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Pressable } from 'react-native'
 
 export interface Props {
@@ -21,9 +21,9 @@ const HeaderLeft: React.FC<Props> = ({
   background = false,
   onPress
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
 
-  const children = useMemo(() => {
+  const children = () => {
     switch (type) {
       case 'icon':
         return (
@@ -35,31 +35,23 @@ const HeaderLeft: React.FC<Props> = ({
         )
       case 'text':
         return (
-          <CustomText
-            fontStyle='M'
-            style={{ color: colors.primaryDefault }}
-            children={content}
-          />
+          <CustomText fontStyle='M' style={{ color: colors.primaryDefault }} children={content} />
         )
     }
-  }, [theme])
+  }
 
   return (
     <Pressable
       onPress={onPress}
-      children={children}
+      children={children()}
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: background
-          ? colors.backgroundOverlayDefault
-          : undefined,
+        backgroundColor: background ? colors.backgroundOverlayDefault : undefined,
         minHeight: 44,
         minWidth: 44,
-        marginLeft: native
-          ? -StyleConstants.Spacing.S
-          : StyleConstants.Spacing.S,
+        marginLeft: native ? -StyleConstants.Spacing.S : StyleConstants.Spacing.S,
         ...(type === 'icon' && {
           borderRadius: 100
         }),

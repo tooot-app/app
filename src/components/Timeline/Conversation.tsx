@@ -115,4 +115,4 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
   )
 }
 
-export default TimelineConversation
+export default React.memo(TimelineConversation, () => true)

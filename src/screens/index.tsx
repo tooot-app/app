@@ -23,7 +23,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Linking from 'expo-linking'
 import { addScreenshotListener } from 'expo-screen-capture'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IntlProvider } from 'react-intl'
 import { Alert, Platform, StatusBar } from 'react-native'
@@ -90,7 +90,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   useEmojisQuery({ options: { enabled: !!accountActive } })
 
   // Callbacks
-  const navigationContainerOnStateChange = useCallback(() => {
+  const navigationContainerOnStateChange = () => {
     const currentRoute = navigationRef.getCurrentRoute()
 
     const matchTabName = currentRoute?.name?.match(/(Tab-.*)-Root/)
@@ -98,7 +98,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       // @ts-ignore
       setGlobalStorage('app.prev_tab', matchTabName[1])
     }
-  }, [])
+  }
 
   // Deep linking for compose
   const [deeplinked, setDeeplinked] = useState(false)
@@ -128,109 +128,106 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [accounts, accountActive, deeplinked])
 
   // Share Extension
-  const handleShare = useCallback(
-    (
-      item?:
-        | {
-            data: { mimeType: string; data: string }[]
-            mimeType: undefined
-          }
-        | { data: string | string[]; mimeType: string }
-    ) => {
-      if (!accountActive) {
-        return
-      }
-      if (!item || !item.data) {
-        return
-      }
-
-      let text: string | undefined = undefined
-      let media: { uri: string; mime: string }[] = []
-
-      const typesImage = ['png', 'jpg', 'jpeg', 'gif']
-      const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
-      const filterMedia = ({ uri, mime }: { uri: string; mime: string }) => {
-        if (mime.startsWith('image/')) {
-          if (!typesImage.includes(mime.split('/')[1])) {
-            console.warn('Image type not supported:', mime.split('/')[1])
-            displayMessage({
-              message: t('screens:shareError.imageNotSupported', {
-                type: mime.split('/')[1]
-              }),
-              type: 'danger'
-            })
-            return
-          }
-          media.push({ uri, mime })
-        } else if (mime.startsWith('video/')) {
-          if (!typesVideo.includes(mime.split('/')[1])) {
-            console.warn('Video type not supported:', mime.split('/')[1])
-            displayMessage({
-              message: t('screens:shareError.videoNotSupported', {
-                type: mime.split('/')[1]
-              }),
-              type: 'danger'
-            })
-            return
-          }
-          media.push({ uri, mime })
-        } else {
-          if (typesImage.includes(uri.split('.').pop() || '')) {
-            media.push({ uri, mime: 'image/jpg' })
-            return
-          }
-          if (typesVideo.includes(uri.split('.').pop() || '')) {
-            media.push({ uri, mime: 'video/mp4' })
-            return
-          }
-          text = !text ? uri : text.concat(text, `\n${uri}`)
+  const handleShare = (
+    item?:
+      | {
+          data: { mimeType: string; data: string }[]
+          mimeType: undefined
         }
-      }
+      | { data: string | string[]; mimeType: string }
+  ) => {
+    if (!accountActive) {
+      return
+    }
+    if (!item || !item.data) {
+      return
+    }
 
-      switch (Platform.OS) {
-        case 'ios':
-          if (!Array.isArray(item.data) || !item.data) {
-            return
-          }
+    let text: string | undefined = undefined
+    let media: { uri: string; mime: string }[] = []
 
-          for (const d of item.data) {
-            if (typeof d !== 'string') {
-              filterMedia({ uri: d.data, mime: d.mimeType })
-            }
-          }
-          break
-        case 'android':
-          if (!item.mimeType) {
-            return
-          }
-          if (Array.isArray(item.data)) {
-            for (const d of item.data) {
-              filterMedia({ uri: d, mime: item.mimeType })
-            }
-          } else {
-            filterMedia({ uri: item.data, mime: item.mimeType })
-          }
-          break
-      }
-
-      if (!text && !media.length) {
-        return
+    const typesImage = ['png', 'jpg', 'jpeg', 'gif']
+    const typesVideo = ['mp4', 'm4v', 'mov', 'webm', 'mpeg']
+    const filterMedia = ({ uri, mime }: { uri: string; mime: string }) => {
+      if (mime.startsWith('image/')) {
+        if (!typesImage.includes(mime.split('/')[1])) {
+          console.warn('Image type not supported:', mime.split('/')[1])
+          displayMessage({
+            message: t('screens:shareError.imageNotSupported', {
+              type: mime.split('/')[1]
+            }),
+            type: 'danger'
+          })
+          return
+        }
+        media.push({ uri, mime })
+      } else if (mime.startsWith('video/')) {
+        if (!typesVideo.includes(mime.split('/')[1])) {
+          console.warn('Video type not supported:', mime.split('/')[1])
+          displayMessage({
+            message: t('screens:shareError.videoNotSupported', {
+              type: mime.split('/')[1]
+            }),
+            type: 'danger'
+          })
+          return
+        }
+        media.push({ uri, mime })
       } else {
-        if (accounts?.length) {
-          navigationRef.navigate('Screen-AccountSelection', {
-            share: { text, media }
-          })
-        } else {
-          navigationRef.navigate('Screen-Compose', {
-            type: 'share',
-            text,
-            media
-          })
+        if (typesImage.includes(uri.split('.').pop() || '')) {
+          media.push({ uri, mime: 'image/jpg' })
+          return
         }
+        if (typesVideo.includes(uri.split('.').pop() || '')) {
+          media.push({ uri, mime: 'video/mp4' })
+          return
+        }
+        text = !text ? uri : text.concat(text, `\n${uri}`)
       }
-    },
-    []
-  )
+    }
+
+    switch (Platform.OS) {
+      case 'ios':
+        if (!Array.isArray(item.data) || !item.data) {
+          return
+        }
+
+        for (const d of item.data) {
+          if (typeof d !== 'string') {
+            filterMedia({ uri: d.data, mime: d.mimeType })
+          }
+        }
+        break
+      case 'android':
+        if (!item.mimeType) {
+          return
+        }
+        if (Array.isArray(item.data)) {
+          for (const d of item.data) {
+            filterMedia({ uri: d, mime: item.mimeType })
+          }
+        } else {
+          filterMedia({ uri: item.data, mime: item.mimeType })
+        }
+        break
+    }
+
+    if (!text && !media.length) {
+      return
+    } else {
+      if (accounts?.length) {
+        navigationRef.navigate('Screen-AccountSelection', {
+          share: { text, media }
+        })
+      } else {
+        navigationRef.navigate('Screen-Compose', {
+          type: 'share',
+          text,
+          media
+        })
+      }
+    }
+  }
   useEffect(() => {
     ShareMenu.getInitialShare(handleShare)
   }, [])

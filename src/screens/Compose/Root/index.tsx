@@ -2,7 +2,7 @@ import ComponentSeparator from '@components/Separator'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useEffect, useMemo, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { AccessibilityInfo, findNodeHandle, FlatList, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import ComposePosting from '../Posting'
@@ -53,29 +53,22 @@ const ComposeRoot = () => {
     }
   }, [composeState.tag])
 
-  const listEmpty = useMemo(() => {
-    if (isFetching) {
-      return (
-        <View key='listEmpty' style={{ flex: 1, alignItems: 'center' }}>
-          <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
-        </View>
-      )
-    }
-  }, [isFetching])
-
-  const Footer = useMemo(
-    () => <ComposeRootFooter accessibleRefAttachments={accessibleRefAttachments} />,
-    [accessibleRefAttachments.current]
-  )
-
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         renderItem={({ item }) => <ComposeRootSuggestion item={item} />}
-        ListEmptyComponent={listEmpty}
+        ListEmptyComponent={
+          isFetching ? (
+            <View key='listEmpty' style={{ flex: 1, alignItems: 'center' }}>
+              <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+            </View>
+          ) : null
+        }
         keyboardShouldPersistTaps='always'
         ListHeaderComponent={ComposeRootHeader}
-        ListFooterComponent={Footer}
+        ListFooterComponent={
+          <ComposeRootFooter accessibleRefAttachments={accessibleRefAttachments} />
+        }
         ItemSeparatorComponent={ComponentSeparator}
         // @ts-ignore
         data={data ? data[mapSchemaToType()] : undefined}

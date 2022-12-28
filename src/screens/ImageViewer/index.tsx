@@ -4,7 +4,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
@@ -40,110 +40,15 @@ const ScreenImagesViewer = ({
 
   const insets = useSafeAreaInsets()
 
-  const { mode, colors } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenImageViewer'])
 
   const initialIndex = imageUrls.findIndex(image => image.id === id)
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   const { showActionSheetWithOptions } = useActionSheet()
-  const onPress = useCallback(() => {
-    showActionSheetWithOptions(
-      {
-        options: [
-          t('screenImageViewer:content.options.save'),
-          t('screenImageViewer:content.options.share'),
-          t('common:buttons.cancel')
-        ],
-        cancelButtonIndex: 2,
-        ...androidActionSheetStyles(colors)
-      },
-      async buttonIndex => {
-        switch (buttonIndex) {
-          case 0:
-            saveImage({ image: imageUrls[currentIndex] })
-            break
-          case 1:
-            switch (Platform.OS) {
-              case 'ios':
-                await Share.share({ url: imageUrls[currentIndex].url })
-                break
-              case 'android':
-                await Share.share({ message: imageUrls[currentIndex].url })
-                break
-            }
-            break
-        }
-      }
-    )
-  }, [currentIndex])
 
   const isZoomed = useSharedValue(false)
-
-  const renderItem = React.useCallback(
-    ({
-      item
-    }: {
-      item: RootStackScreenProps<'Screen-ImagesViewer'>['route']['params']['imageUrls'][0]
-    }) => {
-      const screenRatio = WINDOW_WIDTH / WINDOW_HEIGHT
-      const imageRatio = item.width && item.height ? item.width / item.height : 1
-      const imageWidth = item.width || 100
-      const imageHeight = item.height || 100
-
-      const maxWidthScale = item.width ? (item.width / WINDOW_WIDTH / PixelRatio.get()) * 4 : 0
-      const maxHeightScale = item.height ? (item.height / WINDOW_WIDTH / PixelRatio.get()) * 4 : 0
-      const max = Math.max.apply(Math, [maxWidthScale, maxHeightScale, 4])
-
-      return (
-        <Zoom
-          onZoomBegin={() => (isZoomed.value = true)}
-          onZoomEnd={() => (isZoomed.value = false)}
-          maximumZoomScale={max > 8 ? 8 : max}
-          simultaneousGesture={Gesture.Fling()
-            .direction(Directions.DOWN)
-            .onStart(() => {
-              if (isZoomed.value === false) {
-                runOnJS(navigation.goBack)()
-              }
-            })}
-          children={
-            <View
-              style={{
-                width: WINDOW_WIDTH,
-                height: WINDOW_HEIGHT,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <GracefullyImage
-                uri={{ preview: item.preview_url, remote: item.remote_url, original: item.url }}
-                dimension={{
-                  width:
-                    screenRatio > imageRatio
-                      ? (WINDOW_HEIGHT / imageHeight) * imageWidth
-                      : WINDOW_WIDTH,
-                  height:
-                    screenRatio > imageRatio
-                      ? WINDOW_HEIGHT
-                      : (WINDOW_WIDTH / imageWidth) * imageHeight
-                }}
-              />
-            </View>
-          }
-        />
-      )
-    },
-    [isZoomed.value]
-  )
-
-  const onViewableItemsChanged = useCallback(
-    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      setCurrentIndex(viewableItems[0]?.index || 0)
-    },
-    []
-  )
 
   return (
     <View style={{ backgroundColor: 'black' }}>
@@ -169,7 +74,36 @@ const ScreenImagesViewer = ({
           content='MoreHorizontal'
           native={false}
           background
-          onPress={onPress}
+          onPress={() =>
+            showActionSheetWithOptions(
+              {
+                options: [
+                  t('screenImageViewer:content.options.save'),
+                  t('screenImageViewer:content.options.share'),
+                  t('common:buttons.cancel')
+                ],
+                cancelButtonIndex: 2,
+                ...androidActionSheetStyles(colors)
+              },
+              async buttonIndex => {
+                switch (buttonIndex) {
+                  case 0:
+                    saveImage({ image: imageUrls[currentIndex] })
+                    break
+                  case 1:
+                    switch (Platform.OS) {
+                      case 'ios':
+                        await Share.share({ url: imageUrls[currentIndex].url })
+                        break
+                      case 'android':
+                        await Share.share({ message: imageUrls[currentIndex].url })
+                        break
+                    }
+                    break
+                }
+              }
+            )
+          }
         />
       </View>
       <LongPressGestureHandler
@@ -211,8 +145,71 @@ const ScreenImagesViewer = ({
           pagingEnabled
           horizontal
           keyExtractor={item => item.id}
-          renderItem={renderItem}
-          onViewableItemsChanged={onViewableItemsChanged}
+          renderItem={({
+            item
+          }: {
+            item: RootStackScreenProps<'Screen-ImagesViewer'>['route']['params']['imageUrls'][0]
+          }) => {
+            const screenRatio = WINDOW_WIDTH / WINDOW_HEIGHT
+            const imageRatio = item.width && item.height ? item.width / item.height : 1
+            const imageWidth = item.width || 100
+            const imageHeight = item.height || 100
+
+            const maxWidthScale = item.width
+              ? (item.width / WINDOW_WIDTH / PixelRatio.get()) * 4
+              : 0
+            const maxHeightScale = item.height
+              ? (item.height / WINDOW_WIDTH / PixelRatio.get()) * 4
+              : 0
+            const max = Math.max.apply(Math, [maxWidthScale, maxHeightScale, 4])
+
+            return (
+              <Zoom
+                onZoomBegin={() => (isZoomed.value = true)}
+                onZoomEnd={() => (isZoomed.value = false)}
+                maximumZoomScale={max > 8 ? 8 : max}
+                simultaneousGesture={Gesture.Fling()
+                  .direction(Directions.DOWN)
+                  .onStart(() => {
+                    if (isZoomed.value === false) {
+                      runOnJS(navigation.goBack)()
+                    }
+                  })}
+                children={
+                  <View
+                    style={{
+                      width: WINDOW_WIDTH,
+                      height: WINDOW_HEIGHT,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <GracefullyImage
+                      uri={{
+                        preview: item.preview_url,
+                        remote: item.remote_url,
+                        original: item.url
+                      }}
+                      dimension={{
+                        width:
+                          screenRatio > imageRatio
+                            ? (WINDOW_HEIGHT / imageHeight) * imageWidth
+                            : WINDOW_WIDTH,
+                        height:
+                          screenRatio > imageRatio
+                            ? WINDOW_HEIGHT
+                            : (WINDOW_WIDTH / imageWidth) * imageHeight
+                      }}
+                    />
+                  </View>
+                }
+              />
+            )
+          }}
+          onViewableItemsChanged={({ viewableItems }: { viewableItems: ViewToken[] }) => {
+            setCurrentIndex(viewableItems[0]?.index || 0)
+          }}
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50
           }}

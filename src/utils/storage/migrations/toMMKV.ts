@@ -3,7 +3,7 @@ import log from '@utils/startup/log'
 import { secureStorage, storage } from '@utils/storage'
 import { MMKV } from 'react-native-mmkv'
 
-export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
+export const versionStorageGlobal = storage.global.getNumber('version.global')
 
 export async function migrateFromAsyncStorage(): Promise<void> {
   log('log', 'Migration', 'Migrating...')
@@ -107,7 +107,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
     throw error
   }
 
-  storage.global.set('hasMigratedFromAsyncStorage', true)
+  storage.global.set('version.global', 0)
 
   const end = global.performance.now()
   log('log', 'Migration', `Migrated in ${end - start}ms`)

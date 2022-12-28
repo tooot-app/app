@@ -21,7 +21,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as StoreReview from 'expo-store-review'
 import { filter } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import React, { useEffect, useMemo, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
 import ComposeDraftsList, { removeDraft } from './DraftsList'
@@ -202,44 +202,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     return () => (autoSave ? clearInterval(autoSave) : undefined)
   }, [composeState])
 
-  const headerLeft = useCallback(
-    () => (
-      <HeaderLeft
-        type='text'
-        content={t('common:buttons.cancel')}
-        onPress={() => {
-          if (!composeState.dirty) {
-            navigation.goBack()
-            return
-          } else {
-            Alert.alert(t('screenCompose:heading.left.alert.title'), undefined, [
-              {
-                text: t('screenCompose:heading.left.alert.buttons.delete'),
-                style: 'destructive',
-                onPress: () => {
-                  removeDraft(composeState.timestamp)
-                  navigation.goBack()
-                }
-              },
-              {
-                text: t('screenCompose:heading.left.alert.buttons.save'),
-                onPress: () => {
-                  saveDraft()
-                  navigation.goBack()
-                }
-              },
-              {
-                text: t('common:buttons.cancel'),
-                style: 'cancel'
-              }
-            ])
-          }
-        }}
-      />
-    ),
-    [composeState]
-  )
-  const headerRightDisabled = useMemo(() => {
+  const headerRightDisabled = () => {
     if (totalTextCount > maxTootChars) {
       return true
     }
@@ -250,104 +213,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
       return true
     }
     return false
-  }, [totalTextCount, composeState.attachments.uploads, composeState.text.raw])
+  }
   const mutateTimeline = useTimelineMutation({ onMutate: true })
-  const headerRight = useCallback(
-    () => (
-      <HeaderRight
-        type='text'
-        content={t(
-          `screenCompose:heading.right.button.${
-            (params?.type &&
-              (params.type === 'conversation'
-                ? params.visibility === 'direct'
-                  ? params.type
-                  : 'default'
-                : params.type)) ||
-            'default'
-          }`
-        )}
-        onPress={() => {
-          composeDispatch({ type: 'posting', payload: true })
-
-          composePost(params, composeState)
-            .then(res => {
-              haptics('Success')
-              if (Platform.OS === 'ios' && Platform.constants.osVersion === '13.3') {
-                // https://github.com/tooot-app/app/issues/59
-              } else {
-                const currentCount = getGlobalStorage.number('app.count_till_store_review')
-                if (currentCount === 10) {
-                  StoreReview?.isAvailableAsync()
-                    .then(() => StoreReview.requestReview())
-                    .catch(() => {})
-                } else {
-                  setGlobalStorage('app.count_till_store_review', (currentCount || 0) + 1)
-                }
-              }
-
-              switch (params?.type) {
-                case 'edit':
-                  mutateTimeline.mutate({
-                    type: 'editItem',
-                    queryKey: params.queryKey,
-                    rootQueryKey: params.rootQueryKey,
-                    status: res
-                  })
-                  break
-                case 'deleteEdit':
-                case 'reply':
-                  if (params?.queryKey && params.queryKey[1].page === 'Toot') {
-                    queryClient.invalidateQueries(params.queryKey)
-                  }
-                  break
-              }
-              removeDraft(composeState.timestamp)
-              navigation.goBack()
-            })
-            .catch(error => {
-              if (error?.removeReply) {
-                Alert.alert(
-                  t('screenCompose:heading.right.alert.removeReply.title'),
-                  t('screenCompose:heading.right.alert.removeReply.description'),
-                  [
-                    {
-                      text: t('common:buttons.cancel'),
-                      onPress: () => {
-                        composeDispatch({ type: 'posting', payload: false })
-                      },
-                      style: 'destructive'
-                    },
-                    {
-                      text: t('screenCompose:heading.right.alert.removeReply.confirm'),
-                      onPress: () => {
-                        composeDispatch({ type: 'removeReply' })
-                        composeDispatch({ type: 'posting', payload: false })
-                      },
-                      style: 'default'
-                    }
-                  ]
-                )
-              } else {
-                haptics('Error')
-                handleError({ message: 'Posting error', captureResponse: true })
-                composeDispatch({ type: 'posting', payload: false })
-                Alert.alert(t('screenCompose:heading.right.alert.default.title'), undefined, [
-                  { text: t('screenCompose:heading.right.alert.default.button') }
-                ])
-              }
-            })
-        }}
-        loading={composeState.posting}
-        disabled={headerRightDisabled}
-      />
-    ),
-    [totalTextCount, composeState]
-  )
-
-  const headerContent = useMemo(() => {
-    return `${totalTextCount} / ${maxTootChars}`
-  }, [totalTextCount, maxTootChars, composeState.dirty])
 
   const inputProps: EmojisState['inputProps'] = [
     {
@@ -393,7 +260,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             name='Screen-Compose-Root'
             component={ComposeRoot}
             options={{
-              title: headerContent,
+              title: `${totalTextCount} / ${maxTootChars}`,
               headerTitleStyle: {
                 fontWeight:
                   totalTextCount > maxTootChars
@@ -402,8 +269,133 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                 fontSize: StyleConstants.Font.Size.M
               },
               headerTintColor: totalTextCount > maxTootChars ? colors.red : colors.secondary,
-              headerLeft,
-              headerRight
+              headerLeft: () => (
+                <HeaderLeft
+                  type='text'
+                  content={t('common:buttons.cancel')}
+                  onPress={() => {
+                    if (!composeState.dirty) {
+                      navigation.goBack()
+                      return
+                    } else {
+                      Alert.alert(t('screenCompose:heading.left.alert.title'), undefined, [
+                        {
+                          text: t('screenCompose:heading.left.alert.buttons.delete'),
+                          style: 'destructive',
+                          onPress: () => {
+                            removeDraft(composeState.timestamp)
+                            navigation.goBack()
+                          }
+                        },
+                        {
+                          text: t('screenCompose:heading.left.alert.buttons.save'),
+                          onPress: () => {
+                            saveDraft()
+                            navigation.goBack()
+                          }
+                        },
+                        {
+                          text: t('common:buttons.cancel'),
+                          style: 'cancel'
+                        }
+                      ])
+                    }
+                  }}
+                />
+              ),
+              headerRight: () => (
+                <HeaderRight
+                  type='text'
+                  content={t(
+                    `screenCompose:heading.right.button.${
+                      (params?.type &&
+                        (params.type === 'conversation'
+                          ? params.visibility === 'direct'
+                            ? params.type
+                            : 'default'
+                          : params.type)) ||
+                      'default'
+                    }`
+                  )}
+                  onPress={() => {
+                    composeDispatch({ type: 'posting', payload: true })
+
+                    composePost(params, composeState)
+                      .then(res => {
+                        haptics('Success')
+                        if (Platform.OS === 'ios' && Platform.constants.osVersion === '13.3') {
+                          // https://github.com/tooot-app/app/issues/59
+                        } else {
+                          const currentCount = getGlobalStorage.number(
+                            'app.count_till_store_review'
+                          )
+                          if (currentCount === 10) {
+                            StoreReview?.isAvailableAsync()
+                              .then(() => StoreReview.requestReview())
+                              .catch(() => {})
+                          } else {
+                            setGlobalStorage('app.count_till_store_review', (currentCount || 0) + 1)
+                          }
+                        }
+
+                        switch (params?.type) {
+                          case 'edit':
+                            mutateTimeline.mutate({
+                              type: 'editItem',
+                              queryKey: params.queryKey,
+                              rootQueryKey: params.rootQueryKey,
+                              status: res
+                            })
+                            break
+                          case 'deleteEdit':
+                          case 'reply':
+                            if (params?.queryKey && params.queryKey[1].page === 'Toot') {
+                              queryClient.invalidateQueries(params.queryKey)
+                            }
+                            break
+                        }
+                        removeDraft(composeState.timestamp)
+                        navigation.goBack()
+                      })
+                      .catch(error => {
+                        if (error?.removeReply) {
+                          Alert.alert(
+                            t('screenCompose:heading.right.alert.removeReply.title'),
+                            t('screenCompose:heading.right.alert.removeReply.description'),
+                            [
+                              {
+                                text: t('common:buttons.cancel'),
+                                onPress: () => {
+                                  composeDispatch({ type: 'posting', payload: false })
+                                },
+                                style: 'destructive'
+                              },
+                              {
+                                text: t('screenCompose:heading.right.alert.removeReply.confirm'),
+                                onPress: () => {
+                                  composeDispatch({ type: 'removeReply' })
+                                  composeDispatch({ type: 'posting', payload: false })
+                                },
+                                style: 'default'
+                              }
+                            ]
+                          )
+                        } else {
+                          haptics('Error')
+                          handleError({ message: 'Posting error', captureResponse: true })
+                          composeDispatch({ type: 'posting', payload: false })
+                          Alert.alert(
+                            t('screenCompose:heading.right.alert.default.title'),
+                            undefined,
+                            [{ text: t('screenCompose:heading.right.alert.default.button') }]
+                          )
+                        }
+                      })
+                  }}
+                  loading={composeState.posting}
+                  disabled={headerRightDisabled()}
+                />
+              )
             }}
           />
           <Stack.Screen

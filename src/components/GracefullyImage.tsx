@@ -1,6 +1,6 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -65,7 +65,7 @@ const GracefullyImage = ({
     }
   }
 
-  const blurhashView = useMemo(() => {
+  const blurhashView = () => {
     if (hidden || !imageLoaded) {
       if (blurhash) {
         return <Blurhash decodeAsync blurhash={blurhash} style={styles.placeholder} />
@@ -75,7 +75,7 @@ const GracefullyImage = ({
     } else {
       return null
     }
-  }, [hidden, imageLoaded])
+  }
 
   return (
     <Pressable
@@ -98,7 +98,7 @@ const GracefullyImage = ({
         style={[{ flex: 1 }, imageStyle]}
         onLoad={onLoad}
       />
-      {blurhashView}
+      {blurhashView()}
     </Pressable>
   )
 }

@@ -14,7 +14,7 @@ import updateStatusProperty from '@utils/queryHooks/timeline/updateStatusPropert
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { maxBy } from 'lodash'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
 import StatusContext from './Context'
@@ -73,7 +73,7 @@ const TimelinePoll: React.FC = () => {
     }
   })
 
-  const pollButton = useMemo(() => {
+  const pollButton = () => {
     if (!poll.expired) {
       if (!ownAccount && !poll.voted) {
         return (
@@ -127,17 +127,14 @@ const TimelinePoll: React.FC = () => {
         )
       }
     }
-  }, [theme, poll.expired, poll.voted, allOptions, mutation.isLoading])
+  }
 
-  const isSelected = useCallback(
-    (index: number): string =>
-      allOptions[index]
-        ? `Check${poll.multiple ? 'Square' : 'Circle'}`
-        : `${poll.multiple ? 'Square' : 'Circle'}`,
-    [allOptions]
-  )
+  const isSelected = (index: number): string =>
+    allOptions[index]
+      ? `Check${poll.multiple ? 'Square' : 'Circle'}`
+      : `${poll.multiple ? 'Square' : 'Circle'}`
 
-  const pollBodyDisallow = useMemo(() => {
+  const pollBodyDisallow = () => {
     const maxValue = maxBy(poll.options, option => option.votes_count)?.votes_count
     return poll.options.map((option, index) => (
       <View key={index} style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}>
@@ -191,8 +188,8 @@ const TimelinePoll: React.FC = () => {
         />
       </View>
     ))
-  }, [theme, poll.options])
-  const pollBodyAllow = useMemo(() => {
+  }
+  const pollBodyAllow = () => {
     return poll.options.map((option, index) => (
       <Pressable
         key={index}
@@ -229,7 +226,7 @@ const TimelinePoll: React.FC = () => {
         </View>
       </Pressable>
     ))
-  }, [theme, allOptions])
+  }
 
   const pollVoteCounts = () => {
     if (poll.voters_count !== null) {
@@ -263,7 +260,7 @@ const TimelinePoll: React.FC = () => {
 
   return (
     <View style={{ marginTop: StyleConstants.Spacing.M }}>
-      {poll.expired || poll.voted ? pollBodyDisallow : pollBodyAllow}
+      {poll.expired || poll.voted ? pollBodyDisallow() : pollBodyAllow()}
       <View
         style={{
           flex: 1,
@@ -272,7 +269,7 @@ const TimelinePoll: React.FC = () => {
           marginTop: StyleConstants.Spacing.XS
         }}
       >
-        {pollButton}
+        {pollButton()}
         <CustomText fontStyle='S' style={{ flexShrink: 1, color: colors.secondary }}>
           {pollVoteCounts()}
           {pollExpiration()}

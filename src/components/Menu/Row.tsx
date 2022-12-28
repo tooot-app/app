@@ -4,7 +4,7 @@ import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
@@ -46,15 +46,6 @@ const MenuRow: React.FC<Props> = ({
 }) => {
   const { colors, theme } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
-
-  const loadingSpinkit = useMemo(
-    () => (
-      <View style={{ position: 'absolute' }}>
-        <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
-      </View>
-    ),
-    [theme]
-  )
 
   return (
     <View
@@ -157,7 +148,11 @@ const MenuRow: React.FC<Props> = ({
                     style={{ marginLeft: 8, opacity: loading ? 0 : 1 }}
                   />
                 ) : null}
-                {loading && loadingSpinkit}
+                {loading ? (
+                  <View style={{ position: 'absolute' }}>
+                    <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+                  </View>
+                ) : null}
               </View>
             ) : null}
           </View>
