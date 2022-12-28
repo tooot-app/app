@@ -2,30 +2,32 @@ import apiGeneral from '@api/general'
 import apiTooot from '@api/tooot'
 import { displayMessage } from '@components/Message'
 import navigationRef from '@helpers/navigationRef'
-import { useAppDispatch } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import { useQuery } from '@tanstack/react-query'
-import { disableAllPushes, getInstances } from '@utils/slices/instancesSlice'
-import { useGlobalStorage } from '@utils/storage/actions'
+import {
+  getAccountDetails,
+  getGlobalStorage,
+  setAccountDetails,
+  useGlobalStorage
+} from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
-import { useSelector } from 'react-redux'
 import { updateExpoToken } from './updateExpoToken'
 
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
 
-  const dispatch = useAppDispatch()
   useEffect(() => {
     updateExpoToken()
   }, [])
 
   const [expoToken] = useGlobalStorage.string('app.expo_token')
-  const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
-  const pushEnabled = instances.filter(instance => instance.push.global)
+  const pushEnabledCount = getGlobalStorage.object('accounts').filter(account => {
+    return getAccountDetails(['push'], account)?.push.global
+  }).length
 
   const connectQuery = useQuery<any, AxiosError>(
     ['tooot', { endpoint: 'push/connect' }],
@@ -69,19 +71,21 @@ const pushUseConnect = () => {
             }
           })
 
-          dispatch(disableAllPushes())
+          getGlobalStorage.object('accounts').forEach(account => {
+            const accountDetails = getAccountDetails(['push', 'auth.domain', 'auth.token'], account)
+            if (!accountDetails) return
 
-          instances.forEach(instance => {
-            if (instance.push.global) {
+            if (accountDetails.push.global) {
               apiGeneral<{}>({
                 method: 'delete',
-                domain: instance.url,
+                domain: accountDetails['auth.domain'],
                 url: 'api/v1/push/subscription',
                 headers: {
-                  Authorization: `Bearer ${instance.token}`
+                  Authorization: `Bearer ${accountDetails['auth.token']}`
                 }
               }).catch(() => console.log('error!!!'))
             }
+            setAccountDetails('push', { ...accountDetails?.push, global: false }, account)
           })
         }
       }
@@ -89,14 +93,14 @@ const pushUseConnect = () => {
   )
 
   useEffect(() => {
-    Sentry.setContext('Push', { expoToken, pushEnabledCount: pushEnabled.length })
+    Sentry.setContext('Push', { expoToken, pushEnabledCount })
 
-    if (expoToken && pushEnabled.length) {
+    if (expoToken && pushEnabledCount) {
       connectQuery.refetch()
     }
 
     const appStateListener = AppState.addEventListener('change', state => {
-      if (expoToken && pushEnabled.length && state === 'active') {
+      if (expoToken && pushEnabledCount && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
           if (count > 0) {
             connectQuery.refetch()
@@ -108,7 +112,7 @@ const pushUseConnect = () => {
     return () => {
       appStateListener.remove()
     }
-  }, [expoToken, pushEnabled.length])
+  }, [expoToken, pushEnabledCount])
 }
 
 export default pushUseConnect

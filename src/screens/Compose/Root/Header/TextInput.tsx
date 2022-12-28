@@ -1,6 +1,6 @@
+import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import PasteInput, { PastedFile } from '@mattermost/react-native-paste-input'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
@@ -8,7 +8,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 import { formatText } from '../../utils/processText'
 import { uploadAttachment } from '../Footer/addAttachment'
@@ -17,8 +16,6 @@ const ComposeTextInput: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation(['common', 'screenCompose'])
   const { colors, mode } = useTheme()
-
-  const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
 
   const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
   const adaptedFontsize = adaptiveScale(StyleConstants.Font.Size.M, adaptiveFontsize)
@@ -72,7 +69,7 @@ const ComposeTextInput: React.FC = () => {
       scrollEnabled={false}
       disableCopyPaste={false}
       onPaste={(error: string | null | undefined, files: PastedFile[]) => {
-        if (composeState.attachments.uploads.length + files.length > maxAttachments) {
+        if (composeState.attachments.uploads.length + files.length > MAX_MEDIA_ATTACHMENTS) {
           Alert.alert(
             t('screenCompose:content.root.header.textInput.keyboardImage.exceedMaximum.title'),
             undefined,

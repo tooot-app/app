@@ -2,6 +2,7 @@ import { storage } from '@root/store'
 import {
   MMKV,
   useMMKVBoolean,
+  useMMKVListener,
   useMMKVNumber,
   useMMKVObject,
   useMMKVString
@@ -46,6 +47,10 @@ export const setGlobalStorage = <T extends keyof StorageGlobal>(key: T, value: S
       ? value
       : JSON.stringify(value)
   )
+export const useGlobalStorageListener = (key: keyof StorageGlobal, func: () => void) =>
+  useMMKVListener(keyChanged => {
+    if (keyChanged === key) func()
+  })
 
 export const getAccountStorage = {
   string: <T extends keyof StorageAccount>(key: T) =>
@@ -90,6 +95,14 @@ export const setAccountStorage = <T extends keyof StorageAccount>(
       : JSON.stringify(value)
   )
 
+export const generateAccountKey = ({
+  domain,
+  id
+}: {
+  domain: Mastodon.Instance<'v1'>['uri'] | Mastodon.Instance<'v2'>['domain']
+  id: Mastodon.Account['id']
+}) => `${domain}/${id}`
+
 export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
   keys: T,
   account?: string
@@ -118,7 +131,6 @@ export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
         result[key] = temp.getString(key)
         break
       case 'preferences':
-      case 'filters':
       case 'notifications':
       case 'push':
       case 'page_local':
@@ -132,6 +144,28 @@ export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
   }
   // @ts-ignore
   return result
+}
+export const setAccountDetails = <T extends keyof StorageAccount>(
+  key: T,
+  value: StorageAccount[T],
+  account?: string
+) => {
+  let temp: MMKV
+  if (account) {
+    temp = new MMKV({ id: account })
+  } else {
+    if (!storage.account) {
+      return null
+    }
+    temp = storage.account
+  }
+
+  temp.set(
+    key,
+    typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean'
+      ? value
+      : JSON.stringify(value)
+  )
 }
 
 export const removeAccount = (account: string) => {

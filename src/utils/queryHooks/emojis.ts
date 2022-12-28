@@ -1,6 +1,7 @@
 import apiInstance from '@api/instance'
 import { AxiosError } from 'axios'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
+import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 
 type QueryKeyEmojis = ['Emojis']
 
@@ -12,13 +13,28 @@ const queryFunction = async () => {
   return res.body
 }
 
-const useEmojisQuery = ({
-  options
-}: {
-  options?: UseQueryOptions<Mastodon.Emoji[], AxiosError>
-}) => {
+const useEmojisQuery = (params?: { options?: UseQueryOptions<Mastodon.Emoji[], AxiosError> }) => {
   const queryKey: QueryKeyEmojis = ['Emojis']
-  return useQuery(queryKey, queryFunction, options)
+  return useQuery(queryKey, queryFunction, {
+    ...params?.options,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    onSuccess: data => {
+      if (!data.length) return
+
+      const currEmojis = getAccountStorage.object('emojis_frequent')
+      if (!Array.isArray(currEmojis)) {
+        setAccountStorage('emojis_frequent', [])
+      } else {
+        setAccountStorage(
+          'emojis_frequent',
+          currEmojis?.filter(emoji => {
+            return data.find(e => e.shortcode === emoji.emoji.shortcode)
+          })
+        )
+      }
+    }
+  })
 }
 
 export { useEmojisQuery }

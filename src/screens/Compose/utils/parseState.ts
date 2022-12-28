@@ -1,14 +1,12 @@
-import { store } from '@root/store'
 import { RootStackParamList } from '@utils/navigation/navigators'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 import composeInitialState from './initialState'
 import { ComposeState } from './types'
 
 const assignVisibility = (
   target: ComposeState['visibility']
 ): Pick<ComposeState, 'visibility' | 'visibilityLock'> => {
-  const accountPreference =
-    getInstanceAccount(store.getState())?.preferences?.['posting:default:visibility'] || 'public'
+  const preferences = getAccountStorage.object('preferences') || 'public'
 
   switch (target) {
     case 'direct':
@@ -16,13 +14,13 @@ const assignVisibility = (
     case 'private':
       return { visibility: 'private', visibilityLock: false }
     case 'unlisted':
-      if (accountPreference === 'private') {
+      if (preferences === 'private') {
         return { visibility: 'private', visibilityLock: false }
       } else {
         return { visibility: 'unlisted', visibilityLock: false }
       }
     case 'public':
-      switch (accountPreference) {
+      switch (preferences) {
         case 'private':
           return { visibility: 'private', visibilityLock: false }
         case 'unlisted':

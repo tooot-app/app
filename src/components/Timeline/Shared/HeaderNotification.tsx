@@ -6,14 +6,13 @@ import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
 import browserPackage from '@helpers/browserPackage'
-import { getInstanceUrl } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
 import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
 import HeaderSharedAccount from './HeaderShared/Account'
@@ -48,8 +47,6 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
   const mStatus = menuStatus({ status, queryKey })
   const mInstance = menuInstance({ status, queryKey })
 
-  const url = useSelector(getInstanceUrl)
-
   const actions = () => {
     switch (notification.type) {
       case 'follow':
@@ -63,7 +60,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
             content={t('shared.actions.openReport')}
             onPress={async () =>
               WebBrowser.openAuthSessionAsync(
-                `https://${url}/admin/reports/${notification.report.id}`,
+                `https://${getAccountStorage.string('auth.domain')}/admin/reports/${
+                  notification.report.id
+                }`,
                 'tooot://tooot',
                 {
                   ...(await browserPackage()),

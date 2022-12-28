@@ -12,18 +12,9 @@ import ComposeRootHeader from './Root/Header'
 import ComposeRootSuggestion from './Root/Suggestion'
 import ComposeContext from './utils/createContext'
 import ComposeDrafts from './Root/Drafts'
-import { useSelector } from 'react-redux'
-import { getInstanceConfigurationStatusCharsURL } from '@utils/slices/instancesSlice'
-
-export let instanceConfigurationStatusCharsURL = 23
 
 const ComposeRoot = () => {
   const { colors } = useTheme()
-
-  instanceConfigurationStatusCharsURL = useSelector(
-    getInstanceConfigurationStatusCharsURL,
-    () => true
-  )
 
   const accessibleRefDrafts = useRef(null)
   const accessibleRefAttachments = useRef(null)

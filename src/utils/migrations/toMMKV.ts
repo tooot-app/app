@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import log from '@root/startup/log'
 import { secureStorage, storage } from '@root/store'
 import { MMKV } from 'react-native-mmkv'
-import { InstanceLatest } from './instances/migration'
 
 export const hasMigratedFromAsyncStorage = storage.global.getBoolean('hasMigratedFromAsyncStorage')
 
@@ -64,7 +63,7 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       const storeInstances: { instances: string } = JSON.parse(value)
       const accounts: string[] = []
 
-      for (const instance of JSON.parse(storeInstances.instances) as InstanceLatest[]) {
+      for (const instance of JSON.parse(storeInstances.instances)) {
         const account = `${instance.uri}/${instance.account.id}`
 
         const temp = new MMKV({ id: account })
@@ -80,7 +79,6 @@ export async function migrateFromAsyncStorage(): Promise<void> {
         if (instance.account.preferences) {
           temp.set('preferences', JSON.stringify(instance.account.preferences))
         }
-        temp.set('filters', JSON.stringify(instance.filters))
         temp.set('notifications', JSON.stringify(instance.notifications_filter))
         temp.set('push', JSON.stringify(instance.push))
         temp.set('page_local', JSON.stringify(instance.followingPage))

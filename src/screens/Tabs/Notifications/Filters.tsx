@@ -2,9 +2,8 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabNotificationsStackScreenProps } from '@utils/navigation/navigators'
-import { useProfileQuery } from '@utils/queryHooks/profile'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { PUSH_ADMIN, PUSH_DEFAULT, usePushFeatures } from '@utils/slices/instances/push/utils'
+import { PUSH_ADMIN, PUSH_DEFAULT } from '@utils/slices/instances/push/utils'
 import { setAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
@@ -16,8 +15,6 @@ const TabNotificationsFilters: React.FC<
   TabNotificationsStackScreenProps<'Tab-Notifications-Filters'>
 > = ({ navigation }) => {
   const { t } = useTranslation(['common', 'screenTabs'])
-
-  const pushFeatures = usePushFeatures()
 
   const [instanceNotificationsFilter] = useAccountStorage.object('notifications')
   const [filters, setFilters] = useState(instanceNotificationsFilter)
@@ -66,12 +63,10 @@ const TabNotificationsFilters: React.FC<
     })
   }, [filters])
 
-  const profileQuery = useProfileQuery()
-
   return (
     <ScrollView style={{ flex: 1 }}>
       <MenuContainer>
-        {PUSH_DEFAULT(pushFeatures).map((type, index) => (
+        {PUSH_DEFAULT.map((type, index) => (
           <MenuRow
             key={index}
             title={t(`screenTabs:me.push.${type}.heading`)}
@@ -79,7 +74,7 @@ const TabNotificationsFilters: React.FC<
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />
         ))}
-        {PUSH_ADMIN(pushFeatures, profileQuery.data?.role?.permissions).map(({ type }) => (
+        {PUSH_ADMIN.map(({ type }) => (
           <MenuRow
             key={type}
             title={t(`screenTabs:me.push.${type}.heading`)}

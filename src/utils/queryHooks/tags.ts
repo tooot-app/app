@@ -11,8 +11,7 @@ import {
 } from '@tanstack/react-query'
 import { infinitePageParams } from './utils'
 import { PagedResponse } from '@api/helpers'
-import { useSelector } from 'react-redux'
-import { checkInstanceFeature } from '@utils/slices/instancesSlice'
+import { featureCheck } from '@helpers/featureCheck'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (
@@ -23,7 +22,7 @@ const useFollowedTagsQuery = (
     >
   } | void
 ) => {
-  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
+  const canFollowTags = featureCheck('follow_tags')
 
   const queryKey: QueryKeyFollowedTags = ['FollowedTags']
   return useInfiniteQuery(

@@ -11,7 +11,6 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
@@ -19,8 +18,8 @@ import React, { useCallback, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 import StatusContext from './Context'
+import { useAccountStorage } from '@utils/storage/actions'
 
 const TimelineActions: React.FC = () => {
   const { queryKey, rootQueryKey, status, reblogStatus, ownAccount, highlighted, disableDetails } =
@@ -76,12 +75,12 @@ const TimelineActions: React.FC = () => {
     }
   })
 
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+  const [accountId] = useAccountStorage.string('auth.account.id')
   const onPressReply = useCallback(() => {
     const accts = uniqBy(
       ([status.account] as Mastodon.Account[] & Mastodon.Mention[])
         .concat(status.mentions)
-        .filter(d => d?.id !== instanceAccount?.id),
+        .filter(d => d?.id !== accountId),
       d => d?.id
     ).map(d => d?.acct)
     navigation.navigate('Screen-Compose', {

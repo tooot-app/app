@@ -3,12 +3,10 @@ import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { RootStackScreenProps, ScreenTabsStackParamList } from '@utils/navigation/navigators'
-import { getInstanceAccount, getInstanceActive } from '@utils/slices/instancesSlice'
-import { getGlobalStorage } from '@utils/storage/actions'
+import { getGlobalStorage, useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
-import { useSelector } from 'react-redux'
 import TabLocal from './Tabs/Local'
 import TabMe from './Tabs/Me'
 import TabNotifications from './Tabs/Notifications'
@@ -19,11 +17,8 @@ const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
   const { colors } = useTheme()
 
-  const instanceActive = useSelector(getInstanceActive)
-  const instanceAccount = useSelector(
-    getInstanceAccount,
-    (prev, next) => prev?.avatarStatic === next?.avatarStatic
-  )
+  const accountActive = useGlobalStorage.string('account.active')
+  const [avatarStatic] = useAccountStorage.string('auth.account.avatar_static')
 
   const composeListeners = useMemo(
     () => ({
@@ -54,14 +49,14 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
 
   return (
     <Tab.Navigator
-      initialRouteName={instanceActive !== -1 ? previousTab : 'Tab-Me'}
+      initialRouteName={accountActive ? previousTab : 'Tab-Me'}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.primaryDefault,
         tabBarInactiveTintColor: colors.secondary,
         tabBarShowLabel: false,
         ...(Platform.OS === 'android' && { tabBarHideOnKeyboard: true }),
-        tabBarStyle: { display: instanceActive !== -1 ? 'flex' : 'none' },
+        tabBarStyle: { display: accountActive ? 'flex' : 'none' },
         tabBarIcon: ({
           focused,
           color,
@@ -83,8 +78,7 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
             case 'Tab-Me':
               return (
                 <GracefullyImage
-                  key={instanceAccount?.avatarStatic}
-                  uri={{ original: instanceAccount?.avatarStatic }}
+                  uri={{ original: avatarStatic }}
                   dimension={{
                     width: size,
                     height: size

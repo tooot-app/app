@@ -14,12 +14,12 @@ import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
 import pushUseReceive from '@utils/push/useReceive'
 import pushUseRespond from '@utils/push/useRespond'
-import { checkEmojis } from '@utils/slices/instances/checkEmojis'
-import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
-import { updateConfiguration } from '@utils/slices/instances/updateConfiguration'
-import { updateFilters } from '@utils/slices/instances/updateFilters'
-import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
-import { setGlobalStorage } from '@utils/storage/actions'
+import { useEmojisQuery } from '@utils/queryHooks/emojis'
+import { useFiltersQuery } from '@utils/queryHooks/filters'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
+import { useProfileQuery } from '@utils/queryHooks/profile'
+import { setGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Linking from 'expo-linking'
@@ -28,9 +28,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform, StatusBar } from 'react-native'
 import ShareMenu from 'react-native-share-menu'
-import { useSelector } from 'react-redux'
 import { routingInstrumentation } from './startup/sentry'
-import { useAppDispatch } from './store'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -45,12 +43,12 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     'screenAnnouncements',
     'screenAccountSelection'
   ])
-  const dispatch = useAppDispatch()
-  const instanceActive = useSelector(getInstanceActive)
+
+  const [accounts] = useGlobalStorage.object('accounts')
+  const [accountActive] = useGlobalStorage.string('account.active')
   const { colors, theme } = useTheme()
 
   // Push hooks
-  const instances = useSelector(getInstances, (prev, next) => prev.length === next.length)
   pushUseConnect()
   pushUseReceive()
   pushUseRespond()
@@ -85,14 +83,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [localCorrupt])
 
   // Lazily update users's preferences, for e.g. composing default visibility
-  useEffect(() => {
-    if (instanceActive !== -1) {
-      dispatch(updateConfiguration())
-      dispatch(updateFilters())
-      dispatch(updateAccountPreferences())
-      dispatch(checkEmojis())
-    }
-  }, [instanceActive])
+  useInstanceQuery()
+  useProfileQuery()
+  usePreferencesQuery()
+  useFiltersQuery()
+  useEmojisQuery()
 
   // Callbacks
   const navigationContainerOnStateChange = useCallback(() => {
@@ -116,12 +111,9 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (initialUrl.path) {
         const paths = initialUrl.path.split('/')
 
-        if (paths && paths.length) {
-          const instanceIndex = instances.findIndex(
-            instance => paths[0] === `@${instance.account.acct}@${instance.uri}`
-          )
-          if (instanceIndex !== -1 && instanceActive !== instanceIndex) {
-            initQuery({ instance: instances[instanceIndex] })
+        if (paths.length) {
+          if (!accounts.includes(accountActive)) {
+            initQuery(accountActive)
           }
         }
       }
@@ -133,7 +125,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     if (!deeplinked) {
       getUrlAsync()
     }
-  }, [instanceActive, instances, deeplinked])
+  }, [accounts, accountActive, deeplinked])
 
   // Share Extension
   const handleShare = useCallback(
@@ -145,7 +137,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
           }
         | { data: string | string[]; mimeType: string }
     ) => {
-      if (instanceActive < 0) {
+      if (!accountActive) {
         return
       }
       if (!item || !item.data) {
@@ -224,7 +216,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (!text && !media.length) {
         return
       } else {
-        if (instances.length > 1) {
+        if (accounts.length) {
           navigationRef.navigate('Screen-AccountSelection', {
             share: { text, media }
           })

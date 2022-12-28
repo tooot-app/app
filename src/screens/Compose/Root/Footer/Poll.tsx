@@ -4,13 +4,12 @@ import { MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { getInstanceConfigurationPoll } from '@utils/slices/instancesSlice'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 
 const ComposePoll: React.FC = () => {
@@ -24,11 +23,11 @@ const ComposePoll: React.FC = () => {
   const { t } = useTranslation(['common', 'screenCompose'])
   const { colors, mode } = useTheme()
 
-  const instanceConfigurationPoll = useSelector(getInstanceConfigurationPoll, () => true)
-  const MAX_OPTIONS = instanceConfigurationPoll.max_options
-  const MAX_CHARS_PER_OPTION = instanceConfigurationPoll.max_characters_per_option
-  const MIN_EXPIRATION = instanceConfigurationPoll.min_expiration
-  const MAX_EXPIRATION = instanceConfigurationPoll.max_expiration
+  const { data } = useInstanceQuery()
+  const MAX_OPTIONS = data?.configuration?.polls.max_options || 4
+  const MAX_CHARS_PER_OPTION = data?.configuration?.polls.max_characters_per_option
+  const MIN_EXPIRATION = data?.configuration?.polls.min_expiration || 300
+  const MAX_EXPIRATION = data?.configuration?.polls.max_expiration || 2629746
 
   const [firstRender, setFirstRender] = useState(true)
   useEffect(() => {

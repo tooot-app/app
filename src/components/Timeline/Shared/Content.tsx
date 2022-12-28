@@ -1,12 +1,11 @@
 import { ParseHTML } from '@components/Parse'
 import CustomText from '@components/Text'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import { isRtlLang } from 'rtl-detect'
 import StatusContext from './Context'
 
@@ -21,7 +20,8 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
 
   const { colors } = useTheme()
   const { t } = useTranslation('componentTimeline')
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+
+  const { data: preferences } = usePreferencesQuery()
 
   return (
     <View>
@@ -63,7 +63,7 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             mentions={status.mentions}
             tags={status.tags}
             numberOfLines={
-              instanceAccount.preferences?.['reading:expand:spoilers'] || inThread
+              preferences?.['reading:expand:spoilers'] || inThread
                 ? notificationOwnToot
                   ? 2
                   : 999

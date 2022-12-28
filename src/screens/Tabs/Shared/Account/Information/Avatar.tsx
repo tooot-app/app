@@ -3,10 +3,9 @@ import navigationRef from '@helpers/navigationRef'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 export interface Props {
   account: Mastodon.Account | undefined
@@ -15,7 +14,9 @@ export interface Props {
 
 const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-  useSelector(getInstanceActive)
+
+  useGlobalStorage.string('account.active')
+
   return (
     <GracefullyImage
       key={account?.avatar}

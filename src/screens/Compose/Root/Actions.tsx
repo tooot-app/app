@@ -1,15 +1,14 @@
 import { emojis } from '@components/Emojis'
 import EmojisContext from '@components/Emojis/helpers/EmojisContext'
 import Icon from '@components/Icon'
+import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 import chooseAndUploadAttachment from './Footer/addAttachment'
 
@@ -18,10 +17,6 @@ const ComposeActions: React.FC = () => {
   const { composeState, composeDispatch } = useContext(ComposeContext)
   const { t } = useTranslation(['common', 'screenCompose'])
   const { colors } = useTheme()
-  const instanceConfigurationStatusMaxAttachments = useSelector(
-    getInstanceConfigurationStatusMaxAttachments,
-    () => true
-  )
 
   const attachmentColor = useMemo(() => {
     if (composeState.poll.active) return colors.disabled
@@ -35,11 +30,8 @@ const ComposeActions: React.FC = () => {
   const attachmentOnPress = () => {
     if (composeState.poll.active) return
 
-    if (composeState.attachments.uploads.length < instanceConfigurationStatusMaxAttachments) {
-      return chooseAndUploadAttachment({
-        composeDispatch,
-        showActionSheetWithOptions
-      })
+    if (composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS) {
+      return chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
     }
   }
 

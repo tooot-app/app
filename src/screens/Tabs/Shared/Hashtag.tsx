@@ -3,14 +3,13 @@ import { HeaderLeft, HeaderRight } from '@components/Header'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
+import { featureCheck } from '@helpers/featureCheck'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyFollowedTags, useTagsMutation, useTagsQuery } from '@utils/queryHooks/tags'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>> = ({
   navigation,
@@ -29,7 +28,7 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
 
   const { t } = useTranslation(['common', 'screenTabs'])
 
-  const canFollowTags = useSelector(checkInstanceFeature('follow_tags'))
+  const canFollowTags = featureCheck('follow_tags')
   const { data, isFetching, refetch } = useTagsQuery({
     tag: hashtag,
     options: { enabled: canFollowTags }

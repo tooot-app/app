@@ -8,10 +8,6 @@ import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
-import {
-  getInstanceAccount,
-  getInstanceConfigurationStatusMaxChars
-} from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as StoreReview from 'expo-store-review'
@@ -20,7 +16,6 @@ import React, { useCallback, useEffect, useMemo, useReducer, useState } from 're
 import { useTranslation } from 'react-i18next'
 import { Alert, Keyboard, Platform } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 import ComposeDraftsList, { removeDraft } from './Compose/DraftsList'
 import ComposeEditAttachment from './Compose/EditAttachment'
 import { uploadAttachment } from './Compose/Root/Footer/addAttachment'
@@ -35,6 +30,8 @@ import {
   setAccountStorage,
   setGlobalStorage
 } from '@utils/storage/actions'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 
 const Stack = createNativeStackNavigator()
 
@@ -57,12 +54,8 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
     }
   }, [])
 
-  const localAccount = useSelector(getInstanceAccount, (prev, next) =>
-    prev?.preferences && next?.preferences
-      ? prev?.preferences['posting:default:visibility'] ===
-        next?.preferences['posting:default:visibility']
-      : true
-  )
+  const { data: preferences } = usePreferencesQuery()
+
   const initialReducerState = useMemo(() => {
     if (params) {
       return composeParseState(params)
@@ -73,21 +66,19 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
         attachments: {
           ...composeInitialState.attachments,
           sensitive:
-            localAccount?.preferences && localAccount?.preferences['posting:default:sensitive']
-              ? localAccount?.preferences['posting:default:sensitive']
+            preferences?.['posting:default:sensitive'] !== undefined
+              ? preferences['posting:default:sensitive']
               : false
         },
-        visibility:
-          localAccount?.preferences && localAccount.preferences['posting:default:visibility']
-            ? localAccount.preferences['posting:default:visibility']
-            : 'public'
+        visibility: preferences?.['posting:default:visibility'] || 'public'
       }
     }
   }, [])
 
   const [composeState, composeDispatch] = useReducer(composeReducer, initialReducerState)
 
-  const maxTootChars = useSelector(getInstanceConfigurationStatusMaxChars, () => true)
+  const { data: dataInstance } = useInstanceQuery()
+  const maxTootChars = dataInstance?.configuration?.statuses.max_characters || 500
   const totalTextCount =
     (composeState.spoiler.active ? composeState.spoiler.count : 0) + composeState.text.count
 

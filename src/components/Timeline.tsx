@@ -2,13 +2,12 @@ import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
 import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { useGlobalStorageListener } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef } from 'react'
 import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
 import TimelineEmpty from './Timeline/Empty'
 import TimelineFooter from './Timeline/Footer'
 import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Timeline/Refresh'
@@ -100,12 +99,9 @@ const Timeline: React.FC<Props> = ({
   })
 
   useScrollToTop(flRef)
-  useSelector(getInstanceActive, (prev, next) => {
-    if (prev !== next) {
-      flRef.current?.scrollToOffset({ offset: 0, animated: false })
-    }
-    return prev === next
-  })
+  useGlobalStorageListener('account.active', () =>
+    flRef.current?.scrollToOffset({ offset: 0, animated: false })
+  )
 
   return (
     <>

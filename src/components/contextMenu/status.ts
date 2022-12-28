@@ -8,12 +8,12 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
+import { featureCheck } from '@helpers/featureCheck'
+import { useAccountStorage } from '@utils/storage/actions'
 
 const menuStatus = ({
   status,
@@ -57,10 +57,10 @@ const menuStatus = ({
 
   const menus: ContextMenu[][] = []
 
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
-  const ownAccount = instanceAccount?.id === status.account?.id
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const ownAccount = accountId === status.account?.id
 
-  const canEditPost = useSelector(checkInstanceFeature('edit_post'))
+  const canEditPost = featureCheck('edit_post')
 
   menus.push([
     {
@@ -203,9 +203,7 @@ const menuStatus = ({
           }),
         disabled: false,
         destructive: false,
-        hidden:
-          !ownAccount &&
-          !status.mentions.filter(mention => mention.id === instanceAccount.id).length
+        hidden: !ownAccount && !status.mentions.filter(mention => mention.id === accountId).length
       },
       title: t('componentContextMenu:status.mute.action', {
         defaultValue: 'false',

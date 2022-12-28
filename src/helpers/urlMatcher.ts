@@ -1,5 +1,4 @@
-import { store } from '@root/store'
-import { getInstanceUrl } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 
 const getHost = (url: unknown): string | undefined | null => {
   if (typeof url !== 'string') return undefined
@@ -21,8 +20,8 @@ const matchStatus = (
     const style = matched[3] === 'web/statuses' ? 'default' : 'pretty'
     const id = matched[4]
 
-    const instanceUrl = getInstanceUrl(store.getState())
-    return { id, style, sameInstance: hostname === instanceUrl }
+    const sameInstance = hostname === getAccountStorage.string('auth.domain')
+    return { id, style, sameInstance }
   }
 
   return null
@@ -48,10 +47,10 @@ const matchAccount = (
     if (account) {
       const style = account.startsWith('@') ? 'pretty' : 'default'
 
-      const instanceUrl = getInstanceUrl(store.getState())
+      const sameInstance = hostname === getAccountStorage.string('auth.domain')
       return style === 'default'
-        ? { id: account, style, sameInstance: hostname === instanceUrl }
-        : { username: account, style, sameInstance: hostname === instanceUrl }
+        ? { id: account, style, sameInstance }
+        : { username: account, style, sameInstance }
     } else {
       return null
     }

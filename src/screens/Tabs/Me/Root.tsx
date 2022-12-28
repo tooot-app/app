@@ -10,16 +10,15 @@ import AccountContext from '@screens/Tabs/Shared/Account/utils/createContext'
 import accountInitialState from '@screens/Tabs/Shared/Account/utils/initialState'
 import accountReducer from '@screens/Tabs/Shared/Account/utils/reducer'
 import { useProfileQuery } from '@utils/queryHooks/profile'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import React, { useReducer, useRef } from 'react'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
 
 const TabMeRoot: React.FC = () => {
-  const instanceActive = useSelector(getInstanceActive)
+  const [accountActive] = useGlobalStorage.string('account.active')
 
   const { data } = useProfileQuery({
-    options: { enabled: instanceActive !== -1, keepPreviousData: false }
+    options: { enabled: !!accountActive, keepPreviousData: false }
   })
 
   const scrollRef = useRef<Animated.ScrollView>(null)
@@ -34,18 +33,18 @@ const TabMeRoot: React.FC = () => {
 
   return (
     <AccountContext.Provider value={{ accountState, accountDispatch }}>
-      {instanceActive !== -1 && data ? <AccountNav scrollY={scrollY} account={data} /> : null}
+      {accountActive && data ? <AccountNav scrollY={scrollY} account={data} /> : null}
       <Animated.ScrollView
         ref={scrollRef}
         keyboardShouldPersistTaps='handled'
         onScroll={onScroll}
         scrollEventThrottle={16}
       >
-        {instanceActive !== -1 ? <MyInfo account={data} /> : <ComponentInstance />}
-        {instanceActive !== -1 ? <Collections /> : null}
+        {accountActive ? <MyInfo account={data} /> : <ComponentInstance />}
+        {accountActive ? <Collections /> : null}
         <Settings />
-        {instanceActive !== -1 ? <AccountInformationSwitch /> : null}
-        {instanceActive !== -1 ? <Logout /> : null}
+        {accountActive ? <AccountInformationSwitch /> : null}
+        {accountActive ? <Logout /> : null}
       </Animated.ScrollView>
     </AccountContext.Provider>
   )

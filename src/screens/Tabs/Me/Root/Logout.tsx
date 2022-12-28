@@ -1,20 +1,17 @@
 import Button from '@components/Button'
 import haptics from '@root/components/haptics'
-import { useAppDispatch } from '@root/store'
-import removeInstance from '@utils/slices/instances/remove'
-import { getInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
 import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
+import { removeAccount, useGlobalStorage } from '@utils/storage/actions'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation(['common', 'screenTabs'])
-  const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
-  const instance = useSelector(getInstance)
+
+  const [accountActive] = useGlobalStorage.string('account.active')
 
   return (
     <Button
@@ -35,10 +32,10 @@ const Logout: React.FC = () => {
               text: t('screenTabs:me.root.logout.alert.buttons.logout'),
               style: 'destructive',
               onPress: () => {
-                if (instance) {
+                if (accountActive) {
                   haptics('Success')
                   queryClient.clear()
-                  dispatch(removeInstance(instance))
+                  removeAccount(accountActive)
                 }
               }
             },

@@ -1,26 +1,23 @@
 import Icon from '@components/Icon'
 import { MenuContainer, MenuRow } from '@components/Menu'
+import browserPackage from '@helpers/browserPackage'
 import { useNavigation } from '@react-navigation/native'
+import { getAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
+import Constants from 'expo-constants'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { getInstanceActive, getInstanceVersion } from '@utils/slices/instancesSlice'
 import { Platform } from 'react-native'
-import Constants from 'expo-constants'
-import browserPackage from '@helpers/browserPackage'
-import { useGlobalStorage } from '@utils/storage/actions'
 
 const SettingsTooot: React.FC = () => {
-  const instanceActive = useSelector(getInstanceActive)
   const navigation = useNavigation<any>()
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
-  const instanceVersion = useSelector(getInstanceVersion, () => true)
+  const [accountActive] = useGlobalStorage.string('account.active')
   const [expoToken] = useGlobalStorage.string('app.expo_token')
 
   return (
@@ -44,7 +41,7 @@ const SettingsTooot: React.FC = () => {
         content={<Icon name='Mail' size={StyleConstants.Font.Size.M} color={colors.secondary} />}
         iconBack='ChevronRight'
         onPress={async () => {
-          if (instanceActive !== -1) {
+          if (accountActive) {
             navigation.navigate('Screen-Compose', {
               type: 'conversation',
               accts: ['tooot@xmflsct.com'],
@@ -55,9 +52,9 @@ const SettingsTooot: React.FC = () => {
                 ' - ' +
                 (Constants.expoConfig?.version ? `t/${Constants.expoConfig?.version}` : '') +
                 ' - ' +
-                (instanceVersion ? `m/${instanceVersion}` : '') +
+                `m/${getAccountStorage.string('version')}` +
                 ' - ' +
-                (expoToken
+                (expoToken.length
                   ? `e/${expoToken.replace(/^ExponentPushToken\[/, '').replace(/\]$/, '')}`
                   : '') +
                 ']'

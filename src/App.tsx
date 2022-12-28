@@ -9,21 +9,19 @@ import netInfo from '@root/startup/netInfo'
 import push from '@root/startup/push'
 import sentry from '@root/startup/sentry'
 import timezone from '@root/startup/timezone'
-import { persistor, storage, store } from '@root/store'
+import { storage } from '@root/store'
 import * as Sentry from '@sentry/react-native'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from '@utils/migrations/toMMKV'
 import { MMKV } from 'react-native-mmkv'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
@@ -38,106 +36,86 @@ push()
 timezone()
 enableFreeze(true)
 
+log('log', 'App', 'delay splash')
+SplashScreen.preventAutoHideAsync()
+
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
+  const [appIsReady, setAppIsReady] = useState(false)
   const [localCorrupt, setLocalCorrupt] = useState<string>()
 
-  useEffect(() => {
-    const delaySplash = async () => {
-      log('log', 'App', 'delay splash')
-      try {
-        await SplashScreen.preventAutoHideAsync()
-      } catch (e) {
-        console.warn(e)
-      }
-    }
-    delaySplash()
-  }, [])
-
   const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage)
-  const [loadedFromMMKV, setLoadedFromMMKV] = useState(!hasMigratedFromAsyncStorage)
 
-  const onBeforeLift = async () => {
-    if (!hasMigrated && !hasMigratedFromAsyncStorage) {
-      try {
-        await migrateFromAsyncStorage()
-        setHasMigrated(true)
-      } catch (e) {
-        // TODO: fall back to AsyncStorage? Wipe storage clean and use MMKV? Crash app?
-      }
-    } else {
-      log('log', 'App', 'loading from MMKV')
-      const account = getGlobalStorage.string('account.active')
-      if (account) {
-        const storageAccount = new MMKV({ id: account })
-        const token = storageAccount.getString('auth.token')
-        if (token) {
-          storage.account = storageAccount
+  useEffect(() => {
+    const prepare = async () => {
+      if (!hasMigrated && !hasMigratedFromAsyncStorage) {
+        try {
+          await migrateFromAsyncStorage()
+          setHasMigrated(true)
+        } catch (e) {
+          // TODO: fall back to AsyncStorage? Wipe storage clean and use MMKV? Crash app?
+        }
+      } else {
+        log('log', 'App', 'loading from MMKV')
+        const account = getGlobalStorage.string('account.active')
+        if (account) {
+          const storageAccount = new MMKV({ id: account })
+          const token = storageAccount.getString('auth.token')
+          if (token) {
+            storage.account = storageAccount
+          }
         }
       }
-      setLoadedFromMMKV(true)
+
+      let netInfoRes = undefined
+      try {
+        netInfoRes = await netInfo()
+      } catch {}
+
+      if (netInfoRes && netInfoRes.corrupted && netInfoRes.corrupted.length) {
+        setLocalCorrupt(netInfoRes.corrupted)
+      }
+
+      log('log', 'App', `locale: ${Localization.locale}`)
+      const language = getLanguage()
+      if (!language) {
+        if (Platform.OS !== 'ios') {
+          setGlobalStorage('app.language', 'en')
+        }
+        i18n.changeLanguage('en')
+      } else {
+        i18n.changeLanguage(language)
+      }
+
+      setAppIsReady(true)
     }
 
-    let netInfoRes = undefined
-    try {
-      netInfoRes = await netInfo()
-    } catch {}
-
-    if (netInfoRes && netInfoRes.corrupted && netInfoRes.corrupted.length) {
-      setLocalCorrupt(netInfoRes.corrupted)
-    }
-
-    log('log', 'App', 'hide splash')
-    try {
+    prepare()
+  }, [])
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      log('log', 'App', 'hide splash')
       await SplashScreen.hideAsync()
-      return Promise.resolve()
-    } catch (e) {
-      console.warn(e)
-      return Promise.reject()
     }
+  }, [appIsReady])
+  if (!appIsReady) {
+    return null
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <PersistGate
-            persistor={persistor}
-            onBeforeLift={onBeforeLift}
-            children={bootstrapped => {
-              log('log', 'App', 'bootstrapped')
-              if (hasMigrated && loadedFromMMKV && bootstrapped) {
-                log('log', 'App', 'loading actual app :)')
-                log('log', 'App', `locale: ${Localization.locale}`)
-                const language = getLanguage()
-                if (!language) {
-                  if (Platform.OS !== 'ios') {
-                    setGlobalStorage('app.language', 'en')
-                  }
-                  i18n.changeLanguage('en')
-                } else {
-                  i18n.changeLanguage(language)
-                }
-
-                return (
-                  <IntlProvider locale={language || 'en'}>
-                    <SafeAreaProvider>
-                      <ActionSheetProvider>
-                        <AccessibilityManager>
-                          <ThemeManager>
-                            <Screens localCorrupt={localCorrupt} />
-                          </ThemeManager>
-                        </AccessibilityManager>
-                      </ActionSheetProvider>
-                    </SafeAreaProvider>
-                  </IntlProvider>
-                )
-              } else {
-                return null
-              }
-            }}
-          />
-        </Provider>
+        <IntlProvider locale={getLanguage() || 'en'}>
+          <SafeAreaProvider>
+            <ActionSheetProvider>
+              <AccessibilityManager>
+                <ThemeManager>
+                  <Screens localCorrupt={localCorrupt} />
+                </ThemeManager>
+              </AccessibilityManager>
+            </ActionSheetProvider>
+          </SafeAreaProvider>
+        </IntlProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   )

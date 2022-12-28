@@ -1,13 +1,12 @@
 import apiInstance from '@api/instance'
-import { store } from '@root/store'
-import { checkInstanceFeature } from '@utils/slices/instancesSlice'
 import { AxiosError } from 'axios'
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import { featureCheck } from '@helpers/featureCheck'
 
 export type QueryKeyTrends = ['Trends', { type: 'tags' | 'statuses' | 'links' }]
 
 const queryFunction = ({ queryKey }: QueryFunctionContext<QueryKeyTrends>) => {
-  const trendsNewPath = checkInstanceFeature('trends_new_path')(store.getState())
+  const trendsNewPath = featureCheck('trends_new_path')
 
   if (!trendsNewPath && queryKey[1].type !== 'tags') {
     return []

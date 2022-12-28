@@ -9,16 +9,17 @@ import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
 import TimelineHeaderNotification from '@components/Timeline/Shared/HeaderNotification'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
+import { featureCheck } from '@helpers/featureCheck'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Fragment, useCallback, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
 import TimelineFiltered, { FilteredProps, shouldFilter } from './Shared/Filtered'
@@ -31,7 +32,8 @@ export interface Props {
 }
 
 const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const { data: preferences } = usePreferencesQuery()
 
   const status = notification.status?.reblog ? notification.status.reblog : notification.status
   const account =
@@ -40,12 +42,12 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       : notification.status
       ? notification.status.account
       : notification.account
-  const ownAccount = notification.account?.id === instanceAccount?.id
+  const ownAccount = notification.account?.id === accountId
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount.preferences?.['reading:expand:spoilers'] || false
+    preferences?.['reading:expand:spoilers'] || false
   )
   const spoilerHidden = notification.status?.spoiler_text?.length
-    ? !instanceAccount.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
+    ? !preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
 
   const { colors } = useTheme()
@@ -117,7 +119,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   if (!ownAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
-    const hasFilterServerSide = useSelector(checkInstanceFeature('filter_server_side'))
+    const hasFilterServerSide = featureCheck('filter_server_side')
     if (notification.status) {
       if (hasFilterServerSide) {
         if (notification.status.filtered?.length) {

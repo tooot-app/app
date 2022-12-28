@@ -27,7 +27,6 @@ export type AccountV0 = {
   // boolean
   // object
   preferences: Mastodon.Preferences | undefined
-  filters: Mastodon.Filter<any>[]
   notifications: PushNotification
   push: {
     global: boolean

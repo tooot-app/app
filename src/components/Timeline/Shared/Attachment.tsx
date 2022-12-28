@@ -7,13 +7,12 @@ import AttachmentVideo from '@components/Timeline/Shared/Attachment/Video'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@utils/navigation/navigators'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import React, { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 
 const TimelineAttachment = () => {
@@ -28,13 +27,10 @@ const TimelineAttachment = () => {
 
   const { t } = useTranslation('componentTimeline')
 
-  const account = useSelector(
-    getInstanceAccount,
-    (prev, next) =>
-      prev.preferences?.['reading:expand:media'] === next.preferences?.['reading:expand:media']
-  )
+  const { data: preferences } = usePreferencesQuery()
+
   const defaultSensitive = () => {
-    switch (account.preferences?.['reading:expand:media']) {
+    switch (preferences?.['reading:expand:media']) {
       case 'show_all':
         return false
       case 'hide_all':

@@ -3,9 +3,10 @@ import { debounce, differenceWith, isEqual } from 'lodash'
 import React, { Dispatch } from 'react'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ComposeAction, ComposeState } from './types'
-import { instanceConfigurationStatusCharsURL } from '../Root'
 import CustomText from '@components/Text'
 import { emojis } from '@components/Emojis'
+import queryClient from '@helpers/queryClient'
+import { QueryKeyInstance } from '@utils/queryHooks/instance'
 
 export interface Params {
   textInput: ComposeState['textInputFocus']['current']
@@ -140,7 +141,11 @@ const formatText = ({ textInput, composeDispatch, content, disableDebounce = fal
         contentLength = contentLength + main.length
         break
       default:
-        contentLength = contentLength + instanceConfigurationStatusCharsURL
+        const queryKeyInstance: QueryKeyInstance = ['Instance']
+        contentLength =
+          contentLength +
+          (queryClient.getQueryData<Mastodon.Instance<any>>(queryKeyInstance)?.configuration
+            ?.statuses.characters_reserved_per_url || 23)
         break
     }
     _content = next
