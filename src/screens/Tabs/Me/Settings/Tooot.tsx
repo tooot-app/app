@@ -54,7 +54,7 @@ const SettingsTooot: React.FC = () => {
                 ' - ' +
                 `m/${getAccountStorage.string('version')}` +
                 ' - ' +
-                (expoToken.length
+                (expoToken?.length
                   ? `e/${expoToken.replace(/^ExponentPushToken\[/, '').replace(/\]$/, '')}`
                   : '') +
                 ']'

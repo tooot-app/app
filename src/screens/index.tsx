@@ -113,7 +113,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
         const paths = initialUrl.path.split('/')
 
         if (paths.length) {
-          if (!accounts.includes(accountActive)) {
+          if (accountActive && !accounts?.includes(accountActive)) {
             initQuery(accountActive)
           }
         }
@@ -217,7 +217,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
       if (!text && !media.length) {
         return
       } else {
-        if (accounts.length) {
+        if (accounts?.length) {
           navigationRef.navigate('Screen-AccountSelection', {
             share: { text, media }
           })

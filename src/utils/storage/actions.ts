@@ -12,31 +12,37 @@ import { StorageGlobal } from './global'
 
 export const getGlobalStorage = {
   string: <T extends keyof StorageGlobal>(key: T) =>
-    storage.global.getString(key) as StorageGlobal[T] extends string ? StorageGlobal[T] : never,
+    storage.global.getString(key) as NonNullable<StorageGlobal[T]> extends string
+      ? StorageGlobal[T]
+      : never,
   number: <T extends keyof StorageGlobal>(key: T) =>
-    storage.global.getNumber(key) as StorageGlobal[T] extends number ? StorageGlobal[T] : never,
+    storage.global.getNumber(key) as NonNullable<StorageGlobal[T]> extends number
+      ? StorageGlobal[T]
+      : never,
   boolean: <T extends keyof StorageGlobal>(key: T) =>
-    storage.global.getBoolean(key) as StorageGlobal[T] extends boolean ? StorageGlobal[T] : never,
+    storage.global.getBoolean(key) as NonNullable<StorageGlobal[T]> extends boolean
+      ? StorageGlobal[T]
+      : never,
   object: <T extends keyof StorageGlobal>(key: T) =>
-    JSON.parse(storage.global.getString(key) || '') as StorageGlobal[T] extends object
+    JSON.parse(storage.global.getString(key) || '') as NonNullable<StorageGlobal[T]> extends object
       ? StorageGlobal[T]
       : never
 }
 export const useGlobalStorage = {
   string: <T extends keyof StorageGlobal>(key: T) =>
-    useMMKVString(key, storage.global) as StorageGlobal[T] extends string
+    useMMKVString(key, storage.global) as NonNullable<StorageGlobal[T]> extends string
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never,
   number: <T extends keyof StorageGlobal>(key: T) =>
-    useMMKVNumber(key, storage.global) as StorageGlobal[T] extends number
+    useMMKVNumber(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never,
   boolean: <T extends keyof StorageGlobal>(key: T) =>
-    useMMKVBoolean(key, storage.global) as StorageGlobal[T] extends boolean
+    useMMKVBoolean(key, storage.global) as NonNullable<StorageGlobal[T]> extends boolean
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never,
   object: <T extends keyof StorageGlobal>(key: T) =>
-    useMMKVObject(key, storage.global) as StorageGlobal[T] extends object
+    useMMKVObject(key, storage.global) as NonNullable<StorageGlobal[T]> extends object
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never
 }
@@ -54,33 +60,39 @@ export const useGlobalStorageListener = (key: keyof StorageGlobal, func: () => v
 
 export const getAccountStorage = {
   string: <T extends keyof StorageAccount>(key: T) =>
-    storage.account?.getString(key) as StorageAccount[T] extends string ? StorageAccount[T] : never,
+    storage.account?.getString(key) as NonNullable<StorageAccount[T]> extends string
+      ? StorageAccount[T]
+      : never,
   number: <T extends keyof StorageAccount>(key: T) =>
-    storage.account?.getNumber(key) as StorageAccount[T] extends number ? StorageAccount[T] : never,
+    storage.account?.getNumber(key) as NonNullable<StorageAccount[T]> extends number
+      ? StorageAccount[T]
+      : never,
   boolean: <T extends keyof StorageAccount>(key: T) =>
-    storage.account?.getBoolean(key) as StorageAccount[T] extends boolean
+    storage.account?.getBoolean(key) as NonNullable<StorageAccount[T]> extends boolean
       ? StorageAccount[T]
       : never,
   object: <T extends keyof StorageAccount>(key: T) =>
-    JSON.parse(storage.account?.getString(key) || '') as StorageAccount[T] extends object
+    JSON.parse(storage.account?.getString(key) || '') as NonNullable<
+      StorageAccount[T]
+    > extends object
       ? StorageAccount[T]
       : never
 }
 export const useAccountStorage = {
   string: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVString(key, storage.account) as StorageAccount[T] extends string
+    useMMKVString(key, storage.account) as NonNullable<StorageAccount[T]> extends string
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   number: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVNumber(key, storage.account) as StorageAccount[T] extends number
+    useMMKVNumber(key, storage.account) as NonNullable<StorageAccount[T]> extends number
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   boolean: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVBoolean(key, storage.account) as StorageAccount[T] extends boolean
+    useMMKVBoolean(key, storage.account) as NonNullable<StorageAccount[T]> extends boolean
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never,
   object: <T extends keyof StorageAccount>(key: T) =>
-    useMMKVObject(key, storage.account) as StorageAccount[T] extends object
+    useMMKVObject(key, storage.account) as NonNullable<StorageAccount[T]> extends object
       ? [StorageAccount[T], (valud: StorageAccount[T]) => void]
       : never
 }

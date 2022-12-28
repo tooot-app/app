@@ -5,10 +5,10 @@ import apiGeneral from '@utils/api/general'
 import apiTooot from '@utils/api/tooot'
 import navigationRef from '@utils/navigation/navigationRef'
 import {
-    getAccountDetails,
-    getGlobalStorage,
-    setAccountDetails,
-    useGlobalStorage
+  getAccountDetails,
+  getGlobalStorage,
+  setAccountDetails,
+  useGlobalStorage
 } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'
@@ -25,7 +25,7 @@ const pushUseConnect = () => {
   }, [])
 
   const [expoToken] = useGlobalStorage.string('app.expo_token')
-  const pushEnabledCount = getGlobalStorage.object('accounts').filter(account => {
+  const pushEnabledCount = getGlobalStorage.object('accounts')?.filter(account => {
     return getAccountDetails(['push'], account)?.push.global
   }).length
 
@@ -71,7 +71,7 @@ const pushUseConnect = () => {
             }
           })
 
-          getGlobalStorage.object('accounts').forEach(account => {
+          getGlobalStorage.object('accounts')?.forEach(account => {
             const accountDetails = getAccountDetails(['push', 'auth.domain', 'auth.token'], account)
             if (!accountDetails) return
 

@@ -282,7 +282,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                     .then(() => StoreReview.requestReview())
                     .catch(() => {})
                 } else {
-                  setGlobalStorage('app.count_till_store_review', currentCount + 1)
+                  setGlobalStorage('app.count_till_store_review', (currentCount || 0) + 1)
                 }
               }
 

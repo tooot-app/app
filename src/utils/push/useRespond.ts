@@ -1,7 +1,7 @@
 import queryClient from '@utils/helpers/queryClient'
 import initQuery from '@utils/helpers/resetQuries'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { useGlobalStorage } from '@utils/storage/actions'
+import { generateAccountKey, useGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import pushUseNavigate from './useNavigate'
@@ -20,11 +20,13 @@ const pushUseRespond = () => {
           accountId: string
         }
 
-        const accountIndex = accounts.findIndex(
-          account => account === `${payloadData.instanceUrl}/${payloadData.accountId}`
+        const currAccount = accounts?.find(
+          account =>
+            account ===
+            generateAccountKey({ domain: payloadData.instanceUrl, id: payloadData.accountId })
         )
-        if (accountIndex > -1) {
-          initQuery(accounts[accountIndex])
+        if (currAccount) {
+          initQuery(currAccount)
         }
         pushUseNavigate(payloadData.notification_id)
       }

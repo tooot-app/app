@@ -45,11 +45,9 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
     []
   )
 
-  const previousTab = getGlobalStorage.string('app.prev_tab')
-
   return (
     <Tab.Navigator
-      initialRouteName={accountActive ? previousTab : 'Tab-Me'}
+      initialRouteName={accountActive ? getGlobalStorage.string('app.prev_tab') : 'Tab-Me'}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.primaryDefault,

@@ -22,13 +22,13 @@ const SettingsDev: React.FC = () => {
       <MenuRow title='Active account' content={account || '-'} onPress={() => {}} />
       <MenuRow
         title={'Saved local instances'}
-        content={accounts.length.toString()}
+        content={accounts?.length.toString()}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              options: accounts.concat(['Cancel']),
-              cancelButtonIndex: accounts.length,
+              options: (accounts || []).concat(['Cancel']),
+              cancelButtonIndex: accounts?.length,
               ...androidActionSheetStyles(colors)
             },
             () => {}
@@ -54,11 +54,14 @@ const SettingsDev: React.FC = () => {
         destructive
         onPress={() => {
           const accounts = getGlobalStorage.object('accounts')
+          if (!accounts) return
+
           for (const account of accounts) {
             console.log('Clearing', account)
             const temp = new MMKV({ id: account })
             temp.clearAll()
           }
+
           console.log('Clearing', 'global')
           storage.global.clearAll()
         }}

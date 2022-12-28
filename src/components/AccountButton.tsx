@@ -8,7 +8,7 @@ import Button from './Button'
 import haptics from './haptics'
 
 interface Props {
-  account: StorageGlobal['accounts'][number]
+  account: NonNullable<StorageGlobal['accounts']>[number]
   selected?: boolean
   additionalActions?: () => void
 }

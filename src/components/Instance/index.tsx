@@ -107,7 +107,7 @@ const ComponentInstance: React.FC<Props> = ({
 
         const accounts = getGlobalStorage.object('accounts')
         const accountKey = generateAccountKey({ domain, id })
-        const account = accounts.find(account => account === accountKey) || accountKey
+        const account = accounts?.find(account => account === accountKey) || accountKey
 
         const accountDetails: StorageAccount = {
           'auth.clientId': clientId,

@@ -9,7 +9,7 @@ import { StorageGlobal } from '@utils/storage/global'
 import { StyleConstants } from '@utils/styles/constants'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -26,6 +26,8 @@ export const mapFontsizeToName = (size: StorageGlobal['app.font_size']) => {
       return 'XL'
     case 3:
       return 'XXL'
+    default:
+      return 'M'
   }
 }
 
@@ -105,7 +107,7 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
       >
         <Button
           onPress={() => {
-            if (fontSize > -1) {
+            if (fontSize && fontSize > -1) {
               haptics('Light')
               // @ts-ignore
               setFontSize(fontSize - 1)
@@ -119,7 +121,7 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
         />
         <Button
           onPress={() => {
-            if (fontSize < 3) {
+            if (fontSize && fontSize < 3) {
               haptics('Light')
               // @ts-ignore
               setFontSize(fontSize + 1)

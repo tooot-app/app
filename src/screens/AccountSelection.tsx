@@ -125,23 +125,24 @@ const ScreenAccountSelection = ({
             marginTop: StyleConstants.Spacing.M
           }}
         >
-          {accounts
-            .slice()
-            .sort((a, b) => a.localeCompare(b))
-            .map((account, index) => {
-              return (
-                <AccountButton
-                  key={index}
-                  account={account}
-                  additionalActions={() =>
-                    navigationRef.navigate('Screen-Compose', {
-                      type: 'share',
-                      ...share
-                    })
-                  }
-                />
-              )
-            })}
+          {accounts &&
+            accounts
+              .slice()
+              .sort((a, b) => a.localeCompare(b))
+              .map((account, index) => {
+                return (
+                  <AccountButton
+                    key={index}
+                    account={account}
+                    additionalActions={() =>
+                      navigationRef.navigate('Screen-Compose', {
+                        type: 'share',
+                        ...share
+                      })
+                    }
+                  />
+                )
+              })}
         </View>
       </View>
     </ScrollView>

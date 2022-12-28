@@ -6,7 +6,7 @@ import { ComposeState } from './types'
 const assignVisibility = (
   target: ComposeState['visibility']
 ): Pick<ComposeState, 'visibility' | 'visibilityLock'> => {
-  const preferences = getAccountStorage.object('preferences') || 'public'
+  const preferences = getAccountStorage.object('preferences')
 
   switch (target) {
     case 'direct':
@@ -14,7 +14,7 @@ const assignVisibility = (
     case 'private':
       return { visibility: 'private', visibilityLock: false }
     case 'unlisted':
-      if (preferences === 'private') {
+      if (preferences?.['posting:default:visibility'] === 'private') {
         return { visibility: 'private', visibilityLock: false }
       } else {
         return { visibility: 'unlisted', visibilityLock: false }

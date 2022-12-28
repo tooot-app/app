@@ -26,7 +26,7 @@ const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Lan
     // Update Android notification channel language
     if (Platform.OS === 'android') {
       const accounts = getGlobalStorage.object('accounts')
-      accounts.forEach(account => setChannels(true, account))
+      accounts?.forEach(account => setChannels(true, account))
     }
 
     navigation.pop(1)

@@ -71,18 +71,19 @@ const TabMeSwitch: React.FC = () => {
               marginTop: StyleConstants.Spacing.M
             }}
           >
-            {accounts
-              .slice()
-              .sort((a, b) => a.localeCompare(b))
-              .map((account, index) => {
-                return (
-                  <AccountButton
-                    key={index}
-                    account={account}
-                    selected={account === accountActive}
-                  />
-                )
-              })}
+            {accounts &&
+              accounts
+                .slice()
+                .sort((a, b) => a.localeCompare(b))
+                .map((account, index) => {
+                  return (
+                    <AccountButton
+                      key={index}
+                      account={account}
+                      selected={account === accountActive}
+                    />
+                  )
+                })}
           </View>
         </View>
       </ScrollView>

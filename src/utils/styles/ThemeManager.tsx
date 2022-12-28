@@ -52,7 +52,7 @@ const determineTheme = (
     lighter = 'dark_lighter',
     darker = 'dark_darker'
   }
-  const determineDarkTheme = DarkTheme[darkTheme]
+  const determineDarkTheme = DarkTheme[darkTheme || 'lighter']
   switch (userTheme) {
     case 'auto':
       switch (osTheme) {
@@ -65,6 +65,8 @@ const determineTheme = (
       return 'light'
     case 'dark':
       return determineDarkTheme
+    default:
+      return determineDarkTheme
   }
 }
 
@@ -73,11 +75,13 @@ const ThemeManager: React.FC<PropsWithChildren> = ({ children }) => {
   const [userTheme] = useGlobalStorage.string('app.theme')
   const [darkTheme] = useGlobalStorage.string('app.theme.dark')
 
-  const [mode, setMode] = useState(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+  const [mode, setMode] = useState<'light' | 'dark'>(
+    userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light'
+  )
   const [theme, setTheme] = useState<Theme>(determineTheme(osTheme, userTheme, darkTheme))
 
   useEffect(() => {
-    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme)
+    setMode(userTheme === 'auto' ? osTheme || 'light' : userTheme || 'light')
   }, [osTheme, userTheme])
   useEffect(() => {
     setTheme(determineTheme(osTheme, userTheme, darkTheme))

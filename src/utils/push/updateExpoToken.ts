@@ -11,7 +11,7 @@ export const updateExpoToken = async () => {
     await setChannels()
   }
 
-  if (expoToken.length) {
+  if (expoToken?.length) {
     return Promise.resolve()
   } else {
     if (isDevelopment) {

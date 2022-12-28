@@ -53,7 +53,7 @@ const TabMePush: React.FC = () => {
       if (isDevelopment) {
         setPushAvailable(true)
       } else {
-        setPushAvailable(!!expoToken.length)
+        setPushAvailable(!!expoToken?.length)
       }
     }
 

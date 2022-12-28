@@ -51,7 +51,7 @@ export const PUSH_ADMIN = [
 export const setChannels = async (reset: boolean | undefined = false, specificAccount?: string) => {
   const account = specificAccount || getGlobalStorage.string('account.active')
   const accountDetails = getAccountDetails(['version', 'push'])
-  if (!accountDetails) return null
+  if (!account || !accountDetails) return null
 
   const deleteChannel = async (type: string) =>
     Notifications.deleteNotificationChannelAsync(`${account}_${type}`)

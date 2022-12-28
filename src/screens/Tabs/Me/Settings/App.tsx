@@ -51,7 +51,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.theme.heading')}
-        content={t(`screenTabs:me.settings.theme.options.${theme}`)}
+        content={t(`screenTabs:me.settings.theme.options.${theme || 'auto'}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
@@ -87,7 +87,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.darkTheme.heading')}
-        content={t(`screenTabs:me.settings.darkTheme.options.${themeDark}`)}
+        content={t(`screenTabs:me.settings.darkTheme.options.${themeDark || 'lighter'}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
@@ -118,7 +118,7 @@ const SettingsApp: React.FC = () => {
       />
       <MenuRow
         title={t('screenTabs:me.settings.browser.heading')}
-        content={t(`screenTabs:me.settings.browser.options.${browser}`)}
+        content={t(`screenTabs:me.settings.browser.options.${browser || 'internal'}`)}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
