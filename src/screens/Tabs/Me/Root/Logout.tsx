@@ -1,6 +1,5 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
-import { useQueryClient } from '@tanstack/react-query'
 import { removeAccount, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -9,7 +8,6 @@ import { Alert } from 'react-native'
 
 const Logout: React.FC = () => {
   const { t } = useTranslation(['common', 'screenTabs'])
-  const queryClient = useQueryClient()
 
   const [accountActive] = useGlobalStorage.string('account.active')
 
@@ -33,8 +31,7 @@ const Logout: React.FC = () => {
               style: 'destructive',
               onPress: () => {
                 if (accountActive) {
-                  haptics('Success')
-                  queryClient.clear()
+                  haptics('Light')
                   removeAccount(accountActive)
                 }
               }

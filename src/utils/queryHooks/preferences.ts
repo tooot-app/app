@@ -20,7 +20,7 @@ const usePreferencesQuery = (params?: {
     staleTime: Infinity,
     cacheTime: Infinity,
     initialData: getAccountStorage.object('preferences'),
-    onSuccess: data => setAccountStorage('preferences', data)
+    onSuccess: data => setAccountStorage([{ key: 'preferences', value: data }])
   })
 }
 

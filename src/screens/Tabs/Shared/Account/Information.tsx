@@ -37,7 +37,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
         <AccountInformationName account={account} />
 
-        <AccountInformationAccount account={account} />
+        <AccountInformationAccount account={account} myInfo={myInfo} />
 
         <AccountInformationFields account={account} myInfo={myInfo} />
 

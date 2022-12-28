@@ -7,7 +7,7 @@ import navigationRef from '@utils/navigation/navigationRef'
 import {
   getAccountDetails,
   getGlobalStorage,
-  setAccountDetails,
+  setAccountStorage,
   useGlobalStorage
 } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
@@ -26,7 +26,7 @@ const pushUseConnect = () => {
 
   const [expoToken] = useGlobalStorage.string('app.expo_token')
   const pushEnabledCount = getGlobalStorage.object('accounts')?.filter(account => {
-    return getAccountDetails(['push'], account)?.push.global
+    return getAccountDetails(['push'], account)?.push?.global
   }).length
 
   const connectQuery = useQuery<any, AxiosError>(
@@ -85,7 +85,10 @@ const pushUseConnect = () => {
                 }
               }).catch(() => console.log('error!!!'))
             }
-            setAccountDetails('push', { ...accountDetails?.push, global: false }, account)
+            setAccountStorage(
+              [{ key: 'push', value: { ...accountDetails?.push, global: false } }],
+              account
+            )
           })
         }
       }

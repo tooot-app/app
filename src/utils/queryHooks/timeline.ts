@@ -9,7 +9,7 @@ import {
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'

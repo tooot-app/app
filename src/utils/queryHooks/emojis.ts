@@ -24,14 +24,16 @@ const useEmojisQuery = (params?: { options?: UseQueryOptions<Mastodon.Emoji[], A
 
       const currEmojis = getAccountStorage.object('emojis_frequent')
       if (!Array.isArray(currEmojis)) {
-        setAccountStorage('emojis_frequent', [])
+        setAccountStorage([{ key: 'emojis_frequent', value: [] }])
       } else {
-        setAccountStorage(
-          'emojis_frequent',
-          currEmojis?.filter(emoji => {
-            return data.find(e => e.shortcode === emoji.emoji.shortcode)
-          })
-        )
+        setAccountStorage([
+          {
+            key: 'emojis_frequent',
+            value: currEmojis?.filter(emoji =>
+              data.find(e => e.shortcode === emoji.emoji.shortcode)
+            )
+          }
+        ])
       }
     }
   })

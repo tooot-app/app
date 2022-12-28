@@ -1,7 +1,6 @@
-import queryClient from '@utils/helpers/queryClient'
-import initQuery from '@utils/helpers/resetQuries'
+import queryClient from '@utils/queryHooks'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { generateAccountKey, useGlobalStorage } from '@utils/storage/actions'
+import { generateAccountKey, setAccount, useGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import pushUseNavigate from './useNavigate'
@@ -26,7 +25,7 @@ const pushUseRespond = () => {
             generateAccountKey({ domain: payloadData.instanceUrl, id: payloadData.accountId })
         )
         if (currAccount) {
-          initQuery(currAccount)
+          setAccount(currAccount)
         }
         pushUseNavigate(payloadData.notification_id)
       }

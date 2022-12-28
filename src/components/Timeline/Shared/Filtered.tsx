@@ -1,5 +1,5 @@
 import CustomText from '@components/Text'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import removeHTML from '@utils/helpers/removeHTML'
 import { QueryKeyFilters } from '@utils/queryHooks/filters'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'

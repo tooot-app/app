@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator<ScreenTabsStackParamList>()
 const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
   const { colors } = useTheme()
 
-  const accountActive = useGlobalStorage.string('account.active')
+  const [accountActive] = useGlobalStorage.string('account.active')
   const [avatarStatic] = useAccountStorage.string('auth.account.avatar_static')
 
   const composeListeners = useMemo(

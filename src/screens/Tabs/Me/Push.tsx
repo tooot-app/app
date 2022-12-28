@@ -84,7 +84,7 @@ const TabMePush: React.FC = () => {
                 body: formData
               })
 
-              setAccountStorage('push', { ...push, alerts })
+              setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
             }}
           />
         ))
@@ -112,7 +112,7 @@ const TabMePush: React.FC = () => {
                 body: formData
               })
 
-              setAccountStorage('push', { ...push, alerts })
+              setAccountStorage([{ key: 'push', value: { ...push, alerts } }])
             }}
           />
         ))
@@ -172,7 +172,7 @@ const TabMePush: React.FC = () => {
                         Notifications.deleteNotificationChannelGroupAsync(accountFull)
                       }
 
-                      setAccountStorage('push', { ...push, global: false })
+                      setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                     } else {
                       // Turning on
                       const randomPath = (Math.random() + 1).toString(36).substring(2)
@@ -225,7 +225,7 @@ const TabMePush: React.FC = () => {
                         setChannels(true)
                       }
 
-                      setAccountStorage('push', { ...push, global: true })
+                      setAccountStorage([{ key: 'push', value: { ...push, global: true } }])
                     }
                   }}
                 />
@@ -247,7 +247,7 @@ const TabMePush: React.FC = () => {
                       setChannels(true)
                     }
 
-                    setAccountStorage('push', { ...push, decode: !push.decode })
+                    setAccountStorage([{ key: 'push', value: { ...push, decode: !push.decode } }])
                   }}
                 />
                 <MenuRow

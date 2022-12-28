@@ -1,7 +1,7 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyPreferences } from '@utils/queryHooks/preferences'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'

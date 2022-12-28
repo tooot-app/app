@@ -106,10 +106,12 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                       showReplies: pageLocal.showReplies
                     }
                   ])
-                  setAccountStorage('page_local', {
-                    ...pageLocal,
-                    showBoosts: !pageLocal.showBoosts
-                  })
+                  setAccountStorage([
+                    {
+                      key: 'page_local',
+                      value: { ...pageLocal, showBoosts: !pageLocal.showBoosts }
+                    }
+                  ])
                 }}
               >
                 <DropdownMenu.ItemIndicator />
@@ -127,10 +129,12 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                       showReplies: !pageLocal.showReplies
                     }
                   ])
-                  setAccountStorage('page_local', {
-                    ...pageLocal,
-                    showReplies: !pageLocal.showReplies
-                  })
+                  setAccountStorage([
+                    {
+                      key: 'page_local',
+                      value: { ...pageLocal, showReplies: !pageLocal.showReplies }
+                    }
+                  ])
                 }}
               >
                 <DropdownMenu.ItemTitle children={t('tabs.local.options.showReplies')} />

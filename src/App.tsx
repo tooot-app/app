@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/react-native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import getLanguage from '@utils/helpers/getLanguage'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import audio from '@utils/startup/audio'
 import log from '@utils/startup/log'
 import netInfo from '@utils/startup/netInfo'
@@ -11,7 +11,12 @@ import push from '@utils/startup/push'
 import sentry from '@utils/startup/sentry'
 import timezone from '@utils/startup/timezone'
 import { storage } from '@utils/storage'
-import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
+import {
+  getGlobalStorage,
+  removeAccount,
+  setAccount,
+  setGlobalStorage
+} from '@utils/storage/actions'
 import {
   hasMigratedFromAsyncStorage,
   migrateFromAsyncStorage
@@ -64,7 +69,20 @@ const App: React.FC = () => {
           const storageAccount = new MMKV({ id: account })
           const token = storageAccount.getString('auth.token')
           if (token) {
+            log('log', 'App', `Binding storage of ${account}`)
             storage.account = storageAccount
+          } else {
+            log('log', 'App', `Token not found for ${account}`)
+            removeAccount(account)
+          }
+        } else {
+          log('log', 'App', 'No active account available')
+          const accounts = getGlobalStorage.object('accounts')
+          if (accounts?.length) {
+            log('log', 'App', `Setting active account ${accounts[accounts.length - 1]}`)
+            setAccount(accounts[accounts.length - 1])
+          } else {
+            setGlobalStorage('account.active', undefined)
           }
         }
       }

@@ -182,16 +182,16 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
       replyToStatus: composeState.replyToStatus
     }
 
-    const currentDrafts = getAccountStorage.object('drafts')
-    const draftIndex = currentDrafts.findIndex(
+    const currentDrafts = getAccountStorage.object('drafts') || []
+    const draftIndex = currentDrafts?.findIndex(
       ({ timestamp }) => timestamp === composeState.timestamp
     )
     if (draftIndex === -1) {
-      currentDrafts.unshift(payload)
+      currentDrafts?.unshift(payload)
     } else {
       currentDrafts[draftIndex] = payload
     }
-    setAccountStorage('drafts', currentDrafts)
+    setAccountStorage([{ key: 'drafts', value: currentDrafts }])
   }
   useEffect(() => {
     const autoSave = composeState.dirty
@@ -199,7 +199,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
           saveDraft()
         }, 1000)
       : removeDraft(composeState.timestamp)
-    return () => autoSave && clearInterval(autoSave)
+    return () => (autoSave ? clearInterval(autoSave) : undefined)
   }, [composeState])
 
   const headerLeft = useCallback(

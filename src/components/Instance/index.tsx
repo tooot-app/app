@@ -4,12 +4,17 @@ import { useNavigation } from '@react-navigation/native'
 import apiGeneral from '@utils/api/general'
 import browserPackage from '@utils/helpers/browserPackage'
 import { featureCheck } from '@utils/helpers/featureCheck'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { StorageAccount } from '@utils/storage/account'
-import { generateAccountKey, getGlobalStorage, setAccountDetails } from '@utils/storage/actions'
+import {
+  generateAccountKey,
+  getGlobalStorage,
+  setAccountStorage,
+  setGlobalStorage
+} from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
@@ -23,6 +28,8 @@ import base64 from 'react-native-base64'
 import { ScrollView } from 'react-native-gesture-handler'
 import validUrl from 'valid-url'
 import CustomText from '../Text'
+import { storage } from '@utils/storage'
+import { MMKV } from 'react-native-mmkv'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -107,7 +114,7 @@ const ComponentInstance: React.FC<Props> = ({
 
         const accounts = getGlobalStorage.object('accounts')
         const accountKey = generateAccountKey({ domain, id })
-        const account = accounts?.find(account => account === accountKey) || accountKey
+        const account = accounts?.find(account => account === accountKey)
 
         const accountDetails: StorageAccount = {
           'auth.clientId': clientId,
@@ -160,10 +167,20 @@ const ComponentInstance: React.FC<Props> = ({
           drafts: [],
           emojis_frequent: []
         }
-        let key: keyof typeof accountDetails
-        for (key in accountDetails) {
-          setAccountDetails(key, accountDetails[key], account)
+
+        setAccountStorage(
+          Object.keys(accountDetails).map((key: keyof StorageAccount) => ({
+            key,
+            value: accountDetails[key]
+          })),
+          accountKey
+        )
+        storage.account = new MMKV({ id: accountKey })
+
+        if (!account) {
+          setGlobalStorage('accounts', accounts?.concat([accountKey]))
         }
+        setGlobalStorage('account.active', accountKey)
 
         goBack && navigation.goBack()
       }

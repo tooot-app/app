@@ -47,8 +47,10 @@ const netInfo = async (): Promise<{
         removeAccount(account)
         return Promise.resolve({ connected: true, corrupted: '' })
       } else {
-        setAccountStorage('auth.account.acct', resVerify.acct)
-        setAccountStorage('auth.account.avatar_static', resVerify.avatar_static)
+        setAccountStorage([
+          { key: 'auth.account.acct', value: resVerify.acct },
+          { key: 'auth.account.avatar_static', value: resVerify.avatar_static }
+        ])
 
         return Promise.resolve({ connected: true })
       }

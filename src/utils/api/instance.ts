@@ -25,7 +25,7 @@ const apiInstance = async <T = unknown>({
 }: Params): Promise<PagedResponse<T>> => {
   const accountDetails = getAccountDetails(['auth.domain', 'auth.token'])
   if (!accountDetails) {
-    console.warn(ctx.bgRed.white.bold(' API ') + ' ' + 'No account detail available')
+    console.warn(ctx.bgRed.white.bold(' API instance '), 'No account detail available')
     return Promise.reject()
   }
 
@@ -35,14 +35,9 @@ const apiInstance = async <T = unknown>({
   }
 
   console.log(
-    ctx.bgGreen.bold(' API instance ') +
-      ' ' +
-      accountDetails['auth.domain'] +
-      ' ' +
-      method +
-      ctx.green(' -> ') +
-      `/${url}` +
-      (params ? ctx.green(' -> ') : ''),
+    ctx.bgGreen.bold(' API instance '),
+    accountDetails['auth.domain'],
+    method + ctx.green(' -> ') + `/${url}` + (params ? ctx.green(' -> ') : ''),
     params ? params : ''
   )
 

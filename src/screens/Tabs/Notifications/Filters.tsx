@@ -52,7 +52,7 @@ const TabNotificationsFilters: React.FC<
           content={t('common:buttons.apply')}
           onPress={() => {
             if (changed) {
-              setAccountStorage('notifications', filters)
+              setAccountStorage([{ key: 'notifications', value: filters }])
               const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Notifications' }]
               queryClient.invalidateQueries({ queryKey })
             }

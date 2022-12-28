@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import { getAccountStorage } from '@utils/storage/actions'
+import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -11,12 +11,14 @@ import { PlaceholderLine } from 'rn-placeholder'
 
 export interface Props {
   account: Mastodon.Account | undefined
+  myInfo?: boolean
 }
 
-const AccountInformationAccount: React.FC<Props> = ({ account }) => {
+const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
 
+  const [acct] = useAccountStorage.string('auth.account.acct')
   const domain = getAccountStorage.string('auth.domain')
 
   const { data: relationship } = useRelationshipQuery({
@@ -49,7 +51,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account }) => {
             }}
             selectable
           >
-            @{account?.acct}
+            @{myInfo ? acct : account?.acct}
             {localInstance ? `@${domain}` : null}
           </CustomText>
           {relationship?.followed_by ? t('shared.account.followed_by') : null}

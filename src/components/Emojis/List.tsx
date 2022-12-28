@@ -87,25 +87,12 @@ const EmojisList = () => {
                   }
 
                   const currentEmojis = getAccountStorage.object('emojis_frequent')
-                  const foundEmojiIndex = currentEmojis.findIndex(
+                  const foundEmojiIndex = currentEmojis?.findIndex(
                     e => e.emoji.shortcode === emoji.shortcode && e.emoji.url === emoji.url
                   )
 
                   let newEmojisSort: StorageAccount['emojis_frequent']
-                  if (foundEmojiIndex > -1) {
-                    newEmojisSort = currentEmojis
-                      .map((e, i) =>
-                        i === foundEmojiIndex
-                          ? {
-                              ...e,
-                              score: calculateScore(e),
-                              count: e.count + 1,
-                              lastUsed: new Date().getTime()
-                            }
-                          : e
-                      )
-                      .sort((a, b) => b.score - a.score)
-                  } else {
+                  if (foundEmojiIndex === -1) {
                     newEmojisSort = currentEmojis || []
                     const temp = {
                       emoji,
@@ -118,12 +105,28 @@ const EmojisList = () => {
                       score: calculateScore(temp),
                       count: temp.count + 1
                     })
+                  } else {
+                    newEmojisSort =
+                      currentEmojis
+                        ?.map((e, i) =>
+                          i === foundEmojiIndex
+                            ? {
+                                ...e,
+                                score: calculateScore(e),
+                                count: e.count + 1,
+                                lastUsed: new Date().getTime()
+                              }
+                            : e
+                        )
+                        .sort((a, b) => b.score - a.score) || []
                   }
 
-                  setAccountStorage(
-                    'emojis_frequent',
-                    newEmojisSort.sort((a, b) => b.score - a.score).slice(0, 20)
-                  )
+                  setAccountStorage([
+                    {
+                      key: 'emojis_frequent',
+                      value: newEmojisSort.sort((a, b) => b.score - a.score).slice(0, 20)
+                    }
+                  ])
                 }}
                 style={{ padding: StyleConstants.Spacing.S }}
               >

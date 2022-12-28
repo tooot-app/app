@@ -15,10 +15,10 @@ import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import * as DropdownMenu from 'zeego/dropdown-menu'
-import AccountAttachments from './Account/Attachments'
-import AccountHeader from './Account/Header'
-import AccountInformation from './Account/Information'
-import AccountNav from './Account/Nav'
+import AccountAttachments from './Attachments'
+import AccountHeader from './Header'
+import AccountInformation from './Information'
+import AccountNav from './Nav'
 
 const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>> = ({
   navigation,

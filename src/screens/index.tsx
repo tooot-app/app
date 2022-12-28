@@ -8,7 +8,6 @@ import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImageViewer'
 import ScreenTabs from '@screens/Tabs'
-import initQuery from '@utils/helpers/resetQuries'
 import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import pushUseConnect from '@utils/push/useConnect'
@@ -19,7 +18,7 @@ import { useFiltersQuery } from '@utils/queryHooks/filters'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { useProfileQuery } from '@utils/queryHooks/profile'
-import { setGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
+import { setAccount, setGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { themes } from '@utils/styles/themes'
 import * as Linking from 'expo-linking'
@@ -84,11 +83,11 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
   }, [localCorrupt])
 
   // Lazily update users's preferences, for e.g. composing default visibility
-  useInstanceQuery()
-  useProfileQuery()
-  usePreferencesQuery()
-  useFiltersQuery()
-  useEmojisQuery()
+  useInstanceQuery({ options: { enabled: !!accountActive } })
+  useProfileQuery({ options: { enabled: !!accountActive } })
+  usePreferencesQuery({ options: { enabled: !!accountActive } })
+  useFiltersQuery({ options: { enabled: !!accountActive } })
+  useEmojisQuery({ options: { enabled: !!accountActive } })
 
   // Callbacks
   const navigationContainerOnStateChange = useCallback(() => {
@@ -114,7 +113,7 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
 
         if (paths.length) {
           if (accountActive && !accounts?.includes(accountActive)) {
-            initQuery(accountActive)
+            setAccount(accountActive)
           }
         }
       }

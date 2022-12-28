@@ -1,5 +1,5 @@
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
-import queryClient from '@utils/helpers/queryClient'
+import queryClient from '@utils/queryHooks'
 import { QueryKeyInstance } from '@utils/queryHooks/instance'
 import i18next from 'i18next'
 import { Asset, launchImageLibrary } from 'react-native-image-picker'

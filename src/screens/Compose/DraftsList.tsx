@@ -19,10 +19,13 @@ import { formatText } from './utils/processText'
 import { ComposeStateDraft, ExtendedAttachment } from './utils/types'
 
 export const removeDraft = (timestamp: number) =>
-  setAccountStorage(
-    'drafts',
-    getAccountStorage.object('drafts').filter(draft => draft.timestamp !== timestamp)
-  )
+  setAccountStorage([
+    {
+      key: 'drafts',
+      value:
+        getAccountStorage.object('drafts')?.filter(draft => draft.timestamp !== timestamp) || []
+    }
+  ])
 
 const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-DraftsList'>> = ({
   navigation,

@@ -39,6 +39,7 @@ const handleError =
         ctx.bold(' API '),
         ctx.bold('response'),
         error.response.status,
+        error.request._url,
         error?.response.data?.error || error?.response.message || 'Unknown error'
       )
 

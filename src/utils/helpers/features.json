@@ -46,5 +46,9 @@
   {
     "feature": "filter_server_side",
     "version": 4.0
+  },
+  {
+    "feature": "instance_new_path",
+    "version": 4.0
   }
 ]

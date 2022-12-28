@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import initQuery from '@utils/helpers/resetQuries'
-import { generateAccountKey, getAccountDetails } from '@utils/storage/actions'
+import { generateAccountKey, getAccountDetails, setAccount } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
@@ -34,7 +33,7 @@ const AccountButton: React.FC<Props> = ({ account, selected = false, additionalA
       }`}
       onPress={() => {
         haptics('Light')
-        initQuery(
+        setAccount(
           generateAccountKey({
             domain: accountDetails['auth.domain'],
             id: accountDetails['auth.account.id']
