@@ -115,7 +115,7 @@
             "accessibilityHint": "使用者帳戶"
           }
         },
-        "application": "{{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "嘟文已編輯"
         },
