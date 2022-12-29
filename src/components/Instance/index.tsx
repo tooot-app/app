@@ -192,7 +192,7 @@ const ComponentInstance: React.FC<Props> = ({
   const processUpdate = useCallback(() => {
     if (domain) {
       const accounts = getGlobalStorage.object('accounts')
-      if (accounts && accounts.filter(account => account.startsWith(`${domain}/`)).length) {
+      if (accounts?.filter(account => account.startsWith(`${domain}/`)).length) {
         Alert.alert(
           t('componentInstance:update.alert.title'),
           t('componentInstance:update.alert.message'),

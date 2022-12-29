@@ -26,7 +26,11 @@ const useProfileQuery = (
     options: UseQueryOptions<AccountWithSource, AxiosError>
   } | void
 ) => {
-  return useQuery(queryKey, queryFunctionProfile, params?.options)
+  return useQuery(queryKey, queryFunctionProfile, {
+    ...params?.options,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 }
 
 type MutationVarsProfileBase =

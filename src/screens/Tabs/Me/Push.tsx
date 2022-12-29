@@ -66,7 +66,7 @@ const TabMePush: React.FC = () => {
 
   const alerts = () =>
     push?.alerts
-      ? PUSH_DEFAULT.map(alert => (
+      ? PUSH_DEFAULT().map(alert => (
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
@@ -94,7 +94,7 @@ const TabMePush: React.FC = () => {
   const profileQuery = useProfileQuery()
   const adminAlerts = () =>
     profileQuery.data?.role?.permissions
-      ? PUSH_ADMIN.map(({ type }) => (
+      ? PUSH_ADMIN().map(({ type }) => (
           <MenuRow
             key={type}
             title={t(`me.push.${type}.heading`)}

@@ -66,7 +66,7 @@ const TabNotificationsFilters: React.FC<
   return (
     <ScrollView style={{ flex: 1 }}>
       <MenuContainer>
-        {PUSH_DEFAULT.map((type, index) => (
+        {PUSH_DEFAULT().map((type, index) => (
           <MenuRow
             key={index}
             title={t(`screenTabs:me.push.${type}.heading`)}
@@ -74,7 +74,9 @@ const TabNotificationsFilters: React.FC<
             switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
           />
         ))}
-        {PUSH_ADMIN.map(({ type }) => (
+      </MenuContainer>
+      <MenuContainer>
+        {PUSH_ADMIN().map(({ type }) => (
           <MenuRow
             key={type}
             title={t(`screenTabs:me.push.${type}.heading`)}
