@@ -115,7 +115,7 @@
             "accessibilityHint": "사용자 계정"
           }
         },
-        "application": "{{application}}으로 툿",
+        "application": "",
         "edited": {
           "accessibilityLabel": "툿 수정됨"
         },
