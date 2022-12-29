@@ -115,7 +115,7 @@
             "accessibilityHint": "Profilo dell'utente"
           }
         },
-        "application": "Via {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Toot modificato"
         },
