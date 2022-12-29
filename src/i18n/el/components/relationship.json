@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Παρακολούθηση χρήστη"
   },
   "block": {
-    "function": ""
+    "function": "Αποκλεισμός χρήστη"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Σφάλμα φόρτωσης",
+    "blocked_by": "Αποκλεισμός από χρήστη",
+    "blocking": "Κατάργηση αποκλεισμού",
+    "following": "Διακοπή παρακολούθησης",
+    "requested": "Ανάκληση αιτήματος",
+    "default": "Παρακολούθηση"
   }
 }
