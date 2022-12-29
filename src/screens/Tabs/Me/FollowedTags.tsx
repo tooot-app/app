@@ -53,7 +53,6 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
       renderItem={({ item }) => (
         <ComponentHashtag
           hashtag={item}
-          onPress={() => {}}
           children={
             <Button
               type='text'
