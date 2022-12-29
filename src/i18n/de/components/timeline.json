@@ -115,7 +115,7 @@
             "accessibilityHint": "Profil"
           }
         },
-        "application": "Mit {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Tröt bearbeitet"
         },
