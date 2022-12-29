@@ -18,9 +18,10 @@ export type AccountV0 = {
   'auth.clientId': string
   'auth.clientSecret': string
   'auth.token': string
-  'auth.domain': string
+  'auth.domain': string // used for API
   'auth.account.id': string
   'auth.account.acct': string
+  'auth.account.domain': string // used for username
   'auth.account.avatar_static': string
   version: string
   // number

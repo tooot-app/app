@@ -24,10 +24,16 @@ export const getGlobalStorage = {
     storage.global.getBoolean(key) as NonNullable<StorageGlobal[T]> extends boolean
       ? StorageGlobal[T]
       : never,
-  object: <T extends keyof StorageGlobal>(key: T) =>
-    JSON.parse(storage.global.getString(key) || '') as NonNullable<StorageGlobal[T]> extends object
-      ? StorageGlobal[T]
-      : never
+  object: <T extends keyof StorageGlobal>(key: T) => {
+    const value = storage.global.getString(key)
+    if (value?.length) {
+      return JSON.parse(value) as NonNullable<StorageGlobal[T]> extends object
+        ? StorageGlobal[T]
+        : never
+    } else {
+      return undefined
+    }
+  }
 }
 export const useGlobalStorage = {
   string: <T extends keyof StorageGlobal>(key: T) =>
@@ -84,7 +90,7 @@ export const getAccountStorage = {
       : never,
   object: <T extends keyof StorageAccount>(key: T) => {
     const value = storage.account?.getString(key)
-    if (value) {
+    if (value?.length) {
       return JSON.parse(value) as NonNullable<StorageAccount[T]> extends object
         ? StorageAccount[T]
         : never
@@ -166,8 +172,9 @@ export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
       case 'auth.clientSecret':
       case 'auth.token':
       case 'auth.domain':
-      case 'auth.account.id':
       case 'auth.account.acct':
+      case 'auth.account.domain':
+      case 'auth.account.id':
       case 'auth.account.avatar_static':
         // @ts-ignore
         result[key] = temp.getString(key)
@@ -180,9 +187,12 @@ export const getAccountDetails = <T extends Array<keyof StorageAccount>>(
       case 'drafts':
       case 'emojis_frequent':
         const value = temp.getString(key)
-        if (value) {
+        if (value?.length) {
           // @ts-ignore
           result[key] = JSON.parse(value)
+        } else {
+          // @ts-ignore
+          result[key] = undefined
         }
         break
     }

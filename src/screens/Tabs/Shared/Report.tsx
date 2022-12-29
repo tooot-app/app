@@ -74,7 +74,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
   }, [isReporting, comment, forward, categories, rules])
 
   const localInstance = account?.acct.includes('@')
-    ? account?.acct.includes(`@${getAccountStorage.string('auth.domain')}`)
+    ? account?.acct.includes(`@${getAccountStorage.string('auth.account.domain')}`)
     : true
 
   const rulesQuery = useRulesQuery()

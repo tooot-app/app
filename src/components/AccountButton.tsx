@@ -15,7 +15,7 @@ interface Props {
 const AccountButton: React.FC<Props> = ({ account, selected = false, additionalActions }) => {
   const navigation = useNavigation()
   const accountDetails = getAccountDetails(
-    ['auth.account.acct', 'auth.domain', 'auth.account.id'],
+    ['auth.domain', 'auth.account.acct', 'auth.account.domain', 'auth.account.id'],
     account
   )
   if (!accountDetails) return null
@@ -28,7 +28,7 @@ const AccountButton: React.FC<Props> = ({ account, selected = false, additionalA
         marginBottom: StyleConstants.Spacing.M,
         marginRight: StyleConstants.Spacing.M
       }}
-      content={`@${accountDetails['auth.account.acct']}@${accountDetails['auth.domain']}${
+      content={`@${accountDetails['auth.account.acct']}@${accountDetails['auth.account.domain']}${
         selected ? ' ✓' : ''
       }`}
       onPress={() => {

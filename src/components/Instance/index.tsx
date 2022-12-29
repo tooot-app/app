@@ -123,6 +123,8 @@ const ComponentInstance: React.FC<Props> = ({
           'auth.domain': domain,
           'auth.account.id': id,
           'auth.account.acct': acct,
+          // @ts-ignore
+          'auth.account.domain': instanceQuery.data?.domain || instanceQuery.data?.uri,
           'auth.account.avatar_static': avatar_static,
           version: instanceQuery.data?.version || '0',
           preferences: undefined,
