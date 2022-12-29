@@ -330,7 +330,7 @@
       "name": "Edita l'historial"
     },
     "report": {
-      "name": "Denúncia {{acct}}",
+      "name": "Denuncia {{acct}}",
       "report": "Denúncia",
       "forward": {
         "heading": "Envia anònimament al servidor remot {{instance}}"
