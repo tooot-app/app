@@ -330,7 +330,7 @@
       "name": "编辑历史"
     },
     "report": {
-      "name": "举报 @{{acct}}",
+      "name": "举报 {{acct}}",
       "report": "举报",
       "forward": {
         "heading": "匿名举报至远程服务器 {{instance}}"
