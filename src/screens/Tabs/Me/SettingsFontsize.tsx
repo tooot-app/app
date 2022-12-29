@@ -88,11 +88,11 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
               marginBottom: StyleConstants.Spacing.M,
               fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
               lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
-              color: fontSize === size ? colors.primaryDefault : colors.secondary,
+              color: (fontSize || 0) === size ? colors.primaryDefault : colors.secondary,
               borderWidth: StyleSheet.hairlineWidth,
               borderColor: colors.border
             }}
-            fontWeight={fontSize === size ? 'Bold' : undefined}
+            fontWeight={(fontSize || 0) === size ? 'Bold' : undefined}
           >
             {t(`me.fontSize.sizes.${mapFontsizeToName(size)}`)}
           </CustomText>
@@ -107,10 +107,10 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
       >
         <Button
           onPress={() => {
-            if (fontSize && fontSize > -1) {
+            if ((fontSize || 0) > -1) {
               haptics('Light')
               // @ts-ignore
-              setFontSize(fontSize - 1)
+              setFontSize((fontSize || 0) - 1)
             }
           }}
           type='icon'
@@ -121,10 +121,10 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
         />
         <Button
           onPress={() => {
-            if (fontSize && fontSize < 3) {
+            if ((fontSize || 0) < 3) {
               haptics('Light')
               // @ts-ignore
-              setFontSize(fontSize + 1)
+              setFontSize((fontSize || 0) + 1)
             }
           }}
           type='icon'

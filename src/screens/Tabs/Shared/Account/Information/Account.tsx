@@ -19,7 +19,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { colors } = useTheme()
 
   const [acct] = useAccountStorage.string('auth.account.acct')
-  const domain = getAccountStorage.string('auth.domain')
+  const domain = getAccountStorage.string('auth.account.domain')
 
   const { data: relationship } = useRelationshipQuery({
     id: account?.id || '',

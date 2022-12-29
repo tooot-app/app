@@ -2,6 +2,7 @@ import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useNavigation } from '@react-navigation/native'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { storage } from '@utils/storage'
 import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
@@ -11,6 +12,7 @@ import React from 'react'
 import { MMKV } from 'react-native-mmkv'
 
 const SettingsDev: React.FC = () => {
+  const navigation = useNavigation()
   const { colors } = useTheme()
   const { showActionSheetWithOptions } = useActionSheet()
 
@@ -54,16 +56,17 @@ const SettingsDev: React.FC = () => {
         destructive
         onPress={() => {
           const accounts = getGlobalStorage.object('accounts')
-          if (!accounts) return
-
-          for (const account of accounts) {
-            console.log('Clearing', account)
-            const temp = new MMKV({ id: account })
-            temp.clearAll()
+          storage.account = undefined
+          if (accounts) {
+            for (const account of accounts) {
+              console.log('Clearing', account)
+              const temp = new MMKV({ id: account })
+              temp.clearAll()
+            }
           }
-
           console.log('Clearing', 'global')
           storage.global.clearAll()
+          navigation.goBack()
         }}
       />
       <Button

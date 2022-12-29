@@ -10232,7 +10232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rtl-detect@npm:^1.0.2, rtl-detect@npm:^1.0.4":
+"rtl-detect@npm:^1.0.2":
   version: 1.0.4
   resolution: "rtl-detect@npm:1.0.4"
   checksum: d562535baa0db62f57f0a1d4676297bff72fd6b94e88f0f0900d5c3e810ab512c5c4cadffd3e05fbe8d9c74310c919afa3ea8c1001c244e5555e8eef12d02d6f
@@ -11304,7 +11304,6 @@ __metadata:
     react-native-tab-view: ^3.3.4
     react-redux: ^8.0.5
     rn-placeholder: ^3.0.3
-    rtl-detect: ^1.0.4
     typescript: ^4.9.4
     valid-url: ^1.0.9
     zeego: ^1.0.2

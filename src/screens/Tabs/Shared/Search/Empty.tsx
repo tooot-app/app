@@ -91,13 +91,7 @@ const SearchEmpty: React.FC<Props> = ({ isFetching, inputRef, setSearchTerm }) =
               return (
                 <React.Fragment key={index}>
                   {index !== 0 ? <ComponentSeparator /> : null}
-                  <ComponentHashtag
-                    hashtag={hashtag}
-                    onPress={() => {
-                      inputRef.current?.setNativeProps({ text: `#${hashtag.name}` })
-                      setSearchTerm(`#${hashtag.name}`)
-                    }}
-                  />
+                  <ComponentHashtag hashtag={hashtag} />
                 </React.Fragment>
               )
             })}

@@ -29,8 +29,9 @@ const TabMePush: React.FC = () => {
   const [expoToken] = useGlobalStorage.string('app.expo_token')
   const [push] = useAccountStorage.object('push')
   const [domain] = useAccountStorage.string('auth.domain')
-  const [accountId] = useAccountStorage.string('auth.account.id')
   const [accountAcct] = useAccountStorage.string('auth.account.acct')
+  const [accountDomain] = useAccountStorage.string('auth.account.domain')
+  const [accountId] = useAccountStorage.string('auth.account.id')
 
   const appsQuery = useAppsQuery()
 
@@ -65,7 +66,7 @@ const TabMePush: React.FC = () => {
 
   const alerts = () =>
     push?.alerts
-      ? PUSH_DEFAULT.map(alert => (
+      ? PUSH_DEFAULT().map(alert => (
           <MenuRow
             key={alert}
             title={t(`me.push.${alert}.heading`)}
@@ -93,7 +94,7 @@ const TabMePush: React.FC = () => {
   const profileQuery = useProfileQuery()
   const adminAlerts = () =>
     profileQuery.data?.role?.permissions
-      ? PUSH_ADMIN.map(({ type }) => (
+      ? PUSH_ADMIN().map(({ type }) => (
           <MenuRow
             key={type}
             title={t(`me.push.${type}.heading`)}
@@ -119,7 +120,7 @@ const TabMePush: React.FC = () => {
       : null
 
   const pushPath = `${expoToken}/${domain}/${accountId}`
-  const accountFull = `@${accountAcct}@${domain}`
+  const accountFull = `@${accountAcct}@${accountDomain}`
 
   return (
     <ScrollView>
@@ -152,7 +153,7 @@ const TabMePush: React.FC = () => {
               ) : null}
               <MenuContainer>
                 <MenuRow
-                  title={t('me.push.global.heading', { acct: `@${accountAcct}@${domain}` })}
+                  title={t('me.push.global.heading', { acct: `@${accountAcct}@${accountDomain}` })}
                   description={t('me.push.global.description')}
                   switchDisabled={!pushEnabled}
                   switchValue={pushEnabled === false ? false : push?.global}

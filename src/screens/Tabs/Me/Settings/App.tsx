@@ -38,7 +38,7 @@ const SettingsApp: React.FC = () => {
           // @ts-ignore
           LOCALES[
             Platform.OS === 'ios'
-              ? Localization.locale.toLowerCase().replace(new RegExp(/.*-.*(-.*)/, 'i'), '')
+              ? Localization.locale.replace(new RegExp(/.*-.*(-.*)/, 'i'), '')
               : i18n.language.toLowerCase()
           ]
         }

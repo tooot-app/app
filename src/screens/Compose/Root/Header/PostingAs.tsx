@@ -23,7 +23,7 @@ const ComposePostingAs = () => {
       <CustomText fontStyle='S' style={{ color: colors.secondary }}>
         {t('content.root.header.postingAs', {
           acct: getAccountStorage.string('auth.account.acct'),
-          domain: getAccountStorage.string('auth.domain')
+          domain: getAccountStorage.string('auth.account.domain')
         })}
       </CustomText>
     </View>

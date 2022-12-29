@@ -123,6 +123,8 @@ const ComponentInstance: React.FC<Props> = ({
           'auth.domain': domain,
           'auth.account.id': id,
           'auth.account.acct': acct,
+          // @ts-ignore
+          'auth.account.domain': instanceQuery.data?.domain || instanceQuery.data?.uri,
           'auth.account.avatar_static': avatar_static,
           version: instanceQuery.data?.version || '0',
           preferences: undefined,
@@ -190,7 +192,7 @@ const ComponentInstance: React.FC<Props> = ({
   const processUpdate = useCallback(() => {
     if (domain) {
       const accounts = getGlobalStorage.object('accounts')
-      if (accounts && accounts.filter(account => account.startsWith(`${domain}/`)).length) {
+      if (accounts?.filter(account => account.startsWith(`${domain}/`)).length) {
         Alert.alert(
           t('componentInstance:update.alert.title'),
           t('componentInstance:update.alert.message'),

@@ -67,16 +67,17 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       const accounts: string[] = []
 
       for (const instance of JSON.parse(storeInstances.instances)) {
-        const account = `${instance.uri}/${instance.account.id}`
+        const account = `${instance.url}/${instance.account.id}`
 
         const temp = new MMKV({ id: account })
         temp.set('auth.clientId', instance.appData.clientId)
         temp.set('auth.clientSecret', instance.appData.clientSecret)
         temp.set('auth.token', instance.token)
-        temp.set('auth.domain', instance.uri)
+        temp.set('auth.domain', instance.url)
 
-        temp.set('auth.account.id', instance.account.id)
         temp.set('auth.account.acct', instance.account.acct)
+        temp.set('auth.account.domain', instance.uri)
+        temp.set('auth.account.id', instance.account.id)
         temp.set('auth.account.avatar_static', instance.account.avatarStatic)
 
         if (instance.account.preferences) {
