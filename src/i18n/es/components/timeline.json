@@ -115,7 +115,7 @@
             "accessibilityHint": "Cuenta de usuario"
           }
         },
-        "application": "Con {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Toot editado"
         },
