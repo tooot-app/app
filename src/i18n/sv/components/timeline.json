@@ -115,7 +115,7 @@
             "accessibilityHint": "Användarens konto"
           }
         },
-        "application": "Via {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Inlägg redigerat"
         },
