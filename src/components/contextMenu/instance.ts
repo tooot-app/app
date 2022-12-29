@@ -1,10 +1,10 @@
 import { displayMessage } from '@components/Message'
+import { useQueryClient } from '@tanstack/react-query'
+import { getHost } from '@utils/helpers/urlMatcher'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
-import { getInstanceUrl } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 
 const menuInstance = ({
   status,
@@ -35,10 +35,9 @@ const menuInstance = ({
 
   const menus: ContextMenu[][] = []
 
-  const currentInstance = useSelector(getInstanceUrl)
-  const instance = status.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const instance = getHost(status.uri)
 
-  if (currentInstance !== instance && instance) {
+  if (instance === getAccountStorage.string('auth.domain')) {
     menus.push([
       {
         key: 'instance-block',

@@ -2,6 +2,7 @@ import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import {
   QueryKeyRelationship,
@@ -13,12 +14,10 @@ import {
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Platform } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 
 const menuAccount = ({
   type,
@@ -43,8 +42,7 @@ const menuAccount = ({
 
   const menus: ContextMenu[][] = [[]]
 
-  const instanceAccount = useSelector(getInstanceAccount)
-  const ownAccount = instanceAccount?.id === account.id
+  const ownAccount = useAccountStorage.string('auth.account.id')['0'] === account.id
 
   const [enabled, setEnabled] = useState(openChange)
   useEffect(() => {

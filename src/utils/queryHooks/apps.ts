@@ -1,14 +1,14 @@
-import apiGeneral from '@api/general'
-import apiInstance from '@api/instance'
+import {
+    QueryFunctionContext,
+    useMutation,
+    UseMutationOptions,
+    useQuery,
+    UseQueryOptions
+} from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
+import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
 import * as AuthSession from 'expo-auth-session'
-import {
-  QueryFunctionContext,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions
-} from '@tanstack/react-query'
 
 export type QueryKeyApps = ['Apps']
 

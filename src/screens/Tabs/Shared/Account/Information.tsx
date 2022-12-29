@@ -3,7 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Placeholder, Fade } from 'rn-placeholder'
+import { Fade, Placeholder } from 'rn-placeholder'
 import AccountInformationAccount from './Information/Account'
 import AccountInformationActions from './Information/Actions'
 import AccountInformationAvatar from './Information/Avatar'
@@ -37,7 +37,7 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
 
         <AccountInformationName account={account} />
 
-        <AccountInformationAccount account={account} />
+        <AccountInformationAccount account={account} myInfo={myInfo} />
 
         <AccountInformationFields account={account} myInfo={myInfo} />
 

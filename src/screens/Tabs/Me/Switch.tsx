@@ -1,27 +1,23 @@
 import AccountButton from '@components/AccountButton'
 import ComponentInstance from '@components/Instance'
 import CustomText from '@components/Text'
-import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import { getGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
 
 const TabMeSwitch: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
-  const instances = useSelector(getInstances, () => true)
-  const instanceActive = useSelector(getInstanceActive, () => true)
+  const accounts = getGlobalStorage.object('accounts')
+  const accountActive = getGlobalStorage.string('account.active')
 
   const scrollViewRef = useRef<ScrollView>(null)
   useEffect(() => {
-    setTimeout(
-      () => scrollViewRef.current?.scrollToEnd({ animated: true }),
-      150
-    )
+    setTimeout(() => scrollViewRef.current?.scrollToEnd({ animated: true }), 150)
   }, [scrollViewRef.current])
 
   return (
@@ -45,11 +41,7 @@ const TabMeSwitch: React.FC = () => {
           >
             {t('me.switch.new')}
           </CustomText>
-          <ComponentInstance
-            scrollViewRef={scrollViewRef}
-            disableHeaderImage
-            goBack
-          />
+          <ComponentInstance scrollViewRef={scrollViewRef} disableHeaderImage goBack />
         </View>
 
         <View
@@ -79,29 +71,19 @@ const TabMeSwitch: React.FC = () => {
               marginTop: StyleConstants.Spacing.M
             }}
           >
-            {instances.length
-              ? instances
-                  .slice()
-                  .sort((a, b) =>
-                    `${a.uri}${a.account.acct}`.localeCompare(
-                      `${b.uri}${b.account.acct}`
-                    )
+            {accounts &&
+              accounts
+                .slice()
+                .sort((a, b) => a.localeCompare(b))
+                .map((account, index) => {
+                  return (
+                    <AccountButton
+                      key={index}
+                      account={account}
+                      selected={account === accountActive}
+                    />
                   )
-                  .map((instance, index) => {
-                    const localAccount = instances[instanceActive!]
-                    return (
-                      <AccountButton
-                        key={index}
-                        instance={instance}
-                        selected={
-                          instance.url === localAccount.url &&
-                          instance.token === localAccount.token &&
-                          instance.account.id === localAccount.account.id
-                        }
-                      />
-                    )
-                  })
-              : null}
+                })}
           </View>
         </View>
       </ScrollView>

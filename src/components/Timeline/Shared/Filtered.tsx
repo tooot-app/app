@@ -1,8 +1,8 @@
 import CustomText from '@components/Text'
-import removeHTML from '@helpers/removeHTML'
-import { store } from '@root/store'
+import queryClient from '@utils/queryHooks'
+import removeHTML from '@utils/helpers/removeHTML'
+import { QueryKeyFilters } from '@utils/queryHooks/filters'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstance } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -75,7 +75,6 @@ export const shouldFilter = ({
   status: Pick<Mastodon.Status, 'content' | 'spoiler_text'>
 }): FilteredProps['filterResults'] | undefined => {
   const page = queryKey[1]
-  const instance = getInstance(store.getState())
 
   let returnFilter: FilteredProps['filterResults'] | undefined
 
@@ -100,7 +99,8 @@ export const shouldFilter = ({
         break
     }
   }
-  instance?.filters?.forEach(filter => {
+  const queryKeyFilters: QueryKeyFilters = ['Filters']
+  queryClient.getQueryData<Mastodon.Filter<'v1'>[]>(queryKeyFilters)?.forEach(filter => {
     if (returnFilter) {
       return
     }

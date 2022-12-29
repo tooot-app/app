@@ -71,15 +71,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     borderRightWidth: 1,
     paddingLeft: StyleConstants.Spacing.S,
     paddingRight: StyleConstants.Spacing.S
   },
   fieldCheck: { marginLeft: StyleConstants.Spacing.XS },
   fieldRight: {
-    flex: 3,
-    alignItems: 'center',
+    flex: 2,
     justifyContent: 'center',
     paddingLeft: StyleConstants.Spacing.S,
     paddingRight: StyleConstants.Spacing.S

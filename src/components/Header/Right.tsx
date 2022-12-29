@@ -2,7 +2,7 @@ import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { AccessibilityProps, Pressable, View } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 
@@ -40,16 +40,14 @@ const HeaderRight: React.FC<Props> = ({
 }) => {
   const { colors, theme } = useTheme()
 
-  const loadingSpinkit = useMemo(
-    () => (
+  const loadingSpinkit = () =>
+    loading ? (
       <View style={{ position: 'absolute' }}>
         <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
       </View>
-    ),
-    [theme]
-  )
+    ) : null
 
-  const children = useMemo(() => {
+  const children = () => {
     switch (type) {
       case 'icon':
         return (
@@ -60,7 +58,7 @@ const HeaderRight: React.FC<Props> = ({
               size={StyleConstants.Spacing.M * 1.25}
               color={disabled ? colors.secondary : destructive ? colors.red : colors.primaryDefault}
             />
-            {loading && loadingSpinkit}
+            {loadingSpinkit()}
           </>
         )
       case 'text':
@@ -79,11 +77,11 @@ const HeaderRight: React.FC<Props> = ({
               }}
               children={content}
             />
-            {loading && loadingSpinkit}
+            {loadingSpinkit()}
           </>
         )
     }
-  }, [theme, loading, disabled])
+  }
 
   return (
     <Pressable
@@ -92,7 +90,7 @@ const HeaderRight: React.FC<Props> = ({
       accessibilityRole='button'
       accessibilityState={accessibilityState}
       onPress={onPress}
-      children={children}
+      children={children()}
       disabled={disabled || loading}
       style={{
         flexDirection: 'row',

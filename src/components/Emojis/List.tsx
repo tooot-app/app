@@ -1,9 +1,9 @@
 import { emojis } from '@components/Emojis'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
-import { useAppDispatch } from '@root/store'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { countInstanceEmoji } from '@utils/slices/instancesSlice'
+import { StorageAccount } from '@utils/storage/account'
+import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -20,10 +20,9 @@ import {
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import validUrl from 'valid-url'
-import EmojisContext from './helpers/EmojisContext'
+import EmojisContext from './Context'
 
 const EmojisList = () => {
-  const dispatch = useAppDispatch()
   const { reduceMotionEnabled } = useAccessibility()
   const { t } = useTranslation(['common', 'screenCompose'])
 
@@ -75,7 +74,59 @@ const EmojisList = () => {
                 key={emoji.shortcode}
                 onPress={() => {
                   addEmoji(`:${emoji.shortcode}:`)
-                  dispatch(countInstanceEmoji(emoji))
+
+                  const HALF_LIFE = 60 * 60 * 24 * 7 // 1 week
+                  const calculateScore = (
+                    emoji: StorageAccount['emojis_frequent'][number]
+                  ): number => {
+                    var seconds = (new Date().getTime() - emoji.lastUsed) / 1000
+                    var score = emoji.count + 1
+                    var order = Math.log(Math.max(score, 1)) / Math.LN10
+                    var sign = score > 0 ? 1 : score === 0 ? 0 : -1
+                    return (sign * order + seconds / HALF_LIFE) * 10
+                  }
+
+                  const currentEmojis = getAccountStorage.object('emojis_frequent')
+                  const foundEmojiIndex = currentEmojis?.findIndex(
+                    e => e.emoji.shortcode === emoji.shortcode && e.emoji.url === emoji.url
+                  )
+
+                  let newEmojisSort: StorageAccount['emojis_frequent']
+                  if (foundEmojiIndex === -1) {
+                    newEmojisSort = currentEmojis || []
+                    const temp = {
+                      emoji,
+                      score: 0,
+                      count: 0,
+                      lastUsed: new Date().getTime()
+                    }
+                    newEmojisSort.push({
+                      ...temp,
+                      score: calculateScore(temp),
+                      count: temp.count + 1
+                    })
+                  } else {
+                    newEmojisSort =
+                      currentEmojis
+                        ?.map((e, i) =>
+                          i === foundEmojiIndex
+                            ? {
+                                ...e,
+                                score: calculateScore(e),
+                                count: e.count + 1,
+                                lastUsed: new Date().getTime()
+                              }
+                            : e
+                        )
+                        .sort((a, b) => b.score - a.score) || []
+                  }
+
+                  setAccountStorage([
+                    {
+                      key: 'emojis_frequent',
+                      value: newEmojisSort.sort((a, b) => b.score - a.score).slice(0, 20)
+                    }
+                  ])
                 }}
                 style={{ padding: StyleConstants.Spacing.S }}
               >

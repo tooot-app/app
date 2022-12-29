@@ -1,19 +1,19 @@
-import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
+import { EmojisState } from '@components/Emojis/Context'
 import haptics from '@components/haptics'
-import { HeaderCenter, HeaderLeft, HeaderRight } from '@components/Header'
+import { HeaderLeft, HeaderRight } from '@components/Header'
 import ComponentInput from '@components/Input'
 import { displayMessage, Message } from '@components/Message'
 import Selections from '@components/Selections'
 import CustomText from '@components/Text'
 import { CommonActions } from '@react-navigation/native'
+import { useQueryClient } from '@tanstack/react-query'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyLists, useListsMutation } from '@utils/queryHooks/lists'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Platform, ScrollView, TextInput } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
+import { Alert, ScrollView, TextInput } from 'react-native'
 
 const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
   navigation,

@@ -1,19 +1,18 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useCallback, useContext, useEffect, useMemo, useRef } from 'react'
+import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
 import chooseAndUploadAttachment from './addAttachment'
@@ -31,20 +30,15 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<any>()
 
-  const maxAttachments = useSelector(getInstanceConfigurationStatusMaxAttachments, () => true)
-
   const flatListRef = useRef<FlatList>(null)
 
-  const sensitiveOnPress = useCallback(
-    () =>
-      composeDispatch({
-        type: 'attachments/sensitive',
-        payload: { sensitive: !composeState.attachments.sensitive }
-      }),
-    [composeState.attachments.sensitive]
-  )
+  const sensitiveOnPress = () =>
+    composeDispatch({
+      type: 'attachments/sensitive',
+      payload: { sensitive: !composeState.attachments.sensitive }
+    })
 
-  const calculateWidth = useCallback((item: ExtendedAttachment) => {
+  const calculateWidth = (item: ExtendedAttachment) => {
     if (item.local) {
       return ((item.local.width || 100) / (item.local.height || 100)) * DEFAULT_HEIGHT
     } else {
@@ -62,9 +56,9 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         return DEFAULT_HEIGHT
       }
     }
-  }, [])
+  }
 
-  const snapToOffsets = useMemo(() => {
+  const snapToOffsets = () => {
     const attachmentsOffsets = composeState.attachments.uploads.map((_, index) => {
       let currentOffset = 0
       Array.from(Array(index).keys()).map(
@@ -84,160 +78,116 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             StyleConstants.Spacing.Global.PagePadding
         ]
       : attachmentsOffsets
-  }, [composeState.attachments.uploads.length])
+  }
   let prevOffsets = useRef<number[]>()
   useEffect(() => {
-    if (snapToOffsets.length > (prevOffsets.current ? prevOffsets.current.length : 0)) {
+    const snap = snapToOffsets()
+    if (snap.length > (prevOffsets.current ? prevOffsets.current.length : 0)) {
       flatListRef.current?.scrollToOffset({
-        offset: snapToOffsets[snapToOffsets.length - 2] + snapToOffsets[snapToOffsets.length - 1]
+        offset: snap[snapToOffsets.length - 2] + snap[snapToOffsets.length - 1]
       })
     }
-    prevOffsets.current = snapToOffsets
+    prevOffsets.current = snap
   }, [snapToOffsets, prevOffsets.current])
 
-  const renderAttachment = useCallback(
-    ({ item, index }: { item: ExtendedAttachment; index: number }) => {
-      return (
-        <View
-          key={index}
-          style={{
-            height: DEFAULT_HEIGHT,
-            marginLeft: StyleConstants.Spacing.Global.PagePadding,
-            marginTop: StyleConstants.Spacing.Global.PagePadding,
-            marginBottom: StyleConstants.Spacing.Global.PagePadding,
-            width: calculateWidth(item)
-          }}
-        >
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={{
-              uri: item.local?.thumbnail || item.remote?.preview_url
-            }}
-          />
-          {item.remote?.meta?.original?.duration ? (
-            <CustomText
-              fontStyle='S'
-              style={{
-                position: 'absolute',
-                bottom: StyleConstants.Spacing.S,
-                left: StyleConstants.Spacing.S,
-                paddingLeft: StyleConstants.Spacing.S,
-                paddingRight: StyleConstants.Spacing.S,
-                paddingTop: StyleConstants.Spacing.XS,
-                paddingBottom: StyleConstants.Spacing.XS,
-                color: colors.backgroundDefault,
-                backgroundColor: colors.backgroundOverlayInvert
-              }}
-            >
-              {item.remote.meta.original.duration}
-            </CustomText>
-          ) : null}
-          {item.uploading ? (
-            <View
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: colors.backgroundOverlayInvert
-              }}
-            >
-              <Circle size={StyleConstants.Font.Size.L} color={colors.primaryOverlay} />
-            </View>
-          ) : (
-            <View
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                justifyContent: 'space-between',
-                alignContent: 'flex-end',
-                alignItems: 'flex-end',
-                padding: StyleConstants.Spacing.S
-              }}
-            >
-              <Button
-                accessibilityLabel={t('content.root.footer.attachments.remove.accessibilityLabel', {
-                  attachment: index + 1
-                })}
-                type='icon'
-                content='X'
-                spacing='M'
-                round
-                overlay
-                onPress={() => {
-                  layoutAnimation()
-                  composeDispatch({
-                    type: 'attachment/delete',
-                    payload: item.remote!.id
-                  })
-                  haptics('Success')
-                }}
-              />
-              {!composeState.attachments.disallowEditing ? (
-                <Button
-                  accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
-                    attachment: index + 1
-                  })}
-                  type='icon'
-                  content='Edit'
-                  spacing='M'
-                  round
-                  overlay
-                  onPress={() => {
-                    navigation.navigate('Screen-Compose-EditAttachment', {
-                      index
-                    })
-                  }}
-                />
-              ) : null}
-            </View>
-          )}
-        </View>
-      )
-    },
-    []
-  )
-
-  const listFooter = useMemo(
-    () => (
-      <Pressable
-        accessible
-        accessibilityLabel={t('content.root.footer.attachments.upload.accessibilityLabel')}
+  const renderAttachment = ({ item, index }: { item: ExtendedAttachment; index: number }) => {
+    return (
+      <View
+        key={index}
         style={{
           height: DEFAULT_HEIGHT,
           marginLeft: StyleConstants.Spacing.Global.PagePadding,
           marginTop: StyleConstants.Spacing.Global.PagePadding,
           marginBottom: StyleConstants.Spacing.Global.PagePadding,
-          width: DEFAULT_HEIGHT,
-          backgroundColor: colors.backgroundOverlayInvert
-        }}
-        onPress={async () => {
-          await chooseAndUploadAttachment({
-            composeDispatch,
-            showActionSheetWithOptions
-          })
+          width: calculateWidth(item)
         }}
       >
-        <Button
-          type='icon'
-          content='UploadCloud'
-          spacing='M'
-          round
-          overlay
-          onPress={async () => {
-            await chooseAndUploadAttachment({
-              composeDispatch,
-              showActionSheetWithOptions
-            })
-          }}
-          style={{
-            position: 'absolute',
-            top: (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2,
-            left: (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2
+        <FastImage
+          style={{ width: '100%', height: '100%' }}
+          source={{
+            uri: item.local?.thumbnail || item.remote?.preview_url
           }}
         />
-      </Pressable>
-    ),
-    []
-  )
+        {item.remote?.meta?.original?.duration ? (
+          <CustomText
+            fontStyle='S'
+            style={{
+              position: 'absolute',
+              bottom: StyleConstants.Spacing.S,
+              left: StyleConstants.Spacing.S,
+              paddingLeft: StyleConstants.Spacing.S,
+              paddingRight: StyleConstants.Spacing.S,
+              paddingTop: StyleConstants.Spacing.XS,
+              paddingBottom: StyleConstants.Spacing.XS,
+              color: colors.backgroundDefault,
+              backgroundColor: colors.backgroundOverlayInvert
+            }}
+          >
+            {item.remote.meta.original.duration}
+          </CustomText>
+        ) : null}
+        {item.uploading ? (
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: colors.backgroundOverlayInvert
+            }}
+          >
+            <Circle size={StyleConstants.Font.Size.L} color={colors.primaryOverlay} />
+          </View>
+        ) : (
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              justifyContent: 'space-between',
+              alignContent: 'flex-end',
+              alignItems: 'flex-end',
+              padding: StyleConstants.Spacing.S
+            }}
+          >
+            <Button
+              accessibilityLabel={t('content.root.footer.attachments.remove.accessibilityLabel', {
+                attachment: index + 1
+              })}
+              type='icon'
+              content='X'
+              spacing='M'
+              round
+              overlay
+              onPress={() => {
+                layoutAnimation()
+                composeDispatch({
+                  type: 'attachment/delete',
+                  payload: item.remote!.id
+                })
+                haptics('Success')
+              }}
+            />
+            {!composeState.attachments.disallowEditing ? (
+              <Button
+                accessibilityLabel={t('content.root.footer.attachments.edit.accessibilityLabel', {
+                  attachment: index + 1
+                })}
+                type='icon'
+                content='Edit'
+                spacing='M'
+                round
+                overlay
+                onPress={() => {
+                  navigation.navigate('Screen-Compose-EditAttachment', {
+                    index
+                  })
+                }}
+              />
+            ) : null}
+          </View>
+        )}
+      </View>
+    )
+  }
+
   return (
     <View
       style={{
@@ -279,13 +229,54 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         pagingEnabled={false}
         snapToAlignment='center'
         renderItem={renderAttachment}
-        snapToOffsets={snapToOffsets}
+        snapToOffsets={snapToOffsets()}
         keyboardShouldPersistTaps='always'
         showsHorizontalScrollIndicator={false}
         data={composeState.attachments.uploads}
         keyExtractor={item => item.local?.uri || item.remote?.url || Math.random().toString()}
         ListFooterComponent={
-          composeState.attachments.uploads.length < maxAttachments ? listFooter : null
+          composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS ? (
+            <Pressable
+              accessible
+              accessibilityLabel={t('content.root.footer.attachments.upload.accessibilityLabel')}
+              style={{
+                height: DEFAULT_HEIGHT,
+                marginLeft: StyleConstants.Spacing.Global.PagePadding,
+                marginTop: StyleConstants.Spacing.Global.PagePadding,
+                marginBottom: StyleConstants.Spacing.Global.PagePadding,
+                width: DEFAULT_HEIGHT,
+                backgroundColor: colors.backgroundOverlayInvert
+              }}
+              onPress={async () => {
+                await chooseAndUploadAttachment({
+                  composeDispatch,
+                  showActionSheetWithOptions
+                })
+              }}
+            >
+              <Button
+                type='icon'
+                content='UploadCloud'
+                spacing='M'
+                round
+                overlay
+                onPress={async () => {
+                  await chooseAndUploadAttachment({
+                    composeDispatch,
+                    showActionSheetWithOptions
+                  })
+                }}
+                style={{
+                  position: 'absolute',
+                  top:
+                    (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) /
+                    2,
+                  left:
+                    (DEFAULT_HEIGHT - StyleConstants.Spacing.M * 2 - StyleConstants.Font.Size.M) / 2
+                }}
+              />
+            </Pressable>
+          ) : null
         }
       />
     </View>

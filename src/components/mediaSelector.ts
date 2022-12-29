@@ -1,8 +1,13 @@
 import { ActionSheetOptions } from '@expo/react-native-action-sheet'
-import { store } from '@root/store'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
+import queryClient from '@utils/queryHooks'
+import { QueryKeyInstance } from '@utils/queryHooks/instance'
 import i18next from 'i18next'
 import { Asset, launchImageLibrary } from 'react-native-image-picker'
+
+const queryKeyInstance: QueryKeyInstance = ['Instance']
+export const MAX_MEDIA_ATTACHMENTS: number =
+  queryClient.getQueryData<Mastodon.Instance<any>>(queryKeyInstance)?.configuration?.statuses
+    .max_media_attachments || 4
 
 export interface Props {
   mediaType?: 'photo' | 'video'
@@ -22,7 +27,7 @@ const mediaSelector = async ({
   indicateMaximum = false,
   showActionSheetWithOptions
 }: Props): Promise<Asset[]> => {
-  const _maximum = maximum || getInstanceConfigurationStatusMaxAttachments(store.getState()) || 4
+  const _maximum = maximum || MAX_MEDIA_ATTACHMENTS
 
   const options = () => {
     switch (mediaType) {

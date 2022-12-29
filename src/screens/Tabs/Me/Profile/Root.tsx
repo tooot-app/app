@@ -1,10 +1,10 @@
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { useAppDispatch } from '@root/store'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import queryClient from '@utils/queryHooks'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
+import { QueryKeyPreferences } from '@utils/queryHooks/preferences'
 import { useProfileMutation, useProfileQuery } from '@utils/queryHooks/profile'
-import { updateAccountPreferences } from '@utils/slices/instances/updateAccountPreferences'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,7 +24,11 @@ const TabMeProfileRoot: React.FC<
 
   const { data, isFetching } = useProfileQuery()
   const { mutateAsync } = useProfileMutation()
-  const dispatch = useAppDispatch()
+
+  const refetchPreferences = () => {
+    const queryKeyPreferences: QueryKeyPreferences = ['Preferences']
+    queryClient.refetchQueries(queryKeyPreferences)
+  }
 
   return (
     <ScrollView>
@@ -117,7 +121,7 @@ const TabMeProfileRoot: React.FC<
                           },
                           type: 'source[privacy]',
                           data: indexVisibilityMapping[buttonIndex]
-                        }).then(() => dispatch(updateAccountPreferences()))
+                        }).then(() => refetchPreferences())
                       }
                       break
                   }
@@ -139,7 +143,7 @@ const TabMeProfileRoot: React.FC<
               },
               type: 'source[sensitive]',
               data: data?.source.sensitive === undefined ? true : !data.source.sensitive
-            }).then(() => dispatch(updateAccountPreferences()))
+            }).then(() => refetchPreferences())
           }
           loading={isFetching}
         />

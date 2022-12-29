@@ -2,24 +2,23 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { useQueryClient } from '@tanstack/react-query'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
@@ -76,12 +75,12 @@ const TimelineActions: React.FC = () => {
     }
   })
 
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const onPressReply = useCallback(() => {
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const onPressReply = () => {
     const accts = uniqBy(
       ([status.account] as Mastodon.Account[] & Mastodon.Mention[])
         .concat(status.mentions)
-        .filter(d => d?.id !== instanceAccount?.id),
+        .filter(d => d?.id !== accountId),
       d => d?.id
     ).map(d => d?.acct)
     navigation.navigate('Screen-Compose', {
@@ -90,9 +89,9 @@ const TimelineActions: React.FC = () => {
       accts,
       queryKey
     })
-  }, [status.replies_count])
+  }
   const { showActionSheetWithOptions } = useActionSheet()
-  const onPressReblog = useCallback(() => {
+  const onPressReblog = () => {
     if (!status.reblogged) {
       showActionSheetWithOptions(
         {
@@ -158,8 +157,8 @@ const TimelineActions: React.FC = () => {
         }
       })
     }
-  }, [status.reblogged, status.reblogs_count])
-  const onPressFavourite = useCallback(() => {
+  }
+  const onPressFavourite = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
@@ -173,8 +172,8 @@ const TimelineActions: React.FC = () => {
         countValue: status.favourites_count
       }
     })
-  }, [status.favourited, status.favourites_count])
-  const onPressBookmark = useCallback(() => {
+  }
+  const onPressBookmark = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
       queryKey,
@@ -188,28 +187,25 @@ const TimelineActions: React.FC = () => {
         countValue: undefined
       }
     })
-  }, [status.bookmarked])
+  }
 
-  const childrenReply = useMemo(
-    () => (
-      <>
-        <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
-        {status.replies_count > 0 ? (
-          <CustomText
-            style={{
-              color: colors.secondary,
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS
-            }}
-          >
-            {status.replies_count}
-          </CustomText>
-        ) : null}
-      </>
-    ),
-    [status.replies_count]
+  const childrenReply = () => (
+    <>
+      <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
+      {status.replies_count > 0 ? (
+        <CustomText
+          style={{
+            color: colors.secondary,
+            fontSize: StyleConstants.Font.Size.M,
+            marginLeft: StyleConstants.Spacing.XS
+          }}
+        >
+          {status.replies_count}
+        </CustomText>
+      ) : null}
+    </>
   )
-  const childrenReblog = useMemo(() => {
+  const childrenReblog = () => {
     const color = (state: boolean) => (state ? colors.green : colors.secondary)
     const disabled =
       status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
@@ -237,8 +233,8 @@ const TimelineActions: React.FC = () => {
         ) : null}
       </>
     )
-  }, [status.reblogged, status.reblogs_count])
-  const childrenFavourite = useMemo(() => {
+  }
+  const childrenFavourite = () => {
     const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
@@ -257,13 +253,13 @@ const TimelineActions: React.FC = () => {
         ) : null}
       </>
     )
-  }, [status.favourited, status.favourites_count])
-  const childrenBookmark = useMemo(() => {
+  }
+  const childrenBookmark = () => {
     const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
       <Icon name='Bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
     )
-  }, [status.bookmarked])
+  }
 
   return (
     <View style={{ flexDirection: 'row' }}>
@@ -276,7 +272,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReply}
-        children={childrenReply}
+        children={childrenReply()}
       />
 
       <Pressable
@@ -290,7 +286,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReblog}
-        children={childrenReblog}
+        children={childrenReblog()}
         disabled={
           status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
         }
@@ -307,7 +303,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressFavourite}
-        children={childrenFavourite}
+        children={childrenFavourite()}
       />
 
       <Pressable
@@ -321,7 +317,7 @@ const TimelineActions: React.FC = () => {
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressBookmark}
-        children={childrenBookmark}
+        children={childrenBookmark()}
       />
     </View>
   )

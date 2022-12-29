@@ -1,21 +1,21 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
-import queryClient from '@helpers/queryClient'
-import { store } from '@root/store'
-import { checkInstanceFeature, getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
+import {
+    MutationOptions,
+    QueryFunctionContext,
+    useInfiniteQuery,
+    UseInfiniteQueryOptions,
+    useMutation
+} from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import queryClient from '@utils/queryHooks'
+import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
-import {
-  MutationOptions,
-  QueryFunctionContext,
-  useInfiniteQuery,
-  UseInfiniteQueryOptions,
-  useMutation
-} from '@tanstack/react-query'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
-import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -82,7 +82,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Local':
-      console.log('local', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
@@ -100,7 +99,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Trending':
-      console.log('trending', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'trends/statuses',
@@ -108,11 +106,8 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Notifications':
-      const rootStore = store.getState()
-      const notificationsFilter = getInstanceNotificationsFilter(rootStore)
-      const usePositiveFilter = checkInstanceFeature('notification_types_positive_filter')(
-        rootStore
-      )
+      const notificationsFilter = getAccountStorage.object('notifications')
+      const usePositiveFilter = featureCheck('notification_types_positive_filter')
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',

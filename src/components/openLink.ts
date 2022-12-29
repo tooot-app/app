@@ -1,10 +1,9 @@
-import apiInstance from '@api/instance'
-import browserPackage from '@helpers/browserPackage'
-import navigationRef from '@helpers/navigationRef'
-import { matchAccount, matchStatus } from '@helpers/urlMatcher'
-import { store } from '@root/store'
+import apiInstance from '@utils/api/instance'
+import browserPackage from '@utils/helpers/browserPackage'
+import { matchAccount, matchStatus } from '@utils/helpers/urlMatcher'
+import navigationRef from '@utils/navigation/navigationRef'
 import { SearchResult } from '@utils/queryHooks/search'
-import { getSettingsBrowser } from '@utils/slices/settingsSlice'
+import { getGlobalStorage } from '@utils/storage/actions'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import validUrl from 'valid-url'
@@ -89,7 +88,7 @@ const openLink = async (url: string, navigation?: any) => {
   loadingLink = false
   const validatedUrl = validUrl.isWebUri(url)
   if (validatedUrl) {
-    switch (getSettingsBrowser(store.getState())) {
+    switch (getGlobalStorage.string('app.browser')) {
       // Some links might end with an empty space at the end that triggers an error
       case 'internal':
         await WebBrowser.openBrowserAsync(validatedUrl, {

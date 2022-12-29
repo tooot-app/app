@@ -1,5 +1,5 @@
 import { ComponentEmojis } from '@components/Emojis'
-import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
+import { EmojisState } from '@components/Emojis/Context'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import ComponentInput from '@components/Input'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'

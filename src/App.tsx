@@ -1,30 +1,34 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
-import getLanguage from '@helpers/getLanguage'
-import queryClient from '@helpers/queryClient'
-import i18n from '@root/i18n/i18n'
-import Screens from '@root/Screens'
-import audio from '@root/startup/audio'
-import log from '@root/startup/log'
-import netInfo from '@root/startup/netInfo'
-import push from '@root/startup/push'
-import sentry from '@root/startup/sentry'
-import timezone from '@root/startup/timezone'
-import { persistor, store } from '@root/store'
 import * as Sentry from '@sentry/react-native'
+import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
-import { changeLanguage } from '@utils/slices/settingsSlice'
+import getLanguage from '@utils/helpers/getLanguage'
+import queryClient from '@utils/queryHooks'
+import audio from '@utils/startup/audio'
+import log from '@utils/startup/log'
+import netInfo from '@utils/startup/netInfo'
+import push from '@utils/startup/push'
+import sentry from '@utils/startup/sentry'
+import timezone from '@utils/startup/timezone'
+import { storage } from '@utils/storage'
+import {
+  getGlobalStorage,
+  removeAccount,
+  setAccount,
+  setGlobalStorage
+} from '@utils/storage/actions'
+import { migrateFromAsyncStorage, versionStorageGlobal } from '@utils/storage/migrations/toMMKV'
 import ThemeManager from '@utils/styles/ThemeManager'
 import * as Localization from 'expo-localization'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
-import { IntlProvider } from 'react-intl'
 import { LogBox, Platform } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { MMKV } from 'react-native-mmkv'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+import i18n from './i18n'
+import Screens from './screens'
 
 Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
@@ -36,83 +40,95 @@ push()
 timezone()
 enableFreeze(true)
 
+log('log', 'App', 'delay splash')
+SplashScreen.preventAutoHideAsync()
+
 const App: React.FC = () => {
   log('log', 'App', 'rendering App')
+  const [appIsReady, setAppIsReady] = useState(false)
   const [localCorrupt, setLocalCorrupt] = useState<string>()
 
+  const [hasMigrated, setHasMigrated] = useState<boolean>(versionStorageGlobal !== undefined)
+
   useEffect(() => {
-    const delaySplash = async () => {
-      log('log', 'App', 'delay splash')
-      try {
-        await SplashScreen.preventAutoHideAsync()
-      } catch (e) {
-        console.warn(e)
+    const prepare = async () => {
+      if (!hasMigrated) {
+        try {
+          await migrateFromAsyncStorage()
+          setHasMigrated(true)
+        } catch {}
+      } else {
+        log('log', 'App', 'loading from MMKV')
+        const account = getGlobalStorage.string('account.active')
+        if (account) {
+          const storageAccount = new MMKV({ id: account })
+          const token = storageAccount.getString('auth.token')
+          if (token) {
+            log('log', 'App', `Binding storage of ${account}`)
+            storage.account = storageAccount
+          } else {
+            log('log', 'App', `Token not found for ${account}`)
+            removeAccount(account)
+          }
+        } else {
+          log('log', 'App', 'No active account available')
+          const accounts = getGlobalStorage.object('accounts')
+          if (accounts?.length) {
+            log('log', 'App', `Setting active account ${accounts[accounts.length - 1]}`)
+            setAccount(accounts[accounts.length - 1])
+          } else {
+            setGlobalStorage('account.active', undefined)
+          }
+        }
       }
+
+      let netInfoRes = undefined
+      try {
+        netInfoRes = await netInfo()
+      } catch {}
+
+      if (netInfoRes && netInfoRes.corrupted && netInfoRes.corrupted.length) {
+        setLocalCorrupt(netInfoRes.corrupted)
+      }
+
+      log('log', 'App', `locale: ${Localization.locale}`)
+      const language = getLanguage()
+      if (!language) {
+        if (Platform.OS !== 'ios') {
+          setGlobalStorage('app.language', 'en')
+        }
+        i18n.changeLanguage('en')
+      } else {
+        i18n.changeLanguage(language)
+      }
+
+      setAppIsReady(true)
     }
-    delaySplash()
+
+    prepare()
   }, [])
-
-  const onBeforeLift = useCallback(async () => {
-    let netInfoRes = undefined
-    try {
-      netInfoRes = await netInfo()
-    } catch {}
-
-    if (netInfoRes && netInfoRes.corrupted && netInfoRes.corrupted.length) {
-      setLocalCorrupt(netInfoRes.corrupted)
-    }
-
-    log('log', 'App', 'hide splash')
-    try {
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      log('log', 'App', 'hide splash')
       await SplashScreen.hideAsync()
-      return Promise.resolve()
-    } catch (e) {
-      console.warn(e)
-      return Promise.reject()
     }
-  }, [])
+  }, [appIsReady])
+  if (!appIsReady) {
+    return null
+  }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <PersistGate
-            persistor={persistor}
-            onBeforeLift={onBeforeLift}
-            children={bootstrapped => {
-              log('log', 'App', 'bootstrapped')
-              if (bootstrapped) {
-                log('log', 'App', 'loading actual app :)')
-                log('log', 'App', `Locale: ${Localization.locale}`)
-                const language = getLanguage()
-                if (!language) {
-                  if (Platform.OS !== 'ios') {
-                    store.dispatch(changeLanguage('en'))
-                  }
-                  i18n.changeLanguage('en')
-                } else {
-                  i18n.changeLanguage(language)
-                }
-
-                return (
-                  <IntlProvider locale={language}>
-                    <SafeAreaProvider>
-                      <ActionSheetProvider>
-                        <AccessibilityManager>
-                          <ThemeManager>
-                            <Screens localCorrupt={localCorrupt} />
-                          </ThemeManager>
-                        </AccessibilityManager>
-                      </ActionSheetProvider>
-                    </SafeAreaProvider>
-                  </IntlProvider>
-                )
-              } else {
-                return null
-              }
-            }}
-          />
-        </Provider>
+        <SafeAreaProvider>
+          <ActionSheetProvider>
+            <AccessibilityManager>
+              <ThemeManager>
+                <Screens localCorrupt={localCorrupt} />
+              </ThemeManager>
+            </AccessibilityManager>
+          </ActionSheetProvider>
+        </SafeAreaProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   )

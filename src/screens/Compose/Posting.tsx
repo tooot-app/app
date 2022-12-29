@@ -1,6 +1,6 @@
+import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Modal, View } from 'react-native'
-import { useTheme } from '@utils/styles/ThemeManager'
 import ComposeContext from './utils/createContext'
 
 const ComposePosting = () => {

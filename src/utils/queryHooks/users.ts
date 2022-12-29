@@ -1,14 +1,14 @@
-import apiInstance from '@api/instance'
+import {
+    QueryFunctionContext,
+    useInfiniteQuery,
+    UseInfiniteQueryOptions
+} from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { getHost } from '@utils/helpers/urlMatcher'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
-import {
-  QueryFunctionContext,
-  useInfiniteQuery,
-  UseInfiniteQueryOptions
-} from '@tanstack/react-query'
-import apiGeneral from '@api/general'
-import { PagedResponse } from '@api/helpers'
-import { getHost } from '@helpers/urlMatcher'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 

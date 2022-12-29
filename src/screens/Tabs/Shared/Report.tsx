@@ -1,18 +1,17 @@
-import apiInstance from '@api/instance'
 import ComponentAccount from '@components/Account'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Selections from '@components/Selections'
 import CustomText from '@components/Text'
+import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useRulesQuery } from '@utils/queryHooks/reports'
-import { getInstanceUri } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, ScrollView, TextInput, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
 
 const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> = ({
   navigation,
@@ -74,9 +73,8 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
     })
   }, [isReporting, comment, forward, categories, rules])
 
-  const instanceUri = useSelector(getInstanceUri)
   const localInstance = account?.acct.includes('@')
-    ? account?.acct.includes(`@${instanceUri}`)
+    ? account?.acct.includes(`@${getAccountStorage.string('auth.domain')}`)
     : true
 
   const rulesQuery = useRulesQuery()

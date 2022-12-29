@@ -3,7 +3,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { forwardRef, RefObject } from 'react'
 import { Platform, TextInput, TextInputProps, View } from 'react-native'
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
-import { EmojisState } from './Emojis/helpers/EmojisContext'
+import { EmojisState } from './Emojis/Context'
 import CustomText from './Text'
 
 export type Props = {

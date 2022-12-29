@@ -1,15 +1,14 @@
 import Button from '@components/Button'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
+import { Platform } from 'expo-modules-core'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
-import { Platform } from 'expo-modules-core'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { aspectRatio } from './dimensions'
-import { useSelector } from 'react-redux'
-import { getSettingsAutoplayGifv } from '@utils/slices/settingsSlice'
 
 export interface Props {
   total: number
@@ -27,7 +26,7 @@ const AttachmentVideo: React.FC<Props> = ({
   gifv = false
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
-  const autoplayGifv = useSelector(getSettingsAutoplayGifv)
+  const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)

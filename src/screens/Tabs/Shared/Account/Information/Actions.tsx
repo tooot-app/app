@@ -3,12 +3,11 @@ import menuAt from '@components/contextMenu/at'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 
 export interface Props {
@@ -50,8 +49,8 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
     )
   }
 
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const ownAccount = account?.id === instanceAccount?.id && account?.acct === instanceAccount?.acct
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const ownAccount = account?.id === accountId
 
   const query = useRelationshipQuery({ id: account.id })
   const mAt = menuAt({ account })

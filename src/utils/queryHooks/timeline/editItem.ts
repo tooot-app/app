@@ -1,5 +1,5 @@
-import queryClient from '@helpers/queryClient'
 import { InfiniteData } from '@tanstack/react-query'
+import queryClient from '@utils/queryHooks'
 import { MutationVarsTimelineEditItem } from '../timeline'
 
 const editItem = ({
