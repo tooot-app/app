@@ -25,30 +25,30 @@
       "status": "{{name}} μόλις έκανε μια ανάρτηση",
       "follow": "{{name}} σας ακολούθησε",
       "follow_request": "{{name}} ζήτησε να σας ακολουθήσει",
-      "poll": "",
+      "poll": "Μια δημοσκόπηση στην οποία ψηφίσατε ολοκληρώθηκε",
       "reblog": {
-        "default": "",
-        "notification": ""
+        "default": "{{name}} προώθησε τη δημοσίευση",
+        "notification": "{{name}} προώθησε τη δημοσίευσή σας"
       },
-      "update": "",
-      "admin.sign_up": "",
-      "admin.report": ""
+      "update": "Η προώθηση έχει υποστεί επεξεργασία",
+      "admin.sign_up": "{{name}} συνδέθηκε στον διακομιστή",
+      "admin.report": "{{name}} αναφέρθηκε:"
     },
     "actions": {
       "reply": {
-        "accessibilityLabel": ""
+        "accessibilityLabel": "Απαντήστε στην ανάρτηση"
       },
       "reblogged": {
-        "accessibilityLabel": "",
-        "function": "",
+        "accessibilityLabel": "Προωθήστε την ανάρτηση",
+        "function": "Προωθήστε την ανάρτηση",
         "options": {
-          "title": "",
-          "public": "",
+          "title": "Επιλέξτε την ορατότητα της προώθησης",
+          "public": "Δημόσια προώθηση",
           "unlisted": ""
         }
       },
       "favourited": {
-        "accessibilityLabel": "",
+        "accessibilityLabel": "Προσθέστε την ανάρτηση στα αγαπημένα",
         "function": ""
       },
       "bookmarked": {
