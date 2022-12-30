@@ -87,7 +87,7 @@ const ComponentInstance: React.FC<Props> = ({
       })
       await request.makeAuthUrlAsync(discovery)
 
-      const promptResult = await request.promptAsync(discovery)
+      const promptResult = await request.promptAsync(discovery, await browserPackage())
 
       if (promptResult?.type === 'success') {
         const { accessToken } = await AuthSession.exchangeCodeAsync(
