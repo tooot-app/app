@@ -115,7 +115,7 @@
             "accessibilityHint": "Tài khoản"
           }
         },
-        "application": "",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Tút đã sửa"
         },
