@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Σκοτεινό θέμα",
         "options": {
-          "lighter": "Πιο ανοικτό",
-          "darker": "Πιο σκοτεινό"
+          "lighter": "",
+          "darker": ""
         }
       },
       "browser": {
