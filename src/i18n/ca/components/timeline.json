@@ -115,7 +115,7 @@
             "accessibilityHint": "Compte d'usuari"
           }
         },
-        "application": "",
+        "application": "amb {{application}}",
         "edited": {
           "accessibilityLabel": "Publicació editada"
         },
