@@ -89,9 +89,9 @@ const themeColors: {
   },
 
   border: {
-    light: 'rgba(25, 25, 25, 0.3)',
-    dark_lighter: 'rgba(255, 255, 255, 0.3)',
-    dark_darker: 'rgba(255, 255, 255, 0.3)'
+    light: 'rgb(180, 180, 180)',
+    dark_lighter: 'rgb(90, 90, 90)',
+    dark_darker: 'rgb(90, 90, 90)'
   },
 
   shimmerDefault: {

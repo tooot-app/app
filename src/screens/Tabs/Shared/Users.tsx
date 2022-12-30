@@ -7,6 +7,7 @@ import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { SearchResult } from '@utils/queryHooks/search'
 import { QueryKeyUsers, useUsersQuery } from '@utils/queryHooks/users'
+import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
@@ -39,14 +40,13 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
       getNextPageParam: lastPage => lastPage.links?.next?.id && { max_id: lastPage.links.next.id }
     }
   })
-  const flattenData = data?.pages ? data.pages.flatMap(page => [...page.body]) : []
 
   const [isSearching, setIsSearching] = useState(false)
 
   return (
     <FlatList
       windowSize={7}
-      data={flattenData}
+      data={flattenPages(data)}
       style={{
         minHeight: '100%',
         paddingVertical: StyleConstants.Spacing.Global.PagePadding

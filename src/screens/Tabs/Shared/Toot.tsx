@@ -1,14 +1,15 @@
 import { HeaderLeft } from '@components/Header'
 import ComponentSeparator from '@components/Separator'
-import Timeline from '@components/Timeline'
+import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
-import { InfiniteQueryObserver, useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
-import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { QueryKeyTimeline, useTootQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
-import React, { useEffect, useRef, useState } from 'react'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
+import { Path, Svg } from 'react-native-svg'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   navigation,
@@ -16,6 +17,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     params: { toot, rootQueryKey }
   }
 }) => {
+  const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   useEffect(() => {
@@ -25,55 +27,23 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     })
   }, [])
 
-  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Toot', toot: toot.id }]
-
   const flRef = useRef<FlatList>(null)
-
-  const [itemsLength, setItemsLength] = useState(0)
   const scrolled = useRef(false)
-  const queryClient = useQueryClient()
-  const observer = new InfiniteQueryObserver(queryClient, {
-    queryKey,
-    enabled: false
-  })
 
-  const replyLevels = useRef<{ id: string; level: number }[]>([])
-  const data = useRef<Mastodon.Status[]>()
-  const highlightIndex = useRef<number>(0)
-  useEffect(() => {
-    return observer.subscribe(result => {
-      if (result.isSuccess) {
-        const flattenData = result.data?.pages
-          ? // @ts-ignore
-            result.data.pages.flatMap(d => [...d.body])
-          : []
-        // Auto go back when toot page is empty
-        if (flattenData.length < 1) {
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Toot', toot: toot.id }]
+  const { data } = useTootQuery({
+    ...queryKey[1],
+    options: {
+      meta: { toot },
+      onSuccess: data => {
+        if (data.body.length < 1) {
           navigation.goBack()
           return
         }
-        data.current = flattenData
-        highlightIndex.current = flattenData.findIndex(({ id }) => id === toot.id)
 
-        for (const [index, status] of flattenData.entries()) {
-          if (status.id === toot.id) continue
-          if (status.in_reply_to_id === toot.id) continue
-
-          if (!replyLevels.current.find(reply => reply.id === status.in_reply_to_id)) {
-            const prevLevel =
-              replyLevels.current.find(reply => reply.id === flattenData[index - 1].in_reply_to_id)
-                ?.level || 0
-            replyLevels.current.push({
-              id: status.in_reply_to_id,
-              level: prevLevel + 1
-            })
-          }
-        }
-
-        setItemsLength(flattenData.length)
         if (!scrolled.current) {
           scrolled.current = true
-          const pointer = flattenData.findIndex(({ id }) => id === toot.id)
+          const pointer = data.body.findIndex(({ id }) => id === toot.id)
           if (pointer < 1) return
           const length = flRef.current?.props.data?.length
           if (!length) return
@@ -91,78 +61,188 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           }
         }
       }
-    })
-  }, [scrolled.current, replyLevels.current])
+    }
+  })
+
+  const heights = useRef<(number | undefined)[]>([])
 
   return (
-    <Timeline
-      flRef={flRef}
-      queryKey={queryKey}
-      queryOptions={{ staleTime: 0, refetchOnMount: true }}
-      customProps={{
-        ItemSeparatorComponent: ({ leadingItem }) => {
-          const levels = {
-            current:
-              replyLevels.current.find(reply => reply.id === leadingItem.in_reply_to_id)?.level || 0
-          }
-          return (
+    <FlatList
+      ref={flRef}
+      scrollEventThrottle={16}
+      windowSize={7}
+      data={data?.body}
+      renderItem={({ item, index }) => {
+        const MAX_LEVEL = 10
+        const ARC = StyleConstants.Avatar.XS / 4
+
+        const prev = data?.body[index - 1]?._level || 0
+        const curr = item._level
+        const next = data?.body[index + 1]?._level || 0
+
+        return (
+          <View
+            style={{
+              paddingLeft:
+                index > (data?.highlightIndex || 0)
+                  ? Math.min(item._level, MAX_LEVEL) * StyleConstants.Spacing.S
+                  : undefined
+            }}
+            onLayout={({
+              nativeEvent: {
+                layout: { height }
+              }
+            }) => (heights.current[index] = height)}
+          >
+            <TimelineDefault
+              item={item}
+              queryKey={queryKey}
+              rootQueryKey={rootQueryKey}
+              highlighted={toot.id === item.id}
+              isConversation={toot.id !== item.id}
+            />
+            {curr > 1 || next > 1
+              ? [...new Array(curr)].map((_, i) => {
+                  if (i > MAX_LEVEL) return null
+
+                  const lastLine = curr === i + 1
+                  if (lastLine) {
+                    if (curr === prev + 1 || curr === next - 1) {
+                      if (curr > next) {
+                        return null
+                      }
+                      return (
+                        <Svg key={i} style={{ position: 'absolute' }}>
+                          <Path
+                            d={
+                              `M ${curr * StyleConstants.Spacing.S + ARC} ${
+                                StyleConstants.Spacing.M + StyleConstants.Avatar.XS / 2
+                              } ` +
+                              `a ${ARC} ${ARC} 0 0 0 -${ARC} ${ARC} ` +
+                              `v 999`
+                            }
+                            strokeWidth={1}
+                            stroke={colors.border}
+                            strokeOpacity={0.6}
+                          />
+                        </Svg>
+                      )
+                    } else {
+                      if (i >= curr - 2) return null
+                      return (
+                        <Svg key={i} style={{ position: 'absolute' }}>
+                          <Path
+                            d={
+                              `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
+                              `v ${
+                                (heights.current[index] || 999) -
+                                (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
+                                StyleConstants.Avatar.XS / 2
+                              } ` +
+                              `a ${ARC} ${ARC} 0 0 0 ${ARC} ${ARC}`
+                            }
+                            strokeWidth={1}
+                            stroke={colors.border}
+                            strokeOpacity={0.6}
+                          />
+                        </Svg>
+                      )
+                    }
+                  } else {
+                    if (i >= next - 1) {
+                      return (
+                        <Svg key={i} style={{ position: 'absolute' }}>
+                          <Path
+                            d={
+                              `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
+                              `v ${
+                                (heights.current[index] || 999) -
+                                (StyleConstants.Spacing.S * 1.5 +
+                                  StyleConstants.Font.Size.L * 1.35) /
+                                  2
+                              } ` +
+                              `h ${ARC}`
+                            }
+                            strokeWidth={1}
+                            stroke={colors.border}
+                            strokeOpacity={0.6}
+                          />
+                        </Svg>
+                      )
+                    } else {
+                      return (
+                        <Svg key={i} style={{ position: 'absolute' }}>
+                          <Path
+                            d={`M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v 999`}
+                            strokeWidth={1}
+                            stroke={colors.border}
+                            strokeOpacity={0.6}
+                          />
+                        </Svg>
+                      )
+                    }
+                  }
+                })
+              : null}
+            {/* <CustomText
+              children={data?.body[index - 1]?._level}
+              style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
+            />
+            <CustomText
+              children={item._level}
+              style={{ position: 'absolute', top: 20, left: 4, color: colors.yellow }}
+            />
+            <CustomText
+              children={data?.body[index + 1]?._level}
+              style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
+            /> */}
+          </View>
+        )
+      }}
+      initialNumToRender={6}
+      maxToRenderPerBatch={3}
+      ItemSeparatorComponent={({ leadingItem }) => {
+        return (
+          <>
             <ComponentSeparator
               extraMarginLeft={
                 toot.id === leadingItem.id
                   ? 0
                   : StyleConstants.Avatar.XS +
                     StyleConstants.Spacing.S +
-                    Math.max(0, levels.current - 1) * 8
+                    Math.max(0, leadingItem._level - 1) * 8
               }
             />
-          )
-        },
-        renderItem: ({ item, index }) => {
-          const levels = {
-            previous:
-              replyLevels.current.find(
-                reply => reply.id === data.current?.[index - 1]?.in_reply_to_id
-              )?.level || 0,
-            current:
-              replyLevels.current.find(reply => reply.id === item.in_reply_to_id)?.level || 0,
-            next:
-              replyLevels.current.find(
-                reply => reply.id === data.current?.[index + 1]?.in_reply_to_id
-              )?.level || 0
-          }
-
-          return (
-            <View
-              style={{ marginLeft: Math.max(0, levels.current - 1) * StyleConstants.Spacing.S }}
-            >
-              <TimelineDefault
-                item={item}
-                queryKey={queryKey}
-                rootQueryKey={rootQueryKey}
-                highlighted={toot.id === item.id}
-                isConversation={toot.id !== item.id}
-              />
-            </View>
-          )
-        },
-        onScrollToIndexFailed: error => {
-          const offset = error.averageItemLength * error.index
-          flRef.current?.scrollToOffset({ offset })
-          try {
-            error.index < itemsLength &&
-              setTimeout(
-                () =>
-                  flRef.current?.scrollToIndex({
-                    index: error.index,
-                    viewOffset: 100
-                  }),
-                500
-              )
-          } catch {}
-        }
+            {leadingItem._level > 1
+              ? [...new Array(leadingItem._level - 1)].map((_, i) => (
+                  <Svg key={i} style={{ position: 'absolute', top: -1 }}>
+                    <Path
+                      d={`M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v 1`}
+                      strokeWidth={1}
+                      stroke={colors.border}
+                      strokeOpacity={0.6}
+                    />
+                  </Svg>
+                ))
+              : null}
+          </>
+        )
       }}
-      disableRefresh
-      disableInfinity
+      onScrollToIndexFailed={error => {
+        const offset = error.averageItemLength * error.index
+        flRef.current?.scrollToOffset({ offset })
+        try {
+          error.index < (data?.body.length || 0) &&
+            setTimeout(
+              () =>
+                flRef.current?.scrollToIndex({
+                  index: error.index,
+                  viewOffset: 100
+                }),
+              500
+            )
+        } catch {}
+      }}
     />
   )
 }

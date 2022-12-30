@@ -6,7 +6,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const TabMeSwitch: React.FC = () => {
@@ -49,7 +49,7 @@ const TabMeSwitch: React.FC = () => {
             marginTop: StyleConstants.Spacing.S,
             paddingTop: StyleConstants.Spacing.M,
             marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-            borderTopWidth: StyleSheet.hairlineWidth,
+            borderTopWidth: 1,
             borderTopColor: colors.border
           }}
         >
