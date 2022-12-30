@@ -70,7 +70,7 @@ const themeColors: {
   backgroundDefault: {
     light: 'rgb(250, 250, 250)',
     dark_lighter: 'rgb(44, 44, 44)',
-    dark_darker: 'rgb(18, 18, 18)'
+    dark_darker: 'rgb(0, 0, 0)'
   },
   backgroundDefaultTransparent: {
     light: 'rgba(250, 250, 250, 0)',
