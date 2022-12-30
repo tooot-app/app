@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
-          "lighter": "밝게",
-          "darker": "어둡게"
+          "lighter": "",
+          "darker": ""
         }
       },
       "browser": {
