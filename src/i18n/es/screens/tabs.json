@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema oscuro",
         "options": {
-          "lighter": "Más claro",
-          "darker": "Más oscuro"
+          "lighter": "",
+          "darker": ""
         }
       },
       "browser": {
