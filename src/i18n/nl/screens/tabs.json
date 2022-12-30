@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Donker thema",
         "options": {
-          "lighter": "Lichter",
-          "darker": "Donkerder"
+          "lighter": "",
+          "darker": ""
         }
       },
       "browser": {
