@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Độ tối",
         "options": {
-          "lighter": "Thấp",
-          "darker": "Vừa"
+          "lighter": "",
+          "darker": ""
         }
       },
       "browser": {
