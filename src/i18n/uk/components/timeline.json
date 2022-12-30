@@ -115,7 +115,7 @@
             "accessibilityHint": "Профіль користувача"
           }
         },
-        "application": "",
+        "application": "через {{application}}",
         "edited": {
           "accessibilityLabel": "Дмух відредаговано"
         },
