@@ -115,7 +115,7 @@
             "accessibilityHint": "Gebruikersaccount"
           }
         },
-        "application": "",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Toot bewerkt"
         },
