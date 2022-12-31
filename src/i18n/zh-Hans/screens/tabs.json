@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "深色主题",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "默认",
+          "darker": "纯黑"
         }
       },
       "browser": {
