@@ -6,7 +6,7 @@
       "action_false": "Volg gebruiker",
       "action_true": "Ontvolg"
     },
-    "inLists": "Gebruiker op lijsten beheren",
+    "inLists": "Lijsten waarin gebruiker staat",
     "showBoosts": {
       "action_false": "Boosts van gebruiker weergeven",
       "action_true": "Boosts van gebruiker verbergen"
