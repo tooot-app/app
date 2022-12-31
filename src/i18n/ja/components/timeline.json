@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "トゥートがミュートされました"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "トゥートはダイレクトメッセージです"
