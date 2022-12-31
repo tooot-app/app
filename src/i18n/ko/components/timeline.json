@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "툿 음소거됨"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "툿이 개인 메시지에요"
