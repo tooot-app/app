@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "Thème sombre",
         "options": {
-          "lighter": "",
+          "lighter": "Par défaut",
           "darker": ""
         }
       },
