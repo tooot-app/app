@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Дмух приглушений"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Дмухнути особистим повідомленням"
