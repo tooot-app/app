@@ -115,13 +115,14 @@
             "accessibilityHint": "用户帐户名"
           }
         },
-        "application": "",
+        "application": "发自{{application}}",
         "edited": {
           "accessibilityLabel": "嘟文已编辑"
         },
         "muted": {
           "accessibilityLabel": "已静音此嘟文"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "此嘟文是私信"
