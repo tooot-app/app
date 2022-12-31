@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "Mörkt tema",
         "options": {
-          "lighter": "",
+          "lighter": "Standard",
           "darker": ""
         }
       },
@@ -330,22 +330,22 @@
       "name": "Redigeringshistorik"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Rapportera {{acct}}",
+      "report": "Rapport",
       "forward": {
         "heading": ""
       },
       "reasons": {
         "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "spam": "Det är skräppost",
+        "other": "Det är något annat",
+        "violation": "Det bryter mot serverns regler"
       },
       "comment": {
-        "heading": ""
+        "heading": "Finns det något annat du vill säga till oss?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Det bryter mot serverns regler"
       }
     },
     "search": {
