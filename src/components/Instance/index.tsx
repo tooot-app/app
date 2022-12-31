@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native'
 import apiGeneral from '@utils/api/general'
 import browserPackage from '@utils/helpers/browserPackage'
 import { featureCheck } from '@utils/helpers/featureCheck'
-import queryClient from '@utils/queryHooks'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
+import queryClient from '@utils/queryHooks'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
+import { storage } from '@utils/storage'
 import { StorageAccount } from '@utils/storage/account'
 import {
   generateAccountKey,
@@ -24,12 +25,10 @@ import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
-import base64 from 'react-native-base64'
 import { ScrollView } from 'react-native-gesture-handler'
+import { MMKV } from 'react-native-mmkv'
 import validUrl from 'valid-url'
 import CustomText from '../Text'
-import { storage } from '@utils/storage'
-import { MMKV } from 'react-native-mmkv'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -87,7 +86,7 @@ const ComponentInstance: React.FC<Props> = ({
       })
       await request.makeAuthUrlAsync(discovery)
 
-      const promptResult = await request.promptAsync(discovery)
+      const promptResult = await request.promptAsync(discovery, await browserPackage())
 
       if (promptResult?.type === 'success') {
         const { accessToken } = await AuthSession.exchangeCodeAsync(
@@ -155,7 +154,7 @@ const ComponentInstance: React.FC<Props> = ({
               'admin.sign_up': false,
               'admin.report': false
             },
-            key: base64.encodeFromByteArray(Random.getRandomBytes(16))
+            key: Math.random().toString(36).slice(2, 12)
           },
           page_local: {
             showBoosts: true,

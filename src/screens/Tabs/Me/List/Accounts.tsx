@@ -9,6 +9,7 @@ import {
   useListAccountsMutation,
   useListAccountsQuery
 } from '@utils/queryHooks/lists'
+import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -18,7 +19,7 @@ import { FlatList, View } from 'react-native'
 const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>> = ({
   route: { params }
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 
   const queryKey: QueryKeyListAccounts = ['ListAccounts', { id: params.id }]
@@ -33,8 +34,6 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
         }
     }
   })
-
-  const flattenData = data?.pages ? data.pages?.flatMap(page => [...page.body]) : []
 
   const mutation = useListAccountsMutation({
     onSuccess: () => {
@@ -53,7 +52,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
 
   return (
     <FlatList
-      data={flattenData}
+      data={flattenPages(data)}
       renderItem={({ item, index }) => (
         <ComponentAccount
           key={index}

@@ -89,7 +89,7 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
               fontSize: adaptiveScale(StyleConstants.Font.Size.M, size),
               lineHeight: adaptiveScale(StyleConstants.Font.LineHeight.M, size),
               color: (fontSize || 0) === size ? colors.primaryDefault : colors.secondary,
-              borderWidth: StyleSheet.hairlineWidth,
+              borderWidth: 1,
               borderColor: colors.border
             }}
             fontWeight={(fontSize || 0) === size ? 'Bold' : undefined}

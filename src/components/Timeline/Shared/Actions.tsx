@@ -329,8 +329,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: StyleConstants.Font.Size.L + StyleConstants.Spacing.S * 3,
-    marginHorizontal: StyleConstants.Spacing.S
+    paddingVertical: StyleConstants.Spacing.S * 1.5
   }
 })
 

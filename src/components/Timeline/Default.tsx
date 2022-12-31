@@ -51,7 +51,7 @@ const TimelineDefault: React.FC<Props> = ({
 }) => {
   const status = item.reblog ? item.reblog : item
   const rawContent = useRef<string[]>([])
-  if (highlighted) {
+  if (highlighted || isConversation) {
     rawContent.current = [
       removeHTML(status.content),
       status.spoiler_text ? removeHTML(status.spoiler_text) : ''
@@ -72,6 +72,7 @@ const TimelineDefault: React.FC<Props> = ({
     ? !preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
   const detectedLanguage = useRef<string>(status.language || '')
+  const excludeMentions = useRef<Mastodon.Mention[]>([])
 
   const mainStyle: StyleProp<ViewStyle> = {
     flex: 1,
@@ -169,6 +170,7 @@ const TimelineDefault: React.FC<Props> = ({
         spoilerHidden,
         rawContent,
         detectedLanguage,
+        excludeMentions,
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,

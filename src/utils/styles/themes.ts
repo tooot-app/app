@@ -70,7 +70,7 @@ const themeColors: {
   backgroundDefault: {
     light: 'rgb(250, 250, 250)',
     dark_lighter: 'rgb(44, 44, 44)',
-    dark_darker: 'rgb(18, 18, 18)'
+    dark_darker: 'rgb(0, 0, 0)'
   },
   backgroundDefaultTransparent: {
     light: 'rgba(250, 250, 250, 0)',
@@ -89,9 +89,9 @@ const themeColors: {
   },
 
   border: {
-    light: 'rgba(25, 25, 25, 0.3)',
-    dark_lighter: 'rgba(255, 255, 255, 0.3)',
-    dark_darker: 'rgba(255, 255, 255, 0.3)'
+    light: 'rgb(180, 180, 180)',
+    dark_lighter: 'rgb(90, 90, 90)',
+    dark_darker: 'rgb(90, 90, 90)'
   },
 
   shimmerDefault: {

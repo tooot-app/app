@@ -5,6 +5,7 @@ import { displayMessage } from '@components/Message'
 import ComponentSeparator from '@components/Separator'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { useFollowedTagsQuery, useTagsMutation } from '@utils/queryHooks/tags'
+import { flattenPages } from '@utils/queryHooks/utils'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native-gesture-handler'
@@ -15,7 +16,8 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
   const { t } = useTranslation(['common', 'screenTabs'])
 
   const { data, fetchNextPage, refetch } = useFollowedTagsQuery()
-  const flattenData = data?.pages ? data.pages.flatMap(page => [...page.body]) : []
+  const flattenData = flattenPages(data)
+
   useEffect(() => {
     if (flattenData.length === 0) {
       navigation.goBack()

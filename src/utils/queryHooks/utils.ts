@@ -1,3 +1,4 @@
+import { InfiniteData } from '@tanstack/react-query'
 import { PagedResponse } from '@utils/api/helpers'
 
 export const infinitePageParams = {
@@ -6,3 +7,6 @@ export const infinitePageParams = {
   getNextPageParam: (lastPage: PagedResponse<any>) =>
     lastPage.links?.next && { max_id: lastPage.links.next }
 }
+
+export const flattenPages = <T>(data: InfiniteData<PagedResponse<T[]>> | undefined): T[] | [] =>
+  data?.pages.map(page => page.body).flat() || []

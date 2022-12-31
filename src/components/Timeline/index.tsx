@@ -2,6 +2,7 @@ import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
 import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { flattenPages } from '@utils/queryHooks/utils'
 import { useGlobalStorageListener } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -53,8 +54,6 @@ const Timeline: React.FC<Props> = ({
           }
       }
     })
-
-  const flattenData = data?.pages ? data.pages?.flatMap(page => [...page.body]) : []
 
   const flRef = useRef<FlatList>(null)
 
@@ -112,7 +111,7 @@ const Timeline: React.FC<Props> = ({
         scrollEventThrottle={16}
         onScroll={onScroll}
         windowSize={7}
-        data={flattenData}
+        data={flattenPages(data)}
         initialNumToRender={6}
         maxToRenderPerBatch={3}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}

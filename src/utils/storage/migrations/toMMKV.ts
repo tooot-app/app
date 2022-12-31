@@ -2,12 +2,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import log from '@utils/startup/log'
 import { secureStorage, storage } from '@utils/storage'
 import { MMKV } from 'react-native-mmkv'
+import { LegacyApp } from './legacy/app'
+import { LegacyContexts } from './legacy/contexts'
+import { LegacyInstance } from './legacy/instance'
+import { LegacySettings } from './legacy/settings'
 
 export const versionStorageGlobal = storage.global.getNumber('version.global')
 
 export async function migrateFromAsyncStorage(): Promise<void> {
   log('log', 'Migration', 'Migrating...')
   const start = global.performance.now()
+
+  const unwrapPushData = (setting: { value: boolean } | boolean | undefined): boolean =>
+    typeof setting === 'object' ? setting.value : typeof setting === 'boolean' ? setting : true
 
   const keys = ['persist:app', 'persist:contexts', 'persist:settings'] as [
     'persist:app',
@@ -21,13 +28,13 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       if (value != null) {
         switch (key) {
           case 'persist:app':
-            const storeApp = JSON.parse(value)
+            const storeApp: LegacyApp = JSON.parse(value)
             if (storeApp.expoToken?.length) {
               storage.global.set('app.expo_token', storeApp.expoToken.replaceAll(`\"`, ``))
             }
             break
           case 'persist:contexts':
-            const storeContexts = JSON.parse(value)
+            const storeContexts: LegacyContexts = JSON.parse(value)
             if (storeContexts.storeReview.current) {
               storage.global.set(
                 'app.count_till_store_review',
@@ -37,17 +44,22 @@ export async function migrateFromAsyncStorage(): Promise<void> {
             storage.global.set('app.prev_tab', storeContexts.previousTab.replaceAll(`\"`, ``))
             storage.global.set(
               'app.prev_public_segment',
-              storeContexts.previousSegment.replaceAll(`\"`, ``)
+              (storeContexts.previousSegment || 'Local').replaceAll(`\"`, ``)
             )
             break
           case 'persist:settings':
-            const storeSettings = JSON.parse(value)
-            storage.global.set('app.font_size', storeSettings.fontsize || 0)
+            const storeSettings: LegacySettings = JSON.parse(value)
+            storage.global.set(
+              'app.font_size',
+              (typeof storeSettings.fontsize === 'string'
+                ? storeSettings.fontsize.replaceAll(`\"`, ``)
+                : storeSettings.fontsize) || 0
+            )
             storage.global.set('app.language', storeSettings.language.replaceAll(`\"`, ``))
             storage.global.set('app.theme', storeSettings.theme.replaceAll(`\"`, ``))
             storage.global.set('app.theme.dark', storeSettings.darkTheme.replaceAll(`\"`, ``))
             storage.global.set('app.browser', storeSettings.browser.replaceAll(`\"`, ``))
-            storage.global.set('app.auto_play_gifv', storeSettings.autoplayGifv || true)
+            storage.global.set('app.auto_play_gifv', true)
             break
         }
 
@@ -66,7 +78,8 @@ export async function migrateFromAsyncStorage(): Promise<void> {
       const storeInstances: { instances: string } = JSON.parse(value)
       const accounts: string[] = []
 
-      for (const instance of JSON.parse(storeInstances.instances)) {
+      let instance: LegacyInstance
+      for (instance of JSON.parse(storeInstances.instances)) {
         const account = `${instance.url}/${instance.account.id}`
 
         const temp = new MMKV({ id: account })
@@ -83,10 +96,63 @@ export async function migrateFromAsyncStorage(): Promise<void> {
         if (instance.account.preferences) {
           temp.set('preferences', JSON.stringify(instance.account.preferences))
         }
-        temp.set('notifications', JSON.stringify(instance.notifications_filter))
-        temp.set('push', JSON.stringify(instance.push))
-        temp.set('page_local', JSON.stringify(instance.followingPage))
-        temp.set('page_me', JSON.stringify(instance.mePage))
+        temp.set(
+          'notifications',
+          JSON.stringify({
+            ...instance.notifications_filter,
+            status:
+              typeof instance.notifications_filter.status === 'boolean'
+                ? instance.notifications_filter.status
+                : true,
+            update:
+              typeof instance.notifications_filter.update === 'boolean'
+                ? instance.notifications_filter.update
+                : true,
+            'admin.sign_up':
+              typeof instance.notifications_filter['admin.sign_up'] === 'boolean'
+                ? instance.notifications_filter['admin.sign_up']
+                : true,
+            'admin.report':
+              typeof instance.notifications_filter['admin.report'] === 'boolean'
+                ? instance.notifications_filter['admin.report']
+                : true
+          })
+        )
+        temp.set(
+          'push',
+          JSON.stringify({
+            global: unwrapPushData(instance.push.global),
+            decode: unwrapPushData(instance.push.decode),
+            alerts: {
+              follow: unwrapPushData(instance.push.alerts.follow),
+              follow_request: unwrapPushData(instance.push.alerts.follow_request),
+              favourite: unwrapPushData(instance.push.alerts.favourite),
+              reblog: unwrapPushData(instance.push.alerts.reblog),
+              mention: unwrapPushData(instance.push.alerts.mention),
+              poll: unwrapPushData(instance.push.alerts.poll),
+              status: unwrapPushData(instance.push.alerts.status),
+              update: unwrapPushData(instance.push.alerts.update),
+              'admin.sign_up': unwrapPushData(instance.push.alerts['admin.sign_up']),
+              'admin.report': unwrapPushData(instance.push.alerts['admin.report'])
+            }
+          })
+        )
+        temp.set(
+          'page_local',
+          JSON.stringify(
+            instance.followingPage || {
+              showBoosts: true,
+              showReplies: true
+            }
+          )
+        )
+        temp.set(
+          'page_me',
+          JSON.stringify({
+            ...instance.mePage,
+            followedTags: instance.mePage.followedTags || { shown: false }
+          })
+        )
         temp.set('drafts', JSON.stringify(instance.drafts))
         temp.set('emojis_frequent', JSON.stringify(instance.frequentEmojis))
         temp.set('version', instance.version)

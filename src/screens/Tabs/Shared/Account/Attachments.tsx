@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useTimelineQuery } from '@utils/queryHooks/timeline'
+import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
@@ -32,12 +33,9 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
     only_media: true
   })
 
-  const flattenData = data?.pages
-    ? data.pages
-        .flatMap(d => [...d.body])
-        .filter(status => !(status as Mastodon.Status).sensitive)
-        .splice(0, DISPLAY_AMOUNT)
-    : []
+  const flattenData = flattenPages(data)
+    .filter(status => !(status as Mastodon.Status).sensitive)
+    .splice(0, DISPLAY_AMOUNT)
 
   const styleContainer = useAnimatedStyle(() => {
     if (flattenData.length) {

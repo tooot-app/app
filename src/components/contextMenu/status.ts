@@ -203,7 +203,7 @@ const menuStatus = ({
           }),
         disabled: false,
         destructive: false,
-        hidden: !ownAccount && !status.mentions.filter(mention => mention.id === accountId).length
+        hidden: !ownAccount && !status.mentions?.filter(mention => mention.id === accountId).length
       },
       title: t('componentContextMenu:status.mute.action', {
         defaultValue: 'false',

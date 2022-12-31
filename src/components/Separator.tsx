@@ -1,7 +1,7 @@
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleProp, View, ViewStyle } from 'react-native'
 
 export interface Props {
   extraMarginLeft?: number
@@ -23,7 +23,7 @@ const ComponentSeparator: React.FC<Props> = ({
         {
           backgroundColor: colors.backgroundDefault,
           borderTopColor: colors.border,
-          borderTopWidth: StyleSheet.hairlineWidth,
+          borderTopWidth: 1,
           marginLeft: StyleConstants.Spacing.Global.PagePadding + extraMarginLeft,
           marginRight: StyleConstants.Spacing.Global.PagePadding + extraMarginRight
         }

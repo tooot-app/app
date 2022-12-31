@@ -3408,13 +3408,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-base64@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@types/react-native-base64@npm:0.2.0"
-  checksum: 6a562ae758dfd06f152a559f7380a7a2da783bf14e70eef8bd4aae0df9dc5971a71888b74e8db552546b94ada198bfc3b6d7db51dd537a8f21767d8729bd10e7
-  languageName: node
-  linkType: hard
-
 "@types/react-native-share-menu@npm:5.0.2":
   version: 5.0.2
   resolution: "@types/react-native-share-menu@npm:5.0.2"
@@ -9441,13 +9434,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-base64@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "react-native-base64@npm:0.2.1"
-  checksum: 5127c857250cabb9c24f494b56185a4339bd0ebb859824a01c2f4eb3264379556e06efc8e59ffb9585cbf1c5e6fee18f50f4a6e8a1c63fe4b5cedf0658f8c25e
-  languageName: node
-  linkType: hard
-
 "react-native-blurhash@npm:^1.1.10":
   version: 1.1.10
   resolution: "react-native-blurhash@npm:1.1.10"
@@ -11246,7 +11232,6 @@ __metadata:
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.10
     "@types/react-native": ^0.70.8
-    "@types/react-native-base64": ^0.2.0
     "@types/react-native-share-menu": ^5.0.2
     "@types/valid-url": ^1.0.3
     axios: ^1.2.1
@@ -11282,7 +11267,6 @@ __metadata:
     react-intl: ^6.2.5
     react-native: ^0.70.6
     react-native-animated-spinkit: ^1.5.2
-    react-native-base64: ^0.2.1
     react-native-blurhash: ^1.1.10
     react-native-clean-project: ^4.0.1
     react-native-fast-image: ^8.6.3

@@ -1,10 +1,12 @@
 import haptics from '@components/haptics'
 import {
-    MutationOptions,
-    QueryFunctionContext,
-    useInfiniteQuery,
-    UseInfiniteQueryOptions,
-    useMutation
+  MutationOptions,
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation,
+  useQuery,
+  UseQueryOptions
 } from '@tanstack/react-query'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
@@ -16,6 +18,67 @@ import { uniqBy } from 'lodash'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
+
+const queryFunctionToot = async ({ queryKey, meta }: QueryFunctionContext<QueryKeyTimeline>) => {
+  // @ts-ignore
+  const id = queryKey[1].toot
+  const target =
+    (meta?.toot as Mastodon.Status) ||
+    undefined ||
+    (await apiInstance<Mastodon.Status>({
+      method: 'get',
+      url: `statuses/${id}`
+    }).then(res => res.body))
+  const context = await apiInstance<{
+    ancestors: Mastodon.Status[]
+    descendants: Mastodon.Status[]
+  }>({
+    method: 'get',
+    url: `statuses/${id}/context`
+  })
+
+  const statuses: (Mastodon.Status & { _level?: number })[] = [
+    ...context.body.ancestors,
+    target,
+    ...context.body.descendants
+  ]
+
+  const highlightIndex = context.body.ancestors.length
+
+  for (const [index, status] of statuses.entries()) {
+    if (index < highlightIndex || status.id === id) {
+      statuses[index]._level = 0
+      continue
+    }
+
+    const repliedLevel = statuses.find(s => s.id === status.in_reply_to_id)?._level
+    statuses[index]._level = (repliedLevel || 0) + 1
+  }
+
+  return { body: statuses, highlightIndex }
+}
+
+const useTootQuery = ({
+  options,
+  ...queryKeyParams
+}: QueryKeyTimeline[1] & {
+  options?: UseQueryOptions<
+    {
+      body: (Mastodon.Status & { _level: number })[]
+      highlightIndex: number
+    },
+    AxiosError
+  >
+}) => {
+  const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
+  return useQuery(queryKey, queryFunctionToot, {
+    staleTime: 0,
+    refetchOnMount: true,
+    ...options
+  })
+}
+
+/* ----- */
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -37,14 +100,14 @@ export type QueryKeyTimeline = [
         list: Mastodon.List['id']
       }
     | {
-        page: 'Toot'
-        toot: Mastodon.Status['id']
-      }
-    | {
         page: 'Account'
         account: Mastodon.Account['id']
         exclude_reblogs: boolean
         only_media: boolean
+      }
+    | {
+        page: 'Toot'
+        toot: Mastodon.Status['id']
       }
   )
 ]
@@ -209,22 +272,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         url: `timelines/list/${page.list}`,
         params
       })
-
-    case 'Toot':
-      const res1_1 = await apiInstance<Mastodon.Status>({
-        method: 'get',
-        url: `statuses/${page.toot}`
-      })
-      const res2_1 = await apiInstance<{
-        ancestors: Mastodon.Status[]
-        descendants: Mastodon.Status[]
-      }>({
-        method: 'get',
-        url: `statuses/${page.toot}/context`
-      })
-      return {
-        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
-      }
     default:
       return Promise.reject()
   }
@@ -454,4 +501,4 @@ const useTimelineMutation = ({
   })
 }
 
-export { useTimelineQuery, useTimelineMutation }
+export { useTootQuery, useTimelineQuery, useTimelineMutation }

@@ -1,6 +1,7 @@
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
+import StatusContext from '@components/Timeline/Shared/Context'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
@@ -11,43 +12,38 @@ import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { ChildNode } from 'domhandler'
 import { ElementType, parseDocument } from 'htmlparser2'
-import React, { useState } from 'react'
+import i18next from 'i18next'
+import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, Text, TextStyleIOS, View } from 'react-native'
+import { Platform, Pressable, Text, TextStyleIOS, View } from 'react-native'
 
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
-  textStyles?: TextStyleIOS
   adaptiveSize?: boolean
-  emojis?: Mastodon.Emoji[]
-  mentions?: Mastodon.Mention[]
-  tags?: Mastodon.Tag[]
   showFullLink?: boolean
   numberOfLines?: number
   expandHint?: string
-  highlighted?: boolean
-  disableDetails?: boolean
   selectable?: boolean
   setSpoilerExpanded?: React.Dispatch<React.SetStateAction<boolean>>
+  emojis?: Mastodon.Emoji[]
+  mentions?: Mastodon.Mention[]
 }
 
 const ParseHTML: React.FC<Props> = ({
   content,
   size = 'M',
-  textStyles,
   adaptiveSize = false,
-  emojis,
-  mentions,
-  tags,
   showFullLink = false,
   numberOfLines = 10,
   expandHint,
-  highlighted = false,
-  disableDetails = false,
   selectable = false,
-  setSpoilerExpanded
+  setSpoilerExpanded,
+  emojis,
+  mentions
 }) => {
+  const { status, highlighted, disableDetails, excludeMentions } = useContext(StatusContext)
+
   const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
   const adaptedFontsize = adaptiveScale(
     StyleConstants.Font.Size[size],
@@ -91,14 +87,16 @@ const ParseHTML: React.FC<Props> = ({
         return ''
     }
   }
+  const startingOfText = useRef<boolean>(false)
   const renderNode = (node: ChildNode, index: number) => {
     switch (node.type) {
       case ElementType.Text:
+        node.data.trim().length && (startingOfText.current = true) // Removing empty spaces appeared between tags and mentions
         return (
           <ParseEmojis
             key={index}
-            content={node.data}
-            emojis={emojis}
+            content={node.data.replace(new RegExp(/^\s+/), '')}
+            emojis={status?.emojis || emojis}
             size={size}
             adaptiveSize={adaptiveSize}
           />
@@ -138,19 +136,28 @@ const ParseHTML: React.FC<Props> = ({
                   />
                 )
               }
-              if (classes.includes('mention') && mentions?.length) {
-                const mentionIndex = mentions.findIndex(mention => mention.url === href)
+              if (classes.includes('mention') && (status?.mentions?.length || mentions?.length)) {
+                const matchedMention = (status?.mentions || mentions || []).find(
+                  mention => mention.url === href
+                )
+                if (
+                  matchedMention &&
+                  !startingOfText.current &&
+                  excludeMentions?.current.find(eM => eM.id === matchedMention.id)
+                ) {
+                  return null
+                }
                 const paramsAccount = (params as { account: Mastodon.Account } | undefined)?.account
-                const sameAccount = paramsAccount?.id === mentions[mentionIndex]?.id
+                const sameAccount = paramsAccount?.id === matchedMention?.id
                 return (
                   <Text
                     key={index}
-                    style={{ color: mentionIndex > -1 ? colors.blue : undefined }}
+                    style={{ color: matchedMention ? colors.blue : undefined }}
                     onPress={() =>
-                      mentionIndex > -1 &&
+                      matchedMention &&
                       !disableDetails &&
                       !sameAccount &&
-                      navigation.push('Tab-Shared-Account', { account: mentions[mentionIndex] })
+                      navigation.push('Tab-Shared-Account', { account: matchedMention })
                     }
                     children={node.children.map(unwrapNode).join('')}
                   />
@@ -159,7 +166,7 @@ const ParseHTML: React.FC<Props> = ({
             }
 
             const content = node.children.map(child => unwrapNode(child)).join('')
-            const shouldBeTag = tags && tags.find(tag => `#${tag.name}` === content)
+            const shouldBeTag = status?.tags?.find(tag => `#${tag.name}` === content)
             return (
               <Text
                 key={index}
@@ -249,7 +256,10 @@ const ParseHTML: React.FC<Props> = ({
         style={{
           fontSize: adaptedFontsize,
           lineHeight: adaptedLineheight,
-          ...textStyles,
+          ...(Platform.OS === 'ios' &&
+            status?.language &&
+            i18next.dir(status.language) === 'rtl' &&
+            ({ writingDirection: 'rtl' } as { writingDirection: 'rtl' })),
           height: numberOfLines === 1 && !expanded ? 0 : undefined
         }}
         numberOfLines={
