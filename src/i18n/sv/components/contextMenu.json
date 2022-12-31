@@ -6,7 +6,7 @@
       "action_false": "Följ användare",
       "action_true": "Avfölj användaren"
     },
-    "inLists": "Hantera användare i listor",
+    "inLists": "",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
