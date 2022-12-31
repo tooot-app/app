@@ -6,7 +6,7 @@
       "action_false": "Segueix l'usuari",
       "action_true": "Deixa de seguir l'usuari"
     },
-    "inLists": "",
+    "inLists": "Llistes que continguin l'usuari",
     "showBoosts": {
       "action_false": "Mostra els impulsos de l'usuari",
       "action_true": "Oculta els impulsos de l'usuari"
