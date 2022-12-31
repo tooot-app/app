@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
-          "lighter": "",
+          "lighter": "기본값",
           "darker": ""
         }
       },
