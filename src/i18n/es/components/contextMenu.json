@@ -6,7 +6,7 @@
       "action_false": "Seguir usuario",
       "action_true": "Dejar de seguir usuario"
     },
-    "inLists": "Administrar usuario de listas",
+    "inLists": "",
     "showBoosts": {
       "action_false": "Mostrar los impulsos del usuario",
       "action_true": "Ocultar los impulsos del usuario"
