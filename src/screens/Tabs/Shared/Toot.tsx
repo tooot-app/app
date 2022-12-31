@@ -1,4 +1,6 @@
+import Button from '@components/Button'
 import { HeaderLeft } from '@components/Header'
+import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
@@ -9,6 +11,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
+import { Circle } from 'react-native-animated-spinkit'
 import { Path, Svg } from 'react-native-svg'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
@@ -18,11 +21,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   }
 }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['componentTimeline', 'screenTabs'])
 
   useEffect(() => {
     navigation.setOptions({
-      title: t('shared.toot.name'),
+      title: t('screenTabs:shared.toot.name'),
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
     })
   }, [])
@@ -31,19 +34,19 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const scrolled = useRef(false)
 
   const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Toot', toot: toot.id }]
-  const { data } = useTootQuery({
+  const { data, status, refetch } = useTootQuery({
     ...queryKey[1],
     options: {
       meta: { toot },
       onSuccess: data => {
-        if (data.body.length < 1) {
+        if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
         }
 
         if (!scrolled.current) {
           scrolled.current = true
-          const pointer = data.body.findIndex(({ id }) => id === toot.id)
+          const pointer = data.pages[0].body.findIndex(({ id }) => id === toot.id)
           if (pointer < 1) return
           const length = flRef.current?.props.data?.length
           if (!length) return
@@ -64,6 +67,54 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   })
 
+  const empty = () => {
+    switch (status) {
+      case 'loading':
+        return <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+      case 'error':
+        return (
+          <>
+            <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
+            <CustomText
+              fontStyle='M'
+              style={{
+                marginTop: StyleConstants.Spacing.S,
+                marginBottom: StyleConstants.Spacing.L,
+                color: colors.primaryDefault
+              }}
+            >
+              {t('componentTimeline:empty.error.message')}
+            </CustomText>
+            <Button
+              type='text'
+              content={t('componentTimeline:empty.error.button')}
+              onPress={() => refetch()}
+            />
+          </>
+        )
+      case 'success':
+        return (
+          <>
+            <Icon
+              name='Smartphone'
+              size={StyleConstants.Font.Size.L}
+              color={colors.primaryDefault}
+            />
+            <CustomText
+              fontStyle='M'
+              style={{
+                marginTop: StyleConstants.Spacing.S,
+                marginBottom: StyleConstants.Spacing.L,
+                color: colors.secondary
+              }}
+            >
+              {t('componentTimeline:empty.success.message')}
+            </CustomText>
+          </>
+        )
+    }
+  }
+
   const heights = useRef<(number | undefined)[]>([])
   const MAX_LEVEL = 10
   const ARC = StyleConstants.Avatar.XS / 4
@@ -73,11 +124,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ref={flRef}
       scrollEventThrottle={16}
       windowSize={7}
-      data={data?.body}
+      data={data?.pages[0].body}
       renderItem={({ item, index }) => {
-        const prev = data?.body[index - 1]?._level || 0
+        const prev = data?.pages[0].body[index - 1]?._level || 0
         const curr = item._level
-        const next = data?.body[index + 1]?._level || 0
+        const next = data?.pages[0].body[index + 1]?._level || 0
 
         return (
           <View
@@ -232,7 +283,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         const offset = error.averageItemLength * error.index
         flRef.current?.scrollToOffset({ offset })
         try {
-          error.index < (data?.body.length || 0) &&
+          error.index < (data?.pages[0].body.length || 0) &&
             setTimeout(
               () =>
                 flRef.current?.scrollToIndex({
@@ -243,6 +294,19 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             )
         } catch {}
       }}
+      ListEmptyComponent={
+        <View
+          style={{
+            flex: 1,
+            minHeight: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.backgroundDefault
+          }}
+        >
+          {empty()}
+        </View>
+      }
     />
   )
 }

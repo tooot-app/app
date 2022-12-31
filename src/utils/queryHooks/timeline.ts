@@ -55,7 +55,7 @@ const queryFunctionToot = async ({ queryKey, meta }: QueryFunctionContext<QueryK
     statuses[index]._level = (repliedLevel || 0) + 1
   }
 
-  return { body: statuses, highlightIndex }
+  return { pages: [{ body: statuses }], highlightIndex }
 }
 
 const useTootQuery = ({
@@ -64,7 +64,7 @@ const useTootQuery = ({
 }: QueryKeyTimeline[1] & {
   options?: UseQueryOptions<
     {
-      body: (Mastodon.Status & { _level: number })[]
+      pages: { body: (Mastodon.Status & { _level: number })[] }[]
       highlightIndex: number
     },
     AxiosError
