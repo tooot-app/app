@@ -21,6 +21,7 @@ type StatusContextType = {
   disableDetails?: boolean
   disableOnPress?: boolean
   isConversation?: boolean
+  isRemote?: boolean
 }
 const StatusContext = createContext<StatusContextType>({} as StatusContextType)
 

@@ -19,67 +19,6 @@ import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
 
-const queryFunctionToot = async ({ queryKey, meta }: QueryFunctionContext<QueryKeyTimeline>) => {
-  // @ts-ignore
-  const id = queryKey[1].toot
-  const target =
-    (meta?.toot as Mastodon.Status) ||
-    undefined ||
-    (await apiInstance<Mastodon.Status>({
-      method: 'get',
-      url: `statuses/${id}`
-    }).then(res => res.body))
-  const context = await apiInstance<{
-    ancestors: Mastodon.Status[]
-    descendants: Mastodon.Status[]
-  }>({
-    method: 'get',
-    url: `statuses/${id}/context`
-  })
-
-  const statuses: (Mastodon.Status & { _level?: number })[] = [
-    ...context.body.ancestors,
-    target,
-    ...context.body.descendants
-  ]
-
-  const highlightIndex = context.body.ancestors.length
-
-  for (const [index, status] of statuses.entries()) {
-    if (index < highlightIndex || status.id === id) {
-      statuses[index]._level = 0
-      continue
-    }
-
-    const repliedLevel = statuses.find(s => s.id === status.in_reply_to_id)?._level
-    statuses[index]._level = (repliedLevel || 0) + 1
-  }
-
-  return { pages: [{ body: statuses }], highlightIndex }
-}
-
-const useTootQuery = ({
-  options,
-  ...queryKeyParams
-}: QueryKeyTimeline[1] & {
-  options?: UseQueryOptions<
-    {
-      pages: { body: (Mastodon.Status & { _level: number })[] }[]
-      highlightIndex: number
-    },
-    AxiosError
-  >
-}) => {
-  const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
-  return useQuery(queryKey, queryFunctionToot, {
-    staleTime: 0,
-    refetchOnMount: true,
-    ...options
-  })
-}
-
-/* ----- */
-
 export type QueryKeyTimeline = [
   'Timeline',
   (
@@ -501,4 +440,4 @@ const useTimelineMutation = ({
   })
 }
 
-export { useTootQuery, useTimelineQuery, useTimelineMutation }
+export { useTimelineQuery, useTimelineMutation }
