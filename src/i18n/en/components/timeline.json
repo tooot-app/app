@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Toot muted"
         },
+        "replies": "Replies",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Toot is a direct message"

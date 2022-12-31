@@ -32,17 +32,19 @@ const HeaderSharedReplies: React.FC = () => {
         color: colors.secondary
       }}
     >
-      Replies
-      {excludeMentions.current.map((mention, index) => (
-        <Fragment key={index}>
-          {' '}
-          <CustomText
-            style={{ color: colors.blue, paddingLeft: StyleConstants.Spacing.S }}
-            children={`@${mention.username}`}
-            onPress={() => navigation.push('Tab-Shared-Account', { account: mention })}
-          />
-        </Fragment>
-      ))}
+      <>
+        {t('shared.header.shared.replies')}
+        {excludeMentions.current.map((mention, index) => (
+          <Fragment key={index}>
+            {' '}
+            <CustomText
+              style={{ color: colors.blue, paddingLeft: StyleConstants.Spacing.S }}
+              children={`@${mention.username}`}
+              onPress={() => navigation.push('Tab-Shared-Account', { account: mention })}
+            />
+          </Fragment>
+        ))}
+      </>
     </CustomText>
   ) : null
 }
