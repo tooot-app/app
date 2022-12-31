@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "Темна тема",
         "options": {
-          "lighter": "",
+          "lighter": "За замовчуванням",
           "darker": ""
         }
       },
