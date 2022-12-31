@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Publicació silenciada"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "La publicació és un missatge directe"
