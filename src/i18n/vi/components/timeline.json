@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Tút này là dạng nhắn riêng"
