@@ -14,6 +14,7 @@ type StatusContextType = {
   spoilerHidden?: boolean
   rawContent?: React.MutableRefObject<string[]> // When highlighted, for translate, edit history
   detectedLanguage?: React.MutableRefObject<string>
+  excludeMentions?: React.MutableRefObject<Mastodon.Mention[]>
 
   highlighted?: boolean
   inThread?: boolean

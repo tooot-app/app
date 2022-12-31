@@ -13,6 +13,7 @@ import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
+import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
@@ -64,6 +65,7 @@ const TimelineHeaderDefault: React.FC = () => {
           />
           <HeaderSharedVisibility visibility={status.visibility} />
           <HeaderSharedMuted muted={status.muted} />
+          <HeaderSharedReplies />
           <HeaderSharedApplication application={status.application} />
         </View>
       </View>

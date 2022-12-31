@@ -15,7 +15,7 @@ const removeHTML = (text: string): string => {
   parser.write(text)
   parser.end()
 
-  return raw
+  return raw.replace(new RegExp(/\s$/), '')
 }
 
 export default removeHTML
