@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Inlägg tystat"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Inlägget är ett direktmeddelande"
