@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Pouet rendu muet"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Envoyer un message privé"
