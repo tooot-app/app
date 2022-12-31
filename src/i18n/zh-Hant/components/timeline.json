@@ -122,7 +122,7 @@
         "muted": {
           "accessibilityLabel": "已靜音此嘟文"
         },
-        "replies": "",
+        "replies": "回覆 <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "此嘟文是私訊"
