@@ -6,7 +6,7 @@
       "action_false": "Follow user",
       "action_true": "Unfollow user"
     },
-    "inLists": "Manage user of lists",
+    "inLists": "Lists containing user",
     "showBoosts": {
       "action_false": "Show user's boosts",
       "action_true": "Hide users's boosts"

@@ -15,7 +15,7 @@ import { ElementType, parseDocument } from 'htmlparser2'
 import i18next from 'i18next'
 import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, Text, TextStyleIOS, View } from 'react-native'
+import { Platform, Pressable, Text, View } from 'react-native'
 
 export interface Props {
   content: string
@@ -78,8 +78,8 @@ const ParseHTML: React.FC<Props> = ({
         return node.data
       case ElementType.Tag:
         if (node.name === 'span') {
-          if (node.attribs.class?.includes('invisible')) return ''
-          if (node.attribs.class?.includes('ellipsis'))
+          if (node.attribs.class?.includes('invisible') && !showFullLink) return ''
+          if (node.attribs.class?.includes('ellipsis') && !showFullLink)
             return node.children.map(child => unwrapNode(child)).join('') + '...'
         }
         return node.children.map(child => unwrapNode(child)).join('')
@@ -87,15 +87,26 @@ const ParseHTML: React.FC<Props> = ({
         return ''
     }
   }
-  const startingOfText = useRef<boolean>(false)
+  const openingMentions = useRef<boolean>(true)
   const renderNode = (node: ChildNode, index: number) => {
     switch (node.type) {
       case ElementType.Text:
-        node.data.trim().length && (startingOfText.current = true) // Removing empty spaces appeared between tags and mentions
+        let content: string = node.data
+        if (openingMentions.current) {
+          if (node.data.trim().length) {
+            openingMentions.current = false // Removing empty spaces appeared between tags and mentions
+            content = excludeMentions?.current.length
+              ? node.data.replace(new RegExp(/^\s+/), '')
+              : node.data
+          } else {
+            content = node.data.trim()
+          }
+        }
+
         return (
           <ParseEmojis
             key={index}
-            content={node.data.replace(new RegExp(/^\s+/), '')}
+            content={content}
             emojis={status?.emojis || emojis}
             size={size}
             adaptiveSize={adaptiveSize}
@@ -108,6 +119,7 @@ const ParseHTML: React.FC<Props> = ({
             const href = node.attribs.href
             if (classes) {
               if (classes.includes('hashtag')) {
+                openingMentions.current = false
                 const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1].toLowerCase()
                 const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
                   ?.hashtag
@@ -142,7 +154,6 @@ const ParseHTML: React.FC<Props> = ({
                 )
                 if (
                   matchedMention &&
-                  !startingOfText.current &&
                   excludeMentions?.current.find(eM => eM.id === matchedMention.id)
                 ) {
                   return null
@@ -165,6 +176,7 @@ const ParseHTML: React.FC<Props> = ({
               }
             }
 
+            openingMentions.current = false
             const content = node.children.map(child => unwrapNode(child)).join('')
             const shouldBeTag = status?.tags?.find(tag => `#${tag.name}` === content)
             return (
@@ -182,7 +194,7 @@ const ParseHTML: React.FC<Props> = ({
                     }
                   }
                 }}
-                children={content !== href ? content : showFullLink ? href : content}
+                children={content}
               />
             )
             break

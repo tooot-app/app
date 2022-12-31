@@ -17,7 +17,7 @@ import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, rootQueryKey, status, highlighted, disableDetails, rawContent } =
+  const { queryKey, rootQueryKey, status, highlighted, disableDetails, rawContent, isRemote } =
     useContext(StatusContext)
   if (!status) return null
 
@@ -58,6 +58,14 @@ const TimelineHeaderDefault: React.FC = () => {
               : { marginTop: StyleConstants.Spacing.XS, marginBottom: StyleConstants.Spacing.S })
           }}
         >
+          {isRemote ? (
+            <Icon
+              name='Wifi'
+              size={StyleConstants.Font.Size.M}
+              color={colors.secondary}
+              style={{ marginRight: StyleConstants.Spacing.S }}
+            />
+          ) : null}
           <HeaderSharedCreated
             created_at={status.created_at}
             edited_at={status.edited_at}

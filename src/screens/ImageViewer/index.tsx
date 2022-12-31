@@ -4,7 +4,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
@@ -49,6 +49,13 @@ const ScreenImagesViewer = ({
   const { showActionSheetWithOptions } = useActionSheet()
 
   const isZoomed = useSharedValue(false)
+
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      setCurrentIndex(viewableItems[0]?.index || 0)
+    },
+    []
+  )
 
   return (
     <View style={{ backgroundColor: 'black' }}>
@@ -107,7 +114,7 @@ const ScreenImagesViewer = ({
         />
       </View>
       <LongPressGestureHandler
-        onEnded={() => {
+        onActivated={() => {
           showActionSheetWithOptions(
             {
               options: [
@@ -207,9 +214,7 @@ const ScreenImagesViewer = ({
               />
             )
           }}
-          onViewableItemsChanged={({ viewableItems }: { viewableItems: ViewToken[] }) => {
-            setCurrentIndex(viewableItems[0]?.index || 0)
-          }}
+          onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50
           }}
