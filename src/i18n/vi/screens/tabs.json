@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "Độ tối",
         "options": {
-          "lighter": "",
+          "lighter": "Mặc định",
           "darker": ""
         }
       },
