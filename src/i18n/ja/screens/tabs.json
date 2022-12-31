@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "ダークテーマ",
         "options": {
-          "lighter": "",
+          "lighter": "デフォルト",
           "darker": ""
         }
       },
