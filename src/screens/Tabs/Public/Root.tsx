@@ -83,7 +83,10 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
       swipeEnabled
       renderScene={renderScene}
       renderTabBar={() => null}
-      onIndexChange={index => setSegment(index)}
+      onIndexChange={index => {
+        setSegment(index)
+        setGlobalStorage('app.prev_public_segment', segments[index])
+      }}
       navigationState={{ index: segment, routes }}
       initialLayout={{ width: Dimensions.get('window').width }}
     />

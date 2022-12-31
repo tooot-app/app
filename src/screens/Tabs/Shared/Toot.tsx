@@ -65,6 +65,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   })
 
   const heights = useRef<(number | undefined)[]>([])
+  const MAX_LEVEL = 10
+  const ARC = StyleConstants.Avatar.XS / 4
 
   return (
     <FlatList
@@ -73,9 +75,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       windowSize={7}
       data={data?.body}
       renderItem={({ item, index }) => {
-        const MAX_LEVEL = 10
-        const ARC = StyleConstants.Avatar.XS / 4
-
         const prev = data?.body[index - 1]?._level || 0
         const curr = item._level
         const next = data?.body[index + 1]?._level || 0
@@ -85,7 +84,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             style={{
               paddingLeft:
                 index > (data?.highlightIndex || 0)
-                  ? Math.min(item._level, MAX_LEVEL) * StyleConstants.Spacing.S
+                  ? Math.min(item._level - 1, MAX_LEVEL) * StyleConstants.Spacing.S
                   : undefined
             }}
             onLayout={({
@@ -206,11 +205,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           <>
             <ComponentSeparator
               extraMarginLeft={
-                toot.id === leadingItem.id
+                leadingItem.id === toot.id
                   ? 0
                   : StyleConstants.Avatar.XS +
                     StyleConstants.Spacing.S +
-                    Math.max(0, leadingItem._level - 1) * 8
+                    Math.min(Math.max(0, leadingItem._level - 1), MAX_LEVEL) *
+                      StyleConstants.Spacing.S
               }
             />
             {leadingItem._level > 1

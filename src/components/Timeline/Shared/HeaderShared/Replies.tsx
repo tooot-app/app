@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import StatusContext from '../Context'
 
 const HeaderSharedReplies: React.FC = () => {
@@ -11,7 +11,7 @@ const HeaderSharedReplies: React.FC = () => {
   if (!isConversation) return null
 
   const navigation = useNavigation<any>()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
   const { colors } = useTheme()
 
   const mentionsBeginning = rawContent?.current?.[0]
@@ -26,25 +26,27 @@ const HeaderSharedReplies: React.FC = () => {
   return excludeMentions?.current.length ? (
     <CustomText
       fontStyle='S'
-      style={{
-        marginLeft: StyleConstants.Spacing.S,
-        flexDirection: 'row',
-        color: colors.secondary
-      }}
+      style={{ flex: 1, marginLeft: StyleConstants.Spacing.S, color: colors.secondary }}
+      numberOfLines={1}
     >
-      <>
-        {t('shared.header.shared.replies')}
-        {excludeMentions.current.map((mention, index) => (
-          <Fragment key={index}>
-            {' '}
-            <CustomText
-              style={{ color: colors.blue, paddingLeft: StyleConstants.Spacing.S }}
-              children={`@${mention.username}`}
-              onPress={() => navigation.push('Tab-Shared-Account', { account: mention })}
-            />
-          </Fragment>
-        ))}
-      </>
+      <Trans
+        ns='componentTimeline'
+        i18nKey='shared.header.shared.replies'
+        components={[
+          <>
+            {excludeMentions.current.map((mention, index) => (
+              <Fragment key={index}>
+                {index > 0 ? t('common:separator') : null}
+                <CustomText
+                  style={{ color: colors.blue, paddingLeft: StyleConstants.Spacing.S }}
+                  children={`@${mention.username}`}
+                  onPress={() => navigation.push('Tab-Shared-Account', { account: mention })}
+                />
+              </Fragment>
+            ))}
+          </>
+        ]}
+      />
     </CustomText>
   ) : null
 }
