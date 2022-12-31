@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Toot gedempt"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Toot is een direct bericht"
