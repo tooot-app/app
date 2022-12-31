@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Dunkles Design",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Standard",
+          "darker": "Schwarz (Vollton)"
         }
       },
       "browser": {
