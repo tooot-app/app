@@ -6,7 +6,7 @@
       "action_false": "Theo dõi người này",
       "action_true": "Ngưng theo dõi người này"
     },
-    "inLists": "Quản lý người trong danh sách",
+    "inLists": "",
     "showBoosts": {
       "action_false": "Hiển lượt đăng lại",
       "action_true": "Ẩn lượt đăng lại"
