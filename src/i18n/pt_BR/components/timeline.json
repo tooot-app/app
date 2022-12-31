@@ -122,6 +122,7 @@
         "muted": {
           "accessibilityLabel": "Toot silenciado"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Enviar uma mensagem direta"
