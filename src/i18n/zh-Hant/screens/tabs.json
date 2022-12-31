@@ -265,7 +265,7 @@
       "darkTheme": {
         "heading": "深色主題",
         "options": {
-          "lighter": "",
+          "lighter": "預設",
           "darker": ""
         }
       },
