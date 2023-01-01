@@ -46,4 +46,19 @@ const useSearchQuery = <T = SearchResult>({
   return useQuery(queryKey, queryFunction, options)
 }
 
+export const searchFetchToot = (uri: Mastodon.Status['uri']): Promise<Mastodon.Status | void> =>
+  apiInstance<SearchResult>({
+    version: 'v2',
+    method: 'get',
+    url: 'search',
+    params: {
+      q: uri,
+      type: 'statuses',
+      limit: 1,
+      resolve: true
+    }
+  })
+    .then(res => res.body.statuses[0])
+    .catch(() => {})
+
 export { useSearchQuery }

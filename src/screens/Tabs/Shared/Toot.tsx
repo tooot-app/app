@@ -59,7 +59,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
   const finalData = useRef<Mastodon.Status[]>([{ ...toot, _level: 0, _remote: false }])
   const highlightIndex = useRef<number>(0)
-  const queryKey: { [key: string]: QueryKeyTimeline } = {
+  const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
     local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
     remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
   }
@@ -199,7 +199,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (finalData.current?.length < data.pages[0].body.length) {
           finalData.current = data.pages[0].body.map(remote => {
             const localMatch = finalData.current?.find(local => local.uri === remote.uri)
-            return localMatch || { ...remote, _remote: true }
+            if (localMatch) {
+              return localMatch
+            } else {
+              remote._remote = true
+              return remote
+            }
           })
           setHasRemoteContent(true)
         }
@@ -302,7 +307,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           >
             <TimelineDefault
               item={item}
-              queryKey={queryKey.local}
+              queryKey={item._remote ? queryKey.remote : queryKey.local}
               rootQueryKey={rootQueryKey}
               highlighted={toot.id === item.id}
               isConversation={toot.id !== item.id}

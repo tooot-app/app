@@ -4,9 +4,7 @@ import {
   QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useMutation,
-  useQuery,
-  UseQueryOptions
+  useMutation
 } from '@tanstack/react-query'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
@@ -15,6 +13,7 @@ import queryClient from '@utils/queryHooks'
 import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
+import { searchFetchToot } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
@@ -251,6 +250,7 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Status['id'] | Mastodon.Poll['id']
   isReblog?: boolean
+  fetchRemoteURI?: Mastodon.Status['uri']
   payload:
     | {
         property: 'bookmarked' | 'muted' | 'pinned'
@@ -344,13 +344,22 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             ...(params.payload.type === 'vote' && { body: formData })
           })
         default:
+          let tootId = params.id
+          if (params.fetchRemoteURI) {
+            const fetched = await searchFetchToot(params.fetchRemoteURI)
+            if (fetched) {
+              tootId = fetched.id
+            } else {
+              return Promise.reject()
+            }
+          }
           const body = new FormData()
           if (params.payload.property === 'reblogged') {
             body.append('visibility', params.payload.visibility)
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${params.id}/${params.payload.currentValue ? 'un' : ''}${
+            url: `statuses/${tootId}/${params.payload.currentValue ? 'un' : ''}${
               MapPropertyToUrl[params.payload.property]
             }`,
             ...(params.payload.property === 'reblogged' && { body })

@@ -113,6 +113,7 @@ const TimelineActions: React.FC = () => {
                 rootQueryKey,
                 id: status.id,
                 isReblog: !!reblogStatus,
+                fetchRemoteURI: status._remote ? status.uri : undefined,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -129,6 +130,7 @@ const TimelineActions: React.FC = () => {
                 rootQueryKey,
                 id: status.id,
                 isReblog: !!reblogStatus,
+                fetchRemoteURI: status._remote ? status.uri : undefined,
                 payload: {
                   property: 'reblogged',
                   currentValue: status.reblogged,
@@ -148,6 +150,7 @@ const TimelineActions: React.FC = () => {
         rootQueryKey,
         id: status.id,
         isReblog: !!reblogStatus,
+        fetchRemoteURI: status._remote ? status.uri : undefined,
         payload: {
           property: 'reblogged',
           currentValue: status.reblogged,
@@ -165,6 +168,7 @@ const TimelineActions: React.FC = () => {
       rootQueryKey,
       id: status.id,
       isReblog: !!reblogStatus,
+      fetchRemoteURI: status._remote ? status.uri : undefined,
       payload: {
         property: 'favourited',
         currentValue: status.favourited,
@@ -180,6 +184,7 @@ const TimelineActions: React.FC = () => {
       rootQueryKey,
       id: status.id,
       isReblog: !!reblogStatus,
+      fetchRemoteURI: status._remote ? status.uri : undefined,
       payload: {
         property: 'bookmarked',
         currentValue: status.bookmarked,
