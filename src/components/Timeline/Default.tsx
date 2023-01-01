@@ -87,9 +87,9 @@ const TimelineDefault: React.FC<Props> = ({
   const main = () => (
     <>
       {item.reblog ? (
-        <TimelineActioned action='reblog' />
+        <TimelineActioned action='reblog' rootStatus={item} />
       ) : item._pinned ? (
-        <TimelineActioned action='pinned' />
+        <TimelineActioned action='pinned' rootStatus={item} />
       ) : null}
 
       <View
@@ -167,7 +167,6 @@ const TimelineDefault: React.FC<Props> = ({
         queryKey,
         rootQueryKey,
         status,
-        reblogStatus: item.reblog ? item : undefined,
         ownAccount,
         spoilerHidden,
         rawContent,

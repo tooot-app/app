@@ -35,7 +35,7 @@ const menuStatus = ({
     onMutate: true,
     onError: (err: any, params, oldData) => {
       const theFunction = (params as MutationVarsTimelineUpdateStatusProperty).payload
-        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
+        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.type
         : 'delete'
       displayMessage({
         theme,
@@ -195,10 +195,9 @@ const menuStatus = ({
             type: 'updateStatusProperty',
             queryKey,
             rootQueryKey,
-            id: status.id,
+            status,
             payload: {
-              property: 'muted',
-              currentValue: status.muted
+              type: 'muted'
             }
           }),
         disabled: false,
@@ -220,12 +219,9 @@ const menuStatus = ({
             type: 'updateStatusProperty',
             queryKey,
             rootQueryKey,
-            id: status.id,
+            status,
             payload: {
-              property: 'pinned',
-              currentValue: status.pinned,
-              propertyCount: undefined,
-              countValue: undefined
+              type: 'pinned'
             }
           }),
         disabled: false,

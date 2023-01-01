@@ -248,35 +248,23 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   type: 'updateStatusProperty'
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-  id: Mastodon.Status['id'] | Mastodon.Poll['id']
-  isReblog?: boolean
-  fetchRemoteURI?: Mastodon.Status['uri']
+  status: Mastodon.Status
   payload:
     | {
-        property: 'bookmarked' | 'muted' | 'pinned'
-        currentValue: boolean
-        propertyCount?: undefined
-        countValue?: undefined
+        type: 'bookmarked' | 'muted' | 'pinned' | 'favourited'
       }
     | {
-        property: 'favourited'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
-      }
-    | {
-        property: 'reblogged'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
+        type: 'reblogged'
         visibility: 'public' | 'unlisted'
       }
     | {
-        property: 'poll'
-        id: Mastodon.Poll['id']
-        type: 'vote' | 'refresh'
-        options?: boolean[]
-        data?: Mastodon.Poll
+        type: 'poll'
+        action: 'vote'
+        options: boolean[]
+      }
+    | {
+        type: 'poll'
+        action: 'refresh'
       }
 }
 
@@ -325,10 +313,10 @@ export type MutationVarsTimeline =
 const mutationFunction = async (params: MutationVarsTimeline) => {
   switch (params.type) {
     case 'updateStatusProperty':
-      switch (params.payload.property) {
+      switch (params.payload.type) {
         case 'poll':
           const formData = new FormData()
-          params.payload.type === 'vote' &&
+          params.payload.action === 'vote' &&
             params.payload.options?.forEach((option, index) => {
               if (option) {
                 formData.append('choices[]', index.toString())
@@ -336,17 +324,17 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             })
 
           return apiInstance<Mastodon.Poll>({
-            method: params.payload.type === 'vote' ? 'post' : 'get',
+            method: params.payload.action === 'vote' ? 'post' : 'get',
             url:
-              params.payload.type === 'vote'
-                ? `polls/${params.payload.id}/votes`
-                : `polls/${params.payload.id}`,
-            ...(params.payload.type === 'vote' && { body: formData })
+              params.payload.action === 'vote'
+                ? `polls/${params.status.poll?.id}/votes`
+                : `polls/${params.status.poll?.id}`,
+            ...(params.payload.action === 'vote' && { body: formData })
           })
         default:
-          let tootId = params.id
-          if (params.fetchRemoteURI) {
-            const fetched = await searchFetchToot(params.fetchRemoteURI)
+          let tootId = params.status.id
+          if (params.status._remote) {
+            const fetched = await searchFetchToot(params.status.uri)
             if (fetched) {
               tootId = fetched.id
             } else {
@@ -354,15 +342,15 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             }
           }
           const body = new FormData()
-          if (params.payload.property === 'reblogged') {
+          if (params.payload.type === 'reblogged') {
             body.append('visibility', params.payload.visibility)
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${tootId}/${params.payload.currentValue ? 'un' : ''}${
-              MapPropertyToUrl[params.payload.property]
+            url: `statuses/${tootId}/${params.status[params.payload.type] ? '' : 'un'}${
+              MapPropertyToUrl[params.payload.type]
             }`,
-            ...(params.payload.property === 'reblogged' && { body })
+            ...(params.payload.type === 'reblogged' && { body })
           })
       }
     case 'updateAccountProperty':

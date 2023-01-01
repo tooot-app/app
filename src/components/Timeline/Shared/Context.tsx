@@ -9,7 +9,6 @@ type StatusContextType = {
 
   status?: Mastodon.Status
 
-  reblogStatus?: Mastodon.Status // When it is a reblog, pass the root status
   ownAccount?: boolean
   spoilerHidden?: boolean
   rawContent?: React.MutableRefObject<string[]> // When highlighted, for translate, edit history

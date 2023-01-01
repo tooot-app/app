@@ -20,15 +20,8 @@ import { Pressable, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {
-  const {
-    queryKey,
-    rootQueryKey,
-    status,
-    reblogStatus,
-    ownAccount,
-    spoilerHidden,
-    disableDetails
-  } = useContext(StatusContext)
+  const { queryKey, rootQueryKey, status, ownAccount, spoilerHidden, disableDetails } =
+    useContext(StatusContext)
   if (!queryKey || !status || !status.poll) return null
   const poll = status.poll
 
@@ -45,10 +38,9 @@ const TimelinePoll: React.FC = () => {
       rootQueryKey && queryClient.cancelQueries(rootQueryKey)
 
       haptics('Success')
-      switch (theParams.payload.property) {
+      switch (theParams.payload.type) {
         case 'poll':
-          theParams.payload.data = body as unknown as Mastodon.Poll
-          updateStatusProperty(theParams)
+          updateStatusProperty({ ...theParams, poll: body as unknown as Mastodon.Poll })
           break
       }
     },
@@ -84,12 +76,10 @@ const TimelinePoll: React.FC = () => {
                   type: 'updateStatusProperty',
                   queryKey,
                   rootQueryKey,
-                  id: status.id,
-                  isReblog: !!reblogStatus,
+                  status,
                   payload: {
-                    property: 'poll',
-                    id: poll.id,
-                    type: 'vote',
+                    type: 'poll',
+                    action: 'vote',
                     options: allOptions
                   }
                 })
@@ -110,12 +100,10 @@ const TimelinePoll: React.FC = () => {
                   type: 'updateStatusProperty',
                   queryKey,
                   rootQueryKey,
-                  id: status.id,
-                  isReblog: !!reblogStatus,
+                  status,
                   payload: {
-                    property: 'poll',
-                    id: poll.id,
-                    type: 'refresh'
+                    type: 'poll',
+                    action: 'refresh'
                   }
                 })
               }
@@ -230,13 +218,9 @@ const TimelinePoll: React.FC = () => {
 
   const pollVoteCounts = () => {
     if (poll.voters_count !== null) {
-      return (
-        t('componentTimeline:shared.poll.meta.count.voters', { count: poll.voters_count }) + ' • '
-      )
+      return t('componentTimeline:shared.poll.meta.count.voters', { count: poll.voters_count })
     } else if (poll.votes_count !== null) {
-      return (
-        t('componentTimeline:shared.poll.meta.count.votes', { count: poll.votes_count }) + ' • '
-      )
+      return t('componentTimeline:shared.poll.meta.count.votes', { count: poll.votes_count })
     }
   }
 
@@ -246,11 +230,14 @@ const TimelinePoll: React.FC = () => {
     } else {
       if (poll.expires_at) {
         return (
-          <Trans
-            ns='componentTimeline'
-            i18nKey='shared.poll.meta.expiration.until'
-            components={[<RelativeTime time={poll.expires_at} />]}
-          />
+          <>
+            {' • '}
+            <Trans
+              ns='componentTimeline'
+              i18nKey='shared.poll.meta.expiration.until'
+              components={[<RelativeTime time={poll.expires_at} />]}
+            />
+          </>
         )
       }
     }
