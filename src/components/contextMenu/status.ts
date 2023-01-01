@@ -202,7 +202,7 @@ const menuStatus = ({
           }),
         disabled: false,
         destructive: false,
-        hidden: !ownAccount && !status.mentions?.filter(mention => mention.id === accountId).length
+        hidden: !ownAccount
       },
       title: t('componentContextMenu:status.mute.action', {
         defaultValue: 'false',
@@ -224,9 +224,9 @@ const menuStatus = ({
               type: 'pinned'
             }
           }),
-        disabled: false,
+        disabled: status.visibility !== 'public' && status.visibility !== 'unlisted',
         destructive: false,
-        hidden: !ownAccount || (status.visibility !== 'public' && status.visibility !== 'unlisted')
+        hidden: !ownAccount
       },
       title: t('componentContextMenu:status.pin.action', {
         defaultValue: 'false',
