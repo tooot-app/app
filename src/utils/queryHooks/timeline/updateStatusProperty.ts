@@ -20,16 +20,20 @@ const updateStatusProperty = ({
             return page
           } else {
             if (typeof (page.body as Mastodon.Conversation[])[0].unread === 'boolean') {
-              foundToot = (page.body as Mastodon.Conversation[]).find(
-                ({ last_status }) => last_status?.id === status.id
+              foundToot = (page.body as Mastodon.Conversation[]).find(({ last_status }) =>
+                last_status?.reblog
+                  ? last_status.reblog.id === status.id
+                  : last_status?.id === status.id
               )?.last_status
               return page
             } else if (typeof (page.body as Mastodon.Notification[])[0].type === 'string') {
-              foundToot = (page.body as Mastodon.Notification[]).find(
-                no => no.status?.id === status.id
+              foundToot = (page.body as Mastodon.Notification[]).find(no =>
+                no.status?.reblog ? no.status.reblog.id === status.id : no.status?.id === status.id
               )?.status
             } else {
-              foundToot = (page.body as Mastodon.Status[]).find(toot => toot.id === status.id)
+              foundToot = (page.body as Mastodon.Status[]).find(toot =>
+                toot.reblog ? toot.reblog.id === status.id : toot.id === status.id
+              )
             }
 
             return page
