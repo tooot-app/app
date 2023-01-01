@@ -19,7 +19,7 @@ const ManageThemeContext = createContext<ContextType>({
 
 export const useTheme = () => useContext(ManageThemeContext)
 
-const useColorSchemeDelay = (delay = 50) => {
+const useColorSchemeDelay = (delay = 250) => {
   const [colorScheme, setColorScheme] = React.useState(Appearance.getColorScheme())
   const onColorSchemeChange = React.useCallback(
     throttle(

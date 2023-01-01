@@ -1,9 +1,6 @@
 import { ComposeAction, ComposeState } from './types'
 
-const composeReducer = (
-  state: ComposeState,
-  action: ComposeAction
-): ComposeState => {
+const composeReducer = (state: ComposeState, action: ComposeAction): ComposeState => {
   switch (action.type) {
     case 'loadDraft':
       const draft = action.payload
@@ -67,9 +64,7 @@ const composeReducer = (
         ...state,
         attachments: {
           ...state.attachments,
-          uploads: state.attachments.uploads.filter(
-            upload => upload.local?.hash !== action.payload
-          )
+          uploads: state.attachments.uploads.filter(upload => upload.local?.hash !== action.payload)
         }
       }
     case 'attachment/delete':
@@ -77,9 +72,7 @@ const composeReducer = (
         ...state,
         attachments: {
           ...state.attachments,
-          uploads: state.attachments.uploads.filter(
-            upload => upload.remote?.id !== action.payload
-          )
+          uploads: state.attachments.uploads.filter(upload => upload.remote?.id !== action.payload)
         }
       }
     case 'attachment/edit':
@@ -101,6 +94,8 @@ const composeReducer = (
         ...state,
         textInputFocus: { ...state.textInputFocus, ...action.payload }
       }
+    case 'updateReply':
+      return { ...state, replyToStatus: action.payload }
     case 'removeReply':
       return { ...state, replyToStatus: undefined }
     default:

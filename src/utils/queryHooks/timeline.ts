@@ -47,6 +47,7 @@ export type QueryKeyTimeline = [
     | {
         page: 'Toot'
         toot: Mastodon.Status['id']
+        remote: boolean
       }
   )
 ]

@@ -7,9 +7,11 @@ import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
 import { useQueryClient } from '@tanstack/react-query'
 import { handleError } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
+import { SearchResult } from '@utils/queryHooks/search'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import {
   getAccountStorage,
@@ -155,6 +157,23 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
             disableDebounce: true
           })
+        apiInstance<SearchResult>({
+          version: 'v2',
+          method: 'get',
+          url: 'search',
+          params: {
+            q: params.incomingStatus.uri,
+            type: 'statuses',
+            limit: 1,
+            resolve: true
+          }
+        })
+          .then(res => {
+            if (res.body.statuses[0]?.uri === params.incomingStatus.uri) {
+              composeDispatch({ type: 'updateReply', payload: res.body.statuses[0] })
+            }
+          })
+          .catch(() => {})
         break
       case 'conversation':
         formatText({

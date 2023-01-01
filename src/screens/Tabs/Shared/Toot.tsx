@@ -9,6 +9,7 @@ import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
 import { getHost } from '@utils/helpers/urlMatcher'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
@@ -56,12 +57,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const flRef = useRef<FlatList>(null)
   const scrolled = useRef(false)
 
-  const finalData = useRef<(Mastodon.Status & { _level?: number; _remote?: boolean })[]>([
-    { ...toot, _level: 0, _remote: false }
-  ])
+  const finalData = useRef<Mastodon.Status[]>([{ ...toot, _level: 0, _remote: false }])
   const highlightIndex = useRef<number>(0)
+  const queryKey: { [key: string]: QueryKeyTimeline } = {
+    local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
+    remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
+  }
   const queryLocal = useQuery(
-    ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
+    queryKey.local,
     async () => {
       const context = await apiInstance<{
         ancestors: Mastodon.Status[]
@@ -129,7 +132,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   )
   useQuery(
-    ['Timeline', { page: 'Toot', toot: toot.id, remote: true }],
+    queryKey.remote,
     async () => {
       let context:
         | {
@@ -196,7 +199,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (finalData.current?.length < data.pages[0].body.length) {
           finalData.current = data.pages[0].body.map(remote => {
             const localMatch = finalData.current?.find(local => local.uri === remote.uri)
-            return localMatch ? { ...localMatch, _remote: false } : { ...remote, _remote: true }
+            return localMatch || { ...remote, _remote: true }
           })
           setHasRemoteContent(true)
         }
@@ -299,7 +302,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           >
             <TimelineDefault
               item={item}
-              queryKey={['Timeline', { page: 'Toot', toot: toot.id }]}
+              queryKey={queryKey.local}
               rootQueryKey={rootQueryKey}
               highlighted={toot.id === item.id}
               isConversation={toot.id !== item.id}
