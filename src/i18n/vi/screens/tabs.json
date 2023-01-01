@@ -339,13 +339,13 @@
         "heading": "Có vấn đề gì với người này?",
         "spam": "Đây là spam",
         "other": "Lý do khác",
-        "violation": "Vi phạm quy tắc máy chủ"
+        "violation": "Vi phạm nội quy máy chủ"
       },
       "comment": {
         "heading": "Bạn có muốn bổ sung gì không?"
       },
       "violatedRules": {
-        "heading": "Vi phạm quy tắc máy chủ"
+        "heading": "Vi phạm nội quy máy chủ"
       }
     },
     "search": {
