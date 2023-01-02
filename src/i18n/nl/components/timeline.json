@@ -83,7 +83,7 @@
         "text": "Fout bij het laden",
         "button": "Probeer externe link"
       },
-      "altText": ""
+      "altText": "Alternatieve tekst"
     },
     "avatar": {
       "accessibilityLabel": "Avatar van {{name}}",
