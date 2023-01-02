@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Errore di caricamento",
         "button": "Apri sul sito dell'istanza remota"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Foto profilo di {{name}}",
