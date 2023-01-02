@@ -378,8 +378,8 @@
     "toot": {
       "name": "Diskussionen",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Enthält externe Inhalte",
+        "message": "Föderierte Inhalte sind nicht immer auf der lokalen Instanz verfügbar. Diese Inhalte werden von einer externen Instanz abgerufen und markiert. Sie können mit diesen Inhalten wie gewohnt interagieren."
       }
     },
     "users": {
