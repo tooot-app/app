@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "載入錯誤",
         "button": "嘗試遠端連接"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}} 的大頭貼",
