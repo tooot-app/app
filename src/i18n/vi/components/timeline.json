@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Không hỗ trợ định dạng",
         "button": "Thử liên kết từ xa"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Ảnh đại diện của {{name}}",
