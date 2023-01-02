@@ -378,8 +378,8 @@
     "toot": {
       "name": "Discussions",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Hi ha contingut remot",
+        "message": "El contingut federat no sempre està disponible a la instància local. S'obtenen de la instància remota i són marcats. Pots interactuar-los com sempre."
       }
     },
     "users": {
