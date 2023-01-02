@@ -376,7 +376,11 @@
       "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした"
     },
     "toot": {
-      "name": "スレッド"
+      "name": "スレッド",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
