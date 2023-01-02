@@ -376,7 +376,11 @@
       "notFound": "Kan <bold>{{searchTerm}}</bold> niet vinden gerelateerd aan {{type}}"
     },
     "toot": {
-      "name": "Gesprek"
+      "name": "Gesprek",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
