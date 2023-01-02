@@ -376,7 +376,11 @@
       "notFound": "Impossible de trouver <bold>{{searchTerm}}</bold> lié à {{type}}"
     },
     "toot": {
-      "name": "Discussions"
+      "name": "Discussions",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
