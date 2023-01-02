@@ -376,7 +376,11 @@
       "notFound": "Δεν είναι εφικτό να βρεθεί <bold>{{searchTerm}}</bold> που να έχει σχέση με {{type}}"
     },
     "toot": {
-      "name": "Συζητήσεις"
+      "name": "Συζητήσεις",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
