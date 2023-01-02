@@ -1,7 +1,7 @@
 {
   "empty": {
     "error": {
-      "message": "Błąd wczytania",
+      "message": "Błąd wczytywania",
       "button": "Spróbuj ponownie"
     },
     "success": {
@@ -110,51 +110,51 @@
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Wyświetlana nazwa użytkownika"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Konto użytkownika"
           }
         },
-        "application": "",
+        "application": "przez {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Edytowano toot"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot wyciszony"
         },
-        "replies": "",
+        "replies": "<0 /> odpowiedzi",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot jest bezpośrednią wiadomością"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot jest widoczny tylko dla obserwujących"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Z",
         "delete": {
-          "function": ""
+          "function": "Usuń wiadomość prywatną"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Głosuj",
+          "refresh": "Odśwież"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} użytkownik zagłosował",
+          "voters_other": "{{count}} użytkowników zagłosowało",
+          "votes_one": "{{count}} głos",
+          "votes_other": "{{count}} głosów"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Głosowanie zakończone",
+          "until": "Wygasa <0 />"
         }
       }
     }
