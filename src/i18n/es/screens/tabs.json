@@ -378,8 +378,8 @@
     "toot": {
       "name": "Discusiones",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Incluye contenido remoto",
+        "message": "El contenido federado no siempre está disponible en la instancia local. Este contenido se obtiene de la instancia remota y se marca. Puedes interactuar con este contenido como siempre."
       }
     },
     "users": {
