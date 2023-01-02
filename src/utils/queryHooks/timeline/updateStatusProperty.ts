@@ -9,10 +9,11 @@ const updateStatusProperty = ({
   payload,
   poll
 }: MutationVarsTimelineUpdateStatusProperty & { poll?: Mastodon.Poll }) => {
-  for (const key of [queryKey, rootQueryKey]) {
+  for (const key of [queryKey]) {
     if (!key) continue
 
     queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {
+      console.log('key', key)
       if (old) {
         let foundToot: Mastodon.Status | undefined = undefined
         old.pages = old.pages.map(page => {
@@ -25,7 +26,6 @@ const updateStatusProperty = ({
                   ? last_status.reblog.id === status.id
                   : last_status?.id === status.id
               )?.last_status
-              return page
             } else if (typeof (page.body as Mastodon.Notification[])[0].type === 'string') {
               foundToot = (page.body as Mastodon.Notification[]).find(no =>
                 no.status?.reblog ? no.status.reblog.id === status.id : no.status?.id === status.id
@@ -41,6 +41,8 @@ const updateStatusProperty = ({
         })
 
         if (foundToot) {
+          const toot = foundToot as Mastodon.Status
+          console.log('updating', toot.id)
           enum MapPropertyToCount {
             favourited = 'favourites_count',
             reblogged = 'reblogs_count'
@@ -48,18 +50,19 @@ const updateStatusProperty = ({
 
           switch (payload.type) {
             case 'poll':
-              status.poll = poll
+              toot.poll = poll
               break
             default:
-              status[payload.type] =
-                typeof status[payload.type] === 'boolean' ? !status[payload.type] : true
+              console.log('11', toot[payload.type])
+              toot[payload.type] = payload.to
+              console.log('22', toot[payload.type])
               switch (payload.type) {
                 case 'favourited':
                 case 'reblogged':
-                  if (typeof status[payload.type] === 'boolean' && status[payload.type]) {
-                    status[MapPropertyToCount[payload.type]]--
+                  if (payload.to) {
+                    toot[MapPropertyToCount[payload.type]]++
                   } else {
-                    status[MapPropertyToCount[payload.type]]++
+                    toot[MapPropertyToCount[payload.type]]--
                   }
                   break
               }

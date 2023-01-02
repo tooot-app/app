@@ -24,15 +24,30 @@ import AccountNav from './Nav'
 const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>> = ({
   navigation,
   route: {
-    params: { account, isRemote }
+    params: { account }
   }
 }) => {
   const { t } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
 
   const { data, dataUpdatedAt } = useAccountQuery({
-    id: account.id,
-    ...(isRemote && { remoteUrl: account.url })
+    account,
+    options: {
+      onSuccess: a => {
+        if (account._remote) {
+          setQueryKey([
+            queryKey[0],
+            {
+              ...queryKey[1],
+              page: 'Account',
+              id: a.id,
+              exclude_reblogs: true,
+              only_media: false
+            }
+          ])
+        }
+      }
+    }
   })
 
   const mShare = menuShare({ type: 'account', url: data?.url })
@@ -87,7 +102,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   const queryClient = useQueryClient()
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
-    { page: 'Account', id: data?.id, exclude_reblogs: true, only_media: false }
+    {
+      page: 'Account',
+      id: account._remote ? data?.id : account.id,
+      exclude_reblogs: true,
+      only_media: false
+    }
   ])
   const page = queryKey[1]
 
@@ -174,7 +194,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         <Timeline
           queryKey={queryKey}
           disableRefresh
-          queryOptions={{ enabled: isRemote ? !!data?.id : true }}
+          queryOptions={{ enabled: account._remote ? !!data?.id : true }}
           customProps={{
             renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
             onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),

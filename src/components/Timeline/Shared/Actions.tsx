@@ -114,7 +114,8 @@ const TimelineActions: React.FC = () => {
                 status,
                 payload: {
                   type: 'reblogged',
-                  visibility: 'public'
+                  visibility: 'public',
+                  to: true
                 }
               })
               break
@@ -126,7 +127,8 @@ const TimelineActions: React.FC = () => {
                 status,
                 payload: {
                   type: 'reblogged',
-                  visibility: 'unlisted'
+                  visibility: 'unlisted',
+                  to: true
                 }
               })
               break
@@ -141,7 +143,8 @@ const TimelineActions: React.FC = () => {
         status,
         payload: {
           type: 'reblogged',
-          visibility: 'public'
+          visibility: 'public',
+          to: false
         }
       })
     }
@@ -153,7 +156,8 @@ const TimelineActions: React.FC = () => {
       rootQueryKey,
       status,
       payload: {
-        type: 'favourited'
+        type: 'favourited',
+        to: !status.favourited
       }
     })
   }
@@ -164,7 +168,8 @@ const TimelineActions: React.FC = () => {
       rootQueryKey,
       status,
       payload: {
-        type: 'bookmarked'
+        type: 'bookmarked',
+        to: !status.bookmarked
       }
     })
   }

@@ -86,7 +86,8 @@ const TimelineCard: React.FC = () => {
   }, [])
 
   const accountQuery = useAccountQuery({
-    id: isAccount?.style === 'default' ? isAccount.id : '',
+    account:
+      isAccount?.style === 'default' ? { id: isAccount.id, url: status.card.url } : undefined,
     options: { enabled: false }
   })
   useEffect(() => {

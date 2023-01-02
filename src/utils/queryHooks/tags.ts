@@ -37,11 +37,11 @@ const useFollowedTagsQuery = (
       })
     },
     {
-      enabled: canFollowTags,
       staleTime: Infinity,
       cacheTime: Infinity,
       ...params?.options,
       ...infinitePageParams,
+      enabled: canFollowTags && params?.options?.enabled,
       onSuccess: data => {
         setAccountStorage([
           {

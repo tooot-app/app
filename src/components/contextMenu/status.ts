@@ -197,7 +197,8 @@ const menuStatus = ({
             rootQueryKey,
             status,
             payload: {
-              type: 'muted'
+              type: 'muted',
+              to: !status.muted
             }
           }),
         disabled: false,
@@ -221,7 +222,8 @@ const menuStatus = ({
             rootQueryKey,
             status,
             payload: {
-              type: 'pinned'
+              type: 'pinned',
+              to: !status.pinned
             }
           }),
         disabled: status.visibility !== 'public' && status.visibility !== 'unlisted',

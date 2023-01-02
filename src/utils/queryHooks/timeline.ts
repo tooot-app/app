@@ -131,7 +131,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Account':
-      if (!page.id) return Promise.reject()
+      if (!page.id) return Promise.reject('Timeline query account id not provided')
 
       if (page.exclude_reblogs) {
         if (pageParam && pageParam.hasOwnProperty('max_id')) {
@@ -214,7 +214,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         params
       })
     default:
-      return Promise.reject()
+      return Promise.reject('Timeline query no page matched')
   }
 }
 
@@ -253,11 +253,17 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   status: Mastodon.Status
   payload:
     | {
-        type: 'bookmarked' | 'muted' | 'pinned' | 'favourited'
+        type: 'bookmarked' | 'muted' | 'pinned'
+        to: boolean
+      }
+    | {
+        type: 'favourited'
+        to: boolean
       }
     | {
         type: 'reblogged'
         visibility: 'public' | 'unlisted'
+        to: boolean
       }
     | {
         type: 'poll'
@@ -340,7 +346,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             if (fetched) {
               tootId = fetched.id
             } else {
-              return Promise.reject()
+              return Promise.reject('Fetching for remote toot failed')
             }
           }
           const body = new FormData()
@@ -349,7 +355,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${tootId}/${params.status[params.payload.type] ? '' : 'un'}${
+            url: `statuses/${tootId}/${params.payload.to ? '' : 'un'}${
               MapPropertyToUrl[params.payload.type]
             }`,
             ...(params.payload.type === 'reblogged' && { body })

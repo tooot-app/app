@@ -31,6 +31,9 @@ declare namespace Mastodon {
     source?: Source
     suspended?: boolean
     role?: Role
+
+    // Internal
+    _remote?: boolean
   }
 
   type Announcement = {
@@ -389,6 +392,9 @@ declare namespace Mastodon {
     username: string
     acct: string
     url: string
+
+    // Internal
+    _remote?: boolean
   }
 
   type Notification =

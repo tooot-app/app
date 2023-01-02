@@ -37,7 +37,6 @@ export interface Props {
   disableDetails?: boolean
   disableOnPress?: boolean
   isConversation?: boolean
-  isRemote?: boolean
 }
 
 // When the poll is long
@@ -48,8 +47,7 @@ const TimelineDefault: React.FC<Props> = ({
   highlighted = false,
   disableDetails = false,
   disableOnPress = false,
-  isConversation = false,
-  isRemote = false
+  isConversation = false
 }) => {
   const status = item.reblog ? item.reblog : item
   const rawContent = useRef<string[]>([])
@@ -177,7 +175,7 @@ const TimelineDefault: React.FC<Props> = ({
         disableDetails,
         disableOnPress,
         isConversation,
-        isRemote
+        isRemote: item._remote
       }}
     >
       {disableOnPress ? (

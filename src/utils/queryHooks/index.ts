@@ -18,4 +18,9 @@ const queryClient = new QueryClient({
   }
 })
 
+// @ts-ignore
+import('react-query-native-devtools').then(({ addPlugin }) => {
+  addPlugin({ queryClient })
+})
+
 export default queryClient

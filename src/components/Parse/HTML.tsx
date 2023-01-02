@@ -168,10 +168,7 @@ const ParseHTML: React.FC<Props> = ({
                       matchedMention &&
                       !disableDetails &&
                       !sameAccount &&
-                      navigation.push('Tab-Shared-Account', {
-                        account: matchedMention,
-                        isRemote: status?._remote
-                      })
+                      navigation.push('Tab-Shared-Account', { account: matchedMention })
                     }
                     children={node.children.map(unwrapNode).join('')}
                   />
