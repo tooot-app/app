@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Erro ao carregar",
         "button": "Experimente o link remoto"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
