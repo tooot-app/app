@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Laddningsfel",
         "button": "Prova fjärrlänk"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}}s avatar",
