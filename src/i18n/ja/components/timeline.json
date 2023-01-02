@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "読み込みエラー",
         "button": "リモートリンクを試す"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}}のアバター",
