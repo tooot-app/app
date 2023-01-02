@@ -376,7 +376,11 @@
       "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}"
     },
     "toot": {
-      "name": "Diskussioner"
+      "name": "Diskussioner",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
