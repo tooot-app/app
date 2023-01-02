@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "불러오기 오류",
         "button": "원격 링크 시도"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}}의 아바타",
