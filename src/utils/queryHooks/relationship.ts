@@ -1,17 +1,18 @@
 import {
-    QueryFunctionContext,
-    useMutation,
-    UseMutationOptions,
-    useQuery,
-    UseQueryOptions
+  QueryFunctionContext,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
 } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
 
-export type QueryKeyRelationship = ['Relationship', { id: Mastodon.Account['id'] }]
+export type QueryKeyRelationship = ['Relationship', { id?: Mastodon.Account['id'] }]
 
 const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyRelationship>) => {
   const { id } = queryKey[1]
+  if (!id) return Promise.reject()
 
   const res = await apiInstance<Mastodon.Relationship[]>({
     method: 'get',
@@ -32,6 +33,8 @@ const useRelationshipQuery = ({
   const queryKey: QueryKeyRelationship = ['Relationship', { ...queryKeyParams }]
   return useQuery(queryKey, queryFunction, {
     ...options,
+    enabled:
+      (typeof options?.enabled === 'boolean' ? options.enabled : true) && !!queryKeyParams.id,
     select: data => data[0]
   })
 }

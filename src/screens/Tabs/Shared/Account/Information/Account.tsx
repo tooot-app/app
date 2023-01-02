@@ -4,31 +4,26 @@ import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo?: boolean
-}
+const AccountInformationAccount: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
 
   const [acct] = useAccountStorage.string('auth.account.acct')
   const domain = getAccountStorage.string('auth.account.domain')
 
-  const { data: relationship } = useRelationshipQuery({
-    id: account?.id || '',
-    options: { enabled: account !== undefined }
-  })
+  const { data: relationship } = useRelationshipQuery({ id: account?.id })
 
   const localInstance = account?.acct.includes('@') ? account?.acct.includes(`@${domain}`) : true
 
-  if (account || localInstance) {
+  if (account || pageMe) {
     return (
       <View
         style={{
@@ -51,7 +46,7 @@ const AccountInformationAccount: React.FC<Props> = ({ account, myInfo }) => {
             }}
             selectable
           >
-            @{myInfo ? acct : account?.acct}
+            @{pageMe ? acct : account?.acct}
             {localInstance ? `@${domain}` : null}
           </CustomText>
           {relationship?.followed_by ? t('shared.account.followed_by') : null}

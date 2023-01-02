@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Loading error",
         "button": "Try remote link"
-      }
+      },
+      "altText": "Alternative Text"
     },
     "avatar": {
       "accessibilityLabel": "Avatar of {{name}}",

@@ -13,11 +13,7 @@ import AccountInformationName from './Information/Name'
 import AccountInformationNote from './Information/Note'
 import AccountInformationStats from './Information/Stats'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
-
-const AccountInformation: React.FC<Props> = ({ account }) => {
+const AccountInformation: React.FC = () => {
   const { colors } = useTheme()
 
   const { name } = useRoute()
@@ -31,21 +27,21 @@ const AccountInformation: React.FC<Props> = ({ account }) => {
         )}
       >
         <View style={styles.avatarAndActions}>
-          <AccountInformationAvatar account={account} myInfo={myInfo} />
-          <AccountInformationActions account={account} myInfo={myInfo} />
+          <AccountInformationAvatar />
+          <AccountInformationActions />
         </View>
 
-        <AccountInformationName account={account} />
+        <AccountInformationName />
 
-        <AccountInformationAccount account={account} myInfo={myInfo} />
+        <AccountInformationAccount />
 
-        <AccountInformationFields account={account} myInfo={myInfo} />
+        <AccountInformationFields />
 
-        <AccountInformationNote account={account} myInfo={myInfo} />
+        <AccountInformationNote />
 
-        <AccountInformationCreated account={account} hidden={myInfo} />
+        <AccountInformationCreated />
 
-        <AccountInformationStats account={account} myInfo={myInfo} />
+        <AccountInformationStats />
       </Placeholder>
     </View>
   )

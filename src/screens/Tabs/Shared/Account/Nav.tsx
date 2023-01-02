@@ -2,17 +2,19 @@ import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import AccountContext from './Context'
 
 export interface Props {
   scrollY: Animated.SharedValue<number>
-  account: Mastodon.Account | undefined
 }
 
-const AccountNav: React.FC<Props> = ({ scrollY, account }) => {
+const AccountNav: React.FC<Props> = ({ scrollY }) => {
+  const { account } = useContext(AccountContext)
+
   const { colors } = useTheme()
   const headerHeight = useSafeAreaInsets().top + 44
 

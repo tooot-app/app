@@ -1,8 +1,7 @@
 import Button from '@components/Button'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
+import { useTranslation } from 'react-i18next'
+import { Alert } from 'react-native'
 
 export interface Props {
   sensitiveShown: boolean
@@ -14,7 +13,7 @@ const AttachmentAltText: React.FC<Props> = ({ sensitiveShown, text }) => {
     return null
   }
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const { t } = useTranslation('componentTimeline')
 
   return !sensitiveShown ? (
     <Button
@@ -28,7 +27,7 @@ const AttachmentAltText: React.FC<Props> = ({ sensitiveShown, text }) => {
       type='text'
       content='ALT'
       fontBold
-      onPress={() => navigation.navigate('Screen-Actions', { type: 'alt_text', text })}
+      onPress={() => Alert.alert(t('shared.attachment.altText'), text)}
     />
   ) : null
 }

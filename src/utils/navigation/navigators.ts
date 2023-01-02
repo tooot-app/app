@@ -7,14 +7,6 @@ import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
 export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>
-  'Screen-Actions':
-    | {
-        type: 'notifications_filter'
-      }
-    | {
-        type: 'alt_text'
-        text: string
-      }
   'Screen-Announcements': { showAll: boolean }
   'Screen-Compose':
     | {
@@ -93,6 +85,7 @@ export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> = Bo
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
     account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct'>
+    isRemote?: boolean
   }
   'Tab-Shared-Account-In-Lists': {
     account: Pick<Mastodon.Account, 'id' | 'username'>
@@ -107,7 +100,7 @@ export type TabSharedStackParamList = {
   }
   'Tab-Shared-Report': {
     account: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'acct' | 'username'>
-    status?: Pick<Mastodon.Status, 'id'>
+    status?: Pick<Mastodon.Status, 'id' | '_remote' | 'uri'>
   }
   'Tab-Shared-Search': undefined
   'Tab-Shared-Toot': {

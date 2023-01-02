@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
+import { useAccountQuery } from '@utils/queryHooks/account'
 import {
   QueryKeyRelationship,
   useRelationshipMutation,
@@ -34,15 +35,11 @@ const menuAccount = ({
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
-  if (!account) return []
-
   const navigation =
     useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
   const { t } = useTranslation(['common', 'componentContextMenu', 'componentRelationship'])
 
   const menus: ContextMenu[][] = [[]]
-
-  const ownAccount = useAccountStorage.string('auth.account.id')['0'] === account.id
 
   const [enabled, setEnabled] = useState(openChange)
   useEffect(() => {
@@ -50,12 +47,22 @@ const menuAccount = ({
       setEnabled(true)
     }
   }, [openChange, enabled])
-  const { data, isFetched } = useRelationshipQuery({ id: account.id, options: { enabled } })
+  const { data: fetchedAccount } = useAccountQuery({
+    remoteUrl: account?.url,
+    options: { enabled: !!status?._remote && enabled }
+  })
+  const actualAccount = status?._remote ? fetchedAccount : account
+  const { data, isFetched } = useRelationshipQuery({
+    id: actualAccount?.id,
+    options: { enabled: !!actualAccount?.id && enabled }
+  })
+
+  const ownAccount = useAccountStorage.string('auth.account.id')['0'] === actualAccount?.id
 
   const queryClient = useQueryClient()
   const timelineMutation = useTimelineMutation({
     onSuccess: (_, params) => {
-      queryClient.refetchQueries(['Relationship', { id: account.id }])
+      queryClient.refetchQueries(['Relationship', { id: actualAccount?.id }])
       const theParams = params as MutationVarsTimelineUpdateAccountProperty
       displayMessage({
         type: 'success',
@@ -101,7 +108,7 @@ const menuAccount = ({
       rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
-  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id: account.id }]
+  const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id: actualAccount?.id }]
   const relationshipMutation = useRelationshipMutation({
     onSuccess: (res, { payload: { action } }) => {
       haptics('Success')
@@ -128,14 +135,17 @@ const menuAccount = ({
     }
   })
 
+  if (!account) return []
+
   if (!ownAccount && Platform.OS !== 'android' && type !== 'account') {
     menus[0].push({
       key: 'account-following',
       item: {
         onSelect: () =>
           data &&
+          actualAccount &&
           relationshipMutation.mutate({
-            id: account.id,
+            id: actualAccount.id,
             type: 'outgoing',
             payload: { action: 'follow', state: !data?.requested ? data.following : true }
           }),
@@ -173,8 +183,9 @@ const menuAccount = ({
       key: 'account-show-boosts',
       item: {
         onSelect: () =>
+          actualAccount &&
           relationshipMutation.mutate({
-            id: account.id,
+            id: actualAccount.id,
             type: 'outgoing',
             payload: { action: 'follow', state: false, reblogs: !data?.showing_reblogs }
           }),
@@ -192,10 +203,11 @@ const menuAccount = ({
       key: 'account-mute',
       item: {
         onSelect: () =>
+          actualAccount &&
           timelineMutation.mutate({
             type: 'updateAccountProperty',
             queryKey,
-            id: account.id,
+            id: actualAccount.id,
             payload: { property: 'mute', currentValue: data?.muting }
           }),
         disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
@@ -215,17 +227,20 @@ const menuAccount = ({
         item: {
           onSelect: () =>
             Alert.alert(
-              t('componentContextMenu:account.block.alert.title', { username: account.username }),
+              t('componentContextMenu:account.block.alert.title', {
+                username: actualAccount?.username
+              }),
               undefined,
               [
                 {
                   text: t('common:buttons.confirm'),
                   style: 'destructive',
                   onPress: () =>
+                    actualAccount &&
                     timelineMutation.mutate({
                       type: 'updateAccountProperty',
                       queryKey,
-                      id: account.id,
+                      id: actualAccount.id,
                       payload: { property: 'block', currentValue: data?.blocking }
                     })
                 },
@@ -247,8 +262,13 @@ const menuAccount = ({
       {
         key: 'account-reports',
         item: {
-          onSelect: () => navigation.navigate('Tab-Shared-Report', { account, status }),
-          disabled: false,
+          onSelect: () =>
+            actualAccount &&
+            navigation.navigate('Tab-Shared-Report', {
+              account: actualAccount,
+              status
+            }),
+          disabled: Platform.OS !== 'android' ? !data || !isFetched : false,
           destructive: true,
           hidden: false
         },

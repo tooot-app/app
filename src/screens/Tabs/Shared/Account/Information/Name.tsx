@@ -2,15 +2,14 @@ import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
+const AccountInformationName: React.FC = () => {
+  const { account } = useContext(AccountContext)
 
-const AccountInformationName: React.FC<Props> = ({ account }) => {
   const { colors } = useTheme()
 
   return (

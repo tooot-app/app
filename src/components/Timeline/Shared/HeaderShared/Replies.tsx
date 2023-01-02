@@ -40,7 +40,12 @@ const HeaderSharedReplies: React.FC = () => {
                 <CustomText
                   style={{ color: colors.blue, paddingLeft: StyleConstants.Spacing.S }}
                   children={`@${mention.username}`}
-                  onPress={() => navigation.push('Tab-Shared-Account', { account: mention })}
+                  onPress={() =>
+                    navigation.push('Tab-Shared-Account', {
+                      account: mention,
+                      isRemote: status?._remote
+                    })
+                  }
                 />
               </Fragment>
             ))}

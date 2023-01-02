@@ -5,14 +5,12 @@ import navigationRef from '@utils/navigation/navigationRef'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
-import React from 'react'
+import React, { useContext } from 'react'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo: boolean
-}
+const AccountInformationAvatar: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   useGlobalStorage.string('account.active')
@@ -29,7 +27,7 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
       uri={{ original: account?.avatar, static: account?.avatar_static }}
       onPress={() => {
         if (account) {
-          if (myInfo) {
+          if (pageMe) {
             navigation.push('Tab-Shared-Account', { account })
             return
           } else {

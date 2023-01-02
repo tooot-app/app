@@ -39,7 +39,7 @@ export type QueryKeyTimeline = [
       }
     | {
         page: 'Account'
-        account: Mastodon.Account['id']
+        id?: Mastodon.Account['id']
         exclude_reblogs: boolean
         only_media: boolean
       }
@@ -131,11 +131,13 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Account':
+      if (!page.id) return Promise.reject()
+
       if (page.exclude_reblogs) {
         if (pageParam && pageParam.hasOwnProperty('max_id')) {
           return apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true',
               ...params
@@ -144,7 +146,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         } else {
           const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               pinned: 'true'
             }
@@ -155,7 +157,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
           })
           const res2 = await apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true'
             }
@@ -168,7 +170,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       } else {
         return apiInstance<Mastodon.Status[]>({
           method: 'get',
-          url: `accounts/${page.account}/statuses`,
+          url: `accounts/${page.id}/statuses`,
           params: {
             ...params,
             exclude_replies: page.exclude_reblogs.toString(),

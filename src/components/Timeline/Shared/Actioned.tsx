@@ -37,7 +37,8 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
     />
   )
 
-  const onPress = () => navigation.push('Tab-Shared-Account', { account })
+  const onPress = () =>
+    navigation.push('Tab-Shared-Account', { account, isRemote: status?._remote })
 
   const children = () => {
     switch (action) {

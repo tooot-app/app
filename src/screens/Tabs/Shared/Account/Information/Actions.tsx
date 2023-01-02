@@ -5,17 +5,15 @@ import { useNavigation } from '@react-navigation/native'
 import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo?: boolean
-}
+const AccountInformationActions: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
   if (!account || account.suspended) {
     return null
   }
@@ -36,7 +34,7 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
     )
   }
 
-  if (myInfo) {
+  if (pageMe) {
     return (
       <View style={styles.base}>
         <Button
@@ -76,7 +74,7 @@ const AccountInformationActions: React.FC<Props> = ({ account, myInfo }) => {
                   {mGroup.map(menu => (
                     <DropdownMenu.Item key={menu.key} {...menu.item}>
                       <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                      <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
                     </DropdownMenu.Item>
                   ))}
                 </DropdownMenu.Group>

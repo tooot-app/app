@@ -5,6 +5,7 @@ import CustomText from '@components/Text'
 import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useRulesQuery } from '@utils/queryHooks/reports'
+import { searchFetchToot } from '@utils/queryHooks/search'
 import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -19,6 +20,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
     params: { account, status }
   }
 }) => {
+  console.log('account', account.id)
   const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
 
@@ -49,10 +51,19 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           type='text'
           content={t('screenTabs:shared.report.report')}
           destructive
-          onPress={() => {
+          onPress={async () => {
             const body = new FormData()
+            if (status) {
+              if (status._remote) {
+                const fetchedStatus = await searchFetchToot(status.uri)
+                if (fetchedStatus) {
+                  body.append('status_ids[]', fetchedStatus.id)
+                }
+              } else {
+                body.append('status_ids[]', status.id)
+              }
+            }
             body.append('account_id', account.id)
-            status && body.append('status_ids[]', status.id)
             comment.length && body.append('comment', comment)
             body.append('forward', forward.toString())
             body.append('category', categories.find(category => category.selected)?.type || 'other')
@@ -71,7 +82,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
         />
       )
     })
-  }, [isReporting, comment, forward, categories, rules])
+  }, [isReporting, comment, forward, categories, rules, account.id])
 
   const localInstance = account?.acct.includes('@')
     ? account?.acct.includes(`@${getAccountStorage.string('auth.account.domain')}`)

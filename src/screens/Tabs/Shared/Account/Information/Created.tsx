@@ -2,18 +2,16 @@ import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  hidden?: boolean
-}
+const AccountInformationCreated: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationCreated: React.FC<Props> = ({ account, hidden = false }) => {
-  if (hidden) {
+  if (pageMe) {
     return null
   }
 

@@ -4,7 +4,6 @@ import common from '../i18n/en/common.json'
 import screens from '../i18n/en/screens.json'
 
 import screenAccountSelection from '../i18n/en/screens/accountSelection.json'
-import screenActions from '../i18n/en/screens/actions.json'
 import screenAnnouncements from '../i18n/en/screens/announcements.json'
 import screenCompose from '../i18n/en/screens/compose.json'
 import screenImageViewer from '../i18n/en/screens/imageViewer.json'
@@ -26,7 +25,6 @@ declare module 'i18next' {
       screens: typeof screens
 
       screenAccountSelection: typeof screenAccountSelection
-      screenActions: typeof screenActions
       screenAnnouncements: typeof screenAnnouncements
       screenCompose: typeof screenCompose
       screenImageViewer: typeof screenImageViewer
