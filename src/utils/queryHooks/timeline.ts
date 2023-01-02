@@ -4,9 +4,7 @@ import {
   QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useMutation,
-  useQuery,
-  UseQueryOptions
+  useMutation
 } from '@tanstack/react-query'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
@@ -15,6 +13,7 @@ import queryClient from '@utils/queryHooks'
 import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
+import { searchFetchToot } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
@@ -40,13 +39,14 @@ export type QueryKeyTimeline = [
       }
     | {
         page: 'Account'
-        account: Mastodon.Account['id']
+        id?: Mastodon.Account['id']
         exclude_reblogs: boolean
         only_media: boolean
       }
     | {
         page: 'Toot'
         toot: Mastodon.Status['id']
+        remote: boolean
       }
   )
 ]
@@ -131,11 +131,13 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Account':
+      if (!page.id) return Promise.reject()
+
       if (page.exclude_reblogs) {
         if (pageParam && pageParam.hasOwnProperty('max_id')) {
           return apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true',
               ...params
@@ -144,7 +146,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         } else {
           const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               pinned: 'true'
             }
@@ -155,7 +157,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
           })
           const res2 = await apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true'
             }
@@ -168,7 +170,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       } else {
         return apiInstance<Mastodon.Status[]>({
           method: 'get',
-          url: `accounts/${page.account}/statuses`,
+          url: `accounts/${page.id}/statuses`,
           params: {
             ...params,
             exclude_replies: page.exclude_reblogs.toString(),
@@ -248,34 +250,23 @@ export type MutationVarsTimelineUpdateStatusProperty = {
   type: 'updateStatusProperty'
   queryKey: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
-  id: Mastodon.Status['id'] | Mastodon.Poll['id']
-  isReblog?: boolean
+  status: Mastodon.Status
   payload:
     | {
-        property: 'bookmarked' | 'muted' | 'pinned'
-        currentValue: boolean
-        propertyCount?: undefined
-        countValue?: undefined
+        type: 'bookmarked' | 'muted' | 'pinned' | 'favourited'
       }
     | {
-        property: 'favourited'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
-      }
-    | {
-        property: 'reblogged'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
+        type: 'reblogged'
         visibility: 'public' | 'unlisted'
       }
     | {
-        property: 'poll'
-        id: Mastodon.Poll['id']
-        type: 'vote' | 'refresh'
-        options?: boolean[]
-        data?: Mastodon.Poll
+        type: 'poll'
+        action: 'vote'
+        options: boolean[]
+      }
+    | {
+        type: 'poll'
+        action: 'refresh'
       }
 }
 
@@ -324,10 +315,10 @@ export type MutationVarsTimeline =
 const mutationFunction = async (params: MutationVarsTimeline) => {
   switch (params.type) {
     case 'updateStatusProperty':
-      switch (params.payload.property) {
+      switch (params.payload.type) {
         case 'poll':
           const formData = new FormData()
-          params.payload.type === 'vote' &&
+          params.payload.action === 'vote' &&
             params.payload.options?.forEach((option, index) => {
               if (option) {
                 formData.append('choices[]', index.toString())
@@ -335,24 +326,33 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             })
 
           return apiInstance<Mastodon.Poll>({
-            method: params.payload.type === 'vote' ? 'post' : 'get',
+            method: params.payload.action === 'vote' ? 'post' : 'get',
             url:
-              params.payload.type === 'vote'
-                ? `polls/${params.payload.id}/votes`
-                : `polls/${params.payload.id}`,
-            ...(params.payload.type === 'vote' && { body: formData })
+              params.payload.action === 'vote'
+                ? `polls/${params.status.poll?.id}/votes`
+                : `polls/${params.status.poll?.id}`,
+            ...(params.payload.action === 'vote' && { body: formData })
           })
         default:
+          let tootId = params.status.id
+          if (params.status._remote) {
+            const fetched = await searchFetchToot(params.status.uri)
+            if (fetched) {
+              tootId = fetched.id
+            } else {
+              return Promise.reject()
+            }
+          }
           const body = new FormData()
-          if (params.payload.property === 'reblogged') {
+          if (params.payload.type === 'reblogged') {
             body.append('visibility', params.payload.visibility)
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${params.id}/${params.payload.currentValue ? 'un' : ''}${
-              MapPropertyToUrl[params.payload.property]
+            url: `statuses/${tootId}/${params.status[params.payload.type] ? '' : 'un'}${
+              MapPropertyToUrl[params.payload.type]
             }`,
-            ...(params.payload.property === 'reblogged' && { body })
+            ...(params.payload.type === 'reblogged' && { body })
           })
       }
     case 'updateAccountProperty':

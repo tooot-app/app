@@ -3,7 +3,6 @@ import { displayMessage, Message } from '@components/Message'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ScreenAccountSelection from '@screens/AccountSelection'
-import ScreenActions from '@screens/Actions'
 import ScreenAnnouncements from '@screens/Announcements'
 import ScreenCompose from '@screens/Compose'
 import ScreenImagesViewer from '@screens/ImageViewer'
@@ -261,15 +260,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen
-            name='Screen-Actions'
-            component={ScreenActions}
-            options={{
-              presentation: 'transparentModal',
-              animation: 'fade',
-              headerShown: false
-            }}
-          />
           <Stack.Screen
             name='Screen-Announcements'
             component={ScreenAnnouncements}

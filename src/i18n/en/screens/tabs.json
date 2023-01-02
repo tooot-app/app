@@ -376,7 +376,11 @@
       "notFound": "Cannot find <bold>{{searchTerm}}</bold> related {{type}}"
     },
     "toot": {
-      "name": "Discussions"
+      "name": "Discussions",
+      "remoteFetch": {
+        "title": "Contains remote content",
+        "message": "Federated content are not always available on local instance. These content are fetched from remote instance and marked. You can interact with these content as usual."
+      }
     },
     "users": {
       "accounts": {

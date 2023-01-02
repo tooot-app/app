@@ -7,17 +7,15 @@ import { useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Dimensions, Pressable, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import AccountContext from './Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
+const AccountAttachments: React.FC = () => {
+  const { account } = useContext(AccountContext)
 
-const AccountAttachments: React.FC<Props> = ({ account }) => {
-  if (!account) return null
+  if (account?.suspended) return null
 
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { colors } = useTheme()
@@ -28,30 +26,28 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
 
   const { data } = useTimelineQuery({
     page: 'Account',
-    account: account.id,
+    id: account?.id,
     exclude_reblogs: false,
-    only_media: true
+    only_media: true,
+    options: { enabled: !!account?.id }
   })
 
   const flattenData = flattenPages(data)
     .filter(status => !(status as Mastodon.Status).sensitive)
     .splice(0, DISPLAY_AMOUNT)
 
-  const styleContainer = useAnimatedStyle(() => {
-    if (flattenData.length) {
-      return {
-        height: withTiming(width + StyleConstants.Spacing.Global.PagePadding * 2),
+  if (!flattenData.length) return null
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        height: width + StyleConstants.Spacing.Global.PagePadding * 2,
         paddingVertical: StyleConstants.Spacing.Global.PagePadding,
         borderTopWidth: 1,
         borderTopColor: colors.border
-      }
-    } else {
-      return {}
-    }
-  }, [flattenData.length])
-
-  return (
-    <Animated.View style={[{ flex: 1 }, styleContainer]}>
+      }}
+    >
       <FlatList
         horizontal
         data={flattenData}
@@ -103,7 +99,7 @@ const AccountAttachments: React.FC<Props> = ({ account }) => {
         }}
         showsHorizontalScrollIndicator={false}
       />
-    </Animated.View>
+    </View>
   )
 }
 

@@ -1,16 +1,14 @@
 import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo?: boolean
-}
+const AccountInformationFields: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationFields: React.FC<Props> = ({ account, myInfo }) => {
-  if (account?.suspended || myInfo || !account?.fields || account.fields.length === 0) {
+  if (account?.suspended || pageMe || !account?.fields || account.fields.length === 0) {
     return null
   }
 

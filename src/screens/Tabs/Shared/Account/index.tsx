@@ -16,6 +16,7 @@ import { Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Attachments'
+import AccountContext from './Context'
 import AccountHeader from './Header'
 import AccountInformation from './Information'
 import AccountNav from './Nav'
@@ -23,14 +24,19 @@ import AccountNav from './Nav'
 const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>> = ({
   navigation,
   route: {
-    params: { account }
+    params: { account, isRemote }
   }
 }) => {
   const { t } = useTranslation('screenTabs')
   const { colors, mode } = useTheme()
 
-  const mShare = menuShare({ type: 'account', url: account.url })
-  const mAccount = menuAccount({ type: 'account', openChange: true, account })
+  const { data, dataUpdatedAt } = useAccountQuery({
+    id: account.id,
+    ...(isRemote && { remoteUrl: account.url })
+  })
+
+  const mShare = menuShare({ type: 'account', url: data?.url })
+  const mAccount = menuAccount({ type: 'account', openChange: true, account: data })
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
@@ -76,14 +82,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     })
   }, [mAccount])
 
-  const { data } = useAccountQuery({ id: account.id })
-
   const scrollY = useSharedValue(0)
 
   const queryClient = useQueryClient()
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
-    { page: 'Account', account: account.id, exclude_reblogs: true, only_media: false }
+    { page: 'Account', id: data?.id, exclude_reblogs: true, only_media: false }
   ])
   const page = queryKey[1]
 
@@ -92,9 +96,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
     return (
       <>
         <View style={{ borderBottomWidth: 1, borderBottomColor: colors.border }}>
-          <AccountHeader account={data} />
-          <AccountInformation account={data} />
-          {!data?.suspended ? <AccountAttachments account={data} /> : null}
+          <AccountHeader />
+          <AccountInformation />
+          <AccountAttachments />
         </View>
         {!data?.suspended ? (
           <SegmentedControl
@@ -110,7 +114,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                     {
                       ...page,
                       page: 'Account',
-                      account: account.id,
+                      id: data?.id,
                       exclude_reblogs: true,
                       only_media: false
                     }
@@ -122,7 +126,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                     {
                       ...page,
                       page: 'Account',
-                      account: account.id,
+                      id: data?.id,
                       exclude_reblogs: false,
                       only_media: false
                     }
@@ -158,11 +162,11 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         ) : null}
       </>
     )
-  }, [segment, data, queryKey[1].page, mode])
+  }, [segment, dataUpdatedAt, mode])
 
   return (
-    <>
-      <AccountNav scrollY={scrollY} account={data} />
+    <AccountContext.Provider value={{ account: data }}>
+      <AccountNav scrollY={scrollY} />
 
       {data?.suspended ? (
         ListHeaderComponent
@@ -170,6 +174,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
         <Timeline
           queryKey={queryKey}
           disableRefresh
+          queryOptions={{ enabled: isRemote ? !!data?.id : true }}
           customProps={{
             renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />,
             onScroll: ({ nativeEvent }) => (scrollY.value = nativeEvent.contentOffset.y),
@@ -180,7 +185,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
           }}
         />
       )}
-    </>
+    </AccountContext.Provider>
   )
 }
 

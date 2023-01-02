@@ -22,7 +22,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
-  const { queryKey, rootQueryKey, status, reblogStatus, ownAccount, highlighted, disableDetails } =
+  const { queryKey, rootQueryKey, status, ownAccount, highlighted, disableDetails } =
     useContext(StatusContext)
   if (!queryKey || !status || disableDetails) return null
 
@@ -38,16 +38,16 @@ const TimelineActions: React.FC = () => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       if (
         // Un-bookmark from bookmarks page
-        (queryKey[1].page === 'Bookmarks' && theParams.payload.property === 'bookmarked') ||
+        (queryKey[1].page === 'Bookmarks' && theParams.payload.type === 'bookmarked') ||
         // Un-favourite from favourites page
-        (queryKey[1].page === 'Favourites' && theParams.payload.property === 'favourited')
+        (queryKey[1].page === 'Favourites' && theParams.payload.type === 'favourited')
       ) {
         queryClient.invalidateQueries(queryKey)
-      } else if (theParams.payload.property === 'favourited') {
+      } else if (theParams.payload.type === 'favourited') {
         // When favourited, update favourited page
         const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Favourites' }]
         queryClient.invalidateQueries(tempQueryKey)
-      } else if (theParams.payload.property === 'bookmarked') {
+      } else if (theParams.payload.type === 'bookmarked') {
         // When bookmarked, update bookmark page
         const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Bookmarks' }]
         queryClient.invalidateQueries(tempQueryKey)
@@ -60,7 +60,7 @@ const TimelineActions: React.FC = () => {
         type: 'error',
         message: t('common:message.error.message', {
           function: t(
-            `componentTimeline:shared.actions.${correctParam.payload.property}.function` as any
+            `componentTimeline:shared.actions.${correctParam.payload.type}.function` as any
           )
         }),
         ...(err.status &&
@@ -111,13 +111,9 @@ const TimelineActions: React.FC = () => {
                 type: 'updateStatusProperty',
                 queryKey,
                 rootQueryKey,
-                id: status.id,
-                isReblog: !!reblogStatus,
+                status,
                 payload: {
-                  property: 'reblogged',
-                  currentValue: status.reblogged,
-                  propertyCount: 'reblogs_count',
-                  countValue: status.reblogs_count,
+                  type: 'reblogged',
                   visibility: 'public'
                 }
               })
@@ -127,13 +123,9 @@ const TimelineActions: React.FC = () => {
                 type: 'updateStatusProperty',
                 queryKey,
                 rootQueryKey,
-                id: status.id,
-                isReblog: !!reblogStatus,
+                status,
                 payload: {
-                  property: 'reblogged',
-                  currentValue: status.reblogged,
-                  propertyCount: 'reblogs_count',
-                  countValue: status.reblogs_count,
+                  type: 'reblogged',
                   visibility: 'unlisted'
                 }
               })
@@ -146,13 +138,9 @@ const TimelineActions: React.FC = () => {
         type: 'updateStatusProperty',
         queryKey,
         rootQueryKey,
-        id: status.id,
-        isReblog: !!reblogStatus,
+        status,
         payload: {
-          property: 'reblogged',
-          currentValue: status.reblogged,
-          propertyCount: 'reblogs_count',
-          countValue: status.reblogs_count,
+          type: 'reblogged',
           visibility: 'public'
         }
       })
@@ -163,13 +151,9 @@ const TimelineActions: React.FC = () => {
       type: 'updateStatusProperty',
       queryKey,
       rootQueryKey,
-      id: status.id,
-      isReblog: !!reblogStatus,
+      status,
       payload: {
-        property: 'favourited',
-        currentValue: status.favourited,
-        propertyCount: 'favourites_count',
-        countValue: status.favourites_count
+        type: 'favourited'
       }
     })
   }
@@ -178,13 +162,9 @@ const TimelineActions: React.FC = () => {
       type: 'updateStatusProperty',
       queryKey,
       rootQueryKey,
-      id: status.id,
-      isReblog: !!reblogStatus,
+      status,
       payload: {
-        property: 'bookmarked',
-        currentValue: status.bookmarked,
-        propertyCount: undefined,
-        countValue: undefined
+        type: 'bookmarked'
       }
     })
   }

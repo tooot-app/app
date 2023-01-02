@@ -1,4 +1,3 @@
-import Button from '@components/Button'
 import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
@@ -9,11 +8,12 @@ import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
 import { getHost } from '@utils/helpers/urlMatcher'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
+import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { Alert, FlatList, Pressable, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { Path, Svg } from 'react-native-svg'
 
@@ -31,7 +31,16 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Pressable
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          disabled={!hasRemoteContent}
+          onPress={() =>
+            Alert.alert(
+              t('screenTabs:shared.toot.remoteFetch.title'),
+              t('screenTabs:shared.toot.remoteFetch.message')
+            )
+          }
+        >
           {hasRemoteContent ? (
             <Icon
               name='Wifi'
@@ -47,7 +56,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             numberOfLines={1}
             children={t('screenTabs:shared.toot.name')}
           />
-        </View>
+        </Pressable>
       ),
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
     })
@@ -56,12 +65,16 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const flRef = useRef<FlatList>(null)
   const scrolled = useRef(false)
 
-  const finalData = useRef<(Mastodon.Status & { _level?: number; _remote?: boolean })[]>([
-    { ...toot, _level: 0, _remote: false }
+  const finalData = useRef<Mastodon.Status[]>([
+    { ...toot, _level: 0, _remote: toot._remote }
   ])
   const highlightIndex = useRef<number>(0)
+  const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
+    local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
+    remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
+  }
   const queryLocal = useQuery(
-    ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
+    queryKey.local,
     async () => {
       const context = await apiInstance<{
         ancestors: Mastodon.Status[]
@@ -93,6 +106,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       return { pages: [{ body: statuses }] }
     },
     {
+      enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: data => {
@@ -129,7 +143,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   )
   useQuery(
-    ['Timeline', { page: 'Toot', toot: toot.id, remote: true }],
+    queryKey.remote,
     async () => {
       let context:
         | {
@@ -186,17 +200,22 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     {
       enabled: toot.account.acct !== toot.account.username, // When on the same instance, these two values are the same
       staleTime: 0,
-      refetchOnMount: false,
+      refetchOnMount: true,
       onSuccess: data => {
         if (finalData.current.length < 1 && data.pages[0].body.length < 1) {
           navigation.goBack()
           return
         }
 
-        if (finalData.current?.length < data.pages[0].body.length) {
+        if (finalData.current.length < data.pages[0].body.length) {
           finalData.current = data.pages[0].body.map(remote => {
-            const localMatch = finalData.current?.find(local => local.uri === remote.uri)
-            return localMatch ? { ...localMatch, _remote: false } : { ...remote, _remote: true }
+            const localMatch = finalData.current.find(local => local.uri === remote.uri)
+            if (localMatch) {
+              return localMatch
+            } else {
+              remote._remote = true
+              return remote
+            }
           })
           setHasRemoteContent(true)
         }
@@ -222,52 +241,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   )
 
-  const empty = () => {
-    switch (queryLocal.status) {
-      case 'error':
-        return (
-          <>
-            <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
-            <CustomText
-              fontStyle='M'
-              style={{
-                marginTop: StyleConstants.Spacing.S,
-                marginBottom: StyleConstants.Spacing.L,
-                color: colors.primaryDefault
-              }}
-            >
-              {t('componentTimeline:empty.error.message')}
-            </CustomText>
-            <Button
-              type='text'
-              content={t('componentTimeline:empty.error.button')}
-              onPress={() => queryLocal.refetch()}
-            />
-          </>
-        )
-      case 'success':
-        return (
-          <>
-            <Icon
-              name='Smartphone'
-              size={StyleConstants.Font.Size.L}
-              color={colors.primaryDefault}
-            />
-            <CustomText
-              fontStyle='M'
-              style={{
-                marginTop: StyleConstants.Spacing.S,
-                marginBottom: StyleConstants.Spacing.L,
-                color: colors.secondary
-              }}
-            >
-              {t('componentTimeline:empty.success.message')}
-            </CustomText>
-          </>
-        )
-    }
-  }
-
   const heights = useRef<(number | undefined)[]>([])
   const MAX_LEVEL = 10
   const ARC = StyleConstants.Avatar.XS / 4
@@ -279,9 +252,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       windowSize={7}
       data={finalData.current}
       renderItem={({ item, index }) => {
-        const prev = finalData.current?.[index - 1]?._level || 0
+        const prev = finalData.current[index - 1]?._level || 0
         const curr = item._level
-        const next = finalData.current?.[index + 1]?._level || 0
+        const next = finalData.current[index + 1]?._level || 0
 
         return (
           <View
@@ -299,7 +272,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           >
             <TimelineDefault
               item={item}
-              queryKey={['Timeline', { page: 'Toot', toot: toot.id }]}
+              queryKey={item._remote ? queryKey.remote : queryKey.local}
               rootQueryKey={rootQueryKey}
               highlighted={toot.id === item.id}
               isConversation={toot.id !== item.id}
@@ -437,7 +410,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         const offset = error.averageItemLength * error.index
         flRef.current?.scrollToOffset({ offset })
         try {
-          error.index < (finalData.current.length || 0) &&
+          error.index < finalData.current.length &&
             setTimeout(
               () =>
                 flRef.current?.scrollToIndex({
@@ -448,19 +421,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             )
         } catch {}
       }}
-      ListEmptyComponent={
-        <View
-          style={{
-            flex: 1,
-            minHeight: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: colors.backgroundDefault
-          }}
-        >
-          {empty()}
-        </View>
-      }
       ListFooterComponent={
         <View
           style={{

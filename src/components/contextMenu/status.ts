@@ -35,7 +35,7 @@ const menuStatus = ({
     onMutate: true,
     onError: (err: any, params, oldData) => {
       const theFunction = (params as MutationVarsTimelineUpdateStatusProperty).payload
-        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
+        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.type
         : 'delete'
       displayMessage({
         theme,
@@ -195,15 +195,14 @@ const menuStatus = ({
             type: 'updateStatusProperty',
             queryKey,
             rootQueryKey,
-            id: status.id,
+            status,
             payload: {
-              property: 'muted',
-              currentValue: status.muted
+              type: 'muted'
             }
           }),
         disabled: false,
         destructive: false,
-        hidden: !ownAccount && !status.mentions?.filter(mention => mention.id === accountId).length
+        hidden: !ownAccount
       },
       title: t('componentContextMenu:status.mute.action', {
         defaultValue: 'false',
@@ -220,17 +219,14 @@ const menuStatus = ({
             type: 'updateStatusProperty',
             queryKey,
             rootQueryKey,
-            id: status.id,
+            status,
             payload: {
-              property: 'pinned',
-              currentValue: status.pinned,
-              propertyCount: undefined,
-              countValue: undefined
+              type: 'pinned'
             }
           }),
-        disabled: false,
+        disabled: status.visibility !== 'public' && status.visibility !== 'unlisted',
         destructive: false,
-        hidden: !ownAccount || (status.visibility !== 'public' && status.visibility !== 'unlisted')
+        hidden: !ownAccount
       },
       title: t('componentContextMenu:status.pin.action', {
         defaultValue: 'false',

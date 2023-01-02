@@ -127,5 +127,9 @@ export type ComposeAction =
       payload: Partial<ComposeState['textInputFocus']>
     }
   | {
+      type: 'updateReply'
+      payload: Mastodon.Status
+    }
+  | {
       type: 'removeReply'
     }

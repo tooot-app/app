@@ -1,17 +1,15 @@
 import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo?: boolean
-}
+const AccountInformationNote: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationNote: React.FC<Props> = ({ account, myInfo }) => {
   if (
     account?.suspended ||
-    myInfo ||
+    pageMe ||
     !account?.note ||
     account.note.length === 0 ||
     account.note === '<p></p>'

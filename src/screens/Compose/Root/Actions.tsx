@@ -141,6 +141,9 @@ const ComposeActions: React.FC = () => {
     <View
       accessibilityRole='toolbar'
       style={{
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
         height: 45,
         borderTopWidth: StyleSheet.hairlineWidth,
         flexDirection: 'row',

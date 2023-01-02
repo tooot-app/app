@@ -4,17 +4,15 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo: boolean
-}
+const AccountInformationStats: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
   if (account?.suspended) {
     return null
   }
@@ -32,7 +30,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
             count: account.statuses_count || 0
           })}
           onPress={() => {
-            myInfo && account && navigation.push('Tab-Shared-Account', { account })
+            pageMe && account && navigation.push('Tab-Shared-Account', { account })
           }}
         />
       ) : (

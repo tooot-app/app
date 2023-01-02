@@ -1,103 +1,76 @@
 import { InfiniteData } from '@tanstack/react-query'
 import queryClient from '@utils/queryHooks'
 import { MutationVarsTimelineUpdateStatusProperty, TimelineData } from '../timeline'
-import updateConversation from './update/conversation'
-import updateNotification from './update/notification'
-import updateStatus from './update/status'
 
 const updateStatusProperty = ({
   queryKey,
   rootQueryKey,
-  id,
-  isReblog,
-  payload
-}: MutationVarsTimelineUpdateStatusProperty) => {
-  queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, old => {
-    if (old) {
-      let foundToot = false
-      old.pages = old.pages.map(page => {
-        // Skip rest of the pages if any toot is found
-        if (foundToot) {
-          return page
-        } else {
-          if (typeof (page.body as Mastodon.Conversation[])[0].unread === 'boolean') {
-            const items = page.body as Mastodon.Conversation[]
-            const tootIndex = items.findIndex(({ last_status }) => last_status?.id === id)
-            if (tootIndex >= 0) {
-              foundToot = true
-              updateConversation({ item: items[tootIndex], payload })
-            }
-            return page
-          } else if (typeof (page.body as Mastodon.Notification[])[0].type === 'string') {
-            const items = page.body as Mastodon.Notification[]
-            const tootIndex = items.findIndex(({ status }) => status?.id === id)
-            if (tootIndex >= 0) {
-              foundToot = true
-              updateNotification({ item: items[tootIndex], payload })
-            }
-          } else {
-            const items = page.body as Mastodon.Status[]
-            const tootIndex = isReblog
-              ? items.findIndex(({ reblog }) => reblog?.id === id)
-              : items.findIndex(toot => toot.id === id)
-            // if favourites page and notifications page, remove the item instead
-            if (tootIndex >= 0) {
-              foundToot = true
-              updateStatus({ item: items[tootIndex], isReblog, payload })
-            }
-          }
+  status,
+  payload,
+  poll
+}: MutationVarsTimelineUpdateStatusProperty & { poll?: Mastodon.Poll }) => {
+  for (const key of [queryKey, rootQueryKey]) {
+    if (!key) continue
 
-          return page
-        }
-      })
-    }
-
-    return old
-  })
-
-  rootQueryKey &&
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(rootQueryKey, old => {
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {
       if (old) {
-        let foundToot = false
+        let foundToot: Mastodon.Status | undefined = undefined
         old.pages = old.pages.map(page => {
-          // Skip rest of the pages if any toot is found
           if (foundToot) {
             return page
           } else {
             if (typeof (page.body as Mastodon.Conversation[])[0].unread === 'boolean') {
-              const items = page.body as Mastodon.Conversation[]
-              const tootIndex = items.findIndex(({ last_status }) => last_status?.id === id)
-              if (tootIndex >= 0) {
-                foundToot = true
-                updateConversation({ item: items[tootIndex], payload })
-              }
+              foundToot = (page.body as Mastodon.Conversation[]).find(({ last_status }) =>
+                last_status?.reblog
+                  ? last_status.reblog.id === status.id
+                  : last_status?.id === status.id
+              )?.last_status
               return page
             } else if (typeof (page.body as Mastodon.Notification[])[0].type === 'string') {
-              const items = page.body as Mastodon.Notification[]
-              const tootIndex = items.findIndex(({ status }) => status?.id === id)
-              if (tootIndex >= 0) {
-                foundToot = true
-                updateNotification({ item: items[tootIndex], payload })
-              }
+              foundToot = (page.body as Mastodon.Notification[]).find(no =>
+                no.status?.reblog ? no.status.reblog.id === status.id : no.status?.id === status.id
+              )?.status
             } else {
-              const items = page.body as Mastodon.Status[]
-              const tootIndex = isReblog
-                ? items.findIndex(({ reblog }) => reblog?.id === id)
-                : items.findIndex(toot => toot.id === id)
-              // if favourites page and notifications page, remove the item instead
-              if (tootIndex >= 0) {
-                foundToot = true
-                updateStatus({ item: items[tootIndex], isReblog, payload })
-              }
+              foundToot = (page.body as Mastodon.Status[]).find(toot =>
+                toot.reblog ? toot.reblog.id === status.id : toot.id === status.id
+              )
             }
 
             return page
           }
         })
+
+        if (foundToot) {
+          enum MapPropertyToCount {
+            favourited = 'favourites_count',
+            reblogged = 'reblogs_count'
+          }
+
+          switch (payload.type) {
+            case 'poll':
+              status.poll = poll
+              break
+            default:
+              status[payload.type] =
+                typeof status[payload.type] === 'boolean' ? !status[payload.type] : true
+              switch (payload.type) {
+                case 'favourited':
+                case 'reblogged':
+                  if (typeof status[payload.type] === 'boolean' && status[payload.type]) {
+                    status[MapPropertyToCount[payload.type]]--
+                  } else {
+                    status[MapPropertyToCount[payload.type]]++
+                  }
+                  break
+              }
+              break
+          }
+        }
       }
 
       return old
     })
+  }
 }
 
 export default updateStatusProperty

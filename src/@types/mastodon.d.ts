@@ -552,6 +552,10 @@ declare namespace Mastodon {
     language?: string
     text?: string
     filtered?: FilterResult[]
+
+    // Internal
+    _level?: number
+    _remote?: boolean
   }
 
   type StatusHistory = {

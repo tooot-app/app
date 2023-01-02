@@ -61,6 +61,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
             action={notification.type}
             isNotification
             account={notification.account}
+            rootStatus={notification.status}
           />
         ) : null}
 
