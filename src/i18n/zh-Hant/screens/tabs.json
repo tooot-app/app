@@ -376,7 +376,11 @@
       "notFound": "找不到 <bold>{{searchTerm}}</bold> 相關的 {{type}}"
     },
     "toot": {
-      "name": "討論"
+      "name": "討論",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
