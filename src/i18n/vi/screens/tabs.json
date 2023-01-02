@@ -376,7 +376,11 @@
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
     },
     "toot": {
-      "name": "Nội dung tút"
+      "name": "Nội dung tút",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
