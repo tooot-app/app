@@ -1,7 +1,7 @@
 {
   "tabs": {
     "local": {
-      "name": "",
+      "name": "Obserwowane",
       "options": {
         "showBoosts": "Pokaż podbicia",
         "showReplies": "Pokaż odpowiedzi"
@@ -9,26 +9,26 @@
     },
     "public": {
       "segments": {
-        "federated": "",
-        "local": "",
-        "trending": ""
+        "federated": "Sfederowane",
+        "local": "Lokalne",
+        "trending": "Trendujące"
       }
     },
     "notifications": {
-      "name": ""
+      "name": "Powiadomienia"
     }
   },
   "common": {
     "search": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Szukaj",
+      "accessibilityHint": "Szukaj hasztagów, użytkowników lub tootów"
     }
   },
   "notifications": {
     "filters": {
-      "accessibilityLabel": "",
-      "accessibilityHint": "",
-      "title": ""
+      "accessibilityLabel": "Filtr",
+      "accessibilityHint": "Filtr pokazanych typów powiadomień",
+      "title": "Pokaż powiadomienia"
     }
   },
   "me": {
@@ -178,43 +178,43 @@
       "mediaSelectionFailed": "Nie udało się przetworzyć obrazka. Prosimy, spróbuj raz jeszcze"
     },
     "push": {
-      "notAvailable": "",
+      "notAvailable": "Twój telefon nie obsługuje powiadomień push",
       "enable": {
-        "direct": "",
-        "settings": ""
+        "direct": "Włącz powiadomienia push",
+        "settings": "Włącz w ustawieniach"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "Serwer nieprawidłowo skonfigurowany pod push",
+        "description": "Skontaktuj się z administratorem serwera, aby skonfigurować wsparcie push"
       },
       "global": {
-        "heading": "",
-        "description": ""
+        "heading": "Włącz dla {{acct}}",
+        "description": "Wiadomości są kierowane przez serwery Tooot"
       },
       "decode": {
-        "heading": "",
-        "description": ""
+        "heading": "Pokaż szczegóły",
+        "description": "Wiadomości przekierowane przez serwery tooot są zaszyfrowane, ale możesz zdecydować się na dekodowanie wiadomości na serwerze. Nasz kod źródłowy serwera jest open-source, bez zapisów w dzienniku zdarzeń."
       },
       "default": {
-        "heading": ""
+        "heading": "Domyślny"
       },
       "follow": {
-        "heading": ""
+        "heading": "Nowy obserwujący"
       },
       "follow_request": {
-        "heading": ""
+        "heading": "Prośby o obserwację"
       },
       "favourite": {
-        "heading": ""
+        "heading": "Ulubione"
       },
       "reblog": {
-        "heading": ""
+        "heading": "Wzmocnione"
       },
       "mention": {
-        "heading": ""
+        "heading": "Wspomniano Cię"
       },
       "poll": {
-        "heading": ""
+        "heading": "Zaktualizowano ankietę"
       },
       "status": {
         "heading": ""
