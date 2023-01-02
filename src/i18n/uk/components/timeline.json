@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Помилка завантаження",
         "button": "Спробуйте віддалене посилання"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Аватар {{name}}",
