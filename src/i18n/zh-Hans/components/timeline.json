@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "附件读取错误",
         "button": "尝试远程链接"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}}的头像",
