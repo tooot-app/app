@@ -83,7 +83,7 @@
         "text": "Error en carregar",
         "button": "Prova amb l'enllaç remot"
       },
-      "altText": ""
+      "altText": "Text alternatiu"
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
