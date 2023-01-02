@@ -83,7 +83,7 @@
         "text": "Ladefehler",
         "button": "Remote Link versuchen"
       },
-      "altText": ""
+      "altText": "Alternativtext"
     },
     "avatar": {
       "accessibilityLabel": "Profilbild von {{name}}",
