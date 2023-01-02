@@ -378,7 +378,7 @@
     "toot": {
       "name": "討論",
       "remoteFetch": {
-        "title": "",
+        "title": "包含遠端內容",
         "message": ""
       }
     },
