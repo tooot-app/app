@@ -20,7 +20,7 @@ export type SearchResult = {
 const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeySearch>) => {
   const { type, term, limit = 20 } = queryKey[1]
   if (!term?.length) {
-    return Promise.reject()
+    return Promise.reject('Empty search term')
   }
   const res = await apiInstance<SearchResult>({
     version: 'v2',
@@ -59,6 +59,6 @@ export const searchFetchToot = (uri: Mastodon.Status['uri']): Promise<Mastodon.S
     }
   })
     .then(res => res.body.statuses[0])
-    .catch(() => {})
+    .catch(err => console.warn(err))
 
 export { useSearchQuery }

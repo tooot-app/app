@@ -3,21 +3,24 @@ import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
 import { SearchResult } from './search'
 
-export type QueryKeyAccount = ['Account', { id?: Mastodon.Account['id']; remoteUrl?: string }]
+export type QueryKeyAccount = [
+  'Account',
+  Pick<Mastodon.Account, 'id' | 'url' | '_remote'> | undefined
+]
 
 const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyAccount>) => {
-  const { id, remoteUrl } = queryKey[1]
-  if (!id && !remoteUrl) return Promise.reject()
+  const key = queryKey[1]
+  if (!key) return Promise.reject()
 
-  let matchedId = id
+  let matchedId = key.id
 
-  if (remoteUrl) {
+  if (key._remote) {
     await apiInstance<SearchResult>({
       version: 'v2',
       method: 'get',
       url: 'search',
       params: {
-        q: remoteUrl,
+        q: key.url,
         type: 'accounts',
         limit: 1,
         resolve: true
@@ -25,7 +28,7 @@ const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyA
     })
       .then(res => {
         const account = res.body.accounts[0]
-        if (account.url !== remoteUrl) {
+        if (account.url !== key.url) {
           return Promise.reject()
         } else {
           matchedId = account.id
@@ -44,11 +47,23 @@ const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyA
 const useAccountQuery = ({
   options,
   ...queryKeyParams
-}: QueryKeyAccount[1] & {
+}: { account?: QueryKeyAccount[1] } & {
   options?: UseQueryOptions<Mastodon.Account, AxiosError>
 }) => {
-  const queryKey: QueryKeyAccount = ['Account', { ...queryKeyParams }]
-  return useQuery(queryKey, accountQueryFunction, { ...options })
+  const queryKey: QueryKeyAccount = [
+    'Account',
+    queryKeyParams.account
+      ? {
+          id: queryKeyParams.account.id,
+          url: queryKeyParams.account.url,
+          _remote: queryKeyParams.account._remote
+        }
+      : undefined
+  ]
+  return useQuery(queryKey, accountQueryFunction, {
+    ...options,
+    enabled: (queryKeyParams.account?._remote ? !!queryKeyParams.account : true) && options?.enabled
+  })
 }
 
 /* ----- */

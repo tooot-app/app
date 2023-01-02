@@ -30,7 +30,7 @@ const menuAccount = ({
 }: {
   type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
-  account?: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct'>
+  account?: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
   rootQueryKey?: QueryKeyTimeline
@@ -47,10 +47,7 @@ const menuAccount = ({
       setEnabled(true)
     }
   }, [openChange, enabled])
-  const { data: fetchedAccount } = useAccountQuery({
-    remoteUrl: account?.url,
-    options: { enabled: !!status?._remote && enabled }
-  })
+  const { data: fetchedAccount } = useAccountQuery({ account, options: { enabled } })
   const actualAccount = status?._remote ? fetchedAccount : account
   const { data, isFetched } = useRelationshipQuery({
     id: actualAccount?.id,

@@ -9,6 +9,7 @@ import apiInstance from '@utils/api/instance'
 import { getHost } from '@utils/helpers/urlMatcher'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
@@ -65,8 +66,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const flRef = useRef<FlatList>(null)
   const scrolled = useRef(false)
 
-  const finalData = useRef<Mastodon.Status[]>([
-    { ...toot, _level: 0, _remote: toot._remote }
+  const finalData = useRef<(Mastodon.Status & { key?: string })[]>([
+    { ...toot, _level: 0, key: 'cached' }
   ])
   const highlightIndex = useRef<number>(0)
   const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
@@ -86,7 +87,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
       const statuses: (Mastodon.Status & { _level?: number })[] = [
         ...context.body.ancestors,
-        toot,
+        { ...toot },
         ...context.body.descendants
       ]
 
@@ -115,8 +116,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if (finalData.current.length < data.pages[0].body.length) {
-          // if the remote has been loaded first
+        if (finalData.current[0].key === 'cached') {
           finalData.current = data.pages[0].body
 
           if (!scrolled.current) {
@@ -145,40 +145,31 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   useQuery(
     queryKey.remote,
     async () => {
-      let context:
-        | {
-            ancestors: Mastodon.Status[]
-            descendants: Mastodon.Status[]
-          }
-        | undefined
+      const domain = getHost(toot.url || toot.uri)
+      if (!domain?.length) {
+        return Promise.reject('Cannot parse remote doamin')
+      }
+      const id = (toot.url || toot.uri).match(new RegExp(/\/([0-9]+)$/))?.[1]
+      if (!id?.length) {
+        return Promise.reject('Cannot parse remote toot id')
+      }
 
-      try {
-        const domain = getHost(toot.url || toot.uri)
-        if (!domain?.length) {
-          throw new Error()
-        }
-        const id = (toot.url || toot.uri).match(new RegExp(/\/([0-9]+)$/))?.[1]
-        if (!id?.length) {
-          throw new Error()
-        }
-
-        context = await apiGeneral<{
-          ancestors: Mastodon.Status[]
-          descendants: Mastodon.Status[]
-        }>({
-          method: 'get',
-          domain,
-          url: `api/v1/statuses/${id}/context`
-        }).then(res => res.body)
-      } catch {}
+      const context = await apiGeneral<{
+        ancestors: Mastodon.Status[]
+        descendants: Mastodon.Status[]
+      }>({
+        method: 'get',
+        domain,
+        url: `api/v1/statuses/${id}/context`
+      }).then(res => res.body)
 
       if (!context) {
-        throw new Error()
+        return Promise.reject('Cannot retrieve remote context')
       }
 
       const statuses: (Mastodon.Status & { _level?: number })[] = [
         ...context.ancestors,
-        toot,
+        { ...toot },
         ...context.descendants
       ]
 
@@ -198,7 +189,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       return { pages: [{ body: statuses }] }
     },
     {
-      enabled: toot.account.acct !== toot.account.username, // When on the same instance, these two values are the same
+      enabled:
+        ['public', 'unlisted'].includes(toot.visibility) &&
+        getHost(toot.uri) !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: data => {
@@ -211,12 +204,25 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           finalData.current = data.pages[0].body.map(remote => {
             const localMatch = finalData.current.find(local => local.uri === remote.uri)
             if (localMatch) {
+              delete localMatch.key
               return localMatch
             } else {
               remote._remote = true
+
+              remote.account._remote = true
+              remote.mentions = remote.mentions.map(mention => ({ ...mention, _remote: true }))
+              if (remote.reblog) {
+                remote.reblog.account._remote = true
+                remote.reblog.mentions = remote.mentions.map(mention => ({
+                  ...mention,
+                  _remote: true
+                }))
+              }
+
               return remote
             }
           })
+
           setHasRemoteContent(true)
         }
 
@@ -274,9 +280,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               item={item}
               queryKey={item._remote ? queryKey.remote : queryKey.local}
               rootQueryKey={rootQueryKey}
-              highlighted={toot.id === item.id}
-              isConversation={toot.id !== item.id}
-              isRemote={item._remote}
+              highlighted={toot.id === item.id || item.id === 'cached'}
+              isConversation={toot.id !== item.id && item.id !== 'cached'}
             />
             {curr > 1 || next > 1
               ? [...new Array(curr)].map((_, i) => {

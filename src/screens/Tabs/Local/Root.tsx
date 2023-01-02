@@ -178,8 +178,6 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
     })
   }, [mode, queryKey[1], pageLocal, lists])
 
-  usePopToTop()
-
   return (
     <Timeline
       queryKey={queryKey}

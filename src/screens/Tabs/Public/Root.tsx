@@ -4,7 +4,6 @@ import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
-import usePopToTop from '@utils/navigation/usePopToTop'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 import { StorageGlobal } from '@utils/storage/global'
@@ -74,8 +73,6 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
       )
     })
   }, [mode, segment])
-
-  usePopToTop()
 
   return (
     <TabView

@@ -32,7 +32,7 @@ const TimelineAvatar: React.FC<Props> = ({ account }) => {
       })}
       onPress={() =>
         !disableOnPress &&
-        navigation.push('Tab-Shared-Account', { account: actualAccount, isRemote: status?._remote })
+        navigation.push('Tab-Shared-Account', { account: actualAccount })
       }
       uri={{ original: actualAccount.avatar, static: actualAccount.avatar_static }}
       dimension={
