@@ -376,7 +376,11 @@
       "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요"
     },
     "toot": {
-      "name": "대화"
+      "name": "대화",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
