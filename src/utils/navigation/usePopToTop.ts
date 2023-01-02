@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useGlobalStorage } from '@utils/storage/actions'
 import { useEffect } from 'react'
 
@@ -8,8 +8,8 @@ const usePopToTop = () => {
   const navigation = useNavigation()
   const [accountActive] = useGlobalStorage.string('account.active')
 
-  return useEffect(() => {
-    // navigation.dispatch(StackActions.popToTop())
+  useEffect(() => {
+    navigation.dispatch(StackActions.popToTop())
   }, [accountActive])
 }
 

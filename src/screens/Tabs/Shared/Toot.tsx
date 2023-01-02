@@ -145,35 +145,26 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   useQuery(
     queryKey.remote,
     async () => {
-      let context:
-        | {
-            ancestors: Mastodon.Status[]
-            descendants: Mastodon.Status[]
-          }
-        | undefined
+      const domain = getHost(toot.url || toot.uri)
+      if (!domain?.length) {
+        return Promise.reject('Cannot parse remote doamin')
+      }
+      const id = (toot.url || toot.uri).match(new RegExp(/\/([0-9]+)$/))?.[1]
+      if (!id?.length) {
+        return Promise.reject('Cannot parse remote toot id')
+      }
 
-      try {
-        const domain = getHost(toot.url || toot.uri)
-        if (!domain?.length) {
-          throw new Error()
-        }
-        const id = (toot.url || toot.uri).match(new RegExp(/\/([0-9]+)$/))?.[1]
-        if (!id?.length) {
-          throw new Error()
-        }
-
-        context = await apiGeneral<{
-          ancestors: Mastodon.Status[]
-          descendants: Mastodon.Status[]
-        }>({
-          method: 'get',
-          domain,
-          url: `api/v1/statuses/${id}/context`
-        }).then(res => res.body)
-      } catch {}
+      const context = await apiGeneral<{
+        ancestors: Mastodon.Status[]
+        descendants: Mastodon.Status[]
+      }>({
+        method: 'get',
+        domain,
+        url: `api/v1/statuses/${id}/context`
+      }).then(res => res.body)
 
       if (!context) {
-        throw new Error()
+        return Promise.reject('Cannot retrieve remote context')
       }
 
       const statuses: (Mastodon.Status & { _level?: number })[] = [

@@ -212,6 +212,7 @@ export const generateAccountKey = ({
 export const setAccount = async (account: string) => {
   storage.account = new MMKV({ id: account })
   setGlobalStorage('account.active', account)
+  await queryClient.resetQueries()
   queryClient.clear()
 }
 

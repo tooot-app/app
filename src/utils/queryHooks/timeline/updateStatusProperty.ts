@@ -13,7 +13,6 @@ const updateStatusProperty = ({
     if (!key) continue
 
     queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {
-      console.log('key', key)
       if (old) {
         let foundToot: Mastodon.Status | undefined = undefined
         old.pages = old.pages.map(page => {
@@ -42,7 +41,6 @@ const updateStatusProperty = ({
 
         if (foundToot) {
           const toot = foundToot as Mastodon.Status
-          console.log('updating', toot.id)
           enum MapPropertyToCount {
             favourited = 'favourites_count',
             reblogged = 'reblogs_count'
@@ -53,9 +51,7 @@ const updateStatusProperty = ({
               toot.poll = poll
               break
             default:
-              console.log('11', toot[payload.type])
               toot[payload.type] = payload.to
-              console.log('22', toot[payload.type])
               switch (payload.type) {
                 case 'favourited':
                 case 'reblogged':
