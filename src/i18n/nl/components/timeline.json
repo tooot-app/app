@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Fout bij het laden",
         "button": "Probeer externe link"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Avatar van {{name}}",
