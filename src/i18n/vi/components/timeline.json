@@ -83,7 +83,7 @@
         "text": "Không hỗ trợ định dạng",
         "button": "Thử liên kết từ xa"
       },
-      "altText": ""
+      "altText": "Mô tả hình"
     },
     "avatar": {
       "accessibilityLabel": "Ảnh đại diện của {{name}}",
