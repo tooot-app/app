@@ -378,8 +378,8 @@
     "toot": {
       "name": "Nội dung tút",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Chứa nội dung ở máy chủ khác",
+        "message": "Nội dung liên hợp không phải lúc nào cũng lưu lại trên máy chủ. Những nội dung này được tìm nạp từ máy chủ từ xa và được đánh dấu. Bạn có thể tương tác với những nội dung này như bình thường."
       }
     },
     "users": {
