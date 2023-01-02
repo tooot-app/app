@@ -376,7 +376,11 @@
       "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}"
     },
     "toot": {
-      "name": "Обговорення"
+      "name": "Обговорення",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
