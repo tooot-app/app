@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "",
         "button": ""
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "",
