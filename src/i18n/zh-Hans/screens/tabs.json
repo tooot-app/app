@@ -376,7 +376,11 @@
       "notFound": "找不到 <bold>{{searchTerm}}</bold> 相关的 {{type}}"
     },
     "toot": {
-      "name": "对话"
+      "name": "对话",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
