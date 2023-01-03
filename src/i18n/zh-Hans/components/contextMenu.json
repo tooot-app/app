@@ -6,7 +6,7 @@
       "action_false": "关注用户",
       "action_true": "取消关注用户"
     },
-    "inLists": "",
+    "inLists": "包含用户的列表",
     "showBoosts": {
       "action_false": "显示用户的转嘟",
       "action_true": "隐藏用户的转嘟"
