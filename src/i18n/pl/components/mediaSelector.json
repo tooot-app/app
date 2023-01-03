@@ -1,10 +1,10 @@
 {
-  "title": "",
-  "message": "",
+  "title": "Wybierz źródło multimediów",
+  "message": "Pliki EXIF nie są obsługiwane",
   "options": {
-    "image": "",
-    "image_max": "",
-    "video": "",
-    "video_max": ""
+    "image": "Prześlij zdjęcia",
+    "image_max": "Prześlij zdjęcia (maks. {{max}})",
+    "video": "Prześlij film",
+    "video_max": "Prześlij film (maks. {{max}})"
   }
 }
