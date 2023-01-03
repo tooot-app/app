@@ -223,64 +223,64 @@
         "heading": "Reblog został edytowany"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "Administracyjne: rejestracja"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "Administracyjne: zgłoszenia"
       },
-      "howitworks": ""
+      "howitworks": "Dowiedz się, jak działa przekierowywanie"
     },
     "root": {
       "announcements": {
         "content": {
-          "unread": "",
-          "read": "",
-          "empty": ""
+          "unread": "{{amount}} nieprzeczytanych",
+          "read": "Wszystko odczytane",
+          "empty": "Brak"
         }
       },
       "push": {
-        "content_true": "",
-        "content_false": ""
+        "content_true": "Włączone",
+        "content_false": "Wyłączone"
       },
       "logout": {
-        "button": "",
+        "button": "Wyloguj się",
         "alert": {
-          "title": "",
-          "message": "",
+          "title": "Czy na pewno chcesz się wylogować?",
+          "message": "Po wylogowaniu musisz zalogować się ponownie",
           "buttons": {
-            "logout": ""
+            "logout": "Wyloguj"
           }
         }
       }
     },
     "settings": {
       "theme": {
-        "heading": "",
+        "heading": "Wygląd",
         "options": {
-          "auto": "",
-          "light": "",
-          "dark": ""
+          "auto": "Systemowy",
+          "light": "Jasny",
+          "dark": "Ciemny"
         }
       },
       "darkTheme": {
-        "heading": "",
+        "heading": "Ciemny motyw",
         "options": {
-          "lighter": "",
-          "darker": ""
+          "lighter": "Domyślny",
+          "darker": "Prawdziwie czarny"
         }
       },
       "browser": {
-        "heading": "",
+        "heading": "Otwieranie linków",
         "options": {
-          "internal": "",
-          "external": ""
+          "internal": "W aplikacji",
+          "external": "Użyj przeglądarki systemowej"
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Automatyczne odtwarzanie GIFów na osi czasu"
       },
       "feedback": {
-        "heading": ""
+        "heading": "Poproś o funkcję"
       },
       "support": {
         "heading": "Wesprzyj tooot!"
@@ -292,76 +292,76 @@
       "instanceVersion": "Wersja Mastodona: v{{version}}"
     },
     "switch": {
-      "existing": "",
-      "new": ""
+      "existing": "Wybierz spośród zalogowanych",
+      "new": "Zaloguj się do instancji"
     }
   },
   "shared": {
     "account": {
       "actions": {
-        "accessibilityLabel": "",
-        "accessibilityHint": ""
+        "accessibilityLabel": "Akcje dla użytkownika {{user}}",
+        "accessibilityHint": "Możesz wyciszać, zablokować, zgłosić lub udostępnić tego użytkownika"
       },
-      "followed_by": "",
-      "moved": "",
-      "created_at": "",
+      "followed_by": " obserwuje Cię",
+      "moved": "Użytkownik przeniesiony",
+      "created_at": "Dołączono: {{date}}",
       "summary": {
-        "statuses_count": ""
+        "statuses_count": "{{count}} tootów"
       },
       "toots": {
-        "default": "",
-        "all": ""
+        "default": "Tooty",
+        "all": "Tooty i odpowiedzi"
       },
-      "suspended": ""
+      "suspended": "Konto zawieszone przez moderatorów Twojego serwera"
     },
     "accountInLists": {
-      "name": "",
-      "inLists": "",
-      "notInLists": ""
+      "name": "Listy użytkownika @{{username}}",
+      "inLists": "Na listach",
+      "notInLists": "Inne listy"
     },
     "attachments": {
-      "name": ""
+      "name": "<0 /><1> multimedia </1>"
     },
     "hashtag": {
-      "follow": "",
-      "unfollow": ""
+      "follow": "Obserwuj",
+      "unfollow": "Przestań obserwować"
     },
     "history": {
-      "name": ""
+      "name": "Historia edycji"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Zgłoś {{acct}}",
+      "report": "Zgłoś",
       "forward": {
-        "heading": ""
+        "heading": "Anonimowo przekaż na zdalny serwer {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Co jest nie tak z tym kontem?",
+        "spam": "To spam",
+        "other": "To coś innego",
+        "violation": "To narusza reguły serwera"
       },
       "comment": {
-        "heading": ""
+        "heading": "Czy chcesz dodać coś jeszcze?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Naruszenie reguł serwera"
       }
     },
     "search": {
       "header": {
-        "prefix": "",
-        "placeholder": ""
+        "prefix": "Wyszukiwanie",
+        "placeholder": "..."
       },
       "empty": {
-        "general": "",
+        "general": "Wprowadź słowo kluczowe, aby wyszukać <bold>$t(screenTabs:shared.search.sections.accounts)</bold>, <bold>$t(screenTabs:shared.search.sections.hashtags)</bold> lub <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
         "advanced": {
-          "header": "",
+          "header": "Zaawansowane wyszukiwanie",
           "example": {
-            "account": "",
-            "hashtag": "",
-            "statusLink": "",
-            "accountLink": ""
+            "account": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)",
+            "hashtag": "$t(shared.search.header.prefix) $t(shared.search.sections.hashtags)",
+            "statusLink": "$t(shared.search.header.prefix) $t(shared.search.sections.statuses)",
+            "accountLink": "$t(shared.search.header.prefix) $t(shared.search.sections.accounts)"
           }
         },
         "trending": {
@@ -369,29 +369,29 @@
         }
       },
       "sections": {
-        "accounts": "",
-        "hashtags": "",
-        "statuses": ""
+        "accounts": "Użytkownik",
+        "hashtags": "Hashtag",
+        "statuses": "Toot"
       },
-      "notFound": ""
+      "notFound": "Nie można odnaleźć <bold>{{searchTerm}}</bold> powiązanego {{type}}"
     },
     "toot": {
-      "name": "",
+      "name": "Dyskusje",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Załaduj zawartość zdalną",
+        "message": "Sfederowane treści nie zawsze są dostępne na instancji lokalnej. Te treści są pobierane z zdalnej instancji i oznaczane. Możesz wchodzić w interakcje z tymi treściami jak zwykle."
       }
     },
     "users": {
       "accounts": {
-        "following": "",
-        "followers": ""
+        "following": "{{count}} obserwujących",
+        "followers": "{{count}} obserwatorów"
       },
       "statuses": {
-        "reblogged_by": "",
-        "favourited_by": ""
+        "reblogged_by": "{{count}} podbić",
+        "favourited_by": "{{count}} polubionych"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "Wyniki ze zdalnej instancji są niekompletne"
     }
   }
 }
