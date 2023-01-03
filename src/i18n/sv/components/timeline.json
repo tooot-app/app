@@ -83,7 +83,7 @@
         "text": "Laddningsfel",
         "button": "Prova fjärrlänk"
       },
-      "altText": ""
+      "altText": "Alternativtext"
     },
     "avatar": {
       "accessibilityLabel": "{{name}}s avatar",
@@ -116,14 +116,14 @@
             "accessibilityHint": "Användarens konto"
           }
         },
-        "application": "",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Inlägg redigerat"
         },
         "muted": {
           "accessibilityLabel": "Inlägg tystat"
         },
-        "replies": "",
+        "replies": "Svarar <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Inlägget är ett direktmeddelande"
