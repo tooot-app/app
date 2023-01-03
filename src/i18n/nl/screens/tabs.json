@@ -266,7 +266,7 @@
         "heading": "Donker thema",
         "options": {
           "lighter": "Standaard",
-          "darker": ""
+          "darker": "Diep zwart"
         }
       },
       "browser": {
@@ -378,8 +378,8 @@
     "toot": {
       "name": "Gesprek",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Bevat externe inhoud",
+        "message": "Federale inhoud is niet altijd beschikbaar op de lokale instantie. Deze inhoud wordt opgehaald bij een externe instantie en gemarkeerd. U kunt met deze inhoud interacteren zoals gebruikelijk."
       }
     },
     "users": {
