@@ -94,7 +94,7 @@ export type TabSharedStackParamList = {
     hashtag: Mastodon.Tag['name']
   }
   'Tab-Shared-History': {
-    id: Mastodon.Status['id']
+    status: Mastodon.Status
     detectedLanguage: string
   }
   'Tab-Shared-Report': {

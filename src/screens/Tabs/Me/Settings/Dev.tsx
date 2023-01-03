@@ -4,11 +4,13 @@ import { displayMessage } from '@components/Message'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { storage } from '@utils/storage'
 import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
+import { Alert } from 'react-native'
 import { MMKV } from 'react-native-mmkv'
 
 const SettingsDev: React.FC = () => {
@@ -35,6 +37,17 @@ const SettingsDev: React.FC = () => {
             },
             () => {}
           )
+        }
+      />
+      <Button
+        type='text'
+        content={'Test link matcher'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={() =>
+          Alert.prompt('URL', undefined, text => console.log(urlMatcher(text)), 'plain-text')
         }
       />
       <Button

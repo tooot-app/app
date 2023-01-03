@@ -1,4 +1,4 @@
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { storage } from '@utils/storage'
 import {
   MMKV,

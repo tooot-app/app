@@ -6,7 +6,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { useQuery } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
-import { getHost } from '@utils/helpers/urlMatcher'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getAccountStorage } from '@utils/storage/actions'
@@ -66,6 +66,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const flRef = useRef<FlatList>(null)
   const scrolled = useRef(false)
 
+  const match = urlMatcher(toot.url || toot.uri)
   const finalData = useRef<(Mastodon.Status & { key?: string })[]>([
     { ...toot, _level: 0, key: 'cached' }
   ])
@@ -145,11 +146,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   useQuery(
     queryKey.remote,
     async () => {
-      const domain = getHost(toot.url || toot.uri)
+      const domain = match?.domain
       if (!domain?.length) {
         return Promise.reject('Cannot parse remote doamin')
       }
-      const id = (toot.url || toot.uri).match(new RegExp(/\/([0-9]+)$/))?.[1]
+      const id = match?.status?.id
       if (!id?.length) {
         return Promise.reject('Cannot parse remote toot id')
       }
@@ -191,7 +192,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     {
       enabled:
         ['public', 'unlisted'].includes(toot.visibility) &&
-        getHost(toot.uri) !== getAccountStorage.string('auth.domain'),
+        match?.domain !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: data => {

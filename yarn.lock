@@ -3449,17 +3449,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/url-parse@npm:^1":
+  version: 1.4.8
+  resolution: "@types/url-parse@npm:1.4.8"
+  checksum: 44a5e96ed4b579c43750f3578bfa9165f97a359c3b2a85ee126e9c16db964f6ea105e152afd3d1adbd15850a8b812043215f3820112177bb4255a60b432dbd85
+  languageName: node
+  linkType: hard
+
 "@types/use-sync-external-store@npm:^0.0.3":
   version: 0.0.3
   resolution: "@types/use-sync-external-store@npm:0.0.3"
   checksum: 161ddb8eec5dbe7279ac971531217e9af6b99f7783213566d2b502e2e2378ea19cf5e5ea4595039d730aa79d3d35c6567d48599f69773a02ffcff1776ec2a44e
-  languageName: node
-  linkType: hard
-
-"@types/valid-url@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@types/valid-url@npm:1.0.3"
-  checksum: bd527221b4f839c440600520f9bfbdb340f473543ea5ee25215f35155ae52fd2cc5c39086cab2ffa67a54a7c303de937fcc8a58edf9bc5b7000169d7a7aa8d42
   languageName: node
   linkType: hard
 
@@ -11262,7 +11262,7 @@ __metadata:
     "@types/react-dom": ^18.0.10
     "@types/react-native": ^0.70.8
     "@types/react-native-share-menu": ^5.0.2
-    "@types/valid-url": ^1.0.3
+    "@types/url-parse": ^1
     axios: ^1.2.1
     babel-plugin-module-resolver: ^4.1.0
     babel-plugin-transform-remove-console: ^6.9.4
@@ -11320,7 +11320,7 @@ __metadata:
     react-redux: ^8.0.5
     rn-placeholder: ^3.0.3
     typescript: ^4.9.4
-    valid-url: ^1.0.9
+    url-parse: ^1.5.10
     zeego: ^1.0.2
   languageName: unknown
   linkType: soft
@@ -11623,7 +11623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-parse@npm:^1.5.9":
+"url-parse@npm:^1.5.10, url-parse@npm:^1.5.9":
   version: 1.5.10
   resolution: "url-parse@npm:1.5.10"
   dependencies:
@@ -11753,7 +11753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valid-url@npm:^1.0.9, valid-url@npm:~1.0.9":
+"valid-url@npm:~1.0.9":
   version: 1.0.9
   resolution: "valid-url@npm:1.0.9"
   checksum: 3ecb030559404441c2cf104cbabab8770efb0f36d117db03d1081052ef133015a68806148ce954bb4dd0b5c42c14b709a88783c93d66b0916cb67ba771c98702

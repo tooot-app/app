@@ -19,7 +19,7 @@ const TimelineFeedback = () => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const { data } = useStatusHistory({
-    id: status.id,
+    status,
     options: { enabled: status.edited_at !== undefined }
   })
 
@@ -82,7 +82,7 @@ const TimelineFeedback = () => {
             style={[styles.text, { marginRight: 0, color: colors.blue }]}
             onPress={() =>
               navigation.push('Tab-Shared-History', {
-                id: status.id,
+                status,
                 detectedLanguage: detectedLanguage?.current || status.language || ''
               })
             }

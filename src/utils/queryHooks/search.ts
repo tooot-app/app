@@ -1,5 +1,6 @@
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
+import { queryClient } from '@utils/queryHooks'
 import { AxiosError } from 'axios'
 
 export type QueryKeySearch = [
@@ -43,22 +44,27 @@ const useSearchQuery = <T = SearchResult>({
   options?: UseQueryOptions<SearchResult, AxiosError, T>
 }) => {
   const queryKey: QueryKeySearch = ['Search', { ...queryKeyParams }]
-  return useQuery(queryKey, queryFunction, options)
+  return useQuery(queryKey, queryFunction, { ...options, staleTime: 3600, cacheTime: 3600 })
 }
 
-export const searchFetchToot = (uri: Mastodon.Status['uri']): Promise<Mastodon.Status | void> =>
-  apiInstance<SearchResult>({
-    version: 'v2',
-    method: 'get',
-    url: 'search',
-    params: {
-      q: uri,
-      type: 'statuses',
-      limit: 1,
-      resolve: true
-    }
-  })
-    .then(res => res.body.statuses[0])
-    .catch(err => console.warn(err))
+export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Mastodon.Status> => {
+  const queryKey: QueryKeySearch = ['Search', { type: 'statuses', term: uri, limit: 1 }]
+  return await queryClient
+    .fetchQuery(queryKey, queryFunction, { staleTime: 3600, cacheTime: 3600 })
+    .then(res =>
+      res.statuses[0].uri === uri || res.statuses[0].url === uri
+        ? res.statuses[0]
+        : Promise.reject()
+    )
+}
+
+export const searchLocalAccount = async (
+  url: Mastodon.Account['url']
+): Promise<Mastodon.Account> => {
+  const queryKey: QueryKeySearch = ['Search', { type: 'accounts', term: url, limit: 1 }]
+  return await queryClient
+    .fetchQuery(queryKey, queryFunction, { staleTime: 3600, cacheTime: 3600 })
+    .then(res => (res.accounts[0].url === url ? res.accounts[0] : Promise.reject()))
+}
 
 export { useSearchQuery }

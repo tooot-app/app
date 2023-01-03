@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query'
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
@@ -15,12 +15,10 @@ const queryClient = new QueryClient({
         }
       }
     }
+  },
+  logger: {
+    log: log => console.log(log),
+    warn: () => {},
+    error: () => {}
   }
 })
-
-// @ts-ignore
-import('react-query-native-devtools').then(({ addPlugin }) => {
-  addPlugin({ queryClient })
-})
-
-export default queryClient

@@ -32,6 +32,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
 
   const { data, dataUpdatedAt } = useAccountQuery({
     account,
+    _local: true,
     options: {
       onSuccess: a => {
         if (account._remote) {

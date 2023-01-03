@@ -47,7 +47,7 @@ const menuAccount = ({
       setEnabled(true)
     }
   }, [openChange, enabled])
-  const { data: fetchedAccount } = useAccountQuery({ account, options: { enabled } })
+  const { data: fetchedAccount } = useAccountQuery({ account, _local: true, options: { enabled } })
   const actualAccount = status?._remote ? fetchedAccount : account
   const { data, isFetched } = useRelationshipQuery({
     id: actualAccount?.id,

@@ -3,8 +3,9 @@ import * as Sentry from '@sentry/react-native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import AccessibilityManager from '@utils/accessibility/AccessibilityManager'
 import getLanguage from '@utils/helpers/getLanguage'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import audio from '@utils/startup/audio'
+import { dev } from '@utils/startup/dev'
 import log from '@utils/startup/log'
 import netInfo from '@utils/startup/netInfo'
 import push from '@utils/startup/push'
@@ -34,6 +35,7 @@ Platform.select({
   android: LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 })
 
+dev()
 sentry()
 audio()
 push()

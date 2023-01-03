@@ -1,4 +1,4 @@
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { generateAccountKey, setAccount, useGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'

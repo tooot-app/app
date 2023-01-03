@@ -7,7 +7,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Platform, TextStyle } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import validUrl from 'valid-url'
 
 const regexEmoji = new RegExp(/(:[A-Za-z0-9_]+:)/)
 
@@ -72,23 +71,19 @@ const ParseEmojis: React.FC<Props> = ({
                 const uri = reduceMotionEnabled
                   ? emojis[emojiIndex].static_url
                   : emojis[emojiIndex].url
-                if (validUrl.isHttpsUri(uri)) {
-                  return (
-                    <CustomText key={emojiShortcode + i}>
-                      {i === 0 ? ' ' : undefined}
-                      <FastImage
-                        source={{ uri }}
-                        style={{
-                          width: adaptedFontsize,
-                          height: adaptedFontsize,
-                          transform: [{ translateY: Platform.OS === 'ios' ? -1 : 2 }]
-                        }}
-                      />
-                    </CustomText>
-                  )
-                } else {
-                  return null
-                }
+                return (
+                  <CustomText key={emojiShortcode + i}>
+                    {i === 0 ? ' ' : undefined}
+                    <FastImage
+                      source={{ uri: uri.trim() }}
+                      style={{
+                        width: adaptedFontsize,
+                        height: adaptedFontsize,
+                        transform: [{ translateY: Platform.OS === 'ios' ? -1 : 2 }]
+                      }}
+                    />
+                  </CustomText>
+                )
               }
             } else {
               return <CustomText key={i}>{str}</CustomText>

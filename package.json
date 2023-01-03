@@ -89,7 +89,7 @@
     "react-native-tab-view": "^3.3.4",
     "react-redux": "^8.0.5",
     "rn-placeholder": "^3.0.3",
-    "valid-url": "^1.0.9",
+    "url-parse": "^1.5.10",
     "zeego": "^1.0.2"
   },
   "devDependencies": {
@@ -104,7 +104,7 @@
     "@types/react-dom": "^18.0.10",
     "@types/react-native": "^0.70.8",
     "@types/react-native-share-menu": "^5.0.2",
-    "@types/valid-url": "^1.0.3",
+    "@types/url-parse": "^1",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chalk": "^4.1.2",
