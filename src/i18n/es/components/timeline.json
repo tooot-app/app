@@ -32,7 +32,7 @@
       },
       "update": "El impulso ha sido editado",
       "admin.sign_up": "{{name}} se unió a la instancia",
-      "admin.report": "{{name}} reportó:"
+      "admin.report": "{{name}} denunció:"
     },
     "actions": {
       "reply": {
@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Error al cargar",
         "button": "Probar con el enlace remoto"
-      }
+      },
+      "altText": "Texto alternativo"
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Cuenta de usuario"
           }
         },
-        "application": "Con {{application}}",
+        "application": "con {{application}}",
         "edited": {
           "accessibilityLabel": "Toot editado"
         },
         "muted": {
           "accessibilityLabel": "Toot silenciado"
         },
+        "replies": "Respuestas <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "El toot es un mensaje directo"

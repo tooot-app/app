@@ -6,7 +6,7 @@
       "action_false": "사용자 팔로우",
       "action_true": "사용자 팔로우 해제"
     },
-    "inLists": "리스트의 사용자 관리",
+    "inLists": "",
     "showBoosts": {
       "action_false": "",
       "action_true": ""

@@ -6,10 +6,10 @@
       "action_false": "Följ användare",
       "action_true": "Avfölj användaren"
     },
-    "inLists": "Hantera användare i listor",
+    "inLists": "Listor som innehåller användaren",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Visa användarens boostar",
+      "action_true": "Göm användarens boostar"
     },
     "mute": {
       "action_false": "Tysta användare",

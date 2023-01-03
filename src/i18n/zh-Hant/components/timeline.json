@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "載入錯誤",
         "button": "嘗試遠端連接"
-      }
+      },
+      "altText": "替代文字"
     },
     "avatar": {
       "accessibilityLabel": "{{name}} 的大頭貼",
@@ -115,13 +116,14 @@
             "accessibilityHint": "使用者帳戶"
           }
         },
-        "application": "{{application}}",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "嘟文已編輯"
         },
         "muted": {
           "accessibilityLabel": "已靜音此嘟文"
         },
+        "replies": "回覆 <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "此嘟文是私訊"

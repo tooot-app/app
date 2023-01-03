@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Độ tối",
         "options": {
-          "lighter": "Thấp",
-          "darker": "Vừa"
+          "lighter": "Mặc định",
+          "darker": "Tương phản cao"
         }
       },
       "browser": {
@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Tự động phát GIF"
       },
       "feedback": {
         "heading": "Đề xuất tính năng"
@@ -330,22 +330,22 @@
       "name": "Lịch sử chỉnh sửa"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Báo cáo @{{acct}}",
+      "report": "Báo cáo",
       "forward": {
-        "heading": ""
+        "heading": "Chuyển tiếp tới {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Có vấn đề gì với người này?",
+        "spam": "Đây là spam",
+        "other": "Lý do khác",
+        "violation": "Vi phạm nội quy máy chủ"
       },
       "comment": {
-        "heading": ""
+        "heading": "Bạn có muốn bổ sung gì không?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Vi phạm nội quy máy chủ"
       }
     },
     "search": {
@@ -376,7 +376,11 @@
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
     },
     "toot": {
-      "name": "Nội dung tút"
+      "name": "Nội dung tút",
+      "remoteFetch": {
+        "title": "Chứa nội dung ở máy chủ khác",
+        "message": "Nội dung liên hợp không phải lúc nào cũng lưu lại trên máy chủ. Những nội dung này được tìm nạp từ máy chủ từ xa và được đánh dấu. Bạn có thể tương tác với những nội dung này như bình thường."
+      }
     },
     "users": {
       "accounts": {

@@ -11,17 +11,17 @@
     },
     "right": {
       "button": {
-        "default": "Trąbnij tootka",
-        "conversation": "Wyślij prywatnego tootka",
-        "reply": "Odpowiedz",
-        "deleteEdit": "Trąbnij tootka",
-        "edit": "Trąbnij tootka",
-        "share": "Trąbnij tootka"
+        "default": "Tootnij",
+        "conversation": "Toot prywatny",
+        "reply": "Odpowiedz na toot",
+        "deleteEdit": "Tootnij",
+        "edit": "Tootnij",
+        "share": "Tootnij"
       },
       "alert": {
         "default": {
-          "title": "Nie udało się trąbnąć tootka",
-          "button": "Spróbuj jeszcze raz"
+          "title": "Publikacja toota nieudana",
+          "button": "Spróbuj ponownie"
         },
         "removeReply": {
           "title": "Nie znaleziono odpowiedzi",
@@ -109,64 +109,64 @@
           "failed": {
             "alert": {
               "title": "Błąd przesyłania",
-              "button": ""
+              "button": "Spróbuj jeszcze raz"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Dodaj ankietę",
+          "accessibilityHint": "Funkcja załącznika zostanie wyłączona, gdy ankieta jest aktywna"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Widoczność toota: {{visibility}}",
+          "title": "Widoczność toota",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Publiczny",
+            "unlisted": "Niepubliczny",
+            "private": "Tylko obserwujący",
+            "direct": "Bezpośrednia wiadomość"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Dodaj emoji",
+          "accessibilityHint": "Otwórz panel wyboru emoji, przesuń w poziomo, aby zmienić stronę"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Wersja robocza ({{count}})",
+      "drafts_other": "Wersje robocze ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Edytuj załącznik",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Zapisz edycję załącznika",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Błąd edycji",
+            "button": "Spróbuj ponownie"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Opis dla niedowidzących",
+          "placeholder": "Możesz dodać opis, czasami nazywany tekstem alternatywnym czy alt-text, dla Twoich mediów, dzięki czemu będą one dostępne dla jeszcze większej liczby osób, w tym dla osób niewidomych lub niedowidzących.\n\nDobre opisy są zwięzłe, ale prezentują to, co w twoich mediach jest wystarczająco dokładne, aby zrozumieć ich kontekst."
         },
-        "imageFocus": ""
+        "imageFocus": "Przeciągnij okrąg ogniskowy, aby zaktualizować punkt ogniskowy"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Wersja robocza"
       },
-      "warning": "",
+      "warning": "Szkice są przechowywane tylko lokalnie i mogą zostać usunięte w razie niefortunnych wydarzeń. Zaleca się nie używać szkiców do długotrwałego przechowywania.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Zapisano szkic, stuknij, aby edytować ten szkic",
+        "textEmpty": "Brak treści"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Sprawdzanie załączników na serwerze..."
     }
   }
 }

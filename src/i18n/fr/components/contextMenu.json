@@ -6,7 +6,7 @@
       "action_false": "Suivre l'utilisateur",
       "action_true": "Ne plus suivre l'utilisateur"
     },
-    "inLists": "Gérer l'utilisateur des listes",
+    "inLists": "",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
