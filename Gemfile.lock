@@ -156,7 +156,7 @@ GEM
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-json (1.1.0)
-    fastlane-plugin-sentry (1.14.0)
+    fastlane-plugin-sentry (1.15.0)
       os (~> 1.1, >= 1.1.4)
     fastlane-plugin-versioning_android (0.1.0)
     fastlane-plugin-yarn (1.2)
