@@ -83,7 +83,7 @@
         "text": "附件读取错误",
         "button": "尝试远程链接"
       },
-      "altText": ""
+      "altText": "替代文本"
     },
     "avatar": {
       "accessibilityLabel": "{{name}}的头像",
@@ -123,7 +123,7 @@
         "muted": {
           "accessibilityLabel": "已静音此嘟文"
         },
-        "replies": "",
+        "replies": "回复 <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "此嘟文是私信"
