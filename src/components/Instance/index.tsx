@@ -5,7 +5,7 @@ import apiGeneral from '@utils/api/general'
 import browserPackage from '@utils/helpers/browserPackage'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { storage } from '@utils/storage'
@@ -19,7 +19,6 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
-import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
@@ -27,7 +26,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { MMKV } from 'react-native-mmkv'
-import validUrl from 'valid-url'
+import parse from 'url-parse'
 import CustomText from '../Text'
 
 export interface Props {
@@ -50,7 +49,7 @@ const ComponentInstance: React.FC<Props> = ({
   const whitelisted: boolean =
     !!domain.length &&
     !!errorCode &&
-    !!validUrl.isHttpsUri(`https://${domain}`) &&
+    !!(parse(`https://${domain}/`).hostname === domain) &&
     errorCode === 401
 
   const instanceQuery = useInstanceQuery({

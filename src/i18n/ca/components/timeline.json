@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Error en carregar",
         "button": "Prova amb l'enllaç remot"
-      }
+      },
+      "altText": "Text alternatiu"
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Compte d'usuari"
           }
         },
-        "application": "Amb {{application}}",
+        "application": "amb {{application}}",
         "edited": {
           "accessibilityLabel": "Publicació editada"
         },
         "muted": {
           "accessibilityLabel": "Publicació silenciada"
         },
+        "replies": "Respostes <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "La publicació és un missatge directe"

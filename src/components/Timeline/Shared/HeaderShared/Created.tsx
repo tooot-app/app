@@ -3,21 +3,23 @@ import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormattedDate } from 'react-intl'
+import StatusContext from '../Context'
 
 export interface Props {
-  created_at: Mastodon.Status['created_at'] | number
-  edited_at?: Mastodon.Status['edited_at']
-  highlighted?: boolean
+  created_at?: Mastodon.Status['created_at'] | number
 }
 
-const HeaderSharedCreated: React.FC<Props> = ({ created_at, edited_at, highlighted = false }) => {
+const HeaderSharedCreated: React.FC<Props> = ({ created_at }) => {
+  const { status, highlighted } = useContext(StatusContext)
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
-  const actualTime = edited_at || created_at
+  if (!status) return null
+
+  const actualTime = created_at || status.edited_at || status.created_at
 
   return (
     <>
@@ -30,7 +32,7 @@ const HeaderSharedCreated: React.FC<Props> = ({ created_at, edited_at, highlight
           <RelativeTime time={actualTime} />
         )}
       </CustomText>
-      {edited_at ? (
+      {status.edited_at && !highlighted ? (
         <Icon
           accessibilityLabel={t('shared.header.shared.edited.accessibilityLabel')}
           name='Edit'

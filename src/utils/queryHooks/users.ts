@@ -1,22 +1,18 @@
 import {
-    QueryFunctionContext,
-    useInfiniteQuery,
-    UseInfiniteQueryOptions
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions
 } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
-import { getHost } from '@utils/helpers/urlMatcher'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 
-const queryFunction = async ({
-  queryKey,
-  pageParam,
-  meta
-}: QueryFunctionContext<QueryKeyUsers>) => {
+const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyUsers>) => {
   const page = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -24,7 +20,7 @@ const queryFunction = async ({
     case 'statuses':
       return apiInstance<Mastodon.Account[]>({
         method: 'get',
-        url: `${page.reference}/${page.status.id}/${page.type}`,
+        url: `statuses/${page.status.id}/${page.type}`,
         params
       })
     case 'accounts':
@@ -32,14 +28,14 @@ const queryFunction = async ({
       if (localInstance) {
         return apiInstance<Mastodon.Account[]>({
           method: 'get',
-          url: `${page.reference}/${page.account.id}/${page.type}`,
+          url: `accounts/${page.account.id}/${page.type}`,
           params
         })
       } else {
         let res: PagedResponse<Mastodon.Account[]>
 
         try {
-          const domain = getHost(page.account.url)
+          const domain = urlMatcher(page.account.url)?.domain
           if (!domain?.length) {
             throw new Error()
           }
@@ -54,7 +50,7 @@ const queryFunction = async ({
             res = await apiGeneral<Mastodon.Account[]>({
               method: 'get',
               domain,
-              url: `api/v1/${page.reference}/${resLookup.body.id}/${page.type}`,
+              url: `api/v1/accounts/${resLookup.body.id}/${page.type}`,
               params
             })
             return { ...res, remoteData: true }

@@ -6,7 +6,7 @@
       "action_false": "ユーザーをフォロー",
       "action_true": "ユーザーをフォロー解除"
     },
-    "inLists": "リストのユーザーを管理",
+    "inLists": "",
     "showBoosts": {
       "action_false": "",
       "action_true": ""

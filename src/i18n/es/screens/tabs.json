@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema oscuro",
         "options": {
-          "lighter": "Más claro",
-          "darker": "Más oscuro"
+          "lighter": "Predeterminado",
+          "darker": "Oscuro puro"
         }
       },
       "browser": {
@@ -300,7 +300,7 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Acciones para {{user}}",
-        "accessibilityHint": "Puedes silenciar, bloquear, reportar o compartir este usuario"
+        "accessibilityHint": "Puedes silenciar, bloquear, denunciar o compartir este usuario"
       },
       "followed_by": " te sigue",
       "moved": "Se ha trasladado",
@@ -330,8 +330,8 @@
       "name": "Historial de ediciones"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Denuncia {{acct}}",
+      "report": "Denuncia",
       "forward": {
         "heading": "Enviar anónimamente al servidor remoto {{instance}}"
       },
@@ -376,7 +376,11 @@
       "notFound": "No se pudo encontrar <bold>{{searchTerm}}</bold> relacionado con {{type}}"
     },
     "toot": {
-      "name": "Discusiones"
+      "name": "Discusiones",
+      "remoteFetch": {
+        "title": "Incluye contenido remoto",
+        "message": "El contenido federado no siempre está disponible en la instancia local. Este contenido se obtiene de la instancia remota y se marca. Puedes interactuar con este contenido como siempre."
+      }
     },
     "users": {
       "accounts": {

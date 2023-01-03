@@ -1,10 +1,10 @@
 import { displayMessage } from '@components/Message'
 import { useQueryClient } from '@tanstack/react-query'
-import { getHost } from '@utils/helpers/urlMatcher'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
 import { getAccountStorage } from '@utils/storage/actions'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
+import parse from 'url-parse'
 
 const menuInstance = ({
   status,
@@ -35,9 +35,9 @@ const menuInstance = ({
 
   const menus: ContextMenu[][] = []
 
-  const instance = getHost(status.uri)
+  const instance = parse(status.uri).hostname
 
-  if (instance === getAccountStorage.string('auth.domain')) {
+  if (instance !== getAccountStorage.string('auth.domain')) {
     menus.push([
       {
         key: 'instance-block',

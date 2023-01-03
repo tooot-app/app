@@ -5,7 +5,7 @@ import {
   PERMISSION_MANAGE_REPORTS,
   PERMISSION_MANAGE_USERS
 } from '@utils/helpers/permissions'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { QueryKeyProfile } from '@utils/queryHooks/profile'
 import { getAccountDetails, getGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'

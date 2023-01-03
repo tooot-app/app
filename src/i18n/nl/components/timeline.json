@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Fout bij het laden",
         "button": "Probeer externe link"
-      }
+      },
+      "altText": "Alternatieve tekst"
     },
     "avatar": {
       "accessibilityLabel": "Avatar van {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Gebruikersaccount"
           }
         },
-        "application": "Via {{application}}",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Toot bewerkt"
         },
         "muted": {
           "accessibilityLabel": "Toot gedempt"
         },
+        "replies": "Reacties <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Toot is een direct bericht"

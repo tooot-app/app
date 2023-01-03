@@ -17,7 +17,7 @@ import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, rootQueryKey, status, highlighted, disableDetails, rawContent, isRemote } =
+  const { queryKey, rootQueryKey, status, disableDetails, rawContent, isRemote } =
     useContext(StatusContext)
   if (!status) return null
 
@@ -66,15 +66,11 @@ const TimelineHeaderDefault: React.FC = () => {
               style={{ marginRight: StyleConstants.Spacing.S }}
             />
           ) : null}
-          <HeaderSharedCreated
-            created_at={status.created_at}
-            edited_at={status.edited_at}
-            highlighted={highlighted}
-          />
-          <HeaderSharedVisibility visibility={status.visibility} />
-          <HeaderSharedMuted muted={status.muted} />
+          <HeaderSharedCreated />
+          <HeaderSharedVisibility />
+          <HeaderSharedMuted />
           <HeaderSharedReplies />
-          <HeaderSharedApplication application={status.application} />
+          <HeaderSharedApplication />
         </View>
       </View>
 

@@ -5,7 +5,7 @@ import CustomText from '@components/Text'
 import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useRulesQuery } from '@utils/queryHooks/reports'
-import { searchFetchToot } from '@utils/queryHooks/search'
+import { searchLocalStatus } from '@utils/queryHooks/search'
 import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -55,7 +55,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
             const body = new FormData()
             if (status) {
               if (status._remote) {
-                const fetchedStatus = await searchFetchToot(status.uri)
+                const fetchedStatus = await searchLocalStatus(status.uri)
                 if (fetchedStatus) {
                   body.append('status_ids[]', fetchedStatus.id)
                 }

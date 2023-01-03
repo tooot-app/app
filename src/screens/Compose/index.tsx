@@ -10,7 +10,7 @@ import { handleError } from '@utils/api/helpers'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
-import { searchFetchToot, SearchResult } from '@utils/queryHooks/search'
+import { searchLocalStatus } from '@utils/queryHooks/search'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import {
   getAccountStorage,
@@ -156,7 +156,7 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
             content: params.accts.map(acct => `@${acct}`).join(' ') + ' ',
             disableDebounce: true
           })
-        searchFetchToot(params.incomingStatus.uri).then(status => {
+        searchLocalStatus(params.incomingStatus.uri).then(status => {
           if (status?.uri === params.incomingStatus.uri) {
             composeDispatch({ type: 'updateReply', payload: status })
           }

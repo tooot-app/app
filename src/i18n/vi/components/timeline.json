@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Không hỗ trợ định dạng",
         "button": "Thử liên kết từ xa"
-      }
+      },
+      "altText": "Mô tả hình"
     },
     "avatar": {
       "accessibilityLabel": "Ảnh đại diện của {{name}}",
@@ -122,6 +123,7 @@
         "muted": {
           "accessibilityLabel": "Đã ẩn tút"
         },
+        "replies": "Lượt trả lời <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Tút này là dạng nhắn riêng"

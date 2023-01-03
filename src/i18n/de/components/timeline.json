@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Ladefehler",
         "button": "Remote Link versuchen"
-      }
+      },
+      "altText": "Alternativtext"
     },
     "avatar": {
       "accessibilityLabel": "Profilbild von {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Profil"
           }
         },
-        "application": "Mit {{application}}",
+        "application": "mit {{application}}",
         "edited": {
           "accessibilityLabel": "Tröt bearbeitet"
         },
         "muted": {
           "accessibilityLabel": "Tröt stummgeschaltet"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Tröt ist eine Direktnachricht"

@@ -1,17 +1,17 @@
 {
   "screenshot": {
-    "title": "",
-    "message": ""
+    "title": "Ochrona Prywatności",
+    "message": "Proszę nie ujawniać tożsamości innych użytkowników, takich jak nazwa użytkownika, awatar itp. Dziękujemy!"
   },
   "localCorrupt": {
-    "message": ""
+    "message": "Sesja wygasła, zaloguj się ponownie"
   },
   "pushError": {
-    "message": "",
-    "description": ""
+    "message": "Błąd usługi push",
+    "description": "Proszę włączyć ponownie powiadomienia push w ustawieniach"
   },
   "shareError": {
-    "imageNotSupported": "",
-    "videoNotSupported": ""
+    "imageNotSupported": "Typ obrazu {{type}} nie jest wspierany",
+    "videoNotSupported": "Typ nagrania {{type}} nie jest wspierany"
   }
 }

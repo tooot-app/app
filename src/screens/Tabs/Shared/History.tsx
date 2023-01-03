@@ -111,11 +111,11 @@ const ContentView: React.FC<{
 const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>> = ({
   navigation,
   route: {
-    params: { id, detectedLanguage }
+    params: { status, detectedLanguage }
   }
 }) => {
   const { t } = useTranslation('screenTabs')
-  const { data } = useStatusHistory({ id })
+  const { data } = useStatusHistory({ status })
 
   useEffect(() => {
     navigation.setOptions({

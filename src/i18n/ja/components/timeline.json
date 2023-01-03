@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "読み込みエラー",
         "button": "リモートリンクを試す"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "{{name}}のアバター",
@@ -115,13 +116,14 @@
             "accessibilityHint": "ユーザーのアカウント名"
           }
         },
-        "application": "{{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "トゥートが編集されました"
         },
         "muted": {
           "accessibilityLabel": "トゥートがミュートされました"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "トゥートはダイレクトメッセージです"

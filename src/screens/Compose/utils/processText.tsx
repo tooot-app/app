@@ -1,6 +1,6 @@
 import { emojis } from '@components/Emojis'
 import CustomText from '@components/Text'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { QueryKeyInstance } from '@utils/queryHooks/instance'
 import { useTheme } from '@utils/styles/ThemeManager'
 import LinkifyIt from 'linkify-it'

@@ -1,19 +1,17 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
+import StatusContext from '../Context'
 
-export interface Props {
-  visibility: Mastodon.Status['visibility']
-}
-
-const HeaderSharedVisibility: React.FC<Props> = ({ visibility }) => {
+const HeaderSharedVisibility: React.FC = () => {
+  const { status } = useContext(StatusContext)
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
 
-  switch (visibility) {
+  switch (status?.visibility) {
     case 'unlisted':
       return (
         <Icon

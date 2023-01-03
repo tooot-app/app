@@ -1,5 +1,5 @@
 import { InfiniteData } from '@tanstack/react-query'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { MutationVarsTimelineUpdateStatusProperty, TimelineData } from '../timeline'
 
 const updateStatusProperty = ({
@@ -9,7 +9,7 @@ const updateStatusProperty = ({
   payload,
   poll
 }: MutationVarsTimelineUpdateStatusProperty & { poll?: Mastodon.Poll }) => {
-  for (const key of [queryKey]) {
+  for (const key of [queryKey, rootQueryKey]) {
     if (!key) continue
 
     queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {

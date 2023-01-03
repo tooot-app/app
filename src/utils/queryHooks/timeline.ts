@@ -9,11 +9,11 @@ import {
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
-import queryClient from '@utils/queryHooks'
+import { queryClient } from '@utils/queryHooks'
 import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
-import { searchFetchToot } from './search'
+import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
@@ -342,7 +342,7 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
         default:
           let tootId = params.status.id
           if (params.status._remote) {
-            const fetched = await searchFetchToot(params.status.uri)
+            const fetched = await searchLocalStatus(params.status.uri)
             if (fetched) {
               tootId = fetched.id
             } else {

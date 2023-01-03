@@ -1,62 +1,69 @@
 import { getAccountStorage } from '@utils/storage/actions'
+import parse from 'url-parse'
 
-const getHost = (url: unknown): string | undefined | null => {
-  if (typeof url !== 'string') return undefined
-
-  const matches = url.match(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i)
-  return matches?.[1]
-}
-
-const matchStatus = (
-  url: string
-): { id: string; style: 'default' | 'pretty'; sameInstance: boolean } | null => {
-  // https://social.xmflsct.com/web/statuses/105590085754428765 <- default
-  // https://social.xmflsct.com/@tooot/105590085754428765 <- pretty
-  const matcherStatus = new RegExp(/(https?:\/\/)?([^\/]+)\/(web\/statuses|@.+)\/([0-9]+)/)
-
-  const matched = url.match(matcherStatus)
-  if (matched) {
-    const hostname = matched[2]
-    const style = matched[3] === 'web/statuses' ? 'default' : 'pretty'
-    const id = matched[4]
-
-    const sameInstance = hostname === getAccountStorage.string('auth.domain')
-    return { id, style, sameInstance }
-  }
-
-  return null
-}
-
-const matchAccount = (
+export const urlMatcher = (
   url: string
 ):
-  | { id: string; style: 'default'; sameInstance: boolean }
-  | { username: string; style: 'pretty'; sameInstance: boolean }
-  | null => {
-  // https://social.xmflsct.com/web/accounts/14195 <- default
-  // https://social.xmflsct.com/web/@tooot <- pretty ! cannot be searched on the same instance
-  // https://social.xmflsct.com/@tooot <- pretty
-  const matcherAccount = new RegExp(
-    /(https?:\/\/)?([^\/]+)(\/web\/accounts\/([0-9]+)|\/web\/(@.+)|\/(@.+))/
-  )
-
-  const matched = url.match(matcherAccount)
-  if (matched) {
-    const hostname = matched[2]
-    const account = matched.filter(i => i).reverse()?.[0]
-    if (account) {
-      const style = account.startsWith('@') ? 'pretty' : 'default'
-
-      const sameInstance = hostname === getAccountStorage.string('auth.domain')
-      return style === 'default'
-        ? { id: account, style, sameInstance }
-        : { username: account, style, sameInstance }
-    } else {
-      return null
+  | {
+      domain: string
+      account?: Partial<Pick<Mastodon.Account, 'id' | 'acct' | '_remote'>>
+      status?: Partial<Pick<Mastodon.Status, 'id' | '_remote'>>
     }
+  | undefined => {
+  const parsed = parse(url)
+  if (!parsed.hostname.length || !parsed.pathname.length) return undefined
+
+  const domain = parsed.hostname
+  const _remote = parsed.hostname !== getAccountStorage.string('auth.domain')
+
+  let statusId: string | undefined
+  let accountId: string | undefined
+  let accountAcct: string | undefined
+
+  const segments = parsed.pathname.split('/')
+  const last = segments[segments.length - 1]
+  const length = segments.length // there is a starting slash
+
+  switch (last?.startsWith('@')) {
+    case true:
+      if (length === 2 || (length === 3 && segments[length - 2] === 'web')) {
+        // https://social.xmflsct.com/@tooot <- Mastodon v4.0 and above
+        // https://social.xmflsct.com/web/@tooot <- Mastodon v3.5 and below ! cannot be searched on the same instance
+        accountAcct = `${last}@${domain}`
+      }
+      break
+    case false:
+      const nextToLast = segments[length - 2]
+      if (nextToLast) {
+        if (nextToLast === 'statuses') {
+          if (length === 4 && segments[length - 3] === 'web') {
+            // https://social.xmflsct.com/web/statuses/105590085754428765 <- old
+            statusId = last
+          } else if (
+            length === 5 &&
+            segments[length - 2] === 'statuses' &&
+            segments[length - 4] === 'users'
+          ) {
+            // https://social.xmflsct.com/users/tooot/statuses/105590085754428765 <- default Mastodon
+            statusId = last
+            // accountAcct = `@${segments[length - 3]}@${domain}`
+          }
+        } else if (
+          nextToLast.startsWith('@') &&
+          (length === 3 || (length === 4 && segments[length - 3] === 'web'))
+        ) {
+          // https://social.xmflsct.com/web/@tooot/105590085754428765 <- pretty Mastodon v3.5 and below
+          // https://social.xmflsct.com/@tooot/105590085754428765 <- pretty Mastodon v4.0 and above
+          statusId = last
+          // accountAcct = `${nextToLast}@${domain}`
+        }
+      }
+      break
   }
 
-  return null
+  return {
+    domain,
+    ...((accountId || accountAcct) && { account: { id: accountId, acct: accountAcct, _remote } }),
+    ...(statusId && { status: { id: statusId, _remote } })
+  }
 }
-
-export { getHost, matchStatus, matchAccount }

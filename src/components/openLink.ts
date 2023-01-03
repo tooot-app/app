@@ -1,12 +1,13 @@
-import apiInstance from '@utils/api/instance'
 import browserPackage from '@utils/helpers/browserPackage'
-import { matchAccount, matchStatus } from '@utils/helpers/urlMatcher'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
 import navigationRef from '@utils/navigation/navigationRef'
-import { SearchResult } from '@utils/queryHooks/search'
+import { queryClient } from '@utils/queryHooks'
+import { QueryKeyAccount } from '@utils/queryHooks/account'
+import { searchLocalAccount, searchLocalStatus } from '@utils/queryHooks/search'
+import { QueryKeyStatus } from '@utils/queryHooks/status'
 import { getGlobalStorage } from '@utils/storage/actions'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
-import validUrl from 'valid-url'
 
 export let loadingLink = false
 
@@ -15,7 +16,7 @@ const openLink = async (url: string, navigation?: any) => {
     return
   }
 
-  const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: {}) => {
+  const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: any) => {
     if (navigation) {
       navigation.push(page, options)
     } else {
@@ -24,83 +25,79 @@ const openLink = async (url: string, navigation?: any) => {
     }
   }
 
+  const match = urlMatcher(url)
   // If a tooot can be found
-  const isStatus = matchStatus(url)
-  if (isStatus) {
-    if (isStatus.sameInstance) {
-      handleNavigation('Tab-Shared-Toot', { toot: { id: isStatus.id } })
-      return
-    }
-
+  if (match?.status?.id) {
     loadingLink = true
-    let response
-    try {
-      response = await apiInstance<SearchResult>({
-        version: 'v2',
-        method: 'get',
-        url: 'search',
-        params: { type: 'statuses', q: url, limit: 1, resolve: true }
-      })
-    } catch {}
-    if (response && response.body && response.body.statuses.length) {
-      handleNavigation('Tab-Shared-Toot', {
-        toot: response.body.statuses[0]
-      })
+    let response: Mastodon.Status | undefined = undefined
+
+    const queryKey: QueryKeyStatus = [
+      'Status',
+      { id: match.status.id, uri: url, _remote: match.status._remote }
+    ]
+    const cache = queryClient.getQueryData<Mastodon.Status>(queryKey)
+
+    if (cache) {
+      handleNavigation('Tab-Shared-Toot', { toot: cache })
       loadingLink = false
       return
+    } else {
+      try {
+        response = await searchLocalStatus(url)
+      } catch {}
+      if (response) {
+        handleNavigation('Tab-Shared-Toot', { toot: response })
+        loadingLink = false
+        return
+      }
     }
   }
 
   // If an account can be found
-  const isAccount = matchAccount(url)
-  if (isAccount) {
-    if (isAccount.sameInstance) {
-      if (isAccount.style === 'default' && isAccount.id) {
-        handleNavigation('Tab-Shared-Account', { account: isAccount })
-        return
-      }
+  if (match?.account) {
+    if (!match.account._remote && match.account.id) {
+      handleNavigation('Tab-Shared-Account', { account: match.account.id })
+      return
     }
 
     loadingLink = true
-    let response
-    try {
-      response = await apiInstance<SearchResult>({
-        version: 'v2',
-        method: 'get',
-        url: 'search',
-        params: {
-          type: 'accounts',
-          q: isAccount.sameInstance && isAccount.style === 'pretty' ? isAccount.username : url,
-          limit: 1,
-          resolve: true
-        }
-      })
-    } catch {}
-    if (response && response.body && response.body.accounts.length) {
-      handleNavigation('Tab-Shared-Account', {
-        account: response.body.accounts[0]
-      })
+    let response: Mastodon.Account | undefined = undefined
+
+    const queryKey: QueryKeyAccount = [
+      'Account',
+      { id: match.account.id, url: url, _remote: match.account._remote }
+    ]
+    const cache = queryClient.getQueryData<Mastodon.Status>(queryKey)
+
+    if (cache) {
+      handleNavigation('Tab-Shared-Account', { account: cache })
       loadingLink = false
       return
+    } else {
+      try {
+        response = await searchLocalAccount(url)
+      } catch {}
+      if (response) {
+        handleNavigation('Tab-Shared-Account', { account: response })
+        loadingLink = false
+        return
+      }
     }
   }
 
   loadingLink = false
-  const validatedUrl = validUrl.isWebUri(url)
-  if (validatedUrl) {
-    switch (getGlobalStorage.string('app.browser')) {
-      // Some links might end with an empty space at the end that triggers an error
-      case 'internal':
-        await WebBrowser.openBrowserAsync(validatedUrl, {
-          dismissButtonStyle: 'close',
-          enableBarCollapsing: true,
-          ...(await browserPackage())
-        })
-        break
-      case 'external':
-        await Linking.openURL(validatedUrl)
-        break
-    }
+  switch (getGlobalStorage.string('app.browser')) {
+    // Some links might end with an empty space at the end that triggers an error
+    case 'internal':
+      await WebBrowser.openBrowserAsync(url.trim(), {
+        dismissButtonStyle: 'close',
+        enableBarCollapsing: true,
+        ...(await browserPackage())
+      })
+      break
+    case 'external':
+      await Linking.openURL(url.trim())
+      break
   }
 }
 

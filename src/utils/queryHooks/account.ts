@@ -1,68 +1,89 @@
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { AxiosError } from 'axios'
-import { SearchResult } from './search'
+import { searchLocalAccount } from './search'
 
 export type QueryKeyAccount = [
   'Account',
-  Pick<Mastodon.Account, 'id' | 'url' | '_remote'> | undefined
+  (
+    | (Partial<Pick<Mastodon.Account, 'id' | 'acct' | 'username' | '_remote'>> &
+        Pick<Mastodon.Account, 'url'> & { _local?: boolean })
+    | undefined
+  )
 ]
 
 const accountQueryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeyAccount>) => {
   const key = queryKey[1]
   if (!key) return Promise.reject()
 
-  let matchedId = key.id
+  let matchedAccount: Mastodon.Account | undefined = undefined
 
   if (key._remote) {
-    await apiInstance<SearchResult>({
-      version: 'v2',
-      method: 'get',
-      url: 'search',
-      params: {
-        q: key.url,
-        type: 'accounts',
-        limit: 1,
-        resolve: true
-      }
-    })
-      .then(res => {
-        const account = res.body.accounts[0]
-        if (account.url !== key.url) {
-          return Promise.reject()
-        } else {
-          matchedId = account.id
-        }
-      })
-      .catch(() => Promise.reject())
-  }
+    const match = urlMatcher(key.url)
 
-  const res = await apiInstance<Mastodon.Account>({
-    method: 'get',
-    url: `accounts/${matchedId}`
-  })
-  return res.body
+    const domain = match?.domain
+    const id = key.id || match?.account?.id
+    const acct = key.acct || key.username || match?.account?.acct
+
+    if (!key._local && domain) {
+      try {
+        if (id) {
+          matchedAccount = await apiGeneral<Mastodon.Account>({
+            method: 'get',
+            domain: domain,
+            url: `api/v1/accounts/${id}`
+          }).then(res => ({ ...res.body, _remote: true }))
+        } else if (acct) {
+          matchedAccount = await apiGeneral<Mastodon.Account>({
+            method: 'get',
+            domain: domain,
+            url: 'api/v1/accounts/lookup',
+            params: { acct }
+          }).then(res => ({ ...res.body, _remote: true }))
+        }
+      } catch {}
+    }
+
+    if (!matchedAccount) {
+      matchedAccount = await searchLocalAccount(key.url)
+    }
+  } else {
+    if (!matchedAccount) {
+      matchedAccount = await apiInstance<Mastodon.Account>({
+        method: 'get',
+        url: `accounts/${key.id}`
+      }).then(res => res.body)
+    }
+  }
+  return matchedAccount
 }
 
 const useAccountQuery = ({
-  options,
-  ...queryKeyParams
-}: { account?: QueryKeyAccount[1] } & {
+  account,
+  _local,
+  options
+}: {
+  account?: QueryKeyAccount[1]
+  _local?: boolean
   options?: UseQueryOptions<Mastodon.Account, AxiosError>
 }) => {
   const queryKey: QueryKeyAccount = [
     'Account',
-    queryKeyParams.account
+    account
       ? {
-          id: queryKeyParams.account.id,
-          url: queryKeyParams.account.url,
-          _remote: queryKeyParams.account._remote
+          id: account.id,
+          username: account.username,
+          url: account.url,
+          _remote: account._remote,
+          ...(_local && { _local })
         }
       : undefined
   ]
   return useQuery(queryKey, accountQueryFunction, {
     ...options,
-    enabled: (queryKeyParams.account?._remote ? !!queryKeyParams.account : true) && options?.enabled
+    enabled: (account?._remote ? !!account : true) && options?.enabled
   })
 }
 

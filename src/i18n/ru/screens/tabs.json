@@ -376,7 +376,11 @@
       "notFound": ""
     },
     "toot": {
-      "name": ""
+      "name": "",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {
