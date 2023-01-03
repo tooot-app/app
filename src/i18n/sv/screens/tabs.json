@@ -266,7 +266,7 @@
         "heading": "Mörkt tema",
         "options": {
           "lighter": "Standard",
-          "darker": ""
+          "darker": "Verkligt svart"
         }
       },
       "browser": {
@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Autospela GIF i tidslinje"
       },
       "feedback": {
         "heading": "Funktionsförslag"
@@ -333,10 +333,10 @@
       "name": "Rapportera {{acct}}",
       "report": "Rapport",
       "forward": {
-        "heading": ""
+        "heading": "Vidarebefordra anonymt till fjärrserver {{instance}}"
       },
       "reasons": {
-        "heading": "",
+        "heading": "Vad pågår med det här kontot?",
         "spam": "Det är skräppost",
         "other": "Det är något annat",
         "violation": "Det bryter mot serverns regler"
@@ -378,8 +378,8 @@
     "toot": {
       "name": "Diskussioner",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "Innehåller fjärrinnehåll",
+        "message": "Federerat innehåll är inte alltid tillgängligt på din lokala server. Detta innehåll hämtas från fjärrservern och markeras. Du kan interagera med det här innehållet som vanligt."
       }
     },
     "users": {
