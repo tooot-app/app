@@ -1,0 +1,162 @@
+{
+  "empty": {
+    "error": {
+      "message": "Σφάλμα φόρτωσης",
+      "button": "Επανάληψη"
+    },
+    "success": {
+      "message": "Κενό timeline"
+    }
+  },
+  "end": {
+    "message": "Τέλος. Τι λέτε για μια κούπα <0 />;"
+  },
+  "lookback": {
+    "message": "Τελευταία ανάγνωση στις"
+  },
+  "refresh": {
+    "fetchPreviousPage": "Νεότερες από εδώ",
+    "refetch": "Μέχρι την τελευταία"
+  },
+  "shared": {
+    "actioned": {
+      "pinned": "Κρεμασμένα",
+      "favourite": "{{name}} πρόσθεσε την ανάρτηση στα αγαπημένα",
+      "status": "{{name}} μόλις έκανε μια ανάρτηση",
+      "follow": "{{name}} σας ακολούθησε",
+      "follow_request": "{{name}} ζήτησε να σας ακολουθήσει",
+      "poll": "Μια δημοσκόπηση στην οποία ψηφίσατε ολοκληρώθηκε",
+      "reblog": {
+        "default": "{{name}} προώθησε τη δημοσίευση",
+        "notification": "{{name}} προώθησε τη δημοσίευσή σας"
+      },
+      "update": "Η προώθηση έχει υποστεί επεξεργασία",
+      "admin.sign_up": "{{name}} συνδέθηκε στον διακομιστή",
+      "admin.report": "{{name}} αναφέρθηκε:"
+    },
+    "actions": {
+      "reply": {
+        "accessibilityLabel": "Απαντήστε στην ανάρτηση"
+      },
+      "reblogged": {
+        "accessibilityLabel": "Προωθήστε την ανάρτηση",
+        "function": "Προωθήστε την ανάρτηση",
+        "options": {
+          "title": "Επιλέξτε την ορατότητα της προώθησης",
+          "public": "Δημόσια προώθηση",
+          "unlisted": ""
+        }
+      },
+      "favourited": {
+        "accessibilityLabel": "Προσθέστε την ανάρτηση στα αγαπημένα",
+        "function": ""
+      },
+      "bookmarked": {
+        "accessibilityLabel": "",
+        "function": ""
+      },
+      "openReport": ""
+    },
+    "actionsUsers": {
+      "reblogged_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "favourited_by": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text": ""
+      },
+      "history": {
+        "accessibilityLabel": "",
+        "accessibilityHint": "",
+        "text_one": "",
+        "text_other": ""
+      }
+    },
+    "attachment": {
+      "sensitive": {
+        "button": ""
+      },
+      "unsupported": {
+        "text": "",
+        "button": ""
+      },
+      "altText": ""
+    },
+    "avatar": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    },
+    "content": {
+      "expandHint": ""
+    },
+    "filtered": {
+      "reveal": "",
+      "match_v1": "",
+      "match_v2_one": "",
+      "match_v2_other": ""
+    },
+    "fullConversation": "",
+    "translate": {
+      "default": "",
+      "succeed": "",
+      "failed": "",
+      "source_not_supported": "",
+      "target_not_supported": ""
+    },
+    "header": {
+      "shared": {
+        "account": {
+          "name": {
+            "accessibilityHint": ""
+          },
+          "account": {
+            "accessibilityHint": ""
+          }
+        },
+        "application": "",
+        "edited": {
+          "accessibilityLabel": ""
+        },
+        "muted": {
+          "accessibilityLabel": ""
+        },
+        "replies": "",
+        "visibility": {
+          "direct": {
+            "accessibilityLabel": ""
+          },
+          "private": {
+            "accessibilityLabel": ""
+          }
+        }
+      },
+      "conversation": {
+        "withAccounts": "",
+        "delete": {
+          "function": ""
+        }
+      }
+    },
+    "poll": {
+      "meta": {
+        "button": {
+          "vote": "",
+          "refresh": ""
+        },
+        "count": {
+          "voters_one": "",
+          "voters_other": "",
+          "votes_one": "",
+          "votes_other": ""
+        },
+        "expiration": {
+          "expired": "",
+          "until": ""
+        }
+      }
+    }
+  }
+}

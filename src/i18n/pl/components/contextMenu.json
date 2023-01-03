@@ -6,10 +6,10 @@
       "action_false": "Obserwuj",
       "action_true": "Przestań obserwować"
     },
-    "inLists": "Zarządzaj kontem list",
+    "inLists": "Listy zawierające użytkownika",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "Pokaż podbicia użytkownika",
+      "action_true": "Ukryj podbicia użytkowników"
     },
     "mute": {
       "action_false": "Wycisz użytkownika",

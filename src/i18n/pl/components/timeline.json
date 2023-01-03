@@ -1,7 +1,7 @@
 {
   "empty": {
     "error": {
-      "message": "Błąd wczytania",
+      "message": "Błąd wczytywania",
       "button": "Spróbuj ponownie"
     },
     "success": {
@@ -55,104 +55,106 @@
         "accessibilityLabel": "Dodaj tego tootka do ulubionych",
         "function": "Zapisz tootka"
       },
-      "openReport": ""
+      "openReport": "Otwórz zgłoszenie"
     },
     "actionsUsers": {
       "reblogged_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} użytkowników podbiło ten wpis",
+        "accessibilityHint": "Stuknij, aby poznać użytkowników",
+        "text": "$t(screenTabs:shared.users.statuses.reblogged_by)"
       },
       "favourited_by": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text": ""
+        "accessibilityLabel": "{{count}} użytkowników polubiło ten wpis",
+        "accessibilityHint": "Dotknij, aby poznać użytkowników",
+        "text": "$t(screenTabs:shared.users.statuses.favourited_by)"
       },
       "history": {
-        "accessibilityLabel": "",
-        "accessibilityHint": "",
-        "text_one": "",
-        "text_other": ""
+        "accessibilityLabel": "Ten wpis był edytowany {{count}} razy",
+        "accessibilityHint": "Dotknij, aby wyświetlić całą historię edycji",
+        "text_one": "{{count}} edycja",
+        "text_other": "{{count}} edycji"
       }
     },
     "attachment": {
       "sensitive": {
-        "button": ""
+        "button": "Pokaż wrażliwe media"
       },
       "unsupported": {
-        "text": "",
-        "button": ""
-      }
+        "text": "Błąd wczytywania",
+        "button": "Wypróbuj zdalny link"
+      },
+      "altText": "Tekst alternatywny"
     },
     "avatar": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Awatar użytkownika {{name}}",
+      "accessibilityHint": "Dotknij, aby przejść do strony {{name}}"
     },
     "content": {
-      "expandHint": ""
+      "expandHint": "Ukryta zawartość"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Wyślij mimo wszystko",
+      "match_v1": "Filtrowano: {{phrase}}.",
+      "match_v2_one": "Filtrowane przez {{filters}}.",
+      "match_v2_other": "Filtrowane przez {{count}} filtrów, {{filters}}."
     },
-    "fullConversation": "",
+    "fullConversation": "Przeczytaj rozmowy",
     "translate": {
-      "default": "",
-      "succeed": "",
-      "failed": "",
-      "source_not_supported": "",
-      "target_not_supported": ""
+      "default": "Przetłumacz",
+      "succeed": "Przetłumaczone przez {{provider}} z {{source}}",
+      "failed": "Tłumaczenie nie powiodło się",
+      "source_not_supported": "język toota nie jest obsługiwany",
+      "target_not_supported": "Wybrany język nie jest wspierany"
     },
     "header": {
       "shared": {
         "account": {
           "name": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Wyświetlana nazwa użytkownika"
           },
           "account": {
-            "accessibilityHint": ""
+            "accessibilityHint": "Konto użytkownika"
           }
         },
-        "application": "",
+        "application": "przez {{application}}",
         "edited": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Edytowano toot"
         },
         "muted": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Toot wyciszony"
         },
+        "replies": "<0 /> odpowiedzi",
         "visibility": {
           "direct": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot jest bezpośrednią wiadomością"
           },
           "private": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Toot jest widoczny tylko dla obserwujących"
           }
         }
       },
       "conversation": {
-        "withAccounts": "",
+        "withAccounts": "Z",
         "delete": {
-          "function": ""
+          "function": "Usuń wiadomość prywatną"
         }
       }
     },
     "poll": {
       "meta": {
         "button": {
-          "vote": "",
-          "refresh": ""
+          "vote": "Głosuj",
+          "refresh": "Odśwież"
         },
         "count": {
-          "voters_one": "",
-          "voters_other": "",
-          "votes_one": "",
-          "votes_other": ""
+          "voters_one": "{{count}} użytkownik zagłosował",
+          "voters_other": "{{count}} użytkowników zagłosowało",
+          "votes_one": "{{count}} głos",
+          "votes_other": "{{count}} głosów"
         },
         "expiration": {
-          "expired": "",
-          "until": ""
+          "expired": "Głosowanie zakończone",
+          "until": "Wygasa <0 />"
         }
       }
     }

@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema fosc",
         "options": {
-          "lighter": "Més clar",
-          "darker": "Més fosc"
+          "lighter": "Per defecte",
+          "darker": "Fosc pur"
         }
       },
       "browser": {
@@ -300,7 +300,7 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Accions per l'usuari {{user}}",
-        "accessibilityHint": "Pots silenciar, bloquejar, reportar o compartir aquest usuari"
+        "accessibilityHint": "Pots silenciar, bloquejar, denunciar o compartir aquest usuari"
       },
       "followed_by": " et segueix",
       "moved": "S'ha traslladat",
@@ -330,8 +330,8 @@
       "name": "Edita l'historial"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Denuncia {{acct}}",
+      "report": "Denúncia",
       "forward": {
         "heading": "Envia anònimament al servidor remot {{instance}}"
       },
@@ -376,7 +376,11 @@
       "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}"
     },
     "toot": {
-      "name": "Discussions"
+      "name": "Discussions",
+      "remoteFetch": {
+        "title": "Hi ha contingut remot",
+        "message": "El contingut federat no sempre està disponible a la instància local. S'obtenen de la instància remota i són marcats. Pots interactuar-los com sempre."
+      }
     },
     "users": {
       "accounts": {

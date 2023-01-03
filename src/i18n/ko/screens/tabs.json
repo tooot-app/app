@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
-          "lighter": "밝게",
-          "darker": "어둡게"
+          "lighter": "기본값",
+          "darker": ""
         }
       },
       "browser": {
@@ -376,7 +376,11 @@
       "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요"
     },
     "toot": {
-      "name": "대화"
+      "name": "대화",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {

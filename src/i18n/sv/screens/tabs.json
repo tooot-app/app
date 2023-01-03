@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Mörkt tema",
         "options": {
-          "lighter": "Ljusare",
-          "darker": "Mörkare"
+          "lighter": "Standard",
+          "darker": "Verkligt svart"
         }
       },
       "browser": {
@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "Autospela GIF i tidslinje"
       },
       "feedback": {
         "heading": "Funktionsförslag"
@@ -330,22 +330,22 @@
       "name": "Redigeringshistorik"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "Rapportera {{acct}}",
+      "report": "Rapport",
       "forward": {
-        "heading": ""
+        "heading": "Vidarebefordra anonymt till fjärrserver {{instance}}"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "Vad pågår med det här kontot?",
+        "spam": "Det är skräppost",
+        "other": "Det är något annat",
+        "violation": "Det bryter mot serverns regler"
       },
       "comment": {
-        "heading": ""
+        "heading": "Finns det något annat du vill säga till oss?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "Det bryter mot serverns regler"
       }
     },
     "search": {
@@ -376,7 +376,11 @@
       "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}"
     },
     "toot": {
-      "name": "Diskussioner"
+      "name": "Diskussioner",
+      "remoteFetch": {
+        "title": "Innehåller fjärrinnehåll",
+        "message": "Federerat innehåll är inte alltid tillgängligt på din lokala server. Detta innehåll hämtas från fjärrservern och markeras. Du kan interagera med det här innehållet som vanligt."
+      }
     },
     "users": {
       "accounts": {

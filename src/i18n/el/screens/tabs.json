@@ -1,0 +1,397 @@
+{
+  "tabs": {
+    "local": {
+      "name": "Ακολουθεί",
+      "options": {
+        "showBoosts": "Εμφάνιση προωθήσεων",
+        "showReplies": "Εμφάνιση απαντήσεων"
+      }
+    },
+    "public": {
+      "segments": {
+        "federated": "Ομοσπονδιακή",
+        "local": "Τοπική",
+        "trending": "Δημοφιλή"
+      }
+    },
+    "notifications": {
+      "name": "Ειδοποιήσεις"
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "Αναζήτηση",
+      "accessibilityHint": "Αναζήτηση για hashtags, χρήστες ή αναρτήσεις"
+    }
+  },
+  "notifications": {
+    "filters": {
+      "accessibilityLabel": "Φίλτρο",
+      "accessibilityHint": "Φίλτρο εμφανιζόμενων τύπων ειδοποιήσεων",
+      "title": "Εμφάνιση ειδοποιήσεων"
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": "Σελιδοδείκτες"
+      },
+      "conversations": {
+        "name": "Προσωπικά μηνύματα"
+      },
+      "favourites": {
+        "name": "Αγαπημένα"
+      },
+      "followedTags": {
+        "name": "Ακολουθούμενα hashtags"
+      },
+      "fontSize": {
+        "name": "Μέγεθος γραμματοσειράς αναρτήσεων"
+      },
+      "language": {
+        "name": "Γλώσσα"
+      },
+      "list": {
+        "name": "Λίστα: {{list}}"
+      },
+      "listAccounts": {
+        "name": "Χρήστες στη λίστα: {{list}}"
+      },
+      "listAdd": {
+        "name": "Δημιουργία λίστας"
+      },
+      "listEdit": {
+        "name": "Επεξεργασία στοιχείων λίστας"
+      },
+      "lists": {
+        "name": "Λίστες"
+      },
+      "push": {
+        "name": "Ειδοποιήσεις push"
+      },
+      "profile": {
+        "name": "Επεξεργασία προφίλ"
+      },
+      "profileName": {
+        "name": "Επεξεργασία ονόματος που εμφανίζεται"
+      },
+      "profileNote": {
+        "name": "Επεξεργασία περιγραφής"
+      },
+      "profileFields": {
+        "name": "Επεξεργασία μεταδεδομένων"
+      },
+      "settings": {
+        "name": "Ρυθμίσεις εφαρμογής"
+      },
+      "webSettings": {
+        "name": "Περισσότερες ρυθμίσεις λογαριασμού"
+      },
+      "switch": {
+        "name": "Εναλλαγή λογαριασμού"
+      }
+    },
+    "fontSize": {
+      "demo": "<p>Αυτό είναι ένα παράδειγμα ανάρτησης😊. Μπορείτε να επιλέξετε μία από τις πολλές επιλογές που εμφανίζονται.<br /><br />Αυτή η ρύθμιση επηρεάζει μόνο το κύριο περιεχόμενο των αναρτήσεων, αλλά όχι άλλα μεγέθη γραμματοσειράς.</p>",
+      "sizes": {
+        "S": "S",
+        "M": "M - Προεπιλογή",
+        "L": "L",
+        "XL": "XL",
+        "XXL": "XXL"
+      }
+    },
+    "listAccounts": {
+      "heading": "Διαχείριση χρηστών",
+      "error": "Διαγραφή χρήστη από τη λίστα",
+      "empty": "Δεν έχει προστεθεί κάποιος χρήστης σε αυτή τη λίστα"
+    },
+    "listEdit": {
+      "heading": "Επεξεργασία στοιχείων λίστας",
+      "title": "Τίτλος",
+      "repliesPolicy": {
+        "heading": "Εμφάνιση απαντήσεων σε:",
+        "options": {
+          "none": "Κανένα",
+          "list": "Μέλη της λίστας",
+          "followed": "Οποιοσδήποτε χρήστης που σας ακολουθεί"
+        }
+      }
+    },
+    "listDelete": {
+      "heading": "Διαγραφή λίστας",
+      "confirm": {
+        "title": "Διαγραφή λίστας \"{{list}}\";",
+        "message": "Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+      }
+    },
+    "profile": {
+      "feedback": {
+        "succeed": "{{type}}: ενημερώθηκε",
+        "failed": "{{type}}: αποτυχία ενημέρωσης, προσπαθήστε ξανά"
+      },
+      "root": {
+        "name": {
+          "title": "Εμφανιζόμενο όνομα"
+        },
+        "avatar": {
+          "title": "Εικόνα προφίλ",
+          "description": "Θα μειωθεί σε 400x400px"
+        },
+        "header": {
+          "title": "Εικόνα επιφάνειας προφίλ",
+          "description": "Θα μειωθεί σε 1500x500px"
+        },
+        "note": {
+          "title": "Περιγραφή"
+        },
+        "fields": {
+          "title": "Μεταδεδομένα",
+          "total_one": "{{count}} πεδίο",
+          "total_other": "{{count}} πεδία"
+        },
+        "visibility": {
+          "title": "Ορατότητα αναρτήσεων",
+          "options": {
+            "public": "Δημόσια",
+            "unlisted": "Χωρίς καταχώρηση",
+            "private": "Μόνο για τους ακολούθους"
+          }
+        },
+        "sensitive": {
+          "title": "Ανάρτηση πολυμέσων ευαίσθητης φύσης"
+        },
+        "lock": {
+          "title": "Κλείδωμα λογαριασμού",
+          "description": "Είναι απαραίτητη η χειρονακτική έγκριση των ακολούθων σας"
+        },
+        "bot": {
+          "title": "Αυτοματοποιημένος λογαριασμός",
+          "description": "Αυτός ο λογαριασμός εκτελεί κυρίως αυτοματοποιημένες ενέργειες και ενδέχεται να μην ελέγχεται ενεργά"
+        }
+      },
+      "fields": {
+        "group": "Σύνολο {{index}}",
+        "label": "Ετικέτα",
+        "content": "Περιεχόμενο"
+      },
+      "mediaSelectionFailed": "Η επεξεργασία της εικόνας απέτυχε. Παρακαλούμε προσπαθήστε ξανά."
+    },
+    "push": {
+      "notAvailable": "Η συσκευή σας δεν υποστηρίζει την ειδοποίηση push",
+      "enable": {
+        "direct": "Ενεργοποίηση ειδοποιήσεων push",
+        "settings": "Ενεργοποίηση στις ρυθμίσεις"
+      },
+      "missingServerKey": {
+        "message": "Λάθος ρύθμιση παραμέτρων διακομιστή για ειδοποιήσεις push",
+        "description": "Επικοινωνήστε με τον διαχειριστή του διακομιστή σας για να ρυθμίσετε την υποστήριξη ειδοποιήσεων push"
+      },
+      "global": {
+        "heading": "Ενεργοποίηση για τον λογαριασμό {{acct}}",
+        "description": "Οι ειδοποιήσεις δρομολογούνται μέσω του διακομιστή της εφαρμογής tooot"
+      },
+      "decode": {
+        "heading": "Προβολή στοιχείων ειδοποίησης",
+        "description": "Τα μηνύματα που δρομολογούνται μέσω του διακομιστή της εφαρμογής tooot είναι κρυπτογραφημένα, αλλά μπορείτε να επιλέξετε να αποκωδικοποιήσετε το μήνυμα στο διακομιστή. Ο πηγαίος κώδικας του διακομιστή μας είναι ανοιχτού κώδικα και δεν υπάρχει πολιτική καταγραφής."
+      },
+      "default": {
+        "heading": "Προεπιλογή"
+      },
+      "follow": {
+        "heading": "Νέοι ακόλουθοι"
+      },
+      "follow_request": {
+        "heading": "Αιτήματα παρακολούθησης"
+      },
+      "favourite": {
+        "heading": "Αγαπημένα"
+      },
+      "reblog": {
+        "heading": "Προωθήσεις"
+      },
+      "mention": {
+        "heading": "Προσωπικές αναφορές"
+      },
+      "poll": {
+        "heading": "Ενημερώσεις δημοσκοπήσεων"
+      },
+      "status": {
+        "heading": "Αναρτήσεις από εγγεγραμμένους χρήστες"
+      },
+      "update": {
+        "heading": "Η προθώθηση έχει επεξεργαστεί"
+      },
+      "admin.sign_up": {
+        "heading": "Διαχειριστές: εγγραφές"
+      },
+      "admin.report": {
+        "heading": "Διαχειριστές: αναφορές"
+      },
+      "howitworks": "Μάθετε πως λειτουργεί η δρομολόγηση"
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "{{amount}} δεν έχουν αναγνωστεί",
+          "read": "Όλες οι αναγνωσμένες",
+          "empty": "Καμία"
+        }
+      },
+      "push": {
+        "content_true": "Ενεργοποιημένες",
+        "content_false": "Απενεργοποιημένες"
+      },
+      "logout": {
+        "button": "Αποσύνδεση",
+        "alert": {
+          "title": "Θέλετε να αποσυνδεθείτε;",
+          "message": "Μετά την αποσύνδεση, πρέπει να συνδεθείτε ξανά",
+          "buttons": {
+            "logout": "Αποσυνδέση"
+          }
+        }
+      }
+    },
+    "settings": {
+      "theme": {
+        "heading": "Εμφάνιση",
+        "options": {
+          "auto": "Ρύθμιση συστήματος",
+          "light": "Ανοικτό θέμα",
+          "dark": "Σκοτεινό θέμα"
+        }
+      },
+      "darkTheme": {
+        "heading": "Σκοτεινό θέμα",
+        "options": {
+          "lighter": "Προεπιλογή",
+          "darker": ""
+        }
+      },
+      "browser": {
+        "heading": "Άνοιγμα συνδέσμου",
+        "options": {
+          "internal": "Μέσα στην εφαρμογή",
+          "external": "Χρήση περιηγητή συστήματος"
+        }
+      },
+      "autoplayGifv": {
+        "heading": "Αυτόματη αναπαραγωγή GIF στο timeline"
+      },
+      "feedback": {
+        "heading": "Αίτημα νέας λειτουργικότητας"
+      },
+      "support": {
+        "heading": "Υποστηρίξτε το tooot"
+      },
+      "contact": {
+        "heading": "Επικοινωνήστε με το tooot"
+      },
+      "version": "Έκδοση v{{version}}",
+      "instanceVersion": "Έκδοση Mastodon v{{version}}"
+    },
+    "switch": {
+      "existing": "Επιλέξτε από τους συνδεδεμένους λογαριασμούς",
+      "new": "Σύνδεση στον διακομιστή"
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "Ενέργειες για το χρήστη {{user}}",
+        "accessibilityHint": "Μπορείτε να σιγάσετε, να αποκλείσετε, να αναφέρετε ή να κοινοποιήσετε αυτό το χρήστη"
+      },
+      "followed_by": " σας ακολουθεί",
+      "moved": "Ο χρήστης μεταφέρθηκε",
+      "created_at": "Δημιουργία λογαριασμού: {{date}}",
+      "summary": {
+        "statuses_count": "{{count}} αναρτήσεις"
+      },
+      "toots": {
+        "default": "Αναρτήσεις",
+        "all": "Αναρτήσεις και απαντήσεις"
+      },
+      "suspended": "Λογαριασμός που έχει αποβληθεί από τους συντονιστές του διακομιστή σας"
+    },
+    "accountInLists": {
+      "name": "Λίστες από @{{username}}",
+      "inLists": "Στις λίστες",
+      "notInLists": "Άλλες λίστες"
+    },
+    "attachments": {
+      "name": "<0 /><1> πολυμέσα</1>"
+    },
+    "hashtag": {
+      "follow": "Ακολουθήστε",
+      "unfollow": "Διακοπή παρακολούθησης"
+    },
+    "history": {
+      "name": "Ιστορικό επεξεργασίας"
+    },
+    "report": {
+      "name": "Αναφορά {{acct}}",
+      "report": "Αναφορά",
+      "forward": {
+        "heading": "Ανώνυμη προώθηση στον απομακρυσμένο διακομιστή {{instance}}"
+      },
+      "reasons": {
+        "heading": "Τι συμβαίνει με αυτόν τον λογαριασμό;",
+        "spam": "Είναι spam",
+        "other": "Συμβαίνει κάτι άλλο",
+        "violation": "Παραβαίνει τους κανόνες του διακομιστή"
+      },
+      "comment": {
+        "heading": "Θέλετε να προσθέσετε κάτι άλλο;"
+      },
+      "violatedRules": {
+        "heading": "Κανόνες διακομιστή που παραβιάζονται"
+      }
+    },
+    "search": {
+      "header": {
+        "prefix": "Αναζήτηση",
+        "placeholder": "για..."
+      },
+      "empty": {
+        "general": "Εισάγετε τη λέξη-κλειδί για αναζήτηση <bold>$t(screenTabs:shared.search.sections.accounts)</bold><bold>$t(screenTabs:shared.search.sections.hashtags)</bold> ή <bold>$t(screenTabs:shared.search.sections.statuses)</bold>",
+        "advanced": {
+          "header": "Σύνθετη αναζήτηση",
+          "example": {
+            "account": "$t(shared.search.header.prefix) χρηστών",
+            "hashtag": "$t(shared.search.header.prefix) hashtag",
+            "statusLink": "$t(shared.search.header.prefix) κατάστασης",
+            "accountLink": "$t(shared.search.header.prefix) χρηστών"
+          }
+        },
+        "trending": {
+          "tags": "Δημοφιλή hashtags"
+        }
+      },
+      "sections": {
+        "accounts": "Χρήστης",
+        "hashtags": "Hashtag",
+        "statuses": "Ανάρτηση"
+      },
+      "notFound": "Δεν είναι εφικτό να βρεθεί <bold>{{searchTerm}}</bold> που να έχει σχέση με {{type}}"
+    },
+    "toot": {
+      "name": "Συζητήσεις",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "users": {
+      "accounts": {
+        "following": "Ακολουθεί {{count}}",
+        "followers": "{{count}} ακόλουθοι"
+      },
+      "statuses": {
+        "reblogged_by": "{{count}} προωθήσεις",
+        "favourited_by": "{{count}} αγαπημένα"
+      },
+      "resultIncomplete": "Ο απομακρυσμένος διακομιστής επιστρέφει ελλιπή αποτελέσματα"
+    }
+  }
+}

@@ -265,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema escuro",
         "options": {
-          "lighter": "Claro",
-          "darker": "Escuro"
+          "lighter": "Padrão",
+          "darker": ""
         }
       },
       "browser": {
@@ -376,7 +376,11 @@
       "notFound": "Não foi possível encontrar <bold>{{searchTerm}}</bold> {{type}} relacionado"
     },
     "toot": {
-      "name": "Discussões"
+      "name": "Discussões",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {

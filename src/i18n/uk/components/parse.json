@@ -1,8 +1,8 @@
 {
   "HTML": {
-    "accessibilityHint": "Натисніть, щоб розгорнути або згорнути вміст",
+    "accessibilityHint": "Торкніться, щоб розгорнути або згорнути вміст",
     "expanded": "{{hint}}{{moreLines}}",
-    "moreLines": " ({{count}} більше рядків)",
+    "moreLines": " (ще {{count}} рядків)",
     "defaultHint": "Довгий дмух"
   }
 }
