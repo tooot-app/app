@@ -36,7 +36,7 @@ private_lane :build_ios do
     export_method: "app-store",
     include_symbols: true,
     output_directory: BUILD_DIRECTORY,
-    silent: false
+    silent: true
   )
 
   case ENVIRONMENT

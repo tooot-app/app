@@ -6001,13 +6001,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatted@npm:^3.2.4":
-  version: 3.2.7
-  resolution: "flatted@npm:3.2.7"
-  checksum: 427633049d55bdb80201c68f7eb1cbd533e03eac541f97d3aecab8c5526f12a20ccecaeede08b57503e772c769e7f8680b37e8d482d1e5f8d7e2194687f9ea35
-  languageName: node
-  linkType: hard
-
 "flow-parser@npm:0.*":
   version: 0.196.3
   resolution: "flow-parser@npm:0.196.3"
@@ -9530,16 +9523,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-flipper@npm:^0.176.1":
-  version: 0.176.1
-  resolution: "react-native-flipper@npm:0.176.1"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: ">0.62.0"
-  checksum: f8ba597190baaed791a73d474ab8c2410048025f6bf8b1e49b5b64b71f08453d50fa118113a4c37e5fd8bb1c7700f8afe84671afeab6ad912a5f0c4da41a35be
-  languageName: node
-  linkType: hard
-
 "react-native-gesture-handler@npm:~2.8.0":
   version: 2.8.0
   resolution: "react-native-gesture-handler@npm:2.8.0"
@@ -9770,18 +9753,6 @@ __metadata:
   bin:
     react-native: cli.js
   checksum: ae57e1b86f4e6950913f8b59732ab57d2dd1ee30af6c2ca68f88b03b8448cb01c51967b148550a8b8cb6d42ca9b73cead2e854b9ecc2f4b9d5d75fccff798846
-  languageName: node
-  linkType: hard
-
-"react-query-native-devtools@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "react-query-native-devtools@npm:4.0.0"
-  dependencies:
-    flatted: ^3.2.4
-  peerDependencies:
-    react-native-flipper: ^0.127.0
-    react-query: ^3.34.6
-  checksum: 7da16b14a59ac19805c315a25ab2c090cc277afe22aee412a743eda5296f282a91c0b35a269d015fbf27781e9c8b65c1a642a6fd5fc258a9318821a27c6da652
   languageName: node
   linkType: hard
 
@@ -11315,7 +11286,6 @@ __metadata:
     react-native-fast-image: ^8.6.3
     react-native-feather: ^1.1.2
     react-native-flash-message: ^0.4.0
-    react-native-flipper: ^0.176.1
     react-native-gesture-handler: ~2.8.0
     react-native-image-picker: ^4.10.3
     react-native-ios-context-menu: ^1.15.1
@@ -11330,7 +11300,6 @@ __metadata:
     react-native-svg: ^13.6.0
     react-native-swipe-list-view: ^3.2.9
     react-native-tab-view: ^3.3.4
-    react-query-native-devtools: ^4.0.0
     react-redux: ^8.0.5
     rn-placeholder: ^3.0.3
     typescript: ^4.9.4
