@@ -5,8 +5,8 @@ export const dev = () => {
   if (__DEV__) {
     log('log', 'dev', 'loading tools')
     // @ts-ignore
-    import('react-query-native-devtools').then(({ addPlugin }) => {
-      addPlugin({ queryClient })
-    })
+    // import('react-query-native-devtools').then(({ addPlugin }) => {
+    //   addPlugin({ queryClient })
+    // })
   }
 }

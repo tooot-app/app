@@ -32,7 +32,6 @@ import TimelineTranslate from './Shared/Translate'
 export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
@@ -43,7 +42,6 @@ export interface Props {
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
-  rootQueryKey,
   highlighted = false,
   disableDetails = false,
   disableOnPress = false,
@@ -131,8 +129,8 @@ const TimelineDefault: React.FC<Props> = ({
     url: status.url || status.uri,
     rawContent
   })
-  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
-  const mInstance = menuInstance({ status, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey })
+  const mInstance = menuInstance({ status, queryKey })
 
   if (!ownAccount) {
     let filterResults: FilteredProps['filterResults'] = []
@@ -163,7 +161,6 @@ const TimelineDefault: React.FC<Props> = ({
     <StatusContext.Provider
       value={{
         queryKey,
-        rootQueryKey,
         status,
         ownAccount,
         spoilerHidden,
@@ -188,12 +185,7 @@ const TimelineDefault: React.FC<Props> = ({
                 accessible={highlighted ? false : true}
                 style={mainStyle}
                 disabled={highlighted}
-                onPress={() =>
-                  navigation.push('Tab-Shared-Toot', {
-                    toot: status,
-                    rootQueryKey: queryKey
-                  })
-                }
+                onPress={() => navigation.push('Tab-Shared-Toot', { toot: status })}
                 onLongPress={() => {}}
                 children={main()}
               />

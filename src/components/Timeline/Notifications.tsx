@@ -154,10 +154,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
             }}
             onPress={() =>
               notification.status &&
-              navigation.push('Tab-Shared-Toot', {
-                toot: notification.status,
-                rootQueryKey: queryKey
-              })
+              navigation.push('Tab-Shared-Toot', { toot: notification.status })
             }
             onLongPress={() => {}}
             children={main()}

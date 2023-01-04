@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useQueryClient } from '@tanstack/react-query'
 import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
-import { RootStackParamList } from '@utils/navigation/navigators'
+import { RootStackParamList, useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -22,10 +22,10 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
-  const { queryKey, rootQueryKey, status, ownAccount, highlighted, disableDetails } =
-    useContext(StatusContext)
+  const { queryKey, status, ownAccount, highlighted, disableDetails } = useContext(StatusContext)
   if (!queryKey || !status || disableDetails) return null
 
+  const navigationState = useNavState()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { t } = useTranslation(['common', 'componentTimeline'])
   const { colors, theme } = useTheme()
@@ -87,7 +87,7 @@ const TimelineActions: React.FC = () => {
       type: 'reply',
       incomingStatus: status,
       accts,
-      queryKey
+      navigationState
     })
   }
   const { showActionSheetWithOptions } = useActionSheet()
@@ -109,8 +109,6 @@ const TimelineActions: React.FC = () => {
             case 0:
               mutation.mutate({
                 type: 'updateStatusProperty',
-                queryKey,
-                rootQueryKey,
                 status,
                 payload: {
                   type: 'reblogged',
@@ -122,8 +120,6 @@ const TimelineActions: React.FC = () => {
             case 1:
               mutation.mutate({
                 type: 'updateStatusProperty',
-                queryKey,
-                rootQueryKey,
                 status,
                 payload: {
                   type: 'reblogged',
@@ -138,8 +134,6 @@ const TimelineActions: React.FC = () => {
     } else {
       mutation.mutate({
         type: 'updateStatusProperty',
-        queryKey,
-        rootQueryKey,
         status,
         payload: {
           type: 'reblogged',
@@ -152,8 +146,6 @@ const TimelineActions: React.FC = () => {
   const onPressFavourite = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
-      queryKey,
-      rootQueryKey,
       status,
       payload: {
         type: 'favourited',
@@ -164,8 +156,6 @@ const TimelineActions: React.FC = () => {
   const onPressBookmark = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
-      queryKey,
-      rootQueryKey,
       status,
       payload: {
         type: 'bookmarked',

@@ -2,7 +2,8 @@ import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
@@ -14,7 +15,12 @@ import { Dimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
 
 const Route = ({ route: { key: page } }: { route: any }) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<TabPublicStackParamList, 'Tab-Public-Root'>>()
   const queryKey: QueryKeyTimeline = ['Timeline', { page }]
+  useEffect(() => {
+    navigation.setParams({ queryKey })
+  }, [])
   return (
     <Timeline
       queryKey={queryKey}

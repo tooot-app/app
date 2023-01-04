@@ -41,6 +41,7 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
         </CustomText>
       )
     })
+    navigation.setParams({ queryKey })
   }, [])
 
   const queryKey: QueryKeyTimeline = [

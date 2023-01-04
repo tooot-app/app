@@ -84,7 +84,6 @@ const HeaderConversation = ({ conversation }: Props) => {
           mutation.mutate({
             type: 'deleteItem',
             source: 'conversations',
-            queryKey,
             id: conversation.id
           })
         }

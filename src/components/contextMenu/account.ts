@@ -3,7 +3,7 @@ import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
-import { TabSharedStackParamList } from '@utils/navigation/navigators'
+import { TabSharedStackParamList, useNavState } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
 import {
   QueryKeyRelationship,
@@ -12,7 +12,6 @@ import {
 } from '@utils/queryHooks/relationship'
 import {
   MutationVarsTimelineUpdateAccountProperty,
-  QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
 import { useAccountStorage } from '@utils/storage/actions'
@@ -24,19 +23,16 @@ const menuAccount = ({
   type,
   openChange,
   account,
-  status,
-  queryKey,
-  rootQueryKey
+  status
 }: {
   type: 'status' | 'account' // Where the action is coming from
   openChange: boolean
   account?: Partial<Mastodon.Account> & Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url'>
   status?: Mastodon.Status
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
   const navigation =
     useNavigation<NativeStackNavigationProp<TabSharedStackParamList, any, undefined>>()
+  const navState = useNavState()
   const { t } = useTranslation(['common', 'componentContextMenu', 'componentRelationship'])
 
   const menus: ContextMenu[][] = [[]]
@@ -101,8 +97,9 @@ const menuAccount = ({
       })
     },
     onSettled: () => {
-      queryKey && queryClient.invalidateQueries(queryKey)
-      rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
+      for (const key of navState) {
+        queryClient.invalidateQueries(key)
+      }
     }
   })
   const queryKeyRelationship: QueryKeyRelationship = ['Relationship', { id: actualAccount?.id }]
@@ -111,8 +108,10 @@ const menuAccount = ({
       haptics('Success')
       queryClient.setQueryData<Mastodon.Relationship[]>(queryKeyRelationship, [res])
       if (action === 'block') {
-        const queryKey = ['Timeline', { page: 'Following' }]
-        queryClient.invalidateQueries({ queryKey, exact: false })
+        queryClient.invalidateQueries({
+          queryKey: ['Timeline', { page: 'Following' }],
+          exact: false
+        })
       }
     },
     onError: (err: any, { payload: { action } }) => {
@@ -203,7 +202,6 @@ const menuAccount = ({
           actualAccount &&
           timelineMutation.mutate({
             type: 'updateAccountProperty',
-            queryKey,
             id: actualAccount.id,
             payload: { property: 'mute', currentValue: data?.muting }
           }),
@@ -236,7 +234,6 @@ const menuAccount = ({
                     actualAccount &&
                     timelineMutation.mutate({
                       type: 'updateAccountProperty',
-                      queryKey,
                       id: actualAccount.id,
                       payload: { property: 'block', currentValue: data?.blocking }
                     })
