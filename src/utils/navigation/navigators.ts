@@ -92,7 +92,8 @@ export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> = Bo
 
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
-    account: Pick<Mastodon.Account, 'id' | 'username' | 'acct' | 'url' | '_remote'>
+    account: Partial<Pick<Mastodon.Account, 'id' | 'url' | '_remote'>> &
+      Pick<Mastodon.Account, 'acct' | 'url'>
     queryKey?: QueryKeyTimeline
   }
   'Tab-Shared-Account-In-Lists': { account: Pick<Mastodon.Account, 'id' | 'username'> }

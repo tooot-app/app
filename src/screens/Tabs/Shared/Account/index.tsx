@@ -47,7 +47,8 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             }
           ])
         }
-      }
+      },
+      onError: () => navigation.goBack()
     }
   })
 
