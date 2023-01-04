@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next'
 import StatusContext from '../Context'
 
 const HeaderSharedApplication: React.FC = () => {
-  const { status } = useContext(StatusContext)
+  const { status, isConversation } = useContext(StatusContext)
   const { colors } = useTheme()
   const { t } = useTranslation('componentTimeline')
 
-  return status?.application?.name && status.application.name !== 'Web' ? (
+  return !isConversation && status?.application?.name && status.application.name !== 'Web' ? (
     <CustomText
       fontStyle='S'
       accessibilityRole='link'

@@ -50,6 +50,17 @@ const ContentView: React.FC<{
   const changesContent = withoutBoundary
     ? diffChars(removeHTML(prevItem?.content || item.content), removeHTML(item.content))
     : diffWords(removeHTML(prevItem?.content || item.content), removeHTML(item.content))
+  const changesPoll = item.poll
+    ? item.poll.options.map((option, index) =>
+        withoutBoundary
+          ? prevItem?.poll?.options[index].title
+            ? diffChars(prevItem?.poll?.options[index].title, option.title)
+            : undefined
+          : prevItem?.poll?.options[index].title
+          ? diffWords(prevItem?.poll?.options[index].title, option.title)
+          : undefined
+      )
+    : null
 
   return (
     // @ts-ignore
@@ -92,12 +103,28 @@ const ContentView: React.FC<{
                   paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
                   marginRight: StyleConstants.Spacing.S
                 }}
-                name='Circle'
+                name={item.poll?.multiple ? 'Square' : 'Circle'}
                 size={StyleConstants.Font.Size.M}
-                color={colors.disabled}
+                color={
+                  prevItem?.poll?.multiple !== item.poll?.multiple ? colors.red : colors.disabled
+                }
               />
-              <CustomText style={{ flex: 1 }}>
-                <ParseEmojis content={option.title} emojis={item.poll?.emojis} />
+              <CustomText style={{ flex: 1, color: colors.primaryDefault }}>
+                {changesPoll?.[index]?.length ? (
+                  changesPoll[index]?.map(({ value, added, removed }, index) => (
+                    <ParseEmojis
+                      key={index}
+                      content={value}
+                      emojis={item.poll?.emojis}
+                      style={{
+                        color: added ? colors.green : removed ? colors.red : undefined,
+                        textDecorationLine: removed ? 'line-through' : undefined
+                      }}
+                    />
+                  ))
+                ) : (
+                  <ParseEmojis content={option.title} emojis={item.poll?.emojis} />
+                )}
               </CustomText>
             </View>
           </View>

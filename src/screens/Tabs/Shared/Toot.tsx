@@ -368,7 +368,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                 })
               : null}
             {/* <CustomText
-              children={data?.body[index - 1]?._level}
+              children={finalData.current[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
             <CustomText
@@ -376,7 +376,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               style={{ position: 'absolute', top: 20, left: 4, color: colors.yellow }}
             />
             <CustomText
-              children={data?.body[index + 1]?._level}
+              children={finalData.current[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
             /> */}
           </View>
