@@ -47,9 +47,21 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             }
           ])
         }
-      }
+      },
+      onError: () => navigation.goBack()
     }
   })
+
+  const queryClient = useQueryClient()
+  const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
+    'Timeline',
+    {
+      page: 'Account',
+      id: account._remote ? data?.id : account.id,
+      exclude_reblogs: true,
+      only_media: false
+    }
+  ])
 
   const mShare = menuShare({ type: 'account', url: data?.url })
   const mAccount = menuAccount({ type: 'account', openChange: true, account: data })
@@ -97,19 +109,12 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
       }
     })
   }, [mAccount])
+  useEffect(() => {
+    navigation.setParams({ queryKey })
+  }, [queryKey[1]])
 
   const scrollY = useSharedValue(0)
 
-  const queryClient = useQueryClient()
-  const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
-    'Timeline',
-    {
-      page: 'Account',
-      id: account._remote ? data?.id : account.id,
-      exclude_reblogs: true,
-      only_media: false
-    }
-  ])
   const page = queryKey[1]
 
   const [segment, setSegment] = useState<number>(0)

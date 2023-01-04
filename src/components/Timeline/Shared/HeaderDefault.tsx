@@ -17,7 +17,7 @@ import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, rootQueryKey, status, disableDetails, rawContent, isRemote } =
+  const { queryKey, status, disableDetails, rawContent, isRemote } =
     useContext(StatusContext)
   if (!status) return null
 
@@ -35,10 +35,9 @@ const TimelineHeaderDefault: React.FC = () => {
     type: 'status',
     openChange,
     account: status.account,
-    ...(status && { status }),
-    queryKey
+    ...(status && { status })
   })
-  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey })
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>

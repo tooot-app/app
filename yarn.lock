@@ -9491,11 +9491,11 @@ __metadata:
 
 "react-native-fast-image@patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch::locator=tooot%40workspace%3A.":
   version: 8.6.3
-  resolution: "react-native-fast-image@patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch::version=8.6.3&hash=61017c&locator=tooot%40workspace%3A."
+  resolution: "react-native-fast-image@patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch::version=8.6.3&hash=d37d57&locator=tooot%40workspace%3A."
   peerDependencies:
     react: ^17 || ^18
     react-native: ">=0.60.0"
-  checksum: ffdd0bdf16ef618235bdac64771bb41fb26142737aa98c2c49679025ab1f97e3c8e8d09e23ba2ebe780691f1d11df5e154576f40e057797923a09fa945db8c1b
+  checksum: e5749406ed7608d606df8a7d298a6adaeefdf1077e5349ceb51b344e1fc9de62923f0af05c753c0baa59f476be6d46aee20a20c92c7840a30d8b473a156dfec5
   languageName: node
   linkType: hard
 

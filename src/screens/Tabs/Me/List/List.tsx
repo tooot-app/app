@@ -23,13 +23,13 @@ const TabMeListList: React.FC<TabMeStackScreenProps<'Tab-Me-List-List'>> = ({ na
 
   return (
     <MenuContainer>
-      {data?.map((params, index) => (
+      {data?.map((list, index) => (
         <MenuRow
           key={index}
           iconFront='List'
           iconBack='ChevronRight'
-          title={params.title}
-          onPress={() => navigation.navigate('Tab-Me-List', params)}
+          title={list.title}
+          onPress={() => navigation.navigate('Tab-Me-List', { list })}
         />
       ))}
     </MenuContainer>

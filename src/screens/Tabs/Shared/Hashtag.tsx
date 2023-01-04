@@ -17,14 +17,15 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
     params: { hashtag }
   }
 }) => {
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
       title: `#${decodeURIComponent(hashtag)}`
     })
+    navigation.setParams({ queryKey: queryKey })
   }, [])
-
-  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'Hashtag', hashtag }]
 
   const { t } = useTranslation(['common', 'screenTabs'])
 

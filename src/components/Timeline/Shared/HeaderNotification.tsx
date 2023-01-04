@@ -41,8 +41,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     type: 'status',
     openChange,
     account: status?.account,
-    ...(status && { status }),
-    queryKey
+    ...(status && { status })
   })
   const mStatus = menuStatus({ status, queryKey })
   const mInstance = menuInstance({ status, queryKey })

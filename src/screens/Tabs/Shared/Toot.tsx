@@ -21,13 +21,17 @@ import { Path, Svg } from 'react-native-svg'
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   navigation,
   route: {
-    params: { toot, rootQueryKey }
+    params: { toot }
   }
 }) => {
   const { colors } = useTheme()
   const { t } = useTranslation(['componentTimeline', 'screenTabs'])
 
   const [hasRemoteContent, setHasRemoteContent] = useState<boolean>(false)
+  const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
+    local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
+    remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -61,6 +65,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ),
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
     })
+    navigation.setParams({ toot, queryKey: toot._remote ? queryKey.remote : queryKey.local })
   }, [hasRemoteContent])
 
   const flRef = useRef<FlatList>(null)
@@ -71,10 +76,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     { ...toot, _level: 0, key: 'cached' }
   ])
   const highlightIndex = useRef<number>(0)
-  const queryKey: { local: QueryKeyTimeline; remote: QueryKeyTimeline } = {
-    local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
-    remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
-  }
   const queryLocal = useQuery(
     queryKey.local,
     async () => {
@@ -280,7 +281,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             <TimelineDefault
               item={item}
               queryKey={item._remote ? queryKey.remote : queryKey.local}
-              rootQueryKey={rootQueryKey}
               highlighted={toot.id === item.id || item.id === 'cached'}
               isConversation={toot.id !== item.id && item.id !== 'cached'}
             />
@@ -368,7 +368,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                 })
               : null}
             {/* <CustomText
-              children={data?.body[index - 1]?._level}
+              children={finalData.current[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
             <CustomText
@@ -376,7 +376,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               style={{ position: 'absolute', top: 20, left: 4, color: colors.yellow }}
             />
             <CustomText
-              children={data?.body[index + 1]?._level}
+              children={finalData.current[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
             /> */}
           </View>

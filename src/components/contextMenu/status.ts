@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
-import { RootStackParamList } from '@utils/navigation/navigators'
+import { RootStackParamList, useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
@@ -17,18 +17,18 @@ import { Alert } from 'react-native'
 
 const menuStatus = ({
   status,
-  queryKey,
-  rootQueryKey
+  queryKey
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
   if (!status || !queryKey) return []
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
   const { theme } = useTheme()
   const { t } = useTranslation(['common', 'componentContextMenu'])
+
+  const navigationState = useNavState()
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -90,8 +90,7 @@ const menuStatus = ({
                 spoiler_text: res.body.spoiler_text
               },
               ...(replyToStatus && { replyToStatus }),
-              queryKey,
-              rootQueryKey
+              navigationState
             })
           })
         },
@@ -122,18 +121,13 @@ const menuStatus = ({
                     }).then(res => res.body)
                   }
                   mutation
-                    .mutateAsync({
-                      type: 'deleteItem',
-                      source: 'statuses',
-                      queryKey,
-                      id: status.id
-                    })
+                    .mutateAsync({ type: 'deleteItem', source: 'statuses', id: status.id })
                     .then(res => {
                       navigation.navigate('Screen-Compose', {
                         type: 'deleteEdit',
                         incomingStatus: res.body as Mastodon.Status,
                         ...(replyToStatus && { replyToStatus }),
-                        queryKey
+                        navigationState
                       })
                     })
                 }
@@ -162,13 +156,7 @@ const menuStatus = ({
                 text: t('common:buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
-                  mutation.mutate({
-                    type: 'deleteItem',
-                    source: 'statuses',
-                    queryKey,
-                    rootQueryKey,
-                    id: status.id
-                  })
+                  mutation.mutate({ type: 'deleteItem', source: 'statuses', id: status.id })
                 }
               },
               {
@@ -193,8 +181,6 @@ const menuStatus = ({
         onSelect: () =>
           mutation.mutate({
             type: 'updateStatusProperty',
-            queryKey,
-            rootQueryKey,
             status,
             payload: {
               type: 'muted',
@@ -218,8 +204,6 @@ const menuStatus = ({
           // Also note that reblogs cannot be pinned.
           mutation.mutate({
             type: 'updateStatusProperty',
-            queryKey,
-            rootQueryKey,
             status,
             payload: {
               type: 'pinned',

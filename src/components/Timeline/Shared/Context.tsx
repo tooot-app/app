@@ -5,7 +5,6 @@ export type HighlightedStatusContextType = {}
 
 type StatusContextType = {
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
 
   status?: Mastodon.Status
 

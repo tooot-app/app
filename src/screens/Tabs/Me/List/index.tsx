@@ -2,8 +2,9 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
-import { TabMeStackScreenProps } from '@utils/navigation/navigators'
+import { TabMeStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyLists, useListsMutation } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
@@ -13,13 +14,16 @@ import { useTranslation } from 'react-i18next'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import { menuListAccounts, menuListDelete, menuListEdit } from './menus'
 
-const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
+const TabMeList: React.FC<NativeStackScreenProps<TabMeStackParamList, 'Tab-Me-List'>> = ({
   navigation,
-  route: { key, params }
+  route: {
+    key,
+    params: { list }
+  }
 }) => {
   const { colors } = useTheme()
   const { t } = useTranslation(['common', 'screenTabs'])
-  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'List', list: params.id }]
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'List', list: list.id }]
 
   const queryKeyLists: QueryKeyLists = ['Lists']
   const queryClient = useQueryClient()
@@ -39,9 +43,9 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
   })
 
   useEffect(() => {
-    const listAccounts = menuListAccounts({ params })
-    const listEdit = menuListEdit({ params, key })
-    const listDelete = menuListDelete({ params, mutation })
+    const listAccounts = menuListAccounts({ list })
+    const listEdit = menuListEdit({ list, key })
+    const listDelete = menuListDelete({ list, mutation })
 
     navigation.setOptions({
       headerRight: () => (
@@ -67,7 +71,8 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
         </DropdownMenu.Root>
       )
     })
-  }, [params])
+    navigation.setParams({ queryKey })
+  }, [list])
 
   return (
     <Timeline

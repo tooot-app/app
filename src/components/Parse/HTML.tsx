@@ -87,14 +87,14 @@ const ParseHTML: React.FC<Props> = ({
         return ''
     }
   }
-  const openingMentions = useRef<boolean>(true)
+  const prevMentionRemoved = useRef<boolean>(false)
   const renderNode = (node: ChildNode, index: number) => {
     switch (node.type) {
       case ElementType.Text:
         let content: string = node.data
-        if (openingMentions.current) {
+        if (prevMentionRemoved.current) {
+          prevMentionRemoved.current = false // Removing empty spaces appeared between tags and mentions
           if (node.data.trim().length) {
-            openingMentions.current = false // Removing empty spaces appeared between tags and mentions
             content = excludeMentions?.current.length
               ? node.data.replace(new RegExp(/^\s+/), '')
               : node.data
@@ -119,7 +119,6 @@ const ParseHTML: React.FC<Props> = ({
             const href = node.attribs.href
             if (classes) {
               if (classes.includes('hashtag')) {
-                openingMentions.current = false
                 const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1].toLowerCase()
                 const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
                   ?.hashtag
@@ -156,6 +155,7 @@ const ParseHTML: React.FC<Props> = ({
                   matchedMention &&
                   excludeMentions?.current.find(eM => eM.id === matchedMention.id)
                 ) {
+                  prevMentionRemoved.current = true
                   return null
                 }
                 const paramsAccount = (params as { account: Mastodon.Account } | undefined)?.account
@@ -176,7 +176,6 @@ const ParseHTML: React.FC<Props> = ({
               }
             }
 
-            openingMentions.current = false
             const content = node.children.map(child => unwrapNode(child)).join('')
             const shouldBeTag = status?.tags?.find(tag => `#${tag.name}` === content)
             return (
@@ -198,6 +197,12 @@ const ParseHTML: React.FC<Props> = ({
               />
             )
             break
+          case 'br':
+            return (
+              <Text key={index} style={{ lineHeight: adaptedLineheight / 2 }}>
+                {'\n'}
+              </Text>
+            )
           case 'p':
             if (index < document.children.length - 1) {
               return (

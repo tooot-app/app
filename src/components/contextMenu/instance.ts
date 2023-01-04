@@ -8,12 +8,10 @@ import parse from 'url-parse'
 
 const menuInstance = ({
   status,
-  queryKey,
-  rootQueryKey
+  queryKey
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
 }): ContextMenu[][] => {
   if (!status || !queryKey) return []
 
@@ -29,7 +27,6 @@ const menuInstance = ({
         })
       })
       queryClient.invalidateQueries(queryKey)
-      rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
 
@@ -51,11 +48,7 @@ const menuInstance = ({
                   text: t('common:buttons.confirm'),
                   style: 'destructive',
                   onPress: () => {
-                    mutation.mutate({
-                      type: 'domainBlock',
-                      queryKey,
-                      domain: instance
-                    })
+                    mutation.mutate({ type: 'domainBlock', domain: instance })
                   }
                 },
                 {

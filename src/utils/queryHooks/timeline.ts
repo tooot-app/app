@@ -9,13 +9,13 @@ import {
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
+import { useNavState } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
 import { getAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
-import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
 
 export type QueryKeyTimeline = [
@@ -248,8 +248,6 @@ enum MapPropertyToUrl {
 export type MutationVarsTimelineUpdateStatusProperty = {
   // This is status in general, including "status" inside conversation and notification
   type: 'updateStatusProperty'
-  queryKey: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
   payload:
     | {
@@ -279,7 +277,6 @@ export type MutationVarsTimelineUpdateStatusProperty = {
 export type MutationVarsTimelineUpdateAccountProperty = {
   // This is status in general, including "status" inside conversation and notification
   type: 'updateAccountProperty'
-  queryKey?: QueryKeyTimeline
   id: Mastodon.Account['id']
   payload: {
     property: 'mute' | 'block' | 'reports'
@@ -287,34 +284,22 @@ export type MutationVarsTimelineUpdateAccountProperty = {
   }
 }
 
-export type MutationVarsTimelineEditItem = {
-  // This is for editing status
-  type: 'editItem'
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  status: Mastodon.Status
-}
-
 export type MutationVarsTimelineDeleteItem = {
   // This is for deleting status and conversation
   type: 'deleteItem'
   source: 'statuses' | 'conversations'
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Status['id']
 }
 
 export type MutationVarsTimelineDomainBlock = {
   // This is for deleting status and conversation
   type: 'domainBlock'
-  queryKey: QueryKeyTimeline
   domain: string
 }
 
 export type MutationVarsTimeline =
   | MutationVarsTimelineUpdateStatusProperty
   | MutationVarsTimelineUpdateAccountProperty
-  | MutationVarsTimelineEditItem
   | MutationVarsTimelineDeleteItem
   | MutationVarsTimelineDomainBlock
 
@@ -380,8 +365,6 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             }
           })
       }
-    case 'editItem':
-      return { body: params.status }
     case 'deleteItem':
       return apiInstance<Mastodon.Conversation>({
         method: 'delete',
@@ -415,6 +398,8 @@ const useTimelineMutation = ({
   onSettled?: MutationOptionsTimeline['onSettled']
   onSuccess?: MutationOptionsTimeline['onSuccess']
 }) => {
+  const navigationState = useNavState()
+
   return useMutation<
     { body: Mastodon.Conversation | Mastodon.Notification | Mastodon.Status },
     AxiosError,
@@ -425,19 +410,16 @@ const useTimelineMutation = ({
     onSuccess,
     ...(onMutate && {
       onMutate: params => {
-        queryClient.cancelQueries(params.queryKey)
-        const oldData = params.queryKey && queryClient.getQueryData(params.queryKey)
+        queryClient.cancelQueries(navigationState[0])
+        const oldData = navigationState[0] && queryClient.getQueryData(navigationState[0])
 
         haptics('Light')
         switch (params.type) {
           case 'updateStatusProperty':
-            updateStatusProperty(params)
-            break
-          case 'editItem':
-            editItem(params)
+            updateStatusProperty(params, navigationState)
             break
           case 'deleteItem':
-            deleteItem(params)
+            deleteItem(params, navigationState)
             break
         }
         return oldData

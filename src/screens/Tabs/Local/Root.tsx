@@ -5,7 +5,6 @@ import Timeline from '@components/Timeline'
 import TimelineDefault from '@components/Timeline/Default'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import usePopToTop from '@utils/navigation/usePopToTop'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { setAccountStorage, useAccountStorage } from '@utils/storage/actions'
@@ -176,6 +175,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
         />
       )
     })
+    navigation.setParams({ queryKey: queryKey })
   }, [mode, queryKey[1], pageLocal, lists])
 
   return (

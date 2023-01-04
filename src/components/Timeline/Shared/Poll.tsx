@@ -6,6 +6,7 @@ import { ParseEmojis } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   useTimelineMutation
@@ -20,8 +21,7 @@ import { Pressable, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {
-  const { queryKey, rootQueryKey, status, ownAccount, spoilerHidden, disableDetails } =
-    useContext(StatusContext)
+  const { queryKey, status, ownAccount, spoilerHidden, disableDetails } = useContext(StatusContext)
   if (!queryKey || !status || !status.poll) return null
   const poll = status.poll
 
@@ -30,17 +30,20 @@ const TimelinePoll: React.FC = () => {
 
   const [allOptions, setAllOptions] = useState(new Array(status.poll.options.length).fill(false))
 
+  const navigationState = useNavState()
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     onSuccess: ({ body }, params) => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       queryClient.cancelQueries(queryKey)
-      rootQueryKey && queryClient.cancelQueries(rootQueryKey)
 
       haptics('Success')
       switch (theParams.payload.type) {
         case 'poll':
-          updateStatusProperty({ ...theParams, poll: body as unknown as Mastodon.Poll })
+          updateStatusProperty(
+            { ...theParams, poll: body as unknown as Mastodon.Poll },
+            navigationState
+          )
           break
       }
     },
@@ -74,8 +77,6 @@ const TimelinePoll: React.FC = () => {
               onPress={() =>
                 mutation.mutate({
                   type: 'updateStatusProperty',
-                  queryKey,
-                  rootQueryKey,
                   status,
                   payload: {
                     type: 'poll',
@@ -98,8 +99,6 @@ const TimelinePoll: React.FC = () => {
               onPress={() =>
                 mutation.mutate({
                   type: 'updateStatusProperty',
-                  queryKey,
-                  rootQueryKey,
                   status,
                   payload: {
                     type: 'poll',

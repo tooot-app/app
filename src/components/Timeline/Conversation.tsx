@@ -41,10 +41,7 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
   const onPress = useCallback(() => {
     if (conversation.last_status) {
       conversation.unread && mutate()
-      navigation.push('Tab-Shared-Toot', {
-        toot: conversation.last_status,
-        rootQueryKey: queryKey
-      })
+      navigation.push('Tab-Shared-Toot', { toot: conversation.last_status })
     }
   }, [])
 

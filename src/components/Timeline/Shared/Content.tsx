@@ -24,6 +24,10 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
 
   return (
     <View>
+      {/* <CustomText
+        children={excludeMentions?.current.map(mention => mention.username).join(' - ')}
+        style={{ color: colors.secondary }}
+      /> */}
       {status.spoiler_text?.length ? (
         <>
           <ParseHTML

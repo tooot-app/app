@@ -339,24 +339,25 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                             StoreReview?.isAvailableAsync()
                               .then(() => StoreReview.requestReview())
                               .catch(() => {})
+                            setGlobalStorage('app.count_till_store_review', (currentCount || 0) + 1)
                           } else {
                             setGlobalStorage('app.count_till_store_review', (currentCount || 0) + 1)
                           }
                         }
 
                         switch (params?.type) {
-                          case 'edit':
-                            mutateTimeline.mutate({
-                              type: 'editItem',
-                              queryKey: params.queryKey,
-                              rootQueryKey: params.rootQueryKey,
-                              status: res
+                          case undefined:
+                          case 'conversation':
+                            queryClient.invalidateQueries({
+                              queryKey: ['Timeline', { page: 'Following' }],
+                              exact: false
                             })
                             break
+                          case 'edit': // doesn't work
                           case 'deleteEdit':
                           case 'reply':
-                            if (params?.queryKey && params.queryKey[1].page === 'Toot') {
-                              queryClient.invalidateQueries(params.queryKey)
+                            for (const navState of params.navigationState) {
+                              navState && queryClient.invalidateQueries(navState)
                             }
                             break
                         }
