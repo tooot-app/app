@@ -1,6 +1,5 @@
 import ComponentSeparator from '@components/Separator'
 import { useScrollToTop } from '@react-navigation/native'
-import { FlashList, FlashListProps } from '@shopify/flash-list'
 import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
@@ -8,16 +7,16 @@ import { useGlobalStorageListener } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useRef } from 'react'
-import { Platform, RefreshControl } from 'react-native'
+import { FlatList, FlatListProps, Platform, RefreshControl } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import TimelineEmpty from './Empty'
 import TimelineFooter from './Footer'
 import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Refresh'
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlashList)
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 export interface Props {
-  flRef?: RefObject<FlashList<any>>
+  flRef?: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
   queryOptions?: Omit<
     UseInfiniteQueryOptions<any>,
@@ -25,7 +24,7 @@ export interface Props {
   >
   disableRefresh?: boolean
   disableInfinity?: boolean
-  customProps: Partial<FlashListProps<any>> & Pick<FlashListProps<any>, 'renderItem'>
+  customProps: Partial<FlatListProps<any>> & Pick<FlatListProps<any>, 'renderItem'>
 }
 
 const Timeline: React.FC<Props> = ({
@@ -56,7 +55,7 @@ const Timeline: React.FC<Props> = ({
       }
     })
 
-  const flRef = useRef<FlashList<any>>(null)
+  const flRef = useRef<FlatList>(null)
 
   const scrollY = useSharedValue(0)
   const fetchingType = useSharedValue<0 | 1 | 2>(0)
@@ -93,7 +92,6 @@ const Timeline: React.FC<Props> = ({
     }
   })
 
-  // @ts-ignore
   useScrollToTop(flRef)
   useGlobalStorageListener('account.active', () =>
     flRef.current?.scrollToOffset({ offset: 0, animated: false })
@@ -110,10 +108,12 @@ const Timeline: React.FC<Props> = ({
       />
       <AnimatedFlatList
         ref={customFLRef || flRef}
-        estimatedItemSize={200}
         scrollEventThrottle={16}
         onScroll={onScroll}
+        windowSize={7}
         data={flattenPages(data)}
+        initialNumToRender={6}
+        maxToRenderPerBatch={3}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
         onEndReachedThreshold={0.75}
         ListFooterComponent={
