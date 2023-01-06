@@ -74,7 +74,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
   const match = urlMatcher(toot.url || toot.uri)
   const highlightIndex = useRef<number>(0)
-  const query = useQuery<{ pages: { body: (Mastodon.Status & { _key?: 'cached' })[] }[] }>(
+  const query = useQuery<{ pages: { body: (Mastodon.Status & { key?: 'cached' })[] }[] }>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -106,7 +106,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     },
     {
-      initialData: { pages: [{ body: [{ ...toot, _level: 0, _key: 'cached' }] }] },
+      initialData: { pages: [{ body: [{ ...toot, _level: 0, key: 'cached' }] }] },
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
@@ -205,7 +205,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       local => local.uri === remote.uri
                     )
                     if (localMatch) {
-                      delete localMatch._key
+                      delete localMatch.key
                       return localMatch
                     } else {
                       return {
@@ -263,7 +263,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       ref={flRef}
       scrollEventThrottle={16}
       windowSize={7}
-      data={query.data.pages?.[0].body}
+      data={query.data?.pages?.[0].body}
       renderItem={({ item, index }) => {
         const prev = query.data.pages[0].body[index - 1]?._level || 0
         const curr = item._level
