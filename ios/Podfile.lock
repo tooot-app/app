@@ -16,7 +16,7 @@ PODS:
     - ExpoModulesCore
   - EXNotifications (0.17.0):
     - ExpoModulesCore
-  - Expo (47.0.10):
+  - Expo (47.0.11):
     - ExpoModulesCore
   - ExpoCrypto (12.1.0):
     - ExpoModulesCore
@@ -705,7 +705,7 @@ SPEC CHECKSUMS:
   EXFileSystem: 60602b6eefa6873f97172c684b7537c9760b50d6
   EXFont: 319606bfe48c33b5b5063fb0994afdc496befe80
   EXNotifications: babce2a87b7922051354fcfe7a74dd279b7e272a
-  Expo: a694d89d2461fdfc6b977bf489bf7d341ed03bca
+  Expo: dedd83acfd4d70cbec6ac2f1b4433462d95c70bc
   ExpoCrypto: 6eb2a5ede7d95b7359a5f0391ee0c5d2ecd144b3
   ExpoHaptics: 129d3f8d44c2205adcdf8db760602818463d5437
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
