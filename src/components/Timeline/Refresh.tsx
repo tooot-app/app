@@ -4,9 +4,9 @@ import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useCallback, useRef, useState } from 'react'
+import React, { RefObject, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Platform, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -45,46 +45,47 @@ const TimelineRefresh: React.FC<Props> = ({
   }
 
   const fetchingLatestIndex = useRef(0)
+  const FETCHING_LATEST_MAX = 5
   const refetchActive = useRef(false)
 
-  const { refetch, isFetching, isLoading, fetchPreviousPage, hasPreviousPage, isFetchingNextPage } =
-    useTimelineQuery({
-      ...queryKey[1],
-      options: {
-        getPreviousPageParam: firstPage =>
-          firstPage?.links?.prev && {
-            ...(firstPage.links.prev.isOffset
-              ? { offset: firstPage.links.prev.id }
-              : { min_id: firstPage.links.prev.id }),
-            // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-            limit: '3'
-          },
-        select: data => {
-          if (refetchActive.current) {
-            data.pageParams = [data.pageParams[0]]
-            data.pages = [data.pages[0]]
-            refetchActive.current = false
-          }
-          return data
+  const { refetch, isFetching, fetchPreviousPage, hasPreviousPage } = useTimelineQuery({
+    ...queryKey[1],
+    options: {
+      getPreviousPageParam: firstPage =>
+        firstPage?.links?.prev && {
+          ...(firstPage.links.prev.isOffset
+            ? { offset: firstPage.links.prev.id }
+            : { min_id: firstPage.links.prev.id }),
+          // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
+          limit: '3'
         },
-        onSuccess: () => {
-          if (fetchingLatestIndex.current > 0) {
-            if (fetchingLatestIndex.current > 5) {
+      select: data => {
+        if (refetchActive.current) {
+          data.pageParams = [data.pageParams[0]]
+          data.pages = [data.pages[0]]
+          refetchActive.current = false
+        }
+        return data
+      },
+      onSuccess: async () => {
+        if (fetchingLatestIndex.current > 0) {
+          if (fetchingLatestIndex.current > FETCHING_LATEST_MAX) {
+            clearFirstPage()
+            fetchingLatestIndex.current = 0
+          } else {
+            if (hasPreviousPage) {
+              await new Promise(res => setTimeout(res, 100))
+              fetchPreviousPage()
+              fetchingLatestIndex.current++
+            } else {
               clearFirstPage()
               fetchingLatestIndex.current = 0
-            } else {
-              if (hasPreviousPage) {
-                fetchPreviousPage()
-                fetchingLatestIndex.current++
-              } else {
-                clearFirstPage()
-                fetchingLatestIndex.current = 0
-              }
             }
           }
         }
       }
-    })
+    }
+  })
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
@@ -101,27 +102,6 @@ const TimelineRefresh: React.FC<Props> = ({
         return data
       }
     })
-  }
-  const prepareRefetch = () => {
-    refetchActive.current = true
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
-      if (data) {
-        data.pageParams = [undefined]
-        const newFirstPage: TimelineData = { body: [] }
-        for (let page of data.pages) {
-          // @ts-ignore
-          newFirstPage.body.push(...page.body)
-          if (newFirstPage.body.length > 10) break
-        }
-        data.pages = [newFirstPage]
-      }
-
-      return data
-    })
-  }
-  const callRefetch = async () => {
-    await refetch()
-    setTimeout(() => flRef.current?.scrollToOffset({ offset: 1 }), 50)
   }
 
   const [textRight, setTextRight] = useState(0)
@@ -145,14 +125,6 @@ const TimelineRefresh: React.FC<Props> = ({
   }))
 
   const arrowStage = useSharedValue(0)
-  const onLayout = useCallback(
-    ({ nativeEvent }: LayoutChangeEvent) => {
-      if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-        setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-      }
-    },
-    [textRight]
-  )
   useAnimatedReaction(
     () => {
       if (isFetching) {
@@ -190,8 +162,32 @@ const TimelineRefresh: React.FC<Props> = ({
     },
     [isFetching]
   )
-  const wrapperStartLatest = () => {
+
+  const runFetchPrevious = () => {
     fetchingLatestIndex.current = 1
+    fetchPreviousPage()
+  }
+
+  const prepareRefetch = () => {
+    refetchActive.current = true
+    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
+      if (data) {
+        data.pageParams = [undefined]
+        const newFirstPage: TimelineData = { body: [] }
+        for (let page of data.pages) {
+          // @ts-ignore
+          newFirstPage.body.push(...page.body)
+          if (newFirstPage.body.length > 10) break
+        }
+        data.pages = [newFirstPage]
+      }
+
+      return data
+    })
+  }
+  const callRefetch = async () => {
+    await refetch()
+    setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }
 
   useAnimatedReaction(
@@ -202,95 +198,85 @@ const TimelineRefresh: React.FC<Props> = ({
       fetchingType.value = 0
       switch (data) {
         case 1:
-          runOnJS(wrapperStartLatest)()
-          runOnJS(clearFirstPage)()
-          runOnJS(fetchPreviousPage)()
-          break
+          runOnJS(runFetchPrevious)()
+          return
         case 2:
           runOnJS(prepareRefetch)()
           runOnJS(callRefetch)()
-          break
+          return
       }
     },
     []
   )
 
-  const headerPadding = useAnimatedStyle(
-    () => ({
-      paddingTop:
-        fetchingLatestIndex.current !== 0 || (isFetching && !isLoading && !isFetchingNextPage)
-          ? withTiming(StyleConstants.Spacing.M * 2.5)
-          : withTiming(0)
-    }),
-    [fetchingLatestIndex.current, isFetching, isFetchingNextPage, isLoading]
-  )
-
   return (
-    <Animated.View style={headerPadding}>
-      <View style={styles.base}>
-        {isFetching ? (
-          <View style={styles.container2}>
-            <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-          </View>
-        ) : (
-          <>
-            <View style={styles.container1}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
-                onLayout={onLayout}
-                children={t('refresh.fetchPreviousPage')}
-              />
-              <Animated.View
-                style={[
-                  {
-                    position: 'absolute',
-                    left: textRight + StyleConstants.Spacing.S
-                  },
-                  arrowY,
-                  arrowTop
-                ]}
-                children={
-                  <Icon
-                    name='ArrowLeft'
-                    size={StyleConstants.Font.Size.M}
-                    color={colors.primaryDefault}
-                  />
+    <Animated.View
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: CONTAINER_HEIGHT * 2,
+        alignItems: 'center'
+      }}
+    >
+      {(fetchingLatestIndex.current || 99) <= FETCHING_LATEST_MAX || refetchActive.current ? (
+        <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
+          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+        </View>
+      ) : (
+        <>
+          <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
+            <Text
+              style={{
+                fontSize: StyleConstants.Font.Size.S,
+                lineHeight: CONTAINER_HEIGHT,
+                color: colors.primaryDefault
+              }}
+              onLayout={({ nativeEvent }) => {
+                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
                 }
-              />
-            </View>
-            <View style={styles.container2}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
-                onLayout={onLayout}
-                children={t('refresh.refetch')}
-              />
-            </View>
-          </>
-        )}
-      </View>
+              }}
+              children={t('refresh.fetchPreviousPage')}
+            />
+            <Animated.View
+              style={[
+                {
+                  position: 'absolute',
+                  left: textRight + StyleConstants.Spacing.S
+                },
+                arrowY,
+                arrowTop
+              ]}
+              children={
+                <Icon
+                  name='ArrowLeft'
+                  size={StyleConstants.Font.Size.M}
+                  color={colors.primaryDefault}
+                />
+              }
+            />
+          </View>
+          <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
+            <Text
+              style={{
+                fontSize: StyleConstants.Font.Size.S,
+                lineHeight: CONTAINER_HEIGHT,
+                color: colors.primaryDefault
+              }}
+              onLayout={({ nativeEvent }) => {
+                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+                }
+              }}
+              children={t('refresh.refetch')}
+            />
+          </View>
+        </>
+      )}
     </Animated.View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: CONTAINER_HEIGHT * 2,
-    alignItems: 'center'
-  },
-  container1: {
-    flex: 1,
-    flexDirection: 'row',
-    height: CONTAINER_HEIGHT
-  },
-  container2: { height: CONTAINER_HEIGHT, justifyContent: 'center' },
-  explanation: {
-    fontSize: StyleConstants.Font.Size.S,
-    lineHeight: CONTAINER_HEIGHT
-  }
-})
 
 export default TimelineRefresh
