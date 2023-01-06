@@ -1,10 +1,15 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
 import { InfiniteData, useQueryClient } from '@tanstack/react-query'
-import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { PagedResponse } from '@utils/api/helpers'
+import {
+  queryFunctionTimeline,
+  QueryKeyTimeline,
+  useTimelineQuery
+} from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useRef, useState } from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
@@ -26,7 +31,7 @@ export interface Props {
   disableRefresh?: boolean
 }
 
-const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
+const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2
 export const SEPARATION_Y_1 = -(CONTAINER_HEIGHT / 2 + StyleConstants.Font.Size.S / 2)
 export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Size.S / 2)
 
@@ -44,65 +49,16 @@ const TimelineRefresh: React.FC<Props> = ({
     return null
   }
 
-  const fetchingLatestIndex = useRef(0)
-  const FETCHING_LATEST_MAX = 5
-  const refetchActive = useRef(false)
+  const PREV_PER_BATCH = 1
+  const prevActive = useRef<boolean>(false)
+  const prevCache = useRef<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>()
+  const prevStatusId = useRef<Mastodon.Status['id']>()
 
-  const { refetch, isFetching, fetchPreviousPage, hasPreviousPage } = useTimelineQuery({
-    ...queryKey[1],
-    options: {
-      getPreviousPageParam: firstPage =>
-        firstPage?.links?.prev && {
-          ...(firstPage.links.prev.isOffset
-            ? { offset: firstPage.links.prev.id }
-            : { min_id: firstPage.links.prev.id }),
-          // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-          limit: '3'
-        },
-      select: data => {
-        if (refetchActive.current) {
-          data.pageParams = [data.pageParams[0]]
-          data.pages = [data.pages[0]]
-          refetchActive.current = false
-        }
-        return data
-      },
-      onSuccess: async () => {
-        if (fetchingLatestIndex.current > 0) {
-          if (fetchingLatestIndex.current > FETCHING_LATEST_MAX) {
-            clearFirstPage()
-            fetchingLatestIndex.current = 0
-          } else {
-            if (hasPreviousPage) {
-              await new Promise(res => setTimeout(res, 100))
-              fetchPreviousPage()
-              fetchingLatestIndex.current++
-            } else {
-              clearFirstPage()
-              fetchingLatestIndex.current = 0
-            }
-          }
-        }
-      }
-    }
-  })
+  const queryClient = useQueryClient()
+  const { refetch, isFetching } = useTimelineQuery({ ...queryKey[1] })
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
-
-  const queryClient = useQueryClient()
-  const clearFirstPage = () => {
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
-      if (data?.pages[0] && data.pages[0].body.length === 0) {
-        return {
-          pages: data.pages.slice(1),
-          pageParams: data.pageParams.slice(1)
-        }
-      } else {
-        return data
-      }
-    })
-  }
 
   const [textRight, setTextRight] = useState(0)
   const arrowY = useAnimatedStyle(() => ({
@@ -163,29 +119,78 @@ const TimelineRefresh: React.FC<Props> = ({
     [isFetching]
   )
 
-  const runFetchPrevious = () => {
-    fetchingLatestIndex.current = 1
-    fetchPreviousPage()
-  }
+  const runFetchPrevious = async () => {
+    if (prevActive.current) return
 
-  const prepareRefetch = () => {
-    refetchActive.current = true
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
-      if (data) {
-        data.pageParams = [undefined]
-        const newFirstPage: TimelineData = { body: [] }
-        for (let page of data.pages) {
-          // @ts-ignore
-          newFirstPage.body.push(...page.body)
-          if (newFirstPage.body.length > 10) break
-        }
-        data.pages = [newFirstPage]
-      }
+    const firstPage =
+      queryClient.getQueryData<
+        InfiniteData<
+          PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+        >
+      >(queryKey)?.pages[0]
 
-      return data
+    prevActive.current = true
+    prevStatusId.current = firstPage?.body[0].id
+
+    await queryFunctionTimeline({
+      queryKey,
+      pageParam: firstPage?.links?.prev && {
+        ...(firstPage.links.prev.isOffset
+          ? { offset: firstPage.links.prev.id }
+          : { min_id: firstPage.links.prev.id })
+      },
+      meta: {}
+    }).then(res => {
+      queryClient.setQueryData<
+        InfiniteData<
+          PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+        >
+      >(queryKey, old => {
+        if (!old) return old
+
+        prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
+        return { ...old, pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages] }
+      })
     })
   }
-  const callRefetch = async () => {
+  useEffect(() => {
+    const loop = async () => {
+      for await (const _ of Array(Math.ceil((prevCache.current?.length || 0) / PREV_PER_BATCH))) {
+        await new Promise(promise => setTimeout(promise, 32))
+        queryClient.setQueryData<
+          InfiniteData<
+            PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+          >
+        >(queryKey, old => {
+          if (!old) return old
+
+          return {
+            ...old,
+            pages: old.pages.map((page, index) => {
+              if (index === 0) {
+                const insert = prevCache.current?.slice(-PREV_PER_BATCH)
+                prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
+                if (insert) {
+                  return { ...page, body: [...insert, ...page.body] }
+                } else {
+                  return page
+                }
+              } else {
+                return page
+              }
+            })
+          }
+        })
+
+        break
+      }
+      prevActive.current = false
+    }
+    loop()
+  }, [prevCache.current])
+
+  const runFetchLatest = async () => {
+    queryClient.invalidateQueries(queryKey)
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }
@@ -201,8 +206,7 @@ const TimelineRefresh: React.FC<Props> = ({
           runOnJS(runFetchPrevious)()
           return
         case 2:
-          runOnJS(prepareRefetch)()
-          runOnJS(callRefetch)()
+          runOnJS(runFetchLatest)()
           return
       }
     },
@@ -220,7 +224,7 @@ const TimelineRefresh: React.FC<Props> = ({
         alignItems: 'center'
       }}
     >
-      {(fetchingLatestIndex.current || 99) <= FETCHING_LATEST_MAX || refetchActive.current ? (
+      {prevActive.current || isFetching ? (
         <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
           <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
         </View>

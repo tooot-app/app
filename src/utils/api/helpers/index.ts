@@ -67,7 +67,7 @@ const handleError =
 type LinkFormat = { id: string; isOffset: boolean }
 export type PagedResponse<T = unknown> = {
   body: T
-  links: { prev?: LinkFormat; next?: LinkFormat }
+  links?: { prev?: LinkFormat; next?: LinkFormat }
 }
 
 export { ctx, handleError, userAgent }
