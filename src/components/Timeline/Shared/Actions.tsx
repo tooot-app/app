@@ -169,9 +169,9 @@ const TimelineActions: React.FC = () => {
       <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
       {status.replies_count > 0 ? (
         <CustomText
+          fontStyle='S'
           style={{
             color: colors.secondary,
-            fontSize: StyleConstants.Font.Size.M,
             marginLeft: StyleConstants.Spacing.XS
           }}
         >
@@ -194,12 +194,12 @@ const TimelineActions: React.FC = () => {
         />
         {status.reblogs_count > 0 ? (
           <CustomText
+            fontStyle='S'
             style={{
               color:
                 status.visibility === 'private' && !ownAccount
                   ? colors.disabled
                   : color(status.reblogged),
-              fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
           >
@@ -216,12 +216,8 @@ const TimelineActions: React.FC = () => {
         <Icon name='Heart' color={color(status.favourited)} size={StyleConstants.Font.Size.L} />
         {status.favourites_count > 0 ? (
           <CustomText
-            style={{
-              color: color(status.favourited),
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS,
-              marginTop: 0
-            }}
+            fontStyle='S'
+            style={{ color: color(status.favourited), marginLeft: StyleConstants.Spacing.XS }}
           >
             {status.favourites_count}
           </CustomText>

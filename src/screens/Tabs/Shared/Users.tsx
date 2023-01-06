@@ -3,6 +3,7 @@ import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
+import { FlashList } from '@shopify/flash-list'
 import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { SearchResult } from '@utils/queryHooks/search'
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Circle, Flow } from 'react-native-animated-spinkit'
-import { FlatList } from 'react-native-gesture-handler'
 
 const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = ({
   navigation,
@@ -44,9 +44,9 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
   const [isSearching, setIsSearching] = useState(false)
 
   return (
-    <FlatList
-      windowSize={7}
+    <FlashList
       data={flattenPages(data)}
+      estimatedItemSize={72}
       style={{
         minHeight: '100%',
         paddingVertical: StyleConstants.Spacing.Global.PagePadding

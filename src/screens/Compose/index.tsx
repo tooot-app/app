@@ -7,7 +7,7 @@ import ComposeRoot from '@screens/Compose/Root'
 import { formatText } from '@screens/Compose/utils/processText'
 import { useQueryClient } from '@tanstack/react-query'
 import { handleError } from '@utils/api/helpers'
-import { RootStackScreenProps } from '@utils/navigation/navigators'
+import { RootStackScreenProps, useNavState } from '@utils/navigation/navigators'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { searchLocalStatus } from '@utils/queryHooks/search'
@@ -347,13 +347,19 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
 
                         switch (params?.type) {
                           case undefined:
-                          case 'conversation':
                             queryClient.invalidateQueries({
                               queryKey: ['Timeline', { page: 'Following' }],
                               exact: false
                             })
                             break
+                          case 'conversation':
                           case 'edit': // doesn't work
+                          // mutateTimeline.mutate({
+                          //   type: 'editItem',
+                          //   status: res,
+                          //   navigationState: params.navigationState
+                          // })
+                          // break
                           case 'deleteEdit':
                           case 'reply':
                             for (const navState of params.navigationState) {

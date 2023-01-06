@@ -3,12 +3,12 @@ import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
 import { displayMessage } from '@components/Message'
 import ComponentSeparator from '@components/Separator'
+import { FlashList } from '@shopify/flash-list'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { useFollowedTagsQuery, useTagsMutation } from '@utils/queryHooks/tags'
 import { flattenPages } from '@utils/queryHooks/utils'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList } from 'react-native-gesture-handler'
 
 const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> = ({
   navigation
@@ -49,8 +49,8 @@ const TabMeFollowedTags: React.FC<TabMeStackScreenProps<'Tab-Me-FollowedTags'>> 
   })
 
   return (
-    <FlatList
-      style={{ flex: 1 }}
+    <FlashList
+      estimatedItemSize={70}
       data={flattenData}
       renderItem={({ item }) => (
         <ComponentHashtag

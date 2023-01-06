@@ -10,20 +10,17 @@ const deleteItem = (
     if (!key) continue
 
     queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {
-      if (old) {
-        let foundToot: boolean = false
-        old.pages = old.pages.map(page => {
-          if (foundToot) return page
+      if (!old) return old
 
-          page.body = (page.body as Mastodon.Status[]).filter(
-            (item: Mastodon.Status) => item.id !== id
+      return {
+        ...old,
+        pages: old.pages.map(page => ({
+          ...page,
+          body: (page.body as Mastodon.Status[]).filter(
+            status => status.id !== id && status.reblog?.id !== id
           )
-
-          return page
-        })
+        }))
       }
-
-      return old
     })
   }
 }

@@ -9,4 +9,4 @@ export const infinitePageParams = {
 }
 
 export const flattenPages = <T>(data: InfiniteData<PagedResponse<T[]>> | undefined): T[] | [] =>
-  data?.pages.map(page => page.body).flat() || []
+  data?.pages.flatMap(page => page.body) || []
