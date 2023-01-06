@@ -1,13 +1,12 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { FlashList } from '@shopify/flash-list'
 import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native'
+import { FlatList, LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
@@ -20,7 +19,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 export interface Props {
-  flRef: RefObject<FlashList<any>>
+  flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>

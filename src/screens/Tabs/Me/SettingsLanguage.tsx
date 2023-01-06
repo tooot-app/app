@@ -1,14 +1,13 @@
 import haptics from '@components/haptics'
 import { MenuRow } from '@components/Menu'
 import { LOCALES } from '@i18n/locales'
-import { FlashList } from '@shopify/flash-list'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import { setChannels } from '@utils/push/constants'
 import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { FlatList, Platform } from 'react-native'
 
 const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Language'>> = ({
   navigation
@@ -34,7 +33,7 @@ const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Lan
   }
 
   return (
-    <FlashList
+    <FlatList
       style={{ flex: 1, paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}
       data={languages}
       renderItem={({ item }) => {

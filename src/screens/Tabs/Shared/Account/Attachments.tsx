@@ -9,7 +9,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { Dimensions, Pressable, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { FlatList } from 'react-native-gesture-handler'
 import AccountContext from './Context'
 
 const AccountAttachments: React.FC = () => {
@@ -39,66 +39,67 @@ const AccountAttachments: React.FC = () => {
   if (!flattenData.length) return null
 
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
-        flexDirection: 'row',
         height: width + StyleConstants.Spacing.Global.PagePadding * 2,
         paddingVertical: StyleConstants.Spacing.Global.PagePadding,
         borderTopWidth: 1,
         borderTopColor: colors.border
       }}
-      horizontal
-      showsHorizontalScrollIndicator={false}
     >
-      {flattenData.map((item, index) => {
-        if (index === DISPLAY_AMOUNT - 1) {
-          return (
-            <Pressable
-              key={index}
-              onPress={() => {
-                account && navigation.push('Tab-Shared-Attachments', { account })
-              }}
-              children={
-                <View
-                  style={{
-                    marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
-                    backgroundColor: colors.backgroundOverlayInvert,
-                    width: width,
-                    height: width,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                  children={
-                    <Icon
-                      name='MoreHorizontal'
-                      color={colors.primaryOverlay}
-                      size={StyleConstants.Font.Size.L * 1.5}
-                    />
-                  }
-                />
-              }
-            />
-          )
-        } else {
-          return (
-            <GracefullyImage
-              key={index}
-              uri={{
-                original: item.media_attachments[0]?.preview_url || item.media_attachments[0]?.url,
-                remote: item.media_attachments[0]?.remote_url
-              }}
-              blurhash={
-                item.media_attachments[0] && (item.media_attachments[0].blurhash || undefined)
-              }
-              dimension={{ width: width, height: width }}
-              style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
-              onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
-            />
-          )
-        }
-      })}
-    </ScrollView>
+      <FlatList
+        horizontal
+        data={flattenData}
+        renderItem={({ item, index }) => {
+          if (index === DISPLAY_AMOUNT - 1) {
+            return (
+              <Pressable
+                onPress={() => {
+                  account && navigation.push('Tab-Shared-Attachments', { account })
+                }}
+                children={
+                  <View
+                    style={{
+                      marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+                      backgroundColor: colors.backgroundOverlayInvert,
+                      width: width,
+                      height: width,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                    children={
+                      <Icon
+                        name='MoreHorizontal'
+                        color={colors.primaryOverlay}
+                        size={StyleConstants.Font.Size.L * 1.5}
+                      />
+                    }
+                  />
+                }
+              />
+            )
+          } else {
+            return (
+              <GracefullyImage
+                uri={{
+                  original:
+                    item.media_attachments[0]?.preview_url || item.media_attachments[0]?.url,
+                  remote: item.media_attachments[0]?.remote_url
+                }}
+                blurhash={
+                  item.media_attachments[0] && (item.media_attachments[0].blurhash || undefined)
+                }
+                dimension={{ width: width, height: width }}
+                style={{ marginLeft: StyleConstants.Spacing.Global.PagePadding }}
+                onPress={() => navigation.push('Tab-Shared-Toot', { toot: item })}
+              />
+            )
+          }
+        }}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
   )
 }
 

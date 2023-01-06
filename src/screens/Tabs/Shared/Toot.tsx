@@ -3,7 +3,6 @@ import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
-import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
@@ -16,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Pressable, View } from 'react-native'
+import { Alert, FlatList, Pressable, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { Path, Svg } from 'react-native-svg'
 
@@ -70,7 +69,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     navigation.setParams({ toot, queryKey: queryKey.local })
   }, [hasRemoteContent])
 
-  const flRef = useRef<FlashList<Mastodon.Status>>(null)
+  const flRef = useRef<FlatList>(null)
   const scrolled = useRef(false)
 
   const match = urlMatcher(toot.url || toot.uri)
@@ -259,13 +258,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const ARC = StyleConstants.Avatar.XS / 4
 
   return (
-    <FlashList
+    <FlatList
       ref={flRef}
-      estimatedItemSize={100}
+      scrollEventThrottle={16}
+      windowSize={7}
       data={query.data.pages?.[0].body}
       renderItem={({ item, index }) => {
         const prev = query.data.pages[0].body[index - 1]?._level || 0
-        const curr = item._level || 0
+        const curr = item._level
         const next = query.data.pages[0].body[index + 1]?._level || 0
 
         return (
@@ -273,7 +273,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             style={{
               paddingLeft:
                 index > highlightIndex.current
-                  ? Math.min((item._level || 0) - 1, MAX_LEVEL) * StyleConstants.Spacing.S
+                  ? Math.min(item._level - 1, MAX_LEVEL) * StyleConstants.Spacing.S
                   : undefined
             }}
             onLayout={({
@@ -386,6 +386,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           </View>
         )
       }}
+      initialNumToRender={6}
+      maxToRenderPerBatch={3}
       ItemSeparatorComponent={({ leadingItem }) => {
         return (
           <>
@@ -413,6 +415,21 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               : null}
           </>
         )
+      }}
+      onScrollToIndexFailed={error => {
+        const offset = error.averageItemLength * error.index
+        flRef.current?.scrollToOffset({ offset })
+        try {
+          error.index < query.data.pages[0].body.length &&
+            setTimeout(
+              () =>
+                flRef.current?.scrollToIndex({
+                  index: error.index,
+                  viewOffset: 100
+                }),
+              500
+            )
+        } catch {}
       }}
       ListFooterComponent={
         <View
