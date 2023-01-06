@@ -41,6 +41,7 @@ export type RootStackParamList = {
         accts: Mastodon.Account['acct'][]
         visibility: ComposeState['visibility']
         text?: string // For contacting tooot only
+        navigationState: (QueryKeyTimeline | undefined)[]
       }
     | {
         type: 'share'

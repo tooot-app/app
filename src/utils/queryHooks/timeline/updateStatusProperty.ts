@@ -39,10 +39,13 @@ const updateStatusProperty = (
   for (const key of navigationState) {
     if (!key) continue
 
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(key, old => {
-      if (old) {
-        let updated: boolean = false
-        old.pages = old.pages.map(page => {
+    queryClient.setQueryData<InfiniteData<TimelineData>>(key, old => {
+      if (!old) return old
+
+      let updated: boolean = false
+      return {
+        ...old,
+        pages: old.pages.map(page => {
           if (updated) return page
 
           if (typeof (page.body as Mastodon.Conversation[])[0].unread === 'boolean') {
@@ -73,7 +76,6 @@ const updateStatusProperty = (
           return page
         })
       }
-      return old
     })
   }
 }

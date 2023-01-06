@@ -16,6 +16,7 @@ import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
+import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
 
 export type QueryKeyTimeline = [
@@ -284,8 +285,13 @@ export type MutationVarsTimelineUpdateAccountProperty = {
   }
 }
 
+export type MutationVarsTimelineEditItem = {
+  type: 'editItem'
+  status: Mastodon.Status
+  navigationState: (QueryKeyTimeline | undefined)[]
+}
+
 export type MutationVarsTimelineDeleteItem = {
-  // This is for deleting status and conversation
   type: 'deleteItem'
   source: 'statuses' | 'conversations'
   id: Mastodon.Status['id']
@@ -300,6 +306,7 @@ export type MutationVarsTimelineDomainBlock = {
 export type MutationVarsTimeline =
   | MutationVarsTimelineUpdateStatusProperty
   | MutationVarsTimelineUpdateAccountProperty
+  | MutationVarsTimelineEditItem
   | MutationVarsTimelineDeleteItem
   | MutationVarsTimelineDomainBlock
 
@@ -365,6 +372,8 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             }
           })
       }
+    case 'editItem':
+      return { body: params.status }
     case 'deleteItem':
       return apiInstance<Mastodon.Conversation>({
         method: 'delete',
@@ -417,6 +426,10 @@ const useTimelineMutation = ({
         switch (params.type) {
           case 'updateStatusProperty':
             updateStatusProperty(params, navigationState)
+            break
+          case 'editItem':
+            console.log('YES!!!')
+            editItem(params)
             break
           case 'deleteItem':
             deleteItem(params, navigationState)
