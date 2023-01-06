@@ -178,6 +178,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     },
     {
       enabled:
+        query.isFetched &&
         ['public', 'unlisted'].includes(toot.visibility) &&
         match?.domain !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
