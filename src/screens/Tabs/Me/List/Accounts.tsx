@@ -3,6 +3,7 @@ import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
+import { FlashList } from '@shopify/flash-list'
 import { TabMeStackScreenProps } from '@utils/navigation/navigators'
 import {
   QueryKeyListAccounts,
@@ -14,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { View } from 'react-native'
 
 const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>> = ({
   route: { params }
@@ -51,7 +52,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
   })
 
   return (
-    <FlatList
+    <FlashList
       data={flattenPages(data)}
       renderItem={({ item, index }) => (
         <ComponentAccount

@@ -16,7 +16,7 @@ PODS:
     - ExpoModulesCore
   - EXNotifications (0.17.0):
     - ExpoModulesCore
-  - Expo (47.0.10):
+  - Expo (47.0.11):
     - ExpoModulesCore
   - ExpoCrypto (12.1.0):
     - ExpoModulesCore
@@ -400,6 +400,8 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.14.3)
     - SDWebImageWebPCoder (~> 0.9.1)
+  - RNFlashList (1.4.0):
+    - React-Core
   - RNGestureHandler (2.8.0):
     - React-Core
   - RNReanimated (2.13.0):
@@ -521,6 +523,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
+  - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -680,6 +683,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
+  RNFlashList:
+    :path: "../node_modules/@shopify/flash-list"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -705,7 +710,7 @@ SPEC CHECKSUMS:
   EXFileSystem: 60602b6eefa6873f97172c684b7537c9760b50d6
   EXFont: 319606bfe48c33b5b5063fb0994afdc496befe80
   EXNotifications: babce2a87b7922051354fcfe7a74dd279b7e272a
-  Expo: a694d89d2461fdfc6b977bf489bf7d341ed03bca
+  Expo: dedd83acfd4d70cbec6ac2f1b4433462d95c70bc
   ExpoCrypto: 6eb2a5ede7d95b7359a5f0391ee0c5d2ecd144b3
   ExpoHaptics: 129d3f8d44c2205adcdf8db760602818463d5437
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
@@ -770,6 +775,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNFastImage: 756ab178acb5e3f11d8b0a931956fbd9da8d6e54
+  RNFlashList: 399bf6a0db68f594ad2c86aaff3ea39564f39f8a
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d

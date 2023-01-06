@@ -6,6 +6,7 @@ import CustomText from '@components/Text'
 import TimelineAttachment from '@components/Timeline/Shared/Attachment'
 import StatusContext from '@components/Timeline/Shared/Context'
 import HeaderSharedCreated from '@components/Timeline/Shared/HeaderShared/Created'
+import { FlashList } from '@shopify/flash-list'
 import removeHTML from '@utils/helpers/removeHTML'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useStatusHistory } from '@utils/queryHooks/statusesHistory'
@@ -14,7 +15,7 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { diffChars, diffWords } from 'diff'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { View } from 'react-native'
 
 const SCRIPTS_WITHOUT_BOUNDARIES = [
   'my',
@@ -158,8 +159,8 @@ const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>
   ).length
 
   return (
-    <FlatList
-      style={{ flex: 1, minHeight: '100%' }}
+    <FlashList
+      estimatedItemSize={100}
       data={dataReversed}
       renderItem={({ item, index }) => (
         <ContentView

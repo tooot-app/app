@@ -5,12 +5,13 @@ import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useNavigation } from '@react-navigation/native'
+import { FlashList } from '@shopify/flash-list'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
@@ -30,7 +31,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
   const { colors } = useTheme()
   const navigation = useNavigation<any>()
 
-  const flatListRef = useRef<FlatList>(null)
+  const flatListRef = useRef<FlashList<any>>(null)
 
   const sensitiveOnPress = () =>
     composeDispatch({
@@ -222,10 +223,11 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
           {t('content.root.footer.attachments.sensitive')}
         </CustomText>
       </Pressable>
-      <FlatList
+      <FlashList
         horizontal
         ref={flatListRef}
         decelerationRate={0}
+        estimatedItemSize={100}
         pagingEnabled={false}
         snapToAlignment='center'
         renderItem={renderAttachment}
