@@ -5,7 +5,7 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60 * 5,
       retry: (failureCount, error: any) => {
-        if (error?.status === 404) {
+        if ([401, 404].includes(error?.status)) {
           return false
         }
         if (failureCount <= 3) {
