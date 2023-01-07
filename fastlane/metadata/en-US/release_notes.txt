@@ -1,5 +1,6 @@
 Enjoy toooting! This version includes following improvements and fixes:
 - Auto fetch remote content in conversations!
+- Remember last read position in timeline!
 - Allowing adding more context of reports
 - Option to disable autoplay gif
 - Hide boosts from users

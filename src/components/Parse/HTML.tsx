@@ -49,10 +49,10 @@ const ParseHTML: React.FC<Props> = ({
     StyleConstants.Font.Size[size],
     adaptiveSize ? adaptiveFontsize : 0
   )
-  const adaptedLineheight = adaptiveScale(
-    StyleConstants.Font.LineHeight[size],
-    adaptiveSize ? adaptiveFontsize : 0
-  )
+  const adaptedLineheight =
+    Platform.OS === 'ios'
+      ? adaptiveScale(StyleConstants.Font.LineHeight[size], adaptiveSize ? adaptiveFontsize : 0)
+      : undefined
 
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { params } = useRoute()
@@ -119,7 +119,11 @@ const ParseHTML: React.FC<Props> = ({
             const href = node.attribs.href
             if (classes) {
               if (classes.includes('hashtag')) {
-                const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1].toLowerCase()
+                const children = node.children.map(unwrapNode).join('')
+                const tag =
+                  href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1]?.toLowerCase() ||
+                  children.match(new RegExp(/#(\S+)/))?.[1]?.toLowerCase()
+
                 const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
                   ?.hashtag
                 const sameHashtag = paramsHashtag === tag
@@ -143,7 +147,7 @@ const ParseHTML: React.FC<Props> = ({
                       !sameHashtag &&
                       navigation.push('Tab-Shared-Hashtag', { hashtag: tag })
                     }
-                    children={node.children.map(unwrapNode).join('')}
+                    children={children}
                   />
                 )
               }
@@ -199,7 +203,10 @@ const ParseHTML: React.FC<Props> = ({
             break
           case 'br':
             return (
-              <Text key={index} style={{ lineHeight: adaptedLineheight / 2 }}>
+              <Text
+                key={index}
+                style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
+              >
                 {'\n'}
               </Text>
             )
@@ -208,7 +215,11 @@ const ParseHTML: React.FC<Props> = ({
               return (
                 <Text key={index}>
                   {node.children.map((c, i) => renderNode(c, i))}
-                  <Text style={{ lineHeight: adaptedLineheight / 2 }}>{'\n\n'}</Text>
+                  <Text
+                    style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
+                  >
+                    {'\n\n'}
+                  </Text>
                 </Text>
               )
             } else {

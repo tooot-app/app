@@ -18,6 +18,7 @@ import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
+import { infinitePageParams } from './utils'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -57,7 +58,25 @@ export const queryFunctionTimeline = async ({
   pageParam
 }: QueryFunctionContext<QueryKeyTimeline>) => {
   const page = queryKey[1]
-  let params: { [key: string]: string } = { limit: 40, ...pageParam }
+
+  let marker: string | undefined
+  if (page.page === 'Following' && !pageParam?.offset && !pageParam?.min_id && !pageParam?.max_id) {
+    const storedMarker = getAccountStorage.string('read_marker_following')
+    if (storedMarker) {
+      await apiInstance<Mastodon.Status[]>({
+        method: 'get',
+        url: 'timelines/home',
+        params: { limit: 1, min_id: storedMarker }
+      }).then(res => {
+        if (res.body.length) {
+          marker = storedMarker
+        }
+      })
+    }
+  }
+  let params: { [key: string]: string } = marker
+    ? { limit: 40, max_id: marker }
+    : { limit: 40, ...pageParam }
 
   switch (page.page) {
     case 'Following':
@@ -137,7 +156,16 @@ export const queryFunctionTimeline = async ({
     case 'Account':
       if (!page.id) return Promise.reject('Timeline query account id not provided')
 
-      if (page.exclude_reblogs) {
+      if (page.only_media) {
+        return apiInstance<Mastodon.Status[]>({
+          method: 'get',
+          url: `accounts/${page.id}/statuses`,
+          params: {
+            only_media: 'true',
+            ...params
+          }
+        })
+      } else if (page.exclude_reblogs) {
         if (pageParam && pageParam.hasOwnProperty('max_id')) {
           return apiInstance<Mastodon.Status[]>({
             method: 'get',
@@ -177,8 +205,8 @@ export const queryFunctionTimeline = async ({
           url: `accounts/${page.id}/statuses`,
           params: {
             ...params,
-            exclude_replies: page.exclude_reblogs.toString(),
-            only_media: page.only_media.toString()
+            exclude_replies: false,
+            only_media: false
           }
         })
       }
@@ -228,14 +256,18 @@ const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>
+  options?: Omit<
+    UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>,
+    'getPreviousPageParam' | 'getNextPageParam'
+  >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
   return useInfiniteQuery(queryKey, queryFunctionTimeline, {
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
-    ...options
+    ...options,
+    ...infinitePageParams
   })
 }
 
@@ -431,7 +463,6 @@ const useTimelineMutation = ({
             updateStatusProperty(params, navigationState)
             break
           case 'editItem':
-            console.log('YES!!!')
             editItem(params)
             break
           case 'deleteItem':

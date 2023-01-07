@@ -1476,7 +1476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.8.4":
   version: 7.20.7
   resolution: "@babel/runtime@npm:7.20.7"
   dependencies:
@@ -2744,12 +2744,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-camera-roll/camera-roll@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@react-native-camera-roll/camera-roll@npm:5.2.0"
+"@react-native-camera-roll/camera-roll@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@react-native-camera-roll/camera-roll@npm:5.2.1"
   peerDependencies:
     react-native: ">=0.59"
-  checksum: 27800224bdbd128800e6a64046d76865814a43215ad3a0df9a93eeac64b523e3b68382d7cabb79b574e354d03dddc625b93fa2b6010ed04f6a89296038e3eabf
+  checksum: db901554170cced81db4b01c0e89324905fe4c6915a41e4cf4b6d1fa35f5894d18d1d734304d516824bff434784e4b571e9fa379e850f8dd4d42a28e3eab9eee
   languageName: node
   linkType: hard
 
@@ -5692,13 +5692,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-modules-core@npm:1.1.0":
-  version: 1.1.0
-  resolution: "expo-modules-core@npm:1.1.0"
+"expo-modules-core@npm:1.1.1":
+  version: 1.1.1
+  resolution: "expo-modules-core@npm:1.1.1"
   dependencies:
     compare-versions: ^3.4.0
     invariant: ^2.2.4
-  checksum: f5add659b2f43c2784dce86986ec709feac38a60881afd013049ef86b106eeba9217427d01b9da27e00b678e9f47518ffa5d7676f95408c6e3966093d48252e8
+  checksum: 6a2b6b5d1f56f197ddf8b3f3a638d8f15534657218bdf895bd96c07cb34fc8404761d6a9206527fa5b67baade60858b4530de147fe1f3b7db8205c5d9d059b31
   languageName: node
   linkType: hard
 
@@ -5738,6 +5738,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: e293af098987ab90b7c2c94d6bec67d7f8da0483822620c7224a85918011c5a5f91f66a0f770dfa3a130825fa8b2dde300781926db477e00cb540dfed3012020
+  languageName: node
+  linkType: hard
+
+"expo-screen-orientation@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "expo-screen-orientation@npm:5.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 7ede30533a8c492f82b58c3b8be110b6373ffcc2cbe273299d9f15d9aa943d678d8aaffb3d2565780b45d1d5a2a1ddea54d813fc84c06e30e3cfd59abbd8e30e
   languageName: node
   linkType: hard
 
@@ -5791,9 +5800,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo@npm:^47.0.11":
-  version: 47.0.11
-  resolution: "expo@npm:47.0.11"
+"expo@npm:^47.0.12":
+  version: 47.0.12
+  resolution: "expo@npm:47.0.12"
   dependencies:
     "@babel/runtime": ^7.14.0
     "@expo/cli": 0.4.11
@@ -5810,7 +5819,7 @@ __metadata:
     expo-font: ~11.0.1
     expo-keep-awake: ~11.0.1
     expo-modules-autolinking: 1.0.1
-    expo-modules-core: 1.1.0
+    expo-modules-core: 1.1.1
     fbemitter: ^3.0.0
     getenv: ^1.0.0
     invariant: ^2.2.4
@@ -5823,7 +5832,7 @@ __metadata:
       optional: true
   bin:
     expo: bin/cli.js
-  checksum: 5e470d7b0c94ddade3f77e4e5038f025635f432f1e56a9e541455f5e71b5f4919c7c756639b5bf31ff6b877ad254a77290efe0305d48712e5406c76f3c8b7e77
+  checksum: 24f7073660fb4c4c76a398d722d1fcae1ea654463faf2a730e986f884618a93618d1ee9116fe6c8199338c2e8aa716c2d389344a967824d264e2440eb7f16340
   languageName: node
   linkType: hard
 
@@ -9416,11 +9425,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^12.1.1":
-  version: 12.1.1
-  resolution: "react-i18next@npm:12.1.1"
+"react-i18next@npm:^12.1.4":
+  version: 12.1.4
+  resolution: "react-i18next@npm:12.1.4"
   dependencies:
-    "@babel/runtime": ^7.14.5
+    "@babel/runtime": ^7.20.6
     html-parse-stringify: ^3.0.1
   peerDependencies:
     i18next: ">= 19.0.0"
@@ -9430,7 +9439,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: baeb1957d70281d1a95ef0b94801bc2e6bf17066a49a45f32cd1a706ead3ddce2ab3e7b321e07c43f082efa9987c2d55856a5bdf419d9ad628dbfa9ec87af8ea
+  checksum: 6f0f8a47f0bf7da2c9ac383c88b6ef02446d9d1aa2609cfcc98d8a28999da85361f065fbe7f7f4af910df4e8d53af7879db4b9cd681274d582fc7bdd1b07813b
   languageName: node
   linkType: hard
 
@@ -11254,7 +11263,7 @@ __metadata:
     "@mattermost/react-native-paste-input": ^0.5.2
     "@neverdull-agency/expo-unlimited-secure-store": ^1.0.10
     "@react-native-async-storage/async-storage": ~1.17.11
-    "@react-native-camera-roll/camera-roll": ^5.2.0
+    "@react-native-camera-roll/camera-roll": ^5.2.1
     "@react-native-clipboard/clipboard": ^1.11.1
     "@react-native-community/blur": ^4.3.0
     "@react-native-community/netinfo": 9.3.7
@@ -11281,7 +11290,7 @@ __metadata:
     chalk: ^4.1.2
     diff: ^5.1.0
     dotenv: ^16.0.3
-    expo: ^47.0.11
+    expo: ^47.0.12
     expo-auth-session: ^3.8.0
     expo-av: ^13.1.0
     expo-constants: ^14.1.0
@@ -11293,6 +11302,7 @@ __metadata:
     expo-notifications: ^0.17.0
     expo-random: ^13.0.0
     expo-screen-capture: ^5.0.0
+    expo-screen-orientation: ^5.0.1
     expo-secure-store: ^12.0.0
     expo-splash-screen: ^0.17.5
     expo-store-review: ^6.1.0
@@ -11304,7 +11314,7 @@ __metadata:
     lodash: ^4.17.21
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-i18next: ^12.1.1
+    react-i18next: ^12.1.4
     react-intl: ^6.2.5
     react-native: ^0.70.6
     react-native-animated-spinkit: ^1.5.2

@@ -1,6 +1,5 @@
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import SegmentedControl from '@react-native-community/segmented-control'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -21,15 +20,7 @@ const Route = ({ route: { key: page } }: { route: any }) => {
   useEffect(() => {
     navigation.setParams({ queryKey })
   }, [])
-  return (
-    <Timeline
-      queryKey={queryKey}
-      disableRefresh={page === 'Trending'}
-      customProps={{
-        renderItem: ({ item }: any) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} disableRefresh={page === 'Trending'} />
 }
 
 const renderScene = SceneMap({

@@ -7,18 +7,19 @@ import {
   QueryKeyTimeline,
   useTimelineQuery
 } from '@utils/queryHooks/timeline'
+import { setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useEffect, useRef, useState } from 'react'
+import React, { RefObject, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform, Text, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
@@ -26,21 +27,25 @@ import Animated, {
 export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
+  fetchingActive: React.MutableRefObject<boolean>
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
+  readMarker?: 'read_marker_following'
 }
 
-const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2
+const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
 export const SEPARATION_Y_1 = -(CONTAINER_HEIGHT / 2 + StyleConstants.Font.Size.S / 2)
 export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Size.S / 2)
 
 const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
+  fetchingActive,
   scrollY,
   fetchingType,
-  disableRefresh = false
+  disableRefresh = false,
+  readMarker
 }) => {
   if (Platform.OS !== 'ios') {
     return null
@@ -55,7 +60,15 @@ const TimelineRefresh: React.FC<Props> = ({
   const prevStatusId = useRef<Mastodon.Status['id']>()
 
   const queryClient = useQueryClient()
-  const { refetch, isFetching } = useTimelineQuery({ ...queryKey[1] })
+  const { refetch, isRefetching } = useTimelineQuery({ ...queryKey[1] })
+
+  useDerivedValue(() => {
+    if (prevActive.current || isRefetching) {
+      fetchingActive.current = true
+    } else {
+      fetchingActive.current = false
+    }
+  }, [prevActive.current, isRefetching])
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
@@ -83,7 +96,7 @@ const TimelineRefresh: React.FC<Props> = ({
   const arrowStage = useSharedValue(0)
   useAnimatedReaction(
     () => {
-      if (isFetching) {
+      if (fetchingActive.current) {
         return false
       }
       switch (arrowStage.value) {
@@ -116,9 +129,10 @@ const TimelineRefresh: React.FC<Props> = ({
         runOnJS(haptics)('Light')
       }
     },
-    [isFetching]
+    [fetchingActive.current]
   )
 
+  const fetchAndScrolled = useSharedValue(false)
   const runFetchPrevious = async () => {
     if (prevActive.current) return
 
@@ -134,29 +148,12 @@ const TimelineRefresh: React.FC<Props> = ({
 
     await queryFunctionTimeline({
       queryKey,
-      pageParam: firstPage?.links?.prev && {
-        ...(firstPage.links.prev.isOffset
-          ? { offset: firstPage.links.prev.id }
-          : { min_id: firstPage.links.prev.id })
-      },
+      pageParam: firstPage?.links?.prev,
       meta: {}
-    }).then(res => {
-      queryClient.setQueryData<
-        InfiniteData<
-          PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
-        >
-      >(queryKey, old => {
-        if (!old) return old
-
-        prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
-        return { ...old, pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages] }
-      })
     })
-  }
-  useEffect(() => {
-    const loop = async () => {
-      for await (const _ of Array(Math.ceil((prevCache.current?.length || 0) / PREV_PER_BATCH))) {
-        await new Promise(promise => setTimeout(promise, 32))
+      .then(res => {
+        if (!res.body.length) return
+
         queryClient.setQueryData<
           InfiniteData<
             PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
@@ -164,33 +161,62 @@ const TimelineRefresh: React.FC<Props> = ({
         >(queryKey, old => {
           if (!old) return old
 
+          prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
           return {
             ...old,
-            pages: old.pages.map((page, index) => {
-              if (index === 0) {
-                const insert = prevCache.current?.slice(-PREV_PER_BATCH)
-                prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
-                if (insert) {
-                  return { ...page, body: [...insert, ...page.body] }
-                } else {
-                  return page
-                }
-              } else {
-                return page
-              }
-            })
+            pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages]
           }
         })
 
-        break
-      }
-      prevActive.current = false
-    }
-    loop()
-  }, [prevCache.current])
+        return res.body.length - PREV_PER_BATCH
+      })
+      .then(async nextLength => {
+        if (!nextLength) {
+          prevActive.current = false
+          return
+        }
+
+        for (let [index] of Array(Math.ceil(nextLength / PREV_PER_BATCH)).entries()) {
+          if (!fetchAndScrolled.value && index < 3 && scrollY.value > 15) {
+            fetchAndScrolled.value = true
+            flRef.current?.scrollToOffset({ offset: scrollY.value - 15, animated: true })
+          }
+
+          await new Promise(promise => setTimeout(promise, 32))
+          queryClient.setQueryData<
+            InfiniteData<
+              PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+            >
+          >(queryKey, old => {
+            if (!old) return old
+
+            return {
+              ...old,
+              pages: old.pages.map((page, index) => {
+                if (index === 0) {
+                  const insert = prevCache.current?.slice(-PREV_PER_BATCH)
+                  prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
+                  if (insert) {
+                    return { ...page, body: [...insert, ...page.body] }
+                  } else {
+                    return page
+                  }
+                } else {
+                  return page
+                }
+              })
+            }
+          })
+        }
+        prevActive.current = false
+      })
+  }
 
   const runFetchLatest = async () => {
     queryClient.invalidateQueries(queryKey)
+    if (readMarker) {
+      setAccountStorage([{ key: readMarker, value: undefined }])
+    }
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }
@@ -224,61 +250,53 @@ const TimelineRefresh: React.FC<Props> = ({
         alignItems: 'center'
       }}
     >
-      {prevActive.current || isFetching ? (
-        <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
-          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-        </View>
-      ) : (
-        <>
-          <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
-            <Text
-              style={{
-                fontSize: StyleConstants.Font.Size.S,
-                lineHeight: CONTAINER_HEIGHT,
-                color: colors.primaryDefault
-              }}
-              onLayout={({ nativeEvent }) => {
-                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-                }
-              }}
-              children={t('refresh.fetchPreviousPage')}
+      <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.fetchPreviousPage')}
+        />
+        <Animated.View
+          style={[
+            {
+              position: 'absolute',
+              left: textRight + StyleConstants.Spacing.S
+            },
+            arrowY,
+            arrowTop
+          ]}
+          children={
+            <Icon
+              name='ArrowLeft'
+              size={StyleConstants.Font.Size.M}
+              color={colors.primaryDefault}
             />
-            <Animated.View
-              style={[
-                {
-                  position: 'absolute',
-                  left: textRight + StyleConstants.Spacing.S
-                },
-                arrowY,
-                arrowTop
-              ]}
-              children={
-                <Icon
-                  name='ArrowLeft'
-                  size={StyleConstants.Font.Size.M}
-                  color={colors.primaryDefault}
-                />
-              }
-            />
-          </View>
-          <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
-            <Text
-              style={{
-                fontSize: StyleConstants.Font.Size.S,
-                lineHeight: CONTAINER_HEIGHT,
-                color: colors.primaryDefault
-              }}
-              onLayout={({ nativeEvent }) => {
-                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-                }
-              }}
-              children={t('refresh.refetch')}
-            />
-          </View>
-        </>
-      )}
+          }
+        />
+      </View>
+      <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.refetch')}
+        />
+      </View>
     </Animated.View>
   )
 }

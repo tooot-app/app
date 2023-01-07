@@ -24,6 +24,7 @@ export type AccountV0 = {
   'auth.account.domain': string // used for username
   'auth.account.avatar_static': string
   version: string
+  read_marker_following?: string
   // number
   // boolean
   // object

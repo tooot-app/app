@@ -231,6 +231,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    namespace 'com.xmflsct.app.tooot'
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->

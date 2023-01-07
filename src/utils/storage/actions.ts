@@ -1,5 +1,6 @@
 import { queryClient } from '@utils/queryHooks'
 import { storage } from '@utils/storage'
+import { Platform } from 'react-native'
 import {
   MMKV,
   useMMKVBoolean,
@@ -40,10 +41,21 @@ export const useGlobalStorage = {
     useMMKVString(key, storage.global) as NonNullable<StorageGlobal[T]> extends string
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
       : never,
-  number: <T extends keyof StorageGlobal>(key: T) =>
-    useMMKVNumber(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
-      ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
-      : never,
+  number: <T extends keyof StorageGlobal>(key: T) => {
+    if (Platform.OS === 'ios') {
+      return useMMKVString(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
+        ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
+        : never
+    } else {
+      const [num, setNum] = useMMKVString(key, storage.global)
+      // @ts-ignore
+      return [parseInt(num), v => setNum(v.toString())] as NonNullable<
+        StorageGlobal[T]
+      > extends number
+        ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
+        : never
+    }
+  },
   boolean: <T extends keyof StorageGlobal>(key: T) =>
     useMMKVBoolean(key, storage.global) as NonNullable<StorageGlobal[T]> extends boolean
       ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]

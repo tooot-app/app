@@ -33,12 +33,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
 
   const queryKey: QueryKeyUsers = ['Users', params]
   const { data, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = useUsersQuery({
-    ...queryKey[1],
-    options: {
-      getPreviousPageParam: firstPage =>
-        firstPage.links?.prev?.id && { min_id: firstPage.links.prev.id },
-      getNextPageParam: lastPage => lastPage.links?.next?.id && { max_id: lastPage.links.next.id }
-    }
+    ...queryKey[1]
   })
 
   const [isSearching, setIsSearching] = useState(false)

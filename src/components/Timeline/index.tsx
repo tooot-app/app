@@ -1,9 +1,14 @@
 import ComponentSeparator from '@components/Separator'
+import TimelineDefault from '@components/Timeline/Default'
 import { useScrollToTop } from '@react-navigation/native'
 import { UseInfiniteQueryOptions } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { flattenPages } from '@utils/queryHooks/utils'
-import { useGlobalStorageListener } from '@utils/storage/actions'
+import {
+  getAccountStorage,
+  setAccountStorage,
+  useGlobalStorageListener
+} from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useRef } from 'react'
@@ -13,7 +18,7 @@ import TimelineEmpty from './Empty'
 import TimelineFooter from './Footer'
 import TimelineRefresh, { SEPARATION_Y_1, SEPARATION_Y_2 } from './Refresh'
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList<any>)
 
 export interface Props {
   flRef?: RefObject<FlatList<any>>
@@ -24,7 +29,8 @@ export interface Props {
   >
   disableRefresh?: boolean
   disableInfinity?: boolean
-  customProps: Partial<FlatListProps<any>> & Pick<FlatListProps<any>, 'renderItem'>
+  readMarker?: 'read_marker_following'
+  customProps?: Partial<FlatListProps<any>>
 }
 
 const Timeline: React.FC<Props> = ({
@@ -33,6 +39,7 @@ const Timeline: React.FC<Props> = ({
   queryOptions,
   disableRefresh = false,
   disableInfinity = false,
+  readMarker = undefined,
   customProps
 }) => {
   const { colors } = useTheme()
@@ -45,17 +52,12 @@ const Timeline: React.FC<Props> = ({
         notifyOnChangeProps: Platform.select({
           ios: ['dataUpdatedAt', 'isFetching'],
           android: ['dataUpdatedAt', 'isFetching', 'isLoading']
-        }),
-        getNextPageParam: lastPage =>
-          lastPage?.links?.next && {
-            ...(lastPage.links.next.isOffset
-              ? { offset: lastPage.links.next.id }
-              : { max_id: lastPage.links.next.id })
-          }
+        })
       }
     })
 
   const flRef = useRef<FlatList>(null)
+  const fetchingActive = useRef<boolean>(false)
 
   const scrollY = useSharedValue(0)
   const fetchingType = useSharedValue<0 | 1 | 2>(0)
@@ -78,6 +80,32 @@ const Timeline: React.FC<Props> = ({
     [isFetching]
   )
 
+  const viewabilityConfigCallbackPairs = useRef<
+    Pick<FlatListProps<any>, 'viewabilityConfigCallbackPairs'>['viewabilityConfigCallbackPairs']
+  >(
+    readMarker
+      ? [
+          {
+            viewabilityConfig: {
+              minimumViewTime: 300,
+              itemVisiblePercentThreshold: 80,
+              waitForInteraction: true
+            },
+            onViewableItemsChanged: ({ viewableItems }) => {
+              const marker = readMarker ? getAccountStorage.string(readMarker) : undefined
+
+              const firstItemId = viewableItems.filter(item => item.isViewable)[0]?.item.id
+              if (!fetchingActive.current && firstItemId && firstItemId > (marker || '0')) {
+                setAccountStorage([{ key: readMarker, value: firstItemId }])
+              } else {
+                // setAccountStorage([{ key: readMarker, value: '109519141378761752' }])
+              }
+            }
+          }
+        ]
+      : undefined
+  )
+
   const androidRefreshControl = Platform.select({
     android: {
       refreshControl: (
@@ -86,7 +114,12 @@ const Timeline: React.FC<Props> = ({
           colors={[colors.primaryDefault]}
           progressBackgroundColor={colors.backgroundDefault}
           refreshing={isFetching || isLoading}
-          onRefresh={() => refetch()}
+          onRefresh={() => {
+            if (readMarker) {
+              setAccountStorage([{ key: readMarker, value: undefined }])
+            }
+            refetch()
+          }}
         />
       )
     }
@@ -102,9 +135,11 @@ const Timeline: React.FC<Props> = ({
       <TimelineRefresh
         flRef={flRef}
         queryKey={queryKey}
+        fetchingActive={fetchingActive}
         scrollY={scrollY}
         fetchingType={fetchingType}
         disableRefresh={disableRefresh}
+        readMarker={readMarker}
       />
       <AnimatedFlatList
         ref={customFLRef || flRef}
@@ -112,6 +147,9 @@ const Timeline: React.FC<Props> = ({
         onScroll={onScroll}
         windowSize={7}
         data={flattenPages(data)}
+        {...(customProps?.renderItem
+          ? { renderItem: customProps.renderItem }
+          : { renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} /> })}
         initialNumToRender={6}
         maxToRenderPerBatch={3}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
@@ -129,6 +167,7 @@ const Timeline: React.FC<Props> = ({
             />
           )
         }
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         {...(!isLoading && {
           maintainVisibleContentPosition: {
             minIndexForVisible: 0

@@ -2,7 +2,6 @@ import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import { useQueryClient } from '@tanstack/react-query'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
@@ -82,14 +81,7 @@ const TabSharedHashtag: React.FC<TabSharedStackScreenProps<'Tab-Shared-Hashtag'>
     })
   }, [canFollowTags, data?.following, isFetching])
 
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} />
 }
 
 export default TabSharedHashtag

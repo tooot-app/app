@@ -74,7 +74,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
   const match = urlMatcher(toot.url || toot.uri)
   const highlightIndex = useRef<number>(0)
-  const query = useQuery<{ pages: { body: (Mastodon.Status & { key?: 'cached' })[] }[] }>(
+  const query = useQuery<{ pages: { body: Mastodon.Status[] }[] }>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -94,11 +94,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           {
             body: statuses.map((status, index) => {
               if (index < highlightIndex.current || status.id === toot.id) {
-                return { ...status, _level: 0 }
+                status._level = 0
+                return status
               } else {
                 const repliedLevel: number =
                   statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-                return { ...status, _level: repliedLevel + 1 }
+                status._level = repliedLevel + 1
+                return status
               }
             })
           }
@@ -106,7 +108,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     },
     {
-      initialData: { pages: [{ body: [{ ...toot, _level: 0, key: 'cached' }] }] },
+      placeholderData: { pages: [{ body: [toot] }] },
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
@@ -169,11 +171,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
       return statuses.map((status, index) => {
         if (index < highlightIndex.current || status.id === toot.id) {
-          return { ...status, _level: 0 }
+          status._level = 0
+          return status
         }
 
         const repliedLevel: number = statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-        return { ...status, _level: repliedLevel + 1 }
+        status._level = repliedLevel + 1
+        return status
       })
     },
     {
@@ -184,12 +188,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       staleTime: 0,
       refetchOnMount: true,
       onSuccess: data => {
-        if (query.data.pages[0].body.length < 1 && data.length < 1) {
+        if ((query.data?.pages[0].body.length || 0) < 1 && data.length < 1) {
           navigation.goBack()
           return
         }
 
-        if (query.data.pages[0].body.length < data.length) {
+        if ((query.data?.pages[0].body.length || 0) < data.length) {
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{
             pages: { body: Mastodon.Status[] }[]
@@ -201,12 +205,11 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               pages: [
                 {
                   body: data.map(remote => {
-                    const localMatch = query.data.pages[0].body.find(
+                    const localMatch = query.data?.pages[0].body.find(
                       local => local.uri === remote.uri
                     )
                     if (localMatch) {
-                      delete localMatch.key
-                      return localMatch
+                      return { ...localMatch, _level: remote._level }
                     } else {
                       return {
                         ...remote,
@@ -265,9 +268,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       windowSize={7}
       data={query.data?.pages?.[0].body}
       renderItem={({ item, index }) => {
-        const prev = query.data.pages[0].body[index - 1]?._level || 0
+        const prev = query.data?.pages[0].body[index - 1]?._level || 0
         const curr = item._level
-        const next = query.data.pages[0].body[index + 1]?._level || 0
+        const next = query.data?.pages[0].body[index + 1]?._level || 0
 
         return (
           <View
@@ -373,7 +376,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                 })
               : null}
             {/* <CustomText
-              children={finalData.current[index - 1]?._level}
+              children={query.data?.pages[0].body[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
             <CustomText
@@ -381,7 +384,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               style={{ position: 'absolute', top: 20, left: 4, color: colors.yellow }}
             />
             <CustomText
-              children={finalData.current[index + 1]?._level}
+              children={query.data?.pages[0].body[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
             /> */}
           </View>
@@ -421,7 +424,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         const offset = error.averageItemLength * error.index
         flRef.current?.scrollToOffset({ offset })
         try {
-          error.index < query.data.pages[0].body.length &&
+          error.index < (query.data?.pages[0].body.length || 0) &&
             setTimeout(
               () =>
                 flRef.current?.scrollToIndex({

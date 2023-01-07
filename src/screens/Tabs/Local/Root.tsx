@@ -2,7 +2,6 @@ import { HeaderRight } from '@components/Header'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useListsQuery } from '@utils/queryHooks/lists'
@@ -178,14 +177,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
     navigation.setParams({ queryKey: queryKey })
   }, [mode, queryKey[1], pageLocal, lists])
 
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} readMarker='read_marker_following' />
 }
 
 export default Root
