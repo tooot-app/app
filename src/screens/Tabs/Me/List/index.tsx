@@ -1,7 +1,6 @@
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabMeStackParamList } from '@utils/navigation/navigators'
@@ -74,14 +73,7 @@ const TabMeList: React.FC<NativeStackScreenProps<TabMeStackParamList, 'Tab-Me-Li
     navigation.setParams({ queryKey })
   }, [list])
 
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} />
 }
 
 export default TabMeList

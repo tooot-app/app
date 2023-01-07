@@ -7,18 +7,19 @@ import {
   QueryKeyTimeline,
   useTimelineQuery
 } from '@utils/queryHooks/timeline'
+import { setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useEffect, useRef, useState } from 'react'
+import React, { RefObject, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Platform, Text, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
@@ -26,9 +27,11 @@ import Animated, {
 export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
+  fetchingActive: React.MutableRefObject<boolean>
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
+  readMarker?: 'read_marker_following'
 }
 
 const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
@@ -38,9 +41,11 @@ export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Siz
 const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
+  fetchingActive,
   scrollY,
   fetchingType,
-  disableRefresh = false
+  disableRefresh = false,
+  readMarker
 }) => {
   if (Platform.OS !== 'ios') {
     return null
@@ -55,7 +60,15 @@ const TimelineRefresh: React.FC<Props> = ({
   const prevStatusId = useRef<Mastodon.Status['id']>()
 
   const queryClient = useQueryClient()
-  const { refetch, isFetching } = useTimelineQuery({ ...queryKey[1] })
+  const { refetch, isRefetching } = useTimelineQuery({ ...queryKey[1] })
+
+  useDerivedValue(() => {
+    if (prevActive.current || isRefetching) {
+      fetchingActive.current = true
+    } else {
+      fetchingActive.current = false
+    }
+  }, [prevActive.current, isRefetching])
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
@@ -83,7 +96,7 @@ const TimelineRefresh: React.FC<Props> = ({
   const arrowStage = useSharedValue(0)
   useAnimatedReaction(
     () => {
-      if (isFetching) {
+      if (fetchingActive.current) {
         return false
       }
       switch (arrowStage.value) {
@@ -116,7 +129,7 @@ const TimelineRefresh: React.FC<Props> = ({
         runOnJS(haptics)('Light')
       }
     },
-    [isFetching]
+    [fetchingActive.current]
   )
 
   const fetchAndScrolled = useSharedValue(false)
@@ -201,11 +214,13 @@ const TimelineRefresh: React.FC<Props> = ({
         }
         prevActive.current = false
       })
-      .catch(err => console.warn(err))
   }
 
   const runFetchLatest = async () => {
     queryClient.invalidateQueries(queryKey)
+    if (readMarker) {
+      setAccountStorage([{ key: readMarker, value: undefined }])
+    }
     await refetch()
     setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }
@@ -239,61 +254,53 @@ const TimelineRefresh: React.FC<Props> = ({
         alignItems: 'center'
       }}
     >
-      {prevActive.current || isFetching ? (
-        <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
-          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-        </View>
-      ) : (
-        <>
-          <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
-            <Text
-              style={{
-                fontSize: StyleConstants.Font.Size.S,
-                lineHeight: CONTAINER_HEIGHT,
-                color: colors.primaryDefault
-              }}
-              onLayout={({ nativeEvent }) => {
-                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-                }
-              }}
-              children={t('refresh.fetchPreviousPage')}
+      <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.fetchPreviousPage')}
+        />
+        <Animated.View
+          style={[
+            {
+              position: 'absolute',
+              left: textRight + StyleConstants.Spacing.S
+            },
+            arrowY,
+            arrowTop
+          ]}
+          children={
+            <Icon
+              name='ArrowLeft'
+              size={StyleConstants.Font.Size.M}
+              color={colors.primaryDefault}
             />
-            <Animated.View
-              style={[
-                {
-                  position: 'absolute',
-                  left: textRight + StyleConstants.Spacing.S
-                },
-                arrowY,
-                arrowTop
-              ]}
-              children={
-                <Icon
-                  name='ArrowLeft'
-                  size={StyleConstants.Font.Size.M}
-                  color={colors.primaryDefault}
-                />
-              }
-            />
-          </View>
-          <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
-            <Text
-              style={{
-                fontSize: StyleConstants.Font.Size.S,
-                lineHeight: CONTAINER_HEIGHT,
-                color: colors.primaryDefault
-              }}
-              onLayout={({ nativeEvent }) => {
-                if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-                  setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-                }
-              }}
-              children={t('refresh.refetch')}
-            />
-          </View>
-        </>
-      )}
+          }
+        />
+      </View>
+      <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.refetch')}
+        />
+      </View>
     </Animated.View>
   )
 }

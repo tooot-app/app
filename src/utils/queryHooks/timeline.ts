@@ -11,7 +11,8 @@ import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { useNavState } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
-import { getAccountStorage } from '@utils/storage/actions'
+import { StorageAccount } from '@utils/storage/account'
+import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import { searchLocalStatus } from './search'
@@ -57,7 +58,25 @@ export const queryFunctionTimeline = async ({
   pageParam
 }: QueryFunctionContext<QueryKeyTimeline>) => {
   const page = queryKey[1]
-  let params: { [key: string]: string } = { limit: 40, ...pageParam }
+
+  let marker: string | undefined
+  if (page.page === 'Following' && !pageParam?.offset && !pageParam?.min_id && !pageParam?.max_id) {
+    const storedMarker = getAccountStorage.string('read_marker_following')
+    if (storedMarker) {
+      await apiInstance<Mastodon.Status[]>({
+        method: 'get',
+        url: 'timelines/home',
+        params: { limit: 1, min_id: storedMarker }
+      }).then(res => {
+        if (res.body.length) {
+          marker = storedMarker
+        }
+      })
+    }
+  }
+  let params: { [key: string]: string } = marker
+    ? { limit: 40, max_id: marker }
+    : { limit: 40, ...pageParam }
 
   switch (page.page) {
     case 'Following':
@@ -431,7 +450,6 @@ const useTimelineMutation = ({
             updateStatusProperty(params, navigationState)
             break
           case 'editItem':
-            console.log('YES!!!')
             editItem(params)
             break
           case 'deleteItem':
