@@ -49,10 +49,10 @@ const ParseHTML: React.FC<Props> = ({
     StyleConstants.Font.Size[size],
     adaptiveSize ? adaptiveFontsize : 0
   )
-  const adaptedLineheight = adaptiveScale(
-    StyleConstants.Font.LineHeight[size],
-    adaptiveSize ? adaptiveFontsize : 0
-  )
+  const adaptedLineheight =
+    Platform.OS === 'ios'
+      ? adaptiveScale(StyleConstants.Font.LineHeight[size], adaptiveSize ? adaptiveFontsize : 0)
+      : undefined
 
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
   const { params } = useRoute()
@@ -203,7 +203,10 @@ const ParseHTML: React.FC<Props> = ({
             break
           case 'br':
             return (
-              <Text key={index} style={{ lineHeight: adaptedLineheight / 2 }}>
+              <Text
+                key={index}
+                style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
+              >
                 {'\n'}
               </Text>
             )
@@ -212,7 +215,11 @@ const ParseHTML: React.FC<Props> = ({
               return (
                 <Text key={index}>
                   {node.children.map((c, i) => renderNode(c, i))}
-                  <Text style={{ lineHeight: adaptedLineheight / 2 }}>{'\n\n'}</Text>
+                  <Text
+                    style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
+                  >
+                    {'\n\n'}
+                  </Text>
                 </Text>
               )
             } else {

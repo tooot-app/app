@@ -114,7 +114,12 @@ const Timeline: React.FC<Props> = ({
           colors={[colors.primaryDefault]}
           progressBackgroundColor={colors.backgroundDefault}
           refreshing={isFetching || isLoading}
-          onRefresh={() => refetch()}
+          onRefresh={() => {
+            if (readMarker) {
+              setAccountStorage([{ key: readMarker, value: undefined }])
+            }
+            refetch()
+          }}
         />
       )
     }
