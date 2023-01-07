@@ -1,6 +1,6 @@
 import { getAccountDetails } from '@utils/storage/actions'
 import axios, { AxiosRequestConfig } from 'axios'
-import { ctx, handleError, PagedResponse, userAgent } from './helpers'
+import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'
@@ -57,29 +57,7 @@ const apiInstance = async <T = unknown>({
     ...((body as (FormData & { _parts: [][] }) | undefined)?._parts.length && { data: body }),
     ...extras
   })
-    .then(response => {
-      let links: {
-        prev?: { id: string; isOffset: boolean }
-        next?: { id: string; isOffset: boolean }
-      } = {}
-
-      if (response.headers?.link) {
-        const linksParsed = response.headers.link.matchAll(
-          new RegExp('[?&](.*?_id|offset)=(.*?)>; *rel="(.*?)"', 'gi')
-        )
-        for (const link of linksParsed) {
-          switch (link[3]) {
-            case 'prev':
-              links.prev = { id: link[2], isOffset: link[1].includes('offset') }
-              break
-            case 'next':
-              links.next = { id: link[2], isOffset: link[1].includes('offset') }
-              break
-          }
-        }
-      }
-      return Promise.resolve({ body: response.data, links })
-    })
+    .then(response => ({ body: response.data, links: parseHeaderLinks(response.headers.link) }))
     .catch(handleError())
 }
 

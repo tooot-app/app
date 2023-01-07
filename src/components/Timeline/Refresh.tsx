@@ -148,11 +148,7 @@ const TimelineRefresh: React.FC<Props> = ({
 
     await queryFunctionTimeline({
       queryKey,
-      pageParam: firstPage?.links?.prev && {
-        ...(firstPage.links.prev.isOffset
-          ? { offset: firstPage.links.prev.id }
-          : { min_id: firstPage.links.prev.id })
-      },
+      pageParam: firstPage?.links?.prev,
       meta: {}
     })
       .then(res => {

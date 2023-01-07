@@ -23,17 +23,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
   const { t } = useTranslation(['common', 'screenTabs'])
 
   const queryKey: QueryKeyListAccounts = ['ListAccounts', { id: params.id }]
-  const { data, refetch, fetchNextPage, hasNextPage } = useListAccountsQuery({
-    ...queryKey[1],
-    options: {
-      getNextPageParam: lastPage =>
-        lastPage?.links?.next && {
-          ...(lastPage.links.next.isOffset
-            ? { offset: lastPage.links.next.id }
-            : { max_id: lastPage.links.next.id })
-        }
-    }
-  })
+  const { data, refetch, fetchNextPage, hasNextPage } = useListAccountsQuery({ ...queryKey[1] })
 
   const mutation = useListAccountsMutation({
     onSuccess: () => {

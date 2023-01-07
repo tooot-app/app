@@ -1,15 +1,16 @@
 import {
-    QueryFunctionContext,
-    useInfiniteQuery,
-    UseInfiniteQueryOptions,
-    useMutation,
-    UseMutationOptions,
-    useQuery,
-    UseQueryOptions
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions
 } from '@tanstack/react-query'
 import { PagedResponse } from '@utils/api/helpers'
 import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
+import { infinitePageParams } from './utils'
 
 export type QueryKeyLists = ['Lists']
 
@@ -98,10 +99,16 @@ const useListAccountsQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyListAccounts[1] & {
-  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Account[]>, AxiosError>
+  options?: Omit<
+    UseInfiniteQueryOptions<PagedResponse<Mastodon.Account[]>, AxiosError>,
+    'getPreviousPageParam' | 'getNextPageParam'
+  >
 }) => {
   const queryKey: QueryKeyListAccounts = ['ListAccounts', queryKeyParams]
-  return useInfiniteQuery(queryKey, accountsQueryFunction, options)
+  return useInfiniteQuery(queryKey, accountsQueryFunction, {
+    ...options,
+    ...infinitePageParams
+  })
 }
 
 type AccountsMutationVarsLists = {

@@ -16,16 +16,7 @@ export interface Props {
 const TimelineFooter: React.FC<Props> = ({ queryKey, disableInfinity }) => {
   const { hasNextPage } = useTimelineQuery({
     ...queryKey[1],
-    options: {
-      enabled: !disableInfinity,
-      notifyOnChangeProps: ['hasNextPage'],
-      getNextPageParam: lastPage =>
-        lastPage?.links?.next && {
-          ...(lastPage.links.next.isOffset
-            ? { offset: lastPage.links.next.id }
-            : { max_id: lastPage.links.next.id })
-        }
-    }
+    options: { enabled: !disableInfinity, notifyOnChangeProps: ['hasNextPage'] }
   })
 
   const { colors } = useTheme()

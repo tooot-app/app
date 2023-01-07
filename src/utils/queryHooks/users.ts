@@ -9,6 +9,7 @@ import apiInstance from '@utils/api/instance'
 import { urlMatcher } from '@utils/helpers/urlMatcher'
 import { TabSharedStackParamList } from '@utils/navigation/navigators'
 import { AxiosError } from 'axios'
+import { infinitePageParams } from './utils'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 
@@ -73,13 +74,19 @@ const useUsersQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyUsers[1] & {
-  options?: UseInfiniteQueryOptions<
-    PagedResponse<Mastodon.Account[]> & { warnIncomplete: boolean; remoteData: boolean },
-    AxiosError
+  options?: Omit<
+    UseInfiniteQueryOptions<
+      PagedResponse<Mastodon.Account[]> & { warnIncomplete: boolean; remoteData: boolean },
+      AxiosError
+    >,
+    'getPreviousPageParam' | 'getNextPageParam'
   >
 }) => {
   const queryKey: QueryKeyUsers = ['Users', { ...queryKeyParams }]
-  return useInfiniteQuery(queryKey, queryFunction, options)
+  return useInfiniteQuery(queryKey, queryFunction, {
+    ...options,
+    ...infinitePageParams
+  })
 }
 
 export { useUsersQuery }
