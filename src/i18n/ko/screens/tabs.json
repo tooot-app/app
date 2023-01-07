@@ -266,7 +266,7 @@
         "heading": "다크 테마",
         "options": {
           "lighter": "기본값",
-          "darker": ""
+          "darker": "완전히 검게"
         }
       },
       "browser": {
@@ -277,7 +277,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "타임라인의 GIF 파일 자동 재생"
       },
       "feedback": {
         "heading": "기능 제안"
@@ -330,22 +330,22 @@
       "name": "수정 이력"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "@{{acct}} 신고",
+      "report": "신고",
       "forward": {
-        "heading": ""
+        "heading": "원격 인스턴스 {{instance}}에도 익명으로 전달"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "이 계정에 어떤 문제가 있나요?",
+        "spam": "스팸입니다",
+        "other": "다른 문제가 있습니다",
+        "violation": "서버 규칙을 위반합니다"
       },
       "comment": {
-        "heading": ""
+        "heading": "그 밖에 추가로 작성할 내용이 있나요?"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "서버 규칙 위반 내용"
       }
     },
     "search": {
@@ -378,7 +378,7 @@
     "toot": {
       "name": "대화",
       "remoteFetch": {
-        "title": "",
+        "title": "원격 컨텐츠를 포함",
         "message": ""
       }
     },
