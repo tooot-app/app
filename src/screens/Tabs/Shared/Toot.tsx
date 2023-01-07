@@ -94,11 +94,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           {
             body: statuses.map((status, index) => {
               if (index < highlightIndex.current || status.id === toot.id) {
-                return { ...status, _level: 0 }
+                status._level = 0
+                return status
               } else {
                 const repliedLevel: number =
                   statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-                return { ...status, _level: repliedLevel + 1 }
+                status._level = repliedLevel + 1
+                return status
               }
             })
           }
@@ -169,11 +171,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
       return statuses.map((status, index) => {
         if (index < highlightIndex.current || status.id === toot.id) {
-          return { ...status, _level: 0 }
+          status._level = 0
+          return status
         }
 
         const repliedLevel: number = statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-        return { ...status, _level: repliedLevel + 1 }
+        status._level = repliedLevel + 1
+        return status
       })
     },
     {
@@ -206,7 +210,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                     )
                     if (localMatch) {
                       delete localMatch.key
-                      return localMatch
+                      return { ...localMatch, _level: remote._level }
                     } else {
                       return {
                         ...remote,
@@ -372,8 +376,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   }
                 })
               : null}
-            {/* <CustomText
-              children={finalData.current[index - 1]?._level}
+            <CustomText
+              children={query.data.pages[0].body[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
             <CustomText
@@ -381,9 +385,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               style={{ position: 'absolute', top: 20, left: 4, color: colors.yellow }}
             />
             <CustomText
-              children={finalData.current[index + 1]?._level}
+              children={query.data.pages[0].body[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
-            /> */}
+            />
           </View>
         )
       }}
