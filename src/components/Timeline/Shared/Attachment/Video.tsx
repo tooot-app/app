@@ -4,6 +4,7 @@ import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import { Platform } from 'expo-modules-core'
+import * as ScreenOrientation from 'expo-screen-orientation'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
@@ -72,14 +73,21 @@ const AttachmentVideo: React.FC<Props> = ({
               posterStyle: { resizeMode: ResizeMode.COVER }
             })}
         useNativeControls={false}
-        onFullscreenUpdate={event => {
-          if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
-            Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
-            if (gifv && !reduceMotionEnabled && autoplayGifv) {
-              videoPlayer.current?.playAsync()
-            } else {
-              videoPlayer.current?.pauseAsync()
-            }
+        onFullscreenUpdate={async ({ fullscreenUpdate }) => {
+          switch (fullscreenUpdate) {
+            case VideoFullscreenUpdate.PLAYER_DID_PRESENT:
+              Platform.OS === 'android' && (await ScreenOrientation.unlockAsync())
+              break
+            case VideoFullscreenUpdate.PLAYER_WILL_DISMISS:
+              Platform.OS === 'android' &&
+                (await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT))
+              Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
+              if (gifv && !reduceMotionEnabled && autoplayGifv) {
+                videoPlayer.current?.playAsync()
+              } else {
+                videoPlayer.current?.pauseAsync()
+              }
+              break
           }
         }}
         onPlaybackStatusUpdate={event => {
