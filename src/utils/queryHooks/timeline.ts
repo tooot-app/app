@@ -52,7 +52,10 @@ export type QueryKeyTimeline = [
   )
 ]
 
-const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyTimeline>) => {
+export const queryFunctionTimeline = async ({
+  queryKey,
+  pageParam
+}: QueryFunctionContext<QueryKeyTimeline>) => {
   const page = queryKey[1]
   let params: { [key: string]: string } = { limit: 40, ...pageParam }
 
@@ -165,7 +168,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
           })
           return {
             body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links.next && { links: { next: res2.links.next } })
+            ...(res2.links?.next && { links: { next: res2.links.next } })
           }
         }
       } else {
@@ -220,7 +223,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
 }
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never
-export type TimelineData = Unpromise<ReturnType<typeof queryFunction>>
+export type TimelineData = Unpromise<ReturnType<typeof queryFunctionTimeline>>
 const useTimelineQuery = ({
   options,
   ...queryKeyParams
@@ -228,7 +231,7 @@ const useTimelineQuery = ({
   options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
-  return useInfiniteQuery(queryKey, queryFunction, {
+  return useInfiniteQuery(queryKey, queryFunctionTimeline, {
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

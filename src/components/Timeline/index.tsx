@@ -129,13 +129,11 @@ const Timeline: React.FC<Props> = ({
             />
           )
         }
-        maintainVisibleContentPosition={
-          isFetching
-            ? {
-                minIndexForVisible: 0
-              }
-            : undefined
-        }
+        {...(!isLoading && {
+          maintainVisibleContentPosition: {
+            minIndexForVisible: 0
+          }
+        })}
         {...androidRefreshControl}
         {...customProps}
       />
