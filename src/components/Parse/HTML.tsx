@@ -119,7 +119,11 @@ const ParseHTML: React.FC<Props> = ({
             const href = node.attribs.href
             if (classes) {
               if (classes.includes('hashtag')) {
-                const tag = href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1].toLowerCase()
+                const children = node.children.map(unwrapNode).join('')
+                const tag =
+                  href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1]?.toLowerCase() ||
+                  children.match(new RegExp(/#(\S+)/))?.[1]?.toLowerCase()
+
                 const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
                   ?.hashtag
                 const sameHashtag = paramsHashtag === tag
@@ -143,7 +147,7 @@ const ParseHTML: React.FC<Props> = ({
                       !sameHashtag &&
                       navigation.push('Tab-Shared-Hashtag', { hashtag: tag })
                     }
-                    children={node.children.map(unwrapNode).join('')}
+                    children={children}
                   />
                 )
               }
