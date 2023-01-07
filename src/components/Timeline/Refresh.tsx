@@ -143,6 +143,8 @@ const TimelineRefresh: React.FC<Props> = ({
       meta: {}
     })
       .then(res => {
+        if (!res.body.length) return
+
         queryClient.setQueryData<
           InfiniteData<
             PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
@@ -160,6 +162,11 @@ const TimelineRefresh: React.FC<Props> = ({
         return res.body.length - PREV_PER_BATCH
       })
       .then(async nextLength => {
+        if (!nextLength) {
+          prevActive.current = false
+          return
+        }
+
         for (let [index] of Array(Math.ceil(nextLength / PREV_PER_BATCH)).entries()) {
           if (!fetchAndScrolled.value && index < 3 && scrollY.value > 15) {
             fetchAndScrolled.value = true
@@ -194,6 +201,7 @@ const TimelineRefresh: React.FC<Props> = ({
         }
         prevActive.current = false
       })
+      .catch(err => console.warn(err))
   }
 
   const runFetchLatest = async () => {
