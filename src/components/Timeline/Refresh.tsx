@@ -31,7 +31,7 @@ export interface Props {
   disableRefresh?: boolean
 }
 
-const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2
+const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
 export const SEPARATION_Y_1 = -(CONTAINER_HEIGHT / 2 + StyleConstants.Font.Size.S / 2)
 export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Size.S / 2)
 
@@ -119,6 +119,7 @@ const TimelineRefresh: React.FC<Props> = ({
     [isFetching]
   )
 
+  const fetchAndScrolled = useSharedValue(false)
   const runFetchPrevious = async () => {
     if (prevActive.current) return
 
@@ -140,23 +141,8 @@ const TimelineRefresh: React.FC<Props> = ({
           : { min_id: firstPage.links.prev.id })
       },
       meta: {}
-    }).then(res => {
-      queryClient.setQueryData<
-        InfiniteData<
-          PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
-        >
-      >(queryKey, old => {
-        if (!old) return old
-
-        prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
-        return { ...old, pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages] }
-      })
     })
-  }
-  useEffect(() => {
-    const loop = async () => {
-      for await (const _ of Array(Math.ceil((prevCache.current?.length || 0) / PREV_PER_BATCH))) {
-        await new Promise(promise => setTimeout(promise, 32))
+      .then(res => {
         queryClient.setQueryData<
           InfiniteData<
             PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
@@ -164,30 +150,51 @@ const TimelineRefresh: React.FC<Props> = ({
         >(queryKey, old => {
           if (!old) return old
 
+          prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
           return {
             ...old,
-            pages: old.pages.map((page, index) => {
-              if (index === 0) {
-                const insert = prevCache.current?.slice(-PREV_PER_BATCH)
-                prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
-                if (insert) {
-                  return { ...page, body: [...insert, ...page.body] }
-                } else {
-                  return page
-                }
-              } else {
-                return page
-              }
-            })
+            pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages]
           }
         })
 
-        break
-      }
-      prevActive.current = false
-    }
-    loop()
-  }, [prevCache.current])
+        return res.body.length - PREV_PER_BATCH
+      })
+      .then(async nextLength => {
+        for (let [index] of Array(Math.ceil(nextLength / PREV_PER_BATCH)).entries()) {
+          if (!fetchAndScrolled.value && index < 3 && scrollY.value > 15) {
+            fetchAndScrolled.value = true
+            flRef.current?.scrollToOffset({ offset: scrollY.value - 15, animated: true })
+          }
+
+          await new Promise(promise => setTimeout(promise, 32))
+          queryClient.setQueryData<
+            InfiniteData<
+              PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+            >
+          >(queryKey, old => {
+            if (!old) return old
+
+            return {
+              ...old,
+              pages: old.pages.map((page, index) => {
+                if (index === 0) {
+                  const insert = prevCache.current?.slice(-PREV_PER_BATCH)
+                  prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
+                  if (insert) {
+                    return { ...page, body: [...insert, ...page.body] }
+                  } else {
+                    return page
+                  }
+                } else {
+                  return page
+                }
+              })
+            }
+          })
+        }
+        prevActive.current = false
+      })
+  }
 
   const runFetchLatest = async () => {
     queryClient.invalidateQueries(queryKey)
