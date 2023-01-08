@@ -46,14 +46,21 @@ export const PUSH_ADMIN = () =>
 
 export const setChannels = async (reset: boolean | undefined = false, specificAccount?: string) => {
   const account = specificAccount || getGlobalStorage.string('account.active')
-  const accountDetails = getAccountDetails(['version', 'push'])
+  const accountDetails = getAccountDetails([
+    'version',
+    'push',
+    'auth.account.acct',
+    'auth.account.domain'
+  ])
   if (!account || !accountDetails) return null
 
+  const readableAccount = `@${accountDetails['auth.account.acct']}@${accountDetails['auth.account.domain']}`
+
   const deleteChannel = async (type: string) =>
-    Notifications.deleteNotificationChannelAsync(`${account}_${type}`)
+    Notifications.deleteNotificationChannelAsync(`${readableAccount}_${type}`)
   const setChannel = async (type: string) =>
-    Notifications.setNotificationChannelAsync(`${account}_${type}`, {
-      groupId: account,
+    Notifications.setNotificationChannelAsync(`${readableAccount}_${type}`, {
+      groupId: readableAccount,
       name: i18n.t(`screenTabs:me.push.${type}.heading` as any),
       importance: Notifications.AndroidImportance.DEFAULT,
       bypassDnd: false,
@@ -62,12 +69,12 @@ export const setChannels = async (reset: boolean | undefined = false, specificAc
       enableVibrate: true
     })
 
-  const channelGroup = await Notifications.getNotificationChannelGroupAsync(account)
+  const channelGroup = await Notifications.getNotificationChannelGroupAsync(readableAccount)
   if (channelGroup && !reset) {
     return
   }
   if (!channelGroup) {
-    await Notifications.setNotificationChannelGroupAsync(account, { name: account })
+    await Notifications.setNotificationChannelGroupAsync(readableAccount, { name: readableAccount })
   }
 
   if (!accountDetails.push.decode) {

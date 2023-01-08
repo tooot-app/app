@@ -32,6 +32,7 @@
     "@react-native-community/blur": "^4.3.0",
     "@react-native-community/netinfo": "9.3.7",
     "@react-native-community/segmented-control": "^2.2.2",
+    "@react-native-firebase/app": "^16.5.0",
     "@react-native-menu/menu": "^0.7.3",
     "@react-navigation/bottom-tabs": "^6.5.2",
     "@react-navigation/native": "^6.1.1",
