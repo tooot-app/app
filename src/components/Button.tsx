@@ -97,7 +97,7 @@ const Button: React.FC<Props> = ({
                 fontSize: StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 opacity: loading ? 0 : 1
               }}
-              fontWeight={fontBold ? 'Bold' : 'Normal'}
+              fontWeight={fontBold || selected ? 'Bold' : 'Normal'}
               children={content}
               testID='text'
             />
@@ -125,7 +125,7 @@ const Button: React.FC<Props> = ({
           borderRadius: 100,
           justifyContent: 'center',
           alignItems: 'center',
-          borderWidth: overlay ? 0 : 1,
+          borderWidth: overlay ? 0 : selected ? 1.5 : 1,
           borderColor: mainColor(),
           backgroundColor: overlay ? colors.backgroundOverlayInvert : colors.backgroundDefault,
           paddingVertical: StyleConstants.Spacing[spacing],

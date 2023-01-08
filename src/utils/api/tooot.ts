@@ -26,7 +26,7 @@ const apiTooot = async <T = unknown>({
   body
 }: Params): Promise<{ body: T }> => {
   console.log(
-    ctx.bgGreen.bold(' API tooot ') +
+    ctx.bgGreen.bold(' tooot ') +
       ' ' +
       method +
       ctx.green(' -> ') +

@@ -106,7 +106,7 @@ const Message = React.forwardRef<FlashMessage>((_, ref) => {
         ...StyleConstants.FontStyle.S
       }}
       // @ts-ignore
-      textProps={{ numberOfLines: 2 }}
+      textProps={{ numberOfLines: 3 }}
     />
   )
 })

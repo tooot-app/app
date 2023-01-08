@@ -1,8 +1,10 @@
 import { getAccountDetails } from '@utils/storage/actions'
+import { StorageGlobal } from '@utils/storage/global'
 import axios, { AxiosRequestConfig } from 'axios'
 import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
 
 export type Params = {
+  account?: StorageGlobal['account.active']
   method: 'get' | 'post' | 'put' | 'delete' | 'patch'
   version?: 'v1' | 'v2'
   url: string
@@ -15,6 +17,7 @@ export type Params = {
 }
 
 const apiInstance = async <T = unknown>({
+  account,
   method,
   version = 'v1',
   url,
@@ -23,7 +26,7 @@ const apiInstance = async <T = unknown>({
   body,
   extras
 }: Params): Promise<PagedResponse<T>> => {
-  const accountDetails = getAccountDetails(['auth.domain', 'auth.token'])
+  const accountDetails = getAccountDetails(['auth.domain', 'auth.token'], account)
   if (!accountDetails) {
     console.warn(ctx.bgRed.white.bold(' API instance '), 'No account detail available')
     return Promise.reject()
@@ -35,9 +38,9 @@ const apiInstance = async <T = unknown>({
   }
 
   console.log(
-    ctx.bgGreen.bold(' API instance '),
+    ctx.bgBlue.bold(' Instance '),
     accountDetails['auth.domain'],
-    method + ctx.green(' -> ') + `/${url}` + (params ? ctx.green(' -> ') : ''),
+    method + ctx.blue(' -> ') + `/${url}` + (params ? ctx.blue(' -> ') : ''),
     params ? params : ''
   )
 

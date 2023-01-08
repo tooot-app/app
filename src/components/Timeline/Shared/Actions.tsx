@@ -28,7 +28,7 @@ const TimelineActions: React.FC = () => {
   const navigationState = useNavState()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const { t } = useTranslation(['common', 'componentTimeline'])
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const iconColor = colors.secondary
 
   const queryClient = useQueryClient()
@@ -56,7 +56,6 @@ const TimelineActions: React.FC = () => {
     onError: (err: any, params) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       displayMessage({
-        theme,
         type: 'error',
         message: t('common:message.error.message', {
           function: t(

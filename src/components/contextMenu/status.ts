@@ -21,7 +21,7 @@ const menuStatus = ({
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-}): ContextMenu[][] => {
+}): ContextMenu => {
   if (!status || !queryKey) return []
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
@@ -55,7 +55,7 @@ const menuStatus = ({
     }
   })
 
-  const menus: ContextMenu[][] = []
+  const menus: ContextMenu = []
 
   const [accountId] = useAccountStorage.string('auth.account.id')
   const ownAccount = accountId === status.account?.id
@@ -64,8 +64,9 @@ const menuStatus = ({
 
   menus.push([
     {
+      type: 'item',
       key: 'status-edit',
-      item: {
+      props: {
         onSelect: async () => {
           let replyToStatus: Mastodon.Status | undefined = undefined
           if (status.in_reply_to_id) {
@@ -102,8 +103,9 @@ const menuStatus = ({
       icon: 'square.and.pencil'
     },
     {
+      type: 'item',
       key: 'status-delete-edit',
-      item: {
+      props: {
         onSelect: () =>
           Alert.alert(
             t('componentContextMenu:status.deleteEdit.alert.title'),
@@ -145,8 +147,9 @@ const menuStatus = ({
       icon: 'pencil.and.outline'
     },
     {
+      type: 'item',
       key: 'status-delete',
-      item: {
+      props: {
         onSelect: () =>
           Alert.alert(
             t('componentContextMenu:status.delete.alert.title'),
@@ -176,8 +179,9 @@ const menuStatus = ({
 
   menus.push([
     {
+      type: 'item',
       key: 'status-mute',
-      item: {
+      props: {
         onSelect: () =>
           mutation.mutate({
             type: 'updateStatusProperty',
@@ -198,8 +202,9 @@ const menuStatus = ({
       icon: status.muted ? 'speaker' : 'speaker.slash'
     },
     {
+      type: 'item',
       key: 'status-pin',
-      item: {
+      props: {
         onSelect: () =>
           // Also note that reblogs cannot be pinned.
           mutation.mutate({

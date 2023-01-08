@@ -89,16 +89,48 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {[mShare, mAccount].map((type, i) => (
+              {[mShare, mAccount].map((menu, i) => (
                 <Fragment key={i}>
-                  {type.map((mGroup, index) => (
+                  {menu.map((group, index) => (
                     <DropdownMenu.Group key={index}>
-                      {mGroup.map(menu => (
-                        <DropdownMenu.Item key={menu.key} {...menu.item}>
-                          <DropdownMenu.ItemTitle children={menu.title} />
-                          <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
-                        </DropdownMenu.Item>
-                      ))}
+                      {group.map(item => {
+                        switch (item.type) {
+                          case 'item':
+                            return (
+                              <DropdownMenu.Item key={item.key} {...item.props}>
+                                <DropdownMenu.ItemTitle children={item.title} />
+                                {item.icon ? (
+                                  <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                                ) : null}
+                              </DropdownMenu.Item>
+                            )
+                          case 'sub':
+                            return (
+                              // @ts-ignore
+                              <DropdownMenu.Sub key={item.key}>
+                                <DropdownMenu.SubTrigger
+                                  key={item.trigger.key}
+                                  {...item.trigger.props}
+                                >
+                                  <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                  {item.trigger.icon ? (
+                                    <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                  ) : null}
+                                </DropdownMenu.SubTrigger>
+                                <DropdownMenu.SubContent>
+                                  {item.items.map(sub => (
+                                    <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                      <DropdownMenu.ItemTitle children={sub.title} />
+                                      {sub.icon ? (
+                                        <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                      ) : null}
+                                    </DropdownMenu.Item>
+                                  ))}
+                                </DropdownMenu.SubContent>
+                              </DropdownMenu.Sub>
+                            )
+                        }
+                      })}
                     </DropdownMenu.Group>
                   ))}
                 </Fragment>

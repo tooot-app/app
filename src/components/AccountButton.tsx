@@ -1,44 +1,30 @@
 import { useNavigation } from '@react-navigation/native'
-import { generateAccountKey, getAccountDetails, setAccount } from '@utils/storage/actions'
-import { StorageGlobal } from '@utils/storage/global'
+import { ReadableAccountType, setAccount } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import Button from './Button'
 import haptics from './haptics'
 
 interface Props {
-  account: NonNullable<StorageGlobal['accounts']>[number]
-  selected?: boolean
+  account: ReadableAccountType
   additionalActions?: () => void
 }
 
-const AccountButton: React.FC<Props> = ({ account, selected = false, additionalActions }) => {
+const AccountButton: React.FC<Props> = ({ account, additionalActions }) => {
   const navigation = useNavigation()
-  const accountDetails = getAccountDetails(
-    ['auth.domain', 'auth.account.acct', 'auth.account.domain', 'auth.account.id'],
-    account
-  )
-  if (!accountDetails) return null
 
   return (
     <Button
       type='text'
-      selected={selected}
+      selected={account.active}
       style={{
         marginBottom: StyleConstants.Spacing.M,
         marginRight: StyleConstants.Spacing.M
       }}
-      content={`@${accountDetails['auth.account.acct']}@${accountDetails['auth.account.domain']}${
-        selected ? ' ✓' : ''
-      }`}
+      content={account.acct}
       onPress={() => {
         haptics('Light')
-        setAccount(
-          generateAccountKey({
-            domain: accountDetails['auth.domain'],
-            id: accountDetails['auth.account.id']
-          })
-        )
+        setAccount(account.key)
         navigation.goBack()
         if (additionalActions) {
           additionalActions()

@@ -228,6 +228,41 @@ export const setAccount = async (account: string) => {
   queryClient.clear()
 }
 
+export type ReadableAccountType = {
+  acct: string
+  key: string
+  active: boolean
+}
+export const getReadableAccounts = (): ReadableAccountType[] => {
+  const accountActive = getGlobalStorage.string('account.active')
+  const accounts = getGlobalStorage.object('accounts')?.sort((a, b) => a.localeCompare(b))
+  accounts?.splice(
+    accounts.findIndex(a => a === accountActive),
+    1
+  )
+  accounts?.unshift(accountActive || '')
+  return (
+    accounts?.map(account => {
+      const details = getAccountDetails(
+        ['auth.account.acct', 'auth.account.domain', 'auth.domain', 'auth.account.id'],
+        account
+      )
+      if (details) {
+        return {
+          acct: `@${details['auth.account.acct']}@${details['auth.account.domain']}`,
+          key: generateAccountKey({
+            domain: details['auth.domain'],
+            id: details['auth.account.id']
+          }),
+          active: account === accountActive
+        }
+      } else {
+        return { acct: '', key: '', active: false }
+      }
+    }) || []
+  ).filter(a => a.acct.length)
+}
+
 export const removeAccount = async (account: string) => {
   const currAccounts: NonNullable<StorageGlobal['accounts']> = JSON.parse(
     storage.global.getString('accounts') || '[]'
