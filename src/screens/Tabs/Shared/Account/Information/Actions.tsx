@@ -2,7 +2,6 @@ import Button from '@components/Button'
 import menuAt from '@components/contextMenu/at'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
-import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext } from 'react'
@@ -12,7 +11,7 @@ import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountContext from '../Context'
 
 const AccountInformationActions: React.FC = () => {
-  const { account, pageMe } = useContext(AccountContext)
+  const { account, relationship, pageMe } = useContext(AccountContext)
 
   if (!account || account.suspended) {
     return null
@@ -50,13 +49,12 @@ const AccountInformationActions: React.FC = () => {
   const [accountId] = useAccountStorage.string('auth.account.id')
   const ownAccount = account?.id === accountId
 
-  const query = useRelationshipQuery({ id: account.id })
   const mAt = menuAt({ account })
 
   if (!ownAccount && account) {
     return (
       <View style={styles.base}>
-        {query.data && !query.data.blocked_by ? (
+        {relationship && !relationship.blocked_by ? (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger>
               <Button

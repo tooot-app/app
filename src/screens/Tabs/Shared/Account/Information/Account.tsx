@@ -1,6 +1,5 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
-import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -11,15 +10,13 @@ import { PlaceholderLine } from 'rn-placeholder'
 import AccountContext from '../Context'
 
 const AccountInformationAccount: React.FC = () => {
-  const { account, pageMe } = useContext(AccountContext)
+  const { account, relationship, pageMe } = useContext(AccountContext)
 
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
 
   const [acct] = useAccountStorage.string('auth.account.acct')
   const domain = getAccountStorage.string('auth.account.domain')
-
-  const { data: relationship } = useRelationshipQuery({ id: account?.id })
 
   const localInstance = account?.acct.includes('@') ? account?.acct.includes(`@${domain}`) : true
 

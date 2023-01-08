@@ -7,6 +7,7 @@ import SegmentedControl from '@react-native-community/segmented-control'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
+import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -50,6 +51,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
       },
       onError: () => navigation.goBack()
     }
+  })
+  const { data: dataRelationship } = useRelationshipQuery({
+    id: account._remote ? data?.id : account.id,
+    options: { enabled: account._remote ? !!data?.id : true }
   })
 
   const queryClient = useQueryClient()
@@ -223,7 +228,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   }, [segment, dataUpdatedAt, mode])
 
   return (
-    <AccountContext.Provider value={{ account: data }}>
+    <AccountContext.Provider value={{ account: data, relationship: dataRelationship }}>
       <AccountNav scrollY={scrollY} />
 
       {data?.suspended ? (
