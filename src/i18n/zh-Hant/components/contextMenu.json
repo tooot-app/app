@@ -16,12 +16,12 @@
       "action_true": "解除靜音使用者"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "跟隨...",
+      "succeed_default": "@{{source}} 正在跟隨 @{{target}}",
+      "succeed_locked": "已從 {{source}} 發送跟隨請求至 @{{target}}，等待同意",
+      "failed": "用其它帳號跟隨"
     },
-    "blockReport": "",
+    "blockReport": "封鎖並檢舉…",
     "block": {
       "action_false": "封鎖使用者",
       "action_true": "解除封鎖使用者",
