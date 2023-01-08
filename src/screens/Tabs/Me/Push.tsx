@@ -33,36 +33,39 @@ const TabMePush: React.FC = () => {
   const [accountDomain] = useAccountStorage.string('auth.account.domain')
   const [accountId] = useAccountStorage.string('auth.account.id')
 
-  const appsQuery = useAppsQuery()
+  const appsQuery = useAppsQuery({
+    options: {
+      onSuccess: async data => {
+        if (data.vapid_key) {
+          await checkPush()
+          if (isDevelopment) {
+            setPushAvailable(true)
+          } else {
+            setPushAvailable(!!expoToken?.length)
+          }
+        }
+      }
+    }
+  })
+
+  const checkPush = async () => {
+    const permissions = await Notifications.getPermissionsAsync()
+    setPushEnabled(permissions.granted)
+    setPushCanAskAgain(permissions.canAskAgain)
+    layoutAnimation()
+    await updateExpoToken()
+  }
 
   const [pushAvailable, setPushAvailable] = useState<boolean>()
   const [pushEnabled, setPushEnabled] = useState<boolean>()
   const [pushCanAskAgain, setPushCanAskAgain] = useState<boolean>()
 
   useEffect(() => {
-    const checkPush = async () => {
-      const permissions = await Notifications.getPermissionsAsync()
-      setPushEnabled(permissions.granted)
-      setPushCanAskAgain(permissions.canAskAgain)
-      layoutAnimation()
-      await updateExpoToken()
-    }
-
-    if (appsQuery.data?.vapid_key) {
-      checkPush()
-
-      if (isDevelopment) {
-        setPushAvailable(true)
-      } else {
-        setPushAvailable(!!expoToken?.length)
-      }
-    }
-
     const subscription = AppState.addEventListener('change', checkPush)
     return () => {
       subscription.remove()
     }
-  }, [appsQuery.data?.vapid_key])
+  }, [])
 
   const alerts = () =>
     push?.alerts
@@ -222,11 +225,11 @@ const TabMePush: React.FC = () => {
                         }
                       })
 
+                      setAccountStorage([{ key: 'push', value: { ...push, global: true } }])
+
                       if (Platform.OS === 'android') {
                         setChannels(true)
                       }
-
-                      setAccountStorage([{ key: 'push', value: { ...push, global: true } }])
                     }
                   }}
                 />
@@ -244,11 +247,11 @@ const TabMePush: React.FC = () => {
                       body: { auth: push?.decode ? null : push.key }
                     })
 
+                    setAccountStorage([{ key: 'push', value: { ...push, decode: !push.decode } }])
+
                     if (Platform.OS === 'android') {
                       setChannels(true)
                     }
-
-                    setAccountStorage([{ key: 'push', value: { ...push, decode: !push.decode } }])
                   }}
                 />
                 <MenuRow

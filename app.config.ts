@@ -15,8 +15,9 @@ export default (): ExpoConfig => ({
   },
   android: {
     package: 'com.xmflsct.app.tooot',
-    permissions: ['CAMERA', 'VIBRATE'],
-    blockedPermissions: ['USE_BIOMETRIC', 'USE_FINGERPRINT']
+    permissions: ['NOTIFICATIONS', 'CAMERA', 'VIBRATE'],
+    blockedPermissions: ['USE_BIOMETRIC', 'USE_FINGERPRINT'],
+    googleServicesFile: './android/app/google-services.json'
   },
   plugins: [
     [

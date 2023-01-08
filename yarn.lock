@@ -1656,7 +1656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/config-plugins@npm:5.0.4, @expo/config-plugins@npm:~5.0.3":
+"@expo/config-plugins@npm:5.0.4, @expo/config-plugins@npm:^5.0.4, @expo/config-plugins@npm:~5.0.3":
   version: 5.0.4
   resolution: "@expo/config-plugins@npm:5.0.4"
   dependencies:
@@ -2976,6 +2976,20 @@ __metadata:
     react: ">=16.0"
     react-native: ">=0.62"
   checksum: 2b691a8a1c3b1afc4262d8c27c64b9af14d075198cd1873a6d8abbcea93f9f2fcca00355a31e281350f07d2d48dee9d3020e20eb82ef61901134e3aaba2f833e
+  languageName: node
+  linkType: hard
+
+"@react-native-firebase/app@npm:^16.5.0":
+  version: 16.5.0
+  resolution: "@react-native-firebase/app@npm:16.5.0"
+  dependencies:
+    "@expo/config-plugins": ^5.0.4
+    opencollective-postinstall: ^2.0.1
+    superstruct: ^0.6.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 2eab11544f8b4e932127119b6485e43788214df8264f1f84b06695ad1ca0ae88e9969c9e8d8005ab986637223991617960b1556dee43453cc38716d537d9c81a
   languageName: node
   linkType: hard
 
@@ -4619,6 +4633,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clone-deep@npm:^2.0.1":
+  version: 2.0.2
+  resolution: "clone-deep@npm:2.0.2"
+  dependencies:
+    for-own: ^1.0.0
+    is-plain-object: ^2.0.4
+    kind-of: ^6.0.0
+    shallow-clone: ^1.0.0
+  checksum: c33ae31e332cdfd477a8115c9d044984eb69bf009fce3e1f0ff002176652f572d8742aa5e6caeaf16cf5d6084e33fe51bfa482fec53f43e767b3518c797955b1
+  languageName: node
+  linkType: hard
+
 "clone-deep@npm:^4.0.1":
   version: 4.0.1
   resolution: "clone-deep@npm:4.0.1"
@@ -6109,10 +6135,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"for-in@npm:^1.0.2":
+"for-in@npm:^0.1.3":
+  version: 0.1.8
+  resolution: "for-in@npm:0.1.8"
+  checksum: f5bdad7811700ee6a0f96b33d72a1db966aea75a1f03c7245d147f8369305e709f53a55ee7ae8eaddcfa85c7c89bca78472be8f1bc605475ce5bb2c70f77f8da
+  languageName: node
+  linkType: hard
+
+"for-in@npm:^1.0.1, for-in@npm:^1.0.2":
   version: 1.0.2
   resolution: "for-in@npm:1.0.2"
   checksum: 09f4ae93ce785d253ac963d94c7f3432d89398bf25ac7a24ed034ca393bf74380bdeccc40e0f2d721a895e54211b07c8fad7132e8157827f6f7f059b70b4043d
+  languageName: node
+  linkType: hard
+
+"for-own@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "for-own@npm:1.0.0"
+  dependencies:
+    for-in: ^1.0.1
+  checksum: 233238f6e9060f61295a7f7c7e3e9de11aaef57e82a108e7f350dc92ae84fe2189848077ac4b8db47fd8edd45337ed8d9f66bd0b1efa4a6a1b3f38aa21b7ab2e
   languageName: node
   linkType: hard
 
@@ -7557,7 +7599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kind-of@npm:^6.0.0, kind-of@npm:^6.0.2":
+"kind-of@npm:^6.0.0, kind-of@npm:^6.0.1, kind-of@npm:^6.0.2":
   version: 6.0.3
   resolution: "kind-of@npm:6.0.3"
   checksum: 3ab01e7b1d440b22fe4c31f23d8d38b4d9b91d9f291df683476576493d5dfd2e03848a8b05813dd0c3f0e835bc63f433007ddeceb71f05cb25c45ae1b19c6d3b
@@ -8418,6 +8460,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mixin-object@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "mixin-object@npm:2.0.1"
+  dependencies:
+    for-in: ^0.1.3
+    is-extendable: ^0.1.1
+  checksum: 7d0eb7c2f06435fcc01d132824b4c973a0df689a117d8199d79911b506363b6f4f86a84458a63f3acfa7388f3052612cfe27105400b4932678452925a9739a4c
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^0.5.1, mkdirp@npm:^0.5.5, mkdirp@npm:~0.5.1":
   version: 0.5.6
   resolution: "mkdirp@npm:0.5.6"
@@ -8864,6 +8916,15 @@ __metadata:
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
   checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
+  languageName: node
+  linkType: hard
+
+"opencollective-postinstall@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "opencollective-postinstall@npm:2.0.3"
+  bin:
+    opencollective-postinstall: index.js
+  checksum: 0a68c5cef135e46d11e665d5077398285d1ce5311c948e8327b435791c409744d4a6bb9c55bd6507fb5f2ef34b0ad920565adcdaf974cbdae701aead6f32b396
   languageName: node
   linkType: hard
 
@@ -10496,6 +10557,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"shallow-clone@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "shallow-clone@npm:1.0.0"
+  dependencies:
+    is-extendable: ^0.1.1
+    kind-of: ^5.0.0
+    mixin-object: ^2.0.1
+  checksum: d4fd93b82d9fdd135027510f4beb04479de96c50b5392a17b022cf0942d17d43bff92aa83dfc30ddf962c0ed015e7c686c2ce677b85760ca5a8db9ebd5f1d791
+  languageName: node
+  linkType: hard
+
 "shallow-clone@npm:^3.0.0":
   version: 3.0.1
   resolution: "shallow-clone@npm:3.0.1"
@@ -11001,6 +11073,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"superstruct@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "superstruct@npm:0.6.2"
+  dependencies:
+    clone-deep: ^2.0.1
+    kind-of: ^6.0.1
+  checksum: f95e4049becb928baa531fe56256a74b050a2e4da0bee09ccd0031e08fffd521defeb1d37881b93e6861fa1a7c17c48f3834a99af83cb3ad60c9e6079e840a65
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -11268,6 +11350,7 @@ __metadata:
     "@react-native-community/blur": ^4.3.0
     "@react-native-community/netinfo": 9.3.7
     "@react-native-community/segmented-control": ^2.2.2
+    "@react-native-firebase/app": ^16.5.0
     "@react-native-menu/menu": ^0.7.3
     "@react-navigation/bottom-tabs": ^6.5.2
     "@react-navigation/native": ^6.1.1
