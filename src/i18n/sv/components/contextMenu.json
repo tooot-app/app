@@ -15,6 +15,13 @@
       "action_false": "Tysta användare",
       "action_true": "Sluta tysta användare"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Blockera användare",
       "action_true": "Avblockera användare",

@@ -15,6 +15,13 @@
       "action_false": "靜音使用者",
       "action_true": "解除靜音使用者"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "封鎖使用者",
       "action_true": "解除封鎖使用者",

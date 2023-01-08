@@ -6,26 +6,33 @@
       "action_false": "사용자 팔로우",
       "action_true": "사용자 팔로우 해제"
     },
-    "inLists": "",
+    "inLists": "사용자를 포함한 리스트",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "사용자의 부스트 보이기",
+      "action_true": "사용자의 부스트 숨기기"
     },
     "mute": {
       "action_false": "사용자 뮤트",
       "action_true": "사용자 뮤트 해제"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "사용자 차단",
       "action_true": "사용자 차단 해제",
       "alert": {
-        "title": ""
+        "title": "정말 @{{username}} 사용자를 차단할까요?"
       }
     },
     "reports": {
       "action": "사용자 신고 및 차단",
       "alert": {
-        "title": ""
+        "title": "정말 @{{username}} 사용자를 차단하고 신고할까요?"
       }
     }
   },

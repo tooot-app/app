@@ -15,6 +15,13 @@
       "action_false": "Заглушити користувача",
       "action_true": "Зняти заглушення з користувача"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Заблокувати користувача",
       "action_true": "Розблокувати користувача",

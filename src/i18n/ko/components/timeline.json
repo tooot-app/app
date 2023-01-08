@@ -15,8 +15,8 @@
     "message": "마지막 읽음"
   },
   "refresh": {
-    "fetchPreviousPage": "여기부터 더 새로운",
-    "refetch": "가장 최신으로"
+    "fetchPreviousPage": "이 시점에 이어서 불러오기",
+    "refetch": "최신 내용 불러오기"
   },
   "shared": {
     "actioned": {
@@ -83,7 +83,7 @@
         "text": "불러오기 오류",
         "button": "원격 링크 시도"
       },
-      "altText": ""
+      "altText": "대체 텍스트"
     },
     "avatar": {
       "accessibilityLabel": "{{name}}의 아바타",
@@ -116,14 +116,14 @@
             "accessibilityHint": "사용자 계정"
           }
         },
-        "application": "",
+        "application": "{{application}}으로 툿",
         "edited": {
           "accessibilityLabel": "툿 수정됨"
         },
         "muted": {
           "accessibilityLabel": "툿 음소거됨"
         },
-        "replies": "",
+        "replies": "답장 <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "툿이 개인 메시지에요"
