@@ -13,6 +13,7 @@ import { StorageAccount } from '@utils/storage/account'
 import {
   generateAccountKey,
   getGlobalStorage,
+  setAccount,
   setAccountStorage,
   setGlobalStorage
 } from '@utils/storage/actions'
@@ -175,12 +176,11 @@ const ComponentInstance: React.FC<Props> = ({
           })),
           accountKey
         )
-        storage.account = new MMKV({ id: accountKey })
 
         if (!account) {
           setGlobalStorage('accounts', accounts?.concat([accountKey]))
         }
-        setGlobalStorage('account.active', accountKey)
+        setAccount(accountKey)
 
         goBack && navigation.goBack()
       }
