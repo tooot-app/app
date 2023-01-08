@@ -15,6 +15,13 @@
       "action_false": "Silenciar usuario",
       "action_true": "Dejar de silenciar al usuario"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Bloquear usuario",
       "action_true": "Desbloquear usuario",
