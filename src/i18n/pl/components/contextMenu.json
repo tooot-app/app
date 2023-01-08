@@ -16,12 +16,12 @@
       "action_true": "Wyłącz wyciszenie"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Obserwuj jako...",
+      "succeed_default": "Teraz obserwujesz @{{target}} z @{{source}}",
+      "succeed_locked": "Wysłano prośbę o obserwowanie do @{{target}} z {{source}}, oczekiwanie na zatwierdzenie",
+      "failed": "Obserwuj jako"
     },
-    "blockReport": "",
+    "blockReport": "Zablokuj i zgłoś...",
     "block": {
       "action_false": "Zablokuj użytkownika",
       "action_true": "Odblokuj użytkownika",
