@@ -27,9 +27,9 @@ const handleError =
 
     if (error?.response) {
       if (config?.captureResponse) {
+        Sentry.setTag('error_status', error.response.status)
         Sentry.setContext('Error response', {
           data: error.response.data,
-          status: error.response.status,
           headers: error.response.headers
         })
       }

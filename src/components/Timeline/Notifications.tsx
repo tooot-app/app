@@ -162,16 +162,43 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
         </ContextMenu.Trigger>
 
         <ContextMenu.Content>
-          {[mShare, mStatus, mInstance].map((type, i) => (
+          {[mShare, mStatus, mInstance].map((menu, i) => (
             <Fragment key={i}>
-              {type.map((mGroup, index) => (
+              {menu.map((group, index) => (
                 <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon ios={{ name: menu.icon }} />
-                    </ContextMenu.Item>
-                  ))}
+                  {group.map(item => {
+                    switch (item.type) {
+                      case 'item':
+                        return (
+                          <ContextMenu.Item key={item.key} {...item.props}>
+                            <ContextMenu.ItemTitle children={item.title} />
+                            {item.icon ? <ContextMenu.ItemIcon ios={{ name: item.icon }} /> : null}
+                          </ContextMenu.Item>
+                        )
+                      case 'sub':
+                        return (
+                          // @ts-ignore
+                          <ContextMenu.Sub key={item.key}>
+                            <ContextMenu.SubTrigger key={item.trigger.key} {...item.trigger.props}>
+                              <ContextMenu.ItemTitle children={item.trigger.title} />
+                              {item.trigger.icon ? (
+                                <ContextMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                              ) : null}
+                            </ContextMenu.SubTrigger>
+                            <ContextMenu.SubContent>
+                              {item.items.map(sub => (
+                                <ContextMenu.Item key={sub.key} {...sub.props}>
+                                  <ContextMenu.ItemTitle children={sub.title} />
+                                  {sub.icon ? (
+                                    <ContextMenu.ItemIcon ios={{ name: sub.icon }} />
+                                  ) : null}
+                                </ContextMenu.Item>
+                              ))}
+                            </ContextMenu.SubContent>
+                          </ContextMenu.Sub>
+                        )
+                    }
+                  })}
                 </ContextMenu.Group>
               ))}
             </Fragment>

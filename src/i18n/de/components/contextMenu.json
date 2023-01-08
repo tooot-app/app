@@ -15,6 +15,13 @@
       "action_false": "Profil stummschalten",
       "action_true": "Stummschaltung des Nutzers aufheben"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Nutzer blockieren",
       "action_true": "User entblocken",

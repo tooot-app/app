@@ -13,6 +13,7 @@ import { StorageAccount } from '@utils/storage/account'
 import {
   generateAccountKey,
   getGlobalStorage,
+  setAccount,
   setAccountStorage,
   setGlobalStorage
 } from '@utils/storage/actions'
@@ -95,7 +96,10 @@ const ComponentInstance: React.FC<Props> = ({
             scopes: ['read', 'write', 'follow', 'push'],
             redirectUri,
             code: promptResult.params.code,
-            extraParams: { grant_type: 'authorization_code' }
+            extraParams: {
+              grant_type: 'authorization_code',
+              ...(request.codeVerifier && { code_verifier: request.codeVerifier })
+            }
           },
           { tokenEndpoint: `https://${variables.domain}/oauth/token` }
         )
@@ -175,12 +179,11 @@ const ComponentInstance: React.FC<Props> = ({
           })),
           accountKey
         )
-        storage.account = new MMKV({ id: accountKey })
 
         if (!account) {
           setGlobalStorage('accounts', accounts?.concat([accountKey]))
         }
-        setGlobalStorage('account.active', accountKey)
+        setAccount(accountKey)
 
         goBack && navigation.goBack()
       }

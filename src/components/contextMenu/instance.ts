@@ -12,7 +12,7 @@ const menuInstance = ({
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-}): ContextMenu[][] => {
+}): ContextMenu => {
   if (!status || !queryKey) return []
 
   const { t } = useTranslation(['common', 'componentContextMenu'])
@@ -30,15 +30,16 @@ const menuInstance = ({
     }
   })
 
-  const menus: ContextMenu[][] = []
+  const menus: ContextMenu = []
 
   const instance = parse(status.uri).hostname
 
   if (instance !== getAccountStorage.string('auth.domain')) {
     menus.push([
       {
+        type: 'item',
         key: 'instance-block',
-        item: {
+        props: {
           onSelect: () =>
             Alert.alert(
               t('componentContextMenu:instance.block.alert.title', { instance }),

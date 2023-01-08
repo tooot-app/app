@@ -1,7 +1,7 @@
 import AccountButton from '@components/AccountButton'
 import ComponentInstance from '@components/Instance'
 import CustomText from '@components/Text'
-import { getGlobalStorage } from '@utils/storage/actions'
+import { getReadableAccounts } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef } from 'react'
@@ -12,8 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 const TabMeSwitch: React.FC = () => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
-  const accounts = getGlobalStorage.object('accounts')
-  const accountActive = getGlobalStorage.string('account.active')
+  const accounts = getReadableAccounts()
 
   const scrollViewRef = useRef<ScrollView>(null)
   useEffect(() => {
@@ -71,19 +70,9 @@ const TabMeSwitch: React.FC = () => {
               marginTop: StyleConstants.Spacing.M
             }}
           >
-            {accounts &&
-              accounts
-                .slice()
-                .sort((a, b) => a.localeCompare(b))
-                .map((account, index) => {
-                  return (
-                    <AccountButton
-                      key={index}
-                      account={account}
-                      selected={account === accountActive}
-                    />
-                  )
-                })}
+            {accounts.map((account, index) => {
+              return <AccountButton key={index} account={account} />
+            })}
           </View>
         </View>
       </ScrollView>

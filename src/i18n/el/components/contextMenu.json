@@ -15,6 +15,13 @@
       "action_false": "Σίγαση χρήστη",
       "action_true": "Κατάργηση σίγασης χρήστη"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Αποκλεισμός χρήστη",
       "action_true": "Κατάργηση αποκλεισμού χρήστη",

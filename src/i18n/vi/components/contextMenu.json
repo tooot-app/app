@@ -15,6 +15,13 @@
       "action_false": "Ẩn người này",
       "action_true": "Bỏ ẩn người dùng"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Chặn người này",
       "action_true": "Bỏ chặn người dùng",

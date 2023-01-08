@@ -6,9 +6,9 @@ const log = (type: 'log' | 'warn' | 'error', func: string, message: string) => {
   switch (type) {
     case 'log':
       console.log(
-        ctx.bgBlue.white.bold(' Start up ') +
+        ctx.bgGrey.white.bold(' Start up ') +
           ' ' +
-          ctx.bgBlueBright.black(` ${func} `) +
+          ctx.bgGrey.black(` ${func} `) +
           ' ' +
           message
       )

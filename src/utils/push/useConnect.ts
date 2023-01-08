@@ -96,7 +96,7 @@ const pushUseConnect = () => {
   )
 
   useEffect(() => {
-    Sentry.setContext('Push', { expoToken, pushEnabledCount })
+    Sentry.setTags({ expoToken, pushEnabledCount })
 
     if (expoToken && pushEnabledCount) {
       connectQuery.refetch()

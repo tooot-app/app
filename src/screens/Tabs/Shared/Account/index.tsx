@@ -7,6 +7,7 @@ import SegmentedControl from '@react-native-community/segmented-control'
 import { useQueryClient } from '@tanstack/react-query'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
+import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -51,6 +52,10 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
       onError: () => navigation.goBack()
     }
   })
+  const { data: dataRelationship } = useRelationshipQuery({
+    id: account._remote ? data?.id : account.id,
+    options: { enabled: account._remote ? !!data?.id : true }
+  })
 
   const queryClient = useQueryClient()
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
@@ -89,16 +94,48 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {[mShare, mAccount].map((type, i) => (
+              {[mShare, mAccount].map((menu, i) => (
                 <Fragment key={i}>
-                  {type.map((mGroup, index) => (
+                  {menu.map((group, index) => (
                     <DropdownMenu.Group key={index}>
-                      {mGroup.map(menu => (
-                        <DropdownMenu.Item key={menu.key} {...menu.item}>
-                          <DropdownMenu.ItemTitle children={menu.title} />
-                          <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
-                        </DropdownMenu.Item>
-                      ))}
+                      {group.map(item => {
+                        switch (item.type) {
+                          case 'item':
+                            return (
+                              <DropdownMenu.Item key={item.key} {...item.props}>
+                                <DropdownMenu.ItemTitle children={item.title} />
+                                {item.icon ? (
+                                  <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                                ) : null}
+                              </DropdownMenu.Item>
+                            )
+                          case 'sub':
+                            return (
+                              // @ts-ignore
+                              <DropdownMenu.Sub key={item.key}>
+                                <DropdownMenu.SubTrigger
+                                  key={item.trigger.key}
+                                  {...item.trigger.props}
+                                >
+                                  <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                  {item.trigger.icon ? (
+                                    <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                  ) : null}
+                                </DropdownMenu.SubTrigger>
+                                <DropdownMenu.SubContent>
+                                  {item.items.map(sub => (
+                                    <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                      <DropdownMenu.ItemTitle children={sub.title} />
+                                      {sub.icon ? (
+                                        <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                      ) : null}
+                                    </DropdownMenu.Item>
+                                  ))}
+                                </DropdownMenu.SubContent>
+                              </DropdownMenu.Sub>
+                            )
+                        }
+                      })}
                     </DropdownMenu.Group>
                   ))}
                 </Fragment>
@@ -191,7 +228,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
   }, [segment, dataUpdatedAt, mode])
 
   return (
-    <AccountContext.Provider value={{ account: data }}>
+    <AccountContext.Provider value={{ account: data, relationship: dataRelationship }}>
       <AccountNav scrollY={scrollY} />
 
       {data?.suspended ? (

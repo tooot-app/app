@@ -15,6 +15,13 @@
       "action_false": "Wycisz użytkownika",
       "action_true": "Wyłącz wyciszenie"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Zablokuj użytkownika",
       "action_true": "Odblokuj użytkownika",

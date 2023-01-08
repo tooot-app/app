@@ -15,6 +15,13 @@
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "ユーザーをブロック",
       "action_true": "ユーザーのブロックを解除",

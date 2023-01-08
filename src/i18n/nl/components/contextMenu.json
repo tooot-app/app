@@ -15,6 +15,13 @@
       "action_false": "Gebruiker dempen",
       "action_true": "Dempen opheffen voor gebruiker"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Gebruiker blokkeren",
       "action_true": "Gebruiker deblokkeren",

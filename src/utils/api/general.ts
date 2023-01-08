@@ -21,14 +21,14 @@ const apiGeneral = async <T = unknown>({
   body
 }: Params): Promise<PagedResponse<T>> => {
   console.log(
-    ctx.bgGreen.bold(' API general ') +
+    ctx.bgMagenta.bold(' General ') +
       ' ' +
       domain +
       ' ' +
       method +
-      ctx.green(' -> ') +
+      ctx.magenta(' -> ') +
       `/${url}` +
-      (params ? ctx.green(' -> ') : ''),
+      (params ? ctx.magenta(' -> ') : ''),
     params ? params : ''
   )
 

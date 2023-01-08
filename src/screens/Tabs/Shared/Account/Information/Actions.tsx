@@ -2,7 +2,6 @@ import Button from '@components/Button'
 import menuAt from '@components/contextMenu/at'
 import { RelationshipOutgoing } from '@components/Relationship'
 import { useNavigation } from '@react-navigation/native'
-import { useRelationshipQuery } from '@utils/queryHooks/relationship'
 import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React, { useContext } from 'react'
@@ -12,7 +11,7 @@ import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountContext from '../Context'
 
 const AccountInformationActions: React.FC = () => {
-  const { account, pageMe } = useContext(AccountContext)
+  const { account, relationship, pageMe } = useContext(AccountContext)
 
   if (!account || account.suspended) {
     return null
@@ -50,13 +49,12 @@ const AccountInformationActions: React.FC = () => {
   const [accountId] = useAccountStorage.string('auth.account.id')
   const ownAccount = account?.id === accountId
 
-  const query = useRelationshipQuery({ id: account.id })
   const mAt = menuAt({ account })
 
   if (!ownAccount && account) {
     return (
       <View style={styles.base}>
-        {query.data && !query.data.blocked_by ? (
+        {relationship && !relationship.blocked_by ? (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger>
               <Button
@@ -69,14 +67,41 @@ const AccountInformationActions: React.FC = () => {
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {mAt.map((mGroup, index) => (
+              {mAt.map((group, index) => (
                 <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
-                    </DropdownMenu.Item>
-                  ))}
+                  {group.map(item => {
+                    switch (item.type) {
+                      case 'item':
+                        return (
+                          <DropdownMenu.Item key={item.key} {...item.props}>
+                            <DropdownMenu.ItemTitle children={item.title} />
+                            {item.icon ? <DropdownMenu.ItemIcon ios={{ name: item.icon }} /> : null}
+                          </DropdownMenu.Item>
+                        )
+                      case 'sub':
+                        return (
+                          // @ts-ignore
+                          <DropdownMenu.Sub key={item.key}>
+                            <DropdownMenu.SubTrigger key={item.trigger.key} {...item.trigger.props}>
+                              <DropdownMenu.ItemTitle children={item.trigger.title} />
+                              {item.trigger.icon ? (
+                                <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                              ) : null}
+                            </DropdownMenu.SubTrigger>
+                            <DropdownMenu.SubContent>
+                              {item.items.map(sub => (
+                                <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                  <DropdownMenu.ItemTitle children={sub.title} />
+                                  {sub.icon ? (
+                                    <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                  ) : null}
+                                </DropdownMenu.Item>
+                              ))}
+                            </DropdownMenu.SubContent>
+                          </DropdownMenu.Sub>
+                        )
+                    }
+                  })}
                 </DropdownMenu.Group>
               ))}
             </DropdownMenu.Content>

@@ -2,7 +2,7 @@ import AccountButton from '@components/AccountButton'
 import CustomText from '@components/Text'
 import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import { getGlobalStorage } from '@utils/storage/actions'
+import { getReadableAccounts } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as VideoThumbnails from 'expo-video-thumbnails'
@@ -92,7 +92,7 @@ const ScreenAccountSelection = ({
   const { colors } = useTheme()
   const { t } = useTranslation('screenAccountSelection')
 
-  const accounts = getGlobalStorage.object('accounts')
+  const accounts = getReadableAccounts()
 
   return (
     <ScrollView
@@ -125,24 +125,20 @@ const ScreenAccountSelection = ({
             marginTop: StyleConstants.Spacing.M
           }}
         >
-          {accounts &&
-            accounts
-              .slice()
-              .sort((a, b) => a.localeCompare(b))
-              .map((account, index) => {
-                return (
-                  <AccountButton
-                    key={index}
-                    account={account}
-                    additionalActions={() =>
-                      navigationRef.navigate('Screen-Compose', {
-                        type: 'share',
-                        ...share
-                      })
-                    }
-                  />
-                )
-              })}
+          {accounts.map((account, index) => {
+            return (
+              <AccountButton
+                key={index}
+                account={account}
+                additionalActions={() =>
+                  navigationRef.navigate('Screen-Compose', {
+                    type: 'share',
+                    ...share
+                  })
+                }
+              />
+            )
+          })}
         </View>
       </View>
     </ScrollView>
