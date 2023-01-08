@@ -95,7 +95,10 @@ const ComponentInstance: React.FC<Props> = ({
             scopes: ['read', 'write', 'follow', 'push'],
             redirectUri,
             code: promptResult.params.code,
-            extraParams: { grant_type: 'authorization_code', code_verifier: request.codeVerifier }
+            extraParams: {
+              grant_type: 'authorization_code',
+              ...(request.codeVerifier && { code_verifier: request.codeVerifier })
+            }
           },
           { tokenEndpoint: `https://${variables.domain}/oauth/token` }
         )
