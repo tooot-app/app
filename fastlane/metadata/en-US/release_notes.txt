@@ -6,3 +6,4 @@ Enjoy toooting! This version includes following improvements and fixes:
 - Option to disable autoplay gif
 - Hide boosts from users
 - Followed hashtags are underlined
+- Support GoToSocial

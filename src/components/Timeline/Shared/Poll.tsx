@@ -21,7 +21,8 @@ import { Pressable, View } from 'react-native'
 import StatusContext from './Context'
 
 const TimelinePoll: React.FC = () => {
-  const { queryKey, status, ownAccount, spoilerHidden, disableDetails } = useContext(StatusContext)
+  const { queryKey, status, ownAccount, spoilerHidden, disableDetails, highlighted } =
+    useContext(StatusContext)
   if (!queryKey || !status || !status.poll) return null
   const poll = status.poll
 
@@ -92,7 +93,7 @@ const TimelinePoll: React.FC = () => {
             />
           </View>
         )
-      } else {
+      } else if (highlighted) {
         return (
           <View style={{ marginRight: StyleConstants.Spacing.S }}>
             <Button
@@ -166,7 +167,7 @@ const TimelinePoll: React.FC = () => {
             borderTopRightRadius: 10,
             borderBottomRightRadius: 10,
             marginTop: StyleConstants.Spacing.XS,
-            marginBottom: StyleConstants.Spacing.S,
+            marginBottom: StyleConstants.Spacing.XS,
             width: `${Math.round(
               (option.votes_count / (poll.voters_count || poll.votes_count)) * 100
             )}%`,

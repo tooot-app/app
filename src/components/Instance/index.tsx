@@ -8,7 +8,6 @@ import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { storage } from '@utils/storage'
 import { StorageAccount } from '@utils/storage/account'
 import {
   generateAccountKey,
@@ -26,7 +25,6 @@ import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { MMKV } from 'react-native-mmkv'
 import parse from 'url-parse'
 import CustomText from '../Text'
 
@@ -66,11 +64,13 @@ const ComponentInstance: React.FC<Props> = ({
     }
   })
 
-  const deprecateAuthFollow = featureCheck('deprecate_auth_follow')
-
   const appsMutation = useAppsMutation({
     retry: false,
     onSuccess: async (data, variables) => {
+      const scopes = featureCheck('deprecate_auth_follow')
+        ? ['read', 'write', 'push']
+        : ['read', 'write', 'follow', 'push']
+
       const clientId = data.client_id
       const clientSecret = data.client_secret
 
@@ -79,9 +79,7 @@ const ComponentInstance: React.FC<Props> = ({
       const request = new AuthSession.AuthRequest({
         clientId,
         clientSecret,
-        scopes: deprecateAuthFollow
-          ? ['read', 'write', 'push']
-          : ['read', 'write', 'follow', 'push'],
+        scopes,
         redirectUri
       })
       await request.makeAuthUrlAsync(discovery)
@@ -93,10 +91,12 @@ const ComponentInstance: React.FC<Props> = ({
           {
             clientId,
             clientSecret,
-            scopes: ['read', 'write', 'follow', 'push'],
+            scopes,
             redirectUri,
             code: promptResult.params.code,
             extraParams: {
+              client_id: clientId,
+              client_secret: clientSecret,
               grant_type: 'authorization_code',
               ...(request.codeVerifier && { code_verifier: request.codeVerifier })
             }
@@ -125,8 +125,13 @@ const ComponentInstance: React.FC<Props> = ({
           'auth.domain': domain,
           'auth.account.id': id,
           'auth.account.acct': acct,
-          // @ts-ignore
-          'auth.account.domain': instanceQuery.data?.domain || instanceQuery.data?.uri,
+          'auth.account.domain':
+            (instanceQuery.data as Mastodon.Instance_V2)?.domain ||
+            instanceQuery.data?.account_domain ||
+            ((instanceQuery.data as Mastodon.Instance_V1)?.uri
+              ? parse((instanceQuery.data as Mastodon.Instance_V1).uri).hostname
+              : undefined) ||
+            (instanceQuery.data as Mastodon.Instance_V1)?.uri,
           'auth.account.avatar_static': avatar_static,
           version: instanceQuery.data?.version || '0',
           preferences: undefined,

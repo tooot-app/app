@@ -338,6 +338,9 @@ declare namespace Mastodon {
       contact: { email: string; account: Account }
       rules: Rule[]
     }
+
+    // Gotosocial
+    account_domain?: string
   }
   type Instance_V1 = {
     // Base
@@ -384,6 +387,9 @@ declare namespace Mastodon {
         max_expiration: number
       }
     }
+
+    // Gotosocial
+    account_domain?: string
   }
 
   type Mention = {

@@ -1,4 +1,4 @@
-# [tooot](https://tooot.app/) app for Mastodon
+# [tooot](https://tooot.app/) app for Mastodon compatible platforms
 
 [![GPL-3.0](https://img.shields.io/github/license/tooot-app/push)](LICENSE) ![GitHub issues](https://img.shields.io/github/issues/tooot-app/app) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/tooot-app/app?include_prereleases) [![Crowdin](https://badges.crowdin.net/tooot/localized.svg)](https://crowdin.tooot.app/project/tooot)
 
