@@ -15,6 +15,13 @@
       "action_false": "Rendre muet l'utilisateur",
       "action_true": "Rendre la parole"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Bloquer l'utilisateur",
       "action_true": "Débloquer l'utilisateur",
