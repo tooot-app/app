@@ -16,12 +16,12 @@
       "action_true": "Зняти заглушення з користувача"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Стежити як...",
+      "succeed_default": "Тепер ви стежите за @{{target}} з @{{source}}",
+      "succeed_locked": "Запит на стеження за @{{target}} з {{source}} надіслано, очікується затвердження",
+      "failed": "Стежити як"
     },
-    "blockReport": "",
+    "blockReport": "Заблокувати й поскаржитися...",
     "block": {
       "action_false": "Заблокувати користувача",
       "action_true": "Розблокувати користувача",
