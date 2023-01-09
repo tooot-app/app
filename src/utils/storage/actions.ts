@@ -43,7 +43,7 @@ export const useGlobalStorage = {
       : never,
   number: <T extends keyof StorageGlobal>(key: T) => {
     if (Platform.OS === 'ios') {
-      return useMMKVString(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
+      return useMMKVNumber(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
         ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
         : never
     } else {
