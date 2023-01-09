@@ -162,7 +162,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }).then(res => res.body)
 
       if (!context?.ancestors.length && !context?.descendants.length) {
-        return Promise.resolve([])
+        return Promise.resolve([{ ...toot }])
       }
 
       highlightIndex.current = context.ancestors.length
@@ -193,12 +193,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) - 1 <= data.length) {
+        if ((query.data?.pages[0].body.length || 0) < data.length) {
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{
             pages: { body: Mastodon.Status[] }[]
           }>(queryKey.local, old => {
-            if (!old) return { pages: [{ body: [toot] }] }
+            if (!old) return old
 
             setHasRemoteContent(true)
             return {
