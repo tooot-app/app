@@ -16,12 +16,12 @@
       "action_true": "Deixa de silenciar l'usuari"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Segueix com...",
+      "succeed_default": "Seguint a @{{target}} com @{{source}}",
+      "succeed_locked": "Enviada la sol·licitud de seguiment a @{{target}} com {{source}}, pendent d'aprovar-la",
+      "failed": "Segueix com"
     },
-    "blockReport": "",
+    "blockReport": "Bloqueja i denuncia...",
     "block": {
       "action_false": "Bloqueja l'usuari",
       "action_true": "Deixa de bloquejar l'usuari",
