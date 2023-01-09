@@ -257,7 +257,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   )
 
-  const heights = useRef<(number | undefined)[]>([])
+  const [heights, setHeights] = useState<{ [key: number]: number }>({})
   const MAX_LEVEL = 10
   const ARC = StyleConstants.Avatar.XS / 4
 
@@ -284,7 +284,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               nativeEvent: {
                 layout: { height }
               }
-            }) => (heights.current[index] = height)}
+            }) => setHeights({ ...heights, [index]: height })}
           >
             <TimelineDefault
               item={item}
@@ -326,7 +326,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights.current[index] || 999) -
+                                (heights[index] || 999) -
                                 (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
                                 StyleConstants.Avatar.XS / 2
                               } ` +
@@ -347,7 +347,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights.current[index] || 999) -
+                                (heights[index] || 999) -
                                 (StyleConstants.Spacing.S * 1.5 +
                                   StyleConstants.Font.Size.L * 1.35) /
                                   2
@@ -355,7 +355,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                               `h ${ARC}`
                             }
                             strokeWidth={1}
-                            stroke={colors.border}
+                            stroke={colors.red}
                             strokeOpacity={0.6}
                           />
                         </Svg>
@@ -375,7 +375,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   }
                 })
               : null}
-            {/* <CustomText
+            <CustomText
               children={query.data?.pages[0].body[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
@@ -386,7 +386,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             <CustomText
               children={query.data?.pages[0].body[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
-            /> */}
+            />
           </View>
         )
       }}
