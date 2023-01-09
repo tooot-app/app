@@ -1,21 +1,21 @@
-import navigationRef from '@helpers/navigationRef'
+import { UseMutationResult } from '@tanstack/react-query'
+import navigationRef from '@utils/navigation/navigationRef'
 import i18next from 'i18next'
 import { Alert } from 'react-native'
-import { UseMutationResult } from '@tanstack/react-query'
 
-export const menuListAccounts = ({ params }: { params: Mastodon.List }) => ({
+export const menuListAccounts = ({ list }: { list: Mastodon.List }) => ({
   key: 'list-accounts',
-  onSelect: () => navigationRef.navigate<any>('Tab-Me-List-Accounts', params),
+  onSelect: () => navigationRef.navigate<any>('Tab-Me-List-Accounts', list),
   title: i18next.t('screenTabs:me.listAccounts.heading'),
   icon: 'person.crop.circle.fill.badge.checkmark'
 })
 
-export const menuListEdit = ({ params, key }: { params: Mastodon.List; key: string }) => ({
+export const menuListEdit = ({ list, key }: { list: Mastodon.List; key: string }) => ({
   key: 'list-edit',
   onSelect: () =>
     navigationRef.navigate<any>('Tab-Me-List-Edit', {
       type: 'edit',
-      payload: params,
+      payload: list,
       key
     }),
   title: i18next.t('screenTabs:me.listEdit.heading'),
@@ -23,22 +23,22 @@ export const menuListEdit = ({ params, key }: { params: Mastodon.List; key: stri
 })
 
 export const menuListDelete = ({
-  params,
+  list,
   mutation
 }: {
-  params: Mastodon.List
+  list: Mastodon.List
   mutation: UseMutationResult<any, any, unknown, unknown>
 }) => ({
   key: 'list-delete',
   onSelect: () =>
     Alert.alert(
-      i18next.t('screenTabs:me.listDelete.confirm.title', { list: params.title.slice(0, 20) }),
+      i18next.t('screenTabs:me.listDelete.confirm.title', { list: list.title.slice(0, 20) }),
       i18next.t('screenTabs:me.listDelete.confirm.message'),
       [
         {
           text: i18next.t('common:buttons.delete'),
           style: 'destructive',
-          onPress: () => mutation.mutate({ type: 'delete', payload: params })
+          onPress: () => mutation.mutate({ type: 'delete', payload: list })
         },
         { text: i18next.t('common:buttons.cancel') }
       ]

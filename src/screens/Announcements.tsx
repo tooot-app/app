@@ -9,7 +9,7 @@ import { RootStackScreenProps } from '@utils/navigation/navigators'
 import { useAnnouncementMutation, useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import {
   Dimensions,
@@ -56,147 +56,140 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
     }
   }, [query.data])
 
-  const renderItem = useCallback(
-    ({ item, index }: { item: Mastodon.Announcement; index: number }) => (
+  const renderItem = ({ item, index }: { item: Mastodon.Announcement; index: number }) => (
+    <View
+      key={index}
+      style={{
+        width: Dimensions.get('window').width,
+        padding: StyleConstants.Spacing.Global.PagePadding,
+        marginVertical: StyleConstants.Spacing.Global.PagePadding,
+        justifyContent: 'center'
+      }}
+    >
+      <Pressable style={StyleSheet.absoluteFillObject} onPress={() => navigation.goBack()} />
       <View
-        key={index}
         style={{
-          width: Dimensions.get('window').width,
+          flexShrink: 1,
           padding: StyleConstants.Spacing.Global.PagePadding,
-          marginVertical: StyleConstants.Spacing.Global.PagePadding,
-          justifyContent: 'center'
+          marginTop: StyleConstants.Spacing.Global.PagePadding,
+          borderWidth: 1,
+          borderRadius: 6,
+          borderColor: colors.primaryDefault,
+          backgroundColor: colors.backgroundDefault
         }}
       >
-        <Pressable style={StyleSheet.absoluteFillObject} onPress={() => navigation.goBack()} />
-        <View
+        <CustomText
+          fontStyle='S'
           style={{
-            flexShrink: 1,
-            padding: StyleConstants.Spacing.Global.PagePadding,
-            marginTop: StyleConstants.Spacing.Global.PagePadding,
-            borderWidth: 1,
-            borderRadius: 6,
-            borderColor: colors.primaryDefault,
-            backgroundColor: colors.backgroundDefault
+            marginBottom: StyleConstants.Spacing.S,
+            color: colors.secondary
           }}
         >
-          <CustomText
-            fontStyle='S'
+          <Trans
+            ns='screenAnnouncements'
+            i18nKey='content.published'
+            components={[<RelativeTime time={item.published_at} />]}
+          />
+        </CustomText>
+        <ScrollView
+          style={{
+            marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
+          }}
+          showsVerticalScrollIndicator
+        >
+          <ParseHTML
+            content={item.content}
+            size='M'
+            emojis={item.emojis}
+            mentions={item.mentions}
+            numberOfLines={999}
+            selectable
+          />
+        </ScrollView>
+        {item.reactions?.length ? (
+          <View
             style={{
-              marginBottom: StyleConstants.Spacing.S,
-              color: colors.secondary
-            }}
-          >
-            <Trans
-              i18nKey='screenAnnouncements:content.published'
-              components={[<RelativeTime time={item.published_at} />]}
-            />
-          </CustomText>
-          <ScrollView
-            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
               marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
             }}
-            showsVerticalScrollIndicator
           >
-            <ParseHTML
-              content={item.content}
-              size='M'
-              emojis={item.emojis}
-              mentions={item.mentions}
-              numberOfLines={999}
-              selectable
-            />
-          </ScrollView>
-          {item.reactions?.length ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginBottom: StyleConstants.Spacing.Global.PagePadding / 2
-              }}
-            >
-              {item.reactions?.map(reaction => (
-                <Pressable
-                  key={reaction.name}
-                  style={{
-                    borderWidth: 1,
-                    padding: StyleConstants.Spacing.Global.PagePadding / 2,
-                    marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
-                    marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
-                    marginRight: StyleConstants.Spacing.M,
-                    borderRadius: 6,
-                    flexDirection: 'row',
-                    borderColor: reaction.me ? colors.disabled : colors.primaryDefault,
-                    backgroundColor: reaction.me ? colors.disabled : colors.backgroundDefault
-                  }}
-                  onPress={() =>
-                    mutation.mutate({
-                      id: item.id,
-                      type: 'reaction',
-                      name: reaction.name,
-                      me: reaction.me
-                    })
-                  }
-                >
-                  {reaction.url ? (
-                    <FastImage
-                      source={{
-                        uri: reduceMotionEnabled ? reaction.static_url : reaction.url
-                      }}
-                      style={{
-                        width: StyleConstants.Font.LineHeight.M + 3,
-                        height: StyleConstants.Font.LineHeight.M
-                      }}
-                    />
-                  ) : (
-                    <CustomText fontStyle='M'>{reaction.name}</CustomText>
-                  )}
-                  {reaction.count ? (
-                    <CustomText
-                      fontStyle='S'
-                      style={{
-                        marginLeft: StyleConstants.Spacing.S,
-                        color: colors.primaryDefault
-                      }}
-                    >
-                      {reaction.count}
-                    </CustomText>
-                  ) : null}
-                </Pressable>
-              ))}
-            </View>
-          ) : null}
-          <Button
-            type='text'
-            content={item.read ? t('content.button.read') : t('content.button.unread')}
-            loading={mutation.isLoading}
-            disabled={item.read}
-            onPress={() => {
-              !item.read &&
-                mutation.mutate({
-                  id: item.id,
-                  type: 'dismiss'
-                })
-            }}
-          />
-        </View>
+            {item.reactions?.map(reaction => (
+              <Pressable
+                key={reaction.name}
+                style={{
+                  borderWidth: 1,
+                  padding: StyleConstants.Spacing.Global.PagePadding / 2,
+                  marginTop: StyleConstants.Spacing.Global.PagePadding / 2,
+                  marginBottom: StyleConstants.Spacing.Global.PagePadding / 2,
+                  marginRight: StyleConstants.Spacing.M,
+                  borderRadius: 6,
+                  flexDirection: 'row',
+                  borderColor: reaction.me ? colors.disabled : colors.primaryDefault,
+                  backgroundColor: reaction.me ? colors.disabled : colors.backgroundDefault
+                }}
+                onPress={() =>
+                  mutation.mutate({
+                    id: item.id,
+                    type: 'reaction',
+                    name: reaction.name,
+                    me: reaction.me
+                  })
+                }
+              >
+                {reaction.url ? (
+                  <FastImage
+                    source={{
+                      uri: reduceMotionEnabled ? reaction.static_url : reaction.url
+                    }}
+                    style={{
+                      width: StyleConstants.Font.LineHeight.M + 3,
+                      height: StyleConstants.Font.LineHeight.M
+                    }}
+                  />
+                ) : (
+                  <CustomText fontStyle='M'>{reaction.name}</CustomText>
+                )}
+                {reaction.count ? (
+                  <CustomText
+                    fontStyle='S'
+                    style={{
+                      marginLeft: StyleConstants.Spacing.S,
+                      color: colors.primaryDefault
+                    }}
+                  >
+                    {reaction.count}
+                  </CustomText>
+                ) : null}
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
+        <Button
+          type='text'
+          content={item.read ? t('content.button.read') : t('content.button.unread')}
+          loading={mutation.isLoading}
+          disabled={item.read}
+          onPress={() => {
+            !item.read &&
+              mutation.mutate({
+                id: item.id,
+                type: 'dismiss'
+              })
+          }}
+        />
       </View>
-    ),
-    [mode]
+    </View>
   )
 
-  const onMomentumScrollEnd = useCallback(
-    ({
-      nativeEvent: {
-        contentOffset: { x },
-        layoutMeasurement: { width }
-      }
-    }: NativeSyntheticEvent<NativeScrollEvent>) => {
-      setIndex(Math.floor(x / width))
-    },
-    []
-  )
+  const onMomentumScrollEnd = ({
+    nativeEvent: {
+      contentOffset: { x },
+      layoutMeasurement: { width }
+    }
+  }: NativeSyntheticEvent<NativeScrollEvent>) => setIndex(Math.floor(x / width))
 
-  const ListEmptyComponent = useCallback(() => {
+  const ListEmptyComponent = () => {
     return (
       <View
         style={{
@@ -208,7 +201,7 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
         <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
       </View>
     )
-  }, [])
+  }
 
   return Platform.OS === 'ios' ? (
     <BlurView

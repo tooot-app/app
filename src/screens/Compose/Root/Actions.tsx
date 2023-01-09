@@ -1,29 +1,24 @@
 import { emojis } from '@components/Emojis'
-import EmojisContext from '@components/Emojis/helpers/EmojisContext'
+import EmojisContext from '@components/Emojis/Context'
 import Icon from '@components/Icon'
+import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { getInstanceConfigurationStatusMaxAttachments } from '@utils/slices/instancesSlice'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../utils/createContext'
 import chooseAndUploadAttachment from './Footer/addAttachment'
 
 const ComposeActions: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const { composeState, composeDispatch } = useContext(ComposeContext)
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
   const { colors } = useTheme()
-  const instanceConfigurationStatusMaxAttachments = useSelector(
-    getInstanceConfigurationStatusMaxAttachments,
-    () => true
-  )
 
-  const attachmentColor = useMemo(() => {
+  const attachmentColor = () => {
     if (composeState.poll.active) return colors.disabled
 
     if (composeState.attachments.uploads.length) {
@@ -31,19 +26,16 @@ const ComposeActions: React.FC = () => {
     } else {
       return colors.secondary
     }
-  }, [composeState.poll.active, composeState.attachments.uploads])
+  }
   const attachmentOnPress = () => {
     if (composeState.poll.active) return
 
-    if (composeState.attachments.uploads.length < instanceConfigurationStatusMaxAttachments) {
-      return chooseAndUploadAttachment({
-        composeDispatch,
-        showActionSheetWithOptions
-      })
+    if (composeState.attachments.uploads.length < MAX_MEDIA_ATTACHMENTS) {
+      return chooseAndUploadAttachment({ composeDispatch, showActionSheetWithOptions })
     }
   }
 
-  const pollColor = useMemo(() => {
+  const pollColor = () => {
     if (composeState.attachments.uploads.length) return colors.disabled
 
     if (composeState.poll.active) {
@@ -51,7 +43,7 @@ const ComposeActions: React.FC = () => {
     } else {
       return colors.secondary
     }
-  }, [composeState.poll.active, composeState.attachments.uploads])
+  }
   const pollOnPress = () => {
     if (!composeState.attachments.uploads.length) {
       layoutAnimation()
@@ -65,7 +57,7 @@ const ComposeActions: React.FC = () => {
     }
   }
 
-  const visibilityIcon = useMemo(() => {
+  const visibilityIcon = () => {
     switch (composeState.visibility) {
       case 'public':
         return 'Globe'
@@ -76,17 +68,17 @@ const ComposeActions: React.FC = () => {
       case 'direct':
         return 'Mail'
     }
-  }, [composeState.visibility])
+  }
   const visibilityOnPress = () => {
     if (!composeState.visibilityLock) {
       showActionSheetWithOptions(
         {
-          title: t('content.root.actions.visibility.title'),
+          title: t('screenCompose:content.root.actions.visibility.title'),
           options: [
-            t('content.root.actions.visibility.options.public'),
-            t('content.root.actions.visibility.options.unlisted'),
-            t('content.root.actions.visibility.options.private'),
-            t('content.root.actions.visibility.options.direct'),
+            t('screenCompose:content.root.actions.visibility.options.public'),
+            t('screenCompose:content.root.actions.visibility.options.unlisted'),
+            t('screenCompose:content.root.actions.visibility.options.private'),
+            t('screenCompose:content.root.actions.visibility.options.direct'),
             t('common:buttons.cancel')
           ],
           cancelButtonIndex: 4,
@@ -124,7 +116,7 @@ const ComposeActions: React.FC = () => {
   }
 
   const { emojisState, emojisDispatch } = useContext(EmojisContext)
-  const emojiColor = useMemo(() => {
+  const emojiColor = () => {
     if (!emojis.current?.length) return colors.disabled
 
     if (emojisState.targetIndex !== -1) {
@@ -132,7 +124,7 @@ const ComposeActions: React.FC = () => {
     } else {
       return colors.secondary
     }
-  }, [emojis.current?.length, emojisState.targetIndex])
+  }
   const emojiOnPress = () => {
     if (emojisState.targetIndex === -1) {
       Keyboard.dismiss()
@@ -149,6 +141,9 @@ const ComposeActions: React.FC = () => {
     <View
       accessibilityRole='toolbar'
       style={{
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
         height: 45,
         borderTopWidth: StyleSheet.hairlineWidth,
         flexDirection: 'row',
@@ -160,30 +155,30 @@ const ComposeActions: React.FC = () => {
     >
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.attachment.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.attachment.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.attachment.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.attachment.accessibilityHint')}
         accessibilityState={{
           disabled: composeState.poll.active
         }}
         style={styles.button}
         onPress={attachmentOnPress}
-        children={<Icon name='Camera' size={24} color={attachmentColor} />}
+        children={<Icon name='Camera' size={24} color={attachmentColor()} />}
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.poll.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.poll.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.poll.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.poll.accessibilityHint')}
         accessibilityState={{
           disabled: composeState.attachments.uploads.length ? true : false,
           expanded: composeState.poll.active
         }}
         style={styles.button}
         onPress={pollOnPress}
-        children={<Icon name='BarChart2' size={24} color={pollColor} />}
+        children={<Icon name='BarChart2' size={24} color={pollColor()} />}
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.visibility.accessibilityLabel', {
+        accessibilityLabel={t('screenCompose:content.root.actions.visibility.accessibilityLabel', {
           visibility: composeState.visibility
         })}
         accessibilityState={{ disabled: composeState.visibilityLock }}
@@ -191,7 +186,7 @@ const ComposeActions: React.FC = () => {
         onPress={visibilityOnPress}
         children={
           <Icon
-            name={visibilityIcon}
+            name={visibilityIcon()}
             size={24}
             color={composeState.visibilityLock ? colors.disabled : colors.secondary}
           />
@@ -199,7 +194,7 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.spoiler.accessibilityLabel')}
+        accessibilityLabel={t('screenCompose:content.root.actions.spoiler.accessibilityLabel')}
         accessibilityState={{ expanded: composeState.spoiler.active }}
         style={styles.button}
         onPress={spoilerOnPress}
@@ -213,15 +208,15 @@ const ComposeActions: React.FC = () => {
       />
       <Pressable
         accessibilityRole='button'
-        accessibilityLabel={t('content.root.actions.emoji.accessibilityLabel')}
-        accessibilityHint={t('content.root.actions.emoji.accessibilityHint')}
+        accessibilityLabel={t('screenCompose:content.root.actions.emoji.accessibilityLabel')}
+        accessibilityHint={t('screenCompose:content.root.actions.emoji.accessibilityHint')}
         accessibilityState={{
           disabled: emojis.current?.length ? false : true,
           expanded: emojisState.targetIndex !== -1
         }}
         style={styles.button}
         onPress={emojiOnPress}
-        children={<Icon name='Smile' size={24} color={emojiColor} />}
+        children={<Icon name='Smile' size={24} color={emojiColor()} />}
       />
     </View>
   )

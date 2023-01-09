@@ -1,0 +1,34 @@
+diff --git a/index.d.ts b/index.d.ts
+index f52822c8bed928f387baf90fdb7342c7416a775a..6d9d480d18342832c4b07af2b10f4a63ff538e7b 100755
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -5,11 +5,9 @@
+ // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+ // Minimum TypeScript Version: 3.7
+ 
+-export interface ShareData {
+-    mimeType: string;
+-    data: string | string[];
+-    extraData?: object | undefined;
+-}
++export type ShareData = {
++    data: {mimeType: string; data: string}[];
++} | {mimeType: string; data: string | string[]}
+ 
+ export type ShareCallback = (share?: ShareData) => void;
+ 
+@@ -25,10 +23,10 @@ interface ShareMenu {
+ }
+ 
+ interface ShareMenuReactView {
+-    dismissExtension(error?: string): void;
+-    openApp(): void;
+-    continueInApp(extraData?: object): void;
+-    data(): Promise<{mimeType: string, data: string}>;
++    dismissExtension(error?: string): void
++    openApp(): void
++    continueInApp(extraData?: object): void
++    data(): Promise<{ data: { mimeType: string; data: string }[] }>
+ }
+ 
+ export const ShareMenuReactView: ShareMenuReactView;

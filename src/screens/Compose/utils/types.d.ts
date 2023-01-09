@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { RefObject } from 'react'
 import { Asset } from 'react-native-image-picker'
 
 export type ExtendedAttachment = {
@@ -67,65 +67,69 @@ export type ComposeState = {
 
 export type ComposeAction =
   | {
-    type: 'loadDraft'
-    payload: ComposeStateDraft
-  }
+      type: 'loadDraft'
+      payload: ComposeStateDraft
+    }
   | {
-    type: 'dirty'
-    payload: ComposeState['dirty']
-  }
+      type: 'dirty'
+      payload: ComposeState['dirty']
+    }
   | {
-    type: 'posting'
-    payload: ComposeState['posting']
-  }
+      type: 'posting'
+      payload: ComposeState['posting']
+    }
   | {
-    type: 'spoiler'
-    payload: Partial<ComposeState['spoiler']>
-  }
+      type: 'spoiler'
+      payload: Partial<ComposeState['spoiler']>
+    }
   | {
-    type: 'text'
-    payload: Partial<ComposeState['text']>
-  }
+      type: 'text'
+      payload: Partial<ComposeState['text']>
+    }
   | {
-    type: 'tag'
-    payload: ComposeState['tag']
-  }
+      type: 'tag'
+      payload: ComposeState['tag']
+    }
   | {
-    type: 'poll'
-    payload: Partial<ComposeState['poll']>
-  }
+      type: 'poll'
+      payload: Partial<ComposeState['poll']>
+    }
   | {
-    type: 'attachments/sensitive'
-    payload: Pick<ComposeState['attachments'], 'sensitive'>
-  }
+      type: 'attachments/sensitive'
+      payload: Pick<ComposeState['attachments'], 'sensitive'>
+    }
   | {
-    type: 'attachment/upload/start'
-    payload: Pick<ExtendedAttachment, 'local' | 'uploading'>
-  }
+      type: 'attachment/upload/start'
+      payload: Pick<ExtendedAttachment, 'local' | 'uploading'>
+    }
   | {
-    type: 'attachment/upload/end'
-    payload: { remote: Mastodon.Attachment; local: Asset }
-  }
+      type: 'attachment/upload/end'
+      payload: { remote: Mastodon.Attachment; local: Asset }
+    }
   | {
-    type: 'attachment/upload/fail'
-    payload: ExtendedAttachment['local']['hash']
-  }
+      type: 'attachment/upload/fail'
+      payload: ExtendedAttachment['local']['hash']
+    }
   | {
-    type: 'attachment/delete'
-    payload: NonNullable<ExtendedAttachment['remote']>['id']
-  }
+      type: 'attachment/delete'
+      payload: NonNullable<ExtendedAttachment['remote']>['id']
+    }
   | {
-    type: 'attachment/edit'
-    payload: ExtendedAttachment['remote']
-  }
+      type: 'attachment/edit'
+      payload: ExtendedAttachment['remote']
+    }
   | {
-    type: 'visibility'
-    payload: ComposeState['visibility']
-  }
+      type: 'visibility'
+      payload: ComposeState['visibility']
+    }
   | {
-    type: 'textInputFocus'
-    payload: Partial<ComposeState['textInputFocus']>
-  }
+      type: 'textInputFocus'
+      payload: Partial<ComposeState['textInputFocus']>
+    }
   | {
-    type: 'removeReply'
-  }
+      type: 'updateReply'
+      payload: Mastodon.Status
+    }
+  | {
+      type: 'removeReply'
+    }

@@ -1,20 +1,19 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
+import { useRoute } from '@react-navigation/native'
+import { useQueryClient } from '@tanstack/react-query'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import {
   QueryKeyRelationship,
   useRelationshipMutation,
   useRelationshipQuery
 } from '@utils/queryHooks/relationship'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
-import { checkInstanceFeature } from '@utils/slices/instancesSlice'
-import { StyleConstants } from '@utils/styles/constants'
 import { View } from 'react-native'
-import { useRoute } from '@react-navigation/native'
 
 export interface Props {
   id: Mastodon.Account['id']
@@ -22,9 +21,9 @@ export interface Props {
 
 const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('componentRelationship')
+  const { t } = useTranslation(['common', 'componentRelationship'])
 
-  const canFollowNotify = useSelector(checkInstanceFeature('account_follow_notify'))
+  const canFollowNotify = featureCheck('account_follow_notify')
 
   const query = useRelationshipQuery({ id })
 
@@ -44,7 +43,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`${action}.function`)
+          function: t(`componentRelationship:${action}.function` as any)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -61,15 +60,15 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
   let onPress: () => void
 
   if (query.isError) {
-    content = t('button.error')
+    content = t('componentRelationship:button.error')
     onPress = () => {}
   } else {
     if (query.data?.blocked_by) {
-      content = t('button.blocked_by')
+      content = t('componentRelationship:button.blocked_by')
       onPress = () => {}
     } else {
       if (query.data?.blocking) {
-        content = t('button.blocking')
+        content = t('componentRelationship:button.blocking')
         onPress = () => {
           mutation.mutate({
             id,
@@ -82,7 +81,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
         }
       } else {
         if (query.data?.following) {
-          content = t('button.following')
+          content = t('componentRelationship:button.following')
           onPress = () => {
             mutation.mutate({
               id,
@@ -95,7 +94,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
           }
         } else {
           if (query.data?.requested) {
-            content = t('button.requested')
+            content = t('componentRelationship:button.requested')
             onPress = () => {
               mutation.mutate({
                 id,
@@ -107,7 +106,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
               })
             }
           } else {
-            content = t('button.default')
+            content = t('componentRelationship:button.default')
             onPress = () => {
               mutation.mutate({
                 id,

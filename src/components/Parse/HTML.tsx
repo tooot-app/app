@@ -1,315 +1,302 @@
 import Icon from '@components/Icon'
 import openLink from '@components/openLink'
 import ParseEmojis from '@components/Parse/Emojis'
-import CustomText from '@components/Text'
+import StatusContext from '@components/Timeline/Shared/Context'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { getSettingsFontsize } from '@utils/slices/settingsSlice'
+import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
-import { isEqual } from 'lodash'
-import React, { useCallback, useState } from 'react'
+import { ChildNode } from 'domhandler'
+import { ElementType, parseDocument } from 'htmlparser2'
+import i18next from 'i18next'
+import React, { useContext, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, Pressable, TextStyleIOS, View } from 'react-native'
-import HTMLView from 'react-native-htmlview'
-import { useSelector } from 'react-redux'
-
-// Prevent going to the same hashtag multiple times
-const renderNode = ({
-  routeParams,
-  colors,
-  node,
-  index,
-  adaptedFontsize,
-  adaptedLineheight,
-  navigation,
-  mentions,
-  tags,
-  showFullLink,
-  disableDetails
-}: {
-  routeParams?: any
-  colors: any
-  node: any
-  index: number
-  adaptedFontsize: number
-  adaptedLineheight: number
-  navigation: StackNavigationProp<TabLocalStackParamList>
-  mentions?: Mastodon.Mention[]
-  tags?: Mastodon.Tag[]
-  showFullLink: boolean
-  disableDetails: boolean
-}) => {
-  switch (node.name) {
-    case 'a':
-      const classes = node.attribs.class
-      const href = node.attribs.href
-      if (classes) {
-        if (classes.includes('hashtag')) {
-          const tag = href?.split(new RegExp(/\/tag\/(.*)|\/tags\/(.*)/))
-          const differentTag = routeParams?.hashtag
-            ? routeParams.hashtag !== tag[1] && routeParams.hashtag !== tag[2]
-            : true
-          return (
-            <CustomText
-              accessible
-              key={index}
-              style={{
-                color: colors.blue,
-                fontSize: adaptedFontsize,
-                lineHeight: adaptedLineheight
-              }}
-              onPress={() => {
-                !disableDetails &&
-                  differentTag &&
-                  navigation.push('Tab-Shared-Hashtag', {
-                    hashtag: tag[1] || tag[2]
-                  })
-              }}
-            >
-              {node.children[0].data}
-              {node.children[1]?.children[0].data}
-            </CustomText>
-          )
-        } else if (classes.includes('mention') && mentions) {
-          const accountIndex = mentions.findIndex(mention => mention.url === href)
-          const differentAccount = routeParams?.account
-            ? routeParams.account.id !== mentions[accountIndex]?.id
-            : true
-          return (
-            <CustomText
-              key={index}
-              style={{
-                color: accountIndex !== -1 ? colors.blue : colors.primaryDefault,
-                fontSize: adaptedFontsize,
-                lineHeight: adaptedLineheight
-              }}
-              onPress={() => {
-                accountIndex !== -1 &&
-                  !disableDetails &&
-                  differentAccount &&
-                  navigation.push('Tab-Shared-Account', {
-                    account: mentions[accountIndex]
-                  })
-              }}
-            >
-              {node.children[0].data}
-              {node.children[1]?.children[0].data}
-            </CustomText>
-          )
-        }
-      } else {
-        const domain = href?.split(new RegExp(/:\/\/(.[^\/]+\/.{3})/))
-        // Need example here
-        const content = node.children && node.children[0] && node.children[0].data
-        const shouldBeTag = tags && tags.filter(tag => `#${tag.name}` === content).length > 0
-        return (
-          <CustomText
-            key={index}
-            style={{
-              color: colors.blue,
-              alignItems: 'center',
-              fontSize: adaptedFontsize,
-              lineHeight: adaptedLineheight
-            }}
-            onPress={async () => {
-              if (!disableDetails) {
-                if (shouldBeTag) {
-                  navigation.push('Tab-Shared-Hashtag', {
-                    hashtag: content.substring(1)
-                  })
-                } else {
-                  await openLink(href, navigation)
-                }
-              }
-            }}
-          >
-            {content && content !== href ? content : showFullLink ? href : domain?.[1]}
-            {!shouldBeTag ? '...' : null}
-          </CustomText>
-        )
-      }
-      break
-    case 'p':
-      if (!node.children.length) {
-        return <View key={index} /> // bug when the tag is empty
-      }
-      break
-  }
-}
+import { Platform, Pressable, Text, View } from 'react-native'
 
 export interface Props {
   content: string
   size?: 'S' | 'M' | 'L'
-  textStyles?: TextStyleIOS
   adaptiveSize?: boolean
-  emojis?: Mastodon.Emoji[]
-  mentions?: Mastodon.Mention[]
-  tags?: Mastodon.Tag[]
   showFullLink?: boolean
   numberOfLines?: number
   expandHint?: string
-  highlighted?: boolean
-  disableDetails?: boolean
   selectable?: boolean
   setSpoilerExpanded?: React.Dispatch<React.SetStateAction<boolean>>
+  emojis?: Mastodon.Emoji[]
+  mentions?: Mastodon.Mention[]
 }
 
-const ParseHTML = React.memo(
-  ({
-    content,
-    size = 'M',
-    textStyles,
-    adaptiveSize = false,
-    emojis,
-    mentions,
-    tags,
-    showFullLink = false,
-    numberOfLines = 10,
-    expandHint,
-    highlighted = false,
-    disableDetails = false,
-    selectable = false,
-    setSpoilerExpanded
-  }: Props) => {
-    const adaptiveFontsize = useSelector(getSettingsFontsize)
-    const adaptedFontsize = adaptiveScale(
-      StyleConstants.Font.Size[size],
-      adaptiveSize ? adaptiveFontsize : 0
-    )
-    const adaptedLineheight = adaptiveScale(
-      StyleConstants.Font.LineHeight[size],
-      adaptiveSize ? adaptiveFontsize : 0
-    )
+const ParseHTML: React.FC<Props> = ({
+  content,
+  size = 'M',
+  adaptiveSize = false,
+  showFullLink = false,
+  numberOfLines = 10,
+  expandHint,
+  selectable = false,
+  setSpoilerExpanded,
+  emojis,
+  mentions
+}) => {
+  const { status, highlighted, disableDetails, excludeMentions } = useContext(StatusContext)
 
-    const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-    const route = useRoute()
-    const { colors, theme } = useTheme()
-    const { t } = useTranslation('componentParse')
-    if (!expandHint) {
-      expandHint = t('HTML.defaultHint')
+  const [adaptiveFontsize] = useGlobalStorage.number('app.font_size')
+  const adaptedFontsize = adaptiveScale(
+    StyleConstants.Font.Size[size],
+    adaptiveSize ? adaptiveFontsize : 0
+  )
+  const adaptedLineheight =
+    Platform.OS === 'ios'
+      ? adaptiveScale(StyleConstants.Font.LineHeight[size], adaptiveSize ? adaptiveFontsize : 0)
+      : undefined
+
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
+  const { params } = useRoute()
+  const { colors } = useTheme()
+  const { t } = useTranslation('componentParse')
+  if (!expandHint) {
+    expandHint = t('HTML.defaultHint')
+  }
+
+  if (disableDetails) {
+    numberOfLines = 4
+  }
+
+  const [followedTags] = useAccountStorage.object('followed_tags')
+
+  const [totalLines, setTotalLines] = useState<number>()
+  const [expanded, setExpanded] = useState(highlighted)
+
+  const document = parseDocument(content)
+  const unwrapNode = (node: ChildNode): string => {
+    switch (node.type) {
+      case ElementType.Text:
+        return node.data
+      case ElementType.Tag:
+        if (node.name === 'span') {
+          if (node.attribs.class?.includes('invisible') && !showFullLink) return ''
+          if (node.attribs.class?.includes('ellipsis') && !showFullLink)
+            return node.children.map(child => unwrapNode(child)).join('') + '...'
+        }
+        return node.children.map(child => unwrapNode(child)).join('')
+      default:
+        return ''
     }
+  }
+  const prevMentionRemoved = useRef<boolean>(false)
+  const renderNode = (node: ChildNode, index: number) => {
+    switch (node.type) {
+      case ElementType.Text:
+        let content: string = node.data
+        if (prevMentionRemoved.current) {
+          prevMentionRemoved.current = false // Removing empty spaces appeared between tags and mentions
+          if (node.data.trim().length) {
+            content = excludeMentions?.current.length
+              ? node.data.replace(new RegExp(/^\s+/), '')
+              : node.data
+          } else {
+            content = node.data.trim()
+          }
+        }
 
-    if (disableDetails) {
-      numberOfLines = 4
-    }
-
-    const renderNodeCallback = useCallback(
-      (node: any, index: any) =>
-        renderNode({
-          routeParams: route.params,
-          colors,
-          node,
-          index,
-          adaptedFontsize,
-          adaptedLineheight,
-          navigation,
-          mentions,
-          tags,
-          showFullLink,
-          disableDetails
-        }),
-      []
-    )
-    const textComponent = useCallback(({ children }: any) => {
-      if (children) {
         return (
           <ParseEmojis
-            content={children?.toString()}
-            emojis={emojis}
+            key={index}
+            content={content}
+            emojis={status?.emojis || emojis}
             size={size}
             adaptiveSize={adaptiveSize}
           />
         )
-      } else {
-        return null
-      }
-    }, [])
-    const rootComponent = useCallback(
-      ({ children }: any) => {
-        const { t } = useTranslation('componentParse')
+      case ElementType.Tag:
+        switch (node.name) {
+          case 'a':
+            const classes = node.attribs.class
+            const href = node.attribs.href
+            if (classes) {
+              if (classes.includes('hashtag')) {
+                const children = node.children.map(unwrapNode).join('')
+                const tag =
+                  href.match(new RegExp(/\/tags?\/(.*)/, 'i'))?.[1]?.toLowerCase() ||
+                  children.match(new RegExp(/#(\S+)/))?.[1]?.toLowerCase()
 
-        const [totalLines, setTotalLines] = useState<number>()
-        const [expanded, setExpanded] = useState(highlighted)
+                const paramsHashtag = (params as { hashtag: Mastodon.Tag['name'] } | undefined)
+                  ?.hashtag
+                const sameHashtag = paramsHashtag === tag
+                const isFollowing = followedTags?.find(t => t.name === tag)
+                return (
+                  <Text
+                    key={index}
+                    style={[
+                      { color: tag?.length ? colors.blue : colors.red },
+                      isFollowing
+                        ? {
+                            textDecorationColor: tag?.length ? colors.blue : colors.red,
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: 'dotted'
+                          }
+                        : null
+                    ]}
+                    onPress={() =>
+                      tag?.length &&
+                      !disableDetails &&
+                      !sameHashtag &&
+                      navigation.push('Tab-Shared-Hashtag', { hashtag: tag })
+                    }
+                    children={children}
+                  />
+                )
+              }
+              if (classes.includes('mention') && (status?.mentions?.length || mentions?.length)) {
+                const matchedMention = (status?.mentions || mentions || []).find(
+                  mention => mention.url === href
+                )
+                if (
+                  matchedMention &&
+                  excludeMentions?.current.find(eM => eM.id === matchedMention.id)
+                ) {
+                  prevMentionRemoved.current = true
+                  return null
+                }
+                const paramsAccount = (params as { account: Mastodon.Account } | undefined)?.account
+                const sameAccount = paramsAccount?.id === matchedMention?.id
+                return (
+                  <Text
+                    key={index}
+                    style={{ color: matchedMention ? colors.blue : undefined }}
+                    onPress={() =>
+                      matchedMention &&
+                      !disableDetails &&
+                      !sameAccount &&
+                      navigation.push('Tab-Shared-Account', { account: matchedMention })
+                    }
+                    children={node.children.map(unwrapNode).join('')}
+                  />
+                )
+              }
+            }
 
-        return (
-          <View style={{ overflow: 'hidden' }}>
-            {(!disableDetails && typeof totalLines === 'number') || numberOfLines === 1 ? (
-              <Pressable
-                accessibilityLabel={t('HTML.accessibilityHint')}
-                onPress={() => {
-                  layoutAnimation()
-                  setExpanded(!expanded)
-                  if (setSpoilerExpanded) {
-                    setSpoilerExpanded(!expanded)
+            const content = node.children.map(child => unwrapNode(child)).join('')
+            const shouldBeTag = status?.tags?.find(tag => `#${tag.name}` === content)
+            return (
+              <Text
+                key={index}
+                style={{ color: colors.blue }}
+                onPress={async () => {
+                  if (!disableDetails) {
+                    if (shouldBeTag) {
+                      navigation.push('Tab-Shared-Hashtag', {
+                        hashtag: content.substring(1)
+                      })
+                    } else {
+                      await openLink(href, navigation)
+                    }
                   }
                 }}
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  minHeight: 44,
-                  backgroundColor: colors.backgroundDefault
-                }}
+                children={content}
+              />
+            )
+            break
+          case 'br':
+            return (
+              <Text
+                key={index}
+                style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
               >
-                <CustomText
-                  style={{
-                    textAlign: 'center',
-                    ...StyleConstants.FontStyle.S,
-                    color: colors.primaryDefault,
-                    marginRight: StyleConstants.Spacing.S
-                  }}
-                  children={t('HTML.expanded', {
-                    hint: expandHint,
-                    moreLines:
-                      numberOfLines > 1 && typeof totalLines === 'number'
-                        ? t('HTML.moreLines', { count: totalLines - numberOfLines })
-                        : ''
-                  })}
-                />
-                <Icon
-                  name={expanded ? 'Minimize2' : 'Maximize2'}
-                  color={colors.primaryDefault}
-                  strokeWidth={2}
-                  size={StyleConstants.Font.Size[size]}
-                />
-              </Pressable>
-            ) : null}
-            <CustomText
-              children={children}
-              onTextLayout={({ nativeEvent }) => {
-                if (numberOfLines === 1 || nativeEvent.lines.length >= numberOfLines + 5) {
-                  setTotalLines(nativeEvent.lines.length)
-                }
-              }}
-              style={{
-                ...textStyles,
-                height: numberOfLines === 1 && !expanded ? 0 : undefined
-              }}
-              numberOfLines={
-                typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : undefined
-              }
-              selectable={selectable}
-            />
-          </View>
-        )
-      },
-      [theme]
-    )
-
-    return (
-      <HTMLView
-        value={content}
-        TextComponent={textComponent}
-        RootComponent={rootComponent}
-        renderNode={renderNodeCallback}
+                {'\n'}
+              </Text>
+            )
+          case 'p':
+            if (index < document.children.length - 1) {
+              return (
+                <Text key={index}>
+                  {node.children.map((c, i) => renderNode(c, i))}
+                  <Text
+                    style={{ lineHeight: adaptedLineheight ? adaptedLineheight / 2 : undefined }}
+                  >
+                    {'\n\n'}
+                  </Text>
+                </Text>
+              )
+            } else {
+              return <Text key={index} children={node.children.map((c, i) => renderNode(c, i))} />
+            }
+          default:
+            return <Text key={index} children={node.children.map((c, i) => renderNode(c, i))} />
+        }
+    }
+    return null
+  }
+  return (
+    <View style={{ overflow: 'hidden' }}>
+      {(!disableDetails && typeof totalLines === 'number') || numberOfLines === 1 ? (
+        <Pressable
+          accessibilityLabel={t('HTML.accessibilityHint')}
+          onPress={() => {
+            layoutAnimation()
+            setExpanded(!expanded)
+            if (setSpoilerExpanded) {
+              setSpoilerExpanded(!expanded)
+            }
+          }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: 44,
+            backgroundColor: colors.backgroundDefault
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              ...StyleConstants.FontStyle.S,
+              color: colors.primaryDefault,
+              marginRight: StyleConstants.Spacing.S
+            }}
+            children={t('HTML.expanded', {
+              hint: expandHint,
+              moreLines:
+                numberOfLines > 1 && typeof totalLines === 'number'
+                  ? t('HTML.moreLines', { count: totalLines - numberOfLines })
+                  : ''
+            })}
+          />
+          <Icon
+            name={expanded ? 'Minimize2' : 'Maximize2'}
+            color={colors.primaryDefault}
+            strokeWidth={2}
+            size={StyleConstants.Font.Size[size]}
+          />
+        </Pressable>
+      ) : null}
+      <Text
+        children={document.children.map(renderNode)}
+        onTextLayout={({ nativeEvent }) => {
+          if (numberOfLines === 1 || nativeEvent.lines.length >= numberOfLines + 5) {
+            setTotalLines(nativeEvent.lines.length)
+          }
+        }}
+        style={{
+          fontSize: adaptedFontsize,
+          lineHeight: adaptedLineheight,
+          ...(Platform.OS === 'ios' &&
+            status?.language &&
+            i18next.dir(status.language) === 'rtl' &&
+            ({ writingDirection: 'rtl' } as { writingDirection: 'rtl' })),
+          height: numberOfLines === 1 && !expanded ? 0 : undefined
+        }}
+        numberOfLines={
+          typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : undefined
+        }
+        selectable={selectable}
       />
-    )
-  },
-  (prev, next) => prev.content === next.content && isEqual(prev.emojis, next.emojis)
-)
+    </View>
+  )
+}
 
 export default ParseHTML

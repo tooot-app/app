@@ -5,14 +5,14 @@
       "button": "Повторити"
     },
     "success": {
-      "message": "Часова гілка порожня"
+      "message": "Стрічка порожня"
     }
   },
   "end": {
     "message": "Це кінець, бажаєте філіжанку кави? <0 />"
   },
   "lookback": {
-    "message": "Останні прочитані в"
+    "message": "Останні прочитані о"
   },
   "refresh": {
     "fetchPreviousPage": "З цього моменту",
@@ -21,14 +21,14 @@
   "shared": {
     "actioned": {
       "pinned": "Прикріплено",
-      "favourite": "{{name}} додав в улюблене дмух",
+      "favourite": "{{name}} додає дмух до улюблених",
       "status": "{{name}} щойно дмухнув",
-      "follow": "{{name}} підписався на вас",
-      "follow_request": "{{name}} відправив запит на підписку",
+      "follow": "{{name}} підписується на вас",
+      "follow_request": "{{name}} надсилає запит на стеження",
       "poll": "Опитування, у якому ви голосували, закінчилося",
       "reblog": {
-        "default": "{{name}} передмухнув(-ла)",
-        "notification": "{{name}} передмухнув(-ла) ваш дмух"
+        "default": "{{name}} передмухує",
+        "notification": "{{name}} передмухує ваш дмух"
       },
       "update": "Передмух був відредагований",
       "admin.sign_up": "{{name}} приєднався до інстансу",
@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Помилка завантаження",
         "button": "Спробуйте віддалене посилання"
-      }
+      },
+      "altText": "Альтернативний текст"
     },
     "avatar": {
       "accessibilityLabel": "Аватар {{name}}",
@@ -92,10 +93,10 @@
       "expandHint": "Прихований вміст"
     },
     "filtered": {
-      "reveal": "",
-      "match_v1": "",
-      "match_v2_one": "",
-      "match_v2_other": ""
+      "reveal": "Все одно показати",
+      "match_v1": "Відфільтровано: {{phrase}}.",
+      "match_v2_one": "Відфільтровано від {{filters}}.",
+      "match_v2_other": "Відфільтровано за {{count}} фільтрів, {{filters}}."
     },
     "fullConversation": "Читати розмови",
     "translate": {
@@ -122,6 +123,7 @@
         "muted": {
           "accessibilityLabel": "Дмух приглушений"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Дмухнути особистим повідомленням"

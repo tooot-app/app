@@ -1,7 +1,7 @@
-import apiTooot from '@api/tooot'
 import haptics from '@components/haptics'
-import { AxiosError } from 'axios'
 import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import apiTooot from '@utils/api/tooot'
+import { AxiosError } from 'axios'
 
 type Translations =
   | {

@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtri",
       "accessibilityHint": "Filtra le notifiche mostrate per tipo",
-      "title": "",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Richiesta di seguirti",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot da utenti seguiti",
-        "update": "Il link è stato modificato",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": ""
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Tema",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema scuro",
         "options": {
-          "lighter": "Poco scuro",
-          "darker": "Molto scuro"
+          "lighter": "Predefinito",
+          "darker": ""
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Nel browser di sistema"
         }
       },
-      "staticEmoji": {
-        "heading": "Usa emoji statiche",
-        "description": "Se la app crasha spesso quando all'apertura della lista di emoji, puoi provare ad attivare le emoji statiche."
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "Richiedi funzionalità"
@@ -332,9 +306,7 @@
       "moved": "Profilo trasferito",
       "created_at": "Account creato il: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toot",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toot"
       },
       "toots": {
         "default": "Toot",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Cronologia delle modifiche"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "Impossibile trovare <bold>{{searchTerm}}</bold> come {{type}}"
     },
     "toot": {
-      "name": "Discussioni"
+      "name": "Discussioni",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {

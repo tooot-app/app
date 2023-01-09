@@ -1,14 +1,14 @@
-import apiInstance from '@api/instance'
 import GracefullyImage from '@components/GracefullyImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useCallback } from 'react'
 import { Pressable, View } from 'react-native'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import TimelineActions from './Shared/Actions'
 import TimelineContent from './Shared/Content'
 import StatusContext from './Shared/Context'
@@ -41,10 +41,7 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
   const onPress = useCallback(() => {
     if (conversation.last_status) {
       conversation.unread && mutate()
-      navigation.push('Tab-Shared-Toot', {
-        toot: conversation.last_status,
-        rootQueryKey: queryKey
-      })
+      navigation.push('Tab-Shared-Toot', { toot: conversation.last_status })
     }
   }, [])
 
@@ -115,4 +112,4 @@ const TimelineConversation: React.FC<Props> = ({ conversation, queryKey, highlig
   )
 }
 
-export default TimelineConversation
+export default React.memo(TimelineConversation, () => true)

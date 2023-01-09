@@ -1,15 +1,16 @@
-import apiInstance from '@api/instance'
 import ComponentAccount from '@components/Account'
 import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
+import apiInstance from '@utils/api/instance'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { SearchResult } from '@utils/queryHooks/search'
 import { QueryKeyUsers, useUsersQuery } from '@utils/queryHooks/users'
+import { flattenPages } from '@utils/queryHooks/utils'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Circle, Flow } from 'react-native-animated-spinkit'
@@ -23,33 +24,24 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
   const { t } = useTranslation('screenTabs')
   useEffect(() => {
     navigation.setOptions({
-      title: t(`shared.users.${params.reference}.${params.type}`, { count: params.count }),
+      title: t(`shared.users.${params.reference}.${params.type}`, {
+        count: params.count
+      } as any) as any,
       headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
     })
   }, [])
 
   const queryKey: QueryKeyUsers = ['Users', params]
   const { data, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = useUsersQuery({
-    ...queryKey[1],
-    options: {
-      getPreviousPageParam: firstPage =>
-        firstPage.links?.prev?.id && { min_id: firstPage.links.prev.id },
-      getNextPageParam: lastPage => lastPage.links?.next?.id && { max_id: lastPage.links.next.id }
-    }
+    ...queryKey[1]
   })
-  const flattenData = data?.pages ? data.pages.flatMap(page => [...page.body]) : []
-
-  const onEndReached = useCallback(
-    () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
-    [hasNextPage, isFetchingNextPage]
-  )
 
   const [isSearching, setIsSearching] = useState(false)
 
   return (
     <FlatList
       windowSize={7}
-      data={flattenData}
+      data={flattenPages(data)}
       style={{
         minHeight: '100%',
         paddingVertical: StyleConstants.Spacing.Global.PagePadding
@@ -88,7 +80,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
           children={<Flow size={StyleConstants.Font.Size.L} color={colors.secondary} />}
         />
       )}
-      onEndReached={onEndReached}
+      onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       onEndReachedThreshold={0.75}
       ItemSeparatorComponent={ComponentSeparator}
       ListEmptyComponent={

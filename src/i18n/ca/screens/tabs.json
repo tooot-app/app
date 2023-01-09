@@ -3,7 +3,7 @@
     "local": {
       "name": "Seguint",
       "options": {
-        "showBoosts": "Mostra les publicacions",
+        "showBoosts": "Mostra els impulsos",
         "showReplies": "Mostra les respostes"
       }
     },
@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtra",
       "accessibilityHint": "Filtra els tipus de notificacions",
-      "title": "Mostra les notificacions",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Sol·licituds de seguiment",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Publicacions d'usuaris subscrits",
-        "update": "Edicions d'impulsos",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Mostra les notificacions"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Aspecte",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema fosc",
         "options": {
-          "lighter": "Més clar",
-          "darker": "Més fosc"
+          "lighter": "Per defecte",
+          "darker": "Fosc pur"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Utilitza el navegador del sistema"
         }
       },
-      "staticEmoji": {
-        "heading": "Utilitza emojis estàtics",
-        "description": "Si l'aplicació falla freqüentment en visualitzar la llista d'emojis, pots intentar fer servir els emojis estàtics."
+      "autoplayGifv": {
+        "heading": "Reprodueix els GIF automàticament"
       },
       "feedback": {
         "heading": "Peticions de característiques"
@@ -326,15 +300,13 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Accions per l'usuari {{user}}",
-        "accessibilityHint": "Pots silenciar, bloquejar, reportar o compartir aquest usuari"
+        "accessibilityHint": "Pots silenciar, bloquejar, denunciar o compartir aquest usuari"
       },
       "followed_by": " et segueix",
       "moved": "S'ha traslladat",
       "created_at": "Es va unir el dia {{date}}",
       "summary": {
-        "statuses_count": "{{count}} publicacions",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} publicacions"
       },
       "toots": {
         "default": "Publicacions",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Edita l'historial"
+    },
+    "report": {
+      "name": "Denuncia {{acct}}",
+      "report": "Denúncia",
+      "forward": {
+        "heading": "Envia anònimament al servidor remot {{instance}}"
+      },
+      "reasons": {
+        "heading": "Què està passant amb aquest compte?",
+        "spam": "És contingut brossa",
+        "other": "És una altra cosa",
+        "violation": "Incompleix les regles del servidor"
+      },
+      "comment": {
+        "heading": "Vols afegir alguna altra cosa?"
+      },
+      "violatedRules": {
+        "heading": "Ha incomplert les regles del servidor"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}"
     },
     "toot": {
-      "name": "Discussions"
+      "name": "Discussions",
+      "remoteFetch": {
+        "title": "Hi ha contingut remot",
+        "message": "El contingut federat no sempre està disponible a la instància local. S'obtenen de la instància remota i són marcats. Pots interactuar-los com sempre."
+      }
     },
     "users": {
       "accounts": {

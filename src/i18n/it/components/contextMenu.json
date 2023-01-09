@@ -7,10 +7,21 @@
       "action_true": ""
     },
     "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Muta utente",
       "action_true": "Riattiva utente"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Blocca utente",
       "action_true": "Sblocca utente",

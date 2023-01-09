@@ -1,7 +1,7 @@
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { AccessibilityProps, Pressable, StyleProp, View, ViewStyle } from 'react-native'
 import { Flow } from 'react-native-animated-spinkit'
 import CustomText from './Text'
@@ -48,18 +48,16 @@ const Button: React.FC<Props> = ({
   overlay = false,
   onPress
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
 
-  const loadingSpinkit = useMemo(
-    () => (
+  const loadingSpinkit = () =>
+    loading ? (
       <View style={{ position: 'absolute' }}>
         <Flow size={StyleConstants.Font.Size[size]} color={colors.secondary} />
       </View>
-    ),
-    [theme]
-  )
+    ) : null
 
-  const mainColor = useMemo(() => {
+  const mainColor = () => {
     if (selected) {
       return colors.blue
     } else if (overlay) {
@@ -73,29 +71,21 @@ const Button: React.FC<Props> = ({
         return colors.primaryDefault
       }
     }
-  }, [theme, disabled, loading, selected])
+  }
 
-  const colorBackground = useMemo(() => {
-    if (overlay) {
-      return colors.backgroundOverlayInvert
-    } else {
-      return colors.backgroundDefault
-    }
-  }, [theme])
-
-  const children = useMemo(() => {
+  const children = () => {
     switch (type) {
       case 'icon':
         return (
           <>
             <Icon
               name={content}
-              color={mainColor}
+              color={mainColor()}
               strokeWidth={strokeWidth}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
             />
-            {loading ? loadingSpinkit : null}
+            {loadingSpinkit()}
           </>
         )
       case 'text':
@@ -103,19 +93,19 @@ const Button: React.FC<Props> = ({
           <>
             <CustomText
               style={{
-                color: mainColor,
+                color: mainColor(),
                 fontSize: StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1),
                 opacity: loading ? 0 : 1
               }}
-              fontWeight={fontBold ? 'Bold' : 'Normal'}
+              fontWeight={fontBold || selected ? 'Bold' : 'Normal'}
               children={content}
               testID='text'
             />
-            {loading ? loadingSpinkit : null}
+            {loadingSpinkit()}
           </>
         )
     }
-  }, [theme, content, loading, disabled])
+  }
 
   const [layoutHeight, setLayoutHeight] = useState<number | undefined>()
 
@@ -135,9 +125,9 @@ const Button: React.FC<Props> = ({
           borderRadius: 100,
           justifyContent: 'center',
           alignItems: 'center',
-          borderWidth: overlay ? 0 : 1,
-          borderColor: mainColor,
-          backgroundColor: colorBackground,
+          borderWidth: overlay ? 0 : selected ? 1.5 : 1,
+          borderColor: mainColor(),
+          backgroundColor: overlay ? colors.backgroundOverlayInvert : colors.backgroundDefault,
           paddingVertical: StyleConstants.Spacing[spacing],
           paddingHorizontal: StyleConstants.Spacing[spacing] + StyleConstants.Spacing.XS,
           width: round && layoutHeight ? layoutHeight : undefined
@@ -149,7 +139,7 @@ const Button: React.FC<Props> = ({
       })}
       testID='base'
       onPress={onPress}
-      children={children}
+      children={children()}
       disabled={selected || disabled || loading}
     />
   )

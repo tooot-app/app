@@ -1,6 +1,6 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import apiInstance from '@utils/api/instance'
 import { ScreenComposeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

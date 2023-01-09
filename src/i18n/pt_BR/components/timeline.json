@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Erro ao carregar",
         "button": "Experimente o link remoto"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Avatar de {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Conta do usuário"
           }
         },
-        "application": "Com {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Toot editado"
         },
         "muted": {
           "accessibilityLabel": "Toot silenciado"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Enviar uma mensagem direta"

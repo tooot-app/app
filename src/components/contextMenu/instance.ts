@@ -1,23 +1,21 @@
 import { displayMessage } from '@components/Message'
+import { useQueryClient } from '@tanstack/react-query'
 import { QueryKeyTimeline, useTimelineMutation } from '@utils/queryHooks/timeline'
-import { getInstanceUrl } from '@utils/slices/instancesSlice'
+import { getAccountStorage } from '@utils/storage/actions'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
+import parse from 'url-parse'
 
 const menuInstance = ({
   status,
-  queryKey,
-  rootQueryKey
+  queryKey
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-}): ContextMenu[][] => {
+}): ContextMenu => {
   if (!status || !queryKey) return []
 
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu'])
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -25,38 +23,33 @@ const menuInstance = ({
       displayMessage({
         type: 'success',
         message: t('common:message.success.message', {
-          function: t(`instance.block.action`, { instance })
+          function: t(`componentContextMenu:instance.block.action`, { instance })
         })
       })
       queryClient.invalidateQueries(queryKey)
-      rootQueryKey && queryClient.invalidateQueries(rootQueryKey)
     }
   })
 
-  const menus: ContextMenu[][] = []
+  const menus: ContextMenu = []
 
-  const currentInstance = useSelector(getInstanceUrl)
-  const instance = status.uri && status.uri.split(new RegExp(/\/\/(.*?)\//))[1]
+  const instance = parse(status.uri).hostname
 
-  if (currentInstance !== instance && instance) {
+  if (instance !== getAccountStorage.string('auth.domain')) {
     menus.push([
       {
+        type: 'item',
         key: 'instance-block',
-        item: {
+        props: {
           onSelect: () =>
             Alert.alert(
-              t('instance.block.alert.title', { instance }),
-              t('instance.block.alert.message'),
+              t('componentContextMenu:instance.block.alert.title', { instance }),
+              t('componentContextMenu:instance.block.alert.message'),
               [
                 {
                   text: t('common:buttons.confirm'),
                   style: 'destructive',
                   onPress: () => {
-                    mutation.mutate({
-                      type: 'domainBlock',
-                      queryKey,
-                      domain: instance
-                    })
+                    mutation.mutate({ type: 'domainBlock', domain: instance })
                   }
                 },
                 {
@@ -68,7 +61,7 @@ const menuInstance = ({
           destructive: true,
           hidden: false
         },
-        title: t('instance.block.action', { instance }),
+        title: t('componentContextMenu:instance.block.action', { instance }),
         icon: ''
       }
     ])

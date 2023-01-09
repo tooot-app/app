@@ -1,9 +1,8 @@
-import { useRoute } from '@react-navigation/native'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Placeholder, Fade } from 'rn-placeholder'
+import { Fade, Placeholder } from 'rn-placeholder'
 import AccountInformationAccount from './Information/Account'
 import AccountInformationActions from './Information/Actions'
 import AccountInformationAvatar from './Information/Avatar'
@@ -11,41 +10,42 @@ import AccountInformationCreated from './Information/Created'
 import AccountInformationFields from './Information/Fields'
 import AccountInformationName from './Information/Name'
 import AccountInformationNote from './Information/Note'
+import AccountInformationPrivateNote from './Information/PrivateNotes'
 import AccountInformationStats from './Information/Stats'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
-
-const AccountInformation: React.FC<Props> = ({ account }) => {
+const AccountInformation: React.FC = () => {
   const { colors } = useTheme()
 
-  const { name } = useRoute()
-  const myInfo = name !== 'Tab-Shared-Account'
-
   return (
-    <View style={styles.base}>
+    <View
+      style={{
+        marginTop: -StyleConstants.Avatar.L / 2,
+        padding: StyleConstants.Spacing.Global.PagePadding
+      }}
+    >
       <Placeholder
         Animation={props => (
           <Fade {...props} style={{ backgroundColor: colors.shimmerHighlight }} />
         )}
       >
         <View style={styles.avatarAndActions}>
-          <AccountInformationAvatar account={account} myInfo={myInfo} />
-          <AccountInformationActions account={account} myInfo={myInfo} />
+          <AccountInformationAvatar />
+          <AccountInformationActions />
         </View>
 
-        <AccountInformationName account={account} />
+        <AccountInformationName />
 
-        <AccountInformationAccount account={account} />
+        <AccountInformationAccount />
 
-        <AccountInformationFields account={account} myInfo={myInfo} />
+        <AccountInformationPrivateNote />
 
-        <AccountInformationNote account={account} myInfo={myInfo} />
+        <AccountInformationFields />
 
-        <AccountInformationCreated account={account} hidden={myInfo} />
+        <AccountInformationNote />
 
-        <AccountInformationStats account={account} myInfo={myInfo} />
+        <AccountInformationCreated />
+
+        <AccountInformationStats />
       </Placeholder>
     </View>
   )

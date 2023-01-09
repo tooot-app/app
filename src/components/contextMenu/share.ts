@@ -13,20 +13,21 @@ const menuShare = (
       }
     | {
         type: 'account'
-        url: string
+        url?: string
       }
-): ContextMenu[][] => {
+): ContextMenu => {
   if (params.type === 'status' && params.visibility === 'direct') return []
 
   const { t } = useTranslation('componentContextMenu')
 
-  const menus: ContextMenu[][] = [[]]
+  const menus: ContextMenu = [[]]
 
   if (params.url) {
     const url = params.url
     menus[0].push({
+      type: 'item',
       key: 'share',
-      item: {
+      props: {
         onSelect: () => {
           switch (Platform.OS) {
             case 'ios':
@@ -47,8 +48,9 @@ const menuShare = (
   }
   if (params.type === 'status')
     menus[0].push({
+      type: 'item',
       key: 'copy',
-      item: {
+      props: {
         onSelect: () => {
           Clipboard.setString(params.rawContent?.current.join(`\n\n`) || '')
           displayMessage({ type: 'success', message: t(`copy.succeed`) })

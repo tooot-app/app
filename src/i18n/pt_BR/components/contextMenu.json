@@ -7,10 +7,21 @@
       "action_true": ""
     },
     "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Silenciar usuário",
       "action_true": "Desativar o silêncio do usuário"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Bloquear usuário",
       "action_true": "Desbloquear usuário",

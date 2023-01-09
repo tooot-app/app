@@ -4,14 +4,13 @@ import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { Platform, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
 
 const TimelineHeaderAndroid: React.FC = () => {
-  const { queryKey, rootQueryKey, status, disableDetails, disableOnPress, rawContent } =
-    useContext(StatusContext)
+  const { queryKey, status, disableDetails, disableOnPress, rawContent } = useContext(StatusContext)
 
   if (Platform.OS !== 'android' || !status || disableDetails || disableOnPress) return null
 
@@ -28,9 +27,9 @@ const TimelineHeaderAndroid: React.FC = () => {
     type: 'status',
     openChange,
     account: status.account,
-    queryKey
+    ...(status && { status })
   })
-  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey })
 
   return (
     <View style={{ position: 'absolute', top: 0, right: 0 }}>
@@ -52,34 +51,51 @@ const TimelineHeaderAndroid: React.FC = () => {
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            {mShare.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
+            {[mShare, mAccount, mStatus].map((menu, i) => (
+              <Fragment key={i}>
+                {menu.map((group, index) => (
+                  <DropdownMenu.Group key={index}>
+                    {group.map(item => {
+                      switch (item.type) {
+                        case 'item':
+                          return (
+                            <DropdownMenu.Item key={item.key} {...item.props}>
+                              <DropdownMenu.ItemTitle children={item.title} />
+                              {item.icon ? (
+                                <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                              ) : null}
+                            </DropdownMenu.Item>
+                          )
+                        case 'sub':
+                          return (
+                            // @ts-ignore
+                            <DropdownMenu.Sub key={item.key}>
+                              <DropdownMenu.SubTrigger
+                                key={item.trigger.key}
+                                {...item.trigger.props}
+                              >
+                                <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                {item.trigger.icon ? (
+                                  <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                ) : null}
+                              </DropdownMenu.SubTrigger>
+                              <DropdownMenu.SubContent>
+                                {item.items.map(sub => (
+                                  <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                    <DropdownMenu.ItemTitle children={sub.title} />
+                                    {sub.icon ? (
+                                      <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                    ) : null}
+                                  </DropdownMenu.Item>
+                                ))}
+                              </DropdownMenu.SubContent>
+                            </DropdownMenu.Sub>
+                          )
+                      }
+                    })}
+                  </DropdownMenu.Group>
                 ))}
-              </DropdownMenu.Group>
-            ))}
-
-            {mAccount.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Group>
-            ))}
-
-            {mStatus.map((mGroup, index) => (
-              <DropdownMenu.Group key={index}>
-                {mGroup.map(menu => (
-                  <DropdownMenu.Item key={menu.key} {...menu.item}>
-                    <DropdownMenu.ItemTitle children={menu.title} />
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Group>
+              </Fragment>
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

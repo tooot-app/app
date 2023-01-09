@@ -2,31 +2,31 @@
   "heading": {
     "left": {
       "alert": {
-        "title": "",
+        "title": "Porzucić zmiany?",
         "buttons": {
-          "save": "",
-          "delete": ""
+          "save": "Zapisz wersję roboczą",
+          "delete": "Usuń wersję roboczą"
         }
       }
     },
     "right": {
       "button": {
-        "default": "",
-        "conversation": "",
-        "reply": "",
-        "deleteEdit": "",
-        "edit": "",
-        "share": ""
+        "default": "Tootnij",
+        "conversation": "Toot prywatny",
+        "reply": "Odpowiedz na toot",
+        "deleteEdit": "Tootnij",
+        "edit": "Tootnij",
+        "share": "Tootnij"
       },
       "alert": {
         "default": {
-          "title": "",
-          "button": ""
+          "title": "Publikacja toota nieudana",
+          "button": "Spróbuj ponownie"
         },
         "removeReply": {
-          "title": "",
-          "description": "",
-          "confirm": ""
+          "title": "Nie znaleziono odpowiedzi",
+          "description": "Odpowiedź mogła zostać usunięta. Czy chcesz usunąć ją z odnośnika?",
+          "confirm": "Usuń odnośnik"
         }
       }
     }
@@ -34,140 +34,139 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "",
+        "postingAs": "Trąbię tootka jako @{{acct}}@{{domain}}",
         "spoilerInput": {
-          "placeholder": ""
+          "placeholder": "Ostrzeżenie przed spoilerami"
         },
         "textInput": {
-          "placeholder": "",
+          "placeholder": "Co Ci chodzi po głowie?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "",
-              "OK": ""
+              "title": "Osiągnięto maksymalną ilość załączników"
             }
           }
         }
       },
       "footer": {
         "attachments": {
-          "sensitive": "",
+          "sensitive": "Oznacz załączniki jako kontrowersyjne",
           "remove": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Usuń przesłany załącznik, numer {{attachment}}"
           },
           "edit": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Edytuj przesłany załącznik, numer {{attachment}}"
           },
           "upload": {
-            "accessibilityLabel": ""
+            "accessibilityLabel": "Prześlij więcej załączników"
           }
         },
         "emojis": {
-          "accessibilityHint": ""
+          "accessibilityHint": "Dotknij, by dodać emoji do tootka"
         },
         "poll": {
           "option": {
             "placeholder": {
-              "accessibilityLabel": "",
-              "single": "",
-              "multiple": ""
+              "accessibilityLabel": "Opcje ankiety {{index}}",
+              "single": "Pojedynczy wybór",
+              "multiple": "Wielokrotny wybór"
             }
           },
           "quantity": {
             "reduce": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Zredukuj opcje ankiety do {{amount}}",
+              "accessibilityHint": "Osiągnięto minimalną ilość opcji ankiety, obecnie posiada {{amount}}"
             },
             "increase": {
-              "accessibilityLabel": "",
-              "accessibilityHint": ""
+              "accessibilityLabel": "Zwiększ ilość opcji ankiety do {{amount}}",
+              "accessibilityHint": "Osiągnięto maksymalną ilość opcji ankiety, obecnie {{amount}}"
             }
           },
           "multiple": {
-            "heading": "",
+            "heading": "Rodzaj wyboru",
             "options": {
-              "single": "",
-              "multiple": ""
+              "single": "Pojedynczy wybór",
+              "multiple": "Wielokrotny wybór"
             }
           },
           "expiration": {
-            "heading": "",
+            "heading": "Ważność",
             "options": {
-              "300": "",
-              "1800": "",
-              "3600": "",
-              "21600": "",
-              "86400": "",
-              "259200": "",
-              "604800": ""
+              "300": "5 minut",
+              "1800": "30 minut",
+              "3600": "1 godzina",
+              "21600": "6 godzin",
+              "86400": "1 dzień",
+              "259200": "3 dni",
+              "604800": "7 dni"
             }
           }
         }
       },
       "actions": {
         "attachment": {
-          "accessibilityLabel": "",
-          "accessibilityHint": "",
+          "accessibilityLabel": "Prześlij załącznik",
+          "accessibilityHint": "Funkcja ankiety zostanie wyłączona jeśli pojawi się jakiś załącznik",
           "failed": {
             "alert": {
-              "title": "",
-              "button": ""
+              "title": "Błąd przesyłania",
+              "button": "Spróbuj jeszcze raz"
             }
           }
         },
         "poll": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Dodaj ankietę",
+          "accessibilityHint": "Funkcja załącznika zostanie wyłączona, gdy ankieta jest aktywna"
         },
         "visibility": {
-          "accessibilityLabel": "",
-          "title": "",
+          "accessibilityLabel": "Widoczność toota: {{visibility}}",
+          "title": "Widoczność toota",
           "options": {
-            "public": "",
-            "unlisted": "",
-            "private": "",
-            "direct": ""
+            "public": "Publiczny",
+            "unlisted": "Niepubliczny",
+            "private": "Tylko obserwujący",
+            "direct": "Bezpośrednia wiadomość"
           }
         },
         "spoiler": {
-          "accessibilityLabel": ""
+          "accessibilityLabel": "Spoiler"
         },
         "emoji": {
-          "accessibilityLabel": "",
-          "accessibilityHint": ""
+          "accessibilityLabel": "Dodaj emoji",
+          "accessibilityHint": "Otwórz panel wyboru emoji, przesuń w poziomo, aby zmienić stronę"
         }
       },
-      "drafts_one": "",
-      "drafts_other": ""
+      "drafts_one": "Wersja robocza ({{count}})",
+      "drafts_other": "Wersje robocze ({{count}})"
     },
     "editAttachment": {
       "header": {
-        "title": "",
+        "title": "Edytuj załącznik",
         "right": {
-          "accessibilityLabel": "",
+          "accessibilityLabel": "Zapisz edycję załącznika",
           "failed": {
-            "title": "",
-            "button": ""
+            "title": "Błąd edycji",
+            "button": "Spróbuj ponownie"
           }
         }
       },
       "content": {
         "altText": {
-          "heading": "",
-          "placeholder": ""
+          "heading": "Opis dla niedowidzących",
+          "placeholder": "Możesz dodać opis, czasami nazywany tekstem alternatywnym czy alt-text, dla Twoich mediów, dzięki czemu będą one dostępne dla jeszcze większej liczby osób, w tym dla osób niewidomych lub niedowidzących.\n\nDobre opisy są zwięzłe, ale prezentują to, co w twoich mediach jest wystarczająco dokładne, aby zrozumieć ich kontekst."
         },
-        "imageFocus": ""
+        "imageFocus": "Przeciągnij okrąg ogniskowy, aby zaktualizować punkt ogniskowy"
       }
     },
     "draftsList": {
       "header": {
-        "title": ""
+        "title": "Wersja robocza"
       },
-      "warning": "",
+      "warning": "Szkice są przechowywane tylko lokalnie i mogą zostać usunięte w razie niefortunnych wydarzeń. Zaleca się nie używać szkiców do długotrwałego przechowywania.",
       "content": {
-        "accessibilityHint": "",
-        "textEmpty": ""
+        "accessibilityHint": "Zapisano szkic, stuknij, aby edytować ten szkic",
+        "textEmpty": "Brak treści"
       },
-      "checkAttachment": ""
+      "checkAttachment": "Sprawdzanie załączników na serwerze..."
     }
   }
 }

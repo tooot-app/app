@@ -1,5 +1,5 @@
 import { ComponentEmojis } from '@components/Emojis'
-import { EmojisState } from '@components/Emojis/helpers/EmojisContext'
+import { EmojisState } from '@components/Emojis/Context'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import ComponentInput from '@components/Input'
 import { TabMeProfileStackScreenProps } from '@utils/navigation/navigators'
@@ -23,7 +23,7 @@ const TabMeProfileName: React.FC<
   navigation
 }) => {
   const { theme } = useTheme()
-  const { t } = useTranslation('screenTabs')
+  const { t } = useTranslation(['common'])
   const { mutateAsync, status } = useProfileMutation()
 
   const [value, setValue] = useState(display_name)
@@ -47,21 +47,17 @@ const TabMeProfileName: React.FC<
           content='X'
           onPress={() => {
             if (dirty) {
-              Alert.alert(
-                t('common:discard.title'),
-                t('common:discard.message'),
-                [
-                  {
-                    text: t('common:buttons.discard'),
-                    style: 'destructive',
-                    onPress: () => navigation.navigate('Tab-Me-Profile-Root')
-                  },
-                  {
-                    text: t('common:buttons.cancel'),
-                    style: 'default'
-                  }
-                ]
-              )
+              Alert.alert(t('common:discard.title'), t('common:discard.message'), [
+                {
+                  text: t('common:buttons.discard'),
+                  style: 'destructive',
+                  onPress: () => navigation.navigate('Tab-Me-Profile-Root')
+                },
+                {
+                  text: t('common:buttons.cancel'),
+                  style: 'default'
+                }
+              ])
             } else {
               navigation.navigate('Tab-Me-Profile-Root')
             }

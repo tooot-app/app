@@ -1,19 +1,17 @@
 import GracefullyImage from '@components/GracefullyImage'
-import navigationRef from '@helpers/navigationRef'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
-import React from 'react'
+import navigationRef from '@utils/navigation/navigationRef'
+import { useGlobalStorage } from '@utils/storage/actions'
+import React, { useContext } from 'react'
 import { Dimensions, Image } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
+import AccountContext from './Context'
 
-export interface Props {
-  account?: Mastodon.Account
-}
+const AccountHeader: React.FC = () => {
+  const { account } = useContext(AccountContext)
 
-const AccountHeader: React.FC<Props> = ({ account }) => {
   const topInset = useSafeAreaInsets().top
 
-  useSelector(getInstanceActive)
+  useGlobalStorage.string('account.active')
 
   return (
     <GracefullyImage

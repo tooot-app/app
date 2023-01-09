@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "筛选",
       "accessibilityHint": "筛选显示的通知类型",
-      "title": "显示通知",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "关注请求",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "订阅用户的嘟文",
-        "update": "转嘟被编辑",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "显示通知"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "应用外观",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "深色主题",
         "options": {
-          "lighter": "暗淡",
-          "darker": "暗黑"
+          "lighter": "默认",
+          "darker": "纯黑"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "浏览器打开"
         }
       },
-      "staticEmoji": {
-        "heading": "使用静态表情",
-        "description": "如果您在查看表情列表时经常遇到应用闪退，您可以尝试使用静态表情。"
+      "autoplayGifv": {
+        "heading": "时间轴自动播放GIF"
       },
       "feedback": {
         "heading": "功能建议"
@@ -332,9 +306,7 @@
       "moved": "账户已迁移",
       "created_at": "注册于：{{date}}",
       "summary": {
-        "statuses_count": "{{count}} 条嘟文",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} 条嘟文"
       },
       "toots": {
         "default": "嘟文",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "编辑历史"
+    },
+    "report": {
+      "name": "举报 {{acct}}",
+      "report": "举报",
+      "forward": {
+        "heading": "匿名举报至远程服务器 {{instance}}"
+      },
+      "reasons": {
+        "heading": "这个账户有什么问题？",
+        "spam": "这是垃圾信息",
+        "other": "其他原因",
+        "violation": "它违反了服务器规则"
+      },
+      "comment": {
+        "heading": "添加其它信息？"
+      },
+      "violatedRules": {
+        "heading": "违反的服务器规则"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "找不到 <bold>{{searchTerm}}</bold> 相关的 {{type}}"
     },
     "toot": {
-      "name": "对话"
+      "name": "对话",
+      "remoteFetch": {
+        "title": "包含远程内容",
+        "message": "联邦的内容并非总在本站可用。 这些内容是从远程实例中获取并标记的。您可以像往常一样与这些内容进行交互。"
+      }
     },
     "users": {
       "accounts": {

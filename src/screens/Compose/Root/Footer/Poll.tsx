@@ -3,14 +3,13 @@ import Icon from '@components/Icon'
 import { MenuRow } from '@components/Menu'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { getInstanceConfigurationPoll } from '@utils/slices/instancesSlice'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { useInstanceQuery } from '@utils/queryHooks/instance'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import ComposeContext from '../../utils/createContext'
 
 const ComposePoll: React.FC = () => {
@@ -21,14 +20,14 @@ const ComposePoll: React.FC = () => {
     },
     composeDispatch
   } = useContext(ComposeContext)
-  const { t } = useTranslation('screenCompose')
+  const { t } = useTranslation(['common', 'screenCompose'])
   const { colors, mode } = useTheme()
 
-  const instanceConfigurationPoll = useSelector(getInstanceConfigurationPoll, () => true)
-  const MAX_OPTIONS = instanceConfigurationPoll.max_options
-  const MAX_CHARS_PER_OPTION = instanceConfigurationPoll.max_characters_per_option
-  const MIN_EXPIRATION = instanceConfigurationPoll.min_expiration
-  const MAX_EXPIRATION = instanceConfigurationPoll.max_expiration
+  const { data } = useInstanceQuery()
+  const MAX_OPTIONS = data?.configuration?.polls.max_options || 4
+  const MAX_CHARS_PER_OPTION = data?.configuration?.polls.max_characters_per_option
+  const MIN_EXPIRATION = data?.configuration?.polls.min_expiration || 300
+  const MAX_EXPIRATION = data?.configuration?.polls.max_expiration || 2629746
 
   const [firstRender, setFirstRender] = useState(true)
   useEffect(() => {
@@ -71,7 +70,7 @@ const ComposePoll: React.FC = () => {
               />
               <TextInput
                 accessibilityLabel={t(
-                  'content.root.footer.poll.option.placeholder.accessibilityLabel',
+                  'screenCompose:content.root.footer.poll.option.placeholder.accessibilityLabel',
                   { index: i + 1 }
                 )}
                 keyboardAppearance={mode}
@@ -88,8 +87,8 @@ const ComposePoll: React.FC = () => {
                 }}
                 placeholder={
                   multiple
-                    ? t('content.root.footer.poll.option.placeholder.multiple')
-                    : t('content.root.footer.poll.option.placeholder.single')
+                    ? t('screenCompose:content.root.footer.poll.option.placeholder.multiple')
+                    : t('screenCompose:content.root.footer.poll.option.placeholder.single')
                 }
                 placeholderTextColor={colors.disabled}
                 maxLength={MAX_CHARS_PER_OPTION}
@@ -119,14 +118,15 @@ const ComposePoll: React.FC = () => {
           {...(total > 2
             ? {
                 accessibilityLabel: t(
-                  'content.root.footer.poll.quantity.reduce.accessibilityLabel',
+                  'screenCompose:content.root.footer.poll.quantity.reduce.accessibilityLabel',
                   { amount: total - 1 }
                 )
               }
             : {
-                accessibilityHint: t('content.root.footer.poll.quantity.reduce.accessibilityHint', {
-                  amount: total
-                })
+                accessibilityHint: t(
+                  'screenCompose:content.root.footer.poll.quantity.reduce.accessibilityHint',
+                  { amount: total }
+                )
               })}
           onPress={() => {
             total > 2 &&
@@ -152,13 +152,13 @@ const ComposePoll: React.FC = () => {
           {...(total < MAX_OPTIONS
             ? {
                 accessibilityLabel: t(
-                  'content.root.footer.poll.quantity.increase.accessibilityLabel',
+                  'screenCompose:content.root.footer.poll.quantity.increase.accessibilityLabel',
                   { amount: total + 1 }
                 )
               }
             : {
                 accessibilityHint: t(
-                  'content.root.footer.poll.quantity.increase.accessibilityHint',
+                  'screenCompose:content.root.footer.poll.quantity.increase.accessibilityHint',
                   { amount: total }
                 )
               })}
@@ -177,18 +177,18 @@ const ComposePoll: React.FC = () => {
       </View>
       <View style={{ paddingHorizontal: StyleConstants.Spacing.Global.PagePadding }}>
         <MenuRow
-          title={t('content.root.footer.poll.multiple.heading')}
+          title={t('screenCompose:content.root.footer.poll.multiple.heading')}
           content={
             multiple
-              ? t('content.root.footer.poll.multiple.options.multiple')
-              : t('content.root.footer.poll.multiple.options.single')
+              ? t('screenCompose:content.root.footer.poll.multiple.options.multiple')
+              : t('screenCompose:content.root.footer.poll.multiple.options.single')
           }
           onPress={() =>
             showActionSheetWithOptions(
               {
                 options: [
-                  t('content.root.footer.poll.multiple.options.single'),
-                  t('content.root.footer.poll.multiple.options.multiple'),
+                  t('screenCompose:content.root.footer.poll.multiple.options.single'),
+                  t('screenCompose:content.root.footer.poll.multiple.options.multiple'),
                   t('common:buttons.cancel')
                 ],
                 cancelButtonIndex: 2,
@@ -207,8 +207,8 @@ const ComposePoll: React.FC = () => {
           iconBack='ChevronRight'
         />
         <MenuRow
-          title={t('content.root.footer.poll.expiration.heading')}
-          content={t(`content.root.footer.poll.expiration.options.${expire}`)}
+          title={t('screenCompose:content.root.footer.poll.expiration.heading')}
+          content={t(`screenCompose:content.root.footer.poll.expiration.options.${expire}`)}
           onPress={() => {
             const expirations = [
               '300',
@@ -225,7 +225,9 @@ const ComposePoll: React.FC = () => {
             showActionSheetWithOptions(
               {
                 options: [
-                  ...expirations.map(e => t(`content.root.footer.poll.expiration.options.${e}`)),
+                  ...expirations.map(e =>
+                    t(`screenCompose:content.root.footer.poll.expiration.options.${e}` as any)
+                  ),
                   t('common:buttons.cancel')
                 ],
                 cancelButtonIndex: expirations.length,

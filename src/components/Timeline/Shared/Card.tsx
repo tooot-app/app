@@ -2,15 +2,16 @@ import ComponentAccount from '@components/Account'
 import GracefullyImage from '@components/GracefullyImage'
 import openLink from '@components/openLink'
 import CustomText from '@components/Text'
-import { matchAccount, matchStatus } from '@helpers/urlMatcher'
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
+import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { useAccountQuery } from '@utils/queryHooks/account'
-import { useSearchQuery } from '@utils/queryHooks/search'
 import { useStatusQuery } from '@utils/queryHooks/status'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import TimelineDefault from '../Default'
 import StatusContext from './Context'
@@ -20,96 +21,44 @@ const TimelineCard: React.FC = () => {
   if (!status || !status.card) return null
 
   const { colors } = useTheme()
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const [loading, setLoading] = useState(false)
-  const isStatus = matchStatus(status.card.url)
+  const match = urlMatcher(status.card.url)
   const [foundStatus, setFoundStatus] = useState<Mastodon.Status>()
-  const isAccount = matchAccount(status.card.url)
   const [foundAccount, setFoundAccount] = useState<Mastodon.Account>()
 
-  const searchQuery = useSearchQuery({
-    type: (() => {
-      if (isStatus) return 'statuses'
-      if (isAccount) return 'accounts'
-    })(),
-    term: (() => {
-      if (isStatus) {
-        if (isStatus.sameInstance) {
-          return
-        } else {
-          return status.card.url
-        }
-      }
-      if (isAccount) {
-        if (isAccount.sameInstance) {
-          if (isAccount.style === 'default') {
-            return
-          } else {
-            return isAccount.username
-          }
-        } else {
-          return status.card.url
-        }
-      }
-    })(),
-    limit: 1,
-    options: { enabled: false }
-  })
-
   const statusQuery = useStatusQuery({
-    id: isStatus?.id || '',
-    options: { enabled: false }
+    status: match?.status ? { ...match.status, uri: status.card.url } : undefined,
+    options: { enabled: false, retry: false }
   })
   useEffect(() => {
-    if (isStatus) {
+    if (match?.status) {
       setLoading(true)
-      if (isStatus.sameInstance) {
-        statusQuery
-          .refetch()
-          .then(res => {
-            res.data && setFoundStatus(res.data)
-            setLoading(false)
-          })
-          .catch(() => setLoading(false))
-      } else {
-        searchQuery
-          .refetch()
-          .then(res => {
-            const status = (res.data as any)?.statuses?.[0]
-            status && setFoundStatus(status)
-            setLoading(false)
-          })
-          .catch(() => setLoading(false))
-      }
+      statusQuery
+        .refetch()
+        .then(res => {
+          res.data && setFoundStatus(res.data)
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
     }
   }, [])
 
   const accountQuery = useAccountQuery({
-    id: isAccount?.style === 'default' ? isAccount.id : '',
-    options: { enabled: false }
+    account: match?.account ? { ...match?.account, url: status.card.url } : undefined,
+    options: { enabled: false, retry: false }
   })
   useEffect(() => {
-    if (isAccount) {
+    if (match?.account) {
       setLoading(true)
-      if (isAccount.sameInstance && isAccount.style === 'default') {
-        accountQuery
-          .refetch()
-          .then(res => {
-            res.data && setFoundAccount(res.data)
-            setLoading(false)
-          })
-          .catch(() => setLoading(false))
-      } else {
-        searchQuery
-          .refetch()
-          .then(res => {
-            const account = (res.data as any)?.accounts?.[0]
-            account && setFoundAccount(account)
-            setLoading(false)
-          })
-          .catch(() => setLoading(false))
-      }
+      accountQuery
+        .refetch()
+        .then(res => {
+          res.data && setFoundAccount(res.data)
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
     }
   }, [])
 
@@ -128,10 +77,10 @@ const TimelineCard: React.FC = () => {
         </View>
       )
     }
-    if (isStatus && foundStatus) {
+    if (match?.status && foundStatus) {
       return <TimelineDefault item={foundStatus} disableDetails disableOnPress />
     }
-    if (isAccount && foundAccount) {
+    if (match?.account && foundAccount) {
       return <ComponentAccount account={foundAccount} />
     }
     return (
@@ -192,12 +141,23 @@ const TimelineCard: React.FC = () => {
         flex: 1,
         flexDirection: 'row',
         marginTop: StyleConstants.Spacing.M,
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 1,
         borderRadius: StyleConstants.Spacing.S,
         overflow: 'hidden',
         borderColor: colors.border
       }}
-      onPress={async () => status.card && (await openLink(status.card.url, navigation))}
+      onPress={async () => {
+        if (match?.status && foundStatus) {
+          navigation.push('Tab-Shared-Toot', { toot: foundStatus })
+          return
+        }
+        if (match?.account && foundAccount) {
+          navigation.push('Tab-Shared-Account', { account: foundAccount })
+          return
+        }
+
+        status.card?.url && (await openLink(status.card.url, navigation))
+      }}
       children={cardContent()}
     />
   )

@@ -42,8 +42,7 @@
           "placeholder": "Vad tänker du på",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Maximalt antal bilagor har uppnåtts",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Maximalt antal bilagor har uppnåtts"
             }
           }
         }

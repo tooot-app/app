@@ -2,34 +2,33 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '@utils/navigation/navigators'
+import { useQueryClient } from '@tanstack/react-query'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { RootStackParamList, useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { uniqBy } from 'lodash'
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 import StatusContext from './Context'
 
 const TimelineActions: React.FC = () => {
-  const { queryKey, rootQueryKey, status, reblogStatus, ownAccount, highlighted, disableDetails } =
-    useContext(StatusContext)
+  const { queryKey, status, ownAccount, highlighted, disableDetails } = useContext(StatusContext)
   if (!queryKey || !status || disableDetails) return null
 
+  const navigationState = useNavState()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const { t } = useTranslation('componentTimeline')
-  const { colors, theme } = useTheme()
+  const { t } = useTranslation(['common', 'componentTimeline'])
+  const { colors } = useTheme()
   const iconColor = colors.secondary
 
   const queryClient = useQueryClient()
@@ -39,28 +38,29 @@ const TimelineActions: React.FC = () => {
       const theParams = params as MutationVarsTimelineUpdateStatusProperty
       if (
         // Un-bookmark from bookmarks page
-        (queryKey[1].page === 'Bookmarks' && theParams.payload.property === 'bookmarked') ||
+        (queryKey[1].page === 'Bookmarks' && theParams.payload.type === 'bookmarked') ||
         // Un-favourite from favourites page
-        (queryKey[1].page === 'Favourites' && theParams.payload.property === 'favourited')
+        (queryKey[1].page === 'Favourites' && theParams.payload.type === 'favourited')
       ) {
         queryClient.invalidateQueries(queryKey)
-      } else if (theParams.payload.property === 'favourited') {
+      } else if (theParams.payload.type === 'favourited') {
         // When favourited, update favourited page
         const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Favourites' }]
         queryClient.invalidateQueries(tempQueryKey)
-      } else if (theParams.payload.property === 'bookmarked') {
+      } else if (theParams.payload.type === 'bookmarked') {
         // When bookmarked, update bookmark page
         const tempQueryKey: QueryKeyTimeline = ['Timeline', { page: 'Bookmarks' }]
         queryClient.invalidateQueries(tempQueryKey)
       }
     },
-    onError: (err: any, params, oldData) => {
+    onError: (err: any, params) => {
       const correctParam = params as MutationVarsTimelineUpdateStatusProperty
       displayMessage({
-        theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`shared.actions.${correctParam.payload.property}.function`)
+          function: t(
+            `componentTimeline:shared.actions.${correctParam.payload.type}.function` as any
+          )
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -74,30 +74,30 @@ const TimelineActions: React.FC = () => {
     }
   })
 
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
-  const onPressReply = useCallback(() => {
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const onPressReply = () => {
     const accts = uniqBy(
       ([status.account] as Mastodon.Account[] & Mastodon.Mention[])
         .concat(status.mentions)
-        .filter(d => d?.id !== instanceAccount?.id),
+        .filter(d => d?.id !== accountId),
       d => d?.id
     ).map(d => d?.acct)
     navigation.navigate('Screen-Compose', {
       type: 'reply',
       incomingStatus: status,
       accts,
-      queryKey
+      navigationState
     })
-  }, [status.replies_count])
+  }
   const { showActionSheetWithOptions } = useActionSheet()
-  const onPressReblog = useCallback(() => {
+  const onPressReblog = () => {
     if (!status.reblogged) {
       showActionSheetWithOptions(
         {
-          title: t('shared.actions.reblogged.options.title'),
+          title: t('componentTimeline:shared.actions.reblogged.options.title'),
           options: [
-            t('shared.actions.reblogged.options.public'),
-            t('shared.actions.reblogged.options.unlisted'),
+            t('componentTimeline:shared.actions.reblogged.options.public'),
+            t('componentTimeline:shared.actions.reblogged.options.unlisted'),
             t('common:buttons.cancel')
           ],
           cancelButtonIndex: 2,
@@ -108,32 +108,22 @@ const TimelineActions: React.FC = () => {
             case 0:
               mutation.mutate({
                 type: 'updateStatusProperty',
-                queryKey,
-                rootQueryKey,
-                id: status.id,
-                isReblog: !!reblogStatus,
+                status,
                 payload: {
-                  property: 'reblogged',
-                  currentValue: status.reblogged,
-                  propertyCount: 'reblogs_count',
-                  countValue: status.reblogs_count,
-                  visibility: 'public'
+                  type: 'reblogged',
+                  visibility: 'public',
+                  to: true
                 }
               })
               break
             case 1:
               mutation.mutate({
                 type: 'updateStatusProperty',
-                queryKey,
-                rootQueryKey,
-                id: status.id,
-                isReblog: !!reblogStatus,
+                status,
                 payload: {
-                  property: 'reblogged',
-                  currentValue: status.reblogged,
-                  propertyCount: 'reblogs_count',
-                  countValue: status.reblogs_count,
-                  visibility: 'unlisted'
+                  type: 'reblogged',
+                  visibility: 'unlisted',
+                  to: true
                 }
               })
               break
@@ -143,91 +133,72 @@ const TimelineActions: React.FC = () => {
     } else {
       mutation.mutate({
         type: 'updateStatusProperty',
-        queryKey,
-        rootQueryKey,
-        id: status.id,
-        isReblog: !!reblogStatus,
+        status,
         payload: {
-          property: 'reblogged',
-          currentValue: status.reblogged,
-          propertyCount: 'reblogs_count',
-          countValue: status.reblogs_count,
-          visibility: 'public'
+          type: 'reblogged',
+          visibility: 'public',
+          to: false
         }
       })
     }
-  }, [status.reblogged, status.reblogs_count])
-  const onPressFavourite = useCallback(() => {
+  }
+  const onPressFavourite = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
-      queryKey,
-      rootQueryKey,
-      id: status.id,
-      isReblog: !!reblogStatus,
+      status,
       payload: {
-        property: 'favourited',
-        currentValue: status.favourited,
-        propertyCount: 'favourites_count',
-        countValue: status.favourites_count
+        type: 'favourited',
+        to: !status.favourited
       }
     })
-  }, [status.favourited, status.favourites_count])
-  const onPressBookmark = useCallback(() => {
+  }
+  const onPressBookmark = () => {
     mutation.mutate({
       type: 'updateStatusProperty',
-      queryKey,
-      rootQueryKey,
-      id: status.id,
-      isReblog: !!reblogStatus,
+      status,
       payload: {
-        property: 'bookmarked',
-        currentValue: status.bookmarked,
-        propertyCount: undefined,
-        countValue: undefined
+        type: 'bookmarked',
+        to: !status.bookmarked
       }
     })
-  }, [status.bookmarked])
+  }
 
-  const childrenReply = useMemo(
-    () => (
-      <>
-        <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
-        {status.replies_count > 0 ? (
-          <CustomText
-            style={{
-              color: colors.secondary,
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS
-            }}
-          >
-            {status.replies_count}
-          </CustomText>
-        ) : null}
-      </>
-    ),
-    [status.replies_count]
+  const childrenReply = () => (
+    <>
+      <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
+      {status.replies_count > 0 ? (
+        <CustomText
+          fontStyle='S'
+          style={{
+            color: colors.secondary,
+            marginLeft: StyleConstants.Spacing.XS
+          }}
+        >
+          {status.replies_count}
+        </CustomText>
+      ) : null}
+    </>
   )
-  const childrenReblog = useMemo(() => {
+  const childrenReblog = () => {
     const color = (state: boolean) => (state ? colors.green : colors.secondary)
+    const disabled =
+      status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
     return (
       <>
         <Icon
           name='Repeat'
-          color={
-            status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
-              ? colors.disabled
-              : color(status.reblogged)
-          }
+          color={disabled ? colors.disabled : color(status.reblogged)}
+          crossOut={disabled}
           size={StyleConstants.Font.Size.L}
         />
         {status.reblogs_count > 0 ? (
           <CustomText
+            fontStyle='S'
             style={{
               color:
                 status.visibility === 'private' && !ownAccount
                   ? colors.disabled
                   : color(status.reblogged),
-              fontSize: StyleConstants.Font.Size.M,
               marginLeft: StyleConstants.Spacing.XS
             }}
           >
@@ -236,58 +207,56 @@ const TimelineActions: React.FC = () => {
         ) : null}
       </>
     )
-  }, [status.reblogged, status.reblogs_count])
-  const childrenFavourite = useMemo(() => {
+  }
+  const childrenFavourite = () => {
     const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
         <Icon name='Heart' color={color(status.favourited)} size={StyleConstants.Font.Size.L} />
         {status.favourites_count > 0 ? (
           <CustomText
-            style={{
-              color: color(status.favourited),
-              fontSize: StyleConstants.Font.Size.M,
-              marginLeft: StyleConstants.Spacing.XS,
-              marginTop: 0
-            }}
+            fontStyle='S'
+            style={{ color: color(status.favourited), marginLeft: StyleConstants.Spacing.XS }}
           >
             {status.favourites_count}
           </CustomText>
         ) : null}
       </>
     )
-  }, [status.favourited, status.favourites_count])
-  const childrenBookmark = useMemo(() => {
+  }
+  const childrenBookmark = () => {
     const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
       <Icon name='Bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
     )
-  }, [status.bookmarked])
+  }
 
   return (
     <View style={{ flexDirection: 'row' }}>
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.reply.accessibilityLabel'),
+              accessibilityLabel: t('componentTimeline:shared.actions.reply.accessibilityLabel'),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReply}
-        children={childrenReply}
+        children={childrenReply()}
       />
 
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.reblogged.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.reblogged.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressReblog}
-        children={childrenReblog}
+        children={childrenReblog()}
         disabled={
           status.visibility === 'direct' || (status.visibility === 'private' && !ownAccount)
         }
@@ -296,25 +265,29 @@ const TimelineActions: React.FC = () => {
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.favourited.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.favourited.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressFavourite}
-        children={childrenFavourite}
+        children={childrenFavourite()}
       />
 
       <Pressable
         {...(highlighted
           ? {
-              accessibilityLabel: t('shared.actions.bookmarked.accessibilityLabel'),
+              accessibilityLabel: t(
+                'componentTimeline:shared.actions.bookmarked.accessibilityLabel'
+              ),
               accessibilityRole: 'button'
             }
           : { accessibilityLabel: '' })}
         style={styles.action}
         onPress={onPressBookmark}
-        children={childrenBookmark}
+        children={childrenBookmark()}
       />
     </View>
   )
@@ -326,8 +299,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: StyleConstants.Font.Size.L + StyleConstants.Spacing.S * 3,
-    marginHorizontal: StyleConstants.Spacing.S
+    paddingVertical: StyleConstants.Spacing.S * 1.5
   }
 })
 

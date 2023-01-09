@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "フィルター",
       "accessibilityHint": "表示される通知の種類をフィルターする",
-      "title": "",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "フォローリクエスト",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "購読したユーザーのトゥート",
-        "update": "ブーストしたトゥートが編集されました",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": ""
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "外観",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "ダークテーマ",
         "options": {
-          "lighter": "明るめ",
-          "darker": "暗め"
+          "lighter": "デフォルト",
+          "darker": ""
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "システムブラウザを使用する"
         }
       },
-      "staticEmoji": {
-        "heading": "静的な絵文字リスト",
-        "description": "絵文字リストを表示しているときにアプリが頻繁にクラッシュする場合、代わりにアニメーションが無効化された絵文字リストを使用してみてください。"
+      "autoplayGifv": {
+        "heading": ""
       },
       "feedback": {
         "heading": "機能リクエスト"
@@ -332,9 +306,7 @@
       "moved": "ユーザーは引っ越ししました",
       "created_at": "登録日: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} 投稿",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} 投稿"
       },
       "toots": {
         "default": "投稿",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "編集履歴"
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした"
     },
     "toot": {
-      "name": "スレッド"
+      "name": "スレッド",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {

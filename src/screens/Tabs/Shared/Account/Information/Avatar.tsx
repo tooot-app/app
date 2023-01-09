@@ -1,21 +1,20 @@
 import GracefullyImage from '@components/GracefullyImage'
-import navigationRef from '@helpers/navigationRef'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import navigationRef from '@utils/navigation/navigationRef'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext } from 'react'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo: boolean
-}
+const AccountInformationAvatar: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-  useSelector(getInstanceActive)
+
+  useGlobalStorage.string('account.active')
+
   return (
     <GracefullyImage
       key={account?.avatar}
@@ -28,7 +27,7 @@ const AccountInformationAvatar: React.FC<Props> = ({ account, myInfo }) => {
       uri={{ original: account?.avatar, static: account?.avatar_static }}
       onPress={() => {
         if (account) {
-          if (myInfo) {
+          if (pageMe) {
             navigation.push('Tab-Shared-Account', { account })
             return
           } else {

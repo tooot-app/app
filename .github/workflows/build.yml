@@ -9,22 +9,18 @@ jobs:
   build-ios:
     runs-on: macos-12
     steps:
-      - name: -- Step 0 -- Extract branch name
-        uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v6
         id: branch
-      - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v3
-      - name: -- Step 2 -- Setup node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - name: -- Step 3 -- Install node dependencies
-        run: yarn install
-      - name: -- Step 4 -- Install ruby dependencies
-        run: bundle install
-      - name: -- Step 5 -- Run fastlane
+      - run: corepack enable
+      - run: yarn install
+      - run: bundle install
+      - run: yarn app:build ios
         env:
-          DEVELOPER_DIR: /Applications/Xcode_14.1.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
           ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           LC_ALL: en_US.UTF-8
@@ -40,30 +36,24 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
           GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn app:build ios
 
   build-android:
     runs-on: macos-12
     steps:
-      - name: -- Step 0 -- Extract branch name
-        uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v6
         id: branch
-      - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v3
-      - name: -- Step 2 -- Setup node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - name: -- Step 3 -- Setup Java
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '11'
-      - name: -- Step 4 -- Install node dependencies
-        run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
-        run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - run: corepack enable
+      - run: yarn install
+      - run: bundle install
+      - run: yarn app:build android
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
@@ -75,31 +65,25 @@ jobs:
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
           GH_PAT_GET_RELEASE: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn app:build android
 
   create-release:
     runs-on: macos-12
     needs: [build-ios, build-android]
     steps:
-      - name: -- Step 0 -- Extract branch name
-        uses: tj-actions/branch-names@v6
+      - uses: tj-actions/branch-names@v6
         id: branch
-      - name: -- Step 1 -- Checkout code
-        uses: actions/checkout@v3
-      - name: -- Step 2 -- Setup node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - name: -- Step 3 -- Setup Java
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '11'
-      - name: -- Step 4 -- Install node dependencies
-        run: yarn install
-      - name: -- Step 5 -- Install ruby dependencies
-        run: bundle install
-      - name: -- Step 6 -- Run fastlane
+      - run: corepack enable
+      - run: yarn install
+      - run: bundle install
+      - run: yarn app:build release
         env:
           ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
           SENTRY_ENVIRONMENT: ${{ steps.branch.outputs.current_branch }}
@@ -113,4 +97,3 @@ jobs:
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
           FL_GITHUB_RELEASE_API_BEARER: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn app:build release

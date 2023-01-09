@@ -1,21 +1,19 @@
-import apiInstance from '@api/instance'
-import { TabSharedStackParamList } from '@utils/navigation/navigators'
-import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
   useInfiniteQuery,
   UseInfiniteQueryOptions
 } from '@tanstack/react-query'
-import apiGeneral from '@api/general'
-import { PagedResponse } from '@api/helpers'
+import apiGeneral from '@utils/api/general'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
+import { TabSharedStackParamList } from '@utils/navigation/navigators'
+import { AxiosError } from 'axios'
+import { infinitePageParams } from './utils'
 
 export type QueryKeyUsers = ['Users', TabSharedStackParamList['Tab-Shared-Users']]
 
-const queryFunction = async ({
-  queryKey,
-  pageParam,
-  meta
-}: QueryFunctionContext<QueryKeyUsers>) => {
+const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyUsers>) => {
   const page = queryKey[1]
   let params: { [key: string]: string } = { ...pageParam }
 
@@ -23,7 +21,7 @@ const queryFunction = async ({
     case 'statuses':
       return apiInstance<Mastodon.Account[]>({
         method: 'get',
-        url: `${page.reference}/${page.status.id}/${page.type}`,
+        url: `statuses/${page.status.id}/${page.type}`,
         params
       })
     case 'accounts':
@@ -31,16 +29,14 @@ const queryFunction = async ({
       if (localInstance) {
         return apiInstance<Mastodon.Account[]>({
           method: 'get',
-          url: `${page.reference}/${page.account.id}/${page.type}`,
+          url: `accounts/${page.account.id}/${page.type}`,
           params
         })
       } else {
         let res: PagedResponse<Mastodon.Account[]>
 
         try {
-          const domain = page.account.url.match(
-            /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i
-          )?.[1]
+          const domain = urlMatcher(page.account.url)?.domain
           if (!domain?.length) {
             throw new Error()
           }
@@ -55,7 +51,7 @@ const queryFunction = async ({
             res = await apiGeneral<Mastodon.Account[]>({
               method: 'get',
               domain,
-              url: `api/v1/${page.reference}/${resLookup.body.id}/${page.type}`,
+              url: `api/v1/accounts/${resLookup.body.id}/${page.type}`,
               params
             })
             return { ...res, remoteData: true }
@@ -78,13 +74,19 @@ const useUsersQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyUsers[1] & {
-  options?: UseInfiniteQueryOptions<
-    PagedResponse<Mastodon.Account[]> & { warnIncomplete: boolean; remoteData: boolean },
-    AxiosError
+  options?: Omit<
+    UseInfiniteQueryOptions<
+      PagedResponse<Mastodon.Account[]> & { warnIncomplete: boolean; remoteData: boolean },
+      AxiosError
+    >,
+    'getPreviousPageParam' | 'getNextPageParam'
   >
 }) => {
   const queryKey: QueryKeyUsers = ['Users', { ...queryKeyParams }]
-  return useInfiniteQuery(queryKey, queryFunction, options)
+  return useInfiniteQuery(queryKey, queryFunction, {
+    ...options,
+    ...infinitePageParams
+  })
 }
 
 export { useUsersQuery }

@@ -2,31 +2,15 @@ import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo } from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
+const AccountInformationName: React.FC = () => {
+  const { account } = useContext(AccountContext)
 
-const AccountInformationName: React.FC<Props> = ({ account }) => {
   const { colors } = useTheme()
-
-  const movedContent = useMemo(() => {
-    if (account?.moved) {
-      return (
-        <View style={{ marginLeft: StyleConstants.Spacing.S }}>
-          <ParseEmojis
-            content={account.moved.display_name || account.moved.username}
-            emojis={account.moved.emojis}
-            size='L'
-            fontBold
-          />
-        </View>
-      )
-    }
-  }, [account?.moved])
 
   return (
     <View
@@ -51,7 +35,16 @@ const AccountInformationName: React.FC<Props> = ({ account }) => {
               fontBold
             />
           </CustomText>
-          {movedContent}
+          {account.moved ? (
+            <View style={{ marginLeft: StyleConstants.Spacing.S }}>
+              <ParseEmojis
+                content={account.moved.display_name || account.moved.username}
+                emojis={account.moved.emojis}
+                size='L'
+                fontBold
+              />
+            </View>
+          ) : null}
         </>
       ) : (
         <PlaceholderLine

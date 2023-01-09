@@ -1,16 +1,16 @@
 {
   "content": {
     "actions": {
-      "accessibilityLabel": "",
-      "accessibilityHint": ""
+      "accessibilityLabel": "Więcej działań dla tego obrazka",
+      "accessibilityHint": "Możesz zapisać lub udostępnić ten obrazek"
     },
     "options": {
-      "save": "",
-      "share": ""
+      "save": "Zapisz obraz",
+      "share": "Udostępnij obraz"
     },
     "save": {
-      "succeed": "",
-      "failed": ""
+      "succeed": "Zapisano zdjęcie",
+      "failed": "Zapisywanie obrazka nie powiodło się"
     }
   }
 }

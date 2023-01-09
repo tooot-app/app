@@ -9,17 +9,18 @@ import TimelineCard from '@components/Timeline/Shared/Card'
 import TimelineContent from '@components/Timeline/Shared/Content'
 import TimelineHeaderDefault from '@components/Timeline/Shared/HeaderDefault'
 import TimelinePoll from '@components/Timeline/Shared/Poll'
-import removeHTML from '@helpers/removeHTML'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import removeHTML from '@utils/helpers/removeHTML'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Pressable, StyleProp, View, ViewStyle } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
 import TimelineFeedback from './Shared/Feedback'
@@ -31,7 +32,6 @@ import TimelineTranslate from './Shared/Translate'
 export interface Props {
   item: Mastodon.Status & { _pinned?: boolean } // For account page, internal property
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   highlighted?: boolean
   disableDetails?: boolean
   disableOnPress?: boolean
@@ -42,7 +42,6 @@ export interface Props {
 const TimelineDefault: React.FC<Props> = ({
   item,
   queryKey,
-  rootQueryKey,
   highlighted = false,
   disableDetails = false,
   disableOnPress = false,
@@ -50,7 +49,7 @@ const TimelineDefault: React.FC<Props> = ({
 }) => {
   const status = item.reblog ? item.reblog : item
   const rawContent = useRef<string[]>([])
-  if (highlighted) {
+  if (highlighted || isConversation) {
     rawContent.current = [
       removeHTML(status.content),
       status.spoiler_text ? removeHTML(status.spoiler_text) : ''
@@ -60,16 +59,18 @@ const TimelineDefault: React.FC<Props> = ({
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const { data: preferences } = usePreferencesQuery()
 
-  const ownAccount = status.account?.id === instanceAccount?.id
+  const ownAccount = status.account?.id === accountId
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount?.preferences?.['reading:expand:spoilers'] || false
+    preferences?.['reading:expand:spoilers'] || false
   )
   const spoilerHidden = status.spoiler_text?.length
-    ? !instanceAccount?.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
+    ? !preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
   const detectedLanguage = useRef<string>(status.language || '')
+  const excludeMentions = useRef<Mastodon.Mention[]>([])
 
   const mainStyle: StyleProp<ViewStyle> = {
     flex: 1,
@@ -82,9 +83,9 @@ const TimelineDefault: React.FC<Props> = ({
   const main = () => (
     <>
       {item.reblog ? (
-        <TimelineActioned action='reblog' />
+        <TimelineActioned action='reblog' rootStatus={item} />
       ) : item._pinned ? (
-        <TimelineActioned action='pinned' />
+        <TimelineActioned action='pinned' rootStatus={item} />
       ) : null}
 
       <View
@@ -128,13 +129,13 @@ const TimelineDefault: React.FC<Props> = ({
     url: status.url || status.uri,
     rawContent
   })
-  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
-  const mInstance = menuInstance({ status, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey })
+  const mInstance = menuInstance({ status, queryKey })
 
   if (!ownAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
-    const hasFilterServerSide = useSelector(checkInstanceFeature('filter_server_side'))
+    const hasFilterServerSide = featureCheck('filter_server_side')
     if (hasFilterServerSide) {
       if (status.filtered?.length) {
         filterResults = status.filtered?.map(filter => filter.filter)
@@ -160,18 +161,18 @@ const TimelineDefault: React.FC<Props> = ({
     <StatusContext.Provider
       value={{
         queryKey,
-        rootQueryKey,
         status,
-        reblogStatus: item.reblog ? item : undefined,
         ownAccount,
         spoilerHidden,
         rawContent,
         detectedLanguage,
+        excludeMentions,
         highlighted,
         inThread: queryKey?.[1].page === 'Toot',
         disableDetails,
         disableOnPress,
-        isConversation
+        isConversation,
+        isRemote: item._remote
       }}
     >
       {disableOnPress ? (
@@ -184,49 +185,58 @@ const TimelineDefault: React.FC<Props> = ({
                 accessible={highlighted ? false : true}
                 style={mainStyle}
                 disabled={highlighted}
-                onPress={() =>
-                  navigation.push('Tab-Shared-Toot', {
-                    toot: status,
-                    rootQueryKey: queryKey
-                  })
-                }
+                onPress={() => navigation.push('Tab-Shared-Toot', { toot: status })}
                 onLongPress={() => {}}
                 children={main()}
               />
             </ContextMenu.Trigger>
 
             <ContextMenu.Content>
-              {mShare.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
+              {[mShare, mStatus, mInstance].map((menu, i) => (
+                <Fragment key={i}>
+                  {menu.map((group, index) => (
+                    <ContextMenu.Group key={index}>
+                      {group.map(item => {
+                        switch (item.type) {
+                          case 'item':
+                            return (
+                              <ContextMenu.Item key={item.key} {...item.props}>
+                                <ContextMenu.ItemTitle children={item.title} />
+                                {item.icon ? (
+                                  <ContextMenu.ItemIcon ios={{ name: item.icon }} />
+                                ) : null}
+                              </ContextMenu.Item>
+                            )
+                          case 'sub':
+                            return (
+                              // @ts-ignore
+                              <ContextMenu.Sub key={item.key}>
+                                <ContextMenu.SubTrigger
+                                  key={item.trigger.key}
+                                  {...item.trigger.props}
+                                >
+                                  <ContextMenu.ItemTitle children={item.trigger.title} />
+                                  {item.trigger.icon ? (
+                                    <ContextMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                  ) : null}
+                                </ContextMenu.SubTrigger>
+                                <ContextMenu.SubContent>
+                                  {item.items.map(sub => (
+                                    <ContextMenu.Item key={sub.key} {...sub.props}>
+                                      <ContextMenu.ItemTitle children={sub.title} />
+                                      {sub.icon ? (
+                                        <ContextMenu.ItemIcon ios={{ name: sub.icon }} />
+                                      ) : null}
+                                    </ContextMenu.Item>
+                                  ))}
+                                </ContextMenu.SubContent>
+                              </ContextMenu.Sub>
+                            )
+                        }
+                      })}
+                    </ContextMenu.Group>
                   ))}
-                </ContextMenu.Group>
-              ))}
-
-              {mStatus.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
-                  ))}
-                </ContextMenu.Group>
-              ))}
-
-              {mInstance.map((mGroup, index) => (
-                <ContextMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <ContextMenu.Item key={menu.key} {...menu.item}>
-                      <ContextMenu.ItemTitle children={menu.title} />
-                      <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                    </ContextMenu.Item>
-                  ))}
-                </ContextMenu.Group>
+                </Fragment>
               ))}
             </ContextMenu.Content>
           </ContextMenu.Root>
@@ -237,4 +247,4 @@ const TimelineDefault: React.FC<Props> = ({
   )
 }
 
-export default TimelineDefault
+export default React.memo(TimelineDefault, () => true)

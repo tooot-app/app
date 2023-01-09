@@ -1,6 +1,6 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -10,8 +10,8 @@ import {
   View,
   ViewStyle
 } from 'react-native'
-import FastImage, { ImageStyle } from 'react-native-fast-image'
 import { Blurhash } from 'react-native-blurhash'
+import FastImage, { ImageStyle } from 'react-native-fast-image'
 
 // blurhas -> if blurhash, show before any loading succeed
 // original -> load original
@@ -55,17 +55,12 @@ const GracefullyImage = ({
   const { colors } = useTheme()
   const [imageLoaded, setImageLoaded] = useState(false)
 
+  const [currentUri, setCurrentUri] = useState<string | undefined>(uri.original || uri.remote)
   const source = {
-    uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
-  }
-  const onLoad = () => {
-    setImageLoaded(true)
-    if (setImageDimensions && source.uri) {
-      Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
-    }
+    uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
 
-  const blurhashView = useMemo(() => {
+  const blurhashView = () => {
     if (hidden || !imageLoaded) {
       if (blurhash) {
         return <Blurhash decodeAsync blurhash={blurhash} style={styles.placeholder} />
@@ -75,7 +70,7 @@ const GracefullyImage = ({
     } else {
       return null
     }
-  }, [hidden, imageLoaded])
+  }
 
   return (
     <Pressable
@@ -92,13 +87,21 @@ const GracefullyImage = ({
         />
       ) : null}
       <FastImage
-        source={{
-          uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
-        }}
+        source={source}
         style={[{ flex: 1 }, imageStyle]}
-        onLoad={onLoad}
+        onLoad={() => {
+          setImageLoaded(true)
+          if (setImageDimensions && source.uri) {
+            Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
+          }
+        }}
+        onError={() => {
+          if (uri.original && uri.original === currentUri && uri.remote) {
+            setCurrentUri(uri.remote)
+          }
+        }}
       />
-      {blurhashView}
+      {blurhashView()}
     </Pressable>
   )
 }

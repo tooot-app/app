@@ -1,0 +1,23 @@
+diff --git a/RNFastImage.podspec b/RNFastImage.podspec
+index db0fada63fc06191f8620d336d244edde6c3dba3..b6ffe6c77ab1fd5b821525f6f0b7363a13cba3a0 100644
+--- a/RNFastImage.podspec
++++ b/RNFastImage.podspec
+@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
+   s.source_files  = "ios/**/*.{h,m}"
+ 
+   s.dependency 'React-Core'
+-  s.dependency 'SDWebImage', '~> 5.11.1'
+-  s.dependency 'SDWebImageWebPCoder', '~> 0.8.4'
++  s.dependency 'SDWebImage', '~> 5.14.3'
++  s.dependency 'SDWebImageWebPCoder', '~> 0.9.1'
+ end
+diff --git a/android/build.gradle b/android/build.gradle
+index 5b21cd59c40a5754f5d19c77e2a0eb0229925911..19d82f826e88125c5e6d87ee7c348fac621f548c 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -65,4 +65,5 @@ dependencies {
+     implementation "com.github.bumptech.glide:glide:${glideVersion}"
+     implementation "com.github.bumptech.glide:okhttp3-integration:${glideVersion}"
+     annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}"
++    implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.12.0'
+ }

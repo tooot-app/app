@@ -1,25 +1,28 @@
 import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
-import { TabMeStackScreenProps } from '@utils/navigation/navigators'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { useQueryClient } from '@tanstack/react-query'
+import { TabMeStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyLists, useListsMutation } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQueryClient } from '@tanstack/react-query'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import { menuListAccounts, menuListDelete, menuListEdit } from './menus'
 
-const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
+const TabMeList: React.FC<NativeStackScreenProps<TabMeStackParamList, 'Tab-Me-List'>> = ({
   navigation,
-  route: { key, params }
+  route: {
+    key,
+    params: { list }
+  }
 }) => {
   const { colors } = useTheme()
-  const { t } = useTranslation('screenTabs')
-  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'List', list: params.id }]
+  const { t } = useTranslation(['common', 'screenTabs'])
+  const queryKey: QueryKeyTimeline = ['Timeline', { page: 'List', list: list.id }]
 
   const queryKeyLists: QueryKeyLists = ['Lists']
   const queryClient = useQueryClient()
@@ -32,16 +35,16 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
       displayMessage({
         type: 'danger',
         message: t('common:message.error.message', {
-          function: t('me.listDelete.heading')
+          function: t('screenTabs:me.listDelete.heading')
         })
       })
     }
   })
 
   useEffect(() => {
-    const listAccounts = menuListAccounts({ params })
-    const listEdit = menuListEdit({ params, key })
-    const listDelete = menuListDelete({ params, mutation })
+    const listAccounts = menuListAccounts({ list })
+    const listEdit = menuListEdit({ list, key })
+    const listDelete = menuListDelete({ list, mutation })
 
     navigation.setOptions({
       headerRight: () => (
@@ -55,38 +58,22 @@ const TabMeList: React.FC<TabMeStackScreenProps<'Tab-Me-List'>> = ({
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            <DropdownMenu.Group>
-              <DropdownMenu.Item key={listAccounts.key} onSelect={listAccounts.onSelect}>
-                <DropdownMenu.ItemTitle children={listAccounts.title} />
-                <DropdownMenu.ItemIcon iosIconName={listAccounts.icon} />
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
-
-            <DropdownMenu.Group>
-              <DropdownMenu.Item key={listEdit.key} onSelect={listEdit.onSelect}>
-                <DropdownMenu.ItemTitle children={listEdit.title} />
-                <DropdownMenu.ItemIcon iosIconName={listEdit.icon} />
-              </DropdownMenu.Item>
-
-              <DropdownMenu.Item key={listDelete.key} destructive onSelect={listDelete.onSelect}>
-                <DropdownMenu.ItemTitle children={listDelete.title} />
-                <DropdownMenu.ItemIcon iosIconName={listDelete.icon} />
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>
+            {[listAccounts, listEdit, listDelete].map((menu, index) => (
+              <DropdownMenu.Group key={index}>
+                <DropdownMenu.Item key={menu.key} onSelect={menu.onSelect}>
+                  <DropdownMenu.ItemTitle children={menu.title} />
+                  <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
+                </DropdownMenu.Item>
+              </DropdownMenu.Group>
+            ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )
     })
-  }, [params])
+    navigation.setParams({ queryKey })
+  }, [list])
 
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} />
 }
 
 export default TabMeList

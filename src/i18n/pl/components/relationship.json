@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Obserwuj użytkownika"
   },
   "block": {
-    "function": ""
+    "function": "Zablokuj użytkownika"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Błąd wczytywania",
+    "blocked_by": "Zablokowany przez użytkownika",
+    "blocking": "Odblokuj",
+    "following": "Przestań obserwować",
+    "requested": "Wycofaj żądanie",
+    "default": "Obserwuj"
   }
 }

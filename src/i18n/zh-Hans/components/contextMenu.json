@@ -6,11 +6,22 @@
       "action_false": "关注用户",
       "action_true": "取消关注用户"
     },
-    "inLists": "管理用户列表",
+    "inLists": "包含用户的列表",
+    "showBoosts": {
+      "action_false": "显示用户的转嘟",
+      "action_true": "隐藏用户的转嘟"
+    },
     "mute": {
       "action_false": "静音用户",
       "action_true": "取消静音用户"
     },
+    "followAs": {
+      "trigger": "关注…",
+      "succeed_default": "@{{source}} 正在关注 @{{target}}",
+      "succeed_locked": "已从 @{{source}} 发送关注请求至 @{{target}}，等待通过",
+      "failed": "用其它账户关注"
+    },
+    "blockReport": "屏蔽与举报…",
     "block": {
       "action_false": "屏蔽用户",
       "action_true": "取消屏蔽用户",

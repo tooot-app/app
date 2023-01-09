@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Lọc",
       "accessibilityHint": "Lọc các dạng thông báo",
-      "title": "Hiện thông báo",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Yêu cầu theo dõi",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Tút từ người đã theo dõi",
-        "update": "Đăng lại đã được sửa",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Hiện thông báo"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Giao diện",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Độ tối",
         "options": {
-          "lighter": "Thấp",
-          "darker": "Vừa"
+          "lighter": "Mặc định",
+          "darker": "Tương phản cao"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Bằng trình duyệt"
         }
       },
-      "staticEmoji": {
-        "heading": "Dùng emoji có sẵn",
-        "description": "Nếu app thường xuyên bị treo khi xem danh sách emoji, bạn hãy dùng emoji mặc định."
+      "autoplayGifv": {
+        "heading": "Tự động phát GIF"
       },
       "feedback": {
         "heading": "Đề xuất tính năng"
@@ -332,9 +306,7 @@
       "moved": "Đã chuyển đi",
       "created_at": "Đã tham gia {{date}}",
       "summary": {
-        "statuses_count": "{{count}} tút",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} tút"
       },
       "toots": {
         "default": "Tút",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Lịch sử chỉnh sửa"
+    },
+    "report": {
+      "name": "Báo cáo @{{acct}}",
+      "report": "Báo cáo",
+      "forward": {
+        "heading": "Chuyển tiếp tới {{instance}}"
+      },
+      "reasons": {
+        "heading": "Có vấn đề gì với người này?",
+        "spam": "Đây là spam",
+        "other": "Lý do khác",
+        "violation": "Vi phạm nội quy máy chủ"
+      },
+      "comment": {
+        "heading": "Bạn có muốn bổ sung gì không?"
+      },
+      "violatedRules": {
+        "heading": "Vi phạm nội quy máy chủ"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
     },
     "toot": {
-      "name": "Nội dung tút"
+      "name": "Nội dung tút",
+      "remoteFetch": {
+        "title": "Chứa nội dung ở máy chủ khác",
+        "message": "Nội dung liên hợp không phải lúc nào cũng lưu lại trên máy chủ. Những nội dung này được tìm nạp từ máy chủ từ xa và được đánh dấu. Bạn có thể tương tác với những nội dung này như bình thường."
+      }
     },
     "users": {
       "accounts": {

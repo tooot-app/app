@@ -42,8 +42,7 @@
           "placeholder": "No que você está pensando",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Quantidade máxima de anexos atingida",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Quantidade máxima de anexos atingida"
             }
           }
         }

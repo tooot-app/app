@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "필터",
       "accessibilityHint": "받는 알림 종류 선택",
-      "title": "알림 표시",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "팔로우 요청",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "구독한 사용자의 툿",
-        "update": "부스트한 툿이 수정됨",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "알림 표시"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "테마",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "다크 테마",
         "options": {
-          "lighter": "밝게",
-          "darker": "어둡게"
+          "lighter": "기본값",
+          "darker": "완전히 검게"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "시스템 브라우저 사용"
         }
       },
-      "staticEmoji": {
-        "heading": "정적인 에모지 사용",
-        "description": "에모지 목록 화면에서 자주 앱이 강제 종료된다면, 정적인 에모지를 사용해보세요."
+      "autoplayGifv": {
+        "heading": "타임라인의 GIF 파일 자동 재생"
       },
       "feedback": {
         "heading": "기능 제안"
@@ -332,9 +306,7 @@
       "moved": "유저가 이동함",
       "created_at": "등록된 날: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} 툿",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} 툿"
       },
       "toots": {
         "default": "툿",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "수정 이력"
+    },
+    "report": {
+      "name": "@{{acct}} 신고",
+      "report": "신고",
+      "forward": {
+        "heading": "원격 인스턴스 {{instance}}에도 익명으로 전달"
+      },
+      "reasons": {
+        "heading": "이 계정에 어떤 문제가 있나요?",
+        "spam": "스팸입니다",
+        "other": "다른 문제가 있습니다",
+        "violation": "서버 규칙을 위반합니다"
+      },
+      "comment": {
+        "heading": "그 밖에 추가로 작성할 내용이 있나요?"
+      },
+      "violatedRules": {
+        "heading": "서버 규칙 위반 내용"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요"
     },
     "toot": {
-      "name": "대화"
+      "name": "대화",
+      "remoteFetch": {
+        "title": "원격 컨텐츠를 포함",
+        "message": ""
+      }
     },
     "users": {
       "accounts": {

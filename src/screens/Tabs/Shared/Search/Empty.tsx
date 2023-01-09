@@ -38,7 +38,8 @@ const SearchEmpty: React.FC<Props> = ({ isFetching, inputRef, setSearchTerm }) =
               }}
             >
               <Trans
-                i18nKey='screenTabs:shared.search.empty.general'
+                ns='screenTabs'
+                i18nKey='shared.search.empty.general'
                 components={{
                   bold: <CustomText fontWeight='Bold' />
                 }}
@@ -90,13 +91,7 @@ const SearchEmpty: React.FC<Props> = ({ isFetching, inputRef, setSearchTerm }) =
               return (
                 <React.Fragment key={index}>
                   {index !== 0 ? <ComponentSeparator /> : null}
-                  <ComponentHashtag
-                    hashtag={hashtag}
-                    onPress={() => {
-                      inputRef.current?.setNativeProps({ text: `#${hashtag.name}` })
-                      setSearchTerm(`#${hashtag.name}`)
-                    }}
-                  />
+                  <ComponentHashtag hashtag={hashtag} />
                 </React.Fragment>
               )
             })}

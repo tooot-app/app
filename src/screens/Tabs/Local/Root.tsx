@@ -2,19 +2,16 @@ import { HeaderRight } from '@components/Header'
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import usePopToTop from '@utils/navigation/usePopToTop'
 import { useListsQuery } from '@utils/queryHooks/lists'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { getInstanceFollowingPage, updateInstanceFollowingPage } from '@utils/slices/instancesSlice'
+import { setAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 
 const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-Root'>> = ({
@@ -25,11 +22,10 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
 
   const { data: lists } = useListsQuery()
 
-  const dispatch = useDispatch()
-  const instanceFollowingPage = useSelector(getInstanceFollowingPage)
+  const [pageLocal] = useAccountStorage.object('page_local')
   const [queryKey, setQueryKey] = useState<QueryKeyTimeline>([
     'Timeline',
-    { page: 'Following', ...instanceFollowingPage }
+    { page: 'Following', ...pageLocal }
   ])
 
   useEffect(() => {
@@ -59,7 +55,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                     : t('tabs.local.name')
                 }
               />
-              {page.page === 'Following' && !instanceFollowingPage.showBoosts ? (
+              {page.page === 'Following' && !pageLocal.showBoosts ? (
                 <Icon
                   name='Repeat'
                   size={StyleConstants.Font.Size.M}
@@ -68,7 +64,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                   crossOut
                 />
               ) : null}
-              {page.page === 'Following' && !instanceFollowingPage.showReplies ? (
+              {page.page === 'Following' && !pageLocal.showReplies ? (
                 <Icon
                   name='MessageCircle'
                   size={StyleConstants.Font.Size.M}
@@ -90,29 +86,30 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
             <DropdownMenu.Group>
               <DropdownMenu.Item
                 key='default'
-                onSelect={() =>
-                  setQueryKey(['Timeline', { page: 'Following', ...instanceFollowingPage }])
-                }
+                onSelect={() => setQueryKey(['Timeline', { page: 'Following', ...pageLocal }])}
                 disabled={page.page === 'Following'}
               >
                 <DropdownMenu.ItemTitle children={t('tabs.local.name')} />
-                <DropdownMenu.ItemIcon iosIconName='house' />
+                <DropdownMenu.ItemIcon ios={{ name: 'house' }} />
               </DropdownMenu.Item>
               <DropdownMenu.CheckboxItem
                 key='showBoosts'
-                value={instanceFollowingPage.showBoosts ? 'on' : 'off'}
+                value={pageLocal.showBoosts ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
                     {
                       page: 'Following',
-                      showBoosts: !instanceFollowingPage.showBoosts,
-                      showReplies: instanceFollowingPage.showReplies
+                      showBoosts: !pageLocal.showBoosts,
+                      showReplies: pageLocal.showReplies
                     }
                   ])
-                  dispatch(
-                    updateInstanceFollowingPage({ showBoosts: !instanceFollowingPage.showBoosts })
-                  )
+                  setAccountStorage([
+                    {
+                      key: 'page_local',
+                      value: { ...pageLocal, showBoosts: !pageLocal.showBoosts }
+                    }
+                  ])
                 }}
               >
                 <DropdownMenu.ItemIndicator />
@@ -120,19 +117,22 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               </DropdownMenu.CheckboxItem>
               <DropdownMenu.CheckboxItem
                 key='showReplies'
-                value={instanceFollowingPage.showReplies ? 'on' : 'off'}
+                value={pageLocal.showReplies ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
                     {
                       page: 'Following',
-                      showBoosts: instanceFollowingPage.showBoosts,
-                      showReplies: !instanceFollowingPage.showReplies
+                      showBoosts: pageLocal.showBoosts,
+                      showReplies: !pageLocal.showReplies
                     }
                   ])
-                  dispatch(
-                    updateInstanceFollowingPage({ showReplies: !instanceFollowingPage.showReplies })
-                  )
+                  setAccountStorage([
+                    {
+                      key: 'page_local',
+                      value: { ...pageLocal, showReplies: !pageLocal.showReplies }
+                    }
+                  ])
                 }}
               >
                 <DropdownMenu.ItemTitle children={t('tabs.local.options.showReplies')} />
@@ -157,7 +157,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                   ].map(menu => (
                     <DropdownMenu.Item key={menu.key} {...menu.item}>
                       <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
+                      <DropdownMenu.ItemIcon ios={{ name: menu.icon }} />
                     </DropdownMenu.Item>
                   ))
                 : undefined}
@@ -174,18 +174,10 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
         />
       )
     })
-  }, [mode, queryKey[1], instanceFollowingPage, lists])
+    navigation.setParams({ queryKey: queryKey })
+  }, [mode, queryKey[1], pageLocal, lists])
 
-  usePopToTop()
-
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} readMarker='read_marker_following' />
 }
 
 export default Root

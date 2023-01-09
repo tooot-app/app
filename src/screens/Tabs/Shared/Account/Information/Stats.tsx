@@ -1,20 +1,18 @@
 import CustomText from '@components/Text'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { StyleConstants } from '@root/utils/styles/constants'
-import { useTheme } from '@root/utils/styles/ThemeManager'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
-import React from 'react'
+import { StyleConstants } from '@utils/styles/constants'
+import { useTheme } from '@utils/styles/ThemeManager'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo: boolean
-}
+const AccountInformationStats: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
   if (account?.suspended) {
     return null
   }
@@ -32,7 +30,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
             count: account.statuses_count || 0
           })}
           onPress={() => {
-            myInfo && account && navigation.push('Tab-Shared-Account', { account })
+            pageMe && account && navigation.push('Tab-Shared-Account', { account })
           }}
         />
       ) : (
@@ -47,7 +45,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <CustomText
           style={[styles.stat, { color: colors.primaryDefault, textAlign: 'right' }]}
-          children={t('shared.account.summary.following_count', {
+          children={t('shared.users.accounts.following', {
             count: account.following_count
           })}
           onPress={() =>
@@ -71,7 +69,7 @@ const AccountInformationStats: React.FC<Props> = ({ account, myInfo }) => {
       {account ? (
         <CustomText
           style={[styles.stat, { color: colors.primaryDefault, textAlign: 'center' }]}
-          children={t('shared.account.summary.followers_count', {
+          children={t('shared.users.accounts.followers', {
             count: account.followers_count
           })}
           onPress={() =>

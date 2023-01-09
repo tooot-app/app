@@ -5,15 +5,14 @@ import menuShare from '@components/contextMenu/share'
 import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { RelationshipIncoming, RelationshipOutgoing } from '@components/Relationship'
-import browserPackage from '@helpers/browserPackage'
-import { getInstanceUrl } from '@utils/slices/instancesSlice'
+import browserPackage from '@utils/helpers/browserPackage'
+import { getAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as WebBrowser from 'expo-web-browser'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import StatusContext from './Context'
 import HeaderSharedAccount from './HeaderShared/Account'
@@ -42,12 +41,10 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
     type: 'status',
     openChange,
     account: status?.account,
-    queryKey
+    ...(status && { status })
   })
   const mStatus = menuStatus({ status, queryKey })
   const mInstance = menuInstance({ status, queryKey })
-
-  const url = useSelector(getInstanceUrl)
 
   const actions = () => {
     switch (notification.type) {
@@ -62,7 +59,9 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
             content={t('shared.actions.openReport')}
             onPress={async () =>
               WebBrowser.openAuthSessionAsync(
-                `https://${url}/admin/reports/${notification.report.id}`,
+                `https://${getAccountStorage.string('auth.domain')}/admin/reports/${
+                  notification.report.id
+                }`,
                 'tooot://tooot',
                 {
                   ...(await browserPackage()),
@@ -74,7 +73,7 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
           />
         )
       default:
-        if (status) {
+        if (status && Platform.OS !== 'android') {
           return (
             <Pressable
               style={{ flex: 1, alignItems: 'center' }}
@@ -89,48 +88,53 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
                   </DropdownMenu.Trigger>
 
                   <DropdownMenu.Content>
-                    {mShare.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
+                    {[mShare, mStatus, mAccount, mInstance].map((menu, i) => (
+                      <Fragment key={i}>
+                        {menu.map((group, index) => (
+                          <DropdownMenu.Group key={index}>
+                            {group.map(item => {
+                              switch (item.type) {
+                                case 'item':
+                                  return (
+                                    <DropdownMenu.Item key={item.key} {...item.props}>
+                                      <DropdownMenu.ItemTitle children={item.title} />
+                                      {item.icon ? (
+                                        <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                                      ) : null}
+                                    </DropdownMenu.Item>
+                                  )
+                                case 'sub':
+                                  return (
+                                    // @ts-ignore
+                                    <DropdownMenu.Sub key={item.key}>
+                                      <DropdownMenu.SubTrigger
+                                        key={item.trigger.key}
+                                        {...item.trigger.props}
+                                      >
+                                        <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                        {item.trigger.icon ? (
+                                          <DropdownMenu.ItemIcon
+                                            ios={{ name: item.trigger.icon }}
+                                          />
+                                        ) : null}
+                                      </DropdownMenu.SubTrigger>
+                                      <DropdownMenu.SubContent>
+                                        {item.items.map(sub => (
+                                          <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                            <DropdownMenu.ItemTitle children={sub.title} />
+                                            {sub.icon ? (
+                                              <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                            ) : null}
+                                          </DropdownMenu.Item>
+                                        ))}
+                                      </DropdownMenu.SubContent>
+                                    </DropdownMenu.Sub>
+                                  )
+                              }
+                            })}
+                          </DropdownMenu.Group>
                         ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mAccount.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mStatus.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
-                    ))}
-
-                    {mInstance.map((mGroup, index) => (
-                      <DropdownMenu.Group key={index}>
-                        {mGroup.map(menu => (
-                          <DropdownMenu.Item key={menu.key} {...menu.item}>
-                            <DropdownMenu.ItemTitle children={menu.title} />
-                            <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Group>
+                      </Fragment>
                     ))}
                   </DropdownMenu.Content>
                 </DropdownMenu.Root>
@@ -175,31 +179,24 @@ const TimelineHeaderNotification: React.FC<Props> = ({ notification }) => {
             marginBottom: StyleConstants.Spacing.S
           }}
         >
-          <HeaderSharedCreated
-            created_at={notification.status?.created_at || notification.created_at}
-            edited_at={notification.status?.edited_at}
-          />
-          {notification.status?.visibility ? (
-            <HeaderSharedVisibility visibility={notification.status.visibility} />
-          ) : null}
-          <HeaderSharedMuted muted={notification.status?.muted} />
-          <HeaderSharedApplication application={notification.status?.application} />
+          <HeaderSharedCreated />
+          {notification.status?.visibility ? <HeaderSharedVisibility /> : null}
+          <HeaderSharedMuted />
+          <HeaderSharedApplication />
         </View>
       </View>
 
-      {Platform.OS !== 'android' ? (
-        <View
-          style={[
-            { marginLeft: StyleConstants.Spacing.M },
-            notification.type === 'follow' ||
-            notification.type === 'follow_request' ||
-            notification.type === 'admin.report'
-              ? { flexShrink: 1 }
-              : { flex: 1 }
-          ]}
-          children={actions()}
-        />
-      ) : null}
+      <View
+        style={[
+          { marginLeft: StyleConstants.Spacing.M },
+          notification.type === 'follow' ||
+          notification.type === 'follow_request' ||
+          notification.type === 'admin.report'
+            ? { flexShrink: 1 }
+            : { flex: 1 }
+        ]}
+        children={actions()}
+      />
     </View>
   )
 }

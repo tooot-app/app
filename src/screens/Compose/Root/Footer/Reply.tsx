@@ -2,7 +2,7 @@ import TimelineDefault from '@components/Timeline/Default'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import ComposeContext from '../../utils/createContext'
 
 const ComposeReply: React.FC = () => {
@@ -16,7 +16,7 @@ const ComposeReply: React.FC = () => {
       style={{
         flex: 1,
         flexDirection: 'row',
-        borderWidth: StyleSheet.hairlineWidth,
+        borderWidth: 1,
         borderRadius: StyleConstants.Spacing.S,
         overflow: 'hidden',
         borderColor: colors.border,
@@ -31,4 +31,4 @@ const ComposeReply: React.FC = () => {
   )
 }
 
-export default React.memo(ComposeReply, () => true)
+export default ComposeReply

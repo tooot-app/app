@@ -7,10 +7,21 @@
       "action_true": ""
     },
     "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "",
       "action_true": ""
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "",
       "action_true": "",

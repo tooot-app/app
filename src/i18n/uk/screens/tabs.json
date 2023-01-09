@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Фільтр",
       "accessibilityHint": "Відфільтрувати типи сповіщень, що відображаються",
-      "title": "Показувати сповіщення",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Запит на підписку",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Дмух від підписників",
-        "update": "Передмух був відредагований",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Показувати сповіщення"
     }
   },
   "me": {
@@ -94,7 +82,7 @@
         "name": "Редагувати метадані"
       },
       "settings": {
-        "name": "Налаштування додатку"
+        "name": "Налаштування застосунку"
       },
       "webSettings": {
         "name": "Додаткові налаштування акаунта"
@@ -266,32 +254,19 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Зовнішній вигляд",
         "options": {
           "auto": "За системними налаштуваннями",
-          "light": "Світла тема",
+          "light": "Світлий режим",
           "dark": "Темний режим"
         }
       },
       "darkTheme": {
         "heading": "Темна тема",
         "options": {
-          "lighter": "Світліше",
-          "darker": "Темніше"
+          "lighter": "За замовчуванням",
+          "darker": "Справжній чорний"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Використовувати системний браузер"
         }
       },
-      "staticEmoji": {
-        "heading": "Використовувати статичні емодзі",
-        "description": "Якщо ви стикаєтеся з частими збоями в роботі програми при перегляді списку емодзі, ви можете спробувати використовувати статичні емодзі."
+      "autoplayGifv": {
+        "heading": "Автовідтворення GIF в стрічці"
       },
       "feedback": {
         "heading": "Запропонувати ідею"
@@ -312,7 +286,7 @@
         "heading": "Підтримати tooot"
       },
       "contact": {
-        "heading": "Зв'язатись з tooot"
+        "heading": "Зв'язатися з tooot"
       },
       "version": "Версія: {{version}}",
       "instanceVersion": "Версія Mastodon: v{{version}}"
@@ -326,15 +300,13 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Дії для користувача {{user}}",
-        "accessibilityHint": "Ви можете приглушити, заблокувати, чи кинути репорт на цього користувача"
+        "accessibilityHint": "Ви можете приглушити, заблокувати, чи поскаржитись на цього користувача"
       },
       "followed_by": " слідує за вами",
       "moved": "Користувач перемістився",
-      "created_at": "Приєднався: {{date}}",
+      "created_at": "Приєднується: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} дмухів",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} дмухів"
       },
       "toots": {
         "default": "Дмухи",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Редагувати історію"
+    },
+    "report": {
+      "name": "Скарга на {{acct}}",
+      "report": "Скарга",
+      "forward": {
+        "heading": "Анонімно переадресовано на віддалений інстанс {{instance}}"
+      },
+      "reasons": {
+        "heading": "Що не так з цим обліковим записом?",
+        "spam": "Це спам",
+        "other": "Це щось інше",
+        "violation": "Це порушує правила сервера"
+      },
+      "comment": {
+        "heading": "Може ви хочете щось додати?"
+      },
+      "violatedRules": {
+        "heading": "Це порушує правила інстанса"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}"
     },
     "toot": {
-      "name": "Обговорення"
+      "name": "Обговорення",
+      "remoteFetch": {
+        "title": "Містить віддалений вміст",
+        "message": "Федеративні матеріали не завжди доступний на локальному екземплярі. Ці матеріали отримані з віддаленого екземпляра та позначені такими. Ви можете взаємодіяти з цими матеріалами як завжди."
+      }
     },
     "users": {
       "accounts": {

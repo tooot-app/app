@@ -1,47 +1,47 @@
-import apiInstance from '@api/instance'
 import { displayMessage } from '@components/Message'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '@utils/navigation/navigators'
+import { useQueryClient } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { RootStackParamList, useNavState } from '@utils/navigation/navigators'
 import {
   MutationVarsTimelineUpdateStatusProperty,
   QueryKeyTimeline,
   useTimelineMutation
 } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { useTheme } from '@utils/styles/ThemeManager'
 import { useTranslation } from 'react-i18next'
 import { Alert } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
 
 const menuStatus = ({
   status,
-  queryKey,
-  rootQueryKey
+  queryKey
 }: {
   status?: Mastodon.Status
   queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-}): ContextMenu[][] => {
+}): ContextMenu => {
   if (!status || !queryKey) return []
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Screen-Tabs'>>()
   const { theme } = useTheme()
-  const { t } = useTranslation('componentContextMenu')
+  const { t } = useTranslation(['common', 'componentContextMenu'])
+
+  const navigationState = useNavState()
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
     onMutate: true,
     onError: (err: any, params, oldData) => {
       const theFunction = (params as MutationVarsTimelineUpdateStatusProperty).payload
-        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.property
+        ? (params as MutationVarsTimelineUpdateStatusProperty).payload.type
         : 'delete'
       displayMessage({
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`status.${theFunction}.action`)
+          function: t(`componentContextMenu:status.${theFunction}.action` as any)
         }),
         ...(err?.status &&
           typeof err.status === 'number' &&
@@ -55,59 +55,62 @@ const menuStatus = ({
     }
   })
 
-  const menus: ContextMenu[][] = []
+  const menus: ContextMenu = []
 
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev.id === next.id)
-  const ownAccount = instanceAccount?.id === status.account?.id
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const ownAccount = accountId === status.account?.id
 
-  const canEditPost = useSelector(checkInstanceFeature('edit_post'))
+  const canEditPost = featureCheck('edit_post')
 
-  if (ownAccount) {
-    menus.push([
-      {
-        key: 'status-edit',
-        item: {
-          onSelect: async () => {
-            let replyToStatus: Mastodon.Status | undefined = undefined
-            if (status.in_reply_to_id) {
-              replyToStatus = await apiInstance<Mastodon.Status>({
-                method: 'get',
-                url: `statuses/${status.in_reply_to_id}`
-              }).then(res => res.body)
-            }
-            apiInstance<{
-              id: Mastodon.Status['id']
-              text: NonNullable<Mastodon.Status['text']>
-              spoiler_text: Mastodon.Status['spoiler_text']
-            }>({
+  menus.push([
+    {
+      type: 'item',
+      key: 'status-edit',
+      props: {
+        onSelect: async () => {
+          let replyToStatus: Mastodon.Status | undefined = undefined
+          if (status.in_reply_to_id) {
+            replyToStatus = await apiInstance<Mastodon.Status>({
               method: 'get',
-              url: `statuses/${status.id}/source`
-            }).then(res => {
-              navigation.navigate('Screen-Compose', {
-                type: 'edit',
-                incomingStatus: {
-                  ...status,
-                  text: res.body.text,
-                  spoiler_text: res.body.spoiler_text
-                },
-                ...(replyToStatus && { replyToStatus }),
-                queryKey,
-                rootQueryKey
-              })
+              url: `statuses/${status.in_reply_to_id}`
+            }).then(res => res.body)
+          }
+          apiInstance<{
+            id: Mastodon.Status['id']
+            text: NonNullable<Mastodon.Status['text']>
+            spoiler_text: Mastodon.Status['spoiler_text']
+          }>({
+            method: 'get',
+            url: `statuses/${status.id}/source`
+          }).then(res => {
+            navigation.navigate('Screen-Compose', {
+              type: 'edit',
+              incomingStatus: {
+                ...status,
+                text: res.body.text,
+                spoiler_text: res.body.spoiler_text
+              },
+              ...(replyToStatus && { replyToStatus }),
+              navigationState
             })
-          },
-          disabled: false,
-          destructive: false,
-          hidden: !canEditPost
+          })
         },
-        title: t('status.edit.action'),
-        icon: 'square.and.pencil'
+        disabled: false,
+        destructive: false,
+        hidden: !ownAccount || !canEditPost
       },
-      {
-        key: 'status-delete-edit',
-        item: {
-          onSelect: () =>
-            Alert.alert(t('status.deleteEdit.alert.title'), t('status.deleteEdit.alert.message'), [
+      title: t('componentContextMenu:status.edit.action'),
+      icon: 'square.and.pencil'
+    },
+    {
+      type: 'item',
+      key: 'status-delete-edit',
+      props: {
+        onSelect: () =>
+          Alert.alert(
+            t('componentContextMenu:status.deleteEdit.alert.title'),
+            t('componentContextMenu:status.deleteEdit.alert.message'),
+            [
               {
                 text: t('common:buttons.confirm'),
                 style: 'destructive',
@@ -120,18 +123,13 @@ const menuStatus = ({
                     }).then(res => res.body)
                   }
                   mutation
-                    .mutateAsync({
-                      type: 'deleteItem',
-                      source: 'statuses',
-                      queryKey,
-                      id: status.id
-                    })
+                    .mutateAsync({ type: 'deleteItem', source: 'statuses', id: status.id })
                     .then(res => {
                       navigation.navigate('Screen-Compose', {
                         type: 'deleteEdit',
                         incomingStatus: res.body as Mastodon.Status,
                         ...(replyToStatus && { replyToStatus }),
-                        queryKey
+                        navigationState
                       })
                     })
                 }
@@ -139,100 +137,95 @@ const menuStatus = ({
               {
                 text: t('common:buttons.cancel')
               }
-            ]),
-          disabled: false,
-          destructive: true,
-          hidden: false
-        },
-        title: t('status.deleteEdit.action'),
-        icon: 'pencil.and.outline'
+            ]
+          ),
+        disabled: false,
+        destructive: true,
+        hidden: !ownAccount
       },
-      {
-        key: 'status-delete',
-        item: {
-          onSelect: () =>
-            Alert.alert(t('status.delete.alert.title'), t('status.delete.alert.message'), [
+      title: t('componentContextMenu:status.deleteEdit.action'),
+      icon: 'pencil.and.outline'
+    },
+    {
+      type: 'item',
+      key: 'status-delete',
+      props: {
+        onSelect: () =>
+          Alert.alert(
+            t('componentContextMenu:status.delete.alert.title'),
+            t('componentContextMenu:status.delete.alert.message'),
+            [
               {
                 text: t('common:buttons.confirm'),
                 style: 'destructive',
                 onPress: async () => {
-                  mutation.mutate({
-                    type: 'deleteItem',
-                    source: 'statuses',
-                    queryKey,
-                    rootQueryKey,
-                    id: status.id
-                  })
+                  mutation.mutate({ type: 'deleteItem', source: 'statuses', id: status.id })
                 }
               },
               {
                 text: t('common:buttons.cancel'),
                 style: 'default'
               }
-            ]),
-          disabled: false,
-          destructive: true,
-          hidden: false
-        },
-        title: t('status.delete.action'),
-        icon: 'trash'
-      }
-    ])
-
-    menus.push([
-      {
-        key: 'status-mute',
-        item: {
-          onSelect: () =>
-            mutation.mutate({
-              type: 'updateStatusProperty',
-              queryKey,
-              rootQueryKey,
-              id: status.id,
-              payload: {
-                property: 'muted',
-                currentValue: status.muted,
-                propertyCount: undefined,
-                countValue: undefined
-              }
-            }),
-          disabled: false,
-          destructive: false,
-          hidden: false
-        },
-        title: t('status.mute.action', {
-          context: (status.muted || false).toString()
-        }),
-        icon: status.muted ? 'speaker' : 'speaker.slash'
+            ]
+          ),
+        disabled: false,
+        destructive: true,
+        hidden: !ownAccount
       },
-      {
-        key: 'status-pin',
-        item: {
-          onSelect: () =>
-            // Also note that reblogs cannot be pinned.
-            mutation.mutate({
-              type: 'updateStatusProperty',
-              queryKey,
-              rootQueryKey,
-              id: status.id,
-              payload: {
-                property: 'pinned',
-                currentValue: status.pinned,
-                propertyCount: undefined,
-                countValue: undefined
-              }
-            }),
-          disabled: false,
-          destructive: false,
-          hidden: status.visibility !== 'public' && status.visibility !== 'unlisted'
-        },
-        title: t('status.pin.action', {
-          context: (status.pinned || false).toString()
-        }),
-        icon: status.pinned ? 'pin.slash' : 'pin'
-      }
-    ])
-  }
+      title: t('componentContextMenu:status.delete.action'),
+      icon: 'trash'
+    }
+  ])
+
+  menus.push([
+    {
+      type: 'item',
+      key: 'status-mute',
+      props: {
+        onSelect: () =>
+          mutation.mutate({
+            type: 'updateStatusProperty',
+            status,
+            payload: {
+              type: 'muted',
+              to: !status.muted
+            }
+          }),
+        disabled: false,
+        destructive: false,
+        hidden: !ownAccount
+      },
+      title: t('componentContextMenu:status.mute.action', {
+        defaultValue: 'false',
+        context: (status.muted || false).toString()
+      }),
+      icon: status.muted ? 'speaker' : 'speaker.slash'
+    },
+    {
+      type: 'item',
+      key: 'status-pin',
+      props: {
+        onSelect: () =>
+          // Also note that reblogs cannot be pinned.
+          mutation.mutate({
+            type: 'updateStatusProperty',
+            status,
+            payload: {
+              type: 'pinned',
+              to: !status.pinned
+            }
+          }),
+        disabled: status.visibility !== 'public' && status.visibility !== 'unlisted',
+        destructive: false,
+        hidden: !ownAccount
+      },
+      title: t('componentContextMenu:status.pin.action', {
+        defaultValue: 'false',
+        context: (status.pinned || false).toString()
+      }),
+      icon: status.pinned ? 'pin.slash' : 'pin'
+    }
+  ])
 
   return menus
 }

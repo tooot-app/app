@@ -1,13 +1,13 @@
+import mediaSelector from '@components/mediaSelector'
+import { ActionSheetOptions } from '@expo/react-native-action-sheet'
+import apiInstance from '@utils/api/instance'
 import * as Crypto from 'expo-crypto'
 import * as VideoThumbnails from 'expo-video-thumbnails'
+import i18next from 'i18next'
 import { Dispatch } from 'react'
 import { Alert } from 'react-native'
-import { ComposeAction } from '../../utils/types'
-import { ActionSheetOptions } from '@expo/react-native-action-sheet'
-import i18next from 'i18next'
-import apiInstance from '@api/instance'
-import mediaSelector from '@components/mediaSelector'
 import { Asset } from 'react-native-image-picker'
+import { ComposeAction } from '../../utils/types'
 
 export interface Props {
   composeDispatch: Dispatch<ComposeAction>

@@ -1,68 +1,53 @@
 import Button from '@components/Button'
 import { MenuContainer, MenuRow } from '@components/Menu'
 import { displayMessage } from '@components/Message'
-import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { androidActionSheetStyles } from '@helpers/androidActionSheetStyles'
-import { persistor } from '@root/store'
-import { getInstanceActive, getInstances } from '@utils/slices/instancesSlice'
+import { useNavigation } from '@react-navigation/native'
+import { androidActionSheetStyles } from '@utils/helpers/androidActionSheetStyles'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
+import { storage } from '@utils/storage'
+import { getGlobalStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import * as Localization from 'expo-localization'
 import React from 'react'
-import { DevSettings } from 'react-native'
-import { useSelector } from 'react-redux'
+import { Alert } from 'react-native'
+import { MMKV } from 'react-native-mmkv'
 
 const SettingsDev: React.FC = () => {
+  const navigation = useNavigation()
   const { colors } = useTheme()
   const { showActionSheetWithOptions } = useActionSheet()
-  const instanceActive = useSelector(getInstanceActive)
-  const instances = useSelector(getInstances, () => true)
+
+  const [accounts] = useGlobalStorage.object('accounts')
+  const [account] = useGlobalStorage.string('account.active')
 
   return (
     <MenuContainer>
-      <CustomText
-        fontStyle='S'
-        selectable
-        style={{
-          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          color: colors.primaryDefault
-        }}
-      >
-        {JSON.stringify(Localization.locales)}
-      </CustomText>
-      <CustomText
-        fontStyle='S'
-        selectable
-        style={{
-          paddingHorizontal: StyleConstants.Spacing.Global.PagePadding,
-          color: colors.primaryDefault
-        }}
-      >
-        {instances[instanceActive]?.token}
-      </CustomText>
-      <MenuRow
-        title={'Local active index'}
-        content={typeof instanceActive + ' - ' + instanceActive}
-        onPress={() => {}}
-      />
+      <MenuRow title='Active account' content={account || '-'} onPress={() => {}} />
       <MenuRow
         title={'Saved local instances'}
-        content={instances.length.toString()}
+        content={accounts?.length.toString()}
         iconBack='ChevronRight'
         onPress={() =>
           showActionSheetWithOptions(
             {
-              options: instances
-                .map(instance => {
-                  return instance.url + ': ' + instance.account.id
-                })
-                .concat(['Cancel']),
-              cancelButtonIndex: instances.length,
+              options: (accounts || []).concat(['Cancel']),
+              cancelButtonIndex: accounts?.length,
               ...androidActionSheetStyles(colors)
             },
             () => {}
           )
+        }
+      />
+      <Button
+        type='text'
+        content={'Test link matcher'}
+        style={{
+          marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
+          marginBottom: StyleConstants.Spacing.Global.PagePadding
+        }}
+        onPress={() =>
+          Alert.prompt('URL', undefined, text => console.log(urlMatcher(text)), 'plain-text')
         }
       />
       <Button
@@ -76,14 +61,25 @@ const SettingsDev: React.FC = () => {
       />
       <Button
         type='text'
-        content={'Purge secure storage'}
+        content={'Purge MMKV'}
         style={{
           marginHorizontal: StyleConstants.Spacing.Global.PagePadding * 2,
           marginBottom: StyleConstants.Spacing.Global.PagePadding
         }}
         destructive
         onPress={() => {
-          persistor.purge().then(() => DevSettings.reload())
+          const accounts = getGlobalStorage.object('accounts')
+          storage.account = undefined
+          if (accounts) {
+            for (const account of accounts) {
+              console.log('Clearing', account)
+              const temp = new MMKV({ id: account })
+              temp.clearAll()
+            }
+          }
+          console.log('Clearing', 'global')
+          storage.global.clearAll()
+          navigation.goBack()
         }}
       />
       <Button

@@ -1,34 +1,33 @@
 import CustomText from '@components/Text'
-import {
-  getInstanceAccount,
-  getInstanceUri
-} from '@utils/slices/instancesSlice'
+import { getAccountStorage, useGlobalStorage } from '@utils/storage/actions'
+import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { View } from 'react-native'
 
-const ComposePostingAs = React.memo(
-  () => {
-    const { t } = useTranslation('screenCompose')
-    const { colors } = useTheme()
+const ComposePostingAs = () => {
+  const accounts = useGlobalStorage.object('accounts')
+  if (!accounts.length) return null
 
-    const instanceAccount = useSelector(
-      getInstanceAccount,
-      (prev, next) => prev?.acct === next?.acct
-    )
-    const instanceUri = useSelector(getInstanceUri)
+  const { t } = useTranslation('screenCompose')
+  const { colors } = useTheme()
 
-    return (
+  return (
+    <View
+      style={{
+        marginHorizontal: StyleConstants.Spacing.Global.PagePadding,
+        marginTop: StyleConstants.Spacing.S
+      }}
+    >
       <CustomText fontStyle='S' style={{ color: colors.secondary }}>
         {t('content.root.header.postingAs', {
-          acct: instanceAccount?.acct,
-          domain: instanceUri
+          acct: getAccountStorage.string('auth.account.acct'),
+          domain: getAccountStorage.string('auth.account.domain')
         })}
       </CustomText>
-    )
-  },
-  () => true
-)
+    </View>
+  )
+}
 
 export default ComposePostingAs

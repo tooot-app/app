@@ -6,11 +6,22 @@
       "action_false": "Suivre l'utilisateur",
       "action_true": "Ne plus suivre l'utilisateur"
     },
-    "inLists": "Gérer l'utilisateur des listes",
+    "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "Rendre muet l'utilisateur",
       "action_true": "Rendre la parole"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "Bloquer l'utilisateur",
       "action_true": "Débloquer l'utilisateur",

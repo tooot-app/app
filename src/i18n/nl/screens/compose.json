@@ -42,8 +42,7 @@
           "placeholder": "Wat wil je kwijt",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Maximum aantal bijlagen bereikt",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Maximum aantal bijlagen bereikt"
             }
           }
         }

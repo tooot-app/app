@@ -42,8 +42,7 @@
           "placeholder": "Bạn đang nghĩ về điều gì?",
           "keyboardImage": {
             "exceedMaximum": {
-              "title": "Vượt quá số lượng tập tin cho phép",
-              "OK": "$t(common:buttons.OK)"
+              "title": "Vượt quá số lượng tập tin cho phép"
             }
           }
         }

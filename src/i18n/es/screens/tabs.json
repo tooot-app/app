@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtrar",
       "accessibilityHint": "Filtrar tipos de notificación",
-      "title": "Mostrar las notificaciones",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Solicitud de seguimiento",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot de usuarios suscritos",
-        "update": "El impulso ha sido editado",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Mostrar las notificaciones"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Apariencia",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Tema oscuro",
         "options": {
-          "lighter": "Más claro",
-          "darker": "Más oscuro"
+          "lighter": "Predeterminado",
+          "darker": "Oscuro puro"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Usar navegador"
         }
       },
-      "staticEmoji": {
-        "heading": "Usar emojis estáticos",
-        "description": "Si la aplicación falla al visualizar la lista de emojis, puedes intentar usar emojis estáticos en su lugar."
+      "autoplayGifv": {
+        "heading": "Reproduce automáticamente los GIF"
       },
       "feedback": {
         "heading": "Petición de funciones"
@@ -326,15 +300,13 @@
     "account": {
       "actions": {
         "accessibilityLabel": "Acciones para {{user}}",
-        "accessibilityHint": "Puedes silenciar, bloquear, reportar o compartir este usuario"
+        "accessibilityHint": "Puedes silenciar, bloquear, denunciar o compartir este usuario"
       },
       "followed_by": " te sigue",
       "moved": "Se ha trasladado",
       "created_at": "Se unió el {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toots",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toots"
       },
       "toots": {
         "default": "Toots",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Historial de ediciones"
+    },
+    "report": {
+      "name": "Denuncia {{acct}}",
+      "report": "Denuncia",
+      "forward": {
+        "heading": "Enviar anónimamente al servidor remoto {{instance}}"
+      },
+      "reasons": {
+        "heading": "¿Qué está pasando con esta cuenta?",
+        "spam": "Es spam",
+        "other": "Es otra cosa",
+        "violation": "Incumple las reglas del servidor"
+      },
+      "comment": {
+        "heading": "¿Hay algo más que quieras añadir?"
+      },
+      "violatedRules": {
+        "heading": "Ha incumplido las reglas del servidor"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "No se pudo encontrar <bold>{{searchTerm}}</bold> relacionado con {{type}}"
     },
     "toot": {
-      "name": "Discusiones"
+      "name": "Discusiones",
+      "remoteFetch": {
+        "title": "Incluye contenido remoto",
+        "message": "El contenido federado no siempre está disponible en la instancia local. Este contenido se obtiene de la instancia remota y se marca. Puedes interactuar con este contenido como siempre."
+      }
     },
     "users": {
       "accounts": {

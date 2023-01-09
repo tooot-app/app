@@ -1,12 +1,14 @@
 import Button from '@components/Button'
+import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
+import { Platform } from 'expo-modules-core'
+import * as ScreenOrientation from 'expo-screen-orientation'
 import React, { useRef, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import { Blurhash } from 'react-native-blurhash'
 import AttachmentAltText from './AltText'
-import { Platform } from 'expo-modules-core'
-import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { aspectRatio } from './dimensions'
 
 export interface Props {
@@ -25,6 +27,7 @@ const AttachmentVideo: React.FC<Props> = ({
   gifv = false
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
+  const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
@@ -60,7 +63,7 @@ const AttachmentVideo: React.FC<Props> = ({
         resizeMode={videoResizeMode}
         {...(gifv
           ? {
-              shouldPlay: reduceMotionEnabled ? false : true,
+              shouldPlay: reduceMotionEnabled || !autoplayGifv ? false : true,
               isMuted: true,
               isLooping: true,
               source: { uri: video.url }
@@ -70,14 +73,21 @@ const AttachmentVideo: React.FC<Props> = ({
               posterStyle: { resizeMode: ResizeMode.COVER }
             })}
         useNativeControls={false}
-        onFullscreenUpdate={event => {
-          if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS) {
-            Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
-            if (gifv && !reduceMotionEnabled) {
-              videoPlayer.current?.playAsync()
-            } else {
-              videoPlayer.current?.pauseAsync()
-            }
+        onFullscreenUpdate={async ({ fullscreenUpdate }) => {
+          switch (fullscreenUpdate) {
+            case VideoFullscreenUpdate.PLAYER_DID_PRESENT:
+              Platform.OS === 'android' && (await ScreenOrientation.unlockAsync())
+              break
+            case VideoFullscreenUpdate.PLAYER_WILL_DISMISS:
+              Platform.OS === 'android' &&
+                (await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT))
+              Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
+              if (gifv && !reduceMotionEnabled && autoplayGifv) {
+                videoPlayer.current?.playAsync()
+              } else {
+                videoPlayer.current?.pauseAsync()
+              }
+              break
           }
         }}
         onPlaybackStatusUpdate={event => {
@@ -106,7 +116,7 @@ const AttachmentVideo: React.FC<Props> = ({
           video.blurhash ? (
             <Blurhash blurhash={video.blurhash} style={{ width: '100%', height: '100%' }} />
           ) : null
-        ) : !gifv || (gifv && reduceMotionEnabled) ? (
+        ) : !gifv || (gifv && (reduceMotionEnabled || !autoplayGifv)) ? (
           <Button
             round
             overlay
@@ -119,6 +129,21 @@ const AttachmentVideo: React.FC<Props> = ({
         ) : null}
         <AttachmentAltText sensitiveShown={sensitiveShown} text={video.description} />
       </Pressable>
+      {gifv && !autoplayGifv ? (
+        <Button
+          style={{
+            position: 'absolute',
+            left: StyleConstants.Spacing.S,
+            bottom: StyleConstants.Spacing.S
+          }}
+          overlay
+          size='S'
+          type='text'
+          content='GIF'
+          fontBold
+          onPress={() => {}}
+        />
+      ) : null}
     </View>
   )
 }

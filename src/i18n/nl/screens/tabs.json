@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Filter getoonde meldingstypes",
-      "title": "Notificaties weergeven",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Volgverzoek",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot van geabonneerde gebruikers",
-        "update": "De reblog is bewerkt",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Notificaties weergeven"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Uiterlijk",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Donker thema",
         "options": {
-          "lighter": "Lichter",
-          "darker": "Donkerder"
+          "lighter": "Standaard",
+          "darker": "Diep zwart"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Systeembrowser gebruiken"
         }
       },
-      "staticEmoji": {
-        "heading": "Statische emoji gebruiken",
-        "description": "Als je vaak een app crash tegenkomt bij het bekijken van de emoji-lijst, kun je proberen om statische emojis te gebruiken."
+      "autoplayGifv": {
+        "heading": "GIF automatisch afspelen op tijdlijn"
       },
       "feedback": {
         "heading": "Feature aanvragen"
@@ -332,9 +306,7 @@
       "moved": "Gebruiker is verplaatst",
       "created_at": "Lid sinds {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toots",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toots"
       },
       "toots": {
         "default": "Toots",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Geschiedenis bewerken"
+    },
+    "report": {
+      "name": "Rapporteer {{acct}}",
+      "report": "Rapporteer",
+      "forward": {
+        "heading": "Anoniem doorsturen naar externe server {{instance}}"
+      },
+      "reasons": {
+        "heading": "Wat is er aan de hand met dit account?",
+        "spam": "Het is spam",
+        "other": "Het is iets anders",
+        "violation": "Het schendt de serverregels"
+      },
+      "comment": {
+        "heading": "Wil je nog iets anders toevoegen?"
+      },
+      "violatedRules": {
+        "heading": "Het is in strijd met de serverregels"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "Kan <bold>{{searchTerm}}</bold> niet vinden gerelateerd aan {{type}}"
     },
     "toot": {
-      "name": "Gesprek"
+      "name": "Gesprek",
+      "remoteFetch": {
+        "title": "Bevat externe inhoud",
+        "message": "Federale inhoud is niet altijd beschikbaar op de lokale instantie. Deze inhoud wordt opgehaald bij een externe instantie en gemarkeerd. U kunt met deze inhoud interacteren zoals gebruikelijk."
+      }
     },
     "users": {
       "accounts": {

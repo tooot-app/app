@@ -1,14 +1,11 @@
 import { ParseHTML } from '@components/Parse'
 import CustomText from '@components/Text'
-import { getInstanceAccount } from '@utils/slices/instancesSlice'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet, View } from 'react-native'
-import { Path, Svg } from 'react-native-svg'
-import { useSelector } from 'react-redux'
-import { isRtlLang } from 'rtl-detect'
+import { View } from 'react-native'
 import StatusContext from './Context'
 
 export interface Props {
@@ -17,35 +14,37 @@ export interface Props {
 }
 
 const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoilerExpanded }) => {
-  const { status, highlighted, inThread, disableDetails } = useContext(StatusContext)
+  const { status, highlighted, inThread } = useContext(StatusContext)
   if (!status || typeof status.content !== 'string' || !status.content.length) return null
 
   const { colors } = useTheme()
   const { t } = useTranslation('componentTimeline')
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+
+  const { data: preferences } = usePreferencesQuery()
 
   return (
-    <>
+    <View>
+      {/* <CustomText
+        children={excludeMentions?.current.map(mention => mention.username).join(' - ')}
+        style={{ color: colors.secondary }}
+      /> */}
       {status.spoiler_text?.length ? (
         <>
           <ParseHTML
             content={status.spoiler_text}
             size={highlighted ? 'L' : 'M'}
             adaptiveSize
-            emojis={status.emojis}
-            mentions={status.mentions}
-            tags={status.tags}
             numberOfLines={999}
-            highlighted={highlighted}
-            disableDetails={disableDetails}
-            textStyles={
-              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
-                ? { writingDirection: 'rtl' }
-                : undefined
-            }
           />
           {inThread ? (
-            <CustomText fontStyle='S' style={{ textAlign: 'center', color: colors.secondary, paddingVertical: StyleConstants.Spacing.XS }}>
+            <CustomText
+              fontStyle='S'
+              style={{
+                textAlign: 'center',
+                color: colors.secondary,
+                paddingVertical: StyleConstants.Spacing.XS
+              }}
+            >
               {t('shared.content.expandHint')}
             </CustomText>
           ) : null}
@@ -53,11 +52,8 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             content={status.content}
             size={highlighted ? 'L' : 'M'}
             adaptiveSize
-            emojis={status.emojis}
-            mentions={status.mentions}
-            tags={status.tags}
             numberOfLines={
-              instanceAccount.preferences?.['reading:expand:spoilers'] || inThread
+              preferences?.['reading:expand:spoilers'] || inThread
                 ? notificationOwnToot
                   ? 2
                   : 999
@@ -65,13 +61,6 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
             }
             expandHint={t('shared.content.expandHint')}
             setSpoilerExpanded={setSpoilerExpanded}
-            highlighted={highlighted}
-            disableDetails={disableDetails}
-            textStyles={
-              Platform.OS === 'ios' && status.language && isRtlLang(status.language)
-                ? { writingDirection: 'rtl' }
-                : undefined
-            }
           />
         </>
       ) : (
@@ -79,19 +68,10 @@ const TimelineContent: React.FC<Props> = ({ notificationOwnToot = false, setSpoi
           content={status.content}
           size={highlighted ? 'L' : 'M'}
           adaptiveSize
-          emojis={status.emojis}
-          mentions={status.mentions}
-          tags={status.tags}
           numberOfLines={highlighted || inThread ? 999 : notificationOwnToot ? 2 : undefined}
-          disableDetails={disableDetails}
-          textStyles={
-            Platform.OS === 'ios' && status.language && isRtlLang(status.language)
-              ? { writingDirection: 'rtl' }
-              : undefined
-          }
         />
       )}
-    </>
+    </View>
   )
 }
 

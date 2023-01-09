@@ -6,11 +6,22 @@
       "action_false": "Follow user",
       "action_true": "Unfollow user"
     },
-    "inLists": "Manage user of lists",
+    "inLists": "Lists containing user",
+    "showBoosts": {
+      "action_false": "Show user's boosts",
+      "action_true": "Hide users's boosts"
+    },
     "mute": {
       "action_false": "Mute user",
       "action_true": "Unmute user"
     },
+    "followAs": {
+      "trigger": "Follow as...",
+      "succeed_default": "Now following @{{target}} with @{{source}}",
+      "succeed_locked": "Sent follow request to @{{target}} with {{source}}, pending approval",
+      "failed": "Follow as"
+    },
+    "blockReport": "Block and report...",
     "block": {
       "action_false": "Block user",
       "action_true": "Unblock user",

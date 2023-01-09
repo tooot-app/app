@@ -1,17 +1,16 @@
-import { StackActions, useNavigation } from '@react-navigation/native'
-import { getInstanceActive } from '@utils/slices/instancesSlice'
+import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useGlobalStorage } from '@utils/storage/actions'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
 
 // Mostly used when switching account and sub pages were still querying the old instance
 
 const usePopToTop = () => {
   const navigation = useNavigation()
-  const instanceActive = useSelector(getInstanceActive)
+  const [accountActive] = useGlobalStorage.string('account.active')
 
-  return useEffect(() => {
+  useEffect(() => {
     navigation.dispatch(StackActions.popToTop())
-  }, [instanceActive])
+  }, [accountActive])
 }
 
 export default usePopToTop

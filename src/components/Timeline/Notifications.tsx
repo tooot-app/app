@@ -11,14 +11,15 @@ import TimelineHeaderNotification from '@components/Timeline/Shared/HeaderNotifi
 import TimelinePoll from '@components/Timeline/Shared/Poll'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { featureCheck } from '@utils/helpers/featureCheck'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { usePreferencesQuery } from '@utils/queryHooks/preferences'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
-import { checkInstanceFeature, getInstanceAccount } from '@utils/slices/instancesSlice'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import * as ContextMenu from 'zeego/context-menu'
 import StatusContext from './Shared/Context'
 import TimelineFiltered, { FilteredProps, shouldFilter } from './Shared/Filtered'
@@ -31,7 +32,8 @@ export interface Props {
 }
 
 const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
-  const instanceAccount = useSelector(getInstanceAccount, () => true)
+  const [accountId] = useAccountStorage.string('auth.account.id')
+  const { data: preferences } = usePreferencesQuery()
 
   const status = notification.status?.reblog ? notification.status.reblog : notification.status
   const account =
@@ -40,24 +42,16 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       : notification.status
       ? notification.status.account
       : notification.account
-  const ownAccount = notification.account?.id === instanceAccount?.id
+  const ownAccount = notification.account?.id === accountId
   const [spoilerExpanded, setSpoilerExpanded] = useState(
-    instanceAccount.preferences?.['reading:expand:spoilers'] || false
+    preferences?.['reading:expand:spoilers'] || false
   )
   const spoilerHidden = notification.status?.spoiler_text?.length
-    ? !instanceAccount.preferences?.['reading:expand:spoilers'] && !spoilerExpanded
+    ? !preferences?.['reading:expand:spoilers'] && !spoilerExpanded
     : false
 
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
-
-  const onPress = useCallback(() => {
-    notification.status &&
-      navigation.push('Tab-Shared-Toot', {
-        toot: notification.status,
-        rootQueryKey: queryKey
-      })
-  }, [])
 
   const main = () => {
     return (
@@ -67,6 +61,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
             action={notification.type}
             isNotification
             account={notification.account}
+            rootStatus={notification.status}
           />
         ) : null}
 
@@ -117,7 +112,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   if (!ownAccount) {
     let filterResults: FilteredProps['filterResults'] = []
     const [filterRevealed, setFilterRevealed] = useState(false)
-    const hasFilterServerSide = useSelector(checkInstanceFeature('filter_server_side'))
+    const hasFilterServerSide = featureCheck('filter_server_side')
     if (notification.status) {
       if (hasFilterServerSide) {
         if (notification.status.filtered?.length) {
@@ -131,7 +126,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       }
 
       if (filterResults?.length && !filterRevealed) {
-        return !filterResults.filter(result => result.filter_action === 'hide').length ? (
+        return !filterResults.filter(result => result.filter_action === 'hide')?.length ? (
           <Pressable onPress={() => setFilterRevealed(!filterRevealed)}>
             <TimelineFiltered filterResults={filterResults} />
           </Pressable>
@@ -157,44 +152,56 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
               backgroundColor: colors.backgroundDefault,
               paddingBottom: notification.status ? 0 : StyleConstants.Spacing.Global.PagePadding
             }}
-            onPress={onPress}
+            onPress={() =>
+              notification.status &&
+              navigation.push('Tab-Shared-Toot', { toot: notification.status })
+            }
             onLongPress={() => {}}
             children={main()}
           />
         </ContextMenu.Trigger>
 
         <ContextMenu.Content>
-          {mShare.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
+          {[mShare, mStatus, mInstance].map((menu, i) => (
+            <Fragment key={i}>
+              {menu.map((group, index) => (
+                <ContextMenu.Group key={index}>
+                  {group.map(item => {
+                    switch (item.type) {
+                      case 'item':
+                        return (
+                          <ContextMenu.Item key={item.key} {...item.props}>
+                            <ContextMenu.ItemTitle children={item.title} />
+                            {item.icon ? <ContextMenu.ItemIcon ios={{ name: item.icon }} /> : null}
+                          </ContextMenu.Item>
+                        )
+                      case 'sub':
+                        return (
+                          // @ts-ignore
+                          <ContextMenu.Sub key={item.key}>
+                            <ContextMenu.SubTrigger key={item.trigger.key} {...item.trigger.props}>
+                              <ContextMenu.ItemTitle children={item.trigger.title} />
+                              {item.trigger.icon ? (
+                                <ContextMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                              ) : null}
+                            </ContextMenu.SubTrigger>
+                            <ContextMenu.SubContent>
+                              {item.items.map(sub => (
+                                <ContextMenu.Item key={sub.key} {...sub.props}>
+                                  <ContextMenu.ItemTitle children={sub.title} />
+                                  {sub.icon ? (
+                                    <ContextMenu.ItemIcon ios={{ name: sub.icon }} />
+                                  ) : null}
+                                </ContextMenu.Item>
+                              ))}
+                            </ContextMenu.SubContent>
+                          </ContextMenu.Sub>
+                        )
+                    }
+                  })}
+                </ContextMenu.Group>
               ))}
-            </ContextMenu.Group>
-          ))}
-
-          {mStatus.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
-              ))}
-            </ContextMenu.Group>
-          ))}
-
-          {mInstance.map((mGroup, index) => (
-            <ContextMenu.Group key={index}>
-              {mGroup.map(menu => (
-                <ContextMenu.Item key={menu.key} {...menu.item}>
-                  <ContextMenu.ItemTitle children={menu.title} />
-                  <ContextMenu.ItemIcon iosIconName={menu.icon} />
-                </ContextMenu.Item>
-              ))}
-            </ContextMenu.Group>
+            </Fragment>
           ))}
         </ContextMenu.Content>
       </ContextMenu.Root>
@@ -203,4 +210,4 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
   )
 }
 
-export default TimelineNotifications
+export default React.memo(TimelineNotifications, () => true)

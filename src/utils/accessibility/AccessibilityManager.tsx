@@ -1,9 +1,9 @@
 import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useState
 } from 'react'
 import { AccessibilityInfo } from 'react-native'
 

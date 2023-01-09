@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Loading error",
         "button": "Try remote link"
-      }
+      },
+      "altText": "Alternative Text"
     },
     "avatar": {
       "accessibilityLabel": "Avatar of {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "User's account"
           }
         },
-        "application": "Via {{application}}",
+        "application": "via {{application}}",
         "edited": {
           "accessibilityLabel": "Toot edited"
         },
         "muted": {
           "accessibilityLabel": "Toot muted"
         },
+        "replies": "Replies <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Toot is a direct message"

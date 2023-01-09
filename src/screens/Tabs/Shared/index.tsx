@@ -1,13 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TabSharedAccount from '@screens/Tabs/Shared/Account'
+import TabSharedAccountInLists from '@screens/Tabs/Shared/AccountInLists'
 import TabSharedAttachments from '@screens/Tabs/Shared/Attachments'
 import TabSharedHashtag from '@screens/Tabs/Shared/Hashtag'
 import TabSharedHistory from '@screens/Tabs/Shared/History'
+import TabSharedReport from '@screens/Tabs/Shared/Report'
 import TabSharedSearch from '@screens/Tabs/Shared/Search'
 import TabSharedToot from '@screens/Tabs/Shared/Toot'
 import TabSharedUsers from '@screens/Tabs/Shared/Users'
 import React from 'react'
-import TabSharedAccountInLists from './AccountInLists'
 
 const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNavigator> }) => {
   return (
@@ -36,6 +37,12 @@ const TabShared = ({ Stack }: { Stack: ReturnType<typeof createNativeStackNaviga
         key='Tab-Shared-History'
         name='Tab-Shared-History'
         component={TabSharedHistory}
+      />
+      <Stack.Screen
+        key='Tab-Shared-Report'
+        name='Tab-Shared-Report'
+        component={TabSharedReport}
+        options={{ presentation: 'modal' }}
       />
       <Stack.Screen key='Tab-Shared-Search' name='Tab-Shared-Search' component={TabSharedSearch} />
       <Stack.Screen key='Tab-Shared-Toot' name='Tab-Shared-Toot' component={TabSharedToot} />

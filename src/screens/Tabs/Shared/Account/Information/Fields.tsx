@@ -1,27 +1,53 @@
-import Icon from '@components/Icon'
 import { ParseHTML } from '@components/Parse'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-  myInfo?: boolean
-}
+const AccountInformationFields: React.FC = () => {
+  const { account, pageMe } = useContext(AccountContext)
 
-const AccountInformationFields: React.FC<Props> = ({ account, myInfo }) => {
-  if (account?.suspended || myInfo || !account?.fields || account.fields.length === 0) {
+  if (account?.suspended || pageMe || !account?.fields || account.fields.length === 0) {
     return null
   }
 
   const { colors } = useTheme()
 
   return (
-    <View style={[styles.fields, { borderTopColor: colors.border }]}>
+    <View
+      style={{
+        borderTopWidth: StyleSheet.hairlineWidth,
+        marginBottom: StyleConstants.Spacing.M,
+        borderTopColor: colors.border
+      }}
+    >
       {account.fields.map((field, index) => (
-        <View key={index} style={[styles.field, { borderBottomColor: colors.border }]}>
-          <View style={[styles.fieldLeft, { borderRightColor: colors.border }]}>
+        <View
+          key={index}
+          style={[
+            {
+              flex: 1,
+              flexDirection: 'row',
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              paddingTop: StyleConstants.Spacing.S,
+              paddingBottom: StyleConstants.Spacing.S,
+              borderBottomColor: colors.border
+            },
+            field.verified_at ? { backgroundColor: 'rgba(0, 255, 0, 0.035)' } : undefined
+          ]}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderRightWidth: 1,
+              paddingLeft: StyleConstants.Spacing.S,
+              paddingRight: StyleConstants.Spacing.S,
+              borderRightColor: colors.border
+            }}
+          >
             <ParseHTML
               content={field.name}
               size={'S'}
@@ -30,16 +56,15 @@ const AccountInformationFields: React.FC<Props> = ({ account, myInfo }) => {
               numberOfLines={5}
               selectable
             />
-            {field.verified_at ? (
-              <Icon
-                name='CheckCircle'
-                size={StyleConstants.Font.Size.M}
-                color={colors.primaryDefault}
-                style={styles.fieldCheck}
-              />
-            ) : null}
           </View>
-          <View style={styles.fieldRight}>
+          <View
+            style={{
+              flex: 2,
+              justifyContent: 'center',
+              paddingLeft: StyleConstants.Spacing.S,
+              paddingRight: StyleConstants.Spacing.S
+            }}
+          >
             <ParseHTML
               content={field.value}
               size={'S'}
@@ -54,36 +79,5 @@ const AccountInformationFields: React.FC<Props> = ({ account, myInfo }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  fields: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    marginBottom: StyleConstants.Spacing.M
-  },
-  field: {
-    flex: 1,
-    flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingTop: StyleConstants.Spacing.S,
-    paddingBottom: StyleConstants.Spacing.S
-  },
-  fieldLeft: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRightWidth: 1,
-    paddingLeft: StyleConstants.Spacing.S,
-    paddingRight: StyleConstants.Spacing.S
-  },
-  fieldCheck: { marginLeft: StyleConstants.Spacing.XS },
-  fieldRight: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: StyleConstants.Spacing.S,
-    paddingRight: StyleConstants.Spacing.S
-  }
-})
 
 export default AccountInformationFields

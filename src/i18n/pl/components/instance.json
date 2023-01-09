@@ -1,27 +1,27 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Domena instancji"
     },
-    "whitelisted": "",
-    "button": "",
+    "whitelisted": "To może być godna zaufania instancja, z której tooot nie może pobrać danych przed zalogowaniem.",
+    "button": "Zaloguj",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "name": "Imię i nazwisko",
+      "accounts": "Użytkownicy",
+      "statuses": "Tootki",
+      "domains": "Uniwersa"
     },
     "disclaimer": {
-      "base": ""
+      "base": "Logowanie odbywa się przy użyciu przeglądarki systemowej, która nie będzie widoczna dla aplikacji."
     },
     "terms": {
-      "base": ""
+      "base": "Logując się, akceptujesz <0>politykę prywatności</0> i <1>regulamin usługi</1>."
     }
   },
   "update": {
     "alert": {
-      "title": "",
-      "message": ""
+      "title": "Zalogowano do tej instancji",
+      "message": "Możesz zalogować się na inne konto, zachowując już zalogowane konto"
     }
   }
 }

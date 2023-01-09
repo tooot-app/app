@@ -1,12 +1,10 @@
-import apiInstance from '@api/instance'
-import navigationRef from '@helpers/navigationRef'
+import apiInstance from '@utils/api/instance'
+import navigationRef from '@utils/navigation/navigationRef'
 
 const pushUseNavigate = (id?: Mastodon.Notification['id']) => {
   navigationRef.navigate('Screen-Tabs', {
     screen: 'Tab-Notifications',
-    params: {
-      screen: 'Tab-Notifications-Root'
-    }
+    params: { screen: 'Tab-Notifications-Root', params: {} }
   })
 
   if (!id) {

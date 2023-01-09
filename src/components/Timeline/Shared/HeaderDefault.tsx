@@ -4,7 +4,7 @@ import menuStatus from '@components/contextMenu/status'
 import Icon from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable, View } from 'react-native'
 import * as DropdownMenu from 'zeego/dropdown-menu'
@@ -13,11 +13,11 @@ import HeaderSharedAccount from './HeaderShared/Account'
 import HeaderSharedApplication from './HeaderShared/Application'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
+import HeaderSharedReplies from './HeaderShared/Replies'
 import HeaderSharedVisibility from './HeaderShared/Visibility'
 
 const TimelineHeaderDefault: React.FC = () => {
-  const { queryKey, rootQueryKey, status, highlighted, disableDetails, rawContent } =
-    useContext(StatusContext)
+  const { queryKey, status, disableDetails, rawContent, isRemote } = useContext(StatusContext)
   if (!status) return null
 
   const { colors } = useTheme()
@@ -34,9 +34,9 @@ const TimelineHeaderDefault: React.FC = () => {
     type: 'status',
     openChange,
     account: status.account,
-    queryKey
+    ...(status && { status })
   })
-  const mStatus = menuStatus({ status, queryKey, rootQueryKey })
+  const mStatus = menuStatus({ status, queryKey })
 
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -56,14 +56,19 @@ const TimelineHeaderDefault: React.FC = () => {
               : { marginTop: StyleConstants.Spacing.XS, marginBottom: StyleConstants.Spacing.S })
           }}
         >
-          <HeaderSharedCreated
-            created_at={status.created_at}
-            edited_at={status.edited_at}
-            highlighted={highlighted}
-          />
-          <HeaderSharedVisibility visibility={status.visibility} />
-          <HeaderSharedMuted muted={status.muted} />
-          <HeaderSharedApplication application={status.application} />
+          {isRemote ? (
+            <Icon
+              name='Wifi'
+              size={StyleConstants.Font.Size.M}
+              color={colors.secondary}
+              style={{ marginRight: StyleConstants.Spacing.S }}
+            />
+          ) : null}
+          <HeaderSharedCreated />
+          <HeaderSharedVisibility />
+          <HeaderSharedMuted />
+          <HeaderSharedReplies />
+          <HeaderSharedApplication />
         </View>
       </View>
 
@@ -82,37 +87,51 @@ const TimelineHeaderDefault: React.FC = () => {
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content>
-              {mShare.map((mGroup, index) => (
-                <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                    </DropdownMenu.Item>
+              {[mShare, mAccount, mStatus].map((menu, i) => (
+                <Fragment key={i}>
+                  {menu.map((group, index) => (
+                    <DropdownMenu.Group key={index}>
+                      {group.map(item => {
+                        switch (item.type) {
+                          case 'item':
+                            return (
+                              <DropdownMenu.Item key={item.key} {...item.props}>
+                                <DropdownMenu.ItemTitle children={item.title} />
+                                {item.icon ? (
+                                  <DropdownMenu.ItemIcon ios={{ name: item.icon }} />
+                                ) : null}
+                              </DropdownMenu.Item>
+                            )
+                          case 'sub':
+                            return (
+                              // @ts-ignore
+                              <DropdownMenu.Sub key={item}>
+                                <DropdownMenu.SubTrigger
+                                  key={item.trigger.key}
+                                  {...item.trigger.props}
+                                >
+                                  <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                  {item.trigger.icon ? (
+                                    <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                  ) : null}
+                                </DropdownMenu.SubTrigger>
+                                <DropdownMenu.SubContent>
+                                  {item.items.map(sub => (
+                                    <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                      <DropdownMenu.ItemTitle children={sub.title} />
+                                      {sub.icon ? (
+                                        <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                      ) : null}
+                                    </DropdownMenu.Item>
+                                  ))}
+                                </DropdownMenu.SubContent>
+                              </DropdownMenu.Sub>
+                            )
+                        }
+                      })}
+                    </DropdownMenu.Group>
                   ))}
-                </DropdownMenu.Group>
-              ))}
-
-              {mAccount.map((mGroup, index) => (
-                <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Group>
-              ))}
-
-              {mStatus.map((mGroup, index) => (
-                <DropdownMenu.Group key={index}>
-                  {mGroup.map(menu => (
-                    <DropdownMenu.Item key={menu.key} {...menu.item}>
-                      <DropdownMenu.ItemTitle children={menu.title} />
-                      <DropdownMenu.ItemIcon iosIconName={menu.icon} />
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Group>
+                </Fragment>
               ))}
             </DropdownMenu.Content>
           </DropdownMenu.Root>

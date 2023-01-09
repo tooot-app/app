@@ -1,35 +1,26 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
-import { useRelationshipQuery } from '@utils/queryHooks/relationship'
-import { getInstanceAccount, getInstanceUri } from '@utils/slices/instancesSlice'
+import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
 import { PlaceholderLine } from 'rn-placeholder'
+import AccountContext from '../Context'
 
-export interface Props {
-  account: Mastodon.Account | undefined
-}
+const AccountInformationAccount: React.FC = () => {
+  const { account, relationship, pageMe } = useContext(AccountContext)
 
-const AccountInformationAccount: React.FC<Props> = ({ account }) => {
   const { t } = useTranslation('screenTabs')
   const { colors } = useTheme()
-  const instanceAccount = useSelector(getInstanceAccount, (prev, next) => prev?.acct === next?.acct)
-  const instanceUri = useSelector(getInstanceUri)
 
-  const { data: relationship } = useRelationshipQuery({
-    id: account?.id || '',
-    options: { enabled: account !== undefined }
-  })
+  const [acct] = useAccountStorage.string('auth.account.acct')
+  const domain = getAccountStorage.string('auth.account.domain')
 
-  const localInstance = account?.acct.includes('@')
-    ? account?.acct.includes(`@${instanceUri}`)
-    : true
+  const localInstance = account?.acct?.includes('@') ? account?.acct?.includes(`@${domain}`) : true
 
-  if (account || (localInstance && instanceAccount)) {
+  if (account || pageMe) {
     return (
       <View
         style={{
@@ -52,8 +43,8 @@ const AccountInformationAccount: React.FC<Props> = ({ account }) => {
             }}
             selectable
           >
-            @{account?.acct}
-            {localInstance ? `@${instanceUri}` : null}
+            @{pageMe ? acct : account?.acct}
+            {localInstance ? `@${domain}` : null}
           </CustomText>
           {relationship?.followed_by ? t('shared.account.followed_by') : null}
         </CustomText>

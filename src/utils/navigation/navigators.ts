@@ -1,46 +1,47 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { NavigatorScreenParams } from '@react-navigation/native'
+import { NavigatorScreenParams, useNavigationState } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ComposeState } from '@screens/Compose/utils/types'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 
+export const useNavState = () =>
+  useNavigationState(state =>
+    state.routes.map(
+      route => (route.params as { queryKey?: QueryKeyTimeline } | undefined)?.queryKey
+    )
+  )
+    .filter(key => key?.[0] === 'Timeline')
+    .reverse()
+
 export type RootStackParamList = {
   'Screen-Tabs': NavigatorScreenParams<ScreenTabsStackParamList>
-  'Screen-Actions':
-    | {
-        type: 'notifications_filter'
-      }
-    | {
-        type: 'alt_text'
-        text: string
-      }
   'Screen-Announcements': { showAll: boolean }
   'Screen-Compose':
     | {
         type: 'edit'
         incomingStatus: Mastodon.Status
         replyToStatus?: Mastodon.Status
-        queryKey?: QueryKeyTimeline
-        rootQueryKey?: QueryKeyTimeline
+        navigationState: (QueryKeyTimeline | undefined)[]
       }
     | {
         type: 'deleteEdit'
         incomingStatus: Mastodon.Status
         replyToStatus?: Mastodon.Status
-        queryKey?: QueryKeyTimeline
+        navigationState: (QueryKeyTimeline | undefined)[]
       }
     | {
         type: 'reply'
         incomingStatus: Mastodon.Status
         accts: Mastodon.Account['acct'][]
-        queryKey?: QueryKeyTimeline
+        navigationState: (QueryKeyTimeline | undefined)[]
       }
     | {
         type: 'conversation'
         accts: Mastodon.Account['acct'][]
         visibility: ComposeState['visibility']
         text?: string // For contacting tooot only
+        navigationState: (QueryKeyTimeline | undefined)[]
       }
     | {
         type: 'share'
@@ -92,24 +93,20 @@ export type ScreenTabsScreenProps<T extends keyof ScreenTabsStackParamList> = Bo
 
 export type TabSharedStackParamList = {
   'Tab-Shared-Account': {
-    account: Mastodon.Account | Mastodon.Mention
+    account: Partial<Pick<Mastodon.Account, 'id' | 'url' | '_remote'>> &
+      Pick<Mastodon.Account, 'acct' | 'url'>
+    queryKey?: QueryKeyTimeline
   }
-  'Tab-Shared-Account-In-Lists': {
-    account: Pick<Mastodon.Account, 'id' | 'username'>
-  }
-  'Tab-Shared-Attachments': { account: Mastodon.Account }
-  'Tab-Shared-Hashtag': {
-    hashtag: Mastodon.Tag['name']
-  }
-  'Tab-Shared-History': {
-    id: Mastodon.Status['id']
-    detectedLanguage: string
+  'Tab-Shared-Account-In-Lists': { account: Pick<Mastodon.Account, 'id' | 'username'> }
+  'Tab-Shared-Attachments': { account: Mastodon.Account; queryKey?: QueryKeyTimeline }
+  'Tab-Shared-Hashtag': { hashtag: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
+  'Tab-Shared-History': { status: Mastodon.Status; detectedLanguage: string }
+  'Tab-Shared-Report': {
+    account: Pick<Mastodon.Account, 'id' | 'acct' | 'username' | 'url'>
+    status?: Pick<Mastodon.Status, 'id' | '_remote' | 'uri'>
   }
   'Tab-Shared-Search': undefined
-  'Tab-Shared-Toot': {
-    toot: Mastodon.Status
-    rootQueryKey?: QueryKeyTimeline
-  }
+  'Tab-Shared-Toot': { toot: Mastodon.Status; queryKey?: QueryKeyTimeline }
   'Tab-Shared-Users':
     | {
         reference: 'accounts'
@@ -128,15 +125,15 @@ export type TabSharedStackScreenProps<T extends keyof TabSharedStackParamList> =
   NativeStackScreenProps<TabSharedStackParamList, T>
 
 export type TabLocalStackParamList = {
-  'Tab-Local-Root': undefined
+  'Tab-Local-Root': { queryKey?: QueryKeyTimeline }
 } & TabSharedStackParamList
 
 export type TabPublicStackParamList = {
-  'Tab-Public-Root': undefined
+  'Tab-Public-Root': { queryKey?: QueryKeyTimeline }
 } & TabSharedStackParamList
 
 export type TabNotificationsStackParamList = {
-  'Tab-Notifications-Root': undefined
+  'Tab-Notifications-Root': { queryKey?: QueryKeyTimeline }
   'Tab-Notifications-Filters': undefined
 } & TabSharedStackParamList
 export type TabNotificationsStackScreenProps<T extends keyof TabNotificationsStackParamList> =
@@ -144,11 +141,11 @@ export type TabNotificationsStackScreenProps<T extends keyof TabNotificationsSta
 
 export type TabMeStackParamList = {
   'Tab-Me-Root': undefined
-  'Tab-Me-Bookmarks': undefined
-  'Tab-Me-Conversations': undefined
-  'Tab-Me-Favourites': undefined
+  'Tab-Me-Bookmarks': { queryKey?: QueryKeyTimeline }
+  'Tab-Me-Conversations': { queryKey?: QueryKeyTimeline }
+  'Tab-Me-Favourites': { queryKey?: QueryKeyTimeline }
   'Tab-Me-FollowedTags': undefined
-  'Tab-Me-List': Mastodon.List
+  'Tab-Me-List': { list: Mastodon.List; queryKey?: QueryKeyTimeline }
   'Tab-Me-List-Accounts': Omit<Mastodon.List, 'replies_policy'>
   'Tab-Me-List-Edit':
     | {

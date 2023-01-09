@@ -1,32 +1,30 @@
 import { useNavigation } from '@react-navigation/native'
-import initQuery from '@utils/initQuery'
-import { InstanceLatest } from '@utils/migrations/instances/migration'
+import { ReadableAccountType, setAccount } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import React from 'react'
 import Button from './Button'
 import haptics from './haptics'
 
 interface Props {
-  instance: InstanceLatest
-  selected?: boolean
+  account: ReadableAccountType
   additionalActions?: () => void
 }
 
-const AccountButton: React.FC<Props> = ({ instance, selected = false, additionalActions }) => {
+const AccountButton: React.FC<Props> = ({ account, additionalActions }) => {
   const navigation = useNavigation()
 
   return (
     <Button
       type='text'
-      selected={selected}
+      selected={account.active}
       style={{
         marginBottom: StyleConstants.Spacing.M,
         marginRight: StyleConstants.Spacing.M
       }}
-      content={`@${instance.account.acct}@${instance.uri}${selected ? ' ✓' : ''}`}
+      content={account.acct}
       onPress={() => {
         haptics('Light')
-        initQuery({ instance })
+        setAccount(account.key)
         navigation.goBack()
         if (additionalActions) {
           additionalActions()

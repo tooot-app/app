@@ -2,7 +2,6 @@ import { HeaderLeft } from '@components/Header'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
 import Timeline from '@components/Timeline'
-import TimelineDefault from '@components/Timeline/Default'
 import { TabSharedStackScreenProps } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { useTheme } from '@utils/styles/ThemeManager'
@@ -23,7 +22,8 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
       headerTitle: () => (
         <CustomText numberOfLines={1}>
           <Trans
-            i18nKey='screenTabs:shared.attachments.name'
+            ns='screenTabs'
+            i18nKey='shared.attachments.name'
             components={[
               <ParseEmojis
                 content={account.display_name || account.username}
@@ -40,21 +40,15 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
         </CustomText>
       )
     })
+    navigation.setParams({ queryKey })
   }, [])
 
   const queryKey: QueryKeyTimeline = [
     'Timeline',
-    { page: 'Account', account: account.id, exclude_reblogs: true, only_media: true }
+    { page: 'Account', id: account.id, exclude_reblogs: true, only_media: true }
   ]
 
-  return (
-    <Timeline
-      queryKey={queryKey}
-      customProps={{
-        renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} />
-      }}
-    />
-  )
+  return <Timeline queryKey={queryKey} />
 }
 
 export default TabSharedAttachments

@@ -2,13 +2,13 @@ import Icon from '@components/Icon'
 import { displayMessage } from '@components/Message'
 import { ParseEmojis } from '@components/Parse'
 import CustomText from '@components/Text'
+import { useQueryClient } from '@tanstack/react-query'
 import { useTimelineMutation } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View } from 'react-native'
-import { useQueryClient } from '@tanstack/react-query'
 import StatusContext from './Context'
 import HeaderSharedCreated from './HeaderShared/Created'
 import HeaderSharedMuted from './HeaderShared/Muted'
@@ -22,7 +22,7 @@ const HeaderConversation = ({ conversation }: Props) => {
   if (!queryKey) return null
 
   const { colors, theme } = useTheme()
-  const { t } = useTranslation('componentTimeline')
+  const { t } = useTranslation(['common', 'componentTimeline'])
 
   const queryClient = useQueryClient()
   const mutation = useTimelineMutation({
@@ -32,7 +32,7 @@ const HeaderConversation = ({ conversation }: Props) => {
         theme,
         type: 'error',
         message: t('common:message.error.message', {
-          function: t(`shared.header.conversation.delete.function`)
+          function: t(`componentTimeline:shared.header.conversation.delete.function`)
         }),
         ...(err.status &&
           typeof err.status === 'number' &&
@@ -53,7 +53,7 @@ const HeaderConversation = ({ conversation }: Props) => {
           numberOfLines={1}
           style={{ ...StyleConstants.FontStyle.M, color: colors.secondary }}
         >
-          <CustomText>{t('shared.header.conversation.withAccounts')}</CustomText>
+          <CustomText>{t('componentTimeline:shared.header.conversation.withAccounts')}</CustomText>
           {conversation.accounts.map((account, index) => (
             <CustomText key={account.id} numberOfLines={1}>
               {index !== 0 ? t('common:separator') : undefined}
@@ -73,13 +73,8 @@ const HeaderConversation = ({ conversation }: Props) => {
             marginBottom: StyleConstants.Spacing.S
           }}
         >
-          {conversation.last_status?.created_at ? (
-            <HeaderSharedCreated
-              created_at={conversation.last_status?.created_at}
-              edited_at={conversation.last_status?.edited_at}
-            />
-          ) : null}
-          <HeaderSharedMuted muted={conversation.last_status?.muted} />
+          {conversation.last_status?.created_at ? <HeaderSharedCreated /> : null}
+          <HeaderSharedMuted />
         </View>
       </View>
 
@@ -89,7 +84,6 @@ const HeaderConversation = ({ conversation }: Props) => {
           mutation.mutate({
             type: 'deleteItem',
             source: 'conversations',
-            queryKey,
             id: conversation.id
           })
         }

@@ -1,5 +1,5 @@
 module.exports = function (api) {
-  api.cache(true)
+  api.cache(false)
 
   const plugins = [
     '@babel/plugin-proposal-optional-chaining',
@@ -8,11 +8,8 @@ module.exports = function (api) {
       {
         root: ['./'],
         alias: {
-          '@assets': './assets',
-          '@root': './src',
-          '@api': './src/api',
-          '@helpers': './src/helpers',
           '@components': './src/components',
+          '@i18n': './src/i18n',
           '@screens': './src/screens',
           '@utils': './src/utils'
         }
@@ -21,27 +18,9 @@ module.exports = function (api) {
     'react-native-reanimated/plugin'
   ]
 
-  if (
-    process.env.NODE_ENV === 'production' ||
-    process.env.BABEL_ENV === 'production'
-  ) {
+  if (process.env.NODE_ENV === 'production' || process.env.BABEL_ENV === 'production') {
     plugins.push('transform-remove-console')
   }
 
-  return {
-    presets: [
-      'babel-preset-expo',
-      [
-        '@babel/preset-react',
-        {
-          importSource: '@welldone-software/why-did-you-render',
-          runtime: 'automatic',
-          development:
-            process.env.NODE_ENV === 'development' ||
-            process.env.BABEL_ENV === 'development'
-        }
-      ]
-    ],
-    plugins
-  }
+  return { presets: ['babel-preset-expo'], plugins }
 }

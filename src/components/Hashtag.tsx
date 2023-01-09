@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { TabLocalStackParamList } from '@utils/navigation/navigators'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { PropsWithChildren, useCallback, useState } from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import { Dimensions, Pressable, View } from 'react-native'
 import Sparkline from './Sparkline'
 import CustomText from './Text'
@@ -21,9 +21,9 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
-  const onPress = useCallback(() => {
+  const onPress = () => {
     navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
-  }, [])
+  }
 
   const padding = StyleConstants.Spacing.Global.PagePadding
   const width = Dimensions.get('window').width / 4

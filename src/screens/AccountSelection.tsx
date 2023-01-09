@@ -1,15 +1,14 @@
 import AccountButton from '@components/AccountButton'
 import CustomText from '@components/Text'
-import navigationRef from '@helpers/navigationRef'
+import navigationRef from '@utils/navigation/navigationRef'
 import { RootStackScreenProps } from '@utils/navigation/navigators'
-import { getInstances } from '@utils/slices/instancesSlice'
+import { getReadableAccounts } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Image, ScrollView, View } from 'react-native'
-import { useSelector } from 'react-redux'
 
 const Share = ({
   text,
@@ -93,7 +92,7 @@ const ScreenAccountSelection = ({
   const { colors } = useTheme()
   const { t } = useTranslation('screenAccountSelection')
 
-  const instances = useSelector(getInstances, () => true)
+  const accounts = getReadableAccounts()
 
   return (
     <ScrollView
@@ -126,27 +125,20 @@ const ScreenAccountSelection = ({
             marginTop: StyleConstants.Spacing.M
           }}
         >
-          {instances.length
-            ? instances
-                .slice()
-                .sort((a, b) =>
-                  `${a.uri}${a.account.acct}`.localeCompare(`${b.uri}${b.account.acct}`)
-                )
-                .map((instance, index) => {
-                  return (
-                    <AccountButton
-                      key={index}
-                      instance={instance}
-                      additionalActions={() => {
-                        navigationRef.navigate('Screen-Compose', {
-                          type: 'share',
-                          ...share
-                        })
-                      }}
-                    />
-                  )
-                })
-            : null}
+          {accounts.map((account, index) => {
+            return (
+              <AccountButton
+                key={index}
+                account={account}
+                additionalActions={() =>
+                  navigationRef.navigate('Screen-Compose', {
+                    type: 'share',
+                    ...share
+                  })
+                }
+              />
+            )
+          })}
         </View>
       </View>
     </ScrollView>

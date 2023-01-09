@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabMeStackParamList } from '@utils/navigation/navigators'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import TabShared from '../Shared'
 import TabMeBookmarks from './Bookmarks'
 import TabMeConversations from './Cconversations'
 import TabMeFavourites from './Favourites'
@@ -18,7 +19,6 @@ import TabMeSettings from './Settings'
 import TabMeSettingsFontsize from './SettingsFontsize'
 import TabMeSettingsLanguage from './SettingsLanguage'
 import TabMeSwitch from './Switch'
-import TabShared from '../Shared'
 
 const Stack = createNativeStackNavigator<TabMeStackParamList>()
 

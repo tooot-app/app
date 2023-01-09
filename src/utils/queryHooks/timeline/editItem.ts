@@ -1,46 +1,46 @@
-import queryClient from '@helpers/queryClient'
 import { InfiniteData } from '@tanstack/react-query'
-import { MutationVarsTimelineEditItem } from '../timeline'
+import { queryClient } from '@utils/queryHooks'
+import { MutationVarsTimelineEditItem, TimelineData } from '../timeline'
 
-const editItem = ({
-  queryKey,
-  rootQueryKey,
-  status
-}: MutationVarsTimelineEditItem) => {
-  queryKey &&
-    queryClient.setQueryData<InfiniteData<any> | undefined>(queryKey, old => {
-      if (old) {
-        old.pages = old.pages.map(page => {
-          page.body = page.body.map((item: Mastodon.Status) => {
-            if (item.id === status.id) {
-              item = status
-            }
-            return item
-          })
+const editItem = ({ status, navigationState }: MutationVarsTimelineEditItem) => {
+  for (const key of navigationState) {
+    if (!key) continue
+
+    queryClient.setQueryData<InfiniteData<TimelineData>>(key, old => {
+      if (!old) return old
+
+      let updated: boolean = false
+      return {
+        ...old,
+        pages: old.pages.map(page => {
+          if (updated) return page
+
+          if (typeof (page.body as Mastodon.Notification[])[0].type === 'string') {
+            ;(page.body as Mastodon.Notification[]).forEach(no => {
+              if (no.status?.reblog?.id === status.id) {
+                updated = true
+                no.status.reblog = { ...status }
+              } else if (no.status?.id === status.id) {
+                updated = true
+                no.status = { ...status }
+              }
+            })
+          } else {
+            ;(page.body as Mastodon.Status[]).forEach(toot => {
+              if (toot.reblog?.id === status.id) {
+                updated = true
+                toot.reblog = { ...status }
+              } else if (toot.id === status.id) {
+                updated = true
+                toot = { ...status }
+              }
+            })
+          }
           return page
         })
-        return old
       }
     })
-
-  rootQueryKey &&
-    queryClient.setQueryData<InfiniteData<any> | undefined>(
-      rootQueryKey,
-      old => {
-        if (old) {
-          old.pages = old.pages.map(page => {
-            page.body = page.body.map((item: Mastodon.Status) => {
-              if (item.id === status.id) {
-                item = status
-              }
-              return item
-            })
-            return page
-          })
-          return old
-        }
-      }
-    )
+  }
 }
 
 export default editItem

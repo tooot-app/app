@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "Errore di caricamento",
         "button": "Apri sul sito dell'istanza remota"
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "Foto profilo di {{name}}",
@@ -115,13 +116,14 @@
             "accessibilityHint": "Profilo dell'utente"
           }
         },
-        "application": "Via {{application}}",
+        "application": "",
         "edited": {
           "accessibilityLabel": "Toot modificato"
         },
         "muted": {
           "accessibilityLabel": "Toot mutato"
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": "Questo toot è un messaggio diretto"

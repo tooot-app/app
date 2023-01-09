@@ -28,19 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filter",
       "accessibilityHint": "Filter shown notifications' types",
-      "title": "Show notifications",
-      "options": {
-        "follow": "$t(screenTabs:me.push.follow.heading)",
-        "follow_request": "Follow request",
-        "favourite": "$t(screenTabs:me.push.favourite.heading)",
-        "reblog": "$t(screenTabs:me.push.reblog.heading)",
-        "mention": "$t(screenTabs:me.push.mention.heading)",
-        "poll": "$t(screenTabs:me.push.poll.heading)",
-        "status": "Toot from subscribed users",
-        "update": "Reblog has been edited",
-        "admin.sign_up": "$t(screenTabs:me.push.admin.sign_up.heading)",
-        "admin.report": "$t(screenTabs:me.push.admin.report.heading)"
-      }
+      "title": "Show notifications"
     }
   },
   "me": {
@@ -266,19 +254,6 @@
       }
     },
     "settings": {
-      "fontsize": {
-        "heading": "$t(me.stacks.fontSize.name)",
-        "content": {
-          "S": "$t(me.fontSize.sizes.S)",
-          "M": "$t(me.fontSize.sizes.M)",
-          "L": "$t(me.fontSize.sizes.L)",
-          "XL": "$t(me.fontSize.sizes.XL)",
-          "XXL": "$t(me.fontSize.sizes.XXL)"
-        }
-      },
-      "language": {
-        "heading": "$t(me.stacks.language.name)"
-      },
       "theme": {
         "heading": "Appearance",
         "options": {
@@ -290,8 +265,8 @@
       "darkTheme": {
         "heading": "Dark theme",
         "options": {
-          "lighter": "Lighter",
-          "darker": "Darker"
+          "lighter": "Default",
+          "darker": "True black"
         }
       },
       "browser": {
@@ -301,9 +276,8 @@
           "external": "Use system browser"
         }
       },
-      "staticEmoji": {
-        "heading": "Use static emoji",
-        "description": "If you encounter frequent app crash when viewing emoji list, you can try to use static emoji instead."
+      "autoplayGifv": {
+        "heading": "Autoplay GIF in timeline"
       },
       "feedback": {
         "heading": "Feature Requests"
@@ -332,9 +306,7 @@
       "moved": "User moved",
       "created_at": "Joined: {{date}}",
       "summary": {
-        "statuses_count": "{{count}} toots",
-        "following_count": "$t(shared.users.accounts.following)",
-        "followers_count": "$t(shared.users.accounts.followers)"
+        "statuses_count": "{{count}} toots"
       },
       "toots": {
         "default": "Toots",
@@ -356,6 +328,25 @@
     },
     "history": {
       "name": "Edit History"
+    },
+    "report": {
+      "name": "Report {{acct}}",
+      "report": "Report",
+      "forward": {
+        "heading": "Anonymously forward to remote server {{instance}}"
+      },
+      "reasons": {
+        "heading": "What is going on with this account?",
+        "spam": "It is spam",
+        "other": "It is something else",
+        "violation": "It violates server rules"
+      },
+      "comment": {
+        "heading": "Anything else you want to add?"
+      },
+      "violatedRules": {
+        "heading": "Violated server rules"
+      }
     },
     "search": {
       "header": {
@@ -385,7 +376,11 @@
       "notFound": "Cannot find <bold>{{searchTerm}}</bold> related {{type}}"
     },
     "toot": {
-      "name": "Discussions"
+      "name": "Discussions",
+      "remoteFetch": {
+        "title": "Contains remote content",
+        "message": "Federated content are not always available on local instance. These content are fetched from remote instance and marked. You can interact with these content as usual."
+      }
     },
     "users": {
       "accounts": {

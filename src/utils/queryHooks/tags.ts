@@ -1,5 +1,3 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import {
   QueryFunctionContext,
   useInfiniteQuery,
@@ -9,8 +7,12 @@ import {
   useQuery,
   UseQueryOptions
 } from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { setAccountStorage } from '@utils/storage/actions'
+import { AxiosError } from 'axios'
 import { infinitePageParams } from './utils'
-import { PagedResponse } from '@api/helpers'
 
 export type QueryKeyFollowedTags = ['FollowedTags']
 const useFollowedTagsQuery = (
@@ -21,16 +23,39 @@ const useFollowedTagsQuery = (
     >
   } | void
 ) => {
+  const canFollowTags = featureCheck('follow_tags')
+
   const queryKey: QueryKeyFollowedTags = ['FollowedTags']
   return useInfiniteQuery(
     queryKey,
     async ({ pageParam }: QueryFunctionContext<QueryKeyFollowedTags>) => {
       const params: { [key: string]: string } = { ...pageParam }
-      return await apiInstance<Mastodon.Tag[]>({ method: 'get', url: `followed_tags`, params })
+      return await apiInstance<Mastodon.Tag[]>({
+        method: 'get',
+        url: `followed_tags`,
+        params: { limit: 200, ...params }
+      })
     },
     {
+      staleTime: Infinity,
+      cacheTime: Infinity,
       ...params?.options,
-      ...infinitePageParams
+      ...infinitePageParams,
+      enabled: canFollowTags && params?.options?.enabled,
+      onSuccess: data => {
+        setAccountStorage([
+          {
+            key: 'followed_tags',
+            value: data.pages[0].body.map(tag => ({
+              name: tag.name.toLowerCase(),
+              following: tag.following
+            }))
+          }
+        ])
+        if (params?.options?.onSuccess) {
+          params.options.onSuccess(data)
+        }
+      }
     }
   )
 }

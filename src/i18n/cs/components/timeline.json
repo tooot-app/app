@@ -82,7 +82,8 @@
       "unsupported": {
         "text": "",
         "button": ""
-      }
+      },
+      "altText": ""
     },
     "avatar": {
       "accessibilityLabel": "",
@@ -122,6 +123,7 @@
         "muted": {
           "accessibilityLabel": ""
         },
+        "replies": "",
         "visibility": {
           "direct": {
             "accessibilityLabel": ""

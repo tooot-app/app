@@ -12,12 +12,10 @@
     "strictFunctionTypes": false,
     "baseUrl": "./",
     "paths": {
-      "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
-      "@helpers/*": ["./src/helpers/*"],
+      "@i18n/*": ["./src/i18n/*"],
       "@screens/*": ["./src/screens/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@root/*": ["./src/*"]
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "exclude": ["node_modules"]

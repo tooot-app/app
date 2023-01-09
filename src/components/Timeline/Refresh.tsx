@@ -1,29 +1,37 @@
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
-import { QueryKeyTimeline, TimelineData, useTimelineQuery } from '@utils/queryHooks/timeline'
+import { InfiniteData, useQueryClient } from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import {
+  queryFunctionTimeline,
+  QueryKeyTimeline,
+  useTimelineQuery
+} from '@utils/queryHooks/timeline'
+import { setAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { RefObject, useCallback, useRef, useState } from 'react'
+import React, { RefObject, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
+import { FlatList, Platform, Text, View } from 'react-native'
 import Animated, {
   Extrapolate,
   interpolate,
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 
 export interface Props {
   flRef: RefObject<FlatList<any>>
   queryKey: QueryKeyTimeline
+  fetchingActive: React.MutableRefObject<boolean>
   scrollY: Animated.SharedValue<number>
   fetchingType: Animated.SharedValue<0 | 1 | 2>
   disableRefresh?: boolean
+  readMarker?: 'read_marker_following'
 }
 
 const CONTAINER_HEIGHT = StyleConstants.Spacing.M * 2.5
@@ -33,9 +41,11 @@ export const SEPARATION_Y_2 = -(CONTAINER_HEIGHT * 1.5 + StyleConstants.Font.Siz
 const TimelineRefresh: React.FC<Props> = ({
   flRef,
   queryKey,
+  fetchingActive,
   scrollY,
   fetchingType,
-  disableRefresh = false
+  disableRefresh = false,
+  readMarker
 }) => {
   if (Platform.OS !== 'ios') {
     return null
@@ -44,85 +54,24 @@ const TimelineRefresh: React.FC<Props> = ({
     return null
   }
 
-  const fetchingLatestIndex = useRef(0)
-  const refetchActive = useRef(false)
+  const PREV_PER_BATCH = 1
+  const prevActive = useRef<boolean>(false)
+  const prevCache = useRef<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>()
+  const prevStatusId = useRef<Mastodon.Status['id']>()
 
-  const { refetch, isFetching, isLoading, fetchPreviousPage, hasPreviousPage, isFetchingNextPage } =
-    useTimelineQuery({
-      ...queryKey[1],
-      options: {
-        getPreviousPageParam: firstPage =>
-          firstPage?.links?.prev && {
-            ...(firstPage.links.prev.isOffset
-              ? { offset: firstPage.links.prev.id }
-              : { min_id: firstPage.links.prev.id }),
-            // https://github.com/facebook/react-native/issues/25239#issuecomment-731100372
-            limit: '3'
-          },
-        select: data => {
-          if (refetchActive.current) {
-            data.pageParams = [data.pageParams[0]]
-            data.pages = [data.pages[0]]
-            refetchActive.current = false
-          }
-          return data
-        },
-        onSuccess: () => {
-          if (fetchingLatestIndex.current > 0) {
-            if (fetchingLatestIndex.current > 5) {
-              clearFirstPage()
-              fetchingLatestIndex.current = 0
-            } else {
-              if (hasPreviousPage) {
-                fetchPreviousPage()
-                fetchingLatestIndex.current++
-              } else {
-                clearFirstPage()
-                fetchingLatestIndex.current = 0
-              }
-            }
-          }
-        }
-      }
-    })
+  const queryClient = useQueryClient()
+  const { refetch, isRefetching } = useTimelineQuery({ ...queryKey[1] })
+
+  useDerivedValue(() => {
+    if (prevActive.current || isRefetching) {
+      fetchingActive.current = true
+    } else {
+      fetchingActive.current = false
+    }
+  }, [prevActive.current, isRefetching])
 
   const { t } = useTranslation('componentTimeline')
   const { colors } = useTheme()
-
-  const queryClient = useQueryClient()
-  const clearFirstPage = () => {
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
-      if (data?.pages[0] && data.pages[0].body.length === 0) {
-        return {
-          pages: data.pages.slice(1),
-          pageParams: data.pageParams.slice(1)
-        }
-      } else {
-        return data
-      }
-    })
-  }
-  const prepareRefetch = () => {
-    refetchActive.current = true
-    queryClient.setQueryData<InfiniteData<TimelineData> | undefined>(queryKey, data => {
-      if (data) {
-        data.pageParams = [undefined]
-        const newFirstPage: TimelineData = { body: [] }
-        for (let page of data.pages) {
-          // @ts-ignore
-          newFirstPage.body.push(...page.body)
-          if (newFirstPage.body.length > 10) break
-        }
-        data.pages = [newFirstPage]
-      }
-
-      return data
-    })
-  }
-  const callRefetch = async () => {
-    await refetch()
-    setTimeout(() => flRef.current?.scrollToOffset({ offset: 1 }), 50)
-  }
 
   const [textRight, setTextRight] = useState(0)
   const arrowY = useAnimatedStyle(() => ({
@@ -145,17 +94,9 @@ const TimelineRefresh: React.FC<Props> = ({
   }))
 
   const arrowStage = useSharedValue(0)
-  const onLayout = useCallback(
-    ({ nativeEvent }: LayoutChangeEvent) => {
-      if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
-        setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
-      }
-    },
-    [textRight]
-  )
   useAnimatedReaction(
     () => {
-      if (isFetching) {
+      if (fetchingActive.current) {
         return false
       }
       switch (arrowStage.value) {
@@ -188,10 +129,96 @@ const TimelineRefresh: React.FC<Props> = ({
         runOnJS(haptics)('Light')
       }
     },
-    [isFetching]
+    [fetchingActive.current]
   )
-  const wrapperStartLatest = () => {
-    fetchingLatestIndex.current = 1
+
+  const fetchAndScrolled = useSharedValue(false)
+  const runFetchPrevious = async () => {
+    if (prevActive.current) return
+
+    const firstPage =
+      queryClient.getQueryData<
+        InfiniteData<
+          PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+        >
+      >(queryKey)?.pages[0]
+
+    prevActive.current = true
+    prevStatusId.current = firstPage?.body[0]?.id
+
+    await queryFunctionTimeline({
+      queryKey,
+      pageParam: firstPage?.links?.prev,
+      meta: {}
+    })
+      .then(res => {
+        if (!res.body.length) return
+
+        queryClient.setQueryData<
+          InfiniteData<
+            PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+          >
+        >(queryKey, old => {
+          if (!old) return old
+
+          prevCache.current = res.body.slice(0, -PREV_PER_BATCH)
+          return {
+            ...old,
+            pages: [{ ...res, body: res.body.slice(-PREV_PER_BATCH) }, ...old.pages]
+          }
+        })
+
+        return res.body.length - PREV_PER_BATCH
+      })
+      .then(async nextLength => {
+        if (!nextLength) {
+          prevActive.current = false
+          return
+        }
+
+        for (let [index] of Array(Math.ceil(nextLength / PREV_PER_BATCH)).entries()) {
+          if (!fetchAndScrolled.value && index < 3 && scrollY.value > 15) {
+            fetchAndScrolled.value = true
+            flRef.current?.scrollToOffset({ offset: scrollY.value - 15, animated: true })
+          }
+
+          await new Promise(promise => setTimeout(promise, 64))
+          queryClient.setQueryData<
+            InfiniteData<
+              PagedResponse<(Mastodon.Status | Mastodon.Notification | Mastodon.Conversation)[]>
+            >
+          >(queryKey, old => {
+            if (!old) return old
+
+            return {
+              ...old,
+              pages: old.pages.map((page, index) => {
+                if (index === 0) {
+                  const insert = prevCache.current?.slice(-PREV_PER_BATCH)
+                  prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
+                  if (insert) {
+                    return { ...page, body: [...insert, ...page.body] }
+                  } else {
+                    return page
+                  }
+                } else {
+                  return page
+                }
+              })
+            }
+          })
+        }
+        prevActive.current = false
+      })
+  }
+
+  const runFetchLatest = async () => {
+    queryClient.invalidateQueries(queryKey)
+    if (readMarker) {
+      setAccountStorage([{ key: readMarker, value: undefined }])
+    }
+    await refetch()
+    setTimeout(() => flRef.current?.scrollToOffset({ offset: 0 }), 50)
   }
 
   useAnimatedReaction(
@@ -202,95 +229,76 @@ const TimelineRefresh: React.FC<Props> = ({
       fetchingType.value = 0
       switch (data) {
         case 1:
-          runOnJS(wrapperStartLatest)()
-          runOnJS(clearFirstPage)()
-          runOnJS(fetchPreviousPage)()
-          break
+          runOnJS(runFetchPrevious)()
+          return
         case 2:
-          runOnJS(prepareRefetch)()
-          runOnJS(callRefetch)()
-          break
+          runOnJS(runFetchLatest)()
+          return
       }
     },
     []
   )
 
-  const headerPadding = useAnimatedStyle(
-    () => ({
-      paddingTop:
-        fetchingLatestIndex.current !== 0 || (isFetching && !isLoading && !isFetchingNextPage)
-          ? withTiming(StyleConstants.Spacing.M * 2.5)
-          : withTiming(0)
-    }),
-    [fetchingLatestIndex.current, isFetching, isFetchingNextPage, isLoading]
-  )
-
   return (
-    <Animated.View style={headerPadding}>
-      <View style={styles.base}>
-        {isFetching ? (
-          <View style={styles.container2}>
-            <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-          </View>
-        ) : (
-          <>
-            <View style={styles.container1}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
-                onLayout={onLayout}
-                children={t('refresh.fetchPreviousPage')}
-              />
-              <Animated.View
-                style={[
-                  {
-                    position: 'absolute',
-                    left: textRight + StyleConstants.Spacing.S
-                  },
-                  arrowY,
-                  arrowTop
-                ]}
-                children={
-                  <Icon
-                    name='ArrowLeft'
-                    size={StyleConstants.Font.Size.M}
-                    color={colors.primaryDefault}
-                  />
-                }
-              />
-            </View>
-            <View style={styles.container2}>
-              <Text
-                style={[styles.explanation, { color: colors.primaryDefault }]}
-                onLayout={onLayout}
-                children={t('refresh.refetch')}
-              />
-            </View>
-          </>
-        )}
+    <Animated.View
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: CONTAINER_HEIGHT * 2,
+        alignItems: 'center'
+      }}
+    >
+      <View style={{ flex: 1, flexDirection: 'row', height: CONTAINER_HEIGHT }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.fetchPreviousPage')}
+        />
+        <Animated.View
+          style={[
+            {
+              position: 'absolute',
+              left: textRight + StyleConstants.Spacing.S
+            },
+            arrowY,
+            arrowTop
+          ]}
+          children={
+            <Icon
+              name='ArrowLeft'
+              size={StyleConstants.Font.Size.M}
+              color={colors.primaryDefault}
+            />
+          }
+        />
+      </View>
+      <View style={{ height: CONTAINER_HEIGHT, justifyContent: 'center' }}>
+        <Text
+          style={{
+            fontSize: StyleConstants.Font.Size.S,
+            lineHeight: CONTAINER_HEIGHT,
+            color: colors.primaryDefault
+          }}
+          onLayout={({ nativeEvent }) => {
+            if (nativeEvent.layout.x + nativeEvent.layout.width > textRight) {
+              setTextRight(nativeEvent.layout.x + nativeEvent.layout.width)
+            }
+          }}
+          children={t('refresh.refetch')}
+        />
       </View>
     </Animated.View>
   )
 }
-
-const styles = StyleSheet.create({
-  base: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: CONTAINER_HEIGHT * 2,
-    alignItems: 'center'
-  },
-  container1: {
-    flex: 1,
-    flexDirection: 'row',
-    height: CONTAINER_HEIGHT
-  },
-  container2: { height: CONTAINER_HEIGHT, justifyContent: 'center' },
-  explanation: {
-    fontSize: StyleConstants.Font.Size.S,
-    lineHeight: CONTAINER_HEIGHT
-  }
-})
 
 export default TimelineRefresh

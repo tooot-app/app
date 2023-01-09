@@ -6,11 +6,22 @@
       "action_false": "Segueix l'usuari",
       "action_true": "Deixa de seguir l'usuari"
     },
-    "inLists": "Gestionar usuari de llistes",
+    "inLists": "Llistes que continguin l'usuari",
+    "showBoosts": {
+      "action_false": "Mostra els impulsos de l'usuari",
+      "action_true": "Oculta els impulsos de l'usuari"
+    },
     "mute": {
       "action_false": "Silencia l'usuari",
       "action_true": "Deixa de silenciar l'usuari"
     },
+    "followAs": {
+      "trigger": "Segueix com...",
+      "succeed_default": "Seguint a @{{target}} com @{{source}}",
+      "succeed_locked": "Enviada la sol·licitud de seguiment a @{{target}} com {{source}}, pendent d'aprovar-la",
+      "failed": "Segueix com"
+    },
+    "blockReport": "Bloqueja i denuncia...",
     "block": {
       "action_false": "Bloqueja l'usuari",
       "action_true": "Deixa de bloquejar l'usuari",

@@ -1,10 +1,4 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
-import queryClient from '@helpers/queryClient'
-import { store } from '@root/store'
-import { checkInstanceFeature, getInstanceNotificationsFilter } from '@utils/slices/instancesSlice'
-import { AxiosError } from 'axios'
-import { uniqBy } from 'lodash'
 import {
   MutationOptions,
   QueryFunctionContext,
@@ -12,10 +6,19 @@ import {
   UseInfiniteQueryOptions,
   useMutation
 } from '@tanstack/react-query'
+import { PagedResponse } from '@utils/api/helpers'
+import apiInstance from '@utils/api/instance'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { useNavState } from '@utils/navigation/navigators'
+import { queryClient } from '@utils/queryHooks'
+import { getAccountStorage } from '@utils/storage/actions'
+import { AxiosError } from 'axios'
+import { uniqBy } from 'lodash'
+import { searchLocalStatus } from './search'
 import deleteItem from './timeline/deleteItem'
 import editItem from './timeline/editItem'
 import updateStatusProperty from './timeline/updateStatusProperty'
-import { PagedResponse } from '@api/helpers'
+import { infinitePageParams } from './utils'
 
 export type QueryKeyTimeline = [
   'Timeline',
@@ -37,21 +40,43 @@ export type QueryKeyTimeline = [
         list: Mastodon.List['id']
       }
     | {
-        page: 'Toot'
-        toot: Mastodon.Status['id']
-      }
-    | {
         page: 'Account'
-        account: Mastodon.Account['id']
+        id?: Mastodon.Account['id']
         exclude_reblogs: boolean
         only_media: boolean
+      }
+    | {
+        page: 'Toot'
+        toot: Mastodon.Status['id']
+        remote: boolean
       }
   )
 ]
 
-const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<QueryKeyTimeline>) => {
+export const queryFunctionTimeline = async ({
+  queryKey,
+  pageParam
+}: QueryFunctionContext<QueryKeyTimeline>) => {
   const page = queryKey[1]
-  let params: { [key: string]: string } = { limit: 40, ...pageParam }
+
+  let marker: string | undefined
+  if (page.page === 'Following' && !pageParam?.offset && !pageParam?.min_id && !pageParam?.max_id) {
+    const storedMarker = getAccountStorage.string('read_marker_following')
+    if (storedMarker) {
+      await apiInstance<Mastodon.Status[]>({
+        method: 'get',
+        url: 'timelines/home',
+        params: { limit: 1, min_id: storedMarker }
+      }).then(res => {
+        if (res.body.length) {
+          marker = storedMarker
+        }
+      })
+    }
+  }
+  let params: { [key: string]: string } = marker
+    ? { limit: 40, max_id: marker }
+    : { limit: 40, ...pageParam }
 
   switch (page.page) {
     case 'Following':
@@ -82,7 +107,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Local':
-      console.log('local', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'timelines/public',
@@ -100,7 +124,6 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Trending':
-      console.log('trending', params)
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
         url: 'trends/statuses',
@@ -108,11 +131,8 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Notifications':
-      const rootStore = store.getState()
-      const notificationsFilter = getInstanceNotificationsFilter(rootStore)
-      const usePositiveFilter = checkInstanceFeature('notification_types_positive_filter')(
-        rootStore
-      )
+      const notificationsFilter = getAccountStorage.object('notifications')
+      const usePositiveFilter = featureCheck('notification_types_positive_filter')
       return apiInstance<Mastodon.Notification[]>({
         method: 'get',
         url: 'notifications',
@@ -134,11 +154,22 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
       })
 
     case 'Account':
-      if (page.exclude_reblogs) {
+      if (!page.id) return Promise.reject('Timeline query account id not provided')
+
+      if (page.only_media) {
+        return apiInstance<Mastodon.Status[]>({
+          method: 'get',
+          url: `accounts/${page.id}/statuses`,
+          params: {
+            only_media: 'true',
+            ...params
+          }
+        })
+      } else if (page.exclude_reblogs) {
         if (pageParam && pageParam.hasOwnProperty('max_id')) {
           return apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true',
               ...params
@@ -147,7 +178,7 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         } else {
           const res1 = await apiInstance<(Mastodon.Status & { _pinned: boolean })[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               pinned: 'true'
             }
@@ -158,24 +189,24 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
           })
           const res2 = await apiInstance<Mastodon.Status[]>({
             method: 'get',
-            url: `accounts/${page.account}/statuses`,
+            url: `accounts/${page.id}/statuses`,
             params: {
               exclude_replies: 'true'
             }
           })
           return {
             body: uniqBy([...res1.body, ...res2.body], 'id'),
-            ...(res2.links.next && { links: { next: res2.links.next } })
+            ...(res2.links?.next && { links: { next: res2.links.next } })
           }
         }
       } else {
         return apiInstance<Mastodon.Status[]>({
           method: 'get',
-          url: `accounts/${page.account}/statuses`,
+          url: `accounts/${page.id}/statuses`,
           params: {
             ...params,
-            exclude_replies: page.exclude_reblogs.toString(),
-            only_media: page.only_media.toString()
+            exclude_replies: false,
+            only_media: false
           }
         })
       }
@@ -214,41 +245,29 @@ const queryFunction = async ({ queryKey, pageParam }: QueryFunctionContext<Query
         url: `timelines/list/${page.list}`,
         params
       })
-
-    case 'Toot':
-      const res1_1 = await apiInstance<Mastodon.Status>({
-        method: 'get',
-        url: `statuses/${page.toot}`
-      })
-      const res2_1 = await apiInstance<{
-        ancestors: Mastodon.Status[]
-        descendants: Mastodon.Status[]
-      }>({
-        method: 'get',
-        url: `statuses/${page.toot}/context`
-      })
-      return {
-        body: [...res2_1.body.ancestors, res1_1.body, ...res2_1.body.descendants]
-      }
     default:
-      return Promise.reject()
+      return Promise.reject('Timeline query no page matched')
   }
 }
 
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never
-export type TimelineData = Unpromise<ReturnType<typeof queryFunction>>
+export type TimelineData = Unpromise<ReturnType<typeof queryFunctionTimeline>>
 const useTimelineQuery = ({
   options,
   ...queryKeyParams
 }: QueryKeyTimeline[1] & {
-  options?: UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>
+  options?: Omit<
+    UseInfiniteQueryOptions<PagedResponse<Mastodon.Status[]>, AxiosError>,
+    'getPreviousPageParam' | 'getNextPageParam'
+  >
 }) => {
   const queryKey: QueryKeyTimeline = ['Timeline', { ...queryKeyParams }]
-  return useInfiniteQuery(queryKey, queryFunction, {
+  return useInfiniteQuery(queryKey, queryFunctionTimeline, {
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
-    ...options
+    ...options,
+    ...infinitePageParams
   })
 }
 
@@ -265,43 +284,35 @@ enum MapPropertyToUrl {
 export type MutationVarsTimelineUpdateStatusProperty = {
   // This is status in general, including "status" inside conversation and notification
   type: 'updateStatusProperty'
-  queryKey: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
-  id: Mastodon.Status['id'] | Mastodon.Poll['id']
-  isReblog?: boolean
+  status: Mastodon.Status
   payload:
     | {
-        property: 'bookmarked' | 'muted' | 'pinned'
-        currentValue: boolean
-        propertyCount: undefined
-        countValue: undefined
+        type: 'bookmarked' | 'muted' | 'pinned'
+        to: boolean
       }
     | {
-        property: 'favourited'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
+        type: 'favourited'
+        to: boolean
       }
     | {
-        property: 'reblogged'
-        currentValue: boolean
-        propertyCount: 'favourites_count' | 'reblogs_count'
-        countValue: number
+        type: 'reblogged'
         visibility: 'public' | 'unlisted'
+        to: boolean
       }
     | {
-        property: 'poll'
-        id: Mastodon.Poll['id']
-        type: 'vote' | 'refresh'
-        options?: boolean[]
-        data?: Mastodon.Poll
+        type: 'poll'
+        action: 'vote'
+        options: boolean[]
+      }
+    | {
+        type: 'poll'
+        action: 'refresh'
       }
 }
 
 export type MutationVarsTimelineUpdateAccountProperty = {
   // This is status in general, including "status" inside conversation and notification
   type: 'updateAccountProperty'
-  queryKey?: QueryKeyTimeline
   id: Mastodon.Account['id']
   payload: {
     property: 'mute' | 'block' | 'reports'
@@ -310,26 +321,20 @@ export type MutationVarsTimelineUpdateAccountProperty = {
 }
 
 export type MutationVarsTimelineEditItem = {
-  // This is for editing status
   type: 'editItem'
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   status: Mastodon.Status
+  navigationState: (QueryKeyTimeline | undefined)[]
 }
 
 export type MutationVarsTimelineDeleteItem = {
-  // This is for deleting status and conversation
   type: 'deleteItem'
   source: 'statuses' | 'conversations'
-  queryKey?: QueryKeyTimeline
-  rootQueryKey?: QueryKeyTimeline
   id: Mastodon.Status['id']
 }
 
 export type MutationVarsTimelineDomainBlock = {
   // This is for deleting status and conversation
   type: 'domainBlock'
-  queryKey: QueryKeyTimeline
   domain: string
 }
 
@@ -343,10 +348,10 @@ export type MutationVarsTimeline =
 const mutationFunction = async (params: MutationVarsTimeline) => {
   switch (params.type) {
     case 'updateStatusProperty':
-      switch (params.payload.property) {
+      switch (params.payload.type) {
         case 'poll':
           const formData = new FormData()
-          params.payload.type === 'vote' &&
+          params.payload.action === 'vote' &&
             params.payload.options?.forEach((option, index) => {
               if (option) {
                 formData.append('choices[]', index.toString())
@@ -354,24 +359,33 @@ const mutationFunction = async (params: MutationVarsTimeline) => {
             })
 
           return apiInstance<Mastodon.Poll>({
-            method: params.payload.type === 'vote' ? 'post' : 'get',
+            method: params.payload.action === 'vote' ? 'post' : 'get',
             url:
-              params.payload.type === 'vote'
-                ? `polls/${params.payload.id}/votes`
-                : `polls/${params.payload.id}`,
-            ...(params.payload.type === 'vote' && { body: formData })
+              params.payload.action === 'vote'
+                ? `polls/${params.status.poll?.id}/votes`
+                : `polls/${params.status.poll?.id}`,
+            ...(params.payload.action === 'vote' && { body: formData })
           })
         default:
+          let tootId = params.status.id
+          if (params.status._remote) {
+            const fetched = await searchLocalStatus(params.status.uri)
+            if (fetched) {
+              tootId = fetched.id
+            } else {
+              return Promise.reject('Fetching for remote toot failed')
+            }
+          }
           const body = new FormData()
-          if (params.payload.property === 'reblogged') {
+          if (params.payload.type === 'reblogged') {
             body.append('visibility', params.payload.visibility)
           }
           return apiInstance<Mastodon.Status>({
             method: 'post',
-            url: `statuses/${params.id}/${params.payload.currentValue ? 'un' : ''}${
-              MapPropertyToUrl[params.payload.property]
+            url: `statuses/${tootId}/${params.payload.to ? '' : 'un'}${
+              MapPropertyToUrl[params.payload.type]
             }`,
-            ...(params.payload.property === 'reblogged' && { body })
+            ...(params.payload.type === 'reblogged' && { body })
           })
       }
     case 'updateAccountProperty':
@@ -428,6 +442,8 @@ const useTimelineMutation = ({
   onSettled?: MutationOptionsTimeline['onSettled']
   onSuccess?: MutationOptionsTimeline['onSuccess']
 }) => {
+  const navigationState = useNavState()
+
   return useMutation<
     { body: Mastodon.Conversation | Mastodon.Notification | Mastodon.Status },
     AxiosError,
@@ -438,19 +454,19 @@ const useTimelineMutation = ({
     onSuccess,
     ...(onMutate && {
       onMutate: params => {
-        queryClient.cancelQueries(params.queryKey)
-        const oldData = params.queryKey && queryClient.getQueryData(params.queryKey)
+        queryClient.cancelQueries(navigationState[0])
+        const oldData = navigationState[0] && queryClient.getQueryData(navigationState[0])
 
         haptics('Light')
         switch (params.type) {
           case 'updateStatusProperty':
-            updateStatusProperty(params)
+            updateStatusProperty(params, navigationState)
             break
           case 'editItem':
             editItem(params)
             break
           case 'deleteItem':
-            deleteItem(params)
+            deleteItem(params, navigationState)
             break
         }
         return oldData

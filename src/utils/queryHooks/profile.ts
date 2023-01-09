@@ -1,12 +1,12 @@
-import apiInstance from '@api/instance'
 import haptics from '@components/haptics'
 import { displayMessage } from '@components/Message'
-import queryClient from '@helpers/queryClient'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import { queryClient } from '@utils/queryHooks'
 import { AxiosError } from 'axios'
 import i18next from 'i18next'
 import { RefObject } from 'react'
 import FlashMessage from 'react-native-flash-message'
-import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 type AccountWithSource = Mastodon.Account & Required<Pick<Mastodon.Account, 'source'>>
 
@@ -26,7 +26,11 @@ const useProfileQuery = (
     options: UseQueryOptions<AccountWithSource, AxiosError>
   } | void
 ) => {
-  return useQuery(queryKey, queryFunctionProfile, params?.options)
+  return useQuery(queryKey, queryFunctionProfile, {
+    ...params?.options,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 }
 
 type MutationVarsProfileBase =
@@ -129,7 +133,7 @@ const useProfileMutation = () => {
           displayMessage({
             ref: variables.messageRef,
             message: i18next.t('screenTabs:me.profile.feedback.failed', {
-              type: i18next.t(`screenTabs:${variables.message.text}`)
+              type: i18next.t(`screenTabs:${variables.message.text}` as any)
             }),
             ...(err && { description: err.message }),
             type: 'danger'
@@ -142,7 +146,7 @@ const useProfileMutation = () => {
           displayMessage({
             ref: variables.messageRef,
             message: i18next.t('screenTabs:me.profile.feedback.succeed', {
-              type: i18next.t(`screenTabs:${variables.message.text}`)
+              type: i18next.t(`screenTabs:${variables.message.text}` as any)
             }),
             type: 'success'
           })

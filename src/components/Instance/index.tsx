@@ -1,9 +1,21 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
-import browserPackage from '@helpers/browserPackage'
+import { useNavigation } from '@react-navigation/native'
+import apiGeneral from '@utils/api/general'
+import browserPackage from '@utils/helpers/browserPackage'
+import { featureCheck } from '@utils/helpers/featureCheck'
+import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
+import { queryClient } from '@utils/queryHooks'
 import { redirectUri, useAppsMutation } from '@utils/queryHooks/apps'
 import { useInstanceQuery } from '@utils/queryHooks/instance'
-import { checkInstanceFeature, getInstances } from '@utils/slices/instancesSlice'
+import { StorageAccount } from '@utils/storage/account'
+import {
+  generateAccountKey,
+  getGlobalStorage,
+  setAccount,
+  setAccountStorage,
+  setGlobalStorage
+} from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
@@ -13,16 +25,8 @@ import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useSelector } from 'react-redux'
-import { Placeholder } from 'rn-placeholder'
-import validUrl from 'valid-url'
-import InstanceInfo from './Info'
+import parse from 'url-parse'
 import CustomText from '../Text'
-import { useNavigation } from '@react-navigation/native'
-import { TabMeStackNavigationProp } from '@utils/navigation/navigators'
-import queryClient from '@helpers/queryClient'
-import { useAppDispatch } from '@root/store'
-import addInstance from '@utils/slices/instances/add'
 
 export interface Props {
   scrollViewRef?: RefObject<ScrollView>
@@ -35,7 +39,7 @@ const ComponentInstance: React.FC<Props> = ({
   disableHeaderImage,
   goBack = false
 }) => {
-  const { t } = useTranslation('componentInstance')
+  const { t } = useTranslation(['common', 'componentInstance'])
   const { colors, mode } = useTheme()
   const navigation = useNavigation<TabMeStackNavigationProp<'Tab-Me-Root' | 'Tab-Me-Switch'>>()
 
@@ -44,11 +48,9 @@ const ComponentInstance: React.FC<Props> = ({
   const whitelisted: boolean =
     !!domain.length &&
     !!errorCode &&
-    !!validUrl.isHttpsUri(`https://${domain}`) &&
+    !!(parse(`https://${domain}/`).hostname === domain) &&
     errorCode === 401
 
-  const dispatch = useAppDispatch()
-  const instances = useSelector(getInstances, () => true)
   const instanceQuery = useInstanceQuery({
     domain,
     options: {
@@ -62,8 +64,6 @@ const ComponentInstance: React.FC<Props> = ({
     }
   })
 
-  const deprecateAuthFollow = useSelector(checkInstanceFeature('deprecate_auth_follow'))
-
   const appsMutation = useAppsMutation({
     retry: false,
     onSuccess: async (data, variables) => {
@@ -75,56 +75,145 @@ const ComponentInstance: React.FC<Props> = ({
       const request = new AuthSession.AuthRequest({
         clientId,
         clientSecret,
-        scopes: deprecateAuthFollow
-          ? ['read', 'write', 'push']
-          : ['read', 'write', 'follow', 'push'],
+        scopes: variables.scopes,
         redirectUri
       })
       await request.makeAuthUrlAsync(discovery)
 
-      const promptResult = await request.promptAsync(discovery)
+      const promptResult = await request.promptAsync(discovery, await browserPackage())
 
-      if (promptResult?.type === 'success') {
+      if (promptResult.type === 'success') {
         const { accessToken } = await AuthSession.exchangeCodeAsync(
           {
             clientId,
             clientSecret,
-            scopes: ['read', 'write', 'follow', 'push'],
+            scopes: variables.scopes,
             redirectUri,
             code: promptResult.params.code,
-            extraParams: { grant_type: 'authorization_code' }
+            extraParams: {
+              client_id: clientId,
+              client_secret: clientSecret,
+              grant_type: 'authorization_code',
+              ...(request.codeVerifier && { code_verifier: request.codeVerifier })
+            }
           },
           { tokenEndpoint: `https://${variables.domain}/oauth/token` }
         )
         queryClient.clear()
-        dispatch(
-          addInstance({
-            domain,
-            token: accessToken,
-            instance: instanceQuery.data!,
-            appData: { clientId, clientSecret }
-          })
+
+        const {
+          body: { id, acct, avatar_static }
+        } = await apiGeneral<Mastodon.Account>({
+          method: 'get',
+          domain,
+          url: `api/v1/accounts/verify_credentials`,
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+
+        const accounts = getGlobalStorage.object('accounts')
+        const accountKey = generateAccountKey({ domain, id })
+        const account = accounts?.find(account => account === accountKey)
+
+        const accountDetails: StorageAccount = {
+          'auth.clientId': clientId,
+          'auth.clientSecret': clientSecret,
+          'auth.token': accessToken,
+          'auth.domain': domain,
+          'auth.account.id': id,
+          'auth.account.acct': acct,
+          'auth.account.domain':
+            (instanceQuery.data as Mastodon.Instance_V2)?.domain ||
+            instanceQuery.data?.account_domain ||
+            ((instanceQuery.data as Mastodon.Instance_V1)?.uri
+              ? parse((instanceQuery.data as Mastodon.Instance_V1).uri).hostname
+              : undefined) ||
+            (instanceQuery.data as Mastodon.Instance_V1)?.uri,
+          'auth.account.avatar_static': avatar_static,
+          version: instanceQuery.data?.version || '0',
+          preferences: undefined,
+          notifications: {
+            follow: true,
+            follow_request: true,
+            favourite: true,
+            reblog: true,
+            mention: true,
+            poll: true,
+            status: true,
+            update: true,
+            'admin.sign_up': true,
+            'admin.report': true
+          },
+          push: {
+            global: false,
+            decode: false,
+            alerts: {
+              follow: true,
+              follow_request: true,
+              favourite: true,
+              reblog: true,
+              mention: true,
+              poll: true,
+              status: true,
+              update: true,
+              'admin.sign_up': false,
+              'admin.report': false
+            },
+            key: Math.random().toString(36).slice(2, 12)
+          },
+          page_local: {
+            showBoosts: true,
+            showReplies: true
+          },
+          page_me: {
+            followedTags: { shown: false },
+            lists: { shown: false },
+            announcements: { shown: false, unread: 0 }
+          },
+          drafts: [],
+          emojis_frequent: []
+        }
+
+        setAccountStorage(
+          Object.keys(accountDetails).map((key: keyof StorageAccount) => ({
+            key,
+            value: accountDetails[key]
+          })),
+          accountKey
         )
+
+        if (!account) {
+          setGlobalStorage('accounts', accounts?.concat([accountKey]))
+        }
+        setAccount(accountKey)
+
         goBack && navigation.goBack()
       }
     }
   })
 
+  const scopes = featureCheck('deprecate_auth_follow')
+    ? ['read', 'write', 'push']
+    : ['read', 'write', 'follow', 'push']
   const processUpdate = useCallback(() => {
     if (domain) {
-      if (instances && instances.filter(instance => instance.url === domain).length) {
-        Alert.alert(t('update.alert.title'), t('update.alert.message'), [
-          {
-            text: t('common:buttons.cancel'),
-            style: 'cancel'
-          },
-          {
-            text: t('common:buttons.continue'),
-            onPress: () => appsMutation.mutate({ domain })
-          }
-        ])
+      const accounts = getGlobalStorage.object('accounts')
+      if (accounts?.filter(account => account.startsWith(`${domain}/`)).length) {
+        Alert.alert(
+          t('componentInstance:update.alert.title'),
+          t('componentInstance:update.alert.message'),
+          [
+            {
+              text: t('common:buttons.cancel'),
+              style: 'cancel'
+            },
+            {
+              text: t('common:buttons.continue'),
+              onPress: () => appsMutation.mutate({ domain, scopes })
+            }
+          ]
+        )
       } else {
-        appsMutation.mutate({ domain })
+        appsMutation.mutate({ domain, scopes })
       }
     }
   }, [domain])
@@ -204,12 +293,13 @@ const ComponentInstance: React.FC<Props> = ({
                 text === domain &&
                 instanceQuery.isSuccess &&
                 instanceQuery.data &&
-                instanceQuery.data.uri
+                // @ts-ignore
+                (instanceQuery.data.domain || instanceQuery.data.uri)
               ) {
                 processUpdate()
               }
             }}
-            placeholder={' ' + t('server.textInput.placeholder')}
+            placeholder={' ' + t('componentInstance:server.textInput.placeholder')}
             placeholderTextColor={colors.secondary}
             returnKeyType='go'
             keyboardAppearance={mode}
@@ -222,9 +312,10 @@ const ComponentInstance: React.FC<Props> = ({
           />
           <Button
             type='text'
-            content={t('server.button')}
+            content={t('componentInstance:server.button')}
             onPress={processUpdate}
-            disabled={!instanceQuery.data?.uri && !whitelisted}
+            // @ts-ignore
+            disabled={!(instanceQuery.data?.domain || instanceQuery.data?.uri) && !whitelisted}
             loading={instanceQuery.isFetching || appsMutation.isLoading}
           />
         </View>
@@ -239,37 +330,9 @@ const ComponentInstance: React.FC<Props> = ({
                 paddingTop: StyleConstants.Spacing.XS
               }}
             >
-              {t('server.whitelisted')}
+              {t('componentInstance:server.whitelisted')}
             </CustomText>
-          ) : (
-            <Placeholder>
-              <InstanceInfo
-                header={t('server.information.name')}
-                content={instanceQuery.data?.title || undefined}
-                potentialWidth={2}
-              />
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <InstanceInfo
-                  style={{ alignItems: 'flex-start' }}
-                  header={t('server.information.accounts')}
-                  content={instanceQuery.data?.stats?.user_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-                <InstanceInfo
-                  style={{ alignItems: 'center' }}
-                  header={t('server.information.statuses')}
-                  content={instanceQuery.data?.stats?.status_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-                <InstanceInfo
-                  style={{ alignItems: 'flex-end' }}
-                  header={t('server.information.domains')}
-                  content={instanceQuery.data?.stats?.domain_count?.toString() || undefined}
-                  potentialWidth={4}
-                />
-              </View>
-            </Placeholder>
-          )}
+          ) : null}
           <View
             style={{
               flexDirection: 'row',
@@ -287,7 +350,7 @@ const ComponentInstance: React.FC<Props> = ({
               }}
             />
             <CustomText fontStyle='S' style={{ flex: 1, color: colors.secondary }}>
-              {t('server.disclaimer.base')}
+              {t('componentInstance:server.disclaimer.base')}
             </CustomText>
           </View>
           <View
@@ -312,7 +375,8 @@ const ComponentInstance: React.FC<Props> = ({
               accessibilityRole='link'
             >
               <Trans
-                i18nKey='componentInstance:server.terms.base'
+                ns='componentInstance'
+                i18nKey='server.terms.base'
                 components={[
                   <CustomText
                     accessible

@@ -1,12 +1,12 @@
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
 import {
-  QueryFunctionContext,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions
+    QueryFunctionContext,
+    useMutation,
+    UseMutationOptions,
+    useQuery,
+    UseQueryOptions
 } from '@tanstack/react-query'
+import apiInstance from '@utils/api/instance'
+import { AxiosError } from 'axios'
 
 type QueryKeyAnnouncement = ['Announcements', { showAll?: boolean }]
 

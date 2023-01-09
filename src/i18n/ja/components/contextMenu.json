@@ -6,11 +6,22 @@
       "action_false": "ユーザーをフォロー",
       "action_true": "ユーザーをフォロー解除"
     },
-    "inLists": "リストのユーザーを管理",
+    "inLists": "",
+    "showBoosts": {
+      "action_false": "",
+      "action_true": ""
+    },
     "mute": {
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
     },
+    "followAs": {
+      "trigger": "",
+      "succeed_default": "",
+      "succeed_locked": "",
+      "failed": ""
+    },
+    "blockReport": "",
     "block": {
       "action_false": "ユーザーをブロック",
       "action_true": "ユーザーのブロックを解除",

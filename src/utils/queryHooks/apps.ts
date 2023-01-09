@@ -1,7 +1,3 @@
-import apiGeneral from '@api/general'
-import apiInstance from '@api/instance'
-import { AxiosError } from 'axios'
-import * as AuthSession from 'expo-auth-session'
 import {
   QueryFunctionContext,
   useMutation,
@@ -9,6 +5,10 @@ import {
   useQuery,
   UseQueryOptions
 } from '@tanstack/react-query'
+import apiGeneral from '@utils/api/general'
+import apiInstance from '@utils/api/instance'
+import { AxiosError } from 'axios'
+import * as AuthSession from 'expo-auth-session'
 
 export type QueryKeyApps = ['Apps']
 
@@ -29,24 +29,23 @@ const useAppsQuery = (
   return useQuery(queryKey, queryFunctionApps, params?.options)
 }
 
-type MutationVarsApps = { domain: string }
+type MutationVarsApps = { domain: string; scopes: string[] }
 
 export const redirectUri = AuthSession.makeRedirectUri({
   native: 'tooot://instance-auth',
   useProxy: false
 })
-const mutationFunctionApps = async ({ domain }: MutationVarsApps) => {
-  const formData = new FormData()
-  formData.append('client_name', 'tooot')
-  formData.append('website', 'https://tooot.app')
-  formData.append('redirect_uris', redirectUri)
-  formData.append('scopes', 'read write follow push')
-
+const mutationFunctionApps = async ({ domain, scopes }: MutationVarsApps) => {
   return apiGeneral<Mastodon.Apps>({
     method: 'post',
     domain: domain,
-    url: `api/v1/apps`,
-    body: formData
+    url: 'api/v1/apps',
+    body: {
+      client_name: 'tooot',
+      website: 'https://tooot.app',
+      redirect_uris: redirectUri,
+      scopes: scopes.join(' ')
+    }
   }).then(res => res.body)
 }
 

@@ -1,10 +1,10 @@
 {
-  "heading": "",
+  "heading": "Ważne ogłoszenia",
   "content": {
-    "published": "",
+    "published": "Opublikowano <0 />",
     "button": {
-      "read": "",
-      "unread": ""
+      "read": "Przeczytane",
+      "unread": "Oznacz jako przeczytane"
     }
   }
 }
