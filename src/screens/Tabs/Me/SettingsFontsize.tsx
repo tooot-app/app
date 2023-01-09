@@ -11,7 +11,7 @@ import { adaptiveScale } from '@utils/styles/scaling'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 export const mapFontsizeToName = (size: StorageGlobal['app.font_size']) => {
