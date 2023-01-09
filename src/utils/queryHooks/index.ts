@@ -8,7 +8,7 @@ export const queryClient = new QueryClient({
         if ([401, 404].includes(error?.status)) {
           return false
         }
-        if (failureCount <= 3) {
+        if (failureCount <= 2) {
           return true
         } else {
           return false
