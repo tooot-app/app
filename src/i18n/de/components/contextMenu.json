@@ -16,12 +16,12 @@
       "action_true": "Stummschaltung des Nutzers aufheben"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Folgen als…",
+      "succeed_default": "Folgt nun @{{target}} als @{{source}}",
+      "succeed_locked": "Follower-Anfrage an @{{target}} mit {{source}} gesendet, Bestätigung ausstehend",
+      "failed": "Folgen als…"
     },
-    "blockReport": "",
+    "blockReport": "Blockieren und melden…",
     "block": {
       "action_false": "Nutzer blockieren",
       "action_true": "User entblocken",
