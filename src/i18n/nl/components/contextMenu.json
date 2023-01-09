@@ -16,12 +16,12 @@
       "action_true": "Dempen opheffen voor gebruiker"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Volg als...",
+      "succeed_default": "Je volgt nu @{{target}} met @{{source}}",
+      "succeed_locked": "Verstuurde het volgverzoek naar @{{target}} met {{source}}, in afwachting van goedkeuring",
+      "failed": "Volg als"
     },
-    "blockReport": "",
+    "blockReport": "Blokkeren en rapporten...",
     "block": {
       "action_false": "Gebruiker blokkeren",
       "action_true": "Gebruiker deblokkeren",
