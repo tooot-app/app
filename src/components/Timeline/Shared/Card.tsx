@@ -30,7 +30,7 @@ const TimelineCard: React.FC = () => {
 
   const statusQuery = useStatusQuery({
     status: match?.status ? { ...match.status, uri: status.card.url } : undefined,
-    options: { enabled: false }
+    options: { enabled: false, retry: 1 }
   })
   useEffect(() => {
     if (match?.status) {
@@ -47,7 +47,7 @@ const TimelineCard: React.FC = () => {
 
   const accountQuery = useAccountQuery({
     account: match?.account ? { ...match?.account, url: status.card.url } : undefined,
-    options: { enabled: false }
+    options: { enabled: false, retry: 1 }
   })
   useEffect(() => {
     if (match?.account) {

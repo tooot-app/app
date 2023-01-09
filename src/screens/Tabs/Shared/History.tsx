@@ -53,10 +53,10 @@ const ContentView: React.FC<{
   const changesPoll = item.poll
     ? item.poll.options.map((option, index) =>
         withoutBoundary
-          ? prevItem?.poll?.options[index].title
+          ? prevItem?.poll?.options[index]?.title
             ? diffChars(prevItem?.poll?.options[index].title, option.title)
             : undefined
-          : prevItem?.poll?.options[index].title
+          : prevItem?.poll?.options[index]?.title
           ? diffWords(prevItem?.poll?.options[index].title, option.title)
           : undefined
       )
