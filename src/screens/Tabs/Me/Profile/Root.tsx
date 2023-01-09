@@ -49,7 +49,7 @@ const TabMeProfileRoot: React.FC<
         <ProfileAvatarHeader type='header' messageRef={messageRef} />
         <MenuRow
           title={t('screenTabs:me.profile.root.note.title')}
-          content={data?.source.note}
+          content={data?.source?.note}
           loading={isFetching}
           iconBack='ChevronRight'
           onPress={() => {

@@ -126,7 +126,7 @@ const TimelineNotifications: React.FC<Props> = ({ notification, queryKey }) => {
       }
 
       if (filterResults?.length && !filterRevealed) {
-        return !filterResults.filter(result => result.filter_action === 'hide').length ? (
+        return !filterResults.filter(result => result.filter_action === 'hide')?.length ? (
           <Pressable onPress={() => setFilterRevealed(!filterRevealed)}>
             <TimelineFiltered filterResults={filterResults} />
           </Pressable>

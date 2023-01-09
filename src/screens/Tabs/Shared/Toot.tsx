@@ -182,7 +182,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     },
     {
       enabled:
-        query.isFetched &&
+        (toot._remote ? true : query.isFetched) &&
         ['public', 'unlisted'].includes(toot.visibility) &&
         match?.domain !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
@@ -193,12 +193,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           return
         }
 
-        if ((query.data?.pages[0].body.length || 0) < data.length) {
+        if ((query.data?.pages[0].body.length || 0) - 1 <= data.length) {
           queryClient.cancelQueries(queryKey.local)
           queryClient.setQueryData<{
             pages: { body: Mastodon.Status[] }[]
           }>(queryKey.local, old => {
-            if (!old) return old
+            if (!old) return { pages: [{ body: [toot] }] }
 
             setHasRemoteContent(true)
             return {
@@ -355,7 +355,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                               `h ${ARC}`
                             }
                             strokeWidth={1}
-                            stroke={colors.red}
+                            stroke={colors.border}
                             strokeOpacity={0.6}
                           />
                         </Svg>
@@ -375,7 +375,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   }
                 })
               : null}
-            <CustomText
+            {/* <CustomText
               children={query.data?.pages[0].body[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
             />
@@ -386,7 +386,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             <CustomText
               children={query.data?.pages[0].body[index + 1]?._level}
               style={{ position: 'absolute', top: 36, left: 4, color: colors.green }}
-            />
+            /> */}
           </View>
         )
       }}
