@@ -67,10 +67,6 @@ const ComponentInstance: React.FC<Props> = ({
   const appsMutation = useAppsMutation({
     retry: false,
     onSuccess: async (data, variables) => {
-      const scopes = featureCheck('deprecate_auth_follow')
-        ? ['read', 'write', 'push']
-        : ['read', 'write', 'follow', 'push']
-
       const clientId = data.client_id
       const clientSecret = data.client_secret
 
@@ -79,19 +75,19 @@ const ComponentInstance: React.FC<Props> = ({
       const request = new AuthSession.AuthRequest({
         clientId,
         clientSecret,
-        scopes,
+        scopes: variables.scopes,
         redirectUri
       })
       await request.makeAuthUrlAsync(discovery)
 
       const promptResult = await request.promptAsync(discovery, await browserPackage())
 
-      if (promptResult?.type === 'success') {
+      if (promptResult.type === 'success') {
         const { accessToken } = await AuthSession.exchangeCodeAsync(
           {
             clientId,
             clientSecret,
-            scopes,
+            scopes: variables.scopes,
             redirectUri,
             code: promptResult.params.code,
             extraParams: {
@@ -195,6 +191,9 @@ const ComponentInstance: React.FC<Props> = ({
     }
   })
 
+  const scopes = featureCheck('deprecate_auth_follow')
+    ? ['read', 'write', 'push']
+    : ['read', 'write', 'follow', 'push']
   const processUpdate = useCallback(() => {
     if (domain) {
       const accounts = getGlobalStorage.object('accounts')
@@ -209,12 +208,12 @@ const ComponentInstance: React.FC<Props> = ({
             },
             {
               text: t('common:buttons.continue'),
-              onPress: () => appsMutation.mutate({ domain })
+              onPress: () => appsMutation.mutate({ domain, scopes })
             }
           ]
         )
       } else {
-        appsMutation.mutate({ domain })
+        appsMutation.mutate({ domain, scopes })
       }
     }
   }, [domain])
