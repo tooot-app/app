@@ -1,6 +1,6 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -59,6 +59,11 @@ const GracefullyImage = ({
   const source = {
     uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
+  useEffect(() => {
+    if (currentUri !== uri.original && currentUri !== uri.remote) {
+      setCurrentUri(uri.original || uri.remote)
+    }
+  }, [currentUri, uri.original, uri.remote])
 
   const blurhashView = () => {
     if (hidden || !imageLoaded) {
