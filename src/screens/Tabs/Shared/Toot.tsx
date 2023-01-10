@@ -198,16 +198,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           queryClient.setQueryData<{
             pages: { body: Mastodon.Status[] }[]
           }>(queryKey.local, old => {
-            if (!old) return old
-
             setHasRemoteContent(true)
             return {
               pages: [
                 {
                   body: data.map(remote => {
-                    const localMatch = query.data?.pages[0].body.find(
-                      local => local.uri === remote.uri
-                    )
+                    const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
                     if (localMatch) {
                       return { ...localMatch, _level: remote._level }
                     } else {

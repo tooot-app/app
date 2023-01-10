@@ -55,7 +55,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                     : t('tabs.local.name')
                 }
               />
-              {page.page === 'Following' && !pageLocal.showBoosts ? (
+              {page.page === 'Following' && !pageLocal?.showBoosts ? (
                 <Icon
                   name='Repeat'
                   size={StyleConstants.Font.Size.M}
@@ -64,7 +64,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                   crossOut
                 />
               ) : null}
-              {page.page === 'Following' && !pageLocal.showReplies ? (
+              {page.page === 'Following' && !pageLocal?.showReplies ? (
                 <Icon
                   name='MessageCircle'
                   size={StyleConstants.Font.Size.M}
@@ -94,20 +94,20 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               </DropdownMenu.Item>
               <DropdownMenu.CheckboxItem
                 key='showBoosts'
-                value={pageLocal.showBoosts ? 'on' : 'off'}
+                value={pageLocal?.showBoosts ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
                     {
                       page: 'Following',
-                      showBoosts: !pageLocal.showBoosts,
-                      showReplies: pageLocal.showReplies
+                      showBoosts: !pageLocal?.showBoosts,
+                      showReplies: pageLocal?.showReplies
                     }
                   ])
                   setAccountStorage([
                     {
                       key: 'page_local',
-                      value: { ...pageLocal, showBoosts: !pageLocal.showBoosts }
+                      value: { ...pageLocal, showBoosts: !pageLocal?.showBoosts }
                     }
                   ])
                 }}
@@ -117,20 +117,20 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               </DropdownMenu.CheckboxItem>
               <DropdownMenu.CheckboxItem
                 key='showReplies'
-                value={pageLocal.showReplies ? 'on' : 'off'}
+                value={pageLocal?.showReplies ? 'on' : 'off'}
                 onValueChange={() => {
                   setQueryKey([
                     'Timeline',
                     {
                       page: 'Following',
-                      showBoosts: pageLocal.showBoosts,
-                      showReplies: !pageLocal.showReplies
+                      showBoosts: pageLocal?.showBoosts,
+                      showReplies: !pageLocal?.showReplies
                     }
                   ])
                   setAccountStorage([
                     {
                       key: 'page_local',
-                      value: { ...pageLocal, showReplies: !pageLocal.showReplies }
+                      value: { ...pageLocal, showReplies: !pageLocal?.showReplies }
                     }
                   ])
                 }}
