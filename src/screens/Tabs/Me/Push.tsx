@@ -182,7 +182,7 @@ const TabMePush: React.FC = () => {
                     } else {
                       // Fix a bug for some users of v4.8.0
                       let authKey = push.key
-                      if (push.key.length <= 10) {
+                      if (push.key?.length <= 10) {
                         authKey = fromByteArray(Random.getRandomBytes(16))
                       }
                       // Turning on
@@ -228,7 +228,7 @@ const TabMePush: React.FC = () => {
                         body: {
                           accountFull,
                           serverKey: res.body.server_key,
-                          auth: push.decode === false ? null : push.key
+                          auth: push.decode === false ? null : authKey
                         }
                       })
 
