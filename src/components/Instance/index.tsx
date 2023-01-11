@@ -19,12 +19,14 @@ import {
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as AuthSession from 'expo-auth-session'
+import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import { debounce } from 'lodash'
 import React, { RefObject, useCallback, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Alert, Image, KeyboardAvoidingView, Platform, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import { fromByteArray } from 'react-native-quick-base64'
 import parse from 'url-parse'
 import CustomText from '../Text'
 
@@ -158,7 +160,7 @@ const ComponentInstance: React.FC<Props> = ({
               'admin.sign_up': false,
               'admin.report': false
             },
-            key: Math.random().toString(36).slice(2, 12)
+            key: fromByteArray(Random.getRandomBytes(16))
           },
           page_local: {
             showBoosts: true,
