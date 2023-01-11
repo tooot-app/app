@@ -34,7 +34,7 @@
   "content": {
     "root": {
       "header": {
-        "postingAs": "Publicant la publicació com a @{{acct}}@{{domain}}",
+        "postingAs": "Publicant com a @{{acct}}@{{domain}}",
         "spoilerInput": {
           "placeholder": "Missatge d'alerta d'espòiler"
         },
