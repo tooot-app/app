@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 const ComposePostingAs = () => {
-  const accounts = useGlobalStorage.object('accounts')
-  if (!accounts.length) return null
+  const [accounts] = useGlobalStorage.object('accounts')
+  if (!accounts?.length) return null
 
   const { t } = useTranslation('screenCompose')
   const { colors } = useTheme()

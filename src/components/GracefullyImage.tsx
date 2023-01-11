@@ -60,7 +60,10 @@ const GracefullyImage = ({
     uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
   useEffect(() => {
-    if (currentUri !== uri.original && currentUri !== uri.remote) {
+    if (
+      (uri.original ? currentUri !== uri.original : true) &&
+      (uri.remote ? currentUri !== uri.remote : true)
+    ) {
       setCurrentUri(uri.original || uri.remote)
     }
   }, [currentUri, uri.original, uri.remote])

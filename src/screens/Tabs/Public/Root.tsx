@@ -38,7 +38,10 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   const previousSegment = getGlobalStorage.string('app.prev_public_segment')
   const segments: StorageGlobal['app.prev_public_segment'][] = ['Local', 'LocalPublic', 'Trending']
   const [segment, setSegment] = useState<number>(
-    segments.findIndex(segment => segment === previousSegment)
+    Math.min(
+      0,
+      segments.findIndex(segment => segment === previousSegment)
+    )
   )
   const [routes] = useState([
     { key: 'Local', title: t('tabs.public.segments.local') },

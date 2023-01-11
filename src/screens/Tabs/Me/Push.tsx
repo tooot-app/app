@@ -17,10 +17,12 @@ import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
 import { useTheme } from '@utils/styles/ThemeManager'
 import * as Notifications from 'expo-notifications'
+import * as Random from 'expo-random'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, Platform, ScrollView, View } from 'react-native'
+import { fromByteArray } from 'react-native-quick-base64'
 
 const TabMePush: React.FC = () => {
   const { colors } = useTheme()
@@ -178,6 +180,11 @@ const TabMePush: React.FC = () => {
 
                       setAccountStorage([{ key: 'push', value: { ...push, global: false } }])
                     } else {
+                      // Fix a bug for some users of v4.8.0
+                      let authKey = push.key
+                      if (push.key.length <= 10) {
+                        authKey = fromByteArray(Random.getRandomBytes(16))
+                      }
                       // Turning on
                       const randomPath = (Math.random() + 1).toString(36).substring(2)
 
@@ -189,7 +196,7 @@ const TabMePush: React.FC = () => {
                         'subscription[keys][p256dh]',
                         'BMn2PLpZrMefG981elzG6SB1EY9gU7QZwmtZ/a/J2vUeWG+zXgeskMPwHh4T/bxsD4l7/8QT94F57CbZqYRRfJo='
                       )
-                      formData.append('subscription[keys][auth]', push.key)
+                      formData.append('subscription[keys][auth]', authKey)
                       for (const [key, value] of Object.entries(push.alerts)) {
                         formData.append(`data[alerts][${key}]`, value.toString())
                       }
@@ -225,7 +232,9 @@ const TabMePush: React.FC = () => {
                         }
                       })
 
-                      setAccountStorage([{ key: 'push', value: { ...push, global: true } }])
+                      setAccountStorage([
+                        { key: 'push', value: { ...push, global: true, key: authKey } }
+                      ])
 
                       if (Platform.OS === 'android') {
                         setChannels(true)

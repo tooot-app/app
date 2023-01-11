@@ -92,7 +92,7 @@ const ScreenAccountSelection = ({
   const { colors } = useTheme()
   const { t } = useTranslation('screenAccountSelection')
 
-  const accounts = getReadableAccounts()
+  const accounts = getReadableAccounts(true)
 
   return (
     <ScrollView

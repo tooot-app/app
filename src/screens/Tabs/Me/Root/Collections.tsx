@@ -60,7 +60,7 @@ const Collections: React.FC = () => {
         title={t('screenTabs:me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
-      {pageMe.lists.shown ? (
+      {pageMe.lists?.shown ? (
         <MenuRow
           iconFront='List'
           iconBack='ChevronRight'
@@ -68,7 +68,7 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
-      {pageMe.followedTags.shown ? (
+      {pageMe.followedTags?.shown ? (
         <MenuRow
           iconFront='Hash'
           iconBack='ChevronRight'
@@ -76,7 +76,7 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
         />
       ) : null}
-      {pageMe.announcements.shown ? (
+      {pageMe.announcements?.shown ? (
         <MenuRow
           iconFront='Clipboard'
           iconBack='ChevronRight'
