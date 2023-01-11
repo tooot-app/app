@@ -14,9 +14,11 @@ const HeaderSharedReplies: React.FC = () => {
   const { t } = useTranslation(['common', 'componentTimeline'])
   const { colors } = useTheme()
 
-  const mentionsBeginning = rawContent?.current?.[0]
-    .match(new RegExp(/^(?:@\S+\s+)+/))?.[0]
-    ?.match(new RegExp(/@\S+/, 'g'))
+  const mentionsBeginning = rawContent?.current?.[0]?.length
+    ? rawContent?.current?.[0]
+        .match(new RegExp(/^(?:@\S+\s+)+/))?.[0]
+        ?.match(new RegExp(/@\S+/, 'g'))
+    : undefined
   excludeMentions &&
     (excludeMentions.current =
       mentionsBeginning?.length && status?.mentions

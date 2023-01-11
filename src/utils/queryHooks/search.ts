@@ -52,7 +52,7 @@ export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Ma
   return await queryClient
     .fetchQuery(queryKey, queryFunction, { staleTime: 3600, cacheTime: 3600 })
     .then(res =>
-      res.statuses[0].uri === uri || res.statuses[0].url === uri
+      res.statuses[0]?.uri === uri || res.statuses[0]?.url === uri
         ? res.statuses[0]
         : Promise.reject()
     )

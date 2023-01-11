@@ -17,7 +17,7 @@ const ComposeDrafts: React.FC<Props> = ({ accessibleRefDrafts }) => {
   const navigation = useNavigation<any>()
   const { composeState } = useContext(ComposeContext)
   const [drafts] = useAccountStorage.object('drafts')
-  const draftsCount = drafts.filter(draft => draft.timestamp !== composeState.timestamp).length
+  const draftsCount = drafts?.filter(draft => draft.timestamp !== composeState.timestamp).length
 
   useEffect(() => {
     layoutAnimation()
