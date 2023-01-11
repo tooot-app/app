@@ -197,7 +197,8 @@ const TimelineRefresh: React.FC<Props> = ({
                   const insert = prevCache.current?.slice(-PREV_PER_BATCH)
                   prevCache.current = prevCache.current?.slice(0, -PREV_PER_BATCH)
                   if (insert) {
-                    return { ...page, body: [...insert, ...page.body] }
+                    page.body.unshift(...insert)
+                    return page
                   } else {
                     return page
                   }
