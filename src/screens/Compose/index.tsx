@@ -346,13 +346,6 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                         }
 
                         switch (params?.type) {
-                          case undefined:
-                            queryClient.invalidateQueries({
-                              queryKey: ['Timeline', { page: 'Following' }],
-                              exact: false
-                            })
-                            break
-                          case 'conversation':
                           case 'edit': // doesn't work
                           // mutateTimeline.mutate({
                           //   type: 'editItem',
@@ -361,9 +354,16 @@ const ScreenCompose: React.FC<RootStackScreenProps<'Screen-Compose'>> = ({
                           // })
                           // break
                           case 'deleteEdit':
-                          case 'reply':
                             for (const navState of params.navigationState) {
                               navState && queryClient.invalidateQueries(navState)
+                            }
+                            break
+                          case 'conversation':
+                          case 'reply':
+                            for (const navState of params.navigationState) {
+                              navState &&
+                                navState[1].page !== 'Following' &&
+                                queryClient.invalidateQueries(navState)
                             }
                             break
                         }
