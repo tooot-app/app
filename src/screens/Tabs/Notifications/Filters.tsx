@@ -70,8 +70,8 @@ const TabNotificationsFilters: React.FC<
           <MenuRow
             key={index}
             title={t(`screenTabs:me.push.${type}.heading`)}
-            switchValue={filters[type]}
-            switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
+            switchValue={filters?.[type]}
+            switchOnValueChange={() => setFilters({ ...filters, [type]: !filters?.[type] })}
           />
         ))}
       </MenuContainer>
@@ -80,8 +80,8 @@ const TabNotificationsFilters: React.FC<
           <MenuRow
             key={type}
             title={t(`screenTabs:me.push.${type}.heading`)}
-            switchValue={filters[type]}
-            switchOnValueChange={() => setFilters({ ...filters, [type]: !filters[type] })}
+            switchValue={filters?.[type]}
+            switchOnValueChange={() => setFilters({ ...filters, [type]: !filters?.[type] })}
           />
         ))}
       </MenuContainer>

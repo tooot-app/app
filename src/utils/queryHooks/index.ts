@@ -1,5 +1,7 @@
 import { QueryClient } from '@tanstack/react-query'
 
+export const globalRetry = (failureCount: number) => failureCount <= 2
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -8,17 +10,9 @@ export const queryClient = new QueryClient({
         if ([401, 404].includes(error?.status)) {
           return false
         }
-        if (failureCount <= 2) {
-          return true
-        } else {
-          return false
-        }
+
+        return globalRetry(failureCount)
       }
     }
-  },
-  logger: {
-    log: log => console.log(log),
-    warn: () => {},
-    error: () => {}
   }
 })

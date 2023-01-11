@@ -162,7 +162,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }).then(res => res.body)
 
       if (!context?.ancestors.length && !context?.descendants.length) {
-        return Promise.resolve([])
+        return Promise.resolve([{ ...toot }])
       }
 
       highlightIndex.current = context.ancestors.length
@@ -182,7 +182,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     },
     {
       enabled:
-        query.isFetched &&
+        (toot._remote ? true : query.isFetched) &&
         ['public', 'unlisted'].includes(toot.visibility) &&
         match?.domain !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
@@ -198,16 +198,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           queryClient.setQueryData<{
             pages: { body: Mastodon.Status[] }[]
           }>(queryKey.local, old => {
-            if (!old) return old
-
             setHasRemoteContent(true)
             return {
               pages: [
                 {
                   body: data.map(remote => {
-                    const localMatch = query.data?.pages[0].body.find(
-                      local => local.uri === remote.uri
-                    )
+                    const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
                     if (localMatch) {
                       return { ...localMatch, _level: remote._level }
                     } else {
@@ -257,7 +253,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     }
   )
 
-  const heights = useRef<(number | undefined)[]>([])
+  const [heights, setHeights] = useState<{ [key: number]: number }>({})
   const MAX_LEVEL = 10
   const ARC = StyleConstants.Avatar.XS / 4
 
@@ -284,7 +280,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               nativeEvent: {
                 layout: { height }
               }
-            }) => (heights.current[index] = height)}
+            }) => setHeights({ ...heights, [index]: height })}
           >
             <TimelineDefault
               item={item}
@@ -326,7 +322,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights.current[index] || 999) -
+                                (heights[index] || 999) -
                                 (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
                                 StyleConstants.Avatar.XS / 2
                               } ` +
@@ -347,7 +343,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights.current[index] || 999) -
+                                (heights[index] || 999) -
                                 (StyleConstants.Spacing.S * 1.5 +
                                   StyleConstants.Font.Size.L * 1.35) /
                                   2

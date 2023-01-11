@@ -17,8 +17,8 @@
     },
     "followAs": {
       "trigger": "关注…",
-      "succeed_default": "{{source}} 正在关注 {{target}}",
-      "succeed_locked": "已从 {{source}} 发送关注请求至 {{target}}，等待通过",
+      "succeed_default": "@{{source}} 正在关注 @{{target}}",
+      "succeed_locked": "已从 @{{source}} 发送关注请求至 @{{target}}，等待通过",
       "failed": "用其它账户关注"
     },
     "blockReport": "屏蔽与举报…",

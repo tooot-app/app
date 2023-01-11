@@ -1,6 +1,6 @@
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   AccessibilityProps,
   Image,
@@ -55,15 +55,18 @@ const GracefullyImage = ({
   const { colors } = useTheme()
   const [imageLoaded, setImageLoaded] = useState(false)
 
+  const [currentUri, setCurrentUri] = useState<string | undefined>(uri.original || uri.remote)
   const source = {
-    uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
+    uri: reduceMotionEnabled && uri.static ? uri.static : currentUri
   }
-  const onLoad = () => {
-    setImageLoaded(true)
-    if (setImageDimensions && source.uri) {
-      Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
+  useEffect(() => {
+    if (
+      (uri.original ? currentUri !== uri.original : true) &&
+      (uri.remote ? currentUri !== uri.remote : true)
+    ) {
+      setCurrentUri(uri.original || uri.remote)
     }
-  }
+  }, [currentUri, uri.original, uri.remote])
 
   const blurhashView = () => {
     if (hidden || !imageLoaded) {
@@ -92,11 +95,19 @@ const GracefullyImage = ({
         />
       ) : null}
       <FastImage
-        source={{
-          uri: reduceMotionEnabled && uri.static ? uri.static : uri.original
-        }}
+        source={source}
         style={[{ flex: 1 }, imageStyle]}
-        onLoad={onLoad}
+        onLoad={() => {
+          setImageLoaded(true)
+          if (setImageDimensions && source.uri) {
+            Image.getSize(source.uri, (width, height) => setImageDimensions({ width, height }))
+          }
+        }}
+        onError={() => {
+          if (uri.original && uri.original === currentUri && uri.remote) {
+            setCurrentUri(uri.remote)
+          }
+        }}
       />
       {blurhashView()}
     </Pressable>

@@ -2,6 +2,7 @@ import { MenuContainer, MenuRow } from '@components/Menu'
 import { useNavigation } from '@react-navigation/native'
 import { useAnnouncementQuery } from '@utils/queryHooks/announcement'
 import { useListsQuery } from '@utils/queryHooks/lists'
+import { useFollowedTagsQuery } from '@utils/queryHooks/tags'
 import { useAccountStorage } from '@utils/storage/actions'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +16,12 @@ const Collections: React.FC = () => {
   useListsQuery({
     options: {
       onSuccess: data => setPageMe({ ...pageMe, lists: { shown: !!data?.length } })
+    }
+  })
+  useFollowedTagsQuery({
+    options: {
+      onSuccess: data =>
+        setPageMe({ ...pageMe, followedTags: { shown: !!data.pages[0].body.length } })
     }
   })
   useAnnouncementQuery({
@@ -53,7 +60,7 @@ const Collections: React.FC = () => {
         title={t('screenTabs:me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
-      {pageMe.lists.shown ? (
+      {pageMe.lists?.shown ? (
         <MenuRow
           iconFront='List'
           iconBack='ChevronRight'
@@ -61,7 +68,7 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
-      {pageMe.followedTags.shown ? (
+      {pageMe.followedTags?.shown ? (
         <MenuRow
           iconFront='Hash'
           iconBack='ChevronRight'
@@ -69,7 +76,7 @@ const Collections: React.FC = () => {
           onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
         />
       ) : null}
-      {pageMe.announcements.shown ? (
+      {pageMe.announcements?.shown ? (
         <MenuRow
           iconFront='Clipboard'
           iconBack='ChevronRight'

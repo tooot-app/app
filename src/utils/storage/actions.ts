@@ -43,7 +43,7 @@ export const useGlobalStorage = {
       : never,
   number: <T extends keyof StorageGlobal>(key: T) => {
     if (Platform.OS === 'ios') {
-      return useMMKVString(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
+      return useMMKVNumber(key, storage.global) as NonNullable<StorageGlobal[T]> extends number
         ? [StorageGlobal[T], (valud: StorageGlobal[T]) => void]
         : never
     } else {
@@ -233,14 +233,15 @@ export type ReadableAccountType = {
   key: string
   active: boolean
 }
-export const getReadableAccounts = (): ReadableAccountType[] => {
-  const accountActive = getGlobalStorage.string('account.active')
+export const getReadableAccounts = (withoutActive: boolean = false): ReadableAccountType[] => {
+  const accountActive = !withoutActive && getGlobalStorage.string('account.active')
   const accounts = getGlobalStorage.object('accounts')?.sort((a, b) => a.localeCompare(b))
-  accounts?.splice(
-    accounts.findIndex(a => a === accountActive),
-    1
-  )
-  accounts?.unshift(accountActive || '')
+  !withoutActive &&
+    accounts?.splice(
+      accounts.findIndex(a => a === accountActive),
+      1
+    )
+  !withoutActive && accounts?.unshift(accountActive || '')
   return (
     accounts?.map(account => {
       const details = getAccountDetails(

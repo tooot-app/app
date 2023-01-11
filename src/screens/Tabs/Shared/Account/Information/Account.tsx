@@ -18,7 +18,7 @@ const AccountInformationAccount: React.FC = () => {
   const [acct] = useAccountStorage.string('auth.account.acct')
   const domain = getAccountStorage.string('auth.account.domain')
 
-  const localInstance = account?.acct.includes('@') ? account?.acct.includes(`@${domain}`) : true
+  const localInstance = account?.acct?.includes('@') ? account?.acct?.includes(`@${domain}`) : true
 
   if (account || pageMe) {
     return (
