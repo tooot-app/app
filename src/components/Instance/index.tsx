@@ -184,7 +184,7 @@ const ComponentInstance: React.FC<Props> = ({
         )
 
         if (!account) {
-          setGlobalStorage('accounts', accounts?.concat([accountKey]))
+          setGlobalStorage('accounts', (accounts || []).concat([accountKey]))
         }
         setAccount(accountKey)
 
