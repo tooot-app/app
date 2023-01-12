@@ -4,7 +4,8 @@ import ParseEmojis from '@components/Parse/Emojis'
 import StatusContext from '@components/Timeline/Shared/Context'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { TabLocalStackParamList } from '@utils/navigation/navigators'
+import { urlMatcher } from '@utils/helpers/urlMatcher'
+import { TabLocalStackParamList, TabSharedStackParamList } from '@utils/navigation/navigators'
 import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import layoutAnimation from '@utils/styles/layoutAnimation'
@@ -152,22 +153,34 @@ const ParseHTML: React.FC<Props> = ({
                 )
               }
               if (classes.includes('mention') && (status?.mentions?.length || mentions?.length)) {
-                const matchedMention = (status?.mentions || mentions || []).find(
+                let matchedMention:
+                  | TabSharedStackParamList['Tab-Shared-Account']['account']
+                  | undefined = (status?.mentions || mentions || []).find(
                   mention => mention.url === href
                 )
                 if (
                   matchedMention &&
-                  excludeMentions?.current.find(eM => eM.id === matchedMention.id)
+                  excludeMentions?.current.find(eM => eM.id === matchedMention?.id)
                 ) {
                   prevMentionRemoved.current = true
                   return null
                 }
+
+                if (!matchedMention) {
+                  const match = urlMatcher(href)
+                  if (match?.account?.acct) {
+                    // @ts-ignore
+                    matchedMention = { ...match.account, url: href }
+                  }
+                }
+
                 const paramsAccount = (params as { account: Mastodon.Account } | undefined)?.account
-                const sameAccount = paramsAccount?.id === matchedMention?.id
+                const sameAccount = paramsAccount ? paramsAccount.id === matchedMention?.id : false
+
                 return (
                   <Text
                     key={index}
-                    style={{ color: matchedMention ? colors.blue : undefined }}
+                    style={{ color: matchedMention ? colors.blue : colors.primaryDefault }}
                     onPress={() =>
                       matchedMention &&
                       !disableDetails &&

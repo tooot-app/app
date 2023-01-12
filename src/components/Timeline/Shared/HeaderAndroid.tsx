@@ -68,28 +68,16 @@ const TimelineHeaderAndroid: React.FC = () => {
                           )
                         case 'sub':
                           return (
-                            // @ts-ignore
-                            <DropdownMenu.Sub key={item.key}>
-                              <DropdownMenu.SubTrigger
-                                key={item.trigger.key}
-                                {...item.trigger.props}
-                              >
-                                <DropdownMenu.ItemTitle children={item.trigger.title} />
-                                {item.trigger.icon ? (
-                                  <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
-                                ) : null}
-                              </DropdownMenu.SubTrigger>
-                              <DropdownMenu.SubContent>
-                                {item.items.map(sub => (
-                                  <DropdownMenu.Item key={sub.key} {...sub.props}>
-                                    <DropdownMenu.ItemTitle children={sub.title} />
-                                    {sub.icon ? (
-                                      <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
-                                    ) : null}
-                                  </DropdownMenu.Item>
-                                ))}
-                              </DropdownMenu.SubContent>
-                            </DropdownMenu.Sub>
+                            <Fragment key={item.key}>
+                              {item.items.map(sub => (
+                                <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                  <DropdownMenu.ItemTitle children={sub.title} />
+                                  {sub.icon ? (
+                                    <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                  ) : null}
+                                </DropdownMenu.Item>
+                              ))}
+                            </Fragment>
                           )
                       }
                     })}

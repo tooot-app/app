@@ -13,7 +13,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { Platform, Text, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 import AccountAttachments from './Attachments'
@@ -110,19 +110,34 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                               </DropdownMenu.Item>
                             )
                           case 'sub':
-                            return (
-                              // @ts-ignore
-                              <DropdownMenu.Sub key={item.key}>
-                                <DropdownMenu.SubTrigger
-                                  key={item.trigger.key}
-                                  {...item.trigger.props}
-                                >
-                                  <DropdownMenu.ItemTitle children={item.trigger.title} />
-                                  {item.trigger.icon ? (
-                                    <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
-                                  ) : null}
-                                </DropdownMenu.SubTrigger>
-                                <DropdownMenu.SubContent>
+                            if (Platform.OS === 'ios') {
+                              return (
+                                // @ts-ignore
+                                <DropdownMenu.Sub key={item.key}>
+                                  <DropdownMenu.SubTrigger
+                                    key={item.trigger.key}
+                                    {...item.trigger.props}
+                                  >
+                                    <DropdownMenu.ItemTitle children={item.trigger.title} />
+                                    {item.trigger.icon ? (
+                                      <DropdownMenu.ItemIcon ios={{ name: item.trigger.icon }} />
+                                    ) : null}
+                                  </DropdownMenu.SubTrigger>
+                                  <DropdownMenu.SubContent>
+                                    {item.items.map(sub => (
+                                      <DropdownMenu.Item key={sub.key} {...sub.props}>
+                                        <DropdownMenu.ItemTitle children={sub.title} />
+                                        {sub.icon ? (
+                                          <DropdownMenu.ItemIcon ios={{ name: sub.icon }} />
+                                        ) : null}
+                                      </DropdownMenu.Item>
+                                    ))}
+                                  </DropdownMenu.SubContent>
+                                </DropdownMenu.Sub>
+                              )
+                            } else {
+                              return (
+                                <Fragment key={item.key}>
                                   {item.items.map(sub => (
                                     <DropdownMenu.Item key={sub.key} {...sub.props}>
                                       <DropdownMenu.ItemTitle children={sub.title} />
@@ -131,9 +146,9 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                                       ) : null}
                                     </DropdownMenu.Item>
                                   ))}
-                                </DropdownMenu.SubContent>
-                              </DropdownMenu.Sub>
-                            )
+                                </Fragment>
+                              )
+                            }
                         }
                       })}
                     </DropdownMenu.Group>

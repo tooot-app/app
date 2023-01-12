@@ -12,7 +12,6 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext, useEffect, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import TimelineDefault from '../Default'
 import StatusContext from './Context'
 
@@ -62,21 +61,14 @@ const TimelineCard: React.FC = () => {
     }
   }, [])
 
+  if (loading) {
+    return null
+  }
+  if ((!status.card?.image || !status.card.title) && !status.card?.description) {
+    return null
+  }
+
   const cardContent = () => {
-    if (loading) {
-      return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: StyleConstants.Spacing.M
-          }}
-        >
-          <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-        </View>
-      )
-    }
     if (match?.status && foundStatus) {
       return <TimelineDefault item={foundStatus} disableDetails disableOnPress />
     }

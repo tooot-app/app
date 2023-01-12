@@ -38,7 +38,7 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   const previousSegment = getGlobalStorage.string('app.prev_public_segment')
   const segments: StorageGlobal['app.prev_public_segment'][] = ['Local', 'LocalPublic', 'Trending']
   const [segment, setSegment] = useState<number>(
-    Math.min(
+    Math.max(
       0,
       segments.findIndex(segment => segment === previousSegment)
     )
