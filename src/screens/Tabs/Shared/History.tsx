@@ -161,13 +161,15 @@ const TabSharedHistory: React.FC<TabSharedStackScreenProps<'Tab-Shared-History'>
     <FlatList
       style={{ flex: 1, minHeight: '100%' }}
       data={dataReversed}
-      renderItem={({ item, index }) => (
-        <ContentView
-          withoutBoundary={withoutBoundary}
-          item={item}
-          prevItem={dataReversed[index + 1]}
-        />
-      )}
+      renderItem={({ item, index }) =>
+        index === dataReversed.length - 1 ? null : (
+          <ContentView
+            withoutBoundary={withoutBoundary}
+            item={item}
+            prevItem={dataReversed[index + 1]}
+          />
+        )
+      }
       ItemSeparatorComponent={ComponentSeparator}
     />
   )
