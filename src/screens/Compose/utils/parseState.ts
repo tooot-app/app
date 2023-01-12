@@ -20,7 +20,7 @@ const assignVisibility = (
         return { visibility: 'unlisted', visibilityLock: false }
       }
     case 'public':
-      switch (preferences) {
+      switch (preferences?.['posting:default:visibility']) {
         case 'private':
           return { visibility: 'private', visibilityLock: false }
         case 'unlisted':
