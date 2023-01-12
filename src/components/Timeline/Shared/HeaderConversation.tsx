@@ -56,7 +56,7 @@ const HeaderConversation = ({ conversation }: Props) => {
           <CustomText>{t('componentTimeline:shared.header.conversation.withAccounts')}</CustomText>
           {conversation.accounts.map((account, index) => (
             <CustomText key={account.id} numberOfLines={1}>
-              {index !== 0 ? t('common:separator') : undefined}
+              {index !== 0 ? t('common:separator') : ' '}
               <ParseEmojis
                 content={account.display_name || account.username}
                 emojis={account.emojis}
