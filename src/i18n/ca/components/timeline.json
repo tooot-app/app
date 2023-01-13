@@ -123,7 +123,7 @@
         "muted": {
           "accessibilityLabel": "Publicació silenciada"
         },
-        "replies": "Respostes <0 />",
+        "replies": "En resposta a <0 />",
         "visibility": {
           "direct": {
             "accessibilityLabel": "La publicació és un missatge directe"
