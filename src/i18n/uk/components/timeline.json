@@ -49,7 +49,7 @@
       },
       "favourited": {
         "accessibilityLabel": "Додати дмух до улюблених",
-        "function": "Улюблені дмухи"
+        "function": "Вподобати дмух"
       },
       "bookmarked": {
         "accessibilityLabel": "Додати цей дмух до закладок",
