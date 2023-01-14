@@ -38,7 +38,6 @@ const ComposeRootSuggestions: React.FC = () => {
   const { isFetching, data, refetch } = useSearchQuery({
     type: mapSchemaToType(),
     term: composeState.tag?.raw.substring(1),
-    limit: 10,
     options: { enabled: false }
   })
   useEffect(() => {

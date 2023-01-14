@@ -13,7 +13,7 @@ export type Params = {
   }
   headers?: { [key: string]: string }
   body?: FormData
-  extras?: Omit<AxiosRequestConfig, 'method' | 'url' | 'params' | 'headers' | 'data'>
+  extras?: Omit<AxiosRequestConfig, 'method' | 'baseURL' | 'url' | 'params' | 'headers' | 'data'>
 }
 
 const apiInstance = async <T = unknown>({
