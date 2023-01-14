@@ -64,6 +64,9 @@ const TimelineCard: React.FC = () => {
   if (loading) {
     return null
   }
+  if (status.media_attachments.length) {
+    return null
+  }
   if ((!status.card?.image || !status.card.title) && !status.card?.description) {
     return null
   }
