@@ -11,7 +11,7 @@ import apiInstance from '@utils/api/instance'
 import { featureCheck } from '@utils/helpers/featureCheck'
 import { useNavState } from '@utils/navigation/navigators'
 import { queryClient } from '@utils/queryHooks'
-import { getAccountStorage } from '@utils/storage/actions'
+import { getAccountStorage, setAccountStorage } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import { uniqBy } from 'lodash'
 import { searchLocalStatus } from './search'
@@ -85,6 +85,11 @@ export const queryFunctionTimeline = async ({
         url: 'timelines/home',
         params
       }).then(res => {
+        if (marker && !res.body.length) {
+          setAccountStorage([{ key: 'read_marker_following', value: undefined }])
+          return Promise.reject()
+        }
+
         if (!page.showBoosts || !page.showReplies) {
           return {
             ...res,
