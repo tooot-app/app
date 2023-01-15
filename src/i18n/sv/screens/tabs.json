@@ -373,7 +373,8 @@
         "hashtags": "Hashtagg",
         "statuses": "Inlägg"
       },
-      "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}"
+      "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}",
+      "noResult": ""
     },
     "toot": {
       "name": "Diskussioner",
