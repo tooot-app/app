@@ -9,6 +9,7 @@ export type QueryKeySearch = [
     type?: 'accounts' | 'hashtags' | 'statuses'
     term?: string
     limit?: number
+    following?: boolean
   }
 ]
 
@@ -19,7 +20,7 @@ export type SearchResult = {
 }
 
 const queryFunction = async ({ queryKey, meta }: QueryFunctionContext<QueryKeySearch>) => {
-  const { type, term, limit = 10 } = queryKey[1]
+  const { type, term, limit = 10, following = false } = queryKey[1]
   if (!term?.length) {
     return Promise.reject('Empty search term')
   }
@@ -31,7 +32,8 @@ const queryFunction = async ({ queryKey, meta }: QueryFunctionContext<QueryKeySe
       q: term,
       ...(type && { type }),
       limit,
-      resolve: true
+      resolve: true,
+      following
     },
     ...(meta && { extras: meta })
   })

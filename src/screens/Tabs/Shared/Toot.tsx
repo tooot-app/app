@@ -275,7 +275,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
               setTimeout(() => {
                 flRef.current?.scrollToIndex({
-                  index: (ancestorsCache.current?.length || 0),
+                  index: ancestorsCache.current?.length || 0,
                   viewOffset: 50
                 })
               }, 50)
