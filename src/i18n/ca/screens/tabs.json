@@ -373,7 +373,8 @@
         "hashtags": "Etiqueta",
         "statuses": "Publicació"
       },
-      "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}"
+      "notFound": "No s'ha trobat <bold>{{searchTerm}}</bold> relacionat {{type}}",
+      "noResult": ""
     },
     "toot": {
       "name": "Discussions",
