@@ -310,12 +310,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
               }
             }) => setHeights({ ...heights, [index]: height })}
           >
-            <TimelineDefault
-              item={item}
-              queryKey={item._remote ? queryKey.remote : queryKey.local}
-              highlighted={toot.id === item.id || item.id === 'cached'}
-              isConversation={toot.id !== item.id && item.id !== 'cached'}
-            />
             {curr > 1 || next > 1
               ? [...new Array(curr)].map((_, i) => {
                   if (i > MAX_LEVEL) return null
@@ -399,6 +393,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   }
                 })
               : null}
+            <TimelineDefault
+              item={item}
+              queryKey={item._remote ? queryKey.remote : queryKey.local}
+              highlighted={toot.id === item.id || item.id === 'cached'}
+              isConversation={toot.id !== item.id && item.id !== 'cached'}
+              noBackground
+            />
             {/* <CustomText
               children={query.data?.pages[0].body[index - 1]?._level}
               style={{ position: 'absolute', top: 4, left: 4, color: colors.red }}
