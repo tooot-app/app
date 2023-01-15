@@ -146,33 +146,35 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         return Promise.resolve([{ ...toot }])
       }
 
-      ancestorsCache.current = context.ancestors.map(ancestor => {
-        const localMatch = ancestorsCache.current?.find(local => local.uri === ancestor.uri)
-        if (localMatch) {
-          return { ...localMatch, _level: 0 }
-        } else {
-          return {
-            ...ancestor,
-            _remote: true,
-            account: { ...ancestor.account, _remote: true },
-            mentions: ancestor.mentions.map(mention => ({
-              ...mention,
-              _remote: true
-            })),
-            ...(ancestor.reblog && {
-              reblog: {
-                ...ancestor.reblog,
-                _remote: true,
-                account: { ...ancestor.reblog.account, _remote: true },
-                mentions: ancestor.reblog.mentions.map(mention => ({
-                  ...mention,
-                  _remote: true
-                }))
-              }
-            })
+      if ((ancestorsCache.current?.length || 0) < context.ancestors.length) {
+        ancestorsCache.current = context.ancestors.map(ancestor => {
+          const localMatch = ancestorsCache.current?.find(local => local.uri === ancestor.uri)
+          if (localMatch) {
+            return localMatch
+          } else {
+            return {
+              ...ancestor,
+              _remote: true,
+              account: { ...ancestor.account, _remote: true },
+              mentions: ancestor.mentions.map(mention => ({
+                ...mention,
+                _remote: true
+              })),
+              ...(ancestor.reblog && {
+                reblog: {
+                  ...ancestor.reblog,
+                  _remote: true,
+                  account: { ...ancestor.reblog.account, _remote: true },
+                  mentions: ancestor.reblog.mentions.map(mention => ({
+                    ...mention,
+                    _remote: true
+                  }))
+                }
+              })
+            }
           }
-        }
-      })
+        })
+      }
 
       const statuses = [{ ...toot }, ...context.descendants]
       return statuses.map((status, index) => {
@@ -239,7 +241,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             }
           )
         }
-
+      },
+      onSettled: async () => {
         loaded.current = true
 
         if (ancestorsCache.current?.length) {
