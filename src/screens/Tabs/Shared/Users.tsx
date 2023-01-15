@@ -1,6 +1,7 @@
 import ComponentAccount from '@components/Account'
 import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import apiInstance from '@utils/api/instance'
@@ -13,7 +14,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { Circle, Flow } from 'react-native-animated-spinkit'
 import { FlatList } from 'react-native-gesture-handler'
 
 const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = ({
@@ -36,7 +36,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
     ...queryKey[1]
   })
 
-  const [isSearching, setIsSearching] = useState(false)
+  const [isSearching, setIsSearching] = useState<number | null>(null)
 
   return (
     <FlatList
@@ -46,14 +46,14 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
         minHeight: '100%',
         paddingVertical: StyleConstants.Spacing.Global.PagePadding
       }}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <ComponentAccount
           account={item}
           props={{
-            disabled: isSearching,
+            disabled: isSearching === index,
             onPress: () => {
               if (data?.pages[0]?.remoteData) {
-                setIsSearching(true)
+                setIsSearching(index)
                 apiInstance<SearchResult>({
                   version: 'v2',
                   method: 'get',
@@ -66,18 +66,18 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
                   }
                 })
                   .then(res => {
-                    setIsSearching(false)
+                    setIsSearching(null)
                     if (res.body.accounts[0]) {
                       navigation.push('Tab-Shared-Account', { account: res.body.accounts[0] })
                     }
                   })
-                  .catch(() => setIsSearching(false))
+                  .catch(() => setIsSearching(null))
               } else {
                 navigation.push('Tab-Shared-Account', { account: item })
               }
             }
           }}
-          children={<Flow size={StyleConstants.Font.Size.L} color={colors.secondary} />}
+          children={<Loading />}
         />
       )}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
@@ -93,7 +93,7 @@ const TabSharedUsers: React.FC<TabSharedStackScreenProps<'Tab-Shared-Users'>> = 
               alignItems: 'center'
             }}
           >
-            <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+            <Loading />
           </View>
         ) : null
       }

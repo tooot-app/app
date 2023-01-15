@@ -9,13 +9,7 @@ import { getGlobalStorage } from '@utils/storage/actions'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 
-export let loadingLink = false
-
 const openLink = async (url: string, navigation?: any) => {
-  if (loadingLink) {
-    return
-  }
-
   const handleNavigation = (page: 'Tab-Shared-Toot' | 'Tab-Shared-Account', options: any) => {
     if (navigation) {
       navigation.push(page, options)
@@ -28,7 +22,6 @@ const openLink = async (url: string, navigation?: any) => {
   const match = urlMatcher(url)
   // If a tooot can be found
   if (match?.status?.id) {
-    loadingLink = true
     let response: Mastodon.Status | undefined = undefined
 
     const queryKey: QueryKeyStatus = [
@@ -39,15 +32,13 @@ const openLink = async (url: string, navigation?: any) => {
 
     if (cache) {
       handleNavigation('Tab-Shared-Toot', { toot: cache })
-      loadingLink = false
       return
     } else {
       try {
-        response = await searchLocalStatus(url)
+        response = await searchLocalStatus(url, true)
       } catch {}
       if (response) {
         handleNavigation('Tab-Shared-Toot', { toot: response })
-        loadingLink = false
         return
       }
     }
@@ -60,7 +51,6 @@ const openLink = async (url: string, navigation?: any) => {
       return
     }
 
-    loadingLink = true
     let response: Mastodon.Account | undefined = undefined
 
     const queryKey: QueryKeyAccount = [
@@ -71,21 +61,18 @@ const openLink = async (url: string, navigation?: any) => {
 
     if (cache) {
       handleNavigation('Tab-Shared-Account', { account: cache })
-      loadingLink = false
       return
     } else {
       try {
-        response = await searchLocalAccount(url)
+        response = await searchLocalAccount(url, true)
       } catch {}
       if (response) {
         handleNavigation('Tab-Shared-Account', { account: response })
-        loadingLink = false
         return
       }
     }
   }
 
-  loadingLink = false
   switch (getGlobalStorage.string('app.browser')) {
     // Some links might end with an empty space at the end that triggers an error
     case 'internal':

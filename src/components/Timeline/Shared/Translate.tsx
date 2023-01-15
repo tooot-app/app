@@ -1,3 +1,4 @@
+import { Loading } from '@components/Loading'
 import { ParseHTML } from '@components/Parse'
 import CustomText from '@components/Text'
 import detectLanguage from '@utils/helpers/detectLanguage'
@@ -9,7 +10,6 @@ import * as Localization from 'expo-localization'
 import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, Pressable } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import StatusContext from './Context'
 
 const TimelineTranslate = () => {
@@ -111,13 +111,7 @@ const TimelineTranslate = () => {
                 })
             : t('componentTimeline:shared.translate.default')}
         </CustomText>
-        {isFetching ? (
-          <Circle
-            size={StyleConstants.Font.Size.M}
-            color={colors.disabled}
-            style={{ marginLeft: StyleConstants.Spacing.S }}
-          />
-        ) : null}
+        {isFetching ? <Loading style={{ marginLeft: StyleConstants.Spacing.S }} /> : null}
       </Pressable>
       {devView()}
       {data && data.error === undefined

@@ -1,6 +1,6 @@
 {
   "name": "tooot",
-  "version": "4.8.2",
+  "version": "4.8.3",
   "description": "tooot for Mastodon",
   "author": "xmflsct <me@xmflsct.com>",
   "license": "GPL-3.0-or-later",
@@ -70,7 +70,6 @@
     "react-i18next": "^12.1.4",
     "react-intl": "^6.2.5",
     "react-native": "^0.70.6",
-    "react-native-animated-spinkit": "^1.5.2",
     "react-native-blurhash": "^1.1.10",
     "react-native-fast-image": "^8.6.3",
     "react-native-feather": "^1.1.2",

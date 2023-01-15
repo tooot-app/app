@@ -1,6 +1,7 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import { MAX_MEDIA_ATTACHMENTS } from '@components/mediaSelector'
 import CustomText from '@components/Text'
 import { useActionSheet } from '@expo/react-native-action-sheet'
@@ -11,7 +12,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { RefObject, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import ComposeContext from '../../utils/createContext'
 import { ExtendedAttachment } from '../../utils/types'
@@ -135,7 +135,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
               backgroundColor: colors.backgroundOverlayInvert
             }}
           >
-            <Circle size={StyleConstants.Font.Size.L} color={colors.primaryOverlay} />
+            <Loading />
           </View>
         ) : (
           <View

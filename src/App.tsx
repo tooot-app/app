@@ -10,7 +10,6 @@ import log from '@utils/startup/log'
 import netInfo from '@utils/startup/netInfo'
 import push from '@utils/startup/push'
 import sentry from '@utils/startup/sentry'
-import timezone from '@utils/startup/timezone'
 import { storage } from '@utils/storage'
 import {
   getGlobalStorage,
@@ -39,7 +38,6 @@ dev()
 sentry()
 audio()
 push()
-timezone()
 enableFreeze(true)
 
 log('log', 'App', 'delay splash')

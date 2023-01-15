@@ -9,6 +9,7 @@ export type QueryKeySearch = [
     type?: 'accounts' | 'hashtags' | 'statuses'
     term?: string
     limit?: number
+    following?: boolean
   }
 ]
 
@@ -18,8 +19,8 @@ export type SearchResult = {
   statuses: Mastodon.Status[]
 }
 
-const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeySearch>) => {
-  const { type, term, limit = 20 } = queryKey[1]
+const queryFunction = async ({ queryKey, meta }: QueryFunctionContext<QueryKeySearch>) => {
+  const { type, term, limit = 10, following = false } = queryKey[1]
   if (!term?.length) {
     return Promise.reject('Empty search term')
   }
@@ -31,8 +32,10 @@ const queryFunction = async ({ queryKey }: QueryFunctionContext<QueryKeySearch>)
       q: term,
       ...(type && { type }),
       limit,
-      resolve: true
-    }
+      resolve: true,
+      following
+    },
+    ...(meta && { extras: meta })
   })
   return res.body
 }
@@ -47,10 +50,18 @@ const useSearchQuery = <T = SearchResult>({
   return useQuery(queryKey, queryFunction, { ...options, staleTime: 3600, cacheTime: 3600 })
 }
 
-export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Mastodon.Status> => {
+export const searchLocalStatus = async (
+  uri: Mastodon.Status['uri'],
+  timeout: boolean = false
+): Promise<Mastodon.Status> => {
   const queryKey: QueryKeySearch = ['Search', { type: 'statuses', term: uri, limit: 1 }]
   return await queryClient
-    .fetchQuery(queryKey, queryFunction, { staleTime: 3600, cacheTime: 3600 })
+    .fetchQuery(queryKey, queryFunction, {
+      staleTime: 3600,
+      cacheTime: 3600,
+      retry: false,
+      ...(timeout && { meta: { timeout: 1000 } })
+    })
     .then(res =>
       res.statuses[0]?.uri === uri || res.statuses[0]?.url === uri
         ? res.statuses[0]
@@ -59,11 +70,17 @@ export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Ma
 }
 
 export const searchLocalAccount = async (
-  url: Mastodon.Account['url']
+  url: Mastodon.Account['url'],
+  timeout: boolean = false
 ): Promise<Mastodon.Account> => {
   const queryKey: QueryKeySearch = ['Search', { type: 'accounts', term: url, limit: 1 }]
   return await queryClient
-    .fetchQuery(queryKey, queryFunction, { staleTime: 3600, cacheTime: 3600 })
+    .fetchQuery(queryKey, queryFunction, {
+      staleTime: 3600,
+      cacheTime: 3600,
+      retry: false,
+      ...(timeout && { meta: { timeout: 1000 } })
+    })
     .then(res => (res.accounts[0].url === url ? res.accounts[0] : Promise.reject()))
 }
 

@@ -1,4 +1,5 @@
 import ComponentHashtag from '@components/Hashtag'
+import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import { useTrendsQuery } from '@utils/queryHooks/trends'
@@ -6,26 +7,37 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
+import { StyleSheet, View } from 'react-native'
 
 export interface Props {
   isFetching: boolean
-  inputRef: React.RefObject<TextInput>
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+  searchTerm: string
 }
 
-const SearchEmpty: React.FC<Props> = ({ isFetching, inputRef, setSearchTerm }) => {
+const SearchEmpty: React.FC<Props> = ({ isFetching, searchTerm }) => {
   const { colors } = useTheme()
   const { t } = useTranslation('screenTabs')
 
   const trendsTags = useTrendsQuery({ type: 'tags' })
 
   return (
-    <View style={{ paddingVertical: StyleConstants.Spacing.Global.PagePadding }}>
+    <View
+      style={{
+        flex: 1,
+        minHeight: '100%',
+        paddingVertical: StyleConstants.Spacing.Global.PagePadding
+      }}
+    >
       {isFetching ? (
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Loading />
+        </View>
+      ) : searchTerm.length ? (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <CustomText
+            style={{ color: colors.primaryDefault }}
+            children={t('shared.search.noResult')}
+          />
         </View>
       ) : (
         <>

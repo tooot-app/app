@@ -1,3 +1,4 @@
+import * as Localization from 'expo-localization'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
@@ -127,5 +128,13 @@ i18n.use(initReactI18next).init({
     useSuspense: false
   }
 })
+
+const timezone = Localization.getCalendars()[0].timeZone
+if (timezone && '__setDefaultTimeZone' in Intl.DateTimeFormat) {
+  try {
+    // @ts-ignore
+    Intl.DateTimeFormat.__setDefaultTimeZone(timezone)
+  } catch {}
+}
 
 export default i18n
