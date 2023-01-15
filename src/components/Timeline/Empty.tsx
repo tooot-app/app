@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
@@ -7,7 +8,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -25,7 +25,7 @@ const TimelineEmpty: React.FC<Props> = ({ queryKey }) => {
   const children = () => {
     switch (status) {
       case 'loading':
-        return <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+        return <Loading />
       case 'error':
         return (
           <>

@@ -1,5 +1,6 @@
 import { HeaderLeft } from '@components/Header'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
 import CustomText from '@components/Text'
 import TimelineDefault from '@components/Timeline/Default'
@@ -16,7 +17,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList, Platform, Pressable, View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import { Path, Svg } from 'react-native-svg'
 
 const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
@@ -109,7 +109,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     },
     {
-      placeholderData: { pages: [{ body: [toot] }] },
+      placeholderData: { pages: [{ body: [{ ...toot, _level: 0 }] }] },
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
@@ -121,7 +121,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     }
   )
-  useQuery<Mastodon.Status[]>(
+  const remoteQuery = useQuery<Mastodon.Status[]>(
     queryKey.remote,
     async () => {
       const domain = match?.domain
@@ -446,18 +446,9 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         )
       }}
       ListFooterComponent={
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            backgroundColor: colors.backgroundDefault,
-            marginHorizontal: StyleConstants.Spacing.M
-          }}
-        >
-          {query.isLoading ? (
-            <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
-          ) : null}
-        </View>
+        query.isFetching || remoteQuery.isFetching ? (
+          <View style={{ flex: 1, alignItems: 'center' }} children={<Loading />} />
+        ) : null
       }
       {...(loaded.current && { maintainVisibleContentPosition: { minIndexForVisible: 0 } })}
       {...(Platform.OS !== 'ios' && {

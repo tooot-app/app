@@ -1,10 +1,10 @@
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { AccessibilityProps, Pressable, View } from 'react-native'
-import { Flow } from 'react-native-animated-spinkit'
 
 export interface Props {
   accessibilityLabel?: string
@@ -43,7 +43,7 @@ const HeaderRight: React.FC<Props> = ({
   const loadingSpinkit = () =>
     loading ? (
       <View style={{ position: 'absolute' }}>
-        <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+        <Loading />
       </View>
     ) : null
 

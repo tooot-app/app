@@ -1,5 +1,6 @@
 import Button from '@components/Button'
 import haptics from '@components/haptics'
+import { Loading } from '@components/Loading'
 import { ParseHTML } from '@components/Parse'
 import RelativeTime from '@components/RelativeTime'
 import CustomText from '@components/Text'
@@ -20,7 +21,6 @@ import {
   StyleSheet,
   View
 } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import FastImage from 'react-native-fast-image'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -191,14 +191,8 @@ const ScreenAnnouncements: React.FC<RootStackScreenProps<'Screen-Announcements'>
 
   const ListEmptyComponent = () => {
     return (
-      <View
-        style={{
-          width: Dimensions.get('window').width,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Loading />
       </View>
     )
   }
