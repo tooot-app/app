@@ -48,14 +48,17 @@ const useSearchQuery = <T = SearchResult>({
   return useQuery(queryKey, queryFunction, { ...options, staleTime: 3600, cacheTime: 3600 })
 }
 
-export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Mastodon.Status> => {
+export const searchLocalStatus = async (
+  uri: Mastodon.Status['uri'],
+  timeout: boolean = false
+): Promise<Mastodon.Status> => {
   const queryKey: QueryKeySearch = ['Search', { type: 'statuses', term: uri, limit: 1 }]
   return await queryClient
     .fetchQuery(queryKey, queryFunction, {
       staleTime: 3600,
       cacheTime: 3600,
       retry: false,
-      meta: { timeout: 1000 }
+      ...(timeout && { meta: { timeout: 1000 } })
     })
     .then(res =>
       res.statuses[0]?.uri === uri || res.statuses[0]?.url === uri
@@ -65,7 +68,8 @@ export const searchLocalStatus = async (uri: Mastodon.Status['uri']): Promise<Ma
 }
 
 export const searchLocalAccount = async (
-  url: Mastodon.Account['url']
+  url: Mastodon.Account['url'],
+  timeout: boolean = false
 ): Promise<Mastodon.Account> => {
   const queryKey: QueryKeySearch = ['Search', { type: 'accounts', term: url, limit: 1 }]
   return await queryClient
@@ -73,7 +77,7 @@ export const searchLocalAccount = async (
       staleTime: 3600,
       cacheTime: 3600,
       retry: false,
-      meta: { timeout: 1000 }
+      ...(timeout && { meta: { timeout: 1000 } })
     })
     .then(res => (res.accounts[0].url === url ? res.accounts[0] : Promise.reject()))
 }

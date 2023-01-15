@@ -15,7 +15,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, FlatList, Pressable, View } from 'react-native'
+import { Alert, FlatList, Platform, Pressable, View } from 'react-native'
 import { Circle } from 'react-native-animated-spinkit'
 import { Path, Svg } from 'react-native-svg'
 
@@ -33,6 +33,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     local: ['Timeline', { page: 'Toot', toot: toot.id, remote: false }],
     remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
   }
+
+  const flRef = useRef<FlatList<Mastodon.Status & { _level?: number }>>(null)
 
   useEffect(() => {
     navigation.setOptions({
@@ -69,12 +71,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     navigation.setParams({ toot, queryKey: queryKey.local })
   }, [hasRemoteContent])
 
-  const flRef = useRef<FlatList>(null)
-  const scrolled = useRef(false)
+  const PREV_PER_BATCH = 1
+  const ancestorsCache = useRef<(Mastodon.Status & { _level?: number })[]>()
+  const loaded = useRef<boolean>(false)
 
   const match = urlMatcher(toot.url || toot.uri)
-  const highlightIndex = useRef<number>(0)
-  const query = useQuery<{ pages: { body: Mastodon.Status[] }[] }>(
+  const query = useQuery<{ pages: { body: (Mastodon.Status & { _level?: number })[] }[] }>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -85,15 +87,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         url: `statuses/${toot.id}/context`
       }).then(res => res.body)
 
-      highlightIndex.current = context.ancestors.length
-
-      const statuses = [...context.ancestors, { ...toot }, ...context.descendants]
+      ancestorsCache.current = [...context.ancestors]
+      const statuses = [{ ...toot }, ...context.descendants]
 
       return {
         pages: [
           {
             body: statuses.map((status, index) => {
-              if (index < highlightIndex.current || status.id === toot.id) {
+              if (index === 0) {
                 status._level = 0
                 return status
               } else {
@@ -116,26 +117,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
-        }
-
-        if (!scrolled.current) {
-          scrolled.current = true
-          const pointer = data.pages[0].body.findIndex(({ id }) => id === toot.id)
-          if (pointer < 1) return
-          const length = flRef.current?.props.data?.length
-          if (!length) return
-          try {
-            setTimeout(() => {
-              try {
-                flRef.current?.scrollToIndex({
-                  index: pointer,
-                  viewOffset: 100
-                })
-              } catch {}
-            }, 500)
-          } catch (error) {
-            return
-          }
         }
       }
     }
@@ -165,19 +146,45 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         return Promise.resolve([{ ...toot }])
       }
 
-      highlightIndex.current = context.ancestors.length
+      ancestorsCache.current = context.ancestors.map(ancestor => {
+        const localMatch = ancestorsCache.current?.find(local => local.uri === ancestor.uri)
+        if (localMatch) {
+          return { ...localMatch, _level: 0 }
+        } else {
+          return {
+            ...ancestor,
+            _remote: true,
+            account: { ...ancestor.account, _remote: true },
+            mentions: ancestor.mentions.map(mention => ({
+              ...mention,
+              _remote: true
+            })),
+            ...(ancestor.reblog && {
+              reblog: {
+                ...ancestor.reblog,
+                _remote: true,
+                account: { ...ancestor.reblog.account, _remote: true },
+                mentions: ancestor.reblog.mentions.map(mention => ({
+                  ...mention,
+                  _remote: true
+                }))
+              }
+            })
+          }
+        }
+      })
 
-      const statuses = [...context.ancestors, { ...toot }, ...context.descendants]
-
+      const statuses = [{ ...toot }, ...context.descendants]
       return statuses.map((status, index) => {
-        if (index < highlightIndex.current || status.id === toot.id) {
+        if (index === 0) {
           status._level = 0
           return status
+        } else {
+          const repliedLevel: number =
+            statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
+          status._level = repliedLevel + 1
+          return status
         }
-
-        const repliedLevel: number = statuses.find(s => s.id === status.in_reply_to_id)?._level || 0
-        status._level = repliedLevel + 1
-        return status
       })
     },
     {
@@ -187,7 +194,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         match?.domain !== getAccountStorage.string('auth.domain'),
       staleTime: 0,
       refetchOnMount: true,
-      onSuccess: data => {
+      onSuccess: async data => {
         if ((query.data?.pages[0].body.length || 0) < 1 && data.length < 1) {
           navigation.goBack()
           return
@@ -195,59 +202,85 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
 
         if ((query.data?.pages[0].body.length || 0) < data.length) {
           queryClient.cancelQueries(queryKey.local)
-          queryClient.setQueryData<{
-            pages: { body: Mastodon.Status[] }[]
-          }>(queryKey.local, old => {
-            setHasRemoteContent(true)
-            return {
-              pages: [
-                {
-                  body: data.map(remote => {
-                    const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
-                    if (localMatch) {
-                      return { ...localMatch, _level: remote._level }
-                    } else {
-                      return {
-                        ...remote,
-                        _remote: true,
-                        account: { ...remote.account, _remote: true },
-                        mentions: remote.mentions.map(mention => ({ ...mention, _remote: true })),
-                        ...(remote.reblog && {
-                          reblog: {
-                            ...remote.reblog,
-                            _remote: true,
-                            account: { ...remote.reblog.account, _remote: true },
-                            mentions: remote.reblog.mentions.map(mention => ({
-                              ...mention,
-                              _remote: true
-                            }))
-                          }
-                        })
+          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+            queryKey.local,
+            old => {
+              setHasRemoteContent(true)
+              return {
+                pages: [
+                  {
+                    body: data.map(remote => {
+                      const localMatch = old?.pages[0].body.find(local => local.uri === remote.uri)
+                      if (localMatch) {
+                        return { ...localMatch, _level: remote._level }
+                      } else {
+                        return {
+                          ...remote,
+                          _remote: true,
+                          account: { ...remote.account, _remote: true },
+                          mentions: remote.mentions.map(mention => ({ ...mention, _remote: true })),
+                          ...(remote.reblog && {
+                            reblog: {
+                              ...remote.reblog,
+                              _remote: true,
+                              account: { ...remote.reblog.account, _remote: true },
+                              mentions: remote.reblog.mentions.map(mention => ({
+                                ...mention,
+                                _remote: true
+                              }))
+                            }
+                          })
+                        }
                       }
-                    }
-                  })
-                }
-              ]
+                    })
+                  }
+                ]
+              }
             }
-          })
+          )
         }
 
-        scrolled.current = true
-        const pointer = data.findIndex(({ id }) => id === toot.id)
-        if (pointer < 1) return
-        const length = flRef.current?.props.data?.length
-        if (!length) return
-        try {
-          setTimeout(() => {
-            try {
-              flRef.current?.scrollToIndex({
-                index: pointer,
-                viewOffset: 100
-              })
-            } catch {}
-          }, 500)
-        } catch (error) {
-          return
+        loaded.current = true
+
+        if (ancestorsCache.current?.length) {
+          switch (Platform.OS) {
+            case 'ios':
+              for (let [] of Array(
+                Math.ceil(ancestorsCache.current.length / PREV_PER_BATCH)
+              ).entries()) {
+                await new Promise(promise => setTimeout(promise, 64))
+                queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+                  queryKey.local,
+                  old => {
+                    const insert = ancestorsCache.current?.slice(-PREV_PER_BATCH)
+                    ancestorsCache.current = ancestorsCache.current?.slice(0, -PREV_PER_BATCH)
+                    if (insert) {
+                      old?.pages[0].body.unshift(...insert)
+                    }
+
+                    return old
+                  }
+                )
+              }
+              break
+            default:
+              queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+                queryKey.local,
+                old => {
+                  ancestorsCache.current && old?.pages[0].body.unshift(...ancestorsCache.current)
+
+                  return old
+                }
+              )
+
+              setTimeout(() => {
+                flRef.current?.scrollToIndex({
+                  index: (ancestorsCache.current?.length || 0),
+                  viewOffset: 50
+                })
+              }, 50)
+              break
+          }
         }
       }
     }
@@ -265,17 +298,12 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       data={query.data?.pages?.[0].body}
       renderItem={({ item, index }) => {
         const prev = query.data?.pages[0].body[index - 1]?._level || 0
-        const curr = item._level
+        const curr = item._level || 0
         const next = query.data?.pages[0].body[index + 1]?._level || 0
 
         return (
           <View
-            style={{
-              paddingLeft:
-                index > highlightIndex.current
-                  ? Math.min(item._level - 1, MAX_LEVEL) * StyleConstants.Spacing.S
-                  : undefined
-            }}
+            style={{ paddingLeft: Math.min(curr - 1, MAX_LEVEL) * StyleConstants.Spacing.S }}
             onLayout={({
               nativeEvent: {
                 layout: { height }
@@ -397,7 +425,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   ? 0
                   : StyleConstants.Avatar.XS +
                     StyleConstants.Spacing.S +
-                    Math.min(Math.max(0, leadingItem._level - 1), MAX_LEVEL) *
+                    Math.min(Math.max(0, (leadingItem._level || 0) - 1), MAX_LEVEL) *
                       StyleConstants.Spacing.S
               }
             />
@@ -416,21 +444,6 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           </>
         )
       }}
-      onScrollToIndexFailed={error => {
-        const offset = error.averageItemLength * error.index
-        flRef.current?.scrollToOffset({ offset })
-        try {
-          error.index < (query.data?.pages[0].body.length || 0) &&
-            setTimeout(
-              () =>
-                flRef.current?.scrollToIndex({
-                  index: error.index,
-                  viewOffset: 100
-                }),
-              500
-            )
-        } catch {}
-      }}
       ListFooterComponent={
         <View
           style={{
@@ -440,11 +453,27 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
             marginHorizontal: StyleConstants.Spacing.M
           }}
         >
-          {query.isFetching ? (
+          {query.isLoading ? (
             <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
           ) : null}
         </View>
       }
+      {...(loaded.current && { maintainVisibleContentPosition: { minIndexForVisible: 0 } })}
+      {...(Platform.OS !== 'ios' && {
+        onScrollToIndexFailed: error => {
+          const offset = error.averageItemLength * error.index
+          flRef.current?.scrollToOffset({ offset })
+          error.index < (ancestorsCache.current?.length || 0) &&
+            setTimeout(
+              () =>
+                flRef.current?.scrollToIndex({
+                  index: error.index,
+                  viewOffset: 50
+                }),
+              50
+            )
+        }
+      })}
     />
   )
 }

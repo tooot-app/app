@@ -35,7 +35,7 @@ const openLink = async (url: string, navigation?: any) => {
       return
     } else {
       try {
-        response = await searchLocalStatus(url)
+        response = await searchLocalStatus(url, true)
       } catch {}
       if (response) {
         handleNavigation('Tab-Shared-Toot', { toot: response })
@@ -64,7 +64,7 @@ const openLink = async (url: string, navigation?: any) => {
       return
     } else {
       try {
-        response = await searchLocalAccount(url)
+        response = await searchLocalAccount(url, true)
       } catch {}
       if (response) {
         handleNavigation('Tab-Shared-Account', { account: response })
