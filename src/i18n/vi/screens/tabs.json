@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Tút"
       },
-      "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>"
+      "notFound": "Không tìm thấy {{type}} <bold>{{searchTerm}}</bold>",
+      "noResult": ""
     },
     "toot": {
       "name": "Nội dung tút",
