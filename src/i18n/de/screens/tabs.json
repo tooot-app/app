@@ -374,7 +374,7 @@
         "statuses": "Tröt"
       },
       "notFound": "Konnte <bold>{{searchTerm}}</bold>-bezogene {{type}} nicht finden",
-      "noResult": ""
+      "noResult": "Nichts gefunden, bitte versuchen Sie es mit einem anderen Begriff"
     },
     "toot": {
       "name": "Diskussionen",
