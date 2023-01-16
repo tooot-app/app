@@ -373,7 +373,8 @@
         "hashtags": "ハッシュタグ",
         "statuses": "投稿"
       },
-      "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした"
+      "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした",
+      "noResult": ""
     },
     "toot": {
       "name": "スレッド",

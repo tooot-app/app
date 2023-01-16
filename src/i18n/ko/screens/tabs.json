@@ -373,7 +373,8 @@
         "hashtags": "해시태그",
         "statuses": "툿"
       },
-      "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요"
+      "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요",
+      "noResult": ""
     },
     "toot": {
       "name": "대화",
