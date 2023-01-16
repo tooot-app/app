@@ -264,13 +264,39 @@ export const setAccount = async (account: string) => {
     })
 }
 
-export const removeAccount = async (account: string) => {
-  displayMessage({
-    message: i18n.t('screens:localCorrupt.message'),
-    type: 'danger'
-  })
+export const removeAccount = async (account: string, warning: boolean = true) => {
+  const temp = new MMKV({ id: account })
+
+  if (warning) {
+    const acct = temp.getString('auth.account.acct')
+    const domain = temp.getString('auth.account.domain')
+    displayMessage({
+      message: i18n.t('screens:localCorrupt.message'),
+      ...(acct && domain && { description: `@${acct}@${domain}` }),
+      type: 'danger'
+    })
+  }
   // @ts-ignore
   navigationRef.navigate('Screen-Tabs', { screen: 'Tab-Me' })
+
+  const revokeDetails = {
+    domain: temp.getString('auth.domain'),
+    client_id: temp.getString('auth.clientId'),
+    client_secret: temp.getString('auth.clientSecret'),
+    token: temp.getString('auth.token')
+  }
+  if (
+    revokeDetails.domain &&
+    revokeDetails.client_id &&
+    revokeDetails.client_secret &&
+    revokeDetails.token
+  ) {
+    const body = new FormData()
+    body.append('client_id', revokeDetails.client_id)
+    body.append('client_secret', revokeDetails.client_secret)
+    body.append('token', revokeDetails.token)
+    apiGeneral({ method: 'post', domain: revokeDetails.domain, url: '/oauth/revoke', body })
+  }
 
   const currAccounts: NonNullable<StorageGlobal['accounts']> =
     getGlobalStorage.object('accounts') || []
