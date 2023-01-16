@@ -374,7 +374,7 @@
         "statuses": "嘟文"
       },
       "notFound": "找不到 <bold>{{searchTerm}}</bold> 相关的 {{type}}",
-      "noResult": ""
+      "noResult": "搜索不到相关信息，请尝试不同关键词"
     },
     "toot": {
       "name": "对话",
