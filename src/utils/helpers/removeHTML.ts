@@ -1,6 +1,8 @@
 import * as htmlparser2 from 'htmlparser2'
 
 const removeHTML = (text: string): string => {
+  if (!text) return ''
+
   let raw: string = ''
 
   const parser = new htmlparser2.Parser({
