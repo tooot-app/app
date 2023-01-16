@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Toot"
       },
-      "notFound": "Nie można odnaleźć <bold>{{searchTerm}}</bold> powiązanego {{type}}"
+      "notFound": "Nie można odnaleźć <bold>{{searchTerm}}</bold> powiązanego {{type}}",
+      "noResult": ""
     },
     "toot": {
       "name": "Dyskusje",

@@ -373,7 +373,8 @@
         "hashtags": "主題標籤",
         "statuses": "嘟文"
       },
-      "notFound": "找不到 <bold>{{searchTerm}}</bold> 相關的 {{type}}"
+      "notFound": "找不到 <bold>{{searchTerm}}</bold> 相關的 {{type}}",
+      "noResult": "找不到任何東西，請嘗試其它用詞"
     },
     "toot": {
       "name": "討論",

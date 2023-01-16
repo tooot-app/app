@@ -1,8 +1,7 @@
 import { HeaderRight } from '@components/Header'
 import Timeline from '@components/Timeline'
 import SegmentedControl from '@react-native-community/segmented-control'
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { TabPublicStackParamList } from '@utils/navigation/navigators'
 import { QueryKeyTimeline } from '@utils/queryHooks/timeline'
 import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
@@ -14,12 +13,7 @@ import { Dimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
 
 const Route = ({ route: { key: page } }: { route: any }) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<TabPublicStackParamList, 'Tab-Public-Root'>>()
   const queryKey: QueryKeyTimeline = ['Timeline', { page }]
-  useEffect(() => {
-    navigation.setParams({ queryKey })
-  }, [])
   return <Timeline queryKey={queryKey} disableRefresh={page === 'Trending'} />
 }
 
@@ -35,12 +29,11 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
   const { mode } = useTheme()
   const { t } = useTranslation('screenTabs')
 
-  const previousSegment = getGlobalStorage.string('app.prev_public_segment')
   const segments: StorageGlobal['app.prev_public_segment'][] = ['Local', 'LocalPublic', 'Trending']
   const [segment, setSegment] = useState<number>(
     Math.max(
       0,
-      segments.findIndex(segment => segment === previousSegment)
+      segments.findIndex(segment => segment === getGlobalStorage.string('app.prev_public_segment'))
     )
   )
   const [routes] = useState([
@@ -48,6 +41,10 @@ const Root: React.FC<NativeStackScreenProps<TabPublicStackParamList, 'Tab-Public
     { key: 'LocalPublic', title: t('tabs.public.segments.federated') },
     { key: 'Trending', title: t('tabs.public.segments.trending') }
   ])
+  useEffect(() => {
+    const page = segments[segment]
+    page && navigation.setParams({ queryKey: ['Timeline', { page }] })
+  }, [segment])
 
   useEffect(() => {
     navigation.setOptions({

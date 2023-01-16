@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Ανάρτηση"
       },
-      "notFound": "Δεν είναι εφικτό να βρεθεί <bold>{{searchTerm}}</bold> που να έχει σχέση με {{type}}"
+      "notFound": "Δεν είναι εφικτό να βρεθεί <bold>{{searchTerm}}</bold> που να έχει σχέση με {{type}}",
+      "noResult": ""
     },
     "toot": {
       "name": "Συζητήσεις",

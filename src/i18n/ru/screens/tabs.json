@@ -373,7 +373,8 @@
         "hashtags": "",
         "statuses": ""
       },
-      "notFound": ""
+      "notFound": "",
+      "noResult": ""
     },
     "toot": {
       "name": "",

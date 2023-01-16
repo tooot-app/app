@@ -373,7 +373,8 @@
         "hashtags": "Ґештег",
         "statuses": "Дмух"
       },
-      "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}"
+      "notFound": "Не вдалося знайти <bold>{{searchTerm}}</bold> пов'язаний з {{type}}",
+      "noResult": "Нічого не знайдено, спробуйте інший термін"
     },
     "toot": {
       "name": "Обговорення",
