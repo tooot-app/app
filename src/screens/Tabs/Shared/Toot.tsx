@@ -34,7 +34,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
     remote: ['Timeline', { page: 'Toot', toot: toot.id, remote: true }]
   }
 
-  const flRef = useRef<FlatList<Mastodon.Status & { _level?: number }>>(null)
+  const flRef = useRef<FlatList<Mastodon.Status & { _level?: number; key?: string }>>(null)
 
   useEffect(() => {
     navigation.setOptions({
@@ -72,11 +72,13 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   }, [hasRemoteContent])
 
   const PREV_PER_BATCH = 1
-  const ancestorsCache = useRef<(Mastodon.Status & { _level?: number })[]>()
+  const ancestorsCache = useRef<(Mastodon.Status & { _level?: number; key?: string })[]>()
   const loaded = useRef<boolean>(false)
 
   const match = urlMatcher(toot.url || toot.uri)
-  const query = useQuery<{ pages: { body: (Mastodon.Status & { _level?: number })[] }[] }>(
+  const query = useQuery<{
+    pages: { body: (Mastodon.Status & { _level?: number; key?: string })[] }[]
+  }>(
     queryKey.local,
     async () => {
       const context = await apiInstance<{
@@ -109,7 +111,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       }
     },
     {
-      placeholderData: { pages: [{ body: [{ ...toot, _level: 0 }] }] },
+      placeholderData: { pages: [{ body: [{ ...toot, _level: 0, key: `${toot.id}_cache` }] }] },
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
