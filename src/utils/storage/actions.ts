@@ -1,4 +1,9 @@
+import { displayMessage } from '@components/Message'
+import i18n from '@i18n/index'
+import apiGeneral from '@utils/api/general'
+import navigationRef from '@utils/navigation/navigationRef'
 import { queryClient } from '@utils/queryHooks'
+import log from '@utils/startup/log'
 import { storage } from '@utils/storage'
 import { Platform } from 'react-native'
 import {
@@ -222,10 +227,72 @@ export const generateAccountKey = ({
 }) => `${domain}/${id}`
 
 export const setAccount = async (account: string) => {
-  storage.account = new MMKV({ id: account })
-  setGlobalStorage('account.active', account)
-  await queryClient.resetQueries()
-  queryClient.clear()
+  const temp = new MMKV({ id: account })
+  const token = temp.getString('auth.token')
+  const domain = temp.getString('auth.domain')
+
+  if (!token || !domain) {
+    await removeAccount(account)
+    return
+  }
+
+  await apiGeneral<Mastodon.Account>({
+    method: 'get',
+    domain,
+    url: 'api/v1/accounts/verify_credentials',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(res => res.body)
+    .then(async a => {
+      temp.set('auth.account.acct', a.acct)
+      temp.set('auth.account.avatar_static', a.avatar_static)
+
+      log('log', 'setAccount', `binding storage of ${account}`)
+      await queryClient.resetQueries()
+      queryClient.clear()
+
+      storage.account = temp
+      setGlobalStorage('account.active', account)
+    })
+    .catch(async error => {
+      if (error?.status && error.status == 401) {
+        log('log', 'setAccount', `unauthorised ${account}`)
+        await removeAccount(account)
+      }
+    })
+}
+
+export const removeAccount = async (account: string) => {
+  displayMessage({
+    message: i18n.t('screens:localCorrupt.message'),
+    type: 'danger'
+  })
+  // @ts-ignore
+  navigationRef.navigate('Screen-Tabs', { screen: 'Tab-Me' })
+
+  const currAccounts: NonNullable<StorageGlobal['accounts']> =
+    getGlobalStorage.object('accounts') || []
+  const nextAccounts: NonNullable<StorageGlobal['accounts']> = currAccounts.filter(
+    a => a !== account
+  )
+
+  storage.global.set('accounts', JSON.stringify(nextAccounts))
+
+  if (nextAccounts.length) {
+    log('log', 'removeAccount', `trying next account ${nextAccounts[nextAccounts.length - 1]}`)
+    await setAccount(nextAccounts[nextAccounts.length - 1])
+  } else {
+    log('log', 'removeAccount', 'setting to undefined')
+    await queryClient.resetQueries()
+    queryClient.clear()
+
+    storage.account = undefined
+    setGlobalStorage('account.active', undefined)
+  }
+
+  new MMKV({ id: account }).clearAll()
 }
 
 export type ReadableAccountType = {
@@ -262,26 +329,4 @@ export const getReadableAccounts = (withoutActive: boolean = false): ReadableAcc
       }
     }) || []
   ).filter(a => a.acct.length)
-}
-
-export const removeAccount = async (account: string) => {
-  const currAccounts: NonNullable<StorageGlobal['accounts']> = JSON.parse(
-    storage.global.getString('accounts') || '[]'
-  )
-  const nextAccounts: NonNullable<StorageGlobal['accounts']> = currAccounts.filter(
-    a => a !== account
-  )
-
-  storage.global.set('accounts', JSON.stringify(nextAccounts))
-
-  if (nextAccounts.length) {
-    await setAccount(nextAccounts[nextAccounts.length - 1])
-  } else {
-    storage.account = undefined
-    setGlobalStorage('account.active', undefined)
-    queryClient.clear()
-  }
-
-  const temp = new MMKV({ id: account })
-  temp.clearAll()
 }
