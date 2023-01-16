@@ -9657,7 +9657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-ios-context-menu@npm:^1.15.1":
+"react-native-ios-context-menu@npm:1.15.1":
   version: 1.15.1
   resolution: "react-native-ios-context-menu@npm:1.15.1"
   dependencies:
@@ -9666,6 +9666,18 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 3925783aa849e4af817ec2d7ad9e777da87587b0c95b44f1ee509c9a9b64d8471fb925f99ea9a5573a9028517fff75c441585b703f1d944c7451c0f7a708dd6e
+  languageName: node
+  linkType: hard
+
+"react-native-ios-context-menu@patch:react-native-ios-context-menu@npm%3A1.15.1#./.yarn/patches/react-native-ios-context-menu-npm-1.15.1-0034bfa5ba.patch::locator=tooot%40workspace%3A.":
+  version: 1.15.1
+  resolution: "react-native-ios-context-menu@patch:react-native-ios-context-menu@npm%3A1.15.1#./.yarn/patches/react-native-ios-context-menu-npm-1.15.1-0034bfa5ba.patch::version=1.15.1&hash=e3f0c8&locator=tooot%40workspace%3A."
+  dependencies:
+    "@dominicstop/ts-event-emitter": ^1.1.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ad6bcca2cb3816bc6c52922540cb83e02a5a5217347293e8e4d710742c533afbd244cfd8d3fbe7cf453ba0715435987168bfc1326efec841422ea70a1c9f4a6a
   languageName: node
   linkType: hard
 
