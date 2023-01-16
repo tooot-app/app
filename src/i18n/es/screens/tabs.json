@@ -374,7 +374,7 @@
         "statuses": "Toot"
       },
       "notFound": "No se pudo encontrar <bold>{{searchTerm}}</bold> relacionado con {{type}}",
-      "noResult": ""
+      "noResult": "No se ha podido encontrar nada, por favor, inténtelo con un término diferente"
     },
     "toot": {
       "name": "Discusiones",
