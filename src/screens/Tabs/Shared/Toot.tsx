@@ -74,8 +74,55 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   const PREV_PER_BATCH = 1
   const ancestorsCache = useRef<(Mastodon.Status & { _level?: number; key?: string })[]>()
   const loaded = useRef<boolean>(false)
+  const prependContent = async () => {
+    loaded.current = true
+
+    if (ancestorsCache.current?.length) {
+      switch (Platform.OS) {
+        case 'ios':
+          for (let [] of Array(
+            Math.ceil(ancestorsCache.current.length / PREV_PER_BATCH)
+          ).entries()) {
+            await new Promise(promise => setTimeout(promise, 64))
+            queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+              queryKey.local,
+              old => {
+                const insert = ancestorsCache.current?.slice(-PREV_PER_BATCH)
+                ancestorsCache.current = ancestorsCache.current?.slice(0, -PREV_PER_BATCH)
+                if (insert) {
+                  old?.pages[0].body.unshift(...insert)
+                }
+
+                return old
+              }
+            )
+          }
+          break
+        default:
+          queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
+            queryKey.local,
+            old => {
+              ancestorsCache.current && old?.pages[0].body.unshift(...ancestorsCache.current)
+
+              return old
+            }
+          )
+
+          setTimeout(() => {
+            flRef.current?.scrollToIndex({
+              index: ancestorsCache.current?.length || 0,
+              viewOffset: 50
+            })
+          }, 50)
+          break
+      }
+    }
+  }
 
   const match = urlMatcher(toot.url || toot.uri)
+  const remoteQueryEnabled =
+    ['public', 'unlisted'].includes(toot.visibility) &&
+    match?.domain !== getAccountStorage.string('auth.domain')
   const query = useQuery<{
     pages: { body: (Mastodon.Status & { _level?: number; key?: string })[] }[]
   }>(
@@ -115,10 +162,14 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       enabled: !toot._remote,
       staleTime: 0,
       refetchOnMount: true,
-      onSuccess: data => {
+      onSuccess: async data => {
         if (data.pages[0].body.length < 1) {
           navigation.goBack()
           return
+        }
+
+        if (!remoteQueryEnabled) {
+          await prependContent()
         }
       }
     }
@@ -192,12 +243,10 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
       })
     },
     {
-      enabled:
-        (toot._remote ? true : query.isFetched) &&
-        ['public', 'unlisted'].includes(toot.visibility) &&
-        match?.domain !== getAccountStorage.string('auth.domain'),
+      enabled: (toot._remote ? true : query.isFetched) && remoteQueryEnabled,
       staleTime: 0,
       refetchOnMount: true,
+      retry: false,
       onSuccess: async data => {
         if ((query.data?.pages[0].body.length || 0) < 1 && data.length < 1) {
           navigation.goBack()
@@ -245,48 +294,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         }
       },
       onSettled: async () => {
-        loaded.current = true
-
-        if (ancestorsCache.current?.length) {
-          switch (Platform.OS) {
-            case 'ios':
-              for (let [] of Array(
-                Math.ceil(ancestorsCache.current.length / PREV_PER_BATCH)
-              ).entries()) {
-                await new Promise(promise => setTimeout(promise, 64))
-                queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
-                  queryKey.local,
-                  old => {
-                    const insert = ancestorsCache.current?.slice(-PREV_PER_BATCH)
-                    ancestorsCache.current = ancestorsCache.current?.slice(0, -PREV_PER_BATCH)
-                    if (insert) {
-                      old?.pages[0].body.unshift(...insert)
-                    }
-
-                    return old
-                  }
-                )
-              }
-              break
-            default:
-              queryClient.setQueryData<{ pages: { body: Mastodon.Status[] }[] }>(
-                queryKey.local,
-                old => {
-                  ancestorsCache.current && old?.pages[0].body.unshift(...ancestorsCache.current)
-
-                  return old
-                }
-              )
-
-              setTimeout(() => {
-                flRef.current?.scrollToIndex({
-                  index: ancestorsCache.current?.length || 0,
-                  viewOffset: 50
-                })
-              }, 50)
-              break
-          }
-        }
+        await prependContent()
       }
     }
   )

@@ -32,11 +32,7 @@ import { routingInstrumentation } from '../utils/startup/sentry'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-export interface Props {
-  localCorrupt?: string
-}
-
-const Screens: React.FC<Props> = ({ localCorrupt }) => {
+const Screens: React.FC = () => {
   const { t, i18n } = useTranslation([
     'common',
     'screens',
@@ -63,24 +59,6 @@ const Screens: React.FC<Props> = ({ localCorrupt }) => {
     Platform.select({ ios: screenshotListener })
     return () => screenshotListener.remove()
   }, [])
-
-  // On launch display login credentials corrupt information
-  useEffect(() => {
-    const showLocalCorrect = () => {
-      if (localCorrupt) {
-        displayMessage({
-          message: t('screens:localCorrupt.message'),
-          description: localCorrupt.length ? localCorrupt : undefined,
-          type: 'danger'
-        })
-        // @ts-ignore
-        navigationRef.navigate('Screen-Tabs', {
-          screen: 'Tab-Me'
-        })
-      }
-    }
-    return showLocalCorrect()
-  }, [localCorrupt])
 
   // Lazily update users's preferences, for e.g. composing default visibility
   useInstanceQuery({ options: { enabled: !!accountActive } })

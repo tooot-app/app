@@ -119,6 +119,7 @@
     "react-native-fast-image@^8.6.3": "patch:react-native-fast-image@npm%3A8.6.3#./.yarn/patches/react-native-fast-image-npm-8.6.3-03ee2d23c0.patch",
     "expo-av@^13.0.2": "patch:expo-av@npm%3A13.0.2#./.yarn/patches/expo-av-npm-13.0.2-7a651776f1.patch",
     "react-native-share-menu@^6.0.0": "patch:react-native-share-menu@npm%3A6.0.0#./.yarn/patches/react-native-share-menu-npm-6.0.0-f1094c3204.patch",
-    "@types/react-native-share-menu@^5.0.2": "patch:@types/react-native-share-menu@npm%3A5.0.2#./.yarn/patches/@types-react-native-share-menu-npm-5.0.2-373df17ecc.patch"
+    "@types/react-native-share-menu@^5.0.2": "patch:@types/react-native-share-menu@npm%3A5.0.2#./.yarn/patches/@types-react-native-share-menu-npm-5.0.2-373df17ecc.patch",
+    "react-native-ios-context-menu@^1.15.1": "patch:react-native-ios-context-menu@npm%3A1.15.1#./.yarn/patches/react-native-ios-context-menu-npm-1.15.1-0034bfa5ba.patch"
   }
 }
