@@ -374,7 +374,7 @@
         "statuses": "Toot"
       },
       "notFound": "Kan <bold>{{searchTerm}}</bold> niet vinden gerelateerd aan {{type}}",
-      "noResult": ""
+      "noResult": "Kan niets vinden, probeer een andere term"
     },
     "toot": {
       "name": "Gesprek",
