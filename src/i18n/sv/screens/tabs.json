@@ -374,7 +374,7 @@
         "statuses": "Inlägg"
       },
       "notFound": "Kan inte hitta <bold>{{searchTerm}}</bold>-relaterade {{type}}",
-      "noResult": ""
+      "noResult": "Kan inte hitta något, försök med en annan sökning"
     },
     "toot": {
       "name": "Diskussioner",
