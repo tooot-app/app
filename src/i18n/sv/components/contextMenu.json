@@ -21,7 +21,7 @@
       "succeed_locked": "Följförfrågan skickades till @{{target}} med {{source}}, väntar på godkännande",
       "failed": "Följ som"
     },
-    "blockReport": "",
+    "blockReport": "Blockera och anmäl...",
     "block": {
       "action_false": "Blockera användare",
       "action_true": "Avblockera användare",
