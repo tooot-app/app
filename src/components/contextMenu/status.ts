@@ -58,6 +58,7 @@ const menuStatus = ({
   const menus: ContextMenu = []
 
   const [accountId] = useAccountStorage.string('auth.account.id')
+  const [accountAcct] = useAccountStorage.string('auth.account.acct')
   const ownAccount = accountId === status.account?.id
 
   const canEditPost = featureCheck('edit_post')
@@ -193,7 +194,13 @@ const menuStatus = ({
           }),
         disabled: false,
         destructive: false,
-        hidden: !ownAccount
+        hidden:
+          !ownAccount &&
+          queryKey[1].page !== 'Notifications' &&
+          !status.mentions.find(
+            mention => mention.acct === accountAcct && mention.username === accountAcct
+          ) &&
+          !status.muted
       },
       title: t('componentContextMenu:status.mute.action', {
         defaultValue: 'false',
