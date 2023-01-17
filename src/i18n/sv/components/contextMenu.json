@@ -16,10 +16,10 @@
       "action_true": "Sluta tysta användare"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "Följ som...",
+      "succeed_default": "Följer nu @{{target}} med @{{source}}",
+      "succeed_locked": "Följförfrågan skickades till @{{target}} med {{source}}, väntar på godkännande",
+      "failed": "Följ som"
     },
     "blockReport": "",
     "block": {
