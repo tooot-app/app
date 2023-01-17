@@ -2,13 +2,13 @@ import ComponentAccount from '@components/Account'
 import haptics from '@components/haptics'
 import ComponentHashtag from '@components/Hashtag'
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import ComponentSeparator from '@components/Separator'
 import { useSearchQuery } from '@utils/queryHooks/search'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { Fragment, useContext, useEffect } from 'react'
 import { View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 import ComposeContext from '../utils/createContext'
 import { formatText } from '../utils/processText'
 
@@ -38,7 +38,7 @@ const ComposeRootSuggestions: React.FC = () => {
   const { isFetching, data, refetch } = useSearchQuery({
     type: mapSchemaToType(),
     term: composeState.tag?.raw.substring(1),
-    limit: 10,
+    ...(mapSchemaToType() === 'accounts' && { following: true }),
     options: { enabled: false }
   })
   useEffect(() => {
@@ -125,7 +125,7 @@ const ComposeRootSuggestions: React.FC = () => {
       key='listEmpty'
       style={{ flex: 1, alignItems: 'center', marginVertical: StyleConstants.Spacing.M }}
     >
-      <Circle size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+      <Loading />
     </View>
   ) : (
     <>{main()}</>

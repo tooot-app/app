@@ -51,8 +51,6 @@ const features = [
   }
 ]
 
-export const featureCheck = (feature: string): boolean => {
-  const version = getAccountStorage.string('version')
-  return !!features.filter(f => f.feature === feature).filter(f => parseFloat(version) >= f.version)
-    ?.length
-}
+export const featureCheck = (feature: string, v?: string): boolean =>
+  (features.find(f => f.feature === feature)?.version || 999) <=
+  parseFloat(v || getAccountStorage.string('version'))

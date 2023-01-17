@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
 import { StyleConstants } from '@utils/styles/constants'
@@ -6,7 +7,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import { ColorDefinitions } from '@utils/styles/themes'
 import React from 'react'
 import { View } from 'react-native'
-import { Flow } from 'react-native-animated-spinkit'
 import { State, Switch, TapGestureHandler } from 'react-native-gesture-handler'
 
 export interface Props {
@@ -150,7 +150,7 @@ const MenuRow: React.FC<Props> = ({
                 ) : null}
                 {loading ? (
                   <View style={{ position: 'absolute' }}>
-                    <Flow size={StyleConstants.Font.Size.M * 1.25} color={colors.secondary} />
+                    <Loading />
                   </View>
                 ) : null}
               </View>

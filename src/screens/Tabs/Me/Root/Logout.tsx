@@ -32,7 +32,7 @@ const Logout: React.FC = () => {
               onPress: () => {
                 if (accountActive) {
                   haptics('Light')
-                  removeAccount(accountActive)
+                  removeAccount(accountActive, false)
                 }
               }
             },

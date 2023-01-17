@@ -36,6 +36,7 @@ export interface Props {
   disableDetails?: boolean
   disableOnPress?: boolean
   isConversation?: boolean
+  noBackground?: boolean
 }
 
 // When the poll is long
@@ -45,7 +46,8 @@ const TimelineDefault: React.FC<Props> = ({
   highlighted = false,
   disableDetails = false,
   disableOnPress = false,
-  isConversation = false
+  isConversation = false,
+  noBackground = false
 }) => {
   const status = item.reblog ? item.reblog : item
   const rawContent = useRef<string[]>([])
@@ -77,7 +79,7 @@ const TimelineDefault: React.FC<Props> = ({
     padding: disableDetails
       ? StyleConstants.Spacing.Global.PagePadding / 1.5
       : StyleConstants.Spacing.Global.PagePadding,
-    backgroundColor: colors.backgroundDefault,
+    backgroundColor: noBackground ? undefined : colors.backgroundDefault,
     paddingBottom: disableDetails ? StyleConstants.Spacing.Global.PagePadding / 1.5 : 0
   }
   const main = () => (

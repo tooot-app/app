@@ -1,4 +1,5 @@
 import Icon from '@components/Icon'
+import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { QueryKeyTimeline, useTimelineQuery } from '@utils/queryHooks/timeline'
 import { StyleConstants } from '@utils/styles/constants'
@@ -6,7 +7,6 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import { View } from 'react-native'
-import { Circle } from 'react-native-animated-spinkit'
 
 export interface Props {
   queryKey: QueryKeyTimeline
@@ -31,7 +31,7 @@ const TimelineFooter: React.FC<Props> = ({ queryKey, disableInfinity }) => {
       }}
     >
       {!disableInfinity && hasNextPage ? (
-        <Circle size={StyleConstants.Font.Size.L} color={colors.secondary} />
+        <Loading />
       ) : (
         <CustomText fontStyle='S' style={{ color: colors.secondary }}>
           <Trans

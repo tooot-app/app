@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Toot"
       },
-      "notFound": "Cannot find <bold>{{searchTerm}}</bold> related {{type}}"
+      "notFound": "Cannot find <bold>{{searchTerm}}</bold> related {{type}}",
+      "noResult": "Cannot find anything, please try a different term"
     },
     "toot": {
       "name": "Discussions",

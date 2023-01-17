@@ -4,7 +4,7 @@ import { CameraRoll } from '@react-native-camera-roll/camera-roll'
 import { RootStackParamList } from '@utils/navigation/navigators'
 import * as FileSystem from 'expo-file-system'
 import i18next from 'i18next'
-import { PermissionsAndroid, Platform } from 'react-native'
+import { Linking, PermissionsAndroid, Platform } from 'react-native'
 
 type CommonProps = {
   image: RootStackParamList['Screen-ImagesViewer']['imageUrls'][0]
@@ -19,7 +19,11 @@ const saveIos = async ({ image }: CommonProps) => {
         message: i18next.t('screenImageViewer:content.save.succeed')
       })
     })
-    .catch(() => {
+    .catch(err => {
+      if (err?.code === 'E_PHOTO_LIBRARY_AUTH_DENIED') {
+        Linking.openSettings()
+        return
+      }
       if (image.remote_url) {
         CameraRoll.save(image.remote_url)
           .then(() => {

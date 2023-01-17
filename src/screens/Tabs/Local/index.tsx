@@ -8,7 +8,7 @@ import Root from './Root'
 const Stack = createNativeStackNavigator<TabLocalStackParamList>()
 
 const TabLocal: React.FC = () => {
-  usePopToTop()
+  usePopToTop('Tab-Local-Root')
   return (
     <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
       <Stack.Screen name='Tab-Local-Root' component={Root} />

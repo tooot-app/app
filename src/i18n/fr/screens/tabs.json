@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Pouet"
       },
-      "notFound": "Impossible de trouver <bold>{{searchTerm}}</bold> lié à {{type}}"
+      "notFound": "Impossible de trouver <bold>{{searchTerm}}</bold> lié à {{type}}",
+      "noResult": ""
     },
     "toot": {
       "name": "Discussions",

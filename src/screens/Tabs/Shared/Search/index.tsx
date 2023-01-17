@@ -131,7 +131,6 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
       style={{ flex: 1 }}
     >
       <SectionList
-        style={{ minHeight: '100%' }}
         sections={data || []}
         renderItem={({ item, section }: { item: any; section: any }) => {
           switch (section.title) {
@@ -146,9 +145,7 @@ const TabSharedSearch: React.FC<TabSharedStackScreenProps<'Tab-Shared-Search'>> 
           }
         }}
         stickySectionHeadersEnabled
-        ListEmptyComponent={
-          <SearchEmpty isFetching={isFetching} inputRef={inputRef} setSearchTerm={setSearchTerm} />
-        }
+        ListEmptyComponent={<SearchEmpty isFetching={isFetching} searchTerm={searchTerm} />}
         keyboardShouldPersistTaps='always'
         renderSectionHeader={({ section: { translation } }) => (
           <View

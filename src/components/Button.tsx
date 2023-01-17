@@ -3,7 +3,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useState } from 'react'
 import { AccessibilityProps, Pressable, StyleProp, View, ViewStyle } from 'react-native'
-import { Flow } from 'react-native-animated-spinkit'
+import { Loading } from './Loading'
 import CustomText from './Text'
 
 export interface Props {
@@ -53,7 +53,7 @@ const Button: React.FC<Props> = ({
   const loadingSpinkit = () =>
     loading ? (
       <View style={{ position: 'absolute' }}>
-        <Flow size={StyleConstants.Font.Size[size]} color={colors.secondary} />
+        <Loading />
       </View>
     ) : null
 

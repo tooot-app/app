@@ -4,7 +4,7 @@ import { getGlobalStorage, setGlobalStorage } from '@utils/storage/actions'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 
-export const updateExpoToken = async () => {
+export const updateExpoToken = async (): Promise<string> => {
   const expoToken = getGlobalStorage.string('app.expo_token')
 
   if (Platform.OS === 'android') {
@@ -12,16 +12,19 @@ export const updateExpoToken = async () => {
   }
 
   if (expoToken?.length) {
-    return Promise.resolve()
+    return Promise.resolve(expoToken)
   } else {
     if (isDevelopment) {
       setGlobalStorage('app.expo_token', 'ExponentPushToken[DEVELOPMENT_1]')
-      return Promise.resolve()
+      return Promise.resolve('ExponentPushToken[DEVELOPMENT_1]')
     }
 
     return await Notifications.getExpoPushTokenAsync({
       experienceId: '@xmflsct/tooot',
       applicationId: 'com.xmflsct.app.tooot'
-    }).then(({ data }) => setGlobalStorage('app.expo_token', data))
+    }).then(({ data }) => {
+      setGlobalStorage('app.expo_token', data)
+      return data
+    })
   }
 }

@@ -5,6 +5,7 @@ import apiGeneral from '@utils/api/general'
 import apiTooot from '@utils/api/tooot'
 import navigationRef from '@utils/navigation/navigationRef'
 import {
+  generateAccountKey,
   getAccountDetails,
   getGlobalStorage,
   setAccountStorage,
@@ -12,7 +13,7 @@ import {
 } from '@utils/storage/actions'
 import { AxiosError } from 'axios'
 import * as Notifications from 'expo-notifications'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState } from 'react-native'
 import { updateExpoToken } from './updateExpoToken'
@@ -20,22 +21,32 @@ import { updateExpoToken } from './updateExpoToken'
 const pushUseConnect = () => {
   const { t } = useTranslation('screens')
 
-  useEffect(() => {
-    updateExpoToken()
-  }, [])
+  const startupChecked = useRef<boolean>(false)
 
   const [expoToken] = useGlobalStorage.string('app.expo_token')
-  const pushEnabledCount = getGlobalStorage.object('accounts')?.filter(account => {
-    return getAccountDetails(['push'], account)?.push?.global
-  }).length
+  const accounts = getGlobalStorage.object('accounts')
+  const pushEnabled = accounts
+    ?.map(account => {
+      const details = getAccountDetails(['push', 'auth.domain', 'auth.account.id'], account)
+      if (details?.push?.global) {
+        return {
+          accountKey: generateAccountKey({
+            domain: details['auth.domain'],
+            id: details['auth.account.id']
+          }),
+          push: details.push
+        }
+      }
+    })
+    .filter(d => !!d)
 
-  const connectQuery = useQuery<any, AxiosError>(
+  const connectQuery = useQuery<{ accounts: string[] } | undefined, AxiosError>(
     ['tooot', { endpoint: 'push/connect' }],
     () =>
-      apiTooot<Mastodon.Status>({
+      apiTooot<{ accounts: string[] } | undefined>({
         method: 'get',
         url: `push/connect/${expoToken}`
-      }),
+      }).then(res => res.body),
     {
       enabled: false,
       retry: (failureCount, error) => {
@@ -48,6 +59,17 @@ const pushUseConnect = () => {
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       onSettled: () => Notifications.setBadgeCountAsync(0),
+      onSuccess: data => {
+        if (!startupChecked.current && data?.accounts) {
+          startupChecked.current = true
+          for (const acct of data.accounts) {
+            const matchedAcct = pushEnabled?.find(p => p?.accountKey === acct)
+            if (matchedAcct && !matchedAcct.push.global) {
+              setAccountStorage([{ key: 'push', value: { ...matchedAcct.push, global: true } }])
+            }
+          }
+        }
+      },
       onError: error => {
         if (error?.status == 404) {
           displayMessage({
@@ -96,18 +118,21 @@ const pushUseConnect = () => {
   )
 
   useEffect(() => {
-    Sentry.setTags({ expoToken, pushEnabledCount })
+    updateExpoToken().then(async token => {
+      const badgeCount = await Notifications.getBadgeCountAsync()
+      if (token && (pushEnabled?.length || badgeCount)) {
+        connectQuery.refetch()
+      }
+    })
+  }, [])
 
-    if (expoToken && pushEnabledCount) {
-      connectQuery.refetch()
-    }
+  useEffect(() => {
+    Sentry.setTags({ expoToken, pushEnabledCount: pushEnabled?.length })
 
     const appStateListener = AppState.addEventListener('change', state => {
-      if (expoToken && pushEnabledCount && state === 'active') {
+      if (expoToken && pushEnabled?.length && state === 'active') {
         Notifications.getBadgeCountAsync().then(count => {
-          if (count > 0) {
-            connectQuery.refetch()
-          }
+          if (count > 0) connectQuery.refetch()
         })
       }
     })
@@ -115,7 +140,7 @@ const pushUseConnect = () => {
     return () => {
       appStateListener.remove()
     }
-  }, [expoToken, pushEnabledCount])
+  }, [expoToken, pushEnabled?.length])
 }
 
 export default pushUseConnect

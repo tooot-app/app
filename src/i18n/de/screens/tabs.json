@@ -373,7 +373,8 @@
         "hashtags": "Hashtag",
         "statuses": "Tröt"
       },
-      "notFound": "Konnte <bold>{{searchTerm}}</bold>-bezogene {{type}} nicht finden"
+      "notFound": "Konnte <bold>{{searchTerm}}</bold>-bezogene {{type}} nicht finden",
+      "noResult": "Nichts gefunden, bitte versuchen Sie es mit einem anderen Begriff"
     },
     "toot": {
       "name": "Diskussionen",

@@ -193,10 +193,12 @@ const ComponentInstance: React.FC<Props> = ({
     }
   })
 
-  const scopes = featureCheck('deprecate_auth_follow')
-    ? ['read', 'write', 'push']
-    : ['read', 'write', 'follow', 'push']
   const processUpdate = useCallback(() => {
+    const scopes = () =>
+      featureCheck('deprecate_auth_follow', instanceQuery.data?.version)
+        ? ['read', 'write', 'push']
+        : ['read', 'write', 'follow', 'push']
+
     if (domain) {
       const accounts = getGlobalStorage.object('accounts')
       if (accounts?.filter(account => account.startsWith(`${domain}/`)).length) {
@@ -210,15 +212,15 @@ const ComponentInstance: React.FC<Props> = ({
             },
             {
               text: t('common:buttons.continue'),
-              onPress: () => appsMutation.mutate({ domain, scopes })
+              onPress: () => appsMutation.mutate({ domain, scopes: scopes() })
             }
           ]
         )
       } else {
-        appsMutation.mutate({ domain, scopes })
+        appsMutation.mutate({ domain, scopes: scopes() })
       }
     }
-  }, [domain])
+  }, [domain, instanceQuery.data?.version])
 
   return (
     <KeyboardAvoidingView
