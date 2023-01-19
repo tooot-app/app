@@ -374,7 +374,7 @@
         "statuses": "툿"
       },
       "notFound": "<bold>{{searchTerm}}</bold>와 관련된 {{type}}을 찾을 수 없어요",
-      "noResult": ""
+      "noResult": "검색 결과가 없어요. 다른 검색어로 다시 시도해주세요."
     },
     "toot": {
       "name": "대화",
