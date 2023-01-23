@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Descrever mídia para deficientes visuais",
           "placeholder": "Você pode adicionar uma descrição, às vezes chamada texto alternativo aos seus meios de comunicação social, assim eles estão acessíveis a ainda mais pessoas, incluindo as que são cegos ou deficientes visuais.\n\nAs boas descrições são concisas, mas apresentam o que está em sua mídia com precisão o suficiente para entender seu contexto."
-        },
-        "imageFocus": "Arraste o círculo de foco para atualizar o ponto de foco"
+        }
       }
     },
     "draftsList": {
