@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Omschrijf deze media voor mensen met een visuele beperking",
           "placeholder": "Je kan een beschrijving aan je media toevoegen, ook wel bekend als alt-text, zodat deze voor meer mensen toegankelijk wordt. Bijvoorbeeld voor mensen met een visuele beperking.\n\nGoede beschrijvingen zijn beknopt, maar geven nauwkeurig genoeg weer wat er in de media staat om de context ervan te begrijpen."
-        },
-        "imageFocus": "Sleep de focuscirkel om het focuspunt bij te werken"
+        }
       }
     },
     "draftsList": {
