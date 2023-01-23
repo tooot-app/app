@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Describir para personas con dificultades de visión",
           "placeholder": "Añade una descripción, también llamada texto alternativo, a tu archivo y haz que sea más accesible, incluso para personas ciegas o con dificultades de visión.\n\nLo mejor es que sean concisas, pero que expresen todo lo que aparece en las imágenes con exactitud para dar contexto."
-        },
-        "imageFocus": "Arrastra el círculo para cambiar el punto de atención"
+        }
       }
     },
     "draftsList": {
