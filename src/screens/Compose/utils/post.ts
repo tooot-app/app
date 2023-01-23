@@ -9,13 +9,27 @@ const composePost = async (
   params: RootStackParamList['Screen-Compose'],
   composeState: ComposeState
 ): Promise<Mastodon.Status> => {
-  const formData = new FormData()
+  const body: {
+    language?: string
+    in_reply_to_id?: string
+    spoiler_text?: string
+    status: string
+    visibility: ComposeState['visibility']
+    sensitive?: boolean
+    media_ids?: string[]
+    media_attributes?: { id: string; description?: string }[]
+    poll?: {
+      expires_in: string
+      multiple: boolean
+      options: (string | undefined)[]
+    }
+  } = { status: composeState.text.raw, visibility: composeState.visibility }
 
   const detectedLanguage = await detectLanguage(
     getPureContent([composeState.spoiler.raw, composeState.text.raw].join('\n\n'))
   )
   if (detectedLanguage) {
-    formData.append('language', detectedLanguage.language)
+    body.language = detectedLanguage.language
   }
 
   if (composeState.replyToStatus) {
@@ -29,29 +43,44 @@ const composePost = async (
         return Promise.reject({ removeReply: true })
       }
     }
-    formData.append('in_reply_to_id', composeState.replyToStatus.id)
+    body.in_reply_to_id = composeState.replyToStatus.id
   }
 
   if (composeState.spoiler.active) {
-    formData.append('spoiler_text', composeState.spoiler.raw)
+    body.spoiler_text = composeState.spoiler.raw
   }
 
-  formData.append('status', composeState.text.raw)
-
   if (composeState.poll.active) {
-    Object.values(composeState.poll.options).forEach(
-      e => e && e.length && formData.append('poll[options][]', e)
-    )
-    formData.append('poll[expires_in]', composeState.poll.expire)
-    formData.append('poll[multiple]', composeState.poll.multiple?.toString())
+    body.poll = {
+      expires_in: composeState.poll.expire,
+      multiple: composeState.poll.multiple,
+      options: composeState.poll.options.filter(option => !!option)
+    }
   }
 
   if (composeState.attachments.uploads.filter(upload => upload.remote && upload.remote.id).length) {
-    formData.append('sensitive', composeState.attachments.sensitive?.toString())
-    composeState.attachments.uploads.forEach(e => formData.append('media_ids[]', e.remote!.id!))
-  }
+    body.sensitive = composeState.attachments.sensitive
+    body.media_ids = []
+    if (params?.type === 'edit') {
+      body.media_attributes = []
+    }
 
-  formData.append('visibility', composeState.visibility)
+    composeState.attachments.uploads.forEach((attachment, index) => {
+      body.media_ids?.push(attachment.remote!.id)
+
+      if (params?.type === 'edit') {
+        if (
+          attachment.remote?.description !==
+          params.incomingStatus.media_attachments[index].description
+        ) {
+          body.media_attributes?.push({
+            id: attachment.remote!.id,
+            description: attachment.remote!.description
+          })
+        }
+      }
+    })
+  }
 
   return apiInstance<Mastodon.Status>({
     method: params?.type === 'edit' ? 'put' : 'post',
@@ -73,7 +102,7 @@ const composePost = async (
           (params?.type === 'edit' || params?.type === 'deleteEdit' ? Math.random().toString() : '')
       )
     },
-    body: formData
+    body
   }).then(res => res.body)
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ctx, handleError, PagedResponse, parseHeaderLinks, userAgent } from './helpers'
+import { ctx, handleError, PagedResponse, parseHeaderLinks, processBody, userAgent } from './helpers'
 
 export type Params = {
   method: 'get' | 'post' | 'put' | 'delete'
@@ -39,15 +39,11 @@ const apiGeneral = async <T = unknown>({
     url,
     params,
     headers: {
-      'Content-Type': body && body instanceof FormData ? 'multipart/form-data' : 'application/json',
-      Accept: '*/*',
+      Accept: 'application/json',
       ...userAgent,
       ...headers
     },
-    ...(body &&
-      (body instanceof FormData
-        ? (body as (FormData & { _parts: [][] }) | undefined)?._parts?.length
-        : Object.keys(body).length) && { data: body })
+    data: processBody(body)
   })
     .then(response => ({ body: response.data, links: parseHeaderLinks(response.headers.link) }))
     .catch(handleError())

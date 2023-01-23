@@ -36,11 +36,12 @@ const composeParseState = (
 ): ComposeState => {
   switch (params.type) {
     case 'share':
-      return { ...composeInitialState, dirty: true, timestamp: Date.now() }
+      return { ...composeInitialState, type: params.type, dirty: true, timestamp: Date.now() }
     case 'edit':
     case 'deleteEdit':
       return {
         ...composeInitialState,
+        type: params.type,
         dirty: true,
         timestamp: Date.now(),
         ...(params.incomingStatus.spoiler_text && {
@@ -50,19 +51,13 @@ const composeParseState = (
           poll: {
             active: true,
             total: params.incomingStatus.poll.options.length,
-            options: {
-              '0': params.incomingStatus.poll.options[0]?.title || undefined,
-              '1': params.incomingStatus.poll.options[1]?.title || undefined,
-              '2': params.incomingStatus.poll.options[2]?.title || undefined,
-              '3': params.incomingStatus.poll.options[3]?.title || undefined
-            },
+            options: params.incomingStatus.poll.options.map(option => option.title),
             multiple: params.incomingStatus.poll.multiple,
             expire: '86400' // !!!
           }
         }),
         ...(params.incomingStatus.media_attachments && {
           attachments: {
-            ...(params.type === 'edit' && { disallowEditing: true }),
             sensitive: params.incomingStatus.sensitive,
             uploads: params.incomingStatus.media_attachments.map(media => ({
               remote: media
@@ -77,6 +72,7 @@ const composeParseState = (
       const actualStatus = params.incomingStatus.reblog || params.incomingStatus
       return {
         ...composeInitialState,
+        type: params.type,
         dirty: true,
         timestamp: Date.now(),
         ...(actualStatus.spoiler_text && {
@@ -88,6 +84,7 @@ const composeParseState = (
     case 'conversation':
       return {
         ...composeInitialState,
+        type: params.type,
         dirty: true,
         timestamp: Date.now(),
         ...assignVisibility(params.visibility || 'direct')
