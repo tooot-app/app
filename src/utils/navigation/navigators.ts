@@ -157,6 +157,7 @@ export type TabMeStackParamList = {
         key: string // To update title after successful mutation
       }
   'Tab-Me-List-List': undefined
+  'Tab-Me-Preferences': undefined
   'Tab-Me-Profile': undefined
   'Tab-Me-Push': undefined
   'Tab-Me-Settings': undefined

@@ -1,6 +1,6 @@
 import Button from '@components/Button'
 import { useAccessibility } from '@utils/accessibility/AccessibilityManager'
-import { useGlobalStorage } from '@utils/storage/actions'
+import { useAccountStorage, useGlobalStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { ResizeMode, Video, VideoFullscreenUpdate } from 'expo-av'
 import { Platform } from 'expo-modules-core'
@@ -28,6 +28,11 @@ const AttachmentVideo: React.FC<Props> = ({
 }) => {
   const { reduceMotionEnabled } = useAccessibility()
   const [autoplayGifv] = useGlobalStorage.boolean('app.auto_play_gifv')
+  const [preferences] = useAccountStorage.object('preferences')
+  const shouldAutoplayGifv =
+    preferences?.['reading:autoplay:gifs'] !== undefined
+      ? preferences['reading:autoplay:gifs']
+      : autoplayGifv
 
   const videoPlayer = useRef<Video>(null)
   const [videoLoading, setVideoLoading] = useState(false)
@@ -63,7 +68,7 @@ const AttachmentVideo: React.FC<Props> = ({
         resizeMode={videoResizeMode}
         {...(gifv
           ? {
-              shouldPlay: reduceMotionEnabled || !autoplayGifv ? false : true,
+              shouldPlay: reduceMotionEnabled || !shouldAutoplayGifv ? false : true,
               isMuted: true,
               isLooping: true,
               source: { uri: video.url }
@@ -82,7 +87,7 @@ const AttachmentVideo: React.FC<Props> = ({
               Platform.OS === 'android' &&
                 (await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT))
               Platform.OS === 'android' && setVideoResizeMode(ResizeMode.COVER)
-              if (gifv && !reduceMotionEnabled && autoplayGifv) {
+              if (gifv && !reduceMotionEnabled && shouldAutoplayGifv) {
                 videoPlayer.current?.playAsync()
               } else {
                 videoPlayer.current?.pauseAsync()
@@ -116,7 +121,7 @@ const AttachmentVideo: React.FC<Props> = ({
           video.blurhash ? (
             <Blurhash blurhash={video.blurhash} style={{ width: '100%', height: '100%' }} />
           ) : null
-        ) : !gifv || (gifv && (reduceMotionEnabled || !autoplayGifv)) ? (
+        ) : !gifv || (gifv && (reduceMotionEnabled || !shouldAutoplayGifv)) ? (
           <Button
             round
             overlay
@@ -129,7 +134,7 @@ const AttachmentVideo: React.FC<Props> = ({
         ) : null}
         <AttachmentAltText sensitiveShown={sensitiveShown} text={video.description} />
       </Pressable>
-      {gifv && !autoplayGifv ? (
+      {gifv && !shouldAutoplayGifv ? (
         <Button
           style={{
             position: 'absolute',

@@ -452,6 +452,7 @@ declare namespace Mastodon {
     'posting:default:language'?: string
     'reading:expand:media'?: 'default' | 'show_all' | 'hide_all'
     'reading:expand:spoilers'?: boolean
+    'reading:autoplay:gifs'?: boolean
   }
 
   type PushSubscription = {
