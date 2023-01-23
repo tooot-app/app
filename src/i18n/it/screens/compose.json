@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Descrizione media per ipovedenti",
           "placeholder": "Puoi aggiungere una descrizione (anche chiamata alt-text) ai tuoi media, così da renderli accessibili a molte più persone, incluse quelle con disabilità visive.\n\nUna buona descrizione è concisa ma presenta il contenuto del media in modo abbastanza accurato da farne capire il contesto."
-        },
-        "imageFocus": "Trascina il cerchio per modificare il punto focale della foto"
+        }
       }
     },
     "draftsList": {
