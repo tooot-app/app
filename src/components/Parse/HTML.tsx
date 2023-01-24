@@ -69,6 +69,7 @@ const ParseHTML: React.FC<Props> = ({
 
   const [followedTags] = useAccountStorage.object('followed_tags')
 
+  const MAX_ALLOWED_LINES = 30
   const [totalLines, setTotalLines] = useState<number>()
   const [expanded, setExpanded] = useState(highlighted)
 
@@ -275,7 +276,12 @@ const ParseHTML: React.FC<Props> = ({
               hint: expandHint,
               moreLines:
                 numberOfLines > 1 && typeof totalLines === 'number'
-                  ? t('HTML.moreLines', { count: totalLines - numberOfLines })
+                  ? t('HTML.moreLines', {
+                      count:
+                        totalLines === MAX_ALLOWED_LINES
+                          ? (`${totalLines - numberOfLines}+` as unknown as number)
+                          : totalLines - numberOfLines
+                    })
                   : ''
             })}
           />
@@ -304,7 +310,7 @@ const ParseHTML: React.FC<Props> = ({
           height: numberOfLines === 1 && !expanded ? 0 : undefined
         }}
         numberOfLines={
-          typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : undefined
+          typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : MAX_ALLOWED_LINES
         }
         selectable={selectable}
       />
