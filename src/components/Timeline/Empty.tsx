@@ -29,7 +29,7 @@ const TimelineEmpty: React.FC<Props> = ({ queryKey }) => {
       case 'error':
         return (
           <>
-            <Icon name='Frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
+            <Icon name='frown' size={StyleConstants.Font.Size.L} color={colors.primaryDefault} />
             <CustomText
               fontStyle='M'
               style={{
@@ -47,7 +47,7 @@ const TimelineEmpty: React.FC<Props> = ({ queryKey }) => {
         return (
           <>
             <Icon
-              name='Smartphone'
+              name='smartphone'
               size={StyleConstants.Font.Size.L}
               color={colors.primaryDefault}
             />

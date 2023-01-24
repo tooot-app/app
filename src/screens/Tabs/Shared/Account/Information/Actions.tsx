@@ -42,6 +42,14 @@ const AccountInformationActions: React.FC = () => {
           content={t('me.stacks.profile.name')}
           onPress={() => navigation.navigate('Tab-Me-Profile')}
         />
+        <Button
+          round
+          type='icon'
+          disabled={account === undefined}
+          content='sliders'
+          style={{ marginLeft: StyleConstants.Spacing.S }}
+          onPress={() => navigation.navigate('Tab-Me-Preferences')}
+        />
       </View>
     )
   }
@@ -60,8 +68,8 @@ const AccountInformationActions: React.FC = () => {
               <Button
                 round
                 type='icon'
-                content='AtSign'
-                style={{ marginRight: StyleConstants.Spacing.S }}
+                content='at-sign'
+                style={{ flex: 1, marginRight: StyleConstants.Spacing.S }}
                 onPress={() => {}}
               />
             </DropdownMenu.Trigger>
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
   base: {
     alignSelf: 'flex-end',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'stretch'
   }
 })
 

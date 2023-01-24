@@ -90,7 +90,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
           : t('screenTabs:me.stacks.listEdit.name'),
       headerLeft: () => (
         <HeaderLeft
-          content='X'
+          content='x'
           onPress={() => {
             if (params.type === 'edit' ? params.payload.title !== title : title.length) {
               Alert.alert(t('common:discard.title'), t('common:discard.message'), [
@@ -112,7 +112,7 @@ const TabMeListEdit: React.FC<TabMeStackScreenProps<'Tab-Me-List-Edit'>> = ({
       ),
       headerRight: () => (
         <HeaderRight
-          content='Save'
+          content='save'
           disabled={!title.length}
           loading={mutation.isLoading}
           onPress={() => {

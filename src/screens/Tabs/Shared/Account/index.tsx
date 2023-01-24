@@ -87,7 +87,7 @@ const TabSharedAccount: React.FC<TabSharedStackScreenProps<'Tab-Shared-Account'>
                   user: account.acct
                 })}
                 accessibilityHint={t('shared.account.actions.accessibilityHint')}
-                content='MoreHorizontal'
+                content='more-horizontal'
                 onPress={() => {}}
                 background
               />

@@ -69,6 +69,9 @@
       "push": {
         "name": "Push Notification"
       },
+      "preferences": {
+        "name": "Preferences"
+      },
       "profile": {
         "name": "Edit Profile"
       },
@@ -83,9 +86,6 @@
       },
       "settings": {
         "name": "App Settings"
-      },
-      "webSettings": {
-        "name": "More Account Settings"
       },
       "switch": {
         "name": "Switch Account"
@@ -125,6 +125,37 @@
         "message": "This action is not recoverable."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "Posting visibility",
+        "options": {
+          "public": "Public",
+          "unlisted": "Unlisted",
+          "private": "Followers only"
+        }
+      },
+      "sensitive": {
+        "title": "Posting media sensitive"
+      },
+      "media": {
+        "title": "Media display",
+        "options": {
+          "default": "Hide media marked as sensitive",
+          "show_all": "Always show media",
+          "hide_all": "Always hide media"
+        }
+      },
+      "spoilers": {
+        "title": "Auto expand toots with content warning",
+      },
+      "autoplay_gifs": {
+        "title": "Autoplay GIF in toots"
+      },
+      "web_only": {
+        "title": "Update settings",
+        "description": "Settings below can only be updated using the web UI"
+      }
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} updated",
@@ -149,17 +180,6 @@
           "title": "Metadata",
           "total_one": "{{count}} field",
           "total_other": "{{count}} fields"
-        },
-        "visibility": {
-          "title": "Posting Visibility",
-          "options": {
-            "public": "Public",
-            "unlisted": "Unlisted",
-            "private": "Followers only"
-          }
-        },
-        "sensitive": {
-          "title": "Posting Media Sensitive"
         },
         "lock": {
           "title": "Lock Account",

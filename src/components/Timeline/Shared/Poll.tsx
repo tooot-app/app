@@ -117,10 +117,14 @@ const TimelinePoll: React.FC = () => {
     }
   }
 
-  const isSelected = (index: number): string =>
+  const isSelected = (index: number) =>
     allOptions[index]
-      ? `Check${poll.multiple ? 'Square' : 'Circle'}`
-      : `${poll.multiple ? 'Square' : 'Circle'}`
+      ? poll.multiple
+        ? 'check-square'
+        : 'check-circle'
+      : poll.multiple
+      ? 'square'
+      : 'circle'
 
   const pollBodyDisallow = () => {
     const maxValue = maxBy(poll.options, option => option.votes_count)?.votes_count

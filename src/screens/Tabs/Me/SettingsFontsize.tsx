@@ -114,7 +114,7 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
             }
           }}
           type='icon'
-          content='Minus'
+          content='minus'
           round
           disabled={(fontSize || 0) <= -1}
           style={{ marginHorizontal: StyleConstants.Spacing.S }}
@@ -128,7 +128,7 @@ const TabMeSettingsFontsize: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Fon
             }
           }}
           type='icon'
-          content='Plus'
+          content='plus'
           round
           disabled={(fontSize || 0) >= 3}
           style={{ marginHorizontal: StyleConstants.Spacing.S }}

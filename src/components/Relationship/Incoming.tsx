@@ -51,7 +51,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
       <Button
         round
         type='icon'
-        content='X'
+        content='x'
         loading={mutation.isLoading}
         onPress={() =>
           mutation.mutate({
@@ -64,7 +64,7 @@ const RelationshipIncoming: React.FC<Props> = ({ id }) => {
       <Button
         round
         type='icon'
-        content='Check'
+        content='check'
         loading={mutation.isLoading}
         onPress={() =>
           mutation.mutate({

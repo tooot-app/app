@@ -40,7 +40,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
     navigation.setOptions({
       title: t('content.draftsList.header.title'),
       headerLeft: () => (
-        <HeaderLeft type='icon' content='ChevronDown' onPress={() => navigation.goBack()} />
+        <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
       )
     })
   }, [])
@@ -65,7 +65,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
         }}
       >
         <Icon
-          name='AlertTriangle'
+          name='alert-triangle'
           color={colors.secondary}
           size={StyleConstants.Font.Size.M}
           style={{ marginRight: StyleConstants.Spacing.S }}
@@ -187,7 +187,7 @@ const ComposeDraftsList: React.FC<ScreenComposeStackScreenProps<'Screen-Compose-
                   }}
                   children={
                     <Icon
-                      name='Trash'
+                      name='trash'
                       size={StyleConstants.Font.Size.L}
                       color={colors.primaryOverlay}
                     />

@@ -22,10 +22,14 @@ const Selections: React.FC<Props> = ({
 }) => {
   const { colors } = useTheme()
 
-  const isSelected = (index: number): string =>
+  const isSelected = (index: number) =>
     options[index].selected
-      ? `Check${multiple ? 'Square' : 'Circle'}`
-      : `${multiple ? 'Square' : 'Circle'}`
+      ? multiple
+        ? 'check-square'
+        : 'check-circle'
+      : multiple
+      ? 'square'
+      : 'circle'
 
   return (
     <View>

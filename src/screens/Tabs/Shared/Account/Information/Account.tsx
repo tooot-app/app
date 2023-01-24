@@ -1,6 +1,6 @@
 import Icon from '@components/Icon'
 import CustomText from '@components/Text'
-import { getAccountStorage, useAccountStorage } from '@utils/storage/actions'
+import { useAccountStorage } from '@utils/storage/actions'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useContext } from 'react'
@@ -16,7 +16,7 @@ const AccountInformationAccount: React.FC = () => {
   const { colors } = useTheme()
 
   const [acct] = useAccountStorage.string('auth.account.acct')
-  const domain = getAccountStorage.string('auth.account.domain')
+  const [domain] = useAccountStorage.string('auth.account.domain')
 
   const localInstance = account?.acct?.includes('@') ? account?.acct?.includes(`@${domain}`) : true
 
@@ -50,7 +50,7 @@ const AccountInformationAccount: React.FC = () => {
         </CustomText>
         {account?.locked ? (
           <Icon
-            name='Lock'
+            name='lock'
             style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}
@@ -58,7 +58,7 @@ const AccountInformationAccount: React.FC = () => {
         ) : null}
         {account?.bot ? (
           <Icon
-            name='HardDrive'
+            name='hard-drive'
             style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}

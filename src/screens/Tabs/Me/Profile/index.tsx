@@ -28,7 +28,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ naviga
           options={{
             title: t('me.stacks.profile.name'),
             headerLeft: () => (
-              <HeaderLeft content='ChevronDown' onPress={() => navigation.goBack()} />
+              <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
             )
           }}
         >

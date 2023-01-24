@@ -50,7 +50,7 @@ const TabMeListAccounts: React.FC<TabMeStackScreenProps<'Tab-Me-List-Accounts'>>
           children={
             <Button
               type='icon'
-              content='X'
+              content='x'
               round
               onPress={() =>
                 mutation.mutate({ type: 'delete', payload: { id: params.id, accounts: [item.id] } })

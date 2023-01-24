@@ -38,7 +38,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {page.page === 'List' ? (
                 <Icon
-                  name='List'
+                  name='list'
                   size={StyleConstants.Font.Size.M}
                   color={colors.primaryDefault}
                   style={{ marginRight: StyleConstants.Spacing.S }}
@@ -57,7 +57,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               />
               {page.page === 'Following' && !pageLocal?.showBoosts ? (
                 <Icon
-                  name='Repeat'
+                  name='repeat'
                   size={StyleConstants.Font.Size.M}
                   color={colors.red}
                   style={{ marginLeft: StyleConstants.Spacing.S }}
@@ -66,7 +66,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
               ) : null}
               {page.page === 'Following' && !pageLocal?.showReplies ? (
                 <Icon
-                  name='MessageCircle'
+                  name='message-circle'
                   size={StyleConstants.Font.Size.M}
                   color={colors.red}
                   style={{ marginLeft: StyleConstants.Spacing.S }}
@@ -74,7 +74,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
                 />
               ) : null}
               <Icon
-                name='ChevronDown'
+                name='chevron-down'
                 size={StyleConstants.Font.Size.M}
                 color={colors.primaryDefault}
                 style={{ marginLeft: StyleConstants.Spacing.S }}
@@ -169,7 +169,7 @@ const Root: React.FC<NativeStackScreenProps<TabLocalStackParamList, 'Tab-Local-R
         <HeaderRight
           accessibilityLabel={t('common.search.accessibilityLabel')}
           accessibilityHint={t('common.search.accessibilityHint')}
-          content='Search'
+          content='search'
           onPress={() => navigation.navigate('Tab-Shared-Search')}
         />
       )

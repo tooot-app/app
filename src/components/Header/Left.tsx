@@ -1,21 +1,19 @@
-import Icon from '@components/Icon'
+import Icon, { IconName } from '@components/Icon'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { Pressable } from 'react-native'
 
-export interface Props {
-  type?: 'icon' | 'text'
-  content?: string
+export type Props = {
   native?: boolean
   background?: boolean
 
   onPress: () => void
-}
+} & ({ type?: undefined; content?: IconName } | { type: 'text'; content: string })
 
 const HeaderLeft: React.FC<Props> = ({
-  type = 'icon',
+  type,
   content,
   native = true,
   background = false,
@@ -25,17 +23,17 @@ const HeaderLeft: React.FC<Props> = ({
 
   const children = () => {
     switch (type) {
-      case 'icon':
-        return (
-          <Icon
-            color={colors.primaryDefault}
-            name={content || 'ChevronLeft'}
-            size={StyleConstants.Spacing.M * 1.25}
-          />
-        )
       case 'text':
         return (
           <CustomText fontStyle='M' style={{ color: colors.primaryDefault }} children={content} />
+        )
+      default:
+        return (
+          <Icon
+            color={colors.primaryDefault}
+            name={content || 'chevron-left'}
+            size={StyleConstants.Spacing.M * 1.25}
+          />
         )
     }
   }
@@ -52,7 +50,7 @@ const HeaderLeft: React.FC<Props> = ({
         minHeight: 44,
         minWidth: 44,
         marginLeft: native ? -StyleConstants.Spacing.S : StyleConstants.Spacing.S,
-        ...(type === 'icon' && {
+        ...(type === undefined && {
           borderRadius: 100
         }),
         ...(type === 'text' && {

@@ -94,12 +94,27 @@ export const parseHeaderLinks = (headerLink?: string): PagedResponse['links'] =>
   }
 }
 
-type LinkFormat = { id: string; isOffset: boolean }
 export type PagedResponse<T = unknown> = {
   body: T
   links?: {
     prev?: { min_id: string } | { offset: string }
     next?: { max_id: string } | { offset: string }
+  }
+}
+
+export const processBody = (body?: FormData | Object): FormData | Object | undefined => {
+  if (!body) return
+
+  if (body instanceof FormData) {
+    if ((body as FormData & { _parts: [][] })._parts?.length) {
+      return body
+    } else {
+      return
+    }
+  }
+
+  if (Object.keys(body).length) {
+    return body
   }
 }
 

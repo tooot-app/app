@@ -19,7 +19,7 @@ const usePreferencesQuery = (params?: {
     ...params?.options,
     staleTime: Infinity,
     cacheTime: Infinity,
-    initialData: getAccountStorage.object('preferences'),
+    placeholderData: getAccountStorage.object('preferences'),
     onSuccess: data => setAccountStorage([{ key: 'preferences', value: data }])
   })
 }

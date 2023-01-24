@@ -51,7 +51,7 @@ const TabMeList: React.FC<NativeStackScreenProps<TabMeStackParamList, 'Tab-Me-Li
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             <Icon
-              name='MoreHorizontal'
+              name='more-horizontal'
               size={StyleConstants.Spacing.M * 1.25}
               color={colors.primaryDefault}
             />

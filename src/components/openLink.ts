@@ -73,17 +73,18 @@ const openLink = async (url: string, navigation?: any) => {
     }
   }
 
+  // Some links might end with an empty space at the end that triggers an error
   switch (getGlobalStorage.string('app.browser')) {
-    // Some links might end with an empty space at the end that triggers an error
+    case 'external':
+      await Linking.openURL(url.trim())
+      break
     case 'internal':
+    default:
       await WebBrowser.openBrowserAsync(url.trim(), {
         dismissButtonStyle: 'close',
         enableBarCollapsing: true,
         ...(await browserPackage())
-      })
-      break
-    case 'external':
-      await Linking.openURL(url.trim())
+      }).catch(() => Linking.openURL(url.trim()))
       break
   }
 }

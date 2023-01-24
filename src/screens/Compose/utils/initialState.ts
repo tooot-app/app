@@ -2,6 +2,7 @@ import { createRef } from 'react'
 import { ComposeState } from './types'
 
 const composeInitialState: Omit<ComposeState, 'timestamp'> = {
+  type: undefined,
   dirty: false,
   posting: false,
   spoiler: {
@@ -21,12 +22,7 @@ const composeInitialState: Omit<ComposeState, 'timestamp'> = {
   poll: {
     active: false,
     total: 2,
-    options: {
-      '0': undefined,
-      '1': undefined,
-      '2': undefined,
-      '3': undefined
-    },
+    options: [],
     multiple: false,
     expire: '86400'
   },

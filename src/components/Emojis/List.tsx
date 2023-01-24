@@ -188,7 +188,7 @@ const EmojisList = () => {
             paddingRight: StyleConstants.Spacing.S
           }}
         >
-          <Icon name='Search' size={StyleConstants.Font.Size.L} color={colors.secondary} />
+          <Icon name='search' size={StyleConstants.Font.Size.L} color={colors.secondary} />
         </View>
         <TextInput
           style={{
@@ -214,7 +214,7 @@ const EmojisList = () => {
             emojisDispatch({ type: 'target', payload: -1 })
           }}
         >
-          <Icon name='ChevronDown' size={StyleConstants.Font.Size.L} color={colors.secondary} />
+          <Icon name='chevron-down' size={StyleConstants.Font.Size.L} color={colors.secondary} />
         </Pressable>
       </View>
       <SectionList

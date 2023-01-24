@@ -39,7 +39,7 @@ const EmojisButton: React.FC = () => {
           }}
         >
           <Icon
-            name={emojis.current && emojis.current.length ? 'Smile' : 'Meh'}
+            name={emojis.current && emojis.current.length ? 'smile' : 'meh'}
             size={24}
             color={
               emojis.current && emojis.current.length ? colors.primaryDefault : colors.disabled

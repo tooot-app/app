@@ -26,8 +26,8 @@ const TabMeListList: React.FC<TabMeStackScreenProps<'Tab-Me-List-List'>> = ({ na
       {data?.map((list, index) => (
         <MenuRow
           key={index}
-          iconFront='List'
-          iconBack='ChevronRight'
+          iconFront='list'
+          iconBack='chevron-right'
           title={list.title}
           onPress={() => navigation.navigate('Tab-Me-List', { list })}
         />

@@ -27,7 +27,7 @@ const SettingsDev: React.FC = () => {
       <MenuRow
         title={'Saved local instances'}
         content={accounts?.length.toString()}
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() =>
           showActionSheetWithOptions(
             {

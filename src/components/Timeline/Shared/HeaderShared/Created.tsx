@@ -35,7 +35,7 @@ const HeaderSharedCreated: React.FC<Props> = ({ created_at }) => {
       {status.edited_at && !highlighted ? (
         <Icon
           accessibilityLabel={t('shared.header.shared.edited.accessibilityLabel')}
-          name='Edit'
+          name='edit'
           size={StyleConstants.Font.Size.S}
           color={colors.secondary}
           style={{ marginLeft: StyleConstants.Spacing.S }}

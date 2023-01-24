@@ -13,7 +13,7 @@ const HeaderSharedMuted: React.FC = () => {
   return status?.muted ? (
     <Icon
       accessibilityLabel={t('shared.header.shared.muted.accessibilityLabel')}
-      name='VolumeX'
+      name='volume-x'
       size={StyleConstants.Font.Size.M}
       color={colors.secondary}
       style={{ marginLeft: StyleConstants.Spacing.S }}

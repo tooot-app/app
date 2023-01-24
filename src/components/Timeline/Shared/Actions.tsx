@@ -165,7 +165,7 @@ const TimelineActions: React.FC = () => {
 
   const childrenReply = () => (
     <>
-      <Icon name='MessageCircle' color={iconColor} size={StyleConstants.Font.Size.L} />
+      <Icon name='message-circle' color={iconColor} size={StyleConstants.Font.Size.L} />
       {status.replies_count > 0 ? (
         <CustomText
           fontStyle='S'
@@ -186,7 +186,7 @@ const TimelineActions: React.FC = () => {
     return (
       <>
         <Icon
-          name='Repeat'
+          name='repeat'
           color={disabled ? colors.disabled : color(status.reblogged)}
           crossOut={disabled}
           size={StyleConstants.Font.Size.L}
@@ -212,7 +212,7 @@ const TimelineActions: React.FC = () => {
     const color = (state: boolean) => (state ? colors.red : colors.secondary)
     return (
       <>
-        <Icon name='Heart' color={color(status.favourited)} size={StyleConstants.Font.Size.L} />
+        <Icon name='heart' color={color(status.favourited)} size={StyleConstants.Font.Size.L} />
         {status.favourites_count > 0 ? (
           <CustomText
             fontStyle='S'
@@ -227,7 +227,7 @@ const TimelineActions: React.FC = () => {
   const childrenBookmark = () => {
     const color = (state: boolean) => (state ? colors.yellow : colors.secondary)
     return (
-      <Icon name='Bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
+      <Icon name='bookmark' color={color(status.bookmarked)} size={StyleConstants.Font.Size.L} />
     )
   }
 

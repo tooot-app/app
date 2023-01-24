@@ -79,11 +79,11 @@ const TabSharedAccountInLists: React.FC<
       renderItem={({ index, item, section }) => (
         <MenuRow
           key={index}
-          iconFront='List'
+          iconFront='list'
           content={
             <Button
               type='icon'
-              content={section.id === 'in' ? 'Minus' : 'Plus'}
+              content={section.id === 'in' ? 'minus' : 'plus'}
               round
               disabled={accountInListsQuery.isFetching}
               onPress={() => {

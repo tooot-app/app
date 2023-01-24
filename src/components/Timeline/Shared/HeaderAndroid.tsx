@@ -43,7 +43,7 @@ const TimelineHeaderAndroid: React.FC = () => {
               }}
             >
               <Icon
-                name='MoreHorizontal'
+                name='more-horizontal'
                 color={colors.secondary}
                 size={StyleConstants.Font.Size.L}
               />

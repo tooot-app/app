@@ -43,43 +43,43 @@ const Collections: React.FC = () => {
   return (
     <MenuContainer>
       <MenuRow
-        iconFront='Mail'
-        iconBack='ChevronRight'
+        iconFront='mail'
+        iconBack='chevron-right'
         title={t('screenTabs:me.stacks.conversations.name')}
         onPress={() => navigation.navigate('Tab-Me-Conversations')}
       />
       <MenuRow
-        iconFront='Bookmark'
-        iconBack='ChevronRight'
+        iconFront='bookmark'
+        iconBack='chevron-right'
         title={t('screenTabs:me.stacks.bookmarks.name')}
         onPress={() => navigation.navigate('Tab-Me-Bookmarks')}
       />
       <MenuRow
-        iconFront='Heart'
-        iconBack='ChevronRight'
+        iconFront='heart'
+        iconBack='chevron-right'
         title={t('screenTabs:me.stacks.favourites.name')}
         onPress={() => navigation.navigate('Tab-Me-Favourites')}
       />
       {pageMe?.lists?.shown ? (
         <MenuRow
-          iconFront='List'
-          iconBack='ChevronRight'
+          iconFront='list'
+          iconBack='chevron-right'
           title={t('screenTabs:me.stacks.lists.name')}
           onPress={() => navigation.navigate('Tab-Me-List-List')}
         />
       ) : null}
       {pageMe?.followedTags?.shown ? (
         <MenuRow
-          iconFront='Hash'
-          iconBack='ChevronRight'
+          iconFront='hash'
+          iconBack='chevron-right'
           title={t('screenTabs:me.stacks.followedTags.name')}
           onPress={() => navigation.navigate('Tab-Me-FollowedTags')}
         />
       ) : null}
       {pageMe?.announcements?.shown ? (
         <MenuRow
-          iconFront='Clipboard'
-          iconBack='ChevronRight'
+          iconFront='clipboard'
+          iconBack='chevron-right'
           title={t('screenAnnouncements:heading')}
           content={
             pageMe.announcements.unread
@@ -92,8 +92,8 @@ const Collections: React.FC = () => {
         />
       ) : null}
       <MenuRow
-        iconFront={instancePush ? 'Bell' : 'BellOff'}
-        iconBack='ChevronRight'
+        iconFront={instancePush ? 'bell' : 'bell-off'}
+        iconBack='chevron-right'
         title={t('screenTabs:me.stacks.push.name')}
         content={
           typeof instancePush.global === 'boolean'

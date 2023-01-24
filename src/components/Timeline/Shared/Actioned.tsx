@@ -46,7 +46,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='Anchor'
+              name='anchor'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -58,7 +58,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='Heart'
+              name='heart'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -72,7 +72,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='UserPlus'
+              name='user-plus'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -86,7 +86,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='UserPlus'
+              name='user-plus'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -100,7 +100,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='BarChart2'
+              name='bar-chart-2'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -112,7 +112,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='Repeat'
+              name='repeat'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -130,7 +130,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='Activity'
+              name='activity'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -144,7 +144,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='BarChart2'
+              name='bar-chart-2'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -156,7 +156,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='Users'
+              name='users'
               size={StyleConstants.Font.Size.S}
               color={iconColor}
               style={styles.icon}
@@ -168,7 +168,7 @@ const TimelineActioned: React.FC<Props> = ({ action, isNotification, ...rest }) 
         return (
           <>
             <Icon
-              name='AlertOctagon'
+              name='alert-octagon'
               size={StyleConstants.Font.Size.S}
               color={colors.red}
               style={styles.icon}

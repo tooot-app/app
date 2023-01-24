@@ -1,4 +1,4 @@
-import Icon from '@components/Icon'
+import Icon, { IconName } from '@components/Icon'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useState } from 'react'
@@ -6,21 +6,17 @@ import { AccessibilityProps, Pressable, StyleProp, View, ViewStyle } from 'react
 import { Loading } from './Loading'
 import CustomText from './Text'
 
-export interface Props {
+export type Props = {
   accessibilityLabel?: AccessibilityProps['accessibilityLabel']
   accessibilityHint?: AccessibilityProps['accessibilityHint']
 
   style?: StyleProp<ViewStyle>
-
-  type: 'icon' | 'text'
-  content: string
 
   selected?: boolean
   loading?: boolean
   destructive?: boolean
   disabled?: boolean
 
-  strokeWidth?: number
   size?: 'S' | 'M' | 'L'
   fontBold?: boolean
   spacing?: 'XS' | 'S' | 'M' | 'L'
@@ -28,7 +24,7 @@ export interface Props {
   overlay?: boolean
 
   onPress: () => void
-}
+} & ({ type: 'icon'; content: IconName } | { type: 'text'; content: string })
 
 const Button: React.FC<Props> = ({
   accessibilityLabel,
@@ -40,7 +36,6 @@ const Button: React.FC<Props> = ({
   loading = false,
   destructive = false,
   disabled = false,
-  strokeWidth,
   size = 'M',
   fontBold = false,
   spacing = 'S',
@@ -81,7 +76,6 @@ const Button: React.FC<Props> = ({
             <Icon
               name={content}
               color={mainColor()}
-              strokeWidth={strokeWidth}
               style={{ opacity: loading ? 0 : 1 }}
               size={StyleConstants.Font.Size[size] * (size === 'L' ? 1.25 : 1)}
             />
