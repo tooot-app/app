@@ -145,12 +145,12 @@ const Timeline: React.FC<Props> = ({
         ref={customFLRef || flRef}
         scrollEventThrottle={16}
         onScroll={onScroll}
-        windowSize={7}
+        windowSize={5}
         data={flattenPages(data)}
         {...(customProps?.renderItem
           ? { renderItem: customProps.renderItem }
           : { renderItem: ({ item }) => <TimelineDefault item={item} queryKey={queryKey} /> })}
-        initialNumToRender={6}
+        initialNumToRender={3}
         maxToRenderPerBatch={3}
         onEndReached={() => !disableInfinity && !isFetchingNextPage && fetchNextPage()}
         onEndReachedThreshold={0.75}

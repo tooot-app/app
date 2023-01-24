@@ -68,7 +68,7 @@ const Sparkline: React.FC<Props> = ({ data, width, height, margin = 0 }) => {
   const fillPoints = linePoints.concat(closePolyPoints)
 
   return (
-    <Svg height={height} width={width} style={{ marginRight: margin }}>
+    <Svg height={height} width={width} style={{ marginRight: margin }} fill='none'>
       <G>
         <Path d={'M' + fillPoints.join(' ')} fill={colors.blue} fillOpacity={0.1} />
         <Path

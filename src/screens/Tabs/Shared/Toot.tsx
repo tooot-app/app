@@ -306,8 +306,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
   return (
     <FlatList
       ref={flRef}
-      scrollEventThrottle={16}
-      windowSize={7}
+      windowSize={5}
       data={query.data?.pages?.[0].body}
       renderItem={({ item, index }) => {
         const prev = query.data?.pages[0].body[index - 1]?._level || 0
@@ -334,7 +333,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                         return null
                       }
                       return (
-                        <Svg key={i} style={{ position: 'absolute' }}>
+                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
                           <Path
                             d={
                               `M ${curr * StyleConstants.Spacing.S + ARC} ${
@@ -352,7 +351,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                     } else {
                       if (i >= curr - 2) return null
                       return (
-                        <Svg key={i} style={{ position: 'absolute' }}>
+                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
                           <Path
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
@@ -373,7 +372,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                   } else {
                     if (i >= next - 1) {
                       return (
-                        <Svg key={i} style={{ position: 'absolute' }}>
+                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
                           <Path
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
@@ -393,7 +392,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       )
                     } else {
                       return (
-                        <Svg key={i} style={{ position: 'absolute' }}>
+                        <Svg key={i} style={{ position: 'absolute' }} fill='none'>
                           <Path
                             d={`M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v 999`}
                             strokeWidth={1}
@@ -428,7 +427,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           </View>
         )
       }}
-      initialNumToRender={6}
+      initialNumToRender={3}
       maxToRenderPerBatch={3}
       ItemSeparatorComponent={({ leadingItem }) => {
         return (
