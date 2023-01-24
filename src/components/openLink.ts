@@ -84,7 +84,7 @@ const openLink = async (url: string, navigation?: any) => {
         dismissButtonStyle: 'close',
         enableBarCollapsing: true,
         ...(await browserPackage())
-      })
+      }).catch(() => Linking.openURL(url.trim()))
       break
   }
 }
