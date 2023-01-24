@@ -29,7 +29,7 @@ const SettingsApp: React.FC = () => {
       <MenuRow
         title={t('screenTabs:me.stacks.fontSize.name')}
         content={t(`screenTabs:me.fontSize.sizes.${mapFontsizeToName(fontSize || 0)}`)}
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() => navigation.navigate('Tab-Me-Settings-Fontsize')}
       />
       <MenuRow
@@ -42,7 +42,7 @@ const SettingsApp: React.FC = () => {
               : i18n.language.toLowerCase()
           ]
         }
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() =>
           Platform.OS === 'ios'
             ? Linking.openSettings()
@@ -52,7 +52,7 @@ const SettingsApp: React.FC = () => {
       <MenuRow
         title={t('screenTabs:me.settings.theme.heading')}
         content={t(`screenTabs:me.settings.theme.options.${theme || 'auto'}`)}
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() =>
           showActionSheetWithOptions(
             {
@@ -88,7 +88,7 @@ const SettingsApp: React.FC = () => {
       <MenuRow
         title={t('screenTabs:me.settings.darkTheme.heading')}
         content={t(`screenTabs:me.settings.darkTheme.options.${themeDark || 'lighter'}`)}
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() =>
           showActionSheetWithOptions(
             {
@@ -119,7 +119,7 @@ const SettingsApp: React.FC = () => {
       <MenuRow
         title={t('screenTabs:me.settings.browser.heading')}
         content={t(`screenTabs:me.settings.browser.options.${browser || 'internal'}`)}
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() =>
           showActionSheetWithOptions(
             {

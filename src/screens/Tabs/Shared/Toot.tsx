@@ -51,7 +51,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
         >
           {hasRemoteContent ? (
             <Icon
-              name='Wifi'
+              name='wifi'
               size={StyleConstants.Font.Size.M}
               color={colors.primaryDefault}
               style={{ marginRight: StyleConstants.Spacing.S }}

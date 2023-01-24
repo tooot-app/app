@@ -41,7 +41,7 @@ const TabMePreferences: React.FC<TabMeProfileStackScreenProps<'Tab-Me-Profile-Ro
                 : undefined
             }
             loading={isFetching}
-            iconBack='ChevronRight'
+            iconBack='chevron-right'
             onPress={() =>
               showActionSheetWithOptions(
                 {
@@ -110,7 +110,7 @@ const TabMePreferences: React.FC<TabMeProfileStackScreenProps<'Tab-Me-Profile-Ro
       </MenuContainer>
       <MenuContainer style={{ marginTop: StyleConstants.Spacing.L }}>
         <MenuRow
-          iconBack='ExternalLink'
+          iconBack='external-link'
           title={t('screenTabs:me.preferences.web_only.title')}
           description={t('screenTabs:me.preferences.web_only.description')}
           onPress={async () =>

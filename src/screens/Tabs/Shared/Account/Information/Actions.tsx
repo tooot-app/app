@@ -46,7 +46,7 @@ const AccountInformationActions: React.FC = () => {
           round
           type='icon'
           disabled={account === undefined}
-          content='Settings'
+          content='sliders'
           style={{ marginLeft: StyleConstants.Spacing.S }}
           onPress={() => navigation.navigate('Tab-Me-Preferences')}
         />
@@ -68,7 +68,7 @@ const AccountInformationActions: React.FC = () => {
               <Button
                 round
                 type='icon'
-                content='AtSign'
+                content='at-sign'
                 style={{ flex: 1, marginRight: StyleConstants.Spacing.S }}
                 onPress={() => {}}
               />

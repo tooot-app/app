@@ -25,7 +25,7 @@ const ProfileAvatarHeader: React.FC<Props> = ({ type, messageRef }) => {
       title={t(`screenTabs:me.profile.root.${type}.title`)}
       description={t(`screenTabs:me.profile.root.${type}.description`)}
       loading={query.isFetching || mutation.isLoading}
-      iconBack='ChevronRight'
+      iconBack='chevron-right'
       onPress={async () => {
         const image = await mediaSelector({
           mediaType: 'photo',

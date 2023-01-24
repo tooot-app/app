@@ -68,7 +68,7 @@ const ComponentAccount: React.FC<PropsWithChildren & Props> = ({ account, props,
           </View>
           {props.onPress && !props.disabled ? (
             <Icon
-              name='ChevronRight'
+              name='chevron-right'
               size={StyleConstants.Font.Size.L}
               color={colors.secondary}
               style={{ marginLeft: 8 }}

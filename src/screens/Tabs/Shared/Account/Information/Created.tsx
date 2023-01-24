@@ -30,7 +30,7 @@ const AccountInformationCreated: React.FC = () => {
         }}
       >
         <Icon
-          name='Calendar'
+          name='calendar'
           size={StyleConstants.Font.Size.S}
           color={colors.secondary}
           style={{ marginRight: StyleConstants.Spacing.XS }}

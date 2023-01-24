@@ -87,7 +87,7 @@ const HeaderConversation = ({ conversation }: Props) => {
             id: conversation.id
           })
         }
-        children={<Icon name='Trash' color={colors.secondary} size={StyleConstants.Font.Size.L} />}
+        children={<Icon name='trash' color={colors.secondary} size={StyleConstants.Font.Size.L} />}
       />
     </View>
   )

@@ -127,7 +127,7 @@ const AttachmentVideo: React.FC<Props> = ({
             overlay
             size='L'
             type='icon'
-            content='PlayCircle'
+            content='play-circle'
             onPress={playOnPress}
             loading={videoLoading}
           />

@@ -50,7 +50,7 @@ const AccountInformationAccount: React.FC = () => {
         </CustomText>
         {account?.locked ? (
           <Icon
-            name='Lock'
+            name='lock'
             style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}
@@ -58,7 +58,7 @@ const AccountInformationAccount: React.FC = () => {
         ) : null}
         {account?.bot ? (
           <Icon
-            name='HardDrive'
+            name='hard-drive'
             style={{ marginLeft: StyleConstants.Spacing.S }}
             color={colors.secondary}
             size={StyleConstants.Font.Size.M}

@@ -10,8 +10,8 @@ const Settings: React.FC = () => {
   return (
     <MenuContainer>
       <MenuRow
-        iconFront='Settings'
-        iconBack='ChevronRight'
+        iconFront='settings'
+        iconBack='chevron-right'
         title={t('me.stacks.settings.name')}
         onPress={() => navigation.navigate('Tab-Me-Settings')}
       />

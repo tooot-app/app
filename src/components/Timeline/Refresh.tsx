@@ -276,7 +276,7 @@ const TimelineRefresh: React.FC<Props> = ({
           ]}
           children={
             <Icon
-              name='ArrowLeft'
+              name='arrow-left'
               size={StyleConstants.Font.Size.M}
               color={colors.primaryDefault}
             />

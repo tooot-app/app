@@ -24,22 +24,22 @@ const SettingsTooot: React.FC = () => {
     <MenuContainer>
       <MenuRow
         title={t('me.settings.support.heading')}
-        content={<Icon name='Heart' size={StyleConstants.Font.Size.M} color={colors.red} />}
-        iconBack='ChevronRight'
+        content={<Icon name='heart' size={StyleConstants.Font.Size.M} color={colors.red} />}
+        iconBack='chevron-right'
         onPress={() => Linking.openURL('https://www.buymeacoffee.com/xmflsct')}
       />
       <MenuRow
         title={t('me.settings.feedback.heading')}
         content={
-          <Icon name='MessageSquare' size={StyleConstants.Font.Size.M} color={colors.secondary} />
+          <Icon name='message-square' size={StyleConstants.Font.Size.M} color={colors.secondary} />
         }
-        iconBack='ChevronRight'
+        iconBack='chevron-right'
         onPress={() => Linking.openURL('https://feedback.tooot.app/feature-requests')}
       />
       <MenuRow
         title={t('me.settings.contact.heading')}
-        content={<Icon name='Mail' size={StyleConstants.Font.Size.M} color={colors.secondary} />}
-        iconBack='ChevronRight'
+        content={<Icon name='mail' size={StyleConstants.Font.Size.M} color={colors.secondary} />}
+        iconBack='chevron-right'
         onPress={async () => {
           if (accountActive) {
             navigation.navigate('Screen-Compose', {

@@ -55,7 +55,7 @@ const ComposePoll: React.FC = () => {
           return (
             <View key={i} style={styles.option}>
               <Icon
-                name={multiple ? 'Square' : 'Circle'}
+                name={multiple ? 'square' : 'circle'}
                 size={StyleConstants.Font.Size.L}
                 color={colors.secondary}
               />
@@ -128,7 +128,7 @@ const ComposePoll: React.FC = () => {
               })
           }}
           type='icon'
-          content='Minus'
+          content='minus'
           round
           disabled={!(total > 2)}
         />
@@ -162,7 +162,7 @@ const ComposePoll: React.FC = () => {
               })
           }}
           type='icon'
-          content='Plus'
+          content='plus'
           round
           disabled={!(total < MAX_OPTIONS)}
         />
@@ -196,7 +196,7 @@ const ComposePoll: React.FC = () => {
               }
             )
           }
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
         />
         <MenuRow
           title={t('screenCompose:content.root.footer.poll.expiration.heading')}
@@ -236,7 +236,7 @@ const ComposePoll: React.FC = () => {
               }
             )
           }}
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
         />
       </View>
     </View>

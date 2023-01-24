@@ -35,13 +35,12 @@ const ComposeEditAttachment: React.FC<
     navigation.setOptions({
       title: t('content.editAttachment.header.title'),
       headerLeft: () => (
-        <HeaderLeft type='icon' content='ChevronDown' onPress={() => navigation.goBack()} />
+        <HeaderLeft content='chevron-down' onPress={() => navigation.goBack()} />
       ),
       headerRight: () => (
         <HeaderRight
           accessibilityLabel={t('content.editAttachment.header.right.accessibilityLabel')}
-          type='icon'
-          content='Save'
+          content='save'
           loading={isSubmitting}
           onPress={() => {
             if (composeState.type === 'edit') {

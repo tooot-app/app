@@ -151,7 +151,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                 attachment: index + 1
               })}
               type='icon'
-              content='X'
+              content='x'
               spacing='M'
               round
               overlay
@@ -170,7 +170,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
                   attachment: index + 1
                 })}
                 type='icon'
-                content='Edit'
+                content='edit'
                 spacing='M'
                 round
                 overlay
@@ -203,7 +203,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
         onPress={sensitiveOnPress}
       >
         <Icon
-          name={composeState.attachments.sensitive ? 'CheckCircle' : 'Circle'}
+          name={composeState.attachments.sensitive ? 'check-circle' : 'circle'}
           size={StyleConstants.Font.Size.L}
           color={colors.primaryDefault}
         />
@@ -251,7 +251,7 @@ const ComposeAttachments: React.FC<Props> = ({ accessibleRefAttachments }) => {
             >
               <Button
                 type='icon'
-                content='UploadCloud'
+                content='upload-cloud'
                 spacing='M'
                 round
                 overlay

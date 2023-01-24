@@ -1,15 +1,16 @@
-import React, { createElement } from 'react'
+import FeatherNames from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Feather.json'
+import Feather from '@expo/vector-icons/Feather'
+import React from 'react'
 import { AccessibilityProps, StyleProp, View, ViewStyle } from 'react-native'
-import * as FeatherIcon from 'react-native-feather'
+
+export type IconName = keyof typeof FeatherNames
 
 export interface Props {
   accessibilityLabel?: AccessibilityProps['accessibilityLabel']
 
-  name: string
+  name: IconName
   size: number
   color: string
-  fill?: string
-  strokeWidth?: number
   style?: StyleProp<ViewStyle>
   crossOut?: boolean
 }
@@ -19,8 +20,6 @@ const Icon: React.FC<Props> = ({
   name,
   size,
   color,
-  fill,
-  strokeWidth = 2,
   style,
   crossOut = false
 }) => {
@@ -37,13 +36,7 @@ const Icon: React.FC<Props> = ({
         }
       ]}
     >
-      {createElement(FeatherIcon[name], {
-        width: size,
-        height: size,
-        color,
-        fill,
-        strokeWidth
-      })}
+      <Feather name={name} size={size} color={color} />
       {crossOut ? (
         <View
           style={{
@@ -51,7 +44,7 @@ const Icon: React.FC<Props> = ({
             transform: [{ rotate: '45deg' }],
             width: size * 1.35,
             borderBottomColor: color,
-            borderBottomWidth: strokeWidth
+            borderBottomWidth: 2
           }}
         />
       ) : null}

@@ -41,13 +41,13 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
         }) => {
           switch (route.name) {
             case 'Tab-Local':
-              return <Icon name='Home' size={size} color={color} />
+              return <Icon name='home' size={size} color={color} />
             case 'Tab-Public':
-              return <Icon name='Globe' size={size} color={color} />
+              return <Icon name='globe' size={size} color={color} />
             case 'Tab-Compose':
-              return <Icon name='Plus' size={size} color={color} />
+              return <Icon name='plus' size={size} color={color} />
             case 'Tab-Notifications':
-              return <Icon name='Bell' size={size} color={color} />
+              return <Icon name='bell' size={size} color={color} />
             case 'Tab-Me':
               return (
                 <GracefullyImage
@@ -65,7 +65,7 @@ const ScreenTabs = ({ navigation }: RootStackScreenProps<'Screen-Tabs'>) => {
                 />
               )
             default:
-              return <Icon name='AlertOctagon' size={size} color={color} />
+              return <Icon name='alert-octagon' size={size} color={color} />
           }
         }
       })}

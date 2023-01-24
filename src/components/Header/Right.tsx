@@ -1,4 +1,4 @@
-import Icon from '@components/Icon'
+import Icon, { IconName } from '@components/Icon'
 import { Loading } from '@components/Loading'
 import CustomText from '@components/Text'
 import { StyleConstants } from '@utils/styles/constants'
@@ -6,13 +6,11 @@ import { useTheme } from '@utils/styles/ThemeManager'
 import React from 'react'
 import { AccessibilityProps, Pressable, View } from 'react-native'
 
-export interface Props {
+export type Props = {
   accessibilityLabel?: string
   accessibilityHint?: string
   accessibilityState?: AccessibilityProps['accessibilityState']
 
-  type?: 'icon' | 'text'
-  content: string
   native?: boolean
   background?: boolean
 
@@ -21,7 +19,7 @@ export interface Props {
   destructive?: boolean
 
   onPress: () => void
-}
+} & ({ type?: undefined; content: IconName } | { type: 'text'; content: string })
 
 const HeaderRight: React.FC<Props> = ({
   // Accessibility - Start
@@ -29,7 +27,7 @@ const HeaderRight: React.FC<Props> = ({
   accessibilityHint,
   accessibilityState,
   // Accessibility - End
-  type = 'icon',
+  type,
   content,
   native = true,
   background = false,
@@ -38,7 +36,7 @@ const HeaderRight: React.FC<Props> = ({
   destructive = false,
   onPress
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
 
   const loadingSpinkit = () =>
     loading ? (
@@ -49,18 +47,6 @@ const HeaderRight: React.FC<Props> = ({
 
   const children = () => {
     switch (type) {
-      case 'icon':
-        return (
-          <>
-            <Icon
-              name={content}
-              style={{ opacity: loading ? 0 : 1 }}
-              size={StyleConstants.Spacing.M * 1.25}
-              color={disabled ? colors.secondary : destructive ? colors.red : colors.primaryDefault}
-            />
-            {loadingSpinkit()}
-          </>
-        )
       case 'text':
         return (
           <>
@@ -76,6 +62,18 @@ const HeaderRight: React.FC<Props> = ({
                 opacity: loading ? 0 : 1
               }}
               children={content}
+            />
+            {loadingSpinkit()}
+          </>
+        )
+      default:
+        return (
+          <>
+            <Icon
+              name={content}
+              style={{ opacity: loading ? 0 : 1 }}
+              size={StyleConstants.Spacing.M * 1.25}
+              color={disabled ? colors.secondary : destructive ? colors.red : colors.primaryDefault}
             />
             {loadingSpinkit()}
           </>
@@ -100,7 +98,7 @@ const HeaderRight: React.FC<Props> = ({
         minHeight: 44,
         minWidth: 44,
         marginRight: native ? -StyleConstants.Spacing.S : StyleConstants.Spacing.S,
-        ...(type === 'icon' && {
+        ...(type === undefined && {
           borderRadius: 100
         }),
         ...(type === 'text' && {

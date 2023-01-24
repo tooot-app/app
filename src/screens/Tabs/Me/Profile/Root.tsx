@@ -24,7 +24,7 @@ const TabMeProfileRoot: React.FC<
           title={t('screenTabs:me.profile.root.name.title')}
           content={data?.display_name}
           loading={isFetching}
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
           onPress={() => {
             data &&
               navigation.navigate('Tab-Me-Profile-Name', {
@@ -38,7 +38,7 @@ const TabMeProfileRoot: React.FC<
           title={t('screenTabs:me.profile.root.note.title')}
           content={data?.source?.note}
           loading={isFetching}
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
           onPress={() => {
             data &&
               navigation.navigate('Tab-Me-Profile-Note', {
@@ -56,7 +56,7 @@ const TabMeProfileRoot: React.FC<
               : undefined
           }
           loading={isFetching}
-          iconBack='ChevronRight'
+          iconBack='chevron-right'
           onPress={() => {
             navigation.navigate('Tab-Me-Profile-Fields', {
               fields: data?.source.fields

@@ -25,7 +25,7 @@ const Root: React.FC<
         <HeaderRight
           accessibilityLabel={t('notifications.filters.accessibilityLabel')}
           accessibilityHint={t('notifications.filters.accessibilityHint')}
-          content='Filter'
+          content='filter'
           onPress={() => navigation.navigate('Tab-Notifications-Filters')}
         />
       )

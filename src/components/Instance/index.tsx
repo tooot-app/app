@@ -345,7 +345,7 @@ const ComponentInstance: React.FC<Props> = ({
             }}
           >
             <Icon
-              name='Lock'
+              name='lock'
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{
@@ -365,7 +365,7 @@ const ComponentInstance: React.FC<Props> = ({
             }}
           >
             <Icon
-              name='CheckSquare'
+              name='check-square'
               size={StyleConstants.Font.Size.S}
               color={colors.secondary}
               style={{

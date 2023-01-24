@@ -286,9 +286,8 @@ const ParseHTML: React.FC<Props> = ({
             })}
           />
           <Icon
-            name={expanded ? 'Minimize2' : 'Maximize2'}
+            name={expanded ? 'minimize-2' : 'maximize-2'}
             color={colors.primaryDefault}
-            strokeWidth={2}
             size={StyleConstants.Font.Size[size]}
           />
         </Pressable>

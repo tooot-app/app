@@ -41,7 +41,7 @@ const TabMeSettingsLanguage: React.FC<TabMeStackScreenProps<'Tab-Me-Settings-Lan
           <MenuRow
             key={item[0]}
             title={item[1]}
-            iconBack={item[0] === i18n.language ? 'Check' : undefined}
+            iconBack={item[0] === i18n.language ? 'check' : undefined}
             iconBackColor={'blue'}
             onPress={() => item[0] !== i18n.language && change(item[0])}
           />

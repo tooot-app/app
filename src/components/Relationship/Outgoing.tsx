@@ -130,7 +130,7 @@ const RelationshipOutgoing: React.FC<Props> = ({ id }: Props) => {
       {!isPageNotifications && canFollowNotify && query.data?.following ? (
         <Button
           type='icon'
-          content={query.data.notifying ? 'BellOff' : 'Bell'}
+          content={query.data.notifying ? 'bell-off' : 'bell'}
           round
           onPress={() =>
             mutation.mutate({
