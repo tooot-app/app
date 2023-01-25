@@ -69,6 +69,18 @@
       "push": {
         "name": "プッシュ通知"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "プロフィールを編集"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "アプリの設定"
-      },
-      "webSettings": {
-        "name": "アカウントの設定"
       },
       "switch": {
         "name": "アカウントを切り替える"
@@ -125,6 +134,84 @@
         "message": "この操作は復元できません。"
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} がアップデートされました",
@@ -149,17 +236,6 @@
           "title": "プロフィール補足情報",
           "total_one": "{{count}} つのフィールド",
           "total_other": "{{count}} つのフィールド"
-        },
-        "visibility": {
-          "title": "デフォルトの投稿の公開範囲",
-          "options": {
-            "public": "公開",
-            "unlisted": "未収載",
-            "private": "フォロワー限定"
-          }
-        },
-        "sensitive": {
-          "title": "メディアを常に閲覧注意として投稿する"
         },
         "lock": {
           "title": "承認制アカウント",
