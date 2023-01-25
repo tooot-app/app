@@ -72,6 +72,15 @@
       "preferences": {
         "name": "Preferences"
       },
+      "preferencesFilters": {
+        "name": "All content filters"
+      },
+      "preferencesFilterAdd": {
+        "name": "Create a Filter"
+      },
+      "preferencesFilterEdit": {
+        "name": "Edit Filter"
+      },
       "profile": {
         "name": "Edit Profile"
       },
@@ -127,7 +136,7 @@
     },
     "preferences": {
       "visibility": {
-        "title": "Posting visibility",
+        "title": "Default posting visibility",
         "options": {
           "public": "Public",
           "unlisted": "Unlisted",
@@ -135,7 +144,7 @@
         }
       },
       "sensitive": {
-        "title": "Posting media sensitive"
+        "title": "Default mark media as sensitive"
       },
       "media": {
         "title": "Media display",
@@ -146,15 +155,62 @@
         }
       },
       "spoilers": {
-        "title": "Auto expand toots with content warning",
+        "title": "Auto expand toots with content warning"
       },
       "autoplay_gifs": {
         "title": "Autoplay GIF in toots"
+      },
+      "filters": {
+        "title": "Content filters",
+        "content": "{{count}} active"
       },
       "web_only": {
         "title": "Update settings",
         "description": "Settings below can only be updated using the web UI"
       }
+    },
+    "preferencesFilters": {
+      "expired": "Expired",
+      "keywords_one": "{{count}} keyword",
+      "keywords_other": "{{count}} keywords",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} toots",
+      "context": "Applies in <0 />",
+      "contexts": {
+        "home": "following and lists",
+        "notifications": "notification",
+        "public": "federated",
+        "thread": "conversation",
+        "account": "profile"
+      }
+    },
+    "preferencesFilter": {
+      "name": "Name",
+      "expiration": "Expiration",
+      "expirationOptions": {
+        "0": "Never",
+        "1800": "After 30 minutes",
+        "3600": "After 1 hour",
+        "43200": "After 12 hours",
+        "86400": "After 1 day",
+        "604800": "After 1 week",
+        "18144000": "After 1 month"
+      },
+      "context": "Applies in",
+      "contexts": {
+        "home": "Following and lists",
+        "notifications": "Notification",
+        "public": "Federated timeline",
+        "thread": "Conversation view",
+        "account": "Profile view"
+      },
+      "action": "When matched",
+      "actions": {
+        "warn": "Collapsed but can be revealed",
+        "hide": "Hidden completely"
+      },
+      "keywords": "Matches for these keywords",
+      "keyword": "Keyword"
     },
     "profile": {
       "feedback": {

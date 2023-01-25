@@ -1,10 +1,4 @@
-import {
-  QueryFunctionContext,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions
-} from '@tanstack/react-query'
+import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import apiGeneral from '@utils/api/general'
 import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
@@ -12,7 +6,7 @@ import * as AuthSession from 'expo-auth-session'
 
 export type QueryKeyApps = ['Apps']
 
-const queryFunctionApps = async ({ queryKey }: QueryFunctionContext<QueryKeyApps>) => {
+const queryFunctionApps = async () => {
   const res = await apiInstance<Mastodon.Apps>({
     method: 'get',
     url: 'apps/verify_credentials'

@@ -44,7 +44,7 @@ const MenuRow: React.FC<Props> = ({
   loading = false,
   onPress
 }) => {
-  const { colors, theme } = useTheme()
+  const { colors } = useTheme()
   const { screenReaderEnabled } = useAccessibility()
 
   return (

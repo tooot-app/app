@@ -9,7 +9,9 @@ import CustomText from './Text'
 export type Props = {
   title?: string
   multiline?: boolean
-} & Pick<NonNullable<EmojisState['inputProps'][0]>, 'value' | 'selection' | 'isFocused'> &
+  invalid?: boolean
+} & Pick<NonNullable<EmojisState['inputProps'][0]>, 'value'> &
+  Pick<Partial<EmojisState['inputProps'][0]>, 'isFocused' | 'selection'> &
   Omit<
     TextInputProps,
     | 'style'
@@ -27,8 +29,9 @@ const ComponentInput = forwardRef(
     {
       title,
       multiline = false,
+      invalid = false,
       value: [value, setValue],
-      selection: [selection, setSelection],
+      selection,
       isFocused,
       ...props
     }: Props,
@@ -43,7 +46,7 @@ const ComponentInput = forwardRef(
           paddingHorizontal: withTiming(StyleConstants.Spacing.XS),
           left: withTiming(StyleConstants.Spacing.S),
           top: withTiming(-(StyleConstants.Font.Size.S / 2) - 2),
-          backgroundColor: withTiming(colors.backgroundDefault)
+          backgroundColor: colors.backgroundDefault
         }
       } else {
         return {
@@ -62,7 +65,7 @@ const ComponentInput = forwardRef(
           borderWidth: 1,
           marginVertical: StyleConstants.Spacing.S,
           padding: StyleConstants.Spacing.S,
-          borderColor: colors.border,
+          borderColor: invalid ? colors.red : colors.border,
           flexDirection: multiline ? 'column' : 'row',
           alignItems: 'stretch'
         }}
@@ -78,9 +81,13 @@ const ComponentInput = forwardRef(
           }}
           value={value}
           onChangeText={setValue}
-          onFocus={() => (isFocused.current = true)}
-          onBlur={() => (isFocused.current = false)}
-          onSelectionChange={({ nativeEvent }) => setSelection(nativeEvent.selection)}
+          {...(isFocused !== undefined && {
+            onFocus: () => (isFocused.current = true),
+            onBlur: () => (isFocused.current = false)
+          })}
+          {...(selection !== undefined && {
+            onSelectionChange: ({ nativeEvent }) => selection[1](nativeEvent.selection)
+          })}
           {...(multiline && {
             multiline,
             numberOfLines: Platform.OS === 'android' ? 5 : undefined

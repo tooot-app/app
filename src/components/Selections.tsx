@@ -8,17 +8,22 @@ import { ParseEmojis } from './Parse'
 import CustomText from './Text'
 
 export interface Props {
+  title?: string
+
   multiple?: boolean
   options: { selected: boolean; content: string }[]
   setOptions: React.Dispatch<React.SetStateAction<{ selected: boolean; content: string }[]>>
   disabled?: boolean
+  invalid?: boolean
 }
 
 const Selections: React.FC<Props> = ({
+  title,
   multiple = false,
   options,
   setOptions,
-  disabled = false
+  disabled = false,
+  invalid = false
 }) => {
   const { colors } = useTheme()
 
@@ -32,52 +37,71 @@ const Selections: React.FC<Props> = ({
       : 'circle'
 
   return (
-    <View>
-      {options.map((option, index) => (
-        <Pressable
-          key={index}
-          disabled={disabled}
-          style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
-          onPress={() => {
-            if (multiple) {
-              haptics('Light')
-
-              setOptions(options.map((o, i) => (i === index ? { ...o, selected: !o.selected } : o)))
-            } else {
-              if (!option.selected) {
+    <View style={{ marginVertical: StyleConstants.Spacing.S }}>
+      {title ? (
+        <CustomText
+          fontStyle='M'
+          children={title}
+          style={{ color: disabled ? colors.disabled : colors.primaryDefault }}
+        />
+      ) : null}
+      <View
+        style={{
+          paddingHorizontal: StyleConstants.Spacing.M,
+          paddingVertical: StyleConstants.Spacing.XS,
+          marginTop: StyleConstants.Spacing.S,
+          borderWidth: 1,
+          borderColor: disabled ? colors.disabled : invalid ? colors.red : colors.border
+        }}
+      >
+        {options.map((option, index) => (
+          <Pressable
+            key={index}
+            disabled={disabled}
+            style={{ flex: 1, paddingVertical: StyleConstants.Spacing.S }}
+            onPress={() => {
+              if (multiple) {
                 haptics('Light')
+
                 setOptions(
-                  options.map((o, i) => {
-                    if (i === index) {
-                      return { ...o, selected: true }
-                    } else {
-                      return { ...o, selected: false }
-                    }
-                  })
+                  options.map((o, i) => (i === index ? { ...o, selected: !o.selected } : o))
                 )
+              } else {
+                if (!option.selected) {
+                  haptics('Light')
+                  setOptions(
+                    options.map((o, i) => {
+                      if (i === index) {
+                        return { ...o, selected: true }
+                      } else {
+                        return { ...o, selected: false }
+                      }
+                    })
+                  )
+                }
               }
-            }
-          }}
-        >
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Icon
-              style={{
-                paddingTop: StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M,
-                marginRight: StyleConstants.Spacing.S
-              }}
-              name={isSelected(index)}
-              size={StyleConstants.Font.Size.M}
-              color={disabled ? colors.disabled : colors.primaryDefault}
-            />
-            <CustomText style={{ flex: 1 }}>
-              <ParseEmojis
-                content={option.content}
-                style={{ color: disabled ? colors.disabled : colors.primaryDefault }}
+            }}
+          >
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <Icon
+                style={{
+                  marginTop: (StyleConstants.Font.LineHeight.M - StyleConstants.Font.Size.M) / 2,
+                  marginRight: StyleConstants.Spacing.S
+                }}
+                name={isSelected(index)}
+                size={StyleConstants.Font.Size.M}
+                color={disabled ? colors.disabled : colors.primaryDefault}
               />
-            </CustomText>
-          </View>
-        </Pressable>
-      ))}
+              <CustomText fontStyle='S' style={{ flex: 1 }}>
+                <ParseEmojis
+                  content={option.content}
+                  style={{ color: disabled ? colors.disabled : colors.primaryDefault }}
+                />
+              </CustomText>
+            </View>
+          </Pressable>
+        ))}
+      </View>
     </View>
   )
 }

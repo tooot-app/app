@@ -99,7 +99,7 @@ export const shouldFilter = ({
         break
     }
   }
-  const queryKeyFilters: QueryKeyFilters = ['Filters']
+  const queryKeyFilters: QueryKeyFilters = ['Filters', { version: 'v1' }]
   queryClient.getQueryData<Mastodon.Filter<'v1'>[]>(queryKeyFilters)?.forEach(filter => {
     if (returnFilter) {
       return

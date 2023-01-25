@@ -44,7 +44,7 @@ const TabMeProfileNote: React.FC<
     navigation.setOptions({
       headerLeft: () => (
         <HeaderLeft
-          content='x'
+          content='chevron-left'
           onPress={() => {
             if (dirty) {
               Alert.alert(t('common:discard.title'), t('common:discard.message'), [
