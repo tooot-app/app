@@ -3,6 +3,6 @@
     "accessibilityHint": "Toque para expandir ou recolher conteúdo",
     "expanded": "{{hint}}{{moreLines}}",
     "moreLines": "",
-    "defaultHint": ""
+    "defaultHint": "Toot longo"
   }
 }
