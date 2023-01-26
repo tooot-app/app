@@ -15,18 +15,18 @@
   },
   "message": {
     "success": {
-      "message": ""
+      "message": "{{function}} ongi burutu da"
     },
     "warning": {
       "message": ""
     },
     "error": {
-      "message": ""
+      "message": "{{function}}-(e)k huts egin du, mesedez, saia zaitez berriro"
     }
   },
-  "separator": "",
+  "separator": ", ",
   "discard": {
-    "title": "",
-    "message": ""
+    "title": "Aldaketa ez da gorde",
+    "message": "Zuk eginiko aldaketa ez da gorde. Baztertu nahi al duzu?"
   }
 }
