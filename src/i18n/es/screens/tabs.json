@@ -69,6 +69,18 @@
       "push": {
         "name": "Notificaciones push"
       },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
       "profile": {
         "name": "Editar perfil"
       },
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "Ajustes de la aplicación"
-      },
-      "webSettings": {
-        "name": "Más ajustes de la cuenta"
       },
       "switch": {
         "name": "Cambiar de cuenta"
@@ -125,6 +134,84 @@
         "message": "Esta acción no se podrá deshacer."
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} actualizado",
@@ -149,17 +236,6 @@
           "title": "Metadatos",
           "total_one": "{{count}} campo",
           "total_other": "{{count}} campos"
-        },
-        "visibility": {
-          "title": "Visibilidad de publicación",
-          "options": {
-            "public": "Público",
-            "unlisted": "No listado",
-            "private": "Solo seguidores"
-          }
-        },
-        "sensitive": {
-          "title": "Publicar contenido multimedia sensible"
         },
         "lock": {
           "title": "Hacer la cuenta privada",
