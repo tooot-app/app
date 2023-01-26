@@ -1,9 +1,9 @@
 {
   "follow": {
-    "function": ""
+    "function": "Erabiltzailea jarraitu"
   },
   "block": {
-    "function": ""
+    "function": "Erabiltzailea blokeatu"
   },
   "button": {
     "error": "",
