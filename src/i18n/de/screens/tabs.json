@@ -70,16 +70,16 @@
         "name": "Push-Benachrichtigung"
       },
       "preferences": {
-        "name": ""
+        "name": "Einstellungen"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Inhaltsfilter"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Filterregel erstellen"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Filter bearbeiten"
       },
       "profile": {
         "name": "Profil bearbeiten"
@@ -136,11 +136,11 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Standard-Einstellung für die Sichtbarkeit des Tröts",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Öffentlich",
+          "unlisted": "Ungelistet",
+          "private": "Nur für Follower"
         }
       },
       "sensitive": {
