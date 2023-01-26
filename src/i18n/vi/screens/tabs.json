@@ -210,7 +210,8 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
-    "hashtag": {
-      "follow": "Theo dõi",
-      "unfollow": "Ngưng theo dõi"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Lịch sử chỉnh sửa"
