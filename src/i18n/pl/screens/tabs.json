@@ -70,16 +70,16 @@
         "name": "Powiadomienia Push"
       },
       "preferences": {
-        "name": ""
+        "name": "Preferencje"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Wszystkie filtry treści"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Utwórz filtr"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Edytuj filtr"
       },
       "profile": {
         "name": "Edytuj profil"
@@ -136,81 +136,81 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Domyślna widoczność tootów",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Publiczny",
+          "unlisted": "Niepubliczny",
+          "private": "Tylko obserwujący"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Domyślnie oznacz media jako wrażliwe"
       },
       "media": {
-        "title": "",
+        "title": "Wyświetlanie multimediów",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Ukryj media oznaczone jako wrażliwe",
+          "show_all": "Zawsze pokazuj media",
+          "hide_all": "Zawsze ukrywaj media"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Automatycznie rozwijaj tooty z ostrzeżeniem o zawartości"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Autoodtwarzanie GIF w tootach"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Filtry treści",
+        "content": "{{count}} aktywnych"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Ustawienia aktualizacji",
+        "description": "Poniższe ustawienia mogą być aktualizowane tylko przy użyciu interfejsu webowego"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Wygasło",
+      "keywords_one": "{{count}} słowo kluczowe",
+      "keywords_other": "{{count}} słów kluczowych",
+      "statuses_one": "{{count}} toot",
+      "statuses_other": "{{count}} tootów",
+      "context": "Użyto na <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "obserwujący i listy",
+        "notifications": "powiadomienie",
+        "public": "sfederowane",
+        "thread": "rozmowa",
+        "account": "profil"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Nazwa",
+      "expiration": "Wygaśnięcie",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Nigdy",
+        "1800": "Po 30 minutach",
+        "3600": "Po 1 godzinie",
+        "43200": "Po 12 godzinach",
+        "86400": "Po 1 dniu",
+        "604800": "Po tygodniu",
+        "18144000": "Po miesiącu"
       },
-      "context": "",
+      "context": "Zastosuje na",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Obserwujący i listy",
+        "notifications": "Powiadomienie",
+        "public": "Sfederowana oś czasu",
+        "thread": "Widok rozmów",
+        "account": "Widok profilu"
       },
-      "action": "",
+      "action": "Gdy pasuje",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Zwinięty, ale można go pokazać",
+        "hide": "Całkowicie ukryte"
       },
-      "keywords": "",
-      "keyword": ""
+      "keywords": "Pasuje do tych słów kluczowych",
+      "keyword": "Słowo kluczowe"
     },
     "profile": {
       "feedback": {
