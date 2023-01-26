@@ -3,15 +3,15 @@
     "local": {
       "name": "Seguindo",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "Mostrar boosts",
+        "showReplies": "Mostrar respostas"
       }
     },
     "public": {
       "segments": {
         "federated": "Global",
         "local": "Local",
-        "trending": ""
+        "trending": "Em alta"
       }
     },
     "notifications": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "Filtro",
       "accessibilityHint": "Filtrar notificações por tipos",
-      "title": ""
+      "title": "Mostrar notificações"
     }
   },
   "me": {
@@ -43,7 +43,7 @@
         "name": "Favoritos"
       },
       "followedTags": {
-        "name": ""
+        "name": "Hashtags seguidas"
       },
       "fontSize": {
         "name": "Tamanho da fonte do Toot"
@@ -55,10 +55,10 @@
         "name": "Lista: {{list}}"
       },
       "listAccounts": {
-        "name": ""
+        "name": "Usuários na lista: {{list}}"
       },
       "listAdd": {
-        "name": ""
+        "name": "Criar uma lista"
       },
       "listEdit": {
         "name": ""
@@ -70,16 +70,16 @@
         "name": "Notificação"
       },
       "preferences": {
-        "name": ""
+        "name": "Preferências"
       },
       "preferencesFilters": {
         "name": ""
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Criar um Filtro"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Editar Filtro"
       },
       "profile": {
         "name": "Editar Perfil"
@@ -111,36 +111,36 @@
       }
     },
     "listAccounts": {
-      "heading": "",
-      "error": "",
-      "empty": ""
+      "heading": "Gerenciar usuários",
+      "error": "Excluir usuário da lista",
+      "empty": "Nenhum usuário adicionado a esta lista"
     },
     "listEdit": {
       "heading": "",
-      "title": "",
+      "title": "Título",
       "repliesPolicy": {
-        "heading": "",
+        "heading": "Mostrar respostas para:",
         "options": {
-          "none": "",
-          "list": "",
-          "followed": ""
+          "none": "Ninguém",
+          "list": "Membros da lista",
+          "followed": "Qualquer usuário seguido"
         }
       }
     },
     "listDelete": {
-      "heading": "",
+      "heading": "Excluir lista",
       "confirm": {
-        "title": "",
-        "message": ""
+        "title": "Excluir lista \"{{list}}\"?",
+        "message": "Esta ação não é reversível."
       }
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Visibilidade padrão de postagem",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Público",
+          "unlisted": "Não-listado",
+          "private": "Apenas seguidores"
         }
       },
       "sensitive": {
@@ -149,19 +149,19 @@
       "media": {
         "title": "",
         "options": {
-          "default": "",
+          "default": "Ocultar mídia marcada como sensível",
           "show_all": "",
           "hide_all": ""
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Expandir automaticamente toots com Aviso de Conteúdo"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Reproduzir GIF automaticamente nos toots"
       },
       "filters": {
-        "title": "",
+        "title": "Filtros de conteúdo",
         "content": ""
       },
       "web_only": {
@@ -185,16 +185,16 @@
       }
     },
     "preferencesFilter": {
-      "name": "",
+      "name": "Nome",
       "expiration": "",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Nunca",
+        "1800": "Após 30 minutos",
+        "3600": "Após 1 hora",
+        "43200": "Após 12 horas",
+        "86400": "Após 1 dia",
+        "604800": "Após 1 semana",
+        "18144000": "Após 1 mês"
       },
       "context": "",
       "contexts": {
