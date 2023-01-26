@@ -6,7 +6,7 @@
       "action_false": "사용자 팔로우",
       "action_true": "사용자 팔로우 해제"
     },
-    "inLists": "사용자를 포함한 리스트",
+    "inLists": "",
     "showBoosts": {
       "action_false": "사용자의 부스트 보이기",
       "action_true": "사용자의 부스트 숨기기"
@@ -16,12 +16,12 @@
       "action_true": "사용자 뮤트 해제"
     },
     "followAs": {
-      "trigger": "특정 계정에서 팔로우...",
+      "trigger": "",
       "succeed_default": "@{{source}} 계정에서 @{{target}} 계정을 팔로우 했어요.",
       "succeed_locked": "@{{source}} 계정에서 @{{target}} 계정의 팔로우 승인을 요청했어요.",
       "failed": "특정 계정에서 팔로우"
     },
-    "blockReport": "차단 및 신고...",
+    "blockReport": "",
     "block": {
       "action_false": "사용자 차단",
       "action_true": "사용자 차단 해제",
@@ -52,6 +52,15 @@
         "title": "정말 {{instance}} 인스턴스를 차단할까요?",
         "message": "보통은 사용자 뮤트나 차단으로 충분해요.\n\n인스턴스를 차단하면, 팔로워를 포함한 인스턴스의 모든 콘텐츠가 삭제됩니다!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "툿 고정",
       "action_true": "툿 고정 해제"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }
