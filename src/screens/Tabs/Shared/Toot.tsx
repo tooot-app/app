@@ -66,7 +66,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           />
         </Pressable>
       ),
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+      headerBackVisible: false
     })
     navigation.setParams({ toot, queryKey: queryKey.local })
   }, [hasRemoteContent])

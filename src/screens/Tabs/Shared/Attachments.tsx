@@ -38,7 +38,8 @@ const TabSharedAttachments: React.FC<TabSharedStackScreenProps<'Tab-Shared-Attac
             ]}
           />
         </CustomText>
-      )
+      ),
+      headerBackVisible: false
     })
     navigation.setParams({ queryKey })
   }, [])

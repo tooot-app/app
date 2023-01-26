@@ -80,8 +80,7 @@ const menuHashtag = ({
       type: 'item',
       key: 'hashtag-filter',
       props: {
-        onSelect: () =>
-          navigation.navigate('Tab-Shared-Filter', { source: 'hashtag', tag_name, queryKey }),
+        onSelect: () => navigation.navigate('Tab-Shared-Filter', { source: 'hashtag', tag_name }),
         disabled: false,
         destructive: false,
         hidden: !canFollowTags
