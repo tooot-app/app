@@ -210,7 +210,8 @@
         "hide": "完全隱藏"
       },
       "keywords": "符合這些關鍵字",
-      "keyword": "關鍵字"
+      "keyword": "關鍵字",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
     },
-    "hashtag": {
-      "follow": "跟隨",
-      "unfollow": "取消跟隨"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "編輯歷史"
