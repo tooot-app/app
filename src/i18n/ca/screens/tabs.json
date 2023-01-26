@@ -177,11 +177,11 @@
       "statuses_other": "{{count}} publicacions",
       "context": "Aplica a <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
+        "home": "Seguits i llistes",
+        "notifications": "Notificació",
         "public": "federat",
-        "thread": "",
-        "account": ""
+        "thread": "Conversa",
+        "account": "Perfil"
       }
     },
     "preferencesFilter": {
@@ -198,19 +198,19 @@
       },
       "context": "Aplica a",
       "contexts": {
-        "home": "",
+        "home": "Seguits i llistes",
         "notifications": "Notificació",
         "public": "Línia de temps federada",
         "thread": "Vista de conversa",
         "account": "Vista del perfil"
       },
-      "action": "",
+      "action": "Quan coincideix",
       "actions": {
         "warn": "",
         "hide": "Amagat completament"
       },
-      "keywords": "",
-      "keyword": ""
+      "keywords": "Coincidències per aquestes paraules claus",
+      "keyword": "Paraula clau"
     },
     "profile": {
       "feedback": {
