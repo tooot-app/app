@@ -210,7 +210,8 @@
         "hide": "Amagat completament"
       },
       "keywords": "Coincidències per aquestes paraules claus",
-      "keyword": "Paraula clau"
+      "keyword": "Paraula clau",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "Multimèdia de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Segueix",
-      "unfollow": "Deixa de seguir"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Edita l'historial"
