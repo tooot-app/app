@@ -70,16 +70,16 @@
         "name": "推播通知"
       },
       "preferences": {
-        "name": ""
+        "name": "偏好設定"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "所有內容過濾器"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "建立過濾器"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "編輯過濾器"
       },
       "profile": {
         "name": "編輯個人檔案"
@@ -136,10 +136,10 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "預設發嘟範圍",
         "options": {
-          "public": "",
-          "unlisted": "",
+          "public": "公開",
+          "unlisted": "不公開",
           "private": ""
         }
       },
