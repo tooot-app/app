@@ -57,7 +57,7 @@
   "hashtag": {
     "follow": {
       "action_false": "Follow",
-      "action_true": "Unfollow",
+      "action_true": "Unfollow"
     },
     "filter": {
       "action": "Filter hashtag ..."
