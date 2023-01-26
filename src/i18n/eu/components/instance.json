@@ -1,0 +1,27 @@
+{
+  "server": {
+    "textInput": {
+      "placeholder": ""
+    },
+    "whitelisted": "",
+    "button": "",
+    "information": {
+      "name": "",
+      "accounts": "",
+      "statuses": "",
+      "domains": ""
+    },
+    "disclaimer": {
+      "base": ""
+    },
+    "terms": {
+      "base": ""
+    }
+  },
+  "update": {
+    "alert": {
+      "title": "",
+      "message": ""
+    }
+  }
+}
