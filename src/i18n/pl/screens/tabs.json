@@ -210,7 +210,8 @@
         "hide": "Całkowicie ukryte"
       },
       "keywords": "Pasuje do tych słów kluczowych",
-      "keyword": "Słowo kluczowe"
+      "keyword": "Słowo kluczowe",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1> multimedia </1>"
     },
-    "hashtag": {
-      "follow": "Obserwuj",
-      "unfollow": "Przestań obserwować"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Historia edycji"
