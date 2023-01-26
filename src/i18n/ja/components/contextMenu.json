@@ -6,33 +6,33 @@
       "action_false": "ユーザーをフォロー",
       "action_true": "ユーザーをフォロー解除"
     },
-    "inLists": "",
+    "inLists": "ユーザーを含むリスト一覧",
     "showBoosts": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "ブーストを表示する",
+      "action_true": "ブーストを非表示にする"
     },
     "mute": {
       "action_false": "ユーザーをミュート",
       "action_true": "ユーザーのミュートを解除"
     },
     "followAs": {
-      "trigger": "",
-      "succeed_default": "",
-      "succeed_locked": "",
-      "failed": ""
+      "trigger": "別ユーザーとしてフォロー",
+      "succeed_default": "{{source}} として @{{target}} をフォローしました",
+      "succeed_locked": "{{source}} として @{{target}} へのフォロー申請を送りました。現在承認待ちです",
+      "failed": "別ユーザーとしてフォロー"
     },
-    "blockReport": "",
+    "blockReport": "通報・ブロック...",
     "block": {
       "action_false": "ユーザーをブロック",
       "action_true": "ユーザーのブロックを解除",
       "alert": {
-        "title": ""
+        "title": "@{{username}} をブロックしますか？"
       }
     },
     "reports": {
       "action": "ユーザーの報告とブロック",
       "alert": {
-        "title": ""
+        "title": "@{{username}} を通報し、ブロックしますか？"
       }
     }
   },

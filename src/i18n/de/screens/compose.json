@@ -153,8 +153,7 @@
         "altText": {
           "heading": "Beschreibe den Inhalt für Sehbehinderte",
           "placeholder": "Du kannst den Inhalten eine Beschreibung hinzufügen, auch \"Alt-Text\" genannt, damit sie für mehr Menschen zugänglich sind - auch für Blinde oder Sehbehinderte.\n\nGute Beschreibungen sind kurz und prägnant, geben aber den Inhalt Ihrer Medien genau genug wieder, um den Kontext zu verstehen."
-        },
-        "imageFocus": "Ziehe den Fokuskreis, um den Fokuspunkt zu aktualisieren"
+        }
       }
     },
     "draftsList": {

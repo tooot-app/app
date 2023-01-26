@@ -3,8 +3,8 @@
     "local": {
       "name": "ホーム",
       "options": {
-        "showBoosts": "",
-        "showReplies": ""
+        "showBoosts": "トゥートのブーストも表示する",
+        "showReplies": "他トゥートへの返信も表示する"
       }
     },
     "public": {
@@ -28,7 +28,7 @@
     "filters": {
       "accessibilityLabel": "フィルター",
       "accessibilityHint": "表示される通知の種類をフィルターする",
-      "title": ""
+      "title": "表示する通知"
     }
   },
   "me": {
@@ -43,7 +43,7 @@
         "name": "お気に入り"
       },
       "followedTags": {
-        "name": ""
+        "name": "フォロー中のハッシュタグ"
       },
       "fontSize": {
         "name": "トゥートのフォントサイズ"
@@ -58,7 +58,7 @@
         "name": "リスト {{list}} のユーザー"
       },
       "listAdd": {
-        "name": ""
+        "name": "リストを作成"
       },
       "listEdit": {
         "name": "リストの詳細を編集"
@@ -68,6 +68,18 @@
       },
       "push": {
         "name": "プッシュ通知"
+      },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
       },
       "profile": {
         "name": "プロフィールを編集"
@@ -83,9 +95,6 @@
       },
       "settings": {
         "name": "アプリの設定"
-      },
-      "webSettings": {
-        "name": "アカウントの設定"
       },
       "switch": {
         "name": "アカウントを切り替える"
@@ -125,6 +134,84 @@
         "message": "この操作は復元できません。"
       }
     },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
     "profile": {
       "feedback": {
         "succeed": "{{type}} がアップデートされました",
@@ -150,17 +237,6 @@
           "total_one": "{{count}} つのフィールド",
           "total_other": "{{count}} つのフィールド"
         },
-        "visibility": {
-          "title": "デフォルトの投稿の公開範囲",
-          "options": {
-            "public": "公開",
-            "unlisted": "未収載",
-            "private": "フォロワー限定"
-          }
-        },
-        "sensitive": {
-          "title": "メディアを常に閲覧注意として投稿する"
-        },
         "lock": {
           "title": "承認制アカウント",
           "description": "フォロワーを手動で承認する必要があります"
@@ -184,8 +260,8 @@
         "settings": "設定で有効にする"
       },
       "missingServerKey": {
-        "message": "",
-        "description": ""
+        "message": "このサーバーはプッシュ通知に対応していません",
+        "description": "プッシュ通知機能の有効化についてサーバーの管理者にお問い合わせください"
       },
       "global": {
         "heading": "{{acct}} の通知を有効にする",
@@ -223,10 +299,10 @@
         "heading": "ブーストしたトゥートが編集されました"
       },
       "admin.sign_up": {
-        "heading": ""
+        "heading": "管理者用: 新規登録"
       },
       "admin.report": {
-        "heading": ""
+        "heading": "管理者用: 報告案件"
       },
       "howitworks": "通知到達(routing)のしくみを学ぶ"
     },
@@ -266,7 +342,7 @@
         "heading": "ダークテーマ",
         "options": {
           "lighter": "デフォルト",
-          "darker": ""
+          "darker": "トゥルーブラック"
         }
       },
       "browser": {
@@ -277,7 +353,7 @@
         }
       },
       "autoplayGifv": {
-        "heading": ""
+        "heading": "タイムラインでGIFを自動再生"
       },
       "feedback": {
         "heading": "機能リクエスト"
@@ -330,22 +406,22 @@
       "name": "編集履歴"
     },
     "report": {
-      "name": "",
-      "report": "",
+      "name": "{{acct}} の違反報告",
+      "report": "報告",
       "forward": {
-        "heading": ""
+        "heading": "匿名で相手のサーバー {{instance}} にも送る"
       },
       "reasons": {
-        "heading": "",
-        "spam": "",
-        "other": "",
-        "violation": ""
+        "heading": "このアカウントを通報する理由はなんですか？",
+        "spam": "スパムだから",
+        "other": "他の理由があるから",
+        "violation": "サーバー・インスタンスの規則を破っているから"
       },
       "comment": {
-        "heading": ""
+        "heading": "他に何か意見はありますか？"
       },
       "violatedRules": {
-        "heading": ""
+        "heading": "サーバー・インスタンスの規則違反"
       }
     },
     "search": {
@@ -374,13 +450,13 @@
         "statuses": "投稿"
       },
       "notFound": "{{type}} <bold>{{searchTerm}}</bold> は見つかりませんでした",
-      "noResult": ""
+      "noResult": "何も見つかりません。別の検索用語でお試しください。"
     },
     "toot": {
       "name": "スレッド",
       "remoteFetch": {
-        "title": "",
-        "message": ""
+        "title": "外部の内容が含まれます",
+        "message": "ローカルのインスタンスに特定のコンテンツのコピーが無い場合、リモートから直接取得することになります。これらのコンテンツに対しても通常同様の行動ができます。"
       }
     },
     "users": {
@@ -392,7 +468,7 @@
         "reblogged_by": "{{count}} ブースト",
         "favourited_by": "{{count}} お気に入り"
       },
-      "resultIncomplete": ""
+      "resultIncomplete": "リモートインスタンスからの結果は不完全な場合があります"
     }
   }
 }
