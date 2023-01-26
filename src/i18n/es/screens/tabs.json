@@ -210,7 +210,8 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "Multimedia de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Seguir",
-      "unfollow": "Dejar de seguir"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Historial de ediciones"
