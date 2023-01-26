@@ -399,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
-    "hashtag": {
-      "follow": "Follow",
-      "unfollow": "Unfollow"
+    "filter": {
+      "name": "Add to filter",
+      "existed": "Existed in these filters"
     },
     "history": {
       "name": "Edit History"

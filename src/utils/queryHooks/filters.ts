@@ -1,4 +1,5 @@
-import { QueryFunctionContext, useQuery, UseQueryOptions } from '@tanstack/react-query'
+import haptics from '@components/haptics'
+import { QueryFunctionContext, useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import apiInstance from '@utils/api/instance'
 import { AxiosError } from 'axios'
 
@@ -28,6 +29,73 @@ const useFilterQuery = ({
   })
 }
 
+/* ----- */
+
+type MutationVarsFilter = { filter: Mastodon.Filter<'v2'> } & (
+  | { source: 'status'; action: 'add'; status: Mastodon.Status }
+  | { source: 'status'; action: 'remove'; status: Mastodon.Status }
+  | { source: 'keyword'; action: 'add'; keyword: string }
+  | { source: 'keyword'; action: 'remove'; keyword: string }
+)
+
+const mutationFunction = async (params: MutationVarsFilter) => {
+  switch (params.source) {
+    case 'status':
+      switch (params.action) {
+        case 'add':
+          return apiInstance({
+            method: 'post',
+            version: 'v2',
+            url: `filters/${params.filter.id}/statuses`,
+            body: { status_id: params.status.id }
+          })
+        case 'remove':
+          for (const status of params.filter.statuses) {
+            if (status.status_id === params.status.id) {
+              await apiInstance({
+                method: 'delete',
+                version: 'v2',
+                url: `filters/statuses/${status.id}`
+              })
+            }
+          }
+          return Promise.resolve()
+      }
+      break
+    case 'keyword':
+      switch (params.action) {
+        case 'add':
+          return apiInstance({
+            method: 'post',
+            version: 'v2',
+            url: `filters/${params.filter.id}/keywords`,
+            body: { keyword: params.keyword, whole_word: true }
+          })
+        case 'remove':
+          for (const keyword of params.filter.keywords) {
+            if (keyword.keyword === params.keyword) {
+              await apiInstance({
+                method: 'delete',
+                version: 'v2',
+                url: `filters/keywords/${keyword.id}`
+              })
+            }
+          }
+          return Promise.resolve()
+      }
+      break
+  }
+}
+
+const useFilterMutation = () => {
+  return useMutation<any, AxiosError, MutationVarsFilter>(mutationFunction, {
+    onSuccess: () => haptics('Light'),
+    onError: () => haptics('Error')
+  })
+}
+
+/* ----- */
+
 export type QueryKeyFilters = ['Filters', { version: 'v1' | 'v2' }]
 
 const filtersQueryFunction = async <T extends 'v1' | 'v2' = 'v1'>({
@@ -54,4 +122,4 @@ const useFiltersQuery = <T extends 'v1' | 'v2' = 'v1'>(params?: {
   })
 }
 
-export { useFilterQuery, useFiltersQuery }
+export { useFilterQuery, useFilterMutation, useFiltersQuery }

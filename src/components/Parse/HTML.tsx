@@ -69,7 +69,7 @@ const ParseHTML: React.FC<Props> = ({
 
   const [followedTags] = useAccountStorage.object('followed_tags')
 
-  const MAX_ALLOWED_LINES = 30
+  const MAX_ALLOWED_LINES = 35
   const [totalLines, setTotalLines] = useState<number>()
   const [expanded, setExpanded] = useState(highlighted)
 
@@ -147,7 +147,7 @@ const ParseHTML: React.FC<Props> = ({
                       tag?.length &&
                       !disableDetails &&
                       !sameHashtag &&
-                      navigation.push('Tab-Shared-Hashtag', { hashtag: tag })
+                      navigation.push('Tab-Shared-Hashtag', { tag_name: tag })
                     }
                     children={children}
                   />
@@ -203,9 +203,7 @@ const ParseHTML: React.FC<Props> = ({
                 onPress={async () => {
                   if (!disableDetails) {
                     if (shouldBeTag) {
-                      navigation.push('Tab-Shared-Hashtag', {
-                        hashtag: content.substring(1)
-                      })
+                      navigation.push('Tab-Shared-Hashtag', { tag_name: content.substring(1) })
                     } else {
                       await openLink(href, navigation)
                     }

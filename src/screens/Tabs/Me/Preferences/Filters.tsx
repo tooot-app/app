@@ -1,15 +1,15 @@
+import { Filter } from '@components/Filter'
 import { HeaderLeft, HeaderRight } from '@components/Header'
 import Icon from '@components/Icon'
 import ComponentSeparator from '@components/Separator'
-import CustomText from '@components/Text'
 import apiInstance from '@utils/api/instance'
 import { TabMePreferencesStackScreenProps } from '@utils/navigation/navigators'
 import { useFiltersQuery } from '@utils/queryHooks/filters'
 import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
-import React, { Fragment, useEffect } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { Pressable, TouchableNativeFeedback, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Pressable, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
 
 const TabMePreferencesFilters: React.FC<
@@ -39,6 +39,7 @@ const TabMePreferencesFilters: React.FC<
 
   return (
     <SwipeListView
+      contentContainerStyle={{ padding: StyleConstants.Spacing.Global.PagePadding }}
       renderHiddenItem={({ item }) => (
         <Pressable
           style={{
@@ -65,98 +66,10 @@ const TabMePreferencesFilters: React.FC<
         filter.expires_at ? new Date().getTime() - new Date(filter.expires_at).getTime() : 1
       )}
       renderItem={({ item: filter }) => (
-        <TouchableNativeFeedback
+        <Filter
+          filter={filter}
           onPress={() => navigation.navigate('Tab-Me-Preferences-Filter', { type: 'edit', filter })}
-        >
-          <View
-            style={{
-              padding: StyleConstants.Spacing.Global.PagePadding,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: colors.backgroundDefault
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <CustomText
-                fontStyle='M'
-                children={filter.title}
-                style={{ color: colors.primaryDefault }}
-                numberOfLines={1}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginVertical: StyleConstants.Spacing.XS
-                }}
-              >
-                {filter.expires_at && new Date() > new Date(filter.expires_at) ? (
-                  <CustomText
-                    fontStyle='S'
-                    fontWeight='Bold'
-                    children={t('screenTabs:me.preferencesFilters.expired')}
-                    style={{ color: colors.red, marginRight: StyleConstants.Spacing.M }}
-                  />
-                ) : null}
-                {filter.keywords?.length ? (
-                  <CustomText
-                    children={t('screenTabs:me.preferencesFilters.keywords', {
-                      count: filter.keywords.length
-                    })}
-                    style={{ color: colors.primaryDefault }}
-                  />
-                ) : null}
-                {filter.keywords?.length && filter.statuses?.length ? (
-                  <CustomText
-                    children={t('common:separator')}
-                    style={{ color: colors.primaryDefault }}
-                  />
-                ) : null}
-                {filter.statuses?.length ? (
-                  <CustomText
-                    children={t('screenTabs:me.preferencesFilters.statuses', {
-                      count: filter.statuses.length
-                    })}
-                    style={{ color: colors.primaryDefault }}
-                  />
-                ) : null}
-              </View>
-              <CustomText
-                style={{ color: colors.secondary }}
-                children={
-                  <Trans
-                    ns='screenTabs'
-                    i18nKey='me.preferencesFilters.context'
-                    components={[
-                      <>
-                        {filter.context.map((c, index) => (
-                          <Fragment key={index}>
-                            <CustomText
-                              style={{
-                                color: colors.secondary,
-                                textDecorationColor: colors.disabled,
-                                textDecorationLine: 'underline',
-                                textDecorationStyle: 'solid'
-                              }}
-                              children={t(`screenTabs:me.preferencesFilters.contexts.${c}`)}
-                            />
-                            <CustomText children={t('common:separator')} />
-                          </Fragment>
-                        ))}
-                      </>
-                    ]}
-                  />
-                }
-              />
-            </View>
-            <Icon
-              name='chevron-right'
-              size={StyleConstants.Font.Size.L}
-              color={colors.primaryDefault}
-              style={{ marginLeft: 8 }}
-            />
-          </View>
-        </TouchableNativeFeedback>
+        />
       )}
       ItemSeparatorComponent={ComponentSeparator}
     />

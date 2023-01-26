@@ -99,7 +99,10 @@ export type TabSharedStackParamList = {
   }
   'Tab-Shared-Account-In-Lists': { account: Pick<Mastodon.Account, 'id' | 'username'> }
   'Tab-Shared-Attachments': { account: Mastodon.Account; queryKey?: QueryKeyTimeline }
-  'Tab-Shared-Hashtag': { hashtag: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
+  'Tab-Shared-Filter':
+    | { source: 'status'; status: Mastodon.Status }
+    | { source: 'hashtag'; tag_name: Mastodon.Tag['name'] }
+  'Tab-Shared-Hashtag': { tag_name: Mastodon.Tag['name']; queryKey?: QueryKeyTimeline }
   'Tab-Shared-History': { status: Mastodon.Status; detectedLanguage: string }
   'Tab-Shared-Report': {
     account: Pick<Mastodon.Account, 'id' | 'acct' | 'username' | 'url'>

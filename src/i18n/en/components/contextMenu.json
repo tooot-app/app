@@ -6,7 +6,7 @@
       "action_false": "Follow user",
       "action_true": "Unfollow user"
     },
-    "inLists": "Lists containing user",
+    "inLists": "Lists containing user ...",
     "showBoosts": {
       "action_false": "Show user's boosts",
       "action_true": "Hide users's boosts"
@@ -16,12 +16,12 @@
       "action_true": "Unmute user"
     },
     "followAs": {
-      "trigger": "Follow as...",
+      "trigger": "Follow as ...",
       "succeed_default": "Now following @{{target}} with @{{source}}",
       "succeed_locked": "Sent follow request to @{{target}} with {{source}}, pending approval",
       "failed": "Follow as"
     },
-    "blockReport": "Block and report...",
+    "blockReport": "Block and report",
     "block": {
       "action_false": "Block user",
       "action_true": "Unblock user",
@@ -52,6 +52,15 @@
         "title": "Confirm blocking instance {{instance}} ?",
         "message": "Mostly you can mute or block certain user.\n\nAfter blocking instance, all its content including followers from this instance will be removed!"
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "Follow",
+      "action_true": "Unfollow",
+    },
+    "filter": {
+      "action": "Filter hashtag ..."
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Pin toot",
       "action_true": "Unpin toot"
+    },
+    "filter": {
+      "action_false": "Filter toot ...",
+      "action_true": "Manage filters ..."
     }
   }
 }
