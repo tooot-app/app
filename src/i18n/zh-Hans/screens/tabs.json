@@ -211,7 +211,7 @@
       },
       "keywords": "匹配这些关键字",
       "keyword": "关键字",
-      "statuses": ""
+      "statuses": "匹配这些嘟文"
     },
     "profile": {
       "feedback": {
@@ -400,8 +400,8 @@
       "name": "<0 /><1>的媒体</1>"
     },
     "filter": {
-      "name": "",
-      "existed": ""
+      "name": "添加至过滤器",
+      "existed": "已被过滤"
     },
     "history": {
       "name": "编辑历史"
