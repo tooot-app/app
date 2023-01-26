@@ -1,16 +1,16 @@
 {
   "follow": {
-    "function": ""
+    "function": "Erabiltzailea jarraitu"
   },
   "block": {
-    "function": ""
+    "function": "Erabiltzailea blokeatu"
   },
   "button": {
-    "error": "",
-    "blocked_by": "",
-    "blocking": "",
-    "following": "",
-    "requested": "",
-    "default": ""
+    "error": "Errorea kargatzean",
+    "blocked_by": "Erabiltzaileak blokeatua",
+    "blocking": "Desblokeatu",
+    "following": "Jarraitzeari utzi",
+    "requested": "Eskaera baztertu",
+    "default": "Jarraitu"
   }
 }

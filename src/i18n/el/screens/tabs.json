@@ -210,7 +210,8 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1> πολυμέσα</1>"
     },
-    "hashtag": {
-      "follow": "Ακολουθήστε",
-      "unfollow": "Διακοπή παρακολούθησης"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Ιστορικό επεξεργασίας"

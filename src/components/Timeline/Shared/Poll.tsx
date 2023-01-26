@@ -137,8 +137,8 @@ const TimelinePoll: React.FC = () => {
               marginRight: StyleConstants.Spacing.S
             }}
             name={
-              `${poll.own_votes?.includes(index) ? 'Check' : ''}${
-                poll.multiple ? 'Square' : 'Circle'
+              `${poll.own_votes?.includes(index) ? 'check-' : ''}${
+                poll.multiple ? 'square' : 'circle'
               }` as any
             }
             size={StyleConstants.Font.Size.M}

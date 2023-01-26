@@ -210,7 +210,8 @@
         "hide": "完全隐藏"
       },
       "keywords": "匹配这些关键字",
-      "keyword": "关键字"
+      "keyword": "关键字",
+      "statuses": "匹配这些嘟文"
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>的媒体</1>"
     },
-    "hashtag": {
-      "follow": "关注",
-      "unfollow": "取消关注"
+    "filter": {
+      "name": "添加至过滤器",
+      "existed": "已被过滤"
     },
     "history": {
       "name": "编辑历史"

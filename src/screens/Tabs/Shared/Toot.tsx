@@ -66,7 +66,8 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
           />
         </Pressable>
       ),
-      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />
+      headerLeft: () => <HeaderLeft onPress={() => navigation.goBack()} />,
+      headerBackVisible: false
     })
     navigation.setParams({ toot, queryKey: queryKey.local })
   }, [hasRemoteContent])
@@ -340,7 +341,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                                 StyleConstants.Spacing.M + StyleConstants.Avatar.XS / 2
                               } ` +
                               `a ${ARC} ${ARC} 0 0 0 -${ARC} ${ARC} ` +
-                              `v 999`
+                              `v ${heights[index] || 300}`
                             }
                             strokeWidth={1}
                             stroke={colors.border}
@@ -356,7 +357,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights[index] || 999) -
+                                (heights[index] || 300) -
                                 (StyleConstants.Spacing.S * 1.5 + StyleConstants.Font.Size.L) / 2 -
                                 StyleConstants.Avatar.XS / 2
                               } ` +
@@ -377,7 +378,7 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                             d={
                               `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
                               `v ${
-                                (heights[index] || 999) -
+                                (heights[index] || 300) -
                                 (StyleConstants.Spacing.S * 1.5 +
                                   StyleConstants.Font.Size.L * 1.35) /
                                   2
@@ -394,7 +395,10 @@ const TabSharedToot: React.FC<TabSharedStackScreenProps<'Tab-Shared-Toot'>> = ({
                       return (
                         <Svg key={i} style={{ position: 'absolute' }} fill='none'>
                           <Path
-                            d={`M ${(i + 1) * StyleConstants.Spacing.S} 0 ` + `v 999`}
+                            d={
+                              `M ${(i + 1) * StyleConstants.Spacing.S} 0 ` +
+                              `v ${heights[index] || 300}`
+                            }
                             strokeWidth={1}
                             stroke={colors.border}
                             strokeOpacity={0.6}

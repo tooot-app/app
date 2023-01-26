@@ -210,7 +210,8 @@
         "hide": "Hidden completely"
       },
       "keywords": "Matches for these keywords",
-      "keyword": "Keyword"
+      "keyword": "Keyword",
+      "statuses": "Matches these toots"
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s media</1>"
     },
-    "hashtag": {
-      "follow": "Follow",
-      "unfollow": "Unfollow"
+    "filter": {
+      "name": "Add to filter",
+      "existed": "Existed in these filters"
     },
     "history": {
       "name": "Edit History"

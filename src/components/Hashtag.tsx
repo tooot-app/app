@@ -22,7 +22,7 @@ const ComponentHashtag: React.FC<PropsWithChildren & Props> = ({
   const navigation = useNavigation<StackNavigationProp<TabLocalStackParamList>>()
 
   const onPress = () => {
-    navigation.push('Tab-Shared-Hashtag', { hashtag: hashtag.name })
+    navigation.push('Tab-Shared-Hashtag', { tag_name: hashtag.name })
   }
 
   const padding = StyleConstants.Spacing.Global.PagePadding

@@ -27,15 +27,13 @@ const TabSharedAccountInLists: React.FC<
     navigation.setOptions({
       presentation: 'modal',
       title: t('screenTabs:shared.accountInLists.name', { username: account.username }),
-      headerRight: () => {
-        return (
-          <HeaderRight
-            type='text'
-            content={t('common:buttons.done')}
-            onPress={() => navigation.pop(1)}
-          />
-        )
-      }
+      headerRight: () => (
+        <HeaderRight
+          type='text'
+          content={t('common:buttons.done')}
+          onPress={() => navigation.pop(1)}
+        />
+      )
     })
   }, [])
 
@@ -66,11 +64,11 @@ const TabSharedAccountInLists: React.FC<
     <SectionList
       style={{ padding: StyleConstants.Spacing.Global.PagePadding }}
       sections={sections}
-      SectionSeparatorComponent={props => {
-        return props.leadingItem && props.trailingSection ? (
-          <View style={{ flex: 1, height: StyleConstants.Spacing.Global.PagePadding * 2 }} />
+      SectionSeparatorComponent={props =>
+        props.leadingItem && props.trailingSection ? (
+          <View style={{ height: StyleConstants.Spacing.XL }} />
         ) : null
-      }}
+      }
       renderSectionHeader={({ section: { title, data } }) =>
         data.length ? (
           <CustomText fontStyle='S' style={{ color: colors.secondary }} children={title} />
@@ -117,7 +115,7 @@ const TabSharedAccountInLists: React.FC<
           title={item.title}
         />
       )}
-    ></SectionList>
+    />
   )
 }
 

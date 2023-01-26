@@ -70,16 +70,16 @@
         "name": "推播通知"
       },
       "preferences": {
-        "name": ""
+        "name": "偏好設定"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "所有內容過濾器"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "建立過濾器"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "編輯過濾器"
       },
       "profile": {
         "name": "編輯個人檔案"
@@ -136,81 +136,82 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "預設發嘟範圍",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "公開",
+          "unlisted": "不公開",
+          "private": "僅限跟隨者"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "預設標記媒體為敏感內容"
       },
       "media": {
-        "title": "",
+        "title": "媒體顯示",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "隱藏被標記為敏感內容的媒體",
+          "show_all": "總是顯示媒體",
+          "hide_all": "總是隱藏媒體"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "自動展開含有警告訊息的嘟文"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "在嘟文中自動播放 GIF"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "內容過濾器",
+        "content": "{{count}} 生效中"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "更新設定",
+        "description": "以下的設定只能通過網頁更新"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "已過期",
+      "keywords_one": "{{count}} 關鍵字",
+      "keywords_other": "{{count}} 關鍵字",
+      "statuses_one": "{{count}} 條嘟文",
+      "statuses_other": "{{count}} 條嘟文",
+      "context": "使用於 <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "跟隨和列表",
+        "notifications": "通知",
+        "public": "聯邦",
+        "thread": "對話",
+        "account": "個人資料"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "名稱",
+      "expiration": "截止於",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "從不",
+        "1800": "30 分鐘後",
+        "3600": "1 小時後",
+        "43200": "12 小時後",
+        "86400": "1 天後",
+        "604800": "1 週後",
+        "18144000": "1 個月後"
       },
-      "context": "",
+      "context": "使用於",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "跟隨和列表",
+        "notifications": "通知",
+        "public": "聯邦時間軸",
+        "thread": "對話頁面",
+        "account": "個人資料頁面"
       },
-      "action": "",
+      "action": "當符合時",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "僅折疊，但可點擊顯示",
+        "hide": "完全隱藏"
       },
-      "keywords": "",
-      "keyword": ""
+      "keywords": "符合這些關鍵字",
+      "keyword": "關鍵字",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>的媒體</1>"
     },
-    "hashtag": {
-      "follow": "跟隨",
-      "unfollow": "取消跟隨"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "編輯歷史"

@@ -70,16 +70,16 @@
         "name": "Push-Benachrichtigung"
       },
       "preferences": {
-        "name": ""
+        "name": "Einstellungen"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Inhaltsfilter"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Filterregel erstellen"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Filter bearbeiten"
       },
       "profile": {
         "name": "Profil bearbeiten"
@@ -136,81 +136,82 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Standard-Einstellung für die Sichtbarkeit des Tröts",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Öffentlich",
+          "unlisted": "Ungelistet",
+          "private": "Nur für Follower"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Medien immer als sensibel kennzeichnen"
       },
       "media": {
-        "title": "",
+        "title": "Medien-Anzeige",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Als heikel gekennzeichnete Medien ausblenden",
+          "show_all": "Medien immer anzeigen",
+          "hide_all": "Medien immer verstecken"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Beiträge mit Inhaltswarnungen immer ausklappen"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "GIFs automatisch abspielen"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Inhaltsfilter",
+        "content": "{{count}} aktiv"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Einstellungen aktualisieren",
+        "description": "Nachfolgende Einstellungen können nur über das Web-Interface aktualisiert werden"
       }
     },
     "preferencesFilters": {
-      "expired": "",
+      "expired": "Abgelaufen",
       "keywords_one": "",
       "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "statuses_one": "{{count}} Tröt",
+      "statuses_other": "{{count}} Tröts",
+      "context": "Läuft in <0 /> ab",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Gefolgte und Listen",
+        "notifications": "Benachrichtigung",
+        "public": "Föderiert",
+        "thread": "Unterhaltung",
+        "account": "Profil"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Name",
+      "expiration": "Ablaufdatum",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Niemals",
+        "1800": "Nach 30 Minuten",
+        "3600": "Nach einer Stunde",
+        "43200": "Nach 12 Stunden",
+        "86400": "Nach einem Tag",
+        "604800": "Nach einer Woche",
+        "18144000": "Nach einem Monat"
       },
       "context": "",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Gefolgte und Listen",
+        "notifications": "Benachrichtigung",
+        "public": "Föderierte Timeline",
+        "thread": "Unterhaltungsansicht",
+        "account": "Profilansicht"
       },
-      "action": "",
+      "action": "Bei Übereinstimmung",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Verdeckt, kann aber aufgedeckt werden",
+        "hide": "Vollständig verdeckt"
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "Stichwörter",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>'s Medien</1>"
     },
-    "hashtag": {
-      "follow": "Folgen",
-      "unfollow": "Entfolgen"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Bearbeitungsverlauf"

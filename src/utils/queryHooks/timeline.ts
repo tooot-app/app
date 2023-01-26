@@ -33,7 +33,7 @@ export type QueryKeyTimeline = [
       }
     | {
         page: 'Hashtag'
-        hashtag: Mastodon.Tag['name']
+        tag_name: Mastodon.Tag['name']
       }
     | {
         page: 'List'
@@ -219,7 +219,7 @@ export const queryFunctionTimeline = async ({
     case 'Hashtag':
       return apiInstance<Mastodon.Status[]>({
         method: 'get',
-        url: `timelines/tag/${page.hashtag}`,
+        url: `timelines/tag/${page.tag_name}`,
         params
       })
 

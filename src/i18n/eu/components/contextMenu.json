@@ -54,6 +54,15 @@
       }
     }
   },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
+    }
+  },
   "share": {
     "status": {
       "action": ""
@@ -86,6 +95,10 @@
       "action_true": ""
     },
     "pin": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
       "action_false": "",
       "action_true": ""
     }

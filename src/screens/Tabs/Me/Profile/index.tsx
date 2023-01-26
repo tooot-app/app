@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TabMeProfileStackParamList, TabMeStackScreenProps } from '@utils/navigation/navigators'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { KeyboardAvoidingView, Platform } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import TabMeProfileFields from './Fields'
 import TabMeProfileName from './Name'
@@ -18,10 +17,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ naviga
   const messageRef = useRef<FlashMessage>(null)
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <>
       <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
         <Stack.Screen
           name='Tab-Me-Profile-Root'
@@ -55,7 +51,7 @@ const TabMeProfile: React.FC<TabMeStackScreenProps<'Tab-Me-Switch'>> = ({ naviga
       </Stack.Navigator>
 
       <Message ref={messageRef} />
-    </KeyboardAvoidingView>
+    </>
   )
 }
 
