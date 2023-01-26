@@ -210,7 +210,8 @@
         "hide": "Приховано повністю"
       },
       "keywords": "Збіг із цими ключовими словами",
-      "keyword": "Ключове слово"
+      "keyword": "Ключове слово",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1> медіа</1>"
     },
-    "hashtag": {
-      "follow": "Підписатися",
-      "unfollow": "Відписатися"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Редагувати історію"
