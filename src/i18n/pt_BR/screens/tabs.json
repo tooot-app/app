@@ -210,7 +210,8 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>\"s mídia</1>"
     },
-    "hashtag": {
-      "follow": "Seguir",
-      "unfollow": "Deixar de seguir"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Histórico de Edição"
