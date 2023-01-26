@@ -70,16 +70,16 @@
         "name": "Notificacions push"
       },
       "preferences": {
-        "name": ""
+        "name": "Preferències"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Tots els filtres de continguts"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Crea un filtre"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Edita el filtre"
       },
       "profile": {
         "name": "Edita el teu perfil"
@@ -136,81 +136,82 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Visibilitat de la publicació per defecte",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Públic",
+          "unlisted": "Sense llistar",
+          "private": "Només als seguidors"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Marca el contingut com a sensible"
       },
       "media": {
-        "title": "",
+        "title": "Mostra el contingut multimèdia",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Amaga el contingut multimèdia com a sensible",
+          "show_all": "Mostra sempre el contingut multimèdia",
+          "hide_all": "Amaga sempre el contingut multimèdia"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Amplia sempre el contingut amb alertes"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Autoreprodueix els GIF"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Filtres de continguts",
+        "content": "{{count}} actiu/s"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Actualitza la configuració",
+        "description": "Les configuracions següents només es poden actualitzant fent servir el web"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Caducat",
+      "keywords_one": "{{count}} paraula clau",
+      "keywords_other": "{{count}} paraules clau",
+      "statuses_one": "{{count}} publicació",
+      "statuses_other": "{{count}} publicacions",
+      "context": "Aplica a <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Seguits i llistes",
+        "notifications": "Notificació",
+        "public": "federat",
+        "thread": "Conversa",
+        "account": "Perfil"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Nom",
+      "expiration": "Venciment",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Mai",
+        "1800": "Després de 30 minuts",
+        "3600": "Després d'una hora",
+        "43200": "Després de 12 hores",
+        "86400": "Després d'un dia",
+        "604800": "Després d'una setmana",
+        "18144000": "Després d'un mes"
       },
-      "context": "",
+      "context": "Aplica a",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Seguits i llistes",
+        "notifications": "Notificació",
+        "public": "Línia de temps federada",
+        "thread": "Vista de conversa",
+        "account": "Vista del perfil"
       },
-      "action": "",
+      "action": "Quan coincideix",
       "actions": {
         "warn": "",
-        "hide": ""
+        "hide": "Amagat completament"
       },
-      "keywords": "",
-      "keyword": ""
+      "keywords": "Coincidències per aquestes paraules claus",
+      "keyword": "Paraula clau",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "Multimèdia de <0 /><1></1>"
     },
-    "hashtag": {
-      "follow": "Segueix",
-      "unfollow": "Deixa de seguir"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Edita l'historial"

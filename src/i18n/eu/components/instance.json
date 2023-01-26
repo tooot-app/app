@@ -1,27 +1,27 @@
 {
   "server": {
     "textInput": {
-      "placeholder": ""
+      "placeholder": "Instantziaren domeinua"
     },
-    "whitelisted": "",
-    "button": "",
+    "whitelisted": "Baliteke instantzia hau zerrenda zuri batean egotea eta toootek bertako data ezin eskura ahal izatea saioa hasi aurretik.",
+    "button": "Saioa hasi",
     "information": {
-      "name": "",
-      "accounts": "",
-      "statuses": "",
-      "domains": ""
+      "name": "Izena",
+      "accounts": "Erabiltzaileak",
+      "statuses": "Tutak",
+      "domains": "Domeinuak"
     },
     "disclaimer": {
-      "base": ""
+      "base": "Saioa hasteko prozesuak sistemako nabigatzailea erabiltzen du, beraz, zure kontuko informazioa ez da tooot aplikazioarentzat ikusgarri izango."
     },
     "terms": {
-      "base": ""
+      "base": "Saio hastean, <0>pribatutasun-politika</0> eta <1>zerbitzuaren terminoak</1> onartzen dituzu."
     }
   },
   "update": {
     "alert": {
-      "title": "",
-      "message": ""
+      "title": "Instantzia honetan saioa hasita",
+      "message": "Beste kontu batekin saioa has dezakezu, saioa hasita duen kontua mantentzen delarik"
     }
   }
 }

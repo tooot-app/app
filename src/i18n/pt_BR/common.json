@@ -6,8 +6,8 @@
     "discard": "Descartar",
     "continue": "Continuar",
     "create": "",
-    "delete": "",
-    "done": "",
+    "delete": "Excluir",
+    "done": "Concluído",
     "confirm": "Confirmar"
   },
   "customEmoji": {

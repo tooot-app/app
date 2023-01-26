@@ -210,7 +210,8 @@
         "hide": ""
       },
       "keywords": "",
-      "keyword": ""
+      "keyword": "",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1>의 미디어</1>"
     },
-    "hashtag": {
-      "follow": "팔로우",
-      "unfollow": "팔로우 해제"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "수정 이력"

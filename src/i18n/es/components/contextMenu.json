@@ -6,7 +6,7 @@
       "action_false": "Seguir usuario",
       "action_true": "Dejar de seguir usuario"
     },
-    "inLists": "Listas que contienen el usuario",
+    "inLists": "",
     "showBoosts": {
       "action_false": "Mostrar los impulsos del usuario",
       "action_true": "Ocultar los impulsos del usuario"
@@ -16,12 +16,12 @@
       "action_true": "Dejar de silenciar al usuario"
     },
     "followAs": {
-      "trigger": "Seguir como...",
+      "trigger": "",
       "succeed_default": "Siguiendo @{{target}} como @{{source}}",
       "succeed_locked": "Enviado la solicitud de seguimiento a @{{target}} como {{source}}, pendiente de aprobación",
       "failed": "Seguir como"
     },
-    "blockReport": "Bloquear y denunciar...",
+    "blockReport": "",
     "block": {
       "action_false": "Bloquear usuario",
       "action_true": "Desbloquear usuario",
@@ -52,6 +52,15 @@
         "title": "¿Quieres bloquear la instancia {{instance}}?",
         "message": "Puedes silenciar o bloquear a un usuario.\n\nTras bloquear una instancia, todo su contenido junto con sus seguidores se eliminarán."
       }
+    }
+  },
+  "hashtag": {
+    "follow": {
+      "action_false": "",
+      "action_true": ""
+    },
+    "filter": {
+      "action": ""
     }
   },
   "share": {
@@ -88,6 +97,10 @@
     "pin": {
       "action_false": "Fijar toot",
       "action_true": "Desfijar toot"
+    },
+    "filter": {
+      "action_false": "",
+      "action_true": ""
     }
   }
 }

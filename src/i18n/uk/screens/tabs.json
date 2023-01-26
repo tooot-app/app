@@ -70,16 +70,16 @@
         "name": "Push-сповіщення"
       },
       "preferences": {
-        "name": ""
+        "name": "Параметри"
       },
       "preferencesFilters": {
-        "name": ""
+        "name": "Усі фільтри вмісту"
       },
       "preferencesFilterAdd": {
-        "name": ""
+        "name": "Створити фільтр"
       },
       "preferencesFilterEdit": {
-        "name": ""
+        "name": "Змінити фільтр"
       },
       "profile": {
         "name": "Редагувати профіль"
@@ -136,81 +136,82 @@
     },
     "preferences": {
       "visibility": {
-        "title": "",
+        "title": "Типова видимість дописів",
         "options": {
-          "public": "",
-          "unlisted": "",
-          "private": ""
+          "public": "Загальнодоступні",
+          "unlisted": "Приватні",
+          "private": "Лише для підписників"
         }
       },
       "sensitive": {
-        "title": ""
+        "title": "Типово позначити медіа делікатними"
       },
       "media": {
-        "title": "",
+        "title": "Показ медіа",
         "options": {
-          "default": "",
-          "show_all": "",
-          "hide_all": ""
+          "default": "Приховувати медіа, позначені делікатними",
+          "show_all": "Завжди показувати медіа",
+          "hide_all": "Завжди приховувати медіа"
         }
       },
       "spoilers": {
-        "title": ""
+        "title": "Автоматично розгортати дмухи із попередженням про вміст"
       },
       "autoplay_gifs": {
-        "title": ""
+        "title": "Автовідтворення GIF у дмухах"
       },
       "filters": {
-        "title": "",
-        "content": ""
+        "title": "Фільтри вмісту",
+        "content": "{{count}} активний"
       },
       "web_only": {
-        "title": "",
-        "description": ""
+        "title": "Оновити налаштування",
+        "description": "Налаштування можна оновити лише за допомогою вебінтерфейсу"
       }
     },
     "preferencesFilters": {
-      "expired": "",
-      "keywords_one": "",
-      "keywords_other": "",
-      "statuses_one": "",
-      "statuses_other": "",
-      "context": "",
+      "expired": "Термін дії минув",
+      "keywords_one": "{{count}} ключове слово",
+      "keywords_other": "{{count}} ключових слів",
+      "statuses_one": "{{count}} дмух",
+      "statuses_other": "{{count}} дмухів",
+      "context": "Застосовується в <0 />",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "підписки й списки",
+        "notifications": "сповіщення",
+        "public": "федеративні",
+        "thread": "розмова",
+        "account": "профіль"
       }
     },
     "preferencesFilter": {
-      "name": "",
-      "expiration": "",
+      "name": "Ім’я",
+      "expiration": "Закінчується",
       "expirationOptions": {
-        "0": "",
-        "1800": "",
-        "3600": "",
-        "43200": "",
-        "86400": "",
-        "604800": "",
-        "18144000": ""
+        "0": "Ніколи",
+        "1800": "За 30 хвилин",
+        "3600": "За 1 годину",
+        "43200": "За 12 годин",
+        "86400": "За 1 день",
+        "604800": "За 1 тиждень",
+        "18144000": "За 1 місяць"
       },
-      "context": "",
+      "context": "Застосовується в",
       "contexts": {
-        "home": "",
-        "notifications": "",
-        "public": "",
-        "thread": "",
-        "account": ""
+        "home": "Підписки та списки",
+        "notifications": "Сповіщення",
+        "public": "Федеративна стрічка",
+        "thread": "Перегляд бесід",
+        "account": "Перегляд профілю"
       },
-      "action": "",
+      "action": "За збігу",
       "actions": {
-        "warn": "",
-        "hide": ""
+        "warn": "Згорнуто, але можна виявити",
+        "hide": "Приховано повністю"
       },
-      "keywords": "",
-      "keyword": ""
+      "keywords": "Збіг із цими ключовими словами",
+      "keyword": "Ключове слово",
+      "statuses": ""
     },
     "profile": {
       "feedback": {
@@ -398,9 +399,9 @@
     "attachments": {
       "name": "<0 /><1> медіа</1>"
     },
-    "hashtag": {
-      "follow": "Підписатися",
-      "unfollow": "Відписатися"
+    "filter": {
+      "name": "",
+      "existed": ""
     },
     "history": {
       "name": "Редагувати історію"
