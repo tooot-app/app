@@ -4,9 +4,9 @@
     "title": "Ações do Usuário",
     "following": {
       "action_false": "Seguir usuário",
-      "action_true": ""
+      "action_true": "Deixar de seguir usuário"
     },
-    "inLists": "",
+    "inLists": "Listas contendo usuário",
     "showBoosts": {
       "action_false": "",
       "action_true": ""
@@ -17,22 +17,22 @@
     },
     "followAs": {
       "trigger": "",
-      "succeed_default": "",
+      "succeed_default": "Agora seguindo @{{target}} com @{{source}}",
       "succeed_locked": "",
       "failed": ""
     },
-    "blockReport": "",
+    "blockReport": "Bloquear e denunciar...",
     "block": {
       "action_false": "Bloquear usuário",
       "action_true": "Desbloquear usuário",
       "alert": {
-        "title": ""
+        "title": "Confirmar o bloqueio do usuário @{{username}} ?"
       }
     },
     "reports": {
-      "action": "",
+      "action": "Denunciar e bloquear usuário",
       "alert": {
-        "title": ""
+        "title": "Confirmar denúncia e bloqueio do usuário @{{username}} ?"
       }
     }
   },
@@ -41,7 +41,7 @@
     "public": ""
   },
   "copy": {
-    "action": "",
+    "action": "Copiar toot",
     "succeed": "Copiado"
   },
   "instance": {
