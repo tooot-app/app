@@ -6,7 +6,7 @@
       "action_false": "关注用户",
       "action_true": "取消关注用户"
     },
-    "inLists": "",
+    "inLists": "包含用户的列表 …",
     "showBoosts": {
       "action_false": "显示用户的转嘟",
       "action_true": "隐藏用户的转嘟"
@@ -16,12 +16,12 @@
       "action_true": "取消静音用户"
     },
     "followAs": {
-      "trigger": "",
+      "trigger": "用其它账户关注 …",
       "succeed_default": "@{{source}} 正在关注 @{{target}}",
       "succeed_locked": "已从 @{{source}} 发送关注请求至 @{{target}}，等待通过",
       "failed": "用其它账户关注"
     },
-    "blockReport": "",
+    "blockReport": "屏蔽与举报",
     "block": {
       "action_false": "屏蔽用户",
       "action_true": "取消屏蔽用户",
@@ -56,11 +56,11 @@
   },
   "hashtag": {
     "follow": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "关注",
+      "action_true": "取消关注"
     },
     "filter": {
-      "action": ""
+      "action": "过滤话题标签 …"
     }
   },
   "share": {
@@ -99,8 +99,8 @@
       "action_true": "取消置顶嘟文"
     },
     "filter": {
-      "action_false": "",
-      "action_true": ""
+      "action_false": "过滤此嘟文 …",
+      "action_true": "管理过滤器 …"
     }
   }
 }
