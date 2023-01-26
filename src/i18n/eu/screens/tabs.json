@@ -1,0 +1,474 @@
+{
+  "tabs": {
+    "local": {
+      "name": "",
+      "options": {
+        "showBoosts": "",
+        "showReplies": ""
+      }
+    },
+    "public": {
+      "segments": {
+        "federated": "",
+        "local": "",
+        "trending": ""
+      }
+    },
+    "notifications": {
+      "name": ""
+    }
+  },
+  "common": {
+    "search": {
+      "accessibilityLabel": "",
+      "accessibilityHint": ""
+    }
+  },
+  "notifications": {
+    "filters": {
+      "accessibilityLabel": "",
+      "accessibilityHint": "",
+      "title": ""
+    }
+  },
+  "me": {
+    "stacks": {
+      "bookmarks": {
+        "name": ""
+      },
+      "conversations": {
+        "name": ""
+      },
+      "favourites": {
+        "name": ""
+      },
+      "followedTags": {
+        "name": ""
+      },
+      "fontSize": {
+        "name": ""
+      },
+      "language": {
+        "name": ""
+      },
+      "list": {
+        "name": ""
+      },
+      "listAccounts": {
+        "name": ""
+      },
+      "listAdd": {
+        "name": ""
+      },
+      "listEdit": {
+        "name": ""
+      },
+      "lists": {
+        "name": ""
+      },
+      "push": {
+        "name": ""
+      },
+      "preferences": {
+        "name": ""
+      },
+      "preferencesFilters": {
+        "name": ""
+      },
+      "preferencesFilterAdd": {
+        "name": ""
+      },
+      "preferencesFilterEdit": {
+        "name": ""
+      },
+      "profile": {
+        "name": ""
+      },
+      "profileName": {
+        "name": ""
+      },
+      "profileNote": {
+        "name": ""
+      },
+      "profileFields": {
+        "name": ""
+      },
+      "settings": {
+        "name": ""
+      },
+      "switch": {
+        "name": ""
+      }
+    },
+    "fontSize": {
+      "demo": "",
+      "sizes": {
+        "S": "",
+        "M": "",
+        "L": "",
+        "XL": "",
+        "XXL": ""
+      }
+    },
+    "listAccounts": {
+      "heading": "",
+      "error": "",
+      "empty": ""
+    },
+    "listEdit": {
+      "heading": "",
+      "title": "",
+      "repliesPolicy": {
+        "heading": "",
+        "options": {
+          "none": "",
+          "list": "",
+          "followed": ""
+        }
+      }
+    },
+    "listDelete": {
+      "heading": "",
+      "confirm": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "preferences": {
+      "visibility": {
+        "title": "",
+        "options": {
+          "public": "",
+          "unlisted": "",
+          "private": ""
+        }
+      },
+      "sensitive": {
+        "title": ""
+      },
+      "media": {
+        "title": "",
+        "options": {
+          "default": "",
+          "show_all": "",
+          "hide_all": ""
+        }
+      },
+      "spoilers": {
+        "title": ""
+      },
+      "autoplay_gifs": {
+        "title": ""
+      },
+      "filters": {
+        "title": "",
+        "content": ""
+      },
+      "web_only": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "preferencesFilters": {
+      "expired": "",
+      "keywords_one": "",
+      "keywords_other": "",
+      "statuses_one": "",
+      "statuses_other": "",
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      }
+    },
+    "preferencesFilter": {
+      "name": "",
+      "expiration": "",
+      "expirationOptions": {
+        "0": "",
+        "1800": "",
+        "3600": "",
+        "43200": "",
+        "86400": "",
+        "604800": "",
+        "18144000": ""
+      },
+      "context": "",
+      "contexts": {
+        "home": "",
+        "notifications": "",
+        "public": "",
+        "thread": "",
+        "account": ""
+      },
+      "action": "",
+      "actions": {
+        "warn": "",
+        "hide": ""
+      },
+      "keywords": "",
+      "keyword": ""
+    },
+    "profile": {
+      "feedback": {
+        "succeed": "",
+        "failed": ""
+      },
+      "root": {
+        "name": {
+          "title": ""
+        },
+        "avatar": {
+          "title": "",
+          "description": ""
+        },
+        "header": {
+          "title": "",
+          "description": ""
+        },
+        "note": {
+          "title": ""
+        },
+        "fields": {
+          "title": "",
+          "total_one": "",
+          "total_other": ""
+        },
+        "lock": {
+          "title": "",
+          "description": ""
+        },
+        "bot": {
+          "title": "",
+          "description": ""
+        }
+      },
+      "fields": {
+        "group": "",
+        "label": "",
+        "content": ""
+      },
+      "mediaSelectionFailed": ""
+    },
+    "push": {
+      "notAvailable": "",
+      "enable": {
+        "direct": "",
+        "settings": ""
+      },
+      "missingServerKey": {
+        "message": "",
+        "description": ""
+      },
+      "global": {
+        "heading": "",
+        "description": ""
+      },
+      "decode": {
+        "heading": "",
+        "description": ""
+      },
+      "default": {
+        "heading": ""
+      },
+      "follow": {
+        "heading": ""
+      },
+      "follow_request": {
+        "heading": ""
+      },
+      "favourite": {
+        "heading": ""
+      },
+      "reblog": {
+        "heading": ""
+      },
+      "mention": {
+        "heading": ""
+      },
+      "poll": {
+        "heading": ""
+      },
+      "status": {
+        "heading": ""
+      },
+      "update": {
+        "heading": ""
+      },
+      "admin.sign_up": {
+        "heading": ""
+      },
+      "admin.report": {
+        "heading": ""
+      },
+      "howitworks": ""
+    },
+    "root": {
+      "announcements": {
+        "content": {
+          "unread": "",
+          "read": "",
+          "empty": ""
+        }
+      },
+      "push": {
+        "content_true": "",
+        "content_false": ""
+      },
+      "logout": {
+        "button": "",
+        "alert": {
+          "title": "",
+          "message": "",
+          "buttons": {
+            "logout": ""
+          }
+        }
+      }
+    },
+    "settings": {
+      "theme": {
+        "heading": "",
+        "options": {
+          "auto": "",
+          "light": "",
+          "dark": ""
+        }
+      },
+      "darkTheme": {
+        "heading": "",
+        "options": {
+          "lighter": "",
+          "darker": ""
+        }
+      },
+      "browser": {
+        "heading": "",
+        "options": {
+          "internal": "",
+          "external": ""
+        }
+      },
+      "autoplayGifv": {
+        "heading": ""
+      },
+      "feedback": {
+        "heading": ""
+      },
+      "support": {
+        "heading": ""
+      },
+      "contact": {
+        "heading": ""
+      },
+      "version": "",
+      "instanceVersion": ""
+    },
+    "switch": {
+      "existing": "",
+      "new": ""
+    }
+  },
+  "shared": {
+    "account": {
+      "actions": {
+        "accessibilityLabel": "",
+        "accessibilityHint": ""
+      },
+      "followed_by": "",
+      "moved": "",
+      "created_at": "",
+      "summary": {
+        "statuses_count": ""
+      },
+      "toots": {
+        "default": "",
+        "all": ""
+      },
+      "suspended": ""
+    },
+    "accountInLists": {
+      "name": "",
+      "inLists": "",
+      "notInLists": ""
+    },
+    "attachments": {
+      "name": ""
+    },
+    "hashtag": {
+      "follow": "",
+      "unfollow": ""
+    },
+    "history": {
+      "name": ""
+    },
+    "report": {
+      "name": "",
+      "report": "",
+      "forward": {
+        "heading": ""
+      },
+      "reasons": {
+        "heading": "",
+        "spam": "",
+        "other": "",
+        "violation": ""
+      },
+      "comment": {
+        "heading": ""
+      },
+      "violatedRules": {
+        "heading": ""
+      }
+    },
+    "search": {
+      "header": {
+        "prefix": "",
+        "placeholder": ""
+      },
+      "empty": {
+        "general": "",
+        "advanced": {
+          "header": "",
+          "example": {
+            "account": "",
+            "hashtag": "",
+            "statusLink": "",
+            "accountLink": ""
+          }
+        },
+        "trending": {
+          "tags": ""
+        }
+      },
+      "sections": {
+        "accounts": "",
+        "hashtags": "",
+        "statuses": ""
+      },
+      "notFound": "",
+      "noResult": ""
+    },
+    "toot": {
+      "name": "",
+      "remoteFetch": {
+        "title": "",
+        "message": ""
+      }
+    },
+    "users": {
+      "accounts": {
+        "following": "",
+        "followers": ""
+      },
+      "statuses": {
+        "reblogged_by": "",
+        "favourited_by": ""
+      },
+      "resultIncomplete": ""
+    }
+  }
+}
