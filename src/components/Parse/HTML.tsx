@@ -309,7 +309,11 @@ const ParseHTML: React.FC<Props> = ({
           height: numberOfLines === 1 && !expanded ? 0 : undefined
         }}
         numberOfLines={
-          typeof totalLines === 'number' ? (expanded ? 999 : numberOfLines) : MAX_ALLOWED_LINES
+          typeof totalLines === 'number'
+            ? expanded
+              ? 999
+              : numberOfLines
+            : Math.max(MAX_ALLOWED_LINES, numberOfLines)
         }
         selectable={selectable}
       />

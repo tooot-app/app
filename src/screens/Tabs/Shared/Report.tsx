@@ -1,5 +1,6 @@
 import ComponentAccount from '@components/Account'
 import { HeaderLeft, HeaderRight } from '@components/Header'
+import { ModalScrollView } from '@components/ModalScrollView'
 import Selections from '@components/Selections'
 import CustomText from '@components/Text'
 import apiInstance from '@utils/api/instance'
@@ -11,7 +12,7 @@ import { StyleConstants } from '@utils/styles/constants'
 import { useTheme } from '@utils/styles/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, ScrollView, TextInput, View } from 'react-native'
+import { Platform, TextInput, View } from 'react-native'
 import { Switch } from 'react-native-gesture-handler'
 
 const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> = ({
@@ -96,7 +97,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
   }, [rulesQuery.data])
 
   return (
-    <ScrollView>
+    <ModalScrollView>
       <View
         style={{
           margin: StyleConstants.Spacing.Global.PagePadding,
@@ -209,7 +210,7 @@ const TabSharedReport: React.FC<TabSharedStackScreenProps<'Tab-Shared-Report'>> 
           />
         ) : null}
       </View>
-    </ScrollView>
+    </ModalScrollView>
   )
 }
 

@@ -210,7 +210,8 @@
         "hide": "Hidden completely"
       },
       "keywords": "Matches for these keywords",
-      "keyword": "Keyword"
+      "keyword": "Keyword",
+      "statuses": "Matches these toots"
     },
     "profile": {
       "feedback": {
